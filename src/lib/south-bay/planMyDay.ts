@@ -201,6 +201,7 @@ function buildCandidates(date: Date): Candidate[] {
   const candidates: Candidate[] = [];
 
   for (const e of SOUTH_BAY_EVENTS) {
+    if (e.category === "sports") continue; // skip generic recurring sports — no confirmed game dates
     candidates.push({
       id: `event-${e.id}`,
       title: e.title,

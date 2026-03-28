@@ -1084,6 +1084,7 @@ function bucketEvents(
   upcoming: UpcomingEvent[],
   showCity: boolean,
   highlight = false,
+  showBucketLabels = true,
 ): React.ReactNode {
   const buckets: Record<TimeBucket, AnyEvent[]> = { now: [], morning: [], afternoon: [], evening: [], none: [] };
 
@@ -1094,7 +1095,7 @@ function bucketEvents(
   }
 
   const hasMultipleBuckets =
-    BUCKET_ORDER.filter((b) => buckets[b].length > 0).length > 1;
+    showBucketLabels && BUCKET_ORDER.filter((b) => buckets[b].length > 0).length > 1;
 
   return (
     <>
@@ -1195,7 +1196,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
   const southBayTodayUpcoming = todayUpcoming
     .filter((e) => (homeCity ? e.city !== homeCity : true))
-    .filter((e) => isNotEnded(e.time))
+    .filter((e) => hasNotStarted(e.time))
     .sort((a, b) => startMinutes(a.time) - startMinutes(b.time));
 
   const southBayCount = southBayTodayStatic.length + southBayTodayUpcoming.length;
@@ -1353,11 +1354,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         }}>
                           {TOMORROW_LABEL_STR}
                         </div>
-                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, true)}
+                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, true, false)}
                         {bucketEvents(
                           southBayTomorrowStatic.slice(0, SB_LIMIT),
                           southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                          true,
+                          true, false, false,
                         )}
                       </>
                     )}
@@ -1398,7 +1399,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         }}>
                           {TOMORROW_LABEL_STR}
                         </div>
-                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false)}
+                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, false, false)}
                       </>
                     )}
                   </>
@@ -1447,7 +1448,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                       {bucketEvents(
                         southBayTomorrowStatic.slice(0, SB_LIMIT),
                         southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                        true,
+                        true, false, false,
                       )}
                     </>
                   )}
