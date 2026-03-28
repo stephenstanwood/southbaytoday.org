@@ -5,6 +5,20 @@
     "entries": [
       {
         "date": "Mar 26",
+        "time": "10:29",
+        "type": "Theft",
+        "location": "200 block SENTER RD",
+        "priority": 3
+      },
+      {
+        "date": "Mar 26",
+        "time": "11:58",
+        "type": "Theft",
+        "location": "100 block GEORGE ST",
+        "priority": 3
+      },
+      {
+        "date": "Mar 26",
         "time": "01:15",
         "type": "Tampering With A",
         "location": "3300 block BLUE MOUNTAIN DR",
@@ -198,24 +212,10 @@
         "type": "Missing Person",
         "location": "200 block CHATEAU LA SALLE DR",
         "priority": 2
-      },
-      {
-        "date": "Mar 26",
-        "time": "00:54",
-        "type": "Unk Type 911",
-        "location": "4200 block MOORPARK AV",
-        "priority": 2
-      },
-      {
-        "date": "Mar 26",
-        "time": "00:57",
-        "type": "Pedestrian Stop",
-        "location": "E SANTA CLARA ST & N 9TH ST",
-        "priority": 6
       }
     ],
     "source": "SJ Open Data",
     "sourceUrl": "https://data.sanjoseca.gov/dataset/police-calls-for-service",
-    "generatedAt": "2026-03-28T11:50:10.495Z"
+    "generatedAt": "2026-03-28T22:40:41.260Z"
   }
 }
