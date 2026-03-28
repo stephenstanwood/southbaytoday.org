@@ -6,6 +6,9 @@
  * next scheduled council meeting and writes the results to
  * src/data/south-bay/upcoming-meetings.json.
  *
+ * Also fetches the top substantive agenda items for each meeting so the
+ * Government tab can show a forward-looking preview of what's on the docket.
+ *
  * Run: node scripts/generate-upcoming-meetings.mjs
  */
 
@@ -25,6 +28,93 @@ const LEGISTAR_CITIES = [
   { city: "cupertino",     client: "cupertino",     body: "City Council" },
   { city: "santa-clara",   client: "santaclara",    body: "City Council" },
 ];
+
+// Phrases that indicate a boilerplate/procedural agenda item to skip
+const SKIP_PREFIXES = [
+  "please scroll", "for live translation", "any member of the public",
+  "you may speak", "by email", "members of the public", "to request",
+  "the levine act", "how to", "fill out a", "each speaker", "notice to the public",
+  "all public records", "page break", "open forum",
+];
+const SKIP_EXACT = new Set([
+  "call to order", "roll call", "pledge of allegiance", "invocation",
+  "adjournment", "closed session", "open session", "recess",
+  "orders of the day", "postponements and orders of the day",
+  "closed session report", "consent calendar", "end of consent calendar",
+  "land use consent calendar", "ceremonial items", "strategic support",
+  "public safety services", "transportation & aviation services",
+  "environmental & utility services", "neighborhood services",
+  "community & economic development", "redevelopment – successor agency",
+  "land use", "land use - regular agenda", "regular agenda", "open forum",
+  "adjournment recognition", "public hearings", "special meeting",
+  "closed session, call to order in council chambers",
+  "american disability act", "public comment in person only",
+  "public comment", "public hearing",
+]);
+
+// Prefixes that indicate procedural/non-substantive items
+const SKIP_STARTS_WITH = [
+  "call to order", "roll call", "regular session,", "closed session,",
+  "public comment", "subject:  conference with legal counsel",
+  "subject:  conference with real property",
+];
+
+function isSubstantiveItem(rawTitle) {
+  if (!rawTitle) return false;
+  // Use only the first line (some items have addresses/details appended via \r\n)
+  const t = rawTitle.split(/\r?\n/)[0].trim();
+  if (t.length < 20 || t.length > 300) return false;
+
+  const lower = t.toLowerCase();
+
+  // Skip exact boilerplate
+  if (SKIP_EXACT.has(lower)) return false;
+
+  // Skip known boilerplate prefixes
+  for (const prefix of SKIP_PREFIXES) {
+    if (lower.startsWith(prefix)) return false;
+  }
+
+  // Skip SKIP_STARTS_WITH patterns
+  for (const prefix of SKIP_STARTS_WITH) {
+    if (lower.startsWith(prefix)) return false;
+  }
+
+  // Skip all-caps section headers (e.g. "CONSENT CALENDAR", "PUBLIC PARTICIPATION INFORMATION")
+  // Check: no lowercase letters present = it's a header/banner
+  if (t === t.toUpperCase() && /[A-Z]/.test(t)) return false;
+
+  // Skip items that are just a URL
+  if (/^https?:\/\//.test(t)) return false;
+
+  // Skip items that are just phone numbers or generic procedural notices
+  if (/^\d/.test(t) && t.length < 40) return false;
+
+  return true;
+}
+
+async function fetchAgendaItems(client, eventId) {
+  const url = `https://webapi.legistar.com/v1/${client}/Events/${eventId}/EventItems`;
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": UA, Accept: "application/json" },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) return [];
+    const items = await res.json();
+
+    // Filter to substantive items and take up to 5
+    return items
+      .filter((item) => isSubstantiveItem(item.EventItemTitle))
+      .slice(0, 5)
+      .map((item) => ({
+        title: item.EventItemTitle.split(/\r?\n/)[0].trim(),
+        sequence: item.EventItemAgendaSequence,
+      }));
+  } catch {
+    return [];
+  }
+}
 
 async function fetchNextMeeting(city, client, body) {
   const today = new Date().toISOString().split("T")[0];
@@ -49,6 +139,8 @@ async function fetchNextMeeting(city, client, body) {
   const daysOut = (date.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
   if (daysOut > 60) return null;
 
+  const agendaItems = await fetchAgendaItems(client, ev.EventId);
+
   return {
     date: date.toISOString().split("T")[0],
     displayDate: date.toLocaleDateString("en-US", {
@@ -59,6 +151,7 @@ async function fetchNextMeeting(city, client, body) {
     location: ev.EventLocation || null,
     url: `https://${client}.legistar.com/MeetingDetail.aspx?ID=${ev.EventId}&GUID=${ev.EventGuid}`,
     legistarEventId: ev.EventId,
+    agendaItems,
   };
 }
 
@@ -73,7 +166,8 @@ async function main() {
       const next = await fetchNextMeeting(city, client, body);
       if (next) {
         meetings[city] = next;
-        console.log(` ✅ ${next.displayDate}`);
+        const itemCount = next.agendaItems?.length ?? 0;
+        console.log(` ✅ ${next.displayDate} (${itemCount} agenda items)`);
       } else {
         console.log(` — none scheduled`);
       }

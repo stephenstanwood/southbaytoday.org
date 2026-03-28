@@ -1,17 +1,19 @@
 import { useState, useCallback } from "react";
 import DigestCard from "../cards/DigestCard";
 import type { DigestData } from "../cards/DigestCard";
-import BlotterCard from "../cards/BlotterCard";
-import type { CityBlotter } from "../cards/BlotterCard";
 import HealthScoresCard from "../cards/HealthScoresCard";
 import type { City } from "../../../lib/south-bay/types";
 import digestsJson from "../../../data/south-bay/digests.json";
-import blotterJson from "../../../data/south-bay/blotter.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 
 interface Props {
   selectedCities: Set<City>;
   homeCity: City | null;
+}
+
+interface AgendaItem {
+  title: string;
+  sequence: number;
 }
 
 interface UpcomingMeeting {
@@ -20,11 +22,11 @@ interface UpcomingMeeting {
   bodyName: string;
   location: string | null;
   url: string;
+  agendaItems?: AgendaItem[];
 }
 
 // Load pre-generated data from static JSON
 const staticDigests = digestsJson as Record<string, DigestData>;
-const allBlotters = blotterJson as Record<string, CityBlotter>;
 const upcomingMeetings = (upcomingMeetingsJson as { meetings: Record<string, UpcomingMeeting> }).meetings;
 const configuredCities = Object.keys(staticDigests) as City[];
 
@@ -91,16 +93,6 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
   const unconfiguredSelected = [...selectedCities].filter(
     (c) => !allConfigured.includes(c),
   );
-
-  // Blotter cities: those with data that are selected, sorted same way
-  const blotterCityIds = Object.keys(allBlotters) as City[];
-  const visibleBlotterCities = blotterCityIds
-    .filter((c) => selectedCities.has(c))
-    .sort((a, b) => {
-      if (a === primary) return -1;
-      if (b === primary) return 1;
-      return 0;
-    });
 
   const totalCities = 11;
 
@@ -207,6 +199,7 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
         }
 
         // No pre-generated data for this city — show prompt to generate
+        const hasAgenda = nextMeeting?.agendaItems && nextMeeting.agendaItems.length > 0;
         return (
           <div
             key={city}
@@ -215,47 +208,68 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
               border: "1px dashed var(--sb-border)",
               borderRadius: "var(--sb-radius)",
               marginBottom: 12,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 12,
               fontSize: 13,
               color: "var(--sb-muted)",
             }}
           >
-            <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <span style={{ fontWeight: 600, color: "var(--sb-text)" }}>{cityLabel(city)}</span>
-              {nextMeeting ? (
-                <span style={{ fontSize: 11 }}>
-                  Next meeting:{" "}
-                  <a
-                    href={nextMeeting.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "var(--sb-accent)", textDecoration: "none" }}
-                  >
-                    {nextMeeting.displayDate} →
-                  </a>
-                </span>
-              ) : (
-                <span style={{ fontSize: 11 }}>No digest generated yet</span>
-              )}
-            </span>
-            <button
-              onClick={() => refreshDigest(city)}
-              style={{
-                padding: "4px 10px",
-                fontSize: 11,
-                border: "1px solid var(--sb-border)",
-                borderRadius: 4,
-                background: "#fff",
-                cursor: "pointer",
-                fontFamily: "'Space Mono', monospace",
-                flexShrink: 0,
-              }}
-            >
-              Generate
-            </button>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+              <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <span style={{ fontWeight: 600, color: "var(--sb-text)" }}>{cityLabel(city)}</span>
+                {nextMeeting ? (
+                  <span style={{ fontSize: 11 }}>
+                    Next meeting:{" "}
+                    <a
+                      href={nextMeeting.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "var(--sb-accent)", textDecoration: "none" }}
+                    >
+                      {nextMeeting.displayDate} →
+                    </a>
+                  </span>
+                ) : (
+                  <span style={{ fontSize: 11 }}>No digest generated yet</span>
+                )}
+              </span>
+              <button
+                onClick={() => refreshDigest(city)}
+                style={{
+                  padding: "4px 10px",
+                  fontSize: 11,
+                  border: "1px solid var(--sb-border)",
+                  borderRadius: 4,
+                  background: "#fff",
+                  cursor: "pointer",
+                  fontFamily: "'Space Mono', monospace",
+                  flexShrink: 0,
+                }}
+              >
+                Generate
+              </button>
+            </div>
+            {hasAgenda && (
+              <div style={{ marginTop: 10 }}>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 6 }}>
+                  On the agenda · {nextMeeting!.displayDate}
+                </div>
+                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 4 }}>
+                  {nextMeeting!.agendaItems!.map((item, i) => (
+                    <li
+                      key={i}
+                      style={{
+                        fontSize: 12,
+                        color: "var(--sb-text)",
+                        lineHeight: 1.4,
+                        paddingLeft: 10,
+                        borderLeft: "2px solid var(--sb-border-light)",
+                      }}
+                    >
+                      {item.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         );
       })}
@@ -272,43 +286,6 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
               : "—"}
           </p>
         </div>
-      )}
-
-      {/* ── Police Blotter ── */}
-      {visibleBlotterCities.length > 0 && (
-        <>
-          <div className="sb-section-header" style={{ marginTop: 32, marginBottom: 4 }}>
-            <span className="sb-section-title">Police Blotter</span>
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 600,
-                color: "var(--sb-muted)",
-                background: "#F3F4F6",
-                padding: "2px 8px",
-                borderRadius: 3,
-                letterSpacing: "0.03em",
-              }}
-            >
-              calls for service
-            </span>
-          </div>
-          <p
-            style={{
-              fontSize: 12,
-              color: "var(--sb-muted)",
-              marginTop: 0,
-              marginBottom: 16,
-              lineHeight: 1.5,
-            }}
-          >
-            Recent police calls for service from public open data portals.
-          </p>
-          {visibleBlotterCities.map((city) => {
-            const blotter = allBlotters[city];
-            return blotter ? <BlotterCard key={city} blotter={blotter} /> : null;
-          })}
-        </>
       )}
 
       {/* ── Food Safety Watch ── */}

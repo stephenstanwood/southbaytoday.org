@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-28T22:58:50.482Z",
+  "generatedAt": "2026-03-28T23:14:02.123Z",
   "meetings": {
     "san-jose": {
       "date": "2026-04-07",
@@ -7,7 +7,29 @@
       "bodyName": "City Council",
       "location": "Council Chambers",
       "url": "https://sanjose.legistar.com/MeetingDetail.aspx?ID=7616&GUID=DD26C585-9FF7-4636-B1B8-E24404F75FAB",
-      "legistarEventId": 7616
+      "legistarEventId": 7616,
+      "agendaItems": [
+        {
+          "title": "Establishment of the GovAI Coalition as a Nonprofit Corporation.",
+          "sequence": 52
+        },
+        {
+          "title": "Willow Rock Long Duration Energy Storage Agreement.",
+          "sequence": 56
+        },
+        {
+          "title": "San Diego Community Power Resource Adequacy Trade.",
+          "sequence": 57
+        },
+        {
+          "title": "Establishment of the Story Road Business Improvement District and Approval to Levy Assessments in the Story Road Business Improvement District for Fiscal Year 2026-2027.",
+          "sequence": 60
+        },
+        {
+          "title": "Actions Related to the Loan Commitment for the Valley Transportation Authority Capitol Station Affordable Housing Development.",
+          "sequence": 61
+        }
+      ]
     },
     "cupertino": {
       "date": "2026-04-01",
@@ -15,7 +37,8 @@
       "bodyName": "City Council",
       "location": "10300 Torre Avenue and 10350 Torre Avenue, Council Chamber and via Teleconference",
       "url": "https://cupertino.legistar.com/MeetingDetail.aspx?ID=5333&GUID=4E6AD43F-19FC-4B9E-B4ED-078E75E256F6",
-      "legistarEventId": 5333
+      "legistarEventId": 5333,
+      "agendaItems": []
     }
   }
 }

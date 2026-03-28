@@ -12,11 +12,17 @@ interface DigestData {
   generatedAt?: string;
 }
 
+interface AgendaItem {
+  title: string;
+  sequence: number;
+}
+
 interface UpcomingMeetingInfo {
   date: string;
   displayDate: string;
   url: string;
   location?: string | null;
+  agendaItems?: AgendaItem[];
 }
 
 interface Props {
@@ -46,6 +52,30 @@ export default function DigestCard({ digest, onRefresh, upcomingMeeting }: Props
           ))}
         </ul>
       )}
+      {upcomingMeeting?.agendaItems && upcomingMeeting.agendaItems.length > 0 && (
+        <div style={{ marginTop: 12, marginBottom: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 6 }}>
+            On the agenda · {upcomingMeeting.displayDate}
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 4 }}>
+            {upcomingMeeting.agendaItems.map((item, i) => (
+              <li
+                key={i}
+                style={{
+                  fontSize: 12,
+                  color: "var(--sb-text)",
+                  lineHeight: 1.4,
+                  paddingLeft: 10,
+                  borderLeft: "2px solid var(--sb-border-light)",
+                }}
+              >
+                {item.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="sb-digest-footer">
         {nextLabel && (
           <span className="sb-digest-next">
