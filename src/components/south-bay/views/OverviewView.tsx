@@ -1479,10 +1479,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         />
       )}
 
-      {/* ── City at a glance ── */}
-      {homeCity && !changingCity && (
-        <CityGlance city={homeCity} onNavigate={onNavigate} />
-      )}
 
       {/* ── Police blotter for home city ── */}
       {homeCity && !changingCity && (
