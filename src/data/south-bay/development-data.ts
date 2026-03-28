@@ -68,7 +68,7 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "levi-stadium-area",
-    name: "Related Santa Clara / Central Place",
+    name: "Central Place at Levi's Stadium",
     city: "Santa Clara",
     cityId: "santa-clara",
     category: "mixed-use",

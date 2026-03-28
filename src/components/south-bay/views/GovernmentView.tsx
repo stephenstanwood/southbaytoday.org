@@ -3,6 +3,7 @@ import DigestCard from "../cards/DigestCard";
 import type { DigestData } from "../cards/DigestCard";
 import BlotterCard from "../cards/BlotterCard";
 import type { CityBlotter } from "../cards/BlotterCard";
+import HealthScoresCard from "../cards/HealthScoresCard";
 import type { City } from "../../../lib/south-bay/types";
 import digestsJson from "../../../data/south-bay/digests.json";
 import blotterJson from "../../../data/south-bay/blotter.json";
@@ -309,6 +310,9 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
           })}
         </>
       )}
+
+      {/* ── Food Safety Watch ── */}
+      <HealthScoresCard />
     </>
   );
 }

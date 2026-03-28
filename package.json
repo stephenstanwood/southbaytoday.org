@@ -11,7 +11,9 @@
     "generate-blotter": "node scripts/generate-blotter.mjs",
     "generate-events": "node scripts/generate-events.mjs",
     "generate-upcoming-meetings": "node scripts/generate-upcoming-meetings.mjs",
-    "generate-around-town": "node scripts/generate-around-town.mjs"
+    "generate-around-town": "node scripts/generate-around-town.mjs",
+    "generate-health-scores": "node scripts/generate-health-scores.mjs",
+    "generate-weekend-picks": "node scripts/generate-weekend-picks.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.74.0",

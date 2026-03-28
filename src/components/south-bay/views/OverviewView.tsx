@@ -1282,6 +1282,14 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
           <span style={{ fontSize: 11, color: "var(--sb-muted)", letterSpacing: "0.04em" }}>
             · {homeCity ? getCityName(homeCity) : "South Bay"}, CA
           </span>
+          {homeCity && (
+            <button
+              onClick={() => setChangingCity(true)}
+              style={{ marginLeft: "auto", background: "none", border: "none", fontSize: 11, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
+              Change city
+            </button>
+          )}
         </div>
       )}
 
@@ -1296,14 +1304,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
               <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
                 {cityTodayCount} {cityTodayCount === 1 ? "event" : "events"}
               </span>
-            )}
-            {homeCity && (
-              <button
-                onClick={() => setChangingCity(true)}
-                style={{ marginLeft: "auto", background: "none", border: "none", fontSize: 12, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
-              >
-                Change city
-              </button>
             )}
           </div>
 
@@ -1459,6 +1459,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         </div>
       )}
 
+      {/* ── Sports callout ── */}
+      {todaySportsEvents.length > 0 && (
+        <SportsCallout events={todaySportsEvents} />
+      )}
+
       {/* ── Signal Briefing (newspaper front page hero) ── */}
       {!changingCity && (
         <SignalBriefing
@@ -1472,11 +1477,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {/* ── City at a glance ── */}
       {homeCity && !changingCity && (
         <CityGlance city={homeCity} onNavigate={onNavigate} />
-      )}
-
-      {/* ── Sports callout ── */}
-      {todaySportsEvents.length > 0 && (
-        <SportsCallout events={todaySportsEvents} />
       )}
 
       {/* ── Police blotter for home city ── */}
