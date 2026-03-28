@@ -518,33 +518,80 @@ function pickTopEvent(
   };
 }
 
+// Topics that are procedural noise — not newsworthy
+const GOVT_NOISE_TOPICS = [
+  "roll call", "approval of minutes", "approval of agenda", "public comment",
+  "approval of consent", "consent calendar", "closed session", "adjournment",
+  "pledge of allegiance", "invocation", "presentations and proclamations",
+  // Meeting logistics / accessibility — not civic decisions
+  "multiple ways to watch", "live translation", "accessible meeting",
+  "no public comment", "translation available",
+  // Scheduling / procedural outcomes
+  "cancelled", "rescheduled", "postponed", "continued to",
+  "city council administrative",
+];
+
+function isNoisyTopic(topic: string): boolean {
+  const lower = topic.toLowerCase();
+  return GOVT_NOISE_TOPICS.some((n) => lower.startsWith(n));
+}
+
+function digestAge(meetingDate: string | undefined): number {
+  if (!meetingDate) return 999;
+  const d = new Date(meetingDate);
+  if (isNaN(d.getTime())) return 999;
+  return (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
+}
+
 function pickCityHallStory(
   homeCity: City | null,
   digests: Record<string, { summary?: string; keyTopics?: string[]; meetingDate?: string; schedule?: string }>,
 ): BriefingStory | null {
-  const city = homeCity ?? "san-jose";
-  const digest = digests[city];
-  if (!digest) {
-    // Generic story: show next meeting hint
+  // Build candidate list: home city first, then others sorted by recency
+  const cityOrder = [
+    homeCity ?? "san-jose",
+    "san-jose", "sunnyvale", "mountain-view", "palo-alto",
+    "santa-clara", "cupertino", "saratoga", "los-gatos", "campbell",
+  ].filter((v, i, a) => a.indexOf(v) === i);
+
+  for (const city of cityOrder) {
+    const digest = digests[city];
+    if (!digest) continue;
+    // Skip stale digests (> 30 days old)
+    if (digestAge(digest.meetingDate) > 30) continue;
+    // Find the first substantive (non-noisy) topic
+    const topic = digest.keyTopics?.find((t) => !isNoisyTopic(t));
+    if (!topic) continue;
+
+    const cityLabel = getCityName(city as City);
+    const lede = digest.summary?.slice(0, 130) ?? `${cityLabel} City Council, ${digest.meetingDate ?? "recent meeting"}.`;
     return {
       category: "Government",
-      headline: "City Hall Digest",
-      lede: "AI-generated plain-English summaries of city council meetings across 8 South Bay cities.",
+      headline: topic,
+      lede: lede.length > 130 ? lede.slice(0, 127) + "…" : lede,
       tab: "government",
       emoji: "🏛️",
       accentColor: "#1d4ed8",
     };
   }
-  const headline = digest.keyTopics?.[0] ?? `${homeCity ? getCityName(homeCity) : "South Bay"} City Council`;
-  const lede = digest.summary?.slice(0, 130) ?? `Meeting of ${digest.meetingDate ?? "recent date"}.`;
+
+  // All digests are stale or noisy — show generic prompt
   return {
     category: "Government",
-    headline,
-    lede: lede.length > 130 ? lede.slice(0, 127) + "…" : lede,
+    headline: "City Hall Digest",
+    lede: "Plain-English summaries of city council meetings across 8 South Bay cities.",
     tab: "government",
     emoji: "🏛️",
     accentColor: "#1d4ed8",
   };
+}
+
+// Timelines that signal a decade-away project — not "what's happening now"
+const FAR_FUTURE_PATTERN = /2030s|2031|2032|2033|2034|2035|2036|2037|2038|2039|2040s|long.term/i;
+
+function isNearTerm(timeline: string | undefined): boolean {
+  if (!timeline) return true;
+  return !FAR_FUTURE_PATTERN.test(timeline);
 }
 
 function pickDevelopmentStory(): BriefingStory | null {
@@ -552,8 +599,18 @@ function pickDevelopmentStory(): BriefingStory | null {
     (p) => p.status === "under-construction" || p.status === "opening-soon",
   );
   if (!active.length) return null;
-  // Prefer featured
-  const p = active.find((p) => p.featured) ?? active[0];
+
+  // Priority: opening-soon > near-term under-construction > anything else
+  const openingSoon = active.filter((p) => p.status === "opening-soon");
+  const nearTerm = active.filter(
+    (p) => p.status === "under-construction" && isNearTerm(p.timeline),
+  );
+  const fallback = active;
+
+  const pool = openingSoon.length ? openingSoon : nearTerm.length ? nearTerm : fallback;
+  // Within the pool, prefer featured; otherwise first
+  const p = pool.find((p) => p.featured) ?? pool[0];
+
   const statusLabel = STATUS_CONFIG[p.status]?.label ?? p.status;
   const lede = `${statusLabel} · ${p.city}${p.scale ? ` · ${p.scale}` : ""}${p.timeline ? ` · ${p.timeline}` : ""}`;
   return {
