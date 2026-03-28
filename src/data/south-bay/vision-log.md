@@ -853,3 +853,61 @@ Three bugs were silently nullifying sources that were explicitly coded. CHM and 
 **Yes — silent failures fixed, coverage gaps partially addressed.** Mountain View finally has real events (Computer History Museum exhibits). Palo Alto/Stanford is now represented. The SJSU fix is invisible to users but restores the backbone of the San Jose event feed. The product now covers 9 of 11 cities with at least some events. Sunnyvale remains the most notable gap. The work this cycle was "fixing what was pretending to work" — critical infrastructure that enables everything else.
 
 ---
+
+## Cycle 15 — Campbell Events Fix + "This Week" Section on Today Tab (2026-03-28)
+
+### Context
+Coming off Cycle 14 which fixed CHM, Stanford, and SJSU bugs. Three sources remained silently broken: Campbell (0 events), SJ Jazz (0 events), and Montalvo (0 events). Additionally, the Today tab still lacked any forward-looking content — if today has few events in your city, the homepage offers no path forward except switching tabs.
+
+### Issues Identified This Cycle
+1. **Campbell: 0 events** — The Campbell city calendar uses `calendarEvent:EventDates` (e.g., "April 7, 2026") not `calendarEvent:startDate`. The RSS parser was reading the wrong field. Result: 0 events despite the feed returning 6 real items.
+2. **SJ Jazz + Montalvo: 0 events** — Both sources use WordPress blog RSS feeds, not event calendars. Their `pubDate` timestamps are from 2024-2025 — all filtered out as past events. They were silently contributing 0 useful data.
+3. **Today tab: no forward view** — "Today in San Jose" shows 0-3 events on slow days and then hits "Nothing scheduled today." Users have no way to see what's coming later in the week without clicking to the Events tab.
+
+### What Was Built
+
+**1. Campbell RSS fix** (`scripts/generate-events.mjs`)
+
+Root cause: Campbell uses `calendarEvent:EventDates` (note the plural 's') not `calendarEvent:startDate`. Added two new helpers:
+- `parseCivicPlusEventDates(str)` — parses "March 28, 2026" or "April 6, 2026 - April 10, 2026" (takes start date of range)
+- `parseCivicPlusEventTime(str)` — converts "07:00 PM - 09:00 PM" to "7pm – 9pm" display format
+
+Updated `parseRssItems` to capture `calendarEvent:EventDates` and `calendarEvent:EventTimes` fields. Updated `fetchCampbellEvents` to use `parseCivicPlusEventDates(item.eventDates)` as primary date source. Result: Campbell: 0 → **5 real community events** with proper times ("Parks and Recreation Commission Meeting 7pm – 9pm", "City Council Regular Meeting 7pm", etc.)
+
+**2. SJ Jazz + Montalvo documented and clarified**
+
+Both sources are blog RSS feeds (news articles about past events/artists/residencies). Their blog posts don't contain upcoming events. Rather than leaving them as silent noise producers, added clear comments documenting why they return 0 events and that both venues are already covered in `events-data.ts` (recurring events layer). Prevents future confusion about why these "working" sources produce no output.
+
+**3. "This Week in [City]" section** (`src/components/south-bay/views/OverviewView.tsx`)
+
+Added a new section between "Today in [City]" and "This Month" that shows upcoming events for the next 6 days, grouped by date:
+- Shown only when `homeCity` is set
+- Filters scraped upcoming events to home city only, excludes sports
+- Each day group: newspaper-style monospace date header, 2-column grid (matches Today layout)
+- Up to 4 events per day to keep the section scannable
+- Days with 0 events are hidden (no empty day headers)
+- Section header shows total event count for the week
+- Pre-computed `NEXT_DAYS` array at module load time for clean code
+
+### Why This Was the Strongest Move
+
+**Campbell fix** closes the most embarrassing scraper gap. The CivicPlus RSS documentation is inconsistent — some deployments use `startDate`, others use `EventDates`. The data was there the whole time, just reading the wrong field name. Campbell city events are high-quality content: council meetings, commission meetings, and community programs with real dates and times.
+
+**"This Week" section** is the forward-looking layer the Today tab was missing. A user who opens South Bay Signal on a Tuesday and sees 1 event today can immediately scroll to "This Week in San Jose" and see what's coming on Wednesday (library program), Thursday (arts center opening), Friday (community market). This is the critical difference between "here is today" and "here is your week." For most days, there are 3-15 city events happening in the next 6 days — now they surface on the homepage without requiring a tab switch.
+
+The combination: more data (Campbell fixed) + better UI (forward view) = meaningfully more useful homepage.
+
+### What New Opportunities Emerged
+1. **"This Week" for South Bay-wide** — The current implementation is city-only. A second version showing the top events across the whole region (top 2 per day, diverse sources) would give users without a home city a forward-looking view too.
+2. **Sunnyvale coverage gap** — Still 0 events. City blocks all bot access. The only realistic path: find if Sunnyvale Center for the Performing Arts or Sunnyvale Library uses a platform with a public API (currently failing with fetch errors — may be a DNS/SSL issue, not a bot block).
+3. **SJ Jazz/Montalvo proper events calendar** — Both use WordPress blogs for news, but their actual ticketing is likely on Eventbrite or similar. If we can find their Ticketmaster artist pages or Eventbrite org IDs, we could pull real show listings.
+
+### Next 3 Strongest Ideas
+1. **Pre-generate city council digests automatically** — Add ANTHROPIC_API_KEY to GitHub Actions secrets, schedule digest regeneration on the same cron as events. This turns the Gov tab from "on-demand AI" into "always-fresh summaries every morning."
+2. **Sunnyvale and Mountain View library systems** — Neither city library is on BiblioCommons. Mountain View Public Library and Sunnyvale Public Library may use different ILS platforms (SirsiDynix, Polaris, etc.) that have public event APIs. Worth a targeted investigation.
+3. **"This Week" with smart highlighting** — Add visual differentiation to the This Week section: mark events as "free", highlight upcoming sports games, flag kid-friendly events with an icon. Currently it's information density without editorial curation.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Today tab now answers "what's happening this week?" not just "what's happening today?"** The combination of "Today in [City]" → "This Week in [City]" → "This Month" creates a temporal sequence that covers the immediate (today), the near-term (this week), and the seasonal (this month). A San Jose resident can open the page on a quiet Monday and still get a useful picture of the week ahead. That's the behavior of a daily-use homepage. Campbell being back in coverage means a resident of that city can actually set their home city and get relevant results instead of a nearly-empty list.
+
+---
