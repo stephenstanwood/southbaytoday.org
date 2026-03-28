@@ -33,9 +33,12 @@ interface UpcomingEvent {
   url: string;
   source: string;
   kidFriendly: boolean;
+  ongoing?: boolean;
 }
 
-const upcomingEvents = (upcomingJson as { events: UpcomingEvent[] }).events || [];
+const allUpcomingEvents = (upcomingJson as { events: UpcomingEvent[] }).events || [];
+const upcomingEvents = allUpcomingEvents.filter((e) => !e.ongoing);
+const ongoingEvents = allUpcomingEvents.filter((e) => e.ongoing);
 const upcomingSources = (upcomingJson as { sources: string[] }).sources || [];
 
 // ── Recurring event helpers ──
@@ -305,6 +308,22 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
 
   const activeList = viewMode === "upcoming" ? filteredUpcoming : filteredRecurring;
 
+  // Ongoing/exhibits — separate filtered list, city/category/search aware
+  const filteredOngoing = useMemo(() => {
+    const allCities = selectedCities.size === 11;
+    return ongoingEvents.filter((e) => {
+      if (!allCities && !selectedCities.has(e.city as City)) return false;
+      if (category !== "all" && e.category !== category) return false;
+      if (showKidsOnly && !e.kidFriendly) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        if (!e.title.toLowerCase().includes(q) && !(e.description || "").toLowerCase().includes(q) &&
+            !e.city.toLowerCase().includes(q) && !e.venue.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    });
+  }, [selectedCities, category, showKidsOnly, search]);
+
   // Group upcoming events by date bucket
   const groupedUpcoming = useMemo(() => {
     const groups: Record<string, UpcomingEvent[]> = {};
@@ -326,6 +345,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
           Events
           <span style={{ fontSize: 13, fontWeight: 400, color: "var(--sb-muted)", marginLeft: 8 }}>
             {upcomingEvents.length} upcoming · {SOUTH_BAY_EVENTS.length} recurring
+            {ongoingEvents.length > 0 && ` · ${ongoingEvents.length} ongoing`}
           </span>
         </span>
         <div className="sb-section-line" />
@@ -498,6 +518,25 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
         </div>
       )}
 
+      {/* Ongoing / Exhibits section */}
+      {viewMode === "upcoming" && filteredOngoing.length > 0 && (
+        <div style={{ marginTop: 28 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 6, borderBottom: "2px solid var(--sb-border)" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)" }}>
+              Ongoing &amp; Exhibits
+            </span>
+            <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
+              {filteredOngoing.length} showing now
+            </span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {filteredOngoing.map((event) => (
+              <UpcomingEventCard key={event.id} event={event} />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Source attribution */}
       <div
         style={{
@@ -508,7 +547,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
         }}
       >
         <strong style={{ color: "var(--sb-muted)" }}>
-          {upcomingEvents.length} upcoming events from {upcomingSources.length} sources.
+          {upcomingEvents.length} upcoming + {ongoingEvents.length} ongoing events from {upcomingSources.length} sources.
         </strong>{" "}
         Via {upcomingSources.join(", ")}.
         {" "}Plus {SOUTH_BAY_EVENTS.length} recurring events across the South Bay.
