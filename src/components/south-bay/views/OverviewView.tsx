@@ -11,6 +11,7 @@ import type { City, Tab } from "../../../lib/south-bay/types";
 import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../../data/south-bay/digests.json";
 import blotterJson from "../../../data/south-bay/blotter.json";
+import aroundTownJson from "../../../data/south-bay/around-town.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -774,6 +775,90 @@ function BlotterStrip({
   );
 }
 
+// ── Around the South Bay ─────────────────────────────────────────────────────
+
+interface AroundTownItem {
+  id: string;
+  cityId: string;
+  cityName: string;
+  date: string;
+  headline: string;
+  summary: string;
+  sourceUrl: string;
+}
+
+const CITY_ACCENT: Record<string, string> = {
+  "campbell":      "#1d4ed8",
+  "saratoga":      "#065F46",
+  "los-altos":     "#7c3aed",
+  "los-gatos":     "#b45309",
+  "san-jose":      "#be123c",
+  "mountain-view": "#0369a1",
+  "sunnyvale":     "#0891b2",
+  "cupertino":     "#6d28d9",
+  "santa-clara":   "#b45309",
+  "milpitas":      "#4d7c0f",
+  "palo-alto":     "#1d4ed8",
+};
+
+function AroundTownSection() {
+  const items = (aroundTownJson as { items: AroundTownItem[] }).items;
+  if (!items?.length) return null;
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div className="sb-section-header" style={{ marginBottom: 14 }}>
+        <span className="sb-section-title">Around the South Bay</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          from public records
+        </span>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {items.map((item, i) => {
+          const accent = CITY_ACCENT[item.cityId] ?? "var(--sb-primary)";
+          const dateFormatted = new Date(item.date + "T12:00:00").toLocaleDateString("en-US", {
+            month: "short", day: "numeric",
+          });
+          return (
+            <div key={item.id} style={{
+              padding: "14px 0",
+              borderBottom: i < items.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                  background: accent + "18", color: accent,
+                  letterSpacing: "0.04em",
+                }}>
+                  {item.cityName.toUpperCase()}
+                </span>
+                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+                  {dateFormatted}
+                </span>
+              </div>
+              <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 4 }}>
+                {item.headline}
+              </div>
+              <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.55 }}>
+                {item.summary}{" "}
+                <a
+                  href={item.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: accent, textDecoration: "none", fontWeight: 600 }}
+                >
+                  Source →
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Bucketed event list ───────────────────────────────────────────────────────
 
 type AnyEvent = { _type: "static"; event: SBEvent } | { _type: "upcoming"; event: UpcomingEvent };
@@ -972,6 +1057,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {homeCity && !changingCity && (
         <BlotterStrip homeCity={homeCity} onNavigate={onNavigate} />
       )}
+
+      {/* ── Around the South Bay ── */}
+      {!changingCity && <AroundTownSection />}
 
       {/* ── Your City Today (or expanded regional if sparse) ── */}
       {homeCity && (
