@@ -37,12 +37,27 @@
  *   node scripts/generate-events.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Auto-load .env.local if present (for local development without manual env injection)
+const envLocalPath = join(__dirname, "..", ".env.local");
+if (existsSync(envLocalPath)) {
+  const lines = readFileSync(envLocalPath, "utf8").split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const idx = trimmed.indexOf("=");
+    if (idx === -1) continue;
+    const key = trimmed.slice(0, idx).trim();
+    const val = trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, "");
+    if (key && !(key in process.env)) process.env[key] = val;
+  }
+}
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-events.json");
 
 const UA = "SouthBaySignal/1.0 (stanwood.dev; public event aggregator)";
