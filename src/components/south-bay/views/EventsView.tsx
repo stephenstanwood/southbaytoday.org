@@ -13,7 +13,31 @@ interface Props {
   homeCity: City | null;
 }
 
-type ViewMode = "upcoming" | "recurring";
+type ViewMode = "upcoming" | "recurring" | "venues";
+
+// ── South Bay entertainment venues ──
+
+interface SBVenue {
+  id: string;
+  name: string;
+  venueMatch: string; // substring match against event.venue
+  city: string;
+  cityLabel: string;
+  emoji: string;
+  tags: string;
+}
+
+const SOUTH_BAY_VENUES: SBVenue[] = [
+  { id: "sj-improv",       name: "San Jose Improv",                        venueMatch: "San Jose Improv",                      city: "san-jose",   cityLabel: "San Jose",  emoji: "🎤", tags: "Comedy · Music" },
+  { id: "the-ritz",        name: "The Ritz",                               venueMatch: "The Ritz",                             city: "san-jose",   cityLabel: "San Jose",  emoji: "🎵", tags: "Music" },
+  { id: "sj-civic",        name: "San Jose Civic",                         venueMatch: "San Jose Civic",                       city: "san-jose",   cityLabel: "San Jose",  emoji: "🎵", tags: "Concerts" },
+  { id: "sj-cpa",          name: "SJ Center for the Performing Arts",      venueMatch: "San Jose Center for the Performing",   city: "san-jose",   cityLabel: "San Jose",  emoji: "🎭", tags: "Theater · Arts" },
+  { id: "sap-center",      name: "SAP Center",                             venueMatch: "SAP Center",                           city: "san-jose",   cityLabel: "San Jose",  emoji: "🏟️", tags: "Arena" },
+  { id: "frost",           name: "Frost Amphitheatre",                     venueMatch: "Frost Amphitheatre",                   city: "palo-alto",  cityLabel: "Stanford",  emoji: "🎵", tags: "Outdoor Concerts" },
+  { id: "tech-cu",         name: "Tech CU Arena",                          venueMatch: "Tech CU Arena",                        city: "san-jose",   cityLabel: "San Jose",  emoji: "🏀", tags: "Sports · Events" },
+  { id: "mcenery",         name: "McEnery Convention Center",              venueMatch: "McEnery Convention Center",            city: "san-jose",   cityLabel: "San Jose",  emoji: "🎪", tags: "Special Events" },
+  { id: "discovery",       name: "Discovery Meadows",                      venueMatch: "Discovery Meadows",                    city: "san-jose",   cityLabel: "San Jose",  emoji: "🌿", tags: "Outdoor" },
+];
 
 // ── Upcoming event type (from scraped JSON) ──
 
@@ -328,6 +352,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
   const [search, setSearch] = useState("");
   const [showKidsOnly, setShowKidsOnly] = useState(false);
   const [showAllLater, setShowAllLater] = useState(false);
+  const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
 
   const now = new Date();
   const currentMonth = now.getMonth() + 1;
@@ -403,7 +428,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       });
   }, [selectedCities, category, showKidsOnly, search, currentMonth, primary]);
 
-  const activeList = viewMode === "upcoming" ? filteredUpcoming : filteredRecurring;
+  const activeList = viewMode === "upcoming" ? filteredUpcoming : viewMode === "recurring" ? filteredRecurring : [];
 
   // Ongoing/exhibits — separate filtered list, city/category/search aware
   const filteredOngoing = useMemo(() => {
@@ -420,6 +445,37 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       return true;
     });
   }, [selectedCities, category, showKidsOnly, search]);
+
+  // ── Venue events (TM events grouped by venue) ──
+  const venueEvents = useMemo(() => {
+    const result: Record<string, UpcomingEvent[]> = {};
+    for (const v of SOUTH_BAY_VENUES) {
+      result[v.id] = allUpcomingEvents
+        .filter((e) => e.venue?.toLowerCase().includes(v.venueMatch.toLowerCase()) && !e.ongoing)
+        .sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    }
+    return result;
+  }, []);
+
+  // Events at selected venue, with search/category/kids filter applied
+  const venueFilteredEvents = useMemo(() => {
+    if (!selectedVenue) return [];
+    const v = SOUTH_BAY_VENUES.find((x) => x.id === selectedVenue);
+    if (!v) return [];
+    return allUpcomingEvents
+      .filter((e) => {
+        if (!e.venue?.toLowerCase().includes(v.venueMatch.toLowerCase())) return false;
+        if (e.ongoing) return false;
+        if (category !== "all" && e.category !== category) return false;
+        if (showKidsOnly && !e.kidFriendly) return false;
+        if (search) {
+          const q = search.toLowerCase();
+          if (!e.title.toLowerCase().includes(q) && !e.venue.toLowerCase().includes(q)) return false;
+        }
+        return true;
+      })
+      .sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  }, [selectedVenue, category, showKidsOnly, search]);
 
   // Group upcoming events by date bucket
   const groupedUpcoming = useMemo(() => {
@@ -450,27 +506,30 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
 
       {/* View mode toggle */}
       <div style={{ display: "flex", gap: 0, marginBottom: 12 }}>
-        {(["upcoming", "recurring"] as ViewMode[]).map((mode) => {
+        {([
+          { mode: "upcoming" as ViewMode,  label: `Upcoming (${filteredUpcoming.length})`, borderRadius: "6px 0 0 6px", ml: 0 },
+          { mode: "recurring" as ViewMode, label: `Recurring (${filteredRecurring.length})`, borderRadius: "0", ml: -1.5 },
+          { mode: "venues" as ViewMode,    label: "Venues", borderRadius: "0 6px 6px 0", ml: -1.5 },
+        ]).map(({ mode, label, borderRadius, ml }) => {
           const active = viewMode === mode;
-          const labels = { upcoming: `Upcoming (${filteredUpcoming.length})`, recurring: `Recurring (${filteredRecurring.length})` };
           return (
             <button
               key={mode}
-              onClick={() => setViewMode(mode)}
+              onClick={() => { setViewMode(mode); setSelectedVenue(null); }}
               style={{
                 padding: "6px 16px",
                 border: `1.5px solid ${active ? "var(--sb-primary)" : "var(--sb-border)"}`,
-                borderRadius: mode === "upcoming" ? "6px 0 0 6px" : "0 6px 6px 0",
+                borderRadius,
                 background: active ? "var(--sb-primary)" : "#fff",
                 color: active ? "#fff" : "var(--sb-muted)",
                 fontSize: 12,
                 fontWeight: active ? 700 : 400,
                 cursor: "pointer",
                 fontFamily: "inherit",
-                marginLeft: mode === "recurring" ? -1.5 : 0,
+                marginLeft: ml,
               }}
             >
-              {labels[mode]}
+              {label}
             </button>
           );
         })}
@@ -523,13 +582,104 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
           👶 Kids only
         </label>
 
-        <span style={{ marginLeft: "auto", fontSize: 11, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
-          {activeList.length} events
-        </span>
+        {viewMode !== "venues" && (
+          <span style={{ marginLeft: "auto", fontSize: 11, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
+            {activeList.length} events
+          </span>
+        )}
       </div>
 
       {/* Event cards */}
-      {activeList.length === 0 ? (
+      {viewMode === "venues" ? (
+        selectedVenue ? (
+          /* Venue detail: filtered show list */
+          <>
+            <button
+              onClick={() => setSelectedVenue(null)}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 4,
+                marginBottom: 16, background: "none", border: "none",
+                color: "var(--sb-primary)", fontSize: 13, fontWeight: 600,
+                cursor: "pointer", padding: 0, fontFamily: "inherit",
+              }}
+            >
+              ← All Venues
+            </button>
+            {venueFilteredEvents.length === 0 ? (
+              <div className="sb-empty">
+                <div className="sb-empty-title">No shows match your filters</div>
+                <div className="sb-empty-sub">Try clearing category or search filters</div>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {venueFilteredEvents.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+              </div>
+            )}
+          </>
+        ) : (
+          /* Venue grid */
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+            {SOUTH_BAY_VENUES.map((v) => {
+              const shows = venueEvents[v.id] ?? [];
+              const hasShows = shows.length > 0;
+              const nextShow = shows[0];
+              return (
+                <div
+                  key={v.id}
+                  onClick={() => hasShows && setSelectedVenue(v.id)}
+                  style={{
+                    background: hasShows ? "#fff" : "var(--sb-card)",
+                    border: "1.5px solid var(--sb-border-light)",
+                    borderRadius: 8,
+                    padding: "16px",
+                    cursor: hasShows ? "pointer" : "default",
+                    opacity: hasShows ? 1 : 0.5,
+                    transition: "box-shadow 0.15s, border-color 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!hasShows) return;
+                    e.currentTarget.style.boxShadow = "var(--sb-shadow-hover)";
+                    e.currentTarget.style.borderColor = "var(--sb-primary)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.borderColor = "var(--sb-border-light)";
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                    <span style={{ fontSize: 26, lineHeight: 1, flexShrink: 0, marginTop: 1 }}>{v.emoji}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.3, marginBottom: 2 }}>
+                        {v.name}
+                      </div>
+                      <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 8 }}>
+                        {v.cityLabel} · {v.tags}
+                      </div>
+                      {hasShows ? (
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                          <span style={{
+                            fontSize: 10, fontWeight: 700,
+                            background: "var(--sb-primary)", color: "#fff",
+                            padding: "2px 8px", borderRadius: 100,
+                            letterSpacing: "0.03em",
+                          }}>
+                            {shows.length} upcoming
+                          </span>
+                          <span style={{ fontSize: 11, color: "var(--sb-muted)" }}>
+                            Next: {nextShow?.displayDate}
+                          </span>
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: 11, color: "var(--sb-light)" }}>No shows in 90 days</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )
+      ) : activeList.length === 0 ? (
         <div className="sb-empty">
           <div className="sb-empty-title">No events match</div>
           <div className="sb-empty-sub">
@@ -606,7 +756,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       )}
 
       {/* Ongoing / Exhibits section */}
-      {viewMode === "upcoming" && filteredOngoing.length > 0 && (
+      {(viewMode === "upcoming" || (viewMode === "venues" && selectedVenue)) && filteredOngoing.length > 0 && (
         <div style={{ marginTop: 28 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 6, borderBottom: "2px solid var(--sb-border)" }}>
             <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)" }}>

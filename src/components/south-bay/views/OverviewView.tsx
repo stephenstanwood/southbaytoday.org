@@ -12,6 +12,7 @@ import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../../data/south-bay/digests.json";
 import blotterJson from "../../../data/south-bay/blotter.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
+import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -19,6 +20,7 @@ type UpcomingEvent = {
   id: string;
   title: string;
   date: string;
+  displayDate?: string;
   time: string | null;
   endTime?: string | null;
   venue: string;
@@ -489,63 +491,22 @@ interface BriefingStory {
   url?: string;
 }
 
-function pickTopEvent(
-  todayUpcoming: UpcomingEvent[],
-  todayStatic: SBEvent[],
-): BriefingStory | null {
-  // Prefer: free + specific venue > free > any today event
-  const VENUE_PRIORITY = [
-    "stanford", "sjsu", "san jose state", "computer history",
-    "tech interactive", "children's discovery", "cantor",
-    "bing concert", "hammer theatre", "montalvo",
-  ];
-  const scorable = [...todayUpcoming]
-    .filter((e) => e.category !== "sports")
-    .map((e) => {
-      let score = 0;
-      if (e.cost === "free") score += 30;
-      if (e.time) score += 10;
-      if (e.url) score += 5;
-      const vl = (e.venue ?? "").toLowerCase();
-      const tl = (e.title ?? "").toLowerCase();
-      for (const kw of VENUE_PRIORITY) {
-        if (vl.includes(kw) || tl.includes(kw)) { score += 20; break; }
-      }
-      return { e, score };
-    })
-    .sort((a, b) => b.score - a.score);
-
-  const top = scorable[0];
-  if (!top) {
-    // Fallback to static recurring events
-    const se = todayStatic.find((e) => e.category !== "sports");
-    if (!se) return null;
+function pickTopEvent(): BriefingStory | null {
+  // Use AI-curated weekend picks for editorial voice
+  const picks = (weekendPicksJson as { picks?: Array<{ title: string; why: string; url?: string; cost: string; category: string; time?: string; city: string; date: string }> }).picks ?? [];
+  const pick = picks[0];
+  if (pick) {
     return {
-      category: "Events",
-      headline: se.title,
-      lede: se.description?.slice(0, 120) ?? `${se.recurrence === "ongoing" ? "Always open" : "Happening today"} · ${se.venue}`,
+      category: "This Weekend",
+      headline: pick.title,
+      lede: pick.why,
       tab: "events",
-      emoji: CATEGORY_EMOJI[se.category] ?? "📅",
+      emoji: CATEGORY_EMOJI[pick.category] ?? "📅",
       accentColor: "#16a34a",
-      url: se.url,
+      url: pick.url,
     };
   }
-
-  const e = top.e;
-  const costLabel = e.cost === "free" ? "Free · " : e.cost === "low" ? "Low cost · " : "";
-  const timeLabel = e.time ? `${formatTimeRange(e.time, e.endTime, e.category === "sports")} · ` : "";
-  const ledeBase = `${costLabel}${timeLabel}${e.venue ?? e.city}`.replace(/^· /, "").trim();
-  const lede = ledeBase || (e.description?.slice(0, 100) ?? "");
-
-  return {
-    category: "Events",
-    headline: e.title,
-    lede,
-    tab: "events",
-    emoji: CATEGORY_EMOJI[e.category] ?? "📅",
-    accentColor: "#16a34a",
-    url: e.url ?? undefined,
-  };
+  return null;
 }
 
 // Topics that are procedural noise — not newsworthy
@@ -684,7 +645,7 @@ function SignalBriefing({
   const digests = digestsJson as Record<string, { summary?: string; keyTopics?: string[]; meetingDate?: string; schedule?: string }>;
 
   const stories: BriefingStory[] = [
-    pickTopEvent(todayUpcoming, todayStatic),
+    pickTopEvent(),
     pickCityHallStory(homeCity, digests),
     pickDevelopmentStory(),
   ].filter((s): s is BriefingStory => s !== null);
@@ -954,6 +915,157 @@ function AroundTownSection() {
                 >
                   Source →
                 </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── On Stage section ─────────────────────────────────────────────────────────
+// Compact widget: upcoming shows at major South Bay entertainment venues
+
+function OnStageSection({
+  allUpcoming,
+  onNavigate,
+}: {
+  allUpcoming: UpcomingEvent[];
+  onNavigate: (tab: Tab) => void;
+}) {
+  const sevenDaysOut = new Date(NOW.getTime() + 7 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
+
+  const shows = allUpcoming
+    .filter(
+      (e) =>
+        e.source === "Ticketmaster" &&
+        e.category !== "sports" &&
+        !e.ongoing &&
+        e.date >= TODAY_ISO &&
+        e.date <= sevenDaysOut,
+    )
+    .sort((a, b) => {
+      const dateCmp = (a.date || "").localeCompare(b.date || "");
+      if (dateCmp !== 0) return dateCmp;
+      return (a.time || "99:99").localeCompare(b.time || "99:99");
+    })
+    .slice(0, 5);
+
+  if (!shows.length) return null;
+
+  const hasTonight = shows.some((e) => e.date === TODAY_ISO);
+  const title = hasTonight ? "On Stage Tonight" : "On Stage This Week";
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div className="sb-section-header" style={{ marginBottom: 10 }}>
+        <span className="sb-section-title">🎭 {title}</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          South Bay venues
+        </span>
+        <button
+          onClick={() => onNavigate("events")}
+          style={{
+            marginLeft: "auto", background: "none", border: "none",
+            fontSize: 12, color: "var(--sb-accent)", cursor: "pointer",
+            padding: 0, fontFamily: "inherit", fontWeight: 600,
+          }}
+        >
+          All shows →
+        </button>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {shows.map((e, i) => {
+          const isToday = e.date === TODAY_ISO;
+          const shortDate = (e.displayDate ?? "").replace(/^[A-Za-z]+,\s*/, "");
+          return (
+            <div
+              key={e.id}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 12,
+                padding: "10px 0",
+                borderBottom:
+                  i < shows.length - 1
+                    ? "1px solid var(--sb-border-light)"
+                    : "none",
+              }}
+            >
+              <span
+                style={{
+                  flexShrink: 0,
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: isToday ? "#fff" : "var(--sb-muted)",
+                  background: isToday ? "var(--sb-accent)" : "var(--sb-primary-light)",
+                  padding: "3px 7px",
+                  borderRadius: 4,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  minWidth: 50,
+                  textAlign: "center",
+                  lineHeight: 1.5,
+                }}
+              >
+                {isToday ? "Tonight" : shortDate}
+              </span>
+
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontFamily: "var(--sb-serif)",
+                    fontWeight: 700,
+                    fontSize: 13,
+                    color: "var(--sb-ink)",
+                    lineHeight: 1.3,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    marginBottom: 2,
+                  }}
+                >
+                  {e.url ? (
+                    <a
+                      href={e.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                      onMouseEnter={(el) =>
+                        (el.currentTarget.style.textDecoration = "underline")
+                      }
+                      onMouseLeave={(el) =>
+                        (el.currentTarget.style.textDecoration = "none")
+                      }
+                    >
+                      {e.title}
+                    </a>
+                  ) : (
+                    e.title
+                  )}
+                </div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "var(--sb-muted)",
+                    display: "flex",
+                    gap: 6,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <span>{e.venue}</span>
+                  {e.time && (
+                    <>
+                      <span style={{ color: "var(--sb-border)" }}>·</span>
+                      <span>{e.time}</span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           );
@@ -1373,6 +1485,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── On Stage Tonight / This Week ── */}
+      {!changingCity && (
+        <OnStageSection allUpcoming={allUpcoming} onNavigate={onNavigate} />
+      )}
 
       {/* ── This Week: home city upcoming ── */}
       {homeCity && thisWeekByDay.length > 0 && (
