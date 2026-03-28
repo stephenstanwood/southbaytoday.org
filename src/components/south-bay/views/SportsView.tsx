@@ -194,7 +194,10 @@ function MiniGameRow({ game }: { game: ParsedGame }) {
   const sbHome = game.isSouthBayHome;
 
   const prefix = sbHome ? "vs" : "@";
-  const oppAbbr = sbHome ? game.awayAbbr : game.homeAbbr;
+  const rawAbbr = sbHome ? game.awayAbbr : game.homeAbbr;
+  const rawName = sbHome ? game.awayTeam : game.homeTeam;
+  // Fall back to last word of team name if abbreviation is missing (e.g. MiLB)
+  const oppAbbr = rawAbbr || rawName.split(" ").slice(-1)[0];
   const opponent = `${prefix} ${oppAbbr}`;
 
   let result: React.ReactNode;
@@ -258,10 +261,11 @@ function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGa
   const displayed = [...past, ...live, ...upcoming];
   const leagueLabel = LEAGUE_META[team.league]?.label ?? team.league.toUpperCase();
 
-  // Extract the SB team's logo from any available game
+  // Extract the SB team's logo from any available game, fall back to static CDN URL
   const sbLogo =
     games.find((g) => g.isSouthBayHome)?.homeLogo ??
-    games.find((g) => !g.isSouthBayHome)?.awayLogo;
+    games.find((g) => !g.isSouthBayHome)?.awayLogo ??
+    team.fallbackLogoUrl;
 
   // SB team's W-L record (from most recent game)
   const latestGame = [...games].sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime())[0];
@@ -327,7 +331,7 @@ export default function SportsView() {
       const paths = getEspnPaths();
       const results = await Promise.allSettled(
         paths.map(async (path) => {
-          const res = await fetch(espnScoreboardRangeUrl(path, 7, 14));
+          const res = await fetch(espnScoreboardRangeUrl(path, 4, 4));
           if (!res.ok) throw new Error(`ESPN ${path}: ${res.status}`);
           const data = await res.json();
           return parseEspnGames(path, data);
@@ -337,7 +341,7 @@ export default function SportsView() {
       // MiLB (San Jose Giants) — date range
       let milbGames: ParsedGame[] = [];
       try {
-        const milbRes = await fetch(milbScheduleRangeUrl());
+        const milbRes = await fetch(milbScheduleRangeUrl(476, 4, 4));
         if (milbRes.ok) milbGames = parseMilbGames(await milbRes.json());
       } catch { /* best-effort */ }
 
@@ -397,9 +401,9 @@ export default function SportsView() {
     );
   }
 
-  // Split teams into South Bay local and broader Bay Area
-  const localTeams = SOUTH_BAY_TEAMS.filter((t) => t.primary);
-  const bayAreaTeams = SOUTH_BAY_TEAMS.filter((t) => !t.primary);
+  // Split teams into South Bay local and broader Bay Area — only show teams with games
+  const localTeams = SOUTH_BAY_TEAMS.filter((t) => t.primary && (gamesByTeam.get(t.key)?.length ?? 0) > 0);
+  const bayAreaTeams = SOUTH_BAY_TEAMS.filter((t) => !t.primary && (gamesByTeam.get(t.key)?.length ?? 0) > 0);
 
   const liveCount = [...gamesByTeam.values()].flat().filter((g) => g.status === "in").length;
 
@@ -418,36 +422,40 @@ export default function SportsView() {
       </div>
 
       {/* South Bay local teams */}
-      <div style={{ marginBottom: 8 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
-          South Bay
+      {localTeams.length > 0 && (
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
+            South Bay
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+            {localTeams.map((team) => (
+              <TeamScheduleCard
+                key={team.key}
+                team={team}
+                games={gamesByTeam.get(team.key) ?? []}
+              />
+            ))}
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
-          {localTeams.map((team) => (
-            <TeamScheduleCard
-              key={team.key}
-              team={team}
-              games={gamesByTeam.get(team.key) ?? []}
-            />
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Bay Area teams */}
-      <div style={{ marginBottom: 8, marginTop: 20 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
-          Bay Area
+      {bayAreaTeams.length > 0 && (
+        <div style={{ marginBottom: 8, marginTop: localTeams.length > 0 ? 20 : 0 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
+            Bay Area
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+            {bayAreaTeams.map((team) => (
+              <TeamScheduleCard
+                key={team.key}
+                team={team}
+                games={gamesByTeam.get(team.key) ?? []}
+              />
+            ))}
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
-          {bayAreaTeams.map((team) => (
-            <TeamScheduleCard
-              key={team.key}
-              team={team}
-              games={gamesByTeam.get(team.key) ?? []}
-            />
-          ))}
-        </div>
-      </div>
+      )}
     </>
   );
 }

@@ -131,7 +131,7 @@ async function main() {
 
   const today = new Date().toISOString().split("T")[0];
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 60); // last 60 days
+  cutoff.setDate(cutoff.getDate() - 10); // last 10 days
   const cutoffIso = cutoff.toISOString().split("T")[0];
 
   const SKIP_TYPES = new Set(["closed session", "special meeting"]);
@@ -189,9 +189,9 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
-  // Sort by date descending, cap at 12 items
+  // Sort by date descending, cap at 6 items
   items.sort((a, b) => b.date.localeCompare(a.date));
-  const topItems = items.slice(0, 12);
+  const topItems = items.slice(0, 6);
 
   const output = {
     items: topItems,

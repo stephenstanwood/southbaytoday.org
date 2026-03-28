@@ -955,125 +955,6 @@ function AroundTownSection() {
   );
 }
 
-// ── Weekend Spotlight ─────────────────────────────────────────────────────────
-// Shown Fri / Sat / Sun — curated free & family picks for today + tomorrow
-
-function WeekendSpotlight({
-  homeCity,
-  allUpcoming,
-  onNavigate,
-}: {
-  homeCity: City | null;
-  allUpcoming: UpcomingEvent[];
-  onNavigate: (tab: Tab) => void;
-}) {
-  if (!IS_WEEKEND_MODE) return null;
-
-  type WItem = { _type: "static"; event: SBEvent; dayGroup: "today" | "tomorrow" }
-             | { _type: "upcoming"; event: UpcomingEvent; dayGroup: "today" | "tomorrow" };
-
-  function score(it: WItem): number {
-    const ev = it.event;
-    let s = 0;
-    if (ev.cost === "free") s += 40;
-    if (ev.category === "market") s += 25;
-    if (ev.category === "outdoor" || ev.category === "family") s += 10;
-    if (ev.category === "sports") s -= 50;
-    if ("kidFriendly" in ev && ev.kidFriendly) s += 15;
-    if (ev.time) s += 5;
-    if (homeCity && ev.city === homeCity) s += 20;
-    return s;
-  }
-
-  // Build today + tomorrow candidate pools
-  const todayStatic: WItem[] = SOUTH_BAY_EVENTS
-    .filter(e => isActiveToday(e) && e.category !== "sports")
-    .map(e => ({ _type: "static", event: e, dayGroup: "today" as const }));
-
-  const todayScraped: WItem[] = allUpcoming
-    .filter(e => e.date === TODAY_ISO && !e.ongoing && e.category !== "sports")
-    .map(e => ({ _type: "upcoming", event: e, dayGroup: "today" as const }));
-
-  const tomorrowStatic: WItem[] = TOMORROW_ISO_STR ? SOUTH_BAY_EVENTS
-    .filter(e => isActiveTomorrow(e) && e.category !== "sports")
-    .map(e => ({ _type: "static", event: e, dayGroup: "tomorrow" as const })) : [];
-
-  const tomorrowScraped: WItem[] = TOMORROW_ISO_STR ? allUpcoming
-    .filter(e => e.date === TOMORROW_ISO_STR && !e.ongoing && e.category !== "sports")
-    .map(e => ({ _type: "upcoming", event: e, dayGroup: "tomorrow" as const })) : [];
-
-  // Deduplicate by title per day, sort by score, cap per day
-  function dedup(items: WItem[]): WItem[] {
-    const seen = new Set<string>();
-    return items.filter(it => {
-      const key = `${it.event.title.toLowerCase()}-${it.dayGroup}`;
-      if (seen.has(key)) return false;
-      seen.add(key); return true;
-    });
-  }
-
-  const todayPicks = dedup([...todayStatic, ...todayScraped])
-    .sort((a, b) => score(b) - score(a))
-    .slice(0, 4);
-
-  const tomorrowPicks = dedup([...tomorrowStatic, ...tomorrowScraped])
-    .sort((a, b) => score(b) - score(a))
-    .slice(0, 3);
-
-  if (!todayPicks.length && !tomorrowPicks.length) return null;
-
-  const headerTitle = homeCity
-    ? `This Weekend in ${getCityName(homeCity)}`
-    : "This Weekend";
-
-  const renderGroup = (items: WItem[], dayLabel: string, accent: boolean) => (
-    <div>
-      <div style={{
-        fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-        letterSpacing: "0.08em", textTransform: "uppercase",
-        color: accent ? "var(--sb-accent)" : "var(--sb-muted)",
-        paddingTop: 8, paddingBottom: 2,
-        borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
-      }}>
-        {dayLabel}
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
-        className="sb-today-grid">
-        {items.map(it =>
-          it._type === "static"
-            ? <EventRow key={it.event.id + "-ws"} event={it.event} showCity={!homeCity} />
-            : <UpcomingRow key={it.event.id + "-ws"} event={it.event} showCity={!homeCity} />
-        )}
-      </div>
-    </div>
-  );
-
-  return (
-    <div style={{ marginBottom: 32 }}>
-      <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title">🌅 {headerTitle}</span>
-        <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
-          {todayPicks.length + tomorrowPicks.length} picks
-        </span>
-      </div>
-
-      {todayPicks.length > 0 && renderGroup(todayPicks, `Today · ${WEEKDAY}`, true)}
-      {tomorrowPicks.length > 0 && renderGroup(tomorrowPicks, TOMORROW_LABEL_STR, false)}
-
-      <button
-        onClick={() => onNavigate("events")}
-        style={{
-          marginTop: 8, background: "none", border: "none", padding: 0,
-          fontSize: 12, color: "var(--sb-muted)", cursor: "pointer",
-          textDecoration: "underline", textUnderlineOffset: 3,
-        }}
-      >
-        See all weekend events →
-      </button>
-    </div>
-  );
-}
-
 // ── Bucketed event list ───────────────────────────────────────────────────────
 
 type AnyEvent = { _type: "static"; event: SBEvent } | { _type: "upcoming"; event: UpcomingEvent };
@@ -1215,6 +1096,41 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       }).filter(({ events }) => events.length > 0)
     : [];
 
+  // ── Tomorrow's events for weekend mode ──────────────────────────────────────
+  const cityTomorrowStatic = IS_WEEKEND_MODE && homeCity
+    ? SOUTH_BAY_EVENTS
+        .filter(e => isActiveTomorrow(e) && e.city === homeCity && e.category !== "sports")
+        .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
+    : [];
+  const cityTomorrowUpcoming = IS_WEEKEND_MODE && homeCity
+    ? allUpcoming
+        .filter(e => e.date === TOMORROW_ISO_STR && e.city === homeCity && !e.ongoing && e.category !== "sports")
+        .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
+    : [];
+  const cityTomorrowCount = cityTomorrowStatic.length + cityTomorrowUpcoming.length;
+
+  const southBayTomorrowStatic = IS_WEEKEND_MODE
+    ? SOUTH_BAY_EVENTS
+        .filter(e => isActiveTomorrow(e) && (homeCity ? e.city !== homeCity : true) && e.category !== "sports")
+        .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
+    : [];
+  const southBayTomorrowUpcoming = IS_WEEKEND_MODE
+    ? allUpcoming
+        .filter(e => e.date === TOMORROW_ISO_STR && (homeCity ? e.city !== homeCity : true) && !e.ongoing && e.category !== "sports")
+        .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
+    : [];
+  const southBayTomorrowCount = southBayTomorrowStatic.length + southBayTomorrowUpcoming.length;
+
+  // ── Today section title ──
+  const todaySectionTitle = homeCity
+    ? IS_WEEKEND_MODE
+      ? (showExpandedRegional ? "This Weekend in the South Bay" : `This Weekend in ${getCityName(homeCity)}`)
+      : (showExpandedRegional ? "Today in the South Bay" : `Today in ${getCityName(homeCity)}`)
+    : IS_WEEKEND_MODE ? "This Weekend" : "Happening Today";
+
+  const hasTomorrowEvents = cityTomorrowCount > 0 || southBayTomorrowCount > 0;
+  const showTodaySubHeader = IS_WEEKEND_MODE && hasTomorrowEvents;
+
   return (
     <>
       {/* ── City prompt / picker ── */}
@@ -1248,6 +1164,180 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         </div>
       )}
 
+      {/* ── Today in [City] / This Weekend in [City] ── */}
+      {!changingCity && (homeCity || !homeCity) && (
+        <div style={{ marginBottom: 32 }}>
+          <div className="sb-section-header" style={{ marginBottom: 12 }}>
+            <span className="sb-section-title">
+              {IS_WEEKEND_MODE ? "🌅 " : ""}{todaySectionTitle}
+            </span>
+            {homeCity && cityTodayCount > 0 && !showExpandedRegional && !IS_WEEKEND_MODE && (
+              <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
+                {cityTodayCount} {cityTodayCount === 1 ? "event" : "events"}
+              </span>
+            )}
+            {homeCity && (
+              <button
+                onClick={() => setChangingCity(true)}
+                style={{ marginLeft: "auto", background: "none", border: "none", fontSize: 12, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Change city
+              </button>
+            )}
+          </div>
+
+          {homeCity ? (
+            showExpandedRegional ? (
+              <>
+                {cityTodayCount === 0 && southBayCount === 0 && (!IS_WEEKEND_MODE || (southBayTomorrowCount === 0 && cityTomorrowCount === 0)) ? (
+                  <div style={{ padding: "16px 0", color: "var(--sb-muted)", fontSize: 13, fontStyle: "italic" }}>
+                    Nothing on the calendar today ({WEEKDAY}). Check the Events tab for upcoming events.
+                  </div>
+                ) : (
+                  <>
+                    {showTodaySubHeader && (cityTodayCount > 0 || southBayCount > 0) && (
+                      <div style={{
+                        fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "var(--sb-accent)", paddingTop: 4, paddingBottom: 2,
+                        borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                      }}>
+                        Today · {WEEKDAY}
+                      </div>
+                    )}
+                    {bucketEvents(cityTodayStatic, cityTodayUpcoming, false, true)}
+                    <div style={{ marginTop: 8 }}>
+                      {bucketEvents(
+                        southBayTodayStatic.slice(0, SB_LIMIT),
+                        southBayTodayUpcoming.slice(0, SB_LIMIT),
+                        true,
+                      )}
+                    </div>
+                    {southBayCount > SB_LIMIT && !showAllSouthBay && (
+                      <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
+                        Show {southBayCount - SB_LIMIT} more →
+                      </button>
+                    )}
+                    {showAllSouthBay && bucketEvents(
+                      southBayTodayStatic.slice(SB_LIMIT),
+                      southBayTodayUpcoming.slice(SB_LIMIT),
+                      true,
+                    )}
+                    {IS_WEEKEND_MODE && (cityTomorrowCount > 0 || southBayTomorrowCount > 0) && (
+                      <>
+                        <div style={{
+                          fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                          letterSpacing: "0.08em", textTransform: "uppercase",
+                          color: "var(--sb-muted)", paddingTop: 12, paddingBottom: 2,
+                          borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                        }}>
+                          {TOMORROW_LABEL_STR}
+                        </div>
+                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, true)}
+                        {bucketEvents(
+                          southBayTomorrowStatic.slice(0, SB_LIMIT),
+                          southBayTomorrowUpcoming.slice(0, SB_LIMIT),
+                          true,
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {cityTodayCount === 0 && (!IS_WEEKEND_MODE || cityTomorrowCount === 0) ? (
+                  <div style={{ padding: "16px 0", color: "var(--sb-muted)", fontSize: 13, fontStyle: "italic" }}>
+                    Nothing scheduled in {getCityName(homeCity)} today ({WEEKDAY}). Check the Events tab for upcoming events.
+                  </div>
+                ) : (
+                  <>
+                    {showTodaySubHeader && cityTodayCount > 0 && (
+                      <div style={{
+                        fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "var(--sb-accent)", paddingTop: 4, paddingBottom: 2,
+                        borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                      }}>
+                        Today · {WEEKDAY}
+                      </div>
+                    )}
+                    {bucketEvents(cityTodayStatic, cityTodayUpcoming, false)}
+                    {cityTodayCount > 10 && (
+                      <div style={{ paddingTop: 10, fontSize: 12, color: "var(--sb-muted)" }}>
+                        See Events tab for all {getCityName(homeCity)} events.
+                      </div>
+                    )}
+                    {IS_WEEKEND_MODE && cityTomorrowCount > 0 && (
+                      <>
+                        <div style={{
+                          fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                          letterSpacing: "0.08em", textTransform: "uppercase",
+                          color: "var(--sb-muted)", paddingTop: 12, paddingBottom: 2,
+                          borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                        }}>
+                          {TOMORROW_LABEL_STR}
+                        </div>
+                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false)}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )
+          ) : (
+            /* No home city — show south bay wide */
+            <>
+              {southBayCount === 0 && (!IS_WEEKEND_MODE || southBayTomorrowCount === 0) ? (
+                <div style={{ padding: "20px 0", color: "var(--sb-muted)", fontSize: 14, fontStyle: "italic" }}>
+                  {`No recurring events on ${WEEKDAY}s this time of year.`}
+                </div>
+              ) : (
+                <>
+                  {showTodaySubHeader && southBayCount > 0 && (
+                    <div style={{
+                      fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                      letterSpacing: "0.08em", textTransform: "uppercase",
+                      color: "var(--sb-accent)", paddingTop: 4, paddingBottom: 2,
+                      borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                    }}>
+                      Today · {WEEKDAY}
+                    </div>
+                  )}
+                  {bucketEvents(
+                    showAllSouthBay ? southBayTodayStatic : southBayTodayStatic.slice(0, SB_LIMIT),
+                    showAllSouthBay ? southBayTodayUpcoming : southBayTodayUpcoming.slice(0, SB_LIMIT),
+                    true,
+                  )}
+                  {southBayCount > SB_LIMIT && !showAllSouthBay && (
+                    <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
+                      Show {southBayCount - SB_LIMIT} more events →
+                    </button>
+                  )}
+                  {IS_WEEKEND_MODE && southBayTomorrowCount > 0 && (
+                    <>
+                      <div style={{
+                        fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "var(--sb-muted)", paddingTop: 12, paddingBottom: 2,
+                        borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+                      }}>
+                        {TOMORROW_LABEL_STR}
+                      </div>
+                      {bucketEvents(
+                        southBayTomorrowStatic.slice(0, SB_LIMIT),
+                        southBayTomorrowUpcoming.slice(0, SB_LIMIT),
+                        true,
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
       {/* ── Signal Briefing (newspaper front page hero) ── */}
       {!changingCity && (
         <SignalBriefing
@@ -1256,6 +1346,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
           todayStatic={SOUTH_BAY_EVENTS.filter((e) => isActiveToday(e) && e.category !== "sports")}
           onNavigate={onNavigate}
         />
+      )}
+
+      {/* ── City at a glance ── */}
+      {homeCity && !changingCity && (
+        <CityGlance city={homeCity} onNavigate={onNavigate} />
       )}
 
       {/* ── Sports callout ── */}
@@ -1270,85 +1365,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
-
-      {/* ── Weekend Spotlight (Fri / Sat / Sun only) ── */}
-      {IS_WEEKEND_MODE && !changingCity && (
-        <WeekendSpotlight
-          homeCity={homeCity}
-          allUpcoming={allUpcoming}
-          onNavigate={onNavigate}
-        />
-      )}
-
-      {/* ── Your City Today (or expanded regional if sparse) ── */}
-      {homeCity && (
-        <div style={{ marginBottom: 32 }}>
-          <div className="sb-section-header" style={{ marginBottom: 12 }}>
-            <span className="sb-section-title">
-              {showExpandedRegional ? "Today in the South Bay" : `Today in ${getCityName(homeCity)}`}
-            </span>
-            {cityTodayCount > 0 && !showExpandedRegional && (
-              <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
-                {cityTodayCount} {cityTodayCount === 1 ? "event" : "events"}
-              </span>
-            )}
-            <button
-              onClick={() => setChangingCity(true)}
-              style={{ marginLeft: "auto", background: "none", border: "none", fontSize: 12, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
-            >
-              Change city
-            </button>
-          </div>
-
-          {showExpandedRegional ? (
-            <>
-              {cityTodayCount === 0 && southBayCount === 0 ? (
-                <div style={{ padding: "16px 0", color: "var(--sb-muted)", fontSize: 13, fontStyle: "italic" }}>
-                  Nothing on the calendar today ({WEEKDAY}). Check the Events tab for upcoming events.
-                </div>
-              ) : (
-                <>
-                  {bucketEvents(cityTodayStatic, cityTodayUpcoming, false, true)}
-                  <div style={{ marginTop: 8 }}>
-                    {bucketEvents(
-                      southBayTodayStatic.slice(0, SB_LIMIT),
-                      southBayTodayUpcoming.slice(0, SB_LIMIT),
-                      true,
-                    )}
-                  </div>
-                  {southBayCount > SB_LIMIT && !showAllSouthBay && (
-                    <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
-                      Show {southBayCount - SB_LIMIT} more →
-                    </button>
-                  )}
-                  {showAllSouthBay && bucketEvents(
-                    southBayTodayStatic.slice(SB_LIMIT),
-                    southBayTodayUpcoming.slice(SB_LIMIT),
-                    true,
-                  )}
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              {cityTodayCount === 0 ? (
-                <div style={{ padding: "16px 0", color: "var(--sb-muted)", fontSize: 13, fontStyle: "italic" }}>
-                  Nothing scheduled in {getCityName(homeCity)} today ({WEEKDAY}). Check the Events tab for upcoming events.
-                </div>
-              ) : (
-                <>
-                  {bucketEvents(cityTodayStatic, cityTodayUpcoming, false)}
-                  {cityTodayCount > 10 && (
-                    <div style={{ paddingTop: 10, fontSize: 12, color: "var(--sb-muted)" }}>
-                      See Events tab for all {getCityName(homeCity)} events.
-                    </div>
-                  )}
-                </>
-              )}
-            </>
-          )}
-        </div>
-      )}
 
       {/* ── This Week: home city upcoming ── */}
       {homeCity && thisWeekByDay.length > 0 && (
@@ -1380,11 +1396,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         </div>
       )}
 
-      {/* ── City at a glance ── */}
-      {homeCity && !changingCity && (
-        <CityGlance city={homeCity} onNavigate={onNavigate} />
-      )}
-
       {/* ── This Month in the South Bay ── */}
       {showThisMonth && (
         <div style={{ marginBottom: 32 }}>
@@ -1408,43 +1419,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
             {nextMonthPreview.map((e) => <MonthCard key={e.id} event={e} isUpcoming />)}
           </div>
-        </div>
-      )}
-
-      {/* ── Happening Today, South Bay (only when no home city or not expanded) ── */}
-      {!showExpandedRegional && (
-        <div style={{ marginBottom: 32 }}>
-          <div className="sb-section-header" style={{ marginBottom: 0 }}>
-            <span className="sb-section-title">
-              {homeCity ? "Across the South Bay" : "Happening Today"}
-            </span>
-            {southBayCount > 0 && (
-              <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
-                {southBayCount} {southBayCount === 1 ? "event" : "events"}
-              </span>
-            )}
-          </div>
-
-          {southBayCount === 0 ? (
-            <div style={{ padding: "20px 0", color: "var(--sb-muted)", fontSize: 14, fontStyle: "italic" }}>
-              {homeCity
-                ? `No events found across the region today (${WEEKDAY}).`
-                : `No recurring events on ${WEEKDAY}s this time of year.`}
-            </div>
-          ) : (
-            <>
-              {bucketEvents(
-                showAllSouthBay ? southBayTodayStatic : southBayTodayStatic.slice(0, SB_LIMIT),
-                showAllSouthBay ? southBayTodayUpcoming : southBayTodayUpcoming.slice(0, SB_LIMIT),
-                true,
-              )}
-              {southBayCount > SB_LIMIT && !showAllSouthBay && (
-                <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
-                  Show {southBayCount - SB_LIMIT} more events →
-                </button>
-              )}
-            </>
-          )}
         </div>
       )}
 

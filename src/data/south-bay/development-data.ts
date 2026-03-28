@@ -64,6 +64,23 @@ export const CATEGORY_LABELS: Record<DevCategory, string> = {
 
 export const DEV_PROJECTS: DevProject[] = [
 
+  // ── OPENING SOON ────────────────────────────────────────────────────────
+
+  {
+    id: "levi-stadium-area",
+    name: "Related Santa Clara / Central Place",
+    city: "Santa Clara",
+    cityId: "santa-clara",
+    category: "mixed-use",
+    status: "opening-soon",
+    description:
+      "Mixed-use development adjacent to Levi's Stadium in Santa Clara, developed by Related Companies. Planned to include office, hotel, retail, and entertainment uses, creating a destination district around the 49ers stadium on game days and off.",
+    scale: "Multi-building campus",
+    developer: "Related Companies",
+    timeline: "Phased opening",
+    featured: false,
+  },
+
   // ── UNDER CONSTRUCTION ──────────────────────────────────────────────────
 
   {
@@ -97,6 +114,51 @@ export const DEV_PROJECTS: DevProject[] = [
   },
 
   {
+    id: "milpitas-transit-district",
+    name: "Milpitas BART Transit-Oriented Development",
+    city: "Milpitas",
+    cityId: "milpitas",
+    category: "housing",
+    status: "under-construction",
+    description:
+      "Transit-oriented development projects surrounding the Milpitas and Berryessa BART stations are actively under construction, bringing new mixed-income housing, retail, and community amenities to the area. Several apartment complexes have recently opened or are nearing completion.",
+    scale: "Multiple complexes, thousands of units",
+    developer: "Various",
+    timeline: "Multiple projects opening 2025–2027",
+    featured: false,
+  },
+
+  {
+    id: "campbell-downtown-infill",
+    name: "Downtown Campbell Mixed-Use Infill",
+    city: "Campbell",
+    cityId: "campbell",
+    category: "mixed-use",
+    status: "under-construction",
+    description:
+      "Multiple mixed-use projects are under construction along Campbell Avenue and the surrounding downtown core, continuing the revitalization of Campbell's walkable downtown. New residential units over ground-floor retail have been approved and are actively in development.",
+    scale: "Multiple parcels",
+    developer: "Various",
+    timeline: "Ongoing through 2026–2027",
+    featured: false,
+  },
+
+  {
+    id: "downtown-campbell-market",
+    name: "Campbell Pruneyard Expansion",
+    city: "Campbell",
+    cityId: "campbell",
+    category: "retail",
+    status: "under-construction",
+    description:
+      "The historic Pruneyard Shopping Center in Campbell is undergoing an expansion and renovation, bringing new retail tenants, restaurants, and improvements to the outdoor gathering spaces. The Pruneyard is a beloved local landmark and this investment reinforces Campbell's position as a destination for South Bay dining and shopping.",
+    scale: "Retail and restaurant expansion",
+    developer: "Thompson Thrift / Pruneyard Companies",
+    timeline: "Ongoing",
+    featured: false,
+  },
+
+  {
     id: "mineta-airport-terminal",
     name: "Mineta San José Airport Terminal B Modernization",
     city: "San Jose",
@@ -112,6 +174,80 @@ export const DEV_PROJECTS: DevProject[] = [
   },
 
   // ── APPROVED ────────────────────────────────────────────────────────────
+
+  {
+    id: "490-e-middlefield-mv",
+    name: "490 East Middlefield Mixed-Use",
+    city: "Mountain View",
+    cityId: "mountain-view",
+    category: "mixed-use",
+    status: "approved",
+    description:
+      "Mountain View City Council approved a development agreement for new mixed-use residential at 490 East Middlefield Road in a second reading in March 2026. The project adds new housing along this transit-connected corridor.",
+    scale: "Mixed-use residential",
+    developer: "Private",
+    timeline: "Approved March 2026",
+    featured: false,
+  },
+
+  {
+    id: "berryessa-bart-transit-village",
+    name: "Berryessa BART Transit Village",
+    city: "San Jose",
+    cityId: "san-jose",
+    category: "housing",
+    status: "approved",
+    description:
+      "Large-scale transit-oriented housing development planned around the Berryessa and Alum Rock BART stations, enabled by San José's Urban Village program. Multiple projects have received approvals for dense residential adjacent to BART, bringing new workforce and market-rate housing to North San José.",
+    scale: "Thousands of units across multiple sites",
+    developer: "Various",
+    timeline: "Active approvals and construction",
+    featured: false,
+  },
+
+  {
+    id: "sunnyvale-moffett-park",
+    name: "Sunnyvale Moffett Park Specific Plan",
+    city: "Sunnyvale",
+    cityId: "sunnyvale",
+    category: "mixed-use",
+    status: "approved",
+    description:
+      "Sunnyvale's Moffett Park Specific Plan transforms a major tech office district into a mixed-use neighborhood with housing, retail, and parks alongside office space. Several projects under this plan are in various stages of entitlement and construction.",
+    scale: "Approximately 10,000 housing units at buildout",
+    developer: "Multiple tech and residential developers",
+    timeline: "Phased through 2035",
+    featured: false,
+  },
+
+  {
+    id: "los-gatos-downtown-mixed-use",
+    name: "Los Gatos Downtown Mixed-Use Development",
+    city: "Los Gatos",
+    cityId: "los-gatos",
+    category: "mixed-use",
+    status: "approved",
+    description:
+      "Los Gatos has approved several infill mixed-use projects in its downtown core, adding residential units above ground-floor retail on Santa Cruz Avenue and adjacent streets. These smaller-scale projects preserve the town's character while adding needed housing.",
+    scale: "Multiple small parcels",
+    developer: "Various",
+    timeline: "Active development",
+    featured: false,
+  },
+
+  {
+    id: "el-camino-retail-palo-alto",
+    name: "El Camino Real Retail Preservation Zone",
+    city: "Palo Alto",
+    cityId: "palo-alto",
+    category: "retail",
+    status: "approved",
+    description:
+      "Palo Alto updated its El Camino Real retail preservation rules in March 2026, expanding floor area bonuses for historic buildings and enabling development rights transfers. The changes aim to incentivize preservation and renovation of the corridor's commercial buildings.",
+    scale: "Corridor-wide policy",
+    timeline: "Adopted March 2026",
+    featured: false,
+  },
 
   {
     id: "diridon-station-area",
@@ -176,6 +312,21 @@ export const DEV_PROJECTS: DevProject[] = [
   // ── PROPOSED ────────────────────────────────────────────────────────────
 
   {
+    id: "wolfe-rd-housing-cupertino",
+    name: "Wolfe Road Housing Development",
+    city: "Cupertino",
+    cityId: "cupertino",
+    category: "housing",
+    status: "proposed",
+    description:
+      "The Cupertino City Council held a study session on a new housing development at 10333 N. Wolfe Road in March 2026. If approved, this would add new residential units in North Cupertino near Apple Park and Stevens Creek.",
+    scale: "Residential",
+    developer: "TBD",
+    timeline: "Study session March 2026; approval pending",
+    featured: false,
+  },
+
+  {
     id: "hsr-california",
     name: "California High-Speed Rail (San José–Bakersfield)",
     city: "San Jose",
@@ -202,23 +353,6 @@ export const DEV_PROJECTS: DevProject[] = [
     scale: "Multiple parcels",
     developer: "City of Sunnyvale + private developers",
     timeline: "In planning",
-    featured: false,
-  },
-
-  // ── OPENING SOON ────────────────────────────────────────────────────────
-
-  {
-    id: "levi-stadium-area",
-    name: "Related Santa Clara / Central Place",
-    city: "Santa Clara",
-    cityId: "santa-clara",
-    category: "mixed-use",
-    status: "opening-soon",
-    description:
-      "Mixed-use development adjacent to Levi's Stadium in Santa Clara, developed by Related Companies. Planned to include office, hotel, retail, and entertainment uses, creating a destination district around the 49ers stadium on game days and off.",
-    scale: "Multi-building campus",
-    developer: "Related Companies",
-    timeline: "Phased opening",
     featured: false,
   },
 
@@ -267,51 +401,6 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "NVIDIA",
     timeline: "Completed 2022",
     featured: true,
-  },
-
-  {
-    id: "valley-fair-expansion",
-    name: "Westfield Valley Fair Expansion",
-    city: "Santa Clara / San José",
-    cityId: "santa-clara",
-    category: "retail",
-    status: "completed",
-    description:
-      "Major expansion of Westfield Valley Fair — one of the highest-grossing malls in California — with a new wing adding luxury retail, restaurants, and Eataly. The expansion cemented Valley Fair's status as the South Bay's premier retail destination and made it one of the largest shopping centers in California.",
-    scale: "640,000 sq ft added",
-    developer: "Unibail-Rodamco-Westfield",
-    timeline: "Completed 2021",
-    featured: false,
-  },
-
-  {
-    id: "apple-park",
-    name: "Apple Park",
-    city: "Cupertino",
-    cityId: "cupertino",
-    category: "tech-campus",
-    status: "completed",
-    description:
-      "Apple's 175-acre circular headquarters campus in Cupertino, completed in 2017. Designed by Foster + Partners, the 'spaceship' campus houses 12,000+ employees in a ring-shaped main building surrounded by parkland, orchards, and a 1,000-seat Steve Jobs Theater. The Visitor Center is open to the public.",
-    scale: "175 acres, 2.8M sq ft",
-    developer: "Apple",
-    timeline: "Completed 2017",
-    featured: false,
-  },
-
-  {
-    id: "berryessa-bart",
-    name: "BART Berryessa Extension",
-    city: "San Jose",
-    cityId: "san-jose",
-    category: "transit",
-    status: "completed",
-    description:
-      "The first phase of BART's Silicon Valley extension brought BART to San José's Berryessa neighborhood in 2020, with new stations at Alum Rock and Berryessa/North San José. The extension was the first time BART service reached San José proper and set the stage for Phase II toward downtown.",
-    scale: "10 miles, 2 new stations",
-    developer: "Santa Clara Valley Transportation Authority",
-    timeline: "Completed 2020",
-    featured: false,
   },
 
 ];

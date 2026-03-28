@@ -67,7 +67,7 @@ export default function SignalApp() {
       {/* Masthead */}
       <header className="sb-header">
         <div className="sb-header-inner">
-          <a href="/south-bay" className="sb-brand">
+          <a href="/" className="sb-brand">
             <span className="sb-brand-name">South Bay Signal</span>
           </a>
           <div className="sb-date">

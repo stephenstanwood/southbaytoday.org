@@ -58,6 +58,7 @@ export interface SouthBayTeam {
   espnPath: string; // e.g. "hockey/nhl"
   abbreviation: string; // ESPN abbreviation to match against
   displayNameMatch?: string; // fallback matching against ESPN displayName
+  fallbackLogoUrl?: string; // logo to use when team has no games in window
   color: string;
   textColor: string;
   primary?: boolean; // true = San Jose / local team
