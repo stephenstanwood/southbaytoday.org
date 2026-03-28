@@ -800,3 +800,56 @@ Simultaneously, the Government tab was entirely backward-looking: it showed what
 **Yes — event quality improved significantly.** 821 well-balanced events beats 1,978 university-dominated events. A user filtering to Santa Clara (the city) now sees 188 relevant events instead of 934 SCU athletics. Sports events are correctly tagged. The 60-day window means upcoming library programs and athletic schedules appear further in advance. The product's filter UI is now more trustworthy.
 
 ---
+
+## Cycle 14 — Event Source Fixes: CHM, Stanford, SJSU Timeout + 4 New Source Attempts (2026-03-28)
+
+### Context
+Coming off Cycle 13 which fixed event quality (category inference, 60-day window, per-source caps). Three significant bugs were silently costing the scraper hundreds of events: CHM returning 0 events despite having 8 in the feed, Stanford returning 0 events despite having 98 in the API response, and SJSU timing out on its 1.4MB RSS feed.
+
+### Issues Identified This Cycle
+1. **CHM: 0 events** — Computer History Museum's WordPress `/events/feed/` uses `pubDate` = article publish date (Jan-March 2026), not the event date. Titles like "Apple at 50" don't embed dates. My `parseChmDate` helper (title regex extraction) didn't help because CHM titles have no date patterns. Root cause: exhibits are announced months before they open; by scrape time, `pubDate` is in the past.
+2. **Stanford: 0 events** — Stanford Localist API returns series events where `first_date` = series start date (often January at quarter start). Recurring exhibits like "Archive Room" had `first_date = 2025-08-29`. All filtered as "past events" even though they're currently running.
+3. **SJSU timeout** — SJSU's RSS feed (`calendar.xml`) is 1.4MB. The 15-second timeout was insufficient for the full download. Result: 0 SJSU events in the previous run's output.
+4. **Mountain View has 0 events** — City site is 403 blocked. CHM (the only MV source) was broken. All 3 attempted BiblioCommons IDs for Mountain View Public Library returned 404 (library not on the platform).
+
+### What Was Built
+
+**1. CHM date fix** — Instead of extracting dates from titles (which don't have them), use today's date for CHM items published in the last 6 months. These are ongoing exhibits at a major Mountain View museum. Result: 0 → **8 events**, mountain-view: 0 → **8**.
+
+**2. Stanford Localist fix** — For events where `first_date < now` but `last_date >= now` (ongoing series), use today as the event date. Future events continue to use `first_date`. Result: 0 → **5 unique Palo Alto events** (many of the 98 returned are duplicated instances of the same recurring exhibit, collapsed by deduplication).
+
+**3. SJSU timeout fix** — `fetchText` now accepts an optional `timeout` parameter (default raised from 15s to 20s). SJSU explicitly passes 45s. SJSU back to contributing 100+ events.
+
+**4. Configurable fetchText timeout** — `async function fetchText(url, timeout = 20_000)` — future slow sources can pass custom timeouts without modifying the function.
+
+**5. 4 new source attempts** — All fail gracefully with clear error logging:
+- Mountain View Public Library BiblioCommons ("mountainview") → 404 (not on platform)
+- Sunnyvale Public Library BiblioCommons ("sunnyvale") → 403
+- Palo Alto City Library BiblioCommons ("paloalto") → 500
+- Happy Hollow Park & Zoo RSS (`/events/feed/`) → 200 response but 0 events (empty feed)
+
+### Why This Was the Strongest Move
+Three bugs were silently nullifying sources that were explicitly coded. CHM and Stanford are flagship South Bay cultural institutions — having them return 0 events was a silent product failure. Mountain View had zero coverage before this cycle. The SJSU timeout was costing the product its second-largest single source. Fixing all three is higher-leverage than adding entirely new sources that might have the same reliability issues.
+
+**Results:**
+- Total events: 318 → **433** (+36%)
+- mountain-view: 0 → **8** ✅ (CHM fix)
+- palo-alto: 0 → **5** ✅ (Stanford fix)
+- SJSU contributing again (102 events in final output)
+- 13 active sources (22 declared, 9 gracefully failing)
+
+### What New Opportunities Emerged
+1. **Sunnyvale coverage gap remains** — City site 403 blocked, library platform blocked. Possible alternatives: Sunnyvale Center for the Performing Arts, Sunnyvale Library might use a different catalog platform (try searching their website for event feeds).
+2. **Mountain View library alternative** — MVPL is not on BiblioCommons. Check if they use SirsiDynix, Polaris, or another ILS with a public events API. Or check their city parks & rec calendar.
+3. **SJ Jazz and Montalvo returning 0** — Both use WordPress `/feed/` (blog posts, not events calendar). pubDates are from March 2026, now in the past. Need to find their dedicated events calendar RSS or Eventbrite pages.
+4. **Campbell CivicPlus RSS lacks startDate** — The RSS feed has no `calendarEvent:startDate` field. Falls back to pubDate (article date), which is in the past. Need alternative approach for Campbell city events.
+
+### Next 3 Strongest Ideas
+1. **Sunnyvale and Mountain View alternative sources** — These two cities still have 0 events. For MV: try Silicon Valley Arts Commission calendar, Castro Street events, or Shoreline Amphitheater (Ticketmaster would cover this). For Sunnyvale: check if Sunnyvale Center for the Performing Arts has an RSS feed.
+2. **SJ Jazz + Montalvo proper events feeds** — Both venues likely use Eventbrite or a dedicated ticketing system. If we can find their Eventbrite org IDs, Eventbrite's free API tier (if still available) or a direct page scrape could recover these 20 events.
+3. **Pre-generate council digests automatically** — The GitHub Actions cron runs daily but doesn't regenerate council digests (requires ANTHROPIC_API_KEY). Adding it as a secret and scheduling digest regeneration would make the Gov tab truly self-updating.
+
+### Does the Product Now Feel Meaningfully Closer to "Default Homepage for South Bay Life"?
+**Yes — silent failures fixed, coverage gaps partially addressed.** Mountain View finally has real events (Computer History Museum exhibits). Palo Alto/Stanford is now represented. The SJSU fix is invisible to users but restores the backbone of the San Jose event feed. The product now covers 9 of 11 cities with at least some events. Sunnyvale remains the most notable gap. The work this cycle was "fixing what was pretending to work" — critical infrastructure that enables everything else.
+
+---
