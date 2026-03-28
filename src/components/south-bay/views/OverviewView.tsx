@@ -55,6 +55,14 @@ const NEXT_DAYS: Array<{ iso: string; label: string }> = Array.from({ length: 6 
   return { iso, label };
 });
 
+// ── Weekend mode ───────────────────────────────────────────────────────────────
+const IS_WEEKEND_MODE = DAY_IDX === 5 || DAY_IDX === 6 || DAY_IDX === 0; // Fri / Sat / Sun
+const _tmrow = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate() + 1);
+const TOMORROW_DAY_NAME = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][_tmrow.getDay()] as DayOfWeek;
+const TOMORROW_MONTH_NUM = _tmrow.getMonth() + 1;
+const TOMORROW_ISO_STR = NEXT_DAYS[0]?.iso ?? "";
+const TOMORROW_LABEL_STR = NEXT_DAYS[0]?.label ?? "Tomorrow";
+
 // ── Time helpers ───────────────────────────────────────────────────────────────
 
 function parseMinutes(timeStr: string, useLast = false): number | null {
@@ -143,6 +151,12 @@ function isActiveToday(e: SBEvent): boolean {
   if (!e.days) return e.recurrence !== "seasonal";
   if (!e.days.includes(DAY_NAME as DayOfWeek)) return false;
   return isNotEnded(e.time);
+}
+
+function isActiveTomorrow(e: SBEvent): boolean {
+  if (e.months && !e.months.includes(TOMORROW_MONTH_NUM)) return false;
+  if (!e.days) return e.recurrence !== "seasonal";
+  return e.days.includes(TOMORROW_DAY_NAME);
 }
 
 function cityLabel(city: string): string {
@@ -550,7 +564,28 @@ function pickCityHallStory(
   homeCity: City | null,
   digests: Record<string, { summary?: string; keyTopics?: string[]; meetingDate?: string; schedule?: string }>,
 ): BriefingStory | null {
-  // Build candidate list: home city first, then others sorted by recency
+  // Prefer around-town.json — continuously updated from Stoa, always recent
+  const items = (aroundTownJson as { items: AroundTownItem[] }).items ?? [];
+  const cityItems = homeCity ? items.filter(it => it.cityId === homeCity) : [];
+  const aroundItem = cityItems[0] ?? items[0];
+  if (aroundItem) {
+    const lede = aroundItem.cityName + " · " + (
+      aroundItem.summary.length > 110
+        ? aroundItem.summary.slice(0, 107) + "…"
+        : aroundItem.summary
+    );
+    return {
+      category: "Government",
+      headline: aroundItem.headline,
+      lede,
+      tab: "government",
+      emoji: "🏛️",
+      accentColor: "#1d4ed8",
+      url: aroundItem.sourceUrl,
+    };
+  }
+
+  // Fall back to pre-generated digest data
   const cityOrder = [
     homeCity ?? "san-jose",
     "san-jose", "sunnyvale", "mountain-view", "palo-alto",
@@ -560,14 +595,11 @@ function pickCityHallStory(
   for (const city of cityOrder) {
     const digest = digests[city];
     if (!digest) continue;
-    // Skip stale digests (> 30 days old)
     if (digestAge(digest.meetingDate) > 30) continue;
-    // Find the first substantive (non-noisy) topic
     const topic = digest.keyTopics?.find((t) => !isNoisyTopic(t));
     if (!topic) continue;
-
-    const cityLabel = getCityName(city as City);
-    const lede = digest.summary?.slice(0, 130) ?? `${cityLabel} City Council, ${digest.meetingDate ?? "recent meeting"}.`;
+    const cLabel = getCityName(city as City);
+    const lede = digest.summary?.slice(0, 130) ?? `${cLabel} City Council, ${digest.meetingDate ?? "recent meeting"}.`;
     return {
       category: "Government",
       headline: topic,
@@ -578,7 +610,6 @@ function pickCityHallStory(
     };
   }
 
-  // All digests are stale or noisy — show generic prompt
   return {
     category: "Government",
     headline: "City Hall Digest",
@@ -919,6 +950,125 @@ function AroundTownSection() {
   );
 }
 
+// ── Weekend Spotlight ─────────────────────────────────────────────────────────
+// Shown Fri / Sat / Sun — curated free & family picks for today + tomorrow
+
+function WeekendSpotlight({
+  homeCity,
+  allUpcoming,
+  onNavigate,
+}: {
+  homeCity: City | null;
+  allUpcoming: UpcomingEvent[];
+  onNavigate: (tab: Tab) => void;
+}) {
+  if (!IS_WEEKEND_MODE) return null;
+
+  type WItem = { _type: "static"; event: SBEvent; dayGroup: "today" | "tomorrow" }
+             | { _type: "upcoming"; event: UpcomingEvent; dayGroup: "today" | "tomorrow" };
+
+  function score(it: WItem): number {
+    const ev = it.event;
+    let s = 0;
+    if (ev.cost === "free") s += 40;
+    if (ev.category === "market") s += 25;
+    if (ev.category === "outdoor" || ev.category === "family") s += 10;
+    if (ev.category === "sports") s -= 50;
+    if ("kidFriendly" in ev && ev.kidFriendly) s += 15;
+    if (ev.time) s += 5;
+    if (homeCity && ev.city === homeCity) s += 20;
+    return s;
+  }
+
+  // Build today + tomorrow candidate pools
+  const todayStatic: WItem[] = SOUTH_BAY_EVENTS
+    .filter(e => isActiveToday(e) && e.category !== "sports")
+    .map(e => ({ _type: "static", event: e, dayGroup: "today" as const }));
+
+  const todayScraped: WItem[] = allUpcoming
+    .filter(e => e.date === TODAY_ISO && !e.ongoing && e.category !== "sports")
+    .map(e => ({ _type: "upcoming", event: e, dayGroup: "today" as const }));
+
+  const tomorrowStatic: WItem[] = TOMORROW_ISO_STR ? SOUTH_BAY_EVENTS
+    .filter(e => isActiveTomorrow(e) && e.category !== "sports")
+    .map(e => ({ _type: "static", event: e, dayGroup: "tomorrow" as const })) : [];
+
+  const tomorrowScraped: WItem[] = TOMORROW_ISO_STR ? allUpcoming
+    .filter(e => e.date === TOMORROW_ISO_STR && !e.ongoing && e.category !== "sports")
+    .map(e => ({ _type: "upcoming", event: e, dayGroup: "tomorrow" as const })) : [];
+
+  // Deduplicate by title per day, sort by score, cap per day
+  function dedup(items: WItem[]): WItem[] {
+    const seen = new Set<string>();
+    return items.filter(it => {
+      const key = `${it.event.title.toLowerCase()}-${it.dayGroup}`;
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+  }
+
+  const todayPicks = dedup([...todayStatic, ...todayScraped])
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, 4);
+
+  const tomorrowPicks = dedup([...tomorrowStatic, ...tomorrowScraped])
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, 3);
+
+  if (!todayPicks.length && !tomorrowPicks.length) return null;
+
+  const headerTitle = homeCity
+    ? `This Weekend in ${getCityName(homeCity)}`
+    : "This Weekend";
+
+  const renderGroup = (items: WItem[], dayLabel: string, accent: boolean) => (
+    <div>
+      <div style={{
+        fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+        letterSpacing: "0.08em", textTransform: "uppercase",
+        color: accent ? "var(--sb-accent)" : "var(--sb-muted)",
+        paddingTop: 8, paddingBottom: 2,
+        borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+      }}>
+        {dayLabel}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
+        className="sb-today-grid">
+        {items.map(it =>
+          it._type === "static"
+            ? <EventRow key={it.event.id + "-ws"} event={it.event} showCity={!homeCity} />
+            : <UpcomingRow key={it.event.id + "-ws"} event={it.event} showCity={!homeCity} />
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div className="sb-section-header" style={{ marginBottom: 12 }}>
+        <span className="sb-section-title">🌅 {headerTitle}</span>
+        <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
+          {todayPicks.length + tomorrowPicks.length} picks
+        </span>
+      </div>
+
+      {todayPicks.length > 0 && renderGroup(todayPicks, `Today · ${WEEKDAY}`, true)}
+      {tomorrowPicks.length > 0 && renderGroup(tomorrowPicks, TOMORROW_LABEL_STR, false)}
+
+      <button
+        onClick={() => onNavigate("events")}
+        style={{
+          marginTop: 8, background: "none", border: "none", padding: 0,
+          fontSize: 12, color: "var(--sb-muted)", cursor: "pointer",
+          textDecoration: "underline", textUnderlineOffset: 3,
+        }}
+      >
+        See all weekend events →
+      </button>
+    </div>
+  );
+}
+
 // ── Bucketed event list ───────────────────────────────────────────────────────
 
 type AnyEvent = { _type: "static"; event: SBEvent } | { _type: "upcoming"; event: UpcomingEvent };
@@ -1120,6 +1270,15 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── Weekend Spotlight (Fri / Sat / Sun only) ── */}
+      {IS_WEEKEND_MODE && !changingCity && (
+        <WeekendSpotlight
+          homeCity={homeCity}
+          allUpcoming={allUpcoming}
+          onNavigate={onNavigate}
+        />
+      )}
 
       {/* ── Your City Today (or expanded regional if sparse) ── */}
       {homeCity && (
