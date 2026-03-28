@@ -234,8 +234,10 @@ export default function TransitView() {
         <div className="transit-banner transit-banner--warning">
           <span className="transit-banner-icon">⚠️</span>
           <span>
-            {activeAlerts} {activeAlerts === 1 ? "agency" : "agencies"} reporting delays or disruptions.
-            See details below.
+            {TRANSIT_AGENCIES
+              .filter((a) => a.status === "minor-delays" || a.status === "major-disruption")
+              .map((a) => `${a.shortName}: ${a.alerts[0]?.summary ?? a.statusNote}`)
+              .join(" · ")}
           </span>
         </div>
       )}

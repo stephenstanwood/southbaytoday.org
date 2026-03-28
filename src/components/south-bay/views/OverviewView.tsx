@@ -137,7 +137,7 @@ function calcNextMeeting(schedule: string): string | null {
     dates.sort((a, b) => a.getTime() - b.getTime());
     for (const d of dates) {
       if (d >= today) {
-        return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+        return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
       }
     }
   }
@@ -355,14 +355,13 @@ function MonthCard({ event, isUpcoming }: { event: SBEvent; isUpcoming?: boolean
 function CityGlance({ city, onNavigate }: { city: City; onNavigate: (tab: Tab) => void }) {
   const digest = (digestsJson as Record<string, { schedule?: string; keyTopics?: string[]; meetingDate?: string }>)[city];
   const nextMeeting = digest?.schedule ? calcNextMeeting(digest.schedule) : null;
-  const lastTopic = digest?.keyTopics?.[0] ?? null;
 
   const activeStatuses = new Set(["proposed", "approved", "under-construction", "opening-soon"]);
   const activeProjects = DEV_PROJECTS.filter(
     (p) => p.cityId === city && activeStatuses.has(p.status)
   ).length;
 
-  if (!nextMeeting && !activeProjects && !lastTopic) return null;
+  if (!nextMeeting && !activeProjects) return null;
 
   const tileStyle: React.CSSProperties = {
     flex: 1,
@@ -388,14 +387,9 @@ function CityGlance({ city, onNavigate }: { city: City; onNavigate: (tab: Tab) =
           onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
         >
           <div style={{ fontSize: 10, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 3 }}>
-            🏛️ Next Council Meeting
+            🏛️ Next {getCityName(city)} Council Meeting
           </div>
           <div style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)" }}>{nextMeeting}</div>
-          {lastTopic && (
-            <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              Last: {lastTopic}
-            </div>
-          )}
         </button>
       )}
       {activeProjects > 0 && (
@@ -1148,9 +1142,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
   const allUpcoming = (upcomingJson as { events: UpcomingEvent[] }).events ?? [];
   const todayUpcoming = allUpcoming.filter((e) => e.date === TODAY_ISO && !e.ongoing);
 
-  // Sports events today — pulled out for hero callout
+  // Sports events today — pulled out for hero callout (only upcoming, not started)
   const todaySportsEvents = todayUpcoming
-    .filter((e) => e.category === "sports")
+    .filter((e) => e.category === "sports" && startMinutes(e.time) > NOW_MINUTES)
     .sort((a, b) => startMinutes(a.time) - startMinutes(b.time));
 
   // ── Seasonal events for "This Month" section ──
@@ -1253,11 +1247,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         />
       )}
 
-      {/* ── City at a glance ── */}
-      {homeCity && !changingCity && (
-        <CityGlance city={homeCity} onNavigate={onNavigate} />
-      )}
-
       {/* ── Sports callout ── */}
       {todaySportsEvents.length > 0 && (
         <SportsCallout events={todaySportsEvents} />
@@ -1356,7 +1345,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
           <div className="sb-section-header" style={{ marginBottom: 12 }}>
             <span className="sb-section-title">This Week in {getCityName(homeCity)}</span>
             <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
-              {thisWeekByDay.reduce((n, d) => n + d.events.length, 0)} events
+              {(() => { const n = thisWeekByDay.reduce((acc, d) => acc + d.events.length, 0); return `${n} ${n === 1 ? "event" : "events"}`; })()}
             </span>
           </div>
           {thisWeekByDay.map(({ iso, label, events }) => (
@@ -1378,6 +1367,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
             </div>
           ))}
         </div>
+      )}
+
+      {/* ── City at a glance ── */}
+      {homeCity && !changingCity && (
+        <CityGlance city={homeCity} onNavigate={onNavigate} />
       )}
 
       {/* ── This Month in the South Bay ── */}

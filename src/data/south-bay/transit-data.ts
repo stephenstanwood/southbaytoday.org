@@ -301,18 +301,18 @@ export const QUICK_LINKS = [
 
 export const TRANSIT_PULSE = [
   {
-    value: "4",
-    label: "Transit Agencies",
-    note: "Caltrain · VTA · BART · ACE",
+    value: "175M",
+    label: "Annual Caltrain Riders",
+    note: "Projected after electrification",
   },
   {
-    value: "1",
-    label: "Alert",
-    note: "VTA light rail minor delays",
+    value: "77mi",
+    label: "Caltrain Corridor",
+    note: "SF to Gilroy along the Peninsula",
   },
   {
-    value: "2030",
-    label: "BART Diridon Opens",
-    note: "4 new Silicon Valley stations",
+    value: "$6.1B",
+    label: "BART Silicon Valley Cost",
+    note: "Phase II: Berryessa → Diridon",
   },
 ];
