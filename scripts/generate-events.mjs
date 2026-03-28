@@ -1074,10 +1074,12 @@ async function fetchSharksSchedule() {
 // ── MLS: San Jose Earthquakes ──
 
 async function fetchEarthquakesSchedule() {
-  console.log("  ⏳ Earthquakes (ESPN API)...");
+  console.log("  ⏳ Earthquakes (ESPN scoreboard)...");
   try {
+    const season = new Date().getFullYear();
+    const endYear = season + 1;
     const res = await fetch(
-      "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/teams/17/schedule",
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=${season}0101-${endYear}0101&limit=300`,
       { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) },
     );
     if (!res.ok) throw new Error(`${res.status}`);
@@ -1089,7 +1091,7 @@ async function fetchEarthquakesSchedule() {
       const dateStr = e.date?.split("T")[0];
       if (!dateStr || dateStr < today) return null;
       const homeTeam = comp.competitors?.find((c) => c.homeAway === "home");
-      if (homeTeam?.team?.abbreviation !== "SJ") return null; // home only
+      if (!homeTeam?.team?.displayName?.toLowerCase().includes("san jose")) return null;
       const awayTeam = comp.competitors?.find((c) => c.homeAway === "away");
       const opponent = awayTeam?.team?.displayName || "Opponent";
       const start = new Date(e.date);
@@ -1107,7 +1109,7 @@ async function fetchEarthquakesSchedule() {
         cost: "paid",
         costNote: "From $20",
         description: `San Jose Earthquakes home game vs. ${opponent} at PayPal Park.`,
-        url: `https://www.sjearthquakes.com/schedule`,
+        url: "https://www.sjearthquakes.com/schedule",
         source: "MLS",
         kidFriendly: true,
       };
@@ -1120,13 +1122,64 @@ async function fetchEarthquakesSchedule() {
   }
 }
 
+// ── MiLB: San Jose Giants ──
+
+async function fetchSJGiantsSchedule() {
+  console.log("  ⏳ SJ Giants (MiLB Stats API)...");
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const season = new Date().getFullYear();
+    const res = await fetch(
+      `https://statsapi.mlb.com/api/v1/schedule?sportId=14&teamId=476&startDate=${today}&endDate=${season}-09-30&gameType=R`,
+      { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) },
+    );
+    if (!res.ok) throw new Error(`${res.status}`);
+    const data = await res.json();
+    const events = [];
+    for (const dateRec of data.dates || []) {
+      for (const game of dateRec.games || []) {
+        const homeTeam = game.teams?.home?.team?.name || "";
+        if (!homeTeam.toLowerCase().includes("san jose")) continue; // home games only
+        const awayTeam = game.teams?.away?.team?.name || "Opponent";
+        const gameDate = dateRec.date;
+        const startUtc = game.gameDate ? new Date(game.gameDate) : null;
+        events.push({
+          id: h("sjgiants", String(game.gamePk)),
+          title: `San Jose Giants vs. ${awayTeam}`,
+          date: gameDate,
+          displayDate: displayDate(startUtc || new Date(gameDate + "T19:00:00")),
+          time: startUtc ? displayTime(startUtc) : "7:00pm",
+          endTime: null,
+          venue: "Excite Ballpark",
+          address: "588 E Alma Ave, San Jose",
+          city: "san-jose",
+          category: "sports",
+          cost: "paid",
+          costNote: "From $14",
+          description: `San Jose Giants home game vs. ${awayTeam} at Excite Ballpark.`,
+          url: "https://www.milb.com/san-jose",
+          source: "MiLB",
+          kidFriendly: true,
+        });
+      }
+    }
+    console.log(`  ✅ SJ Giants: ${events.length} home games`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  SJ Giants: ${err.message}`);
+    return [];
+  }
+}
+
 // ── NWSL: Bay FC ──
 
 async function fetchBayFCSchedule() {
-  console.log("  ⏳ Bay FC (ESPN API)...");
+  console.log("  ⏳ Bay FC (ESPN scoreboard)...");
   try {
+    const season = new Date().getFullYear();
+    const endYear = season + 1;
     const res = await fetch(
-      "https://site.api.espn.com/apis/site/v2/sports/soccer/nwsl.1/teams/bay-fc/schedule",
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/usa.nwsl/scoreboard?dates=${season}0101-${endYear}0101&limit=300`,
       { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) },
     );
     if (!res.ok) throw new Error(`${res.status}`);
@@ -1249,8 +1302,9 @@ async function main() {
     fetchSjJazzEvents,
     fetchMontalvoEvents,
     // fetchEventbriteEvents, — deprecated: /v3/events/search/ removed by Eventbrite
-    // fetchEarthquakesSchedule, — ESPN MLS API has no 2026 schedule data yet; Ticketmaster covers PayPal Park
-    // fetchBayFCSchedule, — ESPN NWSL has no Bay FC data; Ticketmaster covers PayPal Park
+    fetchEarthquakesSchedule,
+    fetchBayFCSchedule,
+    fetchSJGiantsSchedule,
     fetchTicketmasterEvents,
     fetchSharksSchedule,
     fetchMvplEvents,
