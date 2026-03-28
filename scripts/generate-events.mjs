@@ -147,12 +147,34 @@ const INTERNAL_EVENT_PATTERNS = [
   /\btuition\s+(due|payment|deadline)\b/i,
 ];
 
+// Detect away games: "[School] at [Away Opponent/Location]"
+// Home game format: "[Opponent] at [School]" — school name is LAST
+// Away game format: "[School] at [Opponent]" — school name is FIRST
+const UNI_HOME_NAMES = [
+  "san jose state", "sjsu",
+  "santa clara", "santa clara university", "scu",
+  "stanford",
+];
+function isAwayGame(title) {
+  const t = title.toLowerCase();
+  // If any of our school names appear before " at " → away game
+  for (const name of UNI_HOME_NAMES) {
+    const idx = t.indexOf(name);
+    if (idx === -1) continue;
+    const afterSchool = t.slice(idx + name.length).trimStart();
+    if (afterSchool.startsWith("at ")) return true;
+  }
+  return false;
+}
+
 function isPublicEvent(title, source) {
   const uniSources = ["Santa Clara University", "SJSU Events", "Stanford Events"];
   if (uniSources.includes(source)) {
     for (const pat of INTERNAL_EVENT_PATTERNS) {
       if (pat.test(title)) return false;
     }
+    // Filter away athletic events — games played outside the South Bay
+    if (isAwayGame(title)) return false;
   }
   return true;
 }
@@ -985,6 +1007,8 @@ async function main() {
     fetchSvlgEvents,
     fetchSjJazzEvents,
     fetchMontalvoEvents,
+    fetchEventbriteEvents,
+    fetchTicketmasterEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));
