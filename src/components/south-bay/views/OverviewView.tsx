@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SportsView from "./SportsView";
 import OutagesCard from "../cards/OutagesCard";
+import RealEstateCard from "../cards/RealEstateCard";
 import {
   SOUTH_BAY_EVENTS,
   type SBEvent,
@@ -1490,6 +1491,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── Housing Market ── */}
+      {!changingCity && <RealEstateCard homeCity={homeCity} />}
 
       {/* ── Sports scoreboard ── */}
       <SportsView />

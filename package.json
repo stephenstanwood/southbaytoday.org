@@ -14,6 +14,7 @@
     "generate-around-town": "node scripts/generate-around-town.mjs",
     "generate-health-scores": "node scripts/generate-health-scores.mjs",
     "generate-outages": "node scripts/generate-outages.mjs",
+    "generate-real-estate": "node scripts/generate-real-estate.mjs",
     "generate-weekend-picks": "node scripts/generate-weekend-picks.mjs"
   },
   "dependencies": {
