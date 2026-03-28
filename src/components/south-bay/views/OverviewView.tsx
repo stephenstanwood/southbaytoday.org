@@ -43,6 +43,16 @@ const WEEKDAY = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Sa
 const MONTH_NAME = NOW.toLocaleDateString("en-US", { month: "long" });
 const NEXT_MONTH_NAME = new Date(NOW.getFullYear(), NOW.getMonth() + 1, 1).toLocaleDateString("en-US", { month: "long" });
 
+// Pre-compute the next 6 dates (tomorrow through 6 days from now)
+const NEXT_DAYS: Array<{ iso: string; label: string }> = Array.from({ length: 6 }, (_, i) => {
+  const d = new Date(NOW);
+  d.setDate(d.getDate() + i + 1);
+  d.setHours(0, 0, 0, 0);
+  const iso = d.toISOString().split("T")[0];
+  const label = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  return { iso, label };
+});
+
 // ── Time helpers ───────────────────────────────────────────────────────────────
 
 function parseMinutes(timeStr: string, useLast = false): number | null {
@@ -544,6 +554,18 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
   const showExpandedRegional = cityIsEmpty;
   const SB_LIMIT = homeCity ? 6 : 8;
 
+  // ── This Week: home city events for next 6 days ──
+  // Shown when homeCity is set, grouped by day
+  const thisWeekByDay = homeCity
+    ? NEXT_DAYS.map(({ iso, label }) => {
+        const events = allUpcoming
+          .filter((e) => e.date === iso && !e.ongoing && e.city === homeCity && e.category !== "sports")
+          .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
+          .slice(0, 4);
+        return { iso, label, events };
+      }).filter(({ events }) => events.length > 0)
+    : [];
+
   return (
     <>
       {/* ── City prompt / picker ── */}
@@ -654,6 +676,36 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
               )}
             </>
           )}
+        </div>
+      )}
+
+      {/* ── This Week: home city upcoming ── */}
+      {homeCity && thisWeekByDay.length > 0 && (
+        <div style={{ marginBottom: 32 }}>
+          <div className="sb-section-header" style={{ marginBottom: 12 }}>
+            <span className="sb-section-title">This Week in {getCityName(homeCity)}</span>
+            <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sb-muted)" }}>
+              {thisWeekByDay.reduce((n, d) => n + d.events.length, 0)} events
+            </span>
+          </div>
+          {thisWeekByDay.map(({ iso, label, events }) => (
+            <div key={iso} style={{ marginBottom: 12 }}>
+              <div style={{
+                fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.08em", textTransform: "uppercase",
+                color: "var(--sb-muted)", paddingTop: 8, paddingBottom: 2,
+                borderBottom: "1px solid var(--sb-border-light)", marginBottom: 0,
+              }}>
+                {label}
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
+                className="sb-today-grid">
+                {events.map((e) => (
+                  <UpcomingRow key={e.id} event={e} showCity={false} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

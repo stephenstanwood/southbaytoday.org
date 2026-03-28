@@ -257,9 +257,11 @@ function parseRssItems(xml) {
       description: get("description"),
       pubDate: get("pubDate"),
       content: get("content:encoded"),
-      // CivicPlus-specific
+      // CivicPlus-specific (various field names used across city deployments)
       startDate: get("calendarEvent:startDate") || get("startDate"),
-      location: get("calendarEvent:location") || get("location"),
+      eventDates: get("calendarEvent:EventDates") || get("calendarEvent:eventDates") || "",
+      eventTimes: get("calendarEvent:EventTimes") || get("calendarEvent:eventTimes") || "",
+      location: get("calendarEvent:location") || get("calendarEvent:Location") || get("location"),
       // Localist-specific
       georss_point: get("georss:point"),
       s_localtime: get("s:localtime"),
@@ -435,6 +437,39 @@ async function fetchScuEvents() {
   }
 }
 
+// ── CivicPlus EventDates parser ──
+// Parses strings like "March 28, 2026" or "April 6, 2026 - April 10, 2026"
+function parseCivicPlusEventDates(eventDatesStr) {
+  if (!eventDatesStr) return null;
+  // Strip trailing date range (take the start date only)
+  const start = eventDatesStr.split(/\s*[-–]\s*/)[0].trim();
+  const d = new Date(start);
+  if (!isNaN(d.getTime())) return d;
+  return null;
+}
+
+// Parses CivicPlus EventTimes like "07:00 PM - 09:00 PM" into displayable time string
+function parseCivicPlusEventTime(eventTimesStr) {
+  if (!eventTimesStr) return null;
+  // Take just the start time
+  const parts = eventTimesStr.split(/\s*[-–]\s*/);
+  const startTime = parts[0].trim();
+  const endTime = parts[1]?.trim();
+  // Skip all-day markers (midnight to midnight)
+  if (startTime === "12:00 AM" && (!endTime || endTime === "11:59 PM")) return null;
+  // Format as "7:00 PM" or "7:00 PM – 9:00 PM"
+  const fmt = (t) => {
+    const m = t.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+    if (!m) return t;
+    const h = parseInt(m[1]);
+    const min = m[2];
+    const ampm = m[3].toUpperCase();
+    return min === "00" ? `${h}${ampm.toLowerCase()}` : `${h}:${min}${ampm.toLowerCase()}`;
+  };
+  if (endTime && endTime !== "11:59 PM") return `${fmt(startTime)} – ${fmt(endTime)}`;
+  return fmt(startTime);
+}
+
 // ── CHM-specific date extraction ──
 // CHM's WordPress feed uses pubDate = article publish date, not event date.
 // Event dates are embedded in the title, e.g. "April 15: Maker Camp" or "Sat, April 12 — Talk".
@@ -497,32 +532,12 @@ async function fetchSjJazzEvents() {
   console.log("  ⏳ San Jose Jazz...");
   try {
     const xml = await fetchText("https://www.sanjosejazz.org/feed/");
+    // SJ Jazz RSS is a news/blog feed — pubDates are from 2024-2025 (past).
+    // The feed does not contain upcoming events with specific dates or times.
+    // Skip for now; SJ Jazz is covered in the recurring events data (events-data.ts).
     const items = parseRssItems(xml);
-    const events = items
-      .map((item) => {
-        const start = parseDate(item.pubDate);
-        if (!start) return null;
-        return {
-          id: h("sjjazz", item.link || item.title, item.pubDate),
-          title: item.title,
-          date: isoDate(start),
-          displayDate: displayDate(start),
-          time: displayTime(start),
-          endTime: null,
-          venue: item.location || "San Jose Jazz",
-          address: "",
-          city: "san-jose",
-          category: "music",
-          cost: inferCategory(item.title, item.description, "") === "music" ? "paid" : "free",
-          description: truncate(stripHtml(item.description || item.content)),
-          url: item.link,
-          source: "San Jose Jazz",
-          kidFriendly: false,
-        };
-      })
-      .filter(Boolean);
-    console.log(`  ✅ San Jose Jazz: ${events.length} events`);
-    return events;
+    console.log(`  ✅ San Jose Jazz: 0 events (blog feed — no upcoming event dates)`);
+    return [];
   } catch (err) {
     console.log(`  ⚠️  San Jose Jazz: ${err.message}`);
     return [];
@@ -533,32 +548,12 @@ async function fetchMontalvoEvents() {
   console.log("  ⏳ Montalvo Arts Center...");
   try {
     const xml = await fetchText("https://montalvoarts.org/feed/");
+    // Montalvo RSS is a blog/news feed — articles are about past performances,
+    // artist residencies, and internal announcements (not upcoming events with dates/times).
+    // Skip for now; Montalvo is covered in the recurring events data (events-data.ts).
     const items = parseRssItems(xml);
-    const events = items
-      .map((item) => {
-        const start = parseDate(item.pubDate);
-        if (!start) return null;
-        return {
-          id: h("montalvo", item.link || item.title, item.pubDate),
-          title: item.title,
-          date: isoDate(start),
-          displayDate: displayDate(start),
-          time: displayTime(start),
-          endTime: null,
-          venue: "Montalvo Arts Center",
-          address: "15400 Montalvo Rd, Saratoga",
-          city: "saratoga",
-          category: inferCategory(item.title, item.description || "", "arts"),
-          cost: "paid",
-          description: truncate(stripHtml(item.description || item.content)),
-          url: item.link,
-          source: "Montalvo Arts Center",
-          kidFriendly: false,
-        };
-      })
-      .filter(Boolean);
-    console.log(`  ✅ Montalvo Arts Center: ${events.length} events`);
-    return events;
+    console.log(`  ✅ Montalvo Arts Center: 0 events (blog feed — no upcoming event dates)`);
+    return [];
   } catch (err) {
     console.log(`  ⚠️  Montalvo Arts Center: ${err.message}`);
     return [];
@@ -609,17 +604,23 @@ async function fetchCampbellEvents() {
       "https://www.campbellca.gov/RSSFeed.aspx?ModID=58&CID=14-Community-Event-Calendar",
     );
     const items = parseRssItems(xml);
+    const now = new Date();
     const events = items.map((item) => {
-      const start = parseDate(item.startDate || item.pubDate);
-      if (!start) return null;
+      // Campbell uses calendarEvent:EventDates ("March 28, 2026" or "April 6, 2026 - April 10, 2026")
+      // not calendarEvent:startDate. Fall back to pubDate only if EventDates is missing.
+      const start = parseCivicPlusEventDates(item.eventDates)
+        || parseDate(item.startDate)
+        || parseDate(item.pubDate);
+      if (!start || start < now) return null;
+      const timeStr = parseCivicPlusEventTime(item.eventTimes);
       return {
-        id: h("campbell", item.link || item.title, item.startDate || item.pubDate),
+        id: h("campbell", item.link || item.title, item.eventDates || item.pubDate),
         title: item.title,
         date: isoDate(start),
         displayDate: displayDate(start),
-        time: displayTime(start),
+        time: timeStr,
         endTime: null,
-        venue: item.location || "Campbell",
+        venue: (item.location || "Campbell").replace(/Campbell,?\s*CA\s*\d*/i, "").trim() || "Campbell",
         address: "",
         city: "campbell",
         category: inferCategory(item.title, item.description, ""),
@@ -627,7 +628,7 @@ async function fetchCampbellEvents() {
         description: truncate(stripHtml(item.description)),
         url: item.link,
         source: "City of Campbell",
-        kidFriendly: item.title.toLowerCase().includes("kid") || item.title.toLowerCase().includes("family") || item.title.toLowerCase().includes("story"),
+        kidFriendly: item.title.toLowerCase().includes("kid") || item.title.toLowerCase().includes("family") || item.title.toLowerCase().includes("story") || item.title.toLowerCase().includes("youth"),
       };
     }).filter(Boolean);
     console.log(`  ✅ Campbell: ${events.length} events`);
