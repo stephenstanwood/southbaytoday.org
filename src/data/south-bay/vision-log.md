@@ -1112,3 +1112,95 @@ The development-data.ts static projects haven't been audited in several cycles. 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the Saturday experience is materially better.** A resident who opens South Bay Signal on a Saturday morning now gets: a government briefing story that names a real council decision with its source city, a dedicated "This Weekend" section surfacing the best free and family-friendly picks across both weekend days, and all the existing depth underneath. The page now answers the weekend's primary question ("what should I do?") without requiring any navigation. That's what a default homepage does.
 
+
+---
+
+## 2026-03-28 — Cycle 18: Entertainment Venue Showcase — Venues Tab + On Stage Section
+
+### Context
+Coming off Cycle 17 which delivered Weekend Spotlight and Signal Briefing government story upgrade. The product had 98 Ticketmaster events in the feed (SAP Center, San Jose Improv, The Ritz, San Jose Civic, SJ Center for the Performing Arts, Frost Amphitheater at Stanford, Tech CU Arena, McEnery Convention Center) — real show listings including David Byrne at Frost Amphitheater, Beetlejuice and Les Misérables touring at SJ Center for the Performing Arts, and a packed San Jose Improv lineup. None of this was visible as a curated entertainment guide. It was just more rows in a date-sorted event list.
+
+### Issues Identified This Cycle
+1. **98 Ticketmaster events invisible as entertainment intelligence** — The Events tab displayed them in date order mixed with library programs and city meetings. No one browsing "Events" for show listings would find "Beetlejuice is at the SJ Center for the Performing Arts next Tuesday" easily. The product had the data for a venue discovery experience but hadn't built one.
+2. **No "what's on at [venue]?" discovery path** — A user thinking "I want to catch something at SAP Center" had no way to filter to that venue. The category filter didn't help; venue search in the text box worked but required knowing to try it.
+3. **Entertainment shows missing from Today tab** — The daily brief showed events, sports, government, and development — but nothing about tonight's show at The Ritz or this weekend's Broadway touring production. This is exactly the kind of "I had no idea that was happening" discovery that drives bookmarking.
+4. **Pre-existing TypeScript bug** — `SignalBriefing` was calling `pickTopEvent(todayUpcoming, todayStatic)` with 2 args, but `pickTopEvent` was refactored in Cycle 17 to take 0 args (using `weekendPicksJson`). This was silently causing the Signal Briefing events card to error. Fixed this cycle.
+
+### What Was Built
+
+**1. EventsView: "Venues" view mode** (`src/components/south-bay/views/EventsView.tsx`)
+
+- Added `"venues"` to `ViewMode` type
+- Added `SOUTH_BAY_VENUES` constant: 9 major entertainment venues with name, city, venue match string, emoji, and tags
+  - 🎤 San Jose Improv (Comedy · Music)
+  - 🎵 The Ritz (Music)
+  - 🎵 San Jose Civic (Concerts)
+  - 🎭 SJ Center for the Performing Arts (Theater · Arts)
+  - 🏟️ SAP Center (Arena)
+  - 🎵 Frost Amphitheatre, Stanford (Outdoor Concerts)
+  - 🏀 Tech CU Arena (Sports · Events)
+  - 🎪 McEnery Convention Center (Special Events)
+  - 🌿 Discovery Meadows (Outdoor)
+- Added `venueEvents` useMemo: groups all TM events by venue, sorted by date
+- Added `venueFilteredEvents` useMemo: filtered events for selected venue (respects category/search/kids filters)
+- Updated view mode toggle to 3 buttons: Upcoming | Recurring | Venues
+- Venues view: 2-column auto-fill grid of venue cards
+  - Each card: emoji, name, city, tags, "N upcoming" badge, next show date
+  - Cards with 0 upcoming shows shown at 50% opacity (grayed out, non-interactive)
+  - Click to select venue → filtered list view with "← All Venues" back button
+- Active list count hidden in venues mode (irrelevant to venue grid)
+
+**2. OverviewView: "On Stage Tonight / This Week" section** (`src/components/south-bay/views/OverviewView.tsx`)
+
+- New `OnStageSection` component
+- Filters allUpcoming to Ticketmaster events, non-sports, within next 7 days
+- Shows up to 5 shows sorted by date then time
+- Per-row: date badge (red "Tonight" if today, muted "Mar 28" otherwise), serif title (linked), venue, time
+- Section title: "On Stage Tonight" when tonight has shows; "On Stage This Week" otherwise
+- "All shows →" navigates to Events tab
+- Positioned between "Around the South Bay" and "This Week in [City]"
+- `UpcomingEvent` type in OverviewView updated to include optional `displayDate` field
+
+**3. Bug fix: `pickTopEvent` call signature** (`OverviewView.tsx`)
+
+- `SignalBriefing` was calling `pickTopEvent(todayUpcoming, todayStatic)` — stale call from before Cycle 17 refactored `pickTopEvent` to take 0 args (using `weekendPicksJson`). Fixed to `pickTopEvent()`.
+
+### Ideas Considered
+
+**1. Entertainment Venue Showcase (Venues tab + On Stage section)** ← BUILT
+Uses existing Ticketmaster data as a venue discovery experience. Makes the product feel like a real entertainment guide.
+
+**2. Live Caltrain service status**
+511 API (requires key). High daily-urgency value. Deferred — API key not available in this environment.
+
+**3. Development data audit + refresh**
+Static projects haven't been reviewed in several cycles. Good candidate for a future cycle with more research time.
+
+**4. Sunnyvale events coverage**
+City blocks bot access; library platforms return 403/404. No clear path this cycle.
+
+**5. Automated digest pre-generation**
+Requires ANTHROPIC_API_KEY in GitHub Actions secrets. Not available in this environment.
+
+### Why This Was the Highest-Leverage Move
+
+The Venues tab solves a real discovery problem. "What's playing at SAP Center?" or "What's at the SJ Center for the Performing Arts this month?" are genuinely common local questions. No other South Bay source presents venue-centric entertainment browsing. The product already had the data — 98 TM events — sitting invisible in a date-sorted list. This cycle turns that data into a venue guide.
+
+The On Stage section on the Today tab creates a new "daily discovery" habit. A resident opening the page might see "On Stage Tonight: Nate Jackson: Big Dog Comedy Tour · San Jose Improv · 8pm" and decide to go — or just feel more connected to what's happening in their city tonight. That's the small moment that builds bookmarking behavior.
+
+The two pieces work together: On Stage surface the most immediately relevant shows at a glance; Venues lets users go deeper by venue when they want to.
+
+The TypeScript bug fix (pickTopEvent call signature) was a bonus — the Signal Briefing's Events card had been silently failing to render its intended "top event" story since Cycle 17.
+
+### Effect on Real Users
+- **Saturday night visitor**: Lands on Today tab, sees "On Stage Tonight: Broadway Rave · The Ritz · 8pm" → one click to tickets they wouldn't have known about
+- **Entertainment browser**: Opens Events → taps "Venues" → sees SAP Center has 3 upcoming, Frost Amphitheater has 3 (David Byrne! Dabin!) → taps to browse shows
+- **User checking weekly calendar**: On Stage This Week shows next 5 entertainment events as a quick scan
+
+### Next 3 Strongest Ideas
+1. **Live Caltrain service status** — Register for 511 API key. A daily-urgency commuter feature that creates guaranteed repeat visits. Every weekday morning, someone checks "is Caltrain running?" and currently no South Bay source answers it at a glance.
+2. **Development data audit + refresh** — The development-data.ts projects were added in early cycles. Their statuses/timelines need updating: BART Phase II milestones, Google Downtown West progress, new projects from 2026. Would improve Signal Briefing development card accuracy.
+3. **Upcoming agenda preview on Gov tab** — Use Legistar EventItems API to show the top 3-5 agenda items for the NEXT scheduled meeting per city. Forward-looking civic intelligence to complement the backward-looking digests.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — entertainment discovery is now a first-class product feature.** South Bay Signal now does something no other South Bay source does: presents major local entertainment venues with their upcoming show listings in a browsable, organized format. The Venues tab + On Stage section makes the product useful for a completely new use case — "what's on in San Jose this week?" — that 98 Ticketmaster events were sitting on but not delivering. A resident can now open South Bay Signal and know, at a glance, that Beetlejuice is touring at SJ Center for the Performing Arts and David Byrne is coming to Frost Amphitheater. That's the kind of local intelligence that makes a site worth bookmarking.
