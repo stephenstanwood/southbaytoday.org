@@ -1,0 +1,493 @@
+import { useState, useEffect } from "react";
+import {
+  buildDayPlan,
+  type DayPlan,
+  type PlanStop,
+  type Who,
+  type Duration,
+  type VibeType,
+  type BudgetType,
+} from "../../../lib/south-bay/planMyDay";
+
+// ── Option definitions ────────────────────────────────────────────────────────
+
+const WHO_OPTIONS: { id: Who; label: string; emoji: string }[] = [
+  { id: "solo", label: "Solo", emoji: "🧍" },
+  { id: "couple", label: "Couple", emoji: "👫" },
+  { id: "family-young", label: "Young family", emoji: "👶" },
+  { id: "family-kids", label: "Family w/ kids", emoji: "👨‍👩‍👦" },
+  { id: "teens", label: "Teens", emoji: "🛹" },
+  { id: "group", label: "Group", emoji: "👥" },
+];
+
+const DURATION_OPTIONS: { id: Duration; label: string; emoji: string; sub: string }[] = [
+  { id: "morning", label: "Morning", emoji: "🌅", sub: "til noon" },
+  { id: "afternoon", label: "Afternoon", emoji: "☀️", sub: "noon–5pm" },
+  { id: "evening", label: "Evening", emoji: "🌆", sub: "6pm+" },
+  { id: "full-day", label: "Full day", emoji: "🗓️", sub: "9am–9pm" },
+  { id: "quick", label: "Quick 2hrs", emoji: "⚡", sub: "right now" },
+];
+
+const VIBE_OPTIONS: { id: VibeType; label: string; emoji: string }[] = [
+  { id: "outdoors", label: "Outside", emoji: "🌳" },
+  { id: "mix", label: "Mix it up", emoji: "✨" },
+  { id: "indoors", label: "Inside", emoji: "🏛️" },
+];
+
+const BUDGET_OPTIONS: { id: BudgetType; label: string; emoji: string; sub: string }[] = [
+  { id: "free", label: "Free only", emoji: "🆓", sub: "$0" },
+  { id: "some", label: "Some OK", emoji: "💵", sub: "under $25" },
+  { id: "anything", label: "No limit", emoji: "🎉", sub: "treat yourself" },
+];
+
+// ── Cost badge ────────────────────────────────────────────────────────────────
+
+function costBadge(cost: "free" | "low" | "paid", costNote?: string) {
+  if (cost === "free")
+    return { label: "FREE", bg: "#D1FAE5", color: "#065F46" };
+  if (cost === "low")
+    return {
+      label: costNote?.split(" ").slice(0, 3).join(" ") ?? "$",
+      bg: "#FEF3C7",
+      color: "#92400E",
+    };
+  return {
+    label: costNote?.split(" ").slice(0, 3).join(" ") ?? "$$+",
+    bg: "#EDE9FE",
+    color: "#5B21B6",
+  };
+}
+
+// ── Option pill ───────────────────────────────────────────────────────────────
+
+function OptionPill({
+  emoji,
+  label,
+  sub,
+  active,
+  onClick,
+}: {
+  emoji: string;
+  label: string;
+  sub?: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`plan-option${active ? " plan-option--active" : ""}`}
+    >
+      <span className="plan-option-emoji">{emoji}</span>
+      <span className="plan-option-label">{label}</span>
+      {sub && <span className="plan-option-sub">{sub}</span>}
+    </button>
+  );
+}
+
+// ── Stop card ─────────────────────────────────────────────────────────────────
+
+function StopCard({ stop }: { stop: PlanStop }) {
+  const badge = costBadge(stop.cost, stop.costNote);
+
+  return (
+    <div style={{ marginBottom: 24 }}>
+      {/* Slot time header */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginBottom: 10,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            color: "var(--sb-muted)",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+            fontFamily: "var(--sb-sans)",
+          }}
+        >
+          {stop.slotLabel} · {stop.time}
+        </span>
+        <div
+          style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }}
+        />
+      </div>
+
+      {/* Activity card */}
+      <div className="plan-stop-card">
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+          <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>
+            {stop.emoji}
+          </span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Title + today badge */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                flexWrap: "wrap",
+                marginBottom: 4,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--sb-serif)",
+                  fontWeight: 700,
+                  fontSize: 16,
+                  color: "var(--sb-ink)",
+                  lineHeight: 1.3,
+                }}
+              >
+                {stop.url ? (
+                  <a
+                    href={stop.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    {stop.title}
+                  </a>
+                ) : (
+                  stop.title
+                )}
+              </span>
+              {stop.isTodaySpecial && (
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    padding: "2px 7px",
+                    borderRadius: 2,
+                    background: "var(--sb-accent-light)",
+                    color: "var(--sb-accent)",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    flexShrink: 0,
+                  }}
+                >
+                  ★ Today
+                </span>
+              )}
+            </div>
+
+            {/* Venue / city */}
+            <div
+              style={{
+                fontSize: 12,
+                color: "var(--sb-muted)",
+                marginBottom: 10,
+                display: "flex",
+                gap: 6,
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
+            >
+              <span>{stop.venue}</span>
+              <span style={{ color: "var(--sb-border)" }}>·</span>
+              <span>{stop.city}</span>
+            </div>
+
+            {/* Badges */}
+            <div
+              style={{
+                display: "flex",
+                gap: 6,
+                flexWrap: "wrap",
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  padding: "2px 7px",
+                  borderRadius: 3,
+                  background: badge.bg,
+                  color: badge.color,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {badge.label}
+              </span>
+              {stop.kidFriendly && (
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    padding: "2px 7px",
+                    borderRadius: 3,
+                    background: "#F0F9FF",
+                    color: "#0369A1",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  👶 Kid-friendly
+                </span>
+              )}
+              {stop.indoorOutdoor === "outdoor" && (
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    padding: "2px 7px",
+                    borderRadius: 3,
+                    background: "#F0FDF4",
+                    color: "#166534",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  🌿 Outdoor
+                </span>
+              )}
+              {stop.indoorOutdoor === "indoor" && (
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 600,
+                    padding: "2px 7px",
+                    borderRadius: 3,
+                    background: "#F8FAFC",
+                    color: "#475569",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  🏛️ Indoor
+                </span>
+              )}
+            </div>
+
+            {/* Why note */}
+            <p
+              style={{
+                fontSize: 13,
+                color: "var(--sb-muted)",
+                lineHeight: 1.6,
+                margin: 0,
+              }}
+            >
+              {stop.why}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
+
+type Step = "form" | "building" | "result";
+
+export default function PlanView() {
+  const [step, setStep] = useState<Step>("form");
+  const [weather, setWeather] = useState<string>("70°F partly cloudy");
+  const [plan, setPlan] = useState<DayPlan | null>(null);
+
+  // Form state with sensible defaults
+  const [who, setWho] = useState<Who>("couple");
+  const [duration, setDuration] = useState<Duration>("full-day");
+  const [vibe, setVibe] = useState<VibeType>("mix");
+  const [budget, setBudget] = useState<BudgetType>("some");
+
+  // Fetch weather silently on mount
+  useEffect(() => {
+    fetch("/api/weather")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.weather) setWeather(d.weather);
+      })
+      .catch(() => {});
+  }, []);
+
+  function handleBuild() {
+    setStep("building");
+    // Small artificial delay for UX polish
+    setTimeout(() => {
+      const result = buildDayPlan({ who, duration, vibe, budget }, weather);
+      setPlan(result);
+      setStep("result");
+    }, 600);
+  }
+
+  function handleReset() {
+    setStep("form");
+    setPlan(null);
+  }
+
+  // ── Form ────────────────────────────────────────────────────────────────────
+
+  if (step === "form" || step === "building") {
+    return (
+      <div className="plan-view">
+        <div className="sb-section-header">
+          <span className="sb-section-title">Plan My Day</span>
+        </div>
+
+        <p
+          style={{
+            fontSize: 15,
+            color: "var(--sb-muted)",
+            marginTop: 0,
+            marginBottom: 28,
+            lineHeight: 1.6,
+          }}
+        >
+          Tell us a little about your day and we'll build a real South Bay
+          itinerary — events that are actually happening, places worth going,
+          matched to the weather.
+        </p>
+
+        {/* Who */}
+        <div className="plan-section">
+          <div className="plan-section-label">Who's coming?</div>
+          <div className="plan-options">
+            {WHO_OPTIONS.map((o) => (
+              <OptionPill
+                key={o.id}
+                emoji={o.emoji}
+                label={o.label}
+                active={who === o.id}
+                onClick={() => setWho(o.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Duration */}
+        <div className="plan-section">
+          <div className="plan-section-label">How much time?</div>
+          <div className="plan-options">
+            {DURATION_OPTIONS.map((o) => (
+              <OptionPill
+                key={o.id}
+                emoji={o.emoji}
+                label={o.label}
+                sub={o.sub}
+                active={duration === o.id}
+                onClick={() => setDuration(o.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Vibe */}
+        <div className="plan-section">
+          <div className="plan-section-label">Indoor or outdoor?</div>
+          <div className="plan-options">
+            {VIBE_OPTIONS.map((o) => (
+              <OptionPill
+                key={o.id}
+                emoji={o.emoji}
+                label={o.label}
+                active={vibe === o.id}
+                onClick={() => setVibe(o.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Budget */}
+        <div className="plan-section">
+          <div className="plan-section-label">Budget?</div>
+          <div className="plan-options">
+            {BUDGET_OPTIONS.map((o) => (
+              <OptionPill
+                key={o.id}
+                emoji={o.emoji}
+                label={o.label}
+                sub={o.sub}
+                active={budget === o.id}
+                onClick={() => setBudget(o.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Build button */}
+        <button
+          onClick={handleBuild}
+          disabled={step === "building"}
+          className="plan-cta"
+        >
+          {step === "building" ? "Building your day…" : "Build My Day →"}
+        </button>
+      </div>
+    );
+  }
+
+  // ── Result ──────────────────────────────────────────────────────────────────
+
+  if (!plan) return null;
+
+  return (
+    <div className="plan-view">
+      {/* Header */}
+      <div className="sb-section-header">
+        <span className="sb-section-title">Plan My Day</span>
+      </div>
+
+      {/* Headline */}
+      <h2 className="plan-headline">{plan.headline}</h2>
+
+      {/* Weather note */}
+      <div className="plan-weather">
+        <span style={{ fontSize: 14 }}>🌤️</span>
+        <span>{plan.weatherNote}</span>
+      </div>
+
+      {/* Stops */}
+      <div style={{ marginTop: 28 }}>
+        {plan.stops.length === 0 ? (
+          <p
+            style={{
+              color: "var(--sb-muted)",
+              fontStyle: "italic",
+              fontSize: 14,
+            }}
+          >
+            No matching options found for those preferences. Try adjusting your
+            filters.
+          </p>
+        ) : (
+          plan.stops.map((stop, i) => (
+            <StopCard key={`${stop.title}-${i}`} stop={stop} />
+          ))
+        )}
+      </div>
+
+      {/* Actions */}
+      <div
+        style={{
+          marginTop: 32,
+          display: "flex",
+          gap: 12,
+          flexWrap: "wrap",
+          alignItems: "center",
+          paddingTop: 20,
+          borderTop: "1px solid var(--sb-border-light)",
+        }}
+      >
+        <button onClick={handleReset} className="plan-cta plan-cta--secondary">
+          ← Start over
+        </button>
+        <span
+          style={{
+            fontSize: 12,
+            color: "var(--sb-light)",
+            lineHeight: 1.5,
+          }}
+        >
+          Based on today's events, weather, and your preferences.
+        </span>
+      </div>
+    </div>
+  );
+}

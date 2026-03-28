@@ -1,0 +1,31 @@
+{
+  "name": "southbaysignal",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-digests": "node scripts/generate-digests.mjs",
+    "generate-blotter": "node scripts/generate-blotter.mjs",
+    "generate-events": "node scripts/generate-events.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.74.0",
+    "@astrojs/react": "^5.0.0",
+    "@astrojs/vercel": "^10.0.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "@vercel/analytics": "^2.0.1",
+    "astro": "^6.0.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-is": "^19.2.4",
+    "recharts": "^3.8.1",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.7",
+    "typescript": "^5.9.3"
+  }
+}

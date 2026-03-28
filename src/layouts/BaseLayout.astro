@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Google Fonts CSS URL */
+  fontsUrl?: string;
+  /** meta theme-color */
+  themeColor?: string;
+}
+
+const {
+  title,
+  description,
+  fontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
+  themeColor = "#f8f4ef",
+} = Astro.props;
+
+const siteUrl = "https://southbaysignal.org";
+const ogImage = `${siteUrl}/images/south-bay-signal.svg`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={themeColor} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@stephenstanwood" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="canonical" href={siteUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fontsUrl} rel="stylesheet" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-nav">Skip to content</a>
+    <main id="main-content">
+      <slot />
+    </main>
+    <Analytics />
+  </body>
+</html>

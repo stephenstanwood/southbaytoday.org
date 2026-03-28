@@ -1,0 +1,683 @@
+// ---------------------------------------------------------------------------
+// South Bay Signal — events data
+// ---------------------------------------------------------------------------
+// Real events with specific schedules (day, time, season).
+// Permanent venues and POIs live in poi-data.ts for Plan My Day.
+// ---------------------------------------------------------------------------
+
+import type { City } from "../../lib/south-bay/types";
+
+export type EventCategory =
+  | "market"
+  | "family"
+  | "music"
+  | "arts"
+  | "sports"
+  | "community"
+  | "outdoor"
+  | "education"
+  | "food";
+
+export type DayOfWeek =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
+
+export type RecurrenceType = "weekly" | "biweekly" | "monthly" | "seasonal" | "ongoing";
+
+export interface SBEvent {
+  id: string;
+  title: string;
+  city: City;
+  venue: string;
+  address?: string;
+  category: EventCategory;
+  recurrence: RecurrenceType;
+  days?: DayOfWeek[];
+  time?: string;
+  months?: number[]; // 1=Jan, 12=Dec. omit = year-round
+  cost: "free" | "low" | "paid"; // free=0, low=<$15, paid=$15+
+  costNote?: string;
+  kidFriendly: boolean;
+  description: string;
+  url?: string;
+  emoji: string;
+  featured?: boolean;
+}
+
+export const SOUTH_BAY_EVENTS: SBEvent[] = [
+  // ── FARMERS MARKETS ──────────────────────────────────────────────────────
+
+  {
+    id: "campbell-farmers-market",
+    title: "Campbell Farmers Market",
+    city: "campbell",
+    venue: "Downtown Campbell",
+    address: "Campbell Ave & Central Ave, Campbell",
+    category: "market",
+    recurrence: "weekly",
+    days: ["sunday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Year-round downtown market with 70+ vendors. Produce, flowers, honey, specialty foods, and artisan goods. Live music most weeks.",
+    url: "https://www.campbellfarmersmarket.com",
+    emoji: "🌽",
+    featured: true,
+  },
+  {
+    id: "mv-castro-farmers-market",
+    title: "Mountain View Farmers Market",
+    city: "mountain-view",
+    venue: "Castro Street",
+    address: "Castro St, Mountain View",
+    category: "market",
+    recurrence: "weekly",
+    days: ["sunday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Beloved year-round market on Castro Street. 60+ vendors covering fresh produce, baked goods, artisan cheese, flowers, and prepared foods.",
+    url: "https://www.pcfma.org/mountainview",
+    emoji: "🌸",
+    featured: true,
+  },
+  {
+    id: "sunnyvale-murphy-market",
+    title: "Sunnyvale Farmers Market",
+    city: "sunnyvale",
+    venue: "Murphy Ave",
+    address: "Murphy Ave, Sunnyvale",
+    category: "market",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Weekly market on charming Murphy Ave in downtown Sunnyvale. Local produce, artisan foods, fresh flowers.",
+    url: "https://sunnyvale.ca.gov/community/recreation-parks-and-cultural-services/special-events/sunnyvale-farmers-market",
+    emoji: "🥦",
+  },
+  {
+    id: "palo-alto-california-ave-market",
+    title: "Palo Alto Farmers Market – California Ave",
+    city: "palo-alto",
+    venue: "California Ave",
+    address: "California Ave, Palo Alto",
+    category: "market",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "8am – 12pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Year-round Saturday market on California Avenue. Over 50 vendors with organic produce, specialty goods, and local artisans.",
+    url: "https://www.pcfma.org/paloaltocaliforniaavenue",
+    emoji: "🥕",
+  },
+  {
+    id: "palo-alto-downtown-market",
+    title: "Palo Alto Farmers Market – Downtown",
+    city: "palo-alto",
+    venue: "Gilman St",
+    address: "Gilman St & Hamilton Ave, Palo Alto",
+    category: "market",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "8am – 12pm",
+    months: [5, 6, 7, 8, 9, 10],
+    cost: "free",
+    kidFriendly: true,
+    description: "Seasonal downtown Palo Alto market. Late spring through fall.",
+    url: "https://www.pcfma.org/paloalto",
+    emoji: "🍑",
+  },
+  {
+    id: "los-gatos-farmers-market",
+    title: "Los Gatos Farmers Market",
+    city: "los-gatos",
+    venue: "Los Gatos Community Center",
+    address: "East Main Ave, Los Gatos",
+    category: "market",
+    recurrence: "weekly",
+    days: ["sunday"],
+    time: "8am – 12pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Charming Sunday market in Los Gatos. Fresh produce, specialty foods, and artisan items.",
+    url: "https://www.pcfma.org/losgatos",
+    emoji: "🍓",
+  },
+  {
+    id: "saratoga-village-market",
+    title: "Saratoga Village Farmers Market",
+    city: "saratoga",
+    venue: "Blaney Plaza",
+    address: "Big Basin Way, Saratoga",
+    category: "market",
+    recurrence: "weekly",
+    days: ["thursday"],
+    time: "2:30 – 6:30pm",
+    months: [5, 6, 7, 8, 9, 10],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Seasonal evening market in Saratoga Village, late May through October. Local produce and artisan vendors in a beautiful historic setting.",
+    emoji: "🌼",
+  },
+  {
+    id: "milpitas-market",
+    title: "Milpitas Farmers Market",
+    city: "milpitas",
+    venue: "Milpitas Square",
+    category: "market",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description: "Weekend market with fresh produce and vendors.",
+    emoji: "🥬",
+  },
+  {
+    id: "sj-willow-glen-market",
+    title: "Willow Glen Farmers Market",
+    city: "san-jose",
+    venue: "Lincoln Ave, Willow Glen",
+    address: "Lincoln Ave, San Jose",
+    category: "market",
+    recurrence: "weekly",
+    days: ["sunday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Year-round Sunday market in the heart of Willow Glen. Popular neighborhood destination with 40+ vendors.",
+    emoji: "🌿",
+  },
+  {
+    id: "sj-downtown-market",
+    title: "Downtown San Jose Farmers Market",
+    city: "san-jose",
+    venue: "San Pedro Square",
+    address: "San Pedro Square, San Jose",
+    category: "market",
+    recurrence: "weekly",
+    days: ["friday"],
+    time: "10am – 2pm",
+    cost: "free",
+    kidFriendly: true,
+    description: "Weekly downtown SJ market. Convenient for the lunch crowd — fresh food, produce, and prepared meals.",
+    emoji: "🏙️",
+  },
+  {
+    id: "los-altos-village-market",
+    title: "Los Altos Village Farmers Market",
+    city: "los-altos",
+    venue: "State Street & Main Street",
+    address: "State St, Los Altos",
+    category: "market",
+    recurrence: "weekly",
+    days: ["thursday"],
+    time: "3pm – 7pm",
+    months: [5, 6, 7, 8, 9, 10],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Charming seasonal Thursday market in the heart of Los Altos Village. Fresh produce, flowers, and artisan foods.",
+    emoji: "🌻",
+  },
+  {
+    id: "cupertino-farmers-market",
+    title: "Cupertino Farmers Market",
+    city: "cupertino",
+    venue: "Cupertino Community Center",
+    address: "10350 Torre Ave, Cupertino",
+    category: "market",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "9am – 1pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Weekend market in Cupertino with fresh local produce, specialty foods, flowers, and artisan vendors.",
+    emoji: "🍎",
+  },
+
+  // ── LIBRARY PROGRAMS (with specific days/times) ────────────────────────
+
+  {
+    id: "campbell-library-storytimes",
+    title: "Campbell Library Story Times",
+    city: "campbell",
+    venue: "Campbell Library",
+    address: "77 Harrison Ave, Campbell",
+    category: "family",
+    recurrence: "weekly",
+    days: ["tuesday", "wednesday", "thursday"],
+    time: "10:30am",
+    cost: "free",
+    kidFriendly: true,
+    description: "Free story times for babies, toddlers, and preschoolers. No registration required.",
+    url: "https://www.sccl.org/campbell",
+    emoji: "📚",
+  },
+
+  // ── CONCERT SERIES (specific schedules) ────────────────────────────────
+
+  {
+    id: "campbell-friday-music",
+    title: "Campbell Downtown Live Music",
+    city: "campbell",
+    venue: "Downtown Campbell",
+    category: "music",
+    recurrence: "weekly",
+    days: ["friday"],
+    time: "6pm",
+    months: [6, 7, 8, 9],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Summer Friday night concerts in downtown Campbell. Live bands, food and drinks from nearby restaurants.",
+    emoji: "🎸",
+  },
+  {
+    id: "mv-free-concert-series",
+    title: "Mountain View Free Summer Concerts",
+    city: "mountain-view",
+    venue: "Civic Center Plaza",
+    category: "music",
+    recurrence: "weekly",
+    months: [7, 8],
+    cost: "free",
+    kidFriendly: true,
+    description: "Free outdoor concerts in downtown Mountain View during July and August.",
+    emoji: "🎵",
+  },
+  {
+    id: "los-gatos-summer-concerts",
+    title: "Los Gatos Music on the Plaza",
+    city: "los-gatos",
+    venue: "Town Plaza / Library",
+    category: "music",
+    recurrence: "weekly",
+    days: ["thursday"],
+    time: "6pm – 8pm",
+    months: [6, 7, 8],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Free summer concerts on Thursday evenings in downtown Los Gatos. Local and regional bands.",
+    emoji: "🎵",
+  },
+  {
+    id: "sunnyvale-summer-concerts",
+    title: "Sunnyvale Summer Concert Series",
+    city: "sunnyvale",
+    venue: "Murphy Avenue Plaza",
+    category: "music",
+    recurrence: "weekly",
+    days: ["friday"],
+    time: "6:30pm – 8:30pm",
+    months: [6, 7, 8],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Free outdoor concerts on Friday evenings in downtown Sunnyvale. Jazz, pop, and local acts.",
+    emoji: "🎶",
+  },
+  {
+    id: "santana-row-concerts",
+    title: "Santana Row Weekend Concerts",
+    city: "san-jose",
+    venue: "Santana Row Plaza",
+    category: "music",
+    recurrence: "weekly",
+    days: ["saturday", "sunday"],
+    time: "Afternoons",
+    months: [5, 6, 7, 8, 9, 10],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Free live music in Santana Row's outdoor plaza on weekend afternoons during the warm season.",
+    emoji: "🎼",
+  },
+
+  // ── MONTHLY EVENTS ─────────────────────────────────────────────────────
+
+  {
+    id: "sj-first-friday",
+    title: "SoFA First Friday Art Walk",
+    city: "san-jose",
+    venue: "South First Street (SoFA District)",
+    address: "South 1st Street, San Jose",
+    category: "arts",
+    recurrence: "monthly",
+    days: ["friday"],
+    time: "6pm – 10pm",
+    cost: "free",
+    kidFriendly: false,
+    description:
+      "Monthly art walk through San Jose's SoFA arts district on the first Friday. Galleries, studios, pop-up art, and street performers.",
+    emoji: "🎭",
+  },
+
+  // ── SEASONAL / ANNUAL EVENTS ───────────────────────────────────────────
+
+  {
+    id: "sj-downtown-ice-rink",
+    title: "Downtown San Jose Ice Rink",
+    city: "san-jose",
+    venue: "Rotary International Ice Rink",
+    category: "family",
+    recurrence: "seasonal",
+    months: [11, 12, 1],
+    cost: "low",
+    costNote: "~$12 admission + skate rental",
+    kidFriendly: true,
+    description: "Outdoor holiday ice rink in downtown San Jose's Plaza de César Chávez. Nov–Jan.",
+    emoji: "⛸️",
+  },
+  {
+    id: "great-america",
+    title: "Paramount's Great America",
+    city: "santa-clara",
+    venue: "Great America Theme Park",
+    address: "4701 Great America Pkwy, Santa Clara",
+    category: "family",
+    recurrence: "seasonal",
+    months: [3, 4, 5, 6, 7, 8, 9, 10],
+    cost: "paid",
+    costNote: "~$49+ general admission; season passes available",
+    kidFriendly: true,
+    description:
+      "The South Bay's major theme park with 40+ rides, a water park, and seasonal events. Open spring through fall.",
+    url: "https://www.cagreatamerica.com",
+    emoji: "🎡",
+  },
+  {
+    id: "viva-calle-sj",
+    title: "Viva CalleSJ",
+    city: "san-jose",
+    venue: "San Jose streets (rotating routes)",
+    category: "community",
+    recurrence: "seasonal",
+    months: [4, 5, 10, 11],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Miles of San Jose streets temporarily closed to cars, open to walkers, cyclists, skaters, and dancers. Joyful open streets events in spring and fall.",
+    url: "https://www.vivacallesj.org",
+    emoji: "🚲",
+    featured: true,
+  },
+  {
+    id: "christmas-park-sj",
+    title: "Christmas in the Park — San Jose",
+    city: "san-jose",
+    venue: "Plaza de César Chávez",
+    address: "Paseo de San Antonio, San Jose",
+    category: "community",
+    recurrence: "seasonal",
+    months: [11, 12],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "San Jose's beloved free holiday event. Hundreds of decorated trees, nightly entertainment, light displays — a tradition since 1985.",
+    url: "https://christmasinthepark.com",
+    emoji: "🎄",
+    featured: true,
+  },
+  {
+    id: "sj-jazz-summer-fest",
+    title: "San Jose Jazz Summer Fest",
+    city: "san-jose",
+    venue: "Downtown San Jose",
+    category: "music",
+    recurrence: "seasonal",
+    months: [8],
+    cost: "free",
+    costNote: "Street festival free; some ticketed stages",
+    kidFriendly: true,
+    description:
+      "One of the largest jazz festivals in the country — three days and 100+ performances across downtown San Jose.",
+    url: "https://sanjosejazz.org/summer-fest",
+    emoji: "🎷",
+    featured: true,
+  },
+  {
+    id: "cinequest-film-festival",
+    title: "Cinequest Film Festival",
+    city: "san-jose",
+    venue: "Downtown San Jose theaters",
+    category: "arts",
+    recurrence: "seasonal",
+    months: [3],
+    cost: "paid",
+    costNote: "Individual films ~$15; passes available",
+    kidFriendly: false,
+    description:
+      "One of the top film festivals in the US, held in downtown San Jose each March. 70+ world premieres and indie films.",
+    url: "https://cinequest.org",
+    emoji: "🎬",
+  },
+  {
+    id: "sunnyvale-art-wine-festival",
+    title: "Sunnyvale Art & Wine Festival",
+    city: "sunnyvale",
+    venue: "Murphy Avenue, Sunnyvale",
+    category: "community",
+    recurrence: "seasonal",
+    months: [5, 6],
+    days: ["saturday", "sunday"],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Two-day street festival with 200+ artists, wine and food vendors, and live music on multiple stages.",
+    emoji: "🍷",
+  },
+  {
+    id: "los-gatos-fiesta-artes",
+    title: "Fiesta de Artes — Los Gatos",
+    city: "los-gatos",
+    venue: "Downtown Los Gatos",
+    category: "arts",
+    recurrence: "seasonal",
+    months: [8],
+    days: ["saturday", "sunday"],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Annual August arts festival in downtown Los Gatos. 100+ juried artists, live music, and local food.",
+    emoji: "🎨",
+  },
+  {
+    id: "sj-greek-festival",
+    title: "San Jose Greek Festival",
+    city: "san-jose",
+    venue: "Saint Nicholas Greek Orthodox Church",
+    address: "1260 Davis St, San Jose",
+    category: "community",
+    recurrence: "seasonal",
+    months: [10],
+    cost: "free",
+    costNote: "Food and entertainment purchased separately",
+    kidFriendly: true,
+    description:
+      "Three-day autumn festival celebrating Greek culture with authentic food, traditional dancing, and live music.",
+    emoji: "🫒",
+  },
+  {
+    id: "tet-festival-sj",
+    title: "Tet Festival — San Jose",
+    city: "san-jose",
+    venue: "Grand Century Mall area",
+    address: "111 Story Rd, San Jose",
+    category: "community",
+    recurrence: "seasonal",
+    months: [1, 2],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "One of the largest Lunar New Year / Tet celebrations outside Vietnam. Cultural performances, food, firecrackers, and community pride.",
+    emoji: "🏮",
+    featured: true,
+  },
+  {
+    id: "sj-jazz-winter-fest",
+    title: "San Jose Jazz Winter Fest",
+    city: "san-jose",
+    venue: "San Jose Convention Center",
+    category: "music",
+    recurrence: "seasonal",
+    months: [1],
+    cost: "paid",
+    costNote: "Individual sessions ~$25; day passes available",
+    kidFriendly: false,
+    description:
+      "Indoor winter jazz festival at the Convention Center in January. World-class performers over two days.",
+    url: "https://sanjosejazz.org/winter-fest",
+    emoji: "🎷",
+  },
+  {
+    id: "campbell-oktoberfest",
+    title: "Campbell Oktoberfest",
+    city: "campbell",
+    venue: "Downtown Campbell",
+    category: "community",
+    recurrence: "seasonal",
+    months: [10],
+    days: ["saturday", "sunday"],
+    cost: "free",
+    costNote: "Beer and food purchased separately",
+    kidFriendly: true,
+    description:
+      "Annual fall Oktoberfest in downtown Campbell with German beer, food, live bands, and family entertainment.",
+    emoji: "🍺",
+  },
+  {
+    id: "mountain-view-art-wine",
+    title: "Mountain View Art & Wine Festival",
+    city: "mountain-view",
+    venue: "Castro Street, Mountain View",
+    category: "community",
+    recurrence: "seasonal",
+    months: [9],
+    days: ["saturday", "sunday"],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "One of the South Bay's biggest street festivals over Labor Day weekend. 250+ artists, 50+ wineries, and live music on Castro Street.",
+    url: "https://www.mvartwine.com",
+    emoji: "🎨",
+    featured: true,
+  },
+
+  // ── SPORTS SEASONS ─────────────────────────────────────────────────────
+
+  {
+    id: "sharks-home-games",
+    title: "San Jose Sharks – Home Games",
+    city: "san-jose",
+    venue: "SAP Center",
+    address: "525 W Santa Clara St, San Jose",
+    category: "sports",
+    recurrence: "seasonal",
+    months: [10, 11, 12, 1, 2, 3, 4, 5, 6],
+    cost: "paid",
+    costNote: "Tickets from ~$35",
+    kidFriendly: true,
+    description:
+      "NHL hockey at SAP Center. 40+ home games per season, Oct–Apr.",
+    url: "https://www.nhl.com/sharks/schedule",
+    emoji: "🦈",
+    featured: true,
+  },
+  {
+    id: "earthquakes-home-games",
+    title: "San Jose Earthquakes – Home Games",
+    city: "san-jose",
+    venue: "PayPal Park",
+    address: "1123 Coleman Ave, San Jose",
+    category: "sports",
+    recurrence: "seasonal",
+    months: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    cost: "paid",
+    costNote: "Tickets from ~$25",
+    kidFriendly: true,
+    description:
+      "MLS soccer at PayPal Park. One of the most family-friendly and affordable pro sports experiences in the Bay.",
+    url: "https://www.sjearthquakes.com/schedule",
+    emoji: "⚽",
+  },
+  {
+    id: "sj-giants-milb",
+    title: "San Jose Giants – Home Games",
+    city: "san-jose",
+    venue: "Excite Ballpark",
+    address: "588 E Alma Ave, San Jose",
+    category: "sports",
+    recurrence: "seasonal",
+    months: [4, 5, 6, 7, 8, 9],
+    cost: "low",
+    costNote: "Tickets from ~$12",
+    kidFriendly: true,
+    description:
+      "Minor League Baseball's SF Giants affiliate. Affordable, fun, great way to see tomorrow's MLB stars up close.",
+    url: "https://www.milb.com/san-jose",
+    emoji: "⚾",
+    featured: true,
+  },
+  {
+    id: "bay-fc-games",
+    title: "Bay FC — Home Games",
+    city: "san-jose",
+    venue: "PayPal Park",
+    address: "1123 Coleman Ave, San Jose",
+    category: "sports",
+    recurrence: "seasonal",
+    months: [3, 4, 5, 6, 7, 8, 9, 10, 11],
+    cost: "paid",
+    costNote: "Tickets from ~$20",
+    kidFriendly: true,
+    description:
+      "Bay FC is the Bay Area's NWSL women's soccer team at PayPal Park. High-level women's soccer in an intimate, family-friendly stadium.",
+    url: "https://www.bayfc.com/schedule",
+    emoji: "⚽",
+  },
+];
+
+// ── Derived helpers ──────────────────────────────────────────────────────────
+
+export const EVENT_CATEGORIES: { id: EventCategory | "all"; label: string; emoji: string }[] = [
+  { id: "all",       label: "All",       emoji: "✨" },
+  { id: "market",    label: "Markets",   emoji: "🌽" },
+  { id: "family",    label: "Family",    emoji: "👨‍👩‍👧" },
+  { id: "music",     label: "Music",     emoji: "🎵" },
+  { id: "arts",      label: "Arts",      emoji: "🎨" },
+  { id: "sports",    label: "Sports",    emoji: "🏟️" },
+  { id: "community", label: "Community", emoji: "🤝" },
+];
+
+export function getEventsForCity(
+  city: City | "all",
+  category: EventCategory | "all",
+  currentMonth?: number,
+): SBEvent[] {
+  const month = currentMonth ?? new Date().getMonth() + 1;
+
+  return SOUTH_BAY_EVENTS.filter((e) => {
+    if (city !== "all" && e.city !== city) return false;
+    if (category !== "all" && e.category !== category) return false;
+    if (e.months && !e.months.includes(month)) return false;
+    return true;
+  });
+}
