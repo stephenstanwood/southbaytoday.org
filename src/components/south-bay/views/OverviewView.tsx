@@ -284,7 +284,7 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
     .slice(0, 4);
 
-  const showThisMonth = thisMonthEvents.length > 0 || nextMonthPreview.length > 0;
+  const showThisMonth = thisMonthEvents.length > 0;
 
   // ── Today: home city (static recurring) ──
   const cityTodayStatic = homeCity
@@ -429,6 +429,18 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
             {thisMonthEvents.map((e) => <MonthCard key={e.id} event={e} />)}
+          </div>
+        </div>
+      )}
+
+      {/* ── Coming Up Next Month ── */}
+      {nextMonthPreview.length > 0 && (
+        <div style={{ marginBottom: 32 }}>
+          <div className="sb-section-header" style={{ marginBottom: 16 }}>
+            <span className="sb-section-title">Coming Up</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{NEXT_MONTH_NAME}</span>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
             {nextMonthPreview.map((e) => <MonthCard key={e.id} event={e} isUpcoming />)}
           </div>
         </div>
