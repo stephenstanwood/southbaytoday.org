@@ -158,9 +158,18 @@ function isPublicEvent(title, source) {
 }
 
 // Strip calendar-artifact date prefixes like "Apr 1, 2026: " or "March 28: "
+// Also decodes HTML entities that may survive title extraction
 function cleanTitle(title) {
   if (!title) return title;
   return title
+    // Decode common HTML entities first
+    .replace(/&#x2019;/gi, "\u2019").replace(/&#x2018;/gi, "\u2018")
+    .replace(/&#x201C;/gi, "\u201C").replace(/&#x201D;/gi, "\u201D")
+    .replace(/&#x2013;/gi, "\u2013").replace(/&#x2014;/gi, "\u2014")
+    .replace(/&#x26;/gi, "&").replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"')
+    .replace(/&#\d+;/g, "").replace(/&\w+;/g, "")
+    // Strip calendar-artifact date prefixes
     .replace(
       /^(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:,\s*\d{4})?\s*:\s*/i,
       "",
@@ -798,6 +807,158 @@ async function fetchScclEvents() {
     if (text.includes("santa clara")) return "santa-clara";
     return null;
   });
+}
+
+// ── Eventbrite geo-search ──
+// 25-mile radius around San Jose (37.3382, -121.8863)
+
+async function fetchEventbriteEvents() {
+  console.log("  ⏳ Eventbrite...");
+  const apiKey = process.env.EVENTBRITE_API_KEY;
+  if (!apiKey) { console.log("  ⚠️  Eventbrite: no API key"); return []; }
+
+  try {
+    const now = new Date();
+    const future = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000); // 60 days out
+    const startFloor = now.toISOString().replace(/\.\d{3}Z$/, "Z");
+    const endCeil = future.toISOString().replace(/\.\d{3}Z$/, "Z");
+
+    const url = new URL("https://www.eventbriteapi.com/v3/events/search/");
+    url.searchParams.set("location.latitude", "37.3382");
+    url.searchParams.set("location.longitude", "-121.8863");
+    url.searchParams.set("location.within", "25mi");
+    url.searchParams.set("start_date.range_start", startFloor);
+    url.searchParams.set("start_date.range_end", endCeil);
+    url.searchParams.set("expand", "venue,organizer");
+    url.searchParams.set("page_size", "200");
+    url.searchParams.set("sort_by", "date");
+
+    const res = await fetch(url.toString(), {
+      headers: { Authorization: `Bearer ${apiKey}`, "User-Agent": UA },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const data = await res.json();
+
+    const events = (data.events || []).map((e) => {
+      const start = parseDate(e.start?.local);
+      if (!start) return null;
+      const end = e.end?.local ? parseDate(e.end.local) : null;
+
+      const venueName = e.venue?.name || "";
+      const address = e.venue?.address?.localized_address_display || "";
+      const city = inferCity(venueName, address);
+      if (!city) return null;
+
+      const isFree = e.is_free || false;
+      const priceStr = e.ticket_availability?.minimum_ticket_price?.display || null;
+
+      return {
+        id: `eb-${e.id}`,
+        title: stripHtml(e.name?.text || e.name?.html || ""),
+        date: isoDate(start),
+        displayDate: displayDate(start),
+        time: displayTime(start),
+        endTime: end ? displayTime(end) : null,
+        venue: venueName,
+        address,
+        city,
+        category: inferCategory(e.name?.text || "", stripHtml(e.description?.html || ""), e.category?.name || ""),
+        cost: isFree ? "free" : priceStr ? "paid" : "paid",
+        costNote: priceStr ? `${priceStr}+` : undefined,
+        description: truncate(stripHtml(e.description?.html || e.summary || "")),
+        url: e.url,
+        source: "Eventbrite",
+        kidFriendly: /family|kid|child|toddler|baby/i.test((e.name?.text || "") + (e.description?.html || "")),
+      };
+    }).filter(Boolean);
+
+    console.log(`  ✅ Eventbrite: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Eventbrite: ${err.message}`);
+    return [];
+  }
+}
+
+// ── Ticketmaster Discovery API ──
+// Covers SAP Center (Sharks), Shoreline, SJ Civic Auditorium, etc.
+
+async function fetchTicketmasterEvents() {
+  console.log("  ⏳ Ticketmaster...");
+  const apiKey = process.env.TICKETMASTER_API_KEY;
+  if (!apiKey) { console.log("  ⚠️  Ticketmaster: no API key"); return []; }
+
+  try {
+    const now = new Date();
+    const future = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 90 days out
+    const startStr = now.toISOString().replace(/\.\d{3}Z$/, "Z");
+    const endStr = future.toISOString().replace(/\.\d{3}Z$/, "Z");
+
+    const url = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
+    url.searchParams.set("apikey", apiKey);
+    url.searchParams.set("latlong", "37.3382,-121.8863");
+    url.searchParams.set("radius", "25");
+    url.searchParams.set("unit", "miles");
+    url.searchParams.set("startDateTime", startStr);
+    url.searchParams.set("endDateTime", endStr);
+    url.searchParams.set("size", "200");
+    url.searchParams.set("sort", "date,asc");
+
+    const res = await fetch(url.toString(), {
+      headers: { "User-Agent": UA },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const data = await res.json();
+
+    const rawEvents = data?._embedded?.events || [];
+    const events = rawEvents.map((e) => {
+      const dateInfo = e.dates?.start;
+      const dateStr = dateInfo?.localDate;
+      const timeStr = dateInfo?.localTime; // "20:00:00"
+      if (!dateStr) return null;
+
+      const start = new Date(`${dateStr}T${timeStr || "00:00:00"}-07:00`);
+      const venue = e._embedded?.venues?.[0];
+      const venueName = venue?.name || "";
+      const city = inferCity(venueName, `${venue?.city?.name || ""} ${venue?.address?.line1 || ""}`);
+      if (!city) return null;
+
+      const priceRange = e.priceRanges?.[0];
+      const minPrice = priceRange?.min;
+      const cost = minPrice === 0 ? "free" : minPrice && minPrice < 25 ? "low" : "paid";
+
+      const classification = e.classifications?.[0];
+      const genre = classification?.genre?.name || "";
+      const segment = classification?.segment?.name || "";
+
+      return {
+        id: `tm-${e.id}`,
+        title: e.name,
+        date: dateStr,
+        displayDate: displayDate(start),
+        time: timeStr ? displayTime(start) : null,
+        endTime: null,
+        venue: venueName,
+        address: venue?.address?.line1 || "",
+        city,
+        category: inferCategory(e.name, genre, segment),
+        cost,
+        costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
+        description: truncate(e.info || e.pleaseNote || ""),
+        url: e.url,
+        source: "Ticketmaster",
+        kidFriendly: /family|kid|child|disney|cirque/i.test(e.name + genre),
+      };
+    }).filter(Boolean);
+
+    console.log(`  ✅ Ticketmaster: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Ticketmaster: ${err.message}`);
+    return [];
+  }
 }
 
 // ── Main ──

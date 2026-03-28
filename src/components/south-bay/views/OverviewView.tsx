@@ -273,13 +273,14 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
   const todayUpcoming = allUpcoming.filter((e) => e.date === TODAY_ISO && !e.ongoing);
 
   // ── Seasonal events for "This Month" section ──
+  // Exclude sports home-game seasons — they span many months with no specific dates
   const thisMonthEvents = SOUTH_BAY_EVENTS
-    .filter((e) => e.recurrence === "seasonal" && e.months?.includes(MONTH))
+    .filter((e) => e.recurrence === "seasonal" && e.months?.includes(MONTH) && e.category !== "sports")
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
     .slice(0, 6);
 
   const nextMonthPreview = SOUTH_BAY_EVENTS
-    .filter((e) => e.recurrence === "seasonal" && e.months?.includes(NEXT_MONTH) && !e.months?.includes(MONTH))
+    .filter((e) => e.recurrence === "seasonal" && e.months?.includes(NEXT_MONTH) && !e.months?.includes(MONTH) && e.category !== "sports")
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
     .slice(0, 4);
 

@@ -36,6 +36,7 @@ export interface PlanInput {
   duration: Duration;
   vibe: VibeType;
   budget: BudgetType;
+  date?: Date; // defaults to today
 }
 
 export interface PlanStop {
@@ -153,17 +154,16 @@ function buildWeatherNote(weather: WeatherInfo, input: PlanInput): string {
 
 // ── Day-of-week helpers ───────────────────────────────────────────────────────
 
-function isActiveToday(e: SBEvent): boolean {
-  const now = new Date();
-  const month = now.getMonth() + 1;
-  const dayIdx = now.getDay();
+function isActiveOnDate(e: SBEvent, date: Date): boolean {
+  const month = date.getMonth() + 1;
+  const dayIdx = date.getDay();
   const dayName = [
     "sunday", "monday", "tuesday", "wednesday",
     "thursday", "friday", "saturday",
   ][dayIdx] as DayOfWeek;
 
   if (e.months && !e.months.includes(month)) return false;
-  if (!e.days) return e.recurrence !== "seasonal"; // seasonal without days = whole-season, not "today"
+  if (!e.days) return e.recurrence !== "seasonal"; // seasonal without days = whole-season, not a daily event
   return e.days.includes(dayName);
 }
 
@@ -197,7 +197,7 @@ function cityLabel(city: string): string {
     .join(" ");
 }
 
-function buildCandidates(): Candidate[] {
+function buildCandidates(date: Date): Candidate[] {
   const candidates: Candidate[] = [];
 
   for (const e of SOUTH_BAY_EVENTS) {
@@ -213,7 +213,7 @@ function buildCandidates(): Candidate[] {
       emoji: e.emoji,
       url: e.url,
       isEvent: true,
-      isTodaySpecial: isActiveToday(e),
+      isTodaySpecial: isActiveOnDate(e, date),
       indoorOutdoor: eventIndoorOutdoor(e),
       category: e.category,
       bestSlots: eventBestSlots(e),
@@ -364,9 +364,10 @@ function buildHeadline(input: PlanInput, stops: PlanStop[]): string {
 // ── Main export ───────────────────────────────────────────────────────────────
 
 export function buildDayPlan(input: PlanInput, weatherRaw: string): DayPlan {
+  const date = input.date ?? new Date();
   const weather = parseWeather(weatherRaw);
   const slots = getSlotsForDuration(input.duration);
-  const candidates = buildCandidates();
+  const candidates = buildCandidates(date);
   const used = new Set<string>();
   const usedCategories = new Set<string>();
   const stops: PlanStop[] = [];

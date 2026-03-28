@@ -286,6 +286,22 @@ function StopCard({ stop }: { stop: PlanStop }) {
 
 type Step = "form" | "building" | "result";
 
+// Build date options: today + 6 more days
+function buildDateOptions() {
+  const options: { label: string; short: string; date: Date }[] = [];
+  const today = new Date();
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const label = i === 0 ? "Today" : i === 1 ? "Tomorrow" : d.toLocaleDateString("en-US", { weekday: "short" });
+    const short = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    options.push({ label, short, date: d });
+  }
+  return options;
+}
+
+const DATE_OPTIONS = buildDateOptions();
+
 export default function PlanView() {
   const [step, setStep] = useState<Step>("form");
   const [weather, setWeather] = useState<string>("70°F partly cloudy");
@@ -296,6 +312,7 @@ export default function PlanView() {
   const [duration, setDuration] = useState<Duration>("full-day");
   const [vibe, setVibe] = useState<VibeType>("mix");
   const [budget, setBudget] = useState<BudgetType>("some");
+  const [selectedDateIdx, setSelectedDateIdx] = useState<number>(0);
 
   // Fetch weather silently on mount
   useEffect(() => {
@@ -311,7 +328,7 @@ export default function PlanView() {
     setStep("building");
     // Small artificial delay for UX polish
     setTimeout(() => {
-      const result = buildDayPlan({ who, duration, vibe, budget }, weather);
+      const result = buildDayPlan({ who, duration, vibe, budget, date: DATE_OPTIONS[selectedDateIdx].date }, weather);
       setPlan(result);
       setStep("result");
     }, 600);
@@ -344,6 +361,38 @@ export default function PlanView() {
           itinerary — events that are actually happening, places worth going,
           matched to the weather.
         </p>
+
+        {/* Date */}
+        <div className="plan-section">
+          <div className="plan-section-label">When?</div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {DATE_OPTIONS.map((opt, i) => (
+              <button
+                key={i}
+                onClick={() => setSelectedDateIdx(i)}
+                style={{
+                  padding: "6px 12px",
+                  borderRadius: 8,
+                  border: `1px solid ${selectedDateIdx === i ? "var(--sb-ink)" : "var(--sb-border)"}`,
+                  background: selectedDateIdx === i ? "var(--sb-ink)" : "var(--sb-card)",
+                  color: selectedDateIdx === i ? "white" : "var(--sb-muted)",
+                  fontSize: 13,
+                  fontWeight: selectedDateIdx === i ? 600 : 400,
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1,
+                  lineHeight: 1.2,
+                  minWidth: 56,
+                }}
+              >
+                <span style={{ fontWeight: 600 }}>{opt.label}</span>
+                <span style={{ fontSize: 10, opacity: 0.7 }}>{opt.short}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Who */}
         <div className="plan-section">
