@@ -41,6 +41,19 @@ const upcomingEvents = allUpcomingEvents.filter((e) => !e.ongoing);
 const ongoingEvents = allUpcomingEvents.filter((e) => e.ongoing);
 const upcomingSources = (upcomingJson as { sources: string[] }).sources || [];
 
+// ── Time helpers ──
+
+function parseTimeToMinutes(t: string): number | null {
+  const m = t.trim().match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
+  if (!m) return null;
+  let h = parseInt(m[1]);
+  const min = parseInt(m[2] ?? "0");
+  const ampm = m[3].toLowerCase();
+  if (ampm === "pm" && h !== 12) h += 12;
+  if (ampm === "am" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
 // ── Recurring event helpers ──
 
 function isEventActiveToday(event: SBEvent, now: Date): boolean {
@@ -275,7 +288,11 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       // 2. Date ascending
       const dateCmp = (a.date || "").localeCompare(b.date || "");
       if (dateCmp !== 0) return dateCmp;
-      // 3. Same date: boost under-represented sources (fewer total = shown first)
+      // 3. Same date: sort by start time (no time = end of day)
+      const aMin = a.time ? (parseTimeToMinutes(a.time) ?? 9999) : 9999;
+      const bMin = b.time ? (parseTimeToMinutes(b.time) ?? 9999) : 9999;
+      if (aMin !== bMin) return aMin - bMin;
+      // 4. Same date+time: boost under-represented sources
       return (srcCounts[a.source] || 0) - (srcCounts[b.source] || 0);
     });
   }, [selectedCities, category, showKidsOnly, search, primary]);

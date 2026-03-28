@@ -160,8 +160,12 @@ const title = "South Bay Signal";
         display: flex;
         align-items: center;
         gap: 8px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
       }
+      .sb-filters-inner::-webkit-scrollbar { display: none; }
       .sb-filter-label {
         font-size: 12px;
         font-weight: 600;
@@ -1734,6 +1738,7 @@ const title = "South Bay Signal";
         .sb-section-title { font-size: 18px; }
         .sb-games-grid { grid-template-columns: 1fr; }
         .sb-overview-grid { grid-template-columns: 1fr; }
+        .sb-today-grid { grid-template-columns: 1fr !important; }
 
         /* Tech section mobile */
         .tech-header-title { font-size: 28px; }

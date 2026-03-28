@@ -384,7 +384,8 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
                   Nothing on the calendar today ({WEEKDAY}). Check the Events tab for upcoming events.
                 </div>
               ) : (
-                <>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
+                  className="sb-today-grid">
                   {/* Home city events first, highlighted */}
                   {cityTodayStatic.map((e) => <EventRow key={e.id} event={e} showCity={false} />)}
                   {cityTodayUpcoming.map((e) => <UpcomingRow key={e.id} event={e} showCity={false} highlight />)}
@@ -392,9 +393,11 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
                   {southBayTodayStatic.slice(0, SB_LIMIT).map((e) => <EventRow key={e.id} event={e} />)}
                   {southBayTodayUpcoming.slice(0, Math.max(0, SB_LIMIT - southBayTodayStatic.length)).map((e) => <UpcomingRow key={e.id} event={e} />)}
                   {totalSouthBay > SB_LIMIT && !showAllSouthBay && (
-                    <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
-                      Show {totalSouthBay - SB_LIMIT} more →
-                    </button>
+                    <div style={{ gridColumn: "1 / -1" }}>
+                      <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
+                        Show {totalSouthBay - SB_LIMIT} more →
+                      </button>
+                    </div>
                   )}
                   {showAllSouthBay && (
                     <>
@@ -402,17 +405,20 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
                       {southBayTodayUpcoming.slice(Math.max(0, SB_LIMIT - southBayTodayStatic.length)).map((e) => <UpcomingRow key={e.id} event={e} />)}
                     </>
                   )}
-                </>
+                </div>
               )}
             </>
           ) : (
-            // Normal city-specific view
+            // Normal city-specific view — 2 columns
             <>
-              {cityTodayStatic.slice(0, 5).map((e) => <EventRow key={e.id} event={e} showCity={false} />)}
-              {cityTodayUpcoming.slice(0, Math.max(0, 5 - cityTodayStatic.length)).map((e) => <UpcomingRow key={e.id} event={e} showCity={false} />)}
-              {cityTodayCount > 5 && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
+                className="sb-today-grid">
+                {cityTodayStatic.slice(0, 10).map((e) => <EventRow key={e.id} event={e} showCity={false} />)}
+                {cityTodayUpcoming.slice(0, Math.max(0, 10 - cityTodayStatic.length)).map((e) => <UpcomingRow key={e.id} event={e} showCity={false} />)}
+              </div>
+              {cityTodayCount > 10 && (
                 <div style={{ paddingTop: 10, fontSize: 12, color: "var(--sb-muted)" }}>
-                  +{cityTodayCount - 5} more in <span style={{ fontWeight: 600, color: "var(--sb-ink)" }}>{getCityName(homeCity)}</span> — see the Events tab.
+                  +{cityTodayCount - 10} more in <span style={{ fontWeight: 600, color: "var(--sb-ink)" }}>{getCityName(homeCity)}</span> — see the Events tab.
                 </div>
               )}
             </>
@@ -468,8 +474,11 @@ export default function OverviewView({ homeCity, setHomeCity }: Props) {
             </div>
           ) : (
             <>
-              {(showAllSouthBay ? southBayTodayStatic : southBayTodayStatic.slice(0, SB_LIMIT)).map((e) => <EventRow key={e.id} event={e} />)}
-              {(showAllSouthBay ? southBayTodayUpcoming : southBayTodayUpcoming.slice(0, Math.max(0, SB_LIMIT - southBayTodayStatic.length))).map((e) => <UpcomingRow key={e.id} event={e} />)}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0 32px" }}
+                className="sb-today-grid">
+                {(showAllSouthBay ? southBayTodayStatic : southBayTodayStatic.slice(0, SB_LIMIT)).map((e) => <EventRow key={e.id} event={e} />)}
+                {(showAllSouthBay ? southBayTodayUpcoming : southBayTodayUpcoming.slice(0, Math.max(0, SB_LIMIT - southBayTodayStatic.length))).map((e) => <UpcomingRow key={e.id} event={e} />)}
+              </div>
               {southBayCount > SB_LIMIT && !showAllSouthBay && (
                 <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
                   Show {southBayCount - SB_LIMIT} more events →
