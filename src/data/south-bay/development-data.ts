@@ -243,7 +243,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Mountain View's approved plan for Google's North Bayshore area — the largest development proposal in the city's history. The project includes housing, retail, parks, and Google office space in a neighborhood adjacent to the Bay. Mountain View approved a Precise Plan enabling thousands of new homes in an area previously limited to office use.",
+      "Mountain View's approved plan for Google's North Bayshore area — a major mixed-use development spanning housing, retail, parks, and Google office space adjacent to the Bay. Mountain View approved a Precise Plan enabling thousands of new homes in an area previously limited to office use.",
     scale: "~7,000 housing units, office, retail",
     developer: "Google",
     timeline: "Long-term phased development",
