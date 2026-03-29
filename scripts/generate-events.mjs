@@ -230,12 +230,54 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bVIP\s+Package\b/i,
   /\bMeet\s*[&+]\s*Greet\b/i,
   /\bFloor\s+Package\b/i,
-  // SCU course-based events (enrolled students only, not open public)
+  // SCU course-based / enrolled-student-only events
   /^IN-PERSON ONLY:/i,
   /^ONLINE ONLY:/i,
   /^HYBRID:/i,
+  /^OSHER\s+ONLINE/i,
   /\bcourse\s+lecture\b/i,
   /\bclass\s+session\b/i,
+  /\bclasses\s+begin\b/i,
+  /\bclasses\s+end\b/i,
+  /\breading\s+room\s+open\b/i,
+  /\bstudy\s+abroad\s+advising\b/i,
+  /\badvising\s+hours?\b/i,
+  /\bnoon\s+mass\b/i,
+  /\bsacrament\s+of\b/i,
+  /\bpalm\s+sunday\b/i,
+  /\bresume\s+(refresh|workshop|review)\b/i,
+  /\bcoffee\s+chat\s+with\b/i,
+  /\bvirtual\s+coffee\s+chat\b/i,
+  /\btenure\s*[&+]\s*promotion\b/i,
+  /\bsearch\s+training\b/i,
+  /\brecruitment\s+training\b/i,
+  /\b(plan\s+your\s+(2l|3l|1l))\b/i,
+  /^Week\s+\d+$/i,
+  /^Program\s+Start$/i,
+  /^(Classes?|Quarter|Semester)\s+(Begin|Start|End)\b/i,
+  /\bfarm\s+stand\b/i,
+  /\btabling\b/i,
+  /\bintro\s+to\s+(wave|hpc|canvas|banner)\b/i,
+  /\bgetting\s+started\s+with\b/i,
+  /\blabor\s+(management|relations)\s+meeting\b/i,
+  /\bcareer\s+fair\s+ready\b/i,
+  /\bget\s+career\s+fair\b/i,
+  /\bwcag\b/i,
+  /\baccessibility\s+compliance\b/i,
+  /\bcreating\s+accessible\b/i,
+  /\bworkday\s+(financials?|training|procurement|hr)\b/i,
+  /\bpeer\s+advisor\s+hours?\b/i,
+  /\bcoffee\s+and\s+donuts?\b/i,
+  /\bdonuts?\s+and\s+coffee\b/i,
+  /\bcommunity\s+liturgy\b/i,
+  /\bnoon\s+day\s+zen\b/i,
+  /\bcareer\s+advice\s+support\b/i,
+  /\b(drop[\s-]?in\s+)?lsb\s+career\b/i,
+  /\bglean\s+team\b/i,
+  /\bmaking\s+meaning\s+with\s+scu\b/i,
+  /\bweekday\s+liturgy\b/i,
+  /\bevening\s+zen\b/i,
+  /\bexamen\b/i,
 ];
 
 // Detect away games: "[School] at [Away Opponent/Location]"
@@ -1436,12 +1478,18 @@ async function main() {
   // Sort by date ascending
   valid.sort((a, b) => a.date.localeCompare(b.date));
 
-  // Per-source cap — prevent large sources (SJSU, SCU) from drowning community events
-  const MAX_PER_SOURCE = 200;
+  // Per-source cap — university feeds are high-volume; cap them so community events aren't buried
+  const SOURCE_CAPS = {
+    "Santa Clara University": 25,
+    "SJSU Events": 30,
+    "Stanford Events": 30,
+  };
+  const DEFAULT_CAP = 200;
   const sourceCounts = {};
   const capped = valid.filter((e) => {
+    const cap = SOURCE_CAPS[e.source] ?? DEFAULT_CAP;
     sourceCounts[e.source] = (sourceCounts[e.source] || 0) + 1;
-    return sourceCounts[e.source] <= MAX_PER_SOURCE;
+    return sourceCounts[e.source] <= cap;
   });
 
   // Deduplicate by normalized title + date
