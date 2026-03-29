@@ -21,6 +21,7 @@ interface SBVenue {
   id: string;
   name: string;
   venueMatch: string; // substring match against event.venue
+  cityFilter?: string; // also require event.city === cityFilter (for shared venue names like SCCL)
   city: string;
   cityLabel: string;
   emoji: string;
@@ -59,11 +60,11 @@ const SOUTH_BAY_VENUES: SBVenue[] = [
   // ── Sunnyvale ──
   { id: "sunnyvale-library", name: "Sunnyvale Public Library",             venueMatch: "Sunnyvale Public Library",             city: "sunnyvale",     cityLabel: "Sunnyvale",     emoji: "📚", tags: "Library · Classes · Family" },
   // ── Los Gatos ──
-  { id: "los-gatos-library", name: "Los Gatos Library",                   venueMatch: "Los Gatos Library",                    city: "los-gatos",     cityLabel: "Los Gatos",     emoji: "📚", tags: "Library · Classes · Family" },
+  { id: "los-gatos-library", name: "Los Gatos Library",                   venueMatch: "Santa Clara County Library",           cityFilter: "los-gatos",  city: "los-gatos",     cityLabel: "Los Gatos",     emoji: "📚", tags: "Library · Classes · Family" },
   // ── Campbell ──
-  { id: "campbell-library", name: "Campbell Library",                      venueMatch: "Campbell Library",                     city: "campbell",      cityLabel: "Campbell",      emoji: "📚", tags: "Library · Classes · Family" },
+  { id: "campbell-library", name: "Campbell Library",                      venueMatch: "Santa Clara County Library",           cityFilter: "campbell",   city: "campbell",      cityLabel: "Campbell",      emoji: "📚", tags: "Library · Classes · Family" },
   // ── Milpitas ──
-  { id: "milpitas-library", name: "Milpitas Library",                      venueMatch: "Milpitas Library",                     city: "milpitas",      cityLabel: "Milpitas",      emoji: "📚", tags: "Library · Classes · Family" },
+  { id: "milpitas-library", name: "Milpitas Library",                      venueMatch: "Santa Clara County Library",           cityFilter: "milpitas",   city: "milpitas",      cityLabel: "Milpitas",      emoji: "📚", tags: "Library · Classes · Family" },
 ];
 
 // ── Upcoming event type (from scraped JSON) ──
@@ -107,7 +108,8 @@ function formatTimeRange(time: string | null, endTime: string | null, isSports =
 
 const NOW_MINUTES = (() => {
   const n = new Date();
-  return n.getHours() * 60 + n.getMinutes();
+  const nPT = new Date(n.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  return nPT.getHours() * 60 + nPT.getMinutes();
 })();
 
 function hasNotStarted(time: string | null): boolean {
@@ -478,7 +480,11 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
     const result: Record<string, UpcomingEvent[]> = {};
     for (const v of SOUTH_BAY_VENUES) {
       result[v.id] = allUpcomingEvents
-        .filter((e) => e.venue?.toLowerCase().includes(v.venueMatch.toLowerCase()) && !e.ongoing)
+        .filter((e) => {
+          if (!e.venue?.toLowerCase().includes(v.venueMatch.toLowerCase())) return false;
+          if (v.cityFilter && e.city !== v.cityFilter) return false;
+          return true;
+        })
         .sort((a, b) => (a.date || "").localeCompare(b.date || ""));
     }
     return result;
@@ -492,7 +498,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
     return allUpcomingEvents
       .filter((e) => {
         if (!e.venue?.toLowerCase().includes(v.venueMatch.toLowerCase())) return false;
-        if (e.ongoing) return false;
+        if (v.cityFilter && e.city !== v.cityFilter) return false;
         if (category !== "all" && e.category !== category) return false;
         if (showKidsOnly && !e.kidFriendly) return false;
         if (search) {

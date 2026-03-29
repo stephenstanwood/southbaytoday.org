@@ -975,7 +975,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
   console.log(`  ⏳ ${libraryName}...`);
   try {
     const data = await fetchJson(
-      `https://gateway.bibliocommons.com/v2/libraries/${libraryId}/events?limit=200`,
+      `https://gateway.bibliocommons.com/v2/libraries/${libraryId}/events?limit=150`,
     );
 
     const entities = data.entities || {};
