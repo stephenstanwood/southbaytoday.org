@@ -640,6 +640,49 @@ function pickEventStory(): BriefingStory | null {
   return null;
 }
 
+function pickElectionStory(): BriefingStory | null {
+  const nowMidnight = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+  const primaryDate = new Date(2026, 5, 2); // June 2, 2026
+  const generalDate = new Date(2026, 10, 3); // Nov 3, 2026
+  const regDeadline = new Date(2026, 4, 18); // May 18, 2026
+
+  const daysToReg = Math.ceil((regDeadline.getTime() - nowMidnight.getTime()) / 86400000);
+  const daysToPrimary = Math.ceil((primaryDate.getTime() - nowMidnight.getTime()) / 86400000);
+  const daysToGeneral = Math.ceil((generalDate.getTime() - nowMidnight.getTime()) / 86400000);
+
+  // Only surface within 90 days of primary or general
+  if (daysToPrimary < -30 && daysToGeneral > 90) return null;
+  if (daysToPrimary > 90 && daysToGeneral > 90) return null;
+
+  let headline: string;
+  let lede: string;
+
+  if (daysToPrimary > 0 && daysToReg > 0 && daysToReg <= 30) {
+    headline = `Voter registration closes in ${daysToReg} days`;
+    lede = `CA Primary is June 2 — deadline to register online/by mail is May 18. Governor race, US Senate, city councils, and more on the ballot.`;
+  } else if (daysToPrimary > 0 && daysToPrimary <= 14) {
+    headline = `CA Primary Election in ${daysToPrimary} days`;
+    lede = `June 2 — vote on Governor, US Senate, State Legislature, Santa Clara County, and city council races across the South Bay.`;
+  } else if (daysToPrimary > 0) {
+    headline = `CA Primary Election: ${daysToPrimary} days away`;
+    lede = `June 2, 2026. Governor (open seat), US Senate, and key South Bay city council races. Check your registration at sccvote.org.`;
+  } else if (daysToGeneral > 0 && daysToGeneral <= 90) {
+    headline = `General Election: ${daysToGeneral} days`;
+    lede = `November 3, 2026 — general election for Governor, Congress, state legislature, and local offices across Santa Clara County.`;
+  } else {
+    return null;
+  }
+
+  return {
+    category: "Elections 2026",
+    headline,
+    lede,
+    tab: "government",
+    emoji: "🗳️",
+    accentColor: "#1d4ed8",
+  };
+}
+
 function pickHealthStory(): BriefingStory | null {
   const { flags = [] } = healthScoresJson as { flags?: Array<{ name: string; city: string; date: string; result: string; summary: string }> };
   const cutoff = new Date(Date.now() - 14 * 86400000).toISOString().split("T")[0];
@@ -797,7 +840,7 @@ function SignalBriefing({
   const stories: BriefingStory[] = [
     pickEventStory(),
     pickCityHallStory(homeCity, digests),
-    pickHealthStory() ?? pickDevelopmentStory(),
+    pickElectionStory() ?? pickHealthStory() ?? pickDevelopmentStory(),
   ].filter((s): s is BriefingStory => s !== null);
 
   if (!stories.length) return null;

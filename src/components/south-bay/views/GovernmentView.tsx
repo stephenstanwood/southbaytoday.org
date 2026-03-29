@@ -4,6 +4,7 @@ import type { DigestData } from "../cards/DigestCard";
 import HealthScoresCard from "../cards/HealthScoresCard";
 import BudgetCard from "../cards/BudgetCard";
 import MinutesSearchCard from "../cards/MinutesSearchCard";
+import ElectionsCard from "../cards/ElectionsCard";
 import type { City } from "../../../lib/south-bay/types";
 import digestsJson from "../../../data/south-bay/digests.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
@@ -107,6 +108,9 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
 
   return (
     <>
+      {/* ── 2026 Elections ── */}
+      <ElectionsCard />
+
       {/* ── Budget Snapshot ── */}
       <BudgetCard cityId={homeCity} />
 
