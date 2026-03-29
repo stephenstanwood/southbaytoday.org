@@ -1,40 +1,65 @@
 export const prerender = false;
 import type { APIRoute } from "astro";
 import { wmoInfo, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../lib/aestheticWeather";
+import { CITY_MAP } from "../../lib/south-bay/cities";
+import type { City } from "../../lib/south-bay/types";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { okJson } from "../../lib/apiHelpers";
 
 /**
- * Lightweight weather proxy for the homepage terminal card.
- * Uses Open-Meteo (free, no key) for Campbell, CA coords.
- * Returns a one-liner like "☀️ 72°F clear sky".
- *
- * Cached for 30 minutes via CDN headers.
+ * Weather proxy for The South Bay Signal.
+ * Uses Open-Meteo (free, no key) — returns current conditions + 5-day daily forecast.
+ * Accepts optional ?city=campbell query param; defaults to Campbell coords.
+ * Cached 30 min via CDN.
  */
 
-export const GET: APIRoute = async ({ clientAddress }) => {
+export const GET: APIRoute = async ({ request, clientAddress }) => {
   if (!rateLimit(clientAddress)) return rateLimitResponse();
 
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${DEFAULT_WEATHER_LAT}&longitude=${DEFAULT_WEATHER_LON}&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America/Los_Angeles`;
+    const cityId = new URL(request.url).searchParams.get("city") as City | null;
+    const cityConfig = cityId ? CITY_MAP[cityId] : null;
+    const lat = cityConfig?.lat ?? DEFAULT_WEATHER_LAT;
+    const lon = cityConfig?.lon ?? DEFAULT_WEATHER_LON;
 
-    const res = await fetch(url, {
-      signal: AbortSignal.timeout(4000),
-    });
+    const url = [
+      `https://api.open-meteo.com/v1/forecast`,
+      `?latitude=${lat}&longitude=${lon}`,
+      `&current=temperature_2m,weather_code`,
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max`,
+      `&temperature_unit=fahrenheit`,
+      `&timezone=America%2FLos_Angeles`,
+      `&forecast_days=5`,
+    ].join("");
 
+    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
     if (!res.ok) throw new Error(`open-meteo ${res.status}`);
 
     const data = await res.json();
+
+    // Current conditions one-liner
     const temp = Math.round(data.current.temperature_2m);
     const code = data.current.weather_code as number;
     const [emoji, desc] = wmoInfo(code);
-
     const weather = `${emoji} ${temp}°F ${desc.toLowerCase()}`;
 
-    return okJson({ weather }, { "Cache-Control": "public, s-maxage=1800, max-age=900" });
+    // 5-day daily forecast
+    const { time, weather_code, temperature_2m_max, temperature_2m_min, precipitation_probability_max } = data.daily;
+    const forecast = (time as string[]).map((date: string, i: number) => {
+      const [fe, fd] = wmoInfo(weather_code[i] as number);
+      return {
+        date,
+        emoji: fe,
+        desc: fd,
+        high: Math.round(temperature_2m_max[i] as number),
+        low: Math.round(temperature_2m_min[i] as number),
+        rainPct: precipitation_probability_max[i] as number,
+      };
+    });
+
+    return okJson({ weather, forecast }, { "Cache-Control": "public, s-maxage=1800, max-age=900" });
   } catch (err) {
     console.error("weather fetch error:", err);
-    // status 200 intentional — CDN caches this; null signals the UI to show nothing
-    return okJson({ weather: null });
+    return okJson({ weather: null, forecast: null });
   }
 };

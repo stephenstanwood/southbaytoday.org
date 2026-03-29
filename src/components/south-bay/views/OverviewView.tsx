@@ -19,6 +19,15 @@ import schoolCalJson from "../../../data/south-bay/school-calendar.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+type ForecastDay = {
+  date: string;
+  emoji: string;
+  desc: string;
+  high: number;
+  low: number;
+  rainPct: number;
+};
+
 type UpcomingEvent = {
   id: string;
   title: string;
@@ -883,6 +892,74 @@ function WeekendPicksCard() {
   );
 }
 
+// ── 5-day forecast strip ──────────────────────────────────────────────────────
+
+const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function ForecastStrip({ forecast }: { forecast: ForecastDay[] }) {
+  const todayISO = new Date().toISOString().split("T")[0];
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: `repeat(${forecast.length}, 1fr)`,
+        border: "1.5px solid var(--sb-border-light)",
+        borderRadius: 8,
+        overflow: "hidden",
+        background: "#fff",
+      }}>
+        {forecast.map((day, i) => {
+          const isToday = day.date === todayISO;
+          const d = new Date(day.date + "T12:00:00");
+          const label = isToday ? "Today" : DAY_LABELS[d.getDay()];
+          const showRain = day.rainPct >= 20;
+          return (
+            <div
+              key={day.date}
+              style={{
+                padding: "10px 6px 8px",
+                textAlign: "center",
+                borderRight: i < forecast.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+                background: isToday ? "var(--sb-primary-light)" : "transparent",
+              }}
+            >
+              <div style={{
+                fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.06em", textTransform: "uppercase",
+                color: isToday ? "var(--sb-ink)" : "var(--sb-muted)",
+                marginBottom: 4,
+              }}>
+                {label}
+              </div>
+              <div style={{ fontSize: 18, lineHeight: 1, marginBottom: 4 }}>{day.emoji}</div>
+              <div style={{
+                fontSize: 12, fontWeight: 700, color: "var(--sb-ink)",
+                fontVariantNumeric: "tabular-nums",
+              }}>
+                {day.high}°
+              </div>
+              <div style={{
+                fontSize: 11, color: "var(--sb-muted)",
+                fontVariantNumeric: "tabular-nums",
+              }}>
+                {day.low}°
+              </div>
+              {showRain && (
+                <div style={{
+                  fontSize: 9, color: "#1d4ed8", fontWeight: 600,
+                  marginTop: 3, fontVariantNumeric: "tabular-nums",
+                }}>
+                  💧{day.rainPct}%
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Around the South Bay ─────────────────────────────────────────────────────
 
 interface AroundTownItem {
@@ -1357,15 +1434,20 @@ interface Props {
 
 export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Props) {
   const [weather, setWeather] = useState<string | null>(null);
+  const [forecast, setForecast] = useState<ForecastDay[] | null>(null);
   const [changingCity, setChangingCity] = useState(false);
   const [showAllSouthBay, setShowAllSouthBay] = useState(false);
 
   useEffect(() => {
-    fetch("/api/weather")
+    const cityParam = homeCity ? `?city=${homeCity}` : "";
+    fetch(`/api/weather${cityParam}`)
       .then((r) => r.json())
-      .then((d) => setWeather(d.weather ?? null))
+      .then((d) => {
+        setWeather(d.weather ?? null);
+        setForecast(d.forecast ?? null);
+      })
       .catch(() => {});
-  }, []);
+  }, [homeCity]);
 
   // ── Upcoming scraped events for today ──
   const allUpcoming = (upcomingJson as { events: UpcomingEvent[] }).events ?? [];
@@ -1510,6 +1592,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
             </button>
           )}
         </div>
+      )}
+
+      {/* ── 5-day forecast ── */}
+      {forecast && forecast.length > 0 && !changingCity && (
+        <ForecastStrip forecast={forecast} />
       )}
 
       {/* ── Today in [City] / This Weekend in [City] ── */}
