@@ -1641,3 +1641,61 @@ The feature also deepens SBS's identity as a genuine local homepage. No other So
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — employment dimension now complete.** South Bay Signal covers the full lifecycle of South Bay life: what's happening today (events), what your city is doing (government/council), what's being built (development), what the air is like (AQI, weather), what's shaking (quakes), what's on (sports, shows), and now — who's hiring. A resident who opens SBS after a layoff, or who's just thinking about their career, gets a genuine local picture of the job market they can act on immediately.
+
+---
+
+## 2026-03-29 — Cycle 29: Stream Watch Card
+
+### What Was Built
+**WaterWatchCard** — live USGS stream gauge monitoring for 5 South Bay creeks and rivers.
+
+Component: `src/components/south-bay/cards/WaterWatchCard.tsx`
+Data source: USGS National Water Information System API (public, no key required)
+Location: Overview tab, after Quake Watch card
+
+**Gauges covered:**
+- San Francisquito Creek at Stanford (site 11164500)
+- Guadalupe River above HWY 101, San Jose (site 11169025)  
+- Saratoga Creek at Saratoga (site 11169500)
+- Coyote Creek near S. San Jose (site 11170000)
+- Coyote Creek at Milpitas (site 11172175)
+
+**Design:**
+- Color-coded status dots: blue (Normal), amber (Elevated), red (High)
+- Flow in cfs with trend arrow (▲ rising, — stable, ▼ falling) based on 6-hour delta
+- Summary badge: "All normal" (green) or "X elevated" (amber)
+- Last-updated time, link to USGS realtime data
+- Silent-fail if API is unreachable — no error shown to users
+- Status thresholds calibrated to late-winter/spring normal conditions
+
+**Data refreshed this cycle:**
+- upcoming-events.json: 342 events, 86 ongoing, 15 sources
+- digests.json: 6 cities (Milpitas had no usable transcript)
+- around-town.json: 6 items (MV housing, MV prohousing, Sunnyvale safe parking, Cupertino business amnesty, Cupertino retail incentives, Santa Clara HUD grants)
+- upcoming-meetings.json: San Jose (Apr 7), Cupertino (Apr 1)
+- weekend-picks.json: 3 picks for March 27–29
+
+### APIs Investigated This Cycle
+- **Caltrans D4** (`cwwp2.dot.ca.gov`) — still returning 500; skip for now
+- **511.org transit realtime** — requires API key not in .env.local; skip
+- **San Jose open data** (`data.sanjoseca.gov`) — Socrata endpoints returning errors
+- **CDEC reservoir storage** — only UVA (Uvas Reservoir) had non-negative data; station ID coverage is poor for SC County reservoirs
+- **USGS stream gauges** ✅ — works perfectly with explicit site IDs, 15-min resolution
+
+### Why Stream Watch Is Resident-Useful
+South Bay has a recurring flood risk story: Coyote Creek flooded Willow Glen in 2017, San Francisquito Creek has flood risk for East Palo Alto, and the Guadalupe River backstops downtown San Jose during heavy rain events. Stream levels are directly actionable information:
+- "Should I take my kid to creek trail today?" 
+- "Is Coyote Creek safe after this rain?" 
+- "Is there any flood risk right now?"
+
+No other local aggregator shows this. It sits naturally alongside Quake Watch and Air Quality as the "environmental safety" section of the page.
+
+### Effect on Real Users
+- **Trail runner**: Opens SBS morning after a storm — "Guadalupe: 50 cfs, Normal ▼ falling — trail is good"
+- **Parent near Coyote Creek**: Checks status after overnight rain — sees "Normal" and doesn't worry
+- **Flood-risk homeowner near creek**: Has a one-click way to check current conditions without navigating USGS
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511 API key needed. Register at 511.org/open-data.
+2. **High school sports scores** — MaxPreps or CIF section scraper. Hyperlocal.
+3. **Crime pulse** — once San Jose open data is accessible; SJPD has public crime report data.
