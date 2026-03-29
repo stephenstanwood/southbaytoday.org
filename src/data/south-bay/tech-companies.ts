@@ -14,7 +14,8 @@ export type TechCategory =
   | "security"
   | "social"
   | "hardware"
-  | "saas";
+  | "saas"
+  | "robotics";
 
 export const CATEGORY_LABELS: Record<TechCategory, string> = {
   chip: "Chips",
@@ -27,6 +28,7 @@ export const CATEGORY_LABELS: Record<TechCategory, string> = {
   social: "Social",
   hardware: "Hardware",
   saas: "SaaS",
+  robotics: "Robotics",
 };
 
 export type TechTrend = "up" | "flat" | "down";
@@ -568,6 +570,72 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     color: "#0EA5E9",
     url: "https://www.nilesecure.com",
     employeesNote: "~200 employees",
+  },
+  {
+    id: "figure-ai",
+    name: "Figure AI",
+    city: "Sunnyvale",
+    category: "robotics",
+    stage: "startup",
+    tagline: "Humanoid robots for real warehouse and factory work. Raised $675M from OpenAI, Microsoft, NVIDIA, and Amazon. BMW and UPS pilots underway.",
+    color: "#18181B",
+    url: "https://figure.ai",
+    employeesNote: "~400 employees",
+  },
+  {
+    id: "1x-technologies",
+    name: "1X Technologies",
+    city: "Sunnyvale",
+    category: "robotics",
+    stage: "startup",
+    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. US headquarters in Sunnyvale.",
+    color: "#E11D48",
+    url: "https://www.1x.tech",
+    employeesNote: "~200 employees",
+  },
+  {
+    id: "glean",
+    name: "Glean",
+    city: "Palo Alto",
+    category: "saas",
+    stage: "growth",
+    tagline: "Enterprise AI search across every app your company uses — Slack, Drive, GitHub, Salesforce, and more. Valued at $4.6B. Rapid enterprise adoption.",
+    color: "#7C3AED",
+    url: "https://www.glean.com",
+    employeesNote: "~1,000 employees",
+  },
+  {
+    id: "rubrik",
+    name: "Rubrik",
+    city: "Palo Alto",
+    category: "security",
+    stage: "public",
+    tagline: "Data security cloud — backup, ransomware recovery, and data observability. IPO'd April 2024. Growing fast as ransomware threats escalate.",
+    color: "#00B4D8",
+    url: "https://www.rubrik.com",
+    employeesNote: "~3,500 employees globally",
+  },
+  {
+    id: "automation-anywhere",
+    name: "Automation Anywhere",
+    city: "San Jose",
+    category: "saas",
+    stage: "growth",
+    tagline: "Agentic AI automation platform for enterprise workflows. One of the original RPA companies, now reinventing itself for the AI-agent era.",
+    color: "#FF6B00",
+    url: "https://www.automationanywhere.com",
+    employeesNote: "~3,000 employees globally",
+  },
+  {
+    id: "cohesity",
+    name: "Cohesity",
+    city: "San Jose",
+    category: "cloud",
+    stage: "growth",
+    tagline: "Data management and backup platform with AI search across your stored data. Merged with Veritas in 2024 to become a major data protection player.",
+    color: "#00875A",
+    url: "https://www.cohesity.com",
+    employeesNote: "~3,000 employees globally",
   },
 ];
 

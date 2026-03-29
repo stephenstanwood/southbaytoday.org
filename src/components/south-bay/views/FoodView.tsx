@@ -16,7 +16,7 @@ type UpcomingEvent = {
   url: string | null;
 };
 
-const allUpcoming = (upcomingJson as { events: UpcomingEvent[] }).events ?? (upcomingJson as UpcomingEvent[]);
+const allUpcoming: UpcomingEvent[] = (upcomingJson as { events: UpcomingEvent[] }).events ?? (upcomingJson as unknown as UpcomingEvent[]);
 
 const TODAY = new Date().toISOString().split("T")[0];
 const NINETY_DAYS = new Date(Date.now() + 90 * 86400000).toISOString().split("T")[0];

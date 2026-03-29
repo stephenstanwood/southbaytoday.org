@@ -455,7 +455,13 @@ function inferCategory(title, desc, type, venue = "") {
   // School/fundraiser fun runs are community events, not sports
   const isSchoolFundraiser = /\b(school|middle school|elementary|fundrais|walk-a-thon|walkathon)\b/.test(t);
   if (t.includes("game") || t.includes("sport") || t.includes("athletic") || t.includes("golf") || t.includes("tennis") || t.includes("soccer") || t.includes("basketball") || t.includes("baseball") || t.includes("softball") || t.includes("volleyball") || t.includes("swimming") || t.includes("swim meet") || t.includes("track") || t.includes("cross country") || t.includes("lacrosse") || t.includes("football") || t.includes("gymnastics") || t.includes("wrestling") || t.includes("water polo") || t.includes("polo") || t.includes("hockey") || t.includes("rugby") || /\browing\b/.test(t) || t.includes("crew") || t.includes("diving") || t.includes("fencing") || t.includes("skiing") || t.includes("snowboard") || t.includes("cycling") || t.includes("equestrian") || t.includes("vs.") || t.includes("vs ") || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(t)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(t)) || (!isSchoolFundraiser && t.includes("race"))) return "sports";
-  if (t.includes("market") || t.includes("fair") || t.includes("vendor") || t.includes("craft")) return "market";
+  // Government/civic events at markets are still community events
+  if (/\b(office hours|mayor|city council|council member|supervisor)\b/.test(t) && t.includes("market")) return "community";
+  // "craft" alone is too broad — "well-crafted resume", "refine your craft" → require craft market context
+  const isCraftMarket = /\bcraft\s*(fair|market|show|sale|night|bazaar|booth|vendor)\b/.test(t);
+  // "fair" alone is too broad — only match community/arts fairs, not job/health/resource/housing fairs
+  const isFairEvent = /\b(craft|art|artisan|maker|vendor|street|holiday|county|state|flea|antique|swap|harvest|spring|summer|fall|winter) fair\b/.test(t);
+  if (t.includes("market") || isFairEvent || t.includes("vendor") || isCraftMarket) return "market";
   if (t.includes("hike") || t.includes("hiking") || t.includes("outdoor") || t.includes("garden") || t.includes("nature") || t.includes("trail") || t.includes("park")) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary")) return "food";
