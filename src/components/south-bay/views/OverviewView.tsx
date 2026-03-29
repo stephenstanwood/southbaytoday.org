@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SportsView from "./SportsView";
 import OutagesCard from "../cards/OutagesCard";
 import RealEstateCard from "../cards/RealEstateCard";
+import PermitPulseCard from "../cards/PermitPulseCard";
 import {
   SOUTH_BAY_EVENTS,
   type SBEvent,
@@ -1910,6 +1911,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Housing Market ── */}
       {!changingCity && <RealEstateCard homeCity={homeCity} />}
+
+      {/* ── Permit Pulse ── */}
+      {!changingCity && <PermitPulseCard />}
 
       {/* ── Sports scoreboard ── */}
       <SportsView />
