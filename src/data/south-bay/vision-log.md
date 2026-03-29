@@ -1489,3 +1489,57 @@ The data is genuinely real-time (USGS updates within minutes of any event), the 
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — environmental awareness is now complete.** In the span of recent cycles, South Bay Signal has gone from no environmental data to covering four dimensions of local conditions: weather (ForecastStrip), air quality (AirQualityCard), building activity (PermitPulseCard), and now seismic activity (QuakeWatchCard). A resident opening the page now gets a genuine pulse of the physical environment they live in — what's in the air, what's being built, and what's shaking underground. That's uniquely local intelligence that no other aggregator provides in one place.
+
+---
+
+## Cycle 26 — 2026 Elections Card: Civic Countdown (2026-03-29)
+
+### What Was Built
+
+**ElectionsCard on the Government tab** — countdown to the California Primary and key voter deadlines for Santa Clara County residents.
+
+**`src/components/south-bay/cards/ElectionsCard.tsx`** — new static component:
+- Headline countdown: "X days to CA Primary" with urgency coloring (red if ≤30 days)
+- Key dates strip: Voter Reg Deadline (May 18), VBM Request Cutoff (May 26), Early Voting Opens (May 9), CA Primary (June 2), General Election (Nov 3)
+- Date rows highlight yellow when ≤14 days away
+- "On the Ballot" grid: 5 races with descriptions — Governor (open seat), US Senate, State Assembly/Senate, SCC Board of Supervisors, City Council races
+- CTA buttons: "Check Your Registration →" (to sccvote.org) + "Find Your Polling Place"
+- Auto-hides after both primary and general are 7+ days past
+
+**Overview briefing story** — `pickElectionStory()` added to OverviewView:
+- Activates within 90 days of either primary or general
+- Currently shows: "Voter registration closes in X days" (or countdown to primary)
+- Appears as 3rd briefing card, bumping health/development stories during election season
+
+**Data refreshed this cycle:**
+- upcoming-events.json: 340 events, 84 ongoing, 15 sources
+- digests.json: 6 cities (SJ, MV, Sunnyvale, Cupertino, Santa Clara, Palo Alto)
+- around-town.json: 5 items
+- upcoming-meetings.json: San Jose (Apr 7), Cupertino (Apr 1)
+- weekend-picks.json: Los Gatos 5K Fun Run, Sharks vs Blues, Nate Jackson Comedy Tour
+
+### Why This Was the Highest-Leverage Move
+
+The California Primary is June 2, 2026 — just 66 days away as of this cycle. The voter registration deadline is May 18, only 51 days away. This is the exact window where civic reminders have the highest impact: too early and residents ignore it; too late and it's past. South Bay Signal is now the only local aggregator surfacing this information prominently alongside all the other civic content on the Government tab.
+
+Midterm 2026 has significant South Bay stakes: open Governor's seat (Newsom term-limited), US Senate, State Assembly races in Santa Clara County, SCC Board of Supervisors seats, and city council races in San Jose, Sunnyvale, Mountain View, and other cities. A resident who opens SBS and sees "Voter reg closes in 51 days" gets an actionable reminder they won't find anywhere else on a local homepage.
+
+### Effect on Real Users
+- **Unregistered resident**: Sees countdown + "Check Your Registration" CTA — takes immediate action
+- **Registered voter**: Sees upcoming races listed — starts forming opinions / researching candidates
+- **Parent/community member**: "Oh I didn't know there were city council races this year" — civic engagement boost
+- **Overview tab user**: Sees 3rd briefing card "CA Primary Election: 66 days away" — seamless awareness without switching tabs
+
+### Technical Notes
+- All static data — no external API calls, builds instantly
+- `daysUntil()` runs at render time so days count stays current
+- Component returns null after both elections pass (7-day grace period)
+- Races listed are factually confirmed for 2026: Governor (yes, Newsom TL), Alex Padilla (US Senate, 4-year term through 2028), SCC Board District rotations, standard city council cycles
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511 API key needed. Register at 511.org/open-data. Daily commuter urgency.
+2. **Development data audit** — development-data.ts static entries may be stale. BART Phase II milestones, Google Downtown West worth updating.
+3. **Caltrans D4 traffic incidents** — API was returning HTTP 500 as of 2026-03-28. Worth retrying — I-280, 101, 85, 87 incident feed would be very useful for commuters.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — civic engagement dimension now complete.** SBS now covers seven dimensions of local life: sports, events, government/council, real estate, environment (weather + AQI + quakes + permits), health/food safety, and now elections. A resident who opens the page today gets not just what's happening in their city, but what's on the ballot in two months and how to act on it. That's the full homepage for South Bay life.
