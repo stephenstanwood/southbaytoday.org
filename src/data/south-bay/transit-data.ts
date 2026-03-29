@@ -119,10 +119,10 @@ export const TRANSIT_AGENCIES: TransitAgency[] = [
       {
         id: "bart-1",
         summary: "BART Phase II: San José Diridon extension in early construction",
-        detail: "The 6-mile BART Silicon Valley Phase II extension from Berryessa to downtown San José and Santa Clara is in early construction. Four new stations planned: Alum Rock/28th, Downtown San José, Diridon, and Santa Clara. Expected opening 2030.",
+        detail: "The 6-mile BART Silicon Valley Phase II extension from Berryessa to downtown San José and Santa Clara is in early construction. Four new stations planned: Alum Rock/28th, Downtown San José, Diridon, and Santa Clara. Expected opening mid-2030s.",
         affectedRoutes: "Future service",
         startDate: "2024",
-        endDate: "Est. 2030",
+        endDate: "Est. mid-2030s",
       },
     ],
   },
