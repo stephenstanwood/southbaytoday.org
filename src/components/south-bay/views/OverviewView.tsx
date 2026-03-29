@@ -1599,6 +1599,11 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         <ForecastStrip forecast={forecast} />
       )}
 
+      {/* ── City glance (next meeting + active projects) ── */}
+      {homeCity && !changingCity && (
+        <CityGlance city={homeCity} onNavigate={onNavigate} />
+      )}
+
       {/* ── Today in [City] / This Weekend in [City] ── */}
       {!changingCity && (homeCity || !homeCity) && (
         <div style={{ marginBottom: 32 }}>
@@ -1783,6 +1788,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Our Picks (weekends only) ── */}
       {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
+
+      {/* ── On Stage this week (Ticketmaster) ── */}
+      {!changingCity && <OnStageSection allUpcoming={allUpcoming} onNavigate={onNavigate} />}
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
