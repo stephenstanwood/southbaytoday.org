@@ -1374,3 +1374,68 @@ The AI editorial voice matters: "Saratoga's mayor holds office hours at the farm
 1. **Development data audit + refresh** — Static project descriptions and statuses from early cycles need 2026 updates. BART Phase II progress, Google Downtown West current status.
 2. **Live Caltrain service status** — 511 API key needed. Register at 511.org/open-data. Daily-urgency commuter feature.
 3. **Permit Pulse** — Santa Clara County publishes building permit data via open data portal. Show what's being built this week near the resident's city.
+
+---
+
+## Cycle 23 — Permit Pulse: San Jose Building Permits This Week (2026-03-29)
+
+### What Was Built
+
+**Permit Pulse card on the Today tab** — shows the past 7 days of building permits issued by the City of San Jose, sourced from the city's open data portal (data.sanjoseca.gov, no auth required, daily updated).
+
+**Stats shown:**
+- Total permits issued in the 7-day window (239 this cycle)
+- New housing units started (5 this cycle — all ADUs/accessory dwelling units)
+- Total construction valuation across all permits ($79M this cycle, dominated by a $72M SuperMicro manufacturing shell)
+
+**Notable permits list (top 10):**
+- Ranked by: new construction first, then by valuation desc
+- Each permit shows: address, cleaned description, category label (New Home / Commercial Project / etc.), and valuation
+- Category icons: 🏠 new home, 🏘️ multi-family, 🏗️ new construction, 🏢 commercial, 🔨 renovation
+
+**`scripts/generate-permits.mjs`** — New script:
+- Fetches all records from San Jose's "last 30 days" permit API
+- Filters to the past 7 days by ISSUEDATE
+- Categorizes: residential-new (new construction + dwelling), multi-family-new, commercial-large (commercial + $200k+), residential-large (residential + $200k+), new-construction
+- Cleans descriptions: strips "(BEPM100%)" build permit modifiers, "(STAR)" flags, "(B)/(E)" prefixes
+- Outputs permit-pulse.json
+
+**`src/components/south-bay/cards/PermitPulseCard.tsx`** — New component:
+- Header: "Permit Pulse" + "San Jose · [date range]"
+- Stats row: total permits | new units | total value
+- Permit list with icon, address, description, category badge, and valuation
+- Footer: attribution + "San Jose only · More cities coming"
+
+### Data Highlights This Cycle
+- 5 new ADUs approved (San Jose's ADU-friendly permitting showing up in the data)
+- SuperMicro building a $72M warm shell manufacturing facility at 688 E Brokaw Rd
+- Trader Joe's doing a tenant improvement at 5353 Almaden Expressway
+- Good Samaritan hospital building a new parking garage
+
+### Ideas Considered
+
+1. **Permit Pulse** ← BUILT
+2. **Live Caltrain service status** — 511 API key still needed. Deferred.
+3. **Development data audit** — Static project descriptions need 2026 updates.
+
+### Why This Was the Highest-Leverage Move
+
+Permit data is uniquely hyperlocal — a neighbor getting an ADU permit, a beloved retail spot doing a major renovation, a new tech company building a facility. This is exactly the kind of information that makes residents say "I didn't know that was happening." No local publication covers building permits systematically. South Bay Signal is now the only place where a resident can see, in one glance, what construction is being approved in their city this week.
+
+The SuperMicro and Trader Joe's entries are immediately recognizable to South Bay residents — brand names they know, addresses they recognize, activity they care about.
+
+### Effect on Real Users
+- **Homeowner in Willow Glen**: Sees neighbors filing ADU permits — might consider one themselves
+- **Retail watcher**: Spots Trader Joe's doing a TI at Almaden — "oh they're renovating?"
+- **Tech industry observer**: SuperMicro building a $72M manufacturing shell — confirms local industrial growth
+- **Real estate investor**: 239 permits in a week + ADU trend = market signal for active construction
+
+### Limitations
+- San Jose only (no Santa Clara, Sunnyvale, Mountain View open permit APIs found)
+- "New units" counts only new construction, not additions/ADUs correctly classified in raw data
+- Description cleaning catches most BEPM/STAR prefixes but may miss edge cases
+
+### Next 3 Strongest Ideas
+1. **Development data audit + refresh** — development-data.ts has static project status/timeline from early cycles. BART Phase II progress, Google Downtown West, SuperMicro expansion are worth updating.
+2. **Live Caltrain service status** — 511 API key needed (register at 511.org/open-data). Daily commuter urgency.
+3. **Caltrans D4 traffic incidents** — API was returning HTTP 500 as of 2026-03-28. Worth retrying — if it's back up, could add a "Traffic Alerts" module for I-280, 101, 85, 87 incidents.
