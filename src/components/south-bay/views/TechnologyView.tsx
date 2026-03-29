@@ -237,11 +237,12 @@ interface UpcomingEvent {
   ongoing?: boolean;
 }
 
-const TECH_EVENT_KEYWORDS = /\b(ai|robot|silicon|tech|chip|algorithm|startup|venture|humanoid|digital|software|computer|hardware|machine learning|neural|innovation)\b/i;
+const TECH_EVENT_KEYWORDS = /\b(ai|robot|silicon|tech|chip|algorithm|startup|venture|humanoid|machine learning|neural|innovation|physical ai|autonomous)\b/i;
+const TECH_EVENT_EXCLUDES = /\bhelp\b|digital skills|computer help|tech help|1-on-1|one-on-one/i;
 
 function isTechEvent(e: UpcomingEvent): boolean {
   const isChm = !!e.venue?.toLowerCase().includes("computer history");
-  const isTechTitle = TECH_EVENT_KEYWORDS.test(e.title);
+  const isTechTitle = TECH_EVENT_KEYWORDS.test(e.title) && !TECH_EVENT_EXCLUDES.test(e.title);
   return isChm || isTechTitle;
 }
 
