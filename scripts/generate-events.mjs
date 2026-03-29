@@ -278,6 +278,67 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bweekday\s+liturgy\b/i,
   /\bevening\s+zen\b/i,
   /\bexamen\b/i,
+  // Collaboration/classroom tool training (not public events)
+  /\blucidspark\b/i,
+  /\blucidchart\b/i,
+  /\biclicker\b/i,
+  /\bpoll\s+everywhere\b/i,
+  /\bpodcasting\s+with\s+ai\b/i,
+  /\bpopular\s+tips\s+and\s+tricks\b/i,
+  /\bget\s+your\s+students\s+to\b/i,
+  /\bhybrid\s+meetings\s+and\s+classes\b/i,
+  /\bpolling\s+for\s+student\s+engagement\b/i,
+  /\bcanvas\s+(overview|training|session|workshop)\b/i,
+  /\bdigital\s+whiteboards?\b/i,
+  /\badobe\s+acrobat\b.*\btips?\b/i,
+  // Career services workshops (enrolled students / internal)
+  /\b(negotiat\w+)\s+(workshop|confidence|salary)\b/i,
+  /\bnetworking\s+(workshop|success|power)\b/i,
+  /\binterview\s+workshop\b/i,
+  /\bmaster\s+(your\s+)?(job|internship|connection)\b/i,
+  /\bunlock\s+the\s+power\s+of\s+connections\b/i,
+  /\bfrom\s+awkward\s+to\s+awesome\b/i,
+  /\bcraft(ing)?\s+cover\s+letters?\b/i,
+  /\bcover\s+letter\s+workshop\b/i,
+  /\bjob\s+(search|fair|internship)\s+workshop\b/i,
+  /\binternship\s+search\s+workshop\b/i,
+  /\bace\s+your\s+(next\s+)?interview\b/i,
+  /\bnetworking\s+success\b/i,
+  // Academic writing / research workshops (internal university)
+  /\brevising\s+for\s+clarity\b/i,
+  /\bscientific\s+abstracts?\b/i,
+  /\bnavigating\s+literature\s+reviews?\b/i,
+  /\bgraduate\s+writer\b/i,
+  /\bcommon\s+grammar\s+and\s+punctuation\b/i,
+  /\btransitions\s+for\s+coherence\b/i,
+  /\bsearching\s+for\s+research\s+articles?\b/i,
+  /\bnavigating\s+(literature|ai\s+resources)\b/i,
+  // Student wellness / counseling workshops (internal)
+  /\btest\s+anxiety\b/i,
+  /\bglobal\s+connections:/i,
+  /\bacademic\s+stress\b/i,
+  /\bhealthy\s+boundaries\b/i,
+  /\bovercoming\s+the\s+fear\s+of\b/i,
+  /\btime\s+management\b.*\bworkshop\b/i,
+  // Immigration / visa services (enrolled students only)
+  /\bpost[\s-]?(completion\s+)?opt\b/i,
+  /\bopt\s+(workshop|application|packet|prep)\b/i,
+  /\bI-765\b/i,
+  // Internal admin / recognition events
+  /\bbudget\s+town\s+hall\b/i,
+  /\bofficial\s+syllabus\s+workshop\b/i,
+  /\bchat\s+with\s+the\s+(chair|dean|provost|president)\b/i,
+  /\bdonuts?\s+with\s+the\s+(dean|chair|provost)\b/i,
+  /\bhonoring\s+faculty\s+and\s+staff\b/i,
+  /\badmitted\s+(spartans?|students?)\s+day\b/i,
+  /\bfinance\s+what'?s?\s+up\b/i,
+  /\bspring\s+budget\b/i,
+  /\bchhs\b.*\bjournal\s+club\b/i,
+  // Ticketmaster merchandise / add-ons (not events)
+  /\bsouvenir\s+ticket\b/i,
+  /\bcommemorative\s+(magnet|pin|coin|lanyard)\b/i,
+  // Cancelled events (anywhere in title, not just start)
+  /\bcancell?ed\b/i,
 ];
 
 // Detect away games: "[School] at [Away Opponent/Location]"
@@ -1464,13 +1525,15 @@ async function main() {
   // Also skip zero-duration university calendar markers (e.g. "5:00 PM – 5:00 PM")
   const uniSources = new Set(["Stanford Events", "Santa Clara University", "SJSU Events"]);
   const today = new Date().toISOString().split("T")[0];
+  // Cap non-sports events to 180 days out; sports schedules can go further
+  const maxFuture = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
   const valid = allEvents.filter(
     (e) =>
       e.date &&
       e.date >= today &&
+      (e.category === "sports" || e.date <= maxFuture) &&
       e.city &&
       e.title &&
-      !/^cancell?ed/i.test(e.title) &&
       !(uniSources.has(e.source) && e.time && e.endTime && e.time === e.endTime) &&
       isPublicEvent(e.title, e.source),
   );
