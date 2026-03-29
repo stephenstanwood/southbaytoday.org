@@ -1953,3 +1953,47 @@ The Tech tab was skewed toward well-known giants (Google, Apple, NVIDIA) and kno
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the Tech tab now has genuine edge.** A Saratoga resident learning Eridu exists in their own city, or a Mountain View parent knowing Sunday's household robot startup is two miles away — that's the kind of local tech signal SBS is supposed to provide. The tab went from "things you already know" to "things you should know about."
+
+---
+
+## 2026-03-29 — Cycle 35: Spring Break Banner + Filter on Events Tab
+
+### Context
+Today is March 29 — five days before spring break starts. SJUSD, PAUSD, MVWSD, LGSUHSD, and MVLA have break April 3-10; FUHSD, Cupertino USD, and Campbell USD have it April 13-17. The Events tab had no awareness of the upcoming break, leaving parents to manually browse through hundreds of events and mentally flag which ones fell during spring break. The spring-break-picks card on the Overview tab (added last cycle) only shows 5 curated picks — not interactive, not filterable.
+
+### What Was Built
+
+**Spring Break banner + quick filter in EventsView:**
+
+1. **Seasonal banner**: Appears in the Events tab from March 29 through April 17. Shows "Spring Break in X days" (or "Spring Break is here!" once in-window), notes both district windows (Apr 3-10 and Apr 13-17).
+
+2. **One-click filter**: "Show spring break events" button scopes filteredUpcoming to April 3-17, replacing the standard date groups with:
+   - "Easter Weekend" (April 3 events)
+   - "Spring Break · Wk 1 (Apr 3–10)" (SJUSD, PAUSD, MVWSD, LGSUHSD, MVLA districts)
+   - "Spring Break · Wk 2 (Apr 13–17)" (FUHSD, Cupertino USD, Campbell USD)
+
+3. **Composable**: Spring break mode stacks with existing filters (city, category, kids-only, search). A Cupertino parent can activate spring break mode + "👶 Kids only" + "Cupertino" city filter to see exactly their family's options during their specific break week.
+
+4. **Self-cleaning**: Banner only shows March 29 – April 17. After break ends, the code stays but the banner disappears — no cleanup needed.
+
+**All data pipelines refreshed:**
+- upcoming-events.json: 499 events (102 ongoing, 19 sources)
+- around-town.json: 6 items (Cupertino business license amnesty, Santa Clara housing grant, Santa Clara Station land use)
+- digests.json: 8 council digests
+- upcoming-meetings.json: 2 cities (Cupertino Apr 1, missing Sunnyvale/Santa Clara)
+- weekend-picks.json: 3 picks (Rap as Storytelling, Nate Jackson Comedy, SCU Baseball)
+- spring-break-picks.json: 5 picks (poetry month, Latinx art, Princess Bride movie, tulip craft, wildlife photography)
+
+### Why This Was the Strongest Move
+
+Spring break starts in 5 days. Parents across 8 school districts are actively thinking "what are we going to do?" The Events tab has 499 events but they're not spring-break-aware. The new filter makes the answer to "what's happening during spring break?" a single click away. The two-week split is important — families with kids in FUHSD/Cupertino/Campbell USD have a different week off than families in SJUSD/PAUSD/MVWSD, and the filter correctly handles both windows.
+
+The banner is designed to be useful exactly when it's useful and invisible otherwise. The orange-to-purple toggle uses the spring blossom emoji (🌸) and the color scheme shifts from warm orange (pre-break excitement) to purple (active break mode) when engaged.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required (register at https://511.org/open-data). Daily commuter urgency.
+2. **Permit expansion** — Palo Alto Junar API (data.cityofpaloalto.org/developers/). Mountain View: ArcGIS feature service at data-mountainview.opendata.arcgis.com.
+3. **High school sports scores** — MaxPreps data for South Bay high schools (Saratoga, Los Gatos, Monta Vista, Paly). Spring sports season is active right now.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Events tab is now spring-break-aware.** A Cupertino parent opening SBS today sees "Spring Break in 5 days" and can click once to see all the things their family could do during their specific break week. That's the kind of local intelligence that turns a "might check once" into "I actually use this."
