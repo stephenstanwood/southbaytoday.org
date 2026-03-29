@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import SportsView from "./SportsView";
 import OutagesCard from "../cards/OutagesCard";
 import RealEstateCard from "../cards/RealEstateCard";
-import PermitPulseCard from "../cards/PermitPulseCard";
 import AirQualityCard from "../cards/AirQualityCard";
 import QuakeWatchCard from "../cards/QuakeWatchCard";
 import WaterWatchCard from "../cards/WaterWatchCard";
@@ -18,7 +17,6 @@ import type { City, Tab } from "../../../lib/south-bay/types";
 import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../../data/south-bay/digests.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
-import photosJson from "../../../data/south-bay/photos.json";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import springBreakJson from "../../../data/south-bay/spring-break-picks.json";
 import healthScoresJson from "../../../data/south-bay/health-scores.json";
@@ -1539,14 +1537,6 @@ const CITY_ACCENT: Record<string, string> = {
   "palo-alto":     "#1d4ed8",
 };
 
-const cityPhotos = (photosJson as { cities: Record<string, { id: string; thumb: string; photoPage: string; photographer: string; license: string }[]> }).cities;
-
-function getCityPhoto(cityId: string, seed: number) {
-  const pool = cityPhotos[cityId];
-  if (!pool?.length) return null;
-  return pool[seed % pool.length];
-}
-
 function AroundTownSection() {
   const items = (aroundTownJson as { items: AroundTownItem[] }).items;
   if (!items?.length) return null;
@@ -1566,77 +1556,37 @@ function AroundTownSection() {
           const dateFormatted = new Date(item.date + "T12:00:00").toLocaleDateString("en-US", {
             month: "short", day: "numeric",
           });
-          const photo = getCityPhoto(item.cityId, i);
           return (
             <div key={item.id} style={{
               padding: "14px 0",
               borderBottom: i < items.length - 1 ? "1px solid var(--sb-border-light)" : "none",
-              display: "flex", gap: 14, alignItems: "flex-start",
             }}>
-              {/* Text */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
-                    background: accent + "18", color: accent,
-                    letterSpacing: "0.04em",
-                  }}>
-                    {item.cityName.toUpperCase()}
-                  </span>
-                  <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-                    {dateFormatted}
-                  </span>
-                </div>
-                <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 4 }}>
-                  {item.headline}
-                </div>
-                <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.55 }}>
-                  {item.summary}{" "}
-                  <a
-                    href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: accent, textDecoration: "none", fontWeight: 600 }}
-                  >
-                    Source →
-                  </a>
-                </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                  background: accent + "18", color: accent,
+                  letterSpacing: "0.04em",
+                }}>
+                  {item.cityName.toUpperCase()}
+                </span>
+                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+                  {dateFormatted}
+                </span>
               </div>
-
-              {/* Photo thumbnail */}
-              {photo && (
+              <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 4 }}>
+                {item.headline}
+              </div>
+              <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.55 }}>
+                {item.summary}{" "}
                 <a
-                  href={photo.photoPage}
+                  href={item.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={`Photo by ${photo.photographer} · ${photo.license}`}
-                  style={{ flexShrink: 0, display: "block", position: "relative" }}
+                  style={{ color: accent, textDecoration: "none", fontWeight: 600 }}
                 >
-                  <img
-                    src={photo.thumb}
-                    alt={`${item.cityName}`}
-                    width={80}
-                    height={80}
-                    style={{
-                      width: 80, height: 80,
-                      objectFit: "cover",
-                      borderRadius: 4,
-                      border: "1px solid var(--sb-border-light)",
-                      display: "block",
-                    }}
-                  />
-                  <div style={{
-                    position: "absolute", bottom: 2, right: 2,
-                    fontSize: 7, lineHeight: 1,
-                    background: "rgba(0,0,0,0.55)", color: "#fff",
-                    padding: "1px 3px", borderRadius: 2,
-                    fontFamily: "'Space Mono', monospace",
-                    maxWidth: 74, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                  }}>
-                    {photo.license}
-                  </div>
+                  Source →
                 </a>
-              )}
+              </div>
             </div>
           );
         })}
@@ -2398,9 +2348,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Housing Market ── */}
       {!changingCity && <RealEstateCard homeCity={homeCity} />}
-
-      {/* ── Permit Pulse ── */}
-      {!changingCity && <PermitPulseCard homeCity={homeCity} />}
 
       {/* ── Sports scoreboard ── */}
       <SportsView />

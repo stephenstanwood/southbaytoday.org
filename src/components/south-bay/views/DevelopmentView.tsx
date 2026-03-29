@@ -1,4 +1,6 @@
 import { useState, useMemo } from "react";
+import PermitPulseCard from "../cards/PermitPulseCard";
+import type { City } from "../../../lib/south-bay/types";
 import {
   DEV_PROJECTS,
   STATUS_CONFIG,
@@ -241,7 +243,7 @@ function DevSection({
 
 // ── Main view ────────────────────────────────────────────────────────────────
 
-export default function DevelopmentView() {
+export default function DevelopmentView({ homeCity }: { homeCity?: City | null }) {
   const [categoryFilter, setCategoryFilter] = useState<DevCategory | "all">("all");
 
   const byStatus = useMemo(() => {
@@ -303,6 +305,9 @@ export default function DevelopmentView() {
           />
         );
       })}
+
+      {/* Permit Pulse */}
+      <PermitPulseCard homeCity={homeCity ?? null} />
 
       {/* Footer note */}
       <div className="dev-footer-note">

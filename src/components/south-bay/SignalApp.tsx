@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES, getCityName } from "../../lib/south-bay/cities";
@@ -54,6 +54,23 @@ export default function SignalApp() {
     });
   }, []);
 
+  const navInnerRef = useRef<HTMLDivElement>(null);
+  const [showNavArrow, setShowNavArrow] = useState(false);
+
+  useEffect(() => {
+    const el = navInnerRef.current;
+    if (!el) return;
+    const check = () => setShowNavArrow(el.scrollWidth > el.clientWidth + 4 && el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+    check();
+    el.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check, { passive: true });
+    return () => { el.removeEventListener("scroll", check); window.removeEventListener("resize", check); };
+  }, []);
+
+  const scrollNavRight = () => {
+    navInnerRef.current?.scrollBy({ left: 120, behavior: "smooth" });
+  };
+
   const toggleAll = useCallback(() => {
     setSelectedCities((prev) => {
       if (prev.size === CITIES.length) return new Set();
@@ -96,8 +113,8 @@ export default function SignalApp() {
       <hr className="sb-masthead-rule" />
 
       {/* Navigation */}
-      <nav className="sb-nav">
-        <div className="sb-nav-inner">
+      <nav className="sb-nav" style={{ position: "relative" }}>
+        <div className="sb-nav-inner" ref={navInnerRef}>
           {TABS.map((tab) => (
             <button
               key={tab.id}
@@ -109,6 +126,15 @@ export default function SignalApp() {
             </button>
           ))}
         </div>
+        {showNavArrow && (
+          <button
+            onClick={scrollNavRight}
+            aria-label="Scroll tabs right"
+            className="sb-nav-scroll-arrow"
+          >
+            ›
+          </button>
+        )}
       </nav>
 
       {/* City filter */}
@@ -148,7 +174,7 @@ export default function SignalApp() {
           <GovernmentView selectedCities={selectedCities} homeCity={homeCity} />
         )}
         {activeTab === "technology" && <TechnologyView />}
-        {activeTab === "development" && <DevelopmentView />}
+        {activeTab === "development" && <DevelopmentView homeCity={homeCity} />}
         {activeTab === "transit" && <TransitView />}
         {activeTab === "food" && <FoodView />}
         {activeTab === "weather" && <WeatherView homeCity={homeCity} />}
