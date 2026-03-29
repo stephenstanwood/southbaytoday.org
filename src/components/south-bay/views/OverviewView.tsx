@@ -1312,8 +1312,26 @@ function TransitStatusBar({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
+function tempColor(t: number) {
+  if (t >= 95) return "#C2290A";
+  if (t >= 85) return "#E8531D";
+  if (t >= 75) return "#D97706";
+  if (t >= 65) return "#4D7C0F";
+  if (t >= 55) return "#0284C7";
+  return "#4F46E5";
+}
+
+function tempBg(t: number, strong = false) {
+  const a = strong ? 0.10 : 0.05;
+  if (t >= 95) return `rgba(194,41,10,${a})`;
+  if (t >= 85) return `rgba(232,83,29,${a})`;
+  if (t >= 75) return `rgba(217,119,6,${a})`;
+  if (t >= 65) return `rgba(77,124,15,${a})`;
+  if (t >= 55) return `rgba(2,132,199,${a})`;
+  return `rgba(79,70,229,${a})`;
+}
+
 function ForecastStrip({ forecast }: { forecast: ForecastDay[] }) {
-  // Use Pacific time (not UTC) so "Today" label stays correct on Saturday evenings
   const todayISO = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   return (
     <div style={{ marginBottom: 24 }}>
@@ -1328,30 +1346,38 @@ function ForecastStrip({ forecast }: { forecast: ForecastDay[] }) {
         {forecast.map((day, i) => {
           const isToday = day.date === todayISO;
           const d = new Date(day.date + "T12:00:00");
-          const label = isToday ? "Today" : DAY_LABELS[d.getDay()];
+          const label = isToday ? "TODAY" : DAY_LABELS[d.getDay()].toUpperCase();
           const showRain = day.rainPct >= 20;
+          const color = tempColor(day.high);
+          const bg = tempBg(day.high, isToday);
           return (
             <div
               key={day.date}
               style={{
-                padding: "10px 6px 8px",
+                padding: "12px 4px 10px",
                 textAlign: "center",
                 borderRight: i < forecast.length - 1 ? "1px solid var(--sb-border-light)" : "none",
-                background: isToday ? "var(--sb-primary-light)" : "transparent",
+                background: bg,
+                borderTop: isToday ? `3px solid ${color}` : "3px solid transparent",
               }}
             >
               <div style={{
                 fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.06em", textTransform: "uppercase",
-                color: isToday ? "var(--sb-ink)" : "var(--sb-muted)",
-                marginBottom: 4,
+                letterSpacing: "0.08em",
+                color: isToday ? color : "var(--sb-muted)",
+                marginBottom: 6,
               }}>
                 {label}
               </div>
-              <div style={{ fontSize: 18, lineHeight: 1, marginBottom: 4 }}>{day.emoji}</div>
+              <div style={{ fontSize: 22, lineHeight: 1, marginBottom: 6 }}>{day.emoji}</div>
               <div style={{
-                fontSize: 12, fontWeight: 700, color: "var(--sb-ink)",
+                fontSize: isToday ? 42 : 32,
+                fontWeight: 800,
+                lineHeight: 1,
+                color,
                 fontVariantNumeric: "tabular-nums",
+                letterSpacing: "-0.02em",
+                marginBottom: 3,
               }}>
                 {day.high}°
               </div>
@@ -1363,8 +1389,9 @@ function ForecastStrip({ forecast }: { forecast: ForecastDay[] }) {
               </div>
               {showRain && (
                 <div style={{
-                  fontSize: 9, color: "#1d4ed8", fontWeight: 600,
-                  marginTop: 3, fontVariantNumeric: "tabular-nums",
+                  fontSize: 9, color: "#0284C7", fontWeight: 700,
+                  marginTop: 4, fontVariantNumeric: "tabular-nums",
+                  fontFamily: "'Space Mono', monospace",
                 }}>
                   💧{day.rainPct}%
                 </div>
