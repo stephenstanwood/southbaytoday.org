@@ -16,6 +16,7 @@ import aroundTownJson from "../../../data/south-bay/around-town.json";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import healthScoresJson from "../../../data/south-bay/health-scores.json";
 import schoolCalJson from "../../../data/south-bay/school-calendar.json";
+import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -439,6 +440,115 @@ function CityGlance({ city, onNavigate }: { city: City; onNavigate: (tab: Tab) =
           <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2 }}>projects underway</div>
         </button>
       )}
+    </div>
+  );
+}
+
+// ── This Week in [City] briefing ──────────────────────────────────────────────
+
+interface CityHighlight {
+  type: "event" | "council" | "cityhall";
+  title: string;
+  when: string | null;
+  venue: string | null;
+  category: string;
+  url: string | null;
+}
+
+interface CityBriefing {
+  cityId: string;
+  cityName: string;
+  summary: string;
+  highlights: CityHighlight[];
+  weekLabel: string;
+  generatedAt: string;
+}
+
+function CityWeeklyBriefing({ city }: { city: City }) {
+  const data = cityBriefingsJson as { cities?: Record<string, CityBriefing> };
+  const briefing = data.cities?.[city];
+  if (!briefing?.summary) return null;
+
+  const HIGHLIGHT_EMOJI: Record<string, string> = {
+    music: "🎵", arts: "🎨", family: "👨‍👩‍👦", education: "📚",
+    community: "🤝", market: "🌽", food: "🍜", outdoor: "🌿",
+    sports: "🏟️", government: "🏛️",
+  };
+
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <div className="sb-section-header" style={{ marginBottom: 10 }}>
+        <span className="sb-section-title" style={{ fontSize: 14 }}>
+          📍 This Week in {briefing.cityName}
+        </span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
+          {briefing.weekLabel}
+        </span>
+        <div className="sb-section-line" />
+      </div>
+
+      <div style={{
+        background: "#FEFCE8",
+        border: "1.5px solid #FDE68A",
+        borderRadius: 8,
+        padding: "12px 14px",
+      }}>
+        {/* AI editorial lead */}
+        <p style={{
+          margin: "0 0 10px 0",
+          fontSize: 13,
+          lineHeight: 1.55,
+          color: "var(--sb-ink)",
+          fontStyle: "italic",
+        }}>
+          {briefing.summary}
+        </p>
+
+        {/* Highlights */}
+        {briefing.highlights.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {briefing.highlights.map((h, i) => {
+              const emoji = HIGHLIGHT_EMOJI[h.category] ?? "📅";
+              const inner = (
+                <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                  <span style={{ fontSize: 13, flexShrink: 0, marginTop: 1 }}>{emoji}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      fontSize: 12, fontWeight: 600,
+                      color: h.url ? "var(--sb-primary)" : "var(--sb-ink)",
+                      lineHeight: 1.35,
+                      overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                    }}>
+                      {h.title}
+                    </div>
+                    {(h.when || h.venue) && (
+                      <div style={{
+                        fontSize: 11, color: "var(--sb-muted)",
+                        fontFamily: "'Space Mono', monospace", marginTop: 1,
+                      }}>
+                        {[h.when, h.venue].filter(Boolean).join(" · ")}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+              return h.url ? (
+                <a
+                  key={i}
+                  href={h.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", display: "block" }}
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div key={i}>{inner}</div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -1603,6 +1713,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {homeCity && !changingCity && (
         <CityGlance city={homeCity} onNavigate={onNavigate} />
       )}
+
+      {/* ── This Week in [City] briefing ── */}
+      {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
 
       {/* ── Today in [City] / This Weekend in [City] ── */}
       {!changingCity && (homeCity || !homeCity) && (
