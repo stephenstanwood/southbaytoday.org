@@ -4,6 +4,7 @@ import OutagesCard from "../cards/OutagesCard";
 import RealEstateCard from "../cards/RealEstateCard";
 import PermitPulseCard from "../cards/PermitPulseCard";
 import AirQualityCard from "../cards/AirQualityCard";
+import QuakeWatchCard from "../cards/QuakeWatchCard";
 import {
   SOUTH_BAY_EVENTS,
   type SBEvent,
@@ -1918,6 +1919,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Air Quality ── */}
       {!changingCity && <AirQualityCard homeCity={homeCity} />}
+
+      {/* ── Quake Watch ── */}
+      {!changingCity && <QuakeWatchCard />}
 
       {/* ── Sports scoreboard ── */}
       <SportsView />
