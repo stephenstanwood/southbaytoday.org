@@ -1439,3 +1439,53 @@ The SuperMicro and Trader Joe's entries are immediately recognizable to South Ba
 1. **Development data audit + refresh** — development-data.ts has static project status/timeline from early cycles. BART Phase II progress, Google Downtown West, SuperMicro expansion are worth updating.
 2. **Live Caltrain service status** — 511 API key needed (register at 511.org/open-data). Daily commuter urgency.
 3. **Caltrans D4 traffic incidents** — API was returning HTTP 500 as of 2026-03-28. Worth retrying — if it's back up, could add a "Traffic Alerts" module for I-280, 101, 85, 87 incidents.
+
+---
+
+## Cycle 25 — Quake Watch: Real-Time USGS Earthquake Data (2026-03-28)
+
+### What Was Built
+
+**Quake Watch card on the Today tab** — real-time Bay Area earthquake activity from USGS, showing M1.5+ earthquakes in the past 7 days across the South Bay region.
+
+**`QuakeWatchCard.tsx`** — new client-side component:
+- Fetches directly from USGS Earthquake Hazards Program API (no key required, public domain)
+- Bounding box: 36.7–38.0°N, 121.4–122.6°W — covers South Bay through East Bay foothills
+- Summary strip: total quakes, past 24h count, strongest magnitude, M2.5+ notable count
+- Per-quake rows: magnitude (color-coded), location, depth, time ago — each links to USGS detail page
+- Magnitude tiers: M1.5–1.9 micro (gray), M2.0–2.4 minor, M2.5–2.9 moderate (amber), M3.0+ notable (orange), M4.0+ major (red)
+- Silent fail on fetch error — doesn't break the page
+- Shows "No earthquakes M1.5+" message when activity is low
+
+**Data also refreshed this cycle:**
+- upcoming-events.json: 340 events, 84 ongoing, 15 sources
+- digests.json: 6 cities with updated council meeting summaries
+- around-town.json: 6 items including Palo Alto/Red Cross disaster relief partnership
+- city-briefings.json: 9 cities regenerated with latest events + council data
+- upcoming-meetings.json: San Jose (Apr 7) + Cupertino (Apr 1)
+- weekend-picks.json: 3 picks (Los Gatos 5K, Sharks vs Blues, Nate Jackson comedy)
+
+### Sample Activity This Cycle
+- M2.8 near San Ramon (Calaveras fault area)
+- M2.4 north of Morgan Hill
+- M1.7 near Ridgemark (Hollister area)
+- 15 quakes total in past 7 days, all micro to minor range
+
+### Why This Was the Highest-Leverage Move
+
+Bay Area residents are uniquely earthquake-aware. After any notable shake, the first instinct is to open a phone and ask "was that an earthquake?" USGS answers this but with a generic national map. South Bay Signal now has a resident-specific earthquake tracker that shows what's happening locally, in context with everything else on the page. No other local aggregator does this.
+
+The data is genuinely real-time (USGS updates within minutes of any event), the API is free and reliable, and the feature is low-maintenance — it just works. A resident who felt a small tremor, or who checks in after hearing about activity in the news, now has a direct answer at their default homepage.
+
+### Effect on Real Users
+- **Resident who felt a shake last night**: Opens Today tab, sees "M2.4 15 km N of Morgan Hill — 14h ago" — instantly confirmed
+- **Parent checking morning**: Sees "3 quakes past 7 days, strongest M2.8" — reassuring low-activity context
+- **Earthquake-curious commuter**: Clicks USGS link for depth/fault data — gets more detail without leaving the page first
+
+### Next 3 Strongest Ideas
+1. **Tech hiring pulse** — Show South Bay tech companies with "actively hiring / stable / cutting" indicators. Could use Greenhouse public job boards API or static snapshot from known news. Ties into the TechnologyView which already has trend data.
+2. **Transit real-time** — 511 API key needed. Daily commuter urgency. Register at 511.org/open-data.
+3. **Development data audit** — development-data.ts static entries may be stale. BART Phase II milestones, Google Downtown West, SuperMicro expansion worth updating with 2026 status.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — environmental awareness is now complete.** In the span of recent cycles, South Bay Signal has gone from no environmental data to covering four dimensions of local conditions: weather (ForecastStrip), air quality (AirQualityCard), building activity (PermitPulseCard), and now seismic activity (QuakeWatchCard). A resident opening the page now gets a genuine pulse of the physical environment they live in — what's in the air, what's being built, and what's shaking underground. That's uniquely local intelligence that no other aggregator provides in one place.
