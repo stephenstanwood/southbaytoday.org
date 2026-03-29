@@ -1711,9 +1711,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         <ForecastStrip forecast={forecast} />
       )}
 
-      {/* ── This Week in [City] briefing ── */}
-      {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
-
       {/* ── Today in [City] / This Weekend in [City] ── */}
       {!changingCity && (homeCity || !homeCity) && (
         <div style={{ marginBottom: 32 }}>
@@ -1904,6 +1901,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── This Week in [City] briefing ── */}
+      {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
 
       {/* ── School Calendar ── */}
       {!changingCity && <SchoolCalendarCard />}
