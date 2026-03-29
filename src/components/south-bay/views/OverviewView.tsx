@@ -56,11 +56,13 @@ type UpcomingEvent = {
 // ── Time constants ─────────────────────────────────────────────────────────────
 
 const NOW = new Date();
-const NOW_MINUTES = NOW.getHours() * 60 + NOW.getMinutes();
+// All time/date constants use Pacific time — never UTC
+const NOW_PT = new Date(NOW.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+const NOW_MINUTES = NOW_PT.getHours() * 60 + NOW_PT.getMinutes();
 const TODAY_ISO = NOW.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-const MONTH = NOW.getMonth() + 1;
+const MONTH = NOW_PT.getMonth() + 1;
 const NEXT_MONTH = MONTH === 12 ? 1 : MONTH + 1;
-const DAY_IDX = NOW.getDay();
+const DAY_IDX = NOW_PT.getDay(); // Pacific day-of-week
 const DAY_NAME = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][DAY_IDX];
 const WEEKDAY = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][DAY_IDX];
 const MONTH_NAME = NOW.toLocaleDateString("en-US", { month: "long" });
@@ -78,7 +80,10 @@ const NEXT_DAYS: Array<{ iso: string; label: string }> = Array.from({ length: 6 
 
 // ── Weekend mode ───────────────────────────────────────────────────────────────
 const IS_WEEKEND_MODE = DAY_IDX === 5 || DAY_IDX === 6 || DAY_IDX === 0; // Fri / Sat / Sun
-const _tmrow = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate() + 1);
+// Only show tomorrow's events in the weekend section if tomorrow is also a weekend day:
+// Fri→Sat ✓, Sat→Sun ✓, Sun→Mon ✗
+const SHOW_WEEKEND_TOMORROW = DAY_IDX === 5 || DAY_IDX === 6;
+const _tmrow = new Date(NOW_PT.getFullYear(), NOW_PT.getMonth(), NOW_PT.getDate() + 1);
 const TOMORROW_DAY_NAME = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][_tmrow.getDay()] as DayOfWeek;
 const TOMORROW_MONTH_NUM = _tmrow.getMonth() + 1;
 const TOMORROW_ISO_STR = NEXT_DAYS[0]?.iso ?? "";
@@ -483,14 +488,11 @@ function CityWeeklyBriefing({ city }: { city: City }) {
 
   return (
     <div style={{ marginBottom: 20 }}>
-      <div className="sb-section-header" style={{ marginBottom: 10 }}>
-        <span className="sb-section-title" style={{ fontSize: 14 }}>
-          📍 This Week in {briefing.cityName}
-        </span>
-        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
+      <div className="sb-section-header" style={{ marginBottom: 14 }}>
+        <span className="sb-section-title">📍 This Week in {briefing.cityName}</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
           {briefing.weekLabel}
         </span>
-        <div className="sb-section-line" />
       </div>
 
       <div style={{
@@ -970,9 +972,7 @@ function WeekendPicksCard() {
   return (
     <div style={{ marginBottom: 32 }}>
       <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title" style={{ fontSize: 15 }}>
-          ⭐ Our Picks
-        </span>
+        <span className="sb-section-title">⭐ Our Picks</span>
         {data.weekendLabel && (
           <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
             {data.weekendLabel}
@@ -1088,9 +1088,7 @@ function SpringBreakCard() {
   return (
     <div style={{ marginBottom: 32 }}>
       <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title" style={{ fontSize: 15 }}>
-          🌸 Spring Break Guide
-        </span>
+        <span className="sb-section-title">🌸 Spring Break Guide</span>
         {data.subtitle && (
           <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
             {data.subtitle}
@@ -1815,7 +1813,7 @@ function SchoolCalendarCard() {
   return (
     <div style={{ marginBottom: 32 }}>
       <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title">School Calendar</span>
+        <span className="sb-section-title">School Calendars</span>
         <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
           {countdown1 && nextBreak ? `spring break ${countdown1}` : "2025–26"}
         </span>
@@ -2042,24 +2040,25 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
     : [];
 
   // ── Tomorrow's events for weekend mode ──────────────────────────────────────
-  const cityTomorrowStatic = IS_WEEKEND_MODE && homeCity
+  // Only populated when tomorrow is a weekend day (Fri→Sat, Sat→Sun; not Sun→Mon)
+  const cityTomorrowStatic = SHOW_WEEKEND_TOMORROW && homeCity
     ? SOUTH_BAY_EVENTS
         .filter(e => isActiveTomorrow(e) && e.city === homeCity && e.category !== "sports")
         .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
     : [];
-  const cityTomorrowUpcoming = IS_WEEKEND_MODE && homeCity
+  const cityTomorrowUpcoming = SHOW_WEEKEND_TOMORROW && homeCity
     ? allUpcoming
         .filter(e => e.date === TOMORROW_ISO_STR && e.city === homeCity && !e.ongoing && e.category !== "sports")
         .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
     : [];
   const cityTomorrowCount = cityTomorrowStatic.length + cityTomorrowUpcoming.length;
 
-  const southBayTomorrowStatic = IS_WEEKEND_MODE
+  const southBayTomorrowStatic = SHOW_WEEKEND_TOMORROW
     ? SOUTH_BAY_EVENTS
         .filter(e => isActiveTomorrow(e) && (homeCity ? e.city !== homeCity : true) && e.category !== "sports")
         .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
     : [];
-  const southBayTomorrowUpcoming = IS_WEEKEND_MODE
+  const southBayTomorrowUpcoming = SHOW_WEEKEND_TOMORROW
     ? allUpcoming
         .filter(e => e.date === TOMORROW_ISO_STR && (homeCity ? e.city !== homeCity : true) && !e.ongoing && e.category !== "sports")
         .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
@@ -2302,20 +2301,20 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {/* ── Our Picks (weekends only) ── */}
       {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
 
-      {/* ── Spring Break Guide (shown Mar 28 – Apr 17) ── */}
-      {!changingCity && <SpringBreakCard />}
-
       {/* ── On Stage this week (Ticketmaster) ── */}
       {!changingCity && <OnStageSection allUpcoming={allUpcoming} onNavigate={onNavigate} />}
-
-      {/* ── Around the South Bay ── */}
-      {!changingCity && <AroundTownSection />}
 
       {/* ── This Week in [City] briefing ── */}
       {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
 
-      {/* ── School Calendar ── */}
+      {/* ── Around the South Bay ── */}
+      {!changingCity && <AroundTownSection />}
+
+      {/* ── School Calendars ── */}
       {!changingCity && <SchoolCalendarCard />}
+
+      {/* ── Spring Break Guide (shown Mar 28 – Apr 17) ── */}
+      {!changingCity && <SpringBreakCard />}
 
       {/* ── Housing Market ── */}
       {!changingCity && <RealEstateCard homeCity={homeCity} />}

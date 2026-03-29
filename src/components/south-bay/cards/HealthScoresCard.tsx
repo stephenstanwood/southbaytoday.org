@@ -44,9 +44,7 @@ export default function HealthScoresCard() {
     <div style={{ marginBottom: 28 }}>
       {/* Section header */}
       <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title" style={{ fontSize: 15 }}>
-          🍽️ Food Safety Watch
-        </span>
+        <span className="sb-section-title">🍽️ Food Safety Watch</span>
         <div className="sb-section-line" />
       </div>
 

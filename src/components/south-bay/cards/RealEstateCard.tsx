@@ -104,14 +104,7 @@ export default function RealEstateCard({ homeCity }: Props) {
     <div style={{ marginBottom: 32 }}>
       {/* Header */}
       <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title" style={{ fontSize: 15 }}>
-          🏡 Housing Market
-        </span>
-        {latestPeriod && (
-          <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
-            {latestPeriod}
-          </span>
-        )}
+        <span className="sb-section-title">🏡 Housing Market</span>
         <div className="sb-section-line" />
       </div>
 
