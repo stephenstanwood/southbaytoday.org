@@ -108,7 +108,7 @@ Return a JSON array (may be empty if nothing is interesting). Each item:
 {
   "date": "YYYY-MM-DD",
   "headline": "short plain-English headline (max 12 words, no jargon)",
-  "summary": "1-2 sentences. What happened, why it matters. Written for a resident, not a bureaucrat."
+  "summary": "1-2 sentences. What happened, why it matters. Written for a resident, not a bureaucrat. NEVER use relative time words (tonight, today, this week, yesterday, tomorrow) — always use the day name or date (e.g. 'Wednesday's meeting', 'at the April 1 meeting')."
 }
 
 Return [] if nothing is genuinely interesting. Do not force items. Quality over quantity.`;
