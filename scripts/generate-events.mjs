@@ -196,6 +196,46 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bcommencement\s+rehearsal\b/i,
   /\bprocessing\s+deadline\b/i,
   /\badmission\s+(deadline|decision)\b/i,
+  // Graduate program info sessions / recruitment webinars (not open public events)
+  /\binfo(rmation)?\s+session\b/i,
+  /\b(software|tech|it|system|tool)\s+(support\s+)?office\s+hours?\b/i,
+  /\bacademic\s+office\s+hours?\b/i,
+  /\btutor(ing)?\s+office\s+hours?\b/i,
+  /\bvirtual\s+office\s+hours?\b/i,
+  /\bwebinar\s+series\b/i,
+  /\bprogram\s+webinar\b/i,
+  /\badmissions?\s+webinar\b/i,
+  /\bvirtual\s+information\b/i,
+  /\bms\s+in\s+(is|cs|business|data|finance)\b/i,
+  /\bmba\s+(webinar|info|information)\b/i,
+  /\blearn\s+more\s+about\s+the\s+(ms|mba|phd|master)\b/i,
+  /\bgraduate\s+program\s+(info|webinar|session)\b/i,
+  /\bspring\s+webinar\s+series\b/i,
+  /\bfall\s+webinar\s+series\b/i,
+  /\bsupport\s+office\s+hour\b/i,
+  /\btech\s+support\s+hour\b/i,
+  /\binfo\s+session\b/i,
+  // Internal university committee / admin meetings (acronym + "Meeting")
+  /^[A-Z]{2,5}\s+Meeting$/,
+  /\b(faculty|staff|senate|curriculum|advisory|steering|executive)\s+(committee|council|board)\s+meeting\b/i,
+  /\bcommittee\s+meeting\b/i,
+  /\btown\s+hall\s+meeting\b/i,
+  /\bboard\s+of\s+trustees\b/i,
+  /\bdepartment\s+meeting\b/i,
+  /\bfaculty\s+meeting\b/i,
+  /\bstaff\s+meeting\b/i,
+  // Ticketmaster resale / secondary market listings
+  /^BuyBack:/i,
+  /^Resale:/i,
+  /\bVIP\s+Package\b/i,
+  /\bMeet\s*[&+]\s*Greet\b/i,
+  /\bFloor\s+Package\b/i,
+  // SCU course-based events (enrolled students only, not open public)
+  /^IN-PERSON ONLY:/i,
+  /^ONLINE ONLY:/i,
+  /^HYBRID:/i,
+  /\bcourse\s+lecture\b/i,
+  /\bclass\s+session\b/i,
 ];
 
 // Detect away games: "[School] at [Away Opponent/Location]"
@@ -1405,8 +1445,16 @@ async function main() {
   });
 
   // Deduplicate by normalized title + date
+  // Sports events: also deduplicate by date+venue (same game, different listing titles)
   const seen = new Set();
+  const sportsByDateVenue = new Set();
   const deduped = capped.filter((e) => {
+    // Sports dedup: one listing per date+venue (catches "Sharks vs Blues" + "San Jose Sharks vs St Louis Blues")
+    if (e.category === "sports" && e.venue && e.date) {
+      const svKey = `${e.date}|${e.venue.toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 20)}`;
+      if (sportsByDateVenue.has(svKey)) return false;
+      sportsByDateVenue.add(svKey);
+    }
     const key = `${e.title.toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30)}|${e.date}`;
     if (seen.has(key)) return false;
     seen.add(key);
