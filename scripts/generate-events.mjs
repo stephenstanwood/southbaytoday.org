@@ -96,7 +96,13 @@ function parseDate(str) {
 
 function isoDate(d) {
   if (!d) return null;
-  return d.toISOString().split("T")[0];
+  // Use PT to stay consistent with displayDate — avoids UTC-midnight off-by-one
+  const parts = d.toLocaleDateString("en-US", {
+    year: "numeric", month: "2-digit", day: "2-digit",
+    timeZone: "America/Los_Angeles",
+  }).split("/");
+  // Format: MM/DD/YYYY → YYYY-MM-DD
+  return `${parts[2]}-${parts[0]}-${parts[1]}`;
 }
 
 function displayDate(d) {
@@ -175,7 +181,8 @@ const INTERNAL_EVENT_PATTERNS = [
   /\beligibility\s+criteria\b/i,
   /\b(MDD|ADHD|PTSD)\s+study\b/i,
   // HR / payroll / admin (internal university operations)
-  /\btimesheet\b/i,
+  /\btimesheets?\b/i,
+  /\bapprove\s+timesheets?\b/i,
   /\bpay\s+period\b/i,
   /\bpayroll\b/i,
   /\bpay\s+date\b/i,
@@ -190,7 +197,8 @@ const INTERNAL_EVENT_PATTERNS = [
   /\brecruiting\b/i,
   /\bopen\s+position\b/i,
   /\binternship\s+application\b/i,
-  /\bscholarship\s+application\b/i,
+  /\bscholarship\s+(application|nomination)\b/i,
+  /\bnomination\s+application\b/i,
   /\bgrant\s+application\b/i,
   /\bfundraiser\b/i,
   /\bdonation\s+(drive|deadline)\b/i,
@@ -337,6 +345,9 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bfinance\s+what'?s?\s+up\b/i,
   /\bspring\s+budget\b/i,
   /\bchhs\b.*\bjournal\s+club\b/i,
+  // Internal seminar series / recurring workshop codes (not public events)
+  /\bBRICS\s+Session\b/i,
+  /^[A-Z]{3,5}\s+Session$/,
   // Ticketmaster merchandise / add-ons (not events)
   /\bsouvenir\s+ticket\b/i,
   /\bcommemorative\s+(magnet|pin|coin|lanyard)\b/i,
@@ -461,6 +472,8 @@ function inferCategory(title, desc, type, venue = "") {
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
   if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (t.includes("art") && !t.includes("martial art") && !t.includes("start"))) return "arts";
+  // Nature / wildlife events — check BEFORE sports to avoid false positives
+  if (/\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
   if (/\b(volunteer|volunteering)\b/.test(t) && /\b(farm|garden|trail|park|nature)\b/.test(t)) return "community";
   // School/fundraiser fun runs are community events, not sports
@@ -1491,13 +1504,13 @@ async function fetchEarthquakesSchedule() {
     const events = (data.events || []).map((e) => {
       const comp = e.competitions?.[0];
       if (!comp) return null;
-      const dateStr = e.date?.split("T")[0];
+      const start = new Date(e.date);
+      const dateStr = isoDate(start);
       if (!dateStr || dateStr < today) return null;
       const homeTeam = comp.competitors?.find((c) => c.homeAway === "home");
       if (!homeTeam?.team?.displayName?.toLowerCase().includes("san jose")) return null;
       const awayTeam = comp.competitors?.find((c) => c.homeAway === "away");
       const opponent = awayTeam?.team?.displayName || "Opponent";
-      const start = new Date(e.date);
       return {
         id: h("earthquakes", String(e.id)),
         title: `San Jose Earthquakes vs. ${opponent}`,
@@ -1591,13 +1604,13 @@ async function fetchBayFCSchedule() {
     const events = (data.events || []).map((e) => {
       const comp = e.competitions?.[0];
       if (!comp) return null;
-      const dateStr = e.date?.split("T")[0];
+      const start = new Date(e.date);
+      const dateStr = isoDate(start);
       if (!dateStr || dateStr < today) return null;
       const homeTeam = comp.competitors?.find((c) => c.homeAway === "home");
       if (!homeTeam?.team?.displayName?.toLowerCase().includes("bay")) return null;
       const awayTeam = comp.competitors?.find((c) => c.homeAway === "away");
       const opponent = awayTeam?.team?.displayName || "Opponent";
-      const start = new Date(e.date);
       return {
         id: h("bayfc", String(e.id)),
         title: `Bay FC vs. ${opponent}`,
