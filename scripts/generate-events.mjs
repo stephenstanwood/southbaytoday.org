@@ -1343,6 +1343,51 @@ async function fetchTicketmasterEvents() {
   }
 }
 
+// ── Ticketmaster: Shoreline Amphitheatre (Mountain View) ──
+// Targeted fetch for Shoreline — ensures Mountain View concert events always appear
+// regardless of the general TM query's source cap.
+
+async function fetchShorelineEvents() {
+  console.log("  ⏳ Ticketmaster (Shoreline Amphitheatre)...");
+  const apiKey = process.env.TICKETMASTER_API_KEY;
+  if (!apiKey) { console.log("  ⚠️  Shoreline: no Ticketmaster API key"); return []; }
+
+  try {
+    const now = new Date();
+    const future = new Date(now.getTime() + 180 * 24 * 60 * 60 * 1000); // 180 days out
+    const startStr = now.toISOString().replace(/\.\d{3}Z$/, "Z");
+    const endStr = future.toISOString().replace(/\.\d{3}Z$/, "Z");
+
+    const url = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
+    url.searchParams.set("apikey", apiKey);
+    url.searchParams.set("keyword", "Shoreline Amphitheatre");
+    url.searchParams.set("stateCode", "CA");
+    url.searchParams.set("startDateTime", startStr);
+    url.searchParams.set("endDateTime", endStr);
+    url.searchParams.set("size", "100");
+    url.searchParams.set("sort", "date,asc");
+
+    const res = await fetch(url.toString(), {
+      headers: { "User-Agent": UA },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const data = await res.json();
+
+    const rawEvents = data?._embedded?.events || [];
+    const events = rawEvents
+      .map(mapTicketmasterEvent)
+      .filter((e) => e && e.city === "mountain-view")
+      .map((e) => ({ ...e, source: "Shoreline Amphitheatre" }));
+
+    console.log(`  ✅ Shoreline: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Shoreline: ${err.message}`);
+    return [];
+  }
+}
+
 // ── NHL: San Jose Sharks ──
 
 async function fetchSharksSchedule() {
@@ -1736,6 +1781,7 @@ async function main() {
     fetchHappyHollowEvents,
     fetchMaclaEvents,
     fetchHeritageTheatreEvents,
+    fetchShorelineEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));

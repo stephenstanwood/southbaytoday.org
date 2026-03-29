@@ -1870,3 +1870,49 @@ The city briefings expansion to all 11 cities is a meaningful UX improvement: Lo
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the Development Tracker is now current and expanding.** A resident who opens the Development tab today sees 23 projects including three that reflect decisions made in the past two weeks. The tracker is now a living document of what's being built and decided, not a frozen snapshot from March. The SuperMicro project in particular ties the Development and Technology tabs together: South Bay Signal now covers the full lifecycle from "company is growing" (Tech tab) to "company is building new facilities" (Development tab). That's the kind of connected local intelligence no other South Bay source provides.
+
+---
+
+## 2026-03-29 — Cycle 33: Shoreline Amphitheatre + Mountain View Events
+
+### Context
+Coming off Cycle 32 which audited the Development Tracker. Mountain View is one of the most event-rich cities in the South Bay — home to the Computer History Museum, Google, and most importantly Shoreline Amphitheatre, one of the largest concert venues on the West Coast. Yet the events feed showed only 8 Mountain View events (all CHM exhibits, all dated today as "ongoing"). A 10× gap versus San Jose's 184. The issue: the Ticketmaster general query fetches ~449 events sorted by date, hits a 200-event source cap, and the Shoreline concerts (positions 380+) get dropped. This was a silent failure — the script reported "309 events" but Mountain View was getting nothing.
+
+### What Was Built
+
+**1. Shoreline Amphitheatre targeted event fetcher (`fetchShorelineEvents`):**
+- New function in `scripts/generate-events.mjs` that queries Ticketmaster by keyword "Shoreline Amphitheatre" with a 180-day window (vs. 90 for the general query)
+- Tagged with `source: "Shoreline Amphitheatre"` so it gets its own source cap bucket (not counted against the general TM 200-event cap)
+- Reuses `mapTicketmasterEvent` helper (extracted from the main TM function) for consistent event shape
+
+**2. General TM fetcher pagination fix:**
+- The original fetcher only fetched page 0 (200 events) from a single lat/long center
+- Updated to fetch all pages from both SJ center (37.3382,-121.8863) and MV/Shoreline center (37.4266,-122.0804)
+- Deduplicates by event ID before capping, so duplicates don't count against the source cap
+- `mapTicketmasterEvent` extracted as a shared helper
+
+**3. Data refresh:**
+- upcoming-events.json: 500 events (up from 481 before this cycle), 102 ongoing, 19 sources
+- Mountain View: 27 events (up from 8) — 19 Shoreline concerts + 8 CHM exhibits
+- New concerts visible: Pitbull (Jun 7), Pussycat Dolls (Jun 12), Kid Cudi (Jun 23), Chris Stapleton (Jul 8), Hilary Duff (Jul 11), Evanescence (Jul 20), Santana & Doobie Brothers (Aug 9), Luke Bryan (Aug 14), Muse (Aug 27), Mötley Crüe (Sep 24), and more
+- All pipeline scripts refreshed: around-town, digests, city-briefings, health-scores, weekend-picks
+
+### Why This Was the Strongest Move
+
+Shoreline Amphitheatre is one of the defining cultural institutions of the South Bay. When a Mountain View resident checks "what's happening in my city," not seeing upcoming Shoreline concerts is a significant miss — these are major shared cultural events that thousands of South Bay residents attend. The previous 8 Mountain View events (all CHM exhibits) made Mountain View look like a city with nothing going on. 27 events including a full summer concert season is the reality.
+
+The root cause was architectural: Ticketmaster returns results sorted by date, with major venue events sometimes hundreds of positions in. A flat cap without city-diversity balancing silently under-serves cities that generate events later in the season. The fix (dedicated source with its own cap) is the right pattern for other major venues too.
+
+### Effect on Real Users
+- **Mountain View resident**: Events tab now shows their summer concert calendar — not just "Steve Jobs in Exile" at CHM
+- **Concert-goer**: Can see the full Shoreline season in one place without hunting ticketmaster.com
+- **Families**: Multiple family-appropriate shows visible (various genres across the summer)
+- **Everyone in the South Bay**: Mountain View now appears as the event-rich city it actually is
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511 API key needed. Register at 511.org/open-data. Daily commuter urgency. This has been deferred every cycle for the same reason.
+2. **Palo Alto government coverage (PrimeGov)** — PrimeGov API endpoint structure changed; v1/v2 routes don't exist. Need to inspect the live portal's network traffic to find working API routes.
+3. **Caltrans D4 traffic incidents** — API returns 500. Worth retrying — I-280, US-101, SR-85, SR-87 incident alerts would add commuter urgency to the Transit tab.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — Mountain View is now properly covered.** The events feed went from 8 to 27 events for Mountain View, finally representing the city's actual cultural life. Shoreline Amphitheatre — one of the South Bay's most recognizable landmarks — is now part of the signal. A Mountain View resident who visits the Events tab will see their summer: concerts, tech museum exhibits, and the broader calendar of the city they actually live in.
