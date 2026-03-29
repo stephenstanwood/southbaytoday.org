@@ -108,11 +108,14 @@ const title = "The South Bay Signal";
         max-width: var(--sb-max-width);
         margin: 0 auto;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+      }
+      @media (min-width: 860px) {
+        .sb-nav-inner { justify-content: center; }
       }
       .sb-nav-inner::-webkit-scrollbar { display: none; }
       .sb-tab {

@@ -67,17 +67,17 @@ export const DEV_PROJECTS: DevProject[] = [
   // ── OPENING SOON ────────────────────────────────────────────────────────
 
   {
-    id: "levi-stadium-area",
-    name: "Central Place at Levi's Stadium",
+    id: "related-santa-clara",
+    name: "Related Santa Clara",
     city: "Santa Clara",
     cityId: "santa-clara",
     category: "mixed-use",
-    status: "opening-soon",
+    status: "approved",
     description:
-      "Mixed-use development adjacent to Levi's Stadium in Santa Clara, developed by Related Companies. Planned to include office, hotel, retail, and entertainment uses, creating a destination district around the 49ers stadium on game days and off.",
+      "Formerly CityPlace Santa Clara. A large mixed-use development adjacent to Levi's Stadium planned by Related Companies. Approved by Santa Clara after years of litigation with San Jose. Includes office, hotel, retail, and entertainment uses across a multi-building campus.",
     scale: "Multi-building campus",
     developer: "Related Companies",
-    timeline: "Phased opening",
+    timeline: "TBD",
     featured: false,
   },
 

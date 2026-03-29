@@ -1772,3 +1772,45 @@ The NWS API is perfectly complementary to the existing weather + water + air qua
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — emergency intelligence layer complete.** South Bay Signal now covers the full safety picture: NWS weather alerts, USGS stream gauges, air quality, seismic activity, and PG&E/SCE outages. A resident checking SBS during any South Bay hazard event — wildfire smoke, heat wave, flood watch, earthquake, power outage — gets all the relevant information in one place. No other local source aggregates all five of these. For residents in the hills (Saratoga, Los Gatos) who face elevated wildfire and flood risk, this combination is genuinely unique.
+
+---
+
+## 2026-03-29 — Cycle 31: Spring Break Guide
+
+### What Was Built
+
+**Spring Break Guide card on Overview tab** — a curated list of 5 family-friendly activities for spring break week (Apr 3–17, covering Easter weekend + both spring break windows). Shown from Mar 28 through Apr 17.
+
+- `scripts/generate-spring-break-picks.mjs` — new generator script using Claude Haiku to curate 5 picks from spring break events
+- `src/data/south-bay/spring-break-picks.json` — 5 picks: Egg Decorating, LEGO Club, bird photography talk, USWNT soccer, library storytime
+- `SpringBreakCard` component in OverviewView — same visual style as WeekendPicksCard, with 🌸 header and date-gated visibility (Mar 28–Apr 17)
+
+**Data refresh**: events, digests, weekend-picks, around-town, upcoming-meetings
+
+### The 5 Picks (this cycle)
+1. Friday Fun: Egg Decorating — Free Easter egg decorating at SJPL (Apr 3, 4pm)
+2. LEGO Club for Grades K-8 — Free LEGO club at Santa Clara County Library, Milpitas (Apr 6, 3:30pm)
+3. Pelicans, Herons, and Egrets, Oh My! — Wildlife photography nature talk, Los Altos library (Apr 10, 7pm)
+4. U.S. Women's National Team v Japan — USWNT soccer at PayPal Park (Apr 11, 2:30pm)
+5. Reading to Children with Vivian — Free storytime at SJPL (Apr 12, 1pm)
+
+### APIs Investigated This Cycle
+- **CDEC (California DWR)** — Tested Santa Clara County reservoir storage. Only Coyote Reservoir (COY) returned data. Anderson Reservoir (ANR) offline for dam safety retrofit since 2020. Other stations (LEX, CAL, CHB, STC) returned empty datasets. Reservoir card not built this cycle.
+- **Caltrans D4 incidents API** — Still returning HTTP 500. Not buildable this cycle.
+- **511.org transit real-time** — API key required. Not buildable without registration.
+
+### Why This Was the Highest-Leverage Move
+
+Spring break starts in one week for most South Bay school districts (Apr 6-10 for SJUSD/PAUSD/MVWSD/LGSUHSD/MVLA; Apr 13-17 for FUHSD/CUSD). Easter is Apr 5. Parents are planning now.
+
+The Spring Break Guide fills the gap that no other local source fills: a curated, opinionated list of things to actually do with kids during break week. The Events tab shows raw event listings, but a parent with limited time doesn't want to scroll through 342 events — they want "5 things we recommend for your family this week." The card shows from Mar 28 through Apr 17 and then disappears, so it's always timely.
+
+The 5 picks span: free crafts (egg decorating), educational play (LEGO Club), nature/science (bird photography), premium sports (USWNT), and literacy (storytime). Geographic spread: San Jose, Milpitas, Los Altos. Four of the five are free.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511 API key needed (register at 511.org/open-data). Would transform the Transit tab from static alerts to live arrivals.
+2. **Caltrans D4 traffic incidents** — retry when API recovers from 500 error. Real-time incident alerts for 101, 85, 87, 280.
+3. **SCVWD reservoir levels** — Only Coyote (COY) returning data. Keep retrying Anderson (ANR) — it's being refilled after dam safety work and will have data again.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — seasonal intelligence added.** SBS now surfaces timely, curated activity guidance around the local school calendar. The WeekendPicksCard handles any weekend; the SpringBreakCard handles the spring break window specifically. This seasonal awareness (knowing when kids are out of school and curating accordingly) is something no other South Bay source does automatically.
