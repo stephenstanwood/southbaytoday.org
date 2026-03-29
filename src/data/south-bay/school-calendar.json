@@ -1,0 +1,136 @@
+{
+  "updatedAt": "2026-03-28",
+  "schoolYear": "2025-2026",
+  "districts": [
+    {
+      "id": "sjusd",
+      "name": "SJUSD",
+      "fullName": "San Jose Unified",
+      "color": "#1d4ed8",
+      "bg": "#eff6ff",
+      "cities": ["san-jose"]
+    },
+    {
+      "id": "pausd",
+      "name": "PAUSD",
+      "fullName": "Palo Alto Unified",
+      "color": "#15803d",
+      "bg": "#f0fdf4",
+      "cities": ["palo-alto", "mountain-view", "los-altos"]
+    },
+    {
+      "id": "fuhsd",
+      "name": "FUHSD",
+      "fullName": "Fremont Union HS",
+      "color": "#b45309",
+      "bg": "#fffbeb",
+      "cities": ["sunnyvale", "cupertino", "santa-clara", "campbell"]
+    }
+  ],
+  "events": [
+    {
+      "id": "sjusd-good-friday-2026",
+      "districtId": "sjusd",
+      "label": "Good Friday — No School",
+      "type": "holiday",
+      "startDate": "2026-04-03",
+      "endDate": "2026-04-03"
+    },
+    {
+      "id": "sjusd-spring-break-2026",
+      "districtId": "sjusd",
+      "label": "Spring Break",
+      "type": "break",
+      "startDate": "2026-04-06",
+      "endDate": "2026-04-10"
+    },
+    {
+      "id": "pausd-spring-break-2026",
+      "districtId": "pausd",
+      "label": "Spring Break",
+      "type": "break",
+      "startDate": "2026-04-06",
+      "endDate": "2026-04-10"
+    },
+    {
+      "id": "fuhsd-spring-break-2026",
+      "districtId": "fuhsd",
+      "label": "Spring Break",
+      "type": "break",
+      "startDate": "2026-04-13",
+      "endDate": "2026-04-17"
+    },
+    {
+      "id": "pausd-may-1-holiday-2026",
+      "districtId": "pausd",
+      "label": "Local Holiday — No School",
+      "type": "holiday",
+      "startDate": "2026-05-01",
+      "endDate": "2026-05-01"
+    },
+    {
+      "id": "sjusd-memorial-day-2026",
+      "districtId": "sjusd",
+      "label": "Memorial Day — No School",
+      "type": "holiday",
+      "startDate": "2026-05-25",
+      "endDate": "2026-05-25"
+    },
+    {
+      "id": "pausd-memorial-day-2026",
+      "districtId": "pausd",
+      "label": "Memorial Day — No School",
+      "type": "holiday",
+      "startDate": "2026-05-25",
+      "endDate": "2026-05-25"
+    },
+    {
+      "id": "fuhsd-memorial-day-2026",
+      "districtId": "fuhsd",
+      "label": "Memorial Day — No School",
+      "type": "holiday",
+      "startDate": "2026-05-25",
+      "endDate": "2026-05-25"
+    },
+    {
+      "id": "sjusd-graduation-2026",
+      "districtId": "sjusd",
+      "label": "High School Graduations",
+      "type": "graduation",
+      "startDate": "2026-05-27",
+      "endDate": "2026-05-28"
+    },
+    {
+      "id": "sjusd-last-day-2026",
+      "districtId": "sjusd",
+      "label": "Last Day of School",
+      "type": "lastday",
+      "startDate": "2026-05-29",
+      "endDate": "2026-05-29"
+    },
+    {
+      "id": "fuhsd-graduation-2026",
+      "districtId": "fuhsd",
+      "label": "Graduations",
+      "type": "graduation",
+      "startDate": "2026-06-04",
+      "endDate": "2026-06-05"
+    },
+    {
+      "id": "pausd-last-day-2026",
+      "districtId": "pausd",
+      "label": "Last Day of School",
+      "type": "lastday",
+      "startDate": "2026-06-04",
+      "endDate": "2026-06-04"
+    },
+    {
+      "id": "fuhsd-last-day-2026",
+      "districtId": "fuhsd",
+      "label": "Last Day of School",
+      "type": "lastday",
+      "startDate": "2026-06-04",
+      "endDate": "2026-06-04"
+    }
+  ]
+}

@@ -12,9 +12,9 @@ import { CITIES, getCityName } from "../../../lib/south-bay/cities";
 import type { City, Tab } from "../../../lib/south-bay/types";
 import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../../data/south-bay/digests.json";
-import blotterJson from "../../../data/south-bay/blotter.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
+import schoolCalJson from "../../../data/south-bay/school-calendar.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -461,25 +461,6 @@ function CityPicker({ homeCity, onSelect, onClose }: { homeCity: City | null; on
   );
 }
 
-// ── Blotter type (matches blotter.json) ──────────────────────────────────────
-
-interface BlotterEntry {
-  date: string;
-  time: string;
-  type: string;
-  location: string;
-  priority?: number | string;
-}
-
-interface CityBlotter {
-  city: string;
-  cityName: string;
-  entries: BlotterEntry[];
-  source: string;
-  sourceUrl: string;
-  generatedAt?: string;
-}
-
 // ── Signal Briefing ───────────────────────────────────────────────────────────
 // Newspaper front-page hero: 3 lead stories generated from live data
 
@@ -747,97 +728,107 @@ function SignalBriefing({
   );
 }
 
-// ── Blotter strip ─────────────────────────────────────────────────────────────
+// ── Our Picks (weekend editorial) ────────────────────────────────────────────
 
-const BLOTTER_PRIORITY_LABELS: Record<number, { label: string; bg: string; color: string }> = {
-  1: { label: "Priority 1", bg: "#FEF2F2", color: "#991B1B" },
-  2: { label: "Priority 2", bg: "#FFF7ED", color: "#92400E" },
-  3: { label: "Priority 3", bg: "#FEF9C3", color: "#854D0E" },
-};
+interface WeekendPick {
+  id: string;
+  title: string;
+  date: string;
+  displayDate: string;
+  time: string | null;
+  city: string;
+  venue: string;
+  cost: string;
+  url?: string | null;
+  category: string;
+  why: string;
+}
 
-function BlotterStrip({
-  homeCity,
-  onNavigate,
-}: {
-  homeCity: City | null;
-  onNavigate: (tab: Tab) => void;
-}) {
-  const blotters = blotterJson as Record<string, CityBlotter>;
-  const city = homeCity;
-  if (!city) return null;
-  const blotter = blotters[city];
-  if (!blotter || !blotter.entries?.length) return null;
-
-  // Show most recent 5 entries
-  const entries = blotter.entries.slice(0, 5);
-
-  const callDate = entries[0]?.date ?? "";
+function WeekendPicksCard() {
+  const data = weekendPicksJson as { weekendLabel?: string; picks?: WeekendPick[] };
+  const picks = data.picks ?? [];
+  if (!picks.length) return null;
 
   return (
     <div style={{ marginBottom: 32 }}>
-      <div className="sb-section-header" style={{ marginBottom: 10 }}>
-        <span className="sb-section-title" style={{ fontSize: 13 }}>
-          🚨 Police Blotter
+      <div className="sb-section-header" style={{ marginBottom: 12 }}>
+        <span className="sb-section-title" style={{ fontSize: 15 }}>
+          ⭐ Our Picks
         </span>
-        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-          {callDate} · {getCityName(city)}
-        </span>
-        <a
-          href={blotter.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ marginLeft: "auto", fontSize: 11, color: "var(--sb-accent)", textDecoration: "none" }}
-        >
-          {blotter.source} →
-        </a>
+        {data.weekendLabel && (
+          <span style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 500 }}>
+            {data.weekendLabel}
+          </span>
+        )}
+        <div className="sb-section-line" />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {entries.map((entry, i) => {
-          const pri = typeof entry.priority === "number" ? entry.priority : parseInt(entry.priority as string ?? "9", 10);
-          const priStyle = BLOTTER_PRIORITY_LABELS[pri] ?? { label: "", bg: "#F3F4F6", color: "#374151" };
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {picks.map((pick) => {
+          const emoji = CATEGORY_EMOJI[pick.category] ?? "📅";
+          const cityName = pick.city
+            .split("-")
+            .map((w) => w[0].toUpperCase() + w.slice(1))
+            .join(" ");
+
           return (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", gap: 10,
-              padding: "8px 0",
-              borderBottom: i < entries.length - 1 ? "1px solid var(--sb-border-light)" : "none",
-            }}>
-              <span style={{
-                fontFamily: "'Space Mono', monospace", fontSize: 10,
-                color: "var(--sb-muted)", flexShrink: 0, minWidth: 38,
-              }}>
-                {entry.time}
-              </span>
-              <span style={{
-                fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
-                background: priStyle.bg, color: priStyle.color,
-                whiteSpace: "nowrap", flexShrink: 0, letterSpacing: "0.02em",
-                maxWidth: 130, overflow: "hidden", textOverflow: "ellipsis",
-              }}>
-                {entry.type}
-              </span>
-              <span style={{
-                fontSize: 11, color: "var(--sb-muted)",
-                overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                fontFamily: "'Space Mono', monospace",
-              }}>
-                {entry.location}
-              </span>
+            <div
+              key={pick.id}
+              style={{
+                border: "1.5px solid var(--sb-border-light)",
+                borderRadius: 8,
+                padding: "12px 14px",
+                background: "#fff",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <span style={{ fontSize: 20, flexShrink: 0, marginTop: 1 }}>{emoji}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
+                    {pick.url ? (
+                      <a
+                        href={pick.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          fontSize: 14, fontWeight: 700, color: "var(--sb-ink)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {pick.title}
+                      </a>
+                    ) : (
+                      <span style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)" }}>
+                        {pick.title}
+                      </span>
+                    )}
+                    <span style={{
+                      fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+                      background: pick.cost === "free" ? "#DCFCE7" : "#F3F4F6",
+                      color: pick.cost === "free" ? "#15803D" : "var(--sb-muted)",
+                      flexShrink: 0,
+                    }}>
+                      {pick.cost === "free" ? "FREE" : "PAID"}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--sb-muted)", marginBottom: 5, lineHeight: 1.45 }}>
+                    {pick.why}
+                  </div>
+                  <div style={{
+                    fontSize: 11, color: "var(--sb-light)",
+                    fontFamily: "'Space Mono', monospace",
+                    display: "flex", gap: 8, flexWrap: "wrap",
+                  }}>
+                    <span>{pick.displayDate}{pick.time ? ` · ${pick.time}` : ""}</span>
+                    <span>·</span>
+                    <span>{pick.venue || cityName}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           );
         })}
       </div>
-
-      <button
-        onClick={() => onNavigate("government")}
-        style={{
-          marginTop: 8, background: "none", border: "none", padding: 0,
-          fontSize: 12, color: "var(--sb-muted)", cursor: "pointer",
-          textDecoration: "underline", textUnderlineOffset: 3,
-        }}
-      >
-        Full blotter in Gov tab →
-      </button>
     </div>
   );
 }
@@ -1077,6 +1068,179 @@ function OnStageSection({
   );
 }
 
+// ── School Calendar card ──────────────────────────────────────────────────────
+
+type SchoolCalEvent = {
+  id: string;
+  districtId: string;
+  label: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+};
+
+type SchoolDistrict = {
+  id: string;
+  name: string;
+  fullName: string;
+  color: string;
+  bg: string;
+};
+
+const TYPE_ICON: Record<string, string> = {
+  break: "🏖️",
+  holiday: "🗓️",
+  graduation: "🎓",
+  lastday: "🔔",
+};
+
+function SchoolCalendarCard() {
+  const now = new Date();
+  const todayIso = now.toISOString().split("T")[0];
+  const ninetyDaysOut = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
+
+  const districts = (schoolCalJson as { districts: SchoolDistrict[] }).districts;
+  const allEvents = (schoolCalJson as { events: SchoolCalEvent[] }).events;
+  const districtMap = Object.fromEntries(districts.map((d) => [d.id, d]));
+
+  // Filter to upcoming events within 90 days
+  const upcoming = allEvents
+    .filter((e) => e.endDate >= todayIso && e.startDate <= ninetyDaysOut)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+
+  if (!upcoming.length) return null;
+
+  // Group events that share the same label + type + date range (e.g. Memorial Day across districts)
+  type GroupedEntry = {
+    key: string;
+    label: string;
+    type: string;
+    startDate: string;
+    endDate: string;
+    districtIds: string[];
+  };
+
+  const grouped: GroupedEntry[] = [];
+  for (const e of upcoming) {
+    const key = `${e.label}|${e.startDate}|${e.endDate}`;
+    const existing = grouped.find((g) => g.key === key);
+    if (existing) {
+      existing.districtIds.push(e.districtId);
+    } else {
+      grouped.push({ key, label: e.label, type: e.type, startDate: e.startDate, endDate: e.endDate, districtIds: [e.districtId] });
+    }
+  }
+
+  function formatDateRange(start: string, end: string): string {
+    const s = new Date(start + "T12:00:00");
+    const e = new Date(end + "T12:00:00");
+    const sStr = s.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    if (start === end) return sStr;
+    const sameMonth = s.getMonth() === e.getMonth();
+    const eStr = sameMonth
+      ? e.toLocaleDateString("en-US", { day: "numeric" })
+      : e.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return `${sStr}–${eStr}`;
+  }
+
+  function countdown(startDate: string, endDate: string): string | null {
+    const s = new Date(startDate + "T00:00:00");
+    const e = new Date(endDate + "T00:00:00");
+    const today = new Date(todayIso + "T00:00:00");
+    if (today > e) return null;
+    if (today >= s) return "this week";
+    const days = Math.round((s.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (days === 1) return "tomorrow";
+    return `in ${days} days`;
+  }
+
+  const nextBreak = grouped.find((g) => g.type === "break");
+  const countdown1 = nextBreak ? countdown(nextBreak.startDate, nextBreak.endDate) : null;
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div className="sb-section-header" style={{ marginBottom: 12 }}>
+        <span className="sb-section-title">School Calendar</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          {countdown1 && nextBreak ? `spring break ${countdown1}` : "2025–26"}
+        </span>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {grouped.map((entry, i) => {
+          const dateStr = formatDateRange(entry.startDate, entry.endDate);
+          const icon = TYPE_ICON[entry.type] ?? "📅";
+          const isOngoing = entry.startDate <= todayIso && entry.endDate >= todayIso;
+
+          return (
+            <div
+              key={entry.key}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "10px 0",
+                borderBottom: i < grouped.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              }}
+            >
+              {/* Icon */}
+              <span style={{ fontSize: 16, lineHeight: 1, flexShrink: 0 }}>{icon}</span>
+
+              {/* Date + label */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 3 }}>
+                  <span style={{
+                    fontSize: 11,
+                    fontFamily: "'Space Mono', monospace",
+                    color: isOngoing ? "var(--sb-accent)" : "var(--sb-muted)",
+                    fontWeight: isOngoing ? 700 : 400,
+                  }}>
+                    {isOngoing ? "NOW · " : ""}{dateStr}
+                  </span>
+                  {entry.districtIds.map((did) => {
+                    const d = districtMap[did];
+                    if (!d) return null;
+                    return (
+                      <span
+                        key={did}
+                        style={{
+                          fontSize: 9,
+                          fontWeight: 700,
+                          padding: "1px 5px",
+                          borderRadius: 3,
+                          background: d.bg,
+                          color: d.color,
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        {d.name}
+                      </span>
+                    );
+                  })}
+                </div>
+                <div style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--sb-ink)",
+                  lineHeight: 1.3,
+                }}>
+                  {entry.label}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 8, fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+        SJUSD · PAUSD · FUHSD — 2025–26
+      </div>
+    </div>
+  );
+}
+
 // ── Bucketed event list ───────────────────────────────────────────────────────
 
 type AnyEvent = { _type: "static"; event: SBEvent } | { _type: "upcoming"; event: UpcomingEvent };
@@ -1282,7 +1446,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Weather strip ── */}
       {weather && (
-        <div style={{ background: "var(--sb-primary-light)", border: "1px solid var(--sb-border-light)", borderRadius: "var(--sb-radius)", padding: "10px 16px", marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ background: "var(--sb-primary-light)", border: "1px solid var(--sb-border-light)", borderRadius: "var(--sb-radius)", padding: "10px 16px", marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <span style={{ fontSize: 14, color: "var(--sb-ink)", fontWeight: 500 }}>{weather}</span>
           <span style={{ fontSize: 11, color: "var(--sb-muted)", letterSpacing: "0.04em" }}>
             · {homeCity ? getCityName(homeCity) : "South Bay"}, CA
@@ -1480,13 +1644,14 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       )}
 
 
-      {/* ── Police blotter for home city ── */}
-      {homeCity && !changingCity && (
-        <BlotterStrip homeCity={homeCity} onNavigate={onNavigate} />
-      )}
+      {/* ── Our Picks (weekends only) ── */}
+      {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── School Calendar ── */}
+      {!changingCity && <SchoolCalendarCard />}
 
       {/* ── Housing Market ── */}
       {!changingCity && <RealEstateCard homeCity={homeCity} />}
