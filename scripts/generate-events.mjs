@@ -1830,11 +1830,11 @@ async function main() {
     fetchLosGatosEvents,
     fetchSaratogaEvents,
     fetchLosAltosEvents,
-    fetchMountainViewEvents,
-    fetchSunnyvaleEvents,
-    fetchCupertinoEvents,
-    fetchSanJoseCityEvents,
-    fetchTheTechEvents,
+    // fetchMountainViewEvents,  — 403 blocked since 2026-03
+    // fetchSunnyvaleEvents,     — 403 blocked since 2026-03
+    // fetchCupertinoEvents,     — 404/timeout since 2026-03; covered by SCCL BiblioCommons
+    // fetchSanJoseCityEvents,   — 403 blocked since 2026-03
+    // fetchTheTechEvents,       — no /feed/ endpoint as of 2026-03
     fetchSjplEvents,
     fetchScclEvents,
     fetchSvlgEvents,

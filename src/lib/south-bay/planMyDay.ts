@@ -10,6 +10,7 @@ import {
   type DayOfWeek,
 } from "../../data/south-bay/events-data";
 import { SOUTH_BAY_POIS } from "../../data/south-bay/poi-data";
+import upcomingJson from "../../data/south-bay/upcoming-events.json";
 
 // ── Public input/output types ─────────────────────────────────────────────────
 
@@ -168,6 +169,74 @@ function isActiveOnDate(e: SBEvent, date: Date): boolean {
   return e.days.includes(dayName);
 }
 
+// ── Upcoming event helpers ────────────────────────────────────────────────────
+
+const UPCOMING_CAT_EMOJI: Record<string, string> = {
+  arts: "🎨", family: "👨‍👩‍👦", community: "🤝", sports: "⚽",
+  education: "📚", music: "🎵", outdoor: "🌳", market: "🥦", food: "🍽️",
+};
+
+const SKIP_TITLE = /\b(closed|closure|closing|canceled|cancelled)\b/i;
+
+function timeToBestSlots(time: string | null | undefined): TimeSlot[] {
+  if (!time) return ["morning", "afternoon", "evening"];
+  const m = time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return ["morning", "afternoon", "evening"];
+  let h = parseInt(m[1]);
+  const pm = m[3].toUpperCase() === "PM";
+  if (pm && h !== 12) h += 12;
+  if (!pm && h === 12) h = 0;
+  if (h < 12) return ["morning"];
+  if (h < 14) return ["lunch", "afternoon"];
+  if (h < 17) return ["afternoon"];
+  return ["evening"];
+}
+
+function buildUpcomingCandidates(date: Date): Candidate[] {
+  const dateStr = date.toISOString().split("T")[0];
+  const allEvents = (upcomingJson as { events: Array<{
+    id: string; title: string; date: string; time?: string | null;
+    venue?: string; city?: string; category?: string; cost?: string;
+    description?: string; url?: string; kidFriendly?: boolean; ongoing?: boolean;
+  }> }).events || [];
+
+  return allEvents
+    .filter((e) =>
+      e.date === dateStr &&
+      !e.ongoing &&
+      !SKIP_TITLE.test(e.title)
+    )
+    .map((e) => {
+      const cat = e.category ?? "community";
+      const indoorOutdoor: "indoor" | "outdoor" | "both" =
+        ["outdoor", "market", "sports"].includes(cat) ? "outdoor" :
+        ["arts", "education", "music", "food"].includes(cat) ? "indoor" : "both";
+      const cost: "free" | "low" | "paid" =
+        e.cost === "free" ? "free" : e.cost === "low" ? "low" : "paid";
+      const desc = e.description?.trim();
+      const why = desc && desc.length > 0 && !desc.startsWith("http")
+        ? (desc.length > 120 ? desc.slice(0, 117) + "…" : desc)
+        : e.title;
+      return {
+        id: `upcoming-${e.id}`,
+        title: e.title,
+        venue: e.venue ?? "",
+        city: cityLabel(e.city ?? ""),
+        cost,
+        kidFriendly: e.kidFriendly ?? false,
+        why,
+        emoji: UPCOMING_CAT_EMOJI[cat] ?? "📅",
+        url: e.url,
+        isEvent: true,
+        isTodaySpecial: true,
+        hasDayRestriction: true,
+        indoorOutdoor,
+        category: cat,
+        bestSlots: timeToBestSlots(e.time),
+      } as Candidate;
+    });
+}
+
 // ── Candidate building ────────────────────────────────────────────────────────
 
 function eventIndoorOutdoor(e: SBEvent): "indoor" | "outdoor" | "both" {
@@ -244,7 +313,9 @@ function buildCandidates(date: Date): Candidate[] {
     });
   }
 
-  return candidates;
+  // Layer in specific upcoming events for the target date
+  const upcomingCandidates = buildUpcomingCandidates(date);
+  return [...candidates, ...upcomingCandidates];
 }
 
 // ── Scoring ───────────────────────────────────────────────────────────────────
