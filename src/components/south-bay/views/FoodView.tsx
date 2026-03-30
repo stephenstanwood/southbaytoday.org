@@ -149,6 +149,7 @@ function FarmersMarkets() {
 type RadarItem = {
   id: string;
   address: string;
+  name: string | null;
   description: string;
   workType: string;
   signal: "opening" | "closing" | "activity";
@@ -212,7 +213,7 @@ function RestaurantRadar() {
                     fontWeight: 600, fontSize: 13, fontFamily: "var(--sb-sans)",
                     color: "var(--sb-ink)",
                   }}>
-                    {item.address}
+                    {item.name ?? item.address}
                   </span>
                   <span style={{
                     fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
@@ -223,6 +224,8 @@ function RestaurantRadar() {
                   </span>
                 </div>
                 <div style={{ fontSize: 11, color: "var(--sb-muted)", display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  <span>{item.address}</span>
+                  <span style={{ color: "var(--sb-border)" }}>·</span>
                   <span>{item.workType}</span>
                   {item.valuation > 0 && (
                     <>

@@ -56,6 +56,47 @@ function formatAddress(raw) {
     .trim();
 }
 
+/**
+ * Try to extract a business name from a San Jose permit FOLDERNAME.
+ * Permit names follow patterns like:
+ *   "(Bepm100%) Flora Ti"
+ *   "(Bepm100%) Srp La Victoria Ti"
+ *   "Srp (Bemp100%) Fomo Ti #A16"
+ *   "Jc'S Bbq (Bepm 100%) Interior Ti"
+ *   "Taco Bell (E 100%) Sign"
+ *   "(Bp100%) Demo Restaurant"  ← no real name, return null
+ */
+function extractName(raw) {
+  if (!raw) return null;
+  let s = raw.trim();
+
+  // Remove ALL parenthetical expressions (permit codes, completion %)
+  s = s.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+
+  // Strip "Srp " prefix (placeholder owner code used by SJ)
+  s = s.replace(/^Srp\s+/i, "").trim();
+
+  // Strip trailing noise: "Ti", "#A16", "#1808 Restaurant Ti", "Interior", etc.
+  s = s.replace(/\s+#\s*\d+.*$/, "").trim();
+  s = s.replace(/\s+(Interior|Restaurant|Tenant|Improvement|Ti|Demo|Sign|Tbd)\b.*$/i, "").trim();
+
+  // Strip trailing punctuation/spaces
+  s = s.replace(/[,\s]+$/, "").trim();
+
+  // Too short or too generic → no name
+  if (!s || s.length < 3) return null;
+  const generic = /^(demo|demolition|n\/a|restaurant|kitchen|bar|cafe|bakery|food)$/i;
+  if (generic.test(s)) return null;
+
+  // Title-case the result
+  return s
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace(/\bBbq\b/gi, "BBQ")
+    .replace(/\bJc\b/gi, "JC")
+    .replace(/\bJcs\b/gi, "JC's");
+}
+
 function signalFromWork(workType) {
   const w = workType.toLowerCase();
   if (CLOSING_WORK_TYPES.has(w)) return "closing";
@@ -150,11 +191,15 @@ async function main() {
         return null;
       }
 
+      const rawName = r.FOLDERNAME ?? null;
+      const name = extractName(rawName);
+
       return {
         id: r.FOLDERNUMBER ?? String(r._id),
         address: formatAddress(r.gx_location),
-        description: r.FOLDERNAME
-          ? r.FOLDERNAME.trim()
+        name: name ?? null,
+        description: rawName
+          ? rawName.trim()
               .toLowerCase()
               .replace(/\b\w/g, (c) => c.toUpperCase())
           : workType,

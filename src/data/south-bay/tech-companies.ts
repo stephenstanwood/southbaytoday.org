@@ -746,6 +746,18 @@ export interface RecentlyFunded {
 
 export const RECENTLY_FUNDED: RecentlyFunded[] = [
   {
+    id: "raven-io",
+    name: "RAVEN.IO",
+    city: "Palo Alto",
+    category: "security",
+    round: "Seed",
+    amount: "$20M",
+    date: "2026-03-18",
+    tagline: "Runtime application security that blocks cyberattacks by analyzing how code actually behaves inside running apps — not waiting for a CVE patch. Already deployed in production at insurance and financial services customers.",
+    color: "#dc2626",
+    url: "https://raven.io",
+  },
+  {
     id: "deccan-ai",
     name: "Deccan AI",
     city: "Mountain View",
