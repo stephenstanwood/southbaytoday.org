@@ -1926,7 +1926,9 @@ async function main() {
   const deduped = capped.filter((e) => {
     // Sports dedup: one listing per date+venue (catches "Sharks vs Blues" + "San Jose Sharks vs St Louis Blues")
     if (e.category === "sports" && e.venue && e.date) {
-      const svKey = `${e.date}|${e.venue.toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 20)}`;
+      // Normalize venue: strip trailing " at <city>" / " in <city>" so "SAP Center at San Jose" == "SAP Center"
+      const venueNorm = e.venue.toLowerCase().replace(/\s+(at|in)\s+\w[\w\s]*$/, "").replace(/[^a-z0-9]/g, "").substring(0, 20);
+      const svKey = `${e.date}|${venueNorm}`;
       if (sportsByDateVenue.has(svKey)) return false;
       sportsByDateVenue.add(svKey);
     }
