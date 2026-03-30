@@ -313,6 +313,22 @@ function EventRow({ event, showCity = true }: { event: SBEvent; showCity?: boole
 
 // ── Upcoming event row (scraped events) ───────────────────────────────────────
 
+/** Prepend city name to government meeting titles that don't already include it */
+function meetingDisplayTitle(title: string, city: string): string {
+  const MEETING_PATTERNS = [
+    /planning commission/i, /city council/i, /town council/i,
+    /board of supervisors/i, /design review/i, /parks commission/i,
+    /transportation commission/i, /zoning/i, /committee meeting/i,
+    /study session/i, /special meeting/i, /commission meeting/i,
+    /board meeting/i, /public hearing/i,
+  ];
+  const cityName = city.split("-").map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
+  const isMeeting = MEETING_PATTERNS.some(p => p.test(title));
+  if (!isMeeting) return title;
+  if (title.toLowerCase().includes(cityName.toLowerCase())) return title;
+  return `${cityName}: ${title}`;
+}
+
 function UpcomingRow({ event, showCity = true, highlight = false }: { event: UpcomingEvent; showCity?: boolean; highlight?: boolean }) {
   const badge = costBadge(event.cost);
   const showBadge = !(event.cost === "free" && event.category === "community");
@@ -331,9 +347,9 @@ function UpcomingRow({ event, showCity = true, highlight = false }: { event: Upc
           <span style={{ fontFamily: "var(--sb-serif)", fontWeight: 600, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.3 }}>
             {event.url ? (
               <a href={event.url} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
-                {event.title}
+                {meetingDisplayTitle(event.title, event.city)}
               </a>
-            ) : event.title}
+            ) : meetingDisplayTitle(event.title, event.city)}
           </span>
           {showBadge && (
             <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3, background: badge.bg, color: badge.color, letterSpacing: "0.04em", flexShrink: 0 }}>
@@ -2261,7 +2277,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
     : [];
   const cityTomorrowUpcoming = homeCity
     ? allUpcoming
-        .filter(e => e.date === TOMORROW_ISO_STR && e.city === homeCity && !e.ongoing && e.category !== "sports")
+        .filter(e => e.date === TOMORROW_ISO_STR && e.city === homeCity && e.category !== "sports")
         .sort((a, b) => startMinutes(a.time) - startMinutes(b.time))
     : [];
   const cityTomorrowCount = cityTomorrowStatic.length + cityTomorrowUpcoming.length;
@@ -2270,7 +2286,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
     .filter(e => isActiveTomorrow(e) && (homeCity ? e.city !== homeCity : true) && e.category !== "sports")
     .sort((a, b) => startMinutes(a.time) - startMinutes(b.time));
   const southBayTomorrowUpcoming = allUpcoming
-    .filter(e => e.date === TOMORROW_ISO_STR && (homeCity ? e.city !== homeCity : true) && !e.ongoing && e.category !== "sports")
+    .filter(e => e.date === TOMORROW_ISO_STR && (homeCity ? e.city !== homeCity : true) && e.category !== "sports")
     .sort((a, b) => startMinutes(a.time) - startMinutes(b.time));
   const southBayTomorrowCount = southBayTomorrowStatic.length + southBayTomorrowUpcoming.length;
 
@@ -2339,6 +2355,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {forecast && forecast.length > 0 && !changingCity && (
         <ForecastStrip forecast={forecast} />
       )}
+
+      {/* ── Photo strip — right at the top so it's seen immediately ── */}
+      {!changingCity && <PhotoStrip />}
 
       {/* ── NWS weather alerts (live, shows only when active) ── */}
       {!changingCity && <WeatherAlertBanner />}
@@ -2537,9 +2556,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Our Picks (weekends only) ── */}
       {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
-
-      {/* ── Photo strip ── */}
-      {!changingCity && <PhotoStrip />}
 
       {/* ── On Stage this week (Ticketmaster) ── */}
       {!changingCity && <OnStageSection allUpcoming={allUpcoming} onNavigate={onNavigate} />}

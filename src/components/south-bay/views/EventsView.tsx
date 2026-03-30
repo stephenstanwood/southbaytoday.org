@@ -8,6 +8,22 @@ import {
 } from "../../../data/south-bay/events-data";
 import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 
+/** Prepend city name to government meeting titles that don't already include it */
+function meetingDisplayTitle(title: string, city: string): string {
+  const MEETING_PATTERNS = [
+    /planning commission/i, /city council/i, /town council/i,
+    /board of supervisors/i, /design review/i, /parks commission/i,
+    /transportation commission/i, /zoning/i, /committee meeting/i,
+    /study session/i, /special meeting/i, /commission meeting/i,
+    /board meeting/i, /public hearing/i,
+  ];
+  const cityName = city.split("-").map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
+  const isMeeting = MEETING_PATTERNS.some(p => p.test(title));
+  if (!isMeeting) return title;
+  if (title.toLowerCase().includes(cityName.toLowerCase())) return title;
+  return `${cityName}: ${title}`;
+}
+
 interface Props {
   selectedCities: Set<City>;
   homeCity: City | null;
@@ -254,9 +270,9 @@ function UpcomingEventCard({ event }: { event: UpcomingEvent }) {
               onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
               onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
             >
-              {event.title}
+              {meetingDisplayTitle(event.title, event.city)}
             </a>
-          ) : event.title}
+          ) : meetingDisplayTitle(event.title, event.city)}
         </div>
 
         {/* Meta row */}

@@ -667,6 +667,18 @@ async function fetchSjsuEvents() {
   }
 }
 
+// SCU-specific category inference: use inferCategory as a base but reclassify
+// "sports" events that are actually talks, speaker series, or community events.
+const SCU_SPORTS_PATTERNS = /\b(game|match|tournament|championship|athletics|swim meet|track meet|vs\.?|invitational|regatta|scrimmage)\b/i;
+
+function inferScuCategory(title, desc) {
+  const base = inferCategory(title, desc, "");
+  if (base === "sports" && !SCU_SPORTS_PATTERNS.test(title)) {
+    return "community";
+  }
+  return base;
+}
+
 async function fetchScuEvents() {
   console.log("  ⏳ Santa Clara University Events...");
   try {
@@ -685,7 +697,7 @@ async function fetchScuEvents() {
         venue: item.location || "Santa Clara University",
         address: "",
         city: "santa-clara",
-        category: inferCategory(item.title, item.description, ""),
+        category: inferScuCategory(item.title, item.description),
         cost: "free",
         description: truncate(stripHtml(item.description)),
         url: item.link,

@@ -173,6 +173,7 @@ const title = "The South Bay Signal";
         background: var(--sb-card);
         border-bottom: 1px solid var(--sb-border-light);
         padding: 12px 24px;
+        overflow: hidden;
       }
       .sb-filters-inner {
         max-width: var(--sb-max-width);
@@ -184,6 +185,7 @@ const title = "The South Bay Signal";
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        padding-right: 24px; /* ensure last pill fully visible before scroll fade */
       }
       .sb-filters-inner::-webkit-scrollbar { display: none; }
       .sb-filter-label {
