@@ -186,6 +186,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Super Micro Computer",
     timeline: "Permitted March 2026",
     featured: false,
+    sourceNote: "Permit details from San José city permit records, March 2026. Verify permit status at sjpermits.org.",
   },
 
   // ── APPROVED ────────────────────────────────────────────────────────────
