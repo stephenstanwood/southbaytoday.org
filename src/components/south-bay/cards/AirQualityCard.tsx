@@ -214,24 +214,6 @@ export default function AirQualityCard({ homeCity }: Props) {
         {display.recommendation}
       </div>
 
-      {/* Pollutants */}
-      <div style={{ display: "flex", gap: 16, marginTop: 14 }}>
-        {[
-          { label: "PM2.5", value: `${display.pm25.toFixed(1)} μg/m³` },
-          { label: "PM10",  value: `${display.pm10.toFixed(1)} μg/m³` },
-          { label: "Ozone", value: `${Math.round(display.ozone)} ppb` },
-        ].map(({ label, value }) => (
-          <div key={label} style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", fontFamily: "'Inter', sans-serif" }}>
-              {value}
-            </div>
-            <div style={{ fontSize: 10, color: "#9CA3AF", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Cities table (expandable) */}
       <button
         onClick={() => setExpanded((v) => !v)}

@@ -1585,24 +1585,39 @@ const CITY_KEYWORDS: Record<string, string[]> = {
   "milpitas":      ["milpitas"],
 };
 
-const CITY_PHOTO_MAP = (() => {
+const WILDLIFE_KEYWORDS = [
+  "egret", "heron", "hawk", "eagle", "pelican", "duck", "goose", "owl",
+  "falcon", "osprey", "cormorant", "kingfisher", "sandpiper", "plover",
+  "bird", "wildlife", "deer", "coyote", "fox", "squirrel", "butterfly",
+  "dragonfly", "fish", "otter", "seal", "nature", "animal",
+];
+
+const { CITY_PHOTO_MAP, WILDLIFE_PHOTOS } = (() => {
   const map: Record<string, CuratedPhoto[]> = {};
+  const wildlife: CuratedPhoto[] = [];
   for (const photo of ALL_PHOTOS) {
     const haystack = (photo.title + " " + (photo.photographer ?? "")).toLowerCase();
+    let assignedCity = false;
     for (const [city, keywords] of Object.entries(CITY_KEYWORDS)) {
       if (keywords.some(kw => haystack.includes(kw))) {
         (map[city] ??= []).push(photo);
+        assignedCity = true;
         break;
       }
     }
+    if (!assignedCity && WILDLIFE_KEYWORDS.some(kw => haystack.includes(kw))) {
+      wildlife.push(photo);
+    }
   }
-  return map;
+  return { CITY_PHOTO_MAP: map, WILDLIFE_PHOTOS: wildlife };
 })();
 
 function getCityPhoto(cityId: string, offset: number): CuratedPhoto | null {
   const pool = CITY_PHOTO_MAP[cityId];
-  if (!pool?.length) return null;
-  return pool[offset % pool.length];
+  if (pool?.length) return pool[offset % pool.length];
+  // Fallback: wildlife beats blank
+  if (WILDLIFE_PHOTOS.length) return WILDLIFE_PHOTOS[offset % WILDLIFE_PHOTOS.length];
+  return null;
 }
 
 // ── Photo strip (auto-scrolling marquee) ─────────────────────────────────────

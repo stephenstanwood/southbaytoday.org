@@ -84,7 +84,7 @@ export default function BudgetCard({ cityId }: Props) {
             letterSpacing: "-0.01em",
           }}
         >
-          City Budget Snapshot
+          {budget.cityName} Budget Snapshot
         </span>
         <span
           style={{
