@@ -4,10 +4,10 @@ type TipType = 'event' | 'tip' | 'correction' | 'feedback';
 type Status = 'idle' | 'open' | 'sending' | 'sent' | 'error';
 
 const TYPE_OPTIONS: { value: TipType; label: string; emoji: string; placeholder: string }[] = [
-  { value: 'event',      label: 'Event',      emoji: '📅', placeholder: 'What's happening, when, and where?' },
-  { value: 'tip',        label: 'News Tip',   emoji: '📰', placeholder: 'What's the story? Include any details you have.' },
-  { value: 'correction', label: 'Correction', emoji: '⚠️', placeholder: 'What's wrong, and what should it say?' },
-  { value: 'feedback',   label: 'Feedback',   emoji: '💬', placeholder: 'What's on your mind?' },
+  { value: 'event',      label: 'Event',      emoji: '📅', placeholder: "What's happening, when, and where?" },
+  { value: 'tip',        label: 'News Tip',   emoji: '📰', placeholder: "What's the story? Include any details you have." },
+  { value: 'correction', label: 'Correction', emoji: '⚠️', placeholder: "What's wrong, and what should it say?" },
+  { value: 'feedback',   label: 'Feedback',   emoji: '💬', placeholder: "What's on your mind?" },
 ];
 
 export default function ReaderWidget() {
