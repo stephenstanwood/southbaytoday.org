@@ -380,10 +380,25 @@ function isAwayGame(title) {
 }
 
 const CANCELLED_PATTERN = /\bcancell?ed\b/i;
+const VIRTUAL_PATTERNS = [
+  /\bvirtual\b/i,
+  /\bvia zoom\b/i,
+  /\bon zoom\b/i,
+  /\bzoom link\b/i,
+  /\bonline only\b/i,
+  /\bwebinar\b/i,
+];
 
-function isPublicEvent(title, source) {
+function isVirtualEvent(title, description, venue) {
+  const fields = [title, description, venue].filter(Boolean).join(' ');
+  return VIRTUAL_PATTERNS.some(p => p.test(fields));
+}
+
+function isPublicEvent(title, source, description, venue) {
   // Always filter cancelled events regardless of source
   if (CANCELLED_PATTERN.test(title)) return false;
+  // Filter virtual/online-only events
+  if (isVirtualEvent(title, description, venue)) return false;
   const uniSources = ["Santa Clara University", "SJSU Events", "Stanford Events"];
   if (uniSources.includes(source)) {
     for (const pat of INTERNAL_EVENT_PATTERNS) {
@@ -1884,7 +1899,7 @@ async function main() {
       e.city &&
       e.title &&
       !(uniSources.has(e.source) && e.time && e.endTime && e.time === e.endTime) &&
-      isPublicEvent(e.title, e.source),
+      isPublicEvent(e.title, e.source, e.description, e.venue),
   );
 
   // Sort by date ascending
