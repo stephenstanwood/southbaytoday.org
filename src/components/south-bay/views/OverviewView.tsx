@@ -22,6 +22,7 @@ import springBreakJson from "../../../data/south-bay/spring-break-picks.json";
 import healthScoresJson from "../../../data/south-bay/health-scores.json";
 import schoolCalJson from "../../../data/south-bay/school-calendar.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
+import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -1537,6 +1538,85 @@ const CITY_ACCENT: Record<string, string> = {
   "palo-alto":     "#1d4ed8",
 };
 
+// ── Photo utilities ───────────────────────────────────────────────────────────
+
+type CuratedPhoto = {
+  id: string; thumb: string; full: string;
+  title: string; photographer: string; photoPage: string;
+  license: string; source: string;
+};
+
+const ALL_PHOTOS = (curatedPhotosJson as { photos: CuratedPhoto[] }).photos;
+
+/** Seeded shuffle — deterministic per day so strip changes daily */
+function seededShuffle<T>(arr: T[], seed: number): T[] {
+  const out = [...arr];
+  let s = seed >>> 0;
+  for (let i = out.length - 1; i > 0; i--) {
+    s = Math.imul(s ^ (s >>> 15), s | 1);
+    s ^= s + Math.imul(s ^ (s >>> 7), s | 61);
+    s = (s ^ (s >>> 14)) >>> 0;
+    const j = s % (i + 1);
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+const DATE_SEED = parseInt(TODAY_ISO.replace(/-/g, ""), 10);
+const DAILY_PHOTOS = seededShuffle(ALL_PHOTOS, DATE_SEED);
+
+function getPhoto(index: number): CuratedPhoto | null {
+  if (!ALL_PHOTOS.length) return null;
+  return DAILY_PHOTOS[index % DAILY_PHOTOS.length];
+}
+
+// ── Photo strip (auto-scrolling marquee) ─────────────────────────────────────
+
+function PhotoStrip() {
+  if (ALL_PHOTOS.length < 4) return null;
+  // Use up to 20 photos; duplicate for seamless loop
+  const strip = DAILY_PHOTOS.slice(0, Math.min(20, DAILY_PHOTOS.length));
+
+  const tile = (p: CuratedPhoto, keySuffix: string) => (
+    <a
+      key={p.id + keySuffix}
+      href={p.photoPage}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${p.title} — ${p.photographer} — ${p.license}`}
+      style={{
+        flexShrink: 0, display: "block", position: "relative",
+        height: 200, width: 280, overflow: "hidden", background: "#ccc",
+      }}
+    >
+      <img
+        src={p.thumb}
+        alt={p.title}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        onError={(e) => { (e.currentTarget.closest("a") as HTMLElement).style.display = "none"; }}
+      />
+      {/* attribution on hover via CSS sibling — use class */}
+      <div className="ps-caption">
+        <span style={{ fontSize: 9, color: "#fff", fontFamily: "'Space Mono', monospace", lineHeight: 1.5 }}>
+          {p.photographer ? `${p.photographer} · ` : ""}{p.license}
+        </span>
+      </div>
+    </a>
+  );
+
+  return (
+    <div style={{ marginBottom: 32, marginLeft: -16, marginRight: -16, overflow: "hidden" }}>
+      <div className="photo-strip-track">
+        {/* original + duplicate for seamless loop */}
+        {strip.map(p => tile(p, "-a"))}
+        {strip.map(p => tile(p, "-b"))}
+      </div>
+    </div>
+  );
+}
+
+// ── Around Town ───────────────────────────────────────────────────────────────
+
 function AroundTownSection() {
   const items = (aroundTownJson as { items: AroundTownItem[] }).items;
   if (!items?.length) return null;
@@ -1556,37 +1636,58 @@ function AroundTownSection() {
           const dateFormatted = new Date(item.date + "T12:00:00").toLocaleDateString("en-US", {
             month: "short", day: "numeric",
           });
+          const photo = getPhoto(i);
           return (
             <div key={item.id} style={{
               padding: "14px 0",
               borderBottom: i < items.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              display: "flex", gap: 12, alignItems: "flex-start",
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
-                <span style={{
-                  fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
-                  background: accent + "18", color: accent,
-                  letterSpacing: "0.04em",
-                }}>
-                  {item.cityName.toUpperCase()}
-                </span>
-                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-                  {dateFormatted}
-                </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5, flexWrap: "wrap" }}>
+                  <span style={{
+                    fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                    background: accent + "18", color: accent,
+                    letterSpacing: "0.04em",
+                  }}>
+                    {item.cityName.toUpperCase()}
+                  </span>
+                  <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+                    {dateFormatted}
+                  </span>
+                </div>
+                <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 4 }}>
+                  {item.headline}
+                </div>
+                <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.55 }}>
+                  {item.summary}{" "}
+                  <a
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: accent, textDecoration: "none", fontWeight: 600 }}
+                  >
+                    Source →
+                  </a>
+                </div>
               </div>
-              <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 4 }}>
-                {item.headline}
-              </div>
-              <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.55 }}>
-                {item.summary}{" "}
+              {photo && (
                 <a
-                  href={item.sourceUrl}
+                  href={photo.photoPage}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: accent, textDecoration: "none", fontWeight: 600 }}
+                  title={`${photo.photographer} · ${photo.license}`}
+                  style={{ flexShrink: 0 }}
                 >
-                  Source →
+                  <img
+                    src={photo.thumb}
+                    alt={photo.title}
+                    width={72} height={72}
+                    style={{ width: 72, height: 72, objectFit: "cover", borderRadius: 3, border: "1px solid var(--sb-border-light)", display: "block" }}
+                    onError={(e) => { (e.currentTarget.closest("a") as HTMLElement).style.display = "none"; }}
+                  />
                 </a>
-              </div>
+              )}
             </div>
           );
         })}
@@ -2336,6 +2437,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── This Week in [City] briefing ── */}
       {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
+
+      {/* ── Photo strip ── */}
+      {!changingCity && <PhotoStrip />}
 
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
