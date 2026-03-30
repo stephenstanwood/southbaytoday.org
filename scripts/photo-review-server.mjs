@@ -116,9 +116,11 @@ function buildPage(votes) {
     position: absolute; top: 4px; left: 4px;
     font-size: 8px; font-weight: 700; padding: 2px 5px; border-radius: 2px; pointer-events: none;
   }
-  .src-flickr    { background: #ff0084; color: #fff; }
-  .src-wikimedia { background: #3b82f6; color: #fff; }
-  .src-unsplash  { background: #000;    color: #fff; }
+  .src-flickr      { background: #ff0084; color: #fff; }
+  .src-wikimedia   { background: #3b82f6; color: #fff; }
+  .src-unsplash    { background: #000;    color: #fff; }
+  .src-inaturalist { background: #74ac00; color: #fff; }
+  .src-nasa        { background: #0b3d91; color: #fff; }
   .lic-badge {
     position: absolute; bottom: 38px; left: 4px;
     font-size: 8px; background: rgba(0,0,0,0.65); color: #fff;
@@ -207,6 +209,8 @@ function buildPage(votes) {
   <button class="filter-btn" onclick="setSource('flickr',this)">Flickr</button>
   <button class="filter-btn" onclick="setSource('wikimedia',this)">Wikimedia</button>
   <button class="filter-btn" onclick="setSource('unsplash',this)">Unsplash</button>
+  <button class="filter-btn" onclick="setSource('inaturalist',this)">iNaturalist</button>
+  <button class="filter-btn" onclick="setSource('nasa',this)">NASA</button>
 </div>
 
 <div class="grid" id="grid"></div>

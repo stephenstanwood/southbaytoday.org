@@ -261,6 +261,9 @@ async function fetchWikimedia() {
     "Creeks_of_Santa_Clara_County,_California",
     "Hills_of_Santa_Clara_County,_California",
     "San_Francisco_Bay_Area_scenery",
+    // Water / infrastructure
+    "Santa_Clara_Valley_Water_District",
+    "Reservoirs_of_Santa_Clara_County,_California",
     // Architecture / landmarks
     "Apple_Park",
     "Levi's_Stadium",
@@ -357,6 +360,8 @@ function buildHtml(sources) {
   .src-flickr { background: #ff0084; color: #fff; }
   .src-wikimedia { background: #3b82f6; color: #fff; }
   .src-unsplash { background: #000; color: #fff; }
+  .src-inaturalist { background: #74ac00; color: #fff; }
+  .src-nasa { background: #0b3d91; color: #fff; }
   .empty { padding: 40px; color: #999; text-align: center; }
   .photo-title {
     position: absolute; bottom: 0; left: 0; right: 0;
@@ -382,6 +387,8 @@ function buildHtml(sources) {
   <button class="filter-btn" onclick="setFilter('flickr',this)">Flickr (<span id="cnt-flickr">0</span>)</button>
   <button class="filter-btn" onclick="setFilter('wikimedia',this)">Wikimedia (<span id="cnt-wikimedia">0</span>)</button>
   <button class="filter-btn" onclick="setFilter('unsplash',this)">Unsplash (<span id="cnt-unsplash">0</span>)</button>
+  <button class="filter-btn" onclick="setFilter('inaturalist',this)">iNaturalist (<span id="cnt-inaturalist">0</span>)</button>
+  <button class="filter-btn" onclick="setFilter('nasa',this)">NASA (<span id="cnt-nasa">0</span>)</button>
   <button class="filter-btn" onclick="setFilter('selected',this)">Selected (<span id="cnt-selected">0</span>)</button>
 </div>
 <div class="pool-info">${poolInfo}</div>
@@ -395,7 +402,7 @@ let filter = "all";
 
 function init() {
   document.getElementById("cnt-all").textContent = photos.length;
-  ["flickr","wikimedia","unsplash"].forEach(s =>
+  ["flickr","wikimedia","unsplash","inaturalist","nasa"].forEach(s =>
     document.getElementById("cnt-" + s).textContent = photos.filter(p => p.source === s).length
   );
   render();
@@ -454,18 +461,137 @@ init();
 </html>`;
 }
 
+// ── iNaturalist ───────────────────────────────────────────────────────────────
+// Public API — no key needed. CC-licensed wildlife/nature observations.
+
+async function fetchINaturalist() {
+  console.log("🦋 iNaturalist: fetching observations...");
+  const results = [];
+  const seen = new Set();
+
+  // South Bay bounding box
+  const baseParams = {
+    swlat: "37.19", swlng: "-122.20", nelat: "37.47", nelng: "-121.77",
+    photo_licensed: "true",
+    license: "cc-by,cc-by-sa,cc-by-nd,cc0,pd",
+    quality_grade: "research",
+    photos: "true",
+    captive: "false",
+    per_page: "100",
+    order_by: "votes",
+    order: "desc",
+  };
+
+  const iconicTaxa = ["Aves", "Plantae", "Mammalia", "Amphibia", "Reptilia", "Fungi", "Insecta"];
+
+  for (const taxon of iconicTaxa) {
+    try {
+      const params = new URLSearchParams({ ...baseParams, iconic_taxa: taxon });
+      const res = await fetch(`https://api.inaturalist.org/v1/observations?${params}`, {
+        headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000),
+      });
+      if (!res.ok) throw new Error(`iNat ${res.status}`);
+      const data = await res.json();
+
+      for (const obs of data.results ?? []) {
+        const photo = obs.photos?.[0];
+        if (!photo?.url || seen.has(photo.id)) continue;
+        seen.add(photo.id);
+        const thumbUrl = photo.url.replace(/\/square\./, "/medium.");
+        const fullUrl = photo.url.replace(/\/square\./, "/large.");
+        const license = (photo.license_code || "cc").toUpperCase().replace("CC-", "CC ");
+        const commonName = obs.taxon?.preferred_common_name || obs.taxon?.name || "Wildlife";
+        const location = obs.place_guess || "South Bay";
+        results.push({
+          source: "inaturalist",
+          id: `inat-${photo.id}`,
+          thumb: thumbUrl,
+          full: fullUrl,
+          title: `${commonName} — ${location}`,
+          photographer: obs.user?.login || "iNaturalist",
+          photoPage: `https://www.inaturalist.org/observations/${obs.id}`,
+          license,
+        });
+      }
+      await new Promise(r => setTimeout(r, 400));
+    } catch (e) { console.warn(`  iNat ${taxon} failed: ${e.message}`); }
+  }
+
+  console.log(`  → ${results.length} observations`);
+  return { photos: results, poolSize: results.length };
+}
+
+// ── NASA Image & Video Library ────────────────────────────────────────────────
+// Public API — no key needed. Great for Ames Research Center + aerials.
+
+async function fetchNASA() {
+  console.log("🚀 NASA: fetching photos...");
+  const results = [];
+  const seen = new Set();
+
+  const queries = [
+    "Ames Research Center",
+    "San Jose California",
+    "Santa Clara Valley",
+    "Silicon Valley aerial",
+    "San Francisco Bay aerial",
+    "California wildfire",
+    "Moffett Field",
+  ];
+
+  for (const q of queries) {
+    try {
+      const params = new URLSearchParams({ q, media_type: "image", page_size: "20" });
+      const res = await fetch(`https://images-api.nasa.gov/search?${params}`, {
+        headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000),
+      });
+      if (!res.ok) throw new Error(`NASA ${res.status}`);
+      const data = await res.json();
+
+      for (const item of data.collection?.items ?? []) {
+        const meta = item.data?.[0];
+        const link = item.links?.[0];
+        if (!meta?.nasa_id || !link?.href || seen.has(meta.nasa_id)) continue;
+        seen.add(meta.nasa_id);
+        const thumbUrl = link.href;
+        // NASA image asset URLs follow a predictable pattern
+        const baseUrl = thumbUrl.replace(/~thumb\.jpg$/, "");
+        const fullUrl = `${baseUrl}~orig.jpg`;
+        results.push({
+          source: "nasa",
+          id: `nasa-${meta.nasa_id}`,
+          thumb: thumbUrl,
+          full: fullUrl,
+          title: meta.title || "(untitled)",
+          photographer: meta.photographer || meta.center || "NASA",
+          photoPage: `https://images.nasa.gov/details/${meta.nasa_id}`,
+          license: "Public Domain",
+        });
+      }
+      await new Promise(r => setTimeout(r, 300));
+    } catch (e) { console.warn(`  NASA "${q}" failed: ${e.message}`); }
+  }
+
+  console.log(`  → ${results.length} photos`);
+  return { photos: results, poolSize: results.length };
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  const [flickr, unsplash, wikimedia] = await Promise.all([
+  const [flickr, unsplash, wikimedia, inaturalist, nasa] = await Promise.all([
     fetchFlickr(),
     fetchUnsplash(),
     fetchWikimedia(),
+    fetchINaturalist(),
+    fetchNASA(),
   ]);
 
   const sources = [
-    { name: "Flickr",    ...flickr    },
-    { name: "Unsplash",  ...unsplash  },
-    { name: "Wikimedia", ...wikimedia },
+    { name: "Flickr",       ...flickr       },
+    { name: "Unsplash",     ...unsplash     },
+    { name: "Wikimedia",    ...wikimedia    },
+    { name: "iNaturalist",  ...inaturalist  },
+    { name: "NASA",         ...nasa         },
   ];
 
   // Write photo-data.json for the review server
