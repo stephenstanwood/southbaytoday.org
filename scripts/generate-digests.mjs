@@ -155,8 +155,11 @@ async function main() {
     if (r.meetingType !== "City Council") continue;
     const existing = byCity[r.city];
     // Prefer records with real content; among those, take most recent
-    if (!existing) { byCity[r.city] = r; continue; }
     const rReal = hasRealContent(r);
+    if (!existing) {
+      if (rReal) { byCity[r.city] = r; }
+      continue;
+    }
     const exReal = hasRealContent(existing);
     if (rReal && !exReal) { byCity[r.city] = r; continue; }
     if (!rReal && exReal) continue;
