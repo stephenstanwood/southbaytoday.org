@@ -96,7 +96,7 @@ export default function RealEstateCard({ homeCity }: Props) {
   const COLS: { key: SortKey; label: string }[] = [
     { key: "city",  label: "City" },
     { key: "price", label: "Median Sale" },
-    { key: "yoy",   label: "vs. Last Year" },
+    { key: "yoy",   label: "1 yr" },
     { key: "days",  label: "Days" },
   ];
 

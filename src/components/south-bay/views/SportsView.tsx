@@ -430,13 +430,14 @@ export default function SportsView() {
           <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
             South Bay
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+          <div style={{ columns: "240px auto", columnGap: 12 }}>
             {localTeams.map((team) => (
-              <TeamScheduleCard
-                key={team.key}
-                team={team}
-                games={gamesByTeam.get(team.key) ?? []}
-              />
+              <div key={team.key} style={{ breakInside: "avoid", marginBottom: 12 }}>
+                <TeamScheduleCard
+                  team={team}
+                  games={gamesByTeam.get(team.key) ?? []}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -448,13 +449,14 @@ export default function SportsView() {
           <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
             Bay Area
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
+          <div style={{ columns: "240px auto", columnGap: 12 }}>
             {bayAreaTeams.map((team) => (
-              <TeamScheduleCard
-                key={team.key}
-                team={team}
-                games={gamesByTeam.get(team.key) ?? []}
-              />
+              <div key={team.key} style={{ breakInside: "avoid", marginBottom: 12 }}>
+                <TeamScheduleCard
+                  team={team}
+                  games={gamesByTeam.get(team.key) ?? []}
+                />
+              </div>
             ))}
           </div>
         </div>

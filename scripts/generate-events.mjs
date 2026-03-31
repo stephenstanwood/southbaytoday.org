@@ -440,6 +440,8 @@ function cleanTitle(title) {
       "",
     )
     .trim();
+  // Downcase ALL-CAPS words that aren't acronyms (4+ letters, e.g. SPECIAL → Special)
+  t = t.replace(/\b[A-Z]{4,}\b/g, (w) => w[0] + w.slice(1).toLowerCase());
   // Apply known recurring fixes from source data
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
