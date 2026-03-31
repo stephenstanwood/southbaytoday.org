@@ -1,167 +1,34 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-03-31T01:09:41.704Z",
+      "generatedAt": "2026-03-31T14:56:13.481Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Mar 23 – Mar 30",
+      "dateRange": "Mar 24 – Mar 31",
       "stats": {
-        "total": 108,
-        "notable": 11,
-        "newUnits": 4,
-        "totalValuation": 5124642
+        "total": 2,
+        "notable": 0,
+        "newUnits": 0,
+        "totalValuation": 3500
       },
-      "permits": [
-        {
-          "id": "2025-131976-RS",
-          "address": "1143 Pembridge Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 202908,
-          "units": 1,
-          "issueDate": "2026-03-24",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-104958-RS",
-          "address": "3171 Mabury Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu",
-          "valuation": 143727,
-          "units": 1,
-          "issueDate": "2026-03-24",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-114928-RS",
-          "address": "692 Santee River Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu (Not Part of Code Case)",
-          "valuation": 126648,
-          "units": 1,
-          "issueDate": "2026-03-24",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-102660-RS",
-          "address": "7203 Shea Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached Manufactured adu",
-          "valuation": 125634,
-          "units": 1,
-          "issueDate": "2026-03-24",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-109466-CI",
-          "address": "2161 Monterey Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Retail",
-          "valuation": 1913940,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-108638-CI",
-          "address": "2590 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Ste 200, 210, 220 & 230 - Market Ready Office ti",
-          "valuation": 1089288,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-108673-CI",
-          "address": "2325 Orchard Py",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Apple (Bemp100%) Tool Install",
-          "valuation": 250000,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Office"
-        },
-        {
-          "id": "2024-098636-RS",
-          "address": "1015 Riverside Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Additions/Alterations",
-          "description": "Complete Rebuild & Additions",
-          "valuation": 377409,
-          "units": 1,
-          "issueDate": "2026-03-24",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-108378-CI",
-          "address": "2549 S King Rd",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "Srp (Bemp100%) Fomo ti #A16",
-          "valuation": 100000,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Restaurant"
-        },
-        {
-          "id": "2026-109056-CI",
-          "address": "1710 Automation Py",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "Quantumscape (Bem100%) Ph 2.51 Tool Install",
-          "valuation": 70000,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "R & D Lab"
-        }
-      ]
+      "permits": []
     },
     "palo-alto": {
-      "generatedAt": "2026-03-31T01:09:43.881Z",
+      "generatedAt": "2026-03-31T14:56:15.867Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Mar 23 – Mar 30",
+      "dateRange": "Mar 24 – Mar 31",
       "stats": {
-        "total": 88,
-        "notable": 7,
+        "total": 110,
+        "notable": 10,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-00773",
-          "address": "3401 Hillview Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Broadcom: Minor tenant improvement to install a door/sidelight, and lighting fixture.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-00797",
           "address": "401 Webster St",
@@ -175,12 +42,60 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-00803",
+          "address": "3108 Middlefield Rd",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Remove and replace all siding with stucco.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-26",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-00775",
           "address": "1130 California Av",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
           "description": "Res MEP: Replace (E) 40gal gas water heater to (N) 50gal heat pump water heater (Same Location - Garage) and install 100A Subpanel directly behind the Main Service Panel",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00818",
+          "address": "1610 Dana Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Voluntary seismic strengthening (NO GRANT)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-27",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00773",
+          "address": "3401 Hillview Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Broadcom: Minor tenant improvement to install a door/sidelight, and lighting fixture.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00780",
+          "address": "1441 Dana Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-03-24",
@@ -199,18 +114,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00788",
-          "address": "805 Garland Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-25",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00787",
           "address": "847 Sycamore Dr",
           "category": "residential-large",
@@ -223,15 +126,27 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00780",
-          "address": "1441 Dana Av",
+          "id": "26BLD-00788",
+          "address": "805 Garland Dr",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-03-24",
+          "issueDate": "2026-03-25",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00825",
+          "address": "3946 Louis Rd",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-30",
           "subtype": "Permit Issued"
         }
       ]
