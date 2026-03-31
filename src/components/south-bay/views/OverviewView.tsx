@@ -192,6 +192,7 @@ function calcNextMeeting(schedule: string): string | null {
 // ── Static event helpers ──────────────────────────────────────────────────────
 
 function isActiveToday(e: SBEvent): boolean {
+  if ((e as any).startDate && TODAY_ISO < (e as any).startDate) return false;
   if (e.months && !e.months.includes(MONTH)) return false;
   if (!e.days) return e.recurrence !== "seasonal";
   if (!e.days.includes(DAY_NAME as DayOfWeek)) return false;
@@ -199,6 +200,7 @@ function isActiveToday(e: SBEvent): boolean {
 }
 
 function isActiveTomorrow(e: SBEvent): boolean {
+  if ((e as any).startDate && TOMORROW_ISO_STR < (e as any).startDate) return false;
   if (e.months && !e.months.includes(TOMORROW_MONTH_NUM)) return false;
   if (!e.days) return e.recurrence !== "seasonal";
   return e.days.includes(TOMORROW_DAY_NAME);

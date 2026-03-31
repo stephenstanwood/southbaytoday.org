@@ -467,6 +467,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
     const allCities = selectedCities.size === 11;
     return SOUTH_BAY_EVENTS
       .filter((e) => {
+        if ((e as any).startDate && todayIso < (e as any).startDate) return false;
         if (!allCities && !selectedCities.has(e.city)) return false;
         if (e.months && !e.months.includes(currentMonth)) return false;
         if (category !== "all" && e.category !== category) return false;
