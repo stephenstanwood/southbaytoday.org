@@ -1,6 +1,8 @@
 /**
  * generate-permits.mjs
- * Fetches building permits issued in the last 7 days from San Jose's open data portal.
+ * Fetches building permits issued in the last 7 days from:
+ *   - San Jose (data.sanjoseca.gov CKAN API)
+ *   - Palo Alto (gis.cityofpaloalto.org PermitView API)
  * Outputs permit-pulse.json for the PermitPulseCard component.
  */
 
@@ -262,7 +264,188 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+// ── Palo Alto ──────────────────────────────────────────────────────────────
+
+const PA_PERMIT_VIEW = "https://gis.cityofpaloalto.org/PermitView";
+
+// Categories we surface (Palo Alto has no valuation data, so we focus on type)
+const PA_INTERESTING_CATEGORIES = new Set([
+  "Building Permit",
+  "Building",
+  "Entitlement",
+  "Zoning",
+  "Web - Kitchen or Bath Remodel",
+]);
+
+function parsePaDate(str) {
+  if (!str) return null;
+  // "2026-03-25 00:00:00.0000000"
+  const m = str.match(/^(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : null;
+}
+
+function formatPaAddress(raw) {
+  if (!raw) return "";
+  // "3173 SOUTH CT, PALO ALTO, CA 94306" — strip city/state/zip
+  const parts = raw.split(",");
+  const street = (parts[0] ?? raw).trim();
+  return street
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace(/\s+/g, " ");
+}
+
+function categorizePa(record) {
+  const cat = record.RECORD_TYPE_CATEGORY ?? "";
+  const desc = (record.DESCRIPTION ?? "").toLowerCase();
+  const isNew =
+    desc.includes("new") && (desc.includes("construction") || desc.includes("dwelling") || desc.includes("adu") || desc.includes("sfr") || desc.includes("multi"));
+  const isCommercial =
+    desc.includes("ti:") || desc.includes("tenant improvement") || desc.includes("commercial") || desc.includes("office");
+  const isAddition = desc.includes("addition") || desc.includes("remodel") || desc.includes("adu");
+  const isEntitlement = cat === "Entitlement" || cat === "Zoning";
+
+  if (isEntitlement) return "entitlement";
+  if (isNew) return "new-construction";
+  if (isCommercial) return "commercial";
+  if (isAddition) return "residential-large";
+  if (PA_INTERESTING_CATEGORIES.has(cat)) return "commercial"; // fallback bucket
+  return null;
+}
+
+const PA_CATEGORY_LABELS = {
+  "new-construction": "New Construction",
+  commercial: "Commercial Project",
+  "residential-large": "Major Renovation",
+  entitlement: "Entitlement / Zoning",
+};
+
+async function fetchPaloAltoPermits(cutoffStr) {
+  // 1. Get session + CSRF token
+  const page = await fetch(`${PA_PERMIT_VIEW}/`, {
+    headers: { "User-Agent": "southbaysignal.org/permits-bot (+https://southbaysignal.org)" },
+  });
+  if (!page.ok) throw new Error(`PermitView page HTTP ${page.status}`);
+
+  const allCookies = page.headers.getSetCookie
+    ? page.headers.getSetCookie()
+    : [page.headers.get("set-cookie")].filter(Boolean);
+  const cookieParts = allCookies.map((c) => c.split(";")[0]).join("; ");
+  const xsrfMatch = cookieParts.match(/XSRF-TOKEN=([^;]+)/);
+  const xsrfDecoded = xsrfMatch ? decodeURIComponent(xsrfMatch[1]) : "";
+
+  const html = await page.text();
+  const csrf = html.match(/<meta name="csrf-token" content="([^"]+)"/)?.[1] ?? "";
+
+  // 2. Query permits opened since cutoff
+  const formData = new URLSearchParams();
+  formData.append("where", `p.DATE_OPENED >= '${cutoffStr}' AND p.ADDR_FULL_LINE != 'NULL'`);
+
+  const res = await fetch(`${PA_PERMIT_VIEW}/get-remote-data`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-CSRF-TOKEN": csrf,
+      "X-XSRF-TOKEN": xsrfDecoded,
+      "X-Requested-With": "XMLHttpRequest",
+      Cookie: cookieParts,
+      Referer: `${PA_PERMIT_VIEW}/`,
+      "User-Agent": "southbaysignal.org/permits-bot (+https://southbaysignal.org)",
+    },
+    body: formData.toString(),
+  });
+  if (!res.ok) throw new Error(`PermitView data HTTP ${res.status}`);
+  const body = await res.json();
+  return body.data ?? [];
+}
+
+async function mainPaloAlto() {
+  console.log("\n🏗️  Fetching Palo Alto building permits...");
+
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - WINDOW_DAYS);
+  const cutoffStr = cutoff.toISOString().split("T")[0];
+
+  let records;
+  try {
+    records = await fetchPaloAltoPermits(cutoffStr);
+  } catch (err) {
+    console.error("  ❌ Palo Alto fetch failed:", err.message);
+    return null;
+  }
+
+  console.log(`  📋 ${records.length} permits opened since ${cutoffStr}`);
+
+  // Only show "Issued" or "Over the Counter Approved" permits as confirmed issued
+  const issued = records.filter((r) =>
+    ["Permit Issued", "Over the Counter Approved", "Finaled"].includes(r.RECORD_STATUS)
+  );
+  console.log(`  📅 ${issued.length} permits with issued/approved status`);
+
+  const notable = [];
+  for (const r of issued) {
+    const cat = categorizePa(r);
+    if (!cat) continue;
+    notable.push({
+      id: r.RECORD_ID,
+      address: formatPaAddress(r.ADDR_FULL_LINE),
+      category: cat,
+      categoryLabel: PA_CATEGORY_LABELS[cat] ?? cat,
+      workType: r.RECORD_TYPE_CATEGORY ?? "",
+      description: (r.DESCRIPTION ?? "").replace(/\s*\n\s*/g, " ").trim(),
+      valuation: 0, // not available from PermitView
+      units: 0,
+      issueDate: parsePaDate(r.DATE_OPENED),
+      subtype: r.RECORD_STATUS ?? "",
+    });
+  }
+
+  const PA_CAT_PRIORITY = { "new-construction": 0, commercial: 1, "residential-large": 2, entitlement: 3 };
+  notable.sort((a, b) => (PA_CAT_PRIORITY[a.category] ?? 9) - (PA_CAT_PRIORITY[b.category] ?? 9));
+  const top = notable.slice(0, 10);
+
+  const opts = { month: "short", day: "numeric", timeZone: "America/Los_Angeles" };
+  const dateRange = `${cutoff.toLocaleDateString("en-US", opts)} – ${now.toLocaleDateString("en-US", opts)}`;
+
+  console.log(`  ✅ Done — ${issued.length} issued, ${notable.length} notable`);
+  if (top.length > 0) {
+    for (const p of top.slice(0, 5)) {
+      console.log(`    [${p.categoryLabel}] ${p.address} — ${p.description.slice(0, 60)}`);
+    }
+  }
+
+  return {
+    generatedAt: now.toISOString(),
+    city: "Palo Alto",
+    source: "gis.cityofpaloalto.org",
+    sourceUrl: "https://gis.cityofpaloalto.org/PermitView/",
+    windowDays: WINDOW_DAYS,
+    dateRange,
+    stats: {
+      total: records.length,
+      notable: notable.length,
+      newUnits: 0,
+      totalValuation: 0,
+    },
+    permits: top,
+  };
+}
+
+async function mainAll() {
+  await main();
+
+  const paEntry = await mainPaloAlto();
+  if (paEntry) {
+    let existing = { cities: {} };
+    try { existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8")); } catch {}
+    const output = { cities: { ...existing.cities, "palo-alto": paEntry } };
+    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
+    console.log("  ✅ Palo Alto written to permit-pulse.json");
+  }
+}
+
+mainAll().catch((err) => {
   console.error("Fatal:", err);
   process.exit(1);
 });

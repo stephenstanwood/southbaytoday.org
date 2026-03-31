@@ -39,6 +39,7 @@ const CATEGORY_ICON: Record<string, string> = {
   "commercial-large": "🏢",
   "residential-large": "🔨",
   commercial: "🏪",
+  entitlement: "📐",
 };
 
 function formatMoney(n: number): string {
