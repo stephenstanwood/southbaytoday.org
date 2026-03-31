@@ -354,6 +354,44 @@ export const TECH_COMPANIES: TechCompany[] = [
     color: "#2D8CFF",
     careersUrl: "https://careers.zoom.us",
   },
+  {
+    id: "applied-materials",
+    name: "Applied Materials",
+    chartName: "AMAT",
+    ticker: "AMAT",
+    city: "Santa Clara",
+    category: "chip",
+    sccEmployeesK: 12,
+    trend: "up",
+    trendNote: "12K at Santa Clara HQ + SCC campus; growing with record AI chip fab investment",
+    highlights: [
+      "Deposition, etch, and inspection equipment used in every advanced AI chip — from TSMC's A16 to HBM memory stacks",
+      "Record equipment backlog driven by TSMC, Samsung, and Intel expanding AI chip capacity",
+    ],
+    description:
+      "The world's largest semiconductor equipment company. Every chip in your phone, laptop, and AI server was made using Applied's machines.",
+    color: "#1b6ca8",
+    careersUrl: "https://jobs.amat.com",
+  },
+  {
+    id: "supermicro",
+    name: "Super Micro Computer",
+    chartName: "Supermicro",
+    ticker: "SMCI",
+    city: "San Jose",
+    category: "hardware",
+    sccEmployeesK: 3,
+    trend: "up",
+    trendNote: "3K at SJ HQ; rapid growth from AI server demand, despite 2024 governance challenges",
+    highlights: [
+      "Leading supplier of NVIDIA GPU server systems — the racks that power most AI training and inference clusters",
+      "Revenue surged with AI infrastructure boom; resolved SEC filing delays and auditor issues in 2024-25",
+    ],
+    description:
+      "AI servers and GPU systems. The San Jose company quietly inside more AI data centers than almost anyone else.",
+    color: "#e07b39",
+    careersUrl: "https://www.supermicro.com/en/about/careers",
+  },
 ];
 
 // Top employers sorted for chart (top 10 by SCC employment)
@@ -725,6 +763,28 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://lambdalabs.com",
     employeesNote: "~250 employees",
   },
+  {
+    id: "applied-intuition",
+    name: "Applied Intuition",
+    city: "Mountain View",
+    category: "software",
+    stage: "growth",
+    tagline: "Simulation and testing software for autonomous vehicles. Used by Ford, GM, Mercedes, Toyota, and most major AV/ADAS programs to validate self-driving systems before they hit the road. Valued at $6B after $250M Series E in 2024.",
+    color: "#0052cc",
+    url: "https://appliedintuition.com",
+    employeesNote: "~1,200 employees",
+  },
+  {
+    id: "netapp",
+    name: "NetApp",
+    city: "San Jose",
+    category: "cloud",
+    stage: "public",
+    tagline: "Cloud data management and storage for enterprise and AI workloads. Decades of storage expertise reinvented for hybrid and multi-cloud environments. Major platform for organizations managing petabytes of AI training data.",
+    color: "#00b8d9",
+    url: "https://www.netapp.com",
+    employeesNote: "~12K employees globally",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -882,7 +942,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
 // Pulse stats for the header strip
 export const TECH_PULSE = [
   {
-    value: "130K+",
+    value: "140K+",
     label: "Local tech jobs",
     note: "Santa Clara County, est. Q1 2026",
   },
@@ -897,8 +957,8 @@ export const TECH_PULSE = [
     note: "15K+ cut in 2024; SCC campus significantly smaller",
   },
   {
-    value: "AI chips",
+    value: "Chip equipment",
     label: "Hot category",
-    note: "NVIDIA, AMD, Intel all betting on inference",
+    note: "Applied Materials + KLA powering the AI fab boom from Santa Clara",
   },
 ];
