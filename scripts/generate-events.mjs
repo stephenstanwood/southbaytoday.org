@@ -498,7 +498,12 @@ function inferCategory(title, desc, type, venue = "") {
   if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children")) return "family";
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
-  if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (t.includes("art") && !t.includes("martial art") && !t.includes("start"))) return "arts";
+  // Use word-boundary match for "art/arts/artist/artwork" to avoid false positives from
+  // words like "department" (dep-ART-ment), "participants" (p-ART-icipants), "party", "earth", etc.
+  const isArtWord = /\barts?\b|\bartist|\bartwork|\bartistry/.test(t);
+  if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (isArtWord && !t.includes("martial art"))) return "arts";
+  // Book clubs and discussions are arts/reading events, not formal education
+  if (/\bbook\s+(club|discussion|group)\b/.test(t)) return "arts";
   // Nature / wildlife events — check BEFORE sports to avoid false positives
   if (/\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
