@@ -268,6 +268,21 @@ export const DEV_PROJECTS: DevProject[] = [
   },
 
   {
+    id: "summer-hill-homes-los-gatos",
+    name: "Summer Hill Homes Los Gatos",
+    city: "Los Gatos",
+    cityId: "los-gatos",
+    category: "housing",
+    status: "approved",
+    description:
+      "Summer Hill Homes is developing a luxury residential community in Los Gatos, continuing the builder's track record of high-end single-family and townhome projects in the South Bay foothills. The project adds upscale housing consistent with Los Gatos's residential character.",
+    scale: "Luxury residential community",
+    developer: "Summer Hill Homes",
+    timeline: "Active development",
+    featured: false,
+  },
+
+  {
     id: "diridon-station-area",
     name: "Diridon Station Area Plan",
     city: "San Jose",
