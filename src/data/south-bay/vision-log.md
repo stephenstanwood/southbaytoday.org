@@ -2038,3 +2038,43 @@ Residents drive past Sandisk, Trellix, and Lumentum buildings every day without 
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — Tech tab now covers another layer of the South Bay tech ecosystem.** A Milpitas resident learning that their Face ID works because of a company in their own city, or a San Jose resident realizing Sandisk is a standalone company again — that's the local tech signal SBS is supposed to provide.
+
+---
+
+## 2026-04-01 — Cycle 38: 4 More South Bay Companies Residents Interact With Daily
+
+### Context
+Today is April 1, 2026. The AI API key is not inherited by child Node processes in this environment, so AI-powered scripts (around-town, weekend-picks, city-briefings, tech-briefing) cannot run this cycle. The events file was restored after an accidental overwrite that removed Ticketmaster/Shoreline events (the events script skips Ticketmaster without a key, losing 19+ Shoreline concerts). Non-AI data was fully refreshed in cycle 37.
+
+The Tech tab's prime directive is covering South Bay companies residents interact with but don't know are local. Four verified, well-established companies were missing from SCC Spotlight: ChargePoint, Zscaler, Barracuda Networks, and Western Digital — all with South Bay HQs and daily-life relevance.
+
+### What Was Built
+
+**4 new companies added to SCC_SPOTLIGHT in tech-companies.ts:**
+
+1. **ChargePoint** (Campbell) — The largest EV charging network in North America, headquartered at 240 E. Hacienda Ave in Campbell. Their green charging stations are in every mall parking lot across the South Bay. Most residents have used one and have no idea it's a Campbell company. Public (CHPT). ~1,400 employees.
+
+2. **Zscaler** (San Jose) — Zero trust cloud security replacing corporate VPNs for 40% of the Fortune 500. Founded by Jay Chaudhry in 2007 from San Jose. When a tech company says "we use Zscaler instead of VPN," that's San Jose tech. Public (ZS). ~7K employees globally.
+
+3. **Barracuda Networks** (Campbell) — Email security and cloud backup for 200,000+ businesses. Founded from a Campbell garage in 2002, still HQ'd in Campbell. One of the city's largest tech employers. KKR-backed, private. ~2K employees.
+
+4. **Western Digital** (San Jose) — After spinning off SanDisk in February 2025, WD refocused on HDDs and enterprise cloud storage. In San Jose since 1970. The hard drives in most data centers still come from a San Jose company. Public (WDC). ~12K employees globally.
+
+### Why This Was the Strongest Move
+
+These four companies hit the Tech tab's core premise: South Bay residents interact with their products daily without knowing the company is local. ChargePoint's angle is literally "you've used their charger at Santana Row." Zscaler's angle is "your company's VPN replacement is San Jose." Barracuda is "the email filter that stopped that phishing attempt is from Campbell." Western Digital is "the hard drive in that server is from a San Jose company older than most Silicon Valley icons."
+
+Two of the four are in Campbell — making Campbell a more visible part of the South Bay tech story, which is appropriate given its actual cluster of tech companies.
+
+**What was blocked this cycle:**
+- AI scripts (around-town, weekend-picks, digests refresh) — ANTHROPIC_API_KEY not inherited by child Node processes
+- Ticketmaster/Shoreline events — same key issue; events file restored from git to preserve cycle 33's Shoreline work
+- Caltrans D4 API: still 500
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data. Daily commuter urgency. This has been deferred every cycle.
+2. **Ticketmaster key access in scripts** — Need to solve the env-var-not-inherited problem. Once fixed, events script can run with TM events (Shoreline concerts, general SB events) on each cycle refresh.
+3. **Palo Alto government (PrimeGov)** — PrimeGov API endpoint structure changed; need to inspect live portal network traffic to find working routes.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Tech tab now covers the full daily-life layer of South Bay tech.** A Campbell resident who charges their EV, a tech employee who logs in through Zscaler, a small business owner who uses Barracuda email security — all of them can now see on the Tech tab that these services come from companies in their own city. That's the local intelligence layer no other South Bay outlet provides.
