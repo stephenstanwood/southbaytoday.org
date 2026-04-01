@@ -432,6 +432,9 @@ const ROUND_COLORS: Record<string, { bg: string; color: string; border: string }
   "Series A":  { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
   "Series A1": { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
   "Series B":  { bg: "#f3e8ff", color: "#6b21a8", border: "#c4b5fd" },
+  "Series C":  { bg: "#fce7f3", color: "#9d174d", border: "#f9a8d4" },
+  "Series D":  { bg: "#fff7ed", color: "#9a3412", border: "#fdba74" },
+  "Series E":  { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
   "Strategic": { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
 };
 
@@ -559,7 +562,7 @@ function RecentlyFundedSection() {
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">Recently Funded</h3>
-        <span className="tech-section-note">South Bay startups · Q4 2025 – Q1 2026</span>
+        <span className="tech-section-note">South Bay startups · Q4 2025 – Q1 2026 · 20 rounds</span>
       </div>
       <div>
         {sorted.map((company) => (
