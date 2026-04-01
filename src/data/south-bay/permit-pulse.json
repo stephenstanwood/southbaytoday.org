@@ -1,12 +1,12 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-03-31T23:10:04.098Z",
+      "generatedAt": "2026-04-01T07:09:22.526Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Mar 24 – Mar 31",
+      "dateRange": "Mar 25 – Apr 1",
       "stats": {
         "total": 2,
         "notable": 0,
@@ -16,15 +16,15 @@
       "permits": []
     },
     "palo-alto": {
-      "generatedAt": "2026-03-31T23:10:06.426Z",
+      "generatedAt": "2026-04-01T07:09:25.359Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Mar 24 – Mar 31",
+      "dateRange": "Mar 25 – Apr 1",
       "stats": {
-        "total": 110,
-        "notable": 10,
+        "total": 82,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -42,18 +42,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00803",
-          "address": "3108 Middlefield Rd",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Remove and replace all siding with stucco.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-26",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00818",
           "address": "1610 Dana Av",
           "category": "commercial",
@@ -66,39 +54,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00773",
-          "address": "3401 Hillview Av",
+          "id": "26BLD-00803",
+          "address": "3108 Middlefield Rd",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
-          "description": "Broadcom: Minor tenant improvement to install a door/sidelight, and lighting fixture.",
+          "description": "Res: Remove and replace all siding with stucco.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00775",
-          "address": "1130 California Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res MEP: Replace (E) 40gal gas water heater to (N) 50gal heat pump water heater (Same Location - Garage) and install 100A Subpanel directly behind the Main Service Panel",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-24",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00787",
-          "address": "847 Sycamore Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-24",
+          "issueDate": "2026-03-26",
           "subtype": "Permit Issued"
         },
         {
@@ -114,18 +78,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00825",
-          "address": "3946 Louis Rd",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-30",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00788",
           "address": "805 Garland Dr",
           "category": "residential-large",
@@ -138,15 +90,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00780",
-          "address": "1441 Dana Av",
+          "id": "26BLD-00825",
+          "address": "3946 Louis Rd",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-03-24",
+          "issueDate": "2026-03-30",
           "subtype": "Permit Issued"
         }
       ]
