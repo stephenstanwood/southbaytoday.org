@@ -190,6 +190,22 @@ export const DEV_PROJECTS: DevProject[] = [
     sourceNote: "Permit details from San José city permit records, March 2026. Verify permit status at sjpermits.org.",
   },
 
+  {
+    id: "summer-hill-homes-los-gatos",
+    name: "Solana at Los Gatos Lodge (SummerHill Homes)",
+    city: "Los Gatos",
+    cityId: "los-gatos",
+    category: "housing",
+    status: "under-construction",
+    description:
+      "SummerHill Homes is redeveloping the former Los Gatos Lodge site — a historic 8.9-acre motor inn at 50 Los Gatos-Saratoga Road that closed in September 2025 — into 155 townhome-style condominiums called Solana. The project was approved unanimously by the Los Gatos Town Council in March 2025 (the town's first SB 330 streamlined application) and SummerHill closed on the $78M property in October 2025. Groundbreaking followed in November 2025. The three-story Spanish Revival buildings include 26 affordable units (16 low-income, 10 moderate-income) priced around $400K–$600K; market-rate units are expected to list around $1.5M–$2M. Each home will include solar panels and the site includes a pedestrian path to Los Gatos High School.",
+    scale: "155 townhome condos (26 affordable), 8.9 acres",
+    developer: "SummerHill Homes",
+    timeline: "Groundbreaking Nov 2025; move-ins expected 2027",
+    featured: false,
+    sourceNote: "Sources: Los Gatan, SF YIMBY, The Real Deal (Oct 2025). Verify current sales/construction status at summerhill.com.",
+  },
+
   // ── APPROVED ────────────────────────────────────────────────────────────
 
   {
@@ -263,21 +279,6 @@ export const DEV_PROJECTS: DevProject[] = [
       "Los Gatos has approved several infill mixed-use projects in its downtown core, adding residential units above ground-floor retail on Santa Cruz Avenue and adjacent streets. These smaller-scale projects preserve the town's character while adding needed housing.",
     scale: "Multiple small parcels",
     developer: "Various",
-    timeline: "Active development",
-    featured: false,
-  },
-
-  {
-    id: "summer-hill-homes-los-gatos",
-    name: "Summer Hill Homes Los Gatos",
-    city: "Los Gatos",
-    cityId: "los-gatos",
-    category: "housing",
-    status: "approved",
-    description:
-      "Summer Hill Homes is developing a luxury residential community in Los Gatos, continuing the builder's track record of high-end single-family and townhome projects in the South Bay foothills. The project adds upscale housing consistent with Los Gatos's residential character.",
-    scale: "Luxury residential community",
-    developer: "Summer Hill Homes",
     timeline: "Active development",
     featured: false,
   },
