@@ -569,7 +569,7 @@ function RecentlyFundedSection() {
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">Recently Funded</h3>
-        <span className="tech-section-note">South Bay startups · Q4 2025 – Q1 2026 · {RECENTLY_FUNDED.length} rounds</span>
+        <span className="tech-section-note">South Bay startups · Q4 2025 – Q2 2026 · {RECENTLY_FUNDED.length} rounds</span>
       </div>
 
       {/* Q1 2026 Recap */}
