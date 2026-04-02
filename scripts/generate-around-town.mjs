@@ -243,7 +243,10 @@ async function gatherPermitItems() {
     const config = CITIES.find((c) => c.cityId === cityId);
     if (!config) continue;
 
+    const PERMIT_BLOCKLIST = /\b(reroof|re-roof|roofing|roof replacement)\b/i;
     const permits = (cityData.permits || []).filter((p) => {
+      // Skip boring permits
+      if (PERMIT_BLOCKLIST.test(p.description || "")) return false;
       // Notable: high value, new construction, entitlements, or adds housing units
       if (p.valuation > 500_000) return true;
       if (["residential-new", "commercial-large", "entitlement"].includes(p.category)) return true;

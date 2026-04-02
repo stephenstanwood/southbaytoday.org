@@ -140,10 +140,14 @@ async function main() {
       (e) => e.city === city.id && !e.ongoing && e.date >= start && e.date <= end
     ).sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? "").localeCompare(b.time ?? ""));
 
+    // Filter out non-public events (practices, rehearsals, etc.)
+    const BRIEFING_SKIP = /\b(practice|rehearsal|staff meeting|board meeting)\b/i;
+    const publicEvents = cityEvents.filter((e) => !BRIEFING_SKIP.test(e.title));
+
     // Prefer non-sports events for the briefing lead; keep sports as fallback
     const interestingEvents = [
-      ...cityEvents.filter((e) => e.category !== "sports"),
-      ...cityEvents.filter((e) => e.category === "sports"),
+      ...publicEvents.filter((e) => e.category !== "sports"),
+      ...publicEvents.filter((e) => e.category === "sports"),
     ].slice(0, 5);
 
     const cityAroundItems = aroundItems.filter((a) => a.cityId === city.id);
