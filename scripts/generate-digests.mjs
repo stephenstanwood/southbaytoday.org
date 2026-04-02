@@ -143,9 +143,24 @@ async function main() {
     "search for specific items",
     "no items",
   ];
+  // Boilerplate phrases that indicate the excerpt is meeting logistics, not substance
+  const BOILERPLATE_PHRASES = [
+    "how to observe the meeting",
+    "cable channel",
+    "live translations in over",
+    "wordly.ai",
+    "americans with disabilities act",
+    "scroll to the end for information about",
+    "rules of conduct of the meeting",
+  ];
   function hasRealContent(r) {
     const ex = (r.excerpt || "").toLowerCase().trim();
-    return ex.length > 80 && !PLACEHOLDER_EXCERPTS.some((p) => ex.includes(p));
+    if (ex.length <= 80) return false;
+    if (PLACEHOLDER_EXCERPTS.some((p) => ex.includes(p))) return false;
+    // If 2+ boilerplate phrases appear, it's meeting logistics not substance
+    const boilerplateHits = BOILERPLATE_PHRASES.filter((p) => ex.includes(p)).length;
+    if (boilerplateHits >= 2) return false;
+    return true;
   }
 
   // Group by city — prefer most recent meeting with real content
