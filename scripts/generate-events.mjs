@@ -902,8 +902,9 @@ async function fetchSjJazzEvents() {
       const html = await res.text();
       if (!html || html.length < 500) break;
 
-      // Parse each .sjz-event block using regex on server-rendered HTML
-      const eventBlocks = html.split(/class="sjz-event\b/).slice(1);
+      // Parse each .sjz-event container block (split on "sjz-event is-" to avoid
+      // matching sub-classes like sjz-event-name, sjz-event-date, etc.)
+      const eventBlocks = html.split(/class="sjz-event is-/).slice(1);
       if (eventBlocks.length === 0) break;
 
       for (const block of eventBlocks) {
