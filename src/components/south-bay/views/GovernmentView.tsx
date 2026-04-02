@@ -38,6 +38,21 @@ const KNOWN_CITIES: City[] = [
   "campbell", "saratoga", "los-altos",
   "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara",
 ];
+
+// Agenda page URLs — fallback link when no digest is available
+const AGENDA_URLS: Record<string, string> = {
+  "campbell": "https://www.cityofcampbell.com/271/City-Council-Meetings",
+  "saratoga": "https://saratoga-ca.municodemeetings.com/",
+  "los-altos": "https://losaltos-ca.municodemeetings.com/",
+  "los-gatos": "https://losgatos-ca.municodemeetings.com/",
+  "san-jose": "https://sanjose.legistar.com/Calendar.aspx",
+  "mountain-view": "https://mountainview.legistar.com/Calendar.aspx",
+  "sunnyvale": "https://sunnyvale.legistar.com/Calendar.aspx",
+  "cupertino": "https://cupertino.legistar.com/Calendar.aspx",
+  "santa-clara": "https://santaclara.legistar.com/Calendar.aspx",
+  "milpitas": "https://www.ci.milpitas.ca.gov/government/council/",
+  "palo-alto": "https://www.cityofpaloalto.org/Government/City-Clerk/Meetings-Agendas-Minutes",
+};
 const allConfigured = configuredCities.length > 0 ? configuredCities : KNOWN_CITIES;
 
 export default function GovernmentView({ selectedCities, homeCity }: Props) {
@@ -221,6 +236,17 @@ export default function GovernmentView({ selectedCities, homeCity }: Props) {
                       style={{ color: "var(--sb-accent)", textDecoration: "none" }}
                     >
                       {nextMeeting.displayDate} →
+                    </a>
+                  </span>
+                ) : AGENDA_URLS[city] ? (
+                  <span style={{ fontSize: 11 }}>
+                    <a
+                      href={AGENDA_URLS[city]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "var(--sb-accent)", textDecoration: "none" }}
+                    >
+                      View agendas →
                     </a>
                   </span>
                 ) : (

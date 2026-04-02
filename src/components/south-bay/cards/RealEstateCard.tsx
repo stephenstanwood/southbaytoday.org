@@ -65,8 +65,8 @@ interface Props {
 }
 
 export default function RealEstateCard({ homeCity }: Props) {
-  const [sortKey, setSortKey] = useState<SortKey>("price");
-  const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [sortKey, setSortKey] = useState<SortKey>("city");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const { cities, sourceUrl } = data;
   if (!cities || cities.length === 0) return null;

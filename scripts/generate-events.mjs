@@ -674,12 +674,29 @@ async function fetchStanfordEvents() {
   }
 }
 
+// Filter out student-internal events from university feeds.
+// These are org meetings, advising sessions, career fairs for enrolled students, etc.
+// Public-facing events (exhibits, performances, athletics, lectures) should pass through.
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement)\//i;
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake)\b/i;
+const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake)\b/i;
+
+function isStudentOnlyEvent(item) {
+  if (STUDENT_ONLY_URL_PATHS.test(item.link || "")) return true;
+  if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
+  const desc = stripHtml(item.description || "");
+  if (STUDENT_ONLY_DESC.test(desc)) return true;
+  return false;
+}
+
 async function fetchSjsuEvents() {
   console.log("  ⏳ SJSU Events...");
   try {
     const xml = await fetchText("https://events.sjsu.edu/calendar.xml", 45_000); // large feed ~1.4MB
     const items = parseRssItems(xml);
+    let skipped = 0;
     const events = items.map((item) => {
+      if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
       return {
@@ -700,7 +717,7 @@ async function fetchSjsuEvents() {
         kidFriendly: false,
       };
     }).filter(Boolean);
-    console.log(`  ✅ SJSU: ${events.length} events`);
+    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered)`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);
@@ -725,7 +742,9 @@ async function fetchScuEvents() {
   try {
     const xml = await fetchText("https://events.scu.edu/live/rss/events");
     const items = parseRssItems(xml);
+    let skippedScu = 0;
     const events = items.map((item) => {
+      if (isStudentOnlyEvent(item)) { skippedScu++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
       return {
@@ -746,7 +765,7 @@ async function fetchScuEvents() {
         kidFriendly: false,
       };
     }).filter(Boolean);
-    console.log(`  ✅ SCU: ${events.length} events`);
+    console.log(`  ✅ SCU: ${events.length} events (${skippedScu} student-only filtered)`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SCU: ${err.message}`);
