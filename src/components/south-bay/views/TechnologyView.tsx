@@ -435,6 +435,8 @@ const ROUND_COLORS: Record<string, { bg: string; color: string; border: string }
   "Series C":  { bg: "#fce7f3", color: "#9d174d", border: "#f9a8d4" },
   "Series D":  { bg: "#fff7ed", color: "#9a3412", border: "#fdba74" },
   "Series E":  { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
+  "Series F":  { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
+  "Series F+": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
   "Strategic": { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
 };
 
@@ -556,6 +558,11 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
   );
 }
 
+// Q1 2026 stats — derived from RECENTLY_FUNDED, hardcoded for display accuracy
+const Q1_2026_ROUNDS = RECENTLY_FUNDED.filter(
+  (r) => r.date >= "2026-01-01" && r.date <= "2026-03-31"
+).length;
+
 function RecentlyFundedSection() {
   const sorted = [...RECENTLY_FUNDED].sort((a, b) => b.date.localeCompare(a.date));
   return (
@@ -564,6 +571,57 @@ function RecentlyFundedSection() {
         <h3 className="tech-section-title">Recently Funded</h3>
         <span className="tech-section-note">South Bay startups · Q4 2025 – Q1 2026 · {RECENTLY_FUNDED.length} rounds</span>
       </div>
+
+      {/* Q1 2026 Recap */}
+      <div
+        style={{
+          display: "flex",
+          gap: 0,
+          marginBottom: 18,
+          border: "1px solid var(--sb-border-light)",
+          borderRadius: 6,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            padding: "12px 14px",
+            background: "#fdf4ff",
+            borderRight: "1px solid var(--sb-border-light)",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$3.1B+</div>
+          <div style={{ fontSize: 10, color: "#6b21a8", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>Q1 2026 RAISED</div>
+        </div>
+        <div
+          style={{
+            flex: 1,
+            padding: "12px 14px",
+            background: "#f5f3ff",
+            borderRight: "1px solid var(--sb-border-light)",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#4c1d95", lineHeight: 1 }}>{Q1_2026_ROUNDS}</div>
+          <div style={{ fontSize: 10, color: "#5b21b6", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>Q1 ROUNDS</div>
+        </div>
+        <div
+          style={{
+            flex: 2,
+            padding: "12px 14px",
+            background: "#fafaf9",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)", marginBottom: 3 }}>Q1 2026 — South Bay VC wrap</div>
+          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>Three $500M rounds (Nexthop AI, MatX, Ayar Labs) anchored the quarter. Chips, robotics, and AI networking dominated deal flow.</div>
+        </div>
+      </div>
+
       <div>
         {sorted.map((company) => (
           <RecentlyFundedCard key={company.id} company={company} />

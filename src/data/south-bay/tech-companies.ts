@@ -1214,9 +1214,9 @@ export const TECH_PULSE = [
     note: "25K local jobs each at Googleplex & Apple Park",
   },
   {
-    value: "Intel",
-    label: "Most SCC layoffs",
-    note: "15K+ cut in 2024; SCC campus significantly smaller",
+    value: "$3.1B+",
+    label: "Raised in Q1 2026",
+    note: "18 South Bay startup rounds · chips, robotics, networking led the way",
   },
   {
     value: "Chip equipment",
