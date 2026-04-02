@@ -521,17 +521,6 @@ function CityWeeklyBriefing({ city }: { city: City }) {
         borderRadius: 8,
         padding: "12px 14px",
       }}>
-        {/* AI editorial lead */}
-        <p style={{
-          margin: "0 0 10px 0",
-          fontSize: 13,
-          lineHeight: 1.55,
-          color: "var(--sb-ink)",
-          fontStyle: "italic",
-        }}>
-          {briefing.summary}
-        </p>
-
         {/* Highlights */}
         {briefing.highlights.length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
