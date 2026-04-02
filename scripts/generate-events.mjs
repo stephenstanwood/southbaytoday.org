@@ -2075,9 +2075,18 @@ async function main() {
 
   // Deduplicate by normalized title + date
   // Sports events: also deduplicate by date+venue (same game, different listing titles)
+  // Same-source events: also deduplicate by date+venue+time (same event, different title variants)
   const seen = new Set();
   const sportsByDateVenue = new Set();
+  const sameSourceByDVT = new Set();
   const deduped = capped.filter((e) => {
+    // Same-source dedup: catches title variants like "SJSU X" vs "X at SJSU"
+    if (e.venue && e.date && e.time) {
+      const venueNorm = e.venue.toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 20);
+      const dvtKey = `${e.date}|${venueNorm}|${e.time}`;
+      if (sameSourceByDVT.has(dvtKey)) return false;
+      sameSourceByDVT.add(dvtKey);
+    }
     // Sports dedup: one listing per date+venue (catches "Sharks vs Blues" + "San Jose Sharks vs St Louis Blues")
     if (e.category === "sports" && e.venue && e.date) {
       // Normalize venue: strip trailing " at <city>" / " in <city>" so "SAP Center at San Jose" == "SAP Center"
