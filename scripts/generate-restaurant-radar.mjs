@@ -12,6 +12,9 @@ import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY ?? "";
+const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "restaurant-radar.json");
 
@@ -221,13 +224,59 @@ async function main() {
     return b.date.localeCompare(a.date);
   });
 
+  // Enrich items missing names using Claude (best-effort)
+  const topItems = items.slice(0, 20);
+  if (ANTHROPIC_API_KEY) {
+    const unnamed = topItems.filter((it) => !it.name);
+    if (unnamed.length > 0) {
+      console.log(`\n  🔍 Looking up ${unnamed.length} unnamed permit locations…`);
+      const addresses = unnamed.map((it) => `${it.address}, San Jose, CA (${it.workType}, ${it.subtype})`).join("\n");
+      try {
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+          },
+          body: JSON.stringify({
+            model: CLAUDE_HAIKU,
+            max_tokens: 512,
+            messages: [{
+              role: "user",
+              content: `For each address, tell me the restaurant or food business name that is/was at that location in San Jose, CA. If you don't know, say "unknown".\n\nReturn ONLY a JSON array of objects: [{"address": "...", "name": "..."}]\n\n${addresses}`,
+            }],
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = data.content?.[0]?.text ?? "";
+          const jsonMatch = text.match(/\[[\s\S]*\]/);
+          if (jsonMatch) {
+            const lookups = JSON.parse(jsonMatch[0]);
+            for (const lookup of lookups) {
+              if (!lookup.name || lookup.name.toLowerCase() === "unknown") continue;
+              const item = unnamed.find((it) => it.address === lookup.address.replace(/, San Jose.*$/, "").trim());
+              if (item) {
+                item.name = lookup.name;
+                console.log(`    ✓ ${item.address} → ${lookup.name}`);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.log(`    ⚠️ Name lookup failed: ${err.message}`);
+      }
+    }
+  }
+
   const output = {
     generatedAt: new Date().toISOString(),
     city: "San Jose",
     windowDays: 45,
     source: "data.sanjoseca.gov",
     sourceUrl: "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
-    items: items.slice(0, 20),
+    items: topItems,
   };
 
   writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");

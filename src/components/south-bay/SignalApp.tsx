@@ -179,7 +179,7 @@ export default function SignalApp() {
         {activeTab === "transit" && <TransitView />}
         {activeTab === "food" && <FoodView />}
         {activeTab === "weather" && <WeatherView homeCity={homeCity} />}
-        {activeTab === "plan" && <PlanView />}
+        {activeTab === "plan" && <PlanView homeCity={homeCity} />}
         {activeTab === "camps" && <CampsView />}
       </main>
 

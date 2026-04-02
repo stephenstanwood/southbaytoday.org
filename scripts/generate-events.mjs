@@ -884,17 +884,110 @@ async function fetchChmEvents() {
 
 async function fetchSjJazzEvents() {
   console.log("  ⏳ San Jose Jazz...");
+  const events = [];
+  const currentYear = new Date().getFullYear();
+
   try {
-    const xml = await fetchText("https://www.sanjosejazz.org/feed/");
-    // SJ Jazz RSS is a news/blog feed — pubDates are from 2024-2025 (past).
-    // The feed does not contain upcoming events with specific dates or times.
-    // Skip for now; SJ Jazz is covered in the recurring events data (events-data.ts).
-    const items = parseRssItems(xml);
-    console.log(`  ✅ San Jose Jazz: 0 events (blog feed — no upcoming event dates)`);
-    return [];
+    // Scrape paginated HTML calendar (5 events/page, ~4 pages)
+    for (let page = 1; page <= 6; page++) {
+      const url = page === 1
+        ? "https://www.sanjosejazz.org/events/"
+        : `https://sanjosejazz.org/events/page/${page}/`;
+      // SJZ blocks non-browser UAs — use a browser-like UA
+      const res = await fetch(url, {
+        headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!res.ok) break;
+      const html = await res.text();
+      if (!html || html.length < 500) break;
+
+      // Parse each .sjz-event block using regex on server-rendered HTML
+      const eventBlocks = html.split(/class="sjz-event\b/).slice(1);
+      if (eventBlocks.length === 0) break;
+
+      for (const block of eventBlocks) {
+        const nameMatch = block.match(/class="sjz-event-name">\s*([\s\S]*?)\s*<\/p>/);
+        const dateMatch = block.match(/class="sjz-event-date">\s*([\s\S]*?)\s*<\/p>/);
+        const hourMatch = block.match(/class="sjz-event-hour">\s*([\s\S]*?)\s*<\/p>/);
+        const excerptMatch = block.match(/class="sjz-event-excerpt">\s*([\s\S]*?)\s*<\/p>/);
+        const linkMatch = block.match(/href="(https?:\/\/[^"]*sanjosejazz\.org\/events\/[^"]+)"[^>]*>READ MORE/);
+        const isFree = /FREE ADMISSION/i.test(block);
+
+        const title = nameMatch?.[1]?.trim();
+        const dateStr = dateMatch?.[1]?.trim(); // e.g. "Fri, Apr 3"
+        if (!title || !dateStr) continue;
+
+        // Parse time from hour field (e.g. "7pm Pacific / <span>SJZ Break Room</span>")
+        const rawHour = hourMatch?.[1] || "";
+        const timeMatch = rawHour.match(/(\d+(?::\d+)?(?:am|pm))/i);
+        const time = timeMatch?.[1] || null;
+
+        // Extract venue from <span class="event-place">
+        const venueMatch = rawHour.match(/event-place[^>]*>[\s\S]*?(?:-->)?\s*([\w\s]+?)\s*(?:<!--)?<\/span>/);
+        const venue = venueMatch?.[1]?.trim() || "SJZ Break Room";
+
+        // Parse date — "Fri, Apr 3" → full ISO date
+        const dmMatch = dateStr.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d+)/);
+        if (!dmMatch) continue;
+        const monthNames = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+        const month = monthNames[dmMatch[1]];
+        const day = parseInt(dmMatch[2]);
+        let year = currentYear;
+        // If the month is before now and more than 2 months ago, it's next year
+        const now = new Date();
+        const candidate = new Date(year, month, day);
+        if (candidate < new Date(now.getTime() - 60 * 86400000)) year++;
+        const isoDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+        // Clean description
+        const desc = excerptMatch?.[1]?.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() || "";
+        const shortDesc = desc.length > 200 ? desc.slice(0, 197) + "…" : desc;
+
+        // Format time for display
+        let displayTime = null;
+        if (time) {
+          const h = parseInt(time);
+          const isPm = /pm/i.test(time);
+          const minMatch = time.match(/:(\d+)/);
+          const mins = minMatch ? `:${minMatch[1]}` : ":00";
+          const hour24 = isPm && h !== 12 ? h + 12 : !isPm && h === 12 ? 0 : h;
+          displayTime = `${hour24}${mins.replace(":00", "")}:00`.replace(/^(\d):/, "0$1:");
+          // Format as "7:00 PM"
+          const displayH = hour24 > 12 ? hour24 - 12 : hour24 === 0 ? 12 : hour24;
+          displayTime = `${displayH}:${minMatch?.[1] || "00"} ${isPm ? "PM" : "AM"}`;
+        }
+
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "").slice(0, 40);
+        events.push({
+          id: `sjz-${slug}-${isoDate}`,
+          title: title.includes("SJZ") || title.includes("San Jose Jazz") ? title : `${title} — San Jose Jazz`,
+          date: isoDate,
+          displayDate: dateStr,
+          time: displayTime,
+          endTime: null,
+          venue: venue,
+          address: "310 South First St, San Jose",
+          city: "san-jose",
+          category: "music",
+          cost: isFree ? "free" : "paid",
+          description: shortDesc,
+          url: linkMatch?.[1] || "https://www.sanjosejazz.org/events/",
+          source: "San Jose Jazz",
+          kidFriendly: isFree,
+        });
+      }
+
+      // Check for next page link
+      if (!html.includes(`/events/page/${page + 1}/`)) break;
+      await new Promise((r) => setTimeout(r, 500)); // polite delay
+    }
+
+    console.log(`  ✅ San Jose Jazz: ${events.length} events`);
+    return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Jazz: ${err.message}`);
-    return [];
+    return events;
   }
 }
 

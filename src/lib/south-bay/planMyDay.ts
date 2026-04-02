@@ -38,6 +38,7 @@ export interface PlanInput {
   vibe: VibeType;
   budget: BudgetType;
   date?: Date; // defaults to today
+  homeCity?: string; // user's preferred city for proximity scoring
 }
 
 export interface PlanStop {
@@ -72,6 +73,7 @@ interface Candidate {
   title: string;
   venue: string;
   city: string;
+  citySlug: string; // e.g. "san-jose" for proximity scoring
   cost: "free" | "low" | "paid";
   costNote?: string;
   kidFriendly: boolean;
@@ -92,6 +94,26 @@ interface WeatherInfo {
   isSunny: boolean;
   isCold: boolean; // <50°F
   raw: string;
+}
+
+// ── City proximity ──────────────────────────────────────────────────────────
+
+// Distance tiers between South Bay cities (0 = same, 1 = adjacent, 2 = nearby, 3 = far)
+const CITY_DISTANCE: Record<string, Record<string, number>> = {
+  "san-jose":      { "san-jose": 0, "campbell": 1, "santa-clara": 1, "milpitas": 1, "los-gatos": 2, "saratoga": 2, "cupertino": 1, "sunnyvale": 2, "mountain-view": 2, "palo-alto": 3 },
+  "campbell":      { "campbell": 0, "san-jose": 1, "los-gatos": 1, "saratoga": 1, "cupertino": 2, "santa-clara": 2, "sunnyvale": 2, "mountain-view": 3, "milpitas": 3, "palo-alto": 3 },
+  "los-gatos":     { "los-gatos": 0, "campbell": 1, "saratoga": 1, "san-jose": 2, "cupertino": 2, "santa-clara": 2, "sunnyvale": 3, "mountain-view": 3, "milpitas": 3, "palo-alto": 3 },
+  "saratoga":      { "saratoga": 0, "los-gatos": 1, "campbell": 1, "cupertino": 1, "san-jose": 2, "sunnyvale": 2, "santa-clara": 2, "mountain-view": 2, "palo-alto": 3, "milpitas": 3 },
+  "cupertino":     { "cupertino": 0, "saratoga": 1, "santa-clara": 1, "sunnyvale": 1, "campbell": 2, "san-jose": 1, "los-gatos": 2, "mountain-view": 2, "palo-alto": 2, "milpitas": 2 },
+  "santa-clara":   { "santa-clara": 0, "san-jose": 1, "cupertino": 1, "sunnyvale": 1, "milpitas": 2, "campbell": 2, "mountain-view": 1, "saratoga": 2, "los-gatos": 2, "palo-alto": 2 },
+  "sunnyvale":     { "sunnyvale": 0, "santa-clara": 1, "cupertino": 1, "mountain-view": 1, "san-jose": 2, "milpitas": 2, "saratoga": 2, "campbell": 2, "palo-alto": 2, "los-gatos": 3 },
+  "mountain-view": { "mountain-view": 0, "sunnyvale": 1, "palo-alto": 1, "santa-clara": 1, "cupertino": 2, "san-jose": 2, "milpitas": 2, "los-gatos": 3, "campbell": 3, "saratoga": 2 },
+  "palo-alto":     { "palo-alto": 0, "mountain-view": 1, "sunnyvale": 2, "santa-clara": 2, "cupertino": 2, "san-jose": 3, "milpitas": 3, "los-gatos": 3, "campbell": 3, "saratoga": 3 },
+  "milpitas":      { "milpitas": 0, "san-jose": 1, "santa-clara": 2, "sunnyvale": 2, "cupertino": 2, "mountain-view": 2, "campbell": 3, "los-gatos": 3, "saratoga": 3, "palo-alto": 3 },
+};
+
+function getCityDistance(from: string, to: string): number {
+  return CITY_DISTANCE[from]?.[to] ?? 2;
 }
 
 // ── Slot configuration ────────────────────────────────────────────────────────
@@ -222,6 +244,7 @@ function buildUpcomingCandidates(date: Date): Candidate[] {
         title: e.title,
         venue: e.venue ?? "",
         city: cityLabel(e.city ?? ""),
+        citySlug: e.city ?? "",
         cost,
         kidFriendly: e.kidFriendly ?? false,
         why,
@@ -277,6 +300,7 @@ function buildCandidates(date: Date): Candidate[] {
       title: e.title,
       venue: e.venue,
       city: cityLabel(e.city),
+      citySlug: e.city,
       cost: e.cost,
       costNote: e.costNote,
       kidFriendly: e.kidFriendly,
@@ -298,6 +322,7 @@ function buildCandidates(date: Date): Candidate[] {
       title: p.title,
       venue: p.venue,
       city: cityLabel(p.city),
+      citySlug: p.city,
       cost: p.cost,
       costNote: p.costNote,
       kidFriendly: p.kidFriendly,
@@ -327,6 +352,7 @@ function scoreCandidate(
   weather: WeatherInfo,
   used: Set<string>,
   usedCategories: Set<string>,
+  lastCitySlug: string | null,
 ): number {
   if (used.has(c.id)) return -9999;
 
@@ -335,6 +361,23 @@ function scoreCandidate(
   // Slot fit
   if (c.bestSlots.includes(slot)) s += 10;
   else s -= 8;
+
+  // City proximity — prefer events near user's home city
+  if (input.homeCity && c.citySlug) {
+    const dist = getCityDistance(input.homeCity, c.citySlug);
+    if (dist === 0) s += 12;       // same city
+    else if (dist === 1) s += 6;   // adjacent
+    else if (dist === 2) s += 0;   // nearby, neutral
+    else s -= 8;                   // far away
+  }
+
+  // Geographic flow — prefer stops near the previous stop
+  if (lastCitySlug && c.citySlug) {
+    const flow = getCityDistance(lastCitySlug, c.citySlug);
+    if (flow === 0) s += 6;        // same city as last stop
+    else if (flow === 1) s += 3;   // adjacent
+    else if (flow >= 3) s -= 6;    // far jump — bad day flow
+  }
 
   // Lunch slot: strongly prefer food/neighborhood
   if (slot === "lunch") {
@@ -449,10 +492,11 @@ export function buildDayPlan(input: PlanInput, weatherRaw: string): DayPlan {
   const used = new Set<string>();
   const usedCategories = new Set<string>();
   const stops: PlanStop[] = [];
+  let lastCitySlug: string | null = input.homeCity ?? null;
 
   for (const slot of slots) {
     const scored = candidates
-      .map((c) => ({ c, score: scoreCandidate(c, slot, input, weather, used, usedCategories) }))
+      .map((c) => ({ c, score: scoreCandidate(c, slot, input, weather, used, usedCategories, lastCitySlug) }))
       .sort((a, b) => b.score - a.score);
 
     const winner = scored[0]?.c;
@@ -460,6 +504,7 @@ export function buildDayPlan(input: PlanInput, weatherRaw: string): DayPlan {
 
     used.add(winner.id);
     usedCategories.add(winner.category);
+    lastCitySlug = winner.citySlug || lastCitySlug;
     const meta = SLOT_META[slot];
 
     stops.push({

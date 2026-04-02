@@ -302,7 +302,7 @@ function buildDateOptions() {
 
 const DATE_OPTIONS = buildDateOptions();
 
-export default function PlanView() {
+export default function PlanView({ homeCity }: { homeCity: string | null }) {
   const [step, setStep] = useState<Step>("form");
   const [weather, setWeather] = useState<string>("70°F partly cloudy");
   const [plan, setPlan] = useState<DayPlan | null>(null);
@@ -328,7 +328,7 @@ export default function PlanView() {
     setStep("building");
     // Small artificial delay for UX polish
     setTimeout(() => {
-      const result = buildDayPlan({ who, duration, vibe, budget, date: DATE_OPTIONS[selectedDateIdx].date }, weather);
+      const result = buildDayPlan({ who, duration, vibe, budget, date: DATE_OPTIONS[selectedDateIdx].date, homeCity: homeCity ?? undefined }, weather);
       setPlan(result);
       setStep("result");
     }, 600);
