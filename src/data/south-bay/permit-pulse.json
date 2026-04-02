@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-02T19:10:15.141Z",
+      "generatedAt": "2026-04-02T20:12:14.024Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -113,7 +113,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-02T19:10:17.450Z",
+      "generatedAt": "2026-04-02T20:12:16.772Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -127,18 +127,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-00818",
-          "address": "1610 Dana Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Voluntary seismic strengthening (NO GRANT)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-27",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00803",
           "address": "3108 Middlefield Rd",
           "category": "commercial",
@@ -148,6 +136,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-03-26",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00818",
+          "address": "1610 Dana Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Voluntary seismic strengthening (NO GRANT)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-27",
           "subtype": "Permit Issued"
         },
         {
