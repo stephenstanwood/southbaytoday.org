@@ -1885,7 +1885,7 @@ async function main() {
     fetchTicketmasterEvents,
     fetchSharksSchedule,
     fetchMvplEvents,
-    fetchSunnyvaleLibraryEvents,
+    // fetchSunnyvaleLibraryEvents, — 403 (Events feature disabled on their BiblioCommons); covered by SCCL
     fetchPaloAltoLibraryEvents,
     fetchHappyHollowEvents,
     fetchMaclaEvents,
