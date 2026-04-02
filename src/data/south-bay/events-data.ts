@@ -253,6 +253,99 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     emoji: "🍎",
   },
 
+  {
+    id: "santana-row-farmers-market",
+    title: "Santana Row Farmers' Market",
+    city: "san-jose",
+    venue: "Santana Row",
+    address: "377 Santana Row, San Jose",
+    category: "market",
+    recurrence: "weekly",
+    days: ["wednesday"],
+    time: "4pm – 8pm",
+    months: [5, 6, 7, 8, 9],
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Outdoor farmers' market on Santana Row every Wednesday evening. 25+ vendors with organic produce, local cheeses, breads, flowers, and prepared foods.",
+    url: "https://santanarow.com/events/",
+    emoji: "🥬",
+  },
+  {
+    id: "santana-row-makers-market",
+    title: "Makers Market Local Artist Street Fair",
+    city: "san-jose",
+    venue: "Santana Row",
+    address: "377 Santana Row, San Jose",
+    category: "arts",
+    recurrence: "monthly",
+    days: ["saturday"],
+    time: "11am – 6pm",
+    cost: "free",
+    kidFriendly: true,
+    description:
+      "Monthly street fair on the second Saturday with 60+ local artists, crafters, and makers. Handmade jewelry, ceramics, woodwork, apparel, live music. Sip & stroll event.",
+    url: "https://santanarow.com/events/",
+    emoji: "🎨",
+  },
+  {
+    id: "santana-row-yoga",
+    title: "Yoga & Pilates on The Row",
+    city: "san-jose",
+    venue: "Santana Row Park",
+    address: "377 Santana Row, San Jose",
+    category: "community",
+    recurrence: "weekly",
+    days: ["saturday"],
+    time: "9am",
+    months: [5, 6, 7, 8, 9, 10],
+    cost: "free",
+    kidFriendly: false,
+    description:
+      "Free Saturday morning yoga and pilates in Santana Row Park with lululemon. Check-in at 8:30am, class at 9am. Bring your own mat.",
+    url: "https://santanarow.com/events/",
+    emoji: "🧘",
+  },
+
+  // ── MUSEUM PROGRAMS ────────────────────────────────────────────────────
+
+  {
+    id: "cdm-toddler-storytime",
+    title: "Toddler Storytime — Children's Discovery Museum",
+    city: "san-jose",
+    venue: "Children's Discovery Museum",
+    address: "180 Woz Way, San Jose",
+    category: "family",
+    recurrence: "weekly",
+    days: ["wednesday", "thursday", "friday", "saturday", "sunday"],
+    time: "11:30am",
+    cost: "paid",
+    costNote: "Included with museum admission",
+    kidFriendly: true,
+    description:
+      "Drop-in storytime for toddlers in the Wonder Cabinet, Wednesday through Sunday at 11:30am.",
+    url: "https://www.cdm.org/calendar/",
+    emoji: "📖",
+  },
+  {
+    id: "cdm-all-ages-storytime",
+    title: "All Ages Storytime — Children's Discovery Museum",
+    city: "san-jose",
+    venue: "Children's Discovery Museum",
+    address: "180 Woz Way, San Jose",
+    category: "family",
+    recurrence: "weekly",
+    days: ["tuesday"],
+    time: "11:30am",
+    cost: "paid",
+    costNote: "Included with museum admission",
+    kidFriendly: true,
+    description:
+      "All ages storytime in the Theatre every Tuesday at 11:30am.",
+    url: "https://www.cdm.org/calendar/",
+    emoji: "📚",
+  },
+
   // ── LIBRARY PROGRAMS (with specific days/times) ────────────────────────
 
   {
@@ -389,6 +482,25 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
   // ── MONTHLY EVENTS ─────────────────────────────────────────────────────
 
+  {
+    id: "hakone-tea-ceremony",
+    title: "Public Tea Ceremony — Hakone Gardens",
+    city: "saratoga",
+    venue: "Hakone Gardens",
+    address: "21000 Big Basin Way, Saratoga",
+    category: "arts",
+    recurrence: "monthly",
+    days: ["sunday"],
+    time: "12pm, 1pm, 2pm",
+    months: [4, 5, 6, 7, 8, 9, 10, 11, 12],
+    cost: "paid",
+    costNote: "Separate from garden admission",
+    kidFriendly: true,
+    description:
+      "Traditional Omote-senke tea ceremony demonstration on the first Sunday of every month, April through December. Three sessions available.",
+    url: "https://www.hakonegardens.org",
+    emoji: "🍵",
+  },
   {
     id: "sj-first-friday",
     title: "SoFA First Friday Art Walk",
