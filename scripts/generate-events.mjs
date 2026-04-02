@@ -228,13 +228,15 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bprocessing\s+deadline\b/i,
   /\badmission\s+(deadline|decision)\b/i,
   // Graduate program info sessions / recruitment webinars (not open public events)
-  /\binfo(rmation)?\s+session\b/i,
+  /\binfo(rmation)?\s+sessions?\b/i,
+  /\binfo\s+sessions?\b/i,
   /\boffice\s+hours?\b/i,
   /\bwebinar\s+series\b/i,
   /\bprogram\s+webinar\b/i,
   /\badmissions?\s+webinar\b/i,
   /\bvirtual\s+information\b/i,
   /\bms\s+in\s+(is|cs|business|data|finance)\b/i,
+  /\b(ms|mba|phd|master'?s?)\s+.{0,40}\s+(information\s+sessions?|info\s+sessions?|open\s+house)\b/i,
   /\bmba\s+(webinar|info|information)\b/i,
   /\blearn\s+more\s+about\s+the\s+(ms|mba|phd|master)\b/i,
   /\bgraduate\s+program\s+(info|webinar|session)\b/i,
@@ -242,7 +244,9 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bfall\s+webinar\s+series\b/i,
   /\bsupport\s+office\s+hour\b/i,
   /\btech\s+support\s+hour\b/i,
-  /\binfo\s+session\b/i,
+  // Degree program advertising / school recruitment
+  /\b(degree|program)\s+(open\s+house|info\s+night|interest\s+session)\b/i,
+  /\bprospective\s+(student|applicant)\b/i,
   // Internal university committee / admin meetings (acronym + "Meeting")
   /^[A-Z]{2,5}\s+Meeting$/,
   /\b(faculty|staff|senate|curriculum|advisory|steering|executive)\s+(committee|council|board)\s+meeting\b/i,
