@@ -1119,76 +1119,102 @@ function SpringBreakCard() {
         <div className="sb-section-line" />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {picks.map((pick) => {
-          const emoji = CATEGORY_EMOJI[pick.category] ?? "📅";
-          const cityName = pick.city
-            .split("-")
-            .map((w: string) => w[0].toUpperCase() + w.slice(1))
-            .join(" ");
-
+      {(() => {
+        // Group picks by week
+        const weeks = [
+          { label: "Easter Weekend", dateRange: "Apr 3–5", start: "2026-04-03", end: "2026-04-05" },
+          { label: "Week 1", dateRange: "Apr 6–10", start: "2026-04-06", end: "2026-04-10" },
+          { label: "Week 2", dateRange: "Apr 11–17", start: "2026-04-11", end: "2026-04-17" },
+        ];
+        // Sort picks by date
+        const sorted = [...picks].sort((a, b) => a.date.localeCompare(b.date));
+        return weeks.map((week) => {
+          const weekPicks = sorted.filter((p) => p.date >= week.start && p.date <= week.end);
+          if (weekPicks.length === 0) return null;
           return (
-            <div
-              key={pick.id}
-              style={{
-                border: "1.5px solid var(--sb-border-light)",
-                borderRadius: 8,
-                padding: "12px 14px",
-                background: "#fff",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                <span style={{ fontSize: 20, flexShrink: 0, marginTop: 1 }}>{emoji}</span>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-                    {pick.url ? (
-                      <a
-                        href={pick.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          fontSize: 14, fontWeight: 700, color: "var(--sb-ink)",
-                          textDecoration: "none",
-                        }}
-                      >
-                        {pick.title}
-                      </a>
-                    ) : (
-                      <span style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)" }}>
-                        {pick.title}
-                      </span>
-                    )}
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
-                      background: pick.cost === "free" ? "#DCFCE7" : "#F3F4F6",
-                      color: pick.cost === "free" ? "#15803D" : "var(--sb-muted)",
-                      flexShrink: 0,
-                    }}>
-                      {pick.cost === "free" ? "FREE" : "PAID"}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 12, color: "var(--sb-muted)", marginBottom: 5, lineHeight: 1.45 }}>
-                    {pick.why}
-                  </div>
-                  <div style={{
-                    fontSize: 11, color: "var(--sb-light)",
-                    fontFamily: "'Space Mono', monospace",
-                    display: "flex", gap: 8, flexWrap: "wrap",
-                  }}>
-                    {pick.ongoing ? (
-                      <span>Ongoing exhibit</span>
-                    ) : (
-                      <span>{pick.displayDate}{pick.time ? ` · ${pick.time}` : ""}</span>
-                    )}
-                    <span>·</span>
-                    <span>{pick.venue || cityName}</span>
-                  </div>
-                </div>
+            <div key={week.label} style={{ marginBottom: 16 }}>
+              <div style={{
+                fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.1em", textTransform: "uppercase",
+                color: "var(--sb-muted)", marginBottom: 8,
+                display: "flex", alignItems: "center", gap: 8,
+              }}>
+                <span style={{ color: "var(--sb-accent)", background: "var(--sb-cream)", border: "1px solid var(--sb-border-light)", borderRadius: 3, padding: "2px 6px" }}>{week.label}</span>
+                <span>{week.dateRange}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {weekPicks.map((pick) => {
+                  const emoji = CATEGORY_EMOJI[pick.category] ?? "📅";
+                  const cityName = pick.city
+                    .split("-")
+                    .map((w: string) => w[0].toUpperCase() + w.slice(1))
+                    .join(" ");
+                  return (
+                    <div
+                      key={pick.id}
+                      style={{
+                        border: "1.5px solid var(--sb-border-light)",
+                        borderRadius: 8,
+                        padding: "12px 14px",
+                        background: "#fff",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                        <span style={{ fontSize: 20, flexShrink: 0, marginTop: 1 }}>{emoji}</span>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
+                            {pick.url ? (
+                              <a
+                                href={pick.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  fontSize: 14, fontWeight: 700, color: "var(--sb-ink)",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {pick.title}
+                              </a>
+                            ) : (
+                              <span style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)" }}>
+                                {pick.title}
+                              </span>
+                            )}
+                            <span style={{
+                              fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+                              background: pick.cost === "free" ? "#DCFCE7" : "#F3F4F6",
+                              color: pick.cost === "free" ? "#15803D" : "var(--sb-muted)",
+                              flexShrink: 0,
+                            }}>
+                              {pick.cost === "free" ? "FREE" : "PAID"}
+                            </span>
+                          </div>
+                          <div style={{ fontSize: 12, color: "var(--sb-muted)", marginBottom: 5, lineHeight: 1.45 }}>
+                            {pick.why}
+                          </div>
+                          <div style={{
+                            fontSize: 11, color: "var(--sb-light)",
+                            fontFamily: "'Space Mono', monospace",
+                            display: "flex", gap: 8, flexWrap: "wrap",
+                          }}>
+                            {pick.ongoing ? (
+                              <span>Ongoing exhibit</span>
+                            ) : (
+                              <span>{pick.displayDate}{pick.time ? ` · ${pick.time}` : ""}</span>
+                            )}
+                            <span>·</span>
+                            <span>{pick.venue || cityName}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );
-        })}
-      </div>
+        });
+      })()}
     </div>
   );
 }

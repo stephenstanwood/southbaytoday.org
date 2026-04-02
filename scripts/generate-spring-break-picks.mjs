@@ -96,28 +96,27 @@ async function main() {
 
   console.log(`${filtered.length} after filtering noise`);
 
-  const sample = filtered.slice(0, 80);
+  const sample = filtered.slice(0, 120);
   const eventList = sample.map((e, i) =>
     `${i + 1}. [${e.date}${e.ongoing ? " ONGOING" : ` ${e.time || "all day"}`}] ${e.title} — ${cityLabel(e.city)}${e.venue ? `, ${e.venue}` : ""} (${e.cost || "free"}) — ${(e.description || "").slice(0, 120)}`
   ).join("\n");
 
   const prompt = `You are the editorial voice of South Bay Signal, a local news site for Silicon Valley residents.
 
-Spring break runs April 3–17, 2026 (different districts have different weeks). Here are ${sample.length} events and exhibits happening during this period:
+Spring break runs April 3–17, 2026. Week 1 (Apr 3–10) covers Easter weekend + SJUSD/PAUSD districts. Week 2 (Apr 13–17) covers FUHSD/CUSD/Campbell USD districts. Here are ${sample.length} events and exhibits:
 
 ${eventList}
 
-Pick exactly 5 things a South Bay family or resident would genuinely enjoy during spring break. Prioritize:
-- Family-friendly or all-ages activities (kids are out of school!)
-- Free or affordable ($20 or less per person)
-- Things that are unique, seasonal, or especially relevant during spring break week
-- Mix of activity types: outdoor, cultural, educational, arts, sports
-- Geographic diversity across cities if possible
-- Easter/spring themes are a bonus
+Pick exactly 12 things a South Bay family or resident would genuinely enjoy during spring break. Rules:
+- At least 4 picks from Week 1 (Apr 3–10) and at least 4 from Week 2 (Apr 13–17)
+- Include 2–3 ongoing exhibits/museums that are great for families
+- Family-friendly or all-ages (kids are out of school!)
+- Prefer free or affordable ($25 or less per person)
+- Mix of types: outdoor, cultural/museum, arts, hands-on/workshop, sports, Easter/seasonal
+- Geographic spread: aim for at least 4 different cities
+- Avoid: university admin events, meetings, clinical studies, routine weekly sports unless special
 
-Avoid: university admin events, meetings, clinical studies, sports games that happen every week (unless the opponent or timing makes it special)
-
-Return ONLY a JSON array of 5 objects, no other text:
+Return ONLY a JSON array of 12 objects, no other text:
 [
   {
     "eventIndex": <1-based index from the list above>,
@@ -164,7 +163,7 @@ Return ONLY a JSON array of 5 objects, no other text:
   };
 
   writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
-  console.log(`\n✅ ${output.picks.length} spring break picks written to spring-break-picks.json`);
+  console.log(`\n✅ ${output.picks.length} spring break picks written to spring-break-picks.json (target: 12)`);
   output.picks.forEach((p) => console.log(`  • [${p.date}] ${p.title} — ${p.why}`));
 }
 
