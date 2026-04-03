@@ -2170,6 +2170,46 @@ The "City Hall × Tech" callout is uniquely SBS. No other local product surfaces
 
 ---
 
+## 2026-04-03 — Cycle 42: Expand SV History Milestones + Data Refresh
+
+### Context
+April 3, 2026 (Good Friday, spring break starting). The "This Week in SV History" section launched in cycle 41 with 9 milestones. A gap was immediately apparent: the section only covered about half the year, leaving months like February, June, September, and December dark. More importantly, Intuit was missing entirely — a Mountain View company that makes the software millions of South Bay households use every April to file their taxes.
+
+### What Was Built
+
+**Expanded SV History milestone database (9 → 14 milestones):**
+
+Five new milestones added:
+- **Intuit** (Mountain View, Apr 1983) — Founded April 1983 by Scott Cook and Tom Proulx in Palo Alto, now headquartered in Mountain View. *Shows this week* — 43rd anniversary. The company behind TurboTax and QuickBooks is foundational to South Bay's financial software ecosystem.
+- **Sun Microsystems** (Mountain View, Feb 24 1982) — Founded February 24, 1982 at Stanford. "The network is the computer." Java, Solaris, and the SPARC architecture came from here before Oracle acquired it in 2010.
+- **Oracle** (Santa Clara, Jun 16 1977) — Founded June 16, 1977 as Software Development Laboratories in Santa Clara. Larry Ellison's relational database became the backbone of enterprise computing worldwide.
+- **eBay** (San Jose, Sep 3 1995) — Founded September 3, 1995 by Pierre Omidyar from his San Jose home. First item sold: a broken laser pointer for $14.83. Proved that strangers on the internet could transact.
+- **Adobe** (San Jose, Dec 2 1982) — Founded December 2, 1982 by John Warnock and Charles Geschke, named after Adobe Creek in Los Altos. PostScript revolutionized desktop publishing; Photoshop shaped visual culture.
+
+**Full data refresh:**
+- upcoming-events.json: 497 events (108 ongoing), 21 sources — SC County Fire Dept now included, bilingual title fixes from cycle 41 integrated
+- around-town.json: 8 items — Cupertino business license amnesty, San Antonio Road area plan (Palo Alto), retail vitality ordinance, Campbell beekeeping
+- digests.json: 11 city digests
+- city-briefings.json: 11 cities for Apr 3–10
+- spring-break-picks.json: 12 picks including Bay FC vs. Washington Spirit, Easter liturgy at Mission Church, porcelain casting workshop
+- upcoming-meetings.json: San Jose, Sunnyvale, Cupertino for Apr 7
+
+### Why This Was the Strongest Move
+
+Intuit's April founding means the milestone fires THIS WEEK — during tax season, during spring break, the week Apple's 50th is visible. A Mountain View resident opening SBS sees: Apple turns 50, NVIDIA turns 33, and Intuit (TurboTax) turns 43 — all in the same ±8-day window. That's a remarkable concentration of local tech history.
+
+The milestone expansion also future-proofs the feature. Before: 5 months of the year had no milestones visible. After: every month has at least one notable South Bay company in or near the window. Oracle lights up June. eBay lights up September. Adobe and Sun fill December–February.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Daily commuter urgency. Register at https://511.org/open-data.
+2. **Restaurant radar for Mountain View / Sunnyvale** — Need to identify open data portals. SJ and Palo Alto are covered. MV/Sunnyvale have no CKAN equivalent — check city permit portals directly.
+3. **Tech tab: upcoming tech events** — Section exists but is currently empty most weeks (depends on CHM exhibits + keyword-matched events). Consider adding a static curated "Tech Conferences" section with quarterly events like Startup Grind (Apr 28-29 SV), YC Demo Days, etc.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Tech tab now has temporal depth across the full year.** Any week, any month, the "This Week in SV History" section can surface a locally-rooted story. April: Apple + NVIDIA + Intuit. June: Oracle. September: eBay. December: Cisco + Adobe. The feature makes SBS feel like a place with institutional memory, not just a news aggregator.
+
+---
+
 ## 2026-04-03 — Cycle 41: This Week in SV History + Full Data Refresh
 
 ### Context
