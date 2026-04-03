@@ -23,6 +23,9 @@ import healthScoresJson from "../../../data/south-bay/health-scores.json";
 import schoolCalJson from "../../../data/south-bay/school-calendar.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
+import techBriefingJson from "../../../data/south-bay/tech-briefing.json";
+import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
+import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -1558,6 +1561,33 @@ interface AroundTownItem {
   headline: string;
   summary: string;
   sourceUrl: string;
+  source?: "council" | "planning" | "permit";
+}
+
+interface MeetingAgendaItem {
+  title: string;
+  sequence: number;
+}
+
+interface MeetingEntry {
+  date: string;
+  displayDate: string;
+  bodyName: string;
+  location: string;
+  url: string;
+  legistarEventId?: number;
+  agendaItems: MeetingAgendaItem[];
+}
+
+interface RestaurantRadarItem {
+  id: string;
+  address: string;
+  name: string;
+  workType: string;
+  signal: "opening" | "closing";
+  label: string;
+  valuation?: number;
+  date: string;
 }
 
 const CITY_ACCENT: Record<string, string> = {
@@ -1739,6 +1769,16 @@ function AroundTownSection() {
                   }}>
                     {item.cityName.toUpperCase()}
                   </span>
+                  {item.source && (
+                    <span style={{
+                      fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 2,
+                      background: item.source === "permit" ? "#92400e18" : item.source === "planning" ? "#06522818" : "#1e3a8a18",
+                      color: item.source === "permit" ? "#92400e" : item.source === "planning" ? "#065228" : "#1e3a8a",
+                      letterSpacing: "0.06em", fontFamily: "'Space Mono', monospace",
+                    }}>
+                      {item.source.toUpperCase()}
+                    </span>
+                  )}
                   <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
                     {dateFormatted}
                   </span>
@@ -1779,6 +1819,197 @@ function AroundTownSection() {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ── Tech Briefing Callout ─────────────────────────────────────────────────────
+
+function TechBriefingCallout({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
+  const data = techBriefingJson as { weekLabel: string; weekStart: string; summary: string };
+  if (!data?.summary) return null;
+  // show 2 sentences
+  const sentences = data.summary.match(/[^.!?]+[.!?]+/g) ?? [];
+  const teaser = sentences.slice(0, 2).join(" ").trim();
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div className="sb-section-header" style={{ marginBottom: 10 }}>
+        <span className="sb-section-title">South Bay Tech</span>
+        <span style={{ fontSize: 11, color: "#7c3aed", fontFamily: "'Space Mono', monospace" }}>
+          {data.weekLabel}
+        </span>
+      </div>
+      <div style={{
+        borderLeft: "3px solid #7c3aed", paddingLeft: 14,
+        background: "#faf5ff", borderRadius: "0 4px 4px 0",
+        padding: "10px 14px",
+      }}>
+        <div style={{ fontSize: 13, color: "var(--sb-ink)", lineHeight: 1.6 }}>
+          {teaser}
+        </div>
+        <button
+          onClick={() => onNavigate("Tech")}
+          style={{ marginTop: 8, background: "none", border: "none", padding: 0, color: "#7c3aed", fontSize: 12, fontWeight: 700, cursor: "pointer", letterSpacing: "0.02em" }}
+        >
+          Full tech briefing →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── City Hall This Week ───────────────────────────────────────────────────────
+
+function CityHallThisWeek({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
+  const data = upcomingMeetingsJson as { generatedAt: string; meetings: Record<string, MeetingEntry> };
+  if (!data?.meetings) return null;
+
+  const sevenDaysOut = new Date(NOW.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const entries = Object.entries(data.meetings)
+    .filter(([, m]) => m.date >= TODAY_ISO && m.date <= sevenDaysOut)
+    .sort(([, a], [, b]) => a.date.localeCompare(b.date));
+
+  if (!entries.length) return null;
+
+  const MEETING_ACCENT: Record<string, string> = {
+    "san-jose":  "#be123c",
+    "sunnyvale": "#0891b2",
+    "cupertino": "#6d28d9",
+    "campbell":  "#1d4ed8",
+    "mountain-view": "#0369a1",
+    "palo-alto": "#1d4ed8",
+    "santa-clara": "#b45309",
+    "milpitas":  "#4d7c0f",
+  };
+
+  const CITY_DISPLAY: Record<string, string> = {
+    "san-jose":  "San José",
+    "sunnyvale": "Sunnyvale",
+    "cupertino": "Cupertino",
+    "campbell":  "Campbell",
+    "mountain-view": "Mountain View",
+    "palo-alto": "Palo Alto",
+    "santa-clara": "Santa Clara",
+    "milpitas":  "Milpitas",
+  };
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div className="sb-section-header" style={{ marginBottom: 10 }}>
+        <span className="sb-section-title">City Hall This Week</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          council agendas
+        </span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {entries.map(([cityId, meeting], i) => {
+          const accent = MEETING_ACCENT[cityId] ?? "var(--sb-primary)";
+          const cityName = CITY_DISPLAY[cityId] ?? cityId;
+          // pick 3 interesting agenda items (skip boilerplate)
+          const SKIP_PATTERNS = /proclamation|minutes of|consent calendar|public participation|roll call|adjournment|pledge|invocation|treasure|treasurer/i;
+          const highlights = meeting.agendaItems
+            .filter(item => !SKIP_PATTERNS.test(item.title))
+            .slice(0, 3);
+
+          return (
+            <div key={cityId} style={{
+              padding: "12px 0",
+              borderBottom: i < entries.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
+                  background: accent + "18", color: accent, letterSpacing: "0.04em",
+                }}>
+                  {cityName.toUpperCase()}
+                </span>
+                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+                  {meeting.displayDate} · {meeting.bodyName}
+                </span>
+              </div>
+              {highlights.length > 0 && (
+                <ul style={{ margin: 0, padding: "0 0 0 16px", listStyle: "disc" }}>
+                  {highlights.map((item, j) => (
+                    <li key={j} style={{ fontSize: 12, color: "var(--sb-ink)", lineHeight: 1.5, marginBottom: 2 }}>
+                      {item.title.replace(/^Subject:\s*/i, "")}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <a
+                href={meeting.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-block", marginTop: 5, fontSize: 11, color: accent, fontWeight: 600, textDecoration: "none" }}
+              >
+                Full agenda →
+              </a>
+            </div>
+          );
+        })}
+      </div>
+      <button
+        onClick={() => onNavigate("Gov")}
+        style={{ marginTop: 8, background: "none", border: "none", padding: 0, color: "var(--sb-primary)", fontSize: 12, fontWeight: 700, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}
+      >
+        More in Gov →
+      </button>
+    </div>
+  );
+}
+
+// ── Restaurant Radar Teaser ───────────────────────────────────────────────────
+
+function RestaurantRadarTeaser({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
+  const items = (restaurantRadarJson as { items?: RestaurantRadarItem[] })?.items;
+  if (!items?.length) return null;
+
+  const openings = items.filter(r => r.signal === "opening").slice(0, 3);
+  const closings = items.filter(r => r.signal === "closing").slice(0, 2);
+  const combined = [...openings, ...closings];
+  if (!combined.length) return null;
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div className="sb-section-header" style={{ marginBottom: 10 }}>
+        <span className="sb-section-title">Restaurant Radar</span>
+        <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          openings &amp; closings
+        </span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {combined.map((r, i) => (
+          <div key={r.id} style={{
+            padding: "10px 0",
+            borderBottom: i < combined.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+            display: "flex", gap: 10, alignItems: "flex-start",
+          }}>
+            <span style={{
+              fontSize: 9, fontWeight: 700, padding: "2px 6px", borderRadius: 2,
+              background: r.signal === "opening" ? "#d1fae5" : "#fef3c7",
+              color: r.signal === "opening" ? "#065f46" : "#92400e",
+              letterSpacing: "0.06em", fontFamily: "'Space Mono', monospace",
+              whiteSpace: "nowrap", marginTop: 2, flexShrink: 0,
+            }}>
+              {r.signal.toUpperCase()}
+            </span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", lineHeight: 1.3 }}>
+                {r.name}
+              </div>
+              <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 1 }}>
+                {r.label}{r.valuation ? ` · $${(r.valuation / 1e6).toFixed(1)}M permit` : ""}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={() => onNavigate("Food")}
+        style={{ marginTop: 8, background: "none", border: "none", padding: 0, color: "var(--sb-primary)", fontSize: 12, fontWeight: 700, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}
+      >
+        More in Food →
+      </button>
     </div>
   );
 }
@@ -2608,8 +2839,17 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {/* ── This Week in [City] briefing ── */}
       {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
 
+      {/* ── South Bay Tech briefing teaser ── */}
+      {!changingCity && <TechBriefingCallout onNavigate={onNavigate} />}
+
       {/* ── Around the South Bay ── */}
       {!changingCity && <AroundTownSection />}
+
+      {/* ── City Hall This Week ── */}
+      {!changingCity && <CityHallThisWeek onNavigate={onNavigate} />}
+
+      {/* ── Restaurant Radar teaser ── */}
+      {!changingCity && <RestaurantRadarTeaser onNavigate={onNavigate} />}
 
       {/* ── School Calendars ── */}
       {!changingCity && <SchoolCalendarCard />}

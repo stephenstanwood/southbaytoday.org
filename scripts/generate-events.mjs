@@ -2106,6 +2106,47 @@ function fetchScccfdEvents() {
   return events;
 }
 
+function fetchMiscHardcodedEvents() {
+  console.log("  ⏳ Misc hardcoded events...");
+  const raw = [
+    {
+      title: "Stanford Water Polo Senior Day vs Cal",
+      date: "2026-04-04", time: "1:00 PM",
+      venue: "Avery Aquatic Center", address: "Stanford University, Stanford", city: "palo-alto",
+      cost: "free", costNote: null,
+      category: "sports",
+      url: "https://gostanford.com",
+      description: "#2 Stanford hosts rival #4 Cal in the Big Splash. Senior Day — free admission.",
+    },
+  ];
+  const today = new Date().toISOString().split("T")[0];
+  const events = raw
+    .filter((e) => e.date >= today)
+    .map((e) => {
+      const d = new Date(`${e.date}T12:00:00-07:00`);
+      return {
+        id: h("misc", e.date, e.title, e.venue),
+        title: e.title,
+        date: e.date,
+        displayDate: displayDate(d),
+        time: e.time,
+        endTime: null,
+        venue: e.venue,
+        address: e.address,
+        city: e.city,
+        category: e.category ?? "community",
+        cost: e.cost,
+        ...(e.costNote ? { costNote: e.costNote } : {}),
+        description: e.description ?? "",
+        url: e.url,
+        source: "South Bay Signal",
+        kidFriendly: false,
+      };
+    });
+  console.log(`  ✅ Misc hardcoded: ${events.length} events`);
+  return events;
+}
+
 function fetchLgChamberEvents() {
   console.log("  ⏳ LG Chamber of Commerce events...");
   const raw = [
@@ -2240,6 +2281,7 @@ async function main() {
     fetchShorelineEvents,
     fetchScccfdEvents,
     fetchLgChamberEvents,
+    fetchMiscHardcodedEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));
