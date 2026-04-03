@@ -182,7 +182,7 @@ export default function MinutesSearchCard({ homeCity, selectedCities }: Props) {
         color: "var(--sb-muted)",
         lineHeight: 1.5,
       }}>
-        Search 6,400+ city council records from 11 South Bay cities — agendas, decisions, meeting minutes, and YouTube transcripts. Powered by{" "}
+        Search 5,700+ city council records from 11 South Bay cities — agendas, decisions, meeting minutes, and YouTube transcripts. Powered by{" "}
         <a href="https://stoa.works" target="_blank" rel="noopener noreferrer"
           style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
           Stoa
