@@ -1199,6 +1199,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#059669",
     url: "https://rhoda.ai",
   },
+  {
+    id: "imperative-care",
+    name: "Imperative Care",
+    city: "Campbell",
+    category: "medtech",
+    round: "Convertible",
+    amount: "$100M",
+    date: "2026-03-17",
+    tagline: "Medical devices for stroke and vascular disease treatment — the Zoom Stroke System, Symphony, and Prodigy thrombectomy portfolios save lives faster. Building Telos, a robotic platform for standardized endovascular procedures. Campbell-based, founded 2015.",
+    color: "#0369a1",
+    url: "https://imperativecare.com",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1214,9 +1226,9 @@ export const TECH_PULSE = [
     note: "25K local jobs each at Googleplex & Apple Park",
   },
   {
-    value: "$3.1B+",
+    value: "$3.2B+",
     label: "Raised in Q1 2026",
-    note: "18 South Bay startup rounds · chips, robotics, networking led the way",
+    note: "19 South Bay startup rounds · chips, robotics, networking led the way",
   },
   {
     value: "Chip equipment",

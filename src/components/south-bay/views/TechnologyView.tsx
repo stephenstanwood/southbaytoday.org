@@ -437,7 +437,8 @@ const ROUND_COLORS: Record<string, { bg: string; color: string; border: string }
   "Series E":  { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
   "Series F":  { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
   "Series F+": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
-  "Strategic": { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
+  "Strategic":   { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
+  "Convertible": { bg: "#f0f9ff", color: "#0369a1", border: "#7dd3fc" },
 };
 
 function RoundBadge({ round }: { round: string }) {
