@@ -1,26 +1,125 @@
 {
   "flags": [
     {
-      "business_id": "PR0401114",
-      "name": "Purple Onion Deli",
-      "city": "Los Gatos",
-      "address": "14107 Winchester Bl R",
-      "date": "2026-04-01",
-      "score": 70,
+      "business_id": "PR0430661",
+      "name": "Sjs - H Mart",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0376949",
+      "name": "Lee's Sandwiches",
+      "city": "San Jose",
+      "address": "4060 Monterey Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Adequate handwash facilities supplied, accessible"
+    },
+    {
+      "business_id": "PR0303915",
+      "name": "Asia Village Restaurant",
+      "city": "Sunnyvale",
+      "address": "747 S Wolfe Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "This inspection was in conjunction with CO0159271"
+    },
+    {
+      "business_id": "PR0401597",
+      "name": "Sjs - H Mart - Korean Kitchen",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0436796",
+      "name": "Dduk Dabang",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0360491",
+      "name": "Sjs - H Mart",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0430662",
+      "name": "Sjs - H Mart - Bakery",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0376138",
+      "name": "Marufuku Ramen",
+      "city": "Campbell",
+      "address": "1875 S Bascom Av # 300",
+      "date": "2026-04-02",
+      "score": 79,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
     },
     {
-      "business_id": "PR0302427",
-      "name": "Benihana Of Tokyo",
-      "city": "Cupertino",
-      "address": "10123 N Wolfe Rd 2074",
+      "business_id": "PR0360837",
+      "name": "Japacurry",
+      "city": "San Jose",
+      "address": "505 E San Carlos St # B",
+      "date": "2026-04-02",
+      "score": 63,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
+    },
+    {
+      "business_id": "PR0433703",
+      "name": "Tacos Al Vapor",
+      "city": "Los Altos",
+      "address": "131 Main St",
       "date": "2026-04-01",
-      "score": null,
+      "score": 67,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "It was discussed with the PIC that the mailing address is incorrect and requested mailed information be sent to the store"
+    },
+    {
+      "business_id": "PR0367405",
+      "name": "Nam Giao Restaurant",
+      "city": "San Jose",
+      "address": "2066 Tully Rd",
+      "date": "2026-04-01",
+      "score": 59,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
+      "summary": "- Facility is hereby closed due to evidence of a vermin infestation"
     },
     {
       "business_id": "PR0300392",
@@ -45,28 +144,6 @@
       "summary": "Hot and cold water available"
     },
     {
-      "business_id": "PR0367405",
-      "name": "Nam Giao Restaurant",
-      "city": "San Jose",
-      "address": "2066 Tully Rd",
-      "date": "2026-04-01",
-      "score": 59,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "- Facility is hereby closed due to evidence of a vermin infestation"
-    },
-    {
-      "business_id": "PR0433703",
-      "name": "Tacos Al Vapor",
-      "city": "Los Altos",
-      "address": "131 Main St",
-      "date": "2026-04-01",
-      "score": 67,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "It was discussed with the PIC that the mailing address is incorrect and requested mailed information be sent to the store"
-    },
-    {
       "business_id": "PR0301665",
       "name": "Guadalajara De Dia",
       "city": "San Jose",
@@ -76,6 +153,28 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0401114",
+      "name": "Purple Onion Deli",
+      "city": "Los Gatos",
+      "address": "14107 Winchester Bl R",
+      "date": "2026-04-01",
+      "score": 70,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0302427",
+      "name": "Benihana Of Tokyo",
+      "city": "Cupertino",
+      "address": "10123 N Wolfe Rd 2074",
+      "date": "2026-04-01",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
     },
     {
       "business_id": "PR0304465",
@@ -100,39 +199,6 @@
       "summary": "- On-site for facility evaluation request for an ownership change"
     },
     {
-      "business_id": "PR0305310",
-      "name": "Hacienda Parrilla Bar",
-      "city": "San Jose",
-      "address": "1820 Alum Rock Av",
-      "date": "2026-03-30",
-      "score": 43,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food in good condition, safe, unadulterated"
-    },
-    {
-      "business_id": "PR0368840",
-      "name": "Ty Coffee",
-      "city": "San Jose",
-      "address": "2485 Alvin Av",
-      "date": "2026-03-30",
-      "score": 73,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "- Two or more major violations were observed during the routine inspection"
-    },
-    {
-      "business_id": "PR0301883",
-      "name": "Christy's Donut",
-      "city": "San Jose",
-      "address": "1150 N Capitol Av",
-      "date": "2026-03-30",
-      "score": 86,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Routine inspection"
-    },
-    {
       "business_id": "PR0304747",
       "name": "La Grullensa",
       "city": "San Jose",
@@ -142,17 +208,6 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0305950",
-      "name": "Del Sol Bistro",
-      "city": "San Jose",
-      "address": "1080 N 7th St",
-      "date": "2026-03-30",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "- On-site for operator scheduled follow-up inspection"
     },
     {
       "business_id": "PR0303505",
@@ -166,6 +221,28 @@
       "summary": "Proper hot and cold holding temperatures"
     },
     {
+      "business_id": "PR0301883",
+      "name": "Christy's Donut",
+      "city": "San Jose",
+      "address": "1150 N Capitol Av",
+      "date": "2026-03-30",
+      "score": 86,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Routine inspection"
+    },
+    {
+      "business_id": "PR0305950",
+      "name": "Del Sol Bistro",
+      "city": "San Jose",
+      "address": "1080 N 7th St",
+      "date": "2026-03-30",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "- On-site for operator scheduled follow-up inspection"
+    },
+    {
       "business_id": "PR0374012",
       "name": "Easterly",
       "city": "Santa Clara",
@@ -175,6 +252,28 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Routine inspection conducted in conjunction with complaint investigation CO0159213"
+    },
+    {
+      "business_id": "PR0305310",
+      "name": "Hacienda Parrilla Bar",
+      "city": "San Jose",
+      "address": "1820 Alum Rock Av",
+      "date": "2026-03-30",
+      "score": 43,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
+    },
+    {
+      "business_id": "PR0368840",
+      "name": "Ty Coffee",
+      "city": "San Jose",
+      "address": "2485 Alvin Av",
+      "date": "2026-03-30",
+      "score": 73,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "- Two or more major violations were observed during the routine inspection"
     },
     {
       "business_id": "PR0445530",
@@ -199,17 +298,6 @@
       "summary": "This is the first follow up inspection and shall be charged at the approved hourly rate"
     },
     {
-      "business_id": "PR0305057",
-      "name": "Pizza My Heart",
-      "city": "Santa Clara",
-      "address": "700 Bellomy St",
-      "date": "2026-03-27",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "This is the first follow up inspection and shall be charged at the approved hourly rate"
-    },
-    {
       "business_id": "PR0383489",
       "name": "Pasta Market, The",
       "city": "San Jose",
@@ -221,15 +309,15 @@
       "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
     },
     {
-      "business_id": "PR0433784",
-      "name": "Taro San Japanese Noodle Bar",
-      "city": "Palo Alto",
-      "address": "180 El Camino Real Unit 717",
-      "date": "2026-03-26",
+      "business_id": "PR0305057",
+      "name": "Pizza My Heart",
+      "city": "Santa Clara",
+      "address": "700 Bellomy St",
+      "date": "2026-03-27",
       "score": null,
       "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "No rodents, insects, birds, or animals"
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "This is the first follow up inspection and shall be charged at the approved hourly rate"
     },
     {
       "business_id": "PR0350121",
@@ -241,97 +329,9 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "This is the second follow up inspection and shall be charged at the approved hourly rate"
-    },
-    {
-      "business_id": "PR0386663",
-      "name": "Almaden Market",
-      "city": "San Jose",
-      "address": "5965 Almaden Ex",
-      "date": "2026-03-26",
-      "score": null,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "The change of ownership inspection was not completed today due to no hot water"
-    },
-    {
-      "business_id": "PR0305057",
-      "name": "Pizza My Heart",
-      "city": "Santa Clara",
-      "address": "700 Bellomy St",
-      "date": "2026-03-26",
-      "score": 90,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "The facility is hereby CLOSED by this department due to evidence of vermin infestation (see violation K23)"
-    },
-    {
-      "business_id": "PR0368349",
-      "name": "Joy Sushi",
-      "city": "Mountain View",
-      "address": "225 E Middlefield Rd 1b",
-      "date": "2026-03-26",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Limited inspection conducted for change of ownership"
-    },
-    {
-      "business_id": "PR0350121",
-      "name": "Atulya Bharat",
-      "city": "San Jose",
-      "address": "1710 Berryessa Rd # 107",
-      "date": "2026-03-25",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Onsite for the 1st follow up inspection after the routine inspection"
-    },
-    {
-      "business_id": "PR0303345",
-      "name": "Khanh's Restaurant",
-      "city": "Campbell",
-      "address": "150 E Hamilton Av",
-      "date": "2026-03-25",
-      "score": 55,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper cooling methods"
-    },
-    {
-      "business_id": "PR0300384",
-      "name": "Maiwand Market Of Santa Clara",
-      "city": "Santa Clara",
-      "address": "2915 El Camino Real",
-      "date": "2026-03-25",
-      "score": 70,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Routine inspection conducted in conjunction with CO0159216"
-    },
-    {
-      "business_id": "PR0305008",
-      "name": "Friendship Bbq",
-      "city": "Santa Clara",
-      "address": "2783 El Camino Real",
-      "date": "2026-03-25",
-      "score": 61,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "No rodents, insects, birds, or animals"
-    },
-    {
-      "business_id": "PR0301407",
-      "name": "Bombay To Goa",
-      "city": "Sunnyvale",
-      "address": "727 S Wolfe Rd",
-      "date": "2026-03-25",
-      "score": 45,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is hereby closed due to evidence of rodent droppings"
     }
   ],
-  "generatedAt": "2026-04-02T23:09:34.036Z",
+  "generatedAt": "2026-04-03T11:10:34.772Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

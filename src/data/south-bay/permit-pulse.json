@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-02T23:10:02.378Z",
+      "generatedAt": "2026-04-03T11:13:37.788Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Mar 26 – Apr 2",
+      "dateRange": "Mar 27 – Apr 3",
       "stats": {
-        "total": 285,
-        "notable": 8,
-        "newUnits": 4,
-        "totalValuation": 3133184
+        "total": 328,
+        "notable": 6,
+        "newUnits": 5,
+        "totalValuation": 3771451
       },
       "permits": [
         {
@@ -51,93 +51,57 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-143511-RS",
-          "address": "2211 Arleen Wy #2",
+          "id": "2025-133642-RS",
+          "address": "1280 Turrett Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Conversion of Living Space to Jadu",
-          "valuation": 48191,
+          "description": "Code Case Garage Conversion to adu",
+          "valuation": 80656,
           "units": 1,
-          "issueDate": "2026-03-27",
+          "issueDate": "2026-04-01",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-108797-CI",
-          "address": "585 N Capitol Av",
+          "id": "2024-115372-RS",
+          "address": "3923 Arden Farms Pl #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Conversion to adu",
+          "valuation": 79472,
+          "units": 1,
+          "issueDate": "2026-04-01",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-110761-CI",
+          "address": "1300 W San Carlos St",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Capitol Dental Office ti",
-          "valuation": 500000,
+          "workType": "ReRoof",
+          "description": "Commercial/Industrial",
+          "valuation": 696570,
           "units": 0,
-          "issueDate": "2026-03-27",
+          "issueDate": "2026-04-01",
           "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-104085-CI",
-          "address": "959 Story Rd H107",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "(Bem 100%) #5115 Salon ti",
-          "valuation": 132454,
-          "units": 0,
-          "issueDate": "2026-03-27",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-099896-CI",
-          "address": "260 Commercial St",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "(Bm 100%) Hvac ti",
-          "valuation": 54000,
-          "units": 0,
-          "issueDate": "2026-03-27",
-          "subtype": "Nursing/Assisted Living"
-        },
-        {
-          "id": "2026-109763-CI",
-          "address": "6100 Hellyer Av #100",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "Accessible Restroom",
-          "valuation": 50000,
-          "units": 0,
-          "issueDate": "2026-03-27",
-          "subtype": "Medical/Dental Clinic"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-02T23:10:04.594Z",
+      "generatedAt": "2026-04-03T11:13:40.080Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Mar 26 – Apr 2",
+      "dateRange": "Mar 27 – Apr 3",
       "stats": {
-        "total": 94,
-        "notable": 5,
+        "total": 105,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-00803",
-          "address": "3108 Middlefield Rd",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Remove and replace all siding with stucco.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-26",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-00818",
           "address": "1610 Dana Av",
@@ -151,6 +115,54 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-00861",
+          "address": "3132 Alexis Dr",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Temporary power (underground)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-02",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00830",
+          "address": "151 Melville Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "RES MEP: We will replace your damaged sewer line",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-03-30",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00863",
+          "address": "1221 Hopkins Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-02",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00872",
+          "address": "841 Ames Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-02",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-00825",
           "address": "3946 Louis Rd",
           "category": "residential-large",
@@ -160,18 +172,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-03-30",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00809",
-          "address": "473 Gary Ct",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-26",
           "subtype": "Permit Issued"
         },
         {
