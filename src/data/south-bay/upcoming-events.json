@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-04-03T17:19:57.998Z",
-  "eventCount": 517,
+  "generatedAt": "2026-04-03T17:19:41.332Z",
+  "eventCount": 521,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -23,7 +23,8 @@
     "Palo Alto City Library",
     "MACLA",
     "Heritage Theatre",
-    "Shoreline Amphitheatre"
+    "Shoreline Amphitheatre",
+    "SC County Fire Dept"
   ],
   "events": [
     {
@@ -208,7 +209,7 @@
     },
     {
       "id": "stanford-48376809728814",
-      "title": "Public Tour | Cantor Highlights: 1 PM",
+      "title": "Public Tour | Cantor Highlights:",
       "date": "2026-04-03",
       "displayDate": "Fri, Apr 3",
       "time": null,
@@ -329,24 +330,6 @@
       "cost": "free",
       "description": "Come by the Anderson Collection for a free guided tour of our collection! No pre-registration required, meet guide at the top of the stairs.",
       "url": "https://events.stanford.edu/event/highlight-tour",
-      "source": "Stanford Events",
-      "kidFriendly": false
-    },
-    {
-      "id": "stanford-51756668625747",
-      "title": "Public Tour | Cantor Highlights: 3 PM",
-      "date": "2026-04-03",
-      "displayDate": "Fri, Apr 3",
-      "time": null,
-      "endTime": null,
-      "ongoing": true,
-      "venue": "Cantor Arts Center",
-      "address": "328 Lomita Drive, Stanford, CA 94305",
-      "city": "palo-alto",
-      "category": "community",
-      "cost": "paid",
-      "description": "Public Tours: Cantor Highlights Explore the highlights of the Cantor's permanent collection on a public tour that leads you through a selection of works spanning varied cultures and time periods.…",
-      "url": "https://events.stanford.edu/event/copy-of-public-tour-cantor-highlights-1-pm-1879",
       "source": "Stanford Events",
       "kidFriendly": false
     },
@@ -546,7 +529,7 @@
     },
     {
       "id": "scu-2a62af0543fdb822",
-      "title": "Good Friday Liturgy of the Lord’s Passion 3 PM",
+      "title": "Good Friday Liturgy of the Lord’s Passion",
       "date": "2026-04-03",
       "displayDate": "Fri, Apr 3",
       "time": "3:00 PM",
@@ -777,7 +760,7 @@
     },
     {
       "id": "sccl-69b851a68089f23c6762836d",
-      "title": "中/英文雙語說故事時間 Mandarin/English Bilingual Family Storytime",
+      "title": "Mandarin/English Bilingual Family Storytime",
       "date": "2026-04-03",
       "displayDate": "Fri, Apr 3",
       "time": "7:00 PM",
@@ -1005,7 +988,7 @@
     },
     {
       "id": "scu-76de7e5729cd815a",
-      "title": "Easter Vigil Liturgy 8 PM",
+      "title": "Easter Vigil Liturgy",
       "date": "2026-04-04",
       "displayDate": "Sat, Apr 4",
       "time": "8:00 PM",
@@ -1336,7 +1319,7 @@
     },
     {
       "id": "scu-71a1fe9e63c8be0d",
-      "title": "Easter Sunday Liturgy 10 AM",
+      "title": "Easter Sunday Liturgy",
       "date": "2026-04-05",
       "displayDate": "Sun, Apr 5",
       "time": "10:00 AM",
@@ -1994,7 +1977,7 @@
     },
     {
       "id": "sccl-6931e18a6724c63d00e53cb5",
-      "title": "Bilingual Family Storytime / 中英雙語故事時間",
+      "title": "Bilingual Family Storytime",
       "date": "2026-04-07",
       "displayDate": "Tue, Apr 7",
       "time": "6:30 PM",
@@ -2029,7 +2012,7 @@
     },
     {
       "id": "sccl-695ec4c676261f2800631427",
-      "title": "Bilingual Mandarin Family Storytime / 中英雙語故事時間",
+      "title": "Bilingual Mandarin Family Storytime",
       "date": "2026-04-07",
       "displayDate": "Tue, Apr 7",
       "time": "1:00 PM",
@@ -2648,6 +2631,23 @@
       "description": "Monthly book discussion on a graphic novel selected by the group! This program is for readers age 16 and up. 2025-2026 titles: September 11: Understanding Comics by Scott McCloud (1994), 224 pages…",
       "url": "https://paloalto.bibliocommons.com/events/68057e180453817cac2a944c",
       "source": "Palo Alto City Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "scccfd-c1387e642d596497",
+      "title": "Be Ready: Be Prepared for Disasters",
+      "date": "2026-04-09",
+      "displayDate": "Thu, Apr 9",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "Online",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "Santa Clara County Fire Department community safety program. Registration required.",
+      "url": "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+      "source": "SC County Fire Dept",
       "kidFriendly": false
     },
     {
@@ -4118,7 +4118,7 @@
     },
     {
       "id": "sccl-69b851a68089f23c6762836e",
-      "title": "中/英文雙語說故事時間 Mandarin/English Bilingual Family Storytime",
+      "title": "Mandarin/English Bilingual Family Storytime",
       "date": "2026-04-17",
       "displayDate": "Fri, Apr 17",
       "time": "7:00 PM",
@@ -5065,6 +5065,24 @@
       "url": "https://paloalto.bibliocommons.com/events/69c0432c4dacf581ff83b416",
       "source": "Palo Alto City Library",
       "kidFriendly": false
+    },
+    {
+      "id": "scccfd-8885aba75a5d3a9d",
+      "title": "Wildfire Preparedness Workshop",
+      "date": "2026-04-23",
+      "displayDate": "Thu, Apr 23",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "The Pavilion at Redwood Estates",
+      "address": "Redwood Estates, Los Gatos",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Santa Clara County Fire Department community safety program. Registration required.",
+      "url": "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+      "source": "SC County Fire Dept",
+      "kidFriendly": false,
+      "ongoing": true
     },
     {
       "id": "tm-Z7r9jZ1A7-Z13",
@@ -7132,7 +7150,7 @@
     },
     {
       "id": "tm-G5vYZbUH4Iipt",
-      "title": "Stifel Stars on Ice Pre-Show Stargazer Pass: 12:30pm",
+      "title": "Stifel Stars on Ice Pre-Show Stargazer Pass:",
       "date": "2026-05-17",
       "displayDate": "Sun, May 17",
       "time": "4:00 PM",
@@ -7659,6 +7677,24 @@
       "description": "Join us for a free screening of a recently released movie you may have missed in theaters.",
       "url": "https://paloalto.bibliocommons.com/events/6924bde3602c05269faaed72",
       "source": "Palo Alto City Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "scccfd-f25f973aab28a4c4",
+      "title": "Hands-Only CPR and AED Class",
+      "date": "2026-05-28",
+      "displayDate": "Thu, May 28",
+      "time": "10:00 AM",
+      "endTime": null,
+      "venue": "SC County Fire Dept HQ",
+      "address": "Campbell",
+      "city": "campbell",
+      "category": "community",
+      "cost": "low",
+      "costNote": "From $18",
+      "description": "Santa Clara County Fire Department community safety program. Registration required.",
+      "url": "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+      "source": "SC County Fire Dept",
       "kidFriendly": false
     },
     {
@@ -8386,6 +8422,23 @@
       "kidFriendly": true
     },
     {
+      "id": "scccfd-84b43212e0a6c5e3",
+      "title": "Crime Prevention & Home Fire Safety",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
+      "time": "11:00 AM",
+      "endTime": null,
+      "venue": "Saratoga Friendship Hall",
+      "address": "Saratoga",
+      "city": "saratoga",
+      "category": "community",
+      "cost": "free",
+      "description": "Santa Clara County Fire Department community safety program. Registration required.",
+      "url": "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+      "source": "SC County Fire Dept",
+      "kidFriendly": false
+    },
+    {
       "id": "earthquakes-7478809d9c738437",
       "title": "San Jose Earthquakes vs. LA Galaxy",
       "date": "2026-07-25",
@@ -8455,6 +8508,24 @@
       "url": "https://www.bayfc.com/schedule",
       "source": "NWSL",
       "kidFriendly": true
+    },
+    {
+      "id": "scccfd-4a84ed0b2dda42d9",
+      "title": "CERT Academy",
+      "date": "2026-08-04",
+      "displayDate": "Tue, Aug 4",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Joan Pisani Community Center",
+      "address": "19655 Allendale Ave, Saratoga",
+      "city": "saratoga",
+      "category": "community",
+      "cost": "low",
+      "costNote": "From $40",
+      "description": "Santa Clara County Fire Department community safety program. Registration required.",
+      "url": "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+      "source": "SC County Fire Dept",
+      "kidFriendly": false
     },
     {
       "id": "tm-G5vYZ_7mLnaBa",

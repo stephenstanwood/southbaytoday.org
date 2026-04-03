@@ -2282,7 +2282,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
   const cityIsEmpty = homeCity && cityTodayCount < 5;
   const showExpandedRegional = cityIsEmpty;
-  const SB_LIMIT = homeCity ? 6 : 8;
+  const SB_LIMIT = 10;
 
   // ── This Week: home city events for next 6 days ──
   // Shown when homeCity is set, grouped by day
@@ -2440,7 +2440,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         true,
                       )}
                     </div>
-                    {southBayCount > SB_LIMIT && !showAllSouthBay && (
+                    {southBayCount - SB_LIMIT >= 10 && !showAllSouthBay && (
                       <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
                         Show {southBayCount - SB_LIMIT} more →
                       </button>
@@ -2548,7 +2548,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                     showAllSouthBay ? southBayTodayUpcoming : southBayTodayUpcoming.slice(0, SB_LIMIT),
                     true,
                   )}
-                  {southBayCount > SB_LIMIT && !showAllSouthBay && (
+                  {southBayCount - SB_LIMIT >= 10 && !showAllSouthBay && (
                     <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
                       Show {southBayCount - SB_LIMIT} more events →
                     </button>
