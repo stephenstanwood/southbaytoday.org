@@ -2167,3 +2167,41 @@ The "City Hall × Tech" callout is uniquely SBS. No other local product surfaces
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the Tech tab now bridges startup culture and civic governance.** The City Hall × Tech callout is a capability no other South Bay product offers. A resident who cares about AI, energy, or infrastructure can see at a glance what their city council is voting on next week — without leaving the tech tab.
+
+---
+
+## 2026-04-03 — Cycle 41: This Week in SV History + Full Data Refresh
+
+### Context
+April 3, 2026 (Good Friday). Easter weekend. Spring break. This week is notable in Silicon Valley history: Apple's 50th anniversary (founded April 1, 1976) and NVIDIA's 33rd anniversary (founded April 5, 1993) both fall within a 4-day window. The CHM currently has an "Apple at 50" exhibit. No other South Bay product was surfacing this.
+
+### What Was Built
+
+**New feature: "This Week in SV History" section on the Tech tab**
+- Added `TECH_MILESTONES` export to `tech-companies.ts`: 9 companies with founding dates, cities, anniversary notes, and optional CHM exhibit links
+- Added `SvHistorySection` component to `TechnologyView.tsx`: shows milestones within ±8 days of today
+- Section appears between the Weekly Tech Briefing and the Pulse strip
+- This week: Apple at 50 (Cupertino, Apr 1) + NVIDIA at 33 (Santa Clara, Apr 5) both show
+- Apple card shows a CHM exhibit badge linking to "Apple at 50" exhibit
+- Future milestones: Intel, Google, Cisco, Netflix, HP, AMD, Yahoo all covered across the year
+
+**Full data refresh:**
+- upcoming-events.json: 489 events (109 ongoing) — SCCL timed out this run, other 22 sources captured
+- upcoming-meetings.json: San Jose, Sunnyvale, Cupertino for Apr 7
+- around-town.json: 8 items — Cupertino business license amnesty, San Jose litter pick-up, Palo Alto retail zoning, Campbell beekeeping ordinance
+- weekend-picks.json: Spring Egg Hunt, SJ Earthquakes vs SD FC, National Poetry Month rap
+- tech-briefing.json: $4B Q1 funding narrative, 21 rounds tracked
+
+### Why This Was the Strongest Move
+
+Apple's 50th is one of the most significant anniversaries in Silicon Valley history — and almost nobody opened a browser this week and saw "Apple turns 50 this week" as a local story. SBS now does. NVIDIA at 33 is a bonus — the company that runs the AI revolution was founded 3 miles from Apple Park, and their anniversary overlaps perfectly. A Cupertino or Santa Clara resident opening SBS during Easter weekend would see both milestones side-by-side with the CHM exhibit badge — that's exactly the kind of "wait, I didn't know that" moment that makes SBS feel like a local homepage.
+
+The milestone system is also evergreen: Intel at 58 (July), Google at 28 (September), Netflix at 29 (August), HP at 87 (January) — every month has a story waiting.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data. Daily commuter urgency.
+2. **Eventbrite/Meetup tech events** — Eventbrite v3 /events/search is gone. Meetup GraphQL API requires OAuth. Need a workaround — possibly scrape public Meetup group pages for SF Silicon Valley groups.
+3. **Mountain View/Sunnyvale restaurant radar** — Mountain View doesn't have CKAN. Sunnyvale doesn't either. Need to check their permit portals directly.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — SBS now has a sense of time.** The "This Week in SV History" section gives the Tech tab a temporal dimension — it changes every week based on what's happening in Silicon Valley's past. A resident who opens SBS this Easter weekend sees Apple's birthday AND NVIDIA's birthday. That's a story no newspaper, aggregator, or app is telling them. It's local, it's timely, and it's only possible because SBS is building its own data layer city by city, company by company.
