@@ -187,6 +187,9 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bgsb\s+instruction\b/i,
   /\bholiday\s+observance\b/i,
   /\buniversity\s+holiday\b/i,
+  /\badministrative\s+and\s+academic\s+holiday\b/i,
+  /\bacademic\s+and\s+administrative\s+holiday\b/i,
+  /\badmin(istrative)?\s+holiday\b/i,
   /\bhousing\s+move[\s-]?in\b/i,
   /\bhousing\s+move[\s-]?out\b/i,
   /\bhousing\s+opens?\b/i,
@@ -2103,6 +2106,101 @@ function fetchScccfdEvents() {
   return events;
 }
 
+function fetchLgChamberEvents() {
+  console.log("  ⏳ LG Chamber of Commerce events...");
+  const raw = [
+    {
+      title: "Networking Mixer at Coup de Thai",
+      date: "2026-04-14", time: "5:30 PM",
+      venue: "Coup de Thai", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "Chamber U-Pick at Artist's Garden Oasis",
+      date: "2026-04-18", time: null,
+      venue: "Artist's Garden Oasis", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "Multi-Chamber Morning Mixer",
+      date: "2026-04-30", time: "7:30 AM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-05-07", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-06-04", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-07-02", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-08-06", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-09-03", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+    {
+      title: "GOLD Thursdays",
+      date: "2026-10-01", time: "5:00 PM",
+      venue: "Downtown Los Gatos", address: "Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+      url: "https://www.losgatoschamber.com",
+    },
+  ];
+  const today = new Date().toISOString().split("T")[0];
+  const events = raw
+    .filter((e) => e.date >= today)
+    .map((e) => {
+      const d = new Date(`${e.date}T12:00:00-07:00`);
+      return {
+        id: h("lgchamber", e.date, e.title, e.venue),
+        title: e.title,
+        date: e.date,
+        displayDate: displayDate(d),
+        time: e.time,
+        endTime: null,
+        venue: e.venue,
+        address: e.address,
+        city: e.city,
+        category: "community",
+        cost: e.cost,
+        ...(e.costNote ? { costNote: e.costNote } : {}),
+        description: "Los Gatos Chamber of Commerce event.",
+        url: e.url,
+        source: "LG Chamber of Commerce",
+        kidFriendly: false,
+      };
+    });
+  console.log(`  ✅ LG Chamber of Commerce: ${events.length} events`);
+  return events;
+}
+
 // ── Main ──
 
 async function main() {
@@ -2141,6 +2239,7 @@ async function main() {
     fetchHeritageTheatreEvents,
     fetchShorelineEvents,
     fetchScccfdEvents,
+    fetchLgChamberEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));
