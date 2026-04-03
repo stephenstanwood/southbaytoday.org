@@ -5,7 +5,7 @@
  * Scrapes upcoming events from all available South Bay feeds and writes
  * them to src/data/south-bay/upcoming-events.json.
  *
- * Sources (22 active):
+ * Sources (23 active):
  *   - Stanford Events (Localist JSON API) — 60-day window
  *   - SJSU Events (RSS)
  *   - Santa Clara University Events (RSS)
@@ -29,6 +29,7 @@
  *   - Silicon Valley Leadership Group (RSS)
  *   - Happy Hollow Park & Zoo (RSS)
  *   - LibCal (Los Gatos, Milpitas) — BLOCKED: API requires OAuth (see note below)
+ *   - Santa Clara County Fire Department (Eventbrite — hardcoded; /v3/events/search/ removed)
  *
  * NOTE: Mountain View/Sunnyvale/SJ city/Cupertino CivicPlus iCal feeds return 403/404.
  * Those cities' library systems are covered via BiblioCommons instead.
@@ -463,6 +464,16 @@ function cleanTitle(title) {
   t = t.replace(/\b[A-Z]{5,}\b/g, (w) => w[0] + w.slice(1).toLowerCase());
   // Fix pipes without surrounding spaces: "Foo |Bar" → "Foo | Bar"
   t = t.replace(/\s*\|\s*/g, " | ");
+  // Strip non-Latin (CJK, etc.) prefix before English content:
+  // "中/英文雙語說故事時間 Mandarin/English…" → "Mandarin/English…"
+  if (/^[\u2E80-\u9FFF\uF900-\uFAFF]/.test(t)) {
+    t = t.replace(/^.*?(?=[A-Za-z])/, "");
+  }
+  // Strip non-Latin bilingual suffix after " / ":
+  // "Bilingual Family Storytime / 中英雙語故事時間" → "Bilingual Family Storytime"
+  t = t.replace(/\s*\/\s*[\s\S]*[\u2E80-\u9FFF\uF900-\uFAFF][\s\S]*$/, "");
+  // Strip trailing time annotations: "Good Friday Liturgy 3 PM" → "Good Friday Liturgy"
+  t = t.replace(/\s+\d{1,2}(?::\d{2})?\s*(?:AM|PM)\s*$/i, "");
   // Apply known recurring fixes from source data
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
@@ -1992,6 +2003,97 @@ async function fetchHeritageTheatreEvents() {
   }
 }
 
+// ── Santa Clara County Fire Department (hardcoded Eventbrite events) ──
+// Source: https://www.eventbrite.com/o/santa-clara-county-fire-department
+// Eventbrite's /v3/events/search/ API is removed; events are hardcoded here.
+// Update annually or when the organizer posts new events.
+
+function fetchScccfdEvents() {
+  console.log("  ⏳ SC County Fire Dept events...");
+  const raw = [
+    {
+      title: "Be Ready: Be Prepared for Disasters",
+      date: "2026-04-09", time: "2:00 PM",
+      venue: "Online", address: "", city: "san-jose",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "Wildfire Preparedness Workshop",
+      date: "2026-04-23", time: "6:00 PM",
+      venue: "The Pavilion at Redwood Estates", address: "Redwood Estates, Los Gatos", city: "los-gatos",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "Wildfire Preparedness Workshop",
+      date: "2026-05-02", time: "10:00 AM",
+      venue: "San Martín Lions Club", address: "San Martín", city: "san-jose",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "Hands-Only CPR and AED Class",
+      date: "2026-05-28", time: "10:00 AM",
+      venue: "SC County Fire Dept HQ", address: "Campbell", city: "campbell",
+      cost: "low", costNote: "From $18",
+    },
+    {
+      title: "Wildfire Preparedness Workshop",
+      date: "2026-06-02", time: "6:00 PM",
+      venue: "Joan Pisani Community Center", address: "19655 Allendale Ave, Saratoga", city: "saratoga",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "Wildfire Preparedness Workshop",
+      date: "2026-07-15", time: "6:00 PM",
+      venue: "Cupertino Community Hall", address: "Cupertino", city: "cupertino",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "Crime Prevention & Home Fire Safety",
+      date: "2026-07-23", time: "11:00 AM",
+      venue: "Saratoga Friendship Hall", address: "Saratoga", city: "saratoga",
+      cost: "free", costNote: null,
+    },
+    {
+      title: "CERT Academy",
+      date: "2026-08-04", time: "6:00 PM",
+      venue: "Joan Pisani Community Center", address: "19655 Allendale Ave, Saratoga", city: "saratoga",
+      cost: "low", costNote: "From $40",
+    },
+    {
+      title: "Wildfire Preparedness Workshop",
+      date: "2026-08-27", time: "6:00 PM",
+      venue: "Los Altos Community Center", address: "Los Altos", city: "los-altos",
+      cost: "free", costNote: null,
+    },
+  ];
+  const today = new Date().toISOString().split("T")[0];
+  const events = raw
+    .filter((e) => e.date >= today)
+    .map((e) => {
+      const d = new Date(`${e.date}T12:00:00-07:00`);
+      return {
+        id: h("scccfd", e.date, e.title, e.venue),
+        title: e.title,
+        date: e.date,
+        displayDate: displayDate(d),
+        time: e.time,
+        endTime: null,
+        venue: e.venue,
+        address: e.address,
+        city: e.city,
+        category: "community",
+        cost: e.cost,
+        ...(e.costNote ? { costNote: e.costNote } : {}),
+        description: "Santa Clara County Fire Department community safety program. Registration required.",
+        url: "https://www.eventbrite.com/o/santa-clara-county-fire-department",
+        source: "SC County Fire Dept",
+        kidFriendly: false,
+      };
+    });
+  console.log(`  ✅ SC County Fire Dept: ${events.length} events`);
+  return events;
+}
+
 // ── Main ──
 
 async function main() {
@@ -2029,6 +2131,7 @@ async function main() {
     fetchMaclaEvents,
     fetchHeritageTheatreEvents,
     fetchShorelineEvents,
+    fetchScccfdEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));
