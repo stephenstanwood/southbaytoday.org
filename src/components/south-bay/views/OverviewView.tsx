@@ -2622,7 +2622,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
       {!homeCity && !changingCity ? (
         <div style={{ background: "var(--sb-primary-light)", border: "1px solid var(--sb-border-light)", borderRadius: "var(--sb-radius)", padding: "12px 16px", marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
           <span style={{ fontSize: 13, color: "var(--sb-muted)", lineHeight: 1.4 }}>
-            Personalize for your city — see your council meetings, active projects, and local events.
+            Personalize for your city — see your local events, council meetings, and active projects.
           </span>
           <button
             onClick={() => setChangingCity(true)}
