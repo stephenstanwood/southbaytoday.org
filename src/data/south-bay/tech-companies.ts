@@ -1321,6 +1321,7 @@ export interface TechMilestone {
   anniversaryNote: string; // what makes this milestone notable
   url?: string;           // official company URL
   chmExhibit?: string;    // CHM exhibit title if one exists
+  defunct?: boolean;      // true if company no longer exists as independent entity
 }
 
 export const TECH_MILESTONES: TechMilestone[] = [
@@ -1445,6 +1446,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     tagline: "Founded at Stanford in 1982, Sun built the workstations and servers that powered the internet age before Oracle acquired it in 2010.",
     anniversaryNote: "Sun Microsystems was founded February 24, 1982, by Stanford students Scott McNealy, Andy Bechtolsheim, and Vinod Khosla. 'The network is the computer' was their rallying cry — and they were right. Java and Solaris are Sun's lasting contributions to computing.",
     url: "https://en.wikipedia.org/wiki/Sun_Microsystems",
+    defunct: true,
   },
   {
     id: "oracle",
@@ -1489,6 +1491,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     tagline: "The web browser that launched the commercial internet — founded in Mountain View by the team behind NCSA Mosaic.",
     anniversaryNote: "Netscape was incorporated April 4, 1994 as Mosaic Communications Corporation by Marc Andreessen and Jim Clark in Mountain View. Before Google, before Facebook, before the iPhone — Netscape Navigator made the web accessible to everyone. Their 1995 IPO ignited the dot-com era and defined Silicon Valley for a generation.",
     url: "https://en.wikipedia.org/wiki/Netscape",
+    defunct: true,
   },
 ];
 

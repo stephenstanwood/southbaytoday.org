@@ -39,17 +39,16 @@ const CITY_ACCENT: Record<string, string> = {
   "los-altos":     "#7c3aed",
 };
 
-// Chip = shortcut: label shown + query sent + optional topic filter
 const QUICK_CHIPS = [
-  { label: "🏠 Housing",     q: "housing zoning development",   topic: "Housing & Zoning" },
-  { label: "💰 Budget",      q: "budget funding spending",       topic: "Budget" },
-  { label: "🚗 Traffic",     q: "traffic roads infrastructure",  topic: "Infrastructure" },
-  { label: "🌳 Parks",       q: "parks recreation open space",   topic: "Parks & Recreation" },
-  { label: "🏙️ Downtown",   q: "downtown development retail",   topic: "Downtown Development" },
-  { label: "🔒 Safety",      q: "public safety police crime",    topic: "Public Safety" },
+  { label: "🏠 Housing",   q: "housing zoning development",  topic: "Housing & Zoning" },
+  { label: "💰 Budget",    q: "budget funding spending",      topic: "Budget" },
+  { label: "🚗 Traffic",   q: "traffic roads infrastructure", topic: "Infrastructure" },
+  { label: "🌳 Parks",     q: "parks recreation open space",  topic: "Parks & Recreation" },
+  { label: "🏙️ Downtown", q: "downtown development retail",  topic: "Downtown Development" },
+  { label: "🔒 Safety",    q: "public safety police crime",   topic: "Public Safety" },
 ];
 
-const SUGGESTED_QUESTIONS = [
+const CONVERSATION_STARTERS = [
   "What's the city doing about affordable housing?",
   "Any new parks or trails being planned?",
   "How is the city spending its budget?",
@@ -72,7 +71,6 @@ function abbrevType(t: string): string {
   return t;
 }
 
-// City name lookup from Stoa city string (e.g. "Campbell" → "campbell" key)
 function cityIdFromName(name: string): string {
   const entry = Object.entries(CITY_NAME_MAP).find(
     ([, n]) => n.toLowerCase() === name.toLowerCase()
@@ -85,16 +83,20 @@ interface Props {
   selectedCities: Set<string>;
 }
 
+interface ChatTurn {
+  question: string;
+  results: CouncilRecord[] | null;
+  total: number | null;
+  error: string | null;
+}
+
 export default function MinutesSearchCard({ homeCity, selectedCities }: Props) {
   const [query, setQuery] = useState("");
-  const [activeChip, setActiveChip] = useState<string | null>(null);
-  const [results, setResults] = useState<CouncilRecord[] | null>(null);
-  const [total, setTotal] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<ChatTurn[]>([]);
   const [focused, setFocused] = useState(false);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const cityParam = (() => {
     if (homeCity) return CITY_NAME_MAP[homeCity] ?? null;
@@ -102,70 +104,53 @@ export default function MinutesSearchCard({ homeCity, selectedCities }: Props) {
     return names.length > 0 ? names.join(",") : null;
   })();
 
-  const cityLabel = homeCity ? (CITY_NAME_MAP[homeCity] ?? "All Cities") : "All Cities";
+  const cityLabel = homeCity ? (CITY_NAME_MAP[homeCity] ?? "your city") : "your city";
 
   const doSearch = async (q: string, topic?: string) => {
-    const hasQuery = q.trim().length >= 2;
-    const hasTopic = !!topic;
-    if (!hasQuery && !hasTopic) {
-      setResults(null);
-      setTotal(null);
-      setError(null);
-      return;
-    }
+    const trimmed = q.trim();
+    if (trimmed.length < 2 && !topic) return;
+
     setLoading(true);
-    setError(null);
     try {
       const params = new URLSearchParams({ limit: "20" });
       if (cityParam) params.set("city", cityParam);
-      if (q.trim().length >= 2) params.set("q", q.trim());
+      if (trimmed.length >= 2) params.set("q", trimmed);
       if (topic && topic !== "All Topics") params.set("topic", topic);
       const res = await fetch(`https://www.stoa.works/api/council-meetings?${params.toString()}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      setResults(data.records ?? []);
-      setTotal(data.total ?? data.count ?? null);
+      const records: CouncilRecord[] = data.records ?? [];
+      const total: number | null = data.total ?? data.count ?? null;
+      setHistory((prev) => [...prev, { question: q, results: records, total, error: null }]);
     } catch {
-      setError("Search unavailable — try again");
-      setResults(null);
+      setHistory((prev) => [...prev, { question: q, results: null, total: null, error: "Search unavailable — try again" }]);
     } finally {
       setLoading(false);
+      setQuery("");
+      setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
     }
   };
 
-  useEffect(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (activeChip) return; // chip search already fired directly
-    debounceRef.current = setTimeout(() => {
-      doSearch(query);
-    }, 400);
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  const handleSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (query.trim().length >= 2 && !loading) doSearch(query);
+  };
+
+  const handleStarter = (s: string) => {
+    setQuery(s);
+    doSearch(s);
+    inputRef.current?.focus();
+  };
 
   const handleChip = (chip: typeof QUICK_CHIPS[0]) => {
-    if (activeChip === chip.label) {
-      // deselect
-      setActiveChip(null);
-      setQuery("");
-      setResults(null);
-      setTotal(null);
-    } else {
-      setActiveChip(chip.label);
-      setQuery("");
-      doSearch(chip.q, chip.topic);
-    }
+    doSearch(chip.label, chip.topic);
   };
 
-  const handleSuggestion = (s: string) => {
-    setActiveChip(null);
-    setQuery(s);
-    inputRef.current?.focus();
-    doSearch(s);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSubmit();
   };
 
-  const showEmpty = results === null && !loading && !error;
-  const showSuggestions = showEmpty && !focused && query === "";
+  const hasHistory = history.length > 0;
 
   return (
     <div style={{ marginBottom: 28 }}>
@@ -175,173 +160,325 @@ export default function MinutesSearchCard({ homeCity, selectedCities }: Props) {
         <div className="sb-section-line" />
       </div>
 
-      {/* Subhead */}
-      <p style={{
-        margin: "0 0 14px",
-        fontSize: 13,
-        color: "var(--sb-muted)",
-        lineHeight: 1.5,
-      }}>
-        Search 5,700+ city council records from 11 South Bay cities — agendas, decisions, meeting minutes, and YouTube transcripts. Powered by{" "}
-        <a href="https://stoa.works" target="_blank" rel="noopener noreferrer"
-          style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
-          Stoa
-        </a>.
-      </p>
-
-      {/* Search input */}
+      {/* Chat window */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 8, marginBottom: 10,
-        background: "#fff",
-        border: `1.5px solid ${focused ? "var(--sb-ink)" : "var(--sb-border)"}`,
-        borderRadius: 8,
-        padding: "2px 4px 2px 12px",
-        transition: "border-color 0.15s",
+        border: "1px solid var(--sb-border-light)",
+        borderRadius: 10,
+        overflow: "hidden",
+        background: "#fafaf8",
       }}>
-        <span style={{ fontSize: 16, flexShrink: 0 }}>🔍</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setActiveChip(null); }}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={`What's ${cityLabel} doing about…`}
-          style={{
-            flex: 1,
-            fontSize: 14,
-            padding: "8px 4px",
-            border: "none",
-            outline: "none",
-            fontFamily: "inherit",
-            color: "var(--sb-ink)",
-            background: "transparent",
-          }}
-        />
-        {(query || activeChip) && (
-          <button
-            onClick={() => { setQuery(""); setActiveChip(null); setResults(null); setTotal(null); }}
-            style={{
-              background: "none", border: "none", cursor: "pointer",
-              fontSize: 16, color: "var(--sb-muted)", padding: "4px 8px",
-              lineHeight: 1,
-            }}
-            aria-label="Clear search"
-          >
-            ×
-          </button>
-        )}
-      </div>
 
-      {/* Quick topic chips */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
-        {QUICK_CHIPS.map((chip) => {
-          const isActive = activeChip === chip.label;
-          return (
-            <button
-              key={chip.label}
-              onClick={() => handleChip(chip)}
-              style={{
-                fontSize: 11,
-                fontWeight: 600,
-                padding: "4px 10px",
-                borderRadius: 100,
-                border: `1.5px solid ${isActive ? "var(--sb-ink)" : "var(--sb-border)"}`,
-                background: isActive ? "var(--sb-ink)" : "transparent",
-                color: isActive ? "#fff" : "var(--sb-muted)",
-                cursor: "pointer",
-                transition: "all 0.15s",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {chip.label}
-            </button>
-          );
-        })}
-      </div>
+        {/* Messages area */}
+        <div style={{ padding: "16px 16px 0", minHeight: hasHistory ? 0 : undefined }}>
 
-      {/* Suggested questions (idle state) */}
-      {showSuggestions && (
-        <div style={{
-          border: "1px solid var(--sb-border-light)",
-          borderRadius: 8,
-          overflow: "hidden",
-          marginBottom: 4,
-        }}>
-          <div style={{
-            padding: "6px 12px",
-            background: "var(--sb-light, #f8f8f5)",
-            fontSize: 10,
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.07em",
-            color: "var(--sb-muted)",
-            fontFamily: "'Space Mono', monospace",
-          }}>
-            Try asking
-          </div>
-          {SUGGESTED_QUESTIONS.map((s) => (
-            <button
-              key={s}
-              onClick={() => handleSuggestion(s)}
-              style={{
-                display: "block", width: "100%", textAlign: "left",
-                padding: "9px 12px",
-                background: "none", border: "none", borderTop: "1px solid var(--sb-border-light)",
-                fontSize: 13, color: "var(--sb-ink)", cursor: "pointer",
-                fontFamily: "inherit",
-                transition: "background 0.1s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--sb-light, #f8f8f5)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      )}
+          {/* Greeting / idle state */}
+          {!hasHistory && !loading && (
+            <div style={{ paddingBottom: 16 }}>
+              <div style={{
+                display: "flex",
+                gap: 10,
+                alignItems: "flex-start",
+                marginBottom: 14,
+              }}>
+                <div style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "var(--sb-ink)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 13,
+                  flexShrink: 0,
+                  marginTop: 1,
+                }}>
+                  🏛️
+                </div>
+                <div style={{
+                  background: "#fff",
+                  border: "1px solid var(--sb-border-light)",
+                  borderRadius: "4px 12px 12px 12px",
+                  padding: "10px 14px",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  color: "var(--sb-ink)",
+                  maxWidth: 420,
+                }}>
+                  Ask me anything about {cityLabel}'s city council — housing decisions, road projects, budget votes, planning approvals. I search 5,700+ records from 11 South Bay cities.{" "}
+                  <span style={{ color: "var(--sb-muted)", fontSize: 12 }}>
+                    Powered by{" "}
+                    <a href="https://stoa.works" target="_blank" rel="noopener noreferrer"
+                      style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
+                      Stoa
+                    </a>.
+                  </span>
+                </div>
+              </div>
 
-      {/* Loading */}
-      {loading && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--sb-muted)", fontSize: 13, padding: "8px 0" }}>
-          <div className="sb-spinner" style={{ width: 12, height: 12, borderWidth: 2 }} />
-          Searching records…
-        </div>
-      )}
-
-      {/* Error */}
-      {!loading && error && (
-        <div style={{ fontSize: 13, color: "var(--sb-accent)", padding: "8px 0" }}>{error}</div>
-      )}
-
-      {/* Results */}
-      {!loading && !error && results !== null && (
-        <>
-          <div style={{
-            fontSize: 11, color: "var(--sb-muted)", marginBottom: 10,
-            fontFamily: "'Space Mono', monospace",
-          }}>
-            {results.length} record{results.length !== 1 ? "s" : ""}
-            {total !== null && total > results.length ? ` of ${total}` : ""}
-          </div>
-
-          {results.length === 0 ? (
-            <p style={{ fontSize: 13, color: "var(--sb-muted)", margin: 0 }}>
-              No records matched — try different terms or remove a filter.
-            </p>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-              {results.map((rec, i) => (
-                <ResultCard
-                  key={`${rec.id}-${i}`}
-                  record={rec}
-                  isLast={i === results.length - 1}
-                />
-              ))}
+              {/* Conversation starters */}
+              <div style={{ paddingLeft: 38, display: "flex", flexDirection: "column", gap: 6, marginBottom: 4 }}>
+                {CONVERSATION_STARTERS.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => handleStarter(s)}
+                    style={{
+                      textAlign: "left",
+                      background: "#fff",
+                      border: "1px solid var(--sb-border)",
+                      borderRadius: 20,
+                      padding: "7px 14px",
+                      fontSize: 12,
+                      color: "var(--sb-ink)",
+                      cursor: "pointer",
+                      transition: "border-color 0.1s, background 0.1s",
+                      alignSelf: "flex-start",
+                      lineHeight: 1.3,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "var(--sb-ink)";
+                      e.currentTarget.style.background = "#f5f5f2";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--sb-border)";
+                      e.currentTarget.style.background = "#fff";
+                    }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
-        </>
-      )}
+
+          {/* Chat history */}
+          {history.map((turn, i) => (
+            <div key={i} style={{ marginBottom: 16 }}>
+              {/* User bubble */}
+              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10 }}>
+                <div style={{
+                  background: "var(--sb-ink)",
+                  color: "#fff",
+                  borderRadius: "12px 4px 12px 12px",
+                  padding: "9px 14px",
+                  fontSize: 13,
+                  lineHeight: 1.45,
+                  maxWidth: "80%",
+                }}>
+                  {turn.question}
+                </div>
+              </div>
+
+              {/* Response bubble */}
+              <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <div style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "var(--sb-ink)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 13,
+                  flexShrink: 0,
+                  marginTop: 1,
+                }}>
+                  🏛️
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  {turn.error ? (
+                    <div style={{
+                      background: "#fff",
+                      border: "1px solid var(--sb-border-light)",
+                      borderRadius: "4px 12px 12px 12px",
+                      padding: "10px 14px",
+                      fontSize: 13,
+                      color: "var(--sb-accent)",
+                    }}>
+                      {turn.error}
+                    </div>
+                  ) : turn.results !== null && turn.results.length === 0 ? (
+                    <div style={{
+                      background: "#fff",
+                      border: "1px solid var(--sb-border-light)",
+                      borderRadius: "4px 12px 12px 12px",
+                      padding: "10px 14px",
+                      fontSize: 13,
+                      color: "var(--sb-muted)",
+                      lineHeight: 1.5,
+                    }}>
+                      No records matched that query. Try different words or a broader topic.
+                    </div>
+                  ) : turn.results !== null ? (
+                    <div>
+                      <div style={{
+                        background: "#fff",
+                        border: "1px solid var(--sb-border-light)",
+                        borderRadius: "4px 12px 12px 12px",
+                        padding: "10px 14px",
+                        fontSize: 13,
+                        color: "var(--sb-muted)",
+                        lineHeight: 1.5,
+                        marginBottom: 8,
+                      }}>
+                        Found{" "}
+                        <strong style={{ color: "var(--sb-ink)" }}>
+                          {turn.total !== null && turn.total > turn.results.length
+                            ? `${turn.total.toLocaleString()} records`
+                            : `${turn.results.length} record${turn.results.length !== 1 ? "s" : ""}`}
+                        </strong>{" "}
+                        across city council minutes, agendas, and transcripts.
+                        {turn.total !== null && turn.total > turn.results.length && (
+                          <> Showing top {turn.results.length}.</>
+                        )}
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                        {turn.results.map((rec, j) => (
+                          <ResultCard
+                            key={`${rec.id}-${j}`}
+                            record={rec}
+                            isLast={j === turn.results!.length - 1}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Loading */}
+          {loading && (
+            <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 16 }}>
+              <div style={{
+                width: 28,
+                height: 28,
+                borderRadius: "50%",
+                background: "var(--sb-ink)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 13,
+                flexShrink: 0,
+              }}>
+                🏛️
+              </div>
+              <div style={{
+                background: "#fff",
+                border: "1px solid var(--sb-border-light)",
+                borderRadius: "4px 12px 12px 12px",
+                padding: "10px 14px",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                color: "var(--sb-muted)",
+                fontSize: 13,
+              }}>
+                <div className="sb-spinner" style={{ width: 12, height: 12, borderWidth: 2 }} />
+                Searching records…
+              </div>
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Topic chips */}
+        {!loading && (
+          <div style={{
+            padding: "8px 16px",
+            display: "flex",
+            gap: 6,
+            flexWrap: "wrap",
+            borderTop: "1px solid var(--sb-border-light)",
+            background: "#fff",
+          }}>
+            {QUICK_CHIPS.map((chip) => (
+              <button
+                key={chip.label}
+                onClick={() => handleChip(chip)}
+                style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  padding: "3px 10px",
+                  borderRadius: 100,
+                  border: "1.5px solid var(--sb-border)",
+                  background: "transparent",
+                  color: "var(--sb-muted)",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.12s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--sb-ink)";
+                  e.currentTarget.style.color = "var(--sb-ink)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--sb-border)";
+                  e.currentTarget.style.color = "var(--sb-muted)";
+                }}
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Input bar */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "10px 12px",
+          borderTop: "1px solid var(--sb-border-light)",
+          background: "#fff",
+        }}>
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            placeholder={`Ask about ${cityLabel}'s city council…`}
+            style={{
+              flex: 1,
+              fontSize: 13,
+              padding: "8px 10px",
+              border: `1.5px solid ${focused ? "var(--sb-ink)" : "var(--sb-border-light)"}`,
+              borderRadius: 20,
+              outline: "none",
+              fontFamily: "inherit",
+              color: "var(--sb-ink)",
+              background: "#fafaf8",
+              transition: "border-color 0.15s",
+            }}
+          />
+          <button
+            onClick={() => handleSubmit()}
+            disabled={query.trim().length < 2 || loading}
+            style={{
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              background: query.trim().length >= 2 && !loading ? "var(--sb-ink)" : "var(--sb-border-light)",
+              border: "none",
+              cursor: query.trim().length >= 2 && !loading ? "pointer" : "default",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 15,
+              color: query.trim().length >= 2 && !loading ? "#fff" : "var(--sb-muted)",
+              transition: "all 0.15s",
+              flexShrink: 0,
+            }}
+            aria-label="Send"
+          >
+            ↑
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -358,8 +495,8 @@ function ResultCard({ record, isLast }: { record: CouncilRecord; isLast: boolean
     <div style={{
       padding: "12px 0",
       borderBottom: isLast ? "none" : "1px solid var(--sb-border-light)",
+      paddingLeft: 38,
     }}>
-      {/* Meta row */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, flexWrap: "wrap" }}>
         <span style={{
           fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
@@ -388,8 +525,6 @@ function ResultCard({ record, isLast }: { record: CouncilRecord; isLast: boolean
           </>
         )}
       </div>
-
-      {/* Excerpt */}
       {truncExcerpt && (
         <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.5 }}>
           {truncExcerpt}

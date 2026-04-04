@@ -866,7 +866,7 @@ function SvHistorySection() {
                       borderRadius: 3,
                     }}
                   >
-                    {ordinal(age)} anniversary
+                    {m.defunct ? `${age} years ago` : `${ordinal(age)} anniversary`}
                   </span>
                   <span
                     style={{
