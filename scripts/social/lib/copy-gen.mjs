@@ -1,101 +1,13 @@
 // ---------------------------------------------------------------------------
 // South Bay Signal — Copy Generation
-// Uses Claude Sonnet to write platform-specific social copy
+// Uses Claude to write platform-specific social copy
+// Single-item-per-post model
 // ---------------------------------------------------------------------------
-
-import { CLAUDE_MODEL, CONFIG } from "./constants.mjs";
-
-const SYSTEM_PROMPT = `You are the social voice of South Bay Signal, a hyperlocal civic-awareness tool for the South Bay (San Jose, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Palo Alto, Santa Clara, Los Altos, Milpitas).
-
-VOICE RULES:
-- Useful, optimistic, observant, local, light, readable, slightly playful
-- NEVER snarky, cynical, preachy, partisan, alarmist, robotic, corporate, influencer-y
-- NEVER use "Don't miss out!!!", "This is HUGE", "Residents are furious", "Here's what you need to know", "Top 10", "smash that link"
-- NEVER use engagement bait or ask for likes/follows/comments
-- Feel like a pleasant, highly informed local dashboard
-
-CTA RULES:
-- Soft and practical only: "More on South Bay Signal", "See today's full signal", "Browse tonight's picks", "Full weekend list on SBS"
-- Never "What do you think?", "Comment below", "Like and follow"
-
-HASHTAG RULES:
-- Use sparingly or not at all. If used, max 2: #SouthBay #SanJose etc.
-
-FORMAT RULES:
-- Keep within platform character limits (X: 280 chars, Threads: 500 chars, Bluesky: 300 chars)
-- Include the provided URL naturally
-- Use line breaks for readability
-- Prefer named places and specific details over vague descriptions`;
-
-const FORMAT_PROMPTS = {
-  daily_pulse: `Write a DAILY PULSE morning post for South Bay Signal.
-
-ITEMS TO INCLUDE:
-{items}
-
-TARGET URL: {url}
-
-Write three variants:
-1. X (max 270 chars) — shortest, cleanest, most headline-like
-2. Threads (max 490 chars) — slightly warmer, more conversational
-3. Bluesky (max 290 chars) — same as X or slightly looser
-
-Start with a casual morning greeting variation (not always "Good morning"). Mention 2-4 specific items by name/place. End with a soft CTA and the URL.
-
-Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`,
-
-  tonight: `Write a TONIGHT IN THE SOUTH BAY afternoon post.
-
-ITEMS TO INCLUDE:
-{items}
-
-TARGET URL: {url}
-
-Write three variants:
-1. X (max 270 chars)
-2. Threads (max 490 chars)
-3. Bluesky (max 290 chars)
-
-Frame as "a few good reasons to leave the house tonight" — practical, lightly playful, encourages action. Mention specific things people could do. End with CTA and URL.
-
-Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`,
-
-  weekend: `Write a WEEKEND ROUNDUP post for South Bay Signal.
-
-ITEMS TO INCLUDE:
-{items}
-
-TARGET URL: {url}
-
-Write three variants:
-1. X (max 270 chars)
-2. Threads (max 490 chars) — can be more detailed, list a few items
-3. Bluesky (max 290 chars)
-
-Frame as a curated weekend guide. Mention the count and a few highlights by name. Convey that the weekend looks pretty good. End with CTA and URL.
-
-Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`,
-
-  civic: `Write a CIVIC SIGNAL post for South Bay Signal.
-
-ITEMS TO INCLUDE:
-{items}
-
-TARGET URL: {url}
-
-Write three variants:
-1. X (max 270 chars)
-2. Threads (max 490 chars) — slightly more context, warmer
-3. Bluesky (max 290 chars)
-
-Frame as a digestible civic update. Be calm, clear, readable, lightly human. Distinguish between proposed/discussed/approved. Avoid jargon. End with CTA and URL.
-
-Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`,
-};
 
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CLAUDE_MODEL, CONFIG } from "./constants.mjs";
 
 const __copygen_dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -112,39 +24,76 @@ function loadEnv() {
   }
 }
 
-function formatItems(items) {
-  return items
-    .map((item, i) => {
-      const parts = [`${i + 1}. "${item.title}"`];
-      if (item.cityName) parts.push(`in ${item.cityName}`);
-      if (item.venue) parts.push(`at ${item.venue}`);
-      if (item.time) parts.push(`at ${item.time}`);
-      if (item.summary) parts.push(`— ${item.summary.slice(0, 100)}`);
-      return parts.join(" ");
-    })
-    .join("\n");
-}
+const SYSTEM_PROMPT = `You are the social voice of South Bay Signal, a hyperlocal community tool for the South Bay (San Jose, Palo Alto, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Santa Clara, Los Altos, Milpitas).
+
+VOICE:
+- Sound like a friend who went there and liked it, NOT marketing copy
+- Warm, specific, natural rhythm, slightly playful
+- 1-3 emojis placed naturally, adding warmth not replacing words
+- We INFORM, we don't ENDORSE — excited is fine, ad copy is not
+- Never generic ("your Saturday is fully booked"), never forced ("stacked", "huge"), never vague ("got options")
+- Never sound like the venue's PR team or homepage copy
+- No permit/construction jargon ("new build", "finish interior", "TI work")
+
+STRUCTURE:
+- ONE item per post. Full detail. ONE direct link.
+- The link goes to the EVENT/SOURCE (ticketmaster, venue site, agenda PDF), NOT to southbaysignal.org
+- Keep within platform character limits
+- The URL is part of the character count
+
+TRUST MODEL:
+- We do the legwork so people don't have to
+- If we consistently deliver useful info, people seek us out
+- We don't need to mention our site — it's in the bio
+
+THINGS TO NEVER DO:
+- Don't claim things you aren't sure about (don't say "home opener" unless told it is)
+- Don't use permit/construction language
+- Don't combine multiple unrelated items
+- Don't promote events that have already happened
+- Don't link to generic homepages`;
 
 /**
- * Generate platform-specific copy for a post.
+ * Generate copy for a SINGLE item.
  *
- * @param {string} format - Post format (daily_pulse, tonight, weekend, civic)
- * @param {Array} items - Selected candidate items
- * @param {string} url - Target SBS URL
+ * @param {object} item - The candidate item with title, city, venue, time, url, summary, category
+ * @param {string} timeOfDay - "morning" | "afternoon" | "evening"
  * @returns {Promise<{x: string, threads: string, bluesky: string}>}
  */
-export async function generateCopy(format, items, url) {
+export async function generateSingleItemCopy(item, timeOfDay = "morning") {
   loadEnv();
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
 
-  const template = FORMAT_PROMPTS[format];
-  if (!template) throw new Error(`Unknown format: ${format}`);
+  const now = new Date().toLocaleString("en-US", {
+    timeZone: "America/Los_Angeles",
+    dateStyle: "full",
+    timeStyle: "short",
+  });
 
-  const prompt = template
-    .replace("{items}", formatItems(items))
-    .replace("{url}", url);
+  const prompt = `Write a social post about this ONE item. Current time: ${now}. Time of day: ${timeOfDay}.
+
+ITEM:
+- Title: ${item.title}
+- City: ${item.cityName || item.city || ""}
+- Venue: ${item.venue || ""}
+- Date: ${item.date || ""}
+- Time: ${item.time || ""}
+- Category: ${item.category || ""}
+- Summary: ${item.summary ? item.summary.slice(0, 300) : ""}
+- Cost: ${item.cost || ""}
+- URL (MUST include this exact URL): ${item.url}
+
+Write three variants:
+1. X (max 270 chars including URL) — punchy, clean
+2. Threads (max 490 chars including URL) — slightly warmer, can breathe more
+3. Bluesky (max 290 chars including URL) — similar to X, can be slightly looser
+
+Each variant must include the exact URL provided above.
+Use time-appropriate framing ("tonight", "this afternoon", "tomorrow", "this weekend" etc. based on current time).
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -169,7 +118,6 @@ export async function generateCopy(format, items, url) {
   const data = await res.json();
   const text = data.content?.[0]?.text ?? "";
 
-  // Extract JSON from response
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
     throw new Error(`Failed to extract JSON from Claude response: ${text.slice(0, 200)}`);
@@ -177,10 +125,18 @@ export async function generateCopy(format, items, url) {
 
   const variants = JSON.parse(jsonMatch[0]);
 
-  // Validate all three variants exist
   if (!variants.x || !variants.threads || !variants.bluesky) {
     throw new Error("Missing platform variant in Claude response");
   }
 
   return variants;
+}
+
+// Keep the old function for backward compat during transition
+export async function generateCopy(format, items, url) {
+  if (items.length === 1) {
+    return generateSingleItemCopy(items[0]);
+  }
+  // Fallback to old behavior for multi-item (will be removed)
+  return generateSingleItemCopy(items[0]);
 }

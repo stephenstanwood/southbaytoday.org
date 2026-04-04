@@ -1,0 +1,229 @@
+#!/usr/bin/env node
+// ---------------------------------------------------------------------------
+// South Bay Signal — Single-Item Post Generator
+// Replaces daily-pulse, tonight, weekend-roundup, civic-signal
+// Runs multiple times per day, generates individual posts for top items
+//
+// Usage:
+//   node scripts/social/generate-posts.mjs [--max N] [--dry-run]
+//
+// Picks the top N items (default 5) that pass URL + fact-check validation,
+// generates single-item copy for each, and writes individual post JSONs.
+// ---------------------------------------------------------------------------
+
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
+import { scoreAndRank } from "./lib/scoring.mjs";
+import { recentHistory, flattenHistory } from "./lib/dedup.mjs";
+import { filterByUrl } from "./lib/url-check.mjs";
+import { factCheckAll } from "./lib/fact-check.mjs";
+import { generateSingleItemCopy } from "./lib/copy-gen.mjs";
+import { generateAndSaveCard } from "./lib/card-gen.mjs";
+import { CONFIG } from "./lib/constants.mjs";
+import { logStep, logScore, logSuccess, logSkip, logError, logItem } from "./lib/logger.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Load env
+if (!process.env.ANTHROPIC_API_KEY) {
+  try {
+    const envPath = join(__dirname, "..", "..", ".env.local");
+    const lines = readFileSync(envPath, "utf8").split("\n");
+    for (const line of lines) {
+      const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+      if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+    }
+  } catch {}
+}
+
+const OUTPUT_DIR = "/tmp/sbs-social";
+const args = process.argv.slice(2);
+const maxPosts = parseInt(args.find((a, i) => args[i - 1] === "--max") || "5");
+
+// ── Time awareness ──────────────────────────────────────────────────────────
+
+function getPTTime() {
+  return new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" })
+  );
+}
+
+function getTimeOfDay(ptTime) {
+  const hour = ptTime.getHours();
+  if (hour < 12) return "morning";
+  if (hour < 17) return "afternoon";
+  return "evening";
+}
+
+function parseEventHour(timeStr) {
+  if (!timeStr) return null;
+  const lower = timeStr.toLowerCase().trim();
+  const match = lower.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/);
+  if (!match) return null;
+  let hour = parseInt(match[1]);
+  const ampm = match[3];
+  if (ampm === "pm" && hour !== 12) hour += 12;
+  if (ampm === "am" && hour === 12) hour = 0;
+  return hour;
+}
+
+/**
+ * Filter out events that have already happened today.
+ */
+function filterPastEvents(candidates, ptTime) {
+  const today = ptTime.toISOString().split("T")[0];
+  const currentHour = ptTime.getHours();
+
+  return candidates.filter((c) => {
+    // Future dates always pass
+    if (c.date && c.date > today) return true;
+
+    // Past dates fail
+    if (c.date && c.date < today) return false;
+
+    // Today: check time
+    if (c.date === today && c.time) {
+      const eventHour = parseEventHour(c.time);
+      if (eventHour !== null && eventHour < currentHour) {
+        return false; // already started
+      }
+    }
+
+    // Ongoing items pass (no specific time)
+    return true;
+  });
+}
+
+// ── Main pipeline ───────────────────────────────────────────────────────────
+
+async function main() {
+  const ptTime = getPTTime();
+  const timeOfDay = getTimeOfDay(ptTime);
+  const today = ptTime.toISOString().split("T")[0];
+
+  logStep(
+    "📡",
+    `Social post generation — ${today} ${timeOfDay} (${ptTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })})`
+  );
+
+  // 1. Load all candidates
+  const allCandidates = loadAllCandidates();
+  logStep("📊", `Loaded ${allCandidates.length} total candidates`);
+
+  // 2. Filter to upcoming only
+  const upcoming = upcomingCandidates(allCandidates);
+  logStep("📅", `${upcoming.length} upcoming candidates`);
+
+  // 3. Filter out events that already happened today
+  const timely = filterPastEvents(upcoming, ptTime);
+  logStep("🕐", `${timely.length} candidates after time filter (${upcoming.length - timely.length} past events removed)`);
+
+  // 4. Score with dedup history
+  const history = flattenHistory(recentHistory(7));
+  const scored = scoreAndRank(timely, history);
+
+  // 5. Take top candidates (more than we need, to allow for URL/fact-check failures)
+  const topCandidates = scored.slice(0, maxPosts * 3);
+  logStep("📈", `Top ${topCandidates.length} candidates by score`);
+
+  // 6. URL validation — filter out items without good direct links
+  logStep("🔗", "Validating URLs...");
+  const urlValid = await filterByUrl(topCandidates);
+
+  if (urlValid.length === 0) {
+    logSkip("No candidates with valid URLs — skipping");
+    process.exit(0);
+  }
+
+  // 7. Fact check — verify items are accurate
+  logStep("🔍", "Fact-checking...");
+  const factChecked = await factCheckAll(urlValid, ptTime);
+
+  if (factChecked.length === 0) {
+    logSkip("No candidates passed fact check — skipping");
+    process.exit(0);
+  }
+
+  // 8. Take the final top N
+  const selected = factChecked.slice(0, maxPosts);
+  logStep("✅", `Selected ${selected.length} items for posting:`);
+  for (const item of selected) {
+    logScore(item.title, item.score);
+    logItem(`${item.cityName || item.city} · ${item.venue || "no venue"} · ${item.url?.slice(0, 60) || "no url"}`);
+  }
+
+  // 9. Generate copy for each item individually
+  if (!existsSync(OUTPUT_DIR)) mkdirSync(OUTPUT_DIR, { recursive: true });
+  const posts = [];
+
+  for (const item of selected) {
+    logStep("✍️", `Generating copy: ${item.title}`);
+
+    try {
+      const copy = await generateSingleItemCopy(item, timeOfDay);
+
+      const post = {
+        postType: "single",
+        date: today,
+        timeOfDay,
+        generatedAt: new Date().toISOString(),
+        item: {
+          title: item.title,
+          city: item.city,
+          cityName: item.cityName,
+          venue: item.venue,
+          category: item.category,
+          score: item.score,
+          time: item.time,
+          url: item.url,
+        },
+        copy,
+        cardPath: null,
+        targetUrl: item.url,
+      };
+
+      // Write individual post JSON
+      const slug = item.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .slice(0, 40);
+      const postPath = join(OUTPUT_DIR, `post-${today}-${slug}.json`);
+      writeFileSync(postPath, JSON.stringify(post, null, 2) + "\n");
+
+      logStep("🐦", `X (${copy.x.length} chars)`);
+      logStep("🧵", `Threads (${copy.threads.length} chars)`);
+      logStep("🦋", `Bluesky (${copy.bluesky.length} chars)`);
+
+      posts.push({ path: postPath, post });
+    } catch (err) {
+      logError(`Copy gen failed for ${item.title}: ${err.message}`);
+    }
+
+    // Rate limit between Claude calls
+    await new Promise((r) => setTimeout(r, 500));
+  }
+
+  logSuccess(`Generated ${posts.length} individual posts`);
+
+  // Print post file paths for publish.mjs
+  for (const p of posts) {
+    console.log(`POST_FILE=${p.path}`);
+  }
+
+  // Summary for scheduled task reporting
+  console.log(`\n**Social Posts Generated (${timeOfDay})**`);
+  console.log(`- Time: ${ptTime.toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}`);
+  console.log(`- Candidates: ${allCandidates.length} total → ${timely.length} timely → ${urlValid.length} URL-valid → ${factChecked.length} fact-checked`);
+  console.log(`- Posts generated: ${posts.length}`);
+  for (const p of posts) {
+    console.log(`  • ${p.post.item.title} (${p.post.item.cityName || ""}) → ${p.post.item.url?.slice(0, 60)}`);
+  }
+}
+
+main().catch((err) => {
+  logError(err.message);
+  console.error(err);
+  process.exit(1);
+});
