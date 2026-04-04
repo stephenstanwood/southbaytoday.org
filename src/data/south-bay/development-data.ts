@@ -111,6 +111,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Google / Lendlease",
     timeline: "Phased — office timeline revised; housing phases ongoing",
     featured: true,
+    sourceNote: "Lendlease announced exit from US construction in Sept 2023 — verify current developer/partner at sanjoseca.gov or google.com/downtownwest.",
   },
 
   {
