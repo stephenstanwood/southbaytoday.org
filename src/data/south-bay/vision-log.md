@@ -2444,6 +2444,35 @@ Today is Netscape's 32nd birthday — and no newspaper or aggregator is marking 
 
 ---
 
+## 2026-04-04 — Cycle 49: Yahoo IPO 30th Anniversary + Government Data Refresh
+
+### Context
+Saturday April 4, 2026. Easter Saturday, Spring Break week 1. April 7 council meetings (San Jose, Sunnyvale, Cupertino) are 3 days away. The April 10-17 TECH_MILESTONES window had no entries — a gap for next week's visitors.
+
+### What Was Built
+
+**New SV History milestone — Yahoo IPO 30th anniversary:**
+- Added `yahoo` to TECH_MILESTONES: April 12, 1996 IPO. Sunnyvale/Santa Clara company, co-founded by Jerry Yang and David Filo (Stanford alums). Stock nearly tripled on day one; raised $33.8M. First SV internet IPO to capture mainstream attention.
+- 2026 is the **30th anniversary** — a round-number milestone worth surfacing.
+- Fills the April 10–17 window, which previously had no "This Week in SV History" content.
+
+**Government tab data refresh:**
+- Reran `generate-upcoming-meetings.mjs`: San Jose, Sunnyvale, Cupertino all confirmed for April 7 (5 agenda items each). Mountain View and Santa Clara have no meetings scheduled.
+- Reran `generate-around-town.mjs`: 8 items confirmed current — Campbell transit recusal, Mountain View 490 E. Middlefield housing approval, Los Altos affordable housing transfer policy among the new additions.
+
+### Why This Was the Strongest Move
+Any South Bay resident opening the Tech tab between April 10–17 previously saw no "This Week in SV History" card. Now they'll see Yahoo's 30th IPO anniversary — a story with real South Bay roots (Sunnyvale HQ, Stanford founders, the IPO that made the commercial web feel inevitable). The Government tab is freshened ahead of Tuesday's council meetings across three cities.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data.
+2. **Mountain View restaurant radar** — ArcGIS Open Data has no permits layer; e-permits portal has no public REST API. Blocked.
+3. **High school sports scores** — MaxPreps ToS prohibits scraping; no official public API. Blocked.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the SV History section now has coverage across more of April.** Apple (Apr 1), Netscape (Apr 4), NVIDIA (Apr 5), Yahoo (Apr 12) gives the Tech tab a meaningful milestone for every week of April. A Sunnyvale resident opening SBS on April 12 will see a story directly tied to their city's most iconic company.
+
+---
+
 ## 2026-04-04 — Cycle 48: Full Data Refresh + TECH_PULSE 26-Round Update
 
 ### Context

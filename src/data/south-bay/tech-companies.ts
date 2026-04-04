@@ -1517,6 +1517,18 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/Netscape",
     defunct: true,
   },
+  {
+    id: "yahoo",
+    company: "Yahoo",
+    city: "Sunnyvale",
+    foundedYear: 1995,
+    month: 4,
+    day: 12,
+    tagline: "The portal that defined how millions first experienced the web — founded in Santa Clara and headquartered in Sunnyvale.",
+    anniversaryNote: "Yahoo went public on April 12, 1996 — 30 years ago this week. The stock nearly tripled on its first day, raising $33.8 million and signaling to the world that the internet was a real business. Jerry Yang and David Filo's directory of websites became the homepage for a generation.",
+    url: "https://en.wikipedia.org/wiki/Yahoo",
+    defunct: true,
+  },
 ];
 
 // ---------------------------------------------------------------------------
