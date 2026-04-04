@@ -1,6 +1,7 @@
 import HealthScoresCard from "../cards/HealthScoresCard";
 import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
+import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import { SOUTH_BAY_EVENTS } from "../../../data/south-bay/events-data";
 
 type UpcomingEvent = {
@@ -270,9 +271,152 @@ function RestaurantRadar() {
   );
 }
 
+// ── SCC Food Openings ───────────────────────────────────────────────────────
+
+type SccFoodItem = {
+  id: string;
+  name: string;
+  address: string | null;
+  cityId: string | null;
+  cityName: string;
+  date: string | null;
+  status: "opened" | "coming-soon";
+  sourceId: string | null;
+};
+
+const CITY_DISPLAY: Record<string, string> = {
+  "san-jose": "San José",
+  "mountain-view": "Mountain View",
+  "sunnyvale": "Sunnyvale",
+  "santa-clara": "Santa Clara",
+  "cupertino": "Cupertino",
+  "milpitas": "Milpitas",
+  "campbell": "Campbell",
+  "saratoga": "Saratoga",
+  "los-gatos": "Los Gatos",
+  "los-altos": "Los Altos",
+  "palo-alto": "Palo Alto",
+};
+
+function formatSccDate(iso: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso + "T12:00:00");
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function SccFoodOpeningsCard() {
+  const data = sccFoodOpeningsJson as {
+    generatedAt: string;
+    lookbackDays: number;
+    sourceUrl: string;
+    opened: SccFoodItem[];
+    comingSoon: SccFoodItem[];
+  };
+
+  const opened = data.opened ?? [];
+  const comingSoon = data.comingSoon ?? [];
+
+  if (opened.length === 0 && comingSoon.length === 0) return null;
+
+  const updatedDate = new Date(data.generatedAt).toLocaleDateString("en-US", {
+    month: "short", day: "numeric",
+  });
+
+  function FoodRow({ item, accent }: { item: SccFoodItem; accent: string }) {
+    const city = item.cityId ? CITY_DISPLAY[item.cityId] ?? item.cityName : item.cityName;
+    return (
+      <div style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+        padding: "9px 0",
+        borderBottom: "1px solid var(--sb-border-light)",
+      }}>
+        <div style={{
+          width: 3, minHeight: 32, borderRadius: 2,
+          background: accent, flexShrink: 0, marginTop: 3,
+        }} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontWeight: 600, fontSize: 13,
+            color: "var(--sb-ink)", fontFamily: "var(--sb-sans)",
+            marginBottom: 2,
+          }}>
+            {item.name}
+          </div>
+          <div style={{
+            fontSize: 11, color: "var(--sb-muted)",
+            display: "flex", gap: 5, flexWrap: "wrap",
+          }}>
+            {item.address && <span>{item.address}</span>}
+            {city && (
+              <>
+                <span style={{ color: "var(--sb-border)" }}>·</span>
+                <span>{city}</span>
+              </>
+            )}
+            {item.date && (
+              <>
+                <span style={{ color: "var(--sb-border)" }}>·</span>
+                <span>{formatSccDate(item.date)}</span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div className="sb-section-header" style={{ marginBottom: 4 }}>
+        <span className="sb-section-title">🆕 New &amp; Coming Soon</span>
+      </div>
+      <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 12 }}>
+        Restaurant &amp; food permit activity across the South Bay · Updated {updatedDate}
+      </div>
+
+      {opened.length > 0 && (
+        <div style={{ marginBottom: 16 }}>
+          <div style={{
+            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.1em", textTransform: "uppercase",
+            color: "#16a34a", marginBottom: 6,
+          }}>
+            Recently Opened
+          </div>
+          {opened.map((item) => (
+            <FoodRow key={item.id} item={item} accent="#16a34a" />
+          ))}
+        </div>
+      )}
+
+      {comingSoon.length > 0 && (
+        <div>
+          <div style={{
+            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.1em", textTransform: "uppercase",
+            color: "#2563eb", marginBottom: 6,
+          }}>
+            Coming Soon
+          </div>
+          {comingSoon.map((item) => (
+            <FoodRow key={item.id} item={item} accent="#2563eb" />
+          ))}
+        </div>
+      )}
+
+      <div style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, fontStyle: "italic" }}>
+        Based on SCC Environmental Health permit records. "Coming Soon" = plans approved, building out. "Recently Opened" = passed final health inspection.
+      </div>
+    </div>
+  );
+}
+
 export default function FoodView() {
   return (
     <>
+      <SccFoodOpeningsCard />
       <RestaurantRadar />
       <FarmersMarkets />
       <HealthScoresCard />

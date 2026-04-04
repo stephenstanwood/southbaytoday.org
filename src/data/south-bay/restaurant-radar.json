@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-03T20:22:29.502Z",
+  "generatedAt": "2026-04-04T14:06:11.957Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -10,8 +10,7 @@
       "id": "2026-107055-CI",
       "city": "san-jose",
       "address": "2040 N 1st St",
-      "name": null,
-      "blurb": null,
+      "name": "The FAB",
       "description": "(Bp100%) Demo",
       "workType": "Demolition",
       "subtype": "Restaurant",
@@ -25,35 +24,34 @@
       "city": "san-jose",
       "address": "2855 Stevens Creek Bl",
       "name": "Baekjeong",
-      "blurb": "Korean BBQ chain known for tabletop charcoal grilling and premium cuts",
       "description": "(Sti) Baekjeong (Bepm 100%) # 1808 Restaurant Ti",
       "workType": "Finish Interior",
       "subtype": "Restaurant",
       "signal": "opening",
       "label": "New Build",
       "valuation": 3100000,
-      "date": "2026-03-18"
+      "date": "2026-03-18",
+      "blurb": "Korean BBQ chain known for tabletop charcoal grilling and premium cuts"
     },
     {
       "id": "2026-105907-CI",
       "city": "san-jose",
       "address": "355 Santana Row",
       "name": "Flora",
-      "blurb": "California seasonal cuisine with a botanical-inspired menu, opening on Santana Row",
       "description": "(Bepm100%) Flora Ti",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
       "signal": "opening",
       "label": "Major Buildout",
       "valuation": 1200000,
-      "date": "2026-03-06"
+      "date": "2026-03-06",
+      "blurb": "California seasonal cuisine with a botanical-inspired menu, opening on Santana Row"
     },
     {
       "id": "2026-108378-CI",
       "city": "san-jose",
       "address": "2549 S King Rd",
       "name": "Fomo",
-      "blurb": null,
       "description": "Srp (Bemp100%) Fomo Ti #A16",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
@@ -67,21 +65,20 @@
       "city": "san-jose",
       "address": "233 W Santa Clara St",
       "name": "Hedley Club",
-      "blurb": "Historic cocktail lounge inside the Hotel De Anza, a downtown San Jose landmark since 1931",
       "description": "(Bep100%) Srp Hedley Club Ti",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
       "signal": "opening",
       "label": "Renovation",
       "valuation": 82178,
-      "date": "2026-03-18"
+      "date": "2026-03-18",
+      "blurb": "Historic cocktail lounge inside the Hotel De Anza, a downtown San Jose landmark since 1931"
     },
     {
       "id": "2026-103064-CI",
       "city": "san-jose",
       "address": "1080 Saratoga Av",
       "name": "JC'S BBQ",
-      "blurb": "Barbecue joint getting a fresh interior buildout on Saratoga Ave",
       "description": "Jc'S Bbq (Bepm 100%) Interior Ti",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
@@ -95,60 +92,59 @@
       "city": "san-jose",
       "address": "22 N White Rd",
       "name": "Ce Patli Tortilleria",
-      "blurb": "Mexican tortilleria and taqueria on the east side",
       "description": "(Bpm100%) Srp Ce Patli Tortilleria",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
       "signal": "opening",
       "label": "Renovation",
       "valuation": 46773,
-      "date": "2026-03-04"
+      "date": "2026-03-04",
+      "blurb": "Mexican tortilleria and taqueria on the east side"
+    },
+    {
+      "id": "2026-107675-CI",
+      "city": "san-jose",
+      "address": "1725 Branham Ln",
+      "name": "Pollo Loco New",
+      "description": "Pollo Loco (Be 100%) New Sign",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "Renovation",
+      "valuation": 16865,
+      "date": "2026-04-02"
     },
     {
       "id": "pa-407 Lytton Av-2026-03-19",
       "city": "palo-alto",
       "address": "407 Lytton Av",
       "name": "Bistro Demiya",
-      "blurb": "Japanese bistro opening in downtown Palo Alto",
       "description": "COM: Standalone U&O for 'Bistro Demiya'",
       "workType": "Building Permit",
       "signal": "opening",
       "label": "New Opening",
       "valuation": 0,
-      "date": "2026-03-19"
+      "date": "2026-03-19",
+      "blurb": "Japanese bistro opening in downtown Palo Alto"
     },
     {
       "id": "pa-121 Lytton Av-2026-02-10",
       "city": "palo-alto",
       "address": "121 Lytton Av",
       "name": "Rikyu",
-      "blurb": "Japanese restaurant fitting out a new space on Lytton Ave",
       "description": "COM: 'RIKYU'; Minor TI and U&O: Interior improvements for tenant fit-out for …",
       "workType": "Building Permit",
       "signal": "opening",
       "label": "New Opening",
       "valuation": 0,
-      "date": "2026-02-10"
-    },
-    {
-      "id": "pa-401 Webster St-2026-02-26",
-      "city": "palo-alto",
-      "address": "401 Webster St",
-      "name": "Front Porch",
-      "blurb": "Neighborhood American restaurant on Webster St undergoing a kitchen remodel",
-      "description": "FRONT PORCH: Remodel 650SF UNIT 107 like for like kitchen, bathroom, and upgr…",
-      "workType": "Building Permit",
-      "signal": "activity",
-      "label": "Permit Activity",
-      "valuation": 0,
-      "date": "2026-02-26"
+      "date": "2026-02-10",
+      "blurb": "Japanese restaurant fitting out a new space on Lytton Ave"
     },
     {
       "id": "pa-341 California Av-2026-02-26",
       "city": "palo-alto",
       "address": "341 California Av",
       "name": null,
-      "blurb": null,
       "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
       "workType": "Entitlement",
       "signal": "activity",
@@ -157,17 +153,30 @@
       "date": "2026-02-26"
     },
     {
+      "id": "pa-401 Webster St-2026-02-26",
+      "city": "palo-alto",
+      "address": "401 Webster St",
+      "name": "Front Porch",
+      "description": "FRONT PORCH: Remodel 650SF UNIT 107 like for like kitchen, bathroom, and upgr…",
+      "workType": "Building Permit",
+      "signal": "activity",
+      "label": "Permit Activity",
+      "valuation": 0,
+      "date": "2026-02-26",
+      "blurb": "Neighborhood American restaurant on Webster St undergoing a kitchen remodel"
+    },
+    {
       "id": "pa-338 University Av-2026-02-25",
       "city": "palo-alto",
       "address": "338 University Av",
       "name": "Zhangling Malatang",
-      "blurb": "Sichuan-style malatang — customizable spicy hot pot — coming to University Ave",
       "description": "C1- AC/HK- ZHANGLING MALATANG: restaurant tenant improvement ~2300sf for remo…",
       "workType": "Building Permit",
       "signal": "activity",
       "label": "Renovation",
       "valuation": 0,
-      "date": "2026-02-25"
+      "date": "2026-02-25",
+      "blurb": "Sichuan-style malatang — customizable spicy hot pot — coming to University Ave"
     }
   ]
 }
