@@ -279,10 +279,16 @@ function SportsCallout({ events }: { events: UpcomingEvent[] }) {
 
 // ── Compact event row (static events) ─────────────────────────────────────────
 
-function EventRow({ event, showCity = true }: { event: SBEvent; showCity?: boolean }) {
+function EventRow({ event, showCity = true, highlight = false }: { event: SBEvent; showCity?: boolean; highlight?: boolean }) {
   const badge = costBadge(event.cost, event.costNote);
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: "1px solid var(--sb-border-light)" }}>
+    <div style={{
+      display: "flex", alignItems: "center", gap: 10, padding: "10px 0",
+      borderBottom: "1px solid var(--sb-border-light)",
+      borderLeft: highlight ? "3px solid var(--sb-primary)" : undefined,
+      paddingLeft: highlight ? 10 : undefined,
+      marginLeft: highlight ? -13 : undefined,
+    }}>
       <span style={{ fontSize: 20, lineHeight: 1, flexShrink: 0, width: 28, textAlign: "center" }}>
         {event.emoji}
       </span>
@@ -2393,21 +2399,26 @@ function SchoolCalendarCard() {
 
 // ── Bucketed event list ───────────────────────────────────────────────────────
 
-type AnyEvent = { _type: "static"; event: SBEvent } | { _type: "upcoming"; event: UpcomingEvent };
+type AnyEvent = { _type: "static"; event: SBEvent; highlight: boolean } | { _type: "upcoming"; event: UpcomingEvent; highlight: boolean };
 
 function bucketEvents(
   statics: SBEvent[],
   upcoming: UpcomingEvent[],
   showCity: boolean,
-  highlight = false,
+  highlightIds?: Set<string>,
   showBucketLabels = true,
 ): React.ReactNode {
   const buckets: Record<TimeBucket, AnyEvent[]> = { now: [], morning: [], afternoon: [], evening: [], none: [] };
 
-  for (const e of statics) buckets[timeBucket(e.time)].push({ _type: "static", event: e });
+  for (const e of statics) buckets[timeBucket(e.time)].push({ _type: "static", event: e, highlight: highlightIds?.has(e.id) ?? false });
   for (const e of upcoming) {
     if (e.category === "sports") continue; // sports shown in callout
-    buckets[timeBucket(e.time)].push({ _type: "upcoming", event: e });
+    buckets[timeBucket(e.time)].push({ _type: "upcoming", event: e, highlight: highlightIds?.has(e.id) ?? false });
+  }
+
+  // Sort highlighted (home-city) events first within each bucket
+  for (const b of BUCKET_ORDER) {
+    buckets[b].sort((a, bItem) => (bItem.highlight ? 1 : 0) - (a.highlight ? 1 : 0));
   }
 
   const hasMultipleBuckets =
@@ -2436,8 +2447,8 @@ function bucketEvents(
               className="sb-today-grid">
               {items.map((item) =>
                 item._type === "static"
-                  ? <EventRow key={item.event.id} event={item.event} showCity={showCity} />
-                  : <UpcomingRow key={item.event.id} event={item.event} showCity={showCity} highlight={highlight} />
+                  ? <EventRow key={item.event.id} event={item.event} showCity={showCity} highlight={item.highlight} />
+                  : <UpcomingRow key={item.event.id} event={item.event} showCity={showCity} highlight={item.highlight} />
               )}
             </div>
           </div>
@@ -2712,12 +2723,14 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                   </div>
                 ) : showingTomorrow ? (
                   <>
-                    {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, true, false)}
-                    {bucketEvents(
-                      southBayTomorrowStatic.slice(0, SB_LIMIT),
-                      southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                      true, false, false,
-                    )}
+                    {(() => {
+                      const cityIds = new Set([...cityTomorrowStatic.map(e => e.id), ...cityTomorrowUpcoming.map(e => e.id)]);
+                      return bucketEvents(
+                        [...cityTomorrowStatic, ...southBayTomorrowStatic.slice(0, SB_LIMIT)],
+                        [...cityTomorrowUpcoming, ...southBayTomorrowUpcoming.slice(0, SB_LIMIT)],
+                        true, cityIds, false,
+                      );
+                    })()}
                   </>
                 ) : (
                   <>
@@ -2731,14 +2744,18 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         Today · {WEEKDAY}
                       </div>
                     )}
-                    {bucketEvents(cityTodayStatic, cityTodayUpcoming, false, true)}
-                    <div style={{ marginTop: 8 }}>
-                      {bucketEvents(
-                        southBayTodayStatic.slice(0, SB_LIMIT),
-                        southBayTodayUpcoming.slice(0, SB_LIMIT),
+                    {(() => {
+                      const cityIds = new Set([
+                        ...cityTodayStatic.map(e => e.id),
+                        ...cityTodayUpcoming.map(e => e.id),
+                      ]);
+                      return bucketEvents(
+                        [...cityTodayStatic, ...southBayTodayStatic.slice(0, SB_LIMIT)],
+                        [...cityTodayUpcoming, ...southBayTodayUpcoming.slice(0, SB_LIMIT)],
                         true,
-                      )}
-                    </div>
+                        cityIds,
+                      );
+                    })()}
                     {southBayCount - SB_LIMIT >= 10 && !showAllSouthBay && (
                       <button onClick={() => setShowAllSouthBay(true)} style={{ display: "block", marginTop: 12, padding: "8px 0", background: "none", border: "none", color: "var(--sb-primary)", fontSize: 13, fontWeight: 600, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }}>
                         Show {southBayCount - SB_LIMIT} more →
@@ -2759,12 +2776,14 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         }}>
                           {TOMORROW_LABEL_STR}
                         </div>
-                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, true, false)}
-                        {bucketEvents(
-                          southBayTomorrowStatic.slice(0, SB_LIMIT),
-                          southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                          true, false, false,
-                        )}
+                        {(() => {
+                          const cityIds = new Set([...cityTomorrowStatic.map(e => e.id), ...cityTomorrowUpcoming.map(e => e.id)]);
+                          return bucketEvents(
+                            [...cityTomorrowStatic, ...southBayTomorrowStatic.slice(0, SB_LIMIT)],
+                            [...cityTomorrowUpcoming, ...southBayTomorrowUpcoming.slice(0, SB_LIMIT)],
+                            true, cityIds, false,
+                          );
+                        })()}
                       </>
                     )}
                   </>
@@ -2778,7 +2797,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                   </div>
                 ) : showingTomorrow ? (
                   <>
-                    {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, false, false)}
+                    {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, undefined, false)}
                   </>
                 ) : (
                   <>
@@ -2808,7 +2827,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                         }}>
                           {TOMORROW_LABEL_STR}
                         </div>
-                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, false, false)}
+                        {bucketEvents(cityTomorrowStatic, cityTomorrowUpcoming, false, undefined, false)}
                       </>
                     )}
                   </>
@@ -2827,7 +2846,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                   {bucketEvents(
                     southBayTomorrowStatic.slice(0, SB_LIMIT),
                     southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                    true, false, false,
+                    true, undefined, false,
                   )}
                 </>
               ) : (
@@ -2865,7 +2884,7 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
                       {bucketEvents(
                         southBayTomorrowStatic.slice(0, SB_LIMIT),
                         southBayTomorrowUpcoming.slice(0, SB_LIMIT),
-                        true, false, false,
+                        true, undefined, false,
                       )}
                     </>
                   )}
