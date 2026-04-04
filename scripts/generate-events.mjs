@@ -2110,6 +2110,16 @@ function fetchMiscHardcodedEvents() {
   console.log("  ⏳ Misc hardcoded events...");
   const raw = [
     {
+      title: "46th Annual Eggstravaganza Easter Egg Hunt",
+      date: "2026-04-04", time: "9:00 AM",
+      venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell",
+      cost: "free", costNote: null,
+      category: "community",
+      url: "https://www.downtowncampbell.com",
+      description: "Annual community Easter egg hunt in Downtown Campbell. Families and kids search for eggs throughout the downtown area.",
+      kidFriendly: true,
+    },
+    {
       title: "Bunnies & Bonnets Easter Parade",
       date: "2026-04-04", time: "12:00 PM",
       venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell",
@@ -2118,6 +2128,16 @@ function fetchMiscHardcodedEvents() {
       url: "https://www.downtowncampbell.com",
       description: "Annual Easter parade through Downtown Campbell featuring marching bands, dancers, animals, and community groups. Starts at the east end of Downtown by the VTA Light Rail tracks and runs along Campbell Avenue to Third Street.",
       kidFriendly: true,
+    },
+    {
+      title: "Spring Wine Walk in Downtown Campbell",
+      date: "2026-04-23", time: "6:00 PM",
+      venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell",
+      cost: "paid", costNote: null,
+      category: "community",
+      url: "https://www.downtowncampbell.com",
+      description: "Seasonal wine walk through Downtown Campbell. Participants visit participating merchants and restaurants for wine tastings.",
+      kidFriendly: false,
     },
     {
       title: "Stanford Water Polo Senior Day vs Cal",
