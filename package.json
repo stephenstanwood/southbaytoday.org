@@ -23,13 +23,19 @@
     "generate-restaurant-radar": "node scripts/generate-restaurant-radar.mjs",
     "generate-tech-briefing": "node scripts/generate-tech-briefing.mjs",
     "generate-apod": "node scripts/generate-apod.mjs",
-    "generate-scc-food-openings": "node scripts/generate-scc-food-openings.mjs"
+    "generate-scc-food-openings": "node scripts/generate-scc-food-openings.mjs",
+    "social:daily-pulse": "node scripts/social/generate-daily-pulse.mjs",
+    "social:tonight": "node scripts/social/generate-tonight.mjs",
+    "social:weekend": "node scripts/social/generate-weekend-roundup.mjs",
+    "social:civic": "node scripts/social/generate-civic-signal.mjs",
+    "social:publish": "node scripts/social/publish.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.74.0",
     "@astrojs/react": "^5.0.0",
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^10.0.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.18",
     "@vercel/analytics": "^2.0.1",
     "astro": "^6.0.4",
@@ -37,6 +43,8 @@
     "react-dom": "^19.2.4",
     "react-is": "^19.2.4",
     "recharts": "^3.8.1",
+    "satori": "^0.26.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
