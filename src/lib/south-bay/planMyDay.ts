@@ -318,7 +318,7 @@ function buildCandidates(date: Date): Candidate[] {
     candidates.push({
       id: `poi-${p.id}`,
       title: featuredPlace ?? p.title,
-      venue: featuredPlace ? `${p.title} · ${p.venue}` : p.venue,
+      venue: featuredPlace ? p.title : p.venue,
       city: cityLabel(p.city),
       citySlug: p.city,
       cost: p.cost,
