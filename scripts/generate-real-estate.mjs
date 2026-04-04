@@ -101,7 +101,8 @@ async function main() {
       cityId: city.toLowerCase().replace(/\s+/g, "-"),
       periodEnd,
       medianSalePrice: parseNum(cols[COL.MEDIAN_SALE_PRICE]),
-      medianSalePriceYoy: parseNum(cols[COL.MEDIAN_SALE_PRICE_YOY]),
+      // Los Altos YoY is unreliable due to small sample size — null it out to avoid outlier spikes
+      medianSalePriceYoy: city === "Los Altos" ? null : parseNum(cols[COL.MEDIAN_SALE_PRICE_YOY]),
       inventory: (() => { const n = parseNum(cols[COL.INVENTORY]); return n != null ? Math.round(n) : null; })(),
       medianDaysOnMarket: (() => { const n = parseNum(cols[COL.MEDIAN_DOM]); return n != null ? Math.round(n) : null; })(),
       avgSaleToList: parseNum(cols[COL.AVG_SALE_TO_LIST]),

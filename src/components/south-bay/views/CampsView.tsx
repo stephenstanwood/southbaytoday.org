@@ -1085,7 +1085,7 @@ const SB_CITY_LINKS: { city: string; label: string; url: string }[] = [
   { city: "Mountain View",label: "MV Parks & Rec",   url: "https://www.mountainview.gov/departments/parks_and_recreation/registration" },
   { city: "Cupertino",    label: "Cupertino Rec",    url: "https://recreation.cupertino.org" },
   { city: "Santa Clara",  label: "Santa Clara Rec",  url: "https://santaclaraca.gov/residents/parks-recreation" },
-  { city: "Campbell",     label: "Campbell Rec",     url: "https://www.campbellca.gov/recreation" },
+  { city: "Campbell",     label: "Campbell Rec",     url: "https://www.campbellca.gov/camps" },
 ];
 
 const PICK_EMOJI: Record<string, string> = {
@@ -1272,6 +1272,74 @@ function SpringBreakSection() {
             })}
           </div>
         )}
+
+        {/* Campbell spring break camps spotlight */}
+        <div style={{ marginBottom: 14 }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              color: "var(--sb-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              marginBottom: 8,
+            }}
+          >
+            Campbell CCC Spring Break Camps · Apr 13–17
+          </div>
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #fed7aa",
+              borderRadius: 8,
+              padding: "10px 12px",
+            }}
+          >
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", marginBottom: 8 }}>
+              {[
+                "Day Camp at the CCC (ages 4–12)",
+                "Discover & Create: Physical Coding + LEGO Stories (ages 6–8)",
+                "STEM & Stocks Stars Camp (ages 9–12)",
+                "STEM + Minecraft using LEGO® Materials (ages 5–7)",
+                "Young Speakers Camp – Improv, Humor & Confidence (ages 5–11)",
+                "World Cup Soccer Spring Break Camp (ages 5–13)",
+                "Joyful Melodies Music Camp (ages 5–10)",
+                "Skyhawks Multi-Sport Camp (ages 7–12)",
+              ].map((name) => (
+                <span
+                  key={name}
+                  style={{
+                    fontSize: 12,
+                    color: "var(--sb-ink)",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  · {name}
+                </span>
+              ))}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 11, color: "var(--sb-muted)" }}>
+                Full-day (9am–4pm) and half-day options available
+              </span>
+              <a
+                href="https://secure.rec1.com/CA/campbell-ca/catalog"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#c2410c",
+                  textDecoration: "none",
+                  marginLeft: "auto",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Register at rec1.com →
+              </a>
+            </div>
+          </div>
+        </div>
 
         {/* City parks & rec links for full-week programs */}
         <div>

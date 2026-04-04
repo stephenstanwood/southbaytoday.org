@@ -2110,6 +2110,16 @@ function fetchMiscHardcodedEvents() {
   console.log("  ⏳ Misc hardcoded events...");
   const raw = [
     {
+      title: "Bunnies & Bonnets Easter Parade",
+      date: "2026-04-04", time: "12:00 PM",
+      venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell",
+      cost: "free", costNote: null,
+      category: "community",
+      url: "https://www.downtowncampbell.com",
+      description: "Annual Easter parade through Downtown Campbell featuring marching bands, dancers, animals, and community groups. Starts at the east end of Downtown by the VTA Light Rail tracks and runs along Campbell Avenue to Third Street.",
+      kidFriendly: true,
+    },
+    {
       title: "Stanford Water Polo Senior Day vs Cal",
       date: "2026-04-04", time: "1:00 PM",
       venue: "Avery Aquatic Center", address: "Stanford University, Stanford", city: "palo-alto",
