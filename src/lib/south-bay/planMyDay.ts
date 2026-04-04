@@ -314,10 +314,11 @@ function buildCandidates(date: Date): Candidate[] {
   }
 
   for (const p of SOUTH_BAY_POIS) {
+    const featuredPlace = p.featuredPlace;
     candidates.push({
       id: `poi-${p.id}`,
-      title: p.title,
-      venue: p.venue,
+      title: featuredPlace ?? p.title,
+      venue: featuredPlace ? `${p.title} · ${p.venue}` : p.venue,
       city: cityLabel(p.city),
       citySlug: p.city,
       cost: p.cost,

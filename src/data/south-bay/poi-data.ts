@@ -19,6 +19,7 @@ export interface POI {
   kidFriendly: boolean;
   description: string; // shown in card
   why: string; // short hook: why this fits
+  featuredPlace?: string; // specific place to go (e.g. "La Fiorentina"), used as stop title in Plan My Day
   emoji: string;
   url?: string;
   indoorOutdoor: "indoor" | "outdoor" | "both";
@@ -469,6 +470,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Charming walkable downtown with excellent coffee, restaurants, boutiques, and a relaxed local vibe.",
     why: "Get a coffee at Orchard City Kitchen, browse the indie boutiques on Campbell Ave, and grab lunch at Luna Mexican Kitchen or Olla Cocina",
+    featuredPlace: "Orchard City Kitchen",
     emoji: "☕",
     indoorOutdoor: "both",
     bestSlots: ["morning", "afternoon", "evening"],
@@ -484,6 +486,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Upscale open-air shopping and dining district — European-style streets with restaurants, wine bars, and boutiques.",
     why: "Stroll the European-style boulevard, browse designer boutiques, then grab a table at Straits, Sino, or the Zinnia patio for dinner",
+    featuredPlace: "Zinnia",
     emoji: "🛍️",
     url: "https://www.santanarow.com",
     indoorOutdoor: "both",
@@ -500,6 +503,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Lively, pedestrian-friendly downtown with diverse restaurants, coffee shops, and regular community events.",
     why: "Hit the weekend Farmers Market, grab pho or a bánh mì at one of Castro St's many spots, and browse indie shops — excellent value lunch strip",
+    featuredPlace: "Castro Street",
     emoji: "🍜",
     indoorOutdoor: "both",
     bestSlots: ["afternoon", "evening"],
@@ -515,6 +519,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Charming foothill town with excellent brunch spots, boutiques, and a relaxed California pace.",
     why: "Grab a pastry at Fleur de Cocoa, browse the boutiques on Santa Cruz Ave, and settle in for lunch at Los Gatos Brewing Co or a slow dinner at Dio Deka — the most European-feeling downtown in the South Bay",
+    featuredPlace: "Fleur de Cocoa",
     emoji: "🏡",
     indoorOutdoor: "both",
     bestSlots: ["morning", "afternoon"],
@@ -546,6 +551,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "San Jose's most charming neighborhood — tree-lined Lincoln Ave with indie shops, patisseries, and great brunch spots.",
     why: "Start with a pastry at La Fiorentina or an espresso at Caffe Frascati, wander the indie boutiques on Lincoln Ave, and lunch at Paesano's — San Jose's most pleasant neighborhood walk",
+    featuredPlace: "La Fiorentina",
     emoji: "🌷",
     indoorOutdoor: "both",
     bestSlots: ["morning", "afternoon"],
@@ -561,6 +567,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Murphy Avenue has a walkable strip of restaurants, a craft beer garden, and a relaxed neighborhood feel.",
     why: "Dinner at Teske's Germania (a local institution since 1975), fondue night at La Fondue, or craft beers at one of Murphy Ave's tap rooms — Sunnyvale's most walkable and genuinely local strip",
+    featuredPlace: "Teske's Germania",
     emoji: "🍻",
     indoorOutdoor: "both",
     bestSlots: ["afternoon", "evening"],
@@ -576,6 +583,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Tree-lined University Avenue with independent restaurants, bookstores, and coffee shops a block from Stanford.",
     why: "Coffee at Coupa Café, lunch at Oren's Hummus or Vina Enoteca, then browse Kepler's Books — University Ave is one of the most pleasant afternoon walks in the Bay Area with Stanford a block away",
+    featuredPlace: "Coupa Café",
     emoji: "🌳",
     indoorOutdoor: "both",
     bestSlots: ["morning", "afternoon", "evening"],
@@ -591,6 +599,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "One of only three surviving Japantowns in the US — a vibrant neighborhood with ramen shops, mochi bakeries, Japanese markets, and cultural events.",
     why: "Pick up mochi at Okayama Kobo, get a bowl of udon at Gombei, and browse the Japanese grocery on Jackson St — one of only three surviving Japantowns in the US, worth making a whole afternoon of",
+    featuredPlace: "Gombei",
     emoji: "🍜",
     url: "https://www.japantownsanjose.org",
     indoorOutdoor: "both",
@@ -607,6 +616,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Cupertino's walkable mixed-use district with restaurants, a cinema, weekend markets, and community events — near Apple Park.",
     why: "Hit the Saturday farmers market, grab lunch at Lazy Dog or one of the many Asian restaurants nearby, then walk the outdoor plaza steps from Apple Park — Cupertino's most pleasant afternoon destination",
+    featuredPlace: "Lazy Dog",
     emoji: "🍎",
     url: "https://www.mainstreetcupertino.com",
     indoorOutdoor: "both",
@@ -623,6 +633,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "Quiet, upscale foothill village with excellent wine bars, high-end restaurants, art galleries, and a relaxed European feel.",
     why: "Afternoon wine at Out of the Cellar wine bar, dinner at The Basin gastropub or splurge on the Bella Saratoga patio — the quietest and most refined village feel in the South Bay",
+    featuredPlace: "Out of the Cellar",
     emoji: "🍷",
     indoorOutdoor: "both",
     bestSlots: ["afternoon", "evening"],
@@ -638,6 +649,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     description:
       "A quiet, walkable historic district with Mission Santa Clara at its center, local restaurants, and close proximity to Levi's Stadium.",
     why: "Stop at Falafel's Drive-In (a Santa Clara institution since 1966, cash only), walk past Mission Santa Clara, and grab a beer at one of the local spots on Franklin St — low-key, authentic, zero hype",
+    featuredPlace: "Falafel's Drive-In",
     emoji: "⛪",
     indoorOutdoor: "both",
     bestSlots: ["afternoon", "evening"],
