@@ -23,17 +23,6 @@
       "summary": "No rodents, insects, birds, or animals"
     },
     {
-      "business_id": "PR0360491",
-      "name": "Sjs - H Mart",
-      "city": "San Jose",
-      "address": "1710 Oakland Rd",
-      "date": "2026-04-02",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Sewage and wastewater properly disposed"
-    },
-    {
       "business_id": "PR0430661",
       "name": "Sjs - H Mart",
       "city": "San Jose",
@@ -67,6 +56,17 @@
       "summary": "Sewage and wastewater properly disposed"
     },
     {
+      "business_id": "PR0436796",
+      "name": "Dduk Dabang",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
       "business_id": "PR0360837",
       "name": "Japacurry",
       "city": "San Jose",
@@ -78,26 +78,15 @@
       "summary": "Proper hot and cold holding temperatures"
     },
     {
-      "business_id": "PR0303915",
-      "name": "Asia Village Restaurant",
-      "city": "Sunnyvale",
-      "address": "747 S Wolfe Rd",
+      "business_id": "PR0376138",
+      "name": "Marufuku Ramen",
+      "city": "Campbell",
+      "address": "1875 S Bascom Av # 300",
       "date": "2026-04-02",
-      "score": null,
-      "result": "R",
+      "score": 79,
+      "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "This inspection was in conjunction with CO0159271"
-    },
-    {
-      "business_id": "PR0436796",
-      "name": "Dduk Dabang",
-      "city": "San Jose",
-      "address": "1710 Oakland Rd",
-      "date": "2026-04-02",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Sewage and wastewater properly disposed"
+      "summary": "Proper hot and cold holding temperatures"
     },
     {
       "business_id": "PR0401597",
@@ -111,15 +100,59 @@
       "summary": "Sewage and wastewater properly disposed"
     },
     {
-      "business_id": "PR0376138",
-      "name": "Marufuku Ramen",
-      "city": "Campbell",
-      "address": "1875 S Bascom Av # 300",
+      "business_id": "PR0303915",
+      "name": "Asia Village Restaurant",
+      "city": "Sunnyvale",
+      "address": "747 S Wolfe Rd",
       "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "This inspection was in conjunction with CO0159271"
+    },
+    {
+      "business_id": "PR0360491",
+      "name": "Sjs - H Mart",
+      "city": "San Jose",
+      "address": "1710 Oakland Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Sewage and wastewater properly disposed"
+    },
+    {
+      "business_id": "PR0302715",
+      "name": "Birrieria El Primo #2",
+      "city": "San Jose",
+      "address": "5320 Monterey Rd A",
+      "date": "2026-04-01",
+      "score": 64,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food obtained from approved source"
+    },
+    {
+      "business_id": "PR0301665",
+      "name": "Guadalajara De Dia",
+      "city": "San Jose",
+      "address": "5278 Monterey Rd # D",
+      "date": "2026-04-01",
       "score": 79,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0302427",
+      "name": "Benihana Of Tokyo",
+      "city": "Cupertino",
+      "address": "10123 N Wolfe Rd 2074",
+      "date": "2026-04-01",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
     },
     {
       "business_id": "PR0433703",
@@ -155,17 +188,6 @@
       "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
-      "business_id": "PR0301665",
-      "name": "Guadalajara De Dia",
-      "city": "San Jose",
-      "address": "5278 Monterey Rd # D",
-      "date": "2026-04-01",
-      "score": 79,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
       "business_id": "PR0367405",
       "name": "Nam Giao Restaurant",
       "city": "San Jose",
@@ -175,28 +197,6 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "- Facility is hereby closed due to evidence of a vermin infestation"
-    },
-    {
-      "business_id": "PR0302427",
-      "name": "Benihana Of Tokyo",
-      "city": "Cupertino",
-      "address": "10123 N Wolfe Rd 2074",
-      "date": "2026-04-01",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
-    },
-    {
-      "business_id": "PR0302715",
-      "name": "Birrieria El Primo #2",
-      "city": "San Jose",
-      "address": "5320 Monterey Rd A",
-      "date": "2026-04-01",
-      "score": 64,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food obtained from approved source"
     },
     {
       "business_id": "PR0378776",
@@ -221,37 +221,15 @@
       "summary": "Unable to complete ownership change"
     },
     {
-      "business_id": "PR0304747",
-      "name": "La Grullensa",
+      "business_id": "PR0305310",
+      "name": "Hacienda Parrilla Bar",
       "city": "San Jose",
-      "address": "461 S Capitol Av 15",
+      "address": "1820 Alum Rock Av",
       "date": "2026-03-30",
-      "score": 68,
+      "score": 43,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
-    },
-    {
-      "business_id": "PR0368840",
-      "name": "Ty Coffee",
-      "city": "San Jose",
-      "address": "2485 Alvin Av",
-      "date": "2026-03-30",
-      "score": 73,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "- Two or more major violations were observed during the routine inspection"
-    },
-    {
-      "business_id": "PR0374012",
-      "name": "Easterly",
-      "city": "Santa Clara",
-      "address": "3927 Rivermark Plz",
-      "date": "2026-03-30",
-      "score": 36,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Routine inspection conducted in conjunction with complaint investigation CO0159213"
+      "summary": "Proper hot and cold holding temperatures"
     },
     {
       "business_id": "PR0303505",
@@ -276,15 +254,37 @@
       "summary": "- On-site for operator scheduled follow-up inspection"
     },
     {
-      "business_id": "PR0305310",
-      "name": "Hacienda Parrilla Bar",
+      "business_id": "PR0368840",
+      "name": "Ty Coffee",
       "city": "San Jose",
-      "address": "1820 Alum Rock Av",
+      "address": "2485 Alvin Av",
       "date": "2026-03-30",
-      "score": 43,
+      "score": 73,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
+      "summary": "- Two or more major violations were observed during the routine inspection"
+    },
+    {
+      "business_id": "PR0374012",
+      "name": "Easterly",
+      "city": "Santa Clara",
+      "address": "3927 Rivermark Plz",
+      "date": "2026-03-30",
+      "score": 36,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Routine inspection conducted in conjunction with complaint investigation CO0159213"
+    },
+    {
+      "business_id": "PR0304747",
+      "name": "La Grullensa",
+      "city": "San Jose",
+      "address": "461 S Capitol Av 15",
+      "date": "2026-03-30",
+      "score": 68,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0301883",
@@ -309,17 +309,6 @@
       "summary": "**FACILITY CLOSED**"
     },
     {
-      "business_id": "PR0383489",
-      "name": "Pasta Market, The",
-      "city": "San Jose",
-      "address": "579 Coleman Av 80",
-      "date": "2026-03-27",
-      "score": 75,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
-    },
-    {
       "business_id": "PR0305057",
       "name": "Pizza My Heart",
       "city": "Santa Clara",
@@ -329,9 +318,20 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "This is the first follow up inspection and shall be charged at the approved hourly rate"
+    },
+    {
+      "business_id": "PR0383489",
+      "name": "Pasta Market, The",
+      "city": "San Jose",
+      "address": "579 Coleman Av 80",
+      "date": "2026-03-27",
+      "score": 75,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
     }
   ],
-  "generatedAt": "2026-04-04T20:14:25.544Z",
+  "generatedAt": "2026-04-04T23:09:12.050Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }
