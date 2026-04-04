@@ -2378,6 +2378,35 @@ Alcatraz is exactly the kind of company SBS exists to surface — a Cupertino st
 
 ---
 
+## 2026-04-04 — Cycle 47: Axiom Math AI + Exaforce + Data Refresh
+
+### Context
+Saturday April 4, 2026. Easter weekend. Second cycle of the day.
+
+### What Was Built
+
+**Two new companies added to Recently Funded:**
+- **Axiom Math AI** (Palo Alto) — $200M Series A, March 12, 2026. Founded by 25-year-old Stanford PhD student Carina Hong. Builds AI that formally proves AI-generated code is correct using the Lean proof language — solves the hallucination problem at the mathematical level. Scored perfect 12/12 on the Putnam Competition; proved a 20-year-old open number theory conjecture. $1.6B valuation, led by Menlo Ventures. Named conference rooms after mathematicians (Gauss, Ada Lovelace).
+- **Exaforce** (San Jose) — $75M Series A, January 12, 2026. Agentic SOC platform automating the entire security operations lifecycle via AI agents called "Exabots." 10× reduction in human SOC work. Founded by Google/F5/Palo Alto Networks veterans. Led by Khosla Ventures and Mayfield.
+- TECH_PULSE updated: $4.2B+ / 24 rounds
+
+**Data refreshes:**
+- around-town.json: 8 items current (San José West San Carlos permit, Cupertino business amnesty, Campbell beekeeping, SB 79 transit conflicts)
+- upcoming-meetings.json: San Jose, Sunnyvale, Cupertino for Apr 7
+
+### Why This Was the Strongest Move
+Axiom Math AI is a standout local story: a Stanford PhD student (Palo Alto) building AI that can mathematically prove AI code is correct — at a $1.6B valuation — is the kind of thing no newspaper is covering for South Bay residents. The Putnam perfect score and solved open conjecture make it immediately graspable even to non-engineers. Exaforce fills a gap in the security category: a San Jose SOC startup backed by Khosla.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data.
+2. **Mountain View restaurant radar** — ArcGIS Open Data at data-mountainview.opendata.arcgis.com; e-permits at epermits.mountainview.gov.
+3. **High school sports scores** — MaxPreps for Los Gatos, Saratoga, Palo Alto, Gunn, Archbishop Mitty.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Tech tab's Recently Funded is now the most comprehensive and current it's ever been.** 24 verified rounds totaling $4.2B+ in Q1–Q2 2026. A Palo Alto resident opening SBS sees a 25-year-old Stanford founder in their own city who just proved a 20-year-old math conjecture and raised $200M. That's a genuinely local story no aggregator is surfacing.
+
+---
+
 ## 2026-04-04 — Cycle 46: Netscape at 32 + Two More Funding Rounds + Full Data Refresh
 
 ### Context
