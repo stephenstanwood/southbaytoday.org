@@ -35,10 +35,11 @@ export default function SignalApp() {
   const navigateTo = useCallback((tab: Tab) => {
     setActiveTab(tab);
     window.location.hash = tab === "overview" ? "" : tab;
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    const onHashChange = () => setActiveTab(getTabFromHash());
+    const onHashChange = () => { setActiveTab(getTabFromHash()); window.scrollTo(0, 0); };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
