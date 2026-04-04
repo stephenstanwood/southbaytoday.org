@@ -2434,10 +2434,18 @@ async function fetchMeetupEvents() {
   const MIN_MEMBERS = 50;
   const MIN_RSVP = 3;
 
+  // Blocked Meetup group urlnames — add when a group consistently produces off-brand content
+  const BLOCKED_MEETUP_GROUPS = new Set([
+    "bay-area-childfree-connections", // childfree social group — not a fit for SBS audience
+  ]);
+
   const events = [];
   for (const node of rawEvents) {
     if (node.status !== "ACTIVE") continue;
     if (node.eventType !== "PHYSICAL") continue;
+
+    const groupUrlname = node.group?.urlname ?? "";
+    if (BLOCKED_MEETUP_GROUPS.has(groupUrlname)) continue;
 
     const memberCount = node.group?.stats?.memberCounts?.all ?? 0;
     if (memberCount < MIN_MEMBERS) continue;

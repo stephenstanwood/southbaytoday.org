@@ -24,6 +24,7 @@ import schoolCalJson from "../../../data/south-bay/school-calendar.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
 import techBriefingJson from "../../../data/south-bay/tech-briefing.json";
+import apodJson from "../../../data/south-bay/apod.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 
@@ -1823,6 +1824,55 @@ function AroundTownSection() {
   );
 }
 
+// ── NASA APOD Strip ───────────────────────────────────────────────────────────
+
+interface ApodItem {
+  date: string;
+  title: string;
+  url: string;
+  copyright: string | null;
+}
+
+function ApodStrip() {
+  const items = (apodJson as { items: ApodItem[] }).items;
+  if (!items?.length) return null;
+
+  const tile = (item: ApodItem, keySuffix: string) => (
+    <a
+      key={item.date + keySuffix}
+      href={`https://apod.nasa.gov/apod/ap${item.date.replace(/-/g, "").slice(2)}.html`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={item.title}
+      style={{
+        flexShrink: 0, display: "block", position: "relative",
+        height: 180, width: 270, overflow: "hidden", background: "#0a0a1a",
+      }}
+    >
+      <img
+        src={item.url}
+        alt={item.title}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        onError={(e) => { (e.currentTarget.closest("a") as HTMLElement).style.display = "none"; }}
+      />
+      <div className="ps-caption">
+        <span style={{ fontSize: 9, color: "#fff", fontFamily: "'Space Mono', monospace", lineHeight: 1.5 }}>
+          {item.title}{item.copyright ? ` · © ${item.copyright}` : " · NASA/APOD"}
+        </span>
+      </div>
+    </a>
+  );
+
+  return (
+    <div style={{ marginBottom: 28, marginLeft: -16, marginRight: -16, overflow: "hidden" }}>
+      <div className="apod-strip-track">
+        {items.map(p => tile(p, "-a"))}
+        {items.map(p => tile(p, "-b"))}
+      </div>
+    </div>
+  );
+}
+
 // ── Tech Briefing Callout ─────────────────────────────────────────────────────
 
 function TechBriefingCallout({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
@@ -2838,6 +2888,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── This Week in [City] briefing ── */}
       {homeCity && !changingCity && <CityWeeklyBriefing city={homeCity} />}
+
+      {/* ── NASA APOD strip ── */}
+      {!changingCity && <ApodStrip />}
 
       {/* ── South Bay Tech briefing teaser ── */}
       {!changingCity && <TechBriefingCallout onNavigate={onNavigate} />}

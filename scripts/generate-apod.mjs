@@ -20,6 +20,11 @@ const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "apod.json");
 
 const API_KEY = process.env.NASA_API_KEY || "DEMO_KEY";
 
+// Specific APOD dates to exclude (historical/archival photos that don't fit the vibe)
+const BLOCKED_DATES = new Set([
+  "2026-03-28", // Robert Goddard and Nell — historical B&W, not space imagery
+]);
+
 // Fetch the last 14 days; filter to images only, keep up to 12
 function daysAgo(n) {
   const d = new Date();
@@ -42,9 +47,9 @@ async function main() {
   const raw = await res.json();
   if (!Array.isArray(raw)) throw new Error("Unexpected response shape");
 
-  // Keep images only (skip embedded YouTube/Vimeo videos)
+  // Keep images only (skip videos and blocked dates)
   const items = raw
-    .filter((d) => d.media_type === "image")
+    .filter((d) => d.media_type === "image" && !BLOCKED_DATES.has(d.date))
     .slice(-12) // most recent 12
     .reverse()  // newest first
     .map((d) => ({
