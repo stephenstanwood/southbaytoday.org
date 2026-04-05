@@ -282,6 +282,7 @@ type SccFoodItem = {
   date: string | null;
   status: "opened" | "coming-soon";
   sourceId: string | null;
+  blurb?: string | null;
 };
 
 const CITY_DISPLAY: Record<string, string> = {
@@ -344,6 +345,14 @@ function SccFoodOpeningsCard() {
           }}>
             {item.name}
           </div>
+          {item.blurb && (
+            <div style={{
+              fontSize: 12, color: "var(--sb-ink-muted)",
+              fontStyle: "italic", marginBottom: 3, lineHeight: 1.4,
+            }}>
+              {item.blurb}
+            </div>
+          )}
           <div style={{
             fontSize: 11, color: "var(--sb-muted)",
             display: "flex", gap: 5, flexWrap: "wrap",

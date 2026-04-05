@@ -11,9 +11,20 @@
  * Run: node scripts/generate-scc-food-openings.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import Anthropic from "@anthropic-ai/sdk";
+
+// Load .env.local if present (for ANTHROPIC_API_KEY)
+try {
+  const envPath = join(dirname(fileURLToPath(import.meta.url)), "..", ".env.local");
+  const envText = readFileSync(envPath, "utf8");
+  for (const line of envText.split("\n")) {
+    const m = line.match(/^([A-Z0-9_]+)="?([^"]*)"?\s*$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
+  }
+} catch { /* no .env.local */ }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-openings.json");
@@ -30,7 +41,7 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#/i;
+const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE)\b/i;
@@ -57,6 +68,7 @@ const CITY_ID_MAP = {
 /**
  * Clean a business name:
  * - Strip leading "E-" (electronic submission prefix)
+ * - Strip trailing permit artifact suffixes (e.g., "- 3 Comp Sink Install", "- TI")
  * - Title case
  * - Trim trailing generic suffixes like "TENANT IMPROVEMENT"
  */
@@ -69,6 +81,10 @@ function cleanName(raw) {
 
   // If the whole thing is a generic tenant improvement placeholder, return null
   if (/^(RESTAURANT\s+)?TENANT\s+IMPR(OVEMENT)?(\s+\d+)?$/i.test(s)) return null;
+
+  // Strip trailing permit artifact suffixes like "- 3 Comp Sink Install", "- TI", "- Remodel", "- Hood Install"
+  s = s.replace(/\s+-\s+\d+\s+Comp\s+Sink.*$/i, "").trim();
+  s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade)(\s+\d+)?$/i, "").trim();
 
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();
@@ -133,6 +149,9 @@ function cleanAddress(raw) {
   return s || null;
 }
 
+// Pure legal entity names (no real business descriptor) — e.g. "Sp Social LLC", "Umesjoakland Inc."
+const BARE_ENTITY_PATTERN = /^[A-Za-z0-9&'\s]{1,30}\s+(LLC|Inc\.|Inc|Corp\.|Corp|Ltd\.|Ltd|L\.L\.C\.|Co\.)$/i;
+
 function shouldSkip(item) {
   const name = item.business_name ?? "";
   const rawName = name.replace(/^E-\s*/i, "").trim();
@@ -148,7 +167,56 @@ function shouldSkip(item) {
   const cleaned = cleanName(name);
   if (!cleaned) return true;
 
+  // Skip pure legal entity names with no real business descriptor
+  // e.g. "Sp Social LLC", "Umesjoakland Inc." — no actual restaurant name
+  if (BARE_ENTITY_PATTERN.test(cleaned)) {
+    const wordsBeforeEntity = cleaned.replace(/\s+(LLC|Inc\.|Inc|Corp\.|Corp|Ltd\.|Ltd|L\.L\.C\.|Co\.)$/i, "").trim().split(/\s+/);
+    if (wordsBeforeEntity.length <= 2) return true;
+  }
+
   return false;
+}
+
+/**
+ * Generate one-line blurbs for a list of recently opened restaurants using Claude Haiku.
+ * Returns a map of item id → blurb string.
+ */
+async function generateBlurbs(items) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey || items.length === 0) return {};
+
+  const client = new Anthropic({ apiKey });
+  const list = items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"}, ${i.cityName}`).join("\n");
+
+  const prompt = `You are writing micro-blurbs for a local news site about newly opened restaurants in Silicon Valley's South Bay.
+
+For each restaurant below, write a single sentence (max 12 words) that sounds like a friendly neighborhood tip — something a local food lover might say to a friend. Don't start with the restaurant name. Be specific if the name hints at a cuisine. Keep it warm and welcoming.
+
+Restaurants:
+${list}
+
+Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
+
+  try {
+    const msg = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 512,
+      messages: [{ role: "user", content: prompt }],
+    });
+    let text = msg.content[0]?.text ?? "[]";
+    // Strip markdown code fences if present
+    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
+    const parsed = JSON.parse(text);
+    const map = {};
+    for (const entry of parsed) {
+      const match = items.find((i) => i.name === entry.name);
+      if (match) map[match.id] = entry.blurb;
+    }
+    return map;
+  } catch (err) {
+    console.warn("Blurb generation failed:", err.message);
+    return {};
+  }
 }
 
 async function fetchPage(whereClause, orderField, limit = 50) {
@@ -244,11 +312,21 @@ async function main() {
     (i) => !openedAddresses.has(`${i.cityId}:${i.address?.toLowerCase()}`),
   );
 
+  // Generate blurbs for top opened restaurants
+  const topOpened = openedDeduped.slice(0, 8);
+  console.log("Generating blurbs for opened restaurants…");
+  const blurbs = await generateBlurbs(topOpened);
+
+  const openedWithBlurbs = openedDeduped.slice(0, 12).map((i) => ({
+    ...i,
+    blurb: blurbs[i.id] ?? null,
+  }));
+
   const output = {
     generatedAt: new Date().toISOString(),
     lookbackDays: LOOKBACK_DAYS,
     sourceUrl: "https://data.sccgov.org/resource/skd7-7ix3",
-    opened: openedDeduped.slice(0, 12),
+    opened: openedWithBlurbs,
     comingSoon: comingSoonFinal.slice(0, 12),
   };
 

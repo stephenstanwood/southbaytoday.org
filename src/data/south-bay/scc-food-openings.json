@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-05T14:10:00.411Z",
+  "generatedAt": "2026-04-05T23:14:54.093Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
@@ -11,7 +11,8 @@
       "cityName": "CAMPBELL",
       "date": "2026-04-03",
       "status": "opened",
-      "sourceId": "SR0880767"
+      "sourceId": "SR0880767",
+      "blurb": "Campbell's got amazing handmade dumplings now—seriously worth the trip."
     },
     {
       "id": "opened-SR0883804",
@@ -21,7 +22,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-04-03",
       "status": "opened",
-      "sourceId": "SR0883804"
+      "sourceId": "SR0883804",
+      "blurb": "New York pizza just opened in San Jose—crispy, authentic, totally addictive."
     },
     {
       "id": "opened-SR0880054",
@@ -31,7 +33,8 @@
       "cityName": "PALO ALTO",
       "date": "2026-04-02",
       "status": "opened",
-      "sourceId": "SR0880054"
+      "sourceId": "SR0880054",
+      "blurb": "Palo Alto's newest cozy spot for excellent coffee and pastries."
     },
     {
       "id": "opened-SR0882669",
@@ -41,7 +44,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-31",
       "status": "opened",
-      "sourceId": "SR0882669"
+      "sourceId": "SR0882669",
+      "blurb": "Fresh sushi wrapped burrito-style—messy hands, happy belly guaranteed."
     },
     {
       "id": "opened-SR0883343",
@@ -51,17 +55,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-27",
       "status": "opened",
-      "sourceId": "SR0883343"
-    },
-    {
-      "id": "opened-SR0883262",
-      "name": "Sp Social LLC",
-      "address": "163 W Santa Clara St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-03-25",
-      "status": "opened",
-      "sourceId": "SR0883262"
+      "sourceId": "SR0883343",
+      "blurb": "Downtown's vibrant Korean spot delivers bold flavors and serious comfort."
     },
     {
       "id": "opened-SR0883335",
@@ -71,7 +66,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-24",
       "status": "opened",
-      "sourceId": "SR0883335"
+      "sourceId": "SR0883335",
+      "blurb": "Modern comfort food done right—your new favorite quick lunch spot."
     },
     {
       "id": "opened-SR0883691",
@@ -81,7 +77,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-20",
       "status": "opened",
-      "sourceId": "SR0883691"
+      "sourceId": "SR0883691",
+      "blurb": "Japanese curry fusion in a cool garage setting—flavors blow your mind."
     },
     {
       "id": "opened-SR0882563",
@@ -91,7 +88,8 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-19",
       "status": "opened",
-      "sourceId": "SR0882563"
+      "sourceId": "SR0882563",
+      "blurb": "West San Jose's got the best French dips now—perfectly juicy."
     },
     {
       "id": "opened-SR0883795",
@@ -101,7 +99,8 @@
       "cityName": "SUNNYVALE",
       "date": "2026-03-18",
       "status": "opened",
-      "sourceId": "SR0883795"
+      "sourceId": "SR0883795",
+      "blurb": null
     },
     {
       "id": "opened-SR0883623",
@@ -111,17 +110,30 @@
       "cityName": "SAN JOSE",
       "date": "2026-03-17",
       "status": "opened",
-      "sourceId": "SR0883623"
+      "sourceId": "SR0883623",
+      "blurb": null
     },
     {
-      "id": "opened-SR0883302",
-      "name": "Umesjoakland Inc.",
-      "address": "1704 Oakland Rd. #300",
+      "id": "opened-SR0882220",
+      "name": "Da Vien Coffee",
+      "address": "279 W Calaveras Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-03-12",
+      "status": "opened",
+      "sourceId": "SR0882220",
+      "blurb": null
+    },
+    {
+      "id": "opened-SR0883256",
+      "name": "Gu Gu Pocha",
+      "address": "1710 Oakland Rd",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
-      "date": "2026-03-17",
+      "date": "2026-03-11",
       "status": "opened",
-      "sourceId": "SR0883302"
+      "sourceId": "SR0883256",
+      "blurb": null
     }
   ],
   "comingSoon": [
@@ -137,7 +149,7 @@
     },
     {
       "id": "soon-SR0884373",
-      "name": "Tasty Noodle - 3 Comp Sink Install",
+      "name": "Tasty Noodle",
       "address": "103 N Milpitas Blvd",
       "cityId": "milpitas",
       "cityName": "MILPITAS",
@@ -174,16 +186,6 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0878084"
-    },
-    {
-      "id": "soon-SR0882834",
-      "name": "Rancho Del Pueblo Golf Course Pro Shop",
-      "address": "1649 Hermocilla Way",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-03",
-      "status": "coming-soon",
-      "sourceId": "SR0882834"
     },
     {
       "id": "soon-SR0883454",
@@ -244,6 +246,16 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0883303"
+    },
+    {
+      "id": "soon-SR0884117",
+      "name": "Com Tam Thien Huong Take Out",
+      "address": "909 Story Rd.., Unit 100,115",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-01",
+      "status": "coming-soon",
+      "sourceId": "SR0884117"
     }
   ]
 }
