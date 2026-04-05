@@ -183,13 +183,29 @@ async function main() {
     return;
   }
 
-  // Filter to time-relevant items
-  const relevant = unpublished.filter((p) => isTimeRelevant(p.item, ptTime));
-  const expired = unpublished.length - relevant.length;
-  if (expired > 0) {
-    console.log(`   ${expired} expired (past or <2hr lead time)`);
-    // Mark expired items as published so they don't clog the queue
-    for (const p of unpublished) {
+  // Sweep: expire items whose date is fully in the past (before today in PT)
+  let expiredCount = 0;
+  for (const p of queue) {
+    if (p.published) continue;
+    if (p.item?.date && p.item.date < today) {
+      p.published = true;
+      p.publishedAt = new Date().toISOString();
+      p.publishResult = "expired";
+      expiredCount++;
+    }
+  }
+  if (expiredCount > 0) {
+    console.log(`   ${expiredCount} expired (date in the past)`);
+  }
+
+  // Filter remaining unpublished to time-relevant items (today <2hr, etc.)
+  const stillUnpublished = queue.filter((p) => !p.published);
+  const relevant = stillUnpublished.filter((p) => isTimeRelevant(p.item, ptTime));
+  const tooSoon = stillUnpublished.length - relevant.length;
+  if (tooSoon > 0) {
+    console.log(`   ${tooSoon} skipped (<2hr lead time)`);
+    // Mark too-soon items as expired
+    for (const p of stillUnpublished) {
       if (!isTimeRelevant(p.item, ptTime)) {
         p.published = true;
         p.publishedAt = new Date().toISOString();
