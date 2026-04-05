@@ -210,7 +210,40 @@
     "targetUrl": "https://www.bayfc.com/schedule",
     "approvedAt": "2026-04-05T12:17:56.325Z",
     "comment": "good. make sure the time reference makes sense (\"this afternoon\" if day-of; skip if the event is passed or within the next two hours)",
-    "published": false
+    "published": true,
+    "publishedAt": "2026-04-05T21:10:06.974Z",
+    "publishedTo": [
+      {
+        "platform": "x",
+        "ok": true,
+        "postId": "2040899787453862094",
+        "id": "2040899787453862094",
+        "text": "Bay FC takes on Washington Spirit this afternoon at PayPal Park ⚽ Kickoff at 2pm. Tickets available if you're looking for a Sunday soccer fix 🟦 https://t.co/7uhOfX0sQY"
+      },
+      {
+        "platform": "bluesky",
+        "ok": true,
+        "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mirnwouy5u2u",
+        "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mirnwouy5u2u",
+        "cid": "bafyreiehrwvr4fy6w2hm4zxnxfptjrfxzxw7bbyezblaqrue6mtefjf3mu"
+      },
+      {
+        "platform": "threads",
+        "ok": false,
+        "error": "Threads container creation failed (400): {\"error\":{\"message\":\"API access blocked.\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"AYWfBpG5mFfJoEg_IX1nF2y\"}}"
+      },
+      {
+        "platform": "facebook",
+        "ok": false,
+        "error": "Facebook post failed (400): {\"error\":{\"message\":\"Any of the pages_read_engagement, pages_manage_metadata,\\n        pages_read_user_content, pages_manage_ads, pages_show_list or\\n        pages_messaging permission(s) must be granted before impersonating a\\n        user's page.\",\"type\":\"OAuthException\",\"code\":190,\"fbtrace_id\":\"AJOVJ7ZC_cvqaYzeDiFk6rO\"}}"
+      }
+    ],
+    "rewrittenCopy": {
+      "x": "Bay FC takes on Washington Spirit this afternoon at PayPal Park ⚽ Kickoff at 2pm. Tickets available if you're looking for a Sunday soccer fix 🟦 https://www.bayfc.com/schedule",
+      "threads": "Bay FC vs. Washington Spirit is happening this afternoon at PayPal Park! ⚽ Game starts at 2pm — solid way to spend a Sunday if you're into women's soccer. Check out tickets here 🟦 https://www.bayfc.com/schedule",
+      "bluesky": "Bay FC plays Washington Spirit this afternoon at PayPal Park ⚽ Kickoff at 2pm if you want to catch some soccer today. Tickets available 🟦 https://www.bayfc.com/schedule",
+      "facebook": "Bay FC is taking on Washington Spirit this afternoon at PayPal Park! ⚽ If you're looking for something to do this Sunday, the game kicks off at 2pm. Grab tickets if you're interested — solid way to spend the afternoon 🟦 https://www.bayfc.com/schedule"
+    }
   },
   {
     "postType": "single",
