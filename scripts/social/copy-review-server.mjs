@@ -17,6 +17,7 @@ const PORT = 3456;
 const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
+const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
 const ENV_FILE = join(__dirname, "..", "..", ".env.local");
 const BATCH_SIZE = 25;
@@ -63,6 +64,21 @@ function saveQueue(queue) {
   const dir = dirname(QUEUE_FILE);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
+}
+
+function loadReplies() {
+  if (!existsSync(REPLIES_FILE)) return [];
+  try {
+    return JSON.parse(readFileSync(REPLIES_FILE, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
+function saveReplies(replies) {
+  const dir = dirname(REPLIES_FILE);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(REPLIES_FILE, JSON.stringify(replies, null, 2) + "\n");
 }
 
 // Clear old post files and generate a new batch
@@ -122,6 +138,42 @@ const HTML = `<!DOCTYPE html>
     color: #888;
     margin-bottom: 4px;
   }
+
+  /* Tab navigation */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    max-width: 640px;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #E5E2DB;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    color: #888;
+    transition: background 0.15s, color 0.15s;
+  }
+  .tab-btn:not(:last-child) { border-right: 1px solid #E5E2DB; }
+  .tab-btn.active {
+    background: #1a1a1a;
+    color: #faf9f6;
+  }
+  .tab-btn:not(.active):hover { background: #f0efec; }
+  .tab-count {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
   .counter {
     font-size: 13px;
     color: #aaa;
@@ -308,32 +360,179 @@ const HTML = `<!DOCTYPE html>
     color: #888;
   }
   .empty h2 { font-size: 20px; margin-bottom: 8px; color: #1a1a1a; }
+
+  /* Replies tab styles */
+  #replies-view {
+    max-width: 640px;
+    width: 100%;
+    display: none;
+  }
+  .reply-card {
+    background: #fff;
+    border: 1px solid #E5E2DB;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ccc;
+  }
+  .reply-card.cls-positive_simple { border-left-color: #2c6b4f; }
+  .reply-card.cls-factual, .reply-card.cls-question { border-left-color: #1d9bf0; }
+  .reply-card.cls-needs_human { border-left-color: #e6a817; }
+  .reply-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .reply-platform-icon { font-size: 16px; }
+  .reply-author {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .reply-timestamp {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: auto;
+  }
+  .reply-text {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .reply-context {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: #faf9f6;
+    border-radius: 4px;
+  }
+  .reply-context strong { color: #555; }
+  .reply-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .reply-status .check { color: #2c6b4f; }
+  .reply-status .x-mark { color: #c0392b; }
+  .reply-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .reply-badge.positive_simple { background: #e8f5e9; color: #2c6b4f; }
+  .reply-badge.factual, .reply-badge.question { background: #e3f2fd; color: #1565c0; }
+  .reply-badge.needs_human { background: #fff3e0; color: #e65100; }
+  .reply-badge.unclassified { background: #f5f5f5; color: #888; }
+  .reply-link {
+    font-size: 12px;
+    color: #1d9bf0;
+    text-decoration: none;
+  }
+  .reply-link:hover { text-decoration: underline; }
+  .reply-action-box {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .reply-action-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #E5E2DB;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background: #fff;
+  }
+  .reply-action-input::placeholder { color: #bbb; }
+  .reply-action-input:focus { outline: none; border-color: #999; }
+  .reply-action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #1a1a1a;
+    color: #faf9f6;
+    white-space: nowrap;
+  }
+  .reply-action-btn:hover { background: #333; }
+  .reply-action-btn:disabled { background: #ccc; cursor: default; }
+  .reply-saved-note {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #f0efec;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #555;
+  }
+  .reply-saved-note strong { color: #1a1a1a; }
 </style>
 </head>
 <body>
 <h1>The South Bay Signal</h1>
-<div class="counter" id="counter"></div>
-<div id="queue-badge" class="queue-badge"></div>
-<div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> reject &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>Tab</kbd> comment box</div>
 
-<div id="review-area">
-  <div class="item-header" id="item-header"></div>
-  <div class="platforms" id="platforms"></div>
-  <div class="comment-section">
-    <textarea class="comment-input" id="comment" placeholder="Notes or edit suggestions (optional)..." rows="1"></textarea>
-  </div>
-  <div class="buttons" id="buttons">
-    <button class="btn btn-reject" onclick="vote('reject')">&larr; Skip</button>
-    <button class="btn btn-approve" onclick="vote('approve')">Approve &rarr;</button>
-  </div>
+<div class="tab-bar" id="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('review')" id="tab-review">Review <span class="tab-count" id="tab-review-count"></span></button>
+  <button class="tab-btn" onclick="switchTab('replies')" id="tab-replies">Replies <span class="tab-count" id="tab-replies-count"></span></button>
 </div>
-<div class="done" id="done" style="display:none"></div>
+
+<div id="review-tab">
+  <div class="counter" id="counter"></div>
+  <div id="queue-badge" class="queue-badge"></div>
+  <div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> reject &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>Tab</kbd> comment box</div>
+
+  <div id="review-area">
+    <div class="item-header" id="item-header"></div>
+    <div class="platforms" id="platforms"></div>
+    <div class="comment-section">
+      <textarea class="comment-input" id="comment" placeholder="Notes or edit suggestions (optional)..." rows="1"></textarea>
+    </div>
+    <div class="buttons" id="buttons">
+      <button class="btn btn-reject" onclick="vote('reject')">&larr; Skip</button>
+      <button class="btn btn-approve" onclick="vote('approve')">Approve &rarr;</button>
+    </div>
+  </div>
+  <div class="done" id="done" style="display:none"></div>
+</div>
+
+<div id="replies-view">
+  <div id="replies-list"></div>
+</div>
 
 <script>
 let posts = [];
 let current = 0;
 let results = [];
 let queueSize = 0;
+let currentTab = 'review';
+let repliesData = [];
+
+const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8' };
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-review').className = 'tab-btn' + (tab === 'review' ? ' active' : '');
+  document.getElementById('tab-replies').className = 'tab-btn' + (tab === 'replies' ? ' active' : '');
+  document.getElementById('review-tab').style.display = tab === 'review' ? '' : 'none';
+  document.getElementById('replies-view').style.display = tab === 'replies' ? '' : 'none';
+  if (tab === 'replies') loadReplies();
+}
+
+function updateTabCounts(draftCount, repliesNewCount) {
+  document.getElementById('tab-review-count').textContent = draftCount > 0 ? '(' + draftCount + ' drafts)' : '';
+  document.getElementById('tab-replies-count').textContent = repliesNewCount > 0 ? '(' + repliesNewCount + ' new)' : '';
+}
 
 function updateQueueBadge(size) {
   queueSize = size;
@@ -347,6 +546,18 @@ async function init() {
   const data = await res.json();
   posts = data.posts;
   updateQueueBadge(data.queueSize);
+
+  // Fetch reply count for tab badge
+  try {
+    const rRes = await fetch('/api/replies');
+    const rData = await rRes.json();
+    repliesData = rData;
+    const newCount = rData.filter(r => r.classification && !r.responded && !r.actionNote).length;
+    updateTabCounts(posts.length, newCount);
+  } catch {
+    updateTabCounts(posts.length, 0);
+  }
+
   if (posts.length === 0) {
     document.getElementById('review-area').style.display = 'none';
     document.getElementById('shortcuts').style.display = 'none';
@@ -359,6 +570,22 @@ async function init() {
 
 function urlify(text) {
   return text.replace(/(https?:\\/\\/[^\\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+}
+
+function escapeHtml(text) {
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function timeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  const days = Math.floor(hrs / 24);
+  return days + 'd ago';
 }
 
 function render() {
@@ -472,7 +699,112 @@ function vote(v) {
   setTimeout(() => { current++; render(); }, 300);
 }
 
+// --- Replies ---
+
+async function loadReplies() {
+  try {
+    const res = await fetch('/api/replies');
+    repliesData = await res.json();
+  } catch {
+    repliesData = [];
+  }
+  renderReplies();
+}
+
+function renderReplies() {
+  const container = document.getElementById('replies-list');
+  if (!repliesData || repliesData.length === 0) {
+    container.innerHTML = '<div class="empty"><h2>No replies yet</h2><p>Run <code>node scripts/social/monitor-replies.mjs</code> to fetch replies from your social accounts.</p></div>';
+    return;
+  }
+
+  // Sort newest first
+  const sorted = [...repliesData].sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+  let html = '';
+  for (const reply of sorted) {
+    const cls = reply.classification || 'unclassified';
+    const icon = PLATFORM_ICONS[reply.platform] || '';
+    const liked = reply.liked;
+    const responded = reply.responded;
+
+    html += '<div class="reply-card cls-' + cls + '">';
+
+    // Header
+    html += '<div class="reply-card-header">';
+    html += '<span class="reply-platform-icon">' + icon + '</span>';
+    html += '<span class="reply-author">@' + escapeHtml(reply.authorUsername || 'unknown') + '</span>';
+    html += '<span class="reply-badge ' + cls + '">' + cls.replace('_', ' ') + '</span>';
+    html += '<span class="reply-timestamp">' + timeAgo(reply.timestamp) + '</span>';
+    html += '</div>';
+
+    // Reply text
+    html += '<div class="reply-text">' + escapeHtml(reply.text || '') + '</div>';
+
+    // Original post context
+    if (reply.originalPostTitle) {
+      html += '<div class="reply-context">Re: <strong>' + escapeHtml(reply.originalPostTitle) + '</strong></div>';
+    }
+
+    // Status row
+    html += '<div class="reply-status">';
+    html += liked ? '<span class="check">\\u2714 liked</span>' : '<span class="x-mark">\\u2717 not liked</span>';
+    html += responded ? '<span class="check">\\u2714 responded</span>' : '<span class="x-mark">\\u2717 no response</span>';
+    if (reply.permalink) {
+      html += '<a class="reply-link" href="' + escapeHtml(reply.permalink) + '" target="_blank">View on platform \\u2197</a>';
+    }
+    html += '</div>';
+
+    // Saved action note
+    if (reply.actionNote) {
+      html += '<div class="reply-saved-note"><strong>Action:</strong> ' + escapeHtml(reply.actionNote) + '</div>';
+    }
+
+    // Action input
+    html += '<div class="reply-action-box">';
+    html += '<input class="reply-action-input" id="action-' + escapeHtml(reply.id) + '" placeholder="e.g. respond with: Thanks! ..." value="' + escapeHtml(reply.actionNote || '') + '">';
+    html += '<button class="reply-action-btn" onclick="submitAction(\\'' + escapeHtml(reply.id) + '\\')">Save</button>';
+    html += '</div>';
+
+    html += '</div>';
+  }
+  container.innerHTML = html;
+}
+
+async function submitAction(replyId) {
+  const input = document.getElementById('action-' + replyId);
+  if (!input) return;
+  const note = input.value.trim();
+  const btn = input.nextElementSibling;
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const res = await fetch('/api/reply-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: replyId, actionNote: note || null }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      btn.textContent = 'Saved';
+      setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
+      // Update local data
+      const r = repliesData.find(r => r.id === replyId);
+      if (r) r.actionNote = note || null;
+      // Refresh tab count
+      const newCount = repliesData.filter(r => r.classification && !r.responded && !r.actionNote).length;
+      updateTabCounts(posts.length, newCount);
+    }
+  } catch {
+    btn.textContent = 'Error';
+    setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
+  }
+}
+
 document.addEventListener('keydown', (e) => {
+  // Don't intercept keys when in replies tab or in an input
+  if (currentTab !== 'review') return;
   if (document.activeElement === document.getElementById('comment')) {
     if (e.key === 'Escape') document.getElementById('comment').blur();
     return;
@@ -567,6 +899,44 @@ const server = createServer((req, res) => {
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true, queueSize: queue.length }));
+    });
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/api/replies") {
+    const replies = loadReplies();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(replies));
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/reply-action") {
+    let body = "";
+    req.on("data", (c) => (body += c));
+    req.on("end", () => {
+      try {
+        const { id, actionNote } = JSON.parse(body);
+        if (!id) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Missing reply id" }));
+          return;
+        }
+        const replies = loadReplies();
+        const reply = replies.find((r) => r.id === id);
+        if (!reply) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Reply not found" }));
+          return;
+        }
+        reply.actionNote = actionNote || null;
+        saveReplies(replies);
+        console.log(`\n📝 Action saved for reply ${id}: "${actionNote || "(cleared)"}"`);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: true }));
+      } catch (e) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
     });
     return;
   }
