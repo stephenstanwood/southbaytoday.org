@@ -2543,3 +2543,36 @@ Any South Bay resident opening the Tech tab April 13–26 previously saw no "Thi
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the SV History section now covers all of April.** A Mountain View resident opening SBS any day in April will see a story tied directly to their city's tech legacy. The full pipeline is refreshed, April 7 meetings are surfaced in upcoming-meetings, and the Easter weekend data gap is closed.
+
+---
+
+## 2026-04-05 — Cycle 53: LinkedIn + Java May Milestones + Full Data Refresh
+
+### Context
+Sunday April 5, 2026 (late cycle). Spring Break week 1. Cycle 52 (JetStream Security + OpenAI MV campus) was done at 7:12 AM. May is approaching — TECH_MILESTONES only had AMD for the entire month. LinkedIn launches on May 5 and Java was announced May 23.
+
+### What Was Built
+
+**Two new May TECH_MILESTONES:**
+- **LinkedIn** (May 5, 2003, Mountain View): LinkedIn launched publicly on May 5, 2003. Reid Hoffman and co-founders, originally from PayPal, opened the site from Mountain View offices. Microsoft acquired it for $26.2B in 2016. Fills the May 5–22 window.
+- **Java / Sun Microsystems** (May 23, 1995, Mountain View): Sun announced Java at SunWorld '95 on May 23, 1995. James Gosling's "Write once, run anywhere" language came from Sun's Mountain View HQ and went on to power Android, enterprise servers, and billions of devices. Fills the May 23–31 window.
+- May now has 3 milestones: AMD (May 1), LinkedIn (May 5), Java (May 23). Full coverage across the month.
+
+**Full data pipeline refresh:**
+- upcoming-events.json: 531 events (107 ongoing) from 24 sources
+- around-town.json: 8 items refreshed
+- digests.json: 9 cities refreshed
+- upcoming-meetings.json: SJ/Sunnyvale/Cupertino Apr 7 confirmed
+- city-briefings.json: 11 cities for Apr 5–12 week
+- real-estate.json, restaurant-radar.json, permit-pulse.json, air-quality.json: all refreshed (avg AQI 53 Moderate)
+
+### Why This Was the Strongest Move
+May was the thinnest month for SV History — only AMD. A resident opening the Tech tab May 5–31 previously saw no milestone after AMD on May 1. Now LinkedIn (May 5) gives them a story about a company that every South Bay professional uses daily, and Java (May 23) gives tech workers a milestone about the language that shaped modern software. Both stories are Mountain View — building a coherent "this city is where the internet was built" narrative.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required.
+2. **More months with thin TECH_MILESTONES coverage** — October and November currently have zero entries.
+3. **High school sports scores** — MaxPreps ToS prohibits scraping; no official public API. Blocked.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — May is now fully covered in SV History.** A Mountain View resident opening SBS any day in May will see a story about their city. April and May together now offer continuous coverage from Apr 1 (Apple) through May 31 (Java), with no dead zones.
