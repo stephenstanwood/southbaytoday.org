@@ -1599,6 +1599,30 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/Java_(programming_language)",
     defunct: false,
   },
+  {
+    id: "intel-4004",
+    company: "Intel 4004",
+    city: "Santa Clara",
+    foundedYear: 1971,
+    month: 11,
+    day: 15,
+    tagline: "The world's first commercial microprocessor — designed at Intel in Santa Clara and published November 15, 1971.",
+    anniversaryNote: "On November 15, 1971, Intel published the 4004 — the world's first commercially available microprocessor. Designed by Ted Hoff, Federico Faggin, and Stan Mazor at Intel's Santa Clara facility, it packed 2,300 transistors onto a chip the size of a fingernail. Every CPU, GPU, and smartphone chip today is a direct descendant of this moment. The entire digital age begins here, in Santa Clara.",
+    url: "https://en.wikipedia.org/wiki/Intel_4004",
+    defunct: false,
+  },
+  {
+    id: "atari-2600",
+    company: "Atari 2600",
+    city: "Sunnyvale",
+    foundedYear: 1977,
+    month: 10,
+    day: 14,
+    tagline: "The home video game console that brought the arcade into living rooms — launched by Atari in Sunnyvale, October 14, 1977.",
+    anniversaryNote: "On October 14, 1977, Atari launched the Atari 2600 Video Computer System from its Sunnyvale headquarters. At $199, it put a programmable game console in millions of homes and created the modern video game industry. Nolan Bushnell's Sunnyvale company had already sparked the arcade era with Pong in 1972 — the 2600 finished the job. Every console from NES to PlayStation to Xbox traces its lineage to this Sunnyvale box.",
+    url: "https://en.wikipedia.org/wiki/Atari_2600",
+    defunct: true,
+  },
 ];
 
 // ---------------------------------------------------------------------------
