@@ -16,6 +16,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
 import { scoreAndRank } from "./lib/scoring.mjs";
+import { diverseSelect } from "./lib/diversity.mjs";
 import { recentHistory, flattenHistory } from "./lib/dedup.mjs";
 import { filterByUrl } from "./lib/url-check.mjs";
 import { factCheckAll } from "./lib/fact-check.mjs";
@@ -178,9 +179,9 @@ async function main() {
   const history = flattenHistory(recentHistory(7));
   const scored = scoreAndRank(fresh, history);
 
-  // 5. Take top candidates (more than we need, to allow for URL/fact-check failures)
-  const topCandidates = scored.slice(0, maxPosts * 3);
-  logStep("📈", `Top ${topCandidates.length} candidates by score`);
+  // 5. Diverse selection (more than we need, to allow for URL/fact-check failures)
+  const topCandidates = diverseSelect(scored, maxPosts * 3);
+  logStep("📈", `Top ${topCandidates.length} diverse candidates by score`);
 
   // 6. URL validation — filter out items without good direct links
   logStep("🔗", "Validating URLs...");
