@@ -1304,6 +1304,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#dc2626",
     url: "https://www.exaforce.com",
   },
+  {
+    id: "also-ev",
+    name: "Also",
+    city: "Palo Alto",
+    category: "hardware",
+    round: "Series C",
+    amount: "$200M",
+    date: "2026-03-31",
+    tagline: "Rivian spinoff building small electric vehicles for last-mile mobility and autonomous delivery. Products include the TM-B e-bike and TM-Q autonomous delivery quad. Hit $1B valuation with DoorDash as a partner and investor — the future of South Bay food delivery may roll on Also wheels.",
+    color: "#16a34a",
+    url: "https://ridealso.com",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1319,9 +1331,9 @@ export const TECH_PULSE = [
     note: "25K local jobs each at Googleplex & Apple Park",
   },
   {
-    value: "$4.2B+",
+    value: "$4.4B+",
     label: "Raised in Q1–Q2 2026",
-    note: "26 South Bay startup rounds · chips, robotics, networking, security, AI led the way",
+    note: "27 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
