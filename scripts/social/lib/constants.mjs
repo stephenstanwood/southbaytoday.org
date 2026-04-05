@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 
 export const CONFIG = {
-  DRY_RUN: true,
+  DRY_RUN: false,
   PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true },
   FORMATS: { daily_pulse: true, tonight: true, weekend: true, civic: true },
   THRESHOLDS: { daily_pulse: 40, tonight: 35, weekend: 60, civic: 50 },
