@@ -11,7 +11,7 @@
 // generates single-item copy for each, and writes individual post JSONs.
 // ---------------------------------------------------------------------------
 
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
@@ -25,6 +25,55 @@ import { CONFIG } from "./lib/constants.mjs";
 import { logStep, logScore, logSuccess, logSkip, logError, logItem } from "./lib/logger.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// ── Already-seen filter ────────────────────────────────────────────────────
+// Skip items that are already approved, or were rejected in a previous review.
+
+function loadAlreadySeen() {
+  const seen = new Set();
+  const queuePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+
+  // Approved queue
+  try {
+    const queue = JSON.parse(readFileSync(queuePath, "utf8"));
+    for (const item of queue) {
+      if (item.item?.url) seen.add(item.item.url);
+      if (item.item?.title) seen.add(item.item.title.toLowerCase());
+    }
+  } catch {}
+
+  // Review feedback files (rejected items)
+  const feedbackDir = "/tmp/sbs-social";
+  try {
+    const files = readdirSync(feedbackDir).filter((f) => f.startsWith("review-feedback-"));
+    for (const f of files) {
+      const feedback = JSON.parse(readFileSync(join(feedbackDir, f), "utf8"));
+      for (const entry of feedback) {
+        if (entry.title) seen.add(entry.title.toLowerCase());
+      }
+    }
+  } catch {}
+
+  // Currently pending post files (avoid regenerating what's already in /tmp)
+  try {
+    const files = readdirSync(feedbackDir).filter((f) => f.startsWith("post-") && f.endsWith(".json"));
+    for (const f of files) {
+      const post = JSON.parse(readFileSync(join(feedbackDir, f), "utf8"));
+      if (post.item?.url) seen.add(post.item.url);
+      if (post.item?.title) seen.add(post.item.title.toLowerCase());
+    }
+  } catch {}
+
+  return seen;
+}
+
+function filterAlreadySeen(candidates, seen) {
+  return candidates.filter((c) => {
+    if (c.url && seen.has(c.url)) return false;
+    if (c.title && seen.has(c.title.toLowerCase())) return false;
+    return true;
+  });
+}
 
 // Load env
 if (!process.env.ANTHROPIC_API_KEY) {
@@ -120,9 +169,14 @@ async function main() {
   const timely = filterPastEvents(upcoming, ptTime);
   logStep("🕐", `${timely.length} candidates after time filter (${upcoming.length - timely.length} past events removed)`);
 
+  // 3b. Filter out items already approved, rejected, or pending review
+  const seen = loadAlreadySeen();
+  const fresh = filterAlreadySeen(timely, seen);
+  logStep("👀", `${fresh.length} fresh candidates (${timely.length - fresh.length} already reviewed/queued)`);
+
   // 4. Score with dedup history
   const history = flattenHistory(recentHistory(7));
-  const scored = scoreAndRank(timely, history);
+  const scored = scoreAndRank(fresh, history);
 
   // 5. Take top candidates (more than we need, to allow for URL/fact-check failures)
   const topCandidates = scored.slice(0, maxPosts * 3);
@@ -215,7 +269,7 @@ async function main() {
   // Summary for scheduled task reporting
   console.log(`\n**Social Posts Generated (${timeOfDay})**`);
   console.log(`- Time: ${ptTime.toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}`);
-  console.log(`- Candidates: ${allCandidates.length} total → ${timely.length} timely → ${urlValid.length} URL-valid → ${factChecked.length} fact-checked`);
+  console.log(`- Candidates: ${allCandidates.length} total → ${timely.length} timely → ${fresh.length} fresh → ${urlValid.length} URL-valid → ${factChecked.length} fact-checked`);
   console.log(`- Posts generated: ${posts.length}`);
   for (const p of posts) {
     console.log(`  • ${p.post.item.title} (${p.post.item.cityName || ""}) → ${p.post.item.url?.slice(0, 60)}`);

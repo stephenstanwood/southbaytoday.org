@@ -19,6 +19,18 @@ const UGLY_URL_PATTERNS = [
   /Calendar\.aspx\?From=/,                     // Legistar date params
 ];
 
+// Signals in page body that the event is dead.
+// Patterns must be specific enough to avoid false positives from
+// unrelated page text (cancellation policies, past tense mentions, etc.)
+const CANCELLATION_PATTERNS = [
+  /this event (is|has been) cancel/i,
+  /event (is|has been) cancel/i,
+  /event.{0,10}(is|has been) postponed/i,
+  /EventCancelled/,                             // schema.org structured data
+  /event-notification-cancell/i,                // common CSS class pattern
+  /\bno longer (taking place|happening)\b/i,
+];
+
 /**
  * Check if a URL is specific enough for social posting.
  * Returns { ok: boolean, reason?: string, url: string }
@@ -45,45 +57,41 @@ export function isUrlSpecific(url) {
 
 /**
  * Fetch a URL and check if it returns a valid response.
+ * Also reads the page body to detect cancellation notices.
  * Returns { ok: boolean, status?: number, reason?: string }
  */
 export async function isUrlReachable(url, timeout = 8000) {
   if (!url) return { ok: false, reason: "no URL" };
 
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeout);
-
+    // Always GET (not HEAD) so we can read the body for cancellation signals
     const res = await fetch(url, {
-      method: "HEAD",
-      signal: controller.signal,
+      method: "GET",
+      signal: AbortSignal.timeout(timeout),
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; SouthBaySignal/1.0)",
       },
       redirect: "follow",
     });
 
-    clearTimeout(timer);
-
-    if (res.ok) {
-      return { ok: true, status: res.status };
+    if (!res.ok) {
+      return { ok: false, status: res.status, reason: `HTTP ${res.status}` };
     }
 
-    // Some sites block HEAD, try GET
-    if (res.status === 405 || res.status === 403) {
-      const res2 = await fetch(url, {
-        method: "GET",
-        signal: AbortSignal.timeout(timeout),
-        headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; SouthBaySignal/1.0)",
-        },
-        redirect: "follow",
-      });
-      if (res2.ok) return { ok: true, status: res2.status };
-      return { ok: false, status: res2.status, reason: `HTTP ${res2.status}` };
+    // Read body and check for cancellation signals
+    const contentType = res.headers.get("content-type") || "";
+    if (contentType.includes("text/html") || contentType.includes("text/plain")) {
+      const body = await res.text();
+      // Scan whole body — cancellation notices can be deep in the page
+      const snippet = body;
+      for (const pattern of CANCELLATION_PATTERNS) {
+        if (pattern.test(snippet)) {
+          return { ok: false, status: res.status, reason: `page says event is canceled/postponed` };
+        }
+      }
     }
 
-    return { ok: false, status: res.status, reason: `HTTP ${res.status}` };
+    return { ok: true, status: res.status };
   } catch (err) {
     return { ok: false, reason: err.message };
   }

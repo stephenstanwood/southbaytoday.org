@@ -1,25 +1,107 @@
 #!/usr/bin/env node
 // ---------------------------------------------------------------------------
 // South Bay Signal — Social Copy Review Server
-// Swipe left/right to approve/reject post variants
+// Shows all 4 platform variants per item, with comment box for feedback.
+// Approved posts go to the ready queue, not published immediately.
+// Auto-regenerates next batch when current batch is finished.
 // ---------------------------------------------------------------------------
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, unlinkSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
+import { execFile } from "node:child_process";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 3456;
-const REVIEW_FILE = "/tmp/sbs-social-review.json";
-const RESULTS_FILE = "/tmp/sbs-social-review-results.json";
+const POST_DIR = "/tmp/sbs-social";
+const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
+const ENV_FILE = join(__dirname, "..", "..", ".env.local");
+const BATCH_SIZE = 25;
 
-let variants = JSON.parse(readFileSync(REVIEW_FILE, "utf8"));
-let results = [];
+let isGenerating = false;
+
+// Load all pending post JSONs from /tmp/sbs-social/
+function loadPendingPosts() {
+  if (!existsSync(POST_DIR)) return [];
+  const files = readdirSync(POST_DIR)
+    .filter((f) => f.startsWith("post-") && f.endsWith(".json"))
+    .sort();
+  const posts = files.map((f) => {
+    try {
+      const data = JSON.parse(readFileSync(join(POST_DIR, f), "utf8"));
+      data._file = f;
+      return data;
+    } catch {
+      return null;
+    }
+  }).filter(Boolean);
+  // Sort by event date/time ascending (soonest first)
+  posts.sort((a, b) => {
+    const dateA = a.item?.date || "9999";
+    const dateB = b.item?.date || "9999";
+    if (dateA !== dateB) return dateA.localeCompare(dateB);
+    const timeA = a.item?.time || "99:99";
+    const timeB = b.item?.time || "99:99";
+    return timeA.localeCompare(timeB);
+  });
+  return posts;
+}
+
+function loadQueue() {
+  if (!existsSync(QUEUE_FILE)) return [];
+  try {
+    return JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
+function saveQueue(queue) {
+  const dir = dirname(QUEUE_FILE);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
+}
+
+// Clear old post files and generate a new batch
+function generateNewBatch() {
+  if (isGenerating) return;
+  isGenerating = true;
+  console.log(`\n🔄 Generating next batch of ${BATCH_SIZE} posts...`);
+
+  // Clear old post files
+  if (existsSync(POST_DIR)) {
+    for (const f of readdirSync(POST_DIR)) {
+      if (f.startsWith("post-") && f.endsWith(".json")) {
+        unlinkSync(join(POST_DIR, f));
+      }
+    }
+  }
+
+  const nodePath = process.execPath;
+  execFile(nodePath, ["--env-file=" + ENV_FILE, GENERATE_SCRIPT, "--max", String(BATCH_SIZE)], {
+    cwd: join(__dirname, "..", ".."),
+    timeout: 300_000,
+  }, (err, stdout, stderr) => {
+    isGenerating = false;
+    if (err) {
+      console.error("Generation failed:", err.message);
+      if (stderr) console.error(stderr);
+      return;
+    }
+    console.log(stdout);
+    const posts = loadPendingPosts();
+    console.log(`✅ ${posts.length} new drafts ready for review`);
+  });
+}
 
 const HTML = `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SBS Social Copy Review</title>
+<title>SBS Social Review</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -30,90 +112,149 @@ const HTML = `<!DOCTYPE html>
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 32px 20px;
   }
   h1 {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #888;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
   .counter {
     font-size: 13px;
     color: #aaa;
-    margin-bottom: 32px;
+    margin-bottom: 8px;
   }
-  .card {
+  .queue-badge {
+    display: inline-block;
+    background: #2c6b4f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .queue-badge.low { background: #c0392b; }
+  .queue-badge.mid { background: #e6a817; }
+  .shortcuts {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+  kbd {
+    display: inline-block;
+    background: #eee;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    margin: 0 2px;
+  }
+
+  .item-header {
+    max-width: 640px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .item-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .item-meta {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .item-url {
+    font-size: 12px;
+    color: #1d9bf0;
+    word-break: break-all;
+  }
+  .item-url a { color: #1d9bf0; text-decoration: none; }
+
+  .platforms {
+    max-width: 640px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .platforms.swipe-left { transform: translateX(-120%) rotate(-4deg); opacity: 0; }
+  .platforms.swipe-right { transform: translateX(120%) rotate(4deg); opacity: 0; }
+  .platform-card {
     background: #fff;
     border: 1px solid #E5E2DB;
     border-radius: 8px;
-    padding: 32px;
-    max-width: 540px;
-    width: 100%;
-    margin-bottom: 24px;
-    position: relative;
-    transition: transform 0.3s, opacity 0.3s;
+    padding: 16px 20px;
   }
-  .card.swipe-left { transform: translateX(-120%) rotate(-8deg); opacity: 0; }
-  .card.swipe-right { transform: translateX(120%) rotate(8deg); opacity: 0; }
-  .format-badge {
-    display: inline-block;
+  .platform-label {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 3px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .format-pulse { background: #f0efec; color: #1a1a1a; }
-  .format-tonight { background: #fdeeec; color: #c0392b; }
-  .format-weekend { background: #e8f5e9; color: #2c6b4f; }
-  .format-civic { background: #e3f2fd; color: #2b5c8c; }
-  .format-lead { background: #f0efec; color: #1a1a1a; }
-  .format-themed { background: #f3e8fd; color: #6b2fa0; }
-  .format-family { background: #fff3e0; color: #e65100; }
-  .format-arts { background: #f3e8fd; color: #6b2fa0; }
-  .format-sports { background: #e8f5e9; color: #2c6b4f; }
-  .format-food { background: #fff8e1; color: #f57f17; }
-  [class*="format-family"] { background: #fff3e0; color: #e65100; }
-  [class*="format-arts"] { background: #f3e8fd; color: #6b2fa0; }
-  [class*="format-sports"] { background: #e8f5e9; color: #2c6b4f; }
-  [class*="format-civic"] { background: #e3f2fd; color: #2b5c8c; }
-  [class*="format-food"] { background: #fff8e1; color: #f57f17; }
-  .vibe {
-    font-size: 12px;
-    color: #aaa;
-    margin-bottom: 12px;
-    font-style: italic;
-  }
-  .tweet-text {
-    font-size: 18px;
+  .platform-label.x { color: #1A1A1A; }
+  .platform-label.threads { color: #000; }
+  .platform-label.bluesky { color: #0085ff; }
+  .platform-label.facebook { color: #1877F2; }
+  .platform-icon { font-size: 14px; }
+  .platform-text {
+    font-size: 15px;
     line-height: 1.5;
     color: #1a1a1a;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-  .tweet-text a { color: #1d9bf0; text-decoration: none; }
+  .platform-text a { color: #1d9bf0; text-decoration: none; }
   .char-count {
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 12px;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 6px;
     text-align: right;
   }
+
+  .comment-section {
+    max-width: 640px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .comment-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #E5E2DB;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 44px;
+    max-height: 120px;
+    background: #fff;
+  }
+  .comment-input::placeholder { color: #bbb; }
+  .comment-input:focus { outline: none; border-color: #999; }
+
   .buttons {
     display: flex;
-    gap: 16px;
-    max-width: 540px;
+    gap: 12px;
+    max-width: 640px;
     width: 100%;
+    margin-bottom: 32px;
   }
   .btn {
     flex: 1;
-    padding: 16px;
+    padding: 14px;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.1s;
@@ -124,140 +265,309 @@ const HTML = `<!DOCTYPE html>
     color: #888;
     border: 1px solid #ddd;
   }
+  .btn-reject:hover { background: #eee; }
   .btn-approve {
     background: #1a1a1a;
     color: #faf9f6;
   }
   .btn-approve:hover { background: #333; }
+
   .done {
     text-align: center;
     padding: 60px 20px;
-    max-width: 540px;
+    max-width: 640px;
   }
-  .done h2 { font-size: 24px; margin-bottom: 16px; }
-  .done p { color: #888; line-height: 1.6; }
-  .results { margin-top: 24px; text-align: left; }
-  .results li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-    list-style: none;
+  .done h2 { font-size: 22px; margin-bottom: 12px; }
+  .done p { color: #888; line-height: 1.6; font-size: 14px; }
+  .stat { margin-top: 20px; }
+  .stat-num { font-size: 36px; font-weight: 700; }
+  .stat-label { font-size: 13px; color: #888; }
+
+  .generating {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
   }
-  .results .approved { color: #2c6b4f; }
-  .results .rejected { color: #c0392b; }
-  kbd {
+  .generating h2 { font-size: 20px; margin-bottom: 12px; color: #1a1a1a; }
+  .spinner {
     display: inline-block;
-    background: #eee;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    padding: 2px 6px;
-    font-size: 12px;
-    margin: 0 2px;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #eee;
+    border-top-color: #1a1a1a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
   }
-  .shortcuts {
-    font-size: 12px;
-    color: #aaa;
-    margin-bottom: 20px;
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #888;
   }
+  .empty h2 { font-size: 20px; margin-bottom: 8px; color: #1a1a1a; }
 </style>
 </head>
 <body>
-<h1>Social Copy Review</h1>
+<h1>The South Bay Signal</h1>
 <div class="counter" id="counter"></div>
-<div class="shortcuts"><kbd>&larr;</kbd> reject &nbsp; <kbd>&rarr;</kbd> approve</div>
-<div class="card" id="card"></div>
-<div class="buttons" id="buttons">
-  <button class="btn btn-reject" onclick="vote('reject')">&larr; Nah</button>
-  <button class="btn btn-approve" onclick="vote('approve')">This works &rarr;</button>
+<div id="queue-badge" class="queue-badge"></div>
+<div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> reject &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>Tab</kbd> comment box</div>
+
+<div id="review-area">
+  <div class="item-header" id="item-header"></div>
+  <div class="platforms" id="platforms"></div>
+  <div class="comment-section">
+    <textarea class="comment-input" id="comment" placeholder="Notes or edit suggestions (optional)..." rows="1"></textarea>
+  </div>
+  <div class="buttons" id="buttons">
+    <button class="btn btn-reject" onclick="vote('reject')">&larr; Skip</button>
+    <button class="btn btn-approve" onclick="vote('approve')">Approve &rarr;</button>
+  </div>
 </div>
 <div class="done" id="done" style="display:none"></div>
 
 <script>
-let variants = VARIANTS_PLACEHOLDER;
+let posts = [];
 let current = 0;
 let results = [];
+let queueSize = 0;
 
-function render() {
-  if (current >= variants.length) {
-    document.getElementById('card').style.display = 'none';
-    document.getElementById('buttons').style.display = 'none';
-    const approved = results.filter(r => r.vote === 'approve');
-    const rejected = results.filter(r => r.vote === 'reject');
-    let html = '<h2>Done!</h2>';
-    html += '<p>' + approved.length + ' approved, ' + rejected.length + ' rejected</p>';
-    if (approved.length > 0) {
-      html += '<div class="results"><strong>Approved:</strong><ul>';
-      approved.forEach(r => {
-        html += '<li class="approved">[' + r.format + '/' + r.vibe + '] ' + r.text.slice(0, 80) + '...</li>';
-      });
-      html += '</ul></div>';
-    }
+function updateQueueBadge(size) {
+  queueSize = size;
+  const el = document.getElementById('queue-badge');
+  el.textContent = size + ' in approved queue';
+  el.className = 'queue-badge' + (size < 10 ? ' low' : size < 25 ? ' mid' : '');
+}
+
+async function init() {
+  const res = await fetch('/api/posts');
+  const data = await res.json();
+  posts = data.posts;
+  updateQueueBadge(data.queueSize);
+  if (posts.length === 0) {
+    document.getElementById('review-area').style.display = 'none';
+    document.getElementById('shortcuts').style.display = 'none';
     document.getElementById('done').style.display = 'block';
-    document.getElementById('done').innerHTML = html;
-    // Save results
-    fetch('/results', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(results) });
+    document.getElementById('done').innerHTML = '<div class="empty"><h2>No drafts to review</h2><p>Generate some with:<br><code>node scripts/social/generate-posts.mjs --max 20</code></p></div>';
     return;
   }
-  const v = variants[current];
-  document.getElementById('counter').textContent = (current + 1) + ' / ' + variants.length;
-  const urlified = v.text.replace(/(https?:\\/\\/[^\\s]+)/g, '<a href="$1">$1</a>');
-  document.getElementById('card').innerHTML =
-    '<div class="format-badge format-' + (v.format || v.approach || 'pulse') + '">' + (v.format || (v.approach === 'themed' ? v.theme : v.approach) || 'pulse').toUpperCase() + '</div>' +
-    '<div class="vibe">' + v.vibe + '</div>' +
-    '<div class="tweet-text">' + urlified + '</div>' +
-    '<div class="char-count">' + v.text.length + ' / 280</div>';
-  document.getElementById('card').className = 'card';
+  render();
+}
+
+function urlify(text) {
+  return text.replace(/(https?:\\/\\/[^\\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+}
+
+function render() {
+  if (current >= posts.length) {
+    showDone();
+    return;
+  }
+
+  const post = posts[current];
+  const item = post.item || {};
+  document.getElementById('counter').textContent = (current + 1) + ' / ' + posts.length;
+  document.getElementById('comment').value = '';
+
+  document.getElementById('item-header').innerHTML =
+    '<div class="item-title">' + (item.title || 'Untitled') + '</div>' +
+    '<div class="item-meta">' + [item.cityName, item.venue, item.date, item.time, item.category].filter(Boolean).join(' \\u00b7 ') + ' \\u00b7 score: ' + (item.score || '?') + '</div>' +
+    (item.url ? '<div class="item-url"><a href="' + item.url + '" target="_blank">' + item.url + '</a></div>' : '');
+
+  const copy = post.copy || {};
+  const platformDefs = [
+    { key: 'x', label: 'X', icon: '\\ud835\\udd4f', maxChars: 280 },
+    { key: 'threads', label: 'Threads', icon: '\\ud83e\\uddf5', maxChars: 500 },
+    { key: 'bluesky', label: 'Bluesky', icon: '\\ud83e\\udd8b', maxChars: 300 },
+    { key: 'facebook', label: 'Facebook', icon: '\\ud83d\\udcd8', maxChars: 500 },
+  ];
+
+  let cardsHtml = '';
+  for (const p of platformDefs) {
+    const text = copy[p.key] || '';
+    if (!text) continue;
+    const overLimit = text.length > p.maxChars;
+    cardsHtml += '<div class="platform-card">' +
+      '<div class="platform-label ' + p.key + '"><span class="platform-icon">' + p.icon + '</span> ' + p.label + '</div>' +
+      '<div class="platform-text">' + urlify(text) + '</div>' +
+      '<div class="char-count"' + (overLimit ? ' style="color:#c0392b;font-weight:700"' : '') + '>' + text.length + ' / ' + p.maxChars + '</div>' +
+      '</div>';
+  }
+  document.getElementById('platforms').innerHTML = cardsHtml;
+  document.getElementById('platforms').className = 'platforms';
+}
+
+async function showDone() {
+  document.getElementById('review-area').style.display = 'none';
+  document.getElementById('shortcuts').style.display = 'none';
+  const approved = results.filter(r => r.vote === 'approve');
+  const rejected = results.filter(r => r.vote === 'reject');
+  const withComments = results.filter(r => r.comment);
+
+  // Save results first
+  const saveRes = await fetch('/api/review', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(results) });
+  const saveData = await saveRes.json();
+  updateQueueBadge(saveData.queueSize || queueSize + approved.length);
+
+  let html = '<h2>Review complete</h2>';
+  html += '<div style="display:flex;gap:40px;justify-content:center;margin-top:24px">';
+  html += '<div class="stat"><div class="stat-num" style="color:#2c6b4f">' + approved.length + '</div><div class="stat-label">approved</div></div>';
+  html += '<div class="stat"><div class="stat-num" style="color:#c0392b">' + rejected.length + '</div><div class="stat-label">skipped</div></div>';
+  if (withComments.length > 0) {
+    html += '<div class="stat"><div class="stat-num" style="color:#e6a817">' + withComments.length + '</div><div class="stat-label">with notes</div></div>';
+  }
+  html += '</div>';
+
+  // Show generating state and trigger new batch
+  html += '<div class="generating" id="gen-status" style="margin-top:32px"><div class="spinner"></div><h2>Generating next batch...</h2><p>This takes about a minute. Page will refresh when ready.</p></div>';
+  document.getElementById('done').style.display = 'block';
+  document.getElementById('done').innerHTML = html;
+
+  // Trigger generation
+  fetch('/api/generate', { method: 'POST' });
+
+  // Poll for new posts
+  pollForNewPosts();
+}
+
+async function pollForNewPosts() {
+  let attempts = 0;
+  const poll = setInterval(async () => {
+    attempts++;
+    try {
+      const res = await fetch('/api/status');
+      const data = await res.json();
+      if (!data.generating && data.pendingCount > 0) {
+        clearInterval(poll);
+        // Reset and reload
+        current = 0;
+        results = [];
+        document.getElementById('done').style.display = 'none';
+        document.getElementById('review-area').style.display = '';
+        document.getElementById('shortcuts').style.display = '';
+        init();
+      }
+      if (attempts > 120) { // 2 min timeout
+        clearInterval(poll);
+        document.getElementById('gen-status').innerHTML = '<h2>Generation timed out</h2><p>Refresh the page to try again.</p>';
+      }
+    } catch {}
+  }, 2000);
 }
 
 function vote(v) {
-  const card = document.getElementById('card');
-  card.classList.add(v === 'approve' ? 'swipe-right' : 'swipe-left');
-  results.push({ ...variants[current], vote: v });
+  const el = document.getElementById('platforms');
+  el.classList.add(v === 'approve' ? 'swipe-right' : 'swipe-left');
+  const comment = document.getElementById('comment').value.trim();
+  results.push({
+    file: posts[current]._file,
+    title: posts[current].item?.title || '',
+    vote: v,
+    comment: comment || null,
+  });
+  if (v === 'approve') updateQueueBadge(queueSize + 1);
   setTimeout(() => { current++; render(); }, 300);
 }
 
 document.addEventListener('keydown', (e) => {
+  if (document.activeElement === document.getElementById('comment')) {
+    if (e.key === 'Escape') document.getElementById('comment').blur();
+    return;
+  }
   if (e.key === 'ArrowRight') vote('approve');
   if (e.key === 'ArrowLeft') vote('reject');
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    document.getElementById('comment').focus();
+  }
 });
 
-render();
+init();
 </script>
 </body>
 </html>`;
 
 const server = createServer((req, res) => {
-  if (req.method === "POST" && req.url === "/results") {
+  if (req.method === "GET" && req.url === "/api/posts") {
+    const posts = loadPendingPosts();
+    const queue = loadQueue();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ posts, queueSize: queue.length }));
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/api/status") {
+    const posts = loadPendingPosts();
+    const queue = loadQueue();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ generating: isGenerating, pendingCount: posts.length, queueSize: queue.length }));
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/generate") {
+    generateNewBatch();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, generating: true }));
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/review") {
     let body = "";
     req.on("data", (c) => (body += c));
     req.on("end", () => {
-      results = JSON.parse(body);
-      writeFileSync(RESULTS_FILE, JSON.stringify(results, null, 2) + "\n");
-      console.log(`\n✅ Review complete!`);
+      const results = JSON.parse(body);
+      const queue = loadQueue();
+      const posts = loadPendingPosts();
+
       const approved = results.filter((r) => r.vote === "approve");
       const rejected = results.filter((r) => r.vote === "reject");
-      console.log(`  Approved: ${approved.length}`);
-      console.log(`  Rejected: ${rejected.length}`);
-      if (approved.length > 0) {
-        console.log(`\n  Approved variants:`);
-        approved.forEach((r) => console.log(`    [${r.format}/${r.vibe}] ${r.text.slice(0, 80)}...`));
+      const withComments = results.filter((r) => r.comment);
+
+      for (const r of approved) {
+        const post = posts.find((p) => p._file === r.file);
+        if (!post) continue;
+        delete post._file;
+        queue.push({
+          ...post,
+          approvedAt: new Date().toISOString(),
+          comment: r.comment || null,
+          published: false,
+        });
       }
+      saveQueue(queue);
+
+      if (withComments.length > 0) {
+        const feedbackFile = join(POST_DIR, `review-feedback-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
+        writeFileSync(feedbackFile, JSON.stringify(results.filter((r) => r.comment), null, 2) + "\n");
+      }
+
+      console.log(`\n✅ Review complete!`);
+      console.log(`   ${approved.length} approved → queue now ${queue.length}`);
+      console.log(`   ${rejected.length} skipped`);
+      if (withComments.length > 0) {
+        console.log(`   ${withComments.length} with comments:`);
+        for (const r of withComments) {
+          console.log(`     [${r.vote}] ${r.title}: "${r.comment}"`);
+        }
+      }
+
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: true }));
+      res.end(JSON.stringify({ ok: true, queueSize: queue.length }));
     });
     return;
   }
 
-  const page = HTML.replace(
-    "VARIANTS_PLACEHOLDER",
-    JSON.stringify(variants)
-  );
   res.writeHead(200, { "Content-Type": "text/html" });
-  res.end(page);
+  res.end(HTML);
 });
 
 server.listen(PORT, () => {
+  const posts = loadPendingPosts();
+  const queue = loadQueue();
   console.log(`\n🗳️  Social Copy Review: http://localhost:${PORT}`);
-  console.log(`   ${variants.length} variants to review`);
-  console.log(`   ← reject  |  approve →\n`);
+  console.log(`   ${posts.length} drafts to review`);
+  console.log(`   ${queue.length} in approved queue`);
+  console.log(`   ← skip  |  approve →  |  Tab for comment box\n`);
 });

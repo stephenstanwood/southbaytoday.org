@@ -90,6 +90,32 @@ export const ADMIN_NOISE = [
   "flag salute",
 ];
 
+// Polarizing/political keywords — hard block from social posting
+export const POLITICAL_BLOCK = [
+  "ice raid",
+  "immigration enforcement",
+  "federal budget cut",
+  "deportation",
+  "partisan",
+  "recall election",
+  "impeach",
+  "political rally",
+  "protest march",
+  "defund",
+];
+
+// Internal/non-public event signals — heavy penalty
+export const INTERNAL_EVENT_SIGNALS = [
+  "youth commission",
+  "student government",
+  "faculty meeting",
+  "staff meeting",
+  "pay day",
+  "payroll",
+  "employee",
+  "internal",
+];
+
 // SBS tab URLs for CTAs
 export const TAB_URLS = {
   today: "/",

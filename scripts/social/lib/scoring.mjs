@@ -3,7 +3,7 @@
 // Assigns a numeric quality score to each candidate item
 // ---------------------------------------------------------------------------
 
-import { SCORE_PENALTIES, ADMIN_NOISE } from "./constants.mjs";
+import { SCORE_PENALTIES, ADMIN_NOISE, POLITICAL_BLOCK, INTERNAL_EVENT_SIGNALS } from "./constants.mjs";
 
 function today() {
   return new Date().toISOString().split("T")[0];
@@ -83,9 +83,36 @@ export function scoreCandidate(item, history = []) {
 
   // ── Penalties ──
 
-  // Admin noise
   const titleLower = (item.title || "").toLowerCase();
   const summaryLower = (item.summary || "").toLowerCase();
+  const combined = titleLower + " " + summaryLower;
+
+  // Political/polarizing content — hard block
+  for (const kw of POLITICAL_BLOCK) {
+    if (combined.includes(kw)) {
+      score -= 50; // effectively blocks the item
+      break;
+    }
+  }
+
+  // Internal/non-public events — heavy penalty
+  for (const kw of INTERNAL_EVENT_SIGNALS) {
+    if (combined.includes(kw)) {
+      score -= 15;
+      break;
+    }
+  }
+
+  // Events outside South Bay (SF, Oakland, etc.)
+  const outsideArea = ["san francisco", "oracle park", "oakland", "berkeley", "sf giants"];
+  for (const kw of outsideArea) {
+    if (combined.includes(kw)) {
+      score -= 20;
+      break;
+    }
+  }
+
+  // Admin noise
   for (const noise of ADMIN_NOISE) {
     if (titleLower.includes(noise) || summaryLower.includes(noise)) {
       score += SCORE_PENALTIES.adminNoise;

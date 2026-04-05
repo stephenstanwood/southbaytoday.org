@@ -42,7 +42,7 @@ export async function factCheck(item, currentTime = new Date()) {
     return { ok: true, issues: [], item };
   }
 
-  const prompt = `You are a fact-checker for South Bay Signal, a hyperlocal site for the South Bay (San Jose, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Palo Alto, Santa Clara, Los Altos, Milpitas).
+  const prompt = `You are a fact-checker for The South Bay Signal, a hyperlocal site for the South Bay (San Jose, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Palo Alto, Santa Clara, Los Altos, Milpitas).
 
 Current time: ${currentTime.toLocaleString("en-US", { timeZone: "America/Los_Angeles", dateStyle: "full", timeStyle: "short" })}
 

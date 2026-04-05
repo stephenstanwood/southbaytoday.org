@@ -48,8 +48,11 @@ async function loadPlatform(name) {
 async function main() {
   const post = JSON.parse(readFileSync(postFile, "utf8"));
 
+  // Normalize: single-item posts have `item`, old roundups have `items`
+  const items = post.items || (post.item ? [post.item] : []);
+
   logStep("📋", `Post type: ${post.postType}`);
-  logStep("📝", `Items: ${post.items?.length || 0}`);
+  logStep("📝", `Item: ${items[0]?.title || "(unknown)"}`);
 
   if (dryRun) {
     logDryRun("Dry run mode — no actual publishing");
@@ -69,8 +72,8 @@ async function main() {
     // Record in history even in dry run (for dedup testing)
     recordPost({
       postType: post.postType,
-      titles: post.items?.map((i) => i.title) || [],
-      cities: [...new Set(post.items?.map((i) => i.city).filter(Boolean) || [])],
+      titles: items.map((i) => i.title),
+      cities: [...new Set(items.map((i) => i.city).filter(Boolean))],
       platforms: ["dry-run"],
     });
 
@@ -137,8 +140,8 @@ async function main() {
   if (published.length > 0) {
     recordPost({
       postType: post.postType,
-      titles: post.items?.map((i) => i.title) || [],
-      cities: [...new Set(post.items?.map((i) => i.city).filter(Boolean) || [])],
+      titles: items.map((i) => i.title),
+      cities: [...new Set(items.map((i) => i.city).filter(Boolean))],
       platforms: published,
     });
   }
@@ -147,7 +150,7 @@ async function main() {
 
   // Output summary for scheduled task reporting
   console.log(`\n**Social post: ${post.postType}**`);
-  console.log(`- Items: ${post.items?.length || 0}`);
+  console.log(`- Item: ${items[0]?.title || "(unknown)"}`);
   console.log(`- Published: ${published.join(", ") || "none"}`);
   for (const [p, r] of Object.entries(results)) {
     console.log(`- ${p}: ${JSON.stringify(r)}`);
