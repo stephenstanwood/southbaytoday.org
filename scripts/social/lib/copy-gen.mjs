@@ -58,7 +58,7 @@ THINGS TO NEVER DO:
  *
  * @param {object} item - The candidate item with title, city, venue, time, url, summary, category
  * @param {string} timeOfDay - "morning" | "afternoon" | "evening"
- * @returns {Promise<{x: string, threads: string, bluesky: string}>}
+ * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string}>}
  */
 export async function generateSingleItemCopy(item, timeOfDay = "morning") {
   loadEnv();
@@ -85,15 +85,16 @@ ITEM:
 - Cost: ${item.cost || ""}
 - URL (MUST include this exact URL): ${item.url}
 
-Write three variants:
+Write four variants:
 1. X (max 270 chars including URL) — punchy, clean
 2. Threads (max 490 chars including URL) — slightly warmer, can breathe more
 3. Bluesky (max 290 chars including URL) — similar to X, can be slightly looser
+4. Facebook (max 500 chars including URL) — conversational, can include a bit more context, similar warmth to Threads
 
 Each variant must include the exact URL provided above.
 Use time-appropriate framing ("tonight", "this afternoon", "tomorrow", "this weekend" etc. based on current time).
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string. No other text.`;
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — each a string. No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -125,7 +126,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky" — each a string.
 
   const variants = JSON.parse(jsonMatch[0]);
 
-  if (!variants.x || !variants.threads || !variants.bluesky) {
+  if (!variants.x || !variants.threads || !variants.bluesky || !variants.facebook) {
     throw new Error("Missing platform variant in Claude response");
   }
 

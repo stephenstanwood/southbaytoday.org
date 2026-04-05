@@ -54,7 +54,34 @@ These items from the original spec were COMPLETED and tested:
 
 ---
 
-## What Needs to Happen Next (Session 2)
+## What Was Done in Session 2 (April 4 2026)
+
+### Meta / Facebook / Threads Setup (COMPLETE)
+- **Facebook Page**: "The South Bay Signal" created via family member's account, Stephen has admin access through Meta Business Suite
+- **Meta Developer App**: "The South Bay Signal" (app ID in developer portal), Threads API + Pages API use cases configured
+- **Threads**: @southbaysignal tester invite accepted, long-lived access token generated and saved
+- **Facebook Page API**: Page access token generated via Graph API Explorer, Page ID `1057203394142664`
+- **Instagram**: @southbaysignal converted to professional account (Community category), linked to Meta Business Suite
+- **Credentials**: Threads + Facebook tokens saved to `.env.local` on both MacBook and Mac Mini
+- **Facebook platform client**: `scripts/social/lib/platforms/facebook.mjs` built (Graph API, text + image posts)
+- **Pipeline updates**: copy-gen.mjs now produces 4 variants (X, Threads, Bluesky, Facebook), publisher handles all 4 platforms, constants updated
+
+### Platforms Ready
+- **X**: @southbaysignal — OAuth 1.0a, ready
+- **Bluesky**: @southbaysignal.bsky.social — app password, ready
+- **Threads**: @southbaysignal — long-lived token, ready
+- **Facebook Page**: The South Bay Signal — page token, ready
+
+---
+
+## What Needs to Happen Next (Session 3)
+
+### 0. First Real Posts (April 5, ~4 AM PT)
+Stephen wants to start sharing content across all 4 platforms. Regroup at that time to:
+- Generate a batch with `generate-posts.mjs --max 3`
+- Review the output
+- Publish to X, Bluesky, Threads, and Facebook
+- Verify link previews render, copy reads well, no errors on each platform
 
 ### 1. More Swipe Review
 Continue calibrating voice with the copy-review-server:
@@ -88,11 +115,7 @@ Each run → pipe post JSONs to `publish.mjs`
 - Verify: link preview renders, copy reads well, no errors
 - Decide: use our branded image card, or let the source's link preview do the work? (For single-item posts, source link previews are probably better — more authentic, shows the venue's own imagery)
 
-### 4. Decide on Meta / Facebook / Threads
-Stephen's personal Facebook was permanently disabled by Meta. Options:
-- **Option A**: Create a brand new Facebook account (new email), use it solely for developer portal access → set up Threads API + Facebook Page
-- **Option B**: Skip Meta entirely, launch with X + Bluesky only, revisit later
-- **Option C**: Have someone else (friend, spouse) create the developer app under their FB account and add Stephen as admin
+### 4. ~~Decide on Meta / Facebook / Threads~~ DONE — See Session 2
 
 ### 5. Best-URL Finder (ENHANCEMENT)
 The URL check rejects bad URLs but doesn't try to FIND better ones. Build a step that:
