@@ -3,10 +3,25 @@
 // Assigns a numeric quality score to each candidate item
 // ---------------------------------------------------------------------------
 
-import { SCORE_PENALTIES, ADMIN_NOISE, POLITICAL_BLOCK, INTERNAL_EVENT_SIGNALS } from "./constants.mjs";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { SCORE_PENALTIES, ADMIN_NOISE, POLITICAL_BLOCK, INTERNAL_EVENT_SIGNALS, CONFIG } from "./constants.mjs";
+
+const __scoring_dirname = dirname(fileURLToPath(import.meta.url));
 
 function today() {
   return new Date().toISOString().split("T")[0];
+}
+
+// Load dynamic blacklist from social-blacklist.json
+function loadBlacklist() {
+  try {
+    const path = join(__scoring_dirname, "..", "..", "..", CONFIG.BLACKLIST_FILE);
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return { venues: [], sources: [], topics: [], phrases: [], penaltySignals: [] };
+  }
 }
 
 function daysAway(dateStr) {
@@ -132,6 +147,23 @@ export function scoreCandidate(item, history = []) {
 
   // Ongoing items are less urgent
   if (item.ongoing) score -= 2;
+
+  // ── Dynamic blacklist penalties ──
+  const blacklist = loadBlacklist();
+  const venueLower = (item.venue || "").toLowerCase();
+  const sourceLower = (item.source || "").toLowerCase();
+  // Hard block: blacklisted venue or source
+  if (blacklist.venues?.some((v) => venueLower.includes(v.toLowerCase()))) score -= 50;
+  if (blacklist.sources?.some((s) => sourceLower.includes(s.toLowerCase()))) score -= 50;
+  // Phrase penalties
+  if (blacklist.phrases?.some((p) => combined.includes(p.toLowerCase()))) score -= 20;
+  // Dynamic penalty signals with configurable weight
+  for (const sig of blacklist.penaltySignals || []) {
+    if (combined.includes(sig.phrase.toLowerCase())) {
+      score += sig.penalty; // penalty is negative
+      break;
+    }
+  }
 
   // Duplicate check against history
   if (history.length > 0) {

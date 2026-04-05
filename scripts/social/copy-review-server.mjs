@@ -11,6 +11,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
 import { execFile } from "node:child_process";
+import { processComment } from "./lib/action-commands.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 3456;
@@ -648,6 +649,16 @@ async function showDone() {
   }
   html += '</div>';
 
+  // Show action command results
+  if (saveData.actionResults && saveData.actionResults.length > 0) {
+    html += '<div style="margin-top:20px;padding:12px 16px;background:#f0f7f4;border:1px solid #c8e6d0;border-radius:8px;text-align:left;max-width:500px;margin-left:auto;margin-right:auto">';
+    html += '<div style="font-weight:600;font-size:13px;color:#2c6b4f;margin-bottom:8px">🎯 Actions executed:</div>';
+    for (const ar of saveData.actionResults) {
+      html += '<div style="font-size:12px;color:#333;margin-bottom:4px">• <strong>' + ar.title + '</strong>: ' + ar.summary + '</div>';
+    }
+    html += '</div>';
+  }
+
   // Show generating state and trigger new batch
   html += '<div class="generating" id="gen-status" style="margin-top:32px"><div class="spinner"></div><h2>Generating next batch...</h2><p>This takes about a minute. Page will refresh when ready.</p></div>';
   document.getElementById('done').style.display = 'block';
@@ -787,8 +798,14 @@ async function submitAction(replyId) {
     });
     const data = await res.json();
     if (data.ok) {
-      btn.textContent = 'Saved';
-      setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
+      if (data.actionResult) {
+        btn.textContent = '✅ ' + data.actionResult;
+        btn.style.fontSize = '11px';
+        setTimeout(() => { btn.textContent = 'Save'; btn.style.fontSize = ''; btn.disabled = false; }, 4000);
+      } else {
+        btn.textContent = 'Saved';
+        setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
+      }
       // Update local data
       const r = repliesData.find(r => r.id === replyId);
       if (r) r.actionNote = note || null;
@@ -849,7 +866,7 @@ const server = createServer((req, res) => {
   if (req.method === "POST" && req.url === "/api/review") {
     let body = "";
     req.on("data", (c) => (body += c));
-    req.on("end", () => {
+    req.on("end", async () => {
       const results = JSON.parse(body);
       const queue = loadQueue();
       const posts = loadPendingPosts();
@@ -897,8 +914,36 @@ const server = createServer((req, res) => {
         }
       }
 
+      // Process action commands from comments
+      const actionResults = [];
+      for (const r of withComments) {
+        const post = posts.find((p) => p._file === r.file);
+        const context = {
+          title: r.title || post?.item?.title || "",
+          source: post?.item?.source || "",
+          venue: post?.item?.venue || "",
+          city: post?.item?.city || "",
+          category: post?.item?.category || "",
+          url: post?.item?.url || "",
+        };
+        try {
+          const result = await processComment(r.comment, context);
+          if (result.summary) {
+            actionResults.push({ title: r.title, summary: result.summary });
+          }
+        } catch (err) {
+          console.error(`  ⚠ Action processing failed for "${r.title}":`, err.message);
+        }
+      }
+      if (actionResults.length > 0) {
+        console.log(`   🎯 Actions executed:`);
+        for (const ar of actionResults) {
+          console.log(`     ${ar.title}: ${ar.summary}`);
+        }
+      }
+
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: true, queueSize: queue.length }));
+      res.end(JSON.stringify({ ok: true, queueSize: queue.length, actionResults }));
     });
     return;
   }
@@ -913,7 +958,7 @@ const server = createServer((req, res) => {
   if (req.method === "POST" && req.url === "/api/reply-action") {
     let body = "";
     req.on("data", (c) => (body += c));
-    req.on("end", () => {
+    req.on("end", async () => {
       try {
         const { id, actionNote } = JSON.parse(body);
         if (!id) {
@@ -931,8 +976,30 @@ const server = createServer((req, res) => {
         reply.actionNote = actionNote || null;
         saveReplies(replies);
         console.log(`\n📝 Action saved for reply ${id}: "${actionNote || "(cleared)"}"`);
+
+        // Process action commands from the note
+        let actionResult = null;
+        if (actionNote) {
+          const context = {
+            title: reply.postTitle || "",
+            source: "",
+            venue: "",
+            city: "",
+            category: "",
+            url: reply.permalink || "",
+          };
+          try {
+            actionResult = await processComment(actionNote, context);
+          } catch (err) {
+            console.error(`  ⚠ Action processing failed:`, err.message);
+          }
+        }
+
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ ok: true }));
+        res.end(JSON.stringify({
+          ok: true,
+          actionResult: actionResult?.summary || null,
+        }));
       } catch (e) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: false, error: e.message }));
