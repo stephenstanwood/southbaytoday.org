@@ -1,7 +1,7 @@
 #!/usr/bin/env /opt/homebrew/bin/node
 // ---------------------------------------------------------------------------
 // South Bay Signal — Reply Monitor & Auto-Interaction
-// Monitors replies on Bluesky, Threads, and Facebook (X requires $200/mo).
+// Monitors replies on Bluesky, Threads, Facebook, and X (Twitter).
 // Classifies replies with Claude Haiku and auto-acts on simple ones.
 //
 // Usage: node scripts/social/monitor-replies.mjs [--dry-run]
@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHmac, randomBytes } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
@@ -20,6 +21,7 @@ const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
 const BSKY_API = "https://bsky.social/xrpc";
 const THREADS_API = "https://graph.threads.net/v1.0";
 const FB_API = "https://graph.facebook.com/v25.0";
+const X_API = "https://api.twitter.com";
 const LOOKBACK_DAYS = 7;
 
 // Load env
@@ -334,6 +336,246 @@ async function fetchFacebookReplies(published) {
   return allReplies;
 }
 
+// ── X (Twitter): OAuth 1.0a helpers ─────────────────────────────────────
+
+function xPercentEncode(str) {
+  return encodeURIComponent(str).replace(
+    /[!'()*]/g,
+    (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
+  );
+}
+
+function xBuildSignatureBaseString(method, url, params) {
+  const sorted = [...params].sort((a, b) => a[0].localeCompare(b[0]));
+  const paramStr = sorted.map(([k, v]) => `${xPercentEncode(k)}=${xPercentEncode(v)}`).join("&");
+  return `${method.toUpperCase()}&${xPercentEncode(url)}&${xPercentEncode(paramStr)}`;
+}
+
+function xSign(baseString, consumerSecret, tokenSecret) {
+  const key = `${xPercentEncode(consumerSecret)}&${xPercentEncode(tokenSecret)}`;
+  return createHmac("sha1", key).update(baseString).digest("base64");
+}
+
+function xBuildAuthHeader(oauthParams) {
+  const parts = oauthParams
+    .map(([k, v]) => `${xPercentEncode(k)}="${xPercentEncode(v)}"`)
+    .join(", ");
+  return `OAuth ${parts}`;
+}
+
+function xMakeOAuthHeader(method, url, queryParams = [], creds) {
+  const oauthParams = [
+    ["oauth_consumer_key", creds.apiKey],
+    ["oauth_nonce", randomBytes(16).toString("hex")],
+    ["oauth_signature_method", "HMAC-SHA1"],
+    ["oauth_timestamp", Math.floor(Date.now() / 1000).toString()],
+    ["oauth_token", creds.accessToken],
+    ["oauth_version", "1.0"],
+  ];
+
+  const allParams = [...oauthParams, ...queryParams];
+  const baseString = xBuildSignatureBaseString(method, url, allParams);
+  const signature = xSign(baseString, creds.apiSecret, creds.accessTokenSecret);
+  oauthParams.push(["oauth_signature", signature]);
+
+  return xBuildAuthHeader(oauthParams);
+}
+
+function getXCredentials() {
+  const apiKey = process.env.X_API_KEY;
+  const apiSecret = process.env.X_API_SECRET;
+  const accessToken = process.env.X_ACCESS_TOKEN;
+  const accessTokenSecret = process.env.X_ACCESS_TOKEN_SECRET;
+  if (!apiKey || !apiSecret || !accessToken || !accessTokenSecret) return null;
+  return { apiKey, apiSecret, accessToken, accessTokenSecret };
+}
+
+// ── X (Twitter): fetch mentions ─────────────────────────────────────────
+
+async function fetchXUserId(creds) {
+  const url = `${X_API}/2/users/me`;
+  const authHeader = xMakeOAuthHeader("GET", url, [], creds);
+  const res = await fetch(url, { headers: { Authorization: authHeader } });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X users/me failed (${res.status}): ${body.slice(0, 200)}`);
+  }
+  const data = await res.json();
+  return data.data.id;
+}
+
+async function fetchXMentions(published) {
+  const creds = getXCredentials();
+  if (!creds) {
+    console.log("   x: skipped (no X credentials)");
+    return [];
+  }
+
+  let userId;
+  try {
+    userId = await fetchXUserId(creds);
+  } catch (err) {
+    console.log(`   x: failed to get user ID: ${err.message}`);
+    return [];
+  }
+  await sleep(200);
+
+  const url = `${X_API}/2/users/${userId}/mentions`;
+  const queryParams = [
+    ["max_results", "20"],
+    ["tweet.fields", "created_at,text,author_id,conversation_id,in_reply_to_user_id"],
+  ];
+
+  const authHeader = xMakeOAuthHeader("GET", url, queryParams, creds);
+  const qs = queryParams.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
+
+  try {
+    const res = await fetch(`${url}?${qs}`, { headers: { Authorization: authHeader } });
+    if (!res.ok) {
+      const body = await res.text();
+      console.log(`   x: mentions fetch failed (${res.status}): ${body.slice(0, 200)}`);
+      return [];
+    }
+    const data = await res.json();
+    const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+    const allReplies = [];
+
+    for (const tweet of data.data || []) {
+      if (new Date(tweet.created_at).getTime() < cutoff) continue;
+
+      // Try to find the matching published post by conversation
+      let postTitle = "(mention)";
+      for (const post of published) {
+        const xEntry = post.publishedTo?.find((e) => e.platform === "x" && e.ok && e.id);
+        if (xEntry && tweet.conversation_id === xEntry.id) {
+          postTitle = post.item?.title || "Untitled";
+          break;
+        }
+      }
+
+      allReplies.push({
+        id: `x-${tweet.id}`,
+        platform: "x",
+        postTitle,
+        postId: tweet.conversation_id || tweet.id,
+        author: tweet.author_id,
+        text: tweet.text || "",
+        timestamp: tweet.created_at || new Date().toISOString(),
+        permalink: `https://x.com/i/status/${tweet.id}`,
+        tweetId: tweet.id,
+        conversationId: tweet.conversation_id,
+        classified: null,
+        responded: false,
+        liked: false,
+        action: null,
+        actionNote: null,
+      });
+    }
+
+    return allReplies;
+  } catch (err) {
+    console.log(`   x: error fetching mentions: ${err.message}`);
+    return [];
+  }
+}
+
+async function xLikeTweet(userId, tweetId, creds) {
+  const url = `${X_API}/2/users/${userId}/likes`;
+  const authHeader = xMakeOAuthHeader("POST", url, [], creds);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tweet_id: tweetId }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X like failed (${res.status}): ${body.slice(0, 200)}`);
+  }
+  return true;
+}
+
+async function xReplyToTweet(text, inReplyToTweetId, creds) {
+  const url = `${X_API}/2/tweets`;
+  const authHeader = xMakeOAuthHeader("POST", url, [], creds);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      text,
+      reply: { in_reply_to_tweet_id: inReplyToTweetId },
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X reply failed (${res.status}): ${body.slice(0, 200)}`);
+  }
+  return true;
+}
+
+// ── Threads: reply to a thread ──────────────────────────────────────────
+
+async function threadsReply(text, replyToId) {
+  const token = process.env.THREADS_ACCESS_TOKEN;
+  const userId = process.env.THREADS_USER_ID;
+  if (!token || !userId) throw new Error("Missing Threads credentials");
+
+  // Create reply container
+  const createParams = new URLSearchParams({
+    media_type: "TEXT",
+    text,
+    reply_to_id: replyToId,
+    access_token: token,
+  });
+
+  const createRes = await fetch(`${THREADS_API}/${userId}/threads`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: createParams.toString(),
+  });
+  if (!createRes.ok) {
+    const body = await createRes.text();
+    throw new Error(`Threads reply container failed (${createRes.status}): ${body.slice(0, 200)}`);
+  }
+  const { id: containerId } = await createRes.json();
+
+  // Wait for container to be ready
+  const maxWait = 30000;
+  const start = Date.now();
+  while (Date.now() - start < maxWait) {
+    const statusRes = await fetch(
+      `${THREADS_API}/${containerId}?fields=status&access_token=${token}`
+    );
+    if (statusRes.ok) {
+      const statusData = await statusRes.json();
+      if (statusData.status === "FINISHED") break;
+      if (statusData.status === "ERROR") throw new Error(`Threads reply container error: ${JSON.stringify(statusData)}`);
+    }
+    await sleep(2000);
+  }
+
+  // Publish
+  const publishParams = new URLSearchParams({
+    creation_id: containerId,
+    access_token: token,
+  });
+  const publishRes = await fetch(`${THREADS_API}/${userId}/threads_publish`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: publishParams.toString(),
+  });
+  if (!publishRes.ok) {
+    const body = await publishRes.text();
+    throw new Error(`Threads reply publish failed (${publishRes.status}): ${body.slice(0, 200)}`);
+  }
+  return true;
+}
+
 // ── Claude classification ────────────────────────────────────────────────
 
 async function classifyReply(reply) {
@@ -563,9 +805,14 @@ async function main() {
   console.log("   facebook...");
   const fbReplies = await fetchFacebookReplies(published);
   console.log(`   facebook: ${fbReplies.length} total replies`);
+  await sleep(500);
+
+  console.log("   x...");
+  const xReplies = await fetchXMentions(published);
+  console.log(`   x: ${xReplies.length} total replies`);
 
   // De-duplicate: only add new replies
-  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies];
+  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies, ...xReplies];
   const newReplies = allNew.filter((r) => !existingIds.has(r.id));
 
   console.log(`\n   ${allNew.length} total fetched, ${newReplies.length} new`);
@@ -630,6 +877,24 @@ async function main() {
         } else if (reply.platform === "facebook") {
           reply.actionNote = "would_like (needs pages_manage_engagement)";
           console.log(`   [facebook] skipped like (needs permission) for @${reply.author}`);
+        } else if (reply.platform === "x" && reply.tweetId) {
+          const xCreds = getXCredentials();
+          if (xCreds) {
+            if (dryRun) {
+              console.log(`   [x] would like @${reply.author}'s reply`);
+            } else {
+              try {
+                const xUserId = await fetchXUserId(xCreds);
+                await sleep(200);
+                await xLikeTweet(xUserId, reply.tweetId, xCreds);
+                reply.liked = true;
+                console.log(`   [x] liked @${reply.author}'s reply`);
+                stats.liked++;
+              } catch (err) {
+                console.log(`   [x] like failed: ${err.message}`);
+              }
+            }
+          }
         }
         break;
       }
@@ -680,9 +945,53 @@ async function main() {
             } catch {}
           }
         } else if (reply.platform === "threads") {
-          reply.actionNote = `would_respond: ${responseText}`;
-          console.log(`   [threads] drafted reply to @${reply.author}: "${responseText.slice(0, 80)}"`);
-          stats.drafted++;
+          const threadsMediaId = reply.postId;
+          if (dryRun) {
+            console.log(`   [threads] would reply to @${reply.author}: "${responseText.slice(0, 80)}"`);
+            stats.drafted++;
+          } else {
+            try {
+              // reply_to_id should be the specific reply's thread ID, not the root post
+              const replyToId = reply.id.replace("threads-", "");
+              await threadsReply(responseText, replyToId);
+              reply.responded = true;
+              reply.actionNote = responseText;
+              console.log(`   [threads] replied to @${reply.author}: "${responseText.slice(0, 80)}"`);
+              stats.responded++;
+            } catch (err) {
+              console.log(`   [threads] reply failed: ${err.message}`);
+              reply.actionNote = `draft: ${responseText} (send failed: ${err.message})`;
+              stats.drafted++;
+            }
+          }
+        } else if (reply.platform === "x" && reply.tweetId) {
+          const xCreds = getXCredentials();
+          if (xCreds) {
+            if (dryRun) {
+              console.log(`   [x] would reply to @${reply.author}: "${responseText.slice(0, 80)}"`);
+              stats.drafted++;
+            } else {
+              try {
+                await xReplyToTweet(responseText, reply.tweetId, xCreds);
+                reply.responded = true;
+                reply.actionNote = responseText;
+                console.log(`   [x] replied to @${reply.author}: "${responseText.slice(0, 80)}"`);
+                stats.responded++;
+                await sleep(200);
+                // Also like the reply
+                try {
+                  const xUserId = await fetchXUserId(xCreds);
+                  await sleep(200);
+                  await xLikeTweet(xUserId, reply.tweetId, xCreds);
+                  reply.liked = true;
+                } catch {}
+              } catch (err) {
+                console.log(`   [x] reply failed: ${err.message}`);
+                reply.actionNote = `draft: ${responseText} (send failed: ${err.message})`;
+                stats.drafted++;
+              }
+            }
+          }
         } else if (reply.platform === "facebook") {
           reply.actionNote = `would_respond: ${responseText}`;
           console.log(`   [facebook] drafted reply to @${reply.author}: "${responseText.slice(0, 80)}"`);
@@ -756,7 +1065,7 @@ async function main() {
   console.log(`   New replies: ${newReplies.length}`);
   console.log(`   Liked: ${stats.liked}`);
   console.log(`   Auto-responded: ${stats.responded}`);
-  console.log(`   Drafted (pending API access): ${stats.drafted}`);
+  console.log(`   Drafted (no API or dry-run): ${stats.drafted}`);
   console.log(`   Escalated to human: ${stats.escalated}`);
   console.log(`   Total tracked: ${repliesData.replies.length}`);
   console.log();
