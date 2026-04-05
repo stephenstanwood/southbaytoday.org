@@ -29,6 +29,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // ── Already-seen filter ────────────────────────────────────────────────────
 // Skip items that are already approved, or were rejected in a previous review.
 
+const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
+
 function loadAlreadySeen() {
   const seen = new Set();
   const queuePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
@@ -42,19 +44,17 @@ function loadAlreadySeen() {
     }
   } catch {}
 
-  // Review feedback files (rejected items)
-  const feedbackDir = "/tmp/sbs-social";
+  // Persistent review history (approved + rejected titles, syncs via git)
   try {
-    const files = readdirSync(feedbackDir).filter((f) => f.startsWith("review-feedback-"));
-    for (const f of files) {
-      const feedback = JSON.parse(readFileSync(join(feedbackDir, f), "utf8"));
-      for (const entry of feedback) {
-        if (entry.title) seen.add(entry.title.toLowerCase());
-      }
+    const history = JSON.parse(readFileSync(REVIEW_HISTORY_FILE, "utf8"));
+    for (const entry of history) {
+      if (entry.title) seen.add(entry.title.toLowerCase());
+      if (entry.url) seen.add(entry.url);
     }
   } catch {}
 
   // Currently pending post files (avoid regenerating what's already in /tmp)
+  const feedbackDir = "/tmp/sbs-social";
   try {
     const files = readdirSync(feedbackDir).filter((f) => f.startsWith("post-") && f.endsWith(".json"));
     for (const f of files) {

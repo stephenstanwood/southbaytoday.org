@@ -16,6 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 3456;
 const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
 const ENV_FILE = join(__dirname, "..", "..", ".env.local");
 const BATCH_SIZE = 25;
@@ -538,10 +539,21 @@ const server = createServer((req, res) => {
       }
       saveQueue(queue);
 
-      if (withComments.length > 0) {
-        const feedbackFile = join(POST_DIR, `review-feedback-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
-        writeFileSync(feedbackFile, JSON.stringify(results.filter((r) => r.comment), null, 2) + "\n");
+      // Persist ALL reviewed items (approved + rejected) to review history
+      // so they never show up again in future generation runs
+      let reviewHistory = [];
+      try { reviewHistory = JSON.parse(readFileSync(REVIEW_HISTORY_FILE, "utf8")); } catch {}
+      for (const r of results) {
+        const post = posts.find((p) => p._file === r.file);
+        reviewHistory.push({
+          title: r.title,
+          url: post?.item?.url || null,
+          vote: r.vote,
+          comment: r.comment || null,
+          reviewedAt: new Date().toISOString(),
+        });
       }
+      writeFileSync(REVIEW_HISTORY_FILE, JSON.stringify(reviewHistory, null, 2) + "\n");
 
       console.log(`\n✅ Review complete!`);
       console.log(`   ${approved.length} approved → queue now ${queue.length}`);
