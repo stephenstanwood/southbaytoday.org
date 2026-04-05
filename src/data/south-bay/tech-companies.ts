@@ -972,6 +972,17 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://stellarcyber.ai",
     employeesNote: "~200 employees",
   },
+  {
+    id: "openai",
+    name: "OpenAI",
+    city: "Mountain View",
+    category: "software",
+    stage: "growth",
+    tagline: "The company behind ChatGPT and GPT-4 just signed a 10-year lease on a 450,000 sq ft campus at 350–380 Ellis Street in Mountain View — making Silicon Valley its second major hub alongside San Francisco. Valued at $300B+.",
+    color: "#10A37F",
+    url: "https://openai.com",
+    employeesNote: "~3,000 employees globally; MV campus opening 2026",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -1316,6 +1327,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#16a34a",
     url: "https://ridealso.com",
   },
+  {
+    id: "jetstream-security",
+    name: "JetStream Security",
+    city: "Santa Clara",
+    category: "security",
+    round: "Seed",
+    amount: "$34M",
+    date: "2026-03-04",
+    tagline: "AI governance and security platform giving enterprises real-time visibility into how AI agents and tools operate — before they go rogue. Founded by veterans from CrowdStrike, Attivo Networks, SentinelOne, and Cohesity. Backed by Redpoint Ventures and the CrowdStrike Falcon Fund.",
+    color: "#1d4ed8",
+    url: "https://jetstream.security",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1331,9 +1354,9 @@ export const TECH_PULSE = [
     note: "25K local jobs each at Googleplex & Apple Park",
   },
   {
-    value: "$4.4B+",
+    value: "$4.5B+",
     label: "Raised in Q1–Q2 2026",
-    note: "27 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "28 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",

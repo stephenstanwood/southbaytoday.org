@@ -1,8 +1,28 @@
 {
-  "generatedAt": "2026-04-05T02:08:09.039Z",
+  "generatedAt": "2026-04-05T14:10:00.411Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0880767",
+      "name": "Dough Zone",
+      "address": "1875 S Bascom Ave., Ste. 405",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-04-03",
+      "status": "opened",
+      "sourceId": "SR0880767"
+    },
+    {
+      "id": "opened-SR0883804",
+      "name": "Sbarro Oakridge",
+      "address": "925 Blossom Hill Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-03",
+      "status": "opened",
+      "sourceId": "SR0883804"
+    },
     {
       "id": "opened-SR0880054",
       "name": "Ralph's Coffee",
@@ -22,16 +42,6 @@
       "date": "2026-03-31",
       "status": "opened",
       "sourceId": "SR0882669"
-    },
-    {
-      "id": "opened-SR0883804",
-      "name": "Sbarro Oakridge",
-      "address": "925 Blossom Hill Rd",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-03-31",
-      "status": "opened",
-      "sourceId": "SR0883804"
     },
     {
       "id": "opened-SR0883343",
@@ -54,26 +64,6 @@
       "sourceId": "SR0883262"
     },
     {
-      "id": "opened-SR0880717",
-      "name": "Dairy Queen",
-      "address": "2255 S Winchester Blvd",
-      "cityId": "campbell",
-      "cityName": "CAMPBELL",
-      "date": "2026-03-25",
-      "status": "opened",
-      "sourceId": "SR0880717"
-    },
-    {
-      "id": "opened-SR0878835",
-      "name": "Whole Foods Market - Los Gatos Juice & Java",
-      "address": "15650 Los Gatos Blvd",
-      "cityId": "los-gatos",
-      "cityName": "LOS GATOS",
-      "date": "2026-03-25",
-      "status": "opened",
-      "sourceId": "SR0878835"
-    },
-    {
       "id": "opened-SR0883335",
       "name": "Jr's Urban Eats",
       "address": "2090 N. Capitol Ave, Ste. C",
@@ -82,16 +72,6 @@
       "date": "2026-03-24",
       "status": "opened",
       "sourceId": "SR0883335"
-    },
-    {
-      "id": "opened-SR0879261",
-      "name": "Shake Shack #1642 Sunnyvale",
-      "address": "240 S Taaffe St",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "date": "2026-03-20",
-      "status": "opened",
-      "sourceId": "SR0879261"
     },
     {
       "id": "opened-SR0883691",
@@ -122,9 +102,99 @@
       "date": "2026-03-18",
       "status": "opened",
       "sourceId": "SR0883795"
+    },
+    {
+      "id": "opened-SR0883623",
+      "name": "Freshest Pizza",
+      "address": "6932 Almaden Expwy",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-03-17",
+      "status": "opened",
+      "sourceId": "SR0883623"
+    },
+    {
+      "id": "opened-SR0883302",
+      "name": "Umesjoakland Inc.",
+      "address": "1704 Oakland Rd. #300",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-03-17",
+      "status": "opened",
+      "sourceId": "SR0883302"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0883513",
+      "name": "Hotel De Anza Cafe",
+      "address": "233 W Santa Clara St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0883513"
+    },
+    {
+      "id": "soon-SR0884373",
+      "name": "Tasty Noodle - 3 Comp Sink Install",
+      "address": "103 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0884373"
+    },
+    {
+      "id": "soon-SR0884184",
+      "name": "Gao's BBQ & Crab Milpitas",
+      "address": "1741 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0884184"
+    },
+    {
+      "id": "soon-SR0881812",
+      "name": "Alpha Tea",
+      "address": "1701 Lundy Ave., Ste. 170",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0881812"
+    },
+    {
+      "id": "soon-SR0878084",
+      "name": "Jun Lum Dim Sum",
+      "address": "1756 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0878084"
+    },
+    {
+      "id": "soon-SR0882834",
+      "name": "Rancho Del Pueblo Golf Course Pro Shop",
+      "address": "1649 Hermocilla Way",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0882834"
+    },
+    {
+      "id": "soon-SR0883454",
+      "name": "Pepper Lunch-Sunnyvale",
+      "address": "328 W El Camino Real",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0883454"
+    },
     {
       "id": "soon-SR0883940",
       "name": "Tojo Coffee Tea House",
@@ -134,6 +204,16 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0883940"
+    },
+    {
+      "id": "soon-SR0884051",
+      "name": "Moomo Tea (Mi Pot House)",
+      "address": "636 San Antonio Rd",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "date": "2026-04-01",
+      "status": "coming-soon",
+      "sourceId": "SR0884051"
     },
     {
       "id": "soon-SR0884220",
@@ -156,16 +236,6 @@
       "sourceId": "SR0884066"
     },
     {
-      "id": "soon-SR0884051",
-      "name": "Moomo Tea (Mi Pot House)",
-      "address": "636 San Antonio Rd",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "date": "2026-04-01",
-      "status": "coming-soon",
-      "sourceId": "SR0884051"
-    },
-    {
       "id": "soon-SR0883303",
       "name": "975 Page Mill Cafe",
       "address": "975 Page Mill Rd",
@@ -174,76 +244,6 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0883303"
-    },
-    {
-      "id": "soon-SR0884117",
-      "name": "Com Tam Thien Huong Take Out",
-      "address": "909 Story Rd.., Unit 100,115",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-01",
-      "status": "coming-soon",
-      "sourceId": "SR0884117"
-    },
-    {
-      "id": "soon-SR0883330",
-      "name": "Esperancita",
-      "address": "660 E. Gish Rd",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-03-30",
-      "status": "coming-soon",
-      "sourceId": "SR0883330"
-    },
-    {
-      "id": "soon-SR0883898",
-      "name": "L &  L Hawaiian Barbecue",
-      "address": "1546 Camden Ave",
-      "cityId": "campbell",
-      "cityName": "CAMPBELL",
-      "date": "2026-03-30",
-      "status": "coming-soon",
-      "sourceId": "SR0883898"
-    },
-    {
-      "id": "soon-SR0883113",
-      "name": "Villa Lometa",
-      "address": "225 Lometa Ave",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "date": "2026-03-30",
-      "status": "coming-soon",
-      "sourceId": "SR0883113"
-    },
-    {
-      "id": "soon-SR0883885",
-      "name": "Heiroku Sushi Restaurant",
-      "address": "19499 Stevens Creek, Ste. 300",
-      "cityId": "cupertino",
-      "cityName": "CUPERTINO",
-      "date": "2026-03-30",
-      "status": "coming-soon",
-      "sourceId": "SR0883885"
-    },
-    {
-      "id": "soon-SR0880341",
-      "name": "Chef Ko Chinese Restaurant",
-      "address": "876 W Hamilton Ave",
-      "cityId": "campbell",
-      "cityName": "CAMPBELL",
-      "date": "2026-03-27",
-      "status": "coming-soon",
-      "sourceId": "SR0880341"
-    },
-    {
-      "id": "soon-SR0883567",
-      "name": "131 Albright Wy Level 1 Coffee",
-      "address": "131 Albright Way",
-      "cityId": "los-gatos",
-      "cityName": "LOS CATOS",
-      "date": "2026-03-26",
-      "status": "coming-soon",
-      "sourceId": "SR0883567"
     }
   ]
 }
