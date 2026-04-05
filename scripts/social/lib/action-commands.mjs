@@ -15,8 +15,6 @@ const BLACKLIST_FILE = join(DATA_DIR, "social-blacklist.json");
 const EVENTS_FILE = join(DATA_DIR, "upcoming-events.json");
 const ACTION_LOG_FILE = join(DATA_DIR, "social-action-log.json");
 const REVIEW_HISTORY_FILE = join(DATA_DIR, "social-review-history.json");
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1488592203251978271/Qf_2sPiCbbuQLnmn6AcSXmD7OfTQbbkKo2J-4K2FiASnQ-F3G0W71bfGwtJqfCKYrklz";
-
 function loadEnv() {
   if (!process.env.ANTHROPIC_API_KEY) {
     try {
@@ -226,7 +224,7 @@ function executeAddPenaltySignal(signal, penalty = -20, reason = "") {
 async function executeFlagDataError(context, issue) {
   const msg = `🔧 **Data Error Flagged**\n**Event:** ${context.title}\n**Issue:** ${issue}\n**Source:** ${context.source || "unknown"}\n**URL:** ${context.url || "none"}`;
   try {
-    await fetch(DISCORD_WEBHOOK, {
+    await fetch(process.env.DISCORD_WEBHOOK, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content: msg }),
@@ -245,7 +243,7 @@ async function executeCancelEvent(context) {
 async function executeNeedsConfirmation(message, context) {
   const msg = `❓ **Action Confirmation Needed**\n**Event:** ${context.title}\n**Message:** ${message}\n\nReviewer comment was ambiguous — please clarify in the portal.`;
   try {
-    await fetch(DISCORD_WEBHOOK, {
+    await fetch(process.env.DISCORD_WEBHOOK, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content: msg }),

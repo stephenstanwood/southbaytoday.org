@@ -15,7 +15,16 @@ import { execFileSync } from "node:child_process";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const POST_DIR = "/tmp/sbs-social";
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1488592203251978271/Qf_2sPiCbbuQLnmn6AcSXmD7OfTQbbkKo2J-4K2FiASnQ-F3G0W71bfGwtJqfCKYrklz";
+
+// Load env
+try {
+  const envPath = join(__dirname, "..", "..", ".env.local");
+  const lines = readFileSync(envPath, "utf8").split("\n");
+  for (const line of lines) {
+    const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+    if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+  }
+} catch {}
 const QUEUE_THRESHOLD = 40;
 const GENERATE_BATCH = 25;
 
@@ -37,7 +46,7 @@ function countPendingDrafts() {
 
 async function sendDiscordDM(message) {
   const payload = { content: message };
-  const res = await fetch(DISCORD_WEBHOOK, {
+  const res = await fetch(process.env.DISCORD_WEBHOOK, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

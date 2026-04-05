@@ -16,7 +16,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
 
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1488592203251978271/Qf_2sPiCbbuQLnmn6AcSXmD7OfTQbbkKo2J-4K2FiASnQ-F3G0W71bfGwtJqfCKYrklz";
 const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
 const BSKY_API = "https://bsky.social/xrpc";
 const THREADS_API = "https://graph.threads.net/v1.0";
@@ -756,7 +755,7 @@ async function blueskyReply(text, rootUri, rootCid, parentUri, parentCid) {
 // ── Discord notification ─────────────────────────────────────────────────
 
 async function sendDiscord(message) {
-  const res = await fetch(DISCORD_WEBHOOK, {
+  const res = await fetch(process.env.DISCORD_WEBHOOK, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content: message }),

@@ -14,8 +14,6 @@ import { createHmac, randomBytes } from "node:crypto";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1488592203251978271/Qf_2sPiCbbuQLnmn6AcSXmD7OfTQbbkKo2J-4K2FiASnQ-F3G0W71bfGwtJqfCKYrklz";
-
 // Load env
 try {
   const envPath = join(__dirname, "..", "..", ".env.local");
@@ -147,7 +145,7 @@ async function verifyFacebook(postId) {
 
 async function sendDiscordAlert(message) {
   try {
-    await fetch(DISCORD_WEBHOOK, {
+    await fetch(process.env.DISCORD_WEBHOOK, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content: message }),
