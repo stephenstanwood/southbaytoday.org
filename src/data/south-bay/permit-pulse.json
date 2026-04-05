@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-05T20:08:47.480Z",
+      "generatedAt": "2026-04-05T23:10:04.833Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-05T20:08:50.211Z",
+      "generatedAt": "2026-04-05T23:10:07.232Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-00830",
-          "address": "151 Melville Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "RES MEP: We will replace your damaged sewer line",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-03-30",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00861",
           "address": "3132 Alexis Dr",
           "category": "commercial",
@@ -175,15 +163,27 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00825",
-          "address": "3946 Louis Rd",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
+          "id": "26BLD-00830",
+          "address": "151 Melville Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "RES MEP: We will replace your damaged sewer line",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-03-30",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00863",
+          "address": "1221 Hopkins Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-02",
           "subtype": "Permit Issued"
         },
         {
@@ -199,15 +199,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00863",
-          "address": "1221 Hopkins Av",
+          "id": "26BLD-00825",
+          "address": "3946 Louis Rd",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-02",
+          "issueDate": "2026-03-30",
           "subtype": "Permit Issued"
         },
         {
