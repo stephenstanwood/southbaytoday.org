@@ -128,6 +128,7 @@ export default function SignalApp() {
               </div>
             )}
           </div>
+          <div className="sb-slogan">Local news. Good vibes. No ads.</div>
         </div>
       </header>
 
