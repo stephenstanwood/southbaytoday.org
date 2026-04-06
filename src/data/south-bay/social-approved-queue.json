@@ -514,7 +514,41 @@
     "targetUrl": "https://events.sjsu.edu/event/sjsu-art-galleries-tuesday-night-lecture-lauren-oconnor-korb",
     "approvedAt": "2026-04-05T12:17:56.325Z",
     "comment": null,
-    "published": false
+    "published": true,
+    "publishedAt": "2026-04-06T18:45:14.024Z",
+    "publishedTo": [
+      {
+        "platform": "x",
+        "ok": true,
+        "postId": "2041225680088961157",
+        "id": "2041225680088961157",
+        "text": "SJSU Art Galleries is hosting Lauren O'Connor-Korb tomorrow night at 5pm—a Boston-based artist and SJSU alum talking about her current work. Free, open to all. https://t.co/rgg1rx2i1b"
+      },
+      {
+        "platform": "bluesky",
+        "ok": true,
+        "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mitwcdchxz2r",
+        "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mitwcdchxz2r",
+        "cid": "bafyreia3svrq2eyzkpmu3k236j4vfqposkdo2nycnge6gwrtvpqqsljbha"
+      },
+      {
+        "platform": "threads",
+        "ok": false,
+        "error": "Threads image container failed (500): {\"error\":{\"message\":\"An unexpected error has occurred. Please retry your request later.\",\"type\":\"OAuthException\",\"is_transient\":true,\"code\":2,\"fbtrace_id\":\"AxS0amC9WjCb35RsVaooAk7\"}}"
+      },
+      {
+        "platform": "facebook",
+        "ok": true,
+        "postId": "1057203394142664_122102801360849604",
+        "id": "1057203394142664_122102801360849604"
+      }
+    ],
+    "rewrittenCopy": {
+      "x": "SJSU Art Galleries is hosting Lauren O'Connor-Korb tomorrow night at 5pm—a Boston-based artist and SJSU alum talking about her current work. Free, open to all. https://southbaysignal.org/go/00cf5b33",
+      "threads": "Tomorrow night at SJSU: Lauren O'Connor-Korb, a Boston-based artist and SJSU alum, is giving a lecture on her current research at the Art Lecture Hall. Free to attend, 5pm. Always interesting to hear from artists working in the community 🎨 https://southbaysignal.org/go/00cf5b33",
+      "bluesky": "SJSU Art Galleries: Lauren O'Connor-Korb (Boston-based, SJSU alum) speaking tomorrow at 5pm about her work. Free lecture, open to everyone. https://southbaysignal.org/go/00cf5b33",
+      "facebook": "SJSU Art Galleries is hosting a Tuesday night lecture tomorrow at 5pm with Lauren O'Connor-Korb, a Boston-based artist and SJSU graduate. She'll be talking about her current research and practice. It's free and open to the community—great way to support local arts 🎨 https://southbaysignal.org/go/00cf5b33"
+    }
   },
   {
     "postType": "single",
