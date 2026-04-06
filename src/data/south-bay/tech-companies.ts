@@ -1508,6 +1508,17 @@ export const TECH_MILESTONES: TechMilestone[] = [
     defunct: true,
   },
   {
+    id: "vmware",
+    company: "VMware",
+    city: "Palo Alto",
+    foundedYear: 1998,
+    month: 2,
+    day: 10,
+    tagline: "Palo Alto startup that invented x86 virtualization — making one computer run as many, unlocking the cloud computing era.",
+    anniversaryNote: "VMware was founded February 10, 1998, in Palo Alto by Diane Greene, Mendel Rosenblum, Scott Devine, Ellen Wang, and Edouard Bugnion. Their virtualization software made it possible to run multiple operating systems on a single machine — the foundational technology behind every cloud server, DevOps pipeline, and containerized app that followed. EMC acquired it in 2004 for $625 million; Broadcom acquired it in 2023 for $69 billion.",
+    url: "https://en.wikipedia.org/wiki/VMware",
+  },
+  {
     id: "oracle",
     company: "Oracle",
     city: "Santa Clara",
