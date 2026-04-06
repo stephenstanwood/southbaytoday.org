@@ -2773,3 +2773,46 @@ The Food tab is where residents make real decisions ("should I try that new plac
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — the Food tab now has discovery value on both sections.** A resident scrolling "Coming Soon" sees anticipation blurbs that tell them why to care, not just where the permit was filed. June now has continuous SV History coverage. A Sunnyvale resident opening SBS late June will see Atari's founding story — a piece of their city's history most residents have forgotten (or never knew was Sunnyvale).
+
+---
+
+## 2026-04-06 — Cycle 59: Intel Pentium March Milestone + Data Pipeline Refresh
+
+### Context
+Monday April 6, 2026. Cycle 58 filled February's SV History gap with VMware. March still had a gap: Yahoo (Mar 2) covers to Mar 9, Apple (Apr 1) covers from Mar 25 — leaving Mar 10-24 with no SV History milestone. Spring Break is in effect for SJUSD, PAUSD, MVWSD, LGSUHSD, MVLA through April 10. Council meetings: San Jose, Sunnyvale, Cupertino, Milpitas, Campbell, Los Gatos all meet April 7.
+
+### What Was Built
+
+**Intel Pentium added to SV History — March 22, 1993, Santa Clara:**
+- Intel shipped the Pentium on March 22, 1993 — the first Intel processor named with a word instead of a number
+- Designed at Intel's Santa Clara campus; ran at 60MHz and 66MHz (5x faster than the 486)
+- Defined an era: millions of families bought their first PC because it said "Intel Inside"
+- The ±7-day window (Mar 15-29) bridges the gap between Yahoo (through Mar 9) and Apple (from Mar 25)
+- The Mar 10-14 window still has no milestone — a future cycle could address this (candidate: Fairchild Semiconductor founding March 1957, or HP's model 200A oscillator first sale)
+
+**Full data pipeline refresh:**
+- around-town.json: 8 items (was 2 this morning — 6 new items surfaced from Stoa data)
+  - Palo Alto Cubberley Project moving forward, San Antonio Road area study, retail zoning changes
+  - Cupertino business amnesty/retail incentives, lawsuit over Mary Avenue safety
+  - San José elevator upgrades on Ridder Park, West San Carlos commercial project
+- upcoming-events.json: 542 events (106 ongoing) from 24 sources
+- tech-briefing.json: refreshed for Apr 6-13 week (28 recent rounds, 7 growing / 9 stable / 2 reducing)
+- upcoming-meetings.json: 9 cities confirmed — San Jose Apr 7 (GovAI Coalition, Willow Rock energy storage, Story Road BID), Sunnyvale Apr 7 (homelessness community plan), Cupertino Apr 7, Milpitas Apr 7, Campbell Apr 7, Palo Alto Apr 6, Saratoga Apr 15, Los Altos Apr 14
+- weekend-picks.json: USWNT vs Japan at PayPal Park, Shakespeare Julius Caesar at Cupertino Library (free), Sharks vs Canucks at SAP Center
+
+**Funding research (April 3-6 window):**
+- No confirmed South Bay funding rounds from April 3-6, 2026
+- Cognichip raised $60M Series A (Apr 1, chip design AI) — but headquartered in Redwood City (San Mateo County), outside SBA coverage area
+
+### Why This Was the Strongest Move
+March was the last month with a 15-day dead zone in SV History. A Santa Clara resident opening SBS between March 10-24 would see nothing. The Pentium is one of Intel's most consequential products — it made home computing mainstream and defined the 1990s for millions of people who grew up in this region. Anyone who had a PC in the 1990s had a Pentium. The chip was designed and shipped from Santa Clara. Adding it means March now has meaningful coverage for most of the month.
+
+The around-town refresh was the most impactful data move: 2 items → 8 items is a 4x improvement in the council news section that residents see on the Today tab. The Cubberley Project update and San Antonio Road study are the kind of local governance stories that affect daily life in Palo Alto.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data.
+2. **RECENTLY_FUNDED updates** — Last South Bay entry: Alcatraz AI (Cupertino, $50M, Apr 2). Next wave of Q2 2026 rounds expected within 2-3 weeks.
+3. **March 10-14 SV History gap** — Still uncovered. Candidates: Fairchild Semiconductor (founded October 1957 — wrong month), first Apple II shipment (June 1977 — wrong month). Better candidate: Hewlett-Packard's first audio oscillator sale for Disney's Fantasia (early 1940 — could be March). Needs date verification.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — March now has SV History coverage for most of the month.** The Pentium milestone means any Santa Clara resident opening SBS March 15-29 sees the story of how their city's most famous chip company put computing in every American home. Combined with the around-town refresh (8 vs 2 items), the Today tab is substantially richer for a Monday start of a major council meeting week.
