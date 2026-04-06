@@ -2652,6 +2652,47 @@ The Food tab is the most "resident-facing" section — people actually use it to
 
 ---
 
+## 2026-04-06 — Cycle 57: SV History Jan/Aug Gaps + Data Refresh
+
+### Context
+Monday April 6, 2026. Cycle 56's "next ideas" called out thin SV History months (January and August). RECENTLY_FUNDED was already up-to-date through April 2 (Alcatraz). No new verified South Bay funding rounds found for April 3–6 after searching Crunchbase, TechCrunch, and Business Wire.
+
+### What Was Built
+
+**Two new TECH_MILESTONES entries:**
+
+- **Palm Computing** (Santa Clara, January 1992, `month: 1, day: 14`)
+  - Founded by Jeff Hawkins and Donna Dubinsky in Santa Clara
+  - Palm Pilot (1996) sold 1M units in 18 months — the iPhone before the iPhone
+  - Fills the January 6–22 window (previously only HP at Jan 1)
+  - Marked `defunct: true`
+
+- **Netscape IPO** (Mountain View, August 9, 1995, `month: 8, day: 9`)
+  - Stock priced at $28, refused to open due to demand, first trade at $71
+  - Ignited the dot-com boom — Mountain View's defining moment in internet history
+  - Fills the August 1–17 window (previously only Netflix at Aug 29)
+  - Marked `defunct: true`
+
+**Full data pipeline refresh:**
+- upcoming-events.json: refreshed from 23 sources
+- digests.json: 10 cities refreshed
+- around-town.json: refreshed (Stoa 10-day lookback)
+- upcoming-meetings.json: 9 cities confirmed (Palo Alto Apr 6, Cupertino/Milpitas Apr 7, Campbell Apr 8, Saratoga Apr 15, Los Altos Apr 14)
+- weekend-picks.json: 3 picks (USWNT vs Japan, Shakespeare Julius Caesar, Saul Williams poetry)
+
+### Why This Was the Strongest Move
+August was essentially empty for 3 weeks — a resident opening the Tech tab August 1–28 would see nothing from SV History. Netscape's IPO is arguably the single most consequential moment in Silicon Valley's commercial internet history and happened right in Mountain View. January had HP but at day 1 — only the first 9 days of January got coverage. Palm Computing is a genuine South Bay story (Santa Clara) that most younger residents don't know. Adding mid-January coverage closes the gap.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data.
+2. **RECENTLY_FUNDED updates** — Last entry April 2, 2026 (Alcatraz). Continue monitoring for South Bay rounds; Q1 was record-breaking globally so signals expected.
+3. **February SV History** — Only 1 entry (Sun Microsystems, Feb 24, 1982). Could add VMware (Feb 10, 1998, Palo Alto) to add mid-February coverage.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — SV History now covers all 12 months with meaningful mid-month depth.** August went from a 28-day dead zone to an anchor story about the moment Silicon Valley went global. January went from 9-day coverage to 23-day coverage. A South Bay resident opening the Tech tab any day in August will now see the Netscape story — the dot-com explosion that shaped their region's identity.
+
+---
+
 ## 2026-04-05 — Cycle 56: Coming-Soon Blurbs + Atari June Milestone + Data Refresh
 
 ### Context
