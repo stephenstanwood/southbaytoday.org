@@ -146,14 +146,32 @@ async function main() {
     });
   }
 
+  const attempted = platforms.filter(
+    (p) => CONFIG.PLATFORMS[p] && (!platformFilter || platformFilter.includes(p)) && post.copy?.[p]
+  );
+
   logSuccess(`Published to ${published.length} platform(s): ${published.join(", ") || "none"}`);
 
-  // Output summary for scheduled task reporting
-  console.log(`\n**Social post: ${post.postType}**`);
-  console.log(`- Item: ${items[0]?.title || "(unknown)"}`);
-  console.log(`- Published: ${published.join(", ") || "none"}`);
-  for (const [p, r] of Object.entries(results)) {
-    console.log(`- ${p}: ${JSON.stringify(r)}`);
+  // Structured summary for discord-notify.py
+  const failedPlatforms = attempted.filter((p) => !published.includes(p));
+  const publishSummary = {
+    published: published.length,
+    succeeded: published,
+    failed: failedPlatforms,
+    items: [{
+      title: items[0]?.title || "(unknown)",
+      platforms: published,
+      postIds: Object.fromEntries(
+        Object.entries(results).filter(([, r]) => r?.id || r?.uri).map(([p, r]) => [p, r.id || r.uri])
+      ),
+      copy: (post.copy?.x || Object.values(post.copy || {})[0] || "").slice(0, 100),
+    }],
+  };
+  console.log(`\nPUBLISH_SUMMARY:${JSON.stringify(publishSummary)}`);
+
+  if (attempted.length > 0 && published.length === 0) {
+    console.error("PUBLISH_FAILED: No platforms succeeded");
+    process.exit(1);
   }
 }
 

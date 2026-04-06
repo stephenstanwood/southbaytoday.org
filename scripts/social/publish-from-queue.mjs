@@ -358,10 +358,37 @@ async function main() {
     console.error("   ⚠️  Git commit/push failed:", err.message);
   }
 
-  // Summary
-  const totalPublished = toPublish.filter((p) => p.published && p.publishResult !== "expired").length;
+  // Summary + structured output for discord-notify.py
+  const processedPosts = toPublish.filter((p) => p.publishedTo);
+  const totalPublished = processedPosts.length;
   console.log(`\n✅ Published ${totalPublished} posts`);
   console.log(`   ${queue.filter((p) => !p.published).length} remaining in queue`);
+
+  if (!dryRun && toPublish.length > 0) {
+    const allResults = processedPosts.flatMap((p) => p.publishedTo || []);
+    const succeededPlatforms = [...new Set(allResults.filter((r) => r.ok).map((r) => r.platform))];
+    const failedPlatforms = [...new Set(allResults.filter((r) => !r.ok).map((r) => r.platform))];
+    const summaryItems = processedPosts.map((p) => ({
+      title: p.item?.title || "(unknown)",
+      platforms: (p.publishedTo || []).filter((r) => r.ok).map((r) => r.platform),
+      postIds: Object.fromEntries(
+        (p.publishedTo || []).filter((r) => r.ok && r.postId).map((r) => [r.platform, r.postId])
+      ),
+      copy: Object.values(p.rewrittenCopy || {})[0]?.slice(0, 100) || "",
+    }));
+    const publishSummary = {
+      published: totalPublished,
+      succeeded: succeededPlatforms,
+      failed: failedPlatforms,
+      items: summaryItems,
+    };
+    console.log(`\nPUBLISH_SUMMARY:${JSON.stringify(publishSummary)}`);
+
+    if (totalPublished > 0 && succeededPlatforms.length === 0) {
+      console.error("PUBLISH_FAILED: All platforms failed");
+      process.exit(1);
+    }
+  }
 }
 
 main().catch((err) => {
