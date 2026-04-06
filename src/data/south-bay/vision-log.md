@@ -2693,6 +2693,52 @@ August was essentially empty for 3 weeks — a resident opening the Tech tab Aug
 
 ---
 
+## 2026-04-06 — Cycle 58: VMware February Milestone + Food Coming-Soon Blurbs + Data Refresh
+
+### Context
+Monday April 6, 2026. Cycle 57 filled January (Palm Computing) and August (Netscape IPO) SV History gaps. February still had only one milestone (Sun Microsystems, Feb 24) — leaving Feb 1–23 empty. Four coming-soon food items had null blurbs from the cycle 56 batch (Haiku only matched 8 of 12). Spring Break is underway across 5 districts through April 10.
+
+### What Was Built
+
+**VMware added to SV History — February 10, 1998, Palo Alto:**
+- Founded by Diane Greene, Mendel Rosenblum, Scott Devine, Ellen Wang, and Edouard Bugnion
+- First company to commercialize x86 virtualization — the foundational tech behind every cloud server and DevOps pipeline
+- Operated in stealth through 1998; launched publicly at DEMO conference February 1999; shipped VMware Workstation May 1999
+- EMC acquired in 2004 for $625M; Broadcom acquired in 2023 for $69B
+- February now has two milestones: VMware (Feb 10) + Sun Microsystems (Feb 24) — Feb 4–28 has continuous coverage
+- Founding date verified against Wikipedia (Feb 10, not Feb 12 as initially drafted; Ellen Wang, not Edward Wang)
+
+**Blurbs for 4 remaining coming-soon food items (Food tab):**
+- Golden Wang Donkatsu (Santa Clara): "Crispy Japanese pork cutlets hitting El Camino Real—finally, proper tonkatsu in Santa Clara."
+- Ut Fruit Market (San Jose): "Story Road's getting fresh: Southeast Asian fruits and produce you won't find anywhere else."
+- 975 Page Mill Cafe (Palo Alto): "Page Mill's new neighborhood spot promises proper coffee and food that actually belongs in Palo Alto."
+- Com Tam Thien Huong Take Out (San Jose): "Authentic broken rice bowls and Vietnamese comfort food coming to Story Road—the real deal."
+- All 12 coming-soon items now have blurbs — none left blank
+
+**Full data pipeline refresh:**
+- upcoming-events.json: 543 events (106 ongoing) from 24 sources
+- digests.json: 10 cities refreshed
+- around-town.json: 8 items refreshed (council + permit sources)
+- upcoming-meetings.json: 9 cities confirmed (SJ Apr 7, Sunnyvale Apr 7, Milpitas Apr 7, Los Gatos Apr 7, Cupertino Apr 7, Palo Alto Apr 6, Campbell Apr 8, Saratoga Apr 15, Los Altos Apr 14)
+- weekend-picks.json: 3 picks (USWNT vs Japan, Shakespeare Julius Caesar at Cupertino, Saul Williams poetry at SJ Jazz)
+
+**Funding research (April 3-6 window):**
+- No confirmed South Bay funding rounds from April 3-6, 2026 found via TechCrunch, Crunchbase, Business Wire, PR Newswire
+- Near-miss: Alcatraz AI (Cupertino) $50M Series B — announced April 2, one day before window
+
+### Why This Was the Strongest Move
+February is the worst month for SV History — Sun Microsystems at Feb 24 means Feb 1-23 (23 days!) is a dead zone. VMware at Feb 10 cuts that gap to 9 days and anchors the month with arguably the most consequential South Bay company for cloud computing. Every AWS instance, Google Compute node, and Azure VM traces its lineage back to VMware's x86 virtualization breakthrough from Palo Alto. Completing all 12 coming-soon blurbs means no food item is blurb-less — the discovery tab is fully stocked for residents making dining decisions.
+
+### Next 3 Strongest Ideas
+1. **Transit real-time** — 511.org API key required. Register at https://511.org/open-data.
+2. **RECENTLY_FUNDED updates** — No new rounds this week from target cities. Continue monitoring; South Bay AI deals tend to cluster in 2-3 week waves.
+3. **February SV History depth** — Feb 1-9 remains empty. Candidate: Hewlett-Packard's Model 200A audio oscillator (first sale January 1939, but often cited as a February 1939 demo). Would need precise date verification.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — SV History now has meaningful coverage in every month of the year.** February was the last month with a 3+ week dead zone. Any Palo Alto resident opening SBS Feb 4-24 will now see VMware's story — the moment a professor's garage-startup revolutionized how every computer in the world runs software. The Food tab's coming-soon section is now fully populated with anticipation blurbs, giving residents a reason to care about permits-filed rather than just names-and-addresses.
+
+---
+
 ## 2026-04-05 — Cycle 56: Coming-Soon Blurbs + Atari June Milestone + Data Refresh
 
 ### Context
