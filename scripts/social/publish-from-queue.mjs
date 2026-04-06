@@ -247,19 +247,40 @@ async function main() {
       }
     }
 
-    // Shorten long URLs for cleaner posts
+    // Fetch og:image from the target URL for richer social cards
     const targetUrl = item.url || post.targetUrl;
+    let ogImage = "";
+    if (targetUrl) {
+      try {
+        const ogRes = await fetch(targetUrl, {
+          headers: { "User-Agent": "SouthBaySignalBot/1.0 (link preview)" },
+          redirect: "follow",
+          signal: AbortSignal.timeout(8000),
+        });
+        if (ogRes.ok) {
+          const html = await ogRes.text();
+          const m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+            || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+          if (m) ogImage = m[1];
+        }
+      } catch { /* skip — og:image is best-effort */ }
+      if (ogImage) console.log(`      🖼️  og:image: ${ogImage.slice(0, 80)}...`);
+    }
+
+    // Shorten long URLs for cleaner posts
     if (targetUrl && targetUrl.length > 80) {
       const shortSlug = randomBytes(4).toString("hex");
       const shortUrl = `https://southbaysignal.org/go/${shortSlug}`;
       // Save to short-urls.json with metadata for OG tags
       let shortUrls = {};
       try { shortUrls = JSON.parse(readFileSync(SHORT_URLS_FILE, "utf8")); } catch {}
-      shortUrls[shortSlug] = {
+      const entry = {
         url: targetUrl,
         title: item.title || "",
         description: (item.summary || item.description || "").slice(0, 200),
       };
+      if (ogImage) entry.image = ogImage;
+      shortUrls[shortSlug] = entry;
       writeFileSync(SHORT_URLS_FILE, JSON.stringify(shortUrls, null, 2) + "\n");
       // Replace URL in all platform copies
       for (const [platform, text] of Object.entries(rewrittenCopy)) {
@@ -287,7 +308,10 @@ async function main() {
 
       try {
         const client = await import(`./lib/platforms/${platform}.mjs`);
-        const result = await client.publish(copy);
+        // Pass og:image to Threads as image URL (it needs a public URL, not a buffer)
+        const result = platform === "threads" && ogImage
+          ? await client.publish(copy, ogImage)
+          : await client.publish(copy);
         console.log(`      ✅ ${platform}: ${JSON.stringify(result)}`);
         publishResults.push({
           platform,

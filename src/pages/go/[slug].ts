@@ -15,7 +15,7 @@ export const GET: APIRoute = async ({ params }) => {
 
   // Read fresh from disk each time so new short URLs work without redeploy
   const filePath = join(process.cwd(), "src/data/south-bay/short-urls.json");
-  let urls: Record<string, string | { url: string; title?: string; description?: string }>;
+  let urls: Record<string, string | { url: string; title?: string; description?: string; image?: string }>;
   try {
     urls = JSON.parse(readFileSync(filePath, "utf-8"));
   } catch {
@@ -31,6 +31,7 @@ export const GET: APIRoute = async ({ params }) => {
   const target = typeof entry === "string" ? entry : entry.url;
   const title = (typeof entry === "object" && entry.title) || "The South Bay Signal";
   const description = (typeof entry === "object" && entry.description) || "";
+  const image = (typeof entry === "object" && entry.image) || "https://southbaysignal.org/images/og-image.png";
 
   const canonical = `https://southbaysignal.org/go/${slug}`;
 
@@ -42,12 +43,14 @@ export const GET: APIRoute = async ({ params }) => {
 <title>${esc(title)}</title>
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
+<meta property="og:image" content="${esc(image)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:site_name" content="The South Bay Signal">
 <meta property="og:type" content="article">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${esc(image)}">
 <meta http-equiv="refresh" content="0;url=${esc(target)}">
 <link rel="canonical" href="${esc(target)}">
 </head>
