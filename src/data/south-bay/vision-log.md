@@ -2816,3 +2816,55 @@ The around-town refresh was the most impactful data move: 2 items → 8 items is
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — March now has SV History coverage for most of the month.** The Pentium milestone means any Santa Clara resident opening SBS March 15-29 sees the story of how their city's most famous chip company put computing in every American home. Combined with the around-town refresh (8 vs 2 items), the Today tab is substantially richer for a Monday start of a major council meeting week.
+
+---
+
+## 2026-04-06 — Cycle 60: SV History Calendar Coverage Expansion
+
+### Context
+Monday April 6, 2026 (second cycle of the day, following cycle 59). The data pipeline was already refreshed earlier. Analysis of TECH_MILESTONES with the ±8-day display window revealed 5 significant coverage gaps:
+- Jan 23-Feb 1 (10 days)
+- Jul 6-9 (4 days)
+- Sep 13-Oct 5 (23 days — the largest gap by far)
+- Oct 23-Nov 6 (15 days)
+- Total: 79+ uncovered days across the calendar year
+
+### What Was Built
+
+**5 new TECH_MILESTONES added to tech-companies.ts:**
+
+1. **Apple Macintosh introduction** (Jan 24, 1984, Cupertino) — fills Jan 23-Feb 1 gap
+   - Steve Jobs at the Flint Center at De Anza College: "Hello." ±8 = Jan 16-Feb 1.
+
+2. **Tesla founding** (Jul 1, 2003, Palo Alto) — fills Jul 6-9 gap
+   - Martin Eberhard & Marc Tarpenning incorporate; Elon Musk leads Series A. ±8 = Jun 23-Jul 9.
+
+3. **Fairchild Semiconductor founding** (Sep 18, 1957, Palo Alto) — fills Sep 13-26
+   - The Traitorous Eight walk out of Shockley's lab; Robert Noyce and Gordon Moore later co-found Intel. ±8 = Sep 10-26.
+
+4. **Apple iPod announcement** (Oct 23, 2001, Cupertino) — fills Oct 15-31
+   - "1,000 songs in your pocket." The proof-of-concept for the iPhone era. ±8 = Oct 15-31.
+
+5. **Android announcement** (Nov 5, 2007, Mountain View) — fills Oct 28-Nov 13
+   - Google + Open Handset Alliance launch the OS that now runs on 3B+ devices. ±8 = Oct 28-Nov 13.
+
+**Coverage improvement:** 79+ uncovered days → 42 uncovered days. The 23-day September hole (largest gap) and the 15-day October/November hole are now substantially filled.
+
+**Remaining gaps after this cycle:**
+- Mar 11-13 (3 days) — still no confirmed March 10-14 milestone
+- Jun 1-7 (7 days) — between Java (May 23) and Oracle (Jun 16)
+- Jul 27-31 (5 days) — between Intel founding (Jul 18) and Netscape IPO (Aug 9)
+- Aug 18-20 (3 days) — between Netscape IPO (Aug 9) and Netflix (Aug 29)
+- Sep 27-Oct 5 (9 days) — between Fairchild (Sep 18) and iPod (Oct 23)
+- Dec 19-23 (5 days) — between Cisco (Dec 10) and HP (Jan 1)
+
+### Why This Was the Strongest Move
+A resident opening the Tech tab in late September would previously see *nothing* for 23 straight days. Now they see Fairchild Semiconductor — arguably the most important company in Silicon Valley history. The "Traitorous Eight" didn't just start a company; they created the template for every venture-backed startup that followed, and gave the region its name. Combined with the iPod and Android additions, October/November is now well-covered for the first time. The Mac introduction gives January its first post-HP milestone.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Last South Bay entry: Alcatraz AI (Cupertino, $50M, Apr 2). Monitor for Q2 2026 rounds.
+2. **Sep 27-Oct 5 SV History gap** — 9 days still uncovered. Candidates: Apple's "Think Different" campaign (Sep 28, 1997), NeXT founding (Sep 1985 in Palo Alto), Google acquiring YouTube (Oct 9, 2006 — but SF company).
+3. **Jun 1-7 gap** — 7 days uncovered. Candidates: Intel Itanium launch (Jun 4, 2001, Santa Clara), HP's first audio oscillator sale for Disney Fantasia.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Tech tab's "This Week in SV History" now has meaningful content for most of the year.** Any South Bay resident who opens the site in late September sees the Fairchild story — how eight engineers from a Palo Alto garage launched the entire semiconductor industry. Anyone opening it in October sees the iPod story. In November, Android. These are stories every South Bay resident has a personal connection to, even if they don't know the local angle yet.
