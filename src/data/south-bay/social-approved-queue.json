@@ -330,7 +330,40 @@
     "targetUrl": "https://sccl.bibliocommons.com/events/69165795c313c23700e200e3",
     "approvedAt": "2026-04-05T12:17:56.325Z",
     "comment": "good. make sure the time reference is correct",
-    "published": false
+    "published": true,
+    "publishedAt": "2026-04-06T01:45:10.072Z",
+    "publishedTo": [
+      {
+        "platform": "x",
+        "ok": true,
+        "postId": "2040969006551838774",
+        "id": "2040969006551838774",
+        "text": "Tomorrow at 3:30 PM in Milpitas: bring your kid to the library for an hour of pure LEGO building. Drop in, no sign-ups, totally free. They'll build whatever they dream up 🧱\n\nhttps://t.co/MCIv66lQzl"
+      },
+      {
+        "platform": "bluesky",
+        "ok": true,
+        "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mis5cjiayh2l",
+        "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mis5cjiayh2l",
+        "cid": "bafyreibcho26d4bzxrerozpypjfmka3qu7sdiia5hkzdu7d6buqms57nxi"
+      },
+      {
+        "platform": "threads",
+        "ok": false,
+        "error": "Threads container creation failed (400): {\"error\":{\"message\":\"API access blocked.\",\"type\":\"OAuthException\",\"code\":200,\"fbtrace_id\":\"ADqCU-R-hzBbeSBbkTZySSY\"}}"
+      },
+      {
+        "platform": "facebook",
+        "ok": false,
+        "error": "Facebook post failed (400): {\"error\":{\"message\":\"Any of the pages_read_engagement, pages_manage_metadata,\\n        pages_read_user_content, pages_manage_ads, pages_show_list or\\n        pages_messaging permission(s) must be granted before impersonating a\\n        user's page.\",\"type\":\"OAuthException\",\"code\":190,\"fbtrace_id\":\"AZfioOxDuIhDI8YcM2hli4d\"}}"
+      }
+    ],
+    "rewrittenCopy": {
+      "x": "Tomorrow at 3:30 PM in Milpitas: bring your kid to the library for an hour of pure LEGO building. Drop in, no sign-ups, totally free. They'll build whatever they dream up 🧱\n\nhttps://sccl.bibliocommons.com/events/69165795c313c23700e200e3",
+      "threads": "Tomorrow afternoon in Milpitas: LEGO Club at the Santa Clara County Library at 3:30 PM. Kids K-8 get an hour to build whatever they want—no instructions, no registration, no cost. Perfect for a Monday after school 🧱\n\nhttps://sccl.bibliocommons.com/events/69165795c313c23700e200e3",
+      "bluesky": "Tomorrow at 3:30 PM in Milpitas: drop your kid at the library for LEGO Club. Free, no sign-ups needed. An hour of building, creativity, whatever they want to make 🧱\n\nhttps://sccl.bibliocommons.com/events/69165795c313c23700e200e3",
+      "facebook": "Looking for something to do with the kids tomorrow afternoon? LEGO Club is happening at Santa Clara County Library in Milpitas at 3:30 PM. It's a drop-in program for grades K-8—free, no registration needed. They get an hour to build whatever they can imagine. Grab them after school! 🧱\n\nhttps://sccl.bibliocommons.com/events/69165795c313c23700e200e3"
+    }
   },
   {
     "postType": "single",
