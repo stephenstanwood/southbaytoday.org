@@ -1778,6 +1778,18 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/Apple_Inc.",
     defunct: false,
   },
+  {
+    id: "intel-8086",
+    company: "Intel 8086",
+    city: "Santa Clara",
+    foundedYear: 1978,
+    month: 6,
+    day: 8,
+    tagline: "The processor that built the PC era — Intel's 8086, launched June 8, 1978, created the x86 architecture that still runs almost every Windows PC and server on Earth.",
+    anniversaryNote: "On June 8, 1978, Intel introduced the 8086 processor from its Santa Clara facility — and unknowingly defined the next half-century of computing. The 8086 was a 16-bit chip that could address 1 MB of memory, extraordinary for its time. Three years later, IBM chose Intel's compatible 8088 for its first personal computer, locking the PC industry into the x86 instruction set. That decision cascaded through history: the Intel 286, 386, 486, Pentium, Core i9, and every AMD Ryzen and EPYC chip today all trace their lineage back to Santa Clara, 1978. Even Apple's transition from PowerPC to Intel (2006) and now to Apple Silicon (2020) is part of the x86 story — ARM ate x86's lunch only because x86 spent 40 years eating everyone else's. No single chip architecture has ever touched more human lives.",
+    url: "https://en.wikipedia.org/wiki/Intel_8086",
+    defunct: false,
+  },
 ];
 
 // ---------------------------------------------------------------------------

@@ -2908,3 +2908,47 @@ The "Think Different" milestone fills the Tech tab's most culturally resonant ga
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — 17 uncovered days from 42, and the most culturally resonant gap (late September) is now filled.** A resident opening the Tech tab any day from September 20 to October 6 now sees the Think Different story. The Intel Core 2 milestone grounds July in the "comeback" narrative that is deeply South Bay. The Apple IPO entry connects December to the origins of the startup-IPO dream that has defined Silicon Valley ever since.
+
+---
+
+## 2026-04-07 — Cycle 62: Intel 8086 Fills Jun 1-7 + Data Refresh
+
+### Context
+Monday April 7, 2026 (early morning). Previous cycle filled Jul/Sep/Dec SV History gaps. This cycle: full data refresh (events, digests, around-town, weekend picks, tech briefing, upcoming meetings) + SV History gap fill for Jun 1-7.
+
+### What Was Built
+
+**Data refreshed:**
+- `upcoming-events.json` — 507 events (84 ongoing) from 24 sources
+- `around-town.json` — 8 items (council news, permits)
+- `digests.json` — 10 city council digests
+- `upcoming-meetings.json` — 7 cities with upcoming meetings
+- `weekend-picks.json` — 3 picks for Apr 11-12 weekend
+- `tech-briefing.json` — Apr 6-13 week, $4B+ in recent South Bay funding
+
+**1 new TECH_MILESTONE added:**
+
+1. **Intel 8086** (Jun 8, 1978, Santa Clara) — fills Jun 1-7 gap
+   - The processor that created the x86 architecture. IBM chose the compatible 8088 for the original PC in 1981, locking the entire PC industry into x86 for half a century. Every Windows PC, server, and data center chip today traces its lineage to Santa Clara, 1978. ±8 = May 31-Jun 16.
+
+**RECENTLY_FUNDED search:**
+- No new April 2026 rounds found beyond Alcatraz AI (Apr 2, already in DB). Most Q2 2026 activity is still dominated by March rounds already indexed. Check again next cycle.
+
+**Coverage improvement:** 17 uncovered days → 10 uncovered days. Jun 1-7 gap eliminated.
+
+**Remaining gaps after this cycle:**
+- Mar 11-13 (3 days) — no confirmed March 10-14 milestone
+- May 14 (1 day) — between LinkedIn (May 5) and Java (May 23)
+- Aug 18-20 (3 days) — between Netscape IPO (Aug 9) and Netflix (Aug 29)
+- Dec 21-23 (3 days) — Apple IPO covers through Dec 20; HP covers from Dec 24
+
+### Why This Was the Strongest Move
+The Intel 8086 milestone fills the Tech tab's largest remaining calendar gap (7 days). Any South Bay resident who opens the site June 1-7 now sees the story of the chip that built modern computing — and it was made in Santa Clara. The x86 architecture is so fundamental that even Apple's 2020 transition away from Intel was news precisely because x86 had dominated for 40+ years. The story of how one chip from Santa Clara shaped every PC ever made is universally relevant to anyone who lives and works in Silicon Valley.
+
+### Next 3 Strongest Ideas
+1. **Aug 18-20 gap** (3 days) — Candidates: Atari 2600 becoming the first consumer product to generate $1B in revenue (hard to verify exact date), HP-Compaq merger completed (May 2002 — wrong month). Need to find a verified SV milestone around Aug 18-20.
+2. **RECENTLY_FUNDED updates** — Alcatraz AI is the most recent entry (Apr 2). Monitor for more Q2 2026 rounds, especially in AI and robotics.
+3. **Mar 11-13 gap** (3 days) — Candidates: Intel Pentium Pro launch (Nov 1, 1995 — wrong month), Apple's AirPort Wi-Fi launch (July 1999 — wrong month). Need verified March 10-14 SV milestone.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — 10 uncovered days from 17, and the Tech tab's largest remaining gap is now filled.** A resident opening the site any day from June 1-7 sees the story of the chip that built the PC era, made 4 miles from their home in Santa Clara. The Intel 8086 story connects directly to everything Silicon Valley residents experience today — their laptops, the data centers in their city, the Intel campus on Constitution Drive. It's not abstract history; it's their neighborhood.
