@@ -11,7 +11,7 @@
 # Runs every 15 minutes.
 # ---------------------------------------------------------------------------
 
-set -euo pipefail
+set -uo pipefail
 
 # Load env for Discord webhook
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
