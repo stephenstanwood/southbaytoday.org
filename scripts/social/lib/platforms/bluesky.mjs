@@ -192,6 +192,36 @@ export async function createPost(text, imageBlob = null, imageAlt = "") {
 }
 
 /**
+ * Delete a post by AT URI.
+ */
+export async function deletePost(uri) {
+  const session = await createSession();
+  // URI format: at://did:plc:xxx/app.bsky.feed.post/rkey
+  const parts = uri.split("/");
+  const rkey = parts[parts.length - 1];
+
+  const res = await fetch(`${BSKY_API}/com.atproto.repo.deleteRecord`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.accessJwt}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      repo: session.did,
+      collection: "app.bsky.feed.post",
+      rkey,
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Bluesky delete failed (${res.status}): ${text}`);
+  }
+
+  return { deleted: true };
+}
+
+/**
  * Full post flow: upload image (if provided) then post.
  */
 export async function publish(text, imageBuffer = null, imageAlt = "") {

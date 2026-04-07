@@ -117,6 +117,25 @@ async function publishContainer(containerId) {
 }
 
 /**
+ * Delete a post by ID.
+ */
+export async function deletePost(postId) {
+  const { accessToken } = getCredentials();
+
+  const res = await fetch(
+    `${GRAPH_API}/${postId}?access_token=${accessToken}`,
+    { method: "DELETE" }
+  );
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Threads delete failed (${res.status}): ${body}`);
+  }
+
+  return { deleted: true };
+}
+
+/**
  * Full post flow: create container → wait → publish.
  * For image posts, imageUrl must be a publicly accessible URL.
  * (We'll host card images temporarily or use a public URL.)

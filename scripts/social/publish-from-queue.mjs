@@ -60,26 +60,38 @@ function parseEventHour(timeStr) {
 }
 
 /**
+ * Get the effective event date from a post entry.
+ * Checks both post-level date and item-level date.
+ */
+function getEventDate(post) {
+  return post.item?.date || post.date || null;
+}
+
+/**
  * Check if an event is still relevant for posting right now.
  * Must be at least 2 hours in the future.
+ * Accepts a full post entry (not just item) to check both date sources.
  */
-function isTimeRelevant(item, ptTime) {
+function isTimeRelevant(post, ptTime) {
   const today = ptTime.toISOString().split("T")[0];
   const currentHour = ptTime.getHours();
   const currentMinute = ptTime.getMinutes();
   const currentTotalMinutes = currentHour * 60 + currentMinute;
 
+  const eventDate = getEventDate(post);
+
   // No date = ongoing, always relevant
-  if (!item.date) return true;
+  if (!eventDate) return true;
 
   // Past dates = expired
-  if (item.date < today) return false;
+  if (eventDate < today) return false;
 
   // Future dates = relevant
-  if (item.date > today) return true;
+  if (eventDate > today) return true;
 
   // Today: check if event is at least 2 hours away
-  if (item.date === today && item.time) {
+  const item = post.item || post;
+  if (eventDate === today && item.time) {
     const eventHour = parseEventHour(item.time);
     if (eventHour !== null) {
       const eventMinutes = eventHour * 60;
@@ -190,7 +202,8 @@ async function main() {
   let expiredCount = 0;
   for (const p of queue) {
     if (p.published) continue;
-    if (p.item?.date && p.item.date < today) {
+    const eventDate = getEventDate(p);
+    if (eventDate && eventDate < today) {
       p.published = true;
       p.publishedAt = new Date().toISOString();
       p.publishResult = "expired";
@@ -203,13 +216,13 @@ async function main() {
 
   // Filter remaining unpublished to time-relevant items (today <2hr, etc.)
   const stillUnpublished = queue.filter((p) => !p.published);
-  const relevant = stillUnpublished.filter((p) => isTimeRelevant(p.item, ptTime));
+  const relevant = stillUnpublished.filter((p) => isTimeRelevant(p, ptTime));
   const tooSoon = stillUnpublished.length - relevant.length;
   if (tooSoon > 0) {
     console.log(`   ${tooSoon} skipped (<2hr lead time)`);
     // Mark too-soon items as expired
     for (const p of stillUnpublished) {
-      if (!isTimeRelevant(p.item, ptTime)) {
+      if (!isTimeRelevant(p, ptTime)) {
         p.published = true;
         p.publishedAt = new Date().toISOString();
         p.publishResult = "expired";
@@ -225,8 +238,8 @@ async function main() {
 
   // Sort by soonest event first
   relevant.sort((a, b) => {
-    const dateA = a.item?.date || "9999";
-    const dateB = b.item?.date || "9999";
+    const dateA = getEventDate(a) || "9999";
+    const dateB = getEventDate(b) || "9999";
     return dateA.localeCompare(dateB);
   });
 
@@ -236,12 +249,14 @@ async function main() {
 
   for (const post of toPublish) {
     const item = post.item || {};
-    console.log(`   📌 ${item.title} (${item.cityName || ""}, ${item.date} ${item.time || ""})`);
+    const effectiveDate = getEventDate(post);
+    console.log(`   📌 ${item.title} (${item.cityName || ""}, ${effectiveDate} ${item.time || ""})`);
 
-    // Rewrite time references
+    // Rewrite time references — use effective date (post-level or item-level)
+    const rewriteItem = { ...item, date: effectiveDate };
     const rewrittenCopy = {};
     for (const [platform, text] of Object.entries(post.copy || {})) {
-      rewrittenCopy[platform] = rewriteTimeReferences(text, item, ptTime);
+      rewrittenCopy[platform] = rewriteTimeReferences(text, rewriteItem, ptTime);
       if (rewrittenCopy[platform] !== text) {
         console.log(`      ✏️  ${platform}: time refs rewritten`);
       }
@@ -296,6 +311,37 @@ async function main() {
       }
       console.log();
       continue;
+    }
+
+    // ── PRE-PUBLISH GUARD ──────────────────────────────────────────────
+    // Final timeliness check right before posting. Even if the post passed
+    // the earlier filter, time may have elapsed (og:image fetch, URL
+    // shortening, etc.) or the date fields may have been missed earlier.
+    // This is the last line of defense against posting stale events.
+    const guardTime = getPTTime();
+    const guardToday = guardTime.toISOString().split("T")[0];
+    const eventDate = getEventDate(post);
+    if (eventDate && eventDate < guardToday) {
+      console.log(`      ⛔ PRE-PUBLISH GUARD: event date ${eventDate} is in the past — skipping`);
+      post.published = true;
+      post.publishedAt = new Date().toISOString();
+      post.publishResult = "expired-guard";
+      continue;
+    }
+    // Also check the copy itself for obviously stale day-of-week references
+    const guardDayName = DAY_NAMES[guardTime.getDay()];
+    const eventDayName = eventDate ? DAY_NAMES[new Date(eventDate + "T12:00:00").getDay()] : null;
+    const firstCopy = Object.values(rewrittenCopy)[0] || "";
+    if (eventDate && eventDate === guardToday && eventDayName) {
+      // If copy says "Sunday" but it's Tuesday, something is wrong
+      const wrongDayPattern = new RegExp(`\\b${eventDayName}\\b`, "i");
+      if (eventDayName !== guardDayName && wrongDayPattern.test(firstCopy)) {
+        console.log(`      ⛔ PRE-PUBLISH GUARD: copy references "${eventDayName}" but today is ${guardDayName} — skipping`);
+        post.published = true;
+        post.publishedAt = new Date().toISOString();
+        post.publishResult = "expired-guard-dayname";
+        continue;
+      }
     }
 
     // Publish to each platform

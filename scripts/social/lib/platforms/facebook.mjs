@@ -15,6 +15,25 @@ function getCredentials() {
 }
 
 /**
+ * Delete a post by ID.
+ */
+export async function deletePost(postId) {
+  const { accessToken } = getCredentials();
+
+  const res = await fetch(
+    `${GRAPH_API}/${postId}?access_token=${accessToken}`,
+    { method: "DELETE" }
+  );
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Facebook delete failed (${res.status}): ${body}`);
+  }
+
+  return { deleted: true };
+}
+
+/**
  * Post a text message with a link to the Facebook Page.
  * If the text contains a URL, Facebook will auto-generate a link preview.
  */

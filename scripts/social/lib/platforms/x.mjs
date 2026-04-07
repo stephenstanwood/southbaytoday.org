@@ -139,6 +139,28 @@ export async function postTweet(text, mediaId = null) {
 }
 
 /**
+ * Delete a tweet by ID.
+ */
+export async function deletePost(tweetId) {
+  const creds = getCredentials();
+  const url = `${API_BASE}/2/tweets/${tweetId}`;
+  const authHeader = makeOAuthRequest("DELETE", url, [], creds);
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: { Authorization: authHeader },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`X delete failed (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  return { deleted: data.data?.deleted ?? true };
+}
+
+/**
  * Full post flow: upload image (if provided) then tweet.
  */
 export async function publish(text, imageBuffer = null) {
