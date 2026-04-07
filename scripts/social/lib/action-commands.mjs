@@ -82,13 +82,13 @@ Reviewer comment: "{comment}"
 Classify into one or more actions. Return a JSON array of action objects.
 
 Action types:
-- block_event: Remove this specific event. Use when: "delete this", "remove", "kill it", "shouldn't be here"
+- block_event: Remove this specific event AND block its title from reappearing in future event generation. Use when: "delete this", "remove", "kill it", "shouldn't be here", "internal", "political", "not public", "not relevant", "student", "students only", "members only", or any comment indicating the event isn't appropriate for a general public audience
 - block_venue: Block all future events from this venue. Use when: "block this venue", "no more events from [venue]"
 - block_source: Block all future events from this source/org. Use when: "block this source", "block [source name]"
 - add_penalty_signal: Add a scoring penalty for a phrase/pattern. Use when: "stanford affiliates only", "members only", "not public", "too niche", "we don't cover [type]"
-- flag_data_error: Flag incorrect data for correction. Use when: "wrong time", "wrong date", "wrong venue", "incorrect info"
+- flag_data_error: Flag incorrect data for correction. Use when: "wrong time", "wrong date", "wrong venue", "incorrect info", "over limits", "over platform max character limits", "too long" (copy exceeds platform character limits and needs regeneration)
 - cancel_event: Event has been cancelled. Use when: "cancelled", "event cancelled"
-- no_action: Comment is just editorial feedback, not an instruction. Use when: "looks good", "nice pick", "great copy", or any non-actionable note
+- no_action: Comment is just editorial feedback, not an instruction. Use when: "looks good", "nice pick", "great copy", any non-actionable note, OR timeliness complaints like "too late to queue", "event already passed", "too soon" (the system already enforces a 2-hour lead time rule automatically)
 
 Each action object should have:
 - type: one of the action types above
@@ -179,7 +179,18 @@ async function executeBlockEvent(context) {
     writeFileSync(REVIEW_HISTORY_FILE, JSON.stringify(history, null, 2) + "\n");
   } catch {}
 
-  return { ok: true, removed, detail: `Removed ${removed} event(s) from upcoming-events.json` };
+  // Add title to dynamic blacklist so generate-events.mjs skips it on future runs
+  if (context.title) {
+    const bl = loadBlacklist();
+    if (!bl.titles) bl.titles = [];
+    const normalized = context.title.toLowerCase().trim();
+    if (!bl.titles.some((t) => t.toLowerCase() === normalized)) {
+      bl.titles.push(context.title);
+      saveBlacklist(bl);
+    }
+  }
+
+  return { ok: true, removed, detail: `Removed ${removed} event(s) from upcoming-events.json and blocked title` };
 }
 
 function executeBlockVenue(venue) {
