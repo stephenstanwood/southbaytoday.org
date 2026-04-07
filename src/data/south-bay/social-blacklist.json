@@ -3,5 +3,36 @@
   "sources": [],
   "topics": [],
   "phrases": [],
-  "penaltySignals": []
+  "penaltySignals": [
+    {
+      "phrase": "virtual",
+      "penalty": -20,
+      "addedAt": "2026-04-07T17:47:10.151Z",
+      "reason": "Reviewer rejected event for being virtual, indicating virtual events should be penalized"
+    },
+    {
+      "phrase": "for students",
+      "penalty": -20,
+      "addedAt": "2026-04-07T17:47:11.203Z",
+      "reason": "Reviewer indicated this event is for students only, which makes it not broadly public/accessible"
+    },
+    {
+      "phrase": "right now",
+      "penalty": -20,
+      "addedAt": "2026-04-07T17:59:06.906Z",
+      "reason": "Reviewer indicates The South Bay Signal does not cover events marked as happening 'right now' or in immediate/present tense"
+    },
+    {
+      "phrase": "way too far in the future",
+      "penalty": -15,
+      "addedAt": "2026-04-07T18:02:36.770Z",
+      "reason": "Reviewer is flagging that the event date is too far in the future, suggesting a pattern to penalize for future listings"
+    },
+    {
+      "phrase": "student-specific",
+      "penalty": -20,
+      "addedAt": "2026-04-07T18:05:31.641Z",
+      "reason": "Comment indicates this post targets a specific student audience, which is too niche for the general public review portal"
+    }
+  ]
 }
