@@ -2994,3 +2994,48 @@ The Intel 8086 milestone fills the Tech tab's largest remaining calendar gap (7 
 
 ### Are We Becoming More Like the Homepage for South Bay Life?
 **Yes — 10 uncovered days from 17, and the Tech tab's largest remaining gap is now filled.** A resident opening the site any day from June 1-7 sees the story of the chip that built the PC era, made 4 miles from their home in Santa Clara. The Intel 8086 story connects directly to everything Silicon Valley residents experience today — their laptops, the data centers in their city, the Intel campus on Constitution Drive. It's not abstract history; it's their neighborhood.
+
+---
+
+## 2026-04-07 — Cycle 63: 4 SV History Milestones Fill Aug/Dec/Jul/Feb Gaps
+
+### Context
+Tuesday April 7, 2026 (morning). Previous cycle (62) filled Jun 1-7 with Intel 8086, leaving 21 uncovered days. This cycle: full gap analysis revealed the vision log had stale gap tracking — Mar 11-13 was already covered by PalmPilot (Mar 10). Actual gap count was 21 days across 8 windows.
+
+### What Was Built
+
+**4 new TECH_MILESTONES added:**
+
+1. **HP-35 Calculator** (Feb 1, 1972, Palo Alto) — fills Feb 1-2 gap
+   - World's first scientific pocket calculator, made by HP in Palo Alto. Bill Hewlett challenged engineers to make a "shirt-pocket calculator." Made the slide rule obsolete overnight. $395 in 1972.
+
+2. **App Store Launch** (Jul 10, 2008, Cupertino) — fills Jul 9-10 gap
+   - Apple opened the App Store alongside iPhone OS 2.0. 10M downloads in 24 hours. Steve Jobs had originally opposed third-party apps. Birthed the app economy that has paid out $320B+ to developers.
+
+3. **Google IPO** (Aug 19, 2004, Mountain View) — fills Aug 17-21 gap
+   - Google went public at $85/share, $23B market cap. Larry Page and Sergey Brin had started in a Menlo Park garage. One of the biggest IPOs in history at the time.
+
+4. **Apple acquires NeXT** (Dec 20, 1996, Cupertino) — fills Dec 20-24 gap
+   - $429M acquisition brought Steve Jobs back to Apple after 11 years. NeXT's OS became macOS/iOS. Apple was two weeks from bankruptcy at the time.
+
+**Data refreshed:**
+- `upcoming-events.json` — 534 events (110 ongoing) from 24 sources
+
+**Coverage improvement:** 21 uncovered days → 7 uncovered days
+
+**Remaining gaps after this cycle:**
+- May 13-15 (3 days) — between LinkedIn (May 5, covers to May 12) and Java (May 23, covers from May 16)
+- May 31 (1 day) — between Java (covers to May 30) and Jun 8 Intel 8086 (covers from Jun 1)
+- Oct 6 (1 day) — between Apple Think Different Sep 28 (covers to Oct 5) and iPod Oct 14 (covers from Oct 7)
+- Nov 23-24 (2 days) — between Netscape IPO area and Dec 2 coverage
+
+### Why This Was the Strongest Move
+Four verifiable, consequential Silicon Valley milestones — all from companies headquartered within the South Bay coverage area. A resident opening the Tech tab any day from August 17-21 now sees the Google IPO story; any day December 20-24 sees Steve Jobs' return to Apple via NeXT. These are two of the defining moments in Silicon Valley history.
+
+### Next 3 Strongest Ideas
+1. **Oct 6 gap** (1 day) — iPhone 4S announced Oct 4, 2011 (Cupertino); with ±7 covers Oct 6. Strong candidate.
+2. **May 13-15 gap** (3 days) — No clear verified SV milestone in that window yet. The iMac announcement was May 6, 1998 (covers to May 13 but not May 14-15). Needs research.
+3. **Nov 23-24 gap** (2 days) — No confirmed candidate yet. Could research HP or Intel events in that window.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — 7 uncovered days from 21, across only 4 remaining windows.** Any South Bay resident opening the Tech tab from August through December now sees continuous, locally-relevant Silicon Valley history. The four new milestones (HP-35, App Store, Google IPO, Apple-NeXT) cover the most historically dense periods of SV innovation.
