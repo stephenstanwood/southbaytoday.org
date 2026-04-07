@@ -712,12 +712,25 @@ function vote(v) {
   const el = document.getElementById('platforms');
   el.classList.add(v === 'approve' ? 'swipe-right' : 'swipe-left');
   const comment = document.getElementById('comment').value.trim();
-  results.push({
+  const voteData = {
     file: posts[current]._file,
     title: posts[current].item?.title || '',
     vote: v,
     comment: comment || null,
-  });
+  };
+  results.push(voteData);
+
+  // Save immediately — don't wait for batch end
+  fetch('/api/vote', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(voteData) })
+    .then(r => r.json())
+    .then(data => {
+      if (data.queueSize) updateQueueBadge(data.queueSize);
+      if (data.actionResult) {
+        console.log('Action:', data.actionResult);
+      }
+    })
+    .catch(() => {});
+
   if (v === 'approve') updateQueueBadge(queueSize + 1);
   setTimeout(() => { current++; render(); }, 300);
 }
@@ -872,6 +885,83 @@ const server = createServer((req, res) => {
     generateNewBatch();
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ ok: true, generating: true }));
+    return;
+  }
+
+  // Immediate per-vote endpoint — saves each swipe as it happens
+  if (req.method === "POST" && req.url === "/api/vote") {
+    let body = "";
+    req.on("data", (c) => (body += c));
+    req.on("end", async () => {
+      try {
+        const r = JSON.parse(body);
+        const posts = loadPendingPosts();
+        const post = posts.find((p) => p._file === r.file);
+
+        if (r.vote === "approve" && post) {
+          const queue = loadQueue();
+          const cleanPost = { ...post };
+          delete cleanPost._file;
+          queue.push({
+            ...cleanPost,
+            approvedAt: new Date().toISOString(),
+            comment: r.comment || null,
+            published: false,
+          });
+          saveQueue(queue);
+          console.log(`  ✅ ${r.title?.slice(0, 50)} → approved (queue: ${queue.length})`);
+        } else {
+          console.log(`  ⏭️  ${r.title?.slice(0, 50)} → skipped`);
+        }
+
+        // Save to review history so it never reappears
+        let reviewHistory = [];
+        try { reviewHistory = JSON.parse(readFileSync(REVIEW_HISTORY_FILE, "utf8")); } catch {}
+        reviewHistory.push({
+          title: r.title,
+          url: post?.item?.url || null,
+          postType: post?.postType || null,
+          milestoneId: post?.item?.milestoneId || null,
+          vote: r.vote,
+          comment: r.comment || null,
+          reviewedAt: new Date().toISOString(),
+        });
+        writeFileSync(REVIEW_HISTORY_FILE, JSON.stringify(reviewHistory, null, 2) + "\n");
+
+        // Delete the post file from /tmp so it won't reappear
+        if (post?._file) {
+          try { unlinkSync(join(POST_DIR, post._file)); } catch {}
+        }
+
+        // Process action commands from comments
+        let actionResult = null;
+        if (r.comment) {
+          const context = {
+            title: r.title || post?.item?.title || "",
+            source: post?.item?.source || "",
+            venue: post?.item?.venue || "",
+            city: post?.item?.city || "",
+            category: post?.item?.category || "",
+            url: post?.item?.url || "",
+          };
+          try {
+            actionResult = await processComment(r.comment, context);
+            if (actionResult?.summary) {
+              console.log(`     🎯 ${r.title?.slice(0, 40)}: ${actionResult.summary}`);
+            }
+          } catch (err) {
+            console.error(`  ⚠ Action processing failed:`, err.message);
+          }
+        }
+
+        const queue = loadQueue();
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: true, queueSize: queue.length, actionResult: actionResult?.summary || null }));
+      } catch (e) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
+    });
     return;
   }
 

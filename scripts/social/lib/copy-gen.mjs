@@ -175,6 +175,14 @@ export async function generateSvHistoryCopy(milestone, ptTime) {
     ? `\nComputer History Museum exhibit: "${milestone.chmExhibit}"`
     : "";
 
+  // Calculate explicit char budgets so the model knows exactly how much room it has
+  const urlLen = milestone.url.length;
+  const hashtagEstimate = 45; // ~"#SiliconValley #SantaClara #TechHistory"
+  const xBudget = 280 - urlLen - 2;           // 2 for newline/space before URL
+  const bskyBudget = 300 - urlLen - 2 - hashtagEstimate;
+  const threadsBudget = 500 - urlLen - 2 - hashtagEstimate;
+  const fbBudget = 500 - urlLen - 2;
+
   const prompt = `Write an "On This Day in Silicon Valley" social post about this tech milestone. Current date: ${now}.
 
 MILESTONE:
@@ -194,13 +202,13 @@ TONE FOR THIS POST TYPE:
 - If the company still exists locally, nod to its current presence
 - If defunct, frame it as legacy/influence, not loss
 
-Write four variants:
-1. X (max 270 chars including URL) — punchy, clean, no hashtags
-2. Threads (max 470 chars including URL + hashtags) — slightly warmer, can breathe more. End with 2-3 relevant hashtags
-3. Bluesky (max 270 chars including URL + hashtags) — similar to X, can be slightly looser. End with 2-3 relevant hashtags
-4. Facebook (max 500 chars including URL) — conversational, can include a bit more context, no hashtags
+CHARACTER BUDGETS — these are HARD LIMITS. The URL is ${urlLen} chars. You must stay under these totals (text + URL + hashtags combined):
+1. X: max 280 chars total. You have ${xBudget} chars for text, then the URL. No hashtags.
+2. Threads: max 500 chars total. You have ~${threadsBudget} chars for text, then URL + 3 hashtags.
+3. Bluesky: max 300 chars total. You have ~${bskyBudget} chars for text, then URL + 3 hashtags.
+4. Facebook: max 500 chars total. You have ${fbBudget} chars for text, then the URL. No hashtags.
 
-Each variant must include the exact URL provided above.
+CRITICAL: Count your characters carefully. The URL "${milestone.url}" is ${urlLen} characters and MUST be included exactly as-is in every variant. If your text is too long, CUT WORDS rather than exceeding the limit.
 
 HASHTAG RULES (for Bluesky and Threads only):
 - Always include #SiliconValley
