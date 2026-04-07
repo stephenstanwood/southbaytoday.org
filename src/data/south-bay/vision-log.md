@@ -2911,6 +2911,48 @@ The "Think Different" milestone fills the Tech tab's most culturally resonant ga
 
 ---
 
+## 2026-04-07 — Cycle 63: PalmPilot Launch Fills Mar 11-13 + Data Refresh
+
+### Context
+Tuesday April 7, 2026 (morning). Previous cycle filled Jun 1-7 SV History gap with Intel 8086. This cycle: full data refresh + SV History gap fill for Mar 11-13.
+
+### What Was Built
+
+**Data refreshed:**
+- `upcoming-events.json` — 534 events (110 ongoing) from 24 sources
+- `around-town.json` — 8 items (council news, permits)
+- `digests.json` — 10 city council digests (including same-day Los Gatos, San José, Mountain View, Sunnyvale, Cupertino, Santa Clara, Milpitas)
+- `upcoming-meetings.json` — 7 cities with upcoming meetings
+- `weekend-picks.json` — 3 picks for Apr 10-12 (Bay FC vs Japan, Free Shakespeare Julius Caesar, Sharks vs Canucks)
+
+**1 new TECH_MILESTONE added:**
+
+1. **PalmPilot launch** (Mar 10, 1996, Santa Clara) — fills Mar 11-13 gap
+   - The PalmPilot 1000/5000 shipped March 10, 1996. Jeff Hawkins prototyped it with a block of wood. Sold 1M units in 18 months. The first PDA people actually used, made in Santa Clara. ±8 = Mar 2-18.
+
+**RECENTLY_FUNDED search:**
+- No new April 2026 rounds found beyond Alcatraz AI (Apr 2). Search results were mixing Q1 data. Check again next cycle.
+
+**Coverage improvement:** 10 uncovered days → 7 uncovered days. Mar 11-13 gap eliminated.
+
+**Remaining gaps after this cycle:**
+- May 14 (1 day) — between LinkedIn (May 5 covers through May 13) and Java (May 23 covers from May 15)
+- Aug 18-20 (3 days) — between Netscape IPO (Aug 9) and Netflix (Aug 29)
+- Dec 21-23 (3 days) — Apple IPO covers through Dec 20; HP covers from Dec 24
+
+### Why This Was the Strongest Move
+The PalmPilot milestone fills the last remaining multi-day spring gap in the Tech tab. Any South Bay resident opening the site March 11-13 now sees the story of the device that invented the handheld computing era — made in Santa Clara. Jeff Hawkins famously designed it by carrying a block of wood to test if he'd actually reach for it. The PalmPilot sold a million units in 18 months before the smartphone era. It's a deeply local story (Santa Clara) with universal resonance.
+
+### Next 3 Strongest Ideas
+1. **Aug 18-20 gap** (3 days) — Candidates still needed. Potential: ROLM Corporation founding (Aug 1969, Santa Clara) — needs exact date verification; Applied Materials founding is November.
+2. **May 14 gap** (1 day) — Extremely tight. No confident candidate found yet. Could try Apple WWDC 1997 (May 13-16 in San Jose) but exact date uncertain.
+3. **RECENTLY_FUNDED Q2 2026** — No new April rounds found this cycle. Monitor weekly.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — 7 uncovered days from 10, and the last multi-day spring gap is now filled.** A resident who opens the Tech tab any day March 11-13 now sees the full arc: Palm Computing was founded in Santa Clara in January 1992, and the device they built changed personal computing in March 1996. Two related milestones anchoring two different months — both from the same Santa Clara company.
+
+---
+
 ## 2026-04-07 — Cycle 62: Intel 8086 Fills Jun 1-7 + Data Refresh
 
 ### Context

@@ -1790,6 +1790,18 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/Intel_8086",
     defunct: false,
   },
+  {
+    id: "palmpilot-launch",
+    company: "PalmPilot",
+    city: "Santa Clara",
+    foundedYear: 1996,
+    month: 3,
+    day: 10,
+    tagline: "The PDA that put a computer in your pocket — the PalmPilot 1000 and 5000 shipped March 10, 1996, a year before the smartphone era anyone imagined.",
+    anniversaryNote: "On March 10, 1996, US Robotics shipped the PalmPilot 1000 and 5000 — the first PDAs that people actually carried everywhere. Jeff Hawkins and Donna Dubinsky's Santa Clara company (Palm Computing, acquired by US Robotics in 1995) had built the device Hawkins famously prototyped by carrying a block of wood the size of a shirt pocket. The PalmPilot sold a million units in its first 18 months. Before the BlackBerry, before the iPhone, before Android: the Palm Pilot was Silicon Valley's proof that a computer could fit in your hand. Every smartphone you use today owes something to what shipped from Santa Clara in March 1996.",
+    url: "https://en.wikipedia.org/wiki/PalmPilot",
+    defunct: true,
+  },
 ];
 
 // ---------------------------------------------------------------------------
