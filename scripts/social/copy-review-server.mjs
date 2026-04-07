@@ -88,10 +88,10 @@ function generateNewBatch() {
   isGenerating = true;
   console.log(`\n🔄 Generating next batch of ${BATCH_SIZE} posts...`);
 
-  // Clear old post files (preserve sv-history posts — they're date-sensitive and shouldn't be regenerated)
+  // Clear old post files (preserve sv-history and restaurant posts — they have their own dedup)
   if (existsSync(POST_DIR)) {
     for (const f of readdirSync(POST_DIR)) {
-      if (f.startsWith("post-") && f.endsWith(".json") && !f.includes("-sv-history-")) {
+      if (f.startsWith("post-") && f.endsWith(".json") && !f.includes("-sv-history-") && !f.includes("-restaurant-")) {
         unlinkSync(join(POST_DIR, f));
       }
     }
@@ -108,6 +108,17 @@ function generateNewBatch() {
     });
   } catch (err) {
     console.error("SV History generation failed:", err.message);
+  }
+
+  // Generate restaurant opening posts (quick — only produces output for new openings)
+  try {
+    execFileSync(nodePath, ["--env-file=" + ENV_FILE, join(__dirname, "generate-restaurant-openings.mjs")], {
+      cwd: join(__dirname, "..", ".."),
+      timeout: 120_000,
+      stdio: "inherit",
+    });
+  } catch (err) {
+    console.error("Restaurant opening generation failed:", err.message);
   }
 
   execFile(nodePath, ["--env-file=" + ENV_FILE, GENERATE_SCRIPT, "--max", String(BATCH_SIZE)], {
