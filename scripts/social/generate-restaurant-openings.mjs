@@ -17,6 +17,7 @@
 import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { randomBytes } from "node:crypto";
 import { CLAUDE_MODEL } from "./lib/constants.mjs";
 import { logStep, logSuccess, logSkip, logError, logItem } from "./lib/logger.mjs";
 
@@ -153,6 +154,26 @@ const CITY_NAMES = {
   milpitas: "Milpitas",
 };
 
+// ── Short URL generation ─────────────────────────────────────────────────
+
+const SHORT_URLS_FILE = join(ROOT, "src", "data", "south-bay", "short-urls.json");
+
+function createShortUrl(longUrl, title, description) {
+  const slug = randomBytes(4).toString("hex");
+  const shortUrl = `https://southbaysignal.org/go/${slug}`;
+
+  let shortUrls = {};
+  try { shortUrls = JSON.parse(readFileSync(SHORT_URLS_FILE, "utf8")); } catch {}
+  shortUrls[slug] = {
+    url: longUrl,
+    title: title || "",
+    description: (description || "").slice(0, 200),
+  };
+  writeFileSync(SHORT_URLS_FILE, JSON.stringify(shortUrls, null, 2) + "\n");
+
+  return shortUrl;
+}
+
 // ── Copy generation ──────────────────────────────────────────────────────
 
 async function generateRestaurantCopy(restaurant) {
@@ -161,7 +182,10 @@ async function generateRestaurantCopy(restaurant) {
 
   const cityName = CITY_NAMES[restaurant.cityId] || restaurant.cityName;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.name + " " + restaurant.address + " " + cityName + " CA")}`;
-  const urlLen = mapsUrl.length;
+
+  // Pre-shorten the ugly Maps URL so copy is clean and has more char budget
+  const shortUrl = createShortUrl(mapsUrl, `Now Open: ${restaurant.name}`, restaurant.blurb || "");
+  const urlLen = shortUrl.length; // ~42 chars vs ~120+ for raw Maps URL
 
   const xBudget = 280 - urlLen - 2;
   const bskyBudget = 300 - urlLen - 2 - 45;
@@ -176,7 +200,7 @@ RESTAURANT:
 - City: ${cityName}
 - Opened: ${restaurant.date}
 ${restaurant.blurb ? `- Vibe/description: ${restaurant.blurb}` : ""}
-- Google Maps link (MUST include this exact URL): ${mapsUrl}
+- Link (MUST include this exact URL): ${shortUrl}
 
 TONE:
 - This is a "now open" announcement — the restaurant has already opened its doors
@@ -192,7 +216,7 @@ CHARACTER BUDGETS — these are HARD LIMITS. The URL is ${urlLen} chars. Stay un
 3. Bluesky: max 300 chars total. You have ~${bskyBudget} chars for text, then URL + 3 hashtags.
 4. Facebook: max 500 chars total. You have ${fbBudget} chars for text, then the URL. No hashtags.
 
-CRITICAL: Count your characters carefully. The URL "${mapsUrl}" is ${urlLen} characters and MUST be included exactly as-is in every variant. If your text is too long, CUT WORDS rather than exceeding the limit.
+CRITICAL: Count your characters carefully. The URL "${shortUrl}" is ${urlLen} characters and MUST be included exactly as-is in every variant. If your text is too long, CUT WORDS rather than exceeding the limit.
 
 HASHTAG RULES (for Bluesky and Threads only):
 - Always include #SouthBay
@@ -244,7 +268,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
     }
   }
 
-  return { copy: variants, mapsUrl };
+  return { copy: variants, mapsUrl, shortUrl };
 }
 
 /**
@@ -339,7 +363,7 @@ async function main() {
     }
 
     try {
-      const { copy, mapsUrl } = await generateRestaurantCopy(restaurant);
+      const { copy, mapsUrl, shortUrl } = await generateRestaurantCopy(restaurant);
 
       const post = {
         postType: "restaurant_opening",
@@ -357,11 +381,12 @@ async function main() {
           blurb: restaurant.blurb,
           category: "food",
           score: 22, // slightly below curated sv_history but above average events
-          url: mapsUrl,
+          url: shortUrl,
+          mapsUrl,
         },
         copy,
         cardPath: null,
-        targetUrl: mapsUrl,
+        targetUrl: shortUrl,
       };
 
       const slug = restaurant.id.replace(/[^a-z0-9-]/gi, "-");
