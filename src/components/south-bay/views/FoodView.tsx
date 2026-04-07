@@ -328,7 +328,7 @@ function SccFoodOpeningsCard() {
     // For coming-soon items, the date is when the plan was approved (not the opening date)
     const dateLabel = item.date
       ? item.status === "coming-soon"
-        ? `Filed ${formatSccDate(item.date)}`
+        ? `Permit approved ${formatSccDate(item.date)}`
         : formatSccDate(item.date)
       : "";
     return (

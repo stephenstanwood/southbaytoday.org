@@ -27,87 +27,96 @@ if [ -z "${DISCORD_WEBHOOK:-}" ]; then
   exit 1
 fi
 
-# Max age thresholds (in minutes) for known SBS processes
-# If a matching process has been running longer than this, it's likely hung
-declare -A THRESHOLDS=(
-  ["publish-from-queue"]="10"
-  ["queue-monitor"]="15"
-  ["reply-monitor"]="10"
-  ["generate-posts"]="20"
-  ["generate-events"]="15"
-  ["generate-digests"]="30"
-  ["generate-around-town"]="15"
-  ["generate-restaurant-radar"]="10"
-  ["generate-sv-history"]="10"
-  ["generate-restaurant-openings"]="10"
-  ["copy-review-server"]="0"   # 0 = skip (always running)
-  ["threads-refresh"]="5"
-  ["collect-metrics"]="10"
-)
+# Process patterns and their max expected runtime in minutes
+# Format: "pattern:max_minutes" (0 = skip, always running)
+CHECKS="
+publish-from-queue:10
+queue-monitor:15
+reply-monitor:10
+generate-posts:20
+generate-events:15
+generate-digests:30
+generate-around-town:15
+generate-restaurant-radar:10
+generate-sv-history:10
+generate-restaurant-openings:10
+threads-refresh:5
+collect-metrics:10
+"
 
-HUNG_PROCESSES=()
+HUNG=""
+POPUP=""
 
-for pattern in "${!THRESHOLDS[@]}"; do
-  max_minutes="${THRESHOLDS[$pattern]}"
+# Parse elapsed time string to minutes
+# Format: [[dd-]hh:]mm:ss
+parse_etime() {
+  local etime="$1"
+  local days=0 hours=0 mins=0
 
-  # Skip always-on processes
-  if [ "$max_minutes" -eq 0 ]; then
-    continue
+  if [[ "$etime" == *-* ]]; then
+    days="${etime%%-*}"
+    etime="${etime#*-}"
   fi
 
+  local IFS=':'
+  local parts=($etime)
+  if [ ${#parts[@]} -eq 3 ]; then
+    hours=$((10#${parts[0]}))
+    mins=$((10#${parts[1]}))
+  elif [ ${#parts[@]} -eq 2 ]; then
+    mins=$((10#${parts[0]}))
+  fi
+
+  echo $(( days * 1440 + hours * 60 + mins ))
+}
+
+for check in $CHECKS; do
+  [ -z "$check" ] && continue
+  pattern="${check%%:*}"
+  max_minutes="${check##*:}"
+
   # Find matching node processes and their elapsed time
-  # ps etime format: [[dd-]hh:]mm:ss
-  while IFS= read -r line; do
+  ps -eo pid,etime,command 2>/dev/null | grep "node.*${pattern}" | grep -v grep | while IFS= read -r line; do
     [ -z "$line" ] && continue
     pid=$(echo "$line" | awk '{print $1}')
     etime=$(echo "$line" | awk '{print $2}')
-
-    # Parse elapsed time to minutes
-    days=0; hours=0; mins=0
-    if [[ "$etime" == *-* ]]; then
-      days="${etime%%-*}"
-      etime="${etime#*-}"
-    fi
-    # Now etime is [hh:]mm:ss
-    IFS=':' read -ra parts <<< "$etime"
-    if [ ${#parts[@]} -eq 3 ]; then
-      hours="${parts[0]}"
-      mins="${parts[1]}"
-    elif [ ${#parts[@]} -eq 2 ]; then
-      mins="${parts[0]}"
-    fi
-    total_mins=$(( days * 1440 + hours * 60 + mins ))
+    total_mins=$(parse_etime "$etime")
 
     if [ "$total_mins" -gt "$max_minutes" ]; then
-      HUNG_PROCESSES+=("**${pattern}** (PID ${pid}) — running ${total_mins}min, expected <${max_minutes}min")
+      echo "HUNG:${pattern}:${pid}:${total_mins}:${max_minutes}" >> /tmp/sbs-watchdog-hits.tmp
     fi
-  done < <(ps -eo pid,etime,command | grep "node.*${pattern}" | grep -v grep | awk '{print $1, $2}')
+  done
 done
 
-# Also check for macOS system popups that might be blocking
-POPUP_PROCS=()
+# Check for macOS system popups that might be blocking
 for popup in "Software Update" "UserNotificationCenter" "SecurityAgent" "CoreServicesUIAgent"; do
   if pgrep -f "$popup" > /dev/null 2>&1; then
-    POPUP_PROCS+=("$popup")
+    POPUP="${POPUP}• ${popup}\n"
   fi
 done
 
+# Read hits from temp file
+if [ -f /tmp/sbs-watchdog-hits.tmp ]; then
+  while IFS= read -r hit; do
+    pattern=$(echo "$hit" | cut -d: -f2)
+    pid=$(echo "$hit" | cut -d: -f3)
+    total=$(echo "$hit" | cut -d: -f4)
+    max=$(echo "$hit" | cut -d: -f5)
+    HUNG="${HUNG}• **${pattern}** (PID ${pid}) — running ${total}min, expected <${max}min\n"
+  done < /tmp/sbs-watchdog-hits.tmp
+  rm -f /tmp/sbs-watchdog-hits.tmp
+fi
+
 # Send alert if anything is hung
-if [ ${#HUNG_PROCESSES[@]} -gt 0 ] || [ ${#POPUP_PROCS[@]} -gt 0 ]; then
+if [ -n "$HUNG" ] || [ -n "$POPUP" ]; then
   MSG="⚠️ **Mac Mini Watchdog Alert**\n"
 
-  if [ ${#HUNG_PROCESSES[@]} -gt 0 ]; then
-    MSG+="🔴 **Hung SBS processes:**\n"
-    for proc in "${HUNG_PROCESSES[@]}"; do
-      MSG+="• ${proc}\n"
-    done
+  if [ -n "$HUNG" ]; then
+    MSG+="🔴 **Hung SBS processes:**\n${HUNG}"
   fi
 
-  if [ ${#POPUP_PROCS[@]} -gt 0 ]; then
-    MSG+="🟡 **System popups detected:**\n"
-    for popup in "${POPUP_PROCS[@]}"; do
-      MSG+="• ${popup}\n"
-    done
+  if [ -n "$POPUP" ]; then
+    MSG+="🟡 **System popups detected:**\n${POPUP}"
   fi
 
   MSG+="📱 Screen share in to check."
@@ -116,7 +125,7 @@ if [ ${#HUNG_PROCESSES[@]} -gt 0 ] || [ ${#POPUP_PROCS[@]} -gt 0 ]; then
     -H "Content-Type: application/json" \
     -d "{\"content\": \"$(echo -e "$MSG")\"}" > /dev/null
 
-  echo "Alert sent: ${#HUNG_PROCESSES[@]} hung process(es), ${#POPUP_PROCS[@]} popup(s)"
+  echo "Alert sent"
 else
   echo "$(date '+%Y-%m-%d %H:%M') — all clear"
 fi
