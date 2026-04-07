@@ -325,6 +325,12 @@ function SccFoodOpeningsCard() {
 
   function FoodRow({ item, accent }: { item: SccFoodItem; accent: string }) {
     const city = item.cityId ? CITY_DISPLAY[item.cityId] ?? item.cityName : item.cityName;
+    // For coming-soon items, the date is when the plan was approved (not the opening date)
+    const dateLabel = item.date
+      ? item.status === "coming-soon"
+        ? `Filed ${formatSccDate(item.date)}`
+        : formatSccDate(item.date)
+      : "";
     return (
       <div style={{
         display: "flex",
@@ -364,10 +370,10 @@ function SccFoodOpeningsCard() {
                 <span>{city}</span>
               </>
             )}
-            {item.date && (
+            {dateLabel && (
               <>
                 <span style={{ color: "var(--sb-border)" }}>·</span>
-                <span>{formatSccDate(item.date)}</span>
+                <span>{dateLabel}</span>
               </>
             )}
           </div>

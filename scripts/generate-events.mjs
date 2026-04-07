@@ -61,6 +61,19 @@ if (existsSync(envLocalPath)) {
   }
 }
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-events.json");
+const BLACKLIST_PATH = join(__dirname, "..", "src", "data", "south-bay", "social-blacklist.json");
+
+// Load dynamic blacklist from social review pipeline (venues, sources, titles)
+let _blacklist;
+function loadBlacklist() {
+  if (_blacklist) return _blacklist;
+  try {
+    _blacklist = JSON.parse(readFileSync(BLACKLIST_PATH, "utf8"));
+  } catch {
+    _blacklist = { venues: [], sources: [], titles: [] };
+  }
+  return _blacklist;
+}
 
 const UA = "SouthBaySignal/1.0 (stanwood.dev; public event aggregator)";
 
@@ -142,10 +155,18 @@ const TITLE_BLOCKLIST = [
   /\bFidelity One on One\b/i, // internal HR appointments
   /\bPay Day\b/i,          // internal HR payroll notices
   /\bResearch Week Braintrust\b/i, // internal student workshop
+  /\bstorytime\b/i,        // museum/library storytimes (require admission, not standalone events)
 ];
 
 function isBlockedEvent(title) {
-  return TITLE_BLOCKLIST.some((re) => re.test(title));
+  if (TITLE_BLOCKLIST.some((re) => re.test(title))) return true;
+  // Dynamic title blocks from social review feedback
+  const bl = loadBlacklist();
+  if (bl.titles?.length) {
+    const tLower = title.toLowerCase();
+    if (bl.titles.some((t) => tLower.includes(t.toLowerCase()))) return true;
+  }
+  return false;
 }
 
 function stripHtml(html) {
@@ -434,12 +455,24 @@ const GLOBAL_EXCLUSIONS = [
 ];
 
 function isPublicEvent(title, source, description, venue) {
+  // Title blocklist — applies to ALL sources (not just university feeds)
+  if (isBlockedEvent(title)) return false;
   // Always filter cancelled events regardless of source
   if (CANCELLED_PATTERN.test(title)) return false;
   // Filter virtual/online-only events
   if (isVirtualEvent(title, description, venue)) return false;
   // Global exclusions — not a fit for a local news site
   if (GLOBAL_EXCLUSIONS.some(p => p.test(title))) return false;
+  // Dynamic blacklist from social review feedback
+  const bl = loadBlacklist();
+  if (venue && bl.venues?.length) {
+    const vLower = venue.toLowerCase();
+    if (bl.venues.some((v) => vLower.includes(v.toLowerCase()))) return false;
+  }
+  if (source && bl.sources?.length) {
+    const sLower = source.toLowerCase();
+    if (bl.sources.some((s) => sLower.includes(s.toLowerCase()))) return false;
+  }
   const uniSources = ["Santa Clara University", "SJSU Events", "Stanford Events"];
   if (uniSources.includes(source)) {
     for (const pat of INTERNAL_EVENT_PATTERNS) {
