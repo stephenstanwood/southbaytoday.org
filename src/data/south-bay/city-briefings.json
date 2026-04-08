@@ -1,17 +1,58 @@
 {
-  "generatedAt": "2026-04-08T19:12:55.342Z",
+  "generatedAt": "2026-04-08T20:12:10.365Z",
   "weekLabel": "Apr 8 – Apr 15",
   "weekStart": "2026-04-08",
   "weekEnd": "2026-04-15",
   "cities": {
+    "campbell": {
+      "cityId": "campbell",
+      "cityName": "Campbell",
+      "summary": "Campbell's Planning Commission meets Thursday to weigh in on development proposals that could shape the city's next growth phase.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Civic Improvement Commission",
+          "when": "Thu, Apr 9 · 6pm",
+          "venue": "Campbell",
+          "category": "community",
+          "url": "https://www.campbellca.gov/Calendar.aspx?EID=3432"
+        },
+        {
+          "type": "event",
+          "title": "Planning Commission Regular Meeting",
+          "when": "Tue, Apr 14",
+          "venue": "Campbell",
+          "category": "community",
+          "url": "https://www.campbellca.gov/Calendar.aspx?EID=3870"
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:11:57.689Z"
+    },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino's new business amnesty program aims to bring underground retail operations into the light while the Garden Gate lawsuit drags on.",
+      "summary": "Cupertino's pushing safer streets with an updated Active Transportation Plan while facing a lawsuit over Mary Avenue safety delays.",
       "highlights": [
         {
+          "type": "event",
+          "title": "Qigong Class at Cupertino Library",
+          "when": "Thu, Apr 9 · 11:00 AM",
+          "venue": "Santa Clara County Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69b5a0598d5e2d0933654343"
+        },
+        {
+          "type": "event",
+          "title": "Art Therapy for Tweens",
+          "when": "Fri, Apr 10 · 4:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/69b851ca8089f23c67628370"
+        },
+        {
           "type": "cityhall",
-          "title": "Cupertino updates Active Transportation Plan with revised scoring",
+          "title": "City updates Active Transportation Plan with new scoring criteria",
           "when": null,
           "venue": null,
           "category": "government",
@@ -19,28 +60,103 @@
         }
       ],
       "weekLabel": "Apr 8 – Apr 15",
-      "generatedAt": "2026-04-08T19:12:49.723Z"
+      "generatedAt": "2026-04-08T20:11:58.891Z"
+    },
+    "los-gatos": {
+      "cityId": "los-gatos",
+      "cityName": "Los Gatos",
+      "summary": "Los Gatos tackles walkability at a Complete Streets meeting while a housing resource fair tackles affordability—two big quality-of-life issues hitting town simultaneously this week.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Complete Streets and Transportation Commission Meeting",
+          "when": "Thu, Apr 9 · 7:30 AM",
+          "venue": "Parks and Public Works Conference Room",
+          "category": "community",
+          "url": "https://www.losgatosca.gov/calendar.aspx?EID=5594"
+        },
+        {
+          "type": "event",
+          "title": "Muse Markets",
+          "when": "Sat, Apr 11 · 11:00 AM",
+          "venue": "Town",
+          "category": "market",
+          "url": null
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:12:00.391Z"
+    },
+    "mountain-view": {
+      "cityId": "mountain-view",
+      "cityName": "Mountain View",
+      "summary": "Mountain View's library is the week's hub: tax prep clinics, health screenings, and Earth Heroes education—all free and open to residents.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Craft Social",
+          "when": "Fri, Apr 10 · 10:00 AM",
+          "venue": "Mountain View Public Library",
+          "category": "community",
+          "url": "https://librarypoint.bibliocommons.com/events/698de8e98b29ea2800cf9a6c"
+        },
+        {
+          "type": "event",
+          "title": "Fabulous Friday: Earth Heroes - Mission Recycle",
+          "when": "Fri, Apr 10 · 4:30 PM",
+          "venue": "Mountain View Public Library",
+          "category": "education",
+          "url": "https://librarypoint.bibliocommons.com/events/698ca3d38d5e2d09335e7ff7"
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:12:01.933Z"
+    },
+    "saratoga": {
+      "cityId": "saratoga",
+      "cityName": "Saratoga",
+      "summary": "Saratoga's library pivots to spring vibes this week with adult drawing classes, a watercolor retrospective opening Friday, and board game day for community hangouts.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Craft Club for Adults: The Joy of Drawing - Tulips in Spring",
+          "when": "Thu, Apr 9 · 1:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69a6167e19c54125aa023245"
+        },
+        {
+          "type": "event",
+          "title": "Chinese Book Club - 中文書友會",
+          "when": "Thu, Apr 9 · 10:15 AM",
+          "venue": "Santa Clara County Library",
+          "category": "arts",
+          "url": "https://sccl.bibliocommons.com/events/676897fd74596c36004d59e2"
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:12:03.529Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "Sharks host back-to-back home games this week while city council green-lights major affordable housing projects including Berryessa TOD development.",
+      "summary": "San Jose State kicks off Asian Pacific Islander Heritage Month Wednesday while City Hall approves a 65-unit senior housing complex on East St John.",
       "highlights": [
         {
           "type": "event",
-          "title": "Be Ready: Be Prepared for Disasters",
-          "when": "Thu, Apr 9 · 2:00 PM",
-          "venue": "Online",
-          "category": "community",
-          "url": "https://www.eventbrite.com/e/online-be-ready-be-prepared-for-disasters-tickets-1983654287372"
+          "title": "Join Zsolt Jozsef Simon — Porcelain Casting Workshop at Art & Design Building",
+          "when": "Wed, Apr 8",
+          "venue": "San Jose State University",
+          "category": "arts",
+          "url": "https://events.sjsu.edu/event/in-the-studio-with-zsolt-jozsef-simon-porcelain-design-workshop"
         },
         {
           "type": "event",
-          "title": "Fresha — San Jose Jazz",
-          "when": "Sat, Apr 11 · 8:00 PM",
-          "venue": "SJZ Break Room",
-          "category": "music",
-          "url": "https://sanjosejazz.org/events/fresha/"
+          "title": "Community Health in Silicon Valley - Honoring the Past, Shaping the Future",
+          "when": "Wed, Apr 8 · 1:30 AM",
+          "venue": "San Jose State University",
+          "category": "community",
+          "url": "https://events.sjsu.edu/event/community-health-in-silicon-valley-honoring-the-past-shaping-the-future"
         },
         {
           "type": "council",
@@ -52,16 +168,82 @@
         }
       ],
       "weekLabel": "Apr 8 – Apr 15",
-      "generatedAt": "2026-04-08T19:12:52.637Z"
+      "generatedAt": "2026-04-08T20:12:04.795Z"
+    },
+    "santa-clara": {
+      "cityId": "santa-clara",
+      "cityName": "Santa Clara",
+      "summary": "Santa Clara University is hosting five events Wednesday—from a Day of Giving fundraiser to theatrical performances exploring aging—making it a packed day for arts, education, and community service.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Day of Giving",
+          "when": "Wed, Apr 8",
+          "venue": "Santa Clara University",
+          "category": "education",
+          "url": "https://events.scu.edu/event/451620-day-of-giving"
+        },
+        {
+          "type": "event",
+          "title": "State of Illusion Exhibition",
+          "when": "Wed, Apr 8",
+          "venue": "Santa Clara University",
+          "category": "arts",
+          "url": "https://events.scu.edu/arts-and-sciences/event/346643-state-of-illusion-exhibition"
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:12:06.214Z"
+    },
+    "los-altos": {
+      "cityId": "los-altos",
+      "cityName": "Los Altos",
+      "summary": "Los Altos Library is packed with spring programming this week—from Easter Island lectures to bird talks and a watercolor workshop for adults.",
+      "highlights": [
+        {
+          "type": "event",
+          "title": "Road Scholar: Easter Island at Los Altos Library",
+          "when": "Wed, Apr 8 · 7:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/693a2140c967cb41207c455b"
+        },
+        {
+          "type": "event",
+          "title": "Pelicans, Herons, and Egrets, Oh My!",
+          "when": "Thu, Apr 9 · 7:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "outdoor",
+          "url": "https://sccl.bibliocommons.com/events/69af55b92866a5b488410573"
+        }
+      ],
+      "weekLabel": "Apr 8 – Apr 15",
+      "generatedAt": "2026-04-08T20:12:07.452Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto City Council green-lights higher gas rates starting next year, signaling utility cost increases for residents heading into 2027.",
+      "summary": "Stanford baseball takes on Santa Clara Wednesday night at Sunken Diamond, while Palo Alto adjusts gas rates for next fiscal year.",
       "highlights": [
         {
+          "type": "event",
+          "title": "Graphic Novel Book Club",
+          "when": "Thu, Apr 9 · 7:00 PM",
+          "venue": "Palo Alto City Library",
+          "category": "arts",
+          "url": "https://paloalto.bibliocommons.com/events/68057e180453817cac2a944c"
+        },
+        {
+          "type": "event",
+          "title": "Family Craft: Yarn Weaving",
+          "when": "Wed, Apr 15 · 3:30 PM",
+          "venue": "Palo Alto City Library",
+          "category": "family",
+          "url": "https://paloalto.bibliocommons.com/events/693b4d847ed7c62f00aa0f42"
+        },
+        {
           "type": "cityhall",
-          "title": "City approves gas rate changes for 2027 budget year",
+          "title": "Gas utility rates adjusted for fiscal year 2027",
           "when": null,
           "venue": null,
           "category": "government",
@@ -69,16 +251,32 @@
         }
       ],
       "weekLabel": "Apr 8 – Apr 15",
-      "generatedAt": "2026-04-08T19:12:53.845Z"
+      "generatedAt": "2026-04-08T20:12:08.815Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas City Council is overhauling how it fills vacancies, potentially changing who gets to pick the next council member.",
+      "summary": "Milpitas City Council just voted to shrink vacant council seats while the library fills the week with family crafts and board games.",
       "highlights": [
         {
+          "type": "event",
+          "title": "Stay and Play Cafe for Ages 0-5",
+          "when": "Fri, Apr 10 · 11:15 AM",
+          "venue": "Santa Clara County Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/69698c9030cbd582eff52715"
+        },
+        {
+          "type": "event",
+          "title": "Board Game Day at Milpitas Library",
+          "when": "Fri, Apr 10 · 5:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/68d6e62aca9101076366cb37"
+        },
+        {
           "type": "cityhall",
-          "title": "Council vacancy ordinance being changed",
+          "title": "Council votes to reduce size of vacant council seats",
           "when": null,
           "venue": null,
           "category": "government",
@@ -86,7 +284,7 @@
         }
       ],
       "weekLabel": "Apr 8 – Apr 15",
-      "generatedAt": "2026-04-08T19:12:55.041Z"
+      "generatedAt": "2026-04-08T20:12:10.062Z"
     }
   }
 }

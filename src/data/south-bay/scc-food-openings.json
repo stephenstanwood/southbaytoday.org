@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-08T11:08:09.658Z",
+  "generatedAt": "2026-04-08T20:12:45.897Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
@@ -12,18 +12,7 @@
       "date": "2026-04-03",
       "status": "opened",
       "sourceId": "SR0883804",
-      "blurb": "New York-style pizza just opened on Blossom Hill—grab a slice!"
-    },
-    {
-      "id": "opened-SR0880054",
-      "name": "Ralph's Coffee",
-      "address": "180 El Camino Real #393a",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "date": "2026-04-02",
-      "status": "opened",
-      "sourceId": "SR0880054",
-      "blurb": "Great coffee spot opened in Palo Alto, perfect for your morning."
+      "blurb": "Classic New York pizza slices hit different at this Blossom Hill spot."
     },
     {
       "id": "opened-SR0882669",
@@ -34,7 +23,7 @@
       "date": "2026-03-31",
       "status": "opened",
       "sourceId": "SR0882669",
-      "blurb": "Creative sushi burritos just landed on Stevens Creek—so good!"
+      "blurb": "Creative sushi wrapped up handheld—your new favorite Stevens Creek grab-and-go."
     },
     {
       "id": "opened-SR0883343",
@@ -45,7 +34,7 @@
       "date": "2026-03-27",
       "status": "opened",
       "sourceId": "SR0883343",
-      "blurb": "Vietnamese pho and bánh mì just opened downtown San Jose."
+      "blurb": "Authentic Korean comfort food just opened downtown on Santa Clara Street."
     },
     {
       "id": "opened-SR0883335",
@@ -56,7 +45,7 @@
       "date": "2026-03-24",
       "status": "opened",
       "sourceId": "SR0883335",
-      "blurb": "Fresh urban comfort food just opened near Capitol Avenue."
+      "blurb": "Fresh urban eats worth the Capitol Avenue detour for lunch."
     },
     {
       "id": "opened-SR0883691",
@@ -67,7 +56,7 @@
       "date": "2026-03-20",
       "status": "opened",
       "sourceId": "SR0883691",
-      "blurb": "Japanese curry just arrived at this fun new spot downtown."
+      "blurb": "Japanese curry fusion tucked in Naglee Park—absolutely worth discovering."
     },
     {
       "id": "opened-SR0882563",
@@ -78,7 +67,7 @@
       "date": "2026-03-19",
       "status": "opened",
       "sourceId": "SR0882563",
-      "blurb": "Delicious French dips just opened on West Bascom Avenue."
+      "blurb": "Messy, delicious French dips on West Bascom—a sandwich lover's dream."
     },
     {
       "id": "opened-SR0883795",
@@ -89,7 +78,7 @@
       "date": "2026-03-18",
       "status": "opened",
       "sourceId": "SR0883795",
-      "blurb": "Thai vegetarian and spicy options just opened in Sunnyvale!"
+      "blurb": "Vegetarian Thai options that don't skimp on flavor over in Sunnyvale."
     },
     {
       "id": "opened-SR0883623",
@@ -100,7 +89,7 @@
       "date": "2026-03-17",
       "status": "opened",
       "sourceId": "SR0883623",
-      "blurb": null
+      "blurb": "Quality wood-fired pizza on Almaden Expwy—your new neighborhood favorite."
     },
     {
       "id": "opened-SR0882220",
@@ -134,19 +123,41 @@
       "status": "opened",
       "sourceId": "SR0878198",
       "blurb": null
+    },
+    {
+      "id": "opened-SR0881221",
+      "name": "Burma Express",
+      "address": "5353 Almaden Expwy., Bldg E, Ste. 40a",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-03-11",
+      "status": "opened",
+      "sourceId": "SR0881221",
+      "blurb": null
     }
   ],
   "comingSoon": [
     {
-      "id": "soon-SR0884373",
-      "name": "Tasty Noodle",
-      "address": "103 N Milpitas Blvd",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
-      "date": "2026-04-03",
+      "id": "soon-SR0879467",
+      "name": "Cedar & Sage (Stanford Shopping Center)",
+      "address": "180 El Camino Real #1301",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-04-06",
       "status": "coming-soon",
-      "sourceId": "SR0884373",
-      "blurb": "Silky noodles and aromatic broths are finally coming to Milpitas!"
+      "sourceId": "SR0879467",
+      "blurb": null
+    },
+    {
+      "id": "soon-SR0882201",
+      "name": "Palo Alto Cafe",
+      "address": "2675 Middlefield Rd",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-04-06",
+      "status": "coming-soon",
+      "sourceId": "SR0882201",
+      "blurb": "Cozy neighborhood spot brewing up something special soon."
     },
     {
       "id": "soon-SR0884184",
@@ -157,7 +168,18 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0884184",
-      "blurb": "Smoky BBQ and fresh crab—Milpitas foodies are counting down the days!"
+      "blurb": "Smoky BBQ and fresh crab coming to Milpitas!"
+    },
+    {
+      "id": "soon-SR0884373",
+      "name": "Tasty Noodle",
+      "address": "103 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0884373",
+      "blurb": "Slurp-worthy noodles hitting downtown Milpitas very soon."
     },
     {
       "id": "soon-SR0883513",
@@ -168,7 +190,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0883513",
-      "blurb": "Historic charm meets modern cafe vibes in downtown San Jose."
+      "blurb": "Historic San Jose location getting a charming cafe upgrade."
     },
     {
       "id": "soon-SR0881812",
@@ -179,7 +201,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0881812",
-      "blurb": "Bubble tea lovers, mark your calendars for San Jose soon!"
+      "blurb": "Bubble tea lovers, rejoice—specialty brews coming to San Jose!"
     },
     {
       "id": "soon-SR0878084",
@@ -190,7 +212,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0878084",
-      "blurb": "Cart-pushing dim sum masters are rolling into North Milpitas very soon!"
+      "blurb": "Cart-rolling dim sum traditions heading to North Milpitas!"
     },
     {
       "id": "soon-SR0883454",
@@ -201,7 +223,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0883454",
-      "blurb": "Sizzling teppanyaki tables coming to El Camino in Sunnyvale!"
+      "blurb": "Teppanyaki sizzle and Japanese flavors coming to Sunnyvale!"
     },
     {
       "id": "soon-SR0883940",
@@ -212,7 +234,7 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0883940",
-      "blurb": "Premium coffee and tea meet cozy gathering space in San Jose."
+      "blurb": null
     },
     {
       "id": "soon-SR0884220",
@@ -223,7 +245,7 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0884220",
-      "blurb": "Crispy, golden tonkatsu is heading to Santa Clara soon!"
+      "blurb": null
     },
     {
       "id": "soon-SR0884051",
@@ -245,28 +267,6 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0884066",
-      "blurb": null
-    },
-    {
-      "id": "soon-SR0883303",
-      "name": "975 Page Mill Cafe",
-      "address": "975 Page Mill Rd",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "date": "2026-04-01",
-      "status": "coming-soon",
-      "sourceId": "SR0883303",
-      "blurb": null
-    },
-    {
-      "id": "soon-SR0884117",
-      "name": "Com Tam Thien Huong Take Out",
-      "address": "909 Story Rd.., Unit 100,115",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-01",
-      "status": "coming-soon",
-      "sourceId": "SR0884117",
       "blurb": null
     }
   ]
