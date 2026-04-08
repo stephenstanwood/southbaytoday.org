@@ -325,9 +325,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
               <div key={i} style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", opacity: 0, animation: `cardAppear 0.5s ease-out ${i * 0.2}s forwards, softGlow 2.5s ease-in-out ${i * 0.2 + 0.5}s infinite` }}>
                 <div style={{ width: 5, background: accent, flexShrink: 0 }} />
                 <div style={{ flex: 1, padding: "14px 16px" }}>
-                  <div style={{ width: "30%", height: 10, borderRadius: 4, background: "#eee", marginBottom: 8 }} />
-                  <div style={{ width: "65%", height: 14, borderRadius: 4, background: "#eee", marginBottom: 6 }} />
-                  <div style={{ width: "90%", height: 10, borderRadius: 4, background: "#f5f5f5" }} />
+                  <div style={{ width: "30%", height: 10, borderRadius: 4, background: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15}s infinite`, marginBottom: 8 }} />
+                  <div style={{ width: "65%", height: 14, borderRadius: 4, background: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.1}s infinite`, marginBottom: 6 }} />
+                  <div style={{ width: "90%", height: 10, borderRadius: 4, background: "linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.2}s infinite` }} />
                 </div>
               </div>
             );
@@ -405,6 +405,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
 
       <style>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
         @keyframes rainbow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
