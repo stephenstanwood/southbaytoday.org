@@ -2,6 +2,60 @@
 
 ---
 
+## 2026-04-08 — Cycle 70: Critical Bug Fix — Events 86→544 (6× Recovery)
+
+### Context
+Wednesday April 8, 2026 (afternoon). Spring break week 1 continues (SJUSD/PAUSD/MVWSD on break through Apr 10). Easter weekend (Apr 12) approaching.
+
+### What Was Built
+
+**Bug fix: `titleLower` temporal dead zone in `inferCategory()`** (`scripts/generate-events.mjs`)
+
+A critical bug was silently killing 13 of 25 event scrapers. The `inferCategory()` function used `titleLower` (a `const` variable) on line 611 before it was declared on line 621 — a JavaScript temporal dead zone (TDZ) error. Any scraper that called `inferCategory()` on an event matching certain patterns would throw `"Cannot access 'titleLower' before initialization"`, causing the entire scraper's output to be discarded.
+
+**Impact:**
+- **Before fix**: 86 events (12 sources), with errors: San Jose Public Library, Mountain View Public Library, Palo Alto City Library, Ticketmaster, SCU, Stanford, SJSU, and more all failing silently
+- **After fix**: 544 events (25 sources) — 6× recovery, all scrapers healthy
+
+Fix: moved `const titleLower = title.toLowerCase()` to before its first use (line 611), removed the duplicate declaration on line 621.
+
+**Full data refresh (14 files):**
+- `upcoming-events.json` — 544 events (105 ongoing) from 25 sources — massive recovery
+- `around-town.json` — 8 items: SJ Bascom Ave traffic signal, SJ pavement contract, Cupertino Active Transportation Plan, Milpitas council seat vote, SJ senior housing 65 units
+- `digests.json` — 10 city digests: SJ, Mountain View, Sunnyvale, Cupertino, Santa Clara, Milpitas, Palo Alto all refreshed
+- `city-briefings.json` — 10 briefings: Stanford baseball tonight, SJ senior housing, Los Altos Easter Island lecture, Saratoga watercolor retrospective
+- `upcoming-meetings.json` — 7 cities; Palo Alto Apr 13, Los Altos Apr 14, Saratoga Apr 15, Campbell/Milpitas Apr 21
+- `tech-briefing.json` — Apr 8–15; ~$4B in recent rounds, Nexthop/MatX/Rhoda/Ayar leading
+- `weekend-picks.json` — 3 picks: SJSU Opera (La Voix Humaine/Stuck Elevator), USWNT vs Japan at PayPal Park, SF Shakespeare Julius Caesar (free, Cupertino)
+- `permit-pulse.json` — Palo Alto: 32 issued, 12 notable
+- `real-estate.json` — 10 cities; Cupertino $3.24M (+33% YoY), Mountain View fastest (8d)
+- `restaurant-radar.json` — Bistro Demiya + Rikyu on Lytton Ave PA, Hedley Club SJ renovation
+- `scc-food-openings.json` — Cedar & Sage at Stanford Shopping, Palo Alto Cafe, Gao's BBQ & Crab Milpitas, Hotel De Anza Cafe SJ, Jun Lum Dim Sum Milpitas, Pepper Lunch Sunnyvale
+- `health-scores.json` — fresh SCC health inspection results
+- `air-quality.json` — AQI 43-44 (Good) across South Bay
+- `outages.json` — 0 active PG&E outages
+
+### RECENTLY_FUNDED research (Apr 8)
+Checked for April 2026 South Bay rounds. Found two candidates:
+- **Alcatraz AI** (Cupertino, $50M Series B, Apr 2) — already in list
+- **Aria Networks** (Palo Alto, $125M Series A, Apr 7) — already in list
+- **Sycamore** (Palo Alto, $65M seed, Mar 30) — already in list
+
+No new entries needed.
+
+### Why This Was the Strongest Move
+The `titleLower` TDZ bug was the single largest content gap on the site. Stanford events, SJSU events, SCC Library (1,618 events scraped), Palo Alto Library (150 events), Ticketmaster (281 events) — all of these were throwing away their output on every run. The site has been silently running at ~16% of its event capacity for however long this bug existed. A resident opening the Events tab on spring break now sees 544 events instead of 86 — 458 events recovered in a single fix.
+
+### Next 3 Strongest Ideas
+1. **Aesthetic polish** — Standing order: aesthetics are lacking. Look at the Events tab especially — 544 events means the filtering UX matters more now. Better category filter chips, better date group headers, clearer card hierarchy.
+2. **Neighborhood-level filtering for San José** — With 215 SJ events (40% of total), sub-city browsing (Willow Glen, Japantown, Almaden) would be valuable.
+3. **Permit Pulse: add Mountain View** — `cityofmountainview.gov` open data portal. Second-densest development corridor after SJ.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — dramatically so.** 544 events covering 10 cities with 25 active sources. Stanford baseball tonight. USWNT vs Japan this weekend. Free Shakespeare in Cupertino. SJSU Opera. SCC Library's full spring programming across all branches. This is the kind of breadth that makes South Bay Signal genuinely useful rather than just local-ish.
+
+---
+
 ## 2026-04-08 — Cycle 69: Weather-Aware Events Tab Banner
 
 ### Context
