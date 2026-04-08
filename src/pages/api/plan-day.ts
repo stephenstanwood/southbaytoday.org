@@ -81,13 +81,14 @@ interface DayCard {
 
 const VALID_CITIES = new Set(Object.keys(CITY_MAP));
 const MAX_CARDS = 6;
-const CANDIDATE_POOL_SIZE = 30;
+const CANDIDATE_POOL_SIZE = 25; // fewer = faster Haiku response
 
 // Distance threshold in km for "nearby" places
 const NEARBY_KM = 15;
 
-// Category diversity: max items of same category in final plan
-// const MAX_SAME_CATEGORY = 2; // reserved for future client-side enforcement
+// In-memory plan cache: city:kids:hour → { data, ts }
+const planCache = new Map<string, { data: any; ts: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -531,6 +532,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const dismissedSet = new Set(dismissedIds);
   const lockedSet = new Set(lockedIds);
 
+  // Cache hit for default requests (no locks/dismissals)
+  const cacheKey = `${city}:${kids}:${hour}`;
+  if (lockedIds.length === 0 && dismissedIds.length === 0) {
+    const cached = planCache.get(cacheKey);
+    if (cached && Date.now() - cached.ts < CACHE_TTL) {
+      return okJson(cached.data, { "Cache-Control": "private, no-store" });
+    }
+  }
+
   try {
     // 1. Fetch weather
     const weatherData = await fetchWeather(city);
@@ -575,17 +585,26 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       hour,
     );
 
-    return okJson(
-      {
-        cards,
-        weather: weatherData.weather,
-        city,
-        kids,
-        generatedAt: new Date().toISOString(),
-        poolSize: allCandidates.length,
-      },
-      { "Cache-Control": "private, no-store" },
-    );
+    const responseData = {
+      cards,
+      weather: weatherData.weather,
+      city,
+      kids,
+      generatedAt: new Date().toISOString(),
+      poolSize: allCandidates.length,
+    };
+
+    // Cache default requests for 5 min
+    if (lockedIds.length === 0 && dismissedIds.length === 0) {
+      planCache.set(cacheKey, { data: responseData, ts: Date.now() });
+      // Evict old entries
+      if (planCache.size > 100) {
+        const oldest = planCache.keys().next().value!;
+        planCache.delete(oldest);
+      }
+    }
+
+    return okJson(responseData, { "Cache-Control": "private, no-store" });
   } catch (err) {
     console.error("plan-day error:", err);
     return errJson(`Planning failed: ${toErrMsg(err)}`, 500);
