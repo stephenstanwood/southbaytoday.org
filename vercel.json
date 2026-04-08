@@ -1,18 +1,4 @@
 {
   "framework": "astro",
-  "ignoreCommand": "[ \"$VERCEL_ENV\" = \"preview\" ] && exit 0 || exit 1",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "southbaysignal.org" }],
-      "destination": "https://www.southbaytoday.org/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.southbaysignal.org" }],
-      "destination": "https://www.southbaytoday.org/:path*",
-      "permanent": true
-    }
-  ]
+  "ignoreCommand": "[ \"$VERCEL_ENV\" = \"preview\" ] && exit 0 || exit 1"
 }
