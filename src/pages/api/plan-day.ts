@@ -417,7 +417,7 @@ ${poolText}
 
 TASK: Pick 5-7 items from the pool (including all locked items) and sequence them into a full day plan that fills the remaining hours with no big gaps. Return a JSON array. Every 1-2 hour block from NOW until bedtime should have something. Err on the side of MORE suggestions — a packed day is better than a sparse one. Do NOT suggest things for "tomorrow."
 
-CRITICAL: Items marked "EVENT TODAY" are real, one-time happenings — include at least 1-2 of these if any exist in the pool. They're what makes today different from any other day.
+CRITICAL: Items marked "EVENT TODAY" are specific things happening today (games, shows, markets). Include at least 1-2 if any exist in the pool.
 
 RULES:
 - Start from NOW (${hour}:00) — don't schedule things in the past
@@ -433,12 +433,13 @@ RULES:
 - Only suggest a venue (theater, amphitheater, stadium) if it appears as an EVENT in the pool with a specific show/game today
 ${kids ? "- Kid-friendly is essential. Skip anything adults-only." : ""}
 
-TONE: Each card's "blurb" should describe the EXPERIENCE (what to do, eat, see there) — NOT restate the name, opponent, or facts already in the title. The "why" should be one short punchy sentence about why it fits today.
-- NEVER say "near [city]" or "nearby in [city]" — the user already picked their city, don't justify proximity
-- NEVER say "real game" or "real event" — everything we suggest is real, that's the whole point
-- NEVER fabricate details not in the data — if you don't know the opponent, don't guess
-- NEVER hedge, apologize, or say "scratch this"
-- Keep it conversational and specific, like a friend who lives here
+TONE: Write like a friend texting a plan, not a travel brochure or AI assistant.
+- "blurb": what to actually DO there (order the tri-tip sandwich, hike the upper loop, sit on the patio). Be specific.
+- "why": one casual sentence. "Perfect weather for it" or "you won't find better ramen" — NOT "this is a one-time event that makes today unforgettable"
+- NEVER say: "real game", "real event", "anchor event", "one-time", "unforgettable", "energy burn"
+- NEVER say: "near [city]", "nearby in", "minimal drive from"
+- NEVER fabricate details not in the data
+- NEVER hedge or qualify — just recommend it confidently
 
 OUTPUT FORMAT (JSON array, no markdown fences):
 [
