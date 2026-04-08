@@ -508,6 +508,23 @@ Return ONLY the JSON array. No explanation.`;
     });
   }
 
+  // Post-process: fix same-category back-to-back by swapping with nearest non-adjacent different-category card
+  for (let i = 1; i < cards.length; i++) {
+    if (cards[i].category === cards[i - 1].category && !cards[i].locked && !cards[i - 1].locked) {
+      // Find the nearest later card with a different category to swap with
+      let swapIdx = -1;
+      for (let j = i + 1; j < cards.length; j++) {
+        if (cards[j].category !== cards[i - 1].category && !cards[j].locked) {
+          swapIdx = j;
+          break;
+        }
+      }
+      if (swapIdx !== -1) {
+        [cards[i], cards[swapIdx]] = [cards[swapIdx], cards[i]];
+      }
+    }
+  }
+
   return cards;
 }
 

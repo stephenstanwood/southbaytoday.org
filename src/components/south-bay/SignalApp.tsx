@@ -114,7 +114,7 @@ export default function SignalApp() {
               </span>
               <span className="sb-logo-signal-row">
                 <span className="sb-logo-signal-rule" />
-                <span className="sb-logo-signal-word">Signal</span>
+                <span className="sb-logo-signal-word">Today</span>
                 <span className="sb-logo-signal-rule" />
               </span>
             </span>
@@ -127,7 +127,7 @@ export default function SignalApp() {
               </div>
             )}
           </div>
-          <div className="sb-slogan">Local news. Good vibes. No ads.</div>
+          <div className="sb-slogan">All local. Good vibes. No ads.</div>
           <div className="sb-social-links">
             <a href="https://x.com/southbaytoday" target="_blank" rel="noopener" aria-label="Follow on X" className="sb-social-icon">
               <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>

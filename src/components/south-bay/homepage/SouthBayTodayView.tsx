@@ -122,12 +122,20 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
   const [cards, setCards] = useState<DayCard[]>([]);
   const [weather, setWeather] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [swapLoading, setSwapLoading] = useState(false); // loading triggered by a dismiss
+  const [fadingIds, setFadingIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
   const [showMoreCities, setShowMoreCities] = useState(false);
   const [geoLoading, setGeoLoading] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const fetchRef = useRef(0);
+
+  // Keep time display live
+  useEffect(() => {
+    const t = setInterval(() => setTimeDisplay(formatTime()), 30000);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => { saveState(state); }, [state]);
   useEffect(() => {
@@ -165,7 +173,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     } catch (err) {
       if (id === fetchRef.current) setError(err instanceof Error ? err.message : "Failed to plan your day");
     } finally {
-      if (id === fetchRef.current) setLoading(false);
+      if (id === fetchRef.current) {
+        setLoading(false);
+        setSwapLoading(false);
+      }
     }
   }, [state.city, state.kids, state.dismissed, state.locked]);
 
@@ -207,6 +218,16 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     }));
   };
   const handleDismiss = (cardId: string, type: DismissType) => {
+    // Immediately start fade-out animation
+    setFadingIds((prev) => new Set([...prev, cardId]));
+    setSwapLoading(true);
+
+    // After animation completes, remove card from list
+    setTimeout(() => {
+      setCards((prev) => prev.filter((c) => c.id !== cardId));
+      setFadingIds((prev) => { const n = new Set(prev); n.delete(cardId); return n; });
+    }, 320);
+
     const entry: DismissedEntry = type === "hide"
       ? { type: "hide", permanent: true }
       : { type: "skip", until: new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }) };
@@ -236,7 +257,6 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           <div className="sbt-time-display" style={{ fontFamily: "'Inter', sans-serif", fontSize: 48, fontWeight: 900, letterSpacing: -2, color: "#000", lineHeight: 1 }}>{timeDisplay}</div>
           <div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 700, color: "#333" }}>{headline}</div>
-            {weather && <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#999", marginTop: 1 }}>{weather}</div>}
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -246,7 +266,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
             <button onClick={() => { if (!state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 10px", border: "none", borderLeft: "2px solid #000", background: state.kids ? "#000" : "#fff", color: state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s" }}>Kids</button>
           </div>
           {/* New Plan */}
-          <button onClick={handleNewPlan} disabled={loading} style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 900, padding: "5px 16px", borderRadius: 14, border: "2.5px solid #000", background: loading ? "#eee" : "linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", color: loading ? "#999" : "#fff", cursor: loading ? "not-allowed" : "pointer", textTransform: "uppercase" as const, letterSpacing: 1, backgroundSize: "200% 200%", animation: loading ? "none" : "rainbow 3s ease infinite", whiteSpace: "nowrap" as const }}>{loading ? "Planning..." : "New Plan"}</button>
+          <button onClick={handleNewPlan} disabled={loading} style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 900, padding: "5px 16px", borderRadius: 14, border: "2.5px solid #000", background: loading ? "#eee" : "linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", color: loading ? "#999" : "#fff", cursor: loading ? "not-allowed" : "pointer", textTransform: "uppercase" as const, letterSpacing: 1, backgroundSize: "200% 200%", animation: loading ? "none" : "rainbow 3s ease infinite", whiteSpace: "nowrap" as const }}>Shuffle ↻</button>
         </div>
       </div>
 
@@ -270,6 +290,15 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           {geoLoading ? <span style={{ fontSize: 12, color: "#aaa" }}>...</span> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /></svg>}
         </button>
       </div>
+
+      {/* Weather strip */}
+      {weather && (
+        <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 14px", marginBottom: 10, background: "#f8f8f8", borderRadius: 10, border: "1px solid #eee" }}>
+          <span style={{ fontSize: 18 }}>🌤</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 700, color: "#333" }}>{weather}</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#bbb", marginLeft: "auto" }}>{CITY_MAP[state.city]?.name}, CA</span>
+        </div>
+      )}
 
       {/* Instruction line */}
       {cards.length > 0 && (
@@ -313,31 +342,41 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           {cards.map((card, i) => {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const emoji = CATEGORY_EMOJI[card.category] || "📍";
+            const isFading = fadingIds.has(card.id);
+            const cardUrl = card.url || card.mapsUrl;
             return (
-              <div key={card.id} style={{ display: "flex", gap: 0, background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", animation: `fadeSlideIn 0.3s ease-out ${i * 0.05}s both` }}>
+              <div
+                key={card.id}
+                style={{
+                  display: "flex",
+                  gap: 0,
+                  background: "#fff",
+                  borderRadius: 10,
+                  border: "1px solid #e8e8e8",
+                  overflow: "hidden",
+                  animation: isFading
+                    ? "fadeSlideOut 0.3s ease-in forwards"
+                    : `fadeSlideIn 0.3s ease-out ${i * 0.05}s both`,
+                  position: "relative" as const,
+                }}
+              >
                 {/* Accent bar */}
                 <div style={{ width: 5, background: accent, flexShrink: 0 }} />
-                {/* Thumbnail: photo or emoji fallback */}
-                <div style={{ width: 72, height: 72, flexShrink: 0, margin: "10px 0 10px 12px", borderRadius: 8, overflow: "hidden", background: card.photoRef ? `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200) center/cover no-repeat, #f0f0f0` : `#f5f5f5`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>
-                  {!card.photoRef && emoji}
-                </div>
-                {/* Content */}
-                <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 800, color: "#000" }}>{card.timeBlock}</span>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#999", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
-                    {card.source === "event" && <span style={{ fontSize: 9, fontWeight: 700, color: "#E63946", fontFamily: "'Inter', sans-serif" }}>EVENT</span>}
+                {/* Clickable area (whole card except traffic lights) */}
+                {cardUrl ? (
+                  <a
+                    href={cardUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "flex", flex: 1, minWidth: 0, textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                  >
+                    <CardInner card={card} emoji={emoji} accent={accent} />
+                  </a>
+                ) : (
+                  <div style={{ display: "flex", flex: 1, minWidth: 0 }}>
+                    <CardInner card={card} emoji={emoji} accent={accent} />
                   </div>
-                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 900, color: "#000", margin: "0 0 3px", lineHeight: 1.2 }}>{card.name}</h3>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 3px", lineHeight: 1.4 }}>{card.blurb}</p>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, color: accent, margin: 0, lineHeight: 1.3, fontStyle: "italic" }}>{card.why}</p>
-                  {(card.costNote || card.cost || card.url || card.mapsUrl) && (
-                    <div style={{ display: "flex", gap: 10, marginTop: 4, alignItems: "center" }}>
-                      {(card.costNote || card.cost) && <span style={{ fontSize: 11, fontWeight: 600, color: "#aaa", fontFamily: "'Inter', sans-serif" }}>{card.costNote || card.cost}</span>}
-                      {(card.url || card.mapsUrl) && <a href={card.url || card.mapsUrl || "#"} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, fontWeight: 700, color: accent, textDecoration: "none", fontFamily: "'Inter', sans-serif" }}>Details →</a>}
-                    </div>
-                  )}
-                </div>
+                )}
                 {/* Traffic light actions */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 3, padding: "10px 10px 10px 0", flexShrink: 0, alignItems: "center", justifyContent: "center" }}>
                   <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: card.locked ? "#22c55e" : "#dcfce7", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: card.locked ? "#fff" : "#22c55e", fontWeight: 700, transition: "all 0.15s" }}>✓</button>
@@ -347,6 +386,15 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
               </div>
             );
           })}
+          {/* Swap-loading stub — shown while fetching a replacement card */}
+          {swapLoading && (
+            <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px dashed #e8e8e8", overflow: "hidden", opacity: 0, animation: "cardAppear 0.4s ease-out 0.35s forwards" }}>
+              <div style={{ width: 5, background: "#e8e8e8", flexShrink: 0 }} />
+              <div style={{ flex: 1, padding: "14px 16px", display: "flex", alignItems: "center" }}>
+                <LoadingVerb />
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -372,6 +420,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           from { opacity: 0; transform: translateY(12px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fadeSlideOut {
+          from { opacity: 1; transform: translateY(0) scale(1); max-height: 120px; }
+          to { opacity: 0; transform: translateY(-8px) scale(0.97); max-height: 0; padding: 0; margin: 0; }
+        }
         @media (max-width: 640px) {
           .sbt-header {
             flex-direction: column !important;
@@ -391,6 +443,74 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// CardInner — shared inner layout for list cards
+// ---------------------------------------------------------------------------
+
+interface UnsplashPhoto {
+  url: string;
+  photographer: string;
+  photographerUrl: string;
+  unsplashUrl: string;
+}
+
+function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; accent: string }) {
+  const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
+
+  useEffect(() => {
+    if (card.photoRef) return; // already have a Google photo
+    fetch(`/api/unsplash-photo?query=${encodeURIComponent(card.category)}`)
+      .then((r) => r.json())
+      .then((d: UnsplashPhoto) => { if (d.url) setUnsplash(d); })
+      .catch(() => {});
+  }, [card.id, card.category, card.photoRef]);
+
+  const hasPhoto = card.photoRef || unsplash;
+
+  return (
+    <>
+      {/* Thumbnail column */}
+      <div style={{ flexShrink: 0, margin: "10px 0 10px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+        <div style={{
+          width: 72, height: 72, borderRadius: 8, overflow: "hidden",
+          background: card.photoRef
+            ? `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200) center/cover no-repeat, #f0f0f0`
+            : unsplash
+              ? "transparent"
+              : "#f5f5f5",
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
+        }}>
+          {unsplash && !card.photoRef
+            ? <img src={unsplash.url} alt={card.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            : !hasPhoto ? emoji : null}
+        </div>
+        {/* Unsplash attribution — only when using Unsplash photo */}
+        {unsplash && !card.photoRef && (
+          <div style={{ width: 72, fontSize: 7, lineHeight: 1.3, color: "#bbb", textAlign: "center" }}>
+            <span role="link" tabIndex={0} onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(unsplash.photographerUrl, "_blank", "noopener"); }} style={{ color: "#bbb", cursor: "pointer" }}>{unsplash.photographer}</span>
+            {" · "}
+            <span role="link" tabIndex={0} onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(unsplash.unsplashUrl, "_blank", "noopener"); }} style={{ color: "#bbb", cursor: "pointer" }}>Unsplash</span>
+          </div>
+        )}
+      </div>
+      {/* Content */}
+      <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 800, color: "#000" }}>{card.timeBlock}</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#999", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
+          {card.source === "event" && <span style={{ fontSize: 9, fontWeight: 700, color: "#E63946", fontFamily: "'Inter', sans-serif" }}>EVENT</span>}
+        </div>
+        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 900, color: "#000", margin: "0 0 3px", lineHeight: 1.2 }}>{card.name}</h3>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 3px", lineHeight: 1.4 }}>{card.blurb}</p>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600, color: accent, margin: 0, lineHeight: 1.3, fontStyle: "italic" }}>{card.why}</p>
+        {(card.costNote || card.cost) && (
+          <span style={{ display: "inline-block", marginTop: 4, fontSize: 11, fontWeight: 600, color: "#aaa", fontFamily: "'Inter', sans-serif" }}>{card.costNote || card.cost}</span>
+        )}
+      </div>
+    </>
+  );
+}
 
 /** Parse "2:30 PM - 4:00 PM" → minutes since midnight for sorting */
 function parseTimeBlock(tb: string): number {
