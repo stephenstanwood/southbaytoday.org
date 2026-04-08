@@ -618,38 +618,37 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         </div>
       )}
 
-      {/* Loading animation — riffle shuffle */}
+      {/* Loading animation — gentle riffle then deal */}
       {loading && cards.length === 0 && (
-        <div style={{ textAlign: "center", padding: "30px 0 60px" }}>
+        <div style={{ textAlign: "center", padding: "30px 0 40px" }}>
           <div
             style={{
               position: "relative",
-              height: 220,
+              height: 200,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-end",
             }}
           >
-            {/* Two halves of the deck interleaving */}
-            {Array.from({ length: 12 }).map((_, i) => {
-              const isLeft = i % 2 === 0;
-              const color = ACCENT_COLORS[i % ACCENT_COLORS.length];
-              const stackIndex = Math.floor(i / 2);
-              const delay = i * 0.08;
+            {Array.from({ length: 6 }).map((_, i) => {
+              const mid = 2.5;
+              const angle = (i - mid) * 3;
+              const offsetX = (i - mid) * 28;
+              const delay = i * 0.15;
               return (
                 <div
                   key={i}
                   style={{
                     position: "absolute",
-                    width: 140,
-                    height: 190,
-                    borderRadius: 12,
-                    border: "2.5px solid #000",
-                    background: `linear-gradient(135deg, ${color}30, ${color}60)`,
-                    animation: `riffle 1.2s ease-in-out ${delay}s infinite`,
-                    transformOrigin: isLeft ? "bottom right" : "bottom left",
-                    zIndex: 12 - i,
-                    boxShadow: "2px 2px 0 rgba(0,0,0,0.1)",
+                    width: 100,
+                    height: 140,
+                    borderRadius: 10,
+                    border: "2px solid #ddd",
+                    background: `linear-gradient(160deg, #f8f8f8, #eee)`,
+                    animation: `gentleShuffle 3s ease-in-out ${delay}s infinite`,
+                    transform: `translateX(${offsetX}px) rotate(${angle}deg)`,
+                    zIndex: i,
+                    boxShadow: "1px 2px 4px rgba(0,0,0,0.06)",
                   }}
                 >
                   <div
@@ -658,11 +657,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
                       alignItems: "center",
                       justifyContent: "center",
                       height: "100%",
-                      fontSize: 28,
-                      opacity: 0.7,
+                      fontSize: 24,
+                      opacity: 0.4,
                     }}
                   >
-                    {["🍽️", "🌿", "🎭", "🏛️", "🎸", "☕"][stackIndex]}
+                    {["🍽️", "🌿", "🎭", "🏛️", "⚾", "☕"][i]}
                   </div>
                 </div>
               );
@@ -671,14 +670,13 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: 14,
-              fontWeight: 700,
-              color: "#bbb",
-              marginTop: 16,
-              letterSpacing: 1,
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#ccc",
+              marginTop: 12,
             }}
           >
-            Shuffling...
+            Planning your day...
           </p>
         </div>
       )}
@@ -691,20 +689,21 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
             display: "flex",
             justifyContent: "center",
             alignItems: "flex-end",
-            padding: "20px 0 60px",
+            padding: "16px 0 40px",
             position: "relative",
-            minHeight: 380,
+            height: 360,
+            overflow: "visible",
           }}
         >
           {cards.map((card, i) => {
             const total = cards.length;
             const mid = (total - 1) / 2;
-            // Fan angle: cards spread from center
-            const fanAngle = (i - mid) * 5;
-            // Vertical arc: center cards higher
-            const arcY = Math.abs(i - mid) * 12;
-            // Horizontal overlap
-            const spreadX = (i - mid) * 140;
+            // Gentle fan: ~3° per card from center
+            const fanAngle = (i - mid) * 3;
+            // Slight vertical arc
+            const arcY = Math.abs(i - mid) * 6;
+            // Tighter overlap so cards fit on screen
+            const spreadX = (i - mid) * 110;
 
             return (
               <DayCardComponent
@@ -737,12 +736,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           0%, 100% { opacity: 0.4; }
           50% { opacity: 0.8; }
         }
-        @keyframes riffle {
-          0% { transform: translateX(0) translateY(0) rotate(0deg); }
-          25% { transform: translateX(-30px) translateY(-40px) rotate(-12deg); }
-          50% { transform: translateX(0) translateY(-8px) rotate(0deg); }
-          75% { transform: translateX(30px) translateY(-40px) rotate(12deg); }
-          100% { transform: translateX(0) translateY(0) rotate(0deg); }
+        @keyframes gentleShuffle {
+          0%, 100% { transform: var(--base-transform, translateX(0) rotate(0deg)); opacity: 0.7; }
+          20% { transform: translateX(0) translateY(-12px) rotate(0deg); opacity: 1; }
+          40% { transform: var(--base-transform, translateX(0) rotate(0deg)); opacity: 0.7; }
         }
         @keyframes dealIn {
           from {
@@ -834,7 +831,7 @@ function DayCardComponent({
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
 
   const baseTransform = `translateX(${spreadX}px) translateY(${arcY}px) rotate(${fanAngle}deg)`;
-  const hoverTransform = `translateX(${spreadX}px) translateY(-40px) rotate(0deg) scale(1.15)`;
+  const hoverTransform = `translateX(${spreadX}px) translateY(${arcY - 14}px) rotate(${fanAngle * 0.3}deg)`;
 
   return (
     <div
@@ -843,16 +840,16 @@ function DayCardComponent({
       onMouseLeave={() => setHovered(false)}
       style={{
         position: "absolute",
-        width: 240,
-        borderRadius: 16,
-        border: `3px solid #000`,
+        width: 190,
+        borderRadius: 14,
+        border: `2.5px solid #000`,
         background: "#fff",
         overflow: "hidden",
         cursor: "default",
         zIndex: hovered ? 50 : index + 1,
         transform: hovered ? hoverTransform : baseTransform,
-        boxShadow: hovered ? `8px 12px 24px rgba(0,0,0,0.25)` : `4px 6px 0 ${accent}22`,
-        transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        boxShadow: hovered ? `6px 8px 16px rgba(0,0,0,0.18)` : `3px 4px 0 ${accent}18`,
+        transition: "all 0.2s ease-out",
         animation: animatingOut ? "slideOut 0.3s ease forwards" : "none",
         transformOrigin: "bottom center",
       }}
@@ -860,13 +857,13 @@ function DayCardComponent({
       {/* Gradient header with accent color */}
       <div
         style={{
-          height: 120,
-          background: `linear-gradient(135deg, ${accent}22, ${accent}44)`,
-          borderBottom: `3px solid #000`,
+          height: 72,
+          background: `linear-gradient(135deg, ${accent}18, ${accent}38)`,
+          borderBottom: `2.5px solid #000`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 48,
+          fontSize: 32,
           position: "relative",
         }}
       >
@@ -878,58 +875,60 @@ function DayCardComponent({
           title={card.locked ? "Unlock this item" : "Lock this item"}
           style={{
             position: "absolute",
-            top: 8,
-            left: 8,
-            width: 32,
-            height: 32,
-            borderRadius: 8,
-            border: card.locked ? "2px solid #000" : "2px solid rgba(0,0,0,0.2)",
+            top: 6,
+            left: 6,
+            width: 24,
+            height: 24,
+            borderRadius: 6,
+            border: card.locked ? "1.5px solid #000" : "1.5px solid rgba(0,0,0,0.2)",
             background: card.locked ? "#06D6A0" : "rgba(255,255,255,0.8)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 16,
+            fontSize: 11,
             transition: "all 0.15s",
+            padding: 0,
           }}
         >
           {card.locked ? "🔒" : "✓"}
         </button>
 
-        {/* Skip / Hide buttons (upper right) */}
-        <div style={{ position: "absolute", top: 8, right: 8, display: "flex", gap: 4 }}>
+        {/* Skip / Hide buttons (upper right) — only show on hover */}
+        <div style={{
+          position: "absolute", top: 6, right: 6, display: "flex", gap: 3,
+          opacity: hovered ? 1 : 0, transition: "opacity 0.15s",
+        }}>
           <button
             onClick={(e) => { e.stopPropagation(); onSkip(); }}
-            title="Not today (skip for 30 days)"
+            title="Not today"
             style={{
-              padding: "4px 10px",
-              borderRadius: 12,
-              border: "2px solid rgba(0,0,0,0.15)",
-              background: "rgba(255,255,255,0.8)",
-              fontSize: 11,
+              padding: "2px 7px",
+              borderRadius: 8,
+              border: "1.5px solid rgba(0,0,0,0.15)",
+              background: "rgba(255,255,255,0.9)",
+              fontSize: 9,
               fontWeight: 700,
               color: "#888",
               cursor: "pointer",
               fontFamily: "'Inter', sans-serif",
-              transition: "all 0.15s",
             }}
           >
             Skip
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onHide(); }}
-            title="Never show this again"
+            title="Never show this"
             style={{
-              padding: "4px 10px",
-              borderRadius: 12,
-              border: "2px solid #000",
+              padding: "2px 7px",
+              borderRadius: 8,
+              border: "1.5px solid #000",
               background: "#000",
-              fontSize: 11,
+              fontSize: 9,
               fontWeight: 700,
               color: "#fff",
               cursor: "pointer",
               fontFamily: "'Inter', sans-serif",
-              transition: "all 0.15s",
             }}
           >
             Hide
@@ -938,32 +937,32 @@ function DayCardComponent({
       </div>
 
       {/* Card body */}
-      <div style={{ padding: 16 }}>
+      <div style={{ padding: "10px 12px 10px" }}>
         {/* Time block */}
         <div
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 13,
+            fontSize: 10,
             fontWeight: 800,
             color: "#000",
-            marginBottom: 4,
+            marginBottom: 2,
           }}
         >
           {card.timeBlock}
         </div>
         {/* Category label */}
-        <div style={{ marginBottom: 8 }}>
+        <div style={{ marginBottom: 5 }}>
           <span
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: 10,
+              fontSize: 8,
               fontWeight: 900,
               textTransform: "uppercase" as const,
-              letterSpacing: 2,
+              letterSpacing: 1.5,
               color: "#000",
-              border: "2px solid #000",
-              borderRadius: 4,
-              padding: "3px 8px",
+              border: "1.5px solid #000",
+              borderRadius: 3,
+              padding: "2px 5px",
               display: "inline-block",
             }}
           >
@@ -975,40 +974,48 @@ function DayCardComponent({
         <h3
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 19,
+            fontSize: 14,
             fontWeight: 900,
-            letterSpacing: -0.5,
+            letterSpacing: -0.3,
             color: "#000",
-            margin: "0 0 6px",
+            margin: "0 0 4px",
             lineHeight: 1.2,
           }}
         >
           {card.name}
         </h3>
 
-        {/* Blurb */}
+        {/* Blurb — truncated */}
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 13,
+            fontSize: 10,
             fontWeight: 500,
             color: "#555",
-            margin: "0 0 6px",
-            lineHeight: 1.4,
+            margin: "0 0 4px",
+            lineHeight: 1.35,
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical" as const,
+            overflow: "hidden",
           }}
         >
           {card.blurb}
         </p>
 
-        {/* Why */}
+        {/* Why — truncated */}
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 12,
+            fontSize: 9,
             fontWeight: 600,
             color: accent,
             margin: 0,
             lineHeight: 1.3,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical" as const,
+            overflow: "hidden",
           }}
         >
           {card.why}
@@ -1020,15 +1027,15 @@ function DayCardComponent({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: 10,
-            paddingTop: 8,
+            marginTop: 6,
+            paddingTop: 5,
             borderTop: "1px solid #eee",
           }}
         >
           {card.costNote || card.cost ? (
             <span
               style={{
-                fontSize: 11,
+                fontSize: 9,
                 fontWeight: 700,
                 color: "#888",
                 fontFamily: "'Inter', sans-serif",
@@ -1045,7 +1052,7 @@ function DayCardComponent({
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: 11,
+                fontSize: 9,
                 fontWeight: 700,
                 color: accent,
                 textDecoration: "none",
