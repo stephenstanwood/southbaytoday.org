@@ -116,14 +116,17 @@ export const INTERNAL_EVENT_SIGNALS = [
   "internal",
 ];
 
-// SBS tab URLs for CTAs
+// SBS tab URLs for CTAs (hash-based routing with full tab IDs)
 export const TAB_URLS = {
   today: "/",
-  plan: "/?tab=plan",
-  events: "/?tab=events",
-  gov: "/?tab=gov",
-  tech: "/?tab=tech",
-  development: "/?tab=development",
-  transit: "/?tab=transit",
-  sports: "/?tab=sports",
+  plan: "/#plan",
+  events: "/#events",
+  camps: "/#camps",
+  government: "/#government",
+  technology: "/#technology",
+  development: "/#development",
+  food: "/#food",
+  transit: "/#transit",
+  weather: "/#weather",
+  sports: "/#sports",
 };

@@ -11,8 +11,13 @@
 ## Data Generation
 Run these scripts to refresh pre-generated data:
 - `npm run generate-digests` — council meeting summaries (needs ANTHROPIC_API_KEY)
-- `npm run generate-blotter` — police calls from San Jose open data
 - `npm run generate-events` — upcoming events from 20+ sources
+- See `package.json` for full list of `generate-*` scripts
+
+## File Organization
+- Generated JSON artifacts (committed): `src/data/south-bay/*.json`
+- Runtime social state (gitignored): `social-*.json` files in same dir
+- Central path config: `scripts/lib/paths.mjs`
 
 ## Deployment
 - Vercel project connected to this repo
@@ -21,4 +26,5 @@ Run these scripts to refresh pre-generated data:
 - NEVER create files in a root `api/` directory — Vercel treats that as legacy serverless functions and routes all `/api/*` traffic away from Astro's `_render`, breaking every API route. All API routes must live in `src/pages/api/`.
 
 ## Tabs
-Order: Today | Plan My Day | Events | Gov | Tech | Development | Transit | Sports
+Order: Today | Plan My Day | Events | Camps | Gov | Tech | Development | Food | Transit | Weather | Sports
+Hash routing: #overview, #plan, #events, #camps, #government, #technology, #development, #food, #transit, #weather, #sports

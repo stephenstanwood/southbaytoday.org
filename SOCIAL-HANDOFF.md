@@ -136,8 +136,7 @@ Some civic URLs that ARE specific are still ugly (long Legistar paths, encoded p
 - Watch for: wrong URLs, past events, jargon leaks, repetitive content
 
 ### 8. Clean Up
-- Delete old roundup format scripts (generate-daily-pulse.mjs, generate-tonight.mjs, generate-weekend-roundup.mjs, generate-civic-signal.mjs) once new pipeline is proven
-- Delete SOCIAL-HANDOFF.md once it's no longer needed
+- Old roundup format scripts (generate-daily-pulse, generate-tonight, generate-weekend-roundup, generate-civic-signal) have been deleted
 - Consider: should card generation still exist for single-item posts, or is it only useful for occasional roundup/summary posts?
 
 ---
@@ -161,11 +160,7 @@ scripts/social/
       x.mjs              — X/Twitter OAuth 1.0a client
       bluesky.mjs        — Bluesky AT Protocol client
       threads.mjs        — Threads Meta Graph API client (not yet active)
-  generate-posts.mjs         — NEW: single-item pipeline (USE THIS)
-  generate-daily-pulse.mjs   — OLD: roundup format (deprecated)
-  generate-tonight.mjs       — OLD: roundup format (deprecated)
-  generate-weekend-roundup.mjs — OLD: roundup format (deprecated)
-  generate-civic-signal.mjs  — OLD: roundup format (deprecated)
+  generate-posts.mjs         — single-item pipeline
   publish.mjs                — publisher, supports --dry-run + --platform
   copy-review-server.mjs     — swipe review tool (localhost:3456)
   generate-header.mjs        — header image generator

@@ -10,7 +10,6 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { execSync } from "node:child_process";
 import { CONFIG } from "./lib/constants.mjs";
 
 import { randomBytes } from "node:crypto";
@@ -462,25 +461,10 @@ async function main() {
   // Save updated queue
   writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
 
-  // Commit and push queue changes
-  const repoRoot = join(__dirname, "..", "..");
-  try {
-    const status = execSync("git status --porcelain src/data/south-bay/social-approved-queue.json src/data/south-bay/social-review-history.json", { cwd: repoRoot, encoding: "utf8" }).trim();
-    if (status) {
-      execSync("git add src/data/south-bay/social-approved-queue.json", { cwd: repoRoot });
-      const historyPath = join(repoRoot, "src", "data", "south-bay", "social-review-history.json");
-      if (existsSync(historyPath)) {
-        execSync("git add src/data/south-bay/social-review-history.json", { cwd: repoRoot });
-      }
-      execSync('git commit -m "social: auto-publish queue update"', { cwd: repoRoot });
-      execSync("git push", { cwd: repoRoot });
-      console.log("   📦 Queue changes committed and pushed");
-    } else {
-      console.log("   📦 No queue changes to commit");
-    }
-  } catch (err) {
-    console.error("   ⚠️  Git commit/push failed:", err.message);
-  }
+  // Social state files are gitignored — no git commit needed.
+  // Queue and history are saved to disk above; they persist on the Mini
+  // without polluting the tracked repo.
+  console.log("   📦 Queue state saved to disk (gitignored, not committed)");
 
   // Summary + structured output for discord-notify.py
   const processedPosts = toPublish.filter((p) => p.publishedTo);

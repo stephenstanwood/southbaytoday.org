@@ -9,3 +9,15 @@ node_modules/
 _ORGANIZATIONS.txt
 photo-data.json
 photo-votes.json
+
+# Runtime-mutable social pipeline state (not build inputs)
+src/data/south-bay/social-approved-queue.json
+src/data/south-bay/social-review-history.json
+src/data/south-bay/social-action-log.json
+src/data/south-bay/social-analytics.json
+src/data/south-bay/social-post-history.json
+src/data/south-bay/social-blacklist.json
+src/data/south-bay/social-replies.json
+
+# Dev/build caches
+src/data/south-bay/.dev-status-cache.json
