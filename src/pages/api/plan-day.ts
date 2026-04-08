@@ -423,8 +423,8 @@ RULES:
 - Start from NOW (${hour}:00) — don't schedule things in the past
 - Events with listed times are anchors — schedule around them
 - If an event has no listed time, pick a reasonable slot for it
-- No two restaurants/food spots back-to-back unless lunch + dinner
-- Mix categories for variety (outdoor, food, museum, entertainment)
+- NEVER put two items of the same category back-to-back. No two parks in a row, no two restaurants in a row (unless lunch + dinner). Alternate categories: outdoor → food → museum → entertainment → food, etc.
+- Max 2 of any single category in the entire plan. A day with 3 parks is a bad day plan.
 - Geographic clustering — don't zigzag across the region
 - Time blocks should be realistic (meals: 1-1.5hr, museums: 2hr, parks: 1-2hr, events: per schedule)
 - Match places to appropriate time slots: cafes/coffee for morning, restaurants for lunch/dinner, parks for daytime, bars for evening
