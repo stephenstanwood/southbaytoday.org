@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-04-08 — Cycle 69: Weather-Aware Events Tab Banner
+
+### Context
+Wednesday April 8, 2026. Spring break week 1 continues (SJUSD/PAUSD/MVWSD on break through Apr 10). Easter weekend (Apr 12) approaching. Today's events: 64 events available (all data pipelines fresh from this morning).
+
+### What Was Built
+
+**Events tab: weather-aware banner** (`EventsView.tsx`)
+
+The Events view now shows a contextual weather tip at the top of the Upcoming events list (visible when category = "all"):
+
+- **Sunny/clear day** (rainPct < 20%, desc includes "clear"/"sunny"/"fair"): Shows amber banner — "{emoji} {desc} today, {temp}°F — great day to get outside!" with a green "Show Outdoor Events" button that applies the outdoor category filter.
+- **Rainy day** (rainPct ≥ 40%): Shows blue banner — "🌧️ Rainy today ({temp}°F, {rainPct}% rain chance) — great day for a library program or indoor event."
+- **Neutral days** (partly cloudy, mild): No banner shown (only show when tip is meaningful).
+
+Weather is fetched from the same `/api/weather` endpoint used by the Overview tab, with a `sessionStorage` cache keyed by city + date to avoid duplicate API calls if the user has already loaded the Overview tab.
+
+### Why This Was the Strongest Move
+Spring break week 1. A family opening the Events tab on a sunny Wednesday sees "Clear today, 72°F — great day to get outside!" with an immediate button to show outdoor events. On a rainy day they see a nudge toward libraries and indoor activities. This makes the Events tab feel like a living context-aware tool rather than a static list, and it's immediately useful for families deciding what to do today during the break.
+
+### RECENTLY_FUNDED research (Apr 8)
+Searched for new Q2 2026 South Bay funding rounds. Web results did not return specific verifiable April 2026 announcements for South Bay companies. Last entry remains Deccan AI (Mar 27). Check again next cycle.
+
+### Next 3 Strongest Ideas
+1. **Permit Pulse: add Mountain View** — Try `cityofmountainview.gov/services/permits` or the city's GIS/open data portal. Expanding beyond SJ and PA adds coverage for the second-densest development corridor.
+2. **Neighborhood-level filtering for San José** — 214 SJ events (40% of total). Willow Glen, Japantown, Almaden, Rose Garden are distinct communities that would benefit from sub-city browsing.
+3. **RECENTLY_FUNDED updates** — Watch for Apr 8–14 announcements. AI/robotics/semiconductor rounds are most likely. Only add entries with verified source links.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes — the Events tab now knows the weather.** A parent checking what to do with their kids on spring break doesn't just see a list of events — they see a tip anchored to today's conditions. That contextual layer is the difference between a reference tool and a daily habit.
+
+---
+
 ## STANDING ORDERS (read every cycle before choosing what to build)
 
 These are permanent directives from Stephen — override any other instinct:

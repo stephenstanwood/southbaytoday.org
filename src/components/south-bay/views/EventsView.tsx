@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { City } from "../../../lib/south-bay/types";
 import {
   SOUTH_BAY_EVENTS,
@@ -537,6 +537,9 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
   const [showAllLater, setShowAllLater] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [springBreakMode, setSpringBreakMode] = useState(false);
+  const [todayForecast, setTodayForecast] = useState<{
+    high: number; rainPct: number; emoji: string; desc: string;
+  } | null>(null);
 
   const now = new Date();
   const currentMonth = now.getMonth() + 1;
@@ -549,6 +552,26 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
   const showSpringBreakBanner = todayIso >= SB_BANNER_START && todayIso <= SB_BREAK_END;
   const daysUntilBreak = Math.ceil((new Date(SB_BREAK_START).getTime() - now.getTime()) / 86400000);
   const breakInProgress = todayIso >= SB_BREAK_START && todayIso <= SB_BREAK_END;
+
+  // ── Fetch today's weather (sessionStorage-cached to avoid duplicate calls) ──
+  useEffect(() => {
+    const cacheKey = `sb-events-weather-${primary}-${todayIso}`;
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) { setTodayForecast(JSON.parse(cached)); return; }
+    } catch {}
+    fetch(`/api/weather?city=${primary}`)
+      .then((r) => r.json())
+      .then((d) => {
+        const f = d.forecast?.[0];
+        if (f) {
+          const summary = { high: f.high, rainPct: f.rainPct, emoji: f.emoji, desc: f.desc };
+          setTodayForecast(summary);
+          try { sessionStorage.setItem(cacheKey, JSON.stringify(summary)); } catch {}
+        }
+      })
+      .catch(() => {});
+  }, [primary, todayIso]);
 
   // ── Dynamic venue list (auto-discovered from event data) ──
   const SOUTH_BAY_VENUES = useMemo(() => buildVenuesFromEvents(allUpcomingEvents), []);
@@ -859,6 +882,68 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
           </button>
         </div>
       )}
+
+      {/* Weather-aware banner */}
+      {todayForecast && viewMode === "upcoming" && category === "all" && (() => {
+        const { high, rainPct, emoji, desc } = todayForecast;
+        if (rainPct >= 40) {
+          return (
+            <div style={{
+              marginBottom: 14, padding: "9px 14px",
+              background: "#f0f9ff",
+              border: "1.5px solid #bae6fd",
+              borderRadius: 8, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+            }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>🌧️</span>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <span style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
+                  Rainy today ({high}°F, {rainPct}% rain chance)
+                </span>
+                <span style={{ fontSize: 12, color: "var(--sb-muted)", marginLeft: 6 }}>
+                  — great day for a library program or indoor event.
+                </span>
+              </div>
+            </div>
+          );
+        }
+        const isClear = rainPct < 20 && (
+          desc.toLowerCase().includes("clear") ||
+          desc.toLowerCase().includes("sunny") ||
+          desc.toLowerCase().includes("fair") ||
+          rainPct === 0
+        );
+        if (isClear) {
+          return (
+            <div style={{
+              marginBottom: 14, padding: "9px 14px",
+              background: "#fffbeb",
+              border: "1.5px solid #fcd34d",
+              borderRadius: 8, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+            }}>
+              <span style={{ fontSize: 18, lineHeight: 1 }}>{emoji}</span>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <span style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
+                  {desc} today, {high}°F
+                </span>
+                <span style={{ fontSize: 12, color: "var(--sb-muted)", marginLeft: 6 }}>
+                  — great day to get outside!
+                </span>
+              </div>
+              <button
+                onClick={() => setCategory("outdoor")}
+                style={{
+                  padding: "5px 12px", background: "#16a34a", color: "#fff",
+                  border: "none", borderRadius: 6, fontSize: 12, fontWeight: 700,
+                  cursor: "pointer", fontFamily: "var(--sb-sans)", whiteSpace: "nowrap",
+                }}
+              >
+                Show Outdoor Events
+              </button>
+            </div>
+          );
+        }
+        return null;
+      })()}
 
       {/* Event cards */}
       {viewMode === "venues" ? (
