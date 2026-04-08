@@ -15,6 +15,8 @@ import {
 import { useHomepageData, type UpcomingEvent, type LeadStory } from "./useHomepageData";
 import SportsView from "../views/SportsView";
 import OutagesCard from "../cards/OutagesCard";
+import PhotoStrip from "./PhotoStrip";
+import AroundTown from "./AroundTown";
 
 // ── Shared styles ──
 
@@ -95,14 +97,12 @@ export default function HomepageView({ homeCity, setHomeCity, onNavigate }: Prop
         <LeadSection stories={data.leadStories} onNavigate={onNavigate} />
       )}
 
+      {/* ═══ PHOTO STRIP ═══ */}
+      {!changingCity && <PhotoStrip />}
+
       {/* ═══ FORECAST STRIP ═══ */}
       {data.forecast && data.forecast.length > 0 && !changingCity && (
         <ForecastStrip forecast={data.forecast} />
-      )}
-
-      {/* ═══ TONIGHT AT CITY HALL ═══ */}
-      {data.tonightMeetings.length > 0 && !changingCity && (
-        <TonightAtCityHall meetings={data.tonightMeetings} onNavigate={onNavigate} />
       )}
 
       {/* ═══ WHAT'S HAPPENING — time-bucketed events ═══ */}
@@ -123,6 +123,9 @@ export default function HomepageView({ homeCity, setHomeCity, onNavigate }: Prop
       {homeCity && data.cityBriefing && !changingCity && (
         <CityBriefingSection briefing={data.cityBriefing} onNavigate={onNavigate} />
       )}
+
+      {/* ═══ AROUND THE SOUTH BAY ═══ */}
+      {!changingCity && <AroundTown />}
 
       {/* ═══ CIVIC WATCH ═══ */}
       {data.civicHighlights.length > 0 && !changingCity && (
@@ -201,45 +204,74 @@ function FreshnessBar({ homeCity, changingCity, setChangingCity, setHomeCity, fr
 // THE LEAD — Hero stories
 // ═══════════════════════════════════════════════════════════════════════════
 
+const LEAD_TYPE_LABEL: Record<string, string> = {
+  civic: "Civic Watch",
+  health: "Alert",
+  development: "Development",
+  opening: "New & Notable",
+  event: "Today",
+  weather: "Weather",
+};
+
 function LeadSection({ stories, onNavigate }: { stories: LeadStory[]; onNavigate: (tab: Tab) => void }) {
   const lead = stories[0];
   const secondary = stories.slice(1, 4);
 
   return (
     <div>
-      {/* Lead story — large, bold */}
+      {/* Lead story — full-width hero with gradient bg */}
       <div
         style={{
-          ...cardBase,
-          borderLeft: `4px solid ${lead.accentColor}`,
-          padding: "20px 24px",
+          background: `linear-gradient(135deg, ${lead.accentColor} 0%, ${lead.accentColor}dd 60%, ${lead.accentColor}99 100%)`,
+          borderRadius: CARD_RADIUS,
+          padding: "28px 28px 24px",
           cursor: lead.tab ? "pointer" : undefined,
-          transition: "box-shadow 0.15s",
+          transition: "transform 0.15s, box-shadow 0.15s",
+          position: "relative",
+          overflow: "hidden",
         }}
         onClick={() => lead.tab && onNavigate(lead.tab)}
-        onMouseEnter={(e) => { if (lead.tab) (e.currentTarget as HTMLElement).style.boxShadow = "var(--sb-shadow-hover)"; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 30px rgba(0,0,0,0.15)"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "none"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
       >
-        <div style={{ ...sectionLabel, color: lead.accentColor, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-          <span>{lead.emoji}</span>
-          <span>{lead.type === "civic" ? "Civic Watch" : lead.type === "health" ? "Alert" : lead.type === "development" ? "Development" : lead.type === "opening" ? "New & Notable" : "Signal"}</span>
+        {/* Decorative large emoji */}
+        <div style={{
+          position: "absolute", top: -10, right: -10, fontSize: 120, opacity: 0.12,
+          lineHeight: 1, pointerEvents: "none",
+        }}>
+          {lead.emoji}
+        </div>
+
+        <div style={{
+          ...sectionLabel,
+          color: "rgba(255,255,255,0.7)",
+          marginBottom: 12,
+          display: "flex", alignItems: "center", gap: 6,
+          position: "relative",
+        }}>
+          <span style={{ fontSize: 14 }}>{lead.emoji}</span>
+          <span>{LEAD_TYPE_LABEL[lead.type] ?? "Signal"}</span>
         </div>
         <h2 style={{
           fontFamily: "var(--sb-serif)",
           fontWeight: 800,
-          fontSize: 26,
-          lineHeight: 1.15,
-          color: "var(--sb-ink)",
-          margin: "0 0 8px 0",
+          fontSize: 30,
+          lineHeight: 1.12,
+          color: "#fff",
+          margin: "0 0 10px 0",
           letterSpacing: "-0.02em",
+          position: "relative",
+          maxWidth: "85%",
         }}>
           {lead.headline}
         </h2>
         <p style={{
-          fontSize: 14,
+          fontSize: 15,
           lineHeight: 1.5,
-          color: "var(--sb-muted)",
+          color: "rgba(255,255,255,0.85)",
           margin: 0,
+          position: "relative",
+          maxWidth: "80%",
         }}>
           {lead.lede}
         </p>
@@ -332,7 +364,7 @@ function ForecastStrip({ forecast }: { forecast: Array<{ date: string; emoji: st
             <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.6, marginBottom: 4 }}>
               {isToday ? "Today" : dayLabel(day.date)}
             </div>
-            <div style={{ fontSize: 22, lineHeight: 1, marginBottom: 4 }}>{day.emoji}</div>
+            <div style={{ fontSize: 28, lineHeight: 1, marginBottom: 4, fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif" }}>{day.emoji}</div>
             <div style={{ fontSize: 16, fontWeight: 800, lineHeight: 1 }}>{Math.round(day.high)}°</div>
             <div style={{ fontSize: 11, opacity: 0.5 }}>{Math.round(day.low)}°</div>
             {day.rainPct > 20 && (
@@ -350,37 +382,6 @@ function ForecastStrip({ forecast }: { forecast: Array<{ date: string; emoji: st
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TONIGHT AT CITY HALL
-// ═══════════════════════════════════════════════════════════════════════════
-
-function TonightAtCityHall({ meetings, onNavigate }: {
-  meetings: Array<{ cityName: string; bodyName: string; date: string; url?: string }>;
-  onNavigate: (tab: Tab) => void;
-}) {
-  return (
-    <div
-      style={{
-        background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%)",
-        borderRadius: CARD_RADIUS,
-        padding: "16px 20px",
-        color: "#e0e7ff",
-        cursor: "pointer",
-      }}
-      onClick={() => onNavigate("government")}
-    >
-      <div style={{ ...sectionLabel, color: "#818cf8", marginBottom: 10 }}>
-        🏛️ Tonight at City Hall
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        {meetings.map((m, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{m.cityName}</span>
-            <span style={{ fontSize: 12, color: "#a5b4fc" }}>{m.bodyName}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 
 // ═══════════════════════════════════════════════════════════════════════════

@@ -182,14 +182,14 @@ export function useHomepageData(homeCity: City | null) {
       .filter((e) => e.ongoing === true && e.date <= TODAY_ISO && e.category !== "sports")
       .slice(0, 6);
 
-    // ── Lead stories (ranked) ──
-    const leadStories = pickLeadStories(homeCity);
+    // ── Tonight's meetings ──
+    const tonightMeetings = pickTonightMeetings();
+
+    // ── Lead stories (ranked by freshness) ──
+    const leadStories = pickLeadStories(homeCity, tonightMeetings, todayEvents);
 
     // ── Civic highlights ──
     const civicHighlights = pickCivicHighlights(homeCity);
-
-    // ── Tonight's meetings ──
-    const tonightMeetings = pickTonightMeetings();
 
     // ── New & notable ──
     const newNotable = pickNewNotable();
@@ -311,72 +311,157 @@ function isNoisyTopic(topic: string): boolean {
   return GOVT_NOISE.some((n) => lower.startsWith(n));
 }
 
-function pickLeadStories(homeCity: City | null): LeadStory[] {
-  const stories: LeadStory[] = [];
+// Far-future development projects should never lead the homepage
+const FAR_FUTURE = /203\d|204\d|long.term/i;
 
-  // 1. Civic/around-town lead
+// Categories that make good hero stories
+const HERO_CATEGORIES = new Set(["music", "arts", "community", "food", "outdoor", "sports", "market"]);
+// Words that signal boring/internal events
+const BORING_SIGNALS = /closed|cancelled|canceled|committee meeting|staff|internal|board of/i;
+
+function pickLeadStories(homeCity: City | null, todayMeetings: Array<{ cityName: string; bodyName: string }>, todayEvents: UpcomingEvent[]): LeadStory[] {
+  const candidates: Array<LeadStory & { freshness: number }> = [];
+
+  // ── Best event today (should often be the lead!) ──
+  const eventCandidates = todayEvents
+    .filter((e) =>
+      e.category !== "sports" &&
+      !BORING_SIGNALS.test(e.title) &&
+      isNotEnded(e.time) &&
+      (HERO_CATEGORIES.has(e.category) || e.cost === "free")
+    )
+    .sort((a, b) => {
+      // Prefer: has time > all day, city match > not, free > paid, named venue > none
+      let scoreA = 0, scoreB = 0;
+      if (a.time) scoreA += 10;
+      if (b.time) scoreB += 10;
+      if (homeCity && a.city === homeCity) scoreA += 8;
+      if (homeCity && b.city === homeCity) scoreB += 8;
+      if (a.cost === "free") scoreA += 3;
+      if (b.cost === "free") scoreB += 3;
+      if (a.venue) scoreA += 2;
+      if (b.venue) scoreB += 2;
+      if (HERO_CATEGORIES.has(a.category)) scoreA += 5;
+      if (HERO_CATEGORIES.has(b.category)) scoreB += 5;
+      return scoreB - scoreA;
+    });
+
+  const bestEvent = eventCandidates[0];
+  if (bestEvent) {
+    const timeStr = bestEvent.time ? ` · ${bestEvent.time}` : "";
+    const venueStr = bestEvent.venue ? ` at ${bestEvent.venue}` : "";
+    const cityName = bestEvent.city === "multi" ? "" : getCityName(bestEvent.city as City);
+    candidates.push({
+      type: "event",
+      headline: bestEvent.title,
+      lede: `${cityName}${venueStr}${timeStr}${bestEvent.cost === "free" ? " · Free" : ""}`,
+      accentColor: bestEvent.category === "music" ? "#7c3aed" : bestEvent.category === "arts" ? "#be185d" : bestEvent.category === "food" ? "#059669" : "#0369a1",
+      emoji: bestEvent.category === "music" ? "🎵" : bestEvent.category === "arts" ? "🎨" : bestEvent.category === "food" ? "🍜" : bestEvent.category === "outdoor" ? "🌿" : "📅",
+      tab: "events",
+      freshness: 90,
+    });
+  }
+
+  // ── Tonight at city hall ──
+  if (todayMeetings.length > 0) {
+    const names = todayMeetings.slice(0, 3).map((m) => m.cityName).join(", ");
+    candidates.push({
+      type: "civic",
+      headline: todayMeetings.length === 1
+        ? `${todayMeetings[0].cityName} ${todayMeetings[0].bodyName} meets tonight`
+        : `${todayMeetings.length} city councils meet tonight`,
+      lede: todayMeetings.length === 1
+        ? `${todayMeetings[0].cityName} ${todayMeetings[0].bodyName} is in session tonight.`
+        : `${names} — city councils are in session tonight.`,
+      accentColor: "#4338ca",
+      emoji: "🏛️",
+      tab: "government",
+      freshness: 85, // High but below best event — meetings are important but events lead
+    });
+  }
+
+  // ── Civic / around-town (yesterday's council actions) ──
   const aroundItems = (aroundTownJson as { items: AroundTownItem[] }).items ?? [];
   const cityItems = homeCity ? aroundItems.filter((it) => it.cityId === homeCity) : [];
   const civicItem = cityItems[0] ?? aroundItems[0];
   if (civicItem) {
-    stories.push({
-      type: "civic",
-      headline: civicItem.headline,
-      lede: `${civicItem.cityName} · ${civicItem.summary.slice(0, 120)}${civicItem.summary.length > 120 ? "…" : ""}`,
-      accentColor: "#1d4ed8",
-      emoji: "🏛️",
-      tab: "government",
-      url: civicItem.sourceUrl,
-      cityId: civicItem.cityId,
-    });
+    const daysSince = (Date.now() - new Date(civicItem.date).getTime()) / 86400000;
+    if (daysSince < 7) {
+      candidates.push({
+        type: "civic",
+        headline: civicItem.headline,
+        lede: `${civicItem.cityName} · ${civicItem.summary.slice(0, 120)}${civicItem.summary.length > 120 ? "…" : ""}`,
+        accentColor: "#1d4ed8",
+        emoji: "🏛️",
+        tab: "government",
+        url: civicItem.sourceUrl,
+        cityId: civicItem.cityId,
+        freshness: Math.max(0, 80 - daysSince * 15),
+      });
+    }
   }
 
-  // 2. Health closure alert
+  // ── Health closure (only if closure date is within 7 days) ──
   const { flags = [] } = healthScoresJson as { flags?: Array<{ name: string; city: string; date: string; result: string; summary: string }> };
-  const cutoff = new Date(Date.now() - 14 * 86400000).toISOString().split("T")[0];
-  const closure = flags.find((f) => f.result === "Y" && f.date >= cutoff);
+  const cutoff7d = new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0];
+  const closure = flags.find((f) => f.result === "Y" && f.date >= cutoff7d);
   if (closure) {
-    stories.push({
-      type: "health",
-      headline: `${closure.name} temporarily closed`,
-      lede: `${closure.city} · ${closure.summary?.slice(0, 110) ?? "Closed following health inspection."}`,
-      accentColor: "#92400E",
-      emoji: "⚠️",
-      tab: "government",
-    });
+    // Only show if the summary looks clean (not raw cert data)
+    const summary = closure.summary || "";
+    const looksClean = summary.length > 20 && !summary.includes("certificate:");
+    if (looksClean) {
+      const daysSince = (Date.now() - new Date(closure.date).getTime()) / 86400000;
+      candidates.push({
+        type: "health",
+        headline: `${closure.name} temporarily closed`,
+        lede: `${closure.city} · ${summary.slice(0, 110)}`,
+        accentColor: "#92400E",
+        emoji: "⚠️",
+        tab: "government",
+        freshness: Math.max(0, 70 - daysSince * 15),
+      });
+    }
   }
 
-  // 3. Development story
-  const openingSoon = DEV_PROJECTS.filter((p) => p.status === "opening-soon");
-  const underConstruction = DEV_PROJECTS.filter((p) => p.status === "under-construction");
-  const devProject = openingSoon[0] ?? underConstruction[0];
-  if (devProject) {
-    const statusLabel = STATUS_CONFIG[devProject.status]?.label ?? devProject.status;
-    stories.push({
+  // ── Development (only near-term, opening-soon strongly preferred) ──
+  const openingSoon = DEV_PROJECTS.filter(
+    (p) => p.status === "opening-soon" && !FAR_FUTURE.test(p.timeline ?? "")
+  );
+  if (openingSoon.length > 0) {
+    const p = openingSoon.find((p) => p.featured) ?? openingSoon[0];
+    candidates.push({
       type: "development",
-      headline: devProject.name,
-      lede: devProject.description?.slice(0, 120) ?? `${statusLabel} · ${devProject.city}`,
+      headline: p.name,
+      lede: p.description?.slice(0, 120) ?? `Opening soon · ${p.city}`,
       accentColor: "#b45309",
       emoji: "🏗️",
       tab: "development",
+      freshness: 50,
     });
   }
 
-  // 4. Restaurant opening
+  // ── Restaurant opening (only if data looks clean — skip raw permit codes) ──
   const radarItems = (restaurantRadarJson as any).items ?? [];
-  const newOpening = radarItems[0];
-  if (newOpening) {
-    stories.push({
+  for (const r of radarItems) {
+    const desc = r.cuisine || r.description || "";
+    // Skip entries with raw permit codes like "(Bp100%)" or "(Sti)"
+    if (/\(B[ep]|Srp|Ti\b/.test(desc)) continue;
+    if (!r.name || r.name.length < 3) continue;
+    candidates.push({
       type: "opening",
-      headline: `Now open: ${newOpening.name}`,
-      lede: `${newOpening.city} · ${newOpening.cuisine || newOpening.description || "New restaurant"}`,
+      headline: `Now open: ${r.name}`,
+      lede: `${getCityName(r.city as City)} · ${desc || "New restaurant"}`,
       accentColor: "#059669",
       emoji: "🍽️",
       tab: "food",
+      freshness: 45,
     });
+    break;
   }
 
-  return stories;
+  // Sort by freshness score, take top 4
+  candidates.sort((a, b) => b.freshness - a.freshness);
+  return candidates.slice(0, 4).map(({ freshness, ...story }) => story);
 }
 
 // ── Civic highlights ──
@@ -446,15 +531,21 @@ export type NotableItem = {
 function pickNewNotable(): NotableItem[] {
   const items: NotableItem[] = [];
 
-  // Restaurant openings
+  // Restaurant openings (skip raw permit codes)
   const radarItems = (restaurantRadarJson as any).items ?? [];
-  for (const r of radarItems.slice(0, 2)) {
+  let restaurantCount = 0;
+  for (const r of radarItems) {
+    if (restaurantCount >= 2) break;
+    const desc = r.cuisine || r.description || "";
+    if (/\(B[ep]|Srp|Ti\b/.test(desc)) continue;
+    if (!r.name || r.name.length < 3) continue;
     items.push({
       type: "restaurant",
       title: r.name,
-      subtitle: `${r.city} · ${r.cuisine || "New restaurant"}`,
+      subtitle: `${getCityName(r.city as City)} · ${desc || "New restaurant"}`,
       emoji: "🍽️",
     });
+    restaurantCount++;
   }
 
   // Health closures
