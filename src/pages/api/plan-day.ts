@@ -450,6 +450,7 @@ TONE: Write like a friend texting a plan, not a travel brochure or AI assistant.
 - NEVER fabricate details not in the data — don't assume drop-in availability, class schedules, or specific menu items unless the data says so
 - NEVER describe a place as being "in" a city it's not in — check the city field
 - NEVER hedge or qualify — just recommend it confidently
+- Vary your sentence structure. Do NOT use an em dash (—) in every blurb. Mix periods, commas, and short sentences. If you catch yourself reaching for "—", use a period instead.
 
 OUTPUT FORMAT (JSON array, no markdown fences):
 [
