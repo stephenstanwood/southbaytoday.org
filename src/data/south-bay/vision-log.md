@@ -2,6 +2,63 @@
 
 ---
 
+## 2026-04-08 — Cycle 72: Events Tab — Weekly Buckets + Date on Cards
+
+### Context
+Wednesday April 8, 2026 (late afternoon). Spring break Week 1 in progress. Easter weekend (Apr 12) approaching.
+
+### What Was Built
+
+**Events tab: calendar-week grouping + date badge on cards** (`EventsView.tsx`)
+
+With 544 events, the old 4-bucket system (Today / Tomorrow / This Week / **Later**) was failing users — the "Later" group could hold 400+ events with no date shown on individual cards, making it completely unscannable.
+
+**Changes:**
+- Replaced flat "Later" bucket with calendar-week buckets: "Next Week · Apr 13–19", "Week of Apr 20", etc. Users can now see exactly when future events fall without reading every card.
+- Added a date pill badge (`Apr 15`) to each card's meta row for any group beyond "Tomorrow" — so scanning "Next Week" now shows `Apr 15 · 7pm · Shoreline Amphitheatre · Mountain View` instead of just `7pm · Shoreline Amphitheatre · Mountain View`.
+- Fixed spring break Wk 2 label: "Apr 13–17" → "Apr 14–17" (Easter Sunday Apr 12 belongs to Easter Weekend; FUHSD/Cupertino USD/Campbell USD break starts Apr 14).
+
+**Implementation:** New `getEventBucket()` + `bucketLabel()` helpers. Week-based grouping keys like `week:2026-04-13` sort chronologically by ISO date. The `showDate` flag is passed through the group map to each `UpcomingEventCard`.
+
+### Why This Was the Strongest Move
+The Events tab is the site's most-used feature with 544 events. A resident filtering to "San Jose · Music" and scrolling past "This Week" into the future needs to know *when* each event is without memorizing the header. Date pills on every card for multi-week groups make the difference between "I see something interesting" and "I know when to go." This is the immediate next step after the 6× event recovery in Cycle 70.
+
+### Next 3 Strongest Ideas
+1. **Neighborhood-level filtering for San José** — With 215 SJ events (~40% of total), sub-city browsing (Willow Glen, Japantown, Almaden) is the next frontier.
+2. **Permit Pulse: add Mountain View** — cityofmountainview.gov open data portal. City website returning 403/ECONNREFUSED — try GIS portal or alternate URL pattern.
+3. **Category filter chips with counts** — Show "Music (42)" on the pill so users know which filters have results before clicking.
+
+### Are We Becoming More Like the Homepage for South Bay Life?
+**Yes, incrementally.** The Events tab is now actually scannable at 544 events. Before this cycle, a user opening "Coming up in 2 weeks" would see a wall of untimed, undated cards. Now they see grouped weeks with date context on every card.
+
+---
+
+## 2026-04-08 — Cycle 71: Spring Break Guide — Easter Weekend Fix
+
+### Context
+Wednesday April 8, 2026 (afternoon). Spring break Week 1 in progress.
+
+### What Was Built
+
+**Spring break guide: Easter Weekend correctly labeled** (`OverviewView.tsx`, `scripts/generate-spring-break-picks.mjs`, `spring-break-picks.json`)
+
+The `SpringBreakCard` week groupings had "Easter Weekend" on Apr 3–5 (wrong — Easter 2026 is April 12, Good Friday April 10/11). The actual Easter weekend events (USWNT vs Japan Apr 11, Julius Caesar Apr 12) were being dumped into "Week 2" without Easter Weekend branding.
+
+**Fixes:**
+- `OverviewView.tsx`: Corrected week boundaries — Week 1: Apr 3–10, Easter Weekend: Apr 11–13, Week 2: Apr 14–17
+- `generate-spring-break-picks.mjs`: Updated prompt with correct Easter date context; relaxed $25 price filter to allow major events like USWNT soccer
+- `spring-break-picks.json`: Regenerated — 12 picks now correctly distributed across all three windows
+
+**Final picks distribution:**
+- Week 1 (Apr 3–10): 6 picks including Stanford exhibits, SJSU Opera, watercolor workshops
+- Easter Weekend (Apr 11–13): 2 picks — USWNT vs Japan (Apr 11), Julius Caesar free outdoor (Apr 12)
+- Week 2 (Apr 14–17): 4 picks — Master Gardeners, author talk, Earthquakes Open Cup, Golden Acorn Music
+
+### Why This Was the Strongest Move
+Easter Sunday is the highlight of spring break for many South Bay families. Having the USWNT vs Japan match (Apr 11) and free Shakespeare on Easter Sunday (Apr 12) properly labeled as "Easter Weekend" rather than buried in Week 2 makes the guide actually useful for holiday weekend planning.
+
+---
+
 ## 2026-04-08 — Cycle 70: Critical Bug Fix — Events 86→544 (6× Recovery)
 
 ### Context
