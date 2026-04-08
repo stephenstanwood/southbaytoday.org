@@ -270,7 +270,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
             <button onClick={() => { if (!state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 10px", border: "none", borderLeft: "2px solid #000", background: state.kids ? "#000" : "#fff", color: state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s" }}>Kids</button>
           </div>
           {/* New Plan */}
-          <button onClick={handleNewPlan} disabled={loading && !swapLoading} style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 900, padding: "5px 16px", borderRadius: 14, border: "2.5px solid #000", background: (loading && !swapLoading) ? "#eee" : "linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", color: (loading && !swapLoading) ? "#999" : "#fff", cursor: (loading && !swapLoading) ? "not-allowed" : "pointer", textTransform: "uppercase" as const, letterSpacing: 1, backgroundSize: "200% 200%", animation: (loading && !swapLoading) ? "none" : "rainbow 3s ease infinite", whiteSpace: "nowrap" as const }}>Shuffle ↻</button>
+          <button onClick={handleNewPlan} disabled={loading && !swapLoading} style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 900, padding: "5px 16px", borderRadius: 14, border: "2.5px solid #000", backgroundColor: (loading && !swapLoading) ? "#eee" : "transparent", backgroundImage: (loading && !swapLoading) ? "none" : "linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", color: (loading && !swapLoading) ? "#999" : "#fff", cursor: (loading && !swapLoading) ? "not-allowed" : "pointer", textTransform: "uppercase" as const, letterSpacing: 1, backgroundSize: "200% 200%", animation: (loading && !swapLoading) ? "none" : "rainbow 3s ease infinite", whiteSpace: "nowrap" as const }}>Shuffle ↻</button>
         </div>
       </div>
 
@@ -325,9 +325,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
               <div key={i} style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", opacity: 0, animation: `cardAppear 0.5s ease-out ${i * 0.2}s forwards, softGlow 2.5s ease-in-out ${i * 0.2 + 0.5}s infinite` }}>
                 <div style={{ width: 5, background: accent, flexShrink: 0 }} />
                 <div style={{ flex: 1, padding: "14px 16px" }}>
-                  <div style={{ width: "30%", height: 10, borderRadius: 4, background: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15}s infinite`, marginBottom: 8 }} />
-                  <div style={{ width: "65%", height: 14, borderRadius: 4, background: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.1}s infinite`, marginBottom: 6 }} />
-                  <div style={{ width: "90%", height: 10, borderRadius: 4, background: "linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%)", backgroundSize: "200% 100%", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.2}s infinite` }} />
+                  <div style={{ width: "30%", height: 10, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15}s infinite`, marginBottom: 8 }} />
+                  <div style={{ width: "65%", height: 14, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.1}s infinite`, marginBottom: 6 }} />
+                  <div style={{ width: "90%", height: 10, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.2}s infinite` }} />
                 </div>
               </div>
             );
