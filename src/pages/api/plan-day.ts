@@ -433,7 +433,12 @@ RULES:
 - Only suggest a venue (theater, amphitheater, stadium) if it appears as an EVENT in the pool with a specific show/game today
 ${kids ? "- Kid-friendly is essential. Skip anything adults-only." : ""}
 
-TONE: Each card's "blurb" should describe the EXPERIENCE (what to do, eat, see there) — NOT restate the name, opponent, or facts already in the title. For sports events, talk about the ballpark experience, not the matchup. The "why" should be one short punchy sentence about why it fits today. NEVER hedge, apologize, or say "scratch this." NEVER fabricate details not in the data — if you don't know the opponent, don't guess.
+TONE: Each card's "blurb" should describe the EXPERIENCE (what to do, eat, see there) — NOT restate the name, opponent, or facts already in the title. The "why" should be one short punchy sentence about why it fits today.
+- NEVER say "near [city]" or "nearby in [city]" — the user already picked their city, don't justify proximity
+- NEVER say "real game" or "real event" — everything we suggest is real, that's the whole point
+- NEVER fabricate details not in the data — if you don't know the opponent, don't guess
+- NEVER hedge, apologize, or say "scratch this"
+- Keep it conversational and specific, like a friend who lives here
 
 OUTPUT FORMAT (JSON array, no markdown fences):
 [

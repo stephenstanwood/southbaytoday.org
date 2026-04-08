@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.southbaytoday.org',
   trailingSlash: 'never',
-  output: 'static',
+  output: 'hybrid',
   adapter: vercel(),
   integrations: [react(), sitemap()],
   vite: {
