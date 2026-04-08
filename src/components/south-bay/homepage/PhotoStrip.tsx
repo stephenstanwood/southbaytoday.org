@@ -2,6 +2,7 @@
 // Photo strip — auto-scrolling marquee of curated South Bay photos
 // ---------------------------------------------------------------------------
 
+import { memo } from "react";
 import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
 
 type CuratedPhoto = {
@@ -25,7 +26,7 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   return out;
 }
 
-export default function PhotoStrip() {
+export default memo(function PhotoStrip() {
   if (ALL_PHOTOS.length < 4) return null;
   const LOAD_SEED = Math.floor(Math.random() * 1_000_000);
   const strip = seededShuffle(ALL_PHOTOS, LOAD_SEED).slice(0, Math.min(20, ALL_PHOTOS.length));
@@ -64,4 +65,4 @@ export default function PhotoStrip() {
       </div>
     </div>
   );
-}
+});
