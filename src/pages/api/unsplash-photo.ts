@@ -40,10 +40,12 @@ export const GET: APIRoute = async ({ url }) => {
   if (!key) return new Response(JSON.stringify({ error: "Not configured" }), { status: 503 });
 
   const rawQuery = url.searchParams.get("query") || "california";
+  const orientation = url.searchParams.get("orientation") || "squarish";
   // Normalize: map category shortcuts through query map
   const query = CATEGORY_QUERIES[rawQuery] ?? rawQuery;
+  const cacheKey = `${query}::${orientation}`;
 
-  const cached = cache.get(query);
+  const cached = cache.get(cacheKey);
   if (cached && Date.now() - cached.ts < CACHE_TTL) {
     return new Response(JSON.stringify(cached.data), {
       headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=86400" },
@@ -52,7 +54,7 @@ export const GET: APIRoute = async ({ url }) => {
 
   try {
     const res = await fetch(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=5&orientation=squarish`,
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=10&orientation=${orientation}`,
       {
         headers: { Authorization: `Client-ID ${key}` },
         signal: AbortSignal.timeout(5000),
@@ -61,7 +63,8 @@ export const GET: APIRoute = async ({ url }) => {
     if (!res.ok) return new Response(JSON.stringify({ error: "Unsplash error" }), { status: 502 });
 
     const data = await res.json();
-    const photo = data.results?.[0];
+    const results = data.results ?? [];
+    const photo = results[Math.floor(Math.random() * Math.min(results.length, 5))];
     if (!photo) return new Response(JSON.stringify({ error: "No results" }), { status: 404 });
 
     // Trigger download endpoint — required by Unsplash API guidelines
@@ -76,7 +79,7 @@ export const GET: APIRoute = async ({ url }) => {
       unsplashUrl: `https://unsplash.com/?${UTM}`,
     };
 
-    cache.set(query, { data: result, ts: Date.now() });
+    cache.set(cacheKey, { data: result, ts: Date.now() });
     // Evict old entries
     if (cache.size > 200) {
       const oldest = cache.keys().next().value!;
