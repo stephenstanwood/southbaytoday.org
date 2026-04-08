@@ -3209,5 +3209,45 @@ The "Coming Up" chip fills a real gap — the section was invisible for ~3 days 
 
 ### Next 3 Strongest Ideas
 1. **RECENTLY_FUNDED updates** — Watch for new Q2 2026 rounds. Aria Networks (Apr 7) is current latest. Check for Apr 8–14 announcements next cycle.
-2. **Permit Pulse: add Mountain View** — Mountain View has an open data portal (data.mountainview.gov). Research their permits API and add a third city.
+2. **Permit Pulse: add Mountain View** — Mountain View open data portal (data.mountainview.gov) doesn't resolve. Try permits.mountainview.gov or city's GIS portal next cycle.
 3. **Neighborhood-level filtering** — San José has distinct neighborhoods (Willow Glen, Almaden, Rose Garden, etc.) — a city as large as SJ could benefit from sub-city filtering in Events and Permits.
+
+---
+
+## 2026-04-08 — Cycle 68: Category Classification Fix + Full Data Refresh
+
+### Context
+Wednesday April 8, 2026. Spring break week 1 continues (SJUSD/PAUSD/MVWSD on break through Apr 10). Easter weekend (Apr 12) approaching.
+
+### What Was Built
+
+**Events: 10 miscategorized events corrected in `inferCategory`**
+
+Found and fixed a cluster of false-positive sports classifications caused by substring matching bugs:
+
+- **`t.includes("sport")` matched "transport"** — "Family Fun Day: Travel and Transport" was showing in the Sports tab instead of family activities. Fixed by switching to `/\bsports?\b/.test(t)` (word boundary).
+- **`t.includes("cycling")` matched "upcycling"** — "Y2K Approved! Upcycled Graphic Tees" was classified as sports. Fixed with `/\bcycling\b/.test(t)`.
+- **`t.includes("vs.")` matched technical descriptions** — "Introduction to Python and Pandas" (with "DataFrames vs. Series" in its description) was showing as sports. Fixed by restricting "vs." check to event title only (`titleHasVs`), not the full description text.
+- **`t.includes("game")` matched library activity descriptions** — Events like "Fabulous Friday: Earth Heroes - Mission Recycle" (description: "games, crafts, and activities") were showing as sports. Fixed with an `isLibraryActivityGames` guard that detects "games, crafts" list patterns.
+
+10 events in the current JSON were back-patched to their correct categories (family, arts, community, education). The generator script is now fixed for future runs.
+
+**Data refreshed (13 files):**
+- `upcoming-events.json` — 536 events (107 ongoing), categories corrected
+- `around-town.json` — 8 items, 10-day lookback
+- `digests.json` — 10 city digests (San José Apr 8, Cupertino Apr 8)
+- `upcoming-meetings.json` — 7 cities
+- `weekend-picks.json` — 3 picks: Sciencepalooza!, USWNT vs Japan, Julius Caesar
+- `permit-pulse.json` — SJ (347 permits, 84 new units) + PA refreshed
+- `restaurant-radar.json` — 11 signals; Bistro Demiya + Rikyu opening on Lytton Ave PA
+- `scc-food-openings.json` — 12 opened, 12 coming soon (Sbarro Oakridge Apr 3, Ralph's Coffee PA Apr 2)
+- `real-estate.json` — 11 cities; Mountain View fastest at 8 days
+- `city-briefings.json` — 10 briefings for Apr 8–15
+
+### Why This Was the Strongest Move
+Events that are mislabeled as "sports" show up in the Sports section — which residents check for scores and games — and disappear from the correct tabs (Family, Arts, Community). A library "games, crafts, and activities" program landing in Sports is jarring and misleading. With spring break underway, parents checking for family activities would miss these events if they browsed by category. The fix is small in code but high in resident impact: the right events show up in the right places.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Check for Apr 8–14 South Bay funding announcements.
+2. **Permit Pulse: add Mountain View** — Try alternative MV permit portals next cycle (data.mountainview.gov doesn't resolve, try permits.mountainview.gov or cityofmountainview.gov/services/permits).
+3. **Neighborhood-level filtering for San José** — Sub-city browsing would make SJ events (214 events, ~40% of total) much more navigable. Willow Glen, Almaden, Japantown, Rose Garden are distinct communities.
