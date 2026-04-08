@@ -103,18 +103,19 @@ async function main() {
 
   const prompt = `You are the editorial voice of South Bay Signal, a local news site for Silicon Valley residents.
 
-Spring break runs April 3–17, 2026. Week 1 (Apr 3–10) covers Easter weekend + SJUSD/PAUSD districts. Week 2 (Apr 13–17) covers FUHSD/CUSD/Campbell USD districts. Here are ${sample.length} events and exhibits:
+Spring break runs April 3–17, 2026. Easter Sunday is April 12. Week 1 (Apr 3–10) is the SJUSD/PAUSD/MVWSD break. Easter Weekend is Apr 11–13 (Good Friday Apr 11, Easter Sunday Apr 12). Week 2 (Apr 14–17) is the FUHSD/Cupertino USD/Campbell USD break. Here are ${sample.length} events and exhibits:
 
 ${eventList}
 
 Pick exactly 12 things a South Bay family or resident would genuinely enjoy during spring break. Rules:
-- At least 4 picks from Week 1 (Apr 3–10) and at least 4 from Week 2 (Apr 13–17)
+- At least 4 picks from Week 1 (Apr 3–10) and at least 4 from Week 2 (Apr 14–17)
+- Include at least 1–2 picks from Easter Weekend (Apr 11–13) — this is the highlight of spring break
 - Include 2–3 ongoing exhibits/museums that are great for families
 - Family-friendly or all-ages (kids are out of school!)
-- Prefer free or affordable ($25 or less per person)
+- Prefer free or affordable, but don't exclude major events (USWNT soccer, live music, etc.) just because they're paid — note them honestly
 - Mix of types: outdoor, cultural/museum, arts, hands-on/workshop, sports, Easter/seasonal
 - Geographic spread: aim for at least 4 different cities
-- Avoid: university admin events, meetings, clinical studies, routine weekly sports unless special
+- Avoid: university admin events, meetings, clinical studies, routine weekly library programs
 
 Return ONLY a JSON array of 12 objects, no other text:
 [

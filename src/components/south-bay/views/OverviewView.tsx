@@ -1159,9 +1159,9 @@ function SpringBreakCard({ todayForecast }: { todayForecast?: ForecastDay | null
       {(() => {
         // Group picks by week
         const weeks = [
-          { label: "Easter Weekend", dateRange: "Apr 3–5", start: "2026-04-03", end: "2026-04-05" },
-          { label: "Week 1", dateRange: "Apr 6–10", start: "2026-04-06", end: "2026-04-10" },
-          { label: "Week 2", dateRange: "Apr 11–17", start: "2026-04-11", end: "2026-04-17" },
+          { label: "Week 1", dateRange: "Apr 3–10", start: "2026-04-03", end: "2026-04-10" },
+          { label: "Easter Weekend", dateRange: "Apr 11–13", start: "2026-04-11", end: "2026-04-13" },
+          { label: "Week 2", dateRange: "Apr 14–17", start: "2026-04-14", end: "2026-04-17" },
         ];
         // Sort picks by date
         const sorted = [...picks].sort((a, b) => a.date.localeCompare(b.date));
