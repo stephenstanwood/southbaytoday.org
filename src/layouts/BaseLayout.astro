@@ -57,6 +57,10 @@ const ogImage = `${siteUrl}/images/og-image.png`;
       <slot />
     </main>
     <ReaderWidget client:idle />
+    <script is:inline>
+      if (location.search.includes('notrack')) localStorage.setItem('notrack', '1');
+      if (localStorage.getItem('notrack')) window.webAnalyticsBeforeSend = () => null;
+    </script>
     <Analytics />
   </body>
 </html>
