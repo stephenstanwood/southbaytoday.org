@@ -154,7 +154,7 @@ async function fetchWeather(city: City): Promise<{ weather: string | null; forec
     const isNice = !isRainy && !isHot && !isCold;
 
     return {
-      weather: `${temp}°F, high ${high}°F, ${rainPct}% rain chance`,
+      weather: `${temp}°F, high ${high}°F${rainPct >= 5 ? `, ${rainPct}% rain chance` : ""}`,
       forecast: [{ high, low, rainPct, isRainy, isHot, isCold, isNice, weatherCode }],
     };
   } catch {
@@ -400,7 +400,7 @@ ${lockedSection}
 CANDIDATE POOL:
 ${poolText}
 
-TASK: Pick ${MAX_CARDS} items from the pool (including all locked items) and sequence them into a great day plan. Return a JSON array of exactly ${MAX_CARDS} objects.
+TASK: Pick the best items from the pool (including all locked items) and sequence them into a great day plan. Return a JSON array. Only include items that fit in the remaining hours of the day. If it's late and only 1-2 activities fit, return 1-2 cards. Do NOT pad with "tomorrow" or "backup" suggestions. Quality over quantity.
 
 CRITICAL: Items marked "EVENT TODAY" are real, one-time happenings — include at least 1-2 of these if any exist in the pool. They're what makes today different from any other day.
 
@@ -418,7 +418,7 @@ RULES:
 - Only suggest a venue (theater, amphitheater, stadium) if it appears as an EVENT in the pool with a specific show/game today
 ${kids ? "- Kid-friendly is essential. Skip anything adults-only." : ""}
 
-TONE: Each card's "blurb" should be an enthusiastic, specific recommendation (what to do/order/see). The "why" should be one short punchy sentence about why it fits today. NEVER hedge, apologize, or say "scratch this" — commit to every pick confidently.
+TONE: Each card's "blurb" should describe the EXPERIENCE (what to do, eat, see there) — NOT restate the name, opponent, or facts already in the title. For sports events, talk about the ballpark experience, not the matchup. The "why" should be one short punchy sentence about why it fits today. NEVER hedge, apologize, or say "scratch this." NEVER fabricate details not in the data — if you don't know the opponent, don't guess.
 
 OUTPUT FORMAT (JSON array, no markdown fences):
 [

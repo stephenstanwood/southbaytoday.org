@@ -344,7 +344,7 @@ export default function CityPage({ cityId, cityName }: Props) {
       {/* ═══ FOOTER ═══ */}
       <div style={{ borderTop: "2px solid var(--sb-ink)", paddingTop: 16, marginTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
         <a href="/" style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", textDecoration: "none" }}>
-          ← The South Bay Signal
+          ← South Bay Today
         </a>
         {city?.website && (
           <a href={city.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: "var(--sb-muted)", textDecoration: "none" }}>

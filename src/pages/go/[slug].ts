@@ -29,11 +29,11 @@ export const GET: APIRoute = async ({ params }) => {
 
   // Support both old string format and new object format
   const target = typeof entry === "string" ? entry : entry.url;
-  const title = (typeof entry === "object" && entry.title) || "The South Bay Signal";
+  const title = (typeof entry === "object" && entry.title) || "South Bay Today";
   const description = (typeof entry === "object" && entry.description) || "";
-  const image = (typeof entry === "object" && entry.image) || "https://southbaysignal.org/images/og-image.png";
+  const image = (typeof entry === "object" && entry.image) || "https://southbaytoday.org/images/og-image.png";
 
-  const canonical = `https://southbaysignal.org/go/${slug}`;
+  const canonical = `https://southbaytoday.org/go/${slug}`;
 
   // Serve HTML with OG tags for crawlers, instant redirect for humans
   const html = `<!DOCTYPE html>
@@ -45,7 +45,7 @@ export const GET: APIRoute = async ({ params }) => {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:image" content="${esc(image)}">
 <meta property="og:url" content="${esc(canonical)}">
-<meta property="og:site_name" content="The South Bay Signal">
+<meta property="og:site_name" content="South Bay Today">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">

@@ -277,7 +277,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
       {loading && cards.length === 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "20px 0" }}>
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} style={{ height: 80, borderRadius: 12, border: "2px solid #eee", background: `linear-gradient(135deg, ${ACCENT_COLORS[i % ACCENT_COLORS.length]}08, ${ACCENT_COLORS[i % ACCENT_COLORS.length]}18)`, animation: `fadeSlideIn 0.4s ease-out ${i * 0.1}s both` }} />
+            <div key={i} style={{ height: 80, borderRadius: 12, border: "1.5px solid transparent", background: `linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, ${ACCENT_COLORS[i % ACCENT_COLORS.length]}40, ${ACCENT_COLORS[(i + 2) % ACCENT_COLORS.length]}40) border-box`, animation: `fadeSlideIn 0.4s ease-out ${i * 0.1}s both, glow 2s ease-in-out ${i * 0.2}s infinite`, boxShadow: `0 0 12px ${ACCENT_COLORS[i % ACCENT_COLORS.length]}15` }} />
           ))}
           <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#ccc", textAlign: "center", marginTop: 8 }}>Planning your day...</p>
         </div>
@@ -385,6 +385,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
+        }
+        @keyframes glow {
+          0%, 100% { box-shadow: 0 0 8px rgba(0,0,0,0.03); opacity: 0.7; }
+          50% { box-shadow: 0 0 20px rgba(100,100,255,0.12); opacity: 1; }
         }
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(12px); }

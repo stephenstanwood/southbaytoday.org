@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
       color: meta.color,
       fields: page ? [{ name: 'URL', value: page.slice(0, 200), inline: false }] : [],
       timestamp: new Date().toISOString(),
-      footer: { text: 'South Bay Signal reader submission' },
+      footer: { text: 'South Bay Today reader submission' },
     }],
   };
 
