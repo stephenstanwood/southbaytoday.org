@@ -2729,12 +2729,20 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
             · {homeCity ? getCityName(homeCity) : "South Bay"}, CA
           </span>
           {homeCity && (
-            <button
-              onClick={() => setChangingCity(true)}
-              style={{ marginLeft: "auto", background: "none", border: "none", fontSize: 11, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
-            >
-              Change city
-            </button>
+            <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 12 }}>
+              <a
+                href={`/city/${homeCity}`}
+                style={{ fontSize: 11, color: "var(--sb-muted)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                {getCityName(homeCity)} page →
+              </a>
+              <button
+                onClick={() => setChangingCity(true)}
+                style={{ background: "none", border: "none", fontSize: 11, color: "var(--sb-muted)", cursor: "pointer", padding: 0, textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Change city
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -2973,6 +2981,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
         <SportsCallout events={todaySportsEvents} />
       )}
 
+      {/* ── Spring Break Guide (shown Mar 28 – Apr 17, promoted to top during break) ── */}
+      {!changingCity && <SpringBreakCard todayForecast={forecast?.[0] ?? null} />}
+
       {/* ── Our Picks (weekends only) ── */}
       {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
 
@@ -2999,9 +3010,6 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── School Calendars ── */}
       {!changingCity && <SchoolCalendarCard />}
-
-      {/* ── Spring Break Guide (shown Mar 28 – Apr 17) ── */}
-      {!changingCity && <SpringBreakCard todayForecast={forecast?.[0] ?? null} />}
 
       {/* ── Housing Market ── */}
       {!changingCity && <RealEstateCard homeCity={homeCity} />}
