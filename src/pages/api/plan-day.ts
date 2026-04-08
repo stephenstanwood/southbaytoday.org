@@ -485,7 +485,7 @@ Return ONLY the JSON array. No explanation.`;
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   // Rate limit: 10 plans per minute per IP
-  if (!rateLimit(clientAddress, 10)) return rateLimitResponse();
+  if (!rateLimit(clientAddress, 30)) return rateLimitResponse();
 
   let body: PlanRequest;
   try {
