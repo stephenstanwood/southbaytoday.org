@@ -472,6 +472,22 @@ async function main() {
   console.log(`\n✅ Published ${totalPublished} posts`);
   console.log(`   ${queue.filter((p) => !p.published).length} remaining in queue`);
 
+  // ── AUTO-DEPLOY SHORT URLS ────────────────────────────────────────────
+  // short-urls.json must be committed so Vercel can serve /go/ redirects.
+  // Push any new entries after publishing so links work without manual deploy.
+  if (!dryRun && totalPublished > 0) {
+    try {
+      const { execSync } = await import("node:child_process");
+      const gitStatus = execSync("git diff --name-only -- src/data/south-bay/short-urls.json", { cwd: join(__dirname, "..", ".."), encoding: "utf8" }).trim();
+      if (gitStatus) {
+        execSync("git add src/data/south-bay/short-urls.json && git commit -m 'data: auto-sync short-urls.json' && git push origin main", { cwd: ROOT, encoding: "utf8", timeout: 30000 });
+        console.log("   📎 short-urls.json committed and pushed");
+      }
+    } catch (e) {
+      console.warn("   ⚠️  Failed to auto-push short-urls.json:", e.message);
+    }
+  }
+
   if (!dryRun && toPublish.length > 0) {
     const allResults = processedPosts.flatMap((p) => p.publishedTo || []);
     const succeededPlatforms = [...new Set(allResults.filter((r) => r.ok).map((r) => r.platform))];

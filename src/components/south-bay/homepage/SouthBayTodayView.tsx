@@ -133,6 +133,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
   const [geoLoading, setGeoLoading] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const fetchRef = useRef(0);
+  const fetchPlanRef = useRef<() => void>(() => {});
 
   // Keep time display live
   useEffect(() => {
@@ -185,6 +186,32 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
   }, [state.city, state.kids, state.dismissed, state.locked]);
 
   useEffect(() => { fetchPlan(); }, []);
+
+  // Keep fetchPlanRef current so auto-refresh always calls latest version
+  useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
+
+  // Auto-refresh at each half-hour mark while tab is open (stops after 10pm)
+  useEffect(() => {
+    const msUntilNextHalf = () => {
+      const now = new Date();
+      const next = new Date(now);
+      if (now.getMinutes() < 30) {
+        next.setMinutes(30, 0, 0);
+      } else {
+        next.setHours(now.getHours() + 1, 0, 0, 0);
+      }
+      return next.getTime() - now.getTime();
+    };
+    const active = () => new Date().getHours() < 22;
+    let interval: ReturnType<typeof setInterval>;
+    const timeout = setTimeout(() => {
+      if (active()) fetchPlanRef.current();
+      interval = setInterval(() => {
+        if (active()) fetchPlanRef.current();
+      }, 30 * 60 * 1000);
+    }, msUntilNextHalf());
+    return () => { clearTimeout(timeout); clearInterval(interval); };
+  }, []);
 
   // Actions
   const handleCityChange = (city: City) => {
@@ -308,7 +335,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
       {/* Instruction line */}
       {cards.length > 0 && (
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#bbb", margin: "0 0 10px" }}>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#bbb", margin: "0 0 10px", textAlign: "right" }}>
           <span style={{ color: "#22c55e" }}>✓</span> Lock what sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Skip what&apos;s not for today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Hide what&apos;s not for you
         </p>
       )}
