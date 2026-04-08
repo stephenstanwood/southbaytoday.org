@@ -271,7 +271,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
       {/* Instruction line */}
       {cards.length > 0 && (
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#bbb", margin: "0 0 10px" }}>
-          ✓ Lock what sounds great &nbsp;·&nbsp; Skip what&apos;s not for today &nbsp;·&nbsp; Hide what&apos;s not for you
+          <span style={{ color: "#22c55e" }}>✓</span> Lock what sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Skip what&apos;s not for today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Hide what&apos;s not for you
         </p>
       )}
 
@@ -336,11 +336,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
                     </div>
                   )}
                 </div>
-                {/* Actions — uniform icon buttons */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginLeft: 10, flexShrink: 0, alignItems: "center" }}>
-                  <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} style={{ width: 28, height: 28, borderRadius: 7, border: card.locked ? "2px solid #06D6A0" : "1.5px solid #ddd", background: card.locked ? "#06D6A0" : "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0 }}>{card.locked ? "🔒" : "✓"}</button>
-                  <button onClick={() => handleDismiss(card.id, "skip")} title="Not today (skip 30 days)" style={{ width: 28, height: 28, borderRadius: 7, border: "1.5px solid #ddd", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#bbb" }}>↷</button>
-                  <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" style={{ width: 28, height: 28, borderRadius: 7, border: "1.5px solid #ddd", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#bbb" }}>✕</button>
+                {/* Actions — traffic light: green lock, yellow skip, red hide */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3, marginLeft: 10, flexShrink: 0, alignItems: "center" }}>
+                  <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: card.locked ? "#22c55e" : "#dcfce7", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: card.locked ? "#fff" : "#22c55e", fontWeight: 700, transition: "all 0.15s" }}>✓</button>
+                  <button onClick={() => handleDismiss(card.id, "skip")} title="Not today (skip 30 days)" style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: "#fef9c3", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#ca8a04", fontWeight: 700, transition: "all 0.15s" }}>→</button>
+                  <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: "#fee2e2", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#dc2626", fontWeight: 700, transition: "all 0.15s" }}>✕</button>
                 </div>
               </div>
             );
