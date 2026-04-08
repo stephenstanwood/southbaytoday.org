@@ -322,23 +322,15 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         </div>
       )}
 
-      {/* Loading — skeleton cards + cycling verb */}
+      {/* Loading — single card with verb inside */}
       {loading && cards.length === 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "20px 0" }}>
-          {Array.from({ length: 5 }).map((_, i) => {
-            const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
-            return (
-              <div key={i} style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #e8e8e8", overflow: "hidden", opacity: 0, animation: `cardAppear 0.5s ease-out ${i * 0.2}s forwards, softGlow 2.5s ease-in-out ${i * 0.2 + 0.5}s infinite` }}>
-                <div style={{ width: 5, background: accent, flexShrink: 0 }} />
-                <div style={{ flex: 1, padding: "14px 16px" }}>
-                  <div style={{ width: "30%", height: 10, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15}s infinite`, marginBottom: 8 }} />
-                  <div style={{ width: "65%", height: 14, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.1}s infinite`, marginBottom: 6 }} />
-                  <div style={{ width: "90%", height: 10, borderRadius: 4, backgroundImage: "linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%)", backgroundSize: "200% 100%", backgroundPosition: "200% 0", animation: `shimmer 1.4s ease-in-out ${i * 0.15 + 0.2}s infinite` }} />
-                </div>
-              </div>
-            );
-          })}
-          <LoadingVerb />
+        <div style={{ padding: "8px 0 20px" }}>
+          <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cardAppear 0.4s ease-out 0.1s forwards" }}>
+            <div style={{ width: 5, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0)", flexShrink: 0 }} />
+            <div style={{ flex: 1, padding: "22px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <LoadingVerb />
+            </div>
+          </div>
         </div>
       )}
 
@@ -584,7 +576,7 @@ function LoadingVerb() {
   const display = full.slice(0, charIdx);
 
   return (
-    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 600, color: "#bbb", textAlign: "center", marginTop: 8, minHeight: 20 }}>
+    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 600, color: "#ccc", textAlign: "center", margin: 0, minHeight: 22 }}>
       {display}<span style={{ opacity: 0.4, animation: "blink 0.8s step-end infinite" }}>|</span>
     </p>
   );
