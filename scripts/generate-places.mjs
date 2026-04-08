@@ -84,18 +84,37 @@ const CITIES = [
 // ---------------------------------------------------------------------------
 
 const CATEGORIES = [
+  // Food & drink
   { query: "restaurant",                    ourCat: "food" },
   { query: "cafe coffee shop",              ourCat: "food" },
   { query: "bar brewery taproom",           ourCat: "food" },
   { query: "bakery dessert",                ourCat: "food" },
   { query: "ice cream frozen yogurt",       ourCat: "food" },
+  { query: "winery tasting room",           ourCat: "food" },
+  // Outdoor
   { query: "park trail hiking",             ourCat: "outdoor" },
   { query: "playground",                    ourCat: "outdoor" },
+  { query: "swimming pool aquatic center",  ourCat: "outdoor" },
+  { query: "farmers market",               ourCat: "outdoor" },
+  // Culture
   { query: "museum gallery",               ourCat: "museum" },
+  { query: "library",                       ourCat: "museum" },
+  { query: "community center",             ourCat: "entertainment" },
+  // Entertainment
   { query: "movie theater entertainment",   ourCat: "entertainment" },
   { query: "bowling arcade fun center",     ourCat: "entertainment" },
+  { query: "escape room",                   ourCat: "entertainment" },
+  { query: "mini golf go karts",            ourCat: "entertainment" },
+  { query: "batting cages",                 ourCat: "entertainment" },
+  { query: "karaoke",                       ourCat: "entertainment" },
+  { query: "board game cafe",               ourCat: "entertainment" },
+  // Creative
+  { query: "paint and sip art studio",      ourCat: "entertainment" },
+  { query: "cooking class",                 ourCat: "entertainment" },
+  // Wellness
   { query: "spa wellness massage",          ourCat: "wellness" },
-  { query: "winery tasting room",           ourCat: "food" },
+  // Shopping
+  { query: "bookstore",                     ourCat: "shopping" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -162,6 +181,16 @@ const TYPE_TO_CATEGORY = {
   clothing_store: "shopping",
   book_store: "shopping",
   gift_shop: "shopping",
+  library: "museum",
+  community_center: "entertainment",
+  swimming_pool: "outdoor",
+  water_park: "outdoor",
+  farmers_market: "outdoor",
+  escape_room: "entertainment",
+  karaoke: "entertainment",
+  miniature_golf: "entertainment",
+  go_kart_track: "entertainment",
+  batting_cage: "entertainment",
 };
 
 // ---------------------------------------------------------------------------
