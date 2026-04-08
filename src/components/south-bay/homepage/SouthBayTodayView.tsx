@@ -561,22 +561,31 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           disabled={geoLoading}
           title="Use my location"
           style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 11,
-            fontWeight: 600,
-            padding: "4px 10px",
-            borderRadius: 14,
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
             border: "1.5px solid #ddd",
             background: "#fff",
-            color: "#777",
             cursor: geoLoading ? "wait" : "pointer",
             transition: "all 0.15s",
             display: "flex",
             alignItems: "center",
-            gap: 3,
+            justifyContent: "center",
+            padding: 0,
+            flexShrink: 0,
           }}
         >
-          {geoLoading ? "..." : "📍"} Locate me
+          {geoLoading ? (
+            <span style={{ fontSize: 12, color: "#aaa" }}>...</span>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <line x1="12" y1="2" x2="12" y2="6" />
+              <line x1="12" y1="18" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="6" y2="12" />
+              <line x1="18" y1="12" x2="22" y2="12" />
+            </svg>
+          )}
         </button>
       </div>
 
