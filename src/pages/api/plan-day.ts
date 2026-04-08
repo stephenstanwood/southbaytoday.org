@@ -415,7 +415,7 @@ ${lockedSection}
 CANDIDATE POOL:
 ${poolText}
 
-TASK: Pick the best items from the pool (including all locked items) and sequence them into a great day plan. Return a JSON array. Only include items that fit in the remaining hours of the day. If it's late and only 1-2 activities fit, return 1-2 cards. Do NOT pad with "tomorrow" or "backup" suggestions. Quality over quantity.
+TASK: Pick 5-7 items from the pool (including all locked items) and sequence them into a full day plan that fills the remaining hours with no big gaps. Return a JSON array. Every 1-2 hour block from NOW until bedtime should have something. Err on the side of MORE suggestions — a packed day is better than a sparse one. Do NOT suggest things for "tomorrow."
 
 CRITICAL: Items marked "EVENT TODAY" are real, one-time happenings — include at least 1-2 of these if any exist in the pool. They're what makes today different from any other day.
 

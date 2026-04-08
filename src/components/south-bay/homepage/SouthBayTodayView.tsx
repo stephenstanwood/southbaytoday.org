@@ -63,6 +63,12 @@ const ACCENT_COLORS = [
   "#FF6B35", "#E63946", "#06D6A0", "#7B2FBE", "#1A5AFF", "#FF3CAC",
 ];
 
+const CATEGORY_EMOJI: Record<string, string> = {
+  food: "🍽️", outdoor: "🌿", museum: "🏛️", entertainment: "🎭",
+  wellness: "💆", shopping: "🛍️", arts: "🎨", events: "📅",
+  sports: "⚾", neighborhood: "🏘️",
+};
+
 // ---------------------------------------------------------------------------
 // localStorage
 // ---------------------------------------------------------------------------
@@ -233,11 +239,6 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
             <button onClick={() => { if (state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 10px", border: "none", background: !state.kids ? "#000" : "#fff", color: !state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s" }}>No Kids</button>
             <button onClick={() => { if (!state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 700, padding: "4px 10px", border: "none", borderLeft: "2px solid #000", background: state.kids ? "#000" : "#fff", color: state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s" }}>Kids</button>
           </div>
-          {/* View toggle */}
-          <div style={{ display: "flex", borderRadius: 14, border: "1.5px solid #ddd", overflow: "hidden" }}>
-            <button onClick={() => setViewMode("list")} style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600, padding: "4px 8px", border: "none", background: state.viewMode === "list" ? "#000" : "#fff", color: state.viewMode === "list" ? "#fff" : "#aaa", cursor: "pointer" }}>List</button>
-            <button onClick={() => setViewMode("cards")} style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600, padding: "4px 8px", border: "none", borderLeft: "1.5px solid #ddd", background: state.viewMode === "cards" ? "#000" : "#fff", color: state.viewMode === "cards" ? "#fff" : "#aaa", cursor: "pointer" }}>Cards</button>
-          </div>
           {/* Reshuffle */}
           <button onClick={handleReshuffle} disabled={loading} style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 900, padding: "5px 16px", borderRadius: 14, border: "2.5px solid #000", background: loading ? "#eee" : "linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", color: loading ? "#999" : "#fff", cursor: loading ? "not-allowed" : "pointer", textTransform: "uppercase" as const, letterSpacing: 1, backgroundSize: "200% 200%", animation: loading ? "none" : "rainbow 3s ease infinite", whiteSpace: "nowrap" as const }}>{loading ? "Planning..." : "Reshuffle"}</button>
         </div>
@@ -291,18 +292,17 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
       )}
 
       {/* ═══ LIST VIEW ═══ */}
-      {cards.length > 0 && state.viewMode === "list" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {cards.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {cards.map((card, i) => {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+            const emoji = CATEGORY_EMOJI[card.category] || "📍";
             return (
-              <div key={card.id} style={{ display: "flex", gap: 0, borderBottom: i < cards.length - 1 ? "1px solid #eee" : "none", padding: "14px 0", animation: `fadeSlideIn 0.3s ease-out ${i * 0.05}s both` }}>
-                {/* Color accent bar */}
-                <div style={{ width: 4, borderRadius: 2, background: accent, flexShrink: 0, marginRight: 14 }} />
-                {/* Photo thumbnail */}
-                {card.photoRef && (
-                  <div style={{ width: 72, height: 72, borderRadius: 10, overflow: "hidden", flexShrink: 0, marginRight: 14, background: `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200) center/cover no-repeat, ${accent}15` }} />
-                )}
+              <div key={card.id} style={{ display: "flex", gap: 0, padding: "12px 14px", borderRadius: 12, background: `linear-gradient(135deg, ${accent}08, ${accent}15)`, border: `1.5px solid ${accent}20`, animation: `fadeSlideIn 0.3s ease-out ${i * 0.05}s both` }}>
+                {/* Thumbnail: photo or emoji fallback */}
+                <div style={{ width: 64, height: 64, borderRadius: 10, overflow: "hidden", flexShrink: 0, marginRight: 14, background: card.photoRef ? `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200) center/cover no-repeat, ${accent}20` : `${accent}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>
+                  {!card.photoRef && emoji}
+                </div>
                 {/* Content */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
@@ -320,11 +320,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
                     </div>
                   )}
                 </div>
-                {/* Actions */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginLeft: 12, flexShrink: 0, alignItems: "center" }}>
-                  <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} style={{ width: 32, height: 32, borderRadius: 8, border: card.locked ? "2px solid #06D6A0" : "1.5px solid #ddd", background: card.locked ? "#06D6A0" : "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, padding: 0 }}>{card.locked ? "🔒" : "✓"}</button>
-                  <button onClick={() => handleDismiss(card.id, "skip")} title="Not today (skip 30 days)" style={{ padding: "3px 8px", borderRadius: 6, border: "1.5px solid #ddd", background: "#fff", cursor: "pointer", fontSize: 9, fontWeight: 700, color: "#aaa", fontFamily: "'Inter', sans-serif" }}>Skip</button>
-                  <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" style={{ padding: "3px 8px", borderRadius: 6, border: "1.5px solid #000", background: "#000", cursor: "pointer", fontSize: 9, fontWeight: 700, color: "#fff", fontFamily: "'Inter', sans-serif" }}>Hide</button>
+                {/* Actions — uniform icon buttons */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginLeft: 10, flexShrink: 0, alignItems: "center" }}>
+                  <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} style={{ width: 28, height: 28, borderRadius: 7, border: card.locked ? "2px solid #06D6A0" : "1.5px solid #ddd", background: card.locked ? "#06D6A0" : "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0 }}>{card.locked ? "🔒" : "✓"}</button>
+                  <button onClick={() => handleDismiss(card.id, "skip")} title="Not today (skip 30 days)" style={{ width: 28, height: 28, borderRadius: 7, border: "1.5px solid #ddd", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#bbb" }}>↷</button>
+                  <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" style={{ width: 28, height: 28, borderRadius: 7, border: "1.5px solid #ddd", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, padding: 0, color: "#bbb" }}>✕</button>
                 </div>
               </div>
             );
@@ -332,61 +332,6 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         </div>
       )}
 
-      {/* ═══ CARD VIEW (carousel) ═══ */}
-      {cards.length > 0 && state.viewMode === "cards" && (
-        <div>
-          {/* Carousel navigation */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 16 }}>
-            <button onClick={() => setActiveCard(Math.max(0, activeCard - 1))} disabled={activeCard === 0} style={{ width: 36, height: 36, borderRadius: "50%", border: "2px solid #000", background: "#fff", cursor: activeCard === 0 ? "default" : "pointer", opacity: activeCard === 0 ? 0.3 : 1, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>←</button>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 700, color: "#555" }}>{activeCard + 1} / {cards.length}</span>
-            <button onClick={() => setActiveCard(Math.min(cards.length - 1, activeCard + 1))} disabled={activeCard === cards.length - 1} style={{ width: 36, height: 36, borderRadius: "50%", border: "2px solid #000", background: "#fff", cursor: activeCard === cards.length - 1 ? "default" : "pointer", opacity: activeCard === cards.length - 1 ? 0.3 : 1, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>→</button>
-          </div>
-          {/* Active card */}
-          {(() => {
-            const card = cards[activeCard];
-            if (!card) return null;
-            const accent = ACCENT_COLORS[activeCard % ACCENT_COLORS.length];
-            return (
-              <div style={{ maxWidth: 440, margin: "0 auto", borderRadius: 16, border: "3px solid #000", background: "#fff", overflow: "hidden", boxShadow: `6px 6px 0 ${accent}20` }}>
-                {/* Photo header */}
-                <div style={{ height: 160, background: card.photoRef ? `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=500&h=300) center/cover no-repeat` : `linear-gradient(135deg, ${accent}15, ${accent}35)`, borderBottom: "3px solid #000", position: "relative" }}>
-                  <div style={{ position: "absolute", top: 10, left: 10, display: "flex", gap: 6 }}>
-                    <button onClick={() => handleLock(card.id)} style={{ width: 32, height: 32, borderRadius: 8, border: card.locked ? "2px solid #000" : "2px solid rgba(0,0,0,0.2)", background: card.locked ? "#06D6A0" : "rgba(255,255,255,0.9)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, padding: 0 }}>{card.locked ? "🔒" : "✓"}</button>
-                  </div>
-                  <div style={{ position: "absolute", top: 10, right: 10, display: "flex", gap: 4 }}>
-                    <button onClick={() => handleDismiss(card.id, "skip")} style={{ padding: "4px 12px", borderRadius: 10, border: "1.5px solid rgba(0,0,0,0.2)", background: "rgba(255,255,255,0.9)", fontSize: 11, fontWeight: 700, color: "#888", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Skip</button>
-                    <button onClick={() => handleDismiss(card.id, "hide")} style={{ padding: "4px 12px", borderRadius: 10, border: "2px solid #000", background: "#000", fontSize: 11, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Hide</button>
-                  </div>
-                </div>
-                {/* Body */}
-                <div style={{ padding: 20 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 800, color: "#000" }}>{card.timeBlock}</span>
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 700, color: accent, textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
-                    {card.source === "event" && <span style={{ fontSize: 10, fontWeight: 700, color: "#E63946" }}>EVENT</span>}
-                  </div>
-                  <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: 24, fontWeight: 900, color: "#000", margin: "0 0 8px", lineHeight: 1.15, letterSpacing: -0.5 }}>{card.name}</h2>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: "#555", margin: "0 0 8px", lineHeight: 1.5 }}>{card.blurb}</p>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 600, color: accent, margin: 0, lineHeight: 1.4, fontStyle: "italic" }}>{card.why}</p>
-                  {(card.costNote || card.cost || card.url || card.mapsUrl) && (
-                    <div style={{ display: "flex", gap: 12, marginTop: 12, paddingTop: 10, borderTop: "1px solid #eee", alignItems: "center" }}>
-                      {(card.costNote || card.cost) && <span style={{ fontSize: 12, fontWeight: 700, color: "#aaa", fontFamily: "'Inter', sans-serif" }}>{card.costNote || card.cost}</span>}
-                      {(card.url || card.mapsUrl) && <a href={card.url || card.mapsUrl || "#"} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: accent, textDecoration: "none", fontFamily: "'Inter', sans-serif" }}>Details →</a>}
-                    </div>
-                  )}
-                </div>
-                {card.locked && <div style={{ height: 4, background: "#06D6A0" }} />}
-              </div>
-            );
-          })()}
-          {/* Card dots */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 16 }}>
-            {cards.map((_, i) => (
-              <button key={i} onClick={() => setActiveCard(i)} style={{ width: i === activeCard ? 20 : 8, height: 8, borderRadius: 4, border: "none", background: i === activeCard ? "#000" : "#ddd", cursor: "pointer", transition: "all 0.2s", padding: 0 }} />
-            ))}
-          </div>
-        </div>
-      )}
 
       <style>{`
         @keyframes rainbow {
