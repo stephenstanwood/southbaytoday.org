@@ -47,6 +47,7 @@ export const ARTIFACTS = {
   curatedPhotos:    join(DATA_DIR, "curated-photos.json"),
   shortUrls:        join(DATA_DIR, "short-urls.json"),
   schoolCalendar:   join(DATA_DIR, "school-calendar.json"),
+  places:           join(DATA_DIR, "places.json"),
 };
 
 // ---------------------------------------------------------------------------
