@@ -221,9 +221,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     });
   };
 
-  // After 6pm, show "tomorrow" framing
+  // Tomorrow mode: 6pm for kids, 8pm for adults
   const ptHour = Number(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false }));
-  const headline = ptHour >= 18 ? "What should we do tomorrow?" : "What should we do today?";
+  const tomorrowCutoff = state.kids ? 18 : 20;
+  const isTomorrowMode = ptHour >= tomorrowCutoff;
+  const headline = isTomorrowMode ? "What should we do tomorrow?" : "What should we do today?";
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
@@ -249,7 +251,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
       {/* City pills */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0 0 12px", flexWrap: "wrap" }}>
-        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, color: "#bbb", marginRight: 2 }}>Near</span>
+        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, color: "#bbb", marginRight: 2 }}>Starting in</span>
         {FEATURED_CITIES.map((id) => (
           <button key={id} onClick={() => handleCityChange(id)} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: state.city === id ? 800 : 500, padding: "4px 10px", borderRadius: 14, border: state.city === id ? "2px solid #000" : "1.5px solid #ddd", background: state.city === id ? "#000" : "#fff", color: state.city === id ? "#fff" : "#777", cursor: "pointer", transition: "all 0.15s" }}>{CITY_MAP[id].name}</button>
         ))}
