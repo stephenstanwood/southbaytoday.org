@@ -609,97 +609,111 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         </div>
       )}
 
-      {/* Loading animation — dealing cards */}
+      {/* Loading animation — riffle shuffle */}
       {loading && cards.length === 0 && (
-        <div style={{ textAlign: "center", padding: "40px 0" }}>
+        <div style={{ textAlign: "center", padding: "30px 0 60px" }}>
           <div
-            className="sbt-card-grid"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "16px 16px",
-              maxWidth: 1100,
+              position: "relative",
+              height: 220,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {ACCENT_COLORS.map((color, i) => (
-              <div
-                key={i}
-                className="sbt-card"
-                style={{
-                  height: 240,
-                  borderRadius: 16,
-                  border: "3px solid #000",
-                  background: `linear-gradient(135deg, ${color}15, ${color}35)`,
-                  animation: `dealIn 0.4s ease-out ${i * 0.12}s both`,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 12,
-                }}
-              >
-                <div style={{ fontSize: 36, animation: `float 2s ease-in-out ${i * 0.2}s infinite` }}>
-                  {["🗺️", "🍽️", "🌿", "🎭", "🏛️", "🎸"][i]}
+            {/* Two halves of the deck interleaving */}
+            {Array.from({ length: 12 }).map((_, i) => {
+              const isLeft = i % 2 === 0;
+              const color = ACCENT_COLORS[i % ACCENT_COLORS.length];
+              const stackIndex = Math.floor(i / 2);
+              const delay = i * 0.08;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    width: 140,
+                    height: 190,
+                    borderRadius: 12,
+                    border: "2.5px solid #000",
+                    background: `linear-gradient(135deg, ${color}30, ${color}60)`,
+                    animation: `riffle 1.2s ease-in-out ${delay}s infinite`,
+                    transformOrigin: isLeft ? "bottom right" : "bottom left",
+                    zIndex: 12 - i,
+                    boxShadow: "2px 2px 0 rgba(0,0,0,0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                      fontSize: 28,
+                      opacity: 0.7,
+                    }}
+                  >
+                    {["🍽️", "🌿", "🎭", "🏛️", "🎸", "☕"][stackIndex]}
+                  </div>
                 </div>
-                <div
-                  style={{
-                    width: "60%",
-                    height: 8,
-                    borderRadius: 4,
-                    background: `${color}33`,
-                    animation: `shimmer 1.5s ease-in-out ${i * 0.15}s infinite`,
-                  }}
-                />
-                <div
-                  style={{
-                    width: "40%",
-                    height: 8,
-                    borderRadius: 4,
-                    background: `${color}22`,
-                    animation: `shimmer 1.5s ease-in-out ${i * 0.15 + 0.2}s infinite`,
-                  }}
-                />
-              </div>
-            ))}
+              );
+            })}
           </div>
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 14,
-              fontWeight: 600,
-              color: "#aaa",
-              marginTop: 24,
-              animation: "pulse 1.5s ease-in-out infinite",
+              fontWeight: 700,
+              color: "#bbb",
+              marginTop: 16,
+              letterSpacing: 1,
             }}
           >
-            Shuffling the deck...
+            Shuffling...
           </p>
         </div>
       )}
 
-      {/* Card deck */}
+      {/* Card hand — fanned single row */}
       {cards.length > 0 && (
         <div
-          className="sbt-card-grid"
+          className="sbt-hand"
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "20px 16px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-end",
+            padding: "20px 0 60px",
+            position: "relative",
+            minHeight: 380,
           }}
         >
-          {cards.map((card, i) => (
-            <DayCardComponent
-              key={card.id}
-              card={card}
-              index={i}
-              accent={ACCENT_COLORS[i % ACCENT_COLORS.length]}
-              rotation={CARD_ROTATIONS[i % CARD_ROTATIONS.length]}
-              animatingOut={animatingOut.has(card.id)}
-              onLock={() => handleLock(card.id)}
-              onSkip={() => handleDismiss(card.id, "skip")}
-              onHide={() => handleDismiss(card.id, "hide")}
-            />
-          ))}
+          {cards.map((card, i) => {
+            const total = cards.length;
+            const mid = (total - 1) / 2;
+            // Fan angle: cards spread from center
+            const fanAngle = (i - mid) * 5;
+            // Vertical arc: center cards higher
+            const arcY = Math.abs(i - mid) * 12;
+            // Horizontal overlap
+            const spreadX = (i - mid) * 140;
+
+            return (
+              <DayCardComponent
+                key={card.id}
+                card={card}
+                index={i}
+                total={total}
+                accent={ACCENT_COLORS[i % ACCENT_COLORS.length]}
+                fanAngle={fanAngle}
+                arcY={arcY}
+                spreadX={spreadX}
+                animatingOut={animatingOut.has(card.id)}
+                onLock={() => handleLock(card.id)}
+                onSkip={() => handleDismiss(card.id, "skip")}
+                onHide={() => handleDismiss(card.id, "hide")}
+              />
+            );
+          })}
         </div>
       )}
 
@@ -713,6 +727,13 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         @keyframes pulse {
           0%, 100% { opacity: 0.4; }
           50% { opacity: 0.8; }
+        }
+        @keyframes riffle {
+          0% { transform: translateX(0) translateY(0) rotate(0deg); }
+          25% { transform: translateX(-30px) translateY(-40px) rotate(-12deg); }
+          50% { transform: translateX(0) translateY(-8px) rotate(0deg); }
+          75% { transform: translateX(30px) translateY(-40px) rotate(12deg); }
+          100% { transform: translateX(0) translateY(0) rotate(0deg); }
         }
         @keyframes dealIn {
           from {
@@ -739,12 +760,18 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           }
         }
         @media (max-width: 768px) {
-          .sbt-card-grid {
-            grid-template-columns: 1fr !important;
+          .sbt-hand {
+            flex-direction: column !important;
+            align-items: center !important;
+            min-height: auto !important;
+            padding: 8px 0 40px !important;
+            gap: 12px;
           }
-          .sbt-card {
+          .sbt-hand .sbt-card {
+            position: relative !important;
             transform: none !important;
-            margin-top: 0 !important;
+            width: 100% !important;
+            max-width: 360px !important;
           }
           .sbt-header {
             flex-direction: column !important;
@@ -754,6 +781,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           .sbt-time-display {
             font-size: 36px !important;
             letter-spacing: -1px !important;
+          }
+          .sbt-loading-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
@@ -768,8 +798,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 function DayCardComponent({
   card,
   index,
+  total,
   accent,
-  rotation,
+  fanAngle,
+  arcY,
+  spreadX,
   animatingOut,
   onLock,
   onSkip,
@@ -777,8 +810,11 @@ function DayCardComponent({
 }: {
   card: DayCard;
   index: number;
+  total: number;
   accent: string;
-  rotation: { rotate: number; translateY: number; z: number };
+  fanAngle: number;
+  arcY: number;
+  spreadX: number;
   animatingOut: boolean;
   onLock: () => void;
   onSkip: () => void;
@@ -786,14 +822,10 @@ function DayCardComponent({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  const isRow2 = index >= 3;
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
 
-  const transform = hovered
-    ? `rotate(0deg) translateY(-8px) scale(1.03)`
-    : `rotate(${rotation.rotate}deg) translateY(${rotation.translateY}px)`;
-
-  const shadow = hovered ? `10px 10px 0 ${accent}33` : `6px 6px 0 ${accent}22`;
+  const baseTransform = `translateX(${spreadX}px) translateY(${arcY}px) rotate(${fanAngle}deg)`;
+  const hoverTransform = `translateX(${spreadX}px) translateY(-40px) rotate(0deg) scale(1.15)`;
 
   return (
     <div
@@ -801,18 +833,19 @@ function DayCardComponent({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        position: "relative",
+        position: "absolute",
+        width: 240,
         borderRadius: 16,
         border: `3px solid #000`,
         background: "#fff",
         overflow: "hidden",
         cursor: "default",
-        zIndex: hovered ? 10 : rotation.z,
-        transform,
-        boxShadow: shadow,
-        marginTop: isRow2 ? -24 : 0,
-        transition: "all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        zIndex: hovered ? 50 : index + 1,
+        transform: hovered ? hoverTransform : baseTransform,
+        boxShadow: hovered ? `8px 12px 24px rgba(0,0,0,0.25)` : `4px 6px 0 ${accent}22`,
+        transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
         animation: animatingOut ? "slideOut 0.3s ease forwards" : "none",
+        transformOrigin: "bottom center",
       }}
     >
       {/* Gradient header with accent color */}
