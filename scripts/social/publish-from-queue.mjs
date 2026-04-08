@@ -480,7 +480,7 @@ async function main() {
       const { execSync } = await import("node:child_process");
       const gitStatus = execSync("git diff --name-only -- src/data/south-bay/short-urls.json", { cwd: join(__dirname, "..", ".."), encoding: "utf8" }).trim();
       if (gitStatus) {
-        execSync("git add src/data/south-bay/short-urls.json && git commit -m 'data: auto-sync short-urls.json' && git push origin main", { cwd: ROOT, encoding: "utf8", timeout: 30000 });
+        execSync("git add src/data/south-bay/short-urls.json && git commit -m 'data: auto-sync short-urls.json' && git push origin main", { cwd: join(__dirname, "..", ".."), encoding: "utf8", timeout: 30000 });
         console.log("   📎 short-urls.json committed and pushed");
       }
     } catch (e) {
