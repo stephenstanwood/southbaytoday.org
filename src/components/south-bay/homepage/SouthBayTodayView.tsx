@@ -209,14 +209,17 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     const entry: DismissedEntry = type === "hide"
       ? { type: "hide", permanent: true }
       : { type: "skip", until: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10) };
-    setState((s) => ({
-      ...s,
-      dismissed: { ...s.dismissed, [cardId]: entry },
-      locked: s.locked.filter((id) => id !== cardId),
-    }));
-    setCards((prev) => prev.filter((c) => c.id !== cardId));
+    setState((s) => {
+      const next = {
+        ...s,
+        dismissed: { ...s.dismissed, [cardId]: entry },
+        locked: s.locked.filter((id) => id !== cardId),
+      };
+      // Refetch plan with updated dismissals so a replacement fills the slot
+      setTimeout(() => fetchPlan(), 50);
+      return next;
+    });
   };
-  const setViewMode = (mode: "list" | "cards") => setState((s) => ({ ...s, viewMode: mode }));
 
   // After 6pm, show "tomorrow" framing
   const ptHour = Number(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false }));
@@ -281,13 +284,26 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         </div>
       )}
 
-      {/* Loading */}
+      {/* Loading — cards appear one at a time then glow */}
       {loading && cards.length === 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "20px 0" }}>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} style={{ height: 80, borderRadius: 12, border: "1.5px solid transparent", background: `linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, ${ACCENT_COLORS[i % ACCENT_COLORS.length]}40, ${ACCENT_COLORS[(i + 2) % ACCENT_COLORS.length]}40) border-box`, animation: `fadeSlideIn 0.4s ease-out ${i * 0.1}s both, glow 2s ease-in-out ${i * 0.2}s infinite`, boxShadow: `0 0 12px ${ACCENT_COLORS[i % ACCENT_COLORS.length]}15` }} />
-          ))}
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#ccc", textAlign: "center", marginTop: 8 }}>Planning your day...</p>
+          {Array.from({ length: 6 }).map((_, i) => {
+            const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+            return (
+              <div
+                key={i}
+                style={{
+                  height: 80,
+                  borderRadius: 12,
+                  background: `linear-gradient(135deg, ${accent}10, ${accent}22)`,
+                  border: `1.5px solid ${accent}25`,
+                  opacity: 0,
+                  animation: `cardAppear 0.5s ease-out ${i * 0.25}s forwards, softGlow 2.5s ease-in-out ${i * 0.25 + 0.5}s infinite`,
+                }}
+              />
+            );
+          })}
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#ccc", textAlign: "center", marginTop: 8, opacity: 0, animation: "cardAppear 0.5s ease-out 1.5s forwards" }}>Planning your day...</p>
         </div>
       )}
 
@@ -339,9 +355,13 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 8px rgba(0,0,0,0.03); opacity: 0.7; }
-          50% { box-shadow: 0 0 20px rgba(100,100,255,0.12); opacity: 1; }
+        @keyframes cardAppear {
+          from { opacity: 0; transform: translateY(16px) scale(0.97); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes softGlow {
+          0%, 100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+          50% { box-shadow: 0 0 16px rgba(100,100,255,0.1); }
         }
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(12px); }
