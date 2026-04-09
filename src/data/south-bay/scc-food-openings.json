@@ -1,8 +1,19 @@
 {
-  "generatedAt": "2026-04-09T11:14:59.527Z",
+  "generatedAt": "2026-04-09T14:09:31.748Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0883940",
+      "name": "Tojo Coffee Tea House",
+      "address": "980 S Winchester Blvd Ste. 20",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-07",
+      "status": "opened",
+      "sourceId": "SR0883940",
+      "blurb": "Cozy spot for artisanal coffee and premium tea blends."
+    },
     {
       "id": "opened-SR0883804",
       "name": "Sbarro Oakridge",
@@ -12,7 +23,7 @@
       "date": "2026-04-03",
       "status": "opened",
       "sourceId": "SR0883804",
-      "blurb": "Classic New York pizza slices hit different at this cozy spot."
+      "blurb": "Classic New York pizza and Italian comfort food, finally here."
     },
     {
       "id": "opened-SR0882669",
@@ -23,7 +34,7 @@
       "date": "2026-03-31",
       "status": "opened",
       "sourceId": "SR0882669",
-      "blurb": "Fresh sushi wrapped up burrito-style—genius handheld meal option here."
+      "blurb": "Creative sushi wraps that are fun, fresh, and totally delicious."
     },
     {
       "id": "opened-SR0883343",
@@ -34,7 +45,7 @@
       "date": "2026-03-27",
       "status": "opened",
       "sourceId": "SR0883343",
-      "blurb": "Authentic Vietnamese pho and bánh mì sandwiches worth your lunch break."
+      "blurb": "Authentic Vietnamese cuisine that'll make you feel right at home."
     },
     {
       "id": "opened-SR0883335",
@@ -45,7 +56,7 @@
       "date": "2026-03-24",
       "status": "opened",
       "sourceId": "SR0883335",
-      "blurb": "Trendy comfort food spot that feels like grabbing lunch with friends."
+      "blurb": "Hip spot for creative comfort food that hits every craving."
     },
     {
       "id": "opened-SR0883691",
@@ -56,7 +67,7 @@
       "date": "2026-03-20",
       "status": "opened",
       "sourceId": "SR0883691",
-      "blurb": "Japanese curry that'll warm you up on any South Bay afternoon."
+      "blurb": "Japanese curry done right in a charming, casual setting nearby."
     },
     {
       "id": "opened-SR0882563",
@@ -67,7 +78,7 @@
       "date": "2026-03-19",
       "status": "opened",
       "sourceId": "SR0882563",
-      "blurb": "That iconic dripping roast beef sandwich you've been craving all week."
+      "blurb": "Perfectly crafted French dips and classic sandwiches worth the visit."
     },
     {
       "id": "opened-SR0883795",
@@ -78,7 +89,7 @@
       "date": "2026-03-18",
       "status": "opened",
       "sourceId": "SR0883795",
-      "blurb": "Fantastic Thai flavors with tons of vegetarian options for everyone."
+      "blurb": "Vibrant Thai flavors with amazing vegetarian options you'll absolutely love."
     },
     {
       "id": "opened-SR0883623",
@@ -89,7 +100,7 @@
       "date": "2026-03-17",
       "status": "opened",
       "sourceId": "SR0883623",
-      "blurb": "Wood-fired pizzas made fresh daily—totally worth the drive out here."
+      "blurb": null
     },
     {
       "id": "opened-SR0882220",
@@ -123,17 +134,6 @@
       "status": "opened",
       "sourceId": "SR0878198",
       "blurb": null
-    },
-    {
-      "id": "opened-SR0881221",
-      "name": "Burma Express",
-      "address": "5353 Almaden Expwy., Bldg E, Ste. 40a",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-03-11",
-      "status": "opened",
-      "sourceId": "SR0881221",
-      "blurb": null
     }
   ],
   "comingSoon": [
@@ -157,18 +157,7 @@
       "date": "2026-04-06",
       "status": "coming-soon",
       "sourceId": "SR0882201",
-      "blurb": "Cozy neighborhood cafe brewing up coffee and comfort on Middlefield."
-    },
-    {
-      "id": "soon-SR0884184",
-      "name": "Gao's BBQ & Crab Milpitas",
-      "address": "1741 N Milpitas Blvd",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
-      "date": "2026-04-03",
-      "status": "coming-soon",
-      "sourceId": "SR0884184",
-      "blurb": "Smoky BBQ and succulent crab coming to satisfy our Milpitas cravings."
+      "blurb": "Your new favorite casual spot for coffee and comfort food awaits."
     },
     {
       "id": "soon-SR0884373",
@@ -179,7 +168,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0884373",
-      "blurb": "Slurp-worthy noodle bowls hitting downtown Milpitas very soon, folks."
+      "blurb": "Slurp-worthy noodles are heading to Milpitas very soon!"
     },
     {
       "id": "soon-SR0883513",
@@ -190,7 +179,18 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0883513",
-      "blurb": "Historic San Jose location finally opens a charming cafe experience downtown."
+      "blurb": "Historic charm meets modern cafe vibes in downtown San Jose."
+    },
+    {
+      "id": "soon-SR0884184",
+      "name": "Gao's BBQ & Crab Milpitas",
+      "address": "1741 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-03",
+      "status": "coming-soon",
+      "sourceId": "SR0884184",
+      "blurb": "Smoky BBQ and fresh crab are coming to North Milpitas Boulevard!"
     },
     {
       "id": "soon-SR0881812",
@@ -201,7 +201,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0881812",
-      "blurb": "Bubble tea paradise opening soon in San Jose—we cannot wait."
+      "blurb": "Premium bubble tea excellence is landing in San Jose soon!"
     },
     {
       "id": "soon-SR0878084",
@@ -212,7 +212,7 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0878084",
-      "blurb": "Steaming baskets of authentic dim sum coming to North Milpitas Boulevard."
+      "blurb": "Cart-pushing dim sum carts are rolling into Milpitas!"
     },
     {
       "id": "soon-SR0883454",
@@ -223,17 +223,17 @@
       "date": "2026-04-03",
       "status": "coming-soon",
       "sourceId": "SR0883454",
-      "blurb": "Sizzling teppanyaki excitement landing on El Camino Real in Sunnyvale."
+      "blurb": "Sizzling teppanyaki-style cooking comes to Sunnyvale's El Camino!"
     },
     {
-      "id": "soon-SR0883940",
-      "name": "Tojo Coffee Tea House",
-      "address": "980 S Winchester Blvd Ste. 20",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
+      "id": "soon-SR0884051",
+      "name": "Moomo Tea (Mi Pot House)",
+      "address": "636 San Antonio Rd",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
       "date": "2026-04-01",
       "status": "coming-soon",
-      "sourceId": "SR0883940",
+      "sourceId": "SR0884051",
       "blurb": null
     },
     {
@@ -248,17 +248,6 @@
       "blurb": null
     },
     {
-      "id": "soon-SR0884051",
-      "name": "Moomo Tea (Mi Pot House)",
-      "address": "636 San Antonio Rd",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "date": "2026-04-01",
-      "status": "coming-soon",
-      "sourceId": "SR0884051",
-      "blurb": null
-    },
-    {
       "id": "soon-SR0884066",
       "name": "Ut Fruit Market",
       "address": "992 Story Rd., Unit# 30",
@@ -267,6 +256,17 @@
       "date": "2026-04-01",
       "status": "coming-soon",
       "sourceId": "SR0884066",
+      "blurb": null
+    },
+    {
+      "id": "soon-SR0883303",
+      "name": "975 Page Mill Cafe",
+      "address": "975 Page Mill Rd",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-04-01",
+      "status": "coming-soon",
+      "sourceId": "SR0883303",
       "blurb": null
     }
   ]

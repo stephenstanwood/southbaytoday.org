@@ -1351,6 +1351,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#1d4ed8",
     url: "https://jetstream.security",
   },
+  {
+    id: "articul8-ai",
+    name: "Articul8 AI",
+    city: "Santa Clara",
+    category: "software",
+    round: "Series B",
+    amount: "$70M",
+    date: "2026-01-07",
+    tagline: "Enterprise generative AI platform spun out of Intel in 2023. Helps large regulated-industry companies deploy private, on-premises AI without sending data to public clouds. Reached a $500M valuation in this round, led by Adara Ventures — former Intel CEO Pat Gelsinger is among the backers.",
+    color: "#0f172a",
+    url: "https://articul8.ai",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1366,9 +1378,9 @@ export const TECH_PULSE = [
     note: "25K local jobs each at Googleplex & Apple Park",
   },
   {
-    value: "$4.5B+",
+    value: "$4.6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "28 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "30 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
