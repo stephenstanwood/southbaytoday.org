@@ -283,9 +283,15 @@ export function candidatesForDate(candidates, date) {
 /**
  * Filter candidates happening today or in the future.
  */
-export function upcomingCandidates(candidates) {
+export function upcomingCandidates(candidates, maxDaysAhead = 14) {
   const t = today();
-  return candidates.filter((c) => !c.date || c.date >= t);
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() + maxDaysAhead);
+  const cutoffStr = cutoff.toISOString().split("T")[0];
+  return candidates.filter((c) => {
+    if (!c.date) return true; // undated items (ongoing) pass through
+    return c.date >= t && c.date <= cutoffStr;
+  });
 }
 
 /**
