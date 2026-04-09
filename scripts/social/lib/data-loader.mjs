@@ -172,14 +172,14 @@ function loadRestaurantRadar() {
       date: r.date,
       time: null,
       endTime: null,
-      url: "",
-      sbsUrl: "/#development",
+      url: r.url || `https://southbaytoday.org/#food`,
+      sbsUrl: "/#food",
       sourceType: "restaurant",
-      source: "permit",
+      source: "restaurant-radar",
       cost: "",
       kidFriendly: false,
       ongoing: false,
-      confidence: 0.6,
+      confidence: 0.85,
     }));
 }
 
