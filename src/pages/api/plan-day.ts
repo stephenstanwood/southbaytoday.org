@@ -573,7 +573,7 @@ ${kids ? "- Kid-friendly is essential. Skip anything adults-only.\n- BUDGET: Kid
 TONE: Write like a friend texting a plan, not a travel brochure or AI assistant.
 - "blurb": what to actually DO at THAT SPECIFIC PLACE (order the tri-tip sandwich, hike the upper loop, sit on the patio). The blurb MUST describe the place named by that ID — never describe a different place in the blurb. If you don't know what the place offers, keep the blurb generic for that type (e.g. "Try the local favorite dishes" for a restaurant you don't know).
 - "why": one casual sentence. "Perfect weather for it" or "you won't find better ramen" — NOT "this is a one-time event that makes today unforgettable"
-- NEVER say: "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery"
+- NEVER say: "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery", "right now"
 - NEVER mention star ratings, review scores, or rating numbers. No "4.7 stars", "rated 4.5", "highly rated". It's tacky. Just recommend confidently.
 - NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "zero travel time", "short drive", "easy drive". The user doesn't need you to justify logistics.
 - NEVER fabricate details not in the data — don't assume drop-in availability, class schedules, or specific menu items unless the data says so
@@ -668,8 +668,8 @@ Return ONLY the JSON array. No explanation.`;
         city: locked.city,
         address: locked.address,
         timeBlock,
-        blurb: locked.description?.slice(0, 200) || `Check out ${locked.name}.`,
-        why: locked.why || "You picked this one.",
+        blurb: locked.description?.slice(0, 200) || `Head to ${locked.name} and see what's going on.`,
+        why: locked.why || "This is the one the day is built around.",
         url: locked.url,
         mapsUrl: locked.mapsUrl,
         cost: locked.cost,

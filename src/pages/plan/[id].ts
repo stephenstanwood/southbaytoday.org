@@ -85,6 +85,19 @@ export const GET: APIRoute = async ({ params, url }) => {
     activeCards = plan.cards;
   }
 
+  // Sort chronologically (API should do this but belt-and-suspenders)
+  activeCards.sort((a: any, b: any) => {
+    const parseH = (tb: string) => {
+      const m = tb.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!m) return 99;
+      let h = parseInt(m[1], 10);
+      if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+      if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+      return h;
+    };
+    return parseH(a.timeBlock) - parseH(b.timeBlock);
+  });
+
   // If all cards are past, redirect to homepage with the city pre-selected
   if (activeCards.length === 0) {
     return Response.redirect(`${origin}/?city=${plan.city}`, 302);
