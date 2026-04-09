@@ -639,6 +639,32 @@ Return ONLY the JSON array. No explanation.`;
     });
   }
 
+  // Post-process: force locked items into the plan if Claude forgot them
+  for (const locked of lockedCandidates) {
+    if (!cards.some((c) => c.id === locked.id)) {
+      console.log(`[plan-day] forcing locked item: ${locked.name}`);
+      cards.push({
+        id: locked.id,
+        name: locked.name,
+        category: locked.category,
+        city: locked.city,
+        address: locked.address,
+        timeBlock: locked.eventTime || "TBD",
+        blurb: locked.description || `Check out ${locked.name}.`,
+        why: locked.why || "You picked this one.",
+        url: locked.url,
+        mapsUrl: locked.mapsUrl,
+        cost: locked.cost,
+        costNote: kids && locked.kidsCostNote ? locked.kidsCostNote : locked.costNote,
+        kidsCostNote: locked.kidsCostNote,
+        photoRef: (locked as any).photoRef || null,
+        venue: locked.venue || null,
+        source: locked.source,
+        locked: true,
+      });
+    }
+  }
+
   // Post-process: enforce kids curfew — drop any card starting at or after 8 PM
   if (kids) {
     const before = cards.length;
