@@ -2,6 +2,43 @@
 
 ---
 
+## 2026-04-09 — Cycle 75: Data Refresh + Fix Library Games Misclassification
+
+### Context
+Thursday April 9, 2026 (continued run). Easter weekend upcoming. Data pipeline fully refreshed.
+
+### What Was Built
+
+**Full data refresh (12 files):**
+- `upcoming-events.json` — 541 events (106 ongoing) from 25 sources
+- `upcoming-meetings.json` — 7 cities; SJ + PA Apr 13, Saratoga Apr 15, Los Altos Apr 14
+- `digests.json` — 10 city digests
+- `around-town.json` — 8 items
+- `weekend-picks.json` — 3 Easter picks: Sciencepalooza!, USWNT vs Japan, Julius Caesar
+- `city-briefings.json` — 10 briefings for Apr 9–16
+- `real-estate.json` — 11 cities; MV fastest at 8 days
+- `restaurant-radar.json` — 12 signals
+- `scc-food-openings.json` — 12 opened, 12 coming soon
+- `permit-pulse.json` — SJ 332 permits (89 new units); PA 31 issued
+- `tech-briefing.json` — Apr 9–16; 30 rounds, 7 growing firms
+- `real-estate.json` — Cupertino +33.4% YoY
+
+**Code fix: `isLibraryActivityGames` regex in `generate-events.mjs`**
+- Bug: "Santa Teresa Teens Reach Meeting" full BiblioCommons description contains bullet "Games and activities." which triggered `t.includes("game")` → misclassified as `sports`
+- Existing guard caught "games, activities" and "activities and games" but not "games and activities" (reversed order)
+- Fix: added `|| /\bgames\s+and\s+activities\b/i.test(t)` as third OR condition
+- Both June 12 and Sep 18 instances now correctly classified as `community`
+
+### Why This Was the Strongest Move
+Classification accuracy matters — a teen volunteer meeting showing up in the Sports tab undermines trust in the entire events section. The fix is targeted and doesn't risk reclassifying legitimate sports content.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Watch for post-Apr 9 South Bay rounds. Aria Networks (Apr 7) is current latest.
+2. **Neighborhood filtering for San José** — 218 events (40% of total); Willow Glen, Almaden, Japantown buckets would sharpen utility.
+3. **Permit Pulse: Sunnyvale** — Check if epermits.sunnyvale.ca.gov has a public dataset similar to SJ Socrata.
+
+---
+
 ## 2026-04-09 — Cycle 74: Full Data Refresh (Easter Weekend)
 
 ### Context
