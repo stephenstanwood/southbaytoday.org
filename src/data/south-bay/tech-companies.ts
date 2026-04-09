@@ -1256,6 +1256,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://imperativecare.com",
   },
   {
+    id: "sifive",
+    name: "SiFive",
+    city: "Santa Clara",
+    category: "chip",
+    round: "Series G",
+    amount: "$400M",
+    date: "2026-04-09",
+    tagline: "RISC-V chip designer challenging Arm in AI data centers — $400M oversubscribed Series G backed by Nvidia, Apollo, and T. Rowe Price at a $3.65B valuation. CEO Patrick Little says this is the final round before an IPO.",
+    color: "#1d4ed8",
+    url: "https://sifive.com",
+  },
+  {
     id: "aria-networks",
     name: "Aria Networks",
     city: "Palo Alto",

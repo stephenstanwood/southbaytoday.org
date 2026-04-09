@@ -36,6 +36,7 @@ const MANUAL_OVERRIDES = {
   "san-jose:22 N White Rd": { blurb: "Mexican tortilleria and taqueria on the east side" },
   "palo-alto:407 Lytton Av": { blurb: "Japanese bistro opening in downtown Palo Alto" },
   "palo-alto:401 Webster St": { blurb: "Neighborhood American restaurant on Webster St undergoing a kitchen remodel" },
+  "palo-alto:388 Cambridge Av": { blurb: "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto" },
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -165,6 +166,11 @@ function extractPaName(desc) {
   const uoMatch = desc.match(/U&O for ['"]([^'"]+)['"]/i) ||
                   desc.match(/for ['"]([^'"]+)['"]/i);
   if (uoMatch) return uoMatch[1].trim();
+  // '"ARSICAULT BAKERY" Tenant improvement...' — quoted name at start of description
+  const quotedLeadMatch = desc.match(/^"([^"]{3,40})"\s/);
+  if (quotedLeadMatch) {
+    return quotedLeadMatch[1].trim().toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  }
   // "FRONT PORCH: ..." — all-caps name before colon
   const colonMatch = desc.match(/^([A-Z][A-Z\s'&]+):/);
   if (colonMatch) {
