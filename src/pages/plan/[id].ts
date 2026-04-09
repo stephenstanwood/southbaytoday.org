@@ -103,8 +103,17 @@ export const GET: APIRoute = async ({ params, url }) => {
       ? `<span style="display:inline-block;margin-top:5px;font-size:10px;font-weight:700;color:#999;background:#f5f5f5;padding:2px 8px;border-radius:4px">${esc(card.costNote || card.cost)}</span>`
       : "";
 
+    // Link: events → event URL or maps, places → maps or URL
+    const cardUrl = card.source === "event"
+      ? (card.url || card.mapsUrl)
+      : (card.mapsUrl || card.url);
+    const linkOpen = cardUrl
+      ? `<a href="${esc(cardUrl)}" target="_blank" rel="noopener noreferrer" style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px;text-decoration:none;color:inherit;transition:box-shadow 0.15s" onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='none'">`
+      : `<div style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px">`;
+    const linkClose = cardUrl ? `</a>` : `</div>`;
+
     return `
-      <div style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px">
+      ${linkOpen}
         ${photoHtml}
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
@@ -118,7 +127,7 @@ export const GET: APIRoute = async ({ params, url }) => {
           <p style="font-size:12px;font-weight:600;color:#FF6B35;margin:0;line-height:1.35;font-style:italic">${esc(card.why)}</p>
           ${costBadge}
         </div>
-      </div>`;
+      ${linkClose}`;
   }).join("\n");
 
   const html = `<!DOCTYPE html>
