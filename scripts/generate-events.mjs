@@ -609,7 +609,8 @@ function inferCategory(title, desc, type, venue = "") {
   // "Games, crafts, and activities" in library/family program descriptions is not sports.
   // Protects against events like "Fabulous Friday: games, crafts, activities" being misclassified.
   const isLibraryActivityGames = /\bgames[,;]?\s*(crafts?|activities|bubbles|more)/i.test(t) ||
-    /\b(crafts?|activities)\s+(?:and\s+)?games\b/i.test(t);
+    /\b(crafts?|activities)\s+(?:and\s+)?games\b/i.test(t) ||
+    /\bgames\s+and\s+activities\b/i.test(t);
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
   const titleLower = title.toLowerCase();

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-09T19:11:10.751Z",
+  "generatedAt": "2026-04-09T20:07:27.078Z",
   "weekLabel": "Apr 9 – Apr 16",
   "weekStart": "2026-04-09",
   "weekEnd": "2026-04-16",
@@ -7,7 +7,7 @@
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's Planning Commission meets Tuesday to weigh in on projects shaping the city's future—worth watching if you care what gets built next.",
+      "summary": "Campbell's Planning Commission meets Tuesday to tackle zoning and development proposals that could reshape the city's commercial corridors.",
       "highlights": [
         {
           "type": "event",
@@ -19,12 +19,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:10:56.411Z"
+      "generatedAt": "2026-04-09T20:07:14.619Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino City Council is revamping its Active Transportation Plan this week, potentially reshaping how the city prioritizes bike lanes and pedestrian infrastructure.",
+      "summary": "Cupertino's revamping its Active Transportation Plan this week while the library hosts Shakespeare's Julius Caesar—perfect timing for culture-hungry neighbors seeking weekend plans.",
       "highlights": [
         {
           "type": "event",
@@ -44,7 +44,7 @@
         },
         {
           "type": "cityhall",
-          "title": "City Council updates Active Transportation Plan with new scoring criteria",
+          "title": "City updates Active Transportation Plan with revised scoring criteria",
           "when": null,
           "venue": null,
           "category": "government",
@@ -52,12 +52,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:10:58.626Z"
+      "generatedAt": "2026-04-09T20:07:16.087Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos tackles housing affordability head-on Tuesday with a West Valley Housing Resource Fair, while Muse Markets returns Saturday for spring shopping.",
+      "summary": "Los Gatos City Council green-lit a construction contract with QLM, Inc., signaling progress on a major local project this week.",
       "highlights": [
         {
           "type": "event",
@@ -74,15 +74,23 @@
           "venue": "Los",
           "category": "arts",
           "url": "https://www.losgatosca.gov/calendar.aspx?EID=6189"
+        },
+        {
+          "type": "cityhall",
+          "title": "City Council Approves Construction Contract with QLM, Inc.",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://losgatos-ca.municodemeetings.com/"
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:00.243Z"
+      "generatedAt": "2026-04-09T20:07:17.469Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's tackling taxes and Earth Heroes this week while the controversial 333 Franklin Street project hearing gets indefinitely postponed.",
+      "summary": "Mountain View's tax prep clinics return this week—free help filing your 2025 returns while a controversial 333 Franklin Street zoning hearing gets delayed.",
       "highlights": [
         {
           "type": "event",
@@ -102,7 +110,7 @@
         },
         {
           "type": "cityhall",
-          "title": "333 Franklin Street project hearing postponed indefinitely",
+          "title": "Project at 333 Franklin Street zoning hearing postponed",
           "when": null,
           "venue": null,
           "category": "government",
@@ -110,21 +118,13 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:01.538Z"
+      "generatedAt": "2026-04-09T20:07:18.745Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga's library kicks off spring arts season with back-to-back exhibits featuring local watercolor and young artists this weekend.",
+      "summary": "Saratoga's library goes all-in this week with back-to-back art exhibits and game nights, plus furry reading buddies for kids.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Craft Club for Adults: The Joy of Drawing - Tulips in Spring",
-          "when": "Thu, Apr 9 · 1:00 PM",
-          "venue": "Santa Clara County Library",
-          "category": "education",
-          "url": "https://sccl.bibliocommons.com/events/69a6167e19c54125aa023245"
-        },
         {
           "type": "event",
           "title": "Furry Reading Buddies for Grades K-5",
@@ -132,31 +132,39 @@
           "venue": "Santa Clara County Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/68d7197f62a8786065c4f6c3"
+        },
+        {
+          "type": "event",
+          "title": "Board Game Day at Saratoga Library",
+          "when": "Sat, Apr 11 · 2:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "community",
+          "url": "https://sccl.bibliocommons.com/events/69c7031a491b809c6f23649a"
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:02.795Z"
+      "generatedAt": "2026-04-09T20:07:19.938Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose's getting serious about its aging infrastructure backlog this week, with City Council diving into deferred maintenance costs that'll shape future budget decisions.",
+      "summary": "San Jose State's arts scene explodes this week with a rare Chicano Air Force poster retrospective, while City Hall tackles a massive deferred maintenance backlog that'll reshape future budgets.",
       "highlights": [
         {
           "type": "event",
-          "title": "Be Ready: Be Prepared for Disasters",
-          "when": "Thu, Apr 9 · 2:00 PM",
-          "venue": "Online",
-          "category": "community",
-          "url": "https://www.eventbrite.com/e/online-be-ready-be-prepared-for-disasters-tickets-1983654287372"
+          "title": "Join Zsolt Jozsef Simon — Porcelain Casting Workshop at Art & Design Building",
+          "when": "Thu, Apr 9",
+          "venue": "San Jose State University",
+          "category": "arts",
+          "url": "https://events.sjsu.edu/event/in-the-studio-with-zsolt-jozsef-simon-porcelain-design-workshop"
         },
         {
           "type": "event",
-          "title": "Volunteer Away Your Fines as a Branch Buddy",
-          "when": "Thu, Apr 9 · 5:00 PM",
-          "venue": "San Jose Public Library",
-          "category": "education",
-          "url": "https://sjpl.bibliocommons.com/events/696570a3992fc18a86dd06eb"
+          "title": "R&R, 2026: Recovering Ricardo Favela’s Royal Chicano Air Force Poster Collection at San José State University at King Library",
+          "when": "Thu, Apr 9",
+          "venue": "San Jose State University",
+          "category": "arts",
+          "url": "https://events.sjsu.edu/event/rr-2026-exhibit"
         },
         {
           "type": "council",
@@ -168,12 +176,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:04.180Z"
+      "generatedAt": "2026-04-09T20:07:21.387Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara University's hosting a packed Wednesday: spring music festival, wellness sessions, and AI tools workshops all hitting campus April 9th.",
+      "summary": "Santa Clara University's hosting everything from ethics training to an AI tools workshop this week, plus live music at the Market Street Spring Jubilee—basically your one-stop shop for spring learning and vibes.",
       "highlights": [
         {
           "type": "event",
@@ -193,12 +201,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:05.601Z"
+      "generatedAt": "2026-04-09T20:07:22.813Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos library kicks off spring with birding talks, art workshops, and book clubs this week—something for every reader and creative in town.",
+      "summary": "Los Altos library is hosting everything from a waterbird talk to board game nights this week—perfect if you're looking to escape screens without leaving town.",
       "highlights": [
         {
           "type": "event",
@@ -218,12 +226,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:06.947Z"
+      "generatedAt": "2026-04-09T20:07:24.330Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "David Byrne's bringing the Talking Heads energy to Frost Amphitheatre next Wednesday—catch the indie legend at Stanford.",
+      "summary": "David Byrne's bringing his post-punk genius to Frost Amphitheatre next Wednesday—Palo Alto's biggest music event this month.",
       "highlights": [
         {
           "type": "event",
@@ -243,12 +251,12 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:08.871Z"
+      "generatedAt": "2026-04-09T20:07:25.553Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas just streamlined its council vacancy process, cutting red tape while the library keeps families busy with board games, STEAM workshops, and knitting nights this week.",
+      "summary": "Milpitas council shakes up vacancy process while libraries stack the week with Board Game Day and STEAM programs for kids.",
       "highlights": [
         {
           "type": "event",
@@ -268,7 +276,7 @@
         },
         {
           "type": "cityhall",
-          "title": "Council Vacancy Process Changed, Reduces Appointment Steps",
+          "title": "Council Vacancy Process Being Changed",
           "when": null,
           "venue": null,
           "category": "government",
@@ -276,7 +284,7 @@
         }
       ],
       "weekLabel": "Apr 9 – Apr 16",
-      "generatedAt": "2026-04-09T19:11:10.449Z"
+      "generatedAt": "2026-04-09T20:07:26.777Z"
     }
   }
 }
