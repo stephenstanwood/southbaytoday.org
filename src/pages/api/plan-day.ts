@@ -643,14 +643,32 @@ Return ONLY the JSON array. No explanation.`;
   for (const locked of lockedCandidates) {
     if (!cards.some((c) => c.id === locked.id)) {
       console.log(`[plan-day] forcing locked item: ${locked.name}`);
+      // Build a proper time block from the event time
+      let timeBlock = "TBD";
+      if (locked.eventTime) {
+        const startMatch = locked.eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+        if (startMatch) {
+          // Add 1.5 hours for a reasonable block
+          const startH = parseHour(startMatch[1]);
+          if (startH !== null) {
+            const endH = startH + 1;
+            const endMin = 30;
+            const endAmPm = endH >= 12 ? "PM" : "AM";
+            const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
+            timeBlock = `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
+          } else {
+            timeBlock = startMatch[1];
+          }
+        }
+      }
       cards.push({
         id: locked.id,
         name: locked.name,
         category: locked.category,
         city: locked.city,
         address: locked.address,
-        timeBlock: locked.eventTime || "TBD",
-        blurb: locked.description || `Check out ${locked.name}.`,
+        timeBlock,
+        blurb: locked.description?.slice(0, 200) || `Check out ${locked.name}.`,
         why: locked.why || "You picked this one.",
         url: locked.url,
         mapsUrl: locked.mapsUrl,
@@ -664,6 +682,13 @@ Return ONLY the JSON array. No explanation.`;
       });
     }
   }
+
+  // Re-sort chronologically after forcing locked items
+  cards.sort((a, b) => {
+    const aH = parseHour(a.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
+    const bH = parseHour(b.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
+    return aH - bH;
+  });
 
   // Post-process: enforce kids curfew — drop any card starting at or after 8 PM
   if (kids) {
