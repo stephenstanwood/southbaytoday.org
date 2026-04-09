@@ -54,7 +54,7 @@ async function generatePlanLinks(candidates) {
           lockedIds: [eventId],
           currentHour: item.time ? parseInt(item.time.match(/\d+/)?.[0] || "17", 10) : 17,
         }),
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(30000),
       });
       if (!planRes.ok) continue;
       const planData = await planRes.json();
@@ -70,7 +70,7 @@ async function generatePlanLinks(candidates) {
           kids: false,
           weather: planData.weather,
         }),
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(10000),
       });
       if (!shareRes.ok) continue;
       const shareData = await shareRes.json();

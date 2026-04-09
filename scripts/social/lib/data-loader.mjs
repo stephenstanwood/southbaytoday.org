@@ -172,7 +172,7 @@ function loadRestaurantRadar() {
       date: r.date,
       time: null,
       endTime: null,
-      url: r.url || `https://southbaytoday.org/#food`,
+      url: r.url || "",
       sbsUrl: "/#food",
       sourceType: "restaurant",
       source: "restaurant-radar",
