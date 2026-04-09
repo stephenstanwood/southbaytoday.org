@@ -428,8 +428,8 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
       {/* Instruction line */}
       {cards.length > 0 && (
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#bbb", margin: "0 0 10px", textAlign: "right" }}>
-          <span style={{ color: "#22c55e" }}>✓</span> Lock what sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Skip what&apos;s not for today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Hide what&apos;s not for you
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#999", margin: "0 0 10px", textAlign: "right", letterSpacing: 0.2 }}>
+          <span style={{ color: "#22c55e" }}>✓</span> Sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Not today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Never
         </p>
       )}
 

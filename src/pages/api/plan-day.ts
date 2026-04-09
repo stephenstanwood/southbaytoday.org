@@ -237,11 +237,10 @@ function scoreCandidates(
     let score = 0;
 
     // --- Source priority ---
-    // Today-only events are the most valuable
+    // Events get a moderate boost, not a dominant one
     if (c.source === "event") {
-      score += 50;
-      // Events happening today get extra boost
-      if (c.eventDate === todayStr()) score += 30;
+      score += 25;
+      if (c.eventDate === todayStr()) score += 15;
     }
 
     // --- Rating boost ---
@@ -249,7 +248,10 @@ function scoreCandidates(
     else if (c.rating && c.rating >= 4.0) score += 5;
 
     // --- Curated places are premium ---
-    if ((c as any).curated) score += 20;
+    if ((c as any).curated) score += 25;
+
+    // --- Food places get a meal-slot boost ---
+    if (c.category === "food") score += 10;
 
     // --- Kid-friendliness ---
     if (kids && c.kidFriendly === true) score += 15;
@@ -526,7 +528,10 @@ ${poolText}
 
 TASK: Pick 5-7 items from the pool (including all locked items) and sequence them into a full day plan that fills the remaining hours with no big gaps. Return a JSON array. Every 1-2 hour block from NOW until bedtime should have something. Err on the side of MORE suggestions — a packed day is better than a sparse one. Do NOT suggest things for "tomorrow."
 
-CRITICAL: Items marked "EVENT TODAY" are specific things happening today (games, shows, markets). Include at least 1-2 if any exist in the pool.
+CRITICAL RULES FOR BALANCE:
+- Items marked "EVENT TODAY" are specific things happening today. Include 1-2 if any exist in the pool, but NEVER make the entire plan just events. A good day is activities + food + maybe an event.
+- MEALS ARE REQUIRED: A full day plan MUST include food stops. If the plan starts before noon, include a breakfast/brunch/coffee spot. Always include lunch (noon-2pm). If the plan goes past 6pm, include dinner. Pick actual restaurants or cafes from the pool — not just "grab food somewhere."
+- The ideal plan is: activity → food → activity → food → activity. Alternate between doing things and eating.
 
 RULES:
 - Start from NOW (${hour}:00) — don't schedule things in the past
@@ -723,17 +728,29 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const lockedCandidates = scored.filter((c) => lockedSet.has(c.id));
     const unlockedPool = scored.filter((c) => !lockedSet.has(c.id));
 
-    // 5. Events always get priority slots, then fill with diverse places
+    // 5. Build diverse pool — balance events, food, and activities
     const eventCandidates = unlockedPool.filter((c) => c.source === "event");
-    const placeCandidates = unlockedPool.filter((c) => c.source === "place");
+    const foodCandidates = unlockedPool.filter((c) => c.source === "place" && c.category === "food");
+    const otherPlaces = unlockedPool.filter((c) => c.source === "place" && c.category !== "food");
 
-    // Start with ALL today's events (they're rare and valuable)
-    const diversePool: Candidate[] = [...eventCandidates];
+    const diversePool: Candidate[] = [];
 
-    // Fill remaining slots — hard cap per category to force diversity
+    // Events: include top 3-4 (not ALL — leave room for places)
+    const MAX_EVENTS = 4;
+    for (const c of eventCandidates.slice(0, MAX_EVENTS)) {
+      diversePool.push(c);
+    }
+
+    // Food: guarantee at least 4 food options so Claude can pick meals
+    const MIN_FOOD = 4;
+    for (const c of foodCandidates.slice(0, Math.max(MIN_FOOD, 5))) {
+      diversePool.push(c);
+    }
+
+    // Fill remaining slots with diverse non-food places
     const catCounts: Record<string, number> = {};
-    const CAT_CAPS: Record<string, number> = { food: 4, outdoor: 3, museum: 2, entertainment: 3, wellness: 2, shopping: 2 };
-    for (const c of placeCandidates) {
+    const CAT_CAPS: Record<string, number> = { outdoor: 3, museum: 2, entertainment: 3, wellness: 2, shopping: 2 };
+    for (const c of otherPlaces) {
       const count = catCounts[c.category] || 0;
       const maxForCat = CAT_CAPS[c.category] ?? 3;
       if (count < maxForCat) {

@@ -262,6 +262,10 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bsurvey\b/i,
   /\bfeedback\s+(form|survey)\b/i,
   /\bcommencement\s+rehearsal\b/i,
+  /\bpresidential\s+reception\b/i,
+  /\balumni\s+reception\b/i,
+  /\balumni\s+for\s+others\b/i,
+  /\badmitted\s+students?\s+(day|reception|event)\b/i,
   /\bprocessing\s+deadline\b/i,
   /\badmission\s+(deadline|decision)\b/i,
   // Graduate program info sessions / recruitment webinars (not open public events)

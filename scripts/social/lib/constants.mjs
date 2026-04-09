@@ -127,6 +127,12 @@ export const INTERNAL_EVENT_SIGNALS = [
   "sorority",
   "fraternity",
   "rush week",
+  "alumni reception",
+  "presidential reception",
+  "alumni for others",
+  "admitted students",
+  "prospective students",
+  "commencement rehearsal",
 ];
 
 // SBS tab URLs for CTAs (hash-based routing with full tab IDs)
