@@ -91,6 +91,7 @@ async function generatePlanLinks(candidates) {
         city: item.city,
         kids: false,
         weather: planData.weather,
+        planDate: item.date || new Date().toISOString().split("T")[0],
         createdAt: new Date().toISOString(),
       };
 

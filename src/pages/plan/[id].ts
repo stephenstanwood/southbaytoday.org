@@ -52,29 +52,38 @@ export const GET: APIRoute = async ({ params, url }) => {
     ? `${origin}/api/place-photo?ref=${encodeURIComponent(firstPhotoRef)}&w=1200&h=630`
     : `${origin}/images/og-image.png`;
 
-  // Filter out cards whose time block has already ended (PT timezone)
-  const nowPT = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "numeric", hour12: false });
-  const [nowH, nowM] = nowPT.split(":").map(Number);
-  const nowMinutes = nowH * 60 + (nowM || 0);
+  // Only filter past cards if the plan is for today — future plans show everything
+  const todayPT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const planTargetDate = plan.planDate || plan.createdAt?.slice(0, 10) || todayPT;
+  const isPlanForToday = planTargetDate <= todayPT;
 
-  function parseEndMinutes(timeBlock: string): number | null {
-    // Parse "2:30 PM - 4:00 PM" → end time in minutes since midnight
-    const parts = timeBlock.split(/\s*-\s*/);
-    if (parts.length < 2) return null;
-    const m = parts[1].match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-    if (!m) return null;
-    let h = parseInt(m[1], 10);
-    const min = parseInt(m[2], 10);
-    if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
-    if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
-    return h * 60 + min;
+  let activeCards: any[];
+  if (isPlanForToday) {
+    const nowPT = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "numeric", hour12: false });
+    const [nowH, nowM] = nowPT.split(":").map(Number);
+    const nowMinutes = nowH * 60 + (nowM || 0);
+
+    function parseEndMinutes(timeBlock: string): number | null {
+      const parts = timeBlock.split(/\s*-\s*/);
+      if (parts.length < 2) return null;
+      const m = parts[1].match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!m) return null;
+      let h = parseInt(m[1], 10);
+      const min = parseInt(m[2], 10);
+      if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+      if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+      return h * 60 + min;
+    }
+
+    activeCards = plan.cards.filter((c: any) => {
+      const endMin = parseEndMinutes(c.timeBlock);
+      if (endMin === null) return true;
+      return endMin > nowMinutes;
+    });
+  } else {
+    // Future plan — show all cards
+    activeCards = plan.cards;
   }
-
-  const activeCards = plan.cards.filter((c: any) => {
-    const endMin = parseEndMinutes(c.timeBlock);
-    if (endMin === null) return true; // keep if unparseable
-    return endMin > nowMinutes; // keep if end time is in the future
-  });
 
   // If all cards are past, redirect to homepage with the city pre-selected
   if (activeCards.length === 0) {
@@ -87,9 +96,9 @@ export const GET: APIRoute = async ({ params, url }) => {
     ? `<div style="text-align:center;font-size:12px;color:#bbb;margin-bottom:12px;font-style:italic">Showing ${activeCards.length} upcoming stops${filteredCount > 0 ? ` (${filteredCount} earlier stops already passed)` : ""}</div>`
     : "";
 
-  // Format date for the title (e.g. "Saturday, April 12")
-  const planDate = new Date(plan.createdAt);
-  const dateStr = planDate.toLocaleDateString("en-US", {
+  // Format date for the title — use the plan's target date, not when it was created
+  const planDateObj = new Date(planTargetDate + "T12:00:00");
+  const dateStr = planDateObj.toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles",
     weekday: "long",
     month: "long",
