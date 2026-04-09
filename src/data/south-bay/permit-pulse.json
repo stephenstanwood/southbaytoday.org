@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-08T23:13:28.108Z",
+      "generatedAt": "2026-04-09T11:14:15.078Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 1 – Apr 8",
+      "dateRange": "Apr 2 – Apr 9",
       "stats": {
-        "total": 347,
-        "notable": 28,
-        "newUnits": 84,
-        "totalValuation": 19764055
+        "total": 332,
+        "notable": 27,
+        "newUnits": 89,
+        "totalValuation": 24645282
       },
       "permits": [
         {
@@ -36,6 +36,18 @@
           "valuation": 2069400,
           "units": 6,
           "issueDate": "2026-04-06",
+          "subtype": "Townhouse"
+        },
+        {
+          "id": "2026-109968-MF",
+          "address": "0 Seely Av",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "Trimble Summerhill Build a New 6-Plex",
+          "valuation": 2069400,
+          "units": 6,
+          "issueDate": "2026-04-07",
           "subtype": "Townhouse"
         },
         {
@@ -87,18 +99,6 @@
           "subtype": "Single-Family"
         },
         {
-          "id": "2025-137614-RS",
-          "address": "61 Scharff Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Adu W/ Attached Workshop",
-          "valuation": 208207,
-          "units": 1,
-          "issueDate": "2026-04-02",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-097409-RS",
           "address": "390 Atlanta Av",
           "category": "residential-new",
@@ -137,29 +137,29 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-08T23:13:30.540Z",
+      "generatedAt": "2026-04-09T11:14:17.446Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 1 – Apr 8",
+      "dateRange": "Apr 2 – Apr 9",
       "stats": {
         "total": 113,
-        "notable": 12,
+        "notable": 11,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-00847",
-          "address": "2353 Webster St",
+          "id": "26BLD-00864",
+          "address": "4130 Thain Wy",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
-          "description": "Res: Reroof. Remove wood shake. Install OSB sheathing and asphalt shingle.",
+          "description": "MF: Remove and replace approx. 292 sf of siding and trim at chimney.  Replace wood shingle siding, underlayment, and plywood",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-01",
+          "issueDate": "2026-04-02",
           "subtype": "Permit Issued"
         },
         {
@@ -175,8 +175,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00863",
-          "address": "1221 Hopkins Av",
+          "id": "26BLD-00872",
+          "address": "841 Ames Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
@@ -187,8 +187,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00905",
-          "address": "541 Maybell Av",
+          "id": "26BLD-00909",
+          "address": "837 Ilima Ct",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
@@ -199,8 +199,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00909",
-          "address": "837 Ilima Ct",
+          "id": "26BLD-00905",
+          "address": "541 Maybell Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
@@ -223,18 +223,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00872",
-          "address": "841 Ames Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-02",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00876",
           "address": "3445 Louis Rd",
           "category": "residential-large",
@@ -244,6 +232,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-03",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00863",
+          "address": "1221 Hopkins Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-02",
           "subtype": "Permit Issued"
         },
         {
@@ -259,15 +259,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00067",
-          "address": "1450 Page Mill Rd",
+          "id": "26PLN-00070",
+          "address": "4035 Transport St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Removal and replacement of five (5) non-protected trees associated with 24BLD-03580 scope",
+          "description": "Over the Counter Architectural Review to install one illuminated channel letter building sign on the rear elevation of the existing commercial building. Sign will be internally illuminated LED channel letters with electrical connection to existing building power. The proposed sign will be two feet tall by 38 feet wide to read, \"Peninsula Land.Com\". Environmental Assessment: Not a Project. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-01",
+          "issueDate": "2026-04-03",
           "subtype": "Over the Counter Approved"
         }
       ]

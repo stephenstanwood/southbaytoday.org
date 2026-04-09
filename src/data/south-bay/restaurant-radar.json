@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-08T20:12:52.302Z",
+  "generatedAt": "2026-04-09T11:14:45.233Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -10,7 +10,7 @@
       "id": "2026-107055-CI",
       "city": "san-jose",
       "address": "2040 N 1st St",
-      "name": "Il Fornaio",
+      "name": null,
       "description": "(Bp100%) Demo",
       "workType": "Demolition",
       "subtype": "Restaurant",
@@ -111,6 +111,18 @@
       "valuation": 0,
       "date": "2026-02-10",
       "blurb": "Japanese restaurant fitting out a new space on Lytton Ave"
+    },
+    {
+      "id": "pa-388 Cambridge Av-2026-04-08",
+      "city": "palo-alto",
+      "address": "388 Cambridge Av",
+      "name": null,
+      "description": "\"ARSICAULT BAKERY\" Tenant improvement of approximately 2,150 SF within an exi…",
+      "workType": "Building Permit",
+      "signal": "activity",
+      "label": "Renovation",
+      "valuation": 0,
+      "date": "2026-04-08"
     },
     {
       "id": "pa-401 Webster St-2026-02-26",
