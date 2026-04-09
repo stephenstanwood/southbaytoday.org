@@ -4,7 +4,12 @@
 // "We do the legwork so people don't have to."
 // ---------------------------------------------------------------------------
 
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { logStep, logSkip } from "./logger.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ── Sports URL patterns ────────────────────────────────────────────────────
 
@@ -69,6 +74,44 @@ function enrichSportsUrl(item) {
 }
 
 // ── Restaurant URL enrichment ──────────────────────────────────────────────
+
+// Cross-reference with places.json for instant URL lookups (no API call)
+let _placesCache = null;
+function getPlacesIndex() {
+  if (_placesCache) return _placesCache;
+  try {
+    const path = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
+    const data = JSON.parse(readFileSync(path, "utf8"));
+    _placesCache = new Map();
+    for (const p of data.places || []) {
+      if (p.category === "food" && (p.url || p.mapsUrl)) {
+        // Index by normalized name + city for fuzzy matching
+        const key = (p.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") + ":" + (p.city || "");
+        _placesCache.set(key, { url: p.url, mapsUrl: p.mapsUrl, name: p.name });
+      }
+    }
+    logStep("🔗", `Loaded ${_placesCache.size} food places for cross-reference`);
+  } catch {
+    _placesCache = new Map();
+  }
+  return _placesCache;
+}
+
+function crossRefPlacesUrl(item) {
+  const index = getPlacesIndex();
+  const venue = (item.venue || item.title || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const city = item.city || "";
+  // Try exact match
+  const exact = index.get(venue + ":" + city);
+  if (exact) return exact.mapsUrl || exact.url;
+  // Try partial match (venue name contained in places name)
+  for (const [key, val] of index) {
+    if (key.startsWith(venue + ":") || (venue.length > 5 && key.includes(venue))) {
+      return val.mapsUrl || val.url;
+    }
+  }
+  return null;
+}
 
 async function enrichRestaurantUrl(item) {
   // Use Google Places API to find the restaurant's Google Maps URL
@@ -145,9 +188,19 @@ export async function enrichUrls(candidates) {
       }
     }
 
-    // Restaurants: try Google Places lookup
+    // Restaurants: try places.json cross-reference first, then Google Places API
     if (item.sourceType === "restaurant" && (!originalUrl || originalUrl === "")) {
       attempted++;
+      // Fast path: cross-reference with places.json
+      const crossRef = crossRefPlacesUrl(item);
+      if (crossRef) {
+        item.originalUrl = originalUrl;
+        item.url = crossRef;
+        enriched++;
+        logStep("🔗", `URL enriched (places.json): ${item.title} → ${crossRef.slice(0, 60)}`);
+        continue;
+      }
+      // Slow path: Google Places API
       const better = await enrichRestaurantUrl(item);
       if (better) {
         item.originalUrl = originalUrl;
