@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-04-09 — Cycle 74: Full Data Refresh (Easter Weekend)
+
+### Context
+Thursday April 9, 2026 (evening run). Spring break ends Apr 10 for SJUSD/PAUSD/MVWSD. Easter weekend (Good Friday Apr 10, Easter Sunday Apr 12). USWNT vs Japan at PayPal Park Saturday. 41 events across the Easter weekend window.
+
+### What Was Built
+
+**Full data refresh (14 files):**
+- `upcoming-events.json` — 541 events (106 ongoing); all categories, fresh from 25 sources
+- `around-town.json` — 8 items: SJ youth services/library update (Apr 9), MV 333 Franklin hearing postponed, Bascom Ave traffic signal, Mexican Heritage Plaza arts grant, Cupertino ATP scoring update, Milpitas council vacancy change, 65-unit senior housing on East St John, new housing cluster Gay Ave/Capitol
+- `digests.json` — 10 city digests; San José + Sunnyvale Apr 9 (today), Cupertino Apr 8
+- `upcoming-meetings.json` — 7 cities; SJ + PA Apr 13, Saratoga Apr 15, Los Altos Apr 14
+- `weekend-picks.json` — 3 Easter weekend picks: Sciencepalooza! (SJSU), USWNT vs Japan (PayPal Park), Julius Caesar (Cupertino, free)
+- `city-briefings.json` — 10 briefings for Apr 9–16; David Byrne at Frost Amphitheatre noted in PA briefing
+- `real-estate.json` — 11 cities; Cupertino +33.4% YoY (volatile), MV fastest at 8 days
+- `restaurant-radar.json` — 12 signals; Baekjeong $3.1M buildout at 2855 Stevens Creek
+- `scc-food-openings.json` — 8 opened, 8 coming soon; Tojo Coffee Tea House SJ opened Apr 7, Cedar & Sage (Stanford Shopping Center) coming soon
+- `permit-pulse.json` — SJ 332 permits this week (27 notable, 89 new units); $8.8M multi-family at 678 E St John
+- `tech-briefing.json` — Apr 9–16; 30 rounds tracked, 7 firms actively hiring
+- `health-scores.json` — recent inspections: Voyager Craft Coffee SJ (88), Lee's Kitchen SC (49)
+- `outages.json` — 0 PG&E active outages
+- `short-urls.json` — plan share URLs updated
+
+**Mountain View permit portal: still inaccessible**
+- data.mountainview.gov → ECONNREFUSED
+- developmentpermits.mountainview.gov → 403
+- gis.mountainview.gov → no response
+- epermits.mountainview.gov → no usable content
+- MV's dashboard is annual aggregates only, no record-level API
+
+**New April 2026 funding rounds: none found**
+Searched Crunchbase, TechCrunch, VentureBeat for Apr 8–14 South Bay rounds. Only rounds already in RECENTLY_FUNDED appeared. Aria Networks (Apr 7) remains the latest entry.
+
+### Why This Was the Strongest Move
+Easter weekend data is live and accurate: 541 fresh events, 3 curated weekend picks (including USWNT vs Japan Saturday — a major draw), and city briefings that call out the David Byrne/Talking Heads concert at Frost Amphitheatre. Residents checking today will get current Sunnyvale + San José council news from this morning's meetings.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Watch for Apr 14+ South Bay rounds. Aria Networks (Apr 7) is current latest.
+2. **Permit Pulse: Sunnyvale** — Sunnyvale doesn't appear to have a Socrata API either; check if epermits.sunnyvale.ca.gov has a public dataset.
+3. **Neighborhood-level filtering for San José** — 218 events (40% of total); Willow Glen, Almaden, Japantown, Rose Garden filtering would make browsing much more useful.
+
+---
+
 ## 2026-04-09 — Cycle 73: Data Refresh + Restaurant Radar Label Fix
 
 ### Context
