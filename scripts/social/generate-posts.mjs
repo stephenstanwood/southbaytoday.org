@@ -320,8 +320,15 @@ async function main() {
   const history = flattenHistory(recentHistory(7));
   const scored = scoreAndRank(fresh, history);
 
+  // 4b. Hard cutoff: drop anything with a negative score. A negative score
+  //     means an INTERNAL_EVENT_SIGNALS, political, or blacklist hit — those
+  //     should never make it into the pool regardless of how thin candidates are.
+  const viable = scored.filter((c) => c.score > 0);
+  const dropped = scored.length - viable.length;
+  if (dropped > 0) logStep("🚫", `Dropped ${dropped} candidates with negative score (blocked)`);
+
   // 5. Diverse selection (more than we need, to allow for URL/fact-check failures)
-  const topCandidates = diverseSelect(scored, maxPosts * 3);
+  const topCandidates = diverseSelect(viable, maxPosts * 3);
   logStep("📈", `Top ${topCandidates.length} diverse candidates by score`);
 
   // 6. URL enrichment — find better URLs for generic/missing links
