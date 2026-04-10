@@ -2,6 +2,34 @@
 
 ---
 
+## 2026-04-10 — Cycle 79: Ticketmaster URL Fix (28 Events)
+
+### Context
+Good Friday, April 10, 2026 (evening PT). Follow-up cycle after Cycle 78.
+
+### What Was Built
+
+**Proper Ticketmaster slugged URLs for 28 events**
+
+Root cause: The TM Discovery API returns short-form `ticketmaster.com/event/<id>` URLs that return 401 when accessed directly. The prior fallback rewrote these to `ticketmaster.com/search?q=<name>` — a dead end for residents trying to buy tickets.
+
+Fixed `fixTicketmasterUrl()` in `scripts/generate-events.mjs` to construct the canonical TM URL format:
+`/{title-slug}-{city-slug}-california-{MM-DD-YYYY}/event/{id}`
+
+Slug generation: lowercase, strip apostrophes/periods, replace special chars with hyphens. City sourced from the venue's city field (palo-alto for Frost Amphitheatre events, saratoga for Mountain Winery events, etc.).
+
+Patched 28 events in `upcoming-events.json`: Purity Ring (Apr 11), David Byrne (Apr 16, Frost), Paul Simon ×2 (Jun 3–4, Frost), Scotty McCreery (May 7, Mountain Winery), George Benson (May 9), Chelsea Handler (May 15), Yacht Rock Revue (Jun 2), Alex G (May 8), Bay FC vs Ottawa Rapid (Apr 17), 10 Stanford Baseball/Softball games, and others.
+
+### Why This Was the Strongest Move
+28 events now have working ticket links instead of dead search pages. Any resident clicking through from the events feed to buy tickets for Purity Ring tonight or Bay FC next week now lands on the actual event page instead of a frustrating search results page.
+
+### Next 3 Strongest Ideas
+1. **Neighborhood-level filtering for San José** — 214 SJ events (~40% of total). Willow Glen, Almaden, Japantown, Rose Garden are distinct communities. High impact once spring break winds down.
+2. **Post-spring-break cleanup** — After Apr 17, hide the Spring Break Guide card; evaluate retiring spring break mode toggle until fall.
+3. **Mountain View permit data** — All portal URLs return HTTP 000 (connection refused). Retry after Easter weekend.
+
+---
+
 ## 2026-04-10 — Cycle 78: Spring Break Week 2 + SCCL kidFriendly Fix
 
 ### Context
