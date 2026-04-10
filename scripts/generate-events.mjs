@@ -1593,7 +1593,7 @@ function mapTicketmasterEvent(e) {
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
     description: truncate(e.info || e.pleaseNote || ""),
-    url: fixTicketmasterUrl(e.url, e.name),
+    url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",
     kidFriendly: /family|kid|child|disney|cirque/i.test(e.name + genre),
   };
@@ -1601,10 +1601,10 @@ function mapTicketmasterEvent(e) {
 
 // The TM Discovery API sometimes returns short-form URLs like
 // ticketmaster.com/event/<api-id> that 401 publicly.  Working URLs have a
-// slug prefix: ticketmaster.com/<slug>/event/<hex-id>.  When we detect a
-// broken short-form URL, fall back to a TM search so the link still lands
-// somewhere useful.
-function fixTicketmasterUrl(url, eventName) {
+// slug prefix: ticketmaster.com/<slug>/event/<hex-id>.  We reconstruct the
+// proper URL from the event name, city, date, and extracted event ID.
+// Pattern observed: /{name-slug}-{city-slug}-california-{MM-DD-YYYY}/event/{id}
+function fixTicketmasterUrl(url, eventName, city, dateStr) {
   if (!url) return url;
   try {
     const u = new URL(url);
@@ -1612,7 +1612,25 @@ function fixTicketmasterUrl(url, eventName) {
       u.hostname.endsWith("ticketmaster.com") &&
       /^\/event\/[A-Za-z0-9_-]+$/.test(u.pathname)
     ) {
-      return `https://www.ticketmaster.com/search?q=${encodeURIComponent(eventName)}`;
+      const tmId = u.pathname.replace("/event/", "");
+      const titleSlug = eventName
+        .toLowerCase()
+        .replace(/'/g, "")
+        .replace(/[.]/g, "")
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+      const citySlug = city || "san-jose";
+      // Convert YYYY-MM-DD to MM-DD-YYYY for TM URL format
+      const dateParts = (dateStr || "").split("-");
+      const dateSlug = dateParts.length === 3
+        ? `${dateParts[1]}-${dateParts[2]}-${dateParts[0]}`
+        : "";
+      const pathSlug = dateSlug
+        ? `${titleSlug}-${citySlug}-california-${dateSlug}`
+        : titleSlug;
+      return `https://www.ticketmaster.com/${pathSlug}/event/${tmId}`;
     }
   } catch { /* keep original */ }
   return url;
