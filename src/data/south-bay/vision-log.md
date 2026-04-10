@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-04-10 — Cycle 78: Spring Break Week 2 + SCCL kidFriendly Fix
+
+### Context
+Good Friday, April 10, 2026 (late morning PT). Spring break week 1 ends today for SJUSD/PAUSD/MVWSD. Week 2 (FUHSD, Cupertino USD, Campbell USD) starts Monday April 13.
+
+### What Was Built
+
+**Spring Break picks extended to cover week 2**
+
+Regenerated `spring-break-picks.json` with 12 total picks spanning the full Apr 3–17 window. Added week 2 events: Sciencepalooza at SJSU (Apr 11, free), USWNT vs Japan at PayPal Park (Apr 11, paid), Julius Caesar outdoor Shakespeare in Cupertino (Apr 12, free), Earthquakes vs Phoenix Rising FC US Open Cup (Apr 15, paid), Family Craft: Yarn Weaving (Apr 15, free), Earth Day Craft Grades K-8 (Apr 17, free), Il Volo In Concert (Apr 17, paid). Families with kids on week 2 break now get relevant picks starting Monday.
+
+**SCCL kidFriendly text-fallback**
+
+The Bibliocommons API does not populate `ev.audiences` — it uses `definition.audienceIds` (opaque ID strings) with a separate lookup table. The existing `.some(a => /child|teen|family/.test(a.name))` check always returned false since `ev.audiences` is always `[]`. Added a text-based fallback: title + full description checked against `/\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show)\b/i`. All future SCCL events will now correctly mark family-targeted events as kidFriendly.
+
+**Puppet show category patch**
+
+"Wylding Woods Puppet Show" at Milpitas Library (Apr 10, 7pm, ages 2–10, free) was miscategorized as `sports`. Root cause: SCCL API's full untruncated description likely contained a sports keyword that bypassed the puppet show title check. Fixed by: (a) adding `puppet show` as a family-category trigger in `inferCategory` (runs before sports detection), and (b) directly patching the event JSON. Also patched `kidFriendly: false → true`.
+
+**All data refreshed**
+
+Events (542 total, 107 ongoing), digests, meetings, restaurant radar, real estate, permit pulse, weekend picks, around-town.
+
+### Why This Was the Strongest Move
+A parent whose kids are on week 1 break (through today) opening SBS this weekend would have seen no week 2 spring break picks — just a card that ends Apr 10. Now week 2 families see 7 new events starting Monday, including a USWNT soccer match and free science fair. Timely for the exact moment they're planning next week.
+
+### Next 3 Strongest Ideas
+1. **Neighborhood-level filtering for San José** — 214 SJ events (~40% of total). Willow Glen, Almaden, Japantown, Rose Garden are distinct communities. High impact once spring break winds down.
+2. **Post-spring-break cleanup** — After Apr 17, hide the Spring Break Guide card; evaluate retiring spring break mode toggle until fall.
+3. **Mountain View permit data** — All portal URLs return HTTP 000 (connection refused). Retry after Easter weekend.
+
+---
+
 ## 2026-04-10 — Cycle 77: Easter Weekend UX + Event Categorization Fixes
 
 ### Context
