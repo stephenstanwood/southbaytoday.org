@@ -215,6 +215,12 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
+  // If no briefings were generated (e.g. API credits exhausted), preserve existing file
+  if (Object.keys(result).length === 0) {
+    console.warn("\n⚠️  No briefings generated — preserving existing city-briefings.json");
+    return;
+  }
+
   const output = {
     generatedAt: new Date().toISOString(),
     weekLabel: label,

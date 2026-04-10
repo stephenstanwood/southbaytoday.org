@@ -1157,9 +1157,10 @@ function SpringBreakCard({ todayForecast }: { todayForecast?: ForecastDay | null
       )}
 
       {(() => {
-        // Group picks by week
+        // Group picks by week — Week 1 extends through the weekend (Apr 11-12)
+        // so Saturday/Sunday picks (USWNT, Sciencepalooza, Julius Caesar) aren't dropped.
         const weeks = [
-          { label: "Week 1", dateRange: "Apr 3–10", start: "2026-04-03", end: "2026-04-10" },
+          { label: "Week 1", dateRange: "Apr 3–12", start: "2026-04-03", end: "2026-04-12" },
           { label: "Week 2", dateRange: "Apr 13–17", start: "2026-04-13", end: "2026-04-17" },
         ];
         // Sort picks by date

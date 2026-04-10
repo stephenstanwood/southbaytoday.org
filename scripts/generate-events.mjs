@@ -585,7 +585,15 @@ function inferCity(location, address) {
 
 function inferCategory(title, desc, type, venue = "") {
   const t = `${title} ${desc} ${type} ${venue}`.toLowerCase();
-  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(title.toLowerCase())) return "family";
+  const titleLower = title.toLowerCase();
+  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower)) return "family";
+  // Medical/clinical procedure courses are always education, never arts — even if descriptions
+  // contain "performance" (as in "procedural performance") or the venue has "theater" (OR).
+  const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
+  if (isMedicalProcedureEvent) return "education";
+  // Startup pitch events hosted in campus theaters should be community, not arts.
+  const isStartupPitch = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night)\b/.test(t);
+  if (isStartupPitch) return "community";
   // Exhibits, galleries, and book discussions must be checked BEFORE music — descriptions can
   // mention "music" incidentally (e.g. a printed-books exhibit about a collector who liked music)
   // but the primary category is "arts" when these visual/literary cues are present.
@@ -617,7 +625,6 @@ function inferCategory(title, desc, type, venue = "") {
     /\bgames\s+and\s+activities\b/i.test(t);
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
-  const titleLower = title.toLowerCase();
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");
   if (!isBoardGame && (!isLibraryActivityGames && t.includes("game") || /\bsports?\b/.test(t) || t.includes("athletic") || t.includes("golf") || t.includes("tennis") || t.includes("soccer") || t.includes("basketball") || t.includes("baseball") || t.includes("softball") || t.includes("volleyball") || t.includes("swimming") || t.includes("swim meet") || t.includes("track") || t.includes("cross country") || t.includes("lacrosse") || t.includes("football") || t.includes("gymnastics") || t.includes("wrestling") || t.includes("water polo") || t.includes("polo") || t.includes("hockey") || t.includes("rugby") || /\browing\b/.test(t) || t.includes("crew") || t.includes("diving") || t.includes("fencing") || t.includes("skiing") || t.includes("snowboard") || /\bcycling\b/.test(t) || t.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(t)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(t)) || (!isSchoolFundraiser && /\brace\b/.test(t)))) return "sports";
   // Government/civic events at markets are still community events

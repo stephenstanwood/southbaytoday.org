@@ -253,6 +253,12 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
+  // Preserve existing file if no digests were generated (e.g. API credits exhausted)
+  if (Object.keys(digests).length === 0) {
+    console.warn("\n⚠️  No digests generated — preserving existing digests.json");
+    return;
+  }
+
   writeFileSync(OUT_PATH, JSON.stringify(digests, null, 2) + "\n");
   console.log(`\nDone — ${Object.keys(digests).length} digests written to ${OUT_PATH}`);
 }
