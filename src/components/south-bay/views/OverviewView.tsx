@@ -1159,14 +1159,20 @@ function SpringBreakCard({ todayForecast }: { todayForecast?: ForecastDay | null
       {(() => {
         // Group picks by week
         const weeks = [
-          { label: "Week 1", dateRange: "Apr 3–10", start: "2026-04-03", end: "2026-04-10" },
-          { label: "Easter Weekend", dateRange: "Apr 11–13", start: "2026-04-11", end: "2026-04-13" },
+          { label: "Week 1", dateRange: "Apr 3–9", start: "2026-04-03", end: "2026-04-09" },
+          { label: "Easter Weekend", dateRange: "Apr 10–13", start: "2026-04-10", end: "2026-04-13" },
           { label: "Week 2", dateRange: "Apr 14–17", start: "2026-04-14", end: "2026-04-17" },
         ];
         // Sort picks by date
         const sorted = [...picks].sort((a, b) => a.date.localeCompare(b.date));
         return weeks.map((week) => {
-          const weekPicks = sorted.filter((p) => p.date >= week.start && p.date <= week.end);
+          // Skip weeks that have fully passed (all dates are before today)
+          if (week.end < today) return null;
+          // For the current/future week, only show picks from today onward (non-ongoing)
+          const weekPicks = sorted.filter((p) =>
+            p.date >= week.start && p.date <= week.end &&
+            (p.ongoing || p.date >= today)
+          );
           if (weekPicks.length === 0) return null;
           const isCurrentWeek = today >= week.start && today <= week.end;
           return (

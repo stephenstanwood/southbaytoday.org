@@ -351,6 +351,10 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bweekday\s+liturgy\b/i,
   /\bevening\s+zen\b/i,
   /\bexamen\b/i,
+  // Campus religious services (SCU-specific, not public community events)
+  /^\d+(am|pm)\s+mass$/i,
+  /\bprayer\s+service\b/i,
+  /\b11th\s+hour\s+(prayer|calling)\b/i,
   // Collaboration/classroom tool training (not public events)
   /\blucidspark\b/i,
   /\blucidchart\b/i,
@@ -581,7 +585,7 @@ function inferCity(location, address) {
 
 function inferCategory(title, desc, type, venue = "") {
   const t = `${title} ${desc} ${type} ${venue}`.toLowerCase();
-  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children")) return "family";
+  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(title.toLowerCase())) return "family";
   // Exhibits, galleries, and book discussions must be checked BEFORE music — descriptions can
   // mention "music" incidentally (e.g. a printed-books exhibit about a collector who liked music)
   // but the primary category is "arts" when these visual/literary cues are present.
