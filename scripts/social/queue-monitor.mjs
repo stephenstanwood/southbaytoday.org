@@ -16,6 +16,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const POST_DIR = "/tmp/sbs-social";
 
+// Discord DM channel (Stephen's DM channel with the bot)
+const DM_CHANNEL = "1486102002474811524";
+const BOT_TOKEN_FILE = "/Users/stephenstanwood/.claude/channels/discord/.env";
+
 // Load env
 try {
   const envPath = join(__dirname, "..", "..", ".env.local");
@@ -25,6 +29,19 @@ try {
     if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
   }
 } catch {}
+
+function loadBotToken() {
+  try {
+    const lines = readFileSync(BOT_TOKEN_FILE, "utf8").split("\n");
+    for (const line of lines) {
+      if (line.startsWith("DISCORD_BOT_TOKEN=")) {
+        return line.slice("DISCORD_BOT_TOKEN=".length).trim().replace(/^["']|["']$/g, "");
+      }
+    }
+  } catch {}
+  return null;
+}
+
 const QUEUE_THRESHOLD = 40;
 const GENERATE_BATCH = 25;
 
@@ -45,14 +62,31 @@ function countPendingDrafts() {
 }
 
 async function sendDiscordDM(message) {
-  const payload = { content: message };
-  const res = await fetch(process.env.DISCORD_WEBHOOK, {
+  const botToken = loadBotToken();
+  if (!botToken) {
+    console.error("No Discord bot token found — falling back to webhook");
+    // Fallback to webhook if bot token unavailable
+    if (process.env.DISCORD_WEBHOOK) {
+      await fetch(process.env.DISCORD_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message }),
+      });
+    }
+    return;
+  }
+
+  const res = await fetch(`https://discord.com/api/v10/channels/${DM_CHANNEL}/messages`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bot ${botToken}`,
+    },
+    body: JSON.stringify({ content: message }),
   });
   if (!res.ok) {
-    console.error("Discord webhook failed:", res.status);
+    const body = await res.text();
+    console.error("Discord DM failed:", res.status, body);
   }
 }
 
@@ -101,7 +135,7 @@ async function main() {
   const newDraftCount = countPendingDrafts();
 
   // DM Stephen
-  const msg = `📬 **The South Bay Signal — Queue Check**\n` +
+  const msg = `📬 **South Bay Today — Queue Check**\n` +
     `Approved queue: **${queue.length}** (threshold: ${QUEUE_THRESHOLD})\n` +
     `Drafts ready to review: **${newDraftCount}**\n\n` +
     `Swiper: http://10.0.0.234:3456 (or Tailscale: http://100.117.24.89:3456)`;
