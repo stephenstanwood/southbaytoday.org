@@ -1939,9 +1939,10 @@ async function fetchBayFCSchedule() {
 // (not part of SCCL) that are likely on the BiblioCommons platform.
 
 async function fetchMvplEvents() {
-  // BiblioCommons site ID for Mountain View Public Library is "librarypoint"
-  // (not "mountainview" — confirmed from login page HTML)
-  return fetchBiblioEvents("librarypoint", "Mountain View Public Library", () => "mountain-view");
+  // Mountain View Public Library uses LibCal, not BiblioCommons.
+  // The "librarypoint" site is Central Rappahannock Regional Library in Virginia
+  // — NOT Mountain View. Previous mapping was wrong. Disabled pending LibCal ingest.
+  return [];
 }
 
 async function fetchSunnyvaleLibraryEvents() {

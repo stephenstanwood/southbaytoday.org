@@ -103,7 +103,12 @@ Write four variants:
 4. Facebook (max 500 chars including URL) — conversational, can include a bit more context, similar warmth to Threads, no hashtags
 
 Each variant must include the exact URL provided above.
-Use time-appropriate framing ("tonight", "this afternoon", "tomorrow", "this weekend" etc. based on current time).
+
+TIME ACCURACY (critical):
+- ONLY reference a time of day ("morning", "afternoon", "evening", "9 AM", "tonight") if the Time field above has a specific time. NEVER invent one.
+- If Time is empty, omit time-of-day references entirely. Frame by date only ("Tuesday", "this weekend", "April 14").
+- If Date is today's date, you can say "today"; if tomorrow, "tomorrow"; otherwise use the weekday ("Tuesday", "Saturday") or specific date. Do NOT say "this week" for events 4+ days out.
+- Never fabricate opening hours, start times, or end times not present in the data.
 
 HASHTAG RULES (for Bluesky and Threads only):
 - Always include a city hashtag: #SanJose, #Campbell, #LosGatos, #PaloAlto, #Cupertino, #Sunnyvale, #MountainView, #SantaClara, #Milpitas, #Saratoga, #LosAltos

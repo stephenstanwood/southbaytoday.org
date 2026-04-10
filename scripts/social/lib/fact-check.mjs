@@ -61,9 +61,10 @@ URL: ${item.url || "none"}
 Check for:
 1. TIME: Has this event already happened given the current time? (If the event time has passed today, flag it)
 2. VENUE: Does the venue make sense for the city? (e.g., PayPal Park is in San Jose, Cantor is in Stanford/Palo Alto)
-3. CLAIMS: Are there any claims in the title/summary that sound uncertain or potentially wrong? (e.g., calling something a "home opener" without certainty, wrong sport gender, wrong cuisine type)
-4. JARGON: Does the title/summary contain construction/permit jargon that shouldn't appear in public copy? (e.g., "new build", "finish interior", "TI work", "Bp100%", "Sti")
-5. STALENESS: Is the date more than 2 days in the past?
+3. GEOGRAPHY (block): Is this event actually in the South Bay? If the URL, venue, or summary references a place outside California (e.g., Fredericksburg VA, any East Coast city, Central Rappahannock Regional Library, etc.), BLOCK it — our feed only covers the 11 South Bay cities listed above.
+4. CLAIMS: Are there any claims in the title/summary that sound uncertain or potentially wrong? (e.g., calling something a "home opener" without certainty, wrong sport gender, wrong cuisine type)
+5. JARGON: Does the title/summary contain construction/permit jargon that shouldn't appear in public copy? (e.g., "new build", "finish interior", "TI work", "Bp100%", "Sti")
+6. STALENESS: Is the date more than 2 days in the past?
 
 Return a JSON object:
 {
