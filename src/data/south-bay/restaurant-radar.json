@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-10T11:06:06.355Z",
+  "generatedAt": "2026-04-10T14:11:00.739Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -77,7 +77,7 @@
       "id": "2026-107675-CI",
       "city": "san-jose",
       "address": "1725 Branham Ln",
-      "name": "Pollo Loco New",
+      "name": "El Pollo Loco",
       "description": "Pollo Loco (Be 100%) New Sign",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
@@ -90,7 +90,7 @@
       "id": "2026-111819-CI",
       "city": "san-jose",
       "address": "1200 El Paseo De Saratoga",
-      "name": "Sweetgreens",
+      "name": "Sweetgreen",
       "description": "Sweetgreens (E 100%) Sign",
       "workType": "Tenant Improvement",
       "subtype": "Restaurant",
@@ -129,13 +129,14 @@
       "id": "pa-552 Waverley St-2026-04-09",
       "city": "palo-alto",
       "address": "552 Waverley St",
-      "name": null,
+      "name": "Bon Broth SF",
       "description": "BON BROTH SF Tenant Improvement Restaurant, New Exterior, New kitchen equipme…",
       "workType": "Building Permit",
       "signal": "activity",
       "label": "Renovation",
       "valuation": 0,
-      "date": "2026-04-09"
+      "date": "2026-04-09",
+      "blurb": "San Francisco bone broth and Vietnamese soup restaurant fitting out a new space on Waverley St"
     },
     {
       "id": "pa-388 Cambridge Av-2026-04-08",
@@ -151,6 +152,18 @@
       "blurb": "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto"
     },
     {
+      "id": "pa-341 California Av-2026-02-26",
+      "city": "palo-alto",
+      "address": "341 California Av",
+      "name": null,
+      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
+      "workType": "Entitlement",
+      "signal": "activity",
+      "label": "Conditional Use",
+      "valuation": 0,
+      "date": "2026-02-26"
+    },
+    {
       "id": "pa-401 Webster St-2026-02-26",
       "city": "palo-alto",
       "address": "401 Webster St",
@@ -162,18 +175,6 @@
       "valuation": 0,
       "date": "2026-02-26",
       "blurb": "Neighborhood American restaurant on Webster St undergoing a kitchen remodel"
-    },
-    {
-      "id": "pa-341 California Av-2026-02-26",
-      "city": "palo-alto",
-      "address": "341 California Av",
-      "name": null,
-      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
-      "workType": "Entitlement",
-      "signal": "activity",
-      "label": "Conditional Use",
-      "valuation": 0,
-      "date": "2026-02-26"
     },
     {
       "id": "pa-338 University Av-2026-02-25",

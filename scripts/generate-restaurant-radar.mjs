@@ -37,6 +37,9 @@ const MANUAL_OVERRIDES = {
   "palo-alto:407 Lytton Av": { blurb: "Japanese bistro opening in downtown Palo Alto" },
   "palo-alto:401 Webster St": { blurb: "Neighborhood American restaurant on Webster St undergoing a kitchen remodel" },
   "palo-alto:388 Cambridge Av": { blurb: "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto" },
+  "palo-alto:552 Waverley St": { name: "Bon Broth SF", blurb: "San Francisco bone broth and Vietnamese soup restaurant fitting out a new space on Waverley St" },
+  "san-jose:1725 Branham Ln": { name: "El Pollo Loco" },
+  "san-jose:1200 El Paseo De Saratoga": { name: "Sweetgreen" },
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -106,6 +109,8 @@ function extractName(raw) {
   // Strip trailing noise: "Ti", "#A16", "#1808 Restaurant Ti", "Interior", etc.
   s = s.replace(/\s+#\s*\d+.*$/, "").trim();
   s = s.replace(/\s+(Interior|Restaurant|Tenant|Improvement|Ti|Demo|Sign|Tbd)\b.*$/i, "").trim();
+  // Strip dangling permit words left after previous stripping (e.g. "Pollo Loco New" ← from "New Sign")
+  s = s.replace(/\s+(New|Old|Existing|Remodel)\s*$/i, "").trim();
 
   // Strip trailing punctuation/spaces
   s = s.replace(/[,\s]+$/, "").trim();
@@ -178,6 +183,18 @@ function extractPaName(desc) {
     // Skip generic codes
     if (!/^(RES|COM|C1|REV|MEP|OTC|MFR|SFR)$/i.test(name) && name.length > 3 && name.length < 40) {
       return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+  }
+  // "BON BROTH SF Tenant Improvement ..." — all-caps name before noise keywords
+  const allCapsLeadMatch = desc.match(/^([A-Z][A-Z\s'&]{2,39}?)\s+(Tenant|TI|Restaurant|Kitchen|Cafe|Bakery|Bar|Brew)/);
+  if (allCapsLeadMatch) {
+    const name = allCapsLeadMatch[1].trim();
+    if (!/^(RES|COM|C1|REV|MEP|OTC|REQUEST)/i.test(name) && name.length > 3) {
+      return name.toLowerCase()
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+        .replace(/\bSf\b/g, "SF")
+        .replace(/\bNyc\b/g, "NYC")
+        .replace(/\bBbq\b/g, "BBQ");
     }
   }
   return null;
@@ -462,7 +479,7 @@ async function main() {
     const key = `${item.city ?? ""}:${item.address}`;
     const override = MANUAL_OVERRIDES[key];
     if (override) {
-      if (override.name && !item.name) item.name = override.name;
+      if (override.name) item.name = override.name;  // name override always wins
       if (override.blurb) item.blurb = item.blurb ?? override.blurb;
     }
   }
