@@ -586,7 +586,7 @@ function inferCity(location, address) {
 function inferCategory(title, desc, type, venue = "") {
   const t = `${title} ${desc} ${type} ${venue}`.toLowerCase();
   const titleLower = title.toLowerCase();
-  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower)) return "family";
+  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t)) return "family";
   // Medical/clinical procedure courses are always education, never arts — even if descriptions
   // contain "performance" (as in "procedural performance") or the venue has "theater" (OR).
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
@@ -1376,7 +1376,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           kidFriendly: (ev.audiences || []).some((a) => {
             const name = typeof a === "string" ? a : a?.name || "";
             return /child|teen|family|baby|toddler/i.test(name);
-          }),
+          }) || /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show)\b/i.test(title + " " + stripHtml(desc)),
         };
       })
       .filter(Boolean);
@@ -1472,7 +1472,7 @@ async function fetchScclEvents() {
           kidFriendly: (ev.audiences || []).some((a) => {
             const name = typeof a === "string" ? a : a?.name || "";
             return /child|teen|family|baby|toddler/i.test(name);
-          }),
+          }) || /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show)\b/i.test(title + " " + stripHtml(desc)),
         });
       }
     }
