@@ -57,9 +57,11 @@ function getWeekendRange() {
   const sun = new Date(fri);
   sun.setDate(fri.getDate() + 2);
 
+  // Use local date string (en-CA gives YYYY-MM-DD) so start/end match the label's local dates
+  const toLocalIso = (d) => d.toLocaleDateString("en-CA");
   return {
-    start: fri.toISOString().split("T")[0],
-    end: sun.toISOString().split("T")[0],
+    start: toLocalIso(fri),
+    end: toLocalIso(sun),
     label: `${fri.toLocaleDateString("en-US", { month: "long", day: "numeric" })} – ${sun.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`,
   };
 }
