@@ -1,15 +1,26 @@
 {
   "flags": [
     {
-      "business_id": "PR0433800",
-      "name": "Voyager Craft Coffee",
-      "city": "San Jose",
-      "address": "111 W St John St # 100",
-      "date": "2026-04-08",
-      "score": 88,
+      "business_id": "PR0300107",
+      "name": "Wienerschnitzel",
+      "city": "Campbell",
+      "address": "1940 S Bascom Av",
+      "date": "2026-04-09",
+      "score": null,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Hot and cold water available"
+      "summary": "Facility is hereby closed due to evidence of a pest/vermin infestation"
+    },
+    {
+      "business_id": "PR0301011",
+      "name": "Banh Mi Oven (downtown)",
+      "city": "San Jose",
+      "address": "221 E San Fernando St",
+      "date": "2026-04-08",
+      "score": null,
+      "result": "R",
+      "type": "RISK FACTOR INSPECTION",
+      "summary": "This is a risk factor inspection to verify permit status"
     },
     {
       "business_id": "PR0413482",
@@ -23,15 +34,15 @@
       "summary": "- Two or more major violations were observed during the routine inspection"
     },
     {
-      "business_id": "PR0301011",
-      "name": "Banh Mi Oven (downtown)",
+      "business_id": "PR0433800",
+      "name": "Voyager Craft Coffee",
       "city": "San Jose",
-      "address": "221 E San Fernando St",
+      "address": "111 W St John St # 100",
       "date": "2026-04-08",
-      "score": null,
+      "score": 88,
       "result": "R",
-      "type": "RISK FACTOR INSPECTION",
-      "summary": "This is a risk factor inspection to verify permit status"
+      "type": "ROUTINE INSPECTION",
+      "summary": "Hot and cold water available"
     },
     {
       "business_id": "PR0375547",
@@ -56,12 +67,12 @@
       "summary": "No rodents, insects, birds, or animals"
     },
     {
-      "business_id": "PR0381563",
-      "name": "Mediterranean Wraps",
-      "city": "Palo Alto",
-      "address": "433 S California Av",
+      "business_id": "PR0304948",
+      "name": "99 Ranch Market-bakery",
+      "city": "San Jose",
+      "address": "1688 Hostetter Rd E",
       "date": "2026-04-06",
-      "score": 78,
+      "score": 82,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper cooling methods"
@@ -78,48 +89,15 @@
       "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
-      "business_id": "PR0373291",
-      "name": "Shawarmaji",
-      "city": "Santa Clara",
-      "address": "2281 The Alameda",
+      "business_id": "PR0330020",
+      "name": "99 Ranch Market #66-restaurant",
+      "city": "Milpitas",
+      "address": "338 Barber Ln",
       "date": "2026-04-06",
-      "score": 82,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "The facility is hereby CLOSED due to major violation (K07) and lack of functional refrigeration units to accommodate operations"
-    },
-    {
-      "business_id": "PR0304948",
-      "name": "99 Ranch Market-bakery",
-      "city": "San Jose",
-      "address": "1688 Hostetter Rd E",
-      "date": "2026-04-06",
-      "score": 82,
+      "score": 75,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0446776",
-      "name": "Moontea",
-      "city": "Sunnyvale",
-      "address": "513 S Pastoria Av",
-      "date": "2026-04-06",
-      "score": 88,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is closed due to failure to provide documentation verifying approved source"
-    },
-    {
-      "business_id": "PR0369277",
-      "name": "Con Azucar Cafe",
-      "city": "San Jose",
-      "address": "5651 Silver Creek Valley Rd",
-      "date": "2026-04-06",
-      "score": 69,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Note: Food safety manager certificate: Uriel Contreras - 4/27/2028"
+      "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
       "business_id": "PR0330018",
@@ -128,17 +106,6 @@
       "address": "338 Barber Ln",
       "date": "2026-04-06",
       "score": 80,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Two or more major violations were cited during the routine inspection"
-    },
-    {
-      "business_id": "PR0330020",
-      "name": "99 Ranch Market #66-restaurant",
-      "city": "Milpitas",
-      "address": "338 Barber Ln",
-      "date": "2026-04-06",
-      "score": 75,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
@@ -155,15 +122,48 @@
       "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
-      "business_id": "PR0414785",
-      "name": "Nha Hotspot",
-      "city": "San Jose",
-      "address": "2133 Morrill Av",
-      "date": "2026-04-03",
-      "score": 71,
+      "business_id": "PR0446776",
+      "name": "Moontea",
+      "city": "Sunnyvale",
+      "address": "513 S Pastoria Av",
+      "date": "2026-04-06",
+      "score": 88,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is closed due to failure to provide documentation verifying approved source"
+    },
+    {
+      "business_id": "PR0381563",
+      "name": "Mediterranean Wraps",
+      "city": "Palo Alto",
+      "address": "433 S California Av",
+      "date": "2026-04-06",
+      "score": 78,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0373291",
+      "name": "Shawarmaji",
+      "city": "Santa Clara",
+      "address": "2281 The Alameda",
+      "date": "2026-04-06",
+      "score": 82,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "The facility is hereby CLOSED due to major violation (K07) and lack of functional refrigeration units to accommodate operations"
+    },
+    {
+      "business_id": "PR0369277",
+      "name": "Con Azucar Cafe",
+      "city": "San Jose",
+      "address": "5651 Silver Creek Valley Rd",
+      "date": "2026-04-06",
+      "score": 69,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Note: Food safety manager certificate: Uriel Contreras - 4/27/2028"
     },
     {
       "business_id": "PR0306867",
@@ -174,18 +174,18 @@
       "score": 68,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "No rodents, insects, birds, or animals"
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
-      "business_id": "PR0436796",
-      "name": "Dduk Dabang",
+      "business_id": "PR0414785",
+      "name": "Nha Hotspot",
       "city": "San Jose",
-      "address": "1710 Oakland Rd",
-      "date": "2026-04-02",
-      "score": null,
-      "result": "R",
+      "address": "2133 Morrill Av",
+      "date": "2026-04-03",
+      "score": 71,
+      "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Sewage and wastewater properly disposed"
+      "summary": "No rodents, insects, birds, or animals"
     },
     {
       "business_id": "PR0401597",
@@ -199,51 +199,18 @@
       "summary": "Sewage and wastewater properly disposed"
     },
     {
-      "business_id": "PR0376949",
-      "name": "Lee's Sandwiches",
+      "business_id": "PR0436796",
+      "name": "Dduk Dabang",
       "city": "San Jose",
-      "address": "4060 Monterey Rd",
-      "date": "2026-04-02",
-      "score": null,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
-    },
-    {
-      "business_id": "PR0360837",
-      "name": "Japacurry",
-      "city": "San Jose",
-      "address": "505 E San Carlos St # B",
-      "date": "2026-04-02",
-      "score": 63,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0376138",
-      "name": "Marufuku Ramen",
-      "city": "Campbell",
-      "address": "1875 S Bascom Av # 300",
-      "date": "2026-04-02",
-      "score": 79,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0303915",
-      "name": "Asia Village Restaurant",
-      "city": "Sunnyvale",
-      "address": "747 S Wolfe Rd",
+      "address": "1710 Oakland Rd",
       "date": "2026-04-02",
       "score": null,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "This inspection was in conjunction with CO0159271"
+      "summary": "Sewage and wastewater properly disposed"
     },
     {
-      "business_id": "PR0430661",
+      "business_id": "PR0360491",
       "name": "Sjs - H Mart",
       "city": "San Jose",
       "address": "1710 Oakland Rd",
@@ -265,7 +232,7 @@
       "summary": "Sewage and wastewater properly disposed"
     },
     {
-      "business_id": "PR0360491",
+      "business_id": "PR0430661",
       "name": "Sjs - H Mart",
       "city": "San Jose",
       "address": "1710 Oakland Rd",
@@ -276,15 +243,59 @@
       "summary": "Sewage and wastewater properly disposed"
     },
     {
-      "business_id": "PR0367405",
-      "name": "Nam Giao Restaurant",
+      "business_id": "PR0376949",
+      "name": "Lee's Sandwiches",
       "city": "San Jose",
-      "address": "2066 Tully Rd",
-      "date": "2026-04-01",
-      "score": 59,
+      "address": "4060 Monterey Rd",
+      "date": "2026-04-02",
+      "score": null,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Adequate handwash facilities supplied, accessible"
+    },
+    {
+      "business_id": "PR0376138",
+      "name": "Marufuku Ramen",
+      "city": "Campbell",
+      "address": "1875 S Bascom Av # 300",
+      "date": "2026-04-02",
+      "score": 79,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0360837",
+      "name": "Japacurry",
+      "city": "San Jose",
+      "address": "505 E San Carlos St # B",
+      "date": "2026-04-02",
+      "score": 63,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0303915",
+      "name": "Asia Village Restaurant",
+      "city": "Sunnyvale",
+      "address": "747 S Wolfe Rd",
+      "date": "2026-04-02",
+      "score": null,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "- Facility is hereby closed due to evidence of a vermin infestation"
+      "summary": "This inspection was in conjunction with CO0159271"
+    },
+    {
+      "business_id": "PR0302427",
+      "name": "Benihana Of Tokyo",
+      "city": "Cupertino",
+      "address": "10123 N Wolfe Rd 2074",
+      "date": "2026-04-01",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
     },
     {
       "business_id": "PR0401114",
@@ -309,29 +320,18 @@
       "summary": "Hot and cold water available"
     },
     {
-      "business_id": "PR0302427",
-      "name": "Benihana Of Tokyo",
-      "city": "Cupertino",
-      "address": "10123 N Wolfe Rd 2074",
+      "business_id": "PR0433703",
+      "name": "Tacos Al Vapor",
+      "city": "Los Altos",
+      "address": "131 Main St",
       "date": "2026-04-01",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is CLOSED due to vermin infestation and shall cease all food operations"
-    },
-    {
-      "business_id": "PR0301665",
-      "name": "Guadalajara De Dia",
-      "city": "San Jose",
-      "address": "5278 Monterey Rd # D",
-      "date": "2026-04-01",
-      "score": 79,
+      "score": 67,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
+      "summary": "It was discussed with the PIC that the mailing address is incorrect and requested mailed information be sent to the store"
     }
   ],
-  "generatedAt": "2026-04-09T23:08:55.027Z",
+  "generatedAt": "2026-04-10T11:07:45.623Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

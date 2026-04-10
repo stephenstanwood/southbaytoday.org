@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-09T23:10:40.077Z",
+  "generatedAt": "2026-04-10T11:06:06.355Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -10,7 +10,7 @@
       "id": "2026-107055-CI",
       "city": "san-jose",
       "address": "2040 N 1st St",
-      "name": "La Corona Taqueria",
+      "name": "Mosaic Restaurant and Ultra Lounge",
       "description": "(Bp100%) Demo",
       "workType": "Demolition",
       "subtype": "Restaurant",
@@ -87,6 +87,19 @@
       "date": "2026-04-02"
     },
     {
+      "id": "2026-111819-CI",
+      "city": "san-jose",
+      "address": "1200 El Paseo De Saratoga",
+      "name": "Sweetgreens",
+      "description": "Sweetgreens (E 100%) Sign",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "Renovation",
+      "valuation": 0,
+      "date": "2026-04-08"
+    },
+    {
       "id": "pa-407 Lytton Av-2026-03-19",
       "city": "palo-alto",
       "address": "407 Lytton Av",
@@ -113,6 +126,18 @@
       "blurb": "Japanese restaurant fitting out a new space on Lytton Ave"
     },
     {
+      "id": "pa-552 Waverley St-2026-04-09",
+      "city": "palo-alto",
+      "address": "552 Waverley St",
+      "name": null,
+      "description": "BON BROTH SF Tenant Improvement Restaurant, New Exterior, New kitchen equipme…",
+      "workType": "Building Permit",
+      "signal": "activity",
+      "label": "Renovation",
+      "valuation": 0,
+      "date": "2026-04-09"
+    },
+    {
       "id": "pa-388 Cambridge Av-2026-04-08",
       "city": "palo-alto",
       "address": "388 Cambridge Av",
@@ -126,18 +151,6 @@
       "blurb": "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto"
     },
     {
-      "id": "pa-341 California Av-2026-02-26",
-      "city": "palo-alto",
-      "address": "341 California Av",
-      "name": null,
-      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
-      "workType": "Entitlement",
-      "signal": "activity",
-      "label": "Conditional Use",
-      "valuation": 0,
-      "date": "2026-02-26"
-    },
-    {
       "id": "pa-401 Webster St-2026-02-26",
       "city": "palo-alto",
       "address": "401 Webster St",
@@ -149,6 +162,18 @@
       "valuation": 0,
       "date": "2026-02-26",
       "blurb": "Neighborhood American restaurant on Webster St undergoing a kitchen remodel"
+    },
+    {
+      "id": "pa-341 California Av-2026-02-26",
+      "city": "palo-alto",
+      "address": "341 California Av",
+      "name": null,
+      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
+      "workType": "Entitlement",
+      "signal": "activity",
+      "label": "Conditional Use",
+      "valuation": 0,
+      "date": "2026-02-26"
     },
     {
       "id": "pa-338 University Av-2026-02-25",

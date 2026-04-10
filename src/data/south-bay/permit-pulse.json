@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-09T23:09:24.818Z",
+      "generatedAt": "2026-04-10T11:08:16.851Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 2 – Apr 9",
+      "dateRange": "Apr 3 – Apr 10",
       "stats": {
-        "total": 332,
-        "notable": 27,
-        "newUnits": 89,
-        "totalValuation": 24645282
+        "total": 355,
+        "notable": 30,
+        "newUnits": 88,
+        "totalValuation": 34785009
       },
       "permits": [
         {
@@ -49,6 +49,18 @@
           "units": 6,
           "issueDate": "2026-04-07",
           "subtype": "Townhouse"
+        },
+        {
+          "id": "2024-113033-RS",
+          "address": "3327 Delta Rd",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2 Sty Sfr",
+          "valuation": 722275,
+          "units": 1,
+          "issueDate": "2026-04-08",
+          "subtype": "Single-Family"
         },
         {
           "id": "2026-107126-RS",
@@ -99,18 +111,6 @@
           "subtype": "Single-Family"
         },
         {
-          "id": "2025-097409-RS",
-          "address": "390 Atlanta Av",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Demo Detached Garage & Build New Detached adu W/ Garage",
-          "valuation": 185508,
-          "units": 1,
-          "issueDate": "2026-04-03",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2024-066797-RS",
           "address": "885 Curtner Av #2",
           "category": "residential-new",
@@ -123,79 +123,67 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-092358-RS",
-          "address": "5189 Doyle Rd #2",
+          "id": "2026-107210-RS",
+          "address": "148 N Capitol Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 152181,
+          "description": "Lot 3 (Model 3) New adu",
+          "valuation": 131552,
           "units": 1,
-          "issueDate": "2026-04-03",
+          "issueDate": "2026-04-06",
           "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-09T23:09:27.133Z",
+      "generatedAt": "2026-04-10T11:08:19.105Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 2 – Apr 9",
+      "dateRange": "Apr 3 – Apr 10",
       "stats": {
-        "total": 113,
+        "total": 114,
         "notable": 11,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-00864",
-          "address": "4130 Thain Wy",
+          "id": "26BLD-00894",
+          "address": "2487 Burnham Wy",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
-          "description": "MF: Remove and replace approx. 292 sf of siding and trim at chimney.  Replace wood shingle siding, underlayment, and plywood",
+          "description": "Res: EV charger installation",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-02",
+          "issueDate": "2026-04-06",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00861",
-          "address": "3132 Alexis Dr",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Temporary power (underground)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-02",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00872",
-          "address": "841 Ames Av",
+          "id": "26BLD-00905",
+          "address": "541 Maybell Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
           "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-02",
+          "issueDate": "2026-04-07",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00863",
-          "address": "1221 Hopkins Av",
+          "id": "26BLD-00931",
+          "address": "250 Churchill Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
           "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-02",
+          "issueDate": "2026-04-09",
           "subtype": "Permit Issued"
         },
         {
@@ -223,30 +211,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00909",
-          "address": "837 Ilima Ct",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-07",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00905",
-          "address": "541 Maybell Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-07",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00876",
           "address": "3445 Louis Rd",
           "category": "residential-large",
@@ -259,6 +223,30 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-00938",
+          "address": "1234 Pitman Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-09",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00909",
+          "address": "837 Ilima Ct",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-07",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26PLN-00074",
           "address": "1053 E Meadow Cir",
           "category": "entitlement",
@@ -268,6 +256,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-07",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00077",
+          "address": "421 Kipling St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a new six foot tall white fence along the drive aisle of the property leading to the rear parking lot.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-09",
           "subtype": "Over the Counter Approved"
         }
       ]
