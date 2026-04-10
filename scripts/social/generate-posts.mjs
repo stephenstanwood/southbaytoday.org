@@ -374,6 +374,7 @@ async function main() {
           venue: item.venue,
           category: item.category,
           score: item.score,
+          date: item.date,
           time: item.time,
           url: item.url,
           planUrl: item.planUrl || null,
