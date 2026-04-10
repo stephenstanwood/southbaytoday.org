@@ -53,6 +53,30 @@ export async function factCheck(item, currentTime = new Date()) {
     };
   }
 
+  // Hard block: incomplete/truncated venue names (e.g., "Los" instead of
+  // "Los Gatos Town Hall"). Heuristic: venue <= 4 chars OR a single bare word
+  // that's also a city prefix suggests a parsing error, not a real venue.
+  const venue = (item.venue || "").trim();
+  if (venue && venue.length <= 4) {
+    return {
+      ok: false,
+      issues: [`Venue name looks truncated ("${venue}") — likely a data parsing error`],
+      severity: "block",
+      item,
+    };
+  }
+
+  // Hard block: weak/missing summary makes it impossible to write accurate copy
+  const summary = (item.summary || "").trim();
+  if (!summary || summary.length < 20) {
+    return {
+      ok: false,
+      issues: ["Summary is missing or too short — can't write accurate copy"],
+      severity: "block",
+      item,
+    };
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     logError("ANTHROPIC_API_KEY not set — skipping fact check");
