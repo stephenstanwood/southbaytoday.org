@@ -1086,13 +1086,54 @@ async function fetchSjJazzEvents() {
 async function fetchMontalvoEvents() {
   console.log("  ⏳ Montalvo Arts Center...");
   try {
-    const xml = await fetchText("https://montalvoarts.org/feed/");
-    // Montalvo RSS is a blog/news feed — articles are about past performances,
-    // artist residencies, and internal announcements (not upcoming events with dates/times).
-    // Skip for now; Montalvo is covered in the recurring events data (events-data.ts).
-    const items = parseRssItems(xml);
-    console.log(`  ✅ Montalvo Arts Center: 0 events (blog feed — no upcoming event dates)`);
-    return [];
+    const html = await fetchText("https://montalvoarts.org/experience/events-calendar/");
+    // Extract JSON-LD blocks from the page
+    const jsonLdMatches = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
+    const now = new Date();
+    const events = [];
+
+    for (const match of jsonLdMatches) {
+      let data;
+      try { data = JSON.parse(match[1]); } catch { continue; }
+      const graph = data["@graph"] || (data["@type"] ? [data] : []);
+      for (const item of graph) {
+        if (!["Event", "EventSeries"].includes(item["@type"])) continue;
+        const name = item.name;
+        const startDate = item.startDate;
+        const url = item.url;
+        if (!name || !startDate || !url) continue;
+        const start = new Date(startDate);
+        if (isNaN(start.getTime()) || start < now) continue;
+        events.push({
+          id: h("montalvo", url, startDate),
+          title: name,
+          date: isoDate(start),
+          displayDate: displayDate(start),
+          time: displayTime(start),
+          endTime: null,
+          venue: "Montalvo Arts Center",
+          address: "15400 Montalvo Rd, Saratoga",
+          city: "saratoga",
+          category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
+          cost: "paid",
+          description: item.description || null,
+          url,
+          source: "Montalvo Arts Center",
+          kidFriendly: false,
+        });
+      }
+    }
+
+    // Dedupe by URL (EventSeries and its nested Event may both appear)
+    const seen = new Set();
+    const unique = events.filter((e) => {
+      if (seen.has(e.url)) return false;
+      seen.add(e.url);
+      return true;
+    });
+
+    console.log(`  ✅ Montalvo Arts Center: ${unique.length} events`);
+    return unique;
   } catch (err) {
     console.log(`  ⚠️  Montalvo Arts Center: ${err.message}`);
     return [];
