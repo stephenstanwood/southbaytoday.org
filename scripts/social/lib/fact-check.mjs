@@ -38,12 +38,17 @@ export async function factCheck(item, currentTime = new Date()) {
   loadEnv();
 
   // Hard block: events without a specific start time are untrustworthy for
-  // time-sensitive social posts. Ongoing exhibits (category: exhibit/ongoing)
-  // are the only allowed exception.
+  // time-sensitive social posts. Exhibitions, tours, and other ongoing
+  // things legitimately don't have a single time — allow those through.
   const timeStr = (item.time || "").trim().toLowerCase();
   const missingTime = !timeStr || timeStr === "tbd" || timeStr === "tba" || timeStr === "unknown";
-  const isOngoing = /exhibit|ongoing|all day/i.test(item.category || "") ||
-    /ongoing|all day|on view/i.test(item.summary || "");
+  const titleLower = (item.title || "").toLowerCase();
+  const catLower = (item.category || "").toLowerCase();
+  const summaryLower = (item.summary || "").toLowerCase();
+  const isOngoing =
+    /exhibit|exhibition|ongoing|all day|on view|tour\b|installation|show /.test(titleLower) ||
+    /exhibit|ongoing|all day|museum|art|gallery/.test(catLower) ||
+    /exhibit|exhibition|ongoing|all day|on view|runs through|open daily/.test(summaryLower);
   if (missingTime && !isOngoing) {
     return {
       ok: false,
