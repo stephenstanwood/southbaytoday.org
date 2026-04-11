@@ -335,8 +335,28 @@ async function main() {
   const dropped = scored.length - viable.length;
   if (dropped > 0) logStep("🚫", `Dropped ${dropped} candidates with negative score (blocked)`);
 
-  // 5. Diverse selection (oversample — editorial filter will cut)
-  const diversePool = diverseSelect(viable, maxPosts * 4);
+  // 4c. Drop items with no start time that won't survive fact-check anyway.
+  //     Ongoing/exhibition items pass even without a time (factCheck allows them).
+  const withTime = viable.filter((c) => {
+    const t = (c.time || "").trim().toLowerCase();
+    const missingTime = !t || t === "tbd" || t === "tba" || t === "unknown";
+    if (!missingTime) return true;
+    const titleLower = (c.title || "").toLowerCase();
+    const catLower = (c.category || "").toLowerCase();
+    const summaryLower = (c.summary || "").toLowerCase();
+    return (
+      /exhibit|exhibition|ongoing|all day|on view|tour\b|installation|show /.test(titleLower) ||
+      /exhibit|ongoing|all day|museum|art|gallery/.test(catLower) ||
+      /exhibit|exhibition|ongoing|all day|on view|runs through|open daily/.test(summaryLower)
+    );
+  });
+  const droppedNoTime = viable.length - withTime.length;
+  if (droppedNoTime > 0) logStep("⏰", `Dropped ${droppedNoTime} candidates with no start time`);
+
+  // 5. Diverse selection (oversample — editorial filter will cut).
+  //     allowRepeatVenues: true so the pool isn't starved by venue uniqueness;
+  //     the editorial filter handles final dedup.
+  const diversePool = diverseSelect(withTime, maxPosts * 4, { allowRepeatVenues: true });
   logStep("📈", `Top ${diversePool.length} diverse candidates by score`);
 
   // 5b. Editorial pre-filter — one Claude call picks the top (maxPosts * 1.5)

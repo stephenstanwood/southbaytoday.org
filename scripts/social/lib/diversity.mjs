@@ -31,7 +31,7 @@ export function diverseSelect(candidates, targetCount, opts = {}) {
   const catCounts = {};
   const sourceCounts = {};
   const dayCounts = {};
-  const venuesSeen = new Set();
+  const venuesSeen = new Map();
 
   for (const item of candidates) {
     if (selected.length >= targetCount) break;
@@ -54,15 +54,16 @@ export function diverseSelect(candidates, targetCount, opts = {}) {
     // Check per-day cap (spreads posts across days 2-14)
     if ((dayCounts[day] || 0) >= maxPerDay) continue;
 
-    // Skip duplicate venues
-    if (venue && venue.length > 3 && venuesSeen.has(venue)) continue;
+    // Skip duplicate venues (relaxed when building candidate pools — editorial filter handles final dedup)
+    const maxSameVenue = opts.maxSameVenue ?? 1;
+    if (!opts.allowRepeatVenues && venue && venue.length > 3 && (venuesSeen.get(venue) || 0) >= maxSameVenue) continue;
 
     selected.push(item);
     cityCounts[city] = (cityCounts[city] || 0) + 1;
     catCounts[cat] = (catCounts[cat] || 0) + 1;
     sourceCounts[source] = (sourceCounts[source] || 0) + 1;
     dayCounts[day] = (dayCounts[day] || 0) + 1;
-    if (venue) venuesSeen.add(venue);
+    if (venue) venuesSeen.set(venue, (venuesSeen.get(venue) || 0) + 1);
   }
 
   // If we haven't met minimum city diversity, try swapping
