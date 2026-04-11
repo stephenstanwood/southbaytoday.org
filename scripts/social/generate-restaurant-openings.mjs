@@ -431,6 +431,26 @@ async function main() {
   for (const p of posts) {
     console.log(`  • ${p.post.item.name} — ${p.post.item.cityName} → ${p.post.targetUrl}`);
   }
+
+  // Commit + push short-urls.json immediately so the /go/ links referenced
+  // in the newly-generated copy actually resolve on Vercel. Waiting for the
+  // publisher's auto-commit caused broken links for hours (2026-04-11).
+  if (posts.length > 0) {
+    try {
+      const { execSync } = await import("node:child_process");
+      const cwd = ROOT;
+      execSync("git add src/data/south-bay/short-urls.json", { cwd, stdio: "pipe" });
+      const staged = execSync("git diff --cached --name-only", { cwd }).toString().trim();
+      if (staged) {
+        execSync(`git commit -m "data: short urls for ${posts.length} new restaurant opening(s)"`, { cwd, stdio: "pipe" });
+        execSync("git pull --rebase", { cwd, stdio: "pipe" });
+        execSync("git push", { cwd, stdio: "pipe" });
+        console.log("✅ Committed + pushed short-urls.json");
+      }
+    } catch (e) {
+      console.warn("⚠️  Failed to auto-commit short-urls.json:", e.message);
+    }
+  }
 }
 
 main().catch((err) => {
