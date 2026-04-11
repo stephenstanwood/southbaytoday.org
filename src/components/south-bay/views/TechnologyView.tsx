@@ -708,7 +708,7 @@ function RecentlyFundedSection() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$3.2B+</div>
+          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$4.3B+</div>
           <div style={{ fontSize: 10, color: "#6b21a8", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>Q1 2026 RAISED</div>
         </div>
         <div
@@ -734,7 +734,7 @@ function RecentlyFundedSection() {
           }}
         >
           <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)", marginBottom: 3 }}>Q1 2026 — South Bay VC wrap</div>
-          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>Three $500M rounds (Nexthop AI, MatX, Ayar Labs) anchored the quarter. Chips, robotics, and AI networking dominated deal flow.</div>
+          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>Four $500M rounds (Nexthop AI, MatX, Ayar Labs, Mind Robotics) anchored a record quarter. Chips, robotics, and AI networking dominated deal flow.</div>
         </div>
       </div>
 
