@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-04-11 — Cycle 82: Fix JSON Corruption + Montalvo Events via JSON-LD
+
+### Context
+Saturday April 11, 2026 — Easter weekend. Automated data refresh cycle.
+
+### What Was Built
+
+**Critical fix: upcoming-events.json corruption**
+
+The CHM "Read Me" event description (line 682) used Unicode curly/smart quotes (U+201C `"`, U+201D `"`) as JSON string delimiters instead of ASCII straight-quotes. This made the entire 475-event file unparseable — every resident who opened the site would have seen no events at all. Fixed by rewriting the offending line with proper ASCII quotes, then fully regenerating via the pipeline.
+
+**Montalvo Arts Center: switched from RSS to JSON-LD**
+
+The `fetchMontalvoEvents` function was pointing at Montalvo's blog RSS feed, which contains no event dates and returned 0 events. Rewrote the function to fetch the events calendar page (`/experience/events-calendar/`) and parse `<script type="application/ld+json">` blocks, which contain full `Event`/`EventSeries` records with names, dates, URLs, and descriptions. Now yields 4 upcoming events (Marshall Crenshaw, Best of SF Comedy Competition, The Everly Set, Vienna Teng).
+
+**Full data refresh:** all 14 pipeline sources refreshed.
+
+### Why This Was the Strongest Move
+A corrupted events JSON is a P0 — every resident sees a broken site with no events. Fixing it first was the only correct call. The Montalvo fix adds real cultural events from a major Saratoga venue that had been silently returning nothing for every previous cycle.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Last entry: Aria Networks (Apr 7). Watch for Apr 8–14 South Bay funding announcements.
+2. **Neighborhood-level filtering for San José** — 217+ SJ events. Willow Glen, Almaden, Japantown, Rose Garden filtering would make SJ browsing far more navigable.
+3. **Permit Pulse: Mountain View** — Try `cityofmountainview.gov/services/permits` directly next cycle (data.mountainview.gov DNS fails, epermits is a React SPA with no API).
+
+---
+
 ## 2026-04-11 — Cycle 81: TODAY Badge in Weekend Picks + Week 2 District Callout
 
 ### Context
