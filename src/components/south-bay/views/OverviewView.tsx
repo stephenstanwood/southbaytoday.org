@@ -1010,15 +1010,17 @@ function WeekendPicksCard() {
             .split("-")
             .map((w) => w[0].toUpperCase() + w.slice(1))
             .join(" ");
+          const isToday = pick.date === TODAY_ISO;
 
           return (
             <div
               key={pick.id}
               style={{
-                border: "1.5px solid var(--sb-border-light)",
+                border: isToday ? "1.5px solid #6EE7B7" : "1.5px solid var(--sb-border-light)",
+                borderLeft: isToday ? "3px solid #059669" : undefined,
                 borderRadius: 8,
                 padding: "12px 14px",
-                background: "#fff",
+                background: isToday ? "#F0FDF4" : "#fff",
               }}
             >
               <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
@@ -1040,6 +1042,16 @@ function WeekendPicksCard() {
                     ) : (
                       <span style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)" }}>
                         {pick.title}
+                      </span>
+                    )}
+                    {isToday && (
+                      <span style={{
+                        fontSize: 9, fontWeight: 700, padding: "2px 6px", borderRadius: 3,
+                        background: "#059669", color: "#fff",
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        flexShrink: 0,
+                      }}>
+                        TODAY
                       </span>
                     )}
                     <span style={{
@@ -1193,6 +1205,17 @@ function SpringBreakCard({ todayForecast }: { todayForecast?: ForecastDay | null
                 </span>
                 <span>{week.dateRange}</span>
               </div>
+              {!isCurrentWeek && week.label === "Week 2" && today < week.start && (
+                <div style={{
+                  fontSize: 11, color: "#92400E",
+                  background: "#FFFBEB", border: "1px solid #FDE68A",
+                  borderRadius: 5, padding: "6px 10px", marginBottom: 8,
+                  display: "flex", alignItems: "center", gap: 6,
+                }}>
+                  <span style={{ fontSize: 13 }}>🏫</span>
+                  <span>FUHSD · CUSD · Campbell USD start their break Monday, Apr 13</span>
+                </div>
+              )}
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {weekPicks.map((pick) => {
                   const emoji = CATEGORY_EMOJI[pick.category] ?? "📅";
