@@ -1119,8 +1119,8 @@ async function fetchMontalvoEvents() {
         const startDate = item.startDate;
         const url = item.url;
         if (!name || !startDate || !url) continue;
-        const start = new Date(startDate);
-        if (isNaN(start.getTime()) || start < now) continue;
+        const start = parseDatePT(startDate);
+        if (!start || start < now) continue;
         events.push({
           id: h("montalvo", url, startDate),
           title: name,
