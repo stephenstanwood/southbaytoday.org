@@ -506,9 +506,10 @@ async function sequenceWithClaude(
 
   const timeSlot = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
 
-  // Format locked items
+  // Format locked items. Avoid the word "LOCKED" in the section header
+  // because the model has echoed it back as a literal timeBlock value.
   const lockedSection = lockedCandidates.length > 0
-    ? `\n\nLOCKED ITEMS (must include, plan around these):\n${lockedCandidates.map((c) => `- ${c.name} (${c.category}, ${c.city})${c.eventTime ? ` at ${c.eventTime}` : ""}`).join("\n")}`
+    ? `\n\nMUST-INCLUDE ITEMS (plan around these — always include every one):\n${lockedCandidates.map((c) => `- ${c.name} (${c.category}, ${c.city})${c.eventTime ? ` at ${c.eventTime}` : ""}`).join("\n")}`
     : "";
 
   // Format candidate pool (top items by score)
@@ -591,6 +592,8 @@ OUTPUT FORMAT (JSON array, no markdown fences):
   }
 ]
 
+timeBlock MUST be a literal time range like "7:00 PM - 8:30 PM". Never write "LOCKED", "TBD", "all day", or any placeholder word — always a real clock range with AM/PM.
+
 Return ONLY the JSON array. No explanation.`;
 
   const response = await client.messages.create({
@@ -613,10 +616,39 @@ Return ONLY the JSON array. No explanation.`;
   const allCandidates = [...lockedCandidates, ...topPool];
   const candidateMap = new Map(allCandidates.map((c) => [c.id, c]));
 
+  // Validate a timeBlock string matches the expected format. Guards against
+  // the model echoing back "LOCKED", "TBD", or other placeholder strings
+  // instead of an actual time range.
+  const isValidTimeBlock = (tb: string | null | undefined): boolean => {
+    if (!tb) return false;
+    return /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(tb);
+  };
+
+  // Compute a reasonable "HH:MM AM/PM - HH:MM AM/PM" block from an eventTime
+  // string, or a fallback slot if eventTime is missing/unparseable.
+  const timeBlockFromEventTime = (eventTime: string | null | undefined, fallback = "7:00 PM - 8:30 PM"): string => {
+    if (!eventTime) return fallback;
+    const startMatch = eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+    if (!startMatch) return fallback;
+    const startH = parseHour(startMatch[1]);
+    if (startH === null) return startMatch[1];
+    const endH = startH + 1;
+    const endMin = 30;
+    const endAmPm = endH >= 12 ? "PM" : "AM";
+    const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
+    return `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
+  };
+
   const cards: DayCard[] = [];
   for (const pick of picks) {
     const candidate = candidateMap.get(pick.id);
     if (!candidate) continue;
+
+    // Sanitize: if the model returned a bogus timeBlock (e.g. "LOCKED", "TBD",
+    // empty), derive one from the candidate's eventTime instead.
+    const timeBlock = isValidTimeBlock(pick.timeBlock)
+      ? pick.timeBlock
+      : timeBlockFromEventTime(candidate.eventTime);
 
     cards.push({
       id: candidate.id,
@@ -624,7 +656,7 @@ Return ONLY the JSON array. No explanation.`;
       category: candidate.category,
       city: candidate.city,
       address: candidate.address,
-      timeBlock: pick.timeBlock,
+      timeBlock,
       blurb: pick.blurb,
       why: pick.why,
       url: candidate.url,
@@ -643,24 +675,7 @@ Return ONLY the JSON array. No explanation.`;
   for (const locked of lockedCandidates) {
     if (!cards.some((c) => c.id === locked.id)) {
       console.log(`[plan-day] forcing locked item: ${locked.name}`);
-      // Build a proper time block from the event time
-      let timeBlock = "TBD";
-      if (locked.eventTime) {
-        const startMatch = locked.eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
-        if (startMatch) {
-          // Add 1.5 hours for a reasonable block
-          const startH = parseHour(startMatch[1]);
-          if (startH !== null) {
-            const endH = startH + 1;
-            const endMin = 30;
-            const endAmPm = endH >= 12 ? "PM" : "AM";
-            const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
-            timeBlock = `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
-          } else {
-            timeBlock = startMatch[1];
-          }
-        }
-      }
+      const timeBlock = timeBlockFromEventTime(locked.eventTime);
       cards.push({
         id: locked.id,
         name: locked.name,
