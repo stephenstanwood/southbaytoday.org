@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — New Homepage ("State of the South Bay")
+// South Bay Today — New Homepage ("State of the South Bay")
 // ---------------------------------------------------------------------------
 // A dynamic, editorially hierarchical front page.
 // Replaces the old OverviewView with modular sections and visual punch.
@@ -18,6 +18,7 @@ import OutagesCard from "../cards/OutagesCard";
 import PhotoStrip from "./PhotoStrip";
 import AroundTown from "./AroundTown";
 import CivicThisWeek from "./CivicThisWeek";
+import ForecastCard from "../cards/ForecastCard";
 
 // ── Shared styles ──
 
@@ -123,10 +124,10 @@ export default function HomepageView({ homeCity, setHomeCity, onNavigate }: Prop
         </div>
       )}
 
-      {/* ═══ 5-day forecast ═══ */}
-      {data.forecast && data.forecast.length > 0 && !changingCity && (
+      {/* ═══ Weekly forecast banner ═══ */}
+      {!changingCity && (
         <div style={{ marginBottom: 8 }}>
-          <ForecastStrip forecast={data.forecast} />
+          <ForecastCard homeCity={homeCity} />
         </div>
       )}
 
@@ -172,55 +173,6 @@ export default function HomepageView({ homeCity, setHomeCity, onNavigate }: Prop
   );
 }
 
-
-// ═══════════════════════════════════════════════════════════════════════════
-// FORECAST STRIP
-// ═══════════════════════════════════════════════════════════════════════════
-
-function ForecastStrip({ forecast }: { forecast: Array<{ date: string; emoji: string; desc: string; high: number; low: number; rainPct: number }> }) {
-  const dayLabel = (dateStr: string) => {
-    const d = new Date(dateStr + "T12:00:00");
-    return d.toLocaleDateString("en-US", { weekday: "short" });
-  };
-
-  return (
-    <div style={{
-      display: "flex", gap: 0,
-      borderRadius: CARD_RADIUS,
-      overflow: "hidden",
-      border: "1px solid var(--sb-border-light)",
-    }}>
-      {forecast.slice(0, 5).map((day, i) => {
-        const isToday = i === 0;
-        return (
-          <div
-            key={day.date}
-            style={{
-              flex: 1,
-              padding: "12px 8px",
-              textAlign: "center",
-              background: isToday ? "var(--sb-ink)" : "var(--sb-card)",
-              color: isToday ? "#fff" : "var(--sb-ink)",
-              borderRight: i < 4 ? "1px solid var(--sb-border-light)" : undefined,
-            }}
-          >
-            <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.6, marginBottom: 4 }}>
-              {isToday ? "Today" : dayLabel(day.date)}
-            </div>
-            <div style={{ fontSize: 28, lineHeight: 1, marginBottom: 4, fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif" }}>{day.emoji}</div>
-            <div style={{ fontSize: 16, fontWeight: 800, lineHeight: 1 }}>{Math.round(day.high)}°</div>
-            <div style={{ fontSize: 11, opacity: 0.5 }}>{Math.round(day.low)}°</div>
-            {day.rainPct > 20 && (
-              <div style={{ fontSize: 9, marginTop: 2, color: isToday ? "#93C5FD" : "#3B82F6", fontWeight: 600 }}>
-                💧 {Math.round(day.rainPct)}%
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 
 // ═══════════════════════════════════════════════════════════════════════════
