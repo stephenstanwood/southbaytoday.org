@@ -42,7 +42,7 @@ function loadBotToken() {
   return null;
 }
 
-const QUEUE_THRESHOLD = 25;
+const QUEUE_THRESHOLD = 50;
 const GENERATE_BATCH = 25;
 
 function loadQueue() {
