@@ -142,7 +142,7 @@ const HTML = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SBS Social Review</title>
+<title>SBT Social Review</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -504,7 +504,7 @@ const HTML = `<!DOCTYPE html>
 </style>
 </head>
 <body>
-<h1>The South Bay Signal</h1>
+<h1>South Bay Today</h1>
 
 <div class="tab-bar" id="tab-bar">
   <button class="tab-btn active" onclick="switchTab('review')" id="tab-review">Review <span class="tab-count" id="tab-review-count"></span></button>
