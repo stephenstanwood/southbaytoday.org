@@ -108,6 +108,23 @@ function parseDate(str) {
   return d;
 }
 
+// For sources that return naive datetime strings (no timezone) in Pacific local time.
+// new Date("2026-04-12T12:00") is parsed as UTC in some Node environments,
+// so we append the correct PT offset before parsing.
+function parseDatePT(str) {
+  if (!str) return null;
+  // Only fixup naive datetimes — leave strings that already have tz info alone
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(str) && !/[Z+\-]\d{2}:?\d{2}$/.test(str) && !str.endsWith("Z")) {
+    const month = parseInt(str.slice(5, 7), 10);
+    // PDT (UTC-7): Mar–Nov; PST (UTC-8): Dec–Feb
+    const offset = (month >= 3 && month <= 11) ? "-07:00" : "-08:00";
+    str = str + offset;
+  }
+  const d = new Date(str);
+  if (isNaN(d.getTime())) return null;
+  return d;
+}
+
 function isoDate(d) {
   if (!d) return null;
   // Use PT to stay consistent with displayDate — avoids UTC-midnight off-by-one
@@ -1384,10 +1401,10 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
       .map((ev) => {
         const startStr = ev.start || ev.definition?.start;
         const endStr = ev.end || ev.definition?.end;
-        const start = parseDate(startStr);
+        const start = parseDatePT(startStr);
         if (!start || start < now) return null;
 
-        const end = parseDate(endStr);
+        const end = parseDatePT(endStr);
         const branchId = ev.branchId || ev.definition?.branchLocationId;
         const branchStore = entities.locations || entities.branches;
         const branch = branchId && branchStore ? branchStore[branchId] : null;
@@ -1494,10 +1511,10 @@ async function fetchScclEvents() {
 
         const startStr = ev.start || ev.definition?.start;
         const endStr = ev.end || ev.definition?.end;
-        const start = parseDate(startStr);
+        const start = parseDatePT(startStr);
         if (!start || start < now) continue;
 
-        const end = parseDate(endStr);
+        const end = parseDatePT(endStr);
         const title = ev.title || ev.definition?.title || "";
         const desc = ev.description || ev.definition?.description || "";
 

@@ -66,6 +66,7 @@ interface Candidate {
   source: "event" | "place";
   eventDate?: string;
   eventTime?: string | null;
+  ongoing?: boolean;
   score: number;
 }
 
@@ -421,6 +422,7 @@ function buildCandidatePool(
       source: "event",
       eventDate: evt.date,
       eventTime: evt.time,
+      ongoing: evt.ongoing ?? false,
       score: 0,
     });
   }
@@ -569,7 +571,8 @@ async function sequenceWithClaude(
       parts.push(`category: ${c.category}`);
       parts.push(`city: ${c.city}`);
       if (c.address) parts.push(`address: ${c.address}`);
-      if (c.source === "event") parts.push(`EVENT TODAY`);
+      if (c.source === "event" && !c.ongoing) parts.push(`EVENT TODAY`);
+      if (c.source === "event" && c.ongoing) parts.push(`ongoing exhibition (daytime hours only — must end by 5 PM)`);
       if (c.eventTime) parts.push(`time: ${c.eventTime}`);
       if (c.rating) parts.push(`rating: ${c.rating}`);
       if (c.cost) parts.push(`cost: ${c.cost}`);
