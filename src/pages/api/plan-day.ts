@@ -774,6 +774,46 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
+  // Post-process: detect blurb↔card mismatches. Sometimes Claude returns a
+  // pick with id of one place but a blurb describing a different place in
+  // the pool. The merge step uses the id to look up the candidate but keeps
+  // the wrong blurb verbatim, producing cards like:
+  //   "The Tech Interactive" + "Spend hours at the Rosicrucian Egyptian Museum"
+  // Detection: check if the blurb contains ANY significant word from the
+  // place name OR mentions the place name as a substring. If zero overlap,
+  // the blurb was probably written for a different candidate — drop it.
+  {
+    const before = cards.length;
+    const stopwords = new Set([
+      "the", "and", "for", "with", "from", "into", "onto", "this", "that",
+      "your", "their", "at", "in", "on", "of", "to", "a", "an", "is", "it",
+      "its", "by", "as", "or", "but", "be", "you", "are", "san", "jose",
+      "san-jose", "los", "gatos", "palo", "alto", "santa", "clara", "mountain",
+      "view", "cupertino", "sunnyvale", "milpitas", "campbell", "saratoga",
+    ]);
+    for (let i = cards.length - 1; i >= 0; i--) {
+      if (cards[i].locked) continue;
+      const name = (cards[i].name || "").toLowerCase();
+      const blurb = (cards[i].blurb || "").toLowerCase();
+      if (!name || !blurb) continue;
+      // Quick win: if full name is substring of blurb, accept
+      if (blurb.includes(name)) continue;
+      // Otherwise: look for any significant word overlap
+      const nameWords = name
+        .split(/[^a-z0-9]+/)
+        .filter((w) => w.length > 3 && !stopwords.has(w));
+      if (nameWords.length === 0) continue; // name too generic to validate
+      const hasOverlap = nameWords.some((w) => blurb.includes(w));
+      if (!hasOverlap) {
+        console.log(`[plan-day] dropped blurb mismatch: card="${cards[i].name}" blurb="${cards[i].blurb?.slice(0, 80)}..."`);
+        cards.splice(i, 1);
+      }
+    }
+    if (cards.length < before) {
+      console.log(`[plan-day] blurb validator: dropped ${before - cards.length} mismatched card(s)`);
+    }
+  }
+
   // Post-process: drop places whose scheduled time block doesn't fit within
   // the venue's actual open hours today. Catches three bugs:
   //   1. Scheduled past closing (e.g. museum at 9 PM that closes 5 PM)

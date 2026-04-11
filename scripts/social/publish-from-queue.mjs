@@ -235,7 +235,29 @@ async function main() {
     return;
   }
 
-  // ── Smart scheduling: score posts by publish-time relevance ──────────
+  // ── Slotted path (preferred): find posts pre-assigned to the current slot
+  //    by the slot-scheduler. If any exist, publish those and skip reactive
+  //    scoring entirely. Falls back to reactive if nothing is slotted.
+  try {
+    const { postsForCurrentSlot, currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
+    const slot = currentPublishSlot();
+    const slotted = postsForCurrentSlot(relevant, { today, slot });
+    if (slotted.length > 0) {
+      console.log(`\n📅 Slotted path: ${slotted.length} post(s) assigned to ${today} @ ${slot}`);
+      for (const p of slotted.slice(0, 3)) {
+        console.log(`   ✓ ${(p.item?.title || "").slice(0, 55)} (${getEventDate(p)})`);
+      }
+      // Hand off to the existing publish loop — relevant is narrowed to slotted items
+      relevant.length = 0;
+      relevant.push(...slotted);
+    } else if (slot) {
+      console.log(`\n   No posts slotted for ${today} @ ${slot} — falling back to reactive scoring`);
+    }
+  } catch (err) {
+    console.warn(`   ⚠️  slot scheduler path failed: ${err.message} — falling back to reactive`);
+  }
+
+  // ── Reactive fallback: score posts by publish-time relevance ──────────
   // Principles:
   // - Today/tomorrow events get top priority (urgent)
   // - Weekend events shouldn't be promoted Mon-Tue (too early, awkward)

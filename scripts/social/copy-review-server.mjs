@@ -913,12 +913,25 @@ const server = createServer((req, res) => {
           const queue = loadQueue();
           const cleanPost = { ...post };
           delete cleanPost._file;
-          queue.push({
+          const approvedPost = {
             ...cleanPost,
             approvedAt: new Date().toISOString(),
             comment: r.comment || null,
             published: false,
-          });
+          };
+          // Assign a publish slot based on the event date + current queue
+          // occupancy. Falls back to null if no event date or no slot fits.
+          try {
+            const { assignSlot } = await import("./lib/slot-scheduler.mjs");
+            const slot = assignSlot(approvedPost, queue);
+            if (slot) {
+              approvedPost.scheduledSlot = slot;
+              console.log(`     📅 slotted: ${slot.date} @ ${slot.time}${slot.fallback ? " (fallback)" : ""}`);
+            }
+          } catch (err) {
+            console.warn(`     ⚠️  slot assignment failed: ${err.message}`);
+          }
+          queue.push(approvedPost);
           saveQueue(queue);
           console.log(`  ✅ ${r.title?.slice(0, 50)} → approved (queue: ${queue.length})`);
         } else {

@@ -202,15 +202,15 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
   const [weather, setWeather] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [swapLoading, setSwapLoading] = useState(false); // loading triggered by a dismiss
-  const [fadingIds, setFadingIds] = useState<Set<string>>(new Set());
   const [replacedIds, setReplacedIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
   const [showMoreCities, setShowMoreCities] = useState(false);
   const [geoLoading, setGeoLoading] = useState(false);
+  const [geoActive, setGeoActive] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
   const fetchRef = useRef(0);
-  const fetchPlanRef = useRef<() => void>(() => {});
+  const fetchPlanRef = useRef<(cityOverride?: City, extraLockedIds?: string[]) => void>(() => {});
   const [prefs, setPrefs] = useState<UserPreferences>(loadPrefs);
 
   // Keep time display live
@@ -270,31 +270,8 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
   useEffect(() => { fetchPlan(); }, []);
 
-  // Keep fetchPlanRef current so auto-refresh always calls latest version
+  // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
-
-  // Auto-refresh at each half-hour mark while tab is open (stops after 10pm)
-  useEffect(() => {
-    const msUntilNextHalf = () => {
-      const now = new Date();
-      const next = new Date(now);
-      if (now.getMinutes() < 30) {
-        next.setMinutes(30, 0, 0);
-      } else {
-        next.setHours(now.getHours() + 1, 0, 0, 0);
-      }
-      return next.getTime() - now.getTime();
-    };
-    const active = () => new Date().getHours() < 22;
-    let interval: ReturnType<typeof setInterval>;
-    const timeout = setTimeout(() => {
-      if (active()) fetchPlanRef.current();
-      interval = setInterval(() => {
-        if (active()) fetchPlanRef.current();
-      }, 30 * 60 * 1000);
-    }, msUntilNextHalf());
-    return () => { clearTimeout(timeout); clearInterval(interval); };
-  }, []);
 
   // Actions
   const handleCityChange = (city: City) => {
@@ -304,7 +281,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
   };
   const handleKidsToggle = () => {
     setState((s) => ({ ...s, kids: !s.kids }));
-    setTimeout(() => fetchPlan(), 50);
+    // Use fetchPlanRef so we invoke the latest fetchPlan after the state
+    // update lands, not a stale closure bound to the previous `kids` value.
+    setTimeout(() => fetchPlanRef.current?.(), 50);
   };
   const handleNewPlan = () => fetchPlan();
   const handleGeolocate = () => {
@@ -318,6 +297,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           if (d < minDist) { minDist = d; nearest = c.id; }
         }
         setGeoLoading(false);
+        setGeoActive(true);
         handleCityChange(nearest);
       },
       () => setGeoLoading(false),
@@ -345,15 +325,10 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
       setPrefs(updated);
       savePrefs(updated);
     }
-    // Immediately start fade-out animation
-    setFadingIds((prev) => new Set([...prev, cardId]));
+    // Immediately replace card content with in-place swap skeleton — no fade-out
+    // so the rectangle stays put and just swaps its inner content.
     setSwapLoading(true);
-
-    // After animation: swap card to in-place loading skeleton (don't remove yet)
-    setTimeout(() => {
-      setFadingIds((prev) => { const n = new Set(prev); n.delete(cardId); return n; });
-      setReplacedIds((prev) => new Set([...prev, cardId]));
-    }, 320);
+    setReplacedIds((prev) => new Set([...prev, cardId]));
 
     // Keep all OTHER cards by passing them as extra locked IDs (not stored in state)
     const keepIds = cards.filter((c) => c.id !== cardId).map((c) => c.id);
@@ -401,27 +376,52 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
       {/* City pills */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0 0 12px", flexWrap: "wrap" }}>
         <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, color: "#bbb", marginRight: 2 }}>Starting in</span>
+        {/* Geolocation — first option, to the left of CAMPBELL */}
+        <button
+          onClick={handleGeolocate}
+          disabled={geoLoading}
+          title="Use my location"
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
+            border: geoActive ? "2px solid #1A5AFF" : "1.5px solid #ddd",
+            background: geoActive ? "#1A5AFF" : "#fff",
+            cursor: geoLoading ? "wait" : "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+            flexShrink: 0,
+          }}
+        >
+          {geoLoading ? (
+            <span style={{ fontSize: 12, color: "#aaa" }}>...</span>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={geoActive ? "#fff" : "#4A90D9"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <line x1="12" y1="2" x2="12" y2="6" />
+              <line x1="12" y1="18" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="6" y2="12" />
+              <line x1="18" y1="12" x2="22" y2="12" />
+            </svg>
+          )}
+        </button>
         {FEATURED_CITIES.map((id) => (
-          <button key={id} onClick={() => handleCityChange(id)} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: state.city === id ? 800 : 500, padding: "4px 10px", borderRadius: 14, border: state.city === id ? "2px solid #000" : "1.5px solid #ddd", background: state.city === id ? "#000" : "#fff", color: state.city === id ? "#fff" : "#777", cursor: "pointer", transition: "all 0.15s" }}>{CITY_MAP[id].name}</button>
+          <button key={id} onClick={() => { setGeoActive(false); handleCityChange(id); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: state.city === id ? 800 : 500, padding: "4px 10px", borderRadius: 14, border: state.city === id ? "2px solid #000" : "1.5px solid #ddd", background: state.city === id ? "#000" : "#fff", color: state.city === id ? "#fff" : "#777", cursor: "pointer", transition: "all 0.15s" }}>{CITY_MAP[id].name}</button>
         ))}
         {showMoreCities ? (
           CITIES.filter((c) => !FEATURED_CITIES.includes(c.id)).map((c) => (
-            <button key={c.id} onClick={() => { handleCityChange(c.id); setShowMoreCities(false); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: state.city === c.id ? 800 : 500, padding: "4px 10px", borderRadius: 14, border: state.city === c.id ? "2px solid #000" : "1.5px solid #ddd", background: state.city === c.id ? "#000" : "#fff", color: state.city === c.id ? "#fff" : "#777", cursor: "pointer" }}>{c.name}</button>
+            <button key={c.id} onClick={() => { setGeoActive(false); handleCityChange(c.id); setShowMoreCities(false); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: state.city === c.id ? 800 : 500, padding: "4px 10px", borderRadius: 14, border: state.city === c.id ? "2px solid #000" : "1.5px solid #ddd", background: state.city === c.id ? "#000" : "#fff", color: state.city === c.id ? "#fff" : "#777", cursor: "pointer" }}>{c.name}</button>
           ))
         ) : (
           <>
             {!FEATURED_CITIES.includes(state.city) && <button style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 800, padding: "4px 10px", borderRadius: 14, border: "2px solid #000", background: "#000", color: "#fff", cursor: "default" }}>{CITY_MAP[state.city]?.name}</button>}
           </>
         )}
-        {/* More + geo grouped so they never split across lines */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-          {!showMoreCities && (
-            <button onClick={() => setShowMoreCities(true)} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 14, border: "1.5px dashed #ccc", background: "#fff", color: "#999", cursor: "pointer" }}>More...</button>
-          )}
-          <button onClick={handleGeolocate} disabled={geoLoading} title="Use my location" style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid #ddd", background: "#fff", cursor: geoLoading ? "wait" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 0, flexShrink: 0 }}>
-            {geoLoading ? <span style={{ fontSize: 12, color: "#aaa" }}>...</span> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /></svg>}
-          </button>
-        </div>
+        {!showMoreCities && (
+          <button onClick={() => setShowMoreCities(true)} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 14, border: "1.5px dashed #ccc", background: "#fff", color: "#999", cursor: "pointer", flexShrink: 0 }}>More...</button>
+        )}
       </div>
 
       {/* Photo scroll */}
@@ -463,16 +463,27 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
           {cards.map((card, i) => {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const emoji = CATEGORY_EMOJI[card.category] || "📍";
-            const isFading = fadingIds.has(card.id);
             const isReplaced = replacedIds.has(card.id);
             const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
 
-            // In-place loading skeleton for dismissed card
+            // In-place swap skeleton — same outer wrapper as a normal card so
+            // dimensions don't jump; just swaps the inner content for SwapVerb.
             if (isReplaced) {
               return (
-                <div key={card.id} style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px dashed #e8e8e8", overflow: "hidden", minHeight: 110, opacity: 0, animation: "cardAppear 0.35s ease-out forwards" }}>
-                  <div style={{ width: 5, background: "#e8e8e8", flexShrink: 0 }} />
-                  <div style={{ flex: 1, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div
+                  key={card.id}
+                  style={{
+                    display: "flex",
+                    gap: 0,
+                    background: "#fff",
+                    borderRadius: 10,
+                    border: "1px solid #e8e8e8",
+                    overflow: "hidden",
+                    position: "relative" as const,
+                  }}
+                >
+                  <div style={{ width: 6, background: accent, flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 96 }}>
                     <SwapVerb />
                   </div>
                 </div>
@@ -489,9 +500,7 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
                   borderRadius: 10,
                   border: "1px solid #e8e8e8",
                   overflow: "hidden",
-                  animation: isFading
-                    ? "fadeSlideOut 0.3s ease-in forwards"
-                    : `fadeSlideIn 0.3s ease-out ${i * 0.05}s both`,
+                  animation: `fadeSlideIn 0.3s ease-out ${i * 0.05}s both`,
                   position: "relative" as const,
                 }}
               >

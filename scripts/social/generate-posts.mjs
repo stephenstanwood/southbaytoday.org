@@ -429,6 +429,26 @@ async function main() {
 
   logSuccess(`Generated ${posts.length} individual posts`);
 
+  // Auto-commit shared-plans.json so plan pages are live by the time the
+  // user reviews/approves these posts. Without this, plan links 404 until
+  // the nightly data sync runs.
+  if (posts.length > 0) {
+    try {
+      const { execSync } = await import("node:child_process");
+      const repoRoot = join(__dirname, "..", "..");
+      const dirty = execSync("git diff --name-only -- src/data/south-bay/shared-plans.json", { cwd: repoRoot, encoding: "utf8" }).trim();
+      if (dirty) {
+        execSync("git add src/data/south-bay/shared-plans.json", { cwd: repoRoot, stdio: "pipe" });
+        execSync(`git commit -m "data: batch plans for ${posts.length} new drafts"`, { cwd: repoRoot, stdio: "pipe" });
+        try { execSync("git pull --rebase", { cwd: repoRoot, stdio: "pipe", timeout: 20000 }); } catch (e) { /* ignore rebase noise */ }
+        execSync("git push origin main", { cwd: repoRoot, stdio: "pipe", timeout: 30000 });
+        console.log("   📎 shared-plans.json committed and pushed");
+      }
+    } catch (e) {
+      console.warn("   ⚠️  Failed to auto-push shared-plans.json:", e.message);
+    }
+  }
+
   // Print post file paths for publish.mjs
   for (const p of posts) {
     console.log(`POST_FILE=${p.path}`);
