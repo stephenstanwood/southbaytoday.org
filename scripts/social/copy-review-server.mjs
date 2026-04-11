@@ -561,8 +561,8 @@ function updateTabCounts(draftCount, repliesNewCount) {
 function updateQueueBadge(size) {
   queueSize = size;
   const el = document.getElementById('queue-badge');
-  el.textContent = size + ' in approved queue';
-  el.className = 'queue-badge' + (size < 40 ? ' low' : size < 60 ? ' mid' : '');
+  el.textContent = size + ' approved, unpublished';
+  el.className = 'queue-badge' + (size < 50 ? ' low' : size < 100 ? ' mid' : '');
 }
 
 async function init() {
@@ -880,7 +880,7 @@ const server = createServer((req, res) => {
     const posts = loadPendingPosts();
     const queue = loadQueue();
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ posts, queueSize: queue.length }));
+    res.end(JSON.stringify({ posts, queueSize: queue.filter((p) => !p.published).length }));
     return;
   }
 
@@ -888,7 +888,7 @@ const server = createServer((req, res) => {
     const posts = loadPendingPosts();
     const queue = loadQueue();
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ generating: isGenerating, pendingCount: posts.length, queueSize: queue.length }));
+    res.end(JSON.stringify({ generating: isGenerating, pendingCount: posts.length, queueSize: queue.filter((p) => !p.published).length }));
     return;
   }
 
@@ -980,7 +980,7 @@ const server = createServer((req, res) => {
 
         const queue = loadQueue();
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ ok: true, queueSize: queue.length, actionResult: actionResult?.summary || null }));
+        res.end(JSON.stringify({ ok: true, queueSize: queue.filter((p) => !p.published).length, actionResult: actionResult?.summary || null }));
       } catch (e) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: false, error: e.message }));
@@ -1069,7 +1069,7 @@ const server = createServer((req, res) => {
       }
 
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: true, queueSize: queue.length, actionResults }));
+      res.end(JSON.stringify({ ok: true, queueSize: queue.filter((p) => !p.published).length, actionResults }));
     });
     return;
   }
