@@ -139,10 +139,59 @@ function closingHourToday(hours: Record<string, string> | null | undefined): num
   const dayIdx = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" }).toLowerCase().slice(0, 3);
   const range = hours[dayIdx];
   if (!range) return null;
-  const close = range.split("-")[1];
+  // Take the LAST segment for split ranges like "11:00-14:00,17:00-22:00"
+  const lastSeg = range.split(",").pop() || range;
+  const close = lastSeg.split("-")[1];
   if (!close) return null;
-  const h = parseHour(close);
-  return h;
+  return parseHour(close);
+}
+
+/** Get today's opening hour for a place, or null if unknown. */
+function openingHourToday(hours: Record<string, string> | null | undefined): number | null {
+  if (!hours) return null;
+  const dayIdx = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" }).toLowerCase().slice(0, 3);
+  const range = hours[dayIdx];
+  if (!range) return null;
+  // Take the FIRST segment for split ranges (e.g. lunch start for "11:00-14:00,17:00-22:00")
+  const firstSeg = range.split(",")[0] || range;
+  const open = firstSeg.split("-")[0];
+  if (!open) return null;
+  return parseHour(open);
+}
+
+/**
+ * Return the full list of (open, close) pairs for today, in 24h hours.
+ * Handles single and split ranges like "11:00-14:00,17:00-22:00".
+ * Returns [] if closed today or hours unknown.
+ */
+function openRangesToday(hours: Record<string, string> | null | undefined): Array<[number, number]> {
+  if (!hours) return [];
+  const dayIdx = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" }).toLowerCase().slice(0, 3);
+  const range = hours[dayIdx];
+  if (!range) return []; // closed today
+  const out: Array<[number, number]> = [];
+  for (const seg of range.split(",")) {
+    const [openStr, closeStr] = seg.split("-");
+    if (!openStr || !closeStr) continue;
+    const o = parseHour(openStr);
+    const c = parseHour(closeStr);
+    if (o !== null && c !== null) out.push([o, c]);
+  }
+  return out;
+}
+
+/**
+ * Check whether the given [startH, endH] block fits entirely within any of
+ * the venue's open ranges today. Unknown hours = assume open (return true).
+ */
+function fitsInOpenRange(hours: Record<string, string> | null | undefined, startH: number, endH: number): boolean {
+  if (!hours) return true;
+  const ranges = openRangesToday(hours);
+  if (ranges.length === 0) return false; // closed today
+  for (const [o, c] of ranges) {
+    if (startH >= o && endH <= c) return true;
+  }
+  return false;
 }
 
 function currentPTHour(): number {
@@ -528,13 +577,18 @@ async function sequenceWithClaude(
       if (c.kidFriendly === true) parts.push(`kid-friendly`);
       if (c.why) parts.push(`note: ${c.why}`);
       if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
-      const closeH = closingHourToday((c as any).hours);
-      if (closeH !== null) {
-        const closeAmPm = closeH > 12 ? `${closeH - 12} PM` : closeH === 12 ? "12 PM" : `${closeH} AM`;
-        parts.push(`closes: ${closeAmPm}`);
+      // Only include places that are actually open. If hours data is present
+      // and there's no entry for today, skip entirely (closed today).
+      const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
+      if (hoursObj) {
+        const ranges = openRangesToday(hoursObj);
+        if (ranges.length === 0) return null; // closed today — omit from prompt
+        const fmt = (h: number) => (h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : h === 0 ? "12 AM" : `${h} AM`);
+        parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
       }
       return parts.join(" | ");
     })
+    .filter((line): line is string => line !== null)
     .join("\n");
 
   const prompt = `You are the day-planning engine for South Bay Today, a local guide for ${cityName}, California.
@@ -720,23 +774,30 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
-  // Post-process: drop places scheduled past their closing time
+  // Post-process: drop places whose scheduled time block doesn't fit within
+  // the venue's actual open hours today. Catches three bugs:
+  //   1. Scheduled past closing (e.g. museum at 9 PM that closes 5 PM)
+  //   2. Scheduled before opening (e.g. dinner-only restaurant at 2 PM)
+  //   3. Scheduled on a closed day (no hours entry for today)
   {
     const before = cards.length;
     for (let i = cards.length - 1; i >= 0; i--) {
       if (cards[i].locked) continue;
       const candidate = candidateMap.get(cards[i].id);
       if (!candidate) continue;
-      const closeH = closingHourToday((candidate as any).hours);
-      if (closeH === null) continue; // unknown hours — keep it
-      const startTime = cards[i].timeBlock.split(/\s*-\s*/)[0];
-      const startH = parseHour(startTime);
-      if (startH !== null && startH >= closeH) {
+      const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
+      if (!hoursObj) continue; // unknown hours — keep it
+      const [startStr, endStr] = cards[i].timeBlock.split(/\s*-\s*/);
+      const startH = parseHour(startStr || "");
+      const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
+      if (startH === null || endH === null) continue;
+      if (!fitsInOpenRange(hoursObj, startH, endH)) {
+        console.log(`[plan-day] dropped ${cards[i].name} — ${cards[i].timeBlock} doesn't fit venue hours`);
         cards.splice(i, 1);
       }
     }
     if (cards.length < before) {
-      console.log(`[plan-day] closing time: dropped ${before - cards.length} card(s) scheduled past closing`);
+      console.log(`[plan-day] hours check: dropped ${before - cards.length} card(s) outside venue hours`);
     }
   }
 
@@ -817,7 +878,45 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const unlockedPool = scored.filter((c) => !lockedSet.has(c.id));
 
     // 5. Build diverse pool — balance events, food, and activities
-    const eventCandidates = unlockedPool.filter((c) => c.source === "event");
+
+    // 5a. Dedupe events: collapse near-duplicates at the same physical spot
+    //     (same venue/address AND overlapping time). The user can only attend
+    //     one thing at a time, so showing two competing events at 6:30 PM at
+    //     the same library just confuses the plan. Keep the highest-scored one.
+    const rawEventCandidates = unlockedPool.filter((c) => c.source === "event");
+    const dedupedEvents: Candidate[] = [];
+    const eventGroupSeen = new Map<string, Candidate>();
+    for (const c of rawEventCandidates) {
+      // Group key: venue+eventTime, or address+eventTime, or city+eventTime
+      const loc = (c.venue || c.address || c.city || "").toLowerCase().trim();
+      const time = (c.eventTime || "").toLowerCase().trim();
+      const groupKey = time ? `${loc}|${time}` : null;
+      // Also collapse exact id duplicates (shouldn't happen but defensive)
+      if (eventGroupSeen.has(c.id)) continue;
+      eventGroupSeen.set(c.id, c);
+      if (!groupKey) {
+        dedupedEvents.push(c);
+        continue;
+      }
+      const existing = dedupedEvents.find((e) => {
+        const eLoc = (e.venue || e.address || e.city || "").toLowerCase().trim();
+        const eTime = (e.eventTime || "").toLowerCase().trim();
+        return `${eLoc}|${eTime}` === groupKey;
+      });
+      if (!existing) {
+        dedupedEvents.push(c);
+      } else if ((c.score || 0) > (existing.score || 0)) {
+        // Replace lower-scored duplicate
+        const idx = dedupedEvents.indexOf(existing);
+        dedupedEvents[idx] = c;
+      }
+      // else: drop c, keep existing
+    }
+    const dropped = rawEventCandidates.length - dedupedEvents.length;
+    if (dropped > 0) {
+      console.log(`[plan-day] deduped ${dropped} overlapping events at same venue/time`);
+    }
+    const eventCandidates = dedupedEvents;
     const foodCandidates = unlockedPool.filter((c) => c.source === "place" && c.category === "food");
     const otherPlaces = unlockedPool.filter((c) => c.source === "place" && c.category !== "food");
 
