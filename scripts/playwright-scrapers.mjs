@@ -334,12 +334,14 @@ async function scrapeLibCal(page, config) {
           if (!title || title.length < 3 || /^(More|Show more|Register)/.test(title)) continue;
           if (seenTitles.has(title)) continue;
           seenTitles.add(title);
-          // Date is in the card heading: div with text like "Apr\n13"
+          // Date heading contains "Apr\n13\n...\nMon, 11:00am..." — extract just month + day
           const heading = card.querySelector(".s-lc-eventcard-heading");
-          const rawDate = heading?.textContent?.trim()?.replace(/\s+/g, " "); // "Apr 13"
-          // Time is in the card text like "Mon, 11:00am - 12:00pm"
+          const headingText = heading?.textContent?.trim()?.replace(/\s+/g, " ") || "";
+          const monthDay = headingText.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2}/i);
+          const dateStr = monthDay ? `${monthDay[0]}, ${currentYear}` : null;
+          // Time like "11:00am" from card body
           const timeMatch = card.textContent?.match(/\d{1,2}:\d{2}\s*[ap]m/i);
-          events.push({ title, date: rawDate ? `${rawDate}, ${currentYear}` : null, time: timeMatch?.[0], link: titleLink.href });
+          events.push({ title, date: dateStr, time: timeMatch?.[0], link: titleLink.href });
         }
 
         // Strategy 2: LibCal media-body layout (Mountain View style)
@@ -724,8 +726,9 @@ async function scrapeHistorySJ(page) {
 
 async function scrapeMontalvo(page) {
   await page.goto("https://montalvoarts.org/experience/events-calendar/", {
-    waitUntil: "networkidle", timeout: 25_000,
+    waitUntil: "domcontentloaded", timeout: 20_000,
   });
+  await page.waitForTimeout(3000); // let content render
 
   const raw = await page.evaluate(() => {
     const events = [];
