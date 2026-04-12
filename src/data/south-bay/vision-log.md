@@ -2,6 +2,40 @@
 
 ---
 
+## 2026-04-12 — Cycle 84: Genspark Added to Tech Funding + Spring Break Week 2 Picks + Data Refresh
+
+### Context
+Sunday April 12, 2026 — last day of Easter weekend. FUHSD/CUSD/Campbell USD spring break starts tomorrow (Apr 13–17).
+
+### What Was Built
+
+**Genspark added to RECENTLY_FUNDED (Tech tab)**
+
+Palo Alto AI agent startup Genspark extended its Series B from $275M to $385M (adding $110M) at a $1.6B valuation on April 4, 2026. Founded by Eric Jing (ex-Baidu exec), the company generates $200M+ ARR with roughly 20 employees via its "Super Agent" AI browser assistant. Now visible in the Tech tab alongside SiFive, Aria Networks, and other recent South Bay rounds.
+
+**Spring break picks refreshed for Week 2 (Apr 13–17)**
+
+The previous spring-break-picks.json only covered April 11–12 (Week 1 tail). Regenerated with 12 picks weighted toward FUHSD/CUSD/Campbell families whose break starts Monday: San Jose Barracuda hockey (Apr 14), U.S. Open Cup Earthquakes vs. Phoenix (Apr 15), David Byrne at Oshman (Apr 16), Earth Day K-8 crafts in Milpitas (Apr 17), Paint-A-Rock at Saratoga Library (Apr 14), and more.
+
+**Data refreshed (5 files):**
+- `around-town.json` — 8 items; new: Palo Alto council approves natural gas rate changes, SJ Gay Ave residential development
+- `digests.json` — 11 city digests; refreshed San José (Apr 9), Sunnyvale (Apr 9)
+- `upcoming-meetings.json` — 9 cities with meetings; San José/Cupertino/Palo Alto all Mon Apr 13
+- `real-estate.json` — 11 cities; Cupertino +33.4% YoY, Los Gatos +27.6% YoY strongest markets
+- `outages.json` — 0 active outages confirmed
+
+**Mountain View permit portal — still blocked:** `developmentpermits.mountainview.gov` returns 403, ArcGIS portal has no permit dataset. Trying alternative approaches next cycle.
+
+### Why This Was the Strongest Move
+A Cupertino/Sunnyvale parent checking SBS today (Sunday before Week 2 break) needed to see what to do with their kids next week. The old picks only went through Sunday — regenerating with Week 2 events fills exactly that gap. Genspark is a genuine South Bay story: $200M+ ARR with 20 employees is remarkable efficiency and worth calling out in the Tech tab.
+
+### Next 3 Strongest Ideas
+1. **Post-spring-break cleanup (Apr 17+)** — After Apr 17, hide Spring Break card; add expiry logic to spring-break-picks so stale picks don't linger into May.
+2. **Permit Pulse: Sunnyvale** — Sunnyvale has an open data portal (data.sunnyvale.ca.gov). Worth trying for building permits.
+3. **RECENTLY_FUNDED watch** — Next wave of Q2 2026 rounds expected. Monitor for new South Bay fundraises week of Apr 13.
+
+---
+
 ## 2026-04-12 — Cycle 83: San José Neighborhood Filter in Events Tab
 
 ### Context
