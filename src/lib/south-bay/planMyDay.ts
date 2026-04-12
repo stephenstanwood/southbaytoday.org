@@ -67,7 +67,7 @@ export interface DayPlan {
 
 // ── Internal types ─────────────────────────────────────────────────────────────
 
-type TimeSlot = "morning" | "lunch" | "afternoon" | "evening";
+type TimeSlot = "breakfast" | "morning" | "lunch" | "afternoon" | "dinner" | "evening";
 
 interface Candidate {
   id: string;
@@ -121,17 +121,22 @@ function getCityDistance(from: string, to: string): number {
 // ── Slot configuration ────────────────────────────────────────────────────────
 
 const SLOT_META: Record<TimeSlot, { label: string; time: string }> = {
-  morning: { label: "Morning", time: "9:00 AM" },
-  lunch: { label: "Midday", time: "12:00 PM" },
+  breakfast: { label: "Breakfast", time: "8:30 AM" },
+  morning: { label: "Morning", time: "10:00 AM" },
+  lunch: { label: "Lunch", time: "12:00 PM" },
   afternoon: { label: "Afternoon", time: "2:00 PM" },
-  evening: { label: "Evening", time: "6:00 PM" },
+  dinner: { label: "Dinner", time: "6:00 PM" },
+  evening: { label: "Evening", time: "7:30 PM" },
 };
 
+// Meal slots only allow food/neighborhood candidates
+const MEAL_SLOTS: Set<TimeSlot> = new Set(["breakfast", "lunch", "dinner"]);
+
 function getSlotsForDuration(duration: Duration): TimeSlot[] {
-  if (duration === "full-day") return ["morning", "lunch", "afternoon", "evening"];
-  if (duration === "morning") return ["morning"];
+  if (duration === "full-day") return ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+  if (duration === "morning") return ["breakfast", "morning"];
   if (duration === "afternoon") return ["lunch", "afternoon"];
-  if (duration === "evening") return ["evening"];
+  if (duration === "evening") return ["dinner", "evening"];
   // "quick" — pick based on current time
   const hour = new Date().getHours();
   if (hour < 12) return ["morning"];
@@ -207,9 +212,11 @@ function timeToBestSlots(time: string | null | undefined): TimeSlot[] {
   const pm = m[3].toUpperCase() === "PM";
   if (pm && h !== 12) h += 12;
   if (!pm && h === 12) h = 0;
-  if (h < 12) return ["morning"];
-  if (h < 14) return ["lunch", "afternoon"];
+  if (h < 10) return ["morning"];
+  if (h < 12) return ["morning", "afternoon"];
+  if (h < 14) return ["afternoon"];
   if (h < 17) return ["afternoon"];
+  if (h < 19) return ["evening"];
   return ["evening"];
 }
 
@@ -278,7 +285,7 @@ function eventBestSlots(e: SBEvent): TimeSlot[] {
     education: ["morning", "afternoon"],
     family: ["morning", "afternoon"],
     community: ["afternoon", "evening"],
-    food: ["lunch", "afternoon", "evening"],
+    food: ["lunch", "dinner", "afternoon", "evening"],
   };
   return map[e.category] ?? ["morning", "afternoon"];
 }
@@ -369,10 +376,21 @@ function scoreCandidate(
 ): number {
   if (used.has(c.id)) return -9999;
 
+  const isMealSlot = MEAL_SLOTS.has(slot);
+  const isFoodCandidate = c.category === "food" || c.category === "neighborhood";
+
+  // Meal slots ONLY accept food/neighborhood candidates
+  if (isMealSlot && !isFoodCandidate) return -9999;
+
   let s = 0;
 
-  // Slot fit
-  if (c.bestSlots.includes(slot)) s += 10;
+  // Slot fit — POI bestSlots use "morning"/"afternoon"/"evening", so map
+  // meal slots to the corresponding activity period for fit checking
+  const slotForFit = slot === "breakfast" ? "morning"
+    : slot === "lunch" ? "afternoon"
+    : slot === "dinner" ? "evening"
+    : slot;
+  if (c.bestSlots.includes(slotForFit)) s += 10;
   else s -= 8;
 
   // City proximity — prefer events near user's home city
@@ -390,12 +408,6 @@ function scoreCandidate(
     if (flow === 0) s += 6;        // same city as last stop
     else if (flow === 1) s += 3;   // adjacent
     else if (flow >= 3) s -= 6;    // far jump — bad day flow
-  }
-
-  // Lunch slot: strongly prefer food/neighborhood
-  if (slot === "lunch") {
-    if (c.category === "food" || c.category === "neighborhood") s += 18;
-    if (c.category === "market") s += 8;
   }
 
   // Vibe match
@@ -451,8 +463,11 @@ function scoreCandidate(
     else if (c.cost === "low") s += 5;
   }
 
-  // Category diversity — strongly penalize reusing the same category
-  if (usedCategories.has(c.category)) s -= 30;
+  // Category diversity — penalize reusing the same category, but lighter
+  // for meal slots since multiple food/neighborhood picks are expected
+  if (usedCategories.has(c.category)) {
+    s -= isMealSlot ? 10 : 30;
+  }
 
   // Today bonus — this is happening right now
   if (c.isTodaySpecial) s += 20;

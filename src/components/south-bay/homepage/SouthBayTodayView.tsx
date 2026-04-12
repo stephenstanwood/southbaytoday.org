@@ -9,7 +9,7 @@ import type { City, Tab } from "../../../lib/south-bay/types";
 import { CITIES, CITY_MAP } from "../../../lib/south-bay/cities";
 import PhotoStrip from "./PhotoStrip";
 import ForecastCard from "../cards/ForecastCard";
-import { buildDayPlan, type PlanStop } from "../../../lib/south-bay/planMyDay";
+import defaultPlansJson from "../../../data/south-bay/default-plans.json";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -101,26 +101,27 @@ function isFirstVisit(): boolean {
   try { return !localStorage.getItem(STORAGE_KEY); } catch { return true; }
 }
 
-// Convert client-side PlanStop to DayCard for rendering in the homepage view
-function planStopToDayCard(stop: PlanStop, index: number): DayCard {
-  return {
-    id: `default-${index}`,
-    name: stop.title,
-    category: stop.category || "events",
-    city: stop.city,
-    address: "",
-    timeBlock: stop.time,
-    blurb: stop.venue + (stop.isEvent ? " — happening today" : ""),
-    why: "",
-    url: stop.url || null,
-    mapsUrl: null,
-    cost: stop.cost,
-    costNote: stop.cost === "free" ? "Free" : null,
-    photoRef: null,
-    venue: stop.venue,
-    source: stop.isEvent ? "event" : "place",
-    locked: false,
-  };
+/** Load a pre-generated plan from default-plans.json for instant display */
+function loadDefaultPlan(city: City, kids: boolean): DayCard[] {
+  try {
+    const plans = (defaultPlansJson as any).plans || {};
+    const key = `${city}:${kids ? "kids" : "adults"}`;
+    const plan = plans[key];
+    if (!plan?.cards?.length) return [];
+
+    // Filter out cards whose timeBlock is in the past
+    const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+    return plan.cards.filter((c: DayCard) => {
+      const m = c.timeBlock?.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!m) return true;
+      let hrs = parseInt(m[1]);
+      if (m[3].toUpperCase() === "PM" && hrs !== 12) hrs += 12;
+      if (m[3].toUpperCase() === "AM" && hrs === 12) hrs = 0;
+      return hrs * 60 + parseInt(m[2]) >= nowMin - 30;
+    });
+  } catch {
+    return [];
+  }
 }
 
 function saveState(state: LocalState) {
@@ -226,30 +227,24 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     if (homeCity) loaded.city = homeCity;
     return loaded;
   });
-  // First-visit detection: build an instant client-side plan so anonymous
-  // visitors see content immediately instead of a loading spinner.
+  // Load pre-generated plan for instant display — same quality as the API,
+  // generated at 2 AM. Falls back to API fetch if no pre-generated plan exists.
   const [isFirstVisitUser] = useState(isFirstVisit);
-  const [cards, setCards] = useState<DayCard[]>(() => {
-    if (!isFirstVisitUser) return [];
-    const instant = buildDayPlan(
-      { who: "couple", duration: "full-day", vibe: "mix", budget: "anything", date: new Date() },
-      "70°F partly cloudy",
-    );
-    // Filter past stops
-    const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
-    return instant.stops
-      .filter((s) => {
-        const m = s.time.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-        if (!m) return true;
-        let hrs = parseInt(m[1]);
-        if (m[3].toUpperCase() === "PM" && hrs !== 12) hrs += 12;
-        if (m[3].toUpperCase() === "AM" && hrs === 12) hrs = 0;
-        return hrs * 60 + parseInt(m[2]) >= nowMin - 30;
-      })
-      .map(planStopToDayCard);
+  const [defaultCards] = useState<DayCard[]>(() => {
+    const city = homeCity || "campbell";
+    return loadDefaultPlan(city, false);
   });
-  const [weather, setWeather] = useState<string | null>(null);
-  const [loading, setLoading] = useState(!isFirstVisitUser);
+  const hasDefaultPlan = defaultCards.length > 0;
+  const [cards, setCards] = useState<DayCard[]>(defaultCards);
+  const [weather, setWeather] = useState<string | null>(() => {
+    if (!hasDefaultPlan) return null;
+    try {
+      const plans = (defaultPlansJson as any).plans || {};
+      const city = homeCity || "campbell";
+      return plans[`${city}:adults`]?.weather || null;
+    } catch { return null; }
+  });
+  const [loading, setLoading] = useState(!hasDefaultPlan);
   const [swapLoading, setSwapLoading] = useState(false); // loading triggered by a dismiss
   const [replacedIds, setReplacedIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
@@ -317,9 +312,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     }
   }, [state.city, state.kids, state.dismissed, state.locked]);
 
-  // Skip API call for first-time visitors — they already have the instant plan.
+  // Skip API call if we have a pre-generated plan (first-visit or cached).
   // The API call fires when they pick a city or hit SHUFFLE.
-  useEffect(() => { if (!isFirstVisitUser) fetchPlan(); }, []);
+  useEffect(() => { if (!hasDefaultPlan) fetchPlan(); }, []);
 
   // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);

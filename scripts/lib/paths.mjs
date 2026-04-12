@@ -50,6 +50,7 @@ export const ARTIFACTS = {
   places:           join(DATA_DIR, "places.json"),
   bookstoreEvents:  join(DATA_DIR, "bookstore-events.json"),  // legacy, superseded by playwrightEvents
   playwrightEvents: join(DATA_DIR, "playwright-events.json"),
+  defaultPlans:     join(DATA_DIR, "default-plans.json"),
 };
 
 // ---------------------------------------------------------------------------
