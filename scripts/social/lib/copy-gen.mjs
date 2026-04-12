@@ -394,6 +394,186 @@ export async function generateCopy(format, items, url) {
   if (items.length === 1) {
     return generateSingleItemCopy(items[0]);
   }
-  // Fallback to old behavior for multi-item (will be removed)
   return generateSingleItemCopy(items[0]);
+}
+
+// ── New 3-slot content type generators ─────────────────────────────────
+
+const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+/**
+ * Generate copy for a full DAY PLAN post (7:15 AM signature slot).
+ *
+ * @param {object} plan - Plan object with cards array from default-plans.json
+ * @param {string} dateStr - YYYY-MM-DD
+ * @param {string} [planUrl] - Shareable plan link
+ * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
+ */
+export async function generateDayPlanCopy(plan, dateStr, planUrl) {
+  loadEnv();
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
+
+  const date = new Date(dateStr + "T12:00:00");
+  const dayName = DAY_NAMES[date.getDay()];
+
+  const cities = [...new Set(plan.cards.map((c) => c.city).filter(Boolean))];
+  const cityDisplay = cities.map((c) => {
+    const parts = c.split("-");
+    return parts.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+  }).join(", ");
+
+  let stopsText = "";
+  for (const card of plan.cards) {
+    const time = card.timeBlock?.split(" - ")[0] || "";
+    stopsText += `- ${time}: ${card.name} (${card.city ? cityDisplay : ""})\n  ${(card.blurb || "").slice(0, 100)}\n`;
+  }
+
+  const url = planUrl || `https://southbaytoday.org`;
+  const mentions = mentionInstructions({ venue: plan.cards[0]?.name, title: plan.cards[0]?.name });
+
+  const prompt = `Write a social post promoting a FULL DAY PLAN for ${dayName} in the South Bay. This is our signature daily post — it should feel like an invitation to an awesome day.
+
+DAY: ${dayName}, ${date.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+CITIES: ${cityDisplay}
+
+STOPS:
+${stopsText}
+
+URL (MUST include): ${url}
+${mentions}
+
+This is NOT a single event — it's a curated day plan with ${plan.cards.length} stops. Frame it as "here's your ${dayName}" or "we planned your ${dayName}". The tone should be: we did the work so you don't have to.
+
+Write five variants:
+1. X (max 270 chars including URL) — punchy hook, no hashtags
+2. Threads (max 470 chars including URL + hashtags) — warmer, list a couple highlights. 2-3 hashtags.
+3. Bluesky (max 270 chars including URL + hashtags) — similar to X. 2-3 hashtags.
+4. Facebook (max 500 chars including URL) — conversational, can mention more stops. No hashtags.
+5. Instagram (max 2000 chars including URL + hashtags) — full caption, mention all stops briefly, 8-15 hashtags at end.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram". No other text.`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: CLAUDE_MODEL,
+      max_tokens: 2048,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Claude API error (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  const text = data.content?.[0]?.text ?? "";
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("Failed to extract JSON from Claude response");
+
+  const variants = JSON.parse(jsonMatch[0]);
+  variants.mastodon = variants.bluesky;
+  if (!variants.instagram) variants.instagram = variants.facebook;
+
+  return variants;
+}
+
+/**
+ * Generate copy for a TONIGHT PICK post (11:45 AM slot).
+ *
+ * @param {object} item - Single event/restaurant item
+ * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
+ */
+export async function generateTonightPickCopy(item) {
+  loadEnv();
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
+
+  const mentions = mentionInstructions(item);
+  const postUrl = item.planUrl || item.url;
+
+  const prompt = `Write a social post recommending ONE thing to do TONIGHT in the South Bay. This is our midday "tonight pick" — make people excited about their evening.
+
+ITEM:
+- Title: ${item.title || item.name}
+- City: ${item.cityName || item.city || ""}
+- Venue: ${item.venue || ""}
+- Time: ${item.time || "tonight"}
+- Category: ${item.category || ""}
+- Summary: ${(item.summary || item.blurb || "").slice(0, 300)}
+- Cost: ${item.costNote || item.cost || ""}
+- URL (MUST include): ${postUrl}
+${mentions}
+
+Frame this as a TONIGHT recommendation. "Tonight in the South Bay..." energy. One great thing, full enthusiasm.
+
+Write five variants:
+1. X (max 270 chars including URL) — punchy, no hashtags
+2. Threads (max 470 chars including URL + hashtags) — warmer. 2-3 hashtags.
+3. Bluesky (max 270 chars including URL + hashtags) — 2-3 hashtags.
+4. Facebook (max 500 chars including URL) — conversational. No hashtags.
+5. Instagram (max 2000 chars including URL + hashtags) — full caption, 8-15 hashtags.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram". No other text.`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: CLAUDE_MODEL,
+      max_tokens: 2048,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Claude API error (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  const text = data.content?.[0]?.text ?? "";
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("Failed to extract JSON from Claude response");
+
+  const variants = JSON.parse(jsonMatch[0]);
+  variants.mastodon = variants.bluesky;
+  if (!variants.instagram) variants.instagram = variants.facebook;
+
+  return variants;
+}
+
+/**
+ * Generate copy for a WILDCARD post (4:30 PM slot).
+ * Dispatches based on content subtype.
+ *
+ * @param {object} item - Content item
+ * @param {string} subtype - "sv-history" | "restaurant" | "general"
+ * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
+ */
+export async function generateWildcardCopy(item, subtype = "general") {
+  // SV History has its own generator
+  if (subtype === "sv-history" && item.foundedYear) {
+    const ptTime = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    const variants = await generateSvHistoryCopy(item, ptTime);
+    if (!variants.instagram) variants.instagram = variants.facebook;
+    return variants;
+  }
+
+  // Restaurant openings and general items use the single-item generator
+  // with a subtype-aware framing
+  return generateSingleItemCopy(item, "afternoon");
 }

@@ -4,9 +4,13 @@
 
 export const CONFIG = {
   DRY_RUN: false,
-  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: false },
+  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: true },
+  // Content slot types for the 3-post-per-day strategy
+  SLOT_TYPES: { "day-plan": true, "tonight-pick": true, "wildcard": true },
+  // Legacy format flags (kept for backward compat during transition)
   FORMATS: { daily_pulse: true, tonight: true, weekend: true, civic: true },
   THRESHOLDS: { daily_pulse: 40, tonight: 35, weekend: 60, civic: 50 },
+  SCHEDULE_FILE: "src/data/south-bay/social-schedule.json",
   BLACKLIST_FILE: "src/data/south-bay/social-blacklist.json",
   HISTORY_FILE: "src/data/south-bay/social-post-history.json",
   HISTORY_RETENTION_DAYS: 30,

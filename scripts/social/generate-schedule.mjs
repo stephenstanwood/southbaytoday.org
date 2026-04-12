@@ -1,0 +1,351 @@
+#!/usr/bin/env node
+// ---------------------------------------------------------------------------
+// South Bay Today — 14-Day Schedule Generator
+// Populates the 3-slot daily schedule with draft content:
+//   07:15 — Day Plan (from default-plans.json)
+//   11:45 — Tonight Pick (best evening event)
+//   16:30 — Wildcard (SV history, restaurant, or general)
+//
+// Runs at 2 AM alongside generate-default-plans.
+// Usage: node scripts/social/generate-schedule.mjs [--dry-run] [--days N]
+// ---------------------------------------------------------------------------
+
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
+import { scoreAndRank } from "./lib/scoring.mjs";
+import { generateDayPlanCopy, generateTonightPickCopy, generateWildcardCopy } from "./lib/copy-gen.mjs";
+import { SLOT_TYPES, TYPED_SLOTS, todayPT, addDays } from "./lib/slot-scheduler.mjs";
+import { CITY_NAMES } from "./lib/constants.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+const PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
+const MILESTONES_DIR = join(__dirname, "..", "..", "src", "lib", "south-bay");
+const RESTAURANT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "scc-food-openings.json");
+
+// Load env
+const ENV_FILE = join(__dirname, "..", "..", ".env.local");
+if (!process.env.ANTHROPIC_API_KEY) {
+  try {
+    const lines = readFileSync(ENV_FILE, "utf8").split("\n");
+    for (const line of lines) {
+      const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+      if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+    }
+  } catch {}
+}
+
+const args = process.argv.slice(2);
+const dryRun = args.includes("--dry-run");
+const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || "14");
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+
+function loadSchedule() {
+  if (!existsSync(SCHEDULE_FILE)) return { days: {} };
+  try { return JSON.parse(readFileSync(SCHEDULE_FILE, "utf8")); } catch { return { days: {} }; }
+}
+
+function saveSchedule(schedule) {
+  schedule._meta = {
+    generatedAt: new Date().toISOString(),
+    generator: "generate-schedule",
+    daysAhead,
+  };
+  writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2) + "\n");
+}
+
+function loadDefaultPlans() {
+  try { return JSON.parse(readFileSync(PLANS_FILE, "utf8")); } catch { return { plans: {} }; }
+}
+
+const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+/** Pick the best plan for a given date, rotating through cities. */
+function pickPlanForDate(plansData, dateStr) {
+  const plans = plansData.plans || {};
+  const planKeys = Object.keys(plans).filter((k) => !k.includes(":kids"));
+  if (planKeys.length === 0) return null;
+
+  // Rotate based on day-of-year so each day gets a different city
+  const dayOfYear = Math.floor(
+    (new Date(dateStr + "T12:00:00") - new Date(dateStr.split("-")[0] + "-01-01T00:00:00")) / 86400000
+  );
+  const key = planKeys[dayOfYear % planKeys.length];
+  return { key, plan: plans[key] };
+}
+
+/** Find the best evening event for a given date. */
+function pickTonightEvent(candidates, dateStr) {
+  const dateEvents = candidates.filter((c) => c.date === dateStr);
+  if (dateEvents.length === 0) return null;
+
+  // Prefer evening events (time after 4pm or no time specified)
+  const evening = dateEvents.filter((c) => {
+    if (!c.time) return true;
+    const lower = c.time.toLowerCase();
+    if (lower.includes("pm")) {
+      const hour = parseInt(c.time);
+      return hour >= 4 || hour === 12;
+    }
+    const hour = parseInt(c.time);
+    return hour >= 16;
+  });
+
+  const pool = evening.length > 0 ? evening : dateEvents;
+
+  // Score and pick best
+  const scored = pool.map((c) => ({
+    ...c,
+    _score: (c.score || 0) + (c.category === "arts" ? 3 : 0) + (c.category === "food" ? 2 : 0) + (c.venue ? 2 : 0),
+  }));
+  scored.sort((a, b) => b._score - a._score);
+  return scored[0];
+}
+
+/** Find wildcard content for a given date. */
+function pickWildcard(candidates, dateStr) {
+  // 1. Check for SV history anniversary
+  const date = new Date(dateStr + "T12:00:00");
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  try {
+    // Load milestones from tech-companies data
+    const techFile = join(MILESTONES_DIR, "tech-companies.ts");
+    if (existsSync(techFile)) {
+      const content = readFileSync(techFile, "utf8");
+      // Simple regex to find milestones matching this month/day
+      const milestoneRegex = new RegExp(`month:\\s*${month},\\s*day:\\s*${day}`, "g");
+      if (milestoneRegex.test(content)) {
+        // Extract the company name from nearby context
+        const lines = content.split("\n");
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].includes(`month: ${month}`) && lines[i].includes(`day: ${day}`)) {
+            // Look backwards for company name
+            for (let j = i; j >= Math.max(0, i - 10); j--) {
+              const companyMatch = lines[j].match(/company:\s*"([^"]+)"/);
+              if (companyMatch) {
+                return {
+                  subtype: "sv-history",
+                  item: {
+                    title: companyMatch[1],
+                    company: companyMatch[1],
+                    foundedYear: 0, // Will be filled by the copy generator
+                    name: companyMatch[1],
+                    month, day,
+                  },
+                };
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch {}
+
+  // 2. Check for restaurant openings
+  try {
+    const restaurants = JSON.parse(readFileSync(RESTAURANT_FILE, "utf8"));
+    const openings = (restaurants.openings || []).filter((r) => r.date === dateStr);
+    if (openings.length > 0) {
+      return { subtype: "restaurant", item: openings[0] };
+    }
+  } catch {}
+
+  // 3. Fall back to most interesting general candidate for that date
+  const dateItems = candidates.filter((c) => c.date === dateStr && c.sourceType === "event");
+  if (dateItems.length > 0) {
+    dateItems.sort((a, b) => (b.score || 0) - (a.score || 0));
+    return { subtype: "general", item: dateItems[0] };
+  }
+
+  // 4. Any undated interesting items
+  const undated = candidates.filter((c) => !c.date && c.sourceType !== "permit");
+  if (undated.length > 0) {
+    return { subtype: "general", item: undated[0] };
+  }
+
+  return null;
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────
+
+async function main() {
+  const today = todayPT();
+  console.log(`\n📅 Schedule generator — ${today} (${daysAhead} days ahead)`);
+
+  const schedule = loadSchedule();
+  const plansData = loadDefaultPlans();
+  const allCandidates = loadAllCandidates();
+  const upcoming = upcomingCandidates(allCandidates, daysAhead + 7);
+
+  // Score candidates for ranking
+  let scored;
+  try {
+    scored = scoreAndRank(upcoming);
+  } catch {
+    scored = upcoming;
+  }
+
+  let generated = 0;
+  let skipped = 0;
+
+  for (let offset = 0; offset < daysAhead; offset++) {
+    const dateStr = addDays(today, offset);
+    const dayName = DAY_NAMES[new Date(dateStr + "T12:00:00").getDay()];
+
+    if (!schedule.days[dateStr]) schedule.days[dateStr] = {};
+    const day = schedule.days[dateStr];
+
+    console.log(`\n  ${dayName} ${dateStr}:`);
+
+    // ── Day Plan (7:15 AM) ──────────────────────────────────────────────
+    if (!day["day-plan"] || day["day-plan"].status === "draft") {
+      const planResult = pickPlanForDate(plansData, dateStr);
+      if (planResult) {
+        const { key, plan } = planResult;
+        const citySlug = key.split(":")[0];
+        const cityName = CITY_NAMES[citySlug] || citySlug;
+
+        if (dryRun) {
+          console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) [dry run]`);
+        } else {
+          try {
+            const copy = await generateDayPlanCopy(plan, dateStr);
+            day["day-plan"] = {
+              status: "draft",
+              slotType: "day-plan",
+              city: citySlug,
+              cityName,
+              plan: { cards: plan.cards, weather: plan.weather },
+              copy,
+              imageUrl: null,
+              imageStyle: null,
+              copyApprovedAt: null,
+              imageApprovedAt: null,
+              generatedAt: new Date().toISOString(),
+            };
+            generated++;
+            console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) ✅`);
+          } catch (err) {
+            console.log(`    📋 Day Plan: ${cityName} ❌ ${err.message}`);
+          }
+        }
+      } else {
+        console.log(`    📋 Day Plan: no plan data available`);
+      }
+    } else {
+      skipped++;
+      console.log(`    📋 Day Plan: already ${day["day-plan"].status}`);
+    }
+
+    // ── Tonight Pick (11:45 AM) ─────────────────────────────────────────
+    if (!day["tonight-pick"] || day["tonight-pick"].status === "draft") {
+      const tonight = pickTonightEvent(scored, dateStr);
+      if (tonight) {
+        if (dryRun) {
+          console.log(`    🌙 Tonight: ${tonight.title?.slice(0, 50)} [dry run]`);
+        } else {
+          try {
+            const copy = await generateTonightPickCopy(tonight);
+            day["tonight-pick"] = {
+              status: "draft",
+              slotType: "tonight-pick",
+              item: {
+                title: tonight.title, city: tonight.city, cityName: tonight.cityName,
+                venue: tonight.venue, date: tonight.date, time: tonight.time,
+                category: tonight.category, summary: tonight.summary,
+                url: tonight.url, cost: tonight.cost, costNote: tonight.costNote,
+              },
+              copy,
+              imageUrl: null,
+              imageStyle: null,
+              copyApprovedAt: null,
+              imageApprovedAt: null,
+              generatedAt: new Date().toISOString(),
+            };
+            generated++;
+            console.log(`    🌙 Tonight: ${tonight.title?.slice(0, 50)} ✅`);
+          } catch (err) {
+            console.log(`    🌙 Tonight: ❌ ${err.message}`);
+          }
+        }
+      } else {
+        console.log(`    🌙 Tonight: no evening events found`);
+      }
+    } else {
+      skipped++;
+      console.log(`    🌙 Tonight: already ${day["tonight-pick"].status}`);
+    }
+
+    // ── Wildcard (4:30 PM) ──────────────────────────────────────────────
+    if (!day["wildcard"] || day["wildcard"].status === "draft") {
+      const wild = pickWildcard(scored, dateStr);
+      if (wild) {
+        if (dryRun) {
+          console.log(`    🎲 Wildcard: [${wild.subtype}] ${wild.item.title?.slice(0, 50) || wild.item.name?.slice(0, 50)} [dry run]`);
+        } else {
+          try {
+            const copy = await generateWildcardCopy(wild.item, wild.subtype);
+            day["wildcard"] = {
+              status: "draft",
+              slotType: "wildcard",
+              subtype: wild.subtype,
+              item: {
+                title: wild.item.title || wild.item.name,
+                city: wild.item.city, cityName: wild.item.cityName,
+                venue: wild.item.venue, date: wild.item.date, time: wild.item.time,
+                category: wild.item.category, summary: wild.item.summary || wild.item.blurb,
+                url: wild.item.url, cost: wild.item.cost, costNote: wild.item.costNote,
+                company: wild.item.company, foundedYear: wild.item.foundedYear,
+              },
+              copy,
+              imageUrl: null,
+              imageStyle: null,
+              copyApprovedAt: null,
+              imageApprovedAt: null,
+              generatedAt: new Date().toISOString(),
+            };
+            generated++;
+            console.log(`    🎲 Wildcard: [${wild.subtype}] ${(wild.item.title || wild.item.name || "").slice(0, 50)} ✅`);
+          } catch (err) {
+            console.log(`    🎲 Wildcard: ❌ ${err.message}`);
+          }
+        }
+      } else {
+        console.log(`    🎲 Wildcard: no content found — skipping`);
+      }
+    } else {
+      skipped++;
+      console.log(`    🎲 Wildcard: already ${day["wildcard"].status}`);
+    }
+
+    // Rate limit between days
+    if (!dryRun && offset < daysAhead - 1) {
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+  }
+
+  // Clean up old dates (more than 2 days in the past)
+  const cutoff = addDays(today, -2);
+  for (const dateStr of Object.keys(schedule.days)) {
+    if (dateStr < cutoff) {
+      delete schedule.days[dateStr];
+    }
+  }
+
+  if (!dryRun) {
+    saveSchedule(schedule);
+    console.log(`\n✅ Schedule saved: ${generated} new entries, ${skipped} preserved`);
+  } else {
+    console.log(`\n🏜️  Dry run: would generate ${generated} entries`);
+  }
+}
+
+main().catch((err) => {
+  console.error("Schedule generation failed:", err);
+  process.exit(1);
+});

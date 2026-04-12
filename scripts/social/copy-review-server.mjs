@@ -19,6 +19,7 @@ const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
+const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
 const ENV_FILE = join(__dirname, "..", "..", ".env.local");
 const BATCH_SIZE = 25;
@@ -80,6 +81,15 @@ function saveReplies(replies) {
   const dir = dirname(REPLIES_FILE);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(REPLIES_FILE, JSON.stringify(replies, null, 2) + "\n");
+}
+
+function loadSchedule() {
+  if (!existsSync(SCHEDULE_FILE)) return { days: {} };
+  try { return JSON.parse(readFileSync(SCHEDULE_FILE, "utf8")); } catch { return { days: {} }; }
+}
+
+function saveScheduleFile(schedule) {
+  writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2) + "\n");
 }
 
 // Rewrite all platform copy variants based on edit instructions
@@ -589,6 +599,71 @@ const HTML = `<!DOCTYPE html>
     color: #555;
   }
   .reply-saved-note strong { color: #1a1a1a; }
+
+  /* Calendar View */
+  #calendar-view { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+  .cal-day { margin-bottom: 24px; border: 1px solid #E5E2DB; border-radius: 12px; overflow: hidden; }
+  .cal-day-header {
+    padding: 12px 20px; background: #f5f4f0; border-bottom: 1px solid #E5E2DB;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cal-day-header h3 { font-size: 16px; font-weight: 600; margin: 0; }
+  .cal-day-header .cal-date { color: #888; font-size: 13px; }
+  .cal-day.today .cal-day-header { background: #1a1a1a; color: #faf9f6; }
+  .cal-day.today .cal-date { color: #bbb; }
+  .cal-slots { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .cal-slot {
+    padding: 16px; border-right: 1px solid #E5E2DB;
+    cursor: pointer; transition: background 0.1s; min-height: 140px;
+  }
+  .cal-slot:last-child { border-right: none; }
+  .cal-slot:hover { background: #faf9f6; }
+  .cal-slot-type {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .cal-slot-type.day-plan { color: #d4a017; }
+  .cal-slot-type.tonight-pick { color: #8b5cf6; }
+  .cal-slot-type.wildcard { color: #059669; }
+  .cal-slot-time { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .cal-slot-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+  .cal-slot-preview { font-size: 12px; color: #777; line-height: 1.4; }
+  .cal-slot-thumb { width: 100%; aspect-ratio: 4/5; border-radius: 6px; object-fit: cover; margin-top: 8px; }
+  .cal-badges { display: flex; gap: 6px; margin-top: 8px; }
+  .cal-badge {
+    font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+  }
+  .cal-badge.draft { background: #fef3c7; color: #92400e; }
+  .cal-badge.copy-approved { background: #d1fae5; color: #065f46; }
+  .cal-badge.image-approved { background: #dbeafe; color: #1e40af; }
+  .cal-badge.published { background: #e5e7eb; color: #4b5563; }
+  .cal-badge.empty { background: #f3f4f6; color: #9ca3af; }
+  .cal-slot.empty { opacity: 0.5; }
+  .cal-slot.empty .cal-slot-title { color: #bbb; font-style: italic; }
+
+  /* Calendar expanded slot */
+  .cal-expanded {
+    border-top: 1px solid #E5E2DB; padding: 20px; background: #faf9f6;
+    grid-column: 1 / -1;
+  }
+  .cal-expanded-platforms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+  .cal-expanded-platform { font-size: 13px; line-height: 1.5; }
+  .cal-expanded-platform strong { font-size: 11px; text-transform: uppercase; color: #888; }
+  .cal-expanded-image { max-width: 300px; border-radius: 8px; margin-bottom: 16px; }
+  .cal-expanded-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cal-expanded-actions button {
+    padding: 8px 16px; border-radius: 6px; border: 1px solid #ddd;
+    background: #fff; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+  .cal-expanded-actions button:hover { background: #f5f5f5; }
+  .cal-expanded-actions .btn-approve-copy { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .cal-expanded-actions .btn-approve-image { background: #2563eb; color: #fff; border-color: #2563eb; }
+  .cal-expanded-actions .btn-regen { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+  .cal-edit-area { margin-top: 12px; }
+  .cal-edit-input {
+    width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
+    font-size: 13px; font-family: inherit; resize: vertical; min-height: 40px;
+  }
 </style>
 </head>
 <body>
@@ -596,6 +671,7 @@ const HTML = `<!DOCTYPE html>
 
 <div class="tab-bar" id="tab-bar">
   <button class="tab-btn active" onclick="switchTab('review')" id="tab-review">Review <span class="tab-count" id="tab-review-count"></span></button>
+  <button class="tab-btn" onclick="switchTab('calendar')" id="tab-calendar">Calendar</button>
   <button class="tab-btn" onclick="switchTab('replies')" id="tab-replies">Replies <span class="tab-count" id="tab-replies-count"></span></button>
 </div>
 
@@ -619,6 +695,10 @@ const HTML = `<!DOCTYPE html>
   <div class="done" id="done" style="display:none"></div>
 </div>
 
+<div id="calendar-view" style="display:none">
+  <div id="calendar-grid"></div>
+</div>
+
 <div id="replies-view">
   <div id="replies-list"></div>
 </div>
@@ -636,7 +716,10 @@ const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky
 function switchTab(tab) {
   currentTab = tab;
   document.getElementById('tab-review').className = 'tab-btn' + (tab === 'review' ? ' active' : '');
+  document.getElementById('tab-calendar').className = 'tab-btn' + (tab === 'calendar' ? ' active' : '');
   document.getElementById('tab-replies').className = 'tab-btn' + (tab === 'replies' ? ' active' : '');
+  document.getElementById('calendar-view').style.display = tab === 'calendar' ? '' : 'none';
+  if (tab === 'calendar') loadCalendar();
   document.getElementById('review-tab').style.display = tab === 'review' ? '' : 'none';
   document.getElementById('replies-view').style.display = tab === 'replies' ? '' : 'none';
   if (tab === 'replies') loadReplies();
@@ -993,6 +1076,209 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// --- Calendar ---
+
+let scheduleData = {};
+let expandedSlot = null;
+
+const SLOT_META = {
+  'day-plan': { label: '7:15 AM — Day Plan', icon: '\\ud83d\\udccb', color: '#d4a017' },
+  'tonight-pick': { label: '11:45 AM — Tonight Pick', icon: '\\ud83c\\udf19', color: '#8b5cf6' },
+  'wildcard': { label: '4:30 PM — Wildcard', icon: '\\ud83c\\udfb2', color: '#059669' },
+};
+
+const SLOT_ORDER = ['day-plan', 'tonight-pick', 'wildcard'];
+const DAY_NAMES_CAL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+async function loadCalendar() {
+  try {
+    const res = await fetch('/api/schedule');
+    scheduleData = await res.json();
+  } catch {
+    scheduleData = { days: {} };
+  }
+  renderCalendar();
+}
+
+function todayStr() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('calendar-grid');
+  const today = todayStr();
+  const days = scheduleData.days || {};
+
+  // Generate 14 days starting from today
+  let html = '';
+  for (let offset = 0; offset < 14; offset++) {
+    const d = new Date(today + 'T12:00:00');
+    d.setDate(d.getDate() + offset);
+    const dateStr = d.toLocaleDateString('en-CA');
+    const dayName = DAY_NAMES_CAL[d.getDay()];
+    const monthDay = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const isToday = dateStr === today;
+    const dayData = days[dateStr] || {};
+
+    html += '<div class="cal-day' + (isToday ? ' today' : '') + '">';
+    html += '<div class="cal-day-header">';
+    html += '<h3>' + dayName + (isToday ? ' (Today)' : '') + '</h3>';
+    html += '<span class="cal-date">' + monthDay + '</span>';
+    html += '</div>';
+    html += '<div class="cal-slots">';
+
+    for (const slotType of SLOT_ORDER) {
+      const slot = dayData[slotType];
+      const meta = SLOT_META[slotType];
+      const isEmpty = !slot;
+      const isExpanded = expandedSlot === dateStr + ':' + slotType;
+
+      html += '<div class="cal-slot' + (isEmpty ? ' empty' : '') + '" onclick="toggleCalSlot(\\'' + dateStr + '\\', \\'' + slotType + '\\')">';
+      html += '<div class="cal-slot-type ' + slotType + '">' + meta.icon + ' ' + meta.label + '</div>';
+
+      if (slot) {
+        // Title
+        const title = slot.plan ? (slot.cityName || 'Day Plan') :
+          (slot.item?.title || slot.item?.name || 'Untitled');
+        html += '<div class="cal-slot-title">' + escapeHtml(title.slice(0, 60)) + '</div>';
+
+        // Copy preview
+        const preview = slot.copy?.x || '';
+        html += '<div class="cal-slot-preview">' + escapeHtml(preview.slice(0, 80)) + (preview.length > 80 ? '...' : '') + '</div>';
+
+        // Image thumb
+        if (slot.imageUrl) {
+          html += '<img class="cal-slot-thumb" src="' + escapeHtml(slot.imageUrl) + '" loading="lazy">';
+        }
+
+        // Status badges
+        html += '<div class="cal-badges">';
+        if (slot.status === 'published') {
+          html += '<span class="cal-badge published">Published</span>';
+        } else {
+          html += '<span class="cal-badge ' + (slot.copyApprovedAt ? 'copy-approved' : 'draft') + '">Copy: ' + (slot.copyApprovedAt ? '\\u2713' : 'draft') + '</span>';
+          html += '<span class="cal-badge ' + (slot.imageApprovedAt ? 'image-approved' : slot.imageUrl ? 'draft' : 'empty') + '">Image: ' + (slot.imageApprovedAt ? '\\u2713' : slot.imageUrl ? 'review' : 'none') + '</span>';
+        }
+        html += '</div>';
+      } else {
+        html += '<div class="cal-slot-title">No content</div>';
+        html += '<div class="cal-badges"><span class="cal-badge empty">Empty</span></div>';
+      }
+
+      html += '</div>'; // close cal-slot
+
+      // Expanded view
+      if (isExpanded && slot) {
+        html += renderExpandedSlot(dateStr, slotType, slot);
+      }
+    }
+
+    html += '</div>'; // close cal-slots
+    html += '</div>'; // close cal-day
+  }
+
+  grid.innerHTML = html;
+}
+
+function renderExpandedSlot(dateStr, slotType, slot) {
+  let html = '<div class="cal-expanded">';
+
+  // Platform copy previews
+  if (slot.copy) {
+    html += '<div class="cal-expanded-platforms">';
+    const platforms = ['x', 'threads', 'bluesky', 'facebook', 'instagram'];
+    for (const p of platforms) {
+      if (!slot.copy[p]) continue;
+      html += '<div class="cal-expanded-platform"><strong>' + p + '</strong><br>' + escapeHtml(slot.copy[p]).slice(0, 200) + '</div>';
+    }
+    html += '</div>';
+  }
+
+  // Image
+  if (slot.imageUrl) {
+    html += '<img class="cal-expanded-image" src="' + escapeHtml(slot.imageUrl) + '">';
+  }
+
+  // Actions
+  html += '<div class="cal-expanded-actions">';
+  if (!slot.copyApprovedAt) {
+    html += '<button class="btn-approve-copy" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'approve-copy\\'); event.stopPropagation();">Approve Copy</button>';
+  }
+  if (slot.imageUrl && !slot.imageApprovedAt) {
+    html += '<button class="btn-approve-image" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'approve-image\\'); event.stopPropagation();">Approve Image</button>';
+  }
+  if (slot.copyApprovedAt) {
+    html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Generate Image') + '</button>';
+  }
+  html += '</div>';
+
+  // Edit area
+  html += '<div class="cal-edit-area">';
+  html += '<input class="cal-edit-input" id="cal-edit-' + dateStr + '-' + slotType + '" placeholder="Edit instructions..." onclick="event.stopPropagation()">';
+  html += '<button style="margin-top:6px;padding:6px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:12px;cursor:pointer" onclick="calEditCopy(\\'' + dateStr + '\\', \\'' + slotType + '\\'); event.stopPropagation();">Submit Edits</button>';
+  html += '</div>';
+
+  html += '</div>';
+  return html;
+}
+
+function toggleCalSlot(dateStr, slotType) {
+  const key = dateStr + ':' + slotType;
+  expandedSlot = expandedSlot === key ? null : key;
+  renderCalendar();
+}
+
+async function calAction(dateStr, slotType, action) {
+  try {
+    const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/' + action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      // Update local state
+      if (data.schedule) {
+        scheduleData = data.schedule;
+      } else {
+        await loadCalendar();
+        return;
+      }
+      renderCalendar();
+    } else {
+      alert('Action failed: ' + (data.error || 'unknown'));
+    }
+  } catch (err) {
+    alert('Action failed: ' + err.message);
+  }
+}
+
+async function calEditCopy(dateStr, slotType) {
+  const input = document.getElementById('cal-edit-' + dateStr + '-' + slotType);
+  if (!input || !input.value.trim()) return;
+
+  try {
+    const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/edit-copy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ instructions: input.value.trim() }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      input.value = '';
+      if (data.schedule) {
+        scheduleData = data.schedule;
+      } else {
+        await loadCalendar();
+        return;
+      }
+      renderCalendar();
+    }
+  } catch (err) {
+    alert('Edit failed: ' + err.message);
+  }
+}
+
 init();
 </script>
 </body>
@@ -1206,6 +1492,146 @@ const server = createServer((req, res) => {
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true, queueSize: queue.filter((p) => !p.published).length, actionResults }));
+    });
+    return;
+  }
+
+  // ── Schedule API endpoints ───────────────────────────────────────────────
+
+  if (req.method === "GET" && req.url === "/api/schedule") {
+    const schedule = loadSchedule();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(schedule));
+    return;
+  }
+
+  // Handle schedule actions: /api/schedule/:date/:slotType/:action
+  const scheduleMatch = req.url?.match(/^\/api\/schedule\/(\d{4}-\d{2}-\d{2})\/(day-plan|tonight-pick|wildcard)\/(approve-copy|approve-image|regen-image|edit-copy)$/);
+  if (req.method === "POST" && scheduleMatch) {
+    const [, date, slotType, action] = scheduleMatch;
+    let body = "";
+    req.on("data", (c) => (body += c));
+    req.on("end", async () => {
+      try {
+        const schedule = loadSchedule();
+        const slot = schedule.days?.[date]?.[slotType];
+        if (!slot) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Slot not found" }));
+          return;
+        }
+
+        if (action === "approve-copy") {
+          slot.copyApprovedAt = new Date().toISOString();
+          slot.status = "copy-approved";
+          console.log(`  ✅ Copy approved: ${date} ${slotType}`);
+
+          // Trigger Recraft poster generation
+          try {
+            const { pickStyle, dayPlanPrompt, tonightPickPrompt, wildcardPrompt } = await import("./lib/poster-styles.mjs");
+            const { generateAndUpload } = await import("./lib/recraft.mjs");
+            const style = pickStyle();
+            let prompt;
+            if (slotType === "day-plan" && slot.plan) {
+              prompt = dayPlanPrompt(slot.plan, date, style.style);
+            } else if (slotType === "tonight-pick" && slot.item) {
+              prompt = tonightPickPrompt(slot.item, style.style);
+            } else if (slot.item) {
+              prompt = wildcardPrompt(slot.item, slot.subtype || "general", style.style);
+            }
+            if (prompt) {
+              console.log(`  🎨 Generating Recraft image (${style.id})...`);
+              const pathname = `posters/${date}-${slotType}.png`;
+              const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
+              slot.imageUrl = url;
+              slot.imageStyle = style.id;
+              console.log(`  ✅ Image generated: ${url.slice(0, 80)}`);
+            }
+          } catch (err) {
+            console.error(`  ⚠️  Recraft generation failed: ${err.message}`);
+          }
+
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        if (action === "approve-image") {
+          slot.imageApprovedAt = new Date().toISOString();
+          slot.status = "image-approved";
+          console.log(`  ✅ Image approved: ${date} ${slotType}`);
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        if (action === "regen-image") {
+          try {
+            const { pickStyle, dayPlanPrompt, tonightPickPrompt, wildcardPrompt } = await import("./lib/poster-styles.mjs");
+            const { generateAndUpload } = await import("./lib/recraft.mjs");
+            const style = pickStyle();
+            let prompt;
+            if (slotType === "day-plan" && slot.plan) {
+              prompt = dayPlanPrompt(slot.plan, date, style.style);
+            } else if (slotType === "tonight-pick" && slot.item) {
+              prompt = tonightPickPrompt(slot.item, style.style);
+            } else if (slot.item) {
+              prompt = wildcardPrompt(slot.item, slot.subtype || "general", style.style);
+            }
+            if (prompt) {
+              console.log(`  🎨 Regenerating Recraft image (${style.id})...`);
+              const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
+              const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
+              slot.imageUrl = url;
+              slot.imageStyle = style.id;
+              slot.imageApprovedAt = null; // reset approval on regen
+              console.log(`  ✅ Image regenerated: ${url.slice(0, 80)}`);
+            }
+          } catch (err) {
+            console.error(`  ⚠️  Recraft regeneration failed: ${err.message}`);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: err.message }));
+            return;
+          }
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        if (action === "edit-copy") {
+          const params = JSON.parse(body || "{}");
+          if (!params.instructions) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: "Missing instructions" }));
+            return;
+          }
+          try {
+            const rewritten = await rewriteCopyWithEdits(slot.copy, params.instructions, slot.item || {});
+            slot.copy = rewritten;
+            slot.copyApprovedAt = null; // reset approval after edit
+            slot.status = "draft";
+            console.log(`  ✏️  Copy edited: ${date} ${slotType}`);
+          } catch (err) {
+            console.error(`  ⚠️  Edit failed: ${err.message}`);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: err.message }));
+            return;
+          }
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: "Unknown action" }));
+      } catch (e) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
     });
     return;
   }
