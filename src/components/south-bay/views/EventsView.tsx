@@ -638,6 +638,84 @@ function bucketLabel(bucket: string, weekEndIso: string): string {
 
 const DATE_GROUP_STATIC = ["Today", "Tomorrow", "This Week"];
 
+// ── San José neighborhood filter ───────────────────────────────────────────
+
+interface SjNeighborhood {
+  id: string;
+  label: string;
+  emoji: string;
+  /** venue substrings (case-insensitive) that belong to this area */
+  venues: string[];
+}
+
+const SJ_NEIGHBORHOODS: SjNeighborhood[] = [
+  {
+    id: "downtown",
+    label: "Downtown",
+    emoji: "🏙️",
+    venues: [
+      "san jose improv", "the ritz", "sap center", "san jose civic",
+      "sjz break room", "hammer theatre", "macla", "city lights theater",
+      "ica san", "san jose center for the performing", "king library",
+      "san jose jazz", "arena green",
+    ],
+  },
+  {
+    id: "sjsu",
+    label: "SJSU Area",
+    emoji: "🎓",
+    venues: ["san jose state", "san jose museum of art"],
+  },
+  {
+    id: "japantown",
+    label: "Japantown",
+    emoji: "🏮",
+    venues: ["japanese american museum", "sjda", "japantown"],
+  },
+  {
+    id: "willow-glen",
+    label: "Willow Glen",
+    emoji: "🌳",
+    venues: ["willow glen library"],
+  },
+  {
+    id: "east-side",
+    label: "East Side",
+    emoji: "🌄",
+    venues: [
+      "berryessa library", "vineland library", "educational park library",
+      "edenvale library", "alum rock library",
+    ],
+  },
+  {
+    id: "south-sj",
+    label: "South SJ",
+    emoji: "🏡",
+    venues: ["almaden library", "santa teresa library", "cambrian library"],
+  },
+  {
+    id: "evergreen",
+    label: "Evergreen",
+    emoji: "🌿",
+    venues: ["evergreen library"],
+  },
+  {
+    id: "sports",
+    label: "Sports Venues",
+    emoji: "🏟️",
+    venues: ["paypal park", "excite ballpark", "tech cu arena"],
+  },
+];
+
+function getSjNeighborhood(venue: string | null): string | null {
+  if (!venue) return null;
+  const vl = venue.toLowerCase();
+  for (const n of SJ_NEIGHBORHOODS) {
+    if (n.venues.some((v) => vl.includes(v))) return n.id;
+  }
+  return null;
+}
+
 // ── Main View ──
 
 // ── Spring Break constants ──────────────────────────────────────────────────
@@ -654,6 +732,9 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
   const [showAllLater, setShowAllLater] = useState(false);
   const [selectedVenue, setSelectedVenue] = useState<string | null>(null);
   const [springBreakMode, setSpringBreakMode] = useState(false);
+  const [sjNeighborhoodRaw, setSjNeighborhood] = useState<string | null>(null);
+  // Only apply neighborhood filter when SJ is the sole city
+  const sjNeighborhood = (selectedCities.size === 1 && selectedCities.has("san-jose")) ? sjNeighborhoodRaw : null;
   const [todayForecast, setTodayForecast] = useState<{
     high: number; rainPct: number; emoji: string; desc: string;
   } | null>(null);
@@ -704,6 +785,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       if (e.date === todayIso && !hasNotStarted(e.time)) return false;
       // Spring break mode: show only Apr 3-17 events
       if (springBreakMode && (e.date < SB_BREAK_START || e.date > SB_BREAK_END)) return false;
+      if (sjNeighborhood && e.city === "san-jose" && getSjNeighborhood(e.venue) !== sjNeighborhood) return false;
       if (search) {
         const q = search.toLowerCase();
         if (!e.title.toLowerCase().includes(q) && !e.description.toLowerCase().includes(q) &&
@@ -733,7 +815,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
       // 4. Same date+time: boost under-represented sources
       return (srcCounts[a.source] || 0) - (srcCounts[b.source] || 0);
     });
-  }, [selectedCities, category, showKidsOnly, search, primary, springBreakMode, todayIso]);
+  }, [selectedCities, category, showKidsOnly, search, primary, springBreakMode, todayIso, sjNeighborhood]);
 
   // ── Per-category counts (all filters applied except category, for pill badges) ──
   const categoryCounts = useMemo(() => {
@@ -741,6 +823,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
       if (!allCities && !selectedCities.has(e.city as City)) continue;
+      if (sjNeighborhood && e.city === "san-jose" && getSjNeighborhood(e.venue) !== sjNeighborhood) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (springBreakMode && (e.date < SB_BREAK_START || e.date > SB_BREAK_END)) continue;
@@ -754,7 +837,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
     // "all" = sum of everything
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
-  }, [selectedCities, showKidsOnly, search, springBreakMode, todayIso]);
+  }, [selectedCities, showKidsOnly, search, springBreakMode, todayIso, sjNeighborhood]);
 
   // ── Recurring events (static, weekly/monthly/seasonal) ──
   const filteredRecurring = useMemo(() => {
@@ -995,6 +1078,55 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
           </span>
         )}
       </div>
+
+      {/* San José neighborhood filter — shown when SJ is the only selected city */}
+      {selectedCities.size === 1 && selectedCities.has("san-jose") && viewMode === "upcoming" && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10, alignItems: "center" }}>
+          <span style={{
+            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)",
+            flexShrink: 0, paddingTop: 2,
+          }}>
+            Area:
+          </span>
+          <button
+            onClick={() => setSjNeighborhood(null)}
+            style={{
+              padding: "3px 10px", fontSize: 11, cursor: "pointer", fontFamily: "inherit",
+              border: `1.5px solid ${sjNeighborhood === null ? "var(--sb-primary)" : "var(--sb-border)"}`,
+              borderRadius: 100,
+              background: sjNeighborhood === null ? "var(--sb-primary)" : "#fff",
+              color: sjNeighborhood === null ? "#fff" : "var(--sb-muted)",
+              fontWeight: sjNeighborhood === null ? 600 : 400,
+              transition: "all 0.12s",
+            }}
+          >
+            All SJ
+          </button>
+          {SJ_NEIGHBORHOODS.map((n) => {
+            const active = sjNeighborhood === n.id;
+            return (
+              <button
+                key={n.id}
+                onClick={() => setSjNeighborhood(active ? null : n.id)}
+                style={{
+                  padding: "3px 10px", fontSize: 11, cursor: "pointer", fontFamily: "inherit",
+                  border: `1.5px solid ${active ? "var(--sb-primary)" : "var(--sb-border)"}`,
+                  borderRadius: 100,
+                  background: active ? "var(--sb-primary)" : "#fff",
+                  color: active ? "#fff" : "var(--sb-muted)",
+                  fontWeight: active ? 600 : 400,
+                  transition: "all 0.12s",
+                  display: "flex", alignItems: "center", gap: 4,
+                }}
+              >
+                <span>{n.emoji}</span>
+                <span>{n.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Spring Break banner */}
       {showSpringBreakBanner && viewMode === "upcoming" && (
