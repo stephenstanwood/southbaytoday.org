@@ -468,7 +468,7 @@ async function main() {
     }
 
     // Publish to each platform
-    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon"];
+    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram"];
     const publishResults = [];
 
     for (const platform of platforms) {
@@ -477,10 +477,19 @@ async function main() {
 
       try {
         const client = await import(`./lib/platforms/${platform}.mjs`);
-        // Pass og:image to Threads as image URL (it needs a public URL, not a buffer)
-        const result = platform === "threads" && ogImage
-          ? await client.publish(copy, ogImage)
-          : await client.publish(copy);
+        // Pass og:image to Threads/Instagram as image URL (they need a public URL, not a buffer)
+        let result;
+        if (platform === "threads" && ogImage) {
+          result = await client.publish(copy, ogImage);
+        } else if (platform === "instagram") {
+          if (!ogImage) {
+            console.log(`      ⏭️  instagram: no public image URL — skipping`);
+            continue;
+          }
+          result = await client.publish(copy, ogImage);
+        } else {
+          result = await client.publish(copy);
+        }
         console.log(`      ✅ ${platform}: ${JSON.stringify(result)}`);
         publishResults.push({
           platform,

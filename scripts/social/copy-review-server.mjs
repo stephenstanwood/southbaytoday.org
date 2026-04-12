@@ -82,6 +82,83 @@ function saveReplies(replies) {
   writeFileSync(REPLIES_FILE, JSON.stringify(replies, null, 2) + "\n");
 }
 
+// Rewrite all platform copy variants based on edit instructions
+async function rewriteCopyWithEdits(originalCopy, editInstructions, item) {
+  // Load env for API key
+  let apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    try {
+      const lines = readFileSync(ENV_FILE, "utf8").split("\n");
+      for (const line of lines) {
+        const m = line.match(/^ANTHROPIC_API_KEY=(.*)$/);
+        if (m) apiKey = m[1].replace(/^["']|["']$/g, "");
+      }
+    } catch {}
+  }
+  if (!apiKey) throw new Error("No ANTHROPIC_API_KEY for edit rewrite");
+
+  const prompt = `You are editing social media posts for South Bay Today, a hyperlocal community tool for the South Bay.
+
+ORIGINAL COPY (per platform):
+X: ${originalCopy.x || "(none)"}
+Threads: ${originalCopy.threads || "(none)"}
+Bluesky: ${originalCopy.bluesky || "(none)"}
+Facebook: ${originalCopy.facebook || "(none)"}
+Instagram: ${originalCopy.instagram || "(none)"}
+
+EDIT INSTRUCTIONS FROM REVIEWER:
+${editInstructions}
+
+Apply the edit instructions to ALL platform variants. Preserve the existing tone, URLs, hashtags, and @mentions. Respect platform character limits:
+- X: max 280 chars
+- Threads: max 500 chars
+- Bluesky: max 300 chars
+- Facebook: max 500 chars
+- Instagram: max 2200 chars
+
+If the edit only affects wording/phrasing, apply it consistently across all variants.
+If the edit adds/removes information, adjust each variant appropriately for its platform constraints.
+Keep URLs exactly as they are — never change or remove them.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram" — each a string. No other text.`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 2048,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Claude API error (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  const text = data.content?.[0]?.text ?? "";
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("Failed to extract JSON from edit rewrite response");
+
+  const rewritten = JSON.parse(jsonMatch[0]);
+
+  // Mastodon reuses Bluesky copy
+  rewritten.mastodon = rewritten.bluesky || originalCopy.mastodon;
+
+  // Fallback: keep originals for any missing platform
+  for (const key of Object.keys(originalCopy)) {
+    if (!rewritten[key]) rewritten[key] = originalCopy[key];
+  }
+
+  return rewritten;
+}
+
 // Clear old post files and generate a new batch
 function generateNewBatch() {
   if (isGenerating) return;
@@ -343,6 +420,17 @@ const HTML = `<!DOCTYPE html>
     border: 1px solid #ddd;
   }
   .btn-reject:hover { background: #eee; }
+  .btn-edit {
+    background: #f0ead6;
+    color: #6b5b3e;
+    border: 1px solid #d4c9a8;
+    flex: 1.2;
+  }
+  .btn-edit:hover { background: #e8dfc8; }
+  .btn-edit.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
   .btn-approve {
     background: #1a1a1a;
     color: #faf9f6;
@@ -514,16 +602,17 @@ const HTML = `<!DOCTYPE html>
 <div id="review-tab">
   <div class="counter" id="counter"></div>
   <div id="queue-badge" class="queue-badge"></div>
-  <div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> reject &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>Tab</kbd> comment box</div>
+  <div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> skip &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>e</kbd> accept w/ edits &nbsp; <kbd>Tab</kbd> comment box</div>
 
   <div id="review-area">
     <div class="item-header" id="item-header"></div>
     <div class="platforms" id="platforms"></div>
     <div class="comment-section">
-      <textarea class="comment-input" id="comment" placeholder="Notes or edit suggestions (optional)..." rows="1"></textarea>
+      <textarea class="comment-input" id="comment" placeholder="Edit instructions or notes (optional)..." rows="1"></textarea>
     </div>
     <div class="buttons" id="buttons">
       <button class="btn btn-reject" onclick="vote('reject')">&larr; Skip</button>
+      <button class="btn btn-edit" onclick="vote('edit')" id="btn-edit" style="display:none">Accept w/ Edits</button>
       <button class="btn btn-approve" onclick="vote('approve')">Approve &rarr;</button>
     </div>
   </div>
@@ -634,6 +723,7 @@ function render() {
     { key: 'threads', label: 'Threads', icon: '\\ud83e\\uddf5', maxChars: 500 },
     { key: 'bluesky', label: 'Bluesky', icon: '\\ud83e\\udd8b', maxChars: 300 },
     { key: 'facebook', label: 'Facebook', icon: '\\ud83d\\udcd8', maxChars: 500 },
+    { key: 'instagram', label: 'Instagram', icon: '\\ud83d\\udcf7', maxChars: 2200 },
   ];
 
   let cardsHtml = '';
@@ -719,17 +809,38 @@ async function pollForNewPosts() {
   }, 2000);
 }
 
+// Show "Accept w/ Edits" button when comment has text
+document.getElementById('comment').addEventListener('input', function() {
+  const editBtn = document.getElementById('btn-edit');
+  editBtn.style.display = this.value.trim() ? '' : 'none';
+});
+
 function vote(v) {
   const el = document.getElementById('platforms');
-  el.classList.add(v === 'approve' ? 'swipe-right' : 'swipe-left');
   const comment = document.getElementById('comment').value.trim();
+
+  // "edit" = accept with edits — requires comment text
+  if (v === 'edit' && !comment) {
+    document.getElementById('comment').focus();
+    return;
+  }
+
+  el.classList.add(v === 'reject' ? 'swipe-left' : 'swipe-right');
+
   const voteData = {
     file: posts[current]._file,
     title: posts[current].item?.title || '',
-    vote: v,
+    vote: v === 'edit' ? 'edit' : v,
     comment: comment || null,
   };
   results.push(voteData);
+
+  if (v === 'edit') {
+    // Show loading state — edits take a moment (Claude rewrite)
+    const editBtn = document.getElementById('btn-edit');
+    editBtn.classList.add('loading');
+    editBtn.textContent = 'Rewriting...';
+  }
 
   // Save immediately — don't wait for batch end
   fetch('/api/vote', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(voteData) })
@@ -739,11 +850,22 @@ function vote(v) {
       if (data.actionResult) {
         console.log('Action:', data.actionResult);
       }
+      if (v === 'edit') {
+        const editBtn = document.getElementById('btn-edit');
+        editBtn.classList.remove('loading');
+        editBtn.textContent = 'Accept w/ Edits';
+      }
     })
-    .catch(() => {});
+    .catch(() => {
+      if (v === 'edit') {
+        const editBtn = document.getElementById('btn-edit');
+        editBtn.classList.remove('loading');
+        editBtn.textContent = 'Accept w/ Edits';
+      }
+    });
 
-  if (v === 'approve') updateQueueBadge(queueSize + 1);
-  setTimeout(() => { current++; render(); }, 300);
+  if (v === 'approve' || v === 'edit') updateQueueBadge(queueSize + 1);
+  setTimeout(() => { current++; render(); }, v === 'edit' ? 500 : 300);
 }
 
 // --- Replies ---
@@ -864,6 +986,7 @@ document.addEventListener('keydown', (e) => {
   }
   if (e.key === 'ArrowRight') vote('approve');
   if (e.key === 'ArrowLeft') vote('reject');
+  if (e.key === 'e' || e.key === 'E') { vote('edit'); return; }
   if (e.key === 'Tab') {
     e.preventDefault();
     document.getElementById('comment').focus();
@@ -909,14 +1032,27 @@ const server = createServer((req, res) => {
         const posts = loadPendingPosts();
         const post = posts.find((p) => p._file === r.file);
 
-        if (r.vote === "approve" && post) {
+        if ((r.vote === "approve" || r.vote === "edit") && post) {
           const queue = loadQueue();
           const cleanPost = { ...post };
           delete cleanPost._file;
+
+          // If "edit" vote, rewrite copy with Claude using the comment as instructions
+          if (r.vote === "edit" && r.comment && cleanPost.copy) {
+            try {
+              const rewritten = await rewriteCopyWithEdits(cleanPost.copy, r.comment, cleanPost.item);
+              cleanPost.copy = rewritten;
+              console.log(`  ✏️  ${r.title?.slice(0, 50)} → copy rewritten per edits`);
+            } catch (err) {
+              console.error(`  ⚠️  Edit rewrite failed: ${err.message} — queuing original`);
+            }
+          }
+
           const approvedPost = {
             ...cleanPost,
             approvedAt: new Date().toISOString(),
             comment: r.comment || null,
+            editApplied: r.vote === "edit",
             published: false,
           };
           // Assign a publish slot based on the event date + current queue
@@ -933,7 +1069,7 @@ const server = createServer((req, res) => {
           }
           queue.push(approvedPost);
           saveQueue(queue);
-          console.log(`  ✅ ${r.title?.slice(0, 50)} → approved (queue: ${queue.length})`);
+          console.log(`  ✅ ${r.title?.slice(0, 50)} → ${r.vote === "edit" ? "approved w/ edits" : "approved"} (queue: ${queue.length})`);
         } else {
           console.log(`  ⏭️  ${r.title?.slice(0, 50)} → skipped`);
         }
@@ -957,9 +1093,9 @@ const server = createServer((req, res) => {
           try { unlinkSync(join(POST_DIR, post._file)); } catch {}
         }
 
-        // Process action commands from comments
+        // Process action commands from comments (skip for edit votes — those are edit instructions, not actions)
         let actionResult = null;
-        if (r.comment) {
+        if (r.comment && r.vote !== "edit") {
           const context = {
             title: r.title || post?.item?.title || "",
             source: post?.item?.source || "",

@@ -36,10 +36,38 @@ async function createSession() {
 }
 
 /**
- * Parse text for URLs and create link facets for rich text.
+ * Resolve a Bluesky handle to a DID for mention facets.
+ * Caches results for the session to avoid repeated lookups.
  */
-function detectFacets(text) {
+const _didCache = new Map();
+
+async function resolveHandleToDid(handle) {
+  // Strip leading @ if present
+  const cleanHandle = handle.replace(/^@/, "");
+  if (_didCache.has(cleanHandle)) return _didCache.get(cleanHandle);
+
+  try {
+    const res = await fetch(
+      `${BSKY_API}/com.atproto.identity.resolveHandle?handle=${encodeURIComponent(cleanHandle)}`,
+      { signal: AbortSignal.timeout(5000) }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    _didCache.set(cleanHandle, data.did);
+    return data.did;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Parse text for URLs and @mentions, create rich text facets.
+ * Mention facets require DID resolution (async).
+ */
+async function detectFacets(text) {
   const facets = [];
+
+  // URL facets
   const urlRegex = /https?:\/\/[^\s)]+/g;
   let match;
   while ((match = urlRegex.exec(text)) !== null) {
@@ -51,6 +79,36 @@ function detectFacets(text) {
       features: [{ $type: "app.bsky.richtext.facet#link", uri: url }],
     });
   }
+
+  // Mention facets — @handle.bsky.social or @handle.tld patterns
+  const mentionRegex = /@([\w.-]+\.[\w.-]+)/g;
+  while ((match = mentionRegex.exec(text)) !== null) {
+    const fullMatch = match[0]; // e.g. "@sanjosesharks.bsky.social"
+    const handle = match[1];
+    const did = await resolveHandleToDid(handle);
+    if (did) {
+      const byteStart = Buffer.byteLength(text.slice(0, match.index), "utf8");
+      const byteEnd = byteStart + Buffer.byteLength(fullMatch, "utf8");
+      facets.push({
+        index: { byteStart, byteEnd },
+        features: [{ $type: "app.bsky.richtext.facet#mention", did }],
+      });
+    }
+  }
+
+  // Hashtag facets
+  const hashtagRegex = /#(\w+)/g;
+  while ((match = hashtagRegex.exec(text)) !== null) {
+    const fullMatch = match[0]; // e.g. "#SanJose"
+    const tag = match[1];
+    const byteStart = Buffer.byteLength(text.slice(0, match.index), "utf8");
+    const byteEnd = byteStart + Buffer.byteLength(fullMatch, "utf8");
+    facets.push({
+      index: { byteStart, byteEnd },
+      features: [{ $type: "app.bsky.richtext.facet#tag", tag }],
+    });
+  }
+
   return facets;
 }
 
@@ -129,7 +187,7 @@ async function fetchLinkCard(url) {
  */
 export async function createPost(text, imageBlob = null, imageAlt = "") {
   const session = await createSession();
-  const facets = detectFacets(text);
+  const facets = await detectFacets(text);
 
   const record = {
     $type: "app.bsky.feed.post",

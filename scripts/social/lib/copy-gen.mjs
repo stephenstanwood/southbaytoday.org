@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CLAUDE_MODEL, CONFIG } from "./constants.mjs";
+import { mentionInstructions } from "./handle-lookup.mjs";
 
 const __copygen_dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -109,6 +110,9 @@ export async function generateSingleItemCopy(item, timeOfDay = "morning") {
     ? `- URL (MUST include this exact URL): ${postUrl}\n- This URL links to a full day plan built around this event. Frame the link as "here's a whole day plan" or "we built a day around it" — don't just say "get tickets". The plan page shows this event plus surrounding activities.`
     : `- URL (MUST include this exact URL): ${postUrl}`;
 
+  // Build mention instructions from handle database
+  const mentions = mentionInstructions(item);
+
   const prompt = `Write a social post about this ONE item. Current time: ${now}. Time of day: ${timeOfDay}.
 
 DATE CONTEXT: ${dateContext}
@@ -123,12 +127,13 @@ ITEM:
 - Summary: ${item.summary ? item.summary.slice(0, 300) : ""}
 - Cost: ${item.cost || ""}
 ${urlNote}
-
-Write four variants:
+${mentions}
+Write five variants:
 1. X (max 270 chars including URL) — punchy, clean, no hashtags
 2. Threads (max 470 chars including URL + hashtags) — slightly warmer, can breathe more. End with 2-3 relevant hashtags (e.g. #SanJose #LiveMusic #ThingsToDo)
 3. Bluesky (max 270 chars including URL + hashtags) — similar to X, can be slightly looser. End with 2-3 relevant hashtags (e.g. #SouthBay #SanJose #LocalNews). These hashtags are important for Bluesky discovery and Surf.social aggregation.
 4. Facebook (max 500 chars including URL) — conversational, can include a bit more context, similar warmth to Threads, no hashtags
+5. Instagram (max 2000 chars including URL + hashtags) — warmest, most descriptive. This is a caption for a photo post. Include 8-15 relevant hashtags at the end (city, topic, discovery tags like #ThingsToDoInSanJose #SouthBayEvents #BayAreaEvents #SiliconValleyLife). Instagram captions have room to breathe — add a line break before hashtags. @mention the venue/org if a handle is available.
 
 Each variant must include the exact URL provided above.
 
@@ -139,13 +144,19 @@ TIME ACCURACY (critical):
 - Do NOT say "this week" for events 4+ days out.
 - Never fabricate opening hours, start times, or end times not present in the data.
 
-HASHTAG RULES (for Bluesky and Threads only):
-- Always include a city hashtag: #SanJose, #Campbell, #LosGatos, #PaloAlto, #Cupertino, #Sunnyvale, #MountainView, #SantaClara, #Milpitas, #Saratoga, #LosAltos
-- Add 1-2 topic hashtags based on category: #LiveMusic, #LocalNews, #ThingsToDo, #FreeEvents, #SouthBay, #SiliconValley, #BayArea, #LocalArts, #CityHall, #YouthSports
-- Max 3 hashtags total. Place them at the very end, space-separated.
+HASHTAG RULES:
+- Bluesky/Threads: Always include a city hashtag (#SanJose, #Campbell, etc.) + 1-2 topic hashtags. Max 3 total. Place at the very end.
+- Instagram: 8-15 hashtags. Include city, topic, and discovery hashtags. Place after a line break at the end.
+- X/Facebook: no hashtags.
 - Hashtags count toward the character limit.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — each a string. No other text.`;
+MENTION RULES:
+- If tagging instructions were provided above, use the correct @handle for each platform variant.
+- @mentions count toward the character limit.
+- Work mentions into the sentence naturally (e.g. "Catch @SJBarracuda tonight at SAP Center").
+- Skip the mention if it doesn't fit naturally or would push over the char limit.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram" — each a string. No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -183,6 +194,11 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
 
   // Mastodon reuses Bluesky copy (similar char limits, hashtag-friendly)
   variants.mastodon = variants.bluesky;
+
+  // Instagram fallback — if Claude didn't generate it, derive from Facebook copy + hashtags
+  if (!variants.instagram) {
+    variants.instagram = variants.facebook;
+  }
 
   // Banned phrase scrub — retry once if Claude slips past the prompt
   const BANNED = /\b(right now|happening right now|right this minute|as we speak|this very moment)\b/i;

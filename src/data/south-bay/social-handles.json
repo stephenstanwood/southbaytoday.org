@@ -1,0 +1,325 @@
+{
+  "_meta": {
+    "description": "Social media handles for venues, orgs, and performers. Used by copy-gen to @mention in posts.",
+    "format": "Keys are lowercase venue/org names. Values are platform handles (without @). null = no known handle.",
+    "updated": "2026-04-12"
+  },
+
+  "venues": {
+    "san jose improv": {
+      "x": "sanjoseimprov",
+      "instagram": "sanjoseimprov",
+      "threads": "sanjoseimprov",
+      "bluesky": null,
+      "facebook": "SanJoseImprov",
+      "mastodon": null
+    },
+    "san pedro square market": {
+      "x": "SPSMarket",
+      "instagram": "sanpedrosquaremarket",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SanPedroSquareMarket",
+      "mastodon": null
+    },
+    "california theatre": {
+      "x": null,
+      "instagram": "sanjosetheaters",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SanJoseTheaters",
+      "mastodon": null
+    },
+    "city national civic": {
+      "x": null,
+      "instagram": "sanjosetheaters",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SanJoseTheaters",
+      "mastodon": null
+    },
+    "hammer theatre": {
+      "x": "HammerTheatre",
+      "instagram": "hammertheatre",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "HammerTheatre",
+      "mastodon": null
+    },
+    "san jose museum of art": {
+      "x": "sjmusart",
+      "instagram": "sjmusart",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "sjmusart",
+      "mastodon": null
+    },
+    "the tech interactive": {
+      "x": "TheTech",
+      "instagram": "thetechinteractive",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "TheTechInteractive",
+      "mastodon": null
+    },
+    "sap center": {
+      "x": "SAPCenter",
+      "instagram": "sapcenter",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SAPCenter",
+      "mastodon": null
+    },
+    "paypal park": {
+      "x": "PayPalPark",
+      "instagram": "paypalpark",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "PayPalPark",
+      "mastodon": null
+    },
+    "excite ballpark": {
+      "x": "exciteballpark",
+      "instagram": "exciteballpark",
+      "threads": null,
+      "bluesky": null,
+      "facebook": null,
+      "mastodon": null
+    },
+    "shoreline amphitheatre": {
+      "x": "ShorelineAmph",
+      "instagram": "shorelineamph",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "ShorelineAmphitheatre",
+      "mastodon": null
+    },
+    "lick observatory": {
+      "x": "UCOLick",
+      "instagram": "laboratorylick",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "LickObservatory",
+      "mastodon": null
+    },
+    "mountain view center for the performing arts": {
+      "x": null,
+      "instagram": "mountainviewcenter",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "MountainViewCenter",
+      "mastodon": null
+    },
+    "fox theatre": {
+      "x": null,
+      "instagram": "downtownredwood",
+      "threads": null,
+      "bluesky": null,
+      "facebook": null,
+      "mastodon": null
+    },
+    "flint center": {
+      "x": null,
+      "instagram": null,
+      "threads": null,
+      "bluesky": null,
+      "facebook": null,
+      "mastodon": null
+    },
+    "books inc": {
+      "x": "BooksInc",
+      "instagram": "booksinc",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "BooksInc",
+      "mastodon": null
+    },
+    "hicklebees": {
+      "x": "hicklebees",
+      "instagram": "hicklebees",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "Hicklebees",
+      "mastodon": null
+    },
+    "keplers books": {
+      "x": "KeplersBooks",
+      "instagram": "keplersbooks",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "KeplersBooks",
+      "mastodon": null
+    },
+    "linden tree books": {
+      "x": null,
+      "instagram": "lindentreebooks",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "LindenTreeBooks",
+      "mastodon": null
+    },
+    "east west bookshop": {
+      "x": null,
+      "instagram": "eastwestbookshop",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "EastWestBookshopMV",
+      "mastodon": null
+    },
+    "tabard theatre": {
+      "x": "TabardTheatre",
+      "instagram": "tabardtheatre",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "TabardTheatre",
+      "mastodon": null
+    },
+    "san jose playhouse": {
+      "x": null,
+      "instagram": "sanjoseplayhouse",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SanJosePlayhouse",
+      "mastodon": null
+    },
+    "history san jose": {
+      "x": "HistorySanJose",
+      "instagram": "historysanjose",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "HistorySanJose",
+      "mastodon": null
+    },
+    "happy hollow park & zoo": {
+      "x": "HappyHollowPZ",
+      "instagram": "happyhollowpz",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "HappyHollowPZ",
+      "mastodon": null
+    },
+    "santana row": {
+      "x": "SantanaRow",
+      "instagram": "santanarow",
+      "threads": "santanarow",
+      "bluesky": null,
+      "facebook": "SantanaRow",
+      "mastodon": null
+    },
+    "valley fair": {
+      "x": "Westfield",
+      "instagram": "westfieldvalleyfair",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "WestfieldValleyFair",
+      "mastodon": null
+    },
+    "san jose jazz": {
+      "x": "sanjosejazz",
+      "instagram": "sanjosejazz",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SanJoseJazz",
+      "mastodon": null
+    },
+    "campbell farmers market": {
+      "x": null,
+      "instagram": "campbellfarmersmarket",
+      "threads": null,
+      "bluesky": null,
+      "facebook": null,
+      "mastodon": null
+    }
+  },
+
+  "orgs": {
+    "san jose sharks": {
+      "x": "SanJoseSharks",
+      "instagram": "sanjosesharks",
+      "threads": "sanjosesharks",
+      "bluesky": "sanjosesharks.bsky.social",
+      "facebook": "SanJoseSharks",
+      "mastodon": null
+    },
+    "san jose barracuda": {
+      "x": "SJBarracuda",
+      "instagram": "sjbarracuda",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SJBarracuda",
+      "mastodon": null
+    },
+    "san jose earthquakes": {
+      "x": "SJEarthquakes",
+      "instagram": "sjearthquakes",
+      "threads": "sjearthquakes",
+      "bluesky": null,
+      "facebook": "SJEarthquakes",
+      "mastodon": null
+    },
+    "san jose giants": {
+      "x": "SJGiants",
+      "instagram": "sjgiants",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SJGiants",
+      "mastodon": null
+    },
+    "vta": {
+      "x": "VTA",
+      "instagram": "scvta",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "scvta",
+      "mastodon": null
+    },
+    "caltrain": {
+      "x": "Caltrain",
+      "instagram": "caborncaltrain",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "Caltrain",
+      "mastodon": null
+    },
+    "computer history museum": {
+      "x": "ComputerHistory",
+      "instagram": "computerhistory",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "ComputerHistory",
+      "mastodon": null
+    },
+    "silicon valley creates": {
+      "x": "svcreates",
+      "instagram": "svcreates",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "SVCreates",
+      "mastodon": null
+    },
+    "team san jose": {
+      "x": "TeamSanJose",
+      "instagram": "teamsanjose",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "TeamSanJose",
+      "mastodon": null
+    },
+    "japantown san jose": {
+      "x": null,
+      "instagram": "japantownsanjose",
+      "threads": null,
+      "bluesky": null,
+      "facebook": "JapantownSanJose",
+      "mastodon": null
+    },
+    "south bay today": {
+      "x": "southbaytoday",
+      "instagram": "southbaytoday",
+      "threads": "southbaytoday",
+      "bluesky": "southbaytoday.bsky.social",
+      "facebook": "southbaytoday",
+      "mastodon": "southbaytoday@mastodon.social"
+    }
+  }
+}

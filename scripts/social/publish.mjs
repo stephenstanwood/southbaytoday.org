@@ -66,6 +66,8 @@ async function main() {
     console.log(`  ${post.copy?.facebook || "(none)"}\n`);
     logStep("🐘", `Mastodon copy (${post.copy?.mastodon?.length || 0} chars):`);
     console.log(`  ${post.copy?.mastodon || "(none)"}\n`);
+    logStep("📸", `Instagram copy (${post.copy?.instagram?.length || 0} chars):`);
+    console.log(`  ${post.copy?.instagram || "(none)"}\n`);
 
     if (post.cardPath) {
       logStep("🖼️", `Card: ${post.cardPath}`);
@@ -94,7 +96,7 @@ async function main() {
     }
   }
 
-  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon"];
+  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram"];
   const published = [];
   const results = {};
 
@@ -122,6 +124,14 @@ async function main() {
         // Threads needs a public image URL, not a buffer
         // For now, post text-only on Threads
         const result = await client.publish(copy);
+        results[platform] = result;
+      } else if (platform === "instagram") {
+        // Instagram requires a public image URL — skip if none available
+        if (!post.ogImage) {
+          logSkip(`instagram: no public image URL available (required)`);
+          continue;
+        }
+        const result = await client.publish(copy, post.ogImage);
         results[platform] = result;
       } else {
         const result = await client.publish(copy, imageBuffer);

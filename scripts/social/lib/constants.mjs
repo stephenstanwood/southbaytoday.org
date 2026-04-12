@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   DRY_RUN: false,
-  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true },
+  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: true },
   FORMATS: { daily_pulse: true, tonight: true, weekend: true, civic: true },
   THRESHOLDS: { daily_pulse: 40, tonight: 35, weekend: 60, civic: 50 },
   BLACKLIST_FILE: "src/data/south-bay/social-blacklist.json",
