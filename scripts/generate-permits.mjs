@@ -4,6 +4,15 @@
  *   - San Jose (data.sanjoseca.gov CKAN API)
  *   - Palo Alto (gis.cityofpaloalto.org PermitView API)
  * Outputs permit-pulse.json for the PermitPulseCard component.
+ *
+ * Cities investigated but blocked (as of April 2026):
+ *   - Mountain View: developmentpermits.mountainview.gov → 403 (blocked by server)
+ *                    epermits.mountainview.gov → React SPA for permit applications, no data API
+ *                    data-mountainview.opendata.arcgis.com → 22 geographic datasets, no permit data
+ *                    data.mountainview.gov → ECONNREFUSED (dead)
+ *                    Mountain View uses an internal permit system with no public API.
+ *   - Sunnyvale: data.sunnyvale.ca.gov, epermits.sunnyvale.ca.gov → all ECONNREFUSED/timeout
+ *                No Socrata or ArcGIS public permit dataset found.
  */
 
 import { writeFileSync, readFileSync } from "fs";
