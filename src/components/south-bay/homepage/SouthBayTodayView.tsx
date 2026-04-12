@@ -9,6 +9,7 @@ import type { City, Tab } from "../../../lib/south-bay/types";
 import { CITIES, CITY_MAP } from "../../../lib/south-bay/cities";
 import PhotoStrip from "./PhotoStrip";
 import ForecastCard from "../cards/ForecastCard";
+import { buildDayPlan, type PlanStop } from "../../../lib/south-bay/planMyDay";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -94,6 +95,32 @@ function loadState(): LocalState {
 
 function defaultState(): LocalState {
   return { city: "campbell", kids: false, dismissed: {}, locked: [], viewMode: "list" };
+}
+
+function isFirstVisit(): boolean {
+  try { return !localStorage.getItem(STORAGE_KEY); } catch { return true; }
+}
+
+// Convert client-side PlanStop to DayCard for rendering in the homepage view
+function planStopToDayCard(stop: PlanStop, index: number): DayCard {
+  return {
+    id: `default-${index}`,
+    name: stop.title,
+    category: stop.emoji ? stop.emoji : "events",
+    city: stop.city,
+    address: "",
+    timeBlock: stop.slotLabel,
+    blurb: stop.venue + (stop.isEvent ? " — happening today" : ""),
+    why: "",
+    url: stop.url || null,
+    mapsUrl: null,
+    cost: stop.cost,
+    costNote: stop.cost === "free" ? "Free" : null,
+    photoRef: null,
+    venue: stop.venue,
+    source: stop.isEvent ? "event" : "place",
+    locked: false,
+  };
 }
 
 function saveState(state: LocalState) {
@@ -199,9 +226,30 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     if (homeCity) loaded.city = homeCity;
     return loaded;
   });
-  const [cards, setCards] = useState<DayCard[]>([]);
+  // First-visit detection: build an instant client-side plan so anonymous
+  // visitors see content immediately instead of a loading spinner.
+  const [isFirstVisitUser] = useState(isFirstVisit);
+  const [cards, setCards] = useState<DayCard[]>(() => {
+    if (!isFirstVisitUser) return [];
+    const instant = buildDayPlan(
+      { who: "couple", duration: "full-day", vibe: "mix", budget: "anything", date: new Date() },
+      "70°F partly cloudy",
+    );
+    // Filter past stops
+    const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+    return instant.stops
+      .filter((s) => {
+        const m = s.time.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (!m) return true;
+        let hrs = parseInt(m[1]);
+        if (m[3].toUpperCase() === "PM" && hrs !== 12) hrs += 12;
+        if (m[3].toUpperCase() === "AM" && hrs === 12) hrs = 0;
+        return hrs * 60 + parseInt(m[2]) >= nowMin - 30;
+      })
+      .map(planStopToDayCard);
+  });
   const [weather, setWeather] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!isFirstVisitUser);
   const [swapLoading, setSwapLoading] = useState(false); // loading triggered by a dismiss
   const [replacedIds, setReplacedIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
@@ -269,7 +317,9 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
     }
   }, [state.city, state.kids, state.dismissed, state.locked]);
 
-  useEffect(() => { fetchPlan(); }, []);
+  // Skip API call for first-time visitors — they already have the instant plan.
+  // The API call fires when they pick a city or hit SHUFFLE.
+  useEffect(() => { if (!isFirstVisitUser) fetchPlan(); }, []);
 
   // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
