@@ -310,7 +310,7 @@ const LIBCAL_LIBRARIES = [
   {
     name: "Milpitas Library",
     urls: [
-      "https://sccl.libcal.com/calendar?lid=6922", // SCCL Milpitas branch
+      "https://sccl.libcal.com/calendar",          // SCCL main (includes Milpitas branch events)
       "https://milpitas.libcal.com/calendar",
     ],
     city: "milpitas",
@@ -329,38 +329,53 @@ async function scrapeLibCal(page, config) {
 
       const raw = await page.evaluate(() => {
         const events = [];
+        const now = new Date();
+        const currentYear = now.getFullYear();
 
-        // Strategy 1: LibCal event links (h3 a[href*="/event/"])
-        const eventLinks = document.querySelectorAll('h3 a[href*="/event/"], a[class*="s-lc-event-category"]');
-        for (const a of eventLinks) {
-          const title = a.textContent?.trim();
-          // Walk up to find the date container
-          const row = a.closest("tr, .row, div[class*='event'], li, [class*='s-lc']") || a.parentElement?.parentElement;
-          const dateEl = row?.querySelector("time, [class*='date'], td:first-child, .s-lc-ea-date");
-          const timeEl = row?.querySelector("[class*='time'], .s-lc-ea-time");
-          const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-          const time = timeEl?.textContent?.trim();
-          if (title && title.length > 3) events.push({ title, date, time, link: a.href });
+        // Strategy 1: LibCal eventcard layout (Los Gatos style)
+        // Cards have .s-lc-eventcard with date in heading, title in .s-lc-eventcard-body a
+        const cards = document.querySelectorAll(".s-lc-eventcard");
+        for (const card of cards) {
+          const titleLink = card.querySelector(".s-lc-eventcard-body a[href*='/event/']");
+          if (!titleLink) continue;
+          const title = titleLink.textContent?.trim();
+          if (!title || title.length < 3 || title === "More" || title === "Show more dates ››") continue;
+          // Date is in the card heading like "Apr\n13"
+          const heading = card.querySelector(".s-lc-eventcard-heading, .s-lc-eventcard-date");
+          const dateText = heading?.textContent?.trim()?.replace(/\s+/g, " "); // "Apr 13"
+          // Time is in the card content like "Mon, 11:00am - 12:00pm"
+          const timeText = card.textContent?.match(/\d{1,2}:\d{2}\s*[ap]m/i)?.[0];
+          events.push({ title, date: dateText ? `${dateText}, ${currentYear}` : null, time: timeText, link: titleLink.href });
         }
 
-        // Strategy 2: Fallback to card-based selectors
+        // Strategy 2: LibCal media-body layout (Mountain View style)
+        // Events are in .media-body with a[href*="/event/"]
         if (events.length === 0) {
-          const cards = document.querySelectorAll(
-            ".s-lc-ea-item, .s-lc-ea-event, .event-item, " +
-            "[class*='event-card'], [class*='cal-event'], " +
-            ".s-lc-content .card, #s-lc-ea-events-list .row"
-          );
-          for (const card of cards) {
-            const titleEl = card.querySelector(
-              ".s-lc-ea-ttl, .s-lc-ea-event-title, h3, h4, a[class*='title'], [class*='event-name']"
-            );
-            const dateEl = card.querySelector(".s-lc-ea-date, time, [class*='date'], [datetime]");
-            const timeEl = card.querySelector(".s-lc-ea-time, [class*='time']");
-            const title = titleEl?.textContent?.trim();
-            const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-            const time = timeEl?.textContent?.trim();
-            const link = titleEl?.closest("a")?.href || card.querySelector("a")?.href;
-            if (title && title.length > 3) events.push({ title, date, time, link });
+          const bodies = document.querySelectorAll(".media-body");
+          for (const body of bodies) {
+            const titleLink = body.querySelector("a[href*='/event/']");
+            if (!titleLink) continue;
+            const title = titleLink.textContent?.trim();
+            if (!title || title.length < 3) continue;
+            // No explicit date element — extract from event page URL or surrounding text
+            // Date often appears in nearby text like "April 14" or "Tue, Apr 14"
+            const bodyText = body.textContent || "";
+            const dateMatch = bodyText.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2}/i);
+            const date = dateMatch ? `${dateMatch[0]}, ${currentYear}` : null;
+            const timeMatch = bodyText.match(/\d{1,2}:\d{2}\s*[ap]m/i);
+            events.push({ title, date, time: timeMatch?.[0], link: titleLink.href });
+          }
+        }
+
+        // Strategy 3: Any a[href*="/event/"] as last resort
+        if (events.length === 0) {
+          const links = document.querySelectorAll('a[href*="/event/"]');
+          const seen = new Set();
+          for (const a of links) {
+            const title = a.textContent?.trim();
+            if (!title || title.length < 3 || seen.has(title) || /register|more|image/i.test(title)) continue;
+            seen.add(title);
+            events.push({ title, date: null, time: null, link: a.href });
           }
         }
 
@@ -418,29 +433,28 @@ async function scrapeSJJazz(page) {
 
       const raw = await page.evaluate(() => {
         const events = [];
-        const cards = document.querySelectorAll(
-          "[class*='sjz-event'], .event-card, article[class*='event'], .tribe-events-list .type-tribe_events"
-        );
+        // SJ Jazz uses .sjz-event divs with .sjz-event-name, .sjz-event-date, .sjz-event-hour
+        const cards = document.querySelectorAll(".sjz-event");
         for (const card of cards) {
-          const titleEl = card.querySelector("h2, h3, h4, .tribe-events-list-event-title, [class*='title']");
-          const dateEl = card.querySelector("time, .tribe-event-schedule-details, [class*='date'], [datetime]");
-          const venueEl = card.querySelector(".tribe-venue, [class*='venue'], [class*='location']");
-          const title = titleEl?.textContent?.trim();
-          const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-          const venue = venueEl?.textContent?.trim();
-          const link = card.querySelector("a")?.href || titleEl?.closest("a")?.href;
-          if (title && title.length > 3) events.push({ title, date, venue, link });
+          const name = card.querySelector(".sjz-event-name")?.textContent?.trim();
+          const date = card.querySelector(".sjz-event-date")?.textContent?.trim(); // "Sat, Apr 18"
+          const hour = card.querySelector(".sjz-event-hour")?.textContent?.trim()?.replace(/\s+/g, " "); // "8pm Pacific / ..."
+          const venue = card.querySelector(".sjz-event-venue")?.textContent?.trim();
+          const link = card.querySelector("a")?.href;
+          if (name && name.length > 3) events.push({ title: name, date, venue, link, time: hour?.match(/\d+\s*[ap]m/i)?.[0] });
         }
         return events;
       });
 
       for (const r of raw) {
-        const date = tryParseDate(r.date);
+        // SJ Jazz dates are like "Sat, Apr 18" — append current year
+        const dateStr = r.date ? `${r.date}, ${new Date().getFullYear()}` : null;
+        const date = tryParseDate(dateStr);
         if (!date || date < TODAY) continue;
         allEvents.push({
           title: r.title,
           date,
-          time: null,
+          time: normalizeTime(r.time),
           endTime: null,
           venue: r.venue || "San Jose Jazz Venue",
           address: "",
@@ -578,29 +592,33 @@ async function scrapeHicklebees(page) {
 
   const raw = await page.evaluate(() => {
     const events = [];
-    // Hicklebee's uses article.event-list and article.event-block (IndieLite/IndieCommerce)
-    const cards = document.querySelectorAll(
-      "article.event-list, article.event-block, " +
-      "[class*='event-block'], [class*='event-item'], article[class*='event']"
-    );
-    for (const card of cards) {
-      const titleEl = card.querySelector("h2, h3, h4, [class*='title'], a[class*='title']");
-      const dateEl = card.querySelector("time, [class*='date'], [datetime]");
-      const title = titleEl?.textContent?.trim();
-      const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-      const link = titleEl?.closest("a")?.href || card.querySelector("a[href*='/event/']")?.href || card.querySelector("a")?.href;
-      if (title && title.length > 3) events.push({ title, date, link });
+    const seen = new Set();
+
+    // Hicklebee's IndieCommerce: events in .views-row with links like /event/YYYY-MM-DD/slug
+    const rows = document.querySelectorAll(".views-row");
+    for (const row of rows) {
+      const link = row.querySelector("a[href*='/event/']");
+      if (!link) continue;
+      const title = link.textContent?.trim();
+      if (!title || title.length < 5 || seen.has(title) || /view event|more|about/i.test(title)) continue;
+      seen.add(title);
+      // Extract date from URL: /event/2026-04-25/slug
+      const dateMatch = link.href?.match(/\/event\/(\d{4}-\d{2}-\d{2})\//);
+      events.push({ title, date: dateMatch?.[1] || null, link: link.href });
     }
-    // Fallback: look for event links directly
+
+    // Fallback: grab all unique /event/ links
     if (events.length === 0) {
       const links = document.querySelectorAll("a[href*='/event/']");
       for (const a of links) {
         const title = a.textContent?.trim();
-        // Extract date from URL pattern /event/YYYY-MM-DD/
         const dateMatch = a.href?.match(/\/event\/(\d{4}-\d{2}-\d{2})\//);
-        if (title && title.length > 3) events.push({ title, date: dateMatch?.[1], link: a.href });
+        if (!title || title.length < 5 || seen.has(title) || /view|more|about|log|register/i.test(title)) continue;
+        seen.add(title);
+        events.push({ title, date: dateMatch?.[1] || null, link: a.href });
       }
     }
+
     return events;
   });
 
@@ -831,121 +849,121 @@ async function scrape3Below(page) {
 // ── City Lights Theater Company ──
 
 async function scrapeCityLights(page) {
-  const urls = [
-    "https://cltc.org/",
-    "https://cltc.org/whats-playing/",
-    "https://cltc.org/season/",
-  ];
-  for (const url of urls) {
-    try {
-      const resp = await page.goto(url, { waitUntil: "networkidle", timeout: 20_000 });
-      if (!resp || resp.status() >= 400) continue;
+  // City Lights lists shows as menu items with class menu-item-object-event
+  await page.goto("https://cltc.org/", { waitUntil: "networkidle", timeout: 20_000 });
 
-      const raw = await page.evaluate(() => {
-        const events = [];
-        // Theater sites often list shows with dates
-        const cards = document.querySelectorAll(
-          "[class*='show'], [class*='production'], [class*='event'], article, " +
-          ".card, [class*='season-item'], [class*='performance']"
-        );
-        for (const card of cards) {
-          const titleEl = card.querySelector("h2, h3, h4, [class*='title'], [class*='name']");
-          const dateEl = card.querySelector("time, [class*='date'], [datetime], [class*='run']");
-          const title = titleEl?.textContent?.trim();
-          const dateText = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-          const link = card.querySelector("a")?.href || titleEl?.closest("a")?.href;
-          if (title && title.length > 3) events.push({ title, date: dateText, link });
-        }
-        return events;
+  const shows = await page.evaluate(() => {
+    return [...document.querySelectorAll("li.menu-item-object-event a")].map(a => ({
+      title: a.textContent?.trim(),
+      link: a.href,
+    }));
+  });
+
+  const events = [];
+  // Visit each show page to extract date ranges
+  for (const show of shows) {
+    if (!show.title || !show.link) continue;
+    try {
+      await page.goto(show.link, { waitUntil: "networkidle", timeout: 15_000 });
+      const detail = await page.evaluate(() => {
+        const text = document.body?.innerText || "";
+        // Look for date ranges like "April 3 – May 3, 2026" or "March 14 - April 12"
+        const dateRange = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}\s*[–\-—]\s*(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)?\s*\d{1,2},?\s*\d{4}/i);
+        // Also try just a start date
+        const startDate = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}/i);
+        return {
+          dateRange: dateRange?.[0],
+          startDate: startDate?.[0],
+        };
       });
 
-      if (raw.length > 0) {
-        return raw
-          .map((r) => {
-            const date = tryParseDate(r.date);
-            if (!date || date < TODAY) return null;
-            return {
-              title: r.title,
-              date,
-              time: null,
-              endTime: null,
-              venue: "City Lights Theater Company",
-              address: "529 S Second St, San Jose, CA 95112",
-              city: "san-jose",
-              url: r.link || "https://cltc.org/",
-              source: "City Lights Theater",
-              category: "arts",
-              cost: "paid",
-              kidFriendly: false,
-            };
-          })
-          .filter(Boolean);
+      const dateStr = detail.startDate || detail.dateRange;
+      if (dateStr) {
+        const date = tryParseDate(dateStr);
+        if (date && date >= TODAY) {
+          events.push({
+            title: show.title,
+            date,
+            time: null,
+            endTime: null,
+            venue: "City Lights Theater Company",
+            address: "529 S Second St, San Jose, CA 95112",
+            city: "san-jose",
+            url: show.link,
+            source: "City Lights Theater",
+            category: "arts",
+            cost: "paid",
+            kidFriendly: false,
+          });
+        }
       }
     } catch {
       continue;
     }
+    await page.waitForTimeout(300);
   }
-  return [];
+  return events;
 }
 
 // ── ICA San Jose ──
 
 async function scrapeICASanJose(page) {
-  const urls = [
+  const events = [];
+
+  for (const listUrl of [
     "https://www.icasanjose.org/exhibitions/current-exhibitions/",
     "https://www.icasanjose.org/exhibitions/upcoming-exhibitions/",
-    "https://www.icasanjose.org/events",
-    "https://www.icasanjose.org/programs",
-  ];
-  for (const url of urls) {
+  ]) {
     try {
-      const resp = await page.goto(url, { waitUntil: "networkidle", timeout: 20_000 });
+      const resp = await page.goto(listUrl, { waitUntil: "networkidle", timeout: 20_000 });
       if (!resp || resp.status() >= 400) continue;
 
-      const raw = await page.evaluate(() => {
-        const events = [];
-        const cards = document.querySelectorAll(
-          "[class*='event'], [class*='exhibit'], [class*='program'], " +
-          "article, .card, [class*='listing'], [class*='item']"
-        );
-        for (const card of cards) {
-          const titleEl = card.querySelector("h2, h3, h4, [class*='title'], [class*='name']");
-          const dateEl = card.querySelector("time, [class*='date'], [datetime]");
-          const title = titleEl?.textContent?.trim();
-          const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-          const link = card.querySelector("a")?.href || titleEl?.closest("a")?.href;
-          if (title && title.length > 3) events.push({ title, date, link });
-        }
-        return events;
+      // ICA uses jeg_post articles with title links
+      const articles = await page.evaluate(() => {
+        return [...document.querySelectorAll("article.jeg_post")].map(a => ({
+          title: a.querySelector("h3 a, .jeg_post_title a, h2 a")?.textContent?.trim(),
+          link: a.querySelector("a")?.href,
+        }));
       });
 
-      if (raw.length > 0) {
-        return raw
-          .map((r) => {
-            const date = tryParseDate(r.date);
-            if (!date || date < TODAY) return null;
-            return {
-              title: r.title,
-              date,
-              time: null,
-              endTime: null,
-              venue: "ICA San Jose",
-              address: "560 S First St, San Jose, CA 95113",
-              city: "san-jose",
-              url: r.link || "https://www.icasanjose.org/",
-              source: "ICA San Jose",
-              category: "arts",
-              cost: "free",
-              kidFriendly: false,
-            };
-          })
-          .filter(Boolean);
+      // Follow each exhibition link to get dates
+      for (const art of articles) {
+        if (!art.title || !art.link) continue;
+        try {
+          await page.goto(art.link, { waitUntil: "networkidle", timeout: 15_000 });
+          const detail = await page.evaluate(() => {
+            const text = document.body?.innerText || "";
+            // Look for date ranges like "January 16 – August 23, 2026"
+            const dateMatch = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}\s*[–\-—]\s*(?:(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+)?\d{4}/i);
+            // Also try single date like "Opens January 16, 2026"
+            const singleDate = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}/i);
+            return { dateRange: dateMatch?.[0], singleDate: singleDate?.[0] };
+          });
+
+          const dateStr = detail.singleDate || detail.dateRange;
+          const date = tryParseDate(dateStr);
+          // For exhibitions, use today's date if the show is current (so it shows up)
+          const effectiveDate = date || TODAY;
+          events.push({
+            title: art.title,
+            date: effectiveDate,
+            time: null,
+            endTime: null,
+            venue: "ICA San Jose",
+            address: "560 S First St, San Jose, CA 95113",
+            city: "san-jose",
+            url: art.link,
+            source: "ICA San Jose",
+            category: "arts",
+            cost: "free",
+            kidFriendly: false,
+          });
+        } catch { continue; }
+        await page.waitForTimeout(300);
       }
-    } catch {
-      continue;
-    }
+    } catch { continue; }
   }
-  return [];
+  return events;
 }
 
 // ── SC County Fire Department (Eventbrite organizer page) ──
@@ -1014,27 +1032,68 @@ const BOOKS_INC_SB_STORES = new Map([
 ]);
 
 async function scrapeBooksInc(page) {
-  // Domain moved from booksinc.net to booksinc.com in 2026
-  await page.goto("https://www.booksinc.com/events", { waitUntil: "networkidle", timeout: 30_000 });
-  await page.waitForTimeout(3000); // Shopify hydration
+  // Domain moved from booksinc.net to booksinc.com; events at /pages/events
+  await page.goto("https://www.booksinc.com/pages/events", { waitUntil: "networkidle", timeout: 30_000 });
+  await page.waitForTimeout(5000); // Elfsight calendar widget needs extra hydration time
 
   const raw = await page.evaluate(() => {
     const events = [];
-    const cards = document.querySelectorAll(
-      ".event-card, .events-list .event, [class*='event-item'], article, .card"
-    );
-    for (const card of cards) {
-      const titleEl = card.querySelector("h2, h3, .event-title, [class*='title']");
-      const dateEl = card.querySelector("time, .event-date, [class*='date']");
-      const locEl = card.querySelector(".event-location, [class*='location'], [class*='store']");
-      const timeEl = card.querySelector(".event-time, [class*='time']");
-      const title = titleEl?.textContent?.trim();
-      const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-      const location = locEl?.textContent?.trim() || "";
-      const time = timeEl?.textContent?.trim();
-      const link = card.querySelector("a")?.href;
-      if (title) events.push({ title, date, location, time, link });
+
+    // Books Inc uses an Elfsight Events Calendar widget that embeds JSON-LD schema.org Event data
+    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    for (const s of scripts) {
+      try {
+        const data = JSON.parse(s.textContent);
+        const items = Array.isArray(data) ? data : [data];
+        for (const item of items) {
+          if (item["@type"] === "Event") {
+            events.push({
+              title: item.name,
+              date: item.startDate,
+              location: item.location?.name || "",
+              time: null,
+              link: item.url,
+            });
+          }
+        }
+      } catch { /* ignore */ }
     }
+
+    // Also check for JSON-LD embedded in div text (Elfsight renders it as text node)
+    if (events.length === 0) {
+      const allText = document.body?.innerText || "";
+      const jsonMatches = allText.match(/\{"@context":"https:\/\/schema\.org","@type":"Event"[^}]+\}/g);
+      if (jsonMatches) {
+        for (const m of jsonMatches) {
+          try {
+            const item = JSON.parse(m);
+            events.push({
+              title: item.name,
+              date: item.startDate,
+              location: item.location?.name || "",
+              time: null,
+              link: item.url,
+            });
+          } catch { /* ignore */ }
+        }
+      }
+    }
+
+    // Fallback: card-based extraction from Elfsight widget
+    if (events.length === 0) {
+      const cards = document.querySelectorAll("[class*='EventCard'], [class*='event-card'], [class*='eapp-events']");
+      for (const card of cards) {
+        const titleEl = card.querySelector("[class*='Title'], [class*='title'], h3, h4");
+        const dateEl = card.querySelector("[class*='Date'], [class*='date'], time");
+        const locEl = card.querySelector("[class*='Location'], [class*='location'], [class*='Venue']");
+        const title = titleEl?.textContent?.trim();
+        const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
+        const location = locEl?.textContent?.trim() || "";
+        const link = card.querySelector("a")?.href;
+        if (title && title.length > 3) events.push({ title, date, location, time: null, link });
+      }
+    }
+
     return events;
   });
 
