@@ -2895,6 +2895,230 @@ async function fetchLindenTreeEvents() {
   }
 }
 
+// ── San Jose Downtown Association (Tribe Events REST API) ──
+// Covers City Lights Theater, San Jose Museum of Art events, SoFA district, First Fridays, etc.
+
+async function fetchSjdaEvents() {
+  console.log("  ⏳ SJDA (Downtown San Jose)...");
+  try {
+    const events = [];
+    const now = new Date();
+    const perPage = 50;
+    // Paginate — API has 1000+ events, but we only need the next 180 days
+    const maxDate = new Date(now.getTime() + 180 * 86400000);
+    const startStr = now.toISOString().split("T")[0];
+    const endStr = maxDate.toISOString().split("T")[0];
+
+    for (let page = 1; page <= 10; page++) {
+      const url = `https://sjdowntown.com/wp-json/tribe/events/v1/events?per_page=${perPage}&page=${page}&start_date=${startStr}&end_date=${endStr}`;
+      const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000) });
+      if (!res.ok) break;
+      const data = await res.json();
+      const pageEvents = data.events || [];
+      if (pageEvents.length === 0) break;
+
+      for (const e of pageEvents) {
+        if (e.hide_from_listings || e.is_virtual) continue;
+        const title = (typeof e.title === "string" ? e.title : e.title?.rendered || "").replace(/<[^>]+>/g, "").trim();
+        if (!title) continue;
+
+        const start = parseDatePT(e.start_date);
+        if (!start || start < now) continue;
+        const end = e.end_date ? parseDatePT(e.end_date) : null;
+
+        const venue = typeof e.venue === "object" && e.venue
+          ? (e.venue.venue || "").trim()
+          : "";
+        const addr = typeof e.venue === "object" && e.venue
+          ? `${e.venue.address || ""}, ${e.venue.city || "San Jose"}`.trim()
+          : "";
+        const desc = e.excerpt
+          ? truncate(stripHtml(typeof e.excerpt === "string" ? e.excerpt : e.excerpt?.rendered || ""))
+          : "";
+        const cats = (e.categories || []).map((c) => c.name || "").join(" ");
+        const cost = e.cost
+          ? (/free/i.test(e.cost) ? "free" : "paid")
+          : "paid";
+
+        events.push({
+          id: h("sjda", e.url || title, isoDate(start)),
+          title,
+          date: isoDate(start),
+          displayDate: displayDate(start),
+          time: displayTime(start),
+          endTime: end ? displayTime(end) : null,
+          venue: venue || "Downtown San Jose",
+          address: addr,
+          city: "san-jose",
+          category: inferCategory(title, desc, cats, venue),
+          cost,
+          description: desc,
+          url: e.url || "https://sjdowntown.com/dtsj-events/",
+          source: "SJDA",
+          kidFriendly: /\b(kids|children|family|toddler)\b/i.test(title + " " + desc + " " + cats),
+        });
+      }
+
+      if (page >= (data.total_pages || 1)) break;
+      await new Promise((r) => setTimeout(r, 300)); // polite delay
+    }
+
+    console.log(`  ✅ SJDA (Downtown San Jose): ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  SJDA: ${err.message}`);
+    return [];
+  }
+}
+
+// ── San Jose Museum of Art (Drupal Views with <time> tags) ──
+
+async function fetchSjMuseumOfArtEvents() {
+  console.log("  ⏳ San Jose Museum of Art...");
+  try {
+    const BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
+    const res = await fetch("https://sjmusart.org/calendar", {
+      headers: { "User-Agent": BROWSER_UA },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const html = await res.text();
+
+    const events = [];
+    const now = new Date();
+
+    // Extract time+title pairs from Drupal Views
+    const pairs = [...html.matchAll(/<time[^>]*datetime="([^"]*)"[^>]*>[\s\S]*?<\/time>[\s\S]*?<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)];
+    // Also grab links near each pair
+    const rows = html.split(/views-row/).slice(1);
+    for (const row of rows) {
+      const timeMatch = row.match(/<time[^>]*datetime="([^"]*)"/);
+      const titleMatch = row.match(/<h[23][^>]*>(.*?)<\/h[23]>/s);
+      const linkMatch = row.match(/href="(\/[^"]*(?:event|program|exhibition)[^"]*)"/);
+      if (!timeMatch || !titleMatch) continue;
+
+      const dateStr = timeMatch[1]; // "2026-04-11T12:00:00Z"
+      const start = new Date(dateStr);
+      if (isNaN(start.getTime()) || start < now) continue;
+
+      const title = titleMatch[1].replace(/<[^>]+>/g, "").trim();
+      if (!title || /registration|camp/i.test(title)) continue;
+
+      const url = linkMatch
+        ? `https://sjmusart.org${linkMatch[1]}`
+        : "https://sjmusart.org/calendar";
+
+      events.push({
+        id: h("sjma", url, isoDate(start)),
+        title,
+        date: isoDate(start),
+        displayDate: displayDate(start),
+        time: displayTime(start),
+        endTime: null,
+        venue: "San Jose Museum of Art",
+        address: "110 S Market St, San Jose, CA 95113",
+        city: "san-jose",
+        category: "arts",
+        cost: "paid",
+        description: "",
+        url,
+        source: "San Jose Museum of Art",
+        kidFriendly: /\b(kids|children|family)\b/i.test(title),
+      });
+    }
+
+    console.log(`  ✅ San Jose Museum of Art: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  San Jose Museum of Art: ${err.message}`);
+    return [];
+  }
+}
+
+// ── Japanese American Museum of San Jose (Squarespace) ──
+
+async function fetchJamsjEvents() {
+  return fetchSquarespaceEvents(
+    "https://www.jamsj.org/upcoming-events",
+    "Japanese American Museum SJ",
+    "san-jose",
+    "Japanese American Museum of San Jose",
+    "535 N 5th St, San Jose, CA 95112",
+  );
+}
+
+// ── History San Jose (WordPress HTML scrape) ──
+
+async function fetchHistorySanJoseEvents() {
+  console.log("  ⏳ History San Jose...");
+  try {
+    const BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
+    const events = [];
+    const now = new Date();
+    const currentYear = now.getFullYear();
+
+    for (let page = 1; page <= 4; page++) {
+      const url = page === 1
+        ? "https://historysanjose.org/programs-events/"
+        : `https://historysanjose.org/programs-events/page/${page}`;
+      const res = await fetch(url, { headers: { "User-Agent": BROWSER_UA }, signal: AbortSignal.timeout(15_000) });
+      if (!res.ok) break;
+      const html = await res.text();
+
+      // Events are in article/card blocks with h2 titles
+      const articles = html.split(/<article/i).slice(1);
+      for (const article of articles) {
+        const titleMatch = article.match(/<h[23][^>]*>(.*?)<\/h[23]>/s);
+        const linkMatch = article.match(/href="(https:\/\/historysanjose\.org\/[^"]*event[^"]*)"/i)
+          || article.match(/href="(https:\/\/historysanjose\.org\/[^"]*program[^"]*)"/i);
+        if (!titleMatch) continue;
+
+        const title = titleMatch[1].replace(/<[^>]+>/g, "").replace(/\*/g, "").trim();
+        if (!title || title.length < 5) continue;
+
+        // Try to find a date in the article text
+        const text = article.replace(/<[^>]+>/g, " ");
+        const monthNames = { January: 0, February: 1, March: 2, April: 3, May: 4, June: 5, July: 6, August: 7, September: 8, October: 9, November: 10, December: 11 };
+        const dateMatch = text.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})(?:,?\s+(\d{4}))?/i);
+        if (!dateMatch) continue;
+
+        const month = monthNames[dateMatch[1]];
+        const day = parseInt(dateMatch[2]);
+        const year = dateMatch[3] ? parseInt(dateMatch[3]) : currentYear;
+        const start = new Date(year, month, day, 12, 0);
+        if (start < now) continue;
+
+        const eventUrl = linkMatch?.[1] || "https://historysanjose.org/programs-events/";
+
+        events.push({
+          id: h("historysj", title, isoDate(start)),
+          title,
+          date: isoDate(start),
+          displayDate: displayDate(start),
+          time: null,
+          endTime: null,
+          venue: "History Park",
+          address: "635 Phelan Ave, San Jose, CA 95112",
+          city: "san-jose",
+          category: inferCategory(title, "", ""),
+          cost: "paid",
+          description: "",
+          url: eventUrl,
+          source: "History San Jose",
+          kidFriendly: /\b(kids|children|family)\b/i.test(title),
+        });
+      }
+      await new Promise((r) => setTimeout(r, 300));
+    }
+
+    console.log(`  ✅ History San Jose: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  History San Jose: ${err.message}`);
+    return [];
+  }
+}
+
 // ── Main ──
 
 async function main() {
@@ -2940,6 +3164,10 @@ async function main() {
     fetchKeplersEvents,
     fetchHicklebeesEvents,
     fetchLindenTreeEvents,
+    fetchSjdaEvents,
+    fetchSjMuseumOfArtEvents,
+    fetchJamsjEvents,
+    fetchHistorySanJoseEvents,
   ];
 
   const results = await Promise.allSettled(sources.map((fn) => fn()));
