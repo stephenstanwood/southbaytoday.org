@@ -7,7 +7,7 @@ import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { okJson } from "../../lib/apiHelpers";
 
 /**
- * Weather proxy for The South Bay Signal.
+ * Weather proxy for South Bay Today.
  * Uses Open-Meteo (free, no key) — returns current conditions + 5-day daily forecast.
  * Accepts optional ?city=campbell query param; defaults to Campbell coords.
  * Cached 30 min via CDN.

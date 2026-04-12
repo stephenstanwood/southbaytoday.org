@@ -311,7 +311,7 @@ export default function DevelopmentView({ homeCity }: { homeCity?: City | null }
 
       {/* Footer note */}
       <div className="dev-footer-note">
-        South Bay Signal tracks publicly-announced development projects. Data is curated from city records, planning documents, and council decisions. Not all projects are included — focus is on developments with meaningful neighborhood impact.
+        South Bay Today tracks publicly announced development projects. Data is curated from city records, planning documents, and council decisions. Not all projects are included — focus is on developments with meaningful neighborhood impact.
       </div>
 
     </div>

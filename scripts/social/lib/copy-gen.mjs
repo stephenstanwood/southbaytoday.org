@@ -181,6 +181,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
     throw new Error("Missing platform variant in Claude response");
   }
 
+  // Mastodon reuses Bluesky copy (similar char limits, hashtag-friendly)
+  variants.mastodon = variants.bluesky;
+
   // Banned phrase scrub — retry once if Claude slips past the prompt
   const BANNED = /\b(right now|happening right now|right this minute|as we speak|this very moment)\b/i;
   const hasBanned = Object.values(variants).some((v) => BANNED.test(v));
@@ -308,6 +311,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
   if (!variants.x || !variants.threads || !variants.bluesky || !variants.facebook) {
     throw new Error("Missing platform variant in Claude response");
   }
+
+  // Mastodon reuses Bluesky copy
+  variants.mastodon = variants.bluesky;
 
   // Enforce hard character limits — LLMs can't count reliably
   const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500 };

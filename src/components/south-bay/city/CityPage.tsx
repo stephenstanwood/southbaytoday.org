@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — City Page
+// South Bay Today — City Page
 // ---------------------------------------------------------------------------
 // Mini-homepage for a single city: today's events, next meeting, briefing,
 // recent civic actions, and links back to the main site.

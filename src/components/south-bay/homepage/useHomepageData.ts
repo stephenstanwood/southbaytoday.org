@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — Homepage data layer
+// South Bay Today — Homepage data layer
 // ---------------------------------------------------------------------------
 // Curates, ranks, and shapes data from all artifacts into a front-page feed.
 // This is the "brain" of the homepage — determines what leads, what's secondary,

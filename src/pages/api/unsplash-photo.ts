@@ -32,7 +32,12 @@ const CATEGORY_QUERIES: Record<string, string> = {
   arts: "art gallery studio creative",
   events: "festival outdoor event crowd",
   sports: "sports stadium game",
-  neighborhood: "california neighborhood street",
+  neighborhood: "california downtown street cafe",
+  market: "farmers market fresh produce outdoor",
+  community: "community event gathering outdoor",
+  family: "family activity outdoor park",
+  music: "live music concert performance",
+  education: "campus university lecture hall",
 };
 
 export const GET: APIRoute = async ({ url }) => {

@@ -260,6 +260,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
     throw new Error("Missing platform variant in Claude response");
   }
 
+  // Mastodon reuses Bluesky copy
+  variants.mastodon = variants.bluesky;
+
   // Enforce hard character limits
   const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500 };
   for (const [platform, limit] of Object.entries(HARD_LIMITS)) {

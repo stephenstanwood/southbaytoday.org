@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — Time/date helpers (Pacific Time)
+// South Bay Today — Time/date helpers (Pacific Time)
 // ---------------------------------------------------------------------------
 // Extracted from OverviewView for reuse across homepage sections.
 

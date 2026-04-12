@@ -1468,7 +1468,7 @@ export default function TechnologyView() {
       {/* ── Footer note ── */}
       <div className="tech-footer-note">
         Employment figures are Santa Clara County estimates as of Q1 2026, derived from campus headcount reports,
-        company filings, EDD data, and news coverage. Global headcounts are much larger. South Bay Signal is not
+        company filings, EDD data, and news coverage. Global headcounts are much larger. South Bay Today is not
         affiliated with any company listed and this is not investment advice.
       </div>
     </div>

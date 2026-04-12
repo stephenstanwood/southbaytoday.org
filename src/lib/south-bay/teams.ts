@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — team definitions + ESPN fetching
+// South Bay Today — team definitions + ESPN fetching
 // ---------------------------------------------------------------------------
 
 import type { SouthBayTeam, LeagueKey, ParsedGame } from "./types";

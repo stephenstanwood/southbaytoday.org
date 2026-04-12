@@ -372,6 +372,7 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bexamen\b/i,
   // Campus religious services (SCU-specific, not public community events)
   /^\d+(am|pm)\s+mass$/i,
+  /\bstudent\s+mass\b/i,
   /\bprayer\s+service\b/i,
   /\b11th\s+hour\s+(prayer|calling)\b/i,
   // Collaboration/classroom tool training (not public events)

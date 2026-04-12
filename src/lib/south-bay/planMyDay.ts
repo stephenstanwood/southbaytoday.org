@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — Plan My Day algorithm
+// South Bay Today — Plan My Day algorithm
 // Builds a time-blocked day itinerary from events + POIs, filtered by
 // user preferences and weather conditions.
 // ---------------------------------------------------------------------------
@@ -52,6 +52,7 @@ export interface PlanStop {
   kidFriendly: boolean;
   why: string;
   emoji: string;
+  category: string; // e.g. "food", "outdoor", "arts" — for image lookup
   url?: string;
   isEvent: boolean;
   isTodaySpecial: boolean; // event active today
@@ -86,6 +87,7 @@ interface Candidate {
   indoorOutdoor: "indoor" | "outdoor" | "both";
   category: string;
   bestSlots: TimeSlot[];
+  eventTime?: string; // actual time like "5:00 PM" from upcoming events
 }
 
 interface WeatherInfo {
@@ -195,7 +197,7 @@ const UPCOMING_CAT_EMOJI: Record<string, string> = {
   education: "📚", music: "🎵", outdoor: "🌳", market: "🥦", food: "🍽️",
 };
 
-const SKIP_TITLE = /\b(closed|closure|closing|canceled|cancelled)\b/i;
+const SKIP_TITLE = /\b(closed|closure|closing|canceled|cancelled|student\s+mass|\d+pm\s+mass|noon\s+mass)\b/i;
 
 function timeToBestSlots(time: string | null | undefined): TimeSlot[] {
   if (!time) return ["morning", "afternoon", "evening"];
@@ -253,6 +255,7 @@ function buildUpcomingCandidates(date: Date): Candidate[] {
         indoorOutdoor,
         category: cat,
         bestSlots: timeToBestSlots(e.time),
+        eventTime: e.time ?? undefined,
       } as Candidate;
     });
 }
@@ -287,6 +290,17 @@ function cityLabel(city: string): string {
     .join(" ");
 }
 
+/** Parse start time from strings like "9am – 1pm", "2:30 – 6:30pm", "10:30am" → "9:00 AM" */
+function parseStartTime(time?: string): string | undefined {
+  if (!time) return undefined;
+  const m = time.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
+  if (!m) return undefined;
+  const hr = parseInt(m[1]);
+  const min = m[2] ? parseInt(m[2]) : 0;
+  const ampm = m[3].toUpperCase();
+  return `${hr}:${min.toString().padStart(2, "0")} ${ampm}`;
+}
+
 function buildCandidates(date: Date): Candidate[] {
   const candidates: Candidate[] = [];
 
@@ -310,6 +324,7 @@ function buildCandidates(date: Date): Candidate[] {
       indoorOutdoor: eventIndoorOutdoor(e),
       category: e.category,
       bestSlots: eventBestSlots(e),
+      eventTime: parseStartTime(e.time),
     });
   }
 
@@ -506,8 +521,8 @@ export function buildDayPlan(input: PlanInput, weatherRaw: string): DayPlan {
     const meta = SLOT_META[slot];
 
     stops.push({
-      time: meta.time,
-      slotLabel: meta.label,
+      time: winner.eventTime ?? meta.time,
+      slotLabel: winner.eventTime ?? meta.time,
       title: winner.title,
       venue: winner.venue,
       city: winner.city,
@@ -516,6 +531,7 @@ export function buildDayPlan(input: PlanInput, weatherRaw: string): DayPlan {
       kidFriendly: winner.kidFriendly,
       why: winner.why,
       emoji: winner.emoji,
+      category: winner.category,
       url: winner.url,
       isEvent: winner.isEvent,
       isTodaySpecial: winner.isTodaySpecial,

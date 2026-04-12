@@ -106,10 +106,10 @@ function planStopToDayCard(stop: PlanStop, index: number): DayCard {
   return {
     id: `default-${index}`,
     name: stop.title,
-    category: stop.emoji ? stop.emoji : "events",
+    category: stop.category || "events",
     city: stop.city,
     address: "",
-    timeBlock: stop.slotLabel,
+    timeBlock: stop.time,
     blurb: stop.venue + (stop.isEvent ? " — happening today" : ""),
     why: "",
     url: stop.url || null,

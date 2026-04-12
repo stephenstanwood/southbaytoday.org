@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Signal — generalized agenda scraper factory
+// South Bay Today — generalized agenda scraper factory
 // Extends the Campbell scraper pattern to support multiple cities.
 // ---------------------------------------------------------------------------
 

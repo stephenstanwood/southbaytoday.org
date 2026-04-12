@@ -64,6 +64,8 @@ async function main() {
     console.log(`  ${post.copy?.bluesky || "(none)"}\n`);
     logStep("📘", `Facebook copy (${post.copy?.facebook?.length || 0} chars):`);
     console.log(`  ${post.copy?.facebook || "(none)"}\n`);
+    logStep("🐘", `Mastodon copy (${post.copy?.mastodon?.length || 0} chars):`);
+    console.log(`  ${post.copy?.mastodon || "(none)"}\n`);
 
     if (post.cardPath) {
       logStep("🖼️", `Card: ${post.cardPath}`);
@@ -92,7 +94,7 @@ async function main() {
     }
   }
 
-  const platforms = ["x", "threads", "bluesky", "facebook"];
+  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon"];
   const published = [];
   const results = {};
 

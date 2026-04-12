@@ -302,7 +302,7 @@ export default function TransitView() {
 
       {/* Footer */}
       <div className="transit-footer-note">
-        South Bay Signal transit data is a static snapshot curated from public sources including Caltrain, VTA, BART, ACE, and Caltrans.
+        South Bay Today transit data is a static snapshot curated from public sources including Caltrain, VTA, BART, ACE, and Caltrans.
         For real-time departures and live incident data, use the links above. Always check agency sites before travel.
       </div>
 

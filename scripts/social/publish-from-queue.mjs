@@ -468,7 +468,7 @@ async function main() {
     }
 
     // Publish to each platform
-    const platforms = ["x", "bluesky", "threads", "facebook"];
+    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon"];
     const publishResults = [];
 
     for (const platform of platforms) {
