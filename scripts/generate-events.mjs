@@ -2759,13 +2759,13 @@ async function fetchHicklebeesEvents() {
     const now = new Date();
     const currentYear = now.getFullYear();
 
-    // Split on event-block class
-    const blocks = html.split(/class="event-block/).slice(1);
+    // Split on event-block__first (the actual event items, not containers)
+    const blocks = html.split(/class="event-block__first/).slice(1);
     for (const block of blocks) {
       const titleMatch = block.match(/event-block__title[^>]*>(.*?)<\//s);
       const monthMatch = block.match(/event__month event__month--start[^>]*>(.*?)<\//s);
       const dayMatch = block.match(/event__day event__day--start[^>]*>(.*?)<\//s);
-      const linkMatch = block.match(/href="(\/event\/[^"]+)"/);
+      const linkMatch = block.match(/href="(\/event[s]?\/[^"]+)"/);
 
       const title = titleMatch?.[1]?.replace(/<[^>]+>/g, "").trim();
       const month = monthMatch?.[1]?.trim();
