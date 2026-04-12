@@ -978,28 +978,59 @@ async function scrapeICASanJose(page) {
 // ── SC County Fire Department (Eventbrite organizer page) ──
 
 async function scrapeSCCCFD(page) {
-  // Search Eventbrite for their events since the API is dead
-  const url = "https://www.eventbrite.com/o/santa-clara-county-fire-department-7542498853";
+  const url = "https://www.eventbrite.com/o/santa-clara-county-fire-department-11074830922";
   try {
     await page.goto(url, { waitUntil: "networkidle", timeout: 30_000 });
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
 
     const raw = await page.evaluate(() => {
       const events = [];
-      // Eventbrite organizer pages list events as cards
-      const cards = document.querySelectorAll(
-        "[class*='event-card'], [data-testid*='event'], article, " +
-        "[class*='eds-event-card'], a[href*='/e/']"
-      );
-      for (const card of cards) {
-        const el = card.tagName === "A" ? card : card;
-        const titleEl = el.querySelector("h2, h3, [class*='title'], [class*='name'], [data-testid*='title']");
-        const dateEl = el.querySelector("time, [class*='date'], [datetime], p");
-        const title = titleEl?.textContent?.trim() || el.querySelector("[class*='event-card__clamp']")?.textContent?.trim();
-        const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-        const link = el.tagName === "A" ? el.href : (el.querySelector("a")?.href);
-        if (title && title.length > 5) events.push({ title, date, link });
+      const seen = new Set();
+
+      // Strategy 1: JSON-LD structured data (most reliable)
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      for (const s of scripts) {
+        try {
+          const data = JSON.parse(s.textContent);
+          // Look for itemListElement with Event items
+          const items = data.itemListElement || (Array.isArray(data) ? data : [data]);
+          for (const item of items) {
+            const evt = item.item || item;
+            if (!evt.startDate) continue;
+            const title = evt.name || evt.description?.slice(0, 80);
+            if (!title || seen.has(title)) continue;
+            seen.add(title);
+            events.push({
+              title,
+              date: evt.startDate,
+              link: evt.url,
+              location: evt.location?.name,
+            });
+          }
+        } catch { /* ignore */ }
       }
+
+      // Strategy 2: Event card DOM elements
+      if (events.length === 0) {
+        const cards = document.querySelectorAll(".event-card__vertical, [class*='event-card'][class*='vertical']");
+        for (const card of cards) {
+          const titleEl = card.querySelector("h3, [class*='clamp-line']");
+          const linkEl = card.querySelector("a.event-card-link");
+          const title = titleEl?.textContent?.trim();
+          if (!title || title.length < 5 || seen.has(title)) continue;
+          seen.add(title);
+          // Date/price info is in the card details section
+          const detailText = card.querySelector(".event-card-details")?.textContent || "";
+          const priceMatch = detailText.match(/Free|\$[\d.]+/i);
+          events.push({
+            title,
+            date: null, // dates from cards are unreliable, prefer JSON-LD
+            link: linkEl?.href,
+            cost: priceMatch?.[0]?.toLowerCase() === "free" ? "free" : "paid",
+          });
+        }
+      }
+
       return events;
     });
 
@@ -1012,14 +1043,14 @@ async function scrapeSCCCFD(page) {
           date,
           time: null,
           endTime: null,
-          venue: "Online / Various",
+          venue: r.location || "Online / Various",
           address: "",
           city: "san-jose",
           url: r.link || url,
           source: "SC County Fire Dept",
           category: "community",
           cost: "free",
-          kidFriendly: false,
+          kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
         };
       })
       .filter(Boolean);
