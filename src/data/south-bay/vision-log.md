@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-04-12 — Cycle 83: San José Neighborhood Filter in Events Tab
+
+### Context
+Sunday April 12, 2026 — last day of Easter weekend. Week 2 spring break (FUHSD, CUSD, Campbell USD) starts tomorrow Apr 13.
+
+### What Was Built
+
+**San José neighborhood filter in Events tab**
+
+With 260 SJ events across 63 venues, browsing "San Jose" was overwhelming — a resident in Willow Glen had to scroll past The Ritz, SAP Center, and PayPal Park to find anything near them. Added a row of neighborhood area chips that appears when San José is the sole city selected:
+
+- **Downtown** — The Ritz, San Jose Improv, SAP Center, San Jose Civic, SJZ Break Room, Hammer Theatre, MACLA, City Lights, ICA San José, King Library
+- **SJSU Area** — San Jose State University, San Jose Museum of Art
+- **Japantown** — Japanese American Museum, SJDA
+- **Willow Glen** — Willow Glen Library
+- **East Side** — Berryessa, Vineland, Edenvale, Educational Park, Alum Rock libraries
+- **South SJ** — Almaden, Santa Teresa, Cambrian libraries
+- **Evergreen** — Evergreen Library
+- **Sports Venues** — PayPal Park, Excite Ballpark, Tech CU Arena
+
+Chips only show when San José is the only city selected. Selecting a chip filters only SJ events; clearing returns to "All SJ". The `sjNeighborhood` state is nulled automatically when a second city is added to the selection (no stale filter).
+
+### Why This Was the Strongest Move
+San José is by far the largest city in the South Bay events database — 260 events, nearly half of all content. Without area filtering, residents outside Downtown had to scroll past dozens of irrelevant venue listings. The library branch names (Willow Glen Library, Edenvale Library, etc.) were already being used correctly (fixed in Cycle 80), so the data was ready — the UI just needed to expose it.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED updates** — Last entry: Aria Networks (Apr 7). Watch for Apr 8–14 South Bay funding announcements.
+2. **Permit Pulse: Mountain View** — `cityofmountainview.gov` still returns HTTP 000 (connection refused). Retry after Easter weekend infrastructure may normalize.
+3. **Post-spring-break cleanup** — After Apr 17, hide Spring Break banner; consider spring-break-picks.json expiry so stale picks don't persist.
+
+---
+
 ## 2026-04-11 — Cycle 82: Fix JSON Corruption + Montalvo Events via JSON-LD
 
 ### Context
