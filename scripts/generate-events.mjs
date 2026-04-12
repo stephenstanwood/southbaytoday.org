@@ -2748,7 +2748,7 @@ async function fetchHicklebeesEvents() {
   console.log("  ⏳ Hicklebee's...");
   try {
     const BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
-    const res = await fetch("https://www.hicklebees.com/event", {
+    const res = await fetch("https://hicklebees.com/events", {
       headers: { "User-Agent": BROWSER_UA },
       signal: AbortSignal.timeout(15_000),
     });
@@ -2782,8 +2782,8 @@ async function fetchHicklebeesEvents() {
       const start = new Date(year, monthNum, parseInt(day), 12, 0); // noon default
 
       const eventUrl = linkMatch
-        ? `https://www.hicklebees.com${linkMatch[1]}`
-        : "https://www.hicklebees.com/event";
+        ? `https://hicklebees.com${linkMatch[1]}`
+        : "https://hicklebees.com/events";
 
       events.push({
         id: h("hicklebees", title, isoDate(start)),
