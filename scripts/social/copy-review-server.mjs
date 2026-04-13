@@ -718,30 +718,16 @@ async function init() {
   // Load calendar immediately since it's the default tab
   loadCalendar();
 
-  const res = await fetch('/api/posts');
-  const data = await res.json();
-  posts = data.posts;
-  updateQueueBadge(data.queueSize);
-
   // Fetch reply count for tab badge
   try {
     const rRes = await fetch('/api/replies');
     const rData = await rRes.json();
-    repliesData = rData;
-    const newCount = rData.filter(r => r.classification && !r.responded && !r.actionNote).length;
-    updateTabCounts(posts.length, newCount);
+    repliesData = Array.isArray(rData) ? rData : [];
+    const newCount = repliesData.filter(r => r.classification && !r.responded && !r.actionNote).length;
+    updateTabCounts(0, newCount);
   } catch {
-    updateTabCounts(posts.length, 0);
+    updateTabCounts(0, 0);
   }
-
-  if (posts.length === 0) {
-    document.getElementById('review-area').style.display = 'none';
-    document.getElementById('shortcuts').style.display = 'none';
-    document.getElementById('done').style.display = 'block';
-    document.getElementById('done').innerHTML = '<div class="empty"><h2>No drafts to review</h2><p>Generate some with:<br><code>node scripts/social/generate-posts.mjs --max 20</code></p></div>';
-    return;
-  }
-  render();
 }
 
 function urlify(text) {
@@ -872,11 +858,14 @@ async function pollForNewPosts() {
   }, 2000);
 }
 
-// Show "Accept w/ Edits" button when comment has text
-document.getElementById('comment').addEventListener('input', function() {
-  const editBtn = document.getElementById('btn-edit');
-  editBtn.style.display = this.value.trim() ? '' : 'none';
-});
+// Show "Accept w/ Edits" button when comment has text (only if review swiper is present)
+const commentEl = document.getElementById('comment');
+if (commentEl) {
+  commentEl.addEventListener('input', function() {
+    const editBtn = document.getElementById('btn-edit');
+    if (editBtn) editBtn.style.display = this.value.trim() ? '' : 'none';
+  });
+}
 
 function vote(v) {
   const el = document.getElementById('platforms');
@@ -936,7 +925,8 @@ function vote(v) {
 async function loadReplies() {
   try {
     const res = await fetch('/api/replies');
-    repliesData = await res.json();
+    const data = await res.json();
+    repliesData = Array.isArray(data) ? data : [];
   } catch {
     repliesData = [];
   }
