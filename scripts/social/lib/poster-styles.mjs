@@ -112,14 +112,35 @@ const NOVEL_DIRECTIONS = [
 ];
 
 /**
- * Pick a style: 80% from approved pool, 20% novel/experimental.
+ * Pick a style: 80% from approved pool (weighted by feedback), 20% novel/experimental.
  * @returns {{ style: string, colors: Array|null, id: string, isNovel: boolean }}
  */
-export function pickStyle() {
+export async function pickStyle() {
   if (Math.random() < 0.2) {
     const dir = NOVEL_DIRECTIONS[Math.floor(Math.random() * NOVEL_DIRECTIONS.length)];
     return { style: dir, colors: null, id: "novel", isNovel: true };
   }
+
+  // Weight approved styles by acceptance rate from feedback
+  let weights;
+  try {
+    const { getStyleWeights } = await import("./recraft-feedback.mjs");
+    weights = getStyleWeights();
+  } catch {
+    weights = new Map();
+  }
+
+  const weighted = APPROVED_STYLES.map((s) => ({
+    ...s,
+    weight: weights.get(s.id) ?? 1.0,
+  }));
+  const totalWeight = weighted.reduce((sum, s) => sum + s.weight, 0);
+  let roll = Math.random() * totalWeight;
+  for (const s of weighted) {
+    roll -= s.weight;
+    if (roll <= 0) return { style: s.style, colors: s.colors, id: s.id, isNovel: false };
+  }
+  // Fallback (shouldn't happen)
   const pick = APPROVED_STYLES[Math.floor(Math.random() * APPROVED_STYLES.length)];
   return { style: pick.style, colors: pick.colors, id: pick.id, isNovel: false };
 }
@@ -269,6 +290,19 @@ NOT a photograph — graphic design poster. All text must be spelled correctly a
  * @returns {Promise<string>} Recraft-ready prompt
  */
 export async function buildImagePrompt(postCopy, category) {
+  // Load feedback guidance if available
+  let guidanceBlock = "";
+  try {
+    const { getPromptGuidance } = await import("./recraft-feedback.mjs");
+    const { goodExamples, avoidPatterns } = getPromptGuidance();
+    if (goodExamples.length > 0) {
+      guidanceBlock += `\n\nRECENT PROMPTS THAT WERE APPROVED (learn from these):\n${goodExamples.map((p, i) => `${i + 1}. ${p}`).join("\n")}`;
+    }
+    if (avoidPatterns.length > 0) {
+      guidanceBlock += `\n\nRECENT PROMPTS THAT WERE REJECTED (avoid these patterns):\n${avoidPatterns.map((p, i) => `${i + 1}. ${p}`).join("\n")}`;
+    }
+  } catch {}
+
   // Try Claude first to craft a tailored prompt
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -305,7 +339,7 @@ RULES for the prompt you write:
   * Minimal line art with bold color fills (few clean strokes, large color areas)
   * Isometric / architectural (3D-ish flat illustration, spatial depth)
 - AVOID: swirling psychedelic patterns, trippy optical illusions, melting/morphing shapes, tie-dye aesthetics, kaleidoscope effects. These are fine occasionally but should NOT be the default.
-- Keep it under 100 words
+- Keep it under 100 words${guidanceBlock}
 
 Return ONLY the prompt text, nothing else.`
         }],

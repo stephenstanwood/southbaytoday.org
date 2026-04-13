@@ -30,6 +30,7 @@ for (const [date, day] of Object.entries(d.days || {}).sort(([a], [b]) => a.loca
       const { url } = await generateAndUpload({ prompt, pathname });
       slot.imageUrl = url;
       slot.imageStyle = "abstract";
+      slot.imagePrompt = prompt;
       // Don't auto-approve — Stephen will review
       count++;
       console.log(`  ✅ ${url.slice(0, 60)}`);

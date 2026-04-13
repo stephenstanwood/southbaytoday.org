@@ -65,6 +65,7 @@ export const RUNTIME = {
   postHistory:      join(DATA_DIR, "social-post-history.json"),
   blacklist:        join(DATA_DIR, "social-blacklist.json"),
   replies:          join(DATA_DIR, "social-replies.json"),
+  recraftFeedback:  join(DATA_DIR, "recraft-feedback.json"),
   devStatusCache:   join(DATA_DIR, ".dev-status-cache.json"),
 };
 

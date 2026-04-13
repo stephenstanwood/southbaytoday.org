@@ -1712,7 +1712,7 @@ const server = createServer((req, res) => {
 
             if (slotType === "day-plan" && slot.plan) {
               // Day plan: text-heavy poster with style
-              const style = pickStyle();
+              const style = await pickStyle();
               prompt = dayPlanPrompt(slot.plan, date, style.style);
               console.log(`  🎨 Generating day plan poster (${style.id})...`);
               const pathname = `posters/${date}-${slotType}.png`;
@@ -1730,6 +1730,7 @@ const server = createServer((req, res) => {
               slot.imageUrl = url;
               slot.imageStyle = "abstract";
             }
+            slot.imagePrompt = prompt;
             console.log(`  ✅ Image generated: ${slot.imageUrl.slice(0, 80)}`);
           } catch (err) {
             console.error(`  ⚠️  Recraft generation failed: ${err.message}`);
@@ -1745,6 +1746,14 @@ const server = createServer((req, res) => {
           slot.imageApprovedAt = new Date().toISOString();
           slot.status = "image-approved";
           console.log(`  ✅ Image approved: ${date} ${slotType}`);
+
+          // Log acceptance to feedback loop
+          try {
+            const { logFeedback } = await import("./lib/recraft-feedback.mjs");
+            logFeedback({ date, slot: slotType, style: slot.imageStyle || "unknown", prompt: slot.imagePrompt || "", outcome: "approved" });
+            console.log(`  📊 Logged image approval: ${date} ${slotType} (${slot.imageStyle})`);
+          } catch {}
+
           saveScheduleFile(schedule);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ ok: true, schedule }));
@@ -1764,16 +1773,18 @@ const server = createServer((req, res) => {
                 const { generateAndUpload } = await import("./lib/recraft.mjs");
                 const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
                 if (slotType === "day-plan" && slot.plan) {
-                  const style = pickStyle();
+                  const style = await pickStyle();
                   const prompt = dayPlanPrompt(slot.plan, date, style.style);
                   const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
                   slot.imageUrl = url;
                   slot.imageStyle = style.id;
+                  slot.imagePrompt = prompt;
                 } else {
                   const prompt = await buildImagePrompt(slot.copy?.x || "", slot.item?.category || "");
                   const { url } = await generateAndUpload({ prompt, pathname });
                   slot.imageUrl = url;
                   slot.imageStyle = "abstract";
+                  slot.imagePrompt = prompt;
                 }
                 console.log(`  🎨 Image generated: ${slot.imageUrl.slice(0, 60)}`);
               } catch (err) {
@@ -1783,6 +1794,13 @@ const server = createServer((req, res) => {
           }
           if (slot.imageUrl) {
             slot.imageApprovedAt = now;
+
+            // Log acceptance to feedback loop
+            try {
+              const { logFeedback } = await import("./lib/recraft-feedback.mjs");
+              logFeedback({ date, slot: slotType, style: slot.imageStyle || "unknown", prompt: slot.imagePrompt || "", outcome: "approved" });
+              console.log(`  📊 Logged image approval: ${date} ${slotType} (${slot.imageStyle})`);
+            } catch {}
           }
           slot.status = slot.imageApprovedAt ? "image-approved" : "copy-approved";
           console.log(`  ✅ Both approved: ${date} ${slotType}`);
@@ -1793,6 +1811,15 @@ const server = createServer((req, res) => {
         }
 
         if (action === "regen-image") {
+          // Log rejection of the current image before generating a new one
+          try {
+            const { logFeedback } = await import("./lib/recraft-feedback.mjs");
+            if (slot.imageUrl) {
+              logFeedback({ date, slot: slotType, style: slot.imageStyle || "unknown", prompt: slot.imagePrompt || "", outcome: "rejected" });
+              console.log(`  📊 Logged image rejection: ${date} ${slotType} (${slot.imageStyle})`);
+            }
+          } catch {}
+
           try {
             const { pickStyle, dayPlanPrompt, buildImagePrompt } = await import("./lib/poster-styles.mjs");
             const { generateAndUpload } = await import("./lib/recraft.mjs");
@@ -1800,7 +1827,7 @@ const server = createServer((req, res) => {
             const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
 
             if (slotType === "day-plan" && slot.plan) {
-              const style = pickStyle();
+              const style = await pickStyle();
               prompt = dayPlanPrompt(slot.plan, date, style.style);
               console.log(`  🎨 Regenerating day plan poster (${style.id})...`);
               const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
@@ -1815,6 +1842,7 @@ const server = createServer((req, res) => {
               slot.imageUrl = url;
               slot.imageStyle = "abstract";
             }
+            slot.imagePrompt = prompt;
             slot.imageApprovedAt = null; // reset approval on regen
             console.log(`  ✅ Image regenerated: ${slot.imageUrl.slice(0, 80)}`);
           } catch (err) {
