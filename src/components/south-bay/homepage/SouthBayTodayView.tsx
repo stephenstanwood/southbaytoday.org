@@ -399,6 +399,11 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
+      {/* Weekly forecast banner */}
+      <div style={{ marginBottom: 0, paddingTop: 12 }}>
+        <ForecastCard homeCity={state.city} />
+      </div>
+
       {/* Header */}
       <div className="sbt-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 0 10px", gap: 12, flexWrap: "wrap" }}>
         <div className="sbt-time-row" style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
@@ -468,11 +473,6 @@ export default function SouthBayTodayView({ homeCity, setHomeCity }: Props) {
         {!showMoreCities && (
           <button onClick={() => setShowMoreCities(true)} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 14, border: "1.5px dashed #ccc", background: "#fff", color: "#999", cursor: "pointer", flexShrink: 0 }}>More...</button>
         )}
-      </div>
-
-      {/* Weekly forecast banner */}
-      <div style={{ marginBottom: 14 }}>
-        <ForecastCard homeCity={state.city} />
       </div>
 
       {/* Photo scroll */}

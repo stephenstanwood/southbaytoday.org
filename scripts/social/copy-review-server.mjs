@@ -611,25 +611,24 @@ const HTML = `<!DOCTYPE html>
   .cal-day-header .cal-date { color: #888; font-size: 13px; }
   .cal-day.today .cal-day-header { background: #1a1a1a; color: #faf9f6; }
   .cal-day.today .cal-date { color: #bbb; }
-  .cal-slots { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .cal-slots { display: flex; flex-direction: column; }
   .cal-slot {
-    padding: 16px; border-right: 1px solid #E5E2DB;
-    cursor: pointer; transition: background 0.1s; min-height: 140px;
+    padding: 0; border-bottom: 1px solid #E5E2DB;
   }
-  .cal-slot:last-child { border-right: none; }
-  .cal-slot:hover { background: #faf9f6; }
+  .cal-slot:last-child { border-bottom: none; }
+  .cal-slot-header {
+    display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+    flex-wrap: wrap;
+  }
   .cal-slot-type {
     font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    white-space: nowrap;
   }
   .cal-slot-type.day-plan { color: #d4a017; }
   .cal-slot-type.tonight-pick { color: #8b5cf6; }
   .cal-slot-type.wildcard { color: #059669; }
-  .cal-slot-time { font-size: 12px; color: #888; margin-bottom: 8px; }
-  .cal-slot-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
-  .cal-slot-preview { font-size: 12px; color: #777; line-height: 1.4; }
-  .cal-slot-thumb { width: 100%; aspect-ratio: 4/5; border-radius: 6px; object-fit: cover; margin-top: 8px; }
-  .cal-badges { display: flex; gap: 6px; margin-top: 8px; }
+  .cal-slot-title { font-size: 14px; font-weight: 600; line-height: 1.3; flex: 1; }
+  .cal-badges { display: flex; gap: 6px; }
   .cal-badge {
     font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
   }
@@ -643,8 +642,7 @@ const HTML = `<!DOCTYPE html>
 
   /* Calendar expanded slot */
   .cal-expanded {
-    border-top: 1px solid #E5E2DB; padding: 20px; background: #faf9f6;
-    grid-column: 1 / -1;
+    padding: 16px 20px 20px; background: #faf9f6;
   }
   .cal-expanded-platforms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
   .cal-expanded-platform { font-size: 13px; line-height: 1.5; }
@@ -670,32 +668,11 @@ const HTML = `<!DOCTYPE html>
 <h1>South Bay Today</h1>
 
 <div class="tab-bar" id="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('review')" id="tab-review">Review <span class="tab-count" id="tab-review-count"></span></button>
-  <button class="tab-btn" onclick="switchTab('calendar')" id="tab-calendar">Calendar</button>
+  <button class="tab-btn active" onclick="switchTab('calendar')" id="tab-calendar">Calendar</button>
   <button class="tab-btn" onclick="switchTab('replies')" id="tab-replies">Replies <span class="tab-count" id="tab-replies-count"></span></button>
 </div>
 
-<div id="review-tab">
-  <div class="counter" id="counter"></div>
-  <div id="queue-badge" class="queue-badge"></div>
-  <div class="shortcuts" id="shortcuts"><kbd>&larr;</kbd> skip &nbsp; <kbd>&rarr;</kbd> approve &nbsp; <kbd>e</kbd> accept w/ edits &nbsp; <kbd>Tab</kbd> comment box</div>
-
-  <div id="review-area">
-    <div class="item-header" id="item-header"></div>
-    <div class="platforms" id="platforms"></div>
-    <div class="comment-section">
-      <textarea class="comment-input" id="comment" placeholder="Edit instructions or notes (optional)..." rows="1"></textarea>
-    </div>
-    <div class="buttons" id="buttons">
-      <button class="btn btn-reject" onclick="vote('reject')">&larr; Skip</button>
-      <button class="btn btn-edit" onclick="vote('edit')" id="btn-edit" style="display:none">Accept w/ Edits</button>
-      <button class="btn btn-approve" onclick="vote('approve')">Approve &rarr;</button>
-    </div>
-  </div>
-  <div class="done" id="done" style="display:none"></div>
-</div>
-
-<div id="calendar-view" style="display:none">
+<div id="calendar-view">
   <div id="calendar-grid"></div>
 </div>
 
@@ -708,14 +685,13 @@ let posts = [];
 let current = 0;
 let results = [];
 let queueSize = 0;
-let currentTab = 'review';
+let currentTab = 'calendar';
 let repliesData = [];
 
 const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8' };
 
 function switchTab(tab) {
   currentTab = tab;
-  document.getElementById('tab-review').className = 'tab-btn' + (tab === 'review' ? ' active' : '');
   document.getElementById('tab-calendar').className = 'tab-btn' + (tab === 'calendar' ? ' active' : '');
   document.getElementById('tab-replies').className = 'tab-btn' + (tab === 'replies' ? ' active' : '');
   document.getElementById('calendar-view').style.display = tab === 'calendar' ? '' : 'none';
@@ -1079,7 +1055,6 @@ document.addEventListener('keydown', (e) => {
 // --- Calendar ---
 
 let scheduleData = {};
-let expandedSlot = null;
 
 const SLOT_META = {
   'day-plan': { label: '7:15 AM — Day Plan', icon: '\\ud83d\\udccb', color: '#d4a017' },
@@ -1131,27 +1106,17 @@ function renderCalendar() {
       const slot = dayData[slotType];
       const meta = SLOT_META[slotType];
       const isEmpty = !slot;
-      const isExpanded = expandedSlot === dateStr + ':' + slotType;
 
-      html += '<div class="cal-slot' + (isEmpty ? ' empty' : '') + '" onclick="toggleCalSlot(\\'' + dateStr + '\\', \\'' + slotType + '\\')">';
+      html += '<div class="cal-slot' + (isEmpty ? ' empty' : '') + '">';
+      html += '<div class="cal-slot-header">';
       html += '<div class="cal-slot-type ' + slotType + '">' + meta.icon + ' ' + meta.label + '</div>';
 
       if (slot) {
-        // Title
+        // Title + badges inline
         const title = slot.plan ? (slot.cityName || 'Day Plan') :
           (slot.item?.title || slot.item?.name || 'Untitled');
-        html += '<div class="cal-slot-title">' + escapeHtml(title.slice(0, 60)) + '</div>';
+        html += '<span class="cal-slot-title">' + escapeHtml(title) + '</span>';
 
-        // Copy preview
-        const preview = slot.copy?.x || '';
-        html += '<div class="cal-slot-preview">' + escapeHtml(preview.slice(0, 80)) + (preview.length > 80 ? '...' : '') + '</div>';
-
-        // Image thumb
-        if (slot.imageUrl) {
-          html += '<img class="cal-slot-thumb" src="' + escapeHtml(slot.imageUrl) + '" loading="lazy">';
-        }
-
-        // Status badges
         html += '<div class="cal-badges">';
         if (slot.status === 'published') {
           html += '<span class="cal-badge published">Published</span>';
@@ -1161,16 +1126,17 @@ function renderCalendar() {
         }
         html += '</div>';
       } else {
-        html += '<div class="cal-slot-title">No content</div>';
-        html += '<div class="cal-badges"><span class="cal-badge empty">Empty</span></div>';
+        html += '<span class="cal-slot-title" style="color:#bbb;font-style:italic">No content</span>';
+      }
+
+      html += '</div>'; // close cal-slot-header
+
+      // Always show expanded content
+      if (slot) {
+        html += renderExpandedSlot(dateStr, slotType, slot);
       }
 
       html += '</div>'; // close cal-slot
-
-      // Expanded view
-      if (isExpanded && slot) {
-        html += renderExpandedSlot(dateStr, slotType, slot);
-      }
     }
 
     html += '</div>'; // close cal-slots
@@ -1183,13 +1149,17 @@ function renderCalendar() {
 function renderExpandedSlot(dateStr, slotType, slot) {
   let html = '<div class="cal-expanded">';
 
-  // Platform copy previews
+  // Platform copy — full text with char counts
+  const CHAR_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 500 };
   if (slot.copy) {
     html += '<div class="cal-expanded-platforms">';
     const platforms = ['x', 'threads', 'bluesky', 'facebook', 'instagram'];
     for (const p of platforms) {
       if (!slot.copy[p]) continue;
-      html += '<div class="cal-expanded-platform"><strong>' + p + '</strong><br>' + escapeHtml(slot.copy[p]).slice(0, 200) + '</div>';
+      const len = slot.copy[p].length;
+      const limit = CHAR_LIMITS[p] || 500;
+      const over = len > limit;
+      html += '<div class="cal-expanded-platform"><strong>' + p.toUpperCase() + '</strong> <span style="font-size:11px;color:' + (over ? '#c0392b;font-weight:700' : '#aaa') + '">' + len + ' / ' + limit + '</span><br><div style="white-space:pre-wrap;word-wrap:break-word;margin-top:4px">' + urlify(escapeHtml(slot.copy[p])) + '</div></div>';
     }
     html += '</div>';
   }
@@ -1222,11 +1192,7 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   return html;
 }
 
-function toggleCalSlot(dateStr, slotType) {
-  const key = dateStr + ':' + slotType;
-  expandedSlot = expandedSlot === key ? null : key;
-  renderCalendar();
-}
+// All slots render expanded by default — no toggle needed
 
 async function calAction(dateStr, slotType, action) {
   try {

@@ -32,6 +32,7 @@ VOICE:
 - Warm, specific, natural rhythm, slightly playful
 - 1-3 emojis placed naturally, adding warmth not replacing words
 - We INFORM, we don't ENDORSE — excited is fine, ad copy is not
+- Always capitalize the first word of every sentence and post. Proper grammar throughout.
 - Never generic ("your Saturday is fully booked"), never forced ("stacked", "huge"), never vague ("got options")
 - Never sound like the venue's PR team or homepage copy
 - No permit/construction jargon ("new build", "finish interior", "TI work")
@@ -167,7 +168,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
     },
     body: JSON.stringify({
       model: CLAUDE_MODEL,
-      max_tokens: 1024,
+      max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -303,7 +304,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
     },
     body: JSON.stringify({
       model: CLAUDE_MODEL,
-      max_tokens: 1024,
+      max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -424,13 +425,19 @@ export async function generateDayPlanCopy(plan, dateStr, planUrl) {
   }).join(", ");
 
   let stopsText = "";
+  const allMentions = [];
   for (const card of plan.cards) {
     const time = card.timeBlock?.split(" - ")[0] || "";
-    stopsText += `- ${time}: ${card.name} (${card.city ? cityDisplay : ""})\n  ${(card.blurb || "").slice(0, 100)}\n`;
+    stopsText += `- ${time}: ${card.name}\n  ${(card.blurb || "").slice(0, 100)}\n`;
+    // Collect handle mentions for all stops
+    const m = mentionInstructions({ venue: card.name, title: card.name });
+    if (m) allMentions.push(m);
   }
+  // Include all unique handle matches so the LLM can @mention multiple stops
+  const uniqueMentions = [...new Set(allMentions.filter(Boolean))];
+  const mentionBlock = uniqueMentions.length > 0 ? uniqueMentions.join("\n") : "";
 
   const url = planUrl || `https://southbaytoday.org`;
-  const mentions = mentionInstructions({ venue: plan.cards[0]?.name, title: plan.cards[0]?.name });
 
   const prompt = `Write a social post promoting a FULL DAY PLAN for ${dayName} in the South Bay. This is our signature daily post — it should feel like an invitation to an awesome day.
 
@@ -440,8 +447,13 @@ CITIES: ${cityDisplay}
 STOPS:
 ${stopsText}
 
-URL (MUST include): ${url}
-${mentions}
+URL (MUST include this exact URL): ${url}
+${mentionBlock}
+
+LINKS:
+- Always use full URLs with https:// — bare domains don't become clickable on Bluesky or Threads
+- The URL in the post must be exactly the one provided above
+${url.includes('/plan/') ? '- This URL links to a full day plan. Frame the link as "here\\'s a whole day plan" or "we built a day around it" — the plan page shows all stops.' : ''}
 
 This is NOT a single event — it's a curated day plan with ${plan.cards.length} stops. Frame it as "here's your ${dayName}" or "we planned your ${dayName}". The tone should be: we did the work so you don't have to.
 

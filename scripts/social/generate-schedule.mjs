@@ -13,6 +13,8 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import crypto from "node:crypto";
+import { execSync } from "node:child_process";
 import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
 import { scoreAndRank } from "./lib/scoring.mjs";
 import { generateDayPlanCopy, generateTonightPickCopy, generateWildcardCopy } from "./lib/copy-gen.mjs";
@@ -22,6 +24,7 @@ import { CITY_NAMES } from "./lib/constants.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
+const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const MILESTONES_DIR = join(__dirname, "..", "..", "src", "lib", "south-bay");
 const RESTAURANT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "scc-food-openings.json");
 
@@ -59,6 +62,43 @@ function saveSchedule(schedule) {
 
 function loadDefaultPlans() {
   try { return JSON.parse(readFileSync(PLANS_FILE, "utf8")); } catch { return { plans: {} }; }
+}
+
+function loadSharedPlans() {
+  try { return JSON.parse(readFileSync(SHARED_PLANS_FILE, "utf8")); } catch { return {}; }
+}
+
+function saveSharedPlans(plans) {
+  writeFileSync(SHARED_PLANS_FILE, JSON.stringify(plans, null, 2) + "\n");
+}
+
+function generatePlanId() {
+  const bytes = new Uint8Array(4);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/** Save a day plan to shared-plans.json and return the plan URL. */
+function createSharedPlanUrl(plan, dateStr) {
+  const planId = generatePlanId();
+  const entry = {
+    cards: plan.cards.map((c) => ({
+      id: c.id, name: c.name, category: c.category, city: c.city,
+      address: c.address, timeBlock: c.timeBlock, blurb: c.blurb, why: c.why,
+      url: c.url || null, mapsUrl: c.mapsUrl || null,
+      cost: c.cost || null, costNote: c.costNote || null,
+      photoRef: c.photoRef || null, venue: c.venue || null, source: c.source,
+    })),
+    city: plan.cards[0]?.city || "san-jose",
+    kids: false,
+    weather: plan.weather,
+    planDate: dateStr,
+    createdAt: new Date().toISOString(),
+  };
+  const current = loadSharedPlans();
+  current[planId] = entry;
+  saveSharedPlans(current);
+  return `https://southbaytoday.org/plan/${planId}`;
 }
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -155,17 +195,25 @@ function pickWildcard(candidates, dateStr) {
     }
   } catch {}
 
-  // 3. Fall back to most interesting general candidate for that date
+  // 3. Fall back to general event — prefer events 1-3 days out from post date
+  //    (the 4:30 PM wildcard slot benefits from a little lead time)
+  const postDate = new Date(dateStr + "T12:00:00");
+  const nearFuture = candidates.filter((c) => {
+    if (c.sourceType !== "event" || !c.date) return false;
+    const eventDate = new Date(c.date + "T12:00:00");
+    const daysOut = Math.round((eventDate - postDate) / 86400000);
+    return daysOut >= 0 && daysOut <= 3;
+  });
+  if (nearFuture.length > 0) {
+    nearFuture.sort((a, b) => (b.score || 0) - (a.score || 0));
+    return { subtype: "general", item: nearFuture[0] };
+  }
+
+  // 4. Same-date events as fallback
   const dateItems = candidates.filter((c) => c.date === dateStr && c.sourceType === "event");
   if (dateItems.length > 0) {
     dateItems.sort((a, b) => (b.score || 0) - (a.score || 0));
     return { subtype: "general", item: dateItems[0] };
-  }
-
-  // 4. Any undated interesting items
-  const undated = candidates.filter((c) => !c.date && c.sourceType !== "permit");
-  if (undated.length > 0) {
-    return { subtype: "general", item: undated[0] };
   }
 
   return null;
@@ -214,12 +262,17 @@ async function main() {
           console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) [dry run]`);
         } else {
           try {
-            const copy = await generateDayPlanCopy(plan, dateStr);
+            // Create a shared plan entry and get a shareable URL
+            const planUrl = createSharedPlanUrl(plan, dateStr);
+            console.log(`    📎 Plan link: ${planUrl}`);
+
+            const copy = await generateDayPlanCopy(plan, dateStr, planUrl);
             day["day-plan"] = {
               status: "draft",
               slotType: "day-plan",
               city: citySlug,
               cityName,
+              planUrl,
               plan: { cards: plan.cards, weather: plan.weather },
               copy,
               imageUrl: null,
@@ -340,6 +393,20 @@ async function main() {
   if (!dryRun) {
     saveSchedule(schedule);
     console.log(`\n✅ Schedule saved: ${generated} new entries, ${skipped} preserved`);
+
+    // Auto-commit shared-plans.json so plan pages are live by the time posts publish
+    try {
+      const repoRoot = join(__dirname, "..", "..");
+      const dirty = execSync("git diff --name-only -- src/data/south-bay/shared-plans.json", { cwd: repoRoot, encoding: "utf8" }).trim();
+      if (dirty) {
+        execSync("git add src/data/south-bay/shared-plans.json", { cwd: repoRoot, stdio: "pipe" });
+        execSync('git commit -m "data: update shared plans from schedule generator"', { cwd: repoRoot, stdio: "pipe" });
+        execSync("git push", { cwd: repoRoot, stdio: "pipe" });
+        console.log("   📎 shared-plans.json committed and pushed");
+      }
+    } catch (e) {
+      console.warn("   ⚠️  Failed to auto-push shared-plans.json:", e.message);
+    }
   } else {
     console.log(`\n🏜️  Dry run: would generate ${generated} entries`);
   }
