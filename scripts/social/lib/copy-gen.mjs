@@ -332,22 +332,28 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
   // Mastodon reuses Bluesky copy
   variants.mastodon = variants.bluesky;
 
-  // Enforce hard character limits — LLMs can't count reliably
-  const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500 };
+  // Enforce hard character limits
+  enforceHardLimits(variants);
+
+  return variants;
+}
+
+const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 300 };
+
+/** Enforce hard character limits on all platform variants. */
+function enforceHardLimits(variants) {
   for (const [platform, limit] of Object.entries(HARD_LIMITS)) {
-    if (variants[platform].length > limit) {
+    if (variants[platform] && variants[platform].length > limit) {
       variants[platform] = trimToLimit(variants[platform], limit);
     }
   }
-
-  return variants;
 }
 
 /**
  * Trim a social post to fit within a character limit.
  * Preserves the URL and hashtags at the end, trims body sentences.
  */
-function trimToLimit(text, limit) {
+export function trimToLimit(text, limit) {
   if (text.length <= limit) return text;
 
   // Split off trailing hashtags (lines starting with #)
@@ -495,6 +501,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   variants.mastodon = variants.bluesky;
   if (!variants.instagram) variants.instagram = variants.facebook;
 
+  // Enforce hard character limits
+  enforceHardLimits(variants);
+
   return variants;
 }
 
@@ -564,6 +573,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   const variants = JSON.parse(jsonMatch[0]);
   variants.mastodon = variants.bluesky;
   if (!variants.instagram) variants.instagram = variants.facebook;
+
+  // Enforce hard character limits
+  enforceHardLimits(variants);
 
   return variants;
 }

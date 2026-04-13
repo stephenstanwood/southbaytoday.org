@@ -519,6 +519,16 @@ async function main() {
       }
     }
 
+    // Final hard trim — safety net for any copy that slipped through over-limit
+    const { trimToLimit } = await import("./lib/copy-gen.mjs");
+    const PUBLISH_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 300 };
+    for (const [p, lim] of Object.entries(PUBLISH_LIMITS)) {
+      if (rewrittenCopy[p] && rewrittenCopy[p].length > lim) {
+        console.log(`      ✂️  ${p}: ${rewrittenCopy[p].length} → trimmed to ${lim}`);
+        rewrittenCopy[p] = trimToLimit(rewrittenCopy[p], lim);
+      }
+    }
+
     // Publish to each platform
     const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram"];
     const publishResults = [];
