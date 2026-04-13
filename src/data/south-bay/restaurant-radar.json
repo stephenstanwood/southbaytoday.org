@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-12T23:10:33.331Z",
+  "generatedAt": "2026-04-13T14:08:51.823Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -32,6 +32,19 @@
       "valuation": 3100000,
       "date": "2026-03-18",
       "blurb": "Korean BBQ chain known for tabletop charcoal grilling and premium cuts"
+    },
+    {
+      "id": "2026-111618-CI",
+      "city": "san-jose",
+      "address": "3062 Story Rd",
+      "name": "Karavan Coffee",
+      "description": "Karavan Coffee (Bepm 100%) Ti",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "New Buildout",
+      "valuation": 350000,
+      "date": "2026-04-10"
     },
     {
       "id": "2026-108378-CI",
@@ -139,18 +152,6 @@
       "blurb": "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto"
     },
     {
-      "id": "pa-341 California Av-2026-02-26",
-      "city": "palo-alto",
-      "address": "341 California Av",
-      "name": null,
-      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
-      "workType": "Entitlement",
-      "signal": "activity",
-      "label": "Conditional Use",
-      "valuation": 0,
-      "date": "2026-02-26"
-    },
-    {
       "id": "pa-401 Webster St-2026-02-26",
       "city": "palo-alto",
       "address": "401 Webster St",
@@ -162,6 +163,18 @@
       "valuation": 0,
       "date": "2026-02-26",
       "blurb": "Neighborhood American restaurant on Webster St undergoing a kitchen remodel"
+    },
+    {
+      "id": "pa-341 California Av-2026-02-26",
+      "city": "palo-alto",
+      "address": "341 California Av",
+      "name": null,
+      "description": "Request for Conditional Use Permit to Amend Alcohol Service from an existing …",
+      "workType": "Entitlement",
+      "signal": "activity",
+      "label": "Conditional Use",
+      "valuation": 0,
+      "date": "2026-02-26"
     },
     {
       "id": "pa-338 University Av-2026-02-25",

@@ -657,7 +657,10 @@ const SJ_NEIGHBORHOODS: SjNeighborhood[] = [
       "san jose improv", "the ritz", "sap center", "san jose civic",
       "sjz break room", "hammer theatre", "macla", "city lights theater",
       "ica san", "san jose center for the performing", "king library",
-      "san jose jazz", "arena green",
+      "san jose jazz", "arena green", "3below", "o\u2019flaherty", "o'flaherty",
+      "o&#8217;flaherty", "plaza de cesar chavez", "downtown san jose", "south first",
+      "san pedro square", "mcenery convention", "convention center",
+      "sofa market", "courage anyone",
     ],
   },
   {
@@ -676,7 +679,7 @@ const SJ_NEIGHBORHOODS: SjNeighborhood[] = [
     id: "willow-glen",
     label: "Willow Glen",
     emoji: "🌳",
-    venues: ["willow glen library"],
+    venues: ["willow glen library", "hicklebee"],
   },
   {
     id: "east-side",
@@ -685,19 +688,29 @@ const SJ_NEIGHBORHOODS: SjNeighborhood[] = [
     venues: [
       "berryessa library", "vineland library", "educational park library",
       "edenvale library", "alum rock library",
+      "history park", "history san jose", "east sj carnegie", "mt. pleasant library",
     ],
   },
   {
     id: "south-sj",
     label: "South SJ",
     emoji: "🏡",
-    venues: ["almaden library", "santa teresa library", "cambrian library"],
+    venues: [
+      "almaden library", "santa teresa library", "cambrian library",
+      "hillview library", "pearl avenue library",
+    ],
   },
   {
     id: "evergreen",
     label: "Evergreen",
     emoji: "🌿",
-    venues: ["evergreen library"],
+    venues: ["evergreen library", "village square library"],
+  },
+  {
+    id: "west-sj",
+    label: "West SJ",
+    emoji: "🛍️",
+    venues: ["santana row", "bascom library", "westfield valley fair", "valley fair"],
   },
   {
     id: "sports",
