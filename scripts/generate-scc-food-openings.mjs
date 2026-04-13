@@ -150,7 +150,10 @@ function cleanAddress(raw) {
 }
 
 // Pure legal entity names (no real business descriptor) — e.g. "Sp Social LLC", "Umesjoakland Inc."
-const BARE_ENTITY_PATTERN = /^[A-Za-z0-9&'\s]{1,30}\s+(LLC|Inc\.|Inc|Corp\.|Corp|Ltd\.|Ltd|L\.L\.C\.|Co\.)$/i;
+const BARE_ENTITY_PATTERN = /^[A-Za-z0-9&'\s]{1,30}\s+(LLC|Inc\.|Inc|Corp\.|Corp|Ltd\.|Ltd|L\.L\.C\.|L\.L\.P\.|LLP|Co\.)$/i;
+
+// Non-food establishments that sometimes appear in health permit data (law firms, spas, etc.)
+const NON_FOOD_PATTERNS = /\b(LLP|L\.L\.P\.)\b|\bATTORNEY|BARRISTERS|SOLICITORS|\bLAW\s+(OFFICES?|GROUP|FIRM)\b/i;
 
 function shouldSkip(item) {
   const name = item.business_name ?? "";
@@ -158,6 +161,7 @@ function shouldSkip(item) {
 
   if (SKIP_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
+  if (NON_FOOD_PATTERNS.test(rawName)) return true;
 
   // Skip entries with no city or city outside South Bay
   const city = (item.city ?? "").toUpperCase();
