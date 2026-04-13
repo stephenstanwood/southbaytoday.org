@@ -13,6 +13,9 @@ import { createServer } from "node:http";
 import { execFile, execFileSync } from "node:child_process";
 import { processComment } from "./lib/action-commands.mjs";
 
+import crypto from "node:crypto";
+import { generateDayPlanCopy } from "./lib/copy-gen.mjs";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = 3456;
 const POST_DIR = "/tmp/sbs-social";
@@ -20,8 +23,10 @@ const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "soci
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
 const ENV_FILE = join(__dirname, "..", "..", ".env.local");
+const PLAN_API_BASE = process.env.SBT_API_BASE || "https://southbaytoday.org";
 const BATCH_SIZE = 25;
 
 let isGenerating = false;
@@ -1204,8 +1209,13 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   if (slot.imageUrl && !slot.imageApprovedAt) {
     html += '<button class="btn-approve-image" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'approve-image\\'); event.stopPropagation();">Approve Image</button>';
   }
-  if (slot.copyApprovedAt) {
+  // Image gen only for day-plan slots
+  if (slotType === 'day-plan' && slot.copyApprovedAt) {
     html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Generate Image') + '</button>';
+  }
+  // Regen plan button for day-plan slots
+  if (slotType === 'day-plan') {
+    html += '<button class="btn-regen" onclick="if(confirm(\\'Regenerate plan + copy for this date?\\')) calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-plan\\'); event.stopPropagation();">Regen Plan</button>';
   }
   html += '</div>';
 
@@ -1584,6 +1594,70 @@ const server = createServer((req, res) => {
             }
           } catch (err) {
             console.error(`  ⚠️  Recraft regeneration failed: ${err.message}`);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: err.message }));
+            return;
+          }
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        if (action === "regen-plan") {
+          // Regenerate the day plan via the live plan API for this date
+          if (slotType !== "day-plan") {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: "regen-plan only works for day-plan slots" }));
+            return;
+          }
+          try {
+            const city = slot.city || "san-jose";
+            console.log(`  🔄 Regenerating plan for ${city} on ${date}...`);
+            const planRes = await fetch(`${PLAN_API_BASE}/api/plan-day`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ city, kids: false, currentHour: 9, planDate: date }),
+              signal: AbortSignal.timeout(30000),
+            });
+            if (!planRes.ok) throw new Error(`Plan API returned ${planRes.status}`);
+            const planData = await planRes.json();
+            if (!planData.cards?.length) throw new Error("Plan API returned empty plan");
+
+            // Save to shared-plans.json
+            const planId = Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(16).padStart(2, "0")).join("");
+            const entry = {
+              cards: planData.cards.map(c => ({
+                id: c.id, name: c.name, category: c.category, city: c.city,
+                address: c.address, timeBlock: c.timeBlock, blurb: c.blurb, why: c.why,
+                url: c.url || null, mapsUrl: c.mapsUrl || null,
+                cost: c.cost || null, costNote: c.costNote || null,
+                photoRef: c.photoRef || null, venue: c.venue || null, source: c.source,
+              })),
+              city, kids: false, weather: planData.weather,
+              planDate: date, createdAt: new Date().toISOString(),
+            };
+            let sharedPlans = {};
+            try { sharedPlans = JSON.parse(readFileSync(SHARED_PLANS_FILE, "utf8")); } catch {}
+            sharedPlans[planId] = entry;
+            writeFileSync(SHARED_PLANS_FILE, JSON.stringify(sharedPlans, null, 2) + "\n");
+
+            const planUrl = `https://southbaytoday.org/plan/${planId}`;
+
+            // Regenerate copy with the new plan
+            const copy = await generateDayPlanCopy(planData, date, planUrl);
+
+            slot.plan = { cards: planData.cards, weather: planData.weather };
+            slot.planUrl = planUrl;
+            slot.copy = copy;
+            slot.copyApprovedAt = null;
+            slot.imageUrl = null;
+            slot.imageApprovedAt = null;
+            slot.status = "draft";
+            slot.generatedAt = new Date().toISOString();
+            console.log(`  ✅ Plan regenerated: ${planData.cards.length} stops → ${planUrl}`);
+          } catch (err) {
+            console.error(`  ⚠️  Regen plan failed: ${err.message}`);
             res.writeHead(500, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ ok: false, error: err.message }));
             return;

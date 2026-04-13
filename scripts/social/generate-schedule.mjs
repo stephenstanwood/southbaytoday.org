@@ -64,6 +64,32 @@ function loadDefaultPlans() {
   try { return JSON.parse(readFileSync(PLANS_FILE, "utf8")); } catch { return { plans: {} }; }
 }
 
+const PLAN_API_BASE = process.env.SBT_API_BASE || "https://southbaytoday.org";
+
+/** Call the plan API for a specific city + date. Returns plan data or null. */
+async function fetchPlanFromApi(city, dateStr) {
+  try {
+    const res = await fetch(`${PLAN_API_BASE}/api/plan-day`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        city,
+        kids: false,
+        currentHour: 9,
+        planDate: dateStr,
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data.cards?.length) return null;
+    return data;
+  } catch (err) {
+    console.log(`      ⚠️  Plan API failed: ${err.message}`);
+    return null;
+  }
+}
+
 function loadSharedPlans() {
   try { return JSON.parse(readFileSync(SHARED_PLANS_FILE, "utf8")); } catch { return {}; }
 }
@@ -252,16 +278,34 @@ async function main() {
 
     // ── Day Plan (7:15 AM) ──────────────────────────────────────────────
     if (!day["day-plan"] || day["day-plan"].status === "draft") {
-      const planResult = pickPlanForDate(plansData, dateStr);
-      if (planResult) {
-        const { key, plan } = planResult;
-        const citySlug = key.split(":")[0];
-        const cityName = CITY_NAMES[citySlug] || citySlug;
+      // Rotate city based on day-of-year
+      const cityKeys = Object.keys(CITY_NAMES);
+      const dayOfYear = Math.floor(
+        (new Date(dateStr + "T12:00:00") - new Date(dateStr.split("-")[0] + "-01-01T00:00:00")) / 86400000
+      );
+      const citySlug = cityKeys[dayOfYear % cityKeys.length];
+      const cityName = CITY_NAMES[citySlug] || citySlug;
 
-        if (dryRun) {
-          console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) [dry run]`);
-        } else {
-          try {
+      if (dryRun) {
+        console.log(`    📋 Day Plan: ${cityName} [dry run]`);
+      } else {
+        try {
+          // Call the plan API for a date-specific plan
+          console.log(`    📋 Fetching plan for ${cityName} on ${dateStr}...`);
+          let plan = await fetchPlanFromApi(citySlug, dateStr);
+
+          // Fallback to default-plans.json if API is down
+          if (!plan) {
+            const fallback = pickPlanForDate(plansData, dateStr);
+            if (fallback) {
+              plan = fallback.plan;
+              console.log(`      ↩ Fell back to default plan`);
+            }
+          }
+
+          if (!plan || !plan.cards?.length) {
+            console.log(`    📋 Day Plan: no plan available — skipping`);
+          } else {
             // Create a shared plan entry and get a shareable URL
             const planUrl = createSharedPlanUrl(plan, dateStr);
             console.log(`    📎 Plan link: ${planUrl}`);
@@ -283,13 +327,11 @@ async function main() {
             };
             generated++;
             console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) ✅`);
+          }
           } catch (err) {
             console.log(`    📋 Day Plan: ${cityName} ❌ ${err.message}`);
           }
         }
-      } else {
-        console.log(`    📋 Day Plan: no plan data available`);
-      }
     } else {
       skipped++;
       console.log(`    📋 Day Plan: already ${day["day-plan"].status}`);
