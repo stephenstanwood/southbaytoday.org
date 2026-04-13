@@ -235,34 +235,57 @@ async function main() {
     return;
   }
 
-  // ── Slotted path (preferred): find posts pre-assigned to the current slot
-  //    by the slot-scheduler. If any exist, publish those and skip reactive
-  //    scoring entirely. Falls back to reactive if nothing is slotted.
-  //
-  //    Slot roles:
-  //      07:15  Signature  — flagship "here's what to do today" post, images prioritized
-  //      11:45  Tonight    — single best thing to do tonight, images prioritized
-  //      16:30  Wildcard   — restaurant openings, SV history, local data
-  let _currentSlot = null;
+  // ── Schedule-first path: check the 14-day schedule for approved content
+  let publishedFromSchedule = false;
   try {
-    const { postsForCurrentSlot, currentPublishSlot, SLOT_ROLES } = await import("./lib/slot-scheduler.mjs");
-    const slot = currentPublishSlot();
-    _currentSlot = slot;
-    const role = slot ? SLOT_ROLES[slot] : null;
-    const slotted = postsForCurrentSlot(relevant, { today, slot });
-    if (slotted.length > 0) {
-      console.log(`\n📅 Slotted path: ${slotted.length} post(s) assigned to ${today} @ ${slot} [${role}]`);
-      for (const p of slotted.slice(0, 3)) {
-        console.log(`   ✓ ${(p.item?.title || "").slice(0, 55)} (${getEventDate(p)})`);
+    const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
+    const currentSlot = currentPublishSlot();
+    if (currentSlot) {
+      const schedulePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+      if (existsSync(schedulePath)) {
+        const schedule = JSON.parse(readFileSync(schedulePath, "utf8"));
+        const daySchedule = schedule.days?.[today]?.[currentSlot.type];
+
+        if (daySchedule && daySchedule.copyApprovedAt && daySchedule.imageApprovedAt && daySchedule.status !== "published") {
+          console.log(`\n📅 Schedule path: ${currentSlot.type} for ${today}`);
+          const title = daySchedule.plan ? (daySchedule.cityName || "Day Plan") : (daySchedule.item?.title || "Untitled");
+          console.log(`   ✓ ${title}`);
+          console.log(`   ✓ Image: ${daySchedule.imageUrl?.slice(0, 60)}...`);
+
+          const schedPost = {
+            item: daySchedule.item || { title: daySchedule.cityName + " Day Plan", date: today },
+            copy: daySchedule.copy,
+            scheduledSlot: { date: today, slotType: currentSlot.type, time: currentSlot.time },
+            _scheduleImageUrl: daySchedule.imageUrl,
+          };
+
+          relevant.length = 0;
+          relevant.push(schedPost);
+          publishedFromSchedule = true;
+        } else if (daySchedule && !daySchedule.copyApprovedAt) {
+          console.log(`\n   ⏳ Schedule: ${currentSlot.type} copy not approved — skipping`);
+        } else if (daySchedule && !daySchedule.imageApprovedAt) {
+          console.log(`\n   ⏳ Schedule: ${currentSlot.type} image not approved — skipping`);
+        }
       }
-      // Hand off to the existing publish loop — relevant is narrowed to slotted items
-      relevant.length = 0;
-      relevant.push(...slotted);
-    } else if (slot) {
-      console.log(`\n   No posts slotted for ${today} @ ${slot} [${role}] — falling back to reactive scoring`);
     }
   } catch (err) {
-    console.warn(`   ⚠️  slot scheduler path failed: ${err.message} — falling back to reactive`);
+    console.warn(`   ⚠️  schedule path failed: ${err.message} — falling through to queue`);
+  }
+
+  // ── Queue-based slotted path (fallback)
+  if (!publishedFromSchedule) {
+    try {
+      const { postsForCurrentSlot } = await import("./lib/slot-scheduler.mjs");
+      const slotted = postsForCurrentSlot(relevant, { today });
+      if (slotted.length > 0) {
+        console.log(`\n📅 Queue path: ${slotted.length} post(s) for ${today}`);
+        relevant.length = 0;
+        relevant.push(...slotted);
+      }
+    } catch (err) {
+      console.warn(`   ⚠️  slot scheduler path failed: ${err.message}`);
+    }
   }
 
   // ── Reactive fallback: score posts by publish-time relevance ──────────
@@ -388,10 +411,12 @@ async function main() {
       }
     }
 
-    // Fetch og:image from the target URL for richer social cards
+    // Use schedule image if available (Recraft poster from Vercel Blob)
+    let ogImage = post._scheduleImageUrl || "";
+
+    // Fetch og:image from the target URL for richer social cards (fallback)
     const targetUrl = item.planUrl || item.url || post.targetUrl;
-    let ogImage = "";
-    if (targetUrl) {
+    if (!ogImage && targetUrl) {
       try {
         const ogRes = await fetch(targetUrl, {
           headers: { "User-Agent": "SouthBayTodayBot/1.0 (link preview)" },
@@ -504,7 +529,6 @@ async function main() {
 
       try {
         const client = await import(`./lib/platforms/${platform}.mjs`);
-        // Pass og:image to Threads/Instagram as image URL (they need a public URL, not a buffer)
         let result;
         if (platform === "threads" && ogImage) {
           result = await client.publish(copy, ogImage);
@@ -514,6 +538,19 @@ async function main() {
             continue;
           }
           result = await client.publish(copy, ogImage);
+        } else if (ogImage && (platform === "x" || platform === "bluesky" || platform === "facebook" || platform === "mastodon")) {
+          // Download image buffer for platforms that upload directly
+          try {
+            const imgRes = await fetch(ogImage, { signal: AbortSignal.timeout(10000) });
+            if (imgRes.ok) {
+              const imgBuf = Buffer.from(await imgRes.arrayBuffer());
+              result = await client.publish(copy, imgBuf);
+            } else {
+              result = await client.publish(copy);
+            }
+          } catch {
+            result = await client.publish(copy);
+          }
         } else {
           result = await client.publish(copy);
         }
@@ -542,6 +579,24 @@ async function main() {
 
   // Save updated queue
   writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
+
+  // Mark schedule entries as published
+  if (publishedFromSchedule && toPublish.some((p) => p.publishedTo?.some((r) => r.ok))) {
+    try {
+      const schedulePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+      const schedule = JSON.parse(readFileSync(schedulePath, "utf8"));
+      const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
+      const currentSlot = currentPublishSlot();
+      if (currentSlot && schedule.days?.[today]?.[currentSlot.type]) {
+        schedule.days[today][currentSlot.type].status = "published";
+        schedule.days[today][currentSlot.type].publishedAt = new Date().toISOString();
+        writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n");
+        console.log(`   📅 Schedule marked published: ${today} ${currentSlot.type}`);
+      }
+    } catch (err) {
+      console.warn(`   ⚠️  Failed to update schedule: ${err.message}`);
+    }
+  }
 
   // Social state files are gitignored — no git commit needed.
   // Queue and history are saved to disk above; they persist on the Mini

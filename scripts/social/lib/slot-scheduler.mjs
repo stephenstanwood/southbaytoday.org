@@ -17,6 +17,14 @@
 
 export const SLOTS = ["07:15", "09:30", "11:45", "14:10", "16:30", "18:45"];
 
+// Typed slot exports (used by generate-schedule.mjs, calendar, etc.)
+export const TYPED_SLOTS = {
+  "day-plan":     { time: "07:15", label: "Day Plan" },
+  "tonight-pick": { time: "11:45", label: "Tonight Pick" },
+  "wildcard":     { time: "16:30", label: "Wildcard" },
+};
+export const SLOT_TYPES = ["day-plan", "tonight-pick", "wildcard"];
+
 /**
  * Editorial role for each slot. "disabled" slots are defined here for
  * reference but the launchd plist does not fire them. Primary slots only:
@@ -303,10 +311,13 @@ export function assignSlot(post, queue, opts = {}) {
   return null;
 }
 
+// Time→type lookup for typed slot resolution
+const TIME_TO_TYPE = { "07:15": "day-plan", "11:45": "tonight-pick", "16:30": "wildcard" };
+
 /**
- * Find the current publish slot: given `nowHHMM`, return the slot time
- * string the cron is most likely firing for (the primary slot whose scheduled
- * time is closest to now, within a ±30 min window).
+ * Find the current publish slot: given `nowHHMM`, return an object
+ * { type, time } for the primary slot closest to now (within ±30 min).
+ * Returns null if no slot matches.
  */
 export function currentPublishSlot(nowHHMM = nowHHMM_PT()) {
   const nowMin = hhmmToMinutes(nowHHMM);
@@ -319,7 +330,8 @@ export function currentPublishSlot(nowHHMM = nowHHMM_PT()) {
       bestDelta = delta;
     }
   }
-  return best;
+  if (!best) return null;
+  return { type: TIME_TO_TYPE[best] || "wildcard", time: best };
 }
 
 function hhmmToMinutes(hhmm) {
@@ -334,14 +346,14 @@ function hhmmToMinutes(hhmm) {
  */
 export function postsForCurrentSlot(queue, opts = {}) {
   const today = opts.today || todayPT();
-  const slot = opts.slot || currentPublishSlot();
-  if (!slot) return [];
+  const current = currentPublishSlot(opts.nowHHMM);
+  if (!current) return [];
   return queue
     .filter(
       (p) =>
         !p.published &&
         p.scheduledSlot?.date === today &&
-        p.scheduledSlot?.time === slot,
+        p.scheduledSlot?.time === current.time,
     )
     .sort((a, b) => (b.item?.score || 0) - (a.item?.score || 0));
 }
