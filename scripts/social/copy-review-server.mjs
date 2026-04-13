@@ -1151,10 +1151,12 @@ function renderCalendar() {
       if (missed) continue;
 
       const isEmpty = !slot;
-      const fullyApproved = slot && slot.copyApprovedAt && slot.imageApprovedAt && slot.status !== 'published';
+      const isPublished = slot && slot.status === 'published';
+      const fullyApproved = slot && slot.copyApprovedAt && slot.imageApprovedAt && !isPublished;
+      const shouldCollapse = fullyApproved || isPublished;
 
-      html += '<div class="cal-slot' + (isEmpty ? ' empty' : '') + (fullyApproved ? ' approved-collapsed' : '') + '">';
-      html += '<div class="cal-slot-header"' + (fullyApproved ? ' onclick="toggleCalSlot(\\'' + dateStr + '\\', \\'' + slotType + '\\')" style="cursor:pointer"' : '') + '>';
+      html += '<div class="cal-slot' + (isEmpty ? ' empty' : '') + (shouldCollapse ? ' approved-collapsed' : '') + '">';
+      html += '<div class="cal-slot-header"' + (shouldCollapse ? ' onclick="toggleCalSlot(\\'' + dateStr + '\\', \\'' + slotType + '\\')" style="cursor:pointer"' : '') + '>';
       html += '<div class="cal-slot-type ' + slotType + '">' + meta.icon + ' ' + meta.label + '</div>';
 
       if (slot) {
@@ -1177,8 +1179,8 @@ function renderCalendar() {
 
       html += '</div>'; // close cal-slot-header
 
-      // Collapse fully-approved slots — show expanded only if not approved or force-expanded
-      if (slot && (!fullyApproved || expandedSlots[dateStr + ':' + slotType])) {
+      // Collapse approved/published slots — click to expand
+      if (slot && (!shouldCollapse || expandedSlots[dateStr + ':' + slotType])) {
         html += renderExpandedSlot(dateStr, slotType, slot);
       }
 
