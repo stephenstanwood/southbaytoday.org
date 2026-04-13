@@ -65,6 +65,41 @@ function loadDefaultPlans() {
 }
 
 const PLAN_API_BASE = process.env.SBT_API_BASE || "https://southbaytoday.org";
+const PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
+
+/** Look up a Google Places photo ref for a venue name. For in-app display only. */
+async function lookupPhotoRef(name, city) {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  if (!apiKey || !name) return null;
+  try {
+    const query = city ? `${name} ${city.replace(/-/g, " ")}` : name;
+    const res = await fetch(PLACES_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask": "places.photos",
+      },
+      body: JSON.stringify({ textQuery: query, maxResultCount: 1 }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.places?.[0]?.photos?.[0]?.name || null;
+  } catch { return null; }
+}
+
+/** Enrich plan cards that are missing photoRef. */
+async function enrichCardPhotos(cards) {
+  for (const card of cards) {
+    if (card.photoRef) continue;
+    const name = card.venue || card.name;
+    if (!name) continue;
+    const ref = await lookupPhotoRef(name, card.city);
+    if (ref) card.photoRef = ref;
+    await new Promise(r => setTimeout(r, 300));
+  }
+}
 
 /** Call the plan API for a specific city + date. Returns plan data or null. */
 async function fetchPlanFromApi(city, dateStr) {
@@ -321,6 +356,11 @@ async function main() {
               plan = fallback.plan;
               console.log(`      ↩ Fell back to default plan`);
             }
+          }
+
+          // Enrich cards missing venue photos (for in-app display)
+          if (plan?.cards?.length) {
+            await enrichCardPhotos(plan.cards);
           }
 
           if (!plan || !plan.cards?.length) {

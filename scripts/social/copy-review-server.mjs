@@ -1849,6 +1849,32 @@ const server = createServer((req, res) => {
             const planData = await planRes.json();
             if (!planData.cards?.length) throw new Error("Plan API returned empty plan");
 
+            // Enrich missing venue photos (for in-app plan page display)
+            const PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
+            const placesKey = process.env.GOOGLE_PLACES_API_KEY;
+            if (placesKey) {
+              for (const card of planData.cards) {
+                if (card.photoRef) continue;
+                const name = card.venue || card.name;
+                if (!name) continue;
+                try {
+                  const query = card.city ? `${name} ${card.city.replace(/-/g, " ")}` : name;
+                  const pRes = await fetch(PLACES_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "X-Goog-Api-Key": placesKey, "X-Goog-FieldMask": "places.photos" },
+                    body: JSON.stringify({ textQuery: query, maxResultCount: 1 }),
+                    signal: AbortSignal.timeout(8000),
+                  });
+                  if (pRes.ok) {
+                    const pData = await pRes.json();
+                    const ref = pData.places?.[0]?.photos?.[0]?.name;
+                    if (ref) card.photoRef = ref;
+                  }
+                  await new Promise(r => setTimeout(r, 300));
+                } catch {}
+              }
+            }
+
             // Save to shared-plans.json
             const planId = Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(16).padStart(2, "0")).join("");
             const entry = {
