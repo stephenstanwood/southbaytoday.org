@@ -1769,6 +1769,18 @@ const server = createServer((req, res) => {
             slot.status = "draft";
             slot.generatedAt = new Date().toISOString();
             console.log(`  ✅ Plan regenerated: ${planData.cards.length} stops → ${planUrl}`);
+
+            // Auto-commit+push shared-plans.json so the plan URL works on prod
+            try {
+              const repoRoot = join(__dirname, "..", "..");
+              const { execSync } = await import("node:child_process");
+              execSync("git add src/data/south-bay/shared-plans.json", { cwd: repoRoot, stdio: "pipe" });
+              execSync('git commit -m "data: update shared plans from schedule regen"', { cwd: repoRoot, stdio: "pipe" });
+              execSync("git push", { cwd: repoRoot, stdio: "pipe" });
+              console.log("  📎 shared-plans.json committed and pushed");
+            } catch (e) {
+              console.warn(`  ⚠️  Failed to auto-push shared-plans.json: ${e.message}`);
+            }
           } catch (err) {
             console.error(`  ⚠️  Regen plan failed: ${err.message}`);
             res.writeHead(500, { "Content-Type": "application/json" });

@@ -450,7 +450,7 @@ async function main() {
               imageUrl: venuePhotoUrl || null,
               imageStyle: venuePhotoUrl ? "venue-photo" : null,
               copyApprovedAt: null,
-              imageApprovedAt: null,
+              imageApprovedAt: venuePhotoUrl ? new Date().toISOString() : null,
               generatedAt: new Date().toISOString(),
             };
             generated++;
@@ -496,7 +496,7 @@ async function main() {
               imageUrl: wildPhotoUrl || null,
               imageStyle: wildPhotoUrl ? "venue-photo" : null,
               copyApprovedAt: null,
-              imageApprovedAt: null,
+              imageApprovedAt: wildPhotoUrl ? new Date().toISOString() : null,
               generatedAt: new Date().toISOString(),
             };
             generated++;
