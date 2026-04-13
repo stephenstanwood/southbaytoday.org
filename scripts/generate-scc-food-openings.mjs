@@ -41,7 +41,7 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b/i;
+const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE)\b/i;
@@ -84,7 +84,14 @@ function cleanName(raw) {
 
   // Strip trailing permit artifact suffixes like "- 3 Comp Sink Install", "- TI", "- Remodel", "- Hood Install"
   s = s.replace(/\s+-\s+\d+\s+Comp\s+Sink.*$/i, "").trim();
-  s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade)(\s+\d+)?$/i, "").trim();
+  s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade|Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Tank\s+Replace)(\s+\d+)?$/i, "").trim();
+
+  // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank")
+  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System)\s*$/i, "").trim();
+
+  // Strip " At [Venue City]" location descriptors — e.g. "Blendid At City Sports Mountain View"
+  // These appear when a kiosk is located inside another business
+  s = s.replace(/\s+At\s+.+\b(San Jose|Palo Alto|Mountain View|Sunnyvale|Santa Clara|Cupertino|Milpitas|Campbell|Saratoga|Los Gatos|Los Altos)\b.*$/i, "").trim();
 
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();

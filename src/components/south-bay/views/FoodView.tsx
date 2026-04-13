@@ -316,8 +316,8 @@ function SccFoodOpeningsCard() {
     comingSoon: SccFoodItem[];
   };
 
-  const opened = data.opened ?? [];
-  const comingSoon = data.comingSoon ?? [];
+  const opened = (data.opened ?? []).slice(0, 10);
+  const comingSoon = (data.comingSoon ?? []).slice(0, 10);
 
   if (opened.length === 0 && comingSoon.length === 0) return null;
 
