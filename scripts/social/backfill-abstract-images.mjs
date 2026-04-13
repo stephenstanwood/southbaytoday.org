@@ -5,7 +5,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { abstractImagePrompt } from "./lib/poster-styles.mjs";
+import { buildImagePrompt } from "./lib/poster-styles.mjs";
 import { generateAndUpload } from "./lib/recraft.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -24,7 +24,7 @@ for (const [date, day] of Object.entries(d.days || {}).sort(([a], [b]) => a.loca
     if (!postCopy) continue;
 
     try {
-      const prompt = abstractImagePrompt(postCopy, category);
+      const prompt = await buildImagePrompt(postCopy, category);
       console.log(`${date} ${slotType}: generating...`);
       const pathname = `posters/${date}-${slotType}.png`;
       const { url } = await generateAndUpload({ prompt, pathname });

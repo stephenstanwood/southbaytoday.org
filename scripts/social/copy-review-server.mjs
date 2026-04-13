@@ -1254,7 +1254,20 @@ function toggleCalSlot(dateStr, slotType) {
   renderCalendar();
 }
 
+function disableButtons(dateStr, slotType) {
+  const slot = document.querySelector('.cal-slot:has([id*=\"' + dateStr + '-' + slotType + '\"])') ||
+    document.querySelector('[onclick*=\"' + dateStr + '\"][onclick*=\"' + slotType + '\"]')?.closest('.cal-slot');
+  if (!slot) return;
+  slot.querySelectorAll('button').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+}
+
 async function calAction(dateStr, slotType, action) {
+  // Disable all buttons in this slot while processing
+  document.querySelectorAll('button').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes(dateStr) && b.onclick.toString().includes(slotType)) {
+      b.disabled = true; b.style.opacity = '0.5'; b.style.cursor = 'wait';
+    }
+  });
   try {
     const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/' + action, {
       method: 'POST',
@@ -1263,7 +1276,6 @@ async function calAction(dateStr, slotType, action) {
     });
     const data = await res.json();
     if (data.ok) {
-      // Update local state
       if (data.schedule) {
         scheduleData = data.schedule;
       } else {
@@ -1273,15 +1285,21 @@ async function calAction(dateStr, slotType, action) {
       renderCalendar();
     } else {
       alert('Action failed: ' + (data.error || 'unknown'));
+      renderCalendar(); // re-enable buttons
     }
   } catch (err) {
     alert('Action failed: ' + err.message);
+    renderCalendar();
   }
 }
 
 async function calEditCopy(dateStr, slotType) {
   const input = document.getElementById('cal-edit-' + dateStr + '-' + slotType);
   if (!input || !input.value.trim()) return;
+
+  // Disable submit button
+  const submitBtn = input.nextElementSibling;
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.5'; submitBtn.textContent = 'Editing...'; }
 
   try {
     const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/edit-copy', {
@@ -1312,6 +1330,10 @@ async function calUploadImage(dateStr, slotType) {
     return;
   }
   const file = input.files[0];
+  // Disable upload button
+  const uploadBtn = input.nextElementSibling;
+  if (uploadBtn) { uploadBtn.disabled = true; uploadBtn.style.opacity = '0.5'; uploadBtn.textContent = 'Uploading...'; }
+
   const formData = new FormData();
   formData.append('image', file);
   try {
@@ -1674,7 +1696,7 @@ const server = createServer((req, res) => {
           if (slot.imageApprovedAt) {
             console.log(`  ⏭️  Image already approved — keeping existing`);
           } else try {
-            const { pickStyle, dayPlanPrompt, abstractImagePrompt } = await import("./lib/poster-styles.mjs");
+            const { pickStyle, dayPlanPrompt, buildImagePrompt } = await import("./lib/poster-styles.mjs");
             const { generateAndUpload } = await import("./lib/recraft.mjs");
             let prompt;
 
@@ -1691,7 +1713,7 @@ const server = createServer((req, res) => {
               // Tonight pick / wildcard: abstract design, no text, no people
               const postCopy = slot.copy?.x || "";
               const category = slot.item?.category || "";
-              prompt = abstractImagePrompt(postCopy, category);
+              prompt = await buildImagePrompt(postCopy, category);
               console.log(`  🎨 Generating abstract image for ${slotType}...`);
               const pathname = `posters/${date}-${slotType}.png`;
               const { url } = await generateAndUpload({ prompt, pathname });
@@ -1721,7 +1743,7 @@ const server = createServer((req, res) => {
 
         if (action === "regen-image") {
           try {
-            const { pickStyle, dayPlanPrompt, abstractImagePrompt } = await import("./lib/poster-styles.mjs");
+            const { pickStyle, dayPlanPrompt, buildImagePrompt } = await import("./lib/poster-styles.mjs");
             const { generateAndUpload } = await import("./lib/recraft.mjs");
             let prompt;
             const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
@@ -1736,7 +1758,7 @@ const server = createServer((req, res) => {
             } else {
               const postCopy = slot.copy?.x || "";
               const category = slot.item?.category || "";
-              prompt = abstractImagePrompt(postCopy, category);
+              prompt = await buildImagePrompt(postCopy, category);
               console.log(`  🎨 Regenerating abstract image for ${slotType}...`);
               const { url } = await generateAndUpload({ prompt, pathname });
               slot.imageUrl = url;

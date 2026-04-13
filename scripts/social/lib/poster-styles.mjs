@@ -260,22 +260,58 @@ NOT a photograph — graphic design poster. All text must be spelled correctly a
  * @param {string} category - Event category hint (arts, food, tech, etc.)
  * @returns {string}
  */
-export function abstractImagePrompt(postCopy, category) {
-  const moodHints = {
-    arts: "sound waves, stage lighting, flowing rhythm, performance energy",
-    music: "sound waves, equalizer bars, vinyl grooves, sonic ripples",
-    food: "warm gradients, organic shapes, steam wisps, kitchen textures",
-    tech: "circuit patterns, data streams, pixel grids, digital geometry",
-    sports: "motion lines, dynamic angles, kinetic energy, arena lights",
-    community: "interlocking shapes, gathering patterns, warm mosaic, connected forms",
-    education: "book spines, knowledge trees, layered pages, discovery spirals",
-  };
-  const mood = moodHints[category] || "geometric patterns, color fields, bold shapes, visual rhythm";
+/**
+ * Use Claude to craft an ideal Recraft image prompt from post copy.
+ * Falls back to a simple template if Claude is unavailable.
+ *
+ * @param {string} postCopy - The social post text
+ * @param {string} category - Event category
+ * @returns {Promise<string>} Recraft-ready prompt
+ */
+export async function buildImagePrompt(postCopy, category) {
+  // Try Claude first to craft a tailored prompt
+  try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) throw new Error("no key");
 
-  return `Abstract, graphic design illustration. NO PEOPLE — no faces, no hands, no human figures. NO TEXT — no words, no typography, no logos, no watermarks.
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 512,
+        messages: [{
+          role: "user",
+          content: `You are writing an image generation prompt for Recraft (an AI image generator). Given this social media post, write a prompt that will produce a visually striking illustration to accompany it.
 
-Inspired by this social post (for mood/concept only, do NOT render the words):
-"${postCopy.slice(0, 200)}"
+POST: "${postCopy.slice(0, 300)}"
 
-Create a bold, stylized composition using abstract shapes, color fields, and visual metaphors. Think: ${mood}. Modern editorial illustration — between a gig poster background and album art. Rich saturated colors, strong composition, visually striking at thumbnail size. 4:5 portrait ratio.`;
+RULES for the prompt you write:
+- Describe a SPECIFIC scene with concrete objects related to the post's subject
+- NO PEOPLE — no faces, hands, or human figures
+- NO TEXT — no words, typography, logos, or watermarks
+- Style: flat vector illustration, bold saturated colors, clean geometric shapes, slight retro/mid-century modern influence
+- The image should make someone stop scrolling — bold composition, rich colors
+- 4:5 portrait ratio
+- Be specific about WHAT objects/scenes to show (e.g. "a stack of colorful books with reading glasses on top" not "education-themed abstract shapes")
+- Keep it under 100 words
+
+Return ONLY the prompt text, nothing else.`
+        }],
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      const prompt = data.content?.[0]?.text?.trim();
+      if (prompt && prompt.length > 20) return prompt;
+    }
+  } catch {}
+
+  // Fallback: simple template
+  return `Stylized flat vector illustration. NO PEOPLE, NO TEXT. Bold saturated colors, clean geometric shapes, retro/mid-century influence. Subject: ${postCopy.slice(0, 150)}. 4:5 portrait ratio.`;
 }
