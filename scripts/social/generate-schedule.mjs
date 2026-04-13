@@ -143,27 +143,47 @@ function pickPlanForDate(plansData, dateStr) {
   return { key, plan: plans[key] };
 }
 
-/** Find the best evening event for a given date. */
+/** Parse a time string like "7:30 PM", "14:00", "noon" into 24h hour. Returns null if unparseable. */
+function parseHour(timeStr) {
+  if (!timeStr) return null;
+  const lower = timeStr.toLowerCase().trim();
+  if (lower.includes("noon")) return 12;
+  if (lower.includes("midnight")) return 0;
+
+  // "7:30 PM", "7 PM", "7:30PM"
+  const ampm = lower.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/);
+  if (ampm) {
+    let h = parseInt(ampm[1]);
+    const isPM = ampm[3] === "pm";
+    if (isPM && h !== 12) h += 12;
+    if (!isPM && h === 12) h = 0;
+    return h;
+  }
+
+  // 24h: "14:00", "17:30"
+  const mil = lower.match(/^(\d{1,2}):(\d{2})$/);
+  if (mil) return parseInt(mil[1]);
+
+  return null;
+}
+
+/** Find the best evening event for a given date. Must start at 5 PM or later. */
 function pickTonightEvent(candidates, dateStr) {
   const dateEvents = candidates.filter((c) => c.date === dateStr);
   if (dateEvents.length === 0) return null;
 
-  // Prefer evening events (time after 4pm or no time specified)
+  // Only events starting at 5 PM or later qualify as "tonight"
   const evening = dateEvents.filter((c) => {
-    if (!c.time) return true;
-    const lower = c.time.toLowerCase();
-    if (lower.includes("pm")) {
-      const hour = parseInt(c.time);
-      return hour >= 4 || hour === 12;
-    }
-    const hour = parseInt(c.time);
-    return hour >= 16;
+    const hour = parseHour(c.time);
+    // No time = skip (don't assume evening)
+    if (hour === null) return false;
+    return hour >= 17;
   });
 
-  const pool = evening.length > 0 ? evening : dateEvents;
+  if (evening.length === 0) return null;
 
   // Score and pick best
-  const scored = pool.map((c) => ({
+  const scored = evening.map((c) => ({
     ...c,
     _score: (c.score || 0) + (c.category === "arts" ? 3 : 0) + (c.category === "food" ? 2 : 0) + (c.venue ? 2 : 0),
   }));
