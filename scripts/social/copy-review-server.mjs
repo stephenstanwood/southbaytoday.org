@@ -1223,10 +1223,8 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   if (slot.imageUrl && !slot.imageApprovedAt) {
     html += '<button class="btn-approve-image" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'approve-image\\'); event.stopPropagation();">Approve Image</button>';
   }
-  // Image gen only for day-plan slots
-  if (slotType === 'day-plan' && slot.copyApprovedAt) {
-    html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Generate Image') + '</button>';
-  }
+  // Image gen / regen for all slot types
+  html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Gen Image') + '</button>';
   // Regen plan button for day-plan slots
   if (slotType === 'day-plan') {
     html += '<button class="btn-regen" onclick="if(confirm(\\'Regenerate plan + copy for this date?\\')) calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-plan\\'); event.stopPropagation();">Regen Plan</button>';
@@ -1723,26 +1721,29 @@ const server = createServer((req, res) => {
 
         if (action === "regen-image") {
           try {
-            const { pickStyle, dayPlanPrompt, tonightPickPrompt, wildcardPrompt } = await import("./lib/poster-styles.mjs");
+            const { pickStyle, dayPlanPrompt, abstractImagePrompt } = await import("./lib/poster-styles.mjs");
             const { generateAndUpload } = await import("./lib/recraft.mjs");
-            const style = pickStyle();
             let prompt;
+            const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
+
             if (slotType === "day-plan" && slot.plan) {
+              const style = pickStyle();
               prompt = dayPlanPrompt(slot.plan, date, style.style);
-            } else if (slotType === "tonight-pick" && slot.item) {
-              prompt = tonightPickPrompt(slot.item, style.style);
-            } else if (slot.item) {
-              prompt = wildcardPrompt(slot.item, slot.subtype || "general", style.style);
-            }
-            if (prompt) {
-              console.log(`  🎨 Regenerating Recraft image (${style.id})...`);
-              const pathname = `posters/${date}-${slotType}-${Date.now()}.png`;
+              console.log(`  🎨 Regenerating day plan poster (${style.id})...`);
               const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
               slot.imageUrl = url;
               slot.imageStyle = style.id;
-              slot.imageApprovedAt = null; // reset approval on regen
-              console.log(`  ✅ Image regenerated: ${url.slice(0, 80)}`);
+            } else {
+              const postCopy = slot.copy?.x || "";
+              const category = slot.item?.category || "";
+              prompt = abstractImagePrompt(postCopy, category);
+              console.log(`  🎨 Regenerating abstract image for ${slotType}...`);
+              const { url } = await generateAndUpload({ prompt, pathname });
+              slot.imageUrl = url;
+              slot.imageStyle = "abstract";
             }
+            slot.imageApprovedAt = null; // reset approval on regen
+            console.log(`  ✅ Image regenerated: ${slot.imageUrl.slice(0, 80)}`);
           } catch (err) {
             console.error(`  ⚠️  Recraft regeneration failed: ${err.message}`);
             res.writeHead(500, { "Content-Type": "application/json" });
