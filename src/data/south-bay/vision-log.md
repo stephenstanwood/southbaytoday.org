@@ -3843,3 +3843,77 @@ The Yahoo IPO milestone fix means the 30th anniversary card (Yahoo went public A
 1. **RECENTLY_FUNDED: Apr 14+ watch** — No new South Bay rounds Apr 9–12. Next window to watch: Apr 13–19. SiFive IPO timeline expected H2 2026.
 2. **Permit Pulse: Mountain View** — data.mountainview.gov doesn't resolve. Try cityofmountainview.gov/city-hall/departments/community-development/planning-and-permits.
 3. **Neighborhood-level filtering for San José** — 635 total events, ~40% SJ. Willow Glen, Almaden, Japantown, Rose Garden filtering would make SJ much more navigable.
+
+---
+
+## 2026-04-13 — Cycle 71: SJ Neighborhood Filter Expansion + Data Refresh
+
+### Context
+Sunday April 13, 2026. Spring break week 2 — break ends Apr 17. Palo Alto has a city council meeting today (Monday, Apr 13). Events coverage is 653 total.
+
+### What Was Built
+
+**Events: Expanded SJ neighborhood filter from 72% → 91% coverage**
+
+Discovered 87 of 308 San José events (28%) were invisible to the neighborhood filter because their venues had no mapping. Users selecting a neighborhood saw a much smaller event set than actually existed.
+
+Added venue mappings for major gaps:
+- **History Park / History San José** (23 events) → East Side
+- **3Below Theaters, O'Flaherty's, Plaza de Cesar Chavez, Downtown SJ, South First, San Pedro Square, McEnery Convention, SoFA Market, Courage Anyone** → Downtown
+- **Hicklebee's** (bookstore) → Willow Glen
+- **Village Square Library** → Evergreen
+- **Hillview Library, Pearl Avenue Library** → South SJ
+- **East SJ Carnegie Library, Mt. Pleasant Library** → East Side
+- **New "West SJ" neighborhood**: Santana Row, Bascom Library, Valley Fair
+
+Also fixed HTML entity issue: O'Flaherty's venue name was stored as `O&#8217;Flaherty&#8217;s` in JSON, requiring a separate match key.
+
+Result: 87 → 29 unmapped events (91% coverage vs 72%).
+
+**Data refreshed (5 files):**
+- `upcoming-events.json` — 653 events (110 ongoing), 32 sources
+- `digests.json` — 11 city digests; Palo Alto has meeting today
+- `around-town.json` — 8 items, 10-day lookback (refreshed Apr 13 14:05 UTC)
+- `upcoming-meetings.json` — Palo Alto today, SJ + MV + Los Altos Apr 14, Saratoga Apr 15
+- `restaurant-radar.json` — 14 signals; Mosaic possible closure (SJ), Baekjeong buildout, Karavan Coffee new buildout
+
+### Why This Was the Strongest Move
+A resident filtering San José events to their neighborhood (e.g., "East Side") was silently missing History Park's 23 events — the History San José exhibitions, family programs, and seasonal activities that are exactly the kind of thing people want to find. The fix makes neighborhood filtering trustworthy: when you select "East Side," you now actually see east side events.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 14+ watch** — No new South Bay rounds Apr 10–13 confirmed. Watch window: Apr 14–20.
+2. **School calendar expansion** — CUSD, MVWSD, Cupertino Union, Los Gatos-Saratoga JUHSD dates not in school-calendar.json yet.
+3. **Permit Pulse: Mountain View** — All MV permit portals remain blocked/ECONNREFUSED. Monitor for portal changes.
+
+---
+
+## 2026-04-13 — Cycle 72: SiMa.ai + Restaurant Radar Blurbs
+
+### Context
+Monday evening April 13, 2026. Spring break continues through Apr 17 for FUHSD, CUSD, Campbell USD. Multiple council meetings tomorrow (SJ, MV, Los Altos). Tech briefing at 35 funding rounds.
+
+### What Was Built
+
+**Tech tab: Added SiMa.ai to RECENTLY_FUNDED**
+
+SiMa.ai (San Jose) secured a strategic investment from Micron Technology on April 8, 2026. The deal — undisclosed amount — combines SiMa's Modalix MLSoC with Micron's LPDDR5X memory targeting edge AI for robotics, autonomous systems, and industrial automation. Partners include Arm, TSMC, Synopsys, and Wind River. SiMa.ai was not in the RECENTLY_FUNDED database; now added. Tech briefing regenerated with 35 rounds total.
+
+**Food tab: Filled in 6 missing blurbs in restaurant-radar**
+
+Seven restaurant radar items had no blurb, leaving empty descriptions on Food tab cards. Added factual blurbs for:
+- Mosaic Restaurant and Ultra Lounge (SJ, 2040 N 1st St) — demolition/possible closure
+- Karavan Coffee (SJ, 3062 Story Rd) — new East SJ coffee buildout
+- Fomo (SJ, 2549 S King Rd) — new East SJ restaurant
+- JC'S BBQ (SJ, 1080 Saratoga Av) — west SJ BBQ renovation
+- El Pollo Loco (SJ, 1725 Branham Ln) — sign permit update
+- Sweetgreen (SJ, 1200 El Paseo De Saratoga) — signage at El Paseo
+
+Also added blurbs to MANUAL_OVERRIDES in generate-restaurant-radar.mjs so future regenerations preserve them.
+
+### Why This Was the Strongest Move
+SiMa.ai's Micron strategic investment (April 8) is the most recent confirmed South Bay tech funding signal this cycle — adding it to RECENTLY_FUNDED gives the Tech tab a fresh data point. Restaurant blurbs matter because an empty card tells a resident nothing useful; now every Food tab item has a readable description.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 14+ watch** — SiMa.ai added. Watch for new rounds week of Apr 14–20.
+2. **School calendar expansion** — Verify additional no-school days (teacher workdays, interims) for SJUSD/FUHSD/CUSD beyond current entries.
+3. **Permit Pulse: Mountain View** — cityofmountainview.gov portals remain blocked. Monitor for changes.

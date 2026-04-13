@@ -1280,6 +1280,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://sifive.com",
   },
   {
+    id: "sima-ai",
+    name: "SiMa.ai",
+    city: "San Jose",
+    category: "chip",
+    round: "Strategic Investment",
+    amount: "Undisclosed",
+    date: "2026-04-08",
+    tagline: "Physical AI chips for edge deployment — Micron Technology invested to combine SiMa.ai's Modalix MLSoC with Micron's LPDDR5X memory, targeting robotics, autonomous systems, and industrial automation. Partners include Arm, TSMC, Synopsys, and Wind River.",
+    color: "#0d9488",
+    url: "https://sima.ai",
+  },
+  {
     id: "aria-networks",
     name: "Aria Networks",
     city: "Palo Alto",

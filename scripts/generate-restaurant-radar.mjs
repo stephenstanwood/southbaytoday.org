@@ -38,8 +38,12 @@ const MANUAL_OVERRIDES = {
   "palo-alto:401 Webster St": { blurb: "Neighborhood American restaurant on Webster St undergoing a kitchen remodel" },
   "palo-alto:388 Cambridge Av": { blurb: "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto" },
   "palo-alto:552 Waverley St": { name: "Bon Broth SF", blurb: "San Francisco bone broth and Vietnamese soup restaurant fitting out a new space on Waverley St" },
-  "san-jose:1725 Branham Ln": { name: "El Pollo Loco" },
-  "san-jose:1200 El Paseo De Saratoga": { name: "Sweetgreen" },
+  "san-jose:1725 Branham Ln": { name: "El Pollo Loco", blurb: "Mexican-style chicken chain on Branham Lane near Almaden Valley getting updated signage" },
+  "san-jose:1200 El Paseo De Saratoga": { name: "Sweetgreen", blurb: "National salad chain adding signage at El Paseo de Saratoga shopping center near West San Jose" },
+  "san-jose:2040 N 1st St": { blurb: "Longtime nightclub and restaurant near SAP Center filed a full demolition permit — may be permanently closing" },
+  "san-jose:3062 Story Rd": { blurb: "New coffee shop fitting out a $350K space on Story Road in East San Jose" },
+  "san-jose:2549 S King Rd": { blurb: "New restaurant fitting out a space on South King Road in East San Jose" },
+  "san-jose:1080 Saratoga Av": { blurb: "BBQ joint on Saratoga Avenue in west San Jose renovating its interior" },
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
