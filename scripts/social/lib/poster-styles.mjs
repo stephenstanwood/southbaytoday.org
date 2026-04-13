@@ -291,13 +291,13 @@ export async function buildImagePrompt(postCopy, category) {
 POST: "${postCopy.slice(0, 300)}"
 
 RULES for the prompt you write:
-- Describe a SPECIFIC scene with concrete objects related to the post's subject
+- Lean ABSTRACT but still topically connected — recognizable objects can appear but should be stylized, fragmented, or woven into an abstract composition (think: album art, not clip art)
 - NO PEOPLE — no faces, hands, or human figures
 - NO TEXT — no words, typography, logos, or watermarks
-- Style: flat vector illustration, bold saturated colors, clean geometric shapes, slight retro/mid-century modern influence
-- The image should make someone stop scrolling — bold composition, rich colors
+- Style: bold graphic design illustration with saturated colors, geometric shapes, flowing forms. Between abstract art and editorial illustration.
+- The image should make someone stop scrolling — bold composition, rich colors, visual energy
 - 4:5 portrait ratio
-- Be specific about WHAT objects/scenes to show (e.g. "a stack of colorful books with reading glasses on top" not "education-themed abstract shapes")
+- Include 1-2 recognizable visual anchors from the subject (e.g. a stylized guitar shape, an abstracted book spine, a flowing coffee cup silhouette) but let the rest be abstract color fields, patterns, and shapes
 - Keep it under 100 words
 
 Return ONLY the prompt text, nothing else.`
