@@ -453,7 +453,7 @@ ${mentionBlock}
 LINKS:
 - Always use full URLs with https:// — bare domains don't become clickable on Bluesky or Threads
 - The URL in the post must be exactly the one provided above
-${url.includes('/plan/') ? '- This URL links to a full day plan. Frame the link as "here\\'s a whole day plan" or "we built a day around it" — the plan page shows all stops.' : ''}
+${url.includes('/plan/') ? "- This URL links to a full day plan. Frame the link as \"here's a whole day plan\" or \"we built a day around it\" — the plan page shows all stops." : ''}
 
 This is NOT a single event — it's a curated day plan with ${plan.cards.length} stops. Frame it as "here's your ${dayName}" or "we planned your ${dayName}". The tone should be: we did the work so you don't have to.
 
