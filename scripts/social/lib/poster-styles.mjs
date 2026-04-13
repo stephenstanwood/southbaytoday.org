@@ -294,10 +294,17 @@ RULES for the prompt you write:
 - Lean ABSTRACT but still topically connected — recognizable objects can appear but should be stylized, fragmented, or woven into an abstract composition (think: album art, not clip art)
 - NO PEOPLE — no faces, hands, or human figures
 - NO TEXT — no words, typography, logos, or watermarks
-- Style: bold graphic design illustration with saturated colors, geometric shapes, flowing forms. Between abstract art and editorial illustration.
 - The image should make someone stop scrolling — bold composition, rich colors, visual energy
 - 4:5 portrait ratio
 - Include 1-2 recognizable visual anchors from the subject (e.g. a stylized guitar shape, an abstracted book spine, a flowing coffee cup silhouette) but let the rest be abstract color fields, patterns, and shapes
+- IMPORTANT: Vary the style across these different aesthetics (pick ONE per image, don't always default to the same):
+  * Clean geometric / Bauhaus (primary shapes, grid-based, structured)
+  * Mid-century modern (organic curves, muted warm palette, atomic-era)
+  * Paper cut / collage (layered flat shapes, subtle shadows, craft feel)
+  * Risograph / screen print (grainy textures, 2-3 color overprint, zine energy)
+  * Minimal line art with bold color fills (few clean strokes, large color areas)
+  * Isometric / architectural (3D-ish flat illustration, spatial depth)
+- AVOID: swirling psychedelic patterns, trippy optical illusions, melting/morphing shapes, tie-dye aesthetics, kaleidoscope effects. These are fine occasionally but should NOT be the default.
 - Keep it under 100 words
 
 Return ONLY the prompt text, nothing else.`
