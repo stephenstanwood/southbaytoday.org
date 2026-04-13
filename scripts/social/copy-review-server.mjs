@@ -1219,6 +1219,13 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   }
   html += '</div>';
 
+  // Image upload
+  html += '<div class="cal-upload-area" style="margin-top:12px;padding-top:12px;border-top:1px solid #E5E2DB">';
+  html += '<label style="font-size:11px;font-weight:600;text-transform:uppercase;color:#888;display:block;margin-bottom:6px">Upload Image <span style="font-weight:400;text-transform:none">(1080\u00d71350 ideal, 4:5 portrait)</span></label>';
+  html += '<input type="file" accept="image/*" id="cal-upload-' + dateStr + '-' + slotType + '" onclick="event.stopPropagation()" style="font-size:12px">';
+  html += '<button style="margin-left:8px;padding:6px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:12px;cursor:pointer" onclick="calUploadImage(\\'' + dateStr + '\\', \\'' + slotType + '\\'); event.stopPropagation();">Upload</button>';
+  html += '</div>';
+
   // Edit area
   html += '<div class="cal-edit-area">';
   html += '<input class="cal-edit-input" id="cal-edit-' + dateStr + '-' + slotType + '" placeholder="Edit instructions..." onclick="event.stopPropagation()">';
@@ -1279,6 +1286,35 @@ async function calEditCopy(dateStr, slotType) {
     }
   } catch (err) {
     alert('Edit failed: ' + err.message);
+  }
+}
+
+async function calUploadImage(dateStr, slotType) {
+  const input = document.getElementById('cal-upload-' + dateStr + '-' + slotType);
+  if (!input || !input.files || !input.files[0]) {
+    alert('Select an image file first');
+    return;
+  }
+  const file = input.files[0];
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/upload-image', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+    if (data.ok) {
+      input.value = '';
+      if (data.schedule) {
+        scheduleData = data.schedule;
+      }
+      renderCalendar();
+    } else {
+      alert('Upload failed: ' + (data.error || 'unknown'));
+    }
+  } catch (err) {
+    alert('Upload failed: ' + err.message);
   }
 }
 
@@ -1509,7 +1545,85 @@ const server = createServer((req, res) => {
   }
 
   // Handle schedule actions: /api/schedule/:date/:slotType/:action
-  const scheduleMatch = req.url?.match(/^\/api\/schedule\/(\d{4}-\d{2}-\d{2})\/(day-plan|tonight-pick|wildcard)\/(approve-copy|approve-image|regen-image|edit-copy)$/);
+  // Handle image upload: /api/schedule/:date/:slotType/upload-image
+  const uploadMatch = req.url?.match(/^\/api\/schedule\/(\d{4}-\d{2}-\d{2})\/(day-plan|tonight-pick|wildcard)\/upload-image$/);
+  if (req.method === "POST" && uploadMatch) {
+    const [, date, slotType] = uploadMatch;
+    const chunks = [];
+    req.on("data", (c) => chunks.push(c));
+    req.on("end", async () => {
+      try {
+        const schedule = loadSchedule();
+        const slot = schedule.days?.[date]?.[slotType];
+        if (!slot) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Slot not found" }));
+          return;
+        }
+
+        const raw = Buffer.concat(chunks);
+        // Parse multipart boundary
+        const contentType = req.headers["content-type"] || "";
+        const boundaryMatch = contentType.match(/boundary=(.+)/);
+        if (!boundaryMatch) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Missing multipart boundary" }));
+          return;
+        }
+        const boundary = boundaryMatch[1];
+        const parts = raw.toString("binary").split("--" + boundary);
+
+        let fileBuffer = null;
+        let mimeType = "image/jpeg";
+        for (const part of parts) {
+          if (part.includes("filename=")) {
+            const mimeMatch = part.match(/Content-Type:\s*(\S+)/i);
+            if (mimeMatch) mimeType = mimeMatch[1].trim();
+            const headerEnd = part.indexOf("\r\n\r\n");
+            if (headerEnd >= 0) {
+              const body = part.slice(headerEnd + 4);
+              // Remove trailing \r\n
+              const trimmed = body.endsWith("\r\n") ? body.slice(0, -2) : body;
+              fileBuffer = Buffer.from(trimmed, "binary");
+            }
+          }
+        }
+
+        if (!fileBuffer || fileBuffer.length < 100) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "No valid image file found" }));
+          return;
+        }
+
+        // Upload to Vercel Blob
+        const { put } = await import("@vercel/blob");
+        const ext = mimeType.includes("png") ? "png" : "jpg";
+        const pathname = `posters/${date}-${slotType}-upload-${Date.now()}.${ext}`;
+        const result = await put(pathname, fileBuffer, {
+          access: "public",
+          contentType: mimeType,
+          allowOverwrite: true,
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        });
+
+        slot.imageUrl = result.url;
+        slot.imageStyle = "upload";
+        slot.imageApprovedAt = null; // reset for re-approval
+        console.log(`  📤 Image uploaded: ${date} ${slotType} → ${result.url.slice(0, 60)}...`);
+
+        saveScheduleFile(schedule);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: true, schedule }));
+      } catch (e) {
+        console.error(`  ⚠️  Upload failed: ${e.message}`);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
+    });
+    return;
+  }
+
+  const scheduleMatch = req.url?.match(/^\/api\/schedule\/(\d{4}-\d{2}-\d{2})\/(day-plan|tonight-pick|wildcard)\/(approve-copy|approve-image|regen-image|regen-plan|edit-copy)$/);
   if (req.method === "POST" && scheduleMatch) {
     const [, date, slotType, action] = scheduleMatch;
     let body = "";
@@ -1529,18 +1643,16 @@ const server = createServer((req, res) => {
           slot.status = "copy-approved";
           console.log(`  ✅ Copy approved: ${date} ${slotType}`);
 
-          // Trigger Recraft poster generation
+          // Trigger Recraft poster generation (day-plan only)
+          // Tonight pick and wildcard use venue photos instead
+          if (slotType === "day-plan") {
           try {
-            const { pickStyle, dayPlanPrompt, tonightPickPrompt, wildcardPrompt } = await import("./lib/poster-styles.mjs");
+            const { pickStyle, dayPlanPrompt } = await import("./lib/poster-styles.mjs");
             const { generateAndUpload } = await import("./lib/recraft.mjs");
             const style = pickStyle();
             let prompt;
-            if (slotType === "day-plan" && slot.plan) {
+            if (slot.plan) {
               prompt = dayPlanPrompt(slot.plan, date, style.style);
-            } else if (slotType === "tonight-pick" && slot.item) {
-              prompt = tonightPickPrompt(slot.item, style.style);
-            } else if (slot.item) {
-              prompt = wildcardPrompt(slot.item, slot.subtype || "general", style.style);
             }
             if (prompt) {
               console.log(`  🎨 Generating Recraft image (${style.id})...`);
@@ -1553,6 +1665,7 @@ const server = createServer((req, res) => {
           } catch (err) {
             console.error(`  ⚠️  Recraft generation failed: ${err.message}`);
           }
+          } // end day-plan image gen
 
           saveScheduleFile(schedule);
           res.writeHead(200, { "Content-Type": "application/json" });
