@@ -3917,3 +3917,34 @@ SiMa.ai's Micron strategic investment (April 8) is the most recent confirmed Sou
 1. **RECENTLY_FUNDED: Apr 14+ watch** — SiMa.ai added. Watch for new rounds week of Apr 14–20.
 2. **School calendar expansion** — Verify additional no-school days (teacher workdays, interims) for SJUSD/FUHSD/CUSD beyond current entries.
 3. **Permit Pulse: Mountain View** — cityofmountainview.gov portals remain blocked. Monitor for changes.
+
+---
+
+## 2026-04-14 — Cycle 73: Ricursive Intelligence + Ethernovia + Data Refresh
+
+### Context
+Tuesday April 14, 2026 (4 AM PT). Spring break week 2 continues for FUHSD/CUSD/Campbell through Apr 17. Multiple council meetings today: Mountain View (capital improvement plans), Sunnyvale (tenant protection rules), Santa Clara, Los Altos. Events coverage at 661 total.
+
+### What Was Built
+
+**Tech tab: Added 2 new companies to RECENTLY_FUNDED**
+
+- **Ricursive Intelligence** (Palo Alto, $300M Series A, Jan 26 2026) — AI platform that automates semiconductor design via recursive self-improvement loop. Founded by ex-Google Brain researchers Anna Goldie and Azalia Mirhoseini at a $4B valuation two months post-launch. Lightspeed led; Nvidia NVentures, DST Global, Felicis, Sequoia participated.
+
+- **Ethernovia** (San Jose, $90M+ Series B, Jan 20 2026) — Ethernet-based packet processors acting as the nervous system for physical AI. Targets real-time sensor routing for autonomous vehicles, robots, and ADAS. Backed by Maverick Silicon, Porsche SE, Qualcomm Ventures.
+
+RECENTLY_FUNDED total now 38 rounds. TECH_PULSE updated to 38. Tech briefing regenerated.
+
+**Data refreshed:**
+- `upcoming-meetings.json` — Los Altos today (Apr 14), Palo Alto + Saratoga Apr 15, San José + Campbell + Milpitas Apr 21
+- `air-quality.json`, `health-scores.json`, `outages.json`, `permit-pulse.json` — all current
+
+Events (661, 107 ongoing) and digests (10 cities, including today's SJ/MV/Sunnyvale/Santa Clara meetings) were already refreshed from earlier in the cycle.
+
+### Why This Was the Strongest Move
+Ricursive Intelligence's founding story (ex-Google Brain researchers, $4B valuation in under 2 months) is exactly the kind of "South Bay company you haven't heard of yet but should" entry the Tech tab is designed for. Ethernovia's physical AI angle (Ethernet chips for robot nervous systems) is a genuinely interesting local hardware story with automotive credibility (Porsche SE, Qualcomm backing). Both fill a real gap in the January 2026 funding window.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 14–20 watch** — Continue scanning for new rounds. Nothing confirmed yet for this exact date range.
+2. **School calendar: teacher workdays/PD days** — Districts often have 1–2 extra no-school days not in the current calendar. Need verified 2025-26 dates per district.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked. Monitor cityofmountainview.gov for changes.
