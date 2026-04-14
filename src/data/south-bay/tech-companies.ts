@@ -1459,6 +1459,30 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#0f766e",
     url: "https://www.ethernovia.com",
   },
+  {
+    id: "gsme",
+    name: "GSME",
+    city: "San Jose",
+    category: "chip",
+    round: "Series B",
+    amount: "$35M",
+    date: "2026-01-06",
+    tagline: "Advanced semiconductor packaging platform for AI and HPC workloads — CoWoS-class packaging services, supply chain visibility, and AI-driven decision tooling. Backed by Maverick Silicon. Targets the gap between chip design and high-volume manufacturing that's holding back AI hardware scale-out.",
+    color: "#0369a1",
+    url: "https://www.gsme.com",
+  },
+  {
+    id: "primemas",
+    name: "Primemas",
+    city: "Santa Clara",
+    category: "chip",
+    round: "Series B",
+    amount: "$72M",
+    date: "2026-01-13",
+    tagline: "Fabless semiconductor company building 'Hublet' chiplets — a new class of hub chip that bridges compute and memory over CXL for AI training and inference. Claims 40x TCO improvement in AI data centers. Partners with Micron; legal counsel from Sidley Austin.",
+    color: "#7c3aed",
+    url: "https://primemas.com",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1476,7 +1500,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "38 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "40 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",

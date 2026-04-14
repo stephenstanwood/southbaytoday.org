@@ -322,8 +322,8 @@ async function fetchPaloAltoFoodPermits() {
     return true;
   });
 
-  // Skip pure "Permit Activity" if we have named/notable items
-  const notable = unique.filter((it) => it.label !== "Permit Activity" || it.name);
+  // Skip unnamed items (confusing in UI); only show items with a known name
+  const notable = unique.filter((it) => it.name);
   console.log(`  ${notable.length} notable PA food permits`);
   notable.forEach((it) => console.log(`    [${it.label}] ${it.address}${it.name ? ` — ${it.name}` : ""}`));
   return notable;
