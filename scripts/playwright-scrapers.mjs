@@ -120,7 +120,8 @@ function inferCategory(title) {
   if (/\b(art|gallery|exhibit|museum|sculpture)\b/.test(t)) return "arts";
   if (/\b(theater|theatre|play|comedy|improv|show|performance)\b/.test(t)) return "arts";
   if (/\b(book|author|reading|poetry|literary|signing)\b/.test(t)) return "arts";
-  if (/\b(hike|walk|run|yoga|fitness|sport|game)\b/.test(t)) return "sports";
+  if (/\b(yoga|meditation|wellness|mindful)\b/.test(t)) return "community";
+  if (/\b(hike|walk|run|fitness|sport|game)\b/.test(t)) return "sports";
   if (/\b(food|cook|wine|beer|tast|farm|restaurant)\b/.test(t)) return "food";
   if (/\b(tech|hack|code|startup|ai|data|developer)\b/.test(t)) return "technology";
   if (/\b(council|city|civic|government|hearing|meeting)\b/.test(t)) return "meetings";
