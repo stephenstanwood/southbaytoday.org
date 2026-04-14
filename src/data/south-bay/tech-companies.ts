@@ -2109,4 +2109,16 @@ export const TECH_CONFERENCES: TechConference[] = [
     url: "https://svforum.org",
     scale: "regional",
   },
+  {
+    id: "startup-world-cup-sv",
+    name: "Startup World Cup Silicon Valley",
+    organizer: "Pegasus Tech Ventures",
+    venue: "Computer History Museum",
+    city: "Mountain View",
+    typicalMonth: 5,
+    typicalDay: 7,
+    description: "Silicon Valley's regional qualifier for the Startup World Cup — top 15 selected startups pitch live before leading investors and executives at the Computer History Museum. The winner advances to the Grand Finale in San Francisco (Nov 6) where 100+ regional champions compete for a $1M investment prize. Apply by April 26.",
+    url: "https://www.startupworldcup.io/silicon-valley-regional",
+    scale: "regional",
+  },
 ];
