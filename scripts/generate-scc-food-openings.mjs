@@ -211,7 +211,7 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
   try {
     const msg = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 512,
+      max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     });
     let text = msg.content[0]?.text ?? "[]";
@@ -253,7 +253,7 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
   try {
     const msg = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 512,
+      max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     });
     let text = msg.content[0]?.text ?? "[]";
@@ -365,7 +365,7 @@ async function main() {
   );
 
   // Generate blurbs for top opened restaurants
-  const topOpened = openedDeduped.slice(0, 8);
+  const topOpened = openedDeduped.slice(0, 12);
   console.log("Generating blurbs for opened restaurants…");
   const blurbs = await generateBlurbs(topOpened);
 
@@ -375,7 +375,7 @@ async function main() {
   }));
 
   // Generate anticipation blurbs for top coming-soon restaurants
-  const topComingSoon = comingSoonFinal.slice(0, 8);
+  const topComingSoon = comingSoonFinal.slice(0, 12);
   console.log("Generating blurbs for coming-soon restaurants…");
   const comingSoonBlurbs = await generateComingSoonBlurbs(topComingSoon);
 
