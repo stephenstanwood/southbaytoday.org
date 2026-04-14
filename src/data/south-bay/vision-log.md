@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-04-14 — Cycle 74: Food Tab Blurb Fix
+
+### Context
+Tuesday April 14, 2026 (evening). Spring break continues through Apr 17 for FUHSD/CUSD/Campbell USD. No new verified South Bay funding rounds found for Apr 10-14 window beyond what was already captured in Cycle 73.
+
+### What Was Built
+
+**Food tab: Fixed null blurbs for 8 restaurant items (opened + coming soon)**
+
+The `generate-scc-food-openings.mjs` script had a mismatch: it generated blurbs for only the first 8 items (`slice(0, 8)`) but wrote 12 items to JSON, leaving items 9-12 with `null` blurbs. This made those restaurant cards appear empty on the Food tab — no description, just a name and address.
+
+Root causes fixed:
+1. Both `topOpened` and `topComingSoon` slice limits raised from 8 → 12
+2. Claude Haiku `max_tokens` raised from 512 → 1024 for both blurb functions (512 was too small to fit 12 blurb responses in a single API call, causing JSON parse failures)
+3. Manual blurb added for Cedar & Sage (Stanford Shopping Center) which still fell through
+4. All 24 opened/coming-soon items now have blurbs
+
+Resident impact: Food tab cards for Itaiwan Food (Cupertino), Sbarro Oakridge (SJ), Sushi Burrito (SJ), Tiffy Kim Ran (SJ), and 4 coming-soon spots now show descriptive text instead of empty cards.
+
+### Why This Was the Strongest Move
+No new verified South Bay tech funding rounds were found for Apr 10-14 (Crunchbase weekly data only extends through Apr 10). With data pipelines already fresh from earlier today, fixing the visible Food tab regression — 8 cards with no description — was the highest-impact resident-facing improvement available this cycle.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 14–20 watch** — Crunchbase weekly article for Apr 11-17 expected Friday/Monday. Check back next cycle.
+2. **School calendar teacher workdays** — Districts often have extra no-school days not in current entries. Need verified per-district 2025-26 dates.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked. Monitor cityofmountainview.gov for changes.
+
+---
+
 ## 2026-04-12 — Cycle 84: Genspark Added to Tech Funding + Spring Break Week 2 Picks + Data Refresh
 
 ### Context
