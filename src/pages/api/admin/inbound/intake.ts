@@ -34,6 +34,7 @@ import {
   dedupHashFor,
 } from "../../../../lib/lookout/storage.ts";
 import { tryAutoConfirm, looksLikeConfirmation, looksLikeAck } from "../../../../lib/lookout/confirm.ts";
+import { noteInboundFromSender } from "../../../../lib/lookout/tracker.ts";
 import type { InboundEmail, InboundEvent, InboundIntakeLog } from "../../../../lib/lookout/types.ts";
 
 /** Internal shape — InboundEmail plus raw html for confirmation link parsing. */
@@ -95,6 +96,15 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (err) {
     console.error("[intake] fetch received email failed:", (err as Error).message);
     return jsonError(502, "failed to fetch email body");
+  }
+
+  // 4.4. Update the newsletter tracker — any inbound from a tracked sender
+  //      bumps lastReceivedAt and (if applicable) moves status to "receiving".
+  //      Wrapped in try/catch because a tracker failure shouldn't block intake.
+  try {
+    await noteInboundFromSender(email.from, email.receivedAt);
+  } catch (err) {
+    console.error("[intake] tracker update failed:", (err as Error).message);
   }
 
   // 4.5. Confirmation handling — short-circuit confirmation + ack emails
