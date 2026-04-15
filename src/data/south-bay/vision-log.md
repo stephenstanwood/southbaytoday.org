@@ -2,6 +2,42 @@
 
 ---
 
+## 2026-04-15 — Cycle 79: Full Data Refresh
+
+### Context
+Wednesday April 15, 2026 (Tax Day, mid-morning). Spring break ongoing for FUHSD/CUSD/Campbell USD through Apr 17. Santa Clara has a city council meeting today. Events at 679 total (109 ongoing).
+
+### What Was Built
+
+**Full data pipeline refresh — all 12 core data files updated**
+
+- `upcoming-events.json`: 679 events (109 ongoing), 33 sources — up from 671
+- `around-town.json`: 8 items through Apr 14 (MV capital budget, Sunnyvale tenant protections, SJ youth services/library report, PA historic renovation bonus, PA San Antonio Road mixed-use, MV zoning postponement, Los Gatos QLM contract, SJ Mexican Heritage Plaza grant)
+- `digests.json`: 10 city digests (Santa Clara + Palo Alto + Saratoga have meetings today Apr 15)
+- `upcoming-meetings.json`: Santa Clara today, Los Altos Apr 28, Milpitas Apr 21
+- `weekend-picks.json`: 3 picks for Apr 17–19 (420 in the Park/Wailers, Palo Alto Earth Day Festival, Dear Evan Hansen)
+- `real-estate.json`: Saratoga +12.3% YoY, Milpitas -10.2% YoY, Mountain View still below 15-inventory threshold
+- `permit-pulse.json`: 14 notable Palo Alto permits (sewer repairs, panel upgrades); 33 issued SJ permits
+- `restaurant-radar.json`: 12 items (SJ: 8, PA: 4) including Baekjeong at Stevens Creek, Bistro Demiya on Lytton
+- `scc-food-openings.json`: King's Jok-Bal (Santa Clara, Apr 10), Chick-fil-A (Milpitas, Apr 10), Alpha Tea (SJ, Apr 9), Blendid (MV, Apr 9)
+- `outages.json`: 0 active PG&E outages
+- `air-quality.json`: AQI 32 — Good across South Bay
+- `health-scores.json`: refreshed (5 recent inspections)
+
+**SCUSD last day of school — deferred**
+
+Attempted to verify whether SCUSD last day is May 27 or June 5 (conflicting sources). santaclarausd.org calendar pages returned 404/403 errors. Skipped rather than add an unverified date. Will retry next cycle via alternate source.
+
+### Why This Was the Strongest Move
+Data refresh on Tax Day keeps the site current for residents checking in. The events surge (679 vs 671 from morning) reflects mid-week additions from 33 sources. The real estate data captured Saratoga's notable +12.3% YoY spike and Milpitas -10.2% decline — meaningful signals for South Bay homeowners.
+
+### Next 3 Strongest Ideas
+1. **SCUSD last day verification** — Try a different URL or archived calendar PDF to confirm May 27 vs June 5 before adding.
+2. **RECENTLY_FUNDED: Apr 14–20 watch** — Crunchbase weekly roundup publishes Fridays. Check cycle after Apr 18 for new rounds.
+3. **Restaurant radar: Asia Live (Santa Clara), Zareen's (Sunnyvale)** — Confirmed open from news sources; need manual overrides since they won't appear in SJ/PA permit data.
+
+---
+
 ## 2026-04-15 — Cycle 78: SCUSD Added to School Calendar + Full Data Refresh
 
 ### Context
