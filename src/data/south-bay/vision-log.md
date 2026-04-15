@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-04-15 — Cycle 80: Permit Pulse Refresh + RECENTLY_FUNDED Watch
+
+### Context
+Wednesday April 15, 2026 (Tax Day, afternoon). Spring break ongoing through Apr 17 (FUHSD/CUSD/Campbell USD). First full week back for SJUSD/PAUSD/MVWSD/MVLA.
+
+### What Was Built
+
+**Permit Pulse: Fresh Apr 8–15 data window**
+
+Re-ran `generate-permits.mjs` to pull the latest permit data from San José and Palo Alto open data portals:
+- San José: 298 total permits, **20 notable**, 8 new residential units — dateRange Apr 8–15
+- Palo Alto: 120 total permits, **14 notable**, 0 new units — dateRange Apr 8–15
+
+**RECENTLY_FUNDED: Apr 15–21 watch (no new rounds found)**
+
+Searched Crunchbase, TechCrunch, and startup news for South Bay funding rounds Apr 15–21. No new untracked companies found — database remains current at 42 rounds through Apr 14. Crunchbase weekly roundup for Apr 12–18 publishes Friday Apr 18; check next cycle.
+
+### Why This Was the Strongest Move
+Permit Pulse is a resident-facing signal — new construction, electrical upgrades, and housing unit activity is directly relevant to people living near the permit addresses. Keeping the data window current (not stale by >7 days) maintains its usefulness.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 18 Crunchbase roundup** — Weekly roundup for Apr 12–18 publishes Friday. Check for new South Bay rounds.
+2. **SCUSD last day verification** — Conflicting sources (May 27 vs June 5). Try a different URL or PDF calendar.
+3. **Restaurant radar: Asia Live (Santa Clara), Zareen's (Sunnyvale)** — Confirmed open from news; need manual override (won't appear in permit data).
+
+---
+
 ## 2026-04-15 — Cycle 79: Full Data Refresh
 
 ### Context
