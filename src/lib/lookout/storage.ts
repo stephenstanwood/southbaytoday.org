@@ -115,7 +115,7 @@ async function readBlobJson(pathname: string): Promise<string | null> {
   const token = getBlobToken();
   if (!token) return null;
   try {
-    const result = await get(pathname, { access: "private", token });
+    const result = await get(pathname, { access: "public", token });
     if (!result) return null;
     const anyResult = result as unknown as { stream?: ReadableStream; body?: ReadableStream };
     const stream = anyResult.stream ?? anyResult.body ?? (result as unknown as ReadableStream);
@@ -131,7 +131,7 @@ async function writeBlobJson(pathname: string, json: string): Promise<void> {
   const token = getBlobToken();
   if (!token) throw new Error("BLOB_READ_WRITE_TOKEN not available");
   await put(pathname, json, {
-    access: "private",
+    access: "public",
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: "application/json",

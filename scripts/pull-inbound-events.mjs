@@ -42,7 +42,7 @@ if (!token) {
 
 let raw = null;
 try {
-  const result = await get(BLOB_KEY, { access: "private", token });
+  const result = await get(BLOB_KEY, { access: "public", token });
   if (result) {
     const stream = result.stream ?? result.body ?? result;
     raw = await new Response(stream).text();
