@@ -33,7 +33,13 @@ import {
   generateInboundEventId,
   dedupHashFor,
 } from "../../../../lib/lookout/storage.ts";
+import { tryAutoConfirm, looksLikeConfirmation, looksLikeAck } from "../../../../lib/lookout/confirm.ts";
 import type { InboundEmail, InboundEvent, InboundIntakeLog } from "../../../../lib/lookout/types.ts";
+
+/** Internal shape — InboundEmail plus raw html for confirmation link parsing. */
+interface FetchedEmail extends InboundEmail {
+  html: string;
+}
 
 export const prerender = false;
 
@@ -83,12 +89,66 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // 4. Fetch full email body
-  let email: InboundEmail;
+  let email: FetchedEmail;
   try {
     email = await fetchReceivedEmail(meta.emailId, resendKey, meta);
   } catch (err) {
     console.error("[intake] fetch received email failed:", (err as Error).message);
     return jsonError(502, "failed to fetch email body");
+  }
+
+  // 4.5. Confirmation handling — short-circuit confirmation + ack emails
+  //      before the extractor eats the LLM budget. Also auto-click the
+  //      confirm link when we find one, so bulk subscribe flows are unattended.
+  if (looksLikeAck(email.subject)) {
+    console.log(`[intake] ack-ignored — ${email.from} "${email.subject.slice(0, 60)}"`);
+    await appendLog(log, {
+      dedupHash: hash,
+      receivedAt: email.receivedAt,
+      from: email.from,
+      subject: email.subject,
+      outcome: "ack-ignored",
+      eventCount: 0,
+    });
+    return Response.json({ ok: true, outcome: "ack-ignored" });
+  }
+
+  if (looksLikeConfirmation(email.subject)) {
+    const result = await tryAutoConfirm(email);
+    if (result.kind === "clicked") {
+      console.log(
+        `[intake] confirmation-clicked — ${email.from} "${email.subject.slice(0, 60)}" → HTTP ${result.status}`
+      );
+      await appendLog(log, {
+        dedupHash: hash,
+        receivedAt: email.receivedAt,
+        from: email.from,
+        subject: email.subject,
+        outcome: "confirmation-clicked",
+        eventCount: 0,
+      });
+      return Response.json({ ok: true, outcome: "confirmation-clicked", url: result.url, status: result.status });
+    }
+    if (result.kind === "click-failed") {
+      console.error(
+        `[intake] confirmation-failed — ${email.from} "${email.subject.slice(0, 60)}" url=${result.url} err=${result.error}`
+      );
+      await appendLog(log, {
+        dedupHash: hash,
+        receivedAt: email.receivedAt,
+        from: email.from,
+        subject: email.subject,
+        outcome: "confirmation-failed",
+        eventCount: 0,
+        error: result.error,
+      });
+      // Still 2xx — we don't want Resend retrying indefinitely
+      return Response.json({ ok: true, outcome: "confirmation-failed" });
+    }
+    if (result.kind === "no-link-found") {
+      console.warn(`[intake] confirmation subject but no link — "${email.subject.slice(0, 60)}"`);
+      // Fall through to extractor — maybe the email has events anyway
+    }
   }
 
   // 5. Run the extractor
@@ -209,7 +269,7 @@ async function fetchReceivedEmail(
   emailId: string,
   apiKey: string,
   fallback: WebhookMeta
-): Promise<InboundEmail> {
+): Promise<FetchedEmail> {
   // NOTE: endpoint is /emails/receiving/{id} — NOT /received-emails/{id}.
   // Getting this wrong returns confusing 405s. See handoff doc gotcha #2.
   const res = await fetch(`https://api.resend.com/emails/receiving/${emailId}`, {
@@ -234,6 +294,7 @@ async function fetchReceivedEmail(
     to: stringFrom(data.to) || fallback.to,
     subject: stringFrom(data.subject) || fallback.subject,
     body,
+    html,
     receivedAt: stringFrom(data.created_at) || fallback.receivedAt,
     messageId: stringFrom(data.message_id) || fallback.messageId,
   };

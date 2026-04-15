@@ -57,7 +57,14 @@ export interface InboundIntakeLog {
   receivedAt: string;
   from: string;
   subject: string;
-  outcome: "events-extracted" | "no-events" | "extractor-error" | "duplicate";
+  outcome:
+    | "events-extracted"
+    | "no-events"
+    | "extractor-error"
+    | "duplicate"
+    | "confirmation-clicked"
+    | "confirmation-failed"
+    | "ack-ignored";
   eventCount: number;
   error?: string;
 }

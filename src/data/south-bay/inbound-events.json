@@ -1,1 +1,24 @@
-{"events": [], "_meta": {}}
+{
+  "_meta": {
+    "pulledAt": "2026-04-15T18:33:09.027Z",
+    "totalInBlob": 1,
+    "freshCount": 1
+  },
+  "events": [
+    {
+      "id": "inbound_mo0e0rws_rmtxr4",
+      "receivedAt": "2026-04-15 18:28:00.693928+00",
+      "fromEmail": "stephen@stanwood.dev",
+      "emailSubject": "Saratoga Farmers Market this Saturday",
+      "title": "Saratoga Farmers Market",
+      "startsAt": "2026-04-18T09:00:00-07:00",
+      "endsAt": "2026-04-18T13:00:00-07:00",
+      "location": "West Valley College parking lot, 14000 Fruitvale Ave, Saratoga, CA 95070",
+      "description": "Weekly farmers market featuring fresh local produce, live music, and coffee. Free to attend, dogs welcome.",
+      "sourceUrl": "https://saratogafarmersmarket.com/",
+      "cityKey": "saratoga",
+      "cityName": "Saratoga",
+      "status": "new"
+    }
+  ]
+}
