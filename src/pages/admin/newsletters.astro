@@ -345,6 +345,11 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
       tbody tr.status-signup-posted { background: #ede9fe; }
       tbody tr.status-signup-posted:hover { background: #ddd6fe; }
       tbody tr.fading { opacity: 0; transform: translateX(-10px); transition: opacity 300ms, transform 300ms; }
+      @keyframes flashUpdate {
+        0% { background: rgba(139, 92, 246, 0.35); }
+        100% { background: transparent; }
+      }
+      tbody tr.just-updated td { animation: flashUpdate 1400ms ease-out; }
 
       .name a {
         color: var(--fg);
@@ -693,7 +698,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             return;
           }
 
-          // Delete
+          // Delete (see handler below)
           const delBtn = e.target.closest(".delete-btn");
           if (delBtn) {
             const id = delBtn.dataset.id;
@@ -725,6 +730,169 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             }
           }
         });
+
+        // ── Live poller ────────────────────────────────────────────────
+        // Polls /api/admin/newsletters/state every 15s and patches any rows
+        // whose status / lastReceivedAt / receivedCount changed. No full
+        // reload — preserves scroll position.
+        const POLL_INTERVAL = 15000;
+        const STATUS_LABEL = {
+          "not-attempted": "untouched",
+          "signup-posted": "signed up",
+          "confirmed": "confirmed",
+          "receiving": "receiving",
+          "failed": "failed",
+          "needs-manual": "ready",
+          "blocked": "blocked",
+        };
+        const STATUS_COLOR = {
+          "not-attempted": "#94a3b8",
+          "signup-posted": "#a855f7",
+          "confirmed": "#0ea5e9",
+          "receiving": "#16a34a",
+          "failed": "#dc2626",
+          "needs-manual": "#f59e0b",
+          "blocked": "#7c2d12",
+        };
+
+        function relativeTime(iso) {
+          if (!iso) return "—";
+          const diff = Date.now() - new Date(iso).getTime();
+          if (diff < 60_000) return "just now";
+          if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
+          if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+          return `${Math.floor(diff / 86_400_000)}d ago`;
+        }
+
+        // Local cache of last-seen state so we only patch actual diffs.
+        const localState = new Map();
+
+        function patchRow(tr, t) {
+          const prev = localState.get(t.id) ?? {};
+          let changed = false;
+
+          // Status pill + row class
+          if (prev.status !== t.status) {
+            tr.className = `status-${t.status}`;
+            const pill = tr.querySelector(".status-pill");
+            if (pill) {
+              pill.textContent = STATUS_LABEL[t.status] ?? t.status;
+              pill.style.background = STATUS_COLOR[t.status] ?? "#64748b";
+            }
+            // Add/remove the undo X depending on new status
+            const wrap = tr.querySelector(".status-wrap");
+            const existingUndo = wrap?.querySelector(".undo-btn");
+            const shouldShowUndo = t.status === "signup-posted" || t.status === "confirmed";
+            if (shouldShowUndo && !existingUndo && wrap) {
+              const btn = document.createElement("button");
+              btn.className = "undo-btn";
+              btn.dataset.id = t.id;
+              btn.title = "Undo — reset to ready";
+              btn.setAttribute("aria-label", "Reset to ready");
+              btn.textContent = "✕";
+              wrap.appendChild(btn);
+            } else if (!shouldShowUndo && existingUndo) {
+              existingUndo.remove();
+            }
+            changed = true;
+          }
+
+          // Last received + count
+          const cells = tr.querySelectorAll("td");
+          if (cells.length >= 5) {
+            const newRelTime = relativeTime(t.lastReceivedAt);
+            if (cells[3].textContent?.trim() !== newRelTime) {
+              cells[3].textContent = newRelTime;
+              changed = true;
+            }
+            const newCount = String(t.receivedCount ?? 0);
+            if (cells[4].textContent?.trim() !== newCount) {
+              cells[4].textContent = newCount;
+              changed = true;
+            }
+          }
+
+          if (changed) {
+            tr.classList.remove("just-updated");
+            // Force reflow to restart animation
+            void tr.offsetWidth;
+            tr.classList.add("just-updated");
+          }
+          localState.set(t.id, { ...t });
+        }
+
+        function updateSummary(targets) {
+          const counts = {
+            total: targets.length,
+            receiving: 0, signupPosted: 0, confirmed: 0,
+            notAttempted: 0, needsManual: 0, failed: 0,
+          };
+          for (const t of targets) {
+            switch (t.status) {
+              case "receiving": counts.receiving++; break;
+              case "signup-posted": counts.signupPosted++; break;
+              case "confirmed": counts.confirmed++; break;
+              case "not-attempted": counts.notAttempted++; break;
+              case "needs-manual": counts.needsManual++; break;
+              case "failed": counts.failed++; break;
+            }
+          }
+          const stats = document.querySelectorAll(".sticky-header .stat .num");
+          if (stats.length >= 5) {
+            stats[0].textContent = String(counts.receiving);
+            stats[1].textContent = String(counts.signupPosted);
+            stats[2].textContent = String(counts.confirmed);
+            stats[3].textContent = String(counts.needsManual);
+            stats[4].textContent = String(counts.notAttempted);
+          }
+
+          // Progress bar
+          const done = counts.receiving + counts.signupPosted + counts.confirmed;
+          const pct = counts.total > 0 ? Math.round((done / counts.total) * 100) : 0;
+          const fill = document.querySelector(".progress-fill");
+          if (fill) fill.style.width = `${pct}%`;
+          const label = document.querySelector(".progress-label");
+          if (label) {
+            label.innerHTML = `<b>${done}</b> of ${counts.total} complete · <b>${pct}%</b> through the grind`;
+          }
+        }
+
+        async function pollOnce() {
+          try {
+            const res = await fetch(
+              `/api/admin/newsletters/state?key=${encodeURIComponent(providedKey)}`,
+              { cache: "no-store" }
+            );
+            if (!res.ok) return;
+            const json = await res.json();
+            const targets = json?.doc?.targets ?? [];
+            // Patch existing rows; ignore targets that don't have a row (user
+            // deleted them this session, or haven't scrolled to them yet)
+            for (const t of targets) {
+              const tr = document.querySelector(`tr[data-target-id="${t.id}"]`);
+              if (tr) patchRow(tr, t);
+            }
+            updateSummary(targets);
+            // Update the "updated X ago" label in the header
+            const sub = document.querySelector(".title-block .sub");
+            if (sub && json?.doc?.updatedAt) {
+              sub.textContent = `${targets.length} targets · updated ${relativeTime(json.doc.updatedAt)}`;
+            }
+          } catch (err) {
+            // Silent — next poll will retry
+          }
+        }
+
+        // Seed local state from what's already in the DOM
+        document.querySelectorAll("tr[data-target-id]").forEach((tr) => {
+          const id = tr.dataset.targetId;
+          const status = (tr.className.match(/status-(\S+)/) || [])[1];
+          if (id) localState.set(id, { status });
+        });
+
+        setInterval(pollOnce, POLL_INTERVAL);
+        // First poll after ~4s so SSR has settled
+        setTimeout(pollOnce, 4000);
       </script>
     )}
   </body>
