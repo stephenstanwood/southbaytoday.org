@@ -244,23 +244,6 @@ const dateStr = "Wednesday, April 15, 2026";
         border-color: var(--n-ink);
       }
 
-      /* ── Full-width break article ── */
-      .news-break {
-        grid-column: 1 / -1;
-        padding: 24px 0;
-        border-bottom: 1px solid var(--n-border-light);
-        border-right: none !important;
-      }
-      .news-break-inner {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-      }
-      .news-break-inner .news-article-body {
-        columns: 2;
-        column-gap: 24px;
-      }
-
       /* ── Footer ── */
       .news-footer {
         max-width: var(--n-max);
@@ -281,13 +264,6 @@ const dateStr = "Wednesday, April 15, 2026";
         text-decoration: none;
       }
       .news-footer-text a:hover { text-decoration: underline; }
-      .news-colophon {
-        font-family: var(--n-serif);
-        font-size: 13px;
-        font-style: italic;
-        color: var(--n-muted);
-        margin-top: 10px;
-      }
 
       /* ── Responsive ── */
       @media (max-width: 700px) {
@@ -304,12 +280,6 @@ const dateStr = "Wednesday, April 15, 2026";
         }
         .news-article:nth-child(even) {
           padding-left: 0;
-        }
-        .news-break-inner {
-          grid-template-columns: 1fr;
-        }
-        .news-break-inner .news-article-body {
-          columns: 1;
         }
         .news-article-headline { font-size: 20px; }
         .news-masthead-top { flex-direction: column; gap: 2px; }
@@ -340,6 +310,7 @@ const dateStr = "Wednesday, April 15, 2026";
 
     <!-- ═══════════════════════════════════════════════════════
          HERO: Whole Foods Los Gatos
+         Source: Whole Foods Market press release, March 18, 2026
          ═══════════════════════════════════════════════════════ -->
     <article class="news-hero">
       <div class="news-hero-category">Business &middot; Los Gatos</div>
@@ -362,7 +333,7 @@ const dateStr = "Wednesday, April 15, 2026";
         <p>Three decades into the chain's presence in Los Gatos, the town now has the version of the store the company has been wanting to build.</p>
 
         <div class="news-source">
-          Source: <a href="https://www.wholefoodsmarket.com/company-info/newsroom/news-releases/new-whole-foods-market-in-los-gatos-calif-to-open-april-15" target="_blank" rel="noopener">Whole Foods Market press release</a>, March 18, 2026. Also: <a href="https://sanjosespotlight.com/larger-whole-foods-to-open-in-los-gatos/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+          Source: <a href="https://www.wholefoodsmarket.com/company-info/newsroom/news-releases/new-whole-foods-market-in-los-gatos-calif-to-open-april-15" target="_blank" rel="noopener">Whole Foods Market press release</a>, March 18, 2026.
         </div>
       </div>
     </article>
@@ -372,195 +343,197 @@ const dateStr = "Wednesday, April 15, 2026";
          ═══════════════════════════════════════════════════════ -->
     <div class="news-grid">
 
-      <!-- ── 1. Flock Safety Lawsuit ── -->
+      <!-- ── 1. Flock Safety Lawsuit ──
+           Source: Institute for Justice press release + case page (ij.org)
+           IJ filed the lawsuit — this is THEIR press release about THEIR case -->
       <article class="news-article">
         <div class="news-article-category">Civil Liberties &middot; San Jos&eacute;</div>
         <h3 class="news-article-headline">Three Residents Sue San Jos&eacute; Over 474 License Plate Cameras</h3>
-        <p class="news-article-deck">A federal class action asks whether the city's growing surveillance network violates the Fourth Amendment.</p>
+        <p class="news-article-deck">The Institute for Justice files a federal class action challenging the city's Flock Safety surveillance network.</p>
         <div class="news-article-byline">April 15, 2026</div>
         <div class="news-article-body">
-          <p>Tony Tan, Scott West, and Colin Wolfson filed a federal class action lawsuit today at the Robert F. Peckham Federal Building in San Jos&eacute;, challenging the city's network of 474 Flock Safety automated license plate reader cameras.</p>
+          <p>Tony Tan, Scott West, and Colin Wolfson filed a federal class action lawsuit today at the Robert F. Peckham Federal Building in San Jos&eacute;, challenging the city's network of 474 Flock Safety automated license plate reader cameras as unconstitutional warrantless surveillance under the Fourth Amendment.</p>
 
-          <p>The suit, filed by the nonprofit Institute for Justice, argues that the cameras&mdash;which collect millions of license plate images monthly&mdash;constitute a warrantless search in violation of the Fourth Amendment. IJ attorney Michael Soyfer said the system allows thousands of government employees across California to search San Jos&eacute; drivers' data with minimal oversight.</p>
+          <p>The suit was filed by the nonprofit Institute for Justice as part of its national campaign against ALPR abuse. According to IJ, San Jos&eacute;'s Flock database was searched nearly 2.5 million times in the last half of 2025&mdash;an average of more than 15,000 searches per day. More than 1,000 SJPD employees and employees of nearly 300 other government entities in California have access to the data.</p>
 
-          <p>The program launched in 2022 and has grown rapidly. In March, the City Council adopted new restrictions on the cameras, including shortening the default data retention period from one year to 30 days. The plaintiffs are seeking a 24-hour deletion policy, except where warrants are obtained.</p>
+          <p>The city first entered a pilot program with Flock Safety in 2021, placing four cameras at a single intersection. It has since expanded to 474. IJ attorney Michael Soyfer described the system as one of the largest anywhere, and said the organization's goal is to push these cases up to federal appellate courts and ultimately to the Supreme Court.</p>
 
-          <p>City Attorney Susana Alcala Wood has stated that the cameras operate only in public areas on public streets. This is the second federal lawsuit over the system; an advocacy coalition filed a separate suit in November 2025 alleging California Constitution privacy violations.</p>
-
-          <p>Soyfer indicated IJ's broader goal is to push ALPR cases up to federal appellate courts.</p>
+          <p>Several local jurisdictions&mdash;including Santa Clara County, Los Altos Hills, and Mountain View&mdash;have already canceled their Flock contracts over abuse concerns, according to IJ.</p>
 
           <div class="news-source">
-            Sources: <a href="https://sanjosespotlight.com/another-lawsuit-targets-san-joses-license-plate-cameras/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>; <a href="https://ij.org/press-release/three-san-jose-residents-file-federal-class-action-lawsuit-over-citys-mass-surveillance-of-drivers/" target="_blank" rel="noopener">Institute for Justice</a>.
+            Source: <a href="https://ij.org/press-release/three-san-jose-residents-file-federal-class-action-lawsuit-over-citys-mass-surveillance-of-drivers/" target="_blank" rel="noopener">Institute for Justice press release</a>; <a href="https://ij.org/case/san-jose-license-plate-readers/" target="_blank" rel="noopener">IJ case page</a>.
           </div>
         </div>
       </article>
 
-      <!-- ── 2. Mountain View Entertainment Zone ── -->
+      <!-- ── 2. SB 79 Housing Law ──
+           Source: CA Legislature bill text (leginfo.legislature.ca.gov)
+           + VTA station locations (public knowledge) -->
       <article class="news-article">
-        <div class="news-article-category">Lifestyle &middot; Mountain View</div>
-        <h3 class="news-article-headline">Mountain View Advances Downtown "Sip and Stroll" Zone</h3>
-        <p class="news-article-deck">Five blocks of Castro Street could allow open beverages during city events, just in time for the World Cup.</p>
-        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-category">Housing &middot; South Bay</div>
+        <h3 class="news-article-headline">The State Law About to Reshape Every Light Rail Neighborhood</h3>
+        <p class="news-article-deck">SB 79 takes effect July 1. Here's what's actually in the bill&mdash;and what it means for cities built around VTA stations.</p>
+        <div class="news-article-byline">April 15, 2026</div>
         <div class="news-article-body">
-          <p>The Mountain View City Council moved forward on an ordinance to create a downtown entertainment zone along five blocks of Castro Street, from West Evelyn Avenue to Church Street, plus portions of Villa Street, West Dana Street, California Street, and Mercy Street, and the City Hall plaza.</p>
+          <p>Senate Bill 79, authored by Sen. Scott Wiener, was chaptered on October 10, 2025 and takes effect July 1. The law requires cities to allow multifamily housing on any residentially, commercially, or mixed-use-zoned parcel within a half mile of a qualifying transit stop&mdash;regardless of local zoning.</p>
 
-          <p>The 18-month pilot would allow open alcohol consumption during city-sponsored events from 8 a.m. to 11 p.m., seven days a week. If the final vote passes on April 28, the zone launches May 28&mdash;just ahead of the 2026 FIFA World Cup, which served as the primary impetus for the accelerated timeline.</p>
+          <p>The bill establishes two tiers. Tier 1 covers heavy rail and high-frequency commuter service; Tier 2 covers light rail and qualifying bus rapid transit. For Tier 2 stops within a quarter mile, minimum building heights are 65 feet. Beyond a quarter mile in cities of 35,000 or more, the minimum is 55 feet. Minimum densities range from 30 dwelling units per acre up to 120 near Tier 1 stops.</p>
 
-          <p>The Downtown Committee unanimously backed the proposal. Chair Mike Kasperzak urged the city to evaluate the pilot early rather than wait the full 18 months, cautioning a delay could hurt local businesses.</p>
+          <p>Affordability requirements baked into the law mandate that 7 to 13 percent of units be reserved for lower-income households&mdash;55 years for rentals, 45 years for ownership. Buildings exceeding 85 feet must meet prevailing wage and skilled-workforce requirements.</p>
 
-          <p>Amanda Rotella, economic development strategist, said the city aims to position Mountain View as a place where people want to come and spend time. The city plans to weigh costs&mdash;including expanded police presence and additional trash receptacles&mdash;against economic benefits.</p>
+          <p>In the South Bay, VTA's light rail stations qualify as Tier 2 stops. That puts neighborhoods around stations in Campbell, Sunnyvale, Mountain View, and San Jos&eacute; squarely in the law's crosshairs. Campbell, with three stations and compact geography, is particularly exposed. Cities can adopt alternative plans before July 1 if the state signs off&mdash;but the alternative must preserve the same total housing capacity the law would otherwise require.</p>
 
           <div class="news-source">
-            Source: <a href="https://sanjosespotlight.com/mountain-view-could-allow-public-drinking-in-downtown/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+            Source: <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB79" target="_blank" rel="noopener">SB 79 bill text</a>, California Legislature.
           </div>
         </div>
       </article>
 
-      <!-- ── 3. Coyote Creek Trestle ── -->
+      <!-- ── 3. Measure A Sales Tax ──
+           Source: Santa Clara County press releases (news.santaclaracounty.gov) -->
       <article class="news-article">
-        <div class="news-article-category">Preservation &middot; San Jos&eacute;</div>
-        <h3 class="news-article-headline">Residents Rally to Save a 1922 Railroad Trestle Over Coyote Creek</h3>
-        <p class="news-article-deck">The 250-foot timber bridge faces demolition for a trail project. Neighbors say there's a better way.</p>
-        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-category">Fiscal &middot; Santa Clara County</div>
+        <h3 class="news-article-headline">Two Weeks In: What the New Sales Tax Is Paying For</h3>
+        <p class="news-article-deck">Measure A went into effect April 1, adding five-eighths of a cent to every dollar spent in the county. Here's the plan for the $330 million.</p>
+        <div class="news-article-byline">April 15, 2026</div>
         <div class="news-article-body">
-          <p>A coalition of San Jos&eacute; residents is fighting to preserve the Coyote Creek Trestle, a 250-foot timber railroad bridge north of Kelley Park built by Western Pacific Railroad in 1922. The city acquired the structure as part of a nine-acre rail corridor purchase in 2012.</p>
+          <p>Santa Clara County's Measure A sales tax&mdash;approved by 57 percent of voters in November 2025&mdash;took effect April 1, raising the county rate from 9.125 to 9.750 percent. The five-eighths-of-a-cent general tax is expected to generate approximately $330 million annually over its five-year life.</p>
 
-          <p>The trestle is in the path of the Five Wounds Trail expansion, a planned two-mile northward extension terminating near Watson Park. City officials had proposed demolishing it and replacing it with a modern steel bridge. Preservation advocates want a different approach: structurally reinforce the existing trestle and build a new trail bridge at a nearby location.</p>
+          <p>The revenue is aimed squarely at offsetting federal funding cuts to the county's public hospital system and other critical services. The Board of Supervisors has adopted an ordinance establishing a Citizens' Oversight Committee&mdash;a seven-member independent advisory body modeled after the panel that tracks the county's $950 million affordable housing bond from 2016.</p>
 
-          <p>The campaign has drawn support from the D7 Leadership Group, the All District Leadership Group, and Save Our Trails. Councilmember Bien Doan, who represents District 7, said the city can build a safe, modern trail crossing without tearing down what makes the area unique. Board member Keith Ball of Save Our Trails emphasized that public support influences city decisions.</p>
+          <p>The committee will receive annual financial audits and expenditure reports, and issue a public annual report on how Measure A revenues are spent. An independent external auditor will also report to the committee.</p>
 
-          <p>Parks Department spokesperson Ed Bautista said no decisions have been made. The outcome matters to preservationists still smarting from the demolition of the Willow Glen Trestle nearly six years ago, despite similar community pushback.</p>
+          <p>Two weeks into the tax's life, the dollars are flowing. Whether $330 million a year is enough to plug the federal gap remains an open question&mdash;but the oversight structure, at least, is built to let residents track the answer.</p>
 
           <div class="news-source">
-            Source: <a href="https://sanjosespotlight.com/san-jose-residents-rally-to-save-railroad-trestle/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+            Source: <a href="https://news.santaclaracounty.gov/board-supervisors-establishes-oversight-committee-2025-measure-sales-tax-funds" target="_blank" rel="noopener">Santa Clara County press release</a> (oversight committee); <a href="https://news.santaclaracounty.gov/board-supervisors-takes-mid-year-budget-action-offset-federal-funding-cuts-impacting-critical" target="_blank" rel="noopener">County press release</a> (budget action).
           </div>
         </div>
       </article>
 
-      <!-- ── 4. Burrowing Owls ── -->
+      <!-- ── 4. Distracted Driving Month ──
+           Source: City of San Jose press release (sanjoseca.gov), April 2, 2026 -->
       <article class="news-article">
-        <div class="news-article-category">Environment &middot; Mountain View</div>
-        <h3 class="news-article-headline">Mountain View Boosts Funding for Shoreline's Struggling Burrowing Owls</h3>
-        <p class="news-article-deck">The population dropped from 27 to 16. Breeding pairs collapsed from nine to one. The city is writing a check.</p>
-        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-category">Safety &middot; San Jos&eacute;</div>
+        <h3 class="news-article-headline">Fourteen Electronic Signs. Five March Fatalities. One Message.</h3>
+        <p class="news-article-deck">San Jos&eacute; is blanketing high-crash corridors with bilingual reminders to put the phone down.</p>
+        <div class="news-article-byline">April 15, 2026</div>
         <div class="news-article-body">
-          <p>Mountain View is adding $105,000 in funding for biological consultant services at Shoreline Park, where the burrowing owl population has taken a sharp downturn. The city's total budget for biological services at Shoreline for the 2025&ndash;2026 fiscal year is $280,000.</p>
+          <p>San Jos&eacute;'s Transportation Department has placed 14 electronic message signs along high-crash corridors throughout the city for Distracted Driving Awareness Month. The signs display rotating messages in English and Spanish: "Eyes Up Phones Down," "People Crossing," "Slow Down," and "Conduzca Despacio."</p>
 
-          <p>The numbers tell the story: a January 2026 survey counted 16 owls at Shoreline, down from 27 in January 2025. More alarming, successful breeding pairs dropped from nine in 2024&mdash;producing 51 juveniles&mdash;to just one pair in 2025, which produced five juveniles.</p>
+          <p>The campaign comes with urgency. San Jos&eacute; had been on a three-year downward trend in traffic fatalities&mdash;from a high of 65 in 2022 to 41 in 2025. But five fatal crashes in March 2026 alone threatened to reverse that progress.</p>
 
-          <p>The funding boost comes nearly two years after the city's two wildlife biologists departed, leaving the owl monitoring program in the hands of outside consultants. The additional $105,000 covers consulting costs not anticipated in the original budget.</p>
+          <p>Supplementing the signs, the San Jos&eacute; Police Department's Traffic Enforcement Unit is conducting targeted distracted driving enforcement operations through the month.</p>
 
-          <p>Burrowing owls are a California Species of Special Concern. Shoreline Park, built atop a former landfill on the edge of San Francisco Bay, has been one of the South Bay's most important habitats for the small, ground-nesting raptors.</p>
+          <p>The signs are not subtle. They do not need to be. Sixty-five people died on San Jos&eacute; streets four years ago, and the five March deaths are a reminder that the improvement is fragile.</p>
 
           <div class="news-source">
-            Source: <a href="https://www.mv-voice.com/environment/2026/04/14/mountain-view-aims-to-give-shorelines-burrowing-owls-a-boost-with-more-funding/" target="_blank" rel="noopener">Mountain View Voice</a>.
+            Source: <a href="https://www.sanjoseca.gov/Home/Components/News/News/7239/4699" target="_blank" rel="noopener">City of San Jos&eacute; press release</a>, April 2, 2026.
           </div>
         </div>
       </article>
 
-      <!-- ── 5. Campbell SB 79 ── -->
+      <!-- ── 5. #WeCreate408 ──
+           Source: City of San Jose Office of Cultural Affairs (sanjoseca.gov) -->
       <article class="news-article">
-        <div class="news-article-category">Housing &middot; Campbell</div>
-        <h3 class="news-article-headline">Campbell Stares Down a State Law That Could Triple Its Housing</h3>
-        <p class="news-article-deck">SB 79 takes effect July 1. The math: 40,409 potential new homes in a city of 43,000 people.</p>
-        <div class="news-article-byline">April 13, 2026</div>
+        <div class="news-article-category">Arts &middot; San Jos&eacute;</div>
+        <h3 class="news-article-headline">San Jos&eacute;'s Free Creativity Challenge Is Back for Year Eight</h3>
+        <p class="news-article-deck">A daily creative prompt, delivered to your inbox, all month long. You don't need to be an artist.</p>
+        <div class="news-article-byline">April 15, 2026</div>
         <div class="news-article-body">
-          <p>Senate Bill 79, the transit-oriented housing law taking effect July 1, could allow up to 40,409 new homes on land within a half mile of Campbell's three VTA light rail stations&mdash;more than doubling the city's existing stock of roughly 18,200 units.</p>
+          <p>#WeCreate408 is San Jos&eacute;'s month-long online creativity challenge, now in its eighth year. Run by the city's Office of Cultural Affairs, the program sends daily creative prompts to anyone who signs up at wecreate408.org&mdash;along with suggestions for creative activities happening around San Jos&eacute;.</p>
 
-          <p>Nearly a quarter of Campbell's 6.5 square miles falls within the law's reach. The qualifying stations are on South Winchester Boulevard, downtown Campbell, and at Hamilton and Bascom avenues. A fourth station just over the line in San Jos&eacute; throws its radius back into Campbell.</p>
+          <p>The challenge is designed for everyone, not just people who consider themselves artists. The city explicitly says so: "You don't need to consider yourself an 'artist' to take part." Participants share their work on social media with the #WeCreate408 hashtag.</p>
 
-          <p>Community Development Director Rob Eastwood told the San Jos&eacute; Spotlight that no other city in Santa Clara County is projected to have nearly 25 percent of its land area affected by SB 79, and Campbell may experience the highest proportional increase relative to existing housing.</p>
+          <p>This year's Creative Ambassadors include Los Panaderos (Sharon and Tanya Ben&iacute;tez), Mexican Folk Dancers, and filmmaker and educator Tricia Creason-Valencia. The program is part of San Jos&eacute;'s April Arts, Culture, and Creativity Month.</p>
 
-          <p>Councilmember Terry Hines called it the city's "watershed moment." Councilmember Sergio Lopez, who chairs the VTA Board of Directors, said he believes the law could be a net positive financially. Vice Mayor Anne Bybee was more skeptical, calling 40,000 new units an unattainable goal.</p>
-
-          <p>Cities can adopt an alternative plan before July 1 if the state Department of Housing and Community Development approves it&mdash;but the local plan must preserve substantially the same total housing capacity.</p>
+          <p>It's free. It's low-pressure. And it's a genuinely charming thing for a city government to run.</p>
 
           <div class="news-source">
-            Source: <a href="https://sanjosespotlight.com/state-housing-law-could-change-campbells-small-city-vibe/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>. Also: <a href="https://localnewsmatters.org/2026/04/13/state-housing-law-could-reshape-campbells-small-city-vibe-with-up-to-40000-new-homes/" target="_blank" rel="noopener">Local News Matters</a>.
+            Source: <a href="https://www.sanjoseca.gov/your-government/departments-offices/cultural-affairs/participate/we-create-408" target="_blank" rel="noopener">City of San Jos&eacute; Office of Cultural Affairs</a>; <a href="https://www.sanjoseca.gov/your-government/departments-offices/cultural-affairs/participate/creative-ambassadors/2026-creative-ambassadors" target="_blank" rel="noopener">2026 Creative Ambassadors</a>.
           </div>
         </div>
       </article>
 
-      <!-- ── 6. Rod Diridon Tribute ── -->
-      <article class="news-article">
-        <div class="news-article-category">Civic &middot; Santa Clara County</div>
-        <h3 class="news-article-headline">County Honors Rod Diridon Sr., the Father of South Bay Transit</h3>
-        <p class="news-article-deck">The man behind VTA light rail, the first half-cent transit tax, and the station that bears his name died April 3 at 87.</p>
-        <div class="news-article-byline">April 14, 2026</div>
-        <div class="news-article-body">
-          <p>The Santa Clara County Board of Supervisors held a commendation ceremony on April 14 honoring Rod Diridon Sr., who died April 3 at age 87. All five supervisors&mdash;Susan Ellenberg, Board President Otto Lee, Sylvia Arenas, Margaret Abe-Koga, and Betty Duong&mdash;spoke at the ceremony, alongside his son Rod Diridon Jr. and his wife Gloria.</p>
-
-          <p>Diridon served 20 years as a County Supervisor in District 4, beginning in the 1970s, and was the driving force behind the first half-cent transit sales tax and the creation of the VTA light rail system. He later worked with the Mineta Transportation Institute on advancing regional transit. His name is on the Caltrain and future BART station in downtown San Jos&eacute;.</p>
-
-          <p>Board President Otto Lee said Diridon had an unwavering commitment that left an indelible mark. His wife Gloria noted his involvement in causes far beyond transit, including blocking Nestl&eacute;'s bid for McCloud River water rights in Siskiyou County&mdash;an effort that ended when the company abandoned the project in 2009.</p>
-
-          <p>Diridon also advocated for parks, trails, civil rights, gay rights, and healthcare, and was instrumental in the county board's decision to accept Vietnamese refugees.</p>
-
-          <div class="news-source">
-            Source: <a href="https://www.sanjoseinside.com/news/rod-diridon-sr-hailed-by-santa-clara-county-as-father-of-modern-transit/" target="_blank" rel="noopener">San Jos&eacute; Inside</a>.
-          </div>
-        </div>
-      </article>
-
-      <!-- ── 7. Mountain View Hotel ── -->
-      <article class="news-article">
-        <div class="news-article-category">Development &middot; Mountain View</div>
-        <h3 class="news-article-headline">Mountain View Revives $141.8M Downtown Hotel Project</h3>
-        <p class="news-article-deck">Two parking lots near the Transit Center are about to become a five-story hotel and a four-story office building.</p>
-        <div class="news-article-byline">April 14, 2026</div>
-        <div class="news-article-body">
-          <p>Mountain View has authorized an amended deal with developer RGC Mountain View to build a five-story hotel with ground-floor retail and a four-story office building with ground-floor retail on Lots 4 and 8 on Hope Street, between Villa Street and West Evelyn Avenue, across from the Mountain View Transit Center.</p>
-
-          <p>The hotel's estimated construction cost has risen to $141.8 million, up from $80 million when the deal was first struck in 2017. The city projects $433.6 million in revenue over the 55-year lease. In exchange, the city is subsidizing RGC to the tune of $47.5 million over the lease term, including five years rent-free after the hotel opens and up to 15 years of transient occupancy tax rebates.</p>
-
-          <p>A three-level underground garage at the hotel site has been scrapped, saving an estimated $35 million and shaving six-plus months off construction. The hotel will instead use a valet system with shared parking from nearby properties. RGC is paying the city $6.6 million toward a new parking garage at Lot 5. The office building will have a two-level underground garage with 110 spaces.</p>
-
-          <p>The council approved the amended terms unanimously on March 24. The hotel is expected to open between mid-2029 and spring 2031. No upfront capital from the city is required, unlike the original 2017 agreement.</p>
-
-          <div class="news-source">
-            Source: <a href="https://sanjosespotlight.com/mountain-view-to-replace-downtown-parking-lot-with-hotel/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>; <a href="https://www.mv-voice.com/" target="_blank" rel="noopener">Mountain View Voice</a>.
-          </div>
-        </div>
-      </article>
-
-      <!-- ── 8. Hack Cupertino ── -->
-      <article class="news-article">
-        <div class="news-article-category">Community &middot; Cupertino</div>
-        <h3 class="news-article-headline">100 Teens, One Night, Zero Sleep: Hack Cupertino Returns</h3>
-        <p class="news-article-deck">The annual overnight hackathon asked Bay Area teens to build health and wellness software&mdash;and threw in Mario Kart at midnight.</p>
-        <div class="news-article-byline">April 14, 2026</div>
-        <div class="news-article-body">
-          <p>Over 100 Bay Area teens spent the night of April 11&ndash;12 at Quinlan Community Center in Cupertino, building health and wellness software from scratch at Hack Cupertino 2026. The annual 13-hour overnight hackathon is open to participants ages 13 to 18, who split into teams of up to four.</p>
-
-          <p>The event has been running since 2017, organized by Cupertino's Youth Activity Board, Teen Commission, and Recreation Department. This year's theme was health and wellness. Registration cost $5 for Cupertino residents and $6 for non-residents.</p>
-
-          <p>Organizers allowed participants to use AI tools, with the requirement that usage be disclosed. Between coding sprints, the lobby hosted diversions including "Midnight Mario Kart" and "2 a.m. Table Tennis" tournaments.</p>
-
-          <p>The event is a reminder that not all of the South Bay's tech innovation happens inside corporate campuses. Sometimes it happens in a community center at two in the morning, fueled by pizza and competitive ping-pong.</p>
-
-          <div class="news-source">
-            Source: <a href="https://lavozdeanza.com/news/2026/04/14/teens-hack-cupertino/" target="_blank" rel="noopener">La Voz News</a>; <a href="https://www.cupertino.org/our-city/departments/parks-recreation/recreation-classes-and-activities/teen/hack-cupertino" target="_blank" rel="noopener">City of Cupertino</a>.
-          </div>
-        </div>
-      </article>
-
-      <!-- ── 9. Animal Shelter ── -->
+      <!-- ── 6. Animal Shelter ──
+           Source: City of San Jose press release (sanjoseca.gov/Home/Components/News/News/7246/4699)
+           Quotes from Torralba and Mahan are from the city's OWN press release -->
       <article class="news-article">
         <div class="news-article-category">City Hall &middot; San Jos&eacute;</div>
         <h3 class="news-article-headline">San Jos&eacute; Is Moving Its Animal Shelter Back Where It Started</h3>
-        <p class="news-article-deck">After years of audit findings and advocacy pressure, Animal Care and Services returns to the Parks Department on August 1.</p>
+        <p class="news-article-deck">Animal Care and Services returns to the Parks Department on August 1, two decades after it was originally housed there.</p>
         <div class="news-article-byline">April 14, 2026</div>
         <div class="news-article-body">
           <p>San Jos&eacute; has announced that Animal Care and Services will transfer from the Public Works Department to Parks, Recreation and Neighborhood Services on August 1&mdash;returning the shelter to the department where it was originally housed when it opened in 2004.</p>
 
           <p>City Manager's Office spokesperson Danielle Torralba said the transition reflects the administration's goal of optimizing the city's service delivery. Mayor Matt Mahan said the move will help strengthen community-based services and improve outcomes for animals.</p>
 
-          <p>The reorganization places the animal shelter under the same umbrella as Happy Hollow Park and Zoo and Emma Prusch Farm Park, consolidating the city's animal-related programs. It follows a 2024 city audit that cited overcrowding, unsanitary conditions, inadequate medical care, and poor record-keeping at the shelter. Animal welfare advocates threatened legal action in January 2026 over alleged neglect.</p>
+          <p>The reorganization places the animal shelter under the same umbrella as Happy Hollow Park and Zoo and Emma Prusch Farm Park, consolidating the city's animal-related programs.</p>
 
-          <p>The city says recent progress includes reducing shelter overcrowding. Whether the departmental move addresses the structural issues identified in the audit remains to be seen, but for San Jos&eacute;'s shelter animals, a new organizational home is coming this summer.</p>
+          <p>The move follows a 2024 city audit that cited overcrowding, unsanitary conditions, inadequate medical care, and poor record-keeping at the shelter. Whether a different org chart fixes those problems is an open question&mdash;but it puts animal services alongside the city's other animal programs for the first time in years.</p>
 
           <div class="news-source">
-            Sources: <a href="https://www.sanjoseca.gov/Home/Components/News/News/7246/4699" target="_blank" rel="noopener">City of San Jos&eacute; press release</a>; <a href="https://sanjosespotlight.com/san-jose-animal-shelter-moves-back-to-parks-department/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+            Source: <a href="https://www.sanjoseca.gov/Home/Components/News/News/7246/4699" target="_blank" rel="noopener">City of San Jos&eacute; press release</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 7. West Valley Housing Resource Fair ──
+           Source: Town of Los Gatos news flash (losgatosca.gov) -->
+      <article class="news-article">
+        <div class="news-article-category">Community &middot; Los Gatos</div>
+        <h3 class="news-article-headline">Los Gatos Co-Hosts a Housing Resource Fair Today</h3>
+        <p class="news-article-deck">The West Valley cities are pooling resources to help residents navigate one of the most expensive housing markets in the country.</p>
+        <div class="news-article-byline">April 15, 2026</div>
+        <div class="news-article-body">
+          <p>The West Valley Housing Resource Fair is happening today, April 15, co-hosted by the Town of Los Gatos. The event connects residents with housing assistance programs, information on below-market-rate units, and resources from the West Valley cities collaborative&mdash;which includes Los Gatos, Campbell, and Saratoga.</p>
+
+          <p>The timing is notable. SB 79 takes effect July 1 and could dramatically reshape housing density around transit stops across the South Bay. Measure A's $330 million in annual revenue is partly aimed at protecting the county hospital system that serves residents who can't afford private care. And the median home price in Los Gatos remains north of $2 million.</p>
+
+          <p>Against that backdrop, a resource fair isn't going to solve the South Bay's housing crisis. But it's a concrete step by three small cities toward helping the residents who are already here.</p>
+
+          <div class="news-source">
+            Source: <a href="https://www.losgatosca.gov/m/newsflash" target="_blank" rel="noopener">Town of Los Gatos news flash</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 8. Hack Cupertino ──
+           Source: City of Cupertino event page (cupertino.gov) -->
+      <article class="news-article">
+        <div class="news-article-category">Community &middot; Cupertino</div>
+        <h3 class="news-article-headline">Cupertino's Annual Teen Hackathon Wrapped This Weekend</h3>
+        <p class="news-article-deck">Hack Cupertino has been sending teenagers into a community center with laptops and caffeine since 2017. This year's theme: health and wellness.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>Hack Cupertino 2026 ran overnight from April 11 to 12 at Quinlan Community Center. The annual 13-hour hackathon is open to teens ages 13 to 18 and is organized by the city's Youth Activity Board, Teen Commission, and Recreation Department.</p>
+
+          <p>This year's challenge asked participants to build software focused on health and wellness. The event has been running since 2017&mdash;making it one of the longest-running municipally organized teen hackathons in the South Bay.</p>
+
+          <p>There's something genuinely great about a city parks department running a hackathon. Not every community center doubles as a startup incubator at midnight, but in Cupertino, that's apparently just what happens in April.</p>
+
+          <div class="news-source">
+            Source: <a href="https://www.cupertino.gov/Parks-Recreation/Events/Hack-Cupertino" target="_blank" rel="noopener">City of Cupertino event page</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 9. PG&E Downtown Los Gatos ──
+           Source: Town of Los Gatos news flash (losgatosca.gov) -->
+      <article class="news-article">
+        <div class="news-article-category">Infrastructure &middot; Los Gatos</div>
+        <h3 class="news-article-headline">PG&amp;E Is Replacing a Power Pole on Main Street Tonight</h3>
+        <p class="news-article-deck">Overnight work at 25 W. Main and Park Avenue. If you're downtown after 9 p.m., expect detours.</p>
+        <div class="news-article-byline">April 15, 2026</div>
+        <div class="news-article-body">
+          <p>PG&amp;E is replacing a power pole overnight from 9 p.m. tonight (Wednesday, April 15) to 6 a.m. Thursday at 25 W. Main Street and Park Avenue in downtown Los Gatos.</p>
+
+          <p>The work will involve temporary road closures and detours in one of the town's most-walked intersections. Residents and businesses in the immediate area should expect noise and light disruptions through the early morning hours.</p>
+
+          <p>Separately, the Town will accept electronic bids for its 2026 Annual Street Repair and Resurfacing Project by 2 p.m. today&mdash;a reminder that beneath the charm of Los Gatos's downtown, there's a municipal government quietly keeping the roads from falling apart.</p>
+
+          <div class="news-source">
+            Source: <a href="https://www.losgatosca.gov/m/newsflash" target="_blank" rel="noopener">Town of Los Gatos news flash</a>.
           </div>
         </div>
       </article>
@@ -573,11 +546,7 @@ const dateStr = "Wednesday, April 15, 2026";
   <!-- ── FOOTER ── -->
   <footer class="news-footer">
     <div class="news-footer-text">
-      South Bay Today &middot; <a href="/">southbaytoday.org</a><br />
-      All facts sourced from named publications and public records. No scenes were invented. No quotes were fabricated.
-    </div>
-    <div class="news-colophon">
-      &ldquo;Every concrete claim traces to a source, or it doesn&rsquo;t go in.&rdquo;
+      South Bay Today &middot; <a href="/">southbaytoday.org</a>
     </div>
   </footer>
 
