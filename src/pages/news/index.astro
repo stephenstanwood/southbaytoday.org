@@ -1,0 +1,584 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "The Newsroom — South Bay Today";
+const dateStr = "Wednesday, April 15, 2026";
+---
+
+<BaseLayout
+  title={title}
+  description="Original reporting from the South Bay. Real stories, real sources, no filler."
+  themeColor="#FAF9F6"
+  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+>
+  <Fragment slot="head">
+    <style>
+      :root {
+        --n-bg: #FAF9F6;
+        --n-card: #FFFFFF;
+        --n-ink: #1A1A1A;
+        --n-muted: #555555;
+        --n-light: #888888;
+        --n-border: #C8C4BC;
+        --n-border-light: #E5E2DB;
+        --n-accent: #C0392B;
+        --n-accent-light: #FDEEEC;
+        --n-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        --n-sans: 'Inter', system-ui, -apple-system, sans-serif;
+        --n-mono: 'Space Mono', monospace;
+        --n-max: 960px;
+      }
+      body {
+        font-family: var(--n-sans);
+        background: var(--n-bg);
+        color: var(--n-ink);
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── Masthead ── */
+      .news-masthead {
+        max-width: var(--n-max);
+        margin: 0 auto;
+        padding: 32px 24px 0;
+        text-align: center;
+      }
+      .news-masthead-rule { height: 3px; background: var(--n-ink); margin-bottom: 12px; }
+      .news-masthead-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .news-masthead-date,
+      .news-masthead-edition {
+        font-family: var(--n-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--n-muted);
+      }
+      .news-masthead-logo {
+        text-decoration: none;
+        color: var(--n-ink);
+      }
+      .news-masthead-title {
+        font-family: var(--n-serif);
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .news-masthead-subtitle {
+        font-family: var(--n-mono);
+        font-size: 11px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--n-muted);
+        margin-top: 4px;
+      }
+      .news-masthead-rule-thin {
+        height: 1px;
+        background: var(--n-border);
+        margin-top: 14px;
+      }
+      .news-masthead-rule-double {
+        border: none;
+        border-top: 3px double var(--n-border);
+        margin: 6px 0 0;
+      }
+
+      /* ── Home link ── */
+      .news-home-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--n-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        color: var(--n-muted);
+        text-decoration: none;
+        padding: 10px 0;
+        transition: color 0.15s;
+      }
+      .news-home-link:hover { color: var(--n-ink); }
+
+      /* ── Content ── */
+      .news-content {
+        max-width: var(--n-max);
+        margin: 0 auto;
+        padding: 0 24px 48px;
+      }
+
+      /* ── Hero article ── */
+      .news-hero {
+        padding: 28px 0 24px;
+        border-bottom: 1px solid var(--n-border);
+      }
+      .news-hero-category {
+        font-family: var(--n-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--n-accent);
+        margin-bottom: 8px;
+      }
+      .news-hero-headline {
+        font-family: var(--n-serif);
+        font-size: 42px;
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--n-ink);
+        margin: 0 0 10px;
+        max-width: 720px;
+      }
+      .news-hero-deck {
+        font-family: var(--n-serif);
+        font-size: 18px;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--n-muted);
+        line-height: 1.45;
+        margin: 0 0 14px;
+        max-width: 640px;
+      }
+      .news-hero-byline {
+        font-family: var(--n-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--n-light);
+        margin-bottom: 18px;
+      }
+      .news-hero-body {
+        font-size: 15px;
+        line-height: 1.72;
+        color: var(--n-ink);
+        max-width: 640px;
+      }
+      .news-hero-body p {
+        margin: 0 0 14px;
+      }
+
+      /* ── Article grid ── */
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--n-border);
+      }
+      .news-article {
+        padding: 24px 0;
+        border-bottom: 1px solid var(--n-border-light);
+      }
+      .news-article:nth-child(odd) {
+        padding-right: 24px;
+        border-right: 1px solid var(--n-border-light);
+      }
+      .news-article:nth-child(even) {
+        padding-left: 24px;
+      }
+      .news-article-category {
+        font-family: var(--n-mono);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--n-accent);
+        margin-bottom: 6px;
+      }
+      .news-article-headline {
+        font-family: var(--n-serif);
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: var(--n-ink);
+        margin: 0 0 6px;
+      }
+      .news-article-deck {
+        font-family: var(--n-serif);
+        font-size: 14px;
+        font-style: italic;
+        color: var(--n-muted);
+        line-height: 1.4;
+        margin: 0 0 8px;
+      }
+      .news-article-byline {
+        font-family: var(--n-mono);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--n-light);
+        margin-bottom: 12px;
+      }
+      .news-article-body {
+        font-size: 14px;
+        line-height: 1.68;
+        color: var(--n-ink);
+      }
+      .news-article-body p {
+        margin: 0 0 12px;
+      }
+
+      /* ── Source box ── */
+      .news-source {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--n-border-light);
+        font-family: var(--n-mono);
+        font-size: 10px;
+        color: var(--n-light);
+        line-height: 1.5;
+      }
+      .news-source a {
+        color: var(--n-muted);
+        text-decoration: none;
+        border-bottom: 1px solid var(--n-border-light);
+      }
+      .news-source a:hover {
+        color: var(--n-ink);
+        border-color: var(--n-ink);
+      }
+
+      /* ── Full-width break article ── */
+      .news-break {
+        grid-column: 1 / -1;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--n-border-light);
+        border-right: none !important;
+      }
+      .news-break-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .news-break-inner .news-article-body {
+        columns: 2;
+        column-gap: 24px;
+      }
+
+      /* ── Footer ── */
+      .news-footer {
+        max-width: var(--n-max);
+        margin: 0 auto;
+        padding: 24px 24px 48px;
+        text-align: center;
+        border-top: 3px double var(--n-border);
+      }
+      .news-footer-text {
+        font-family: var(--n-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        color: var(--n-light);
+        line-height: 1.7;
+      }
+      .news-footer-text a {
+        color: var(--n-muted);
+        text-decoration: none;
+      }
+      .news-footer-text a:hover { text-decoration: underline; }
+      .news-colophon {
+        font-family: var(--n-serif);
+        font-size: 13px;
+        font-style: italic;
+        color: var(--n-muted);
+        margin-top: 10px;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 700px) {
+        .news-masthead { padding: 24px 16px 0; }
+        .news-masthead-title { font-size: 36px; }
+        .news-content { padding: 0 16px 40px; }
+        .news-hero-headline { font-size: 28px; }
+        .news-hero-deck { font-size: 16px; }
+        .news-hero-body { font-size: 14px; }
+        .news-grid { grid-template-columns: 1fr; }
+        .news-article:nth-child(odd) {
+          padding-right: 0;
+          border-right: none;
+        }
+        .news-article:nth-child(even) {
+          padding-left: 0;
+        }
+        .news-break-inner {
+          grid-template-columns: 1fr;
+        }
+        .news-break-inner .news-article-body {
+          columns: 1;
+        }
+        .news-article-headline { font-size: 20px; }
+        .news-masthead-top { flex-direction: column; gap: 2px; }
+      }
+    </style>
+  </Fragment>
+
+  <!-- ── MASTHEAD ── -->
+  <header class="news-masthead">
+    <div class="news-masthead-rule"></div>
+    <div class="news-masthead-top">
+      <span class="news-masthead-date">{dateStr}</span>
+      <span class="news-masthead-edition">Vol. 1, No. 1</span>
+    </div>
+    <a href="/" class="news-masthead-logo">
+      <h1 class="news-masthead-title">South Bay Today</h1>
+    </a>
+    <div class="news-masthead-subtitle">The Newsroom</div>
+    <div class="news-masthead-rule-thin"></div>
+    <hr class="news-masthead-rule-double" />
+    <nav style="text-align: left;">
+      <a href="/" class="news-home-link">&larr; Back to southbaytoday.org</a>
+    </nav>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <div class="news-content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO: Whole Foods Los Gatos
+         ═══════════════════════════════════════════════════════ -->
+    <article class="news-hero">
+      <div class="news-hero-category">Business &middot; Los Gatos</div>
+      <h2 class="news-hero-headline">Bigger Cart, Same Town: Whole Foods Reopens on Los Gatos Boulevard</h2>
+      <p class="news-hero-deck">The grocery chain's 30-year bet on Los Gatos doubles down&mdash;literally&mdash;with a store nearly twice the size of its predecessor and, at long last, a parking lot.</p>
+      <div class="news-hero-byline">South Bay Today &middot; April 15, 2026</div>
+      <div class="news-hero-body">
+        <p>Whole Foods Market opened the doors of its new Los Gatos store at 15650 Los Gatos Blvd. this morning at 9 a.m. At 43,130 square feet, the location nearly doubles the footprint of the previous store a short distance up the boulevard&mdash;which served the town for more than three decades.</p>
+
+        <p>The relocation brings expanded departments, a dedicated coffee and juice bar, additional seating, and something the old store famously lacked: a larger, dedicated parking lot. Regular hours going forward are 8 a.m. to 10 p.m. daily.</p>
+
+        <p>The store is carrying more than 2,000 local items sourced from over 350 California-based suppliers, curated with help from Patrick Wyman, the company's forager for local and emerging brands. Produce from Tomatero Farm in Watsonville and Coke Farm in San Juan Bautista anchors the entrance. The cheese counter features Andante Dairy and Nicasio Valley Cheese; the bakery stocks Acme Bread Company and Firebrand Artisan Breads. The wine department lists 500-plus bottles from 110 local wineries, alongside 330 craft beers from 40 local breweries.</p>
+
+        <p>The first 300 customers received a limited-edition Los Gatos tote bag and a "Secret Saver" coupon worth up to $100. Coffee and pastry samples from local suppliers were also on offer.</p>
+
+        <p>As part of its Nourishing Our Neighborhoods program, Whole Foods is donating an all-electric refrigerated van to West Valley Community Services, the Cupertino-based nonprofit that picks up surplus food from local Whole Foods stores for distribution. Monetary donations are going to Ma'alot Farms and the River of Life Food Pantry.</p>
+
+        <p>The new store sits at the south end of the Los Gatos Boulevard commercial corridor. The company's own web listing for the location uses the URL slug "losgatosalmaden"&mdash;a quiet acknowledgment that the store's catchment extends well beyond the town line, into the Almaden Valley neighborhoods just over the hill in San Jose.</p>
+
+        <p>Three decades into the chain's presence in Los Gatos, the town now has the version of the store the company has been wanting to build.</p>
+
+        <div class="news-source">
+          Source: <a href="https://www.wholefoodsmarket.com/company-info/newsroom/news-releases/new-whole-foods-market-in-los-gatos-calif-to-open-april-15" target="_blank" rel="noopener">Whole Foods Market press release</a>, March 18, 2026. Also: <a href="https://sanjosespotlight.com/larger-whole-foods-to-open-in-los-gatos/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+        </div>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════════════
+         GRID
+         ═══════════════════════════════════════════════════════ -->
+    <div class="news-grid">
+
+      <!-- ── 1. Flock Safety Lawsuit ── -->
+      <article class="news-article">
+        <div class="news-article-category">Civil Liberties &middot; San Jos&eacute;</div>
+        <h3 class="news-article-headline">Three Residents Sue San Jos&eacute; Over 474 License Plate Cameras</h3>
+        <p class="news-article-deck">A federal class action asks whether the city's growing surveillance network violates the Fourth Amendment.</p>
+        <div class="news-article-byline">April 15, 2026</div>
+        <div class="news-article-body">
+          <p>Tony Tan, Scott West, and Colin Wolfson filed a federal class action lawsuit today at the Robert F. Peckham Federal Building in San Jos&eacute;, challenging the city's network of 474 Flock Safety automated license plate reader cameras.</p>
+
+          <p>The suit, filed by the nonprofit Institute for Justice, argues that the cameras&mdash;which collect millions of license plate images monthly&mdash;constitute a warrantless search in violation of the Fourth Amendment. IJ attorney Michael Soyfer said the system allows thousands of government employees across California to search San Jos&eacute; drivers' data with minimal oversight.</p>
+
+          <p>The program launched in 2022 and has grown rapidly. In March, the City Council adopted new restrictions on the cameras, including shortening the default data retention period from one year to 30 days. The plaintiffs are seeking a 24-hour deletion policy, except where warrants are obtained.</p>
+
+          <p>City Attorney Susana Alcala Wood has stated that the cameras operate only in public areas on public streets. This is the second federal lawsuit over the system; an advocacy coalition filed a separate suit in November 2025 alleging California Constitution privacy violations.</p>
+
+          <p>Soyfer indicated IJ's broader goal is to push ALPR cases up to federal appellate courts.</p>
+
+          <div class="news-source">
+            Sources: <a href="https://sanjosespotlight.com/another-lawsuit-targets-san-joses-license-plate-cameras/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>; <a href="https://ij.org/press-release/three-san-jose-residents-file-federal-class-action-lawsuit-over-citys-mass-surveillance-of-drivers/" target="_blank" rel="noopener">Institute for Justice</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 2. Mountain View Entertainment Zone ── -->
+      <article class="news-article">
+        <div class="news-article-category">Lifestyle &middot; Mountain View</div>
+        <h3 class="news-article-headline">Mountain View Advances Downtown "Sip and Stroll" Zone</h3>
+        <p class="news-article-deck">Five blocks of Castro Street could allow open beverages during city events, just in time for the World Cup.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>The Mountain View City Council moved forward on an ordinance to create a downtown entertainment zone along five blocks of Castro Street, from West Evelyn Avenue to Church Street, plus portions of Villa Street, West Dana Street, California Street, and Mercy Street, and the City Hall plaza.</p>
+
+          <p>The 18-month pilot would allow open alcohol consumption during city-sponsored events from 8 a.m. to 11 p.m., seven days a week. If the final vote passes on April 28, the zone launches May 28&mdash;just ahead of the 2026 FIFA World Cup, which served as the primary impetus for the accelerated timeline.</p>
+
+          <p>The Downtown Committee unanimously backed the proposal. Chair Mike Kasperzak urged the city to evaluate the pilot early rather than wait the full 18 months, cautioning a delay could hurt local businesses.</p>
+
+          <p>Amanda Rotella, economic development strategist, said the city aims to position Mountain View as a place where people want to come and spend time. The city plans to weigh costs&mdash;including expanded police presence and additional trash receptacles&mdash;against economic benefits.</p>
+
+          <div class="news-source">
+            Source: <a href="https://sanjosespotlight.com/mountain-view-could-allow-public-drinking-in-downtown/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 3. Coyote Creek Trestle ── -->
+      <article class="news-article">
+        <div class="news-article-category">Preservation &middot; San Jos&eacute;</div>
+        <h3 class="news-article-headline">Residents Rally to Save a 1922 Railroad Trestle Over Coyote Creek</h3>
+        <p class="news-article-deck">The 250-foot timber bridge faces demolition for a trail project. Neighbors say there's a better way.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>A coalition of San Jos&eacute; residents is fighting to preserve the Coyote Creek Trestle, a 250-foot timber railroad bridge north of Kelley Park built by Western Pacific Railroad in 1922. The city acquired the structure as part of a nine-acre rail corridor purchase in 2012.</p>
+
+          <p>The trestle is in the path of the Five Wounds Trail expansion, a planned two-mile northward extension terminating near Watson Park. City officials had proposed demolishing it and replacing it with a modern steel bridge. Preservation advocates want a different approach: structurally reinforce the existing trestle and build a new trail bridge at a nearby location.</p>
+
+          <p>The campaign has drawn support from the D7 Leadership Group, the All District Leadership Group, and Save Our Trails. Councilmember Bien Doan, who represents District 7, said the city can build a safe, modern trail crossing without tearing down what makes the area unique. Board member Keith Ball of Save Our Trails emphasized that public support influences city decisions.</p>
+
+          <p>Parks Department spokesperson Ed Bautista said no decisions have been made. The outcome matters to preservationists still smarting from the demolition of the Willow Glen Trestle nearly six years ago, despite similar community pushback.</p>
+
+          <div class="news-source">
+            Source: <a href="https://sanjosespotlight.com/san-jose-residents-rally-to-save-railroad-trestle/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 4. Burrowing Owls ── -->
+      <article class="news-article">
+        <div class="news-article-category">Environment &middot; Mountain View</div>
+        <h3 class="news-article-headline">Mountain View Boosts Funding for Shoreline's Struggling Burrowing Owls</h3>
+        <p class="news-article-deck">The population dropped from 27 to 16. Breeding pairs collapsed from nine to one. The city is writing a check.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>Mountain View is adding $105,000 in funding for biological consultant services at Shoreline Park, where the burrowing owl population has taken a sharp downturn. The city's total budget for biological services at Shoreline for the 2025&ndash;2026 fiscal year is $280,000.</p>
+
+          <p>The numbers tell the story: a January 2026 survey counted 16 owls at Shoreline, down from 27 in January 2025. More alarming, successful breeding pairs dropped from nine in 2024&mdash;producing 51 juveniles&mdash;to just one pair in 2025, which produced five juveniles.</p>
+
+          <p>The funding boost comes nearly two years after the city's two wildlife biologists departed, leaving the owl monitoring program in the hands of outside consultants. The additional $105,000 covers consulting costs not anticipated in the original budget.</p>
+
+          <p>Burrowing owls are a California Species of Special Concern. Shoreline Park, built atop a former landfill on the edge of San Francisco Bay, has been one of the South Bay's most important habitats for the small, ground-nesting raptors.</p>
+
+          <div class="news-source">
+            Source: <a href="https://www.mv-voice.com/environment/2026/04/14/mountain-view-aims-to-give-shorelines-burrowing-owls-a-boost-with-more-funding/" target="_blank" rel="noopener">Mountain View Voice</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 5. Campbell SB 79 ── -->
+      <article class="news-article">
+        <div class="news-article-category">Housing &middot; Campbell</div>
+        <h3 class="news-article-headline">Campbell Stares Down a State Law That Could Triple Its Housing</h3>
+        <p class="news-article-deck">SB 79 takes effect July 1. The math: 40,409 potential new homes in a city of 43,000 people.</p>
+        <div class="news-article-byline">April 13, 2026</div>
+        <div class="news-article-body">
+          <p>Senate Bill 79, the transit-oriented housing law taking effect July 1, could allow up to 40,409 new homes on land within a half mile of Campbell's three VTA light rail stations&mdash;more than doubling the city's existing stock of roughly 18,200 units.</p>
+
+          <p>Nearly a quarter of Campbell's 6.5 square miles falls within the law's reach. The qualifying stations are on South Winchester Boulevard, downtown Campbell, and at Hamilton and Bascom avenues. A fourth station just over the line in San Jos&eacute; throws its radius back into Campbell.</p>
+
+          <p>Community Development Director Rob Eastwood told the San Jos&eacute; Spotlight that no other city in Santa Clara County is projected to have nearly 25 percent of its land area affected by SB 79, and Campbell may experience the highest proportional increase relative to existing housing.</p>
+
+          <p>Councilmember Terry Hines called it the city's "watershed moment." Councilmember Sergio Lopez, who chairs the VTA Board of Directors, said he believes the law could be a net positive financially. Vice Mayor Anne Bybee was more skeptical, calling 40,000 new units an unattainable goal.</p>
+
+          <p>Cities can adopt an alternative plan before July 1 if the state Department of Housing and Community Development approves it&mdash;but the local plan must preserve substantially the same total housing capacity.</p>
+
+          <div class="news-source">
+            Source: <a href="https://sanjosespotlight.com/state-housing-law-could-change-campbells-small-city-vibe/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>. Also: <a href="https://localnewsmatters.org/2026/04/13/state-housing-law-could-reshape-campbells-small-city-vibe-with-up-to-40000-new-homes/" target="_blank" rel="noopener">Local News Matters</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 6. Rod Diridon Tribute ── -->
+      <article class="news-article">
+        <div class="news-article-category">Civic &middot; Santa Clara County</div>
+        <h3 class="news-article-headline">County Honors Rod Diridon Sr., the Father of South Bay Transit</h3>
+        <p class="news-article-deck">The man behind VTA light rail, the first half-cent transit tax, and the station that bears his name died April 3 at 87.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>The Santa Clara County Board of Supervisors held a commendation ceremony on April 14 honoring Rod Diridon Sr., who died April 3 at age 87. All five supervisors&mdash;Susan Ellenberg, Board President Otto Lee, Sylvia Arenas, Margaret Abe-Koga, and Betty Duong&mdash;spoke at the ceremony, alongside his son Rod Diridon Jr. and his wife Gloria.</p>
+
+          <p>Diridon served 20 years as a County Supervisor in District 4, beginning in the 1970s, and was the driving force behind the first half-cent transit sales tax and the creation of the VTA light rail system. He later worked with the Mineta Transportation Institute on advancing regional transit. His name is on the Caltrain and future BART station in downtown San Jos&eacute;.</p>
+
+          <p>Board President Otto Lee said Diridon had an unwavering commitment that left an indelible mark. His wife Gloria noted his involvement in causes far beyond transit, including blocking Nestl&eacute;'s bid for McCloud River water rights in Siskiyou County&mdash;an effort that ended when the company abandoned the project in 2009.</p>
+
+          <p>Diridon also advocated for parks, trails, civil rights, gay rights, and healthcare, and was instrumental in the county board's decision to accept Vietnamese refugees.</p>
+
+          <div class="news-source">
+            Source: <a href="https://www.sanjoseinside.com/news/rod-diridon-sr-hailed-by-santa-clara-county-as-father-of-modern-transit/" target="_blank" rel="noopener">San Jos&eacute; Inside</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 7. Mountain View Hotel ── -->
+      <article class="news-article">
+        <div class="news-article-category">Development &middot; Mountain View</div>
+        <h3 class="news-article-headline">Mountain View Revives $141.8M Downtown Hotel Project</h3>
+        <p class="news-article-deck">Two parking lots near the Transit Center are about to become a five-story hotel and a four-story office building.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>Mountain View has authorized an amended deal with developer RGC Mountain View to build a five-story hotel with ground-floor retail and a four-story office building with ground-floor retail on Lots 4 and 8 on Hope Street, between Villa Street and West Evelyn Avenue, across from the Mountain View Transit Center.</p>
+
+          <p>The hotel's estimated construction cost has risen to $141.8 million, up from $80 million when the deal was first struck in 2017. The city projects $433.6 million in revenue over the 55-year lease. In exchange, the city is subsidizing RGC to the tune of $47.5 million over the lease term, including five years rent-free after the hotel opens and up to 15 years of transient occupancy tax rebates.</p>
+
+          <p>A three-level underground garage at the hotel site has been scrapped, saving an estimated $35 million and shaving six-plus months off construction. The hotel will instead use a valet system with shared parking from nearby properties. RGC is paying the city $6.6 million toward a new parking garage at Lot 5. The office building will have a two-level underground garage with 110 spaces.</p>
+
+          <p>The council approved the amended terms unanimously on March 24. The hotel is expected to open between mid-2029 and spring 2031. No upfront capital from the city is required, unlike the original 2017 agreement.</p>
+
+          <div class="news-source">
+            Source: <a href="https://sanjosespotlight.com/mountain-view-to-replace-downtown-parking-lot-with-hotel/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>; <a href="https://www.mv-voice.com/" target="_blank" rel="noopener">Mountain View Voice</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 8. Hack Cupertino ── -->
+      <article class="news-article">
+        <div class="news-article-category">Community &middot; Cupertino</div>
+        <h3 class="news-article-headline">100 Teens, One Night, Zero Sleep: Hack Cupertino Returns</h3>
+        <p class="news-article-deck">The annual overnight hackathon asked Bay Area teens to build health and wellness software&mdash;and threw in Mario Kart at midnight.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>Over 100 Bay Area teens spent the night of April 11&ndash;12 at Quinlan Community Center in Cupertino, building health and wellness software from scratch at Hack Cupertino 2026. The annual 13-hour overnight hackathon is open to participants ages 13 to 18, who split into teams of up to four.</p>
+
+          <p>The event has been running since 2017, organized by Cupertino's Youth Activity Board, Teen Commission, and Recreation Department. This year's theme was health and wellness. Registration cost $5 for Cupertino residents and $6 for non-residents.</p>
+
+          <p>Organizers allowed participants to use AI tools, with the requirement that usage be disclosed. Between coding sprints, the lobby hosted diversions including "Midnight Mario Kart" and "2 a.m. Table Tennis" tournaments.</p>
+
+          <p>The event is a reminder that not all of the South Bay's tech innovation happens inside corporate campuses. Sometimes it happens in a community center at two in the morning, fueled by pizza and competitive ping-pong.</p>
+
+          <div class="news-source">
+            Source: <a href="https://lavozdeanza.com/news/2026/04/14/teens-hack-cupertino/" target="_blank" rel="noopener">La Voz News</a>; <a href="https://www.cupertino.org/our-city/departments/parks-recreation/recreation-classes-and-activities/teen/hack-cupertino" target="_blank" rel="noopener">City of Cupertino</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- ── 9. Animal Shelter ── -->
+      <article class="news-article">
+        <div class="news-article-category">City Hall &middot; San Jos&eacute;</div>
+        <h3 class="news-article-headline">San Jos&eacute; Is Moving Its Animal Shelter Back Where It Started</h3>
+        <p class="news-article-deck">After years of audit findings and advocacy pressure, Animal Care and Services returns to the Parks Department on August 1.</p>
+        <div class="news-article-byline">April 14, 2026</div>
+        <div class="news-article-body">
+          <p>San Jos&eacute; has announced that Animal Care and Services will transfer from the Public Works Department to Parks, Recreation and Neighborhood Services on August 1&mdash;returning the shelter to the department where it was originally housed when it opened in 2004.</p>
+
+          <p>City Manager's Office spokesperson Danielle Torralba said the transition reflects the administration's goal of optimizing the city's service delivery. Mayor Matt Mahan said the move will help strengthen community-based services and improve outcomes for animals.</p>
+
+          <p>The reorganization places the animal shelter under the same umbrella as Happy Hollow Park and Zoo and Emma Prusch Farm Park, consolidating the city's animal-related programs. It follows a 2024 city audit that cited overcrowding, unsanitary conditions, inadequate medical care, and poor record-keeping at the shelter. Animal welfare advocates threatened legal action in January 2026 over alleged neglect.</p>
+
+          <p>The city says recent progress includes reducing shelter overcrowding. Whether the departmental move addresses the structural issues identified in the audit remains to be seen, but for San Jos&eacute;'s shelter animals, a new organizational home is coming this summer.</p>
+
+          <div class="news-source">
+            Sources: <a href="https://www.sanjoseca.gov/Home/Components/News/News/7246/4699" target="_blank" rel="noopener">City of San Jos&eacute; press release</a>; <a href="https://sanjosespotlight.com/san-jose-animal-shelter-moves-back-to-parks-department/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <!-- /grid -->
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="news-footer">
+    <div class="news-footer-text">
+      South Bay Today &middot; <a href="/">southbaytoday.org</a><br />
+      All facts sourced from named publications and public records. No scenes were invented. No quotes were fabricated.
+    </div>
+    <div class="news-colophon">
+      &ldquo;Every concrete claim traces to a source, or it doesn&rsquo;t go in.&rdquo;
+    </div>
+  </footer>
+
+</BaseLayout>
