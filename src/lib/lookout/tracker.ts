@@ -114,19 +114,33 @@ function hasBlobToken(): boolean {
   return !!getBlobToken();
 }
 
+/**
+ * Strip any targets whose id is in deletedIds. Defense-in-depth: even if a
+ * subscribe script or stale write resurrects a row that was supposed to be
+ * gone, the read path will hide it. The tombstone in deletedIds is the source
+ * of truth for "this should not exist."
+ */
+function applyDeletedIds(doc: NewsletterTrackerDoc): NewsletterTrackerDoc {
+  const deleted = new Set(doc.deletedIds ?? []);
+  if (deleted.size === 0) return doc;
+  const filtered = doc.targets.filter((t) => !deleted.has(t.id));
+  if (filtered.length === doc.targets.length) return doc;
+  return { ...doc, targets: filtered };
+}
+
 export async function readTracker(): Promise<NewsletterTrackerDoc> {
   if (hasBlobToken()) {
     const raw = await readBlobJson(TRACKER_BLOB_KEY);
     if (raw === null) return emptyDoc();
     try {
-      return JSON.parse(raw) as NewsletterTrackerDoc;
+      return applyDeletedIds(JSON.parse(raw) as NewsletterTrackerDoc);
     } catch {
       return emptyDoc();
     }
   }
   if (!existsSync(TRACKER_PATH)) return emptyDoc();
   try {
-    return JSON.parse(readFileSync(TRACKER_PATH, "utf-8")) as NewsletterTrackerDoc;
+    return applyDeletedIds(JSON.parse(readFileSync(TRACKER_PATH, "utf-8")) as NewsletterTrackerDoc);
   } catch {
     return emptyDoc();
   }
@@ -218,6 +232,12 @@ export async function upsertTarget(
   }
 ): Promise<void> {
   const doc = await readTracker();
+  const deleted = new Set(doc.deletedIds ?? []);
+  if (deleted.has(target.id)) {
+    // Refuse to resurrect a tombstoned target. Subscribe scripts already
+    // filter on this, but enforce here too in case a one-off path skips it.
+    return;
+  }
   const idx = doc.targets.findIndex((t) => t.id === target.id);
   const merged: NewsletterTarget = {
     receivedCount: 0,

@@ -536,13 +536,13 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
           {orderedCategories.map((category) => {
             const items = grouped[category] ?? [];
             return (
-              <section class="section">
+              <section class="section" data-category={category}>
                 <div class="section-header">
                   <h2>
                     <span>{CATEGORY_EMOJI[category] ?? "✨"}</span>
                     <span>{category.replace(/-/g, " ")}</span>
                   </h2>
-                  <span class="count">{items.length}</span>
+                  <span class="count" data-count>{items.length}</span>
                 </div>
                 <div class="card">
                   <table>
@@ -782,9 +782,18 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                 return;
               }
               const row = delBtn.closest("tr");
+              const section = row?.closest("section.section");
               if (row) {
                 row.classList.add("fading");
-                setTimeout(() => row.remove(), 300);
+                setTimeout(() => {
+                  row.remove();
+                  // Decrement the category count in the section header
+                  const countEl = section?.querySelector("[data-count]");
+                  if (countEl) {
+                    const remaining = section?.querySelectorAll("tbody tr[data-target-id]").length ?? 0;
+                    countEl.textContent = String(remaining);
+                  }
+                }, 300);
               }
             } catch (err) {
               alert("delete error: " + err.message);

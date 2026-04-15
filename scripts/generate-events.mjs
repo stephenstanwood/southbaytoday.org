@@ -1259,7 +1259,7 @@ async function fetchCampbellEvents() {
 
 // ── CivicPlus iCal feeds ──
 
-async function fetchCivicPlusIcal(name, url, defaultCity) {
+async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") {
   console.log(`  ⏳ ${name}...`);
   try {
     const ical = await fetchText(url);
@@ -1294,7 +1294,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity) {
           address: "",
           city,
           category: inferCategory(ev.summary, ev.description || "", ""),
-          cost: "free",
+          cost: defaultCost,
           description: descIsUrl ? "" : descText,
           url: eventUrl,
           source: name,
@@ -1356,6 +1356,85 @@ async function fetchCupertinoEvents() {
     "City of Cupertino",
     "https://www.cupertino.org/common/modules/iCalendar/iCalendar.aspx?feed=calendar",
     "cupertino",
+  );
+}
+
+// ── CivicPlus RSS for cities that don't expose an iCal (Milpitas, Morgan Hill) ──
+// Same shape as fetchCampbellEvents — they all use calendarEvent:EventDates +
+// calendarEvent:EventTimes fields. Refactored into a generic helper so adding
+// another CivicPlus city is a one-liner.
+
+async function fetchCivicPlusRssCity(name, url, defaultCity) {
+  console.log(`  ⏳ ${name}...`);
+  try {
+    const xml = await fetchText(url);
+    const items = parseRssItems(xml);
+    const now = new Date();
+    const events = items.map((item) => {
+      if (isBlockedEvent(item.title)) return null;
+      const start = parseCivicPlusEventDates(item.eventDates)
+        || parseDate(item.startDate)
+        || parseDate(item.pubDate);
+      if (!start || start < now) return null;
+      const timeStr = parseCivicPlusEventTime(item.eventTimes);
+      const venueLabel = (item.location || "").replace(new RegExp(`${defaultCity},?\\s*CA\\s*\\d*`, "i"), "").trim();
+      const titleLower = item.title.toLowerCase();
+      return {
+        id: h(defaultCity, item.link || item.title, item.eventDates || item.pubDate),
+        title: item.title,
+        date: isoDate(start),
+        displayDate: displayDate(start),
+        time: timeStr,
+        endTime: null,
+        venue: venueLabel || name,
+        address: "",
+        city: defaultCity,
+        category: inferCategory(item.title, item.description, ""),
+        cost: "free",
+        description: truncate(stripHtml(item.description)),
+        url: item.link,
+        source: name,
+        kidFriendly: titleLower.includes("kid") || titleLower.includes("family") || titleLower.includes("story") || titleLower.includes("youth"),
+      };
+    }).filter(Boolean);
+    console.log(`  ✅ ${name}: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  ${name}: ${err.message}`);
+    return [];
+  }
+}
+
+async function fetchMilpitasEvents() {
+  return fetchCivicPlusRssCity(
+    "City of Milpitas",
+    "https://www.milpitas.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+    "milpitas",
+  );
+}
+
+async function fetchMorganHillEvents() {
+  return fetchCivicPlusRssCity(
+    "City of Morgan Hill",
+    "https://www.morganhill.ca.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+    "morgan-hill",
+  );
+}
+
+async function fetchOperaSanJoseEvents() {
+  return fetchCivicPlusIcal(
+    "Opera San José",
+    "https://www.operasj.org/events/?ical=1",
+    "san-jose",
+    "paid",
+  );
+}
+
+async function fetchLosAltosHistoryEvents() {
+  return fetchCivicPlusIcal(
+    "Los Altos History Museum",
+    "https://www.losaltoshistory.org/events/?ical=1",
+    "los-altos",
   );
 }
 
@@ -3308,9 +3387,13 @@ async function main() {
     fetchScuEvents,
     fetchChmEvents,
     fetchCampbellEvents,
+    fetchMilpitasEvents,
+    fetchMorganHillEvents,
     fetchLosGatosEvents,
     fetchSaratogaEvents,
     fetchLosAltosEvents,
+    fetchLosAltosHistoryEvents,
+    fetchOperaSanJoseEvents,
     // fetchMountainViewEvents,  — 403 blocked since 2026-03
     // fetchSunnyvaleEvents,     — 403 blocked since 2026-03
     // fetchCupertinoEvents,     — 404/timeout since 2026-03; covered by SCCL BiblioCommons

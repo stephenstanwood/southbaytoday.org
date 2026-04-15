@@ -798,64 +798,6 @@ async function scrapeMontalvo(page) {
 // TIER 3 — Venues with own calendars, not currently scraped
 // ═══════════════════════════════════════════════════════════════════════════
 
-// ── 3Below Theaters ──
-
-async function scrape3Below(page) {
-  const urls = [
-    "https://www.3belowtheaters.com/events",
-    "https://www.3belowtheaters.com/shows",
-    "https://www.3belowtheaters.com/",
-  ];
-  for (const url of urls) {
-    try {
-      const resp = await page.goto(url, { waitUntil: "networkidle", timeout: 20_000 });
-      if (!resp || resp.status() >= 400) continue;
-
-      const raw = await page.evaluate(() => {
-        const events = [];
-        const cards = document.querySelectorAll(
-          "[class*='event'], [class*='show'], article, .card, [class*='performance']"
-        );
-        for (const card of cards) {
-          const titleEl = card.querySelector("h2, h3, h4, [class*='title'], [class*='name']");
-          const dateEl = card.querySelector("time, [class*='date'], [datetime]");
-          const title = titleEl?.textContent?.trim();
-          const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-          const link = card.querySelector("a")?.href || titleEl?.closest("a")?.href;
-          if (title && title.length > 3) events.push({ title, date, link });
-        }
-        return events;
-      });
-
-      if (raw.length > 0) {
-        return raw
-          .map((r) => {
-            const date = tryParseDate(r.date);
-            if (!date || date < TODAY) return null;
-            return {
-              title: r.title,
-              date,
-              time: null,
-              endTime: null,
-              venue: "3Below Theaters",
-              address: "288 S Second St, San Jose, CA 95113",
-              city: "san-jose",
-              url: r.link || "https://www.3belowtheaters.com/",
-              source: "3Below Theaters",
-              category: "arts",
-              cost: "paid",
-              kidFriendly: false,
-            };
-          })
-          .filter(Boolean);
-      }
-    } catch {
-      continue;
-    }
-  }
-  return [];
-}
-
 // ── City Lights Theater Company ──
 
 async function scrapeCityLights(page) {
@@ -1328,7 +1270,6 @@ async function main() {
   tasks.push({ name: "Montalvo Arts Center", fn: (b) => runScraper(b, "Montalvo Arts Center", scrapeMontalvo) });
 
   // Tier 3: Venues with own calendars
-  tasks.push({ name: "3Below Theaters", fn: (b) => runScraper(b, "3Below Theaters", scrape3Below) });
   tasks.push({ name: "City Lights Theater", fn: (b) => runScraper(b, "City Lights Theater", scrapeCityLights) });
   tasks.push({ name: "ICA San Jose", fn: (b) => runScraper(b, "ICA San Jose", scrapeICASanJose) });
   tasks.push({ name: "SCCCFD (Eventbrite)", fn: (b) => runScraper(b, "SCCCFD (Eventbrite)", scrapeSCCCFD) });

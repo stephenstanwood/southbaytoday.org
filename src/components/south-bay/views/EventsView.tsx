@@ -657,7 +657,7 @@ const SJ_NEIGHBORHOODS: SjNeighborhood[] = [
       "san jose improv", "the ritz", "sap center", "san jose civic",
       "sjz break room", "hammer theatre", "macla", "city lights theater",
       "ica san", "san jose center for the performing", "king library",
-      "san jose jazz", "arena green", "3below", "o\u2019flaherty", "o'flaherty",
+      "san jose jazz", "arena green", "o\u2019flaherty", "o'flaherty",
       "o&#8217;flaherty", "plaza de cesar chavez", "downtown san jose", "south first",
       "san pedro square", "mcenery convention", "convention center",
       "sofa market", "courage anyone",

@@ -52,6 +52,12 @@ const meta = await head(BLOB_KEY, { token });
 const res = await fetch(`${meta.url}?_cb=${Date.now()}`);
 const doc = await res.json();
 
+const deletedIds = new Set(doc.deletedIds ?? []);
+if (deletedIds.has(id)) {
+  console.error(`refusing to add tombstoned target: ${id} (in deletedIds). Remove it from deletedIds first if you really want to re-add it.`);
+  process.exit(1);
+}
+
 const existing = doc.targets.find((t) => t.id === id);
 const now = new Date().toISOString();
 
