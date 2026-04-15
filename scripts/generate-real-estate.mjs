@@ -114,6 +114,13 @@ async function main() {
 
   console.log(`  Scanned ${lineNum.toLocaleString()} rows, found ${best.size} cities`);
 
+  // Minimum inventory to trust a city's monthly snapshot. Redfin's per-city
+  // monthly sample occasionally drops into the single digits (e.g. Mountain
+  // View has shown ~7 with a $547K median and 45-day DOM while neighbors sit
+  // at $1.5M+ — one or two distressed condo sales skewing the median). Drop
+  // anything below this threshold to avoid publishing obvious outliers.
+  const MIN_INVENTORY = 15;
+
   const cities = [...best.entries()]
     .map(([city, { periodEnd, cols }]) => ({
       city: CITY_DISPLAY[city] ?? city,
@@ -127,6 +134,13 @@ async function main() {
       avgSaleToList: parseNum(cols[COL.AVG_SALE_TO_LIST]),
       soldAboveListPct: parseNum(cols[COL.SOLD_ABOVE_LIST]),
     }))
+    .filter((c) => {
+      if (c.inventory != null && c.inventory < MIN_INVENTORY) {
+        console.log(`  ⚠️  Dropping ${c.city} — inventory ${c.inventory} < ${MIN_INVENTORY} (small-sample outlier)`);
+        return false;
+      }
+      return true;
+    })
     .sort((a, b) => a.city.localeCompare(b.city));
 
   const output = {
