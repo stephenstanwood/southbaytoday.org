@@ -15,7 +15,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { put, get } from "@vercel/blob";
+import { put, head } from "@vercel/blob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -253,14 +253,16 @@ async function readBlobJson(pathname: string): Promise<string | null> {
   const token = getBlobToken();
   if (!token) return null;
   try {
-    const result = await get(pathname, { access: "public", token });
-    if (!result) return null;
-    const anyResult = result as unknown as { stream?: ReadableStream; body?: ReadableStream };
-    const stream = anyResult.stream ?? anyResult.body ?? (result as unknown as ReadableStream);
-    if (!stream) return null;
-    return await new Response(stream as ReadableStream).text();
+    // head() returns metadata including the downloadUrl for the blob.
+    // For public blobs we can fetch the URL directly; for private we need token.
+    const meta = await head(pathname, { token });
+    if (!meta?.url) return null;
+    const res = await fetch(meta.url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`fetch ${res.status}`);
+    return await res.text();
   } catch (err) {
     if ((err as Error).name === "BlobNotFoundError") return null;
+    if (/404|not.found/i.test((err as Error).message)) return null;
     throw err;
   }
 }

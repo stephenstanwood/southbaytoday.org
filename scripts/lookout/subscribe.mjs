@@ -27,7 +27,7 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { put, get } from "@vercel/blob";
+import { put, head } from "@vercel/blob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -99,13 +99,13 @@ async function fetchWithRetry(url, init = {}, attempts = 2) {
 async function readTracker() {
   if (!BLOB_TOKEN) return emptyTracker();
   try {
-    const result = await get(TRACKER_BLOB_KEY, { access: "public", token: BLOB_TOKEN });
-    if (!result) return emptyTracker();
-    const stream = result.stream ?? result.body ?? result;
-    const text = await new Response(stream).text();
-    return JSON.parse(text);
+    const meta = await head(TRACKER_BLOB_KEY, { token: BLOB_TOKEN });
+    if (!meta?.url) return emptyTracker();
+    const res = await fetch(meta.url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`fetch ${res.status}`);
+    return JSON.parse(await res.text());
   } catch (err) {
-    if (err.name === "BlobNotFoundError") return emptyTracker();
+    if (err.name === "BlobNotFoundError" || /404/.test(err.message || "")) return emptyTracker();
     throw err;
   }
 }

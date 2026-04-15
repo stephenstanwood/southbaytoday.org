@@ -14,7 +14,7 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { get } from "@vercel/blob";
+import { head } from "@vercel/blob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,10 +42,10 @@ if (!token) {
 
 let raw = null;
 try {
-  const result = await get(BLOB_KEY, { access: "public", token });
-  if (result) {
-    const stream = result.stream ?? result.body ?? result;
-    raw = await new Response(stream).text();
+  const meta = await head(BLOB_KEY, { token });
+  if (meta?.url) {
+    const res = await fetch(meta.url, { cache: "no-store" });
+    if (res.ok) raw = await res.text();
   }
 } catch (err) {
   if (err.name === "BlobNotFoundError") {

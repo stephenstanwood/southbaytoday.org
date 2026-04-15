@@ -29,7 +29,7 @@ import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
-import { put, get } from "@vercel/blob";
+import { put, head } from "@vercel/blob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -64,12 +64,15 @@ const jitter = (min, max) => min + Math.floor(Math.random() * (max - min));
 async function readTracker() {
   if (!BLOB_TOKEN) return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
   try {
-    const result = await get(TRACKER_BLOB_KEY, { access: "public", token: BLOB_TOKEN });
-    if (!result) return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
-    const stream = result.stream ?? result.body ?? result;
-    return JSON.parse(await new Response(stream).text());
+    const meta = await head(TRACKER_BLOB_KEY, { token: BLOB_TOKEN });
+    if (!meta?.url) return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
+    const res = await fetch(meta.url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`fetch ${res.status}`);
+    return JSON.parse(await res.text());
   } catch (err) {
-    if (err.name === "BlobNotFoundError") return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
+    if (err.name === "BlobNotFoundError" || /404/.test(err.message || "")) {
+      return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
+    }
     throw err;
   }
 }
