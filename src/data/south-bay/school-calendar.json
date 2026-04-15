@@ -65,6 +65,14 @@
       "color": "#0f766e",
       "bg": "#f0fdfa",
       "cities": ["mountain-view", "los-altos"]
+    },
+    {
+      "id": "scusd",
+      "name": "SCUSD",
+      "fullName": "Santa Clara Unified",
+      "color": "#c2410c",
+      "bg": "#fff7ed",
+      "cities": ["santa-clara"]
     }
   ],
   "events": [
@@ -119,6 +127,14 @@
     {
       "id": "fuhsd-spring-break-2026",
       "districtId": "fuhsd",
+      "label": "Spring Break",
+      "type": "break",
+      "startDate": "2026-04-13",
+      "endDate": "2026-04-17"
+    },
+    {
+      "id": "scusd-spring-break-2026",
+      "districtId": "scusd",
       "label": "Spring Break",
       "type": "break",
       "startDate": "2026-04-13",
@@ -191,6 +207,14 @@
     {
       "id": "campbell-usd-memorial-day-2026",
       "districtId": "campbell-usd",
+      "label": "Memorial Day — No School",
+      "type": "holiday",
+      "startDate": "2026-05-25",
+      "endDate": "2026-05-25"
+    },
+    {
+      "id": "scusd-memorial-day-2026",
+      "districtId": "scusd",
       "label": "Memorial Day — No School",
       "type": "holiday",
       "startDate": "2026-05-25",

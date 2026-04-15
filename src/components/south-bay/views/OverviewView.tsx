@@ -2476,7 +2476,7 @@ function SchoolCalendarCard() {
       </div>
 
       <div style={{ marginTop: 8, fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-        SJUSD · PAUSD · FUHSD · MVWSD · Cupertino USD · Campbell USD · LGSUHSD · MVLA — 2025–26
+        SJUSD · PAUSD · FUHSD · SCUSD · MVWSD · Cupertino USD · Campbell USD · LGSUHSD · MVLA — 2025–26
       </div>
     </div>
   );

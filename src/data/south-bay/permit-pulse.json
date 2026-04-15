@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-15T11:20:09.795Z",
+      "generatedAt": "2026-04-15T14:09:09.616Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-15T11:20:11.591Z",
+      "generatedAt": "2026-04-15T14:09:12.190Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-00915",
-          "address": "3421 Orinda St",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "RES MEP : sewer repair like for like before sidewalk on property line. will tunnel slightly under sidewalk. no concrete cutting of city sidewalk",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-08",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00976",
           "address": "365 College Av",
           "category": "commercial",
@@ -175,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00983",
-          "address": "824 Bryant St",
+          "id": "26BLD-00915",
+          "address": "3421 Orinda St",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
-          "description": "COM emergency sewer replacement to planter strip. (SEPARATE PERMIT FROM PUBLIC WORKS REQUIRED)",
+          "description": "RES MEP : sewer repair like for like before sidewalk on property line. will tunnel slightly under sidewalk. no concrete cutting of city sidewalk",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-14",
+          "issueDate": "2026-04-08",
           "subtype": "Permit Issued"
         },
         {
@@ -211,6 +199,54 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-00983",
+          "address": "824 Bryant St",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "COM emergency sewer replacement to planter strip. (SEPARATE PERMIT FROM PUBLIC WORKS REQUIRED)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-14",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00957",
+          "address": "1066 Maddux Dr",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-10",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00931",
+          "address": "250 Churchill Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-09",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00954",
+          "address": "3179 Stockton Pl",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-10",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-00959",
           "address": "4216 Manuela Av",
           "category": "residential-large",
@@ -229,42 +265,6 @@
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
           "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-09",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00957",
-          "address": "1066 Maddux Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-10",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00954",
-          "address": "3179 Stockton Pl",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-10",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00931",
-          "address": "250 Churchill Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-09",
