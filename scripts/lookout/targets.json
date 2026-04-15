@@ -1,0 +1,95 @@
+{
+  "_meta": {
+    "description": "Newsletter subscription targets for South Bay Today. Run via scripts/lookout/subscribe.mjs — it reads this file and attempts each signup with sandcathype@gmail.com (set via LOOKOUT_SIGNUP_EMAIL).",
+    "conventions": {
+      "provider": "civicplus_notifyme | mailchimp | constant_contact | squarespace | chambermaster | libraryaware | generic_html_form | unknown",
+      "priority": "1 = highest (big city weekly, top chambers); 2 = mid; 3 = low",
+      "category": "city | chamber | library | museum | parks | arts | business-district | school | transit | other"
+    }
+  },
+  "targets": [
+
+    { "id": "saratoga-source", "name": "Saratoga Source (City of Saratoga)", "signupUrl": "https://www.saratoga.ca.us/list.aspx?ListID=260", "city": "saratoga", "category": "city", "provider": "civicplus_notifyme", "priority": 1, "notes": "Weekly city e-newsletter" },
+    { "id": "campbell-notifyme", "name": "City of Campbell Notifications", "signupUrl": "https://www.campbellca.gov/list.aspx", "city": "campbell", "category": "city", "provider": "civicplus_notifyme", "priority": 1 },
+    { "id": "los-altos-notifyme", "name": "City of Los Altos Notifications", "signupUrl": "https://www.losaltosca.gov/list.aspx", "city": "los-altos", "category": "city", "provider": "civicplus_notifyme", "priority": 1 },
+    { "id": "los-gatos-notifyme", "name": "Town of Los Gatos Notifications", "signupUrl": "https://www.losgatosca.gov/list.aspx", "city": "los-gatos", "category": "city", "provider": "civicplus_notifyme", "priority": 1 },
+    { "id": "gilroy-notifyme", "name": "City of Gilroy Notifications", "signupUrl": "https://www.cityofgilroy.org/list.aspx", "city": "gilroy", "category": "city", "provider": "civicplus_notifyme", "priority": 2 },
+    { "id": "morgan-hill-notifyme", "name": "City of Morgan Hill Notifications", "signupUrl": "https://www.morganhill.ca.gov/list.aspx", "city": "morgan-hill", "category": "city", "provider": "civicplus_notifyme", "priority": 2 },
+    { "id": "monte-sereno-notifyme", "name": "City of Monte Sereno Notifications", "signupUrl": "https://www.montesereno.org/list.aspx", "city": "monte-sereno", "category": "city", "provider": "civicplus_notifyme", "priority": 3 },
+    { "id": "milpitas-notifyme", "name": "City of Milpitas Notifications", "signupUrl": "https://www.milpitas.gov/list.aspx", "city": "milpitas", "category": "city", "provider": "civicplus_notifyme", "priority": 2 },
+
+    { "id": "cupertino-scene", "name": "Cupertino Scene Newsletter", "signupUrl": "https://www.cupertino.org/our-city/news-publications/the-cupertino-scene", "city": "cupertino", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked for curl — manual signup" },
+    { "id": "palo-alto-enews", "name": "City of Palo Alto eNews", "signupUrl": "https://www.cityofpaloalto.org/Our-City/Stay-Informed/Subscribe-to-the-Citys-Newsletters", "city": "palo-alto", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked — manual signup" },
+    { "id": "mountain-view-enews", "name": "City of Mountain View E-News", "signupUrl": "https://www.mountainview.gov/connect/newsletters", "city": "mountain-view", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked — manual signup" },
+    { "id": "sunnyvale-enews", "name": "City of Sunnyvale E-News", "signupUrl": "https://www.sunnyvale.ca.gov/news-and-events/newsletter-signup", "city": "sunnyvale", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked — manual signup" },
+    { "id": "santa-clara-enews", "name": "City of Santa Clara E-News", "signupUrl": "https://www.santaclaraca.gov/i-want-to/subscribe", "city": "santa-clara", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked — manual signup" },
+    { "id": "san-jose-mayor-newsletter", "name": "San Jose Mayor's Monthly Newsletter", "signupUrl": "https://www.sanjoseca.gov/your-government/mayor-mahan", "city": "san-jose", "category": "city", "provider": "unknown", "priority": 1, "notes": "WAF-blocked — manual signup" },
+
+    { "id": "sccgov-news", "name": "Santa Clara County News", "signupUrl": "https://news.sccgov.org/subscribe", "city": "santa-clara-county", "category": "other", "provider": "unknown", "priority": 2 },
+    { "id": "scc-parks", "name": "Santa Clara County Parks", "signupUrl": "https://www.sccgov.org/sites/parks/Pages/email-list.aspx", "city": "santa-clara-county", "category": "parks", "provider": "unknown", "priority": 2 },
+    { "id": "vta-news", "name": "VTA News & Alerts", "signupUrl": "https://www.vta.org/newsroom/subscribe", "city": "santa-clara-county", "category": "transit", "provider": "unknown", "priority": 2 },
+    { "id": "valley-water", "name": "Valley Water News", "signupUrl": "https://www.valleywater.org/newsroom/subscribe-news-releases", "city": "santa-clara-county", "category": "other", "provider": "unknown", "priority": 3 },
+
+    { "id": "sccld-newsletter", "name": "Santa Clara County Library District", "signupUrl": "https://sccld.org/support/email-newsletter/", "city": "santa-clara-county", "category": "library", "provider": "unknown", "priority": 1 },
+    { "id": "paloalto-library", "name": "Palo Alto City Library Newsletter", "signupUrl": "https://cityofpaloalto.org/Departments/Library", "city": "palo-alto", "category": "library", "provider": "unknown", "priority": 2 },
+    { "id": "mv-library", "name": "Mountain View Public Library Newsletter", "signupUrl": "https://mountainview.gov/departments/library/library-services", "city": "mountain-view", "category": "library", "provider": "unknown", "priority": 2 },
+    { "id": "los-gatos-library", "name": "Los Gatos Library Newsletter", "signupUrl": "https://www.losgatosca.gov/185/Library", "city": "los-gatos", "category": "library", "provider": "unknown", "priority": 2 },
+
+    { "id": "los-gatos-chamber", "name": "Los Gatos Chamber of Commerce Weekly", "signupUrl": "https://www.losgatoschamber.com/groups/grouproster/newsletter-signup-24", "city": "los-gatos", "category": "chamber", "provider": "chambermaster", "priority": 1, "notes": "Ships every Thursday" },
+    { "id": "sj-chamber", "name": "San Jose Chamber of Commerce", "signupUrl": "https://sjchamber.com/", "city": "san-jose", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "sv-chamber", "name": "Silicon Valley Chamber of Commerce", "signupUrl": "https://siliconvalleychamber.com/", "city": "santa-clara-county", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "mv-chamber", "name": "Mountain View Chamber of Commerce", "signupUrl": "https://www.chambermv.org/", "city": "mountain-view", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "palo-alto-chamber", "name": "Palo Alto Chamber of Commerce", "signupUrl": "https://www.paloaltochamber.com/", "city": "palo-alto", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "sunnyvale-chamber", "name": "Sunnyvale-Silicon Valley Chamber", "signupUrl": "https://www.svsvchamber.com/", "city": "sunnyvale", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "campbell-chamber", "name": "Campbell Chamber of Commerce", "signupUrl": "https://www.campbellchamber.net/", "city": "campbell", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "saratoga-chamber", "name": "Saratoga Chamber of Commerce", "signupUrl": "https://www.saratogachamber.org/", "city": "saratoga", "category": "chamber", "provider": "unknown", "priority": 3 },
+    { "id": "cupertino-chamber", "name": "Cupertino Chamber of Commerce", "signupUrl": "https://cupertino-chamber.org/", "city": "cupertino", "category": "chamber", "provider": "unknown", "priority": 2 },
+    { "id": "milpitas-chamber", "name": "Milpitas Chamber of Commerce", "signupUrl": "https://www.milpitaschamber.com/", "city": "milpitas", "category": "chamber", "provider": "unknown", "priority": 3 },
+    { "id": "gilroy-chamber", "name": "Gilroy Chamber of Commerce", "signupUrl": "https://gilroy.org/", "city": "gilroy", "category": "chamber", "provider": "unknown", "priority": 3 },
+    { "id": "morgan-hill-chamber", "name": "Morgan Hill Chamber of Commerce", "signupUrl": "https://www.morganhill.org/", "city": "morgan-hill", "category": "chamber", "provider": "unknown", "priority": 3 },
+
+    { "id": "downtown-san-jose", "name": "Downtown San Jose (SJDA)", "signupUrl": "https://sjdowntown.com/", "city": "san-jose", "category": "business-district", "provider": "unknown", "priority": 2 },
+    { "id": "downtown-los-gatos", "name": "Downtown Los Gatos", "signupUrl": "https://www.downtownlosgatos.com/", "city": "los-gatos", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "downtown-palo-alto", "name": "Downtown Palo Alto", "signupUrl": "https://www.downtownpaloalto.com/", "city": "palo-alto", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "downtown-mountain-view", "name": "Downtown Mountain View", "signupUrl": "https://www.downtownmountainview.com/", "city": "mountain-view", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "downtown-sunnyvale", "name": "Heritage District (Downtown Sunnyvale)", "signupUrl": "https://www.heritagedistrictsunnyvale.com/", "city": "sunnyvale", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "downtown-willow-glen", "name": "Downtown Willow Glen", "signupUrl": "https://www.downtownwillowglen.com/", "city": "san-jose", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "japantown-sj", "name": "Japantown San Jose", "signupUrl": "https://www.japantownsanjose.org/", "city": "san-jose", "category": "business-district", "provider": "unknown", "priority": 3 },
+
+    { "id": "montalvo", "name": "Montalvo Arts Center", "signupUrl": "https://montalvoarts.org/connect/", "city": "saratoga", "category": "arts", "provider": "unknown", "priority": 1 },
+    { "id": "history-san-jose", "name": "History San Jose", "signupUrl": "https://historysanjose.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "sj-museum-art", "name": "San Jose Museum of Art", "signupUrl": "https://sjmusart.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "ica-sj", "name": "ICA San Jose", "signupUrl": "https://www.icasanjose.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "tech-interactive", "name": "The Tech Interactive", "signupUrl": "https://www.thetech.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "childrens-discovery-museum", "name": "Children's Discovery Museum", "signupUrl": "https://www.cdm.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "cantor-arts-stanford", "name": "Cantor Arts Center (Stanford)", "signupUrl": "https://museum.stanford.edu/", "city": "palo-alto", "category": "museum", "provider": "unknown", "priority": 2 },
+    { "id": "sj-jazz", "name": "San Jose Jazz", "signupUrl": "https://sanjosejazz.org/", "city": "san-jose", "category": "arts", "provider": "unknown", "priority": 2 },
+    { "id": "city-lights-theater", "name": "City Lights Theater Company", "signupUrl": "https://cltc.org/", "city": "san-jose", "category": "arts", "provider": "unknown", "priority": 2 },
+    { "id": "3below-theaters", "name": "3Below Theaters", "signupUrl": "https://www.3belowtheaters.com/", "city": "san-jose", "category": "arts", "provider": "unknown", "priority": 2 },
+    { "id": "heritage-theatre", "name": "Heritage Theatre (Campbell)", "signupUrl": "https://www.heritagetheatrecampbell.org/", "city": "campbell", "category": "arts", "provider": "unknown", "priority": 2 },
+    { "id": "macla-sj", "name": "MACLA / Movimiento de Arte y Cultura Latino Americana", "signupUrl": "https://maclaarte.org/", "city": "san-jose", "category": "arts", "provider": "unknown", "priority": 3 },
+    { "id": "triton-museum", "name": "Triton Museum of Art", "signupUrl": "https://www.tritonmuseum.org/", "city": "santa-clara", "category": "museum", "provider": "unknown", "priority": 3 },
+    { "id": "jamsj", "name": "Japanese American Museum of San Jose", "signupUrl": "https://www.jamsj.org/", "city": "san-jose", "category": "museum", "provider": "unknown", "priority": 3 },
+
+    { "id": "scccfd-events", "name": "SC County Fire Department Events", "signupUrl": "https://www.sccfd.org/newsroom/news", "city": "santa-clara-county", "category": "other", "provider": "unknown", "priority": 3 },
+    { "id": "shoreline-amphitheatre", "name": "Shoreline Amphitheatre", "signupUrl": "https://www.shorelineamp.com/", "city": "mountain-view", "category": "arts", "provider": "unknown", "priority": 3 },
+    { "id": "fox-theatre-redwood", "name": "Fox Theatre Redwood City", "signupUrl": "https://foxrwc.com/", "city": "other", "category": "arts", "provider": "unknown", "priority": 3 },
+
+    { "id": "books-inc", "name": "Books Inc (Palo Alto / Mountain View)", "signupUrl": "https://www.booksinc.com/", "city": "palo-alto", "category": "business-district", "provider": "unknown", "priority": 2 },
+    { "id": "keplers", "name": "Kepler's Books & Events", "signupUrl": "https://www.keplers.com/", "city": "palo-alto", "category": "business-district", "provider": "unknown", "priority": 2 },
+    { "id": "linden-tree-books", "name": "Linden Tree Books (Los Altos)", "signupUrl": "https://lindentreebooks.com/", "city": "los-altos", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "hicklebees", "name": "Hicklebee's Bookstore", "signupUrl": "https://www.hicklebees.com/", "city": "san-jose", "category": "business-district", "provider": "unknown", "priority": 3 },
+    { "id": "east-west-bookshop", "name": "East West Bookshop", "signupUrl": "https://eastwest.com/", "city": "mountain-view", "category": "business-district", "provider": "unknown", "priority": 3 },
+
+    { "id": "saratoga-chamber-farmers-market", "name": "Saratoga Farmers Market (Urban Village)", "signupUrl": "https://www.urbanvillageonline.com/", "city": "saratoga", "category": "other", "provider": "unknown", "priority": 3 },
+    { "id": "palo-alto-farmers-market", "name": "California Avenue Farmers Market (PA)", "signupUrl": "https://www.pafarmersmarket.org/", "city": "palo-alto", "category": "other", "provider": "unknown", "priority": 3 },
+
+    { "id": "sj-earthquakes", "name": "San Jose Earthquakes", "signupUrl": "https://www.sjearthquakes.com/", "city": "san-jose", "category": "other", "provider": "unknown", "priority": 3 },
+    { "id": "sj-barracuda", "name": "San Jose Barracuda (AHL)", "signupUrl": "https://www.sjbarracuda.com/", "city": "san-jose", "category": "other", "provider": "unknown", "priority": 3 },
+    { "id": "sap-center", "name": "SAP Center at San Jose", "signupUrl": "https://www.sapcenter.com/", "city": "san-jose", "category": "other", "provider": "unknown", "priority": 3 },
+
+    { "id": "great-america", "name": "California's Great America", "signupUrl": "https://www.cagreatamerica.com/", "city": "santa-clara", "category": "other", "provider": "unknown", "priority": 3 },
+    { "id": "guadalupe-river-park", "name": "Guadalupe River Park Conservancy", "signupUrl": "https://www.grpg.org/", "city": "san-jose", "category": "parks", "provider": "unknown", "priority": 3 },
+    { "id": "happy-hollow", "name": "Happy Hollow Park & Zoo", "signupUrl": "https://www.hhpz.org/", "city": "san-jose", "category": "parks", "provider": "unknown", "priority": 3 }
+  ]
+}
