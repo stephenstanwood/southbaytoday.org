@@ -158,31 +158,28 @@ async function submitNear(input, email) {
   await input.fill(email);
   await sleep(200);
 
-  // Look for a button or submit input inside the same form as the input
-  const form = await input.evaluateHandle((el) => el.closest("form"));
-  if (form) {
-    const submit = await form.evaluateHandle((f) => {
-      return (
-        f.querySelector('button[type="submit"]') ||
-        f.querySelector('input[type="submit"]') ||
-        f.querySelector("button") ||
-        null
-      );
-    });
-    if (submit) {
-      const clickable = submit.asElement();
-      if (clickable) {
-        await clickable.click({ delay: 50, timeout: 3000 }).catch(async () => {
-          // Fallback: press Enter inside the email field
-          await input.press("Enter");
-        });
+  // Try to find a submit button inside the same form, or press Enter as fallback.
+  try {
+    const clicked = await input.evaluate((el) => {
+      const form = el.closest("form");
+      if (!form) return false;
+      const btn =
+        form.querySelector('button[type="submit"]:not([disabled])') ||
+        form.querySelector('input[type="submit"]:not([disabled])') ||
+        form.querySelector('button:not([type="button"]):not([disabled])');
+      if (btn) {
+        btn.click();
         return true;
       }
-    }
-  }
+      return false;
+    });
+    if (clicked) return true;
+  } catch {}
 
-  // No form? Just press Enter.
-  await input.press("Enter");
+  // Fallback: press Enter inside the email field
+  try {
+    await input.press("Enter");
+  } catch {}
   return true;
 }
 
@@ -228,6 +225,43 @@ async function detectSuccess(page, beforeUrl) {
   return { ok: false, reason: "no-success-indicator" };
 }
 
+/**
+ * If the landing page has no email input, look for a link to a subscribe /
+ * newsletter page and follow it. Returns true if it found and followed a link.
+ */
+async function followSubscribeLink(page) {
+  const linkSelectors = [
+    'a:has-text("Subscribe"):visible',
+    'a:has-text("Newsletter"):visible',
+    'a:has-text("Sign Up"):visible',
+    'a:has-text("Sign up"):visible',
+    'a:has-text("Stay Informed"):visible',
+    'a:has-text("Stay Connected"):visible',
+    'a:has-text("Mailing List"):visible',
+    'a:has-text("Join Our List"):visible',
+    'a:has-text("Email Updates"):visible',
+    'a:has-text("Join Mailing"):visible',
+    'a[href*="newsletter" i]:visible',
+    'a[href*="subscribe" i]:visible',
+    'a[href*="signup" i]:visible',
+    'a[href*="mailing-list" i]:visible',
+  ];
+  for (const sel of linkSelectors) {
+    try {
+      const loc = page.locator(sel).first();
+      if ((await loc.count()) > 0) {
+        const href = await loc.getAttribute("href").catch(() => null);
+        if (!href || href.startsWith("#") || href.startsWith("javascript:") || /unsubscribe/i.test(href)) continue;
+        await loc.click({ timeout: 3000 }).catch(() => {});
+        await page.waitForLoadState("domcontentloaded", { timeout: 10_000 }).catch(() => {});
+        await sleep(500);
+        return true;
+      }
+    } catch {}
+  }
+  return false;
+}
+
 async function subscribeOne(browser, target) {
   const context = await browser.newContext({
     userAgent:
@@ -247,7 +281,16 @@ async function subscribeOne(browser, target) {
     await page.goto(target.signupUrl, { waitUntil: "domcontentloaded", timeout: 20_000 });
     const beforeUrl = page.url();
 
-    const input = await findEmailInput(page);
+    let input = await findEmailInput(page);
+
+    // If not found on landing page, try following a Subscribe/Newsletter link
+    if (!input) {
+      const followed = await followSubscribeLink(page);
+      if (followed) {
+        input = await findEmailInput(page);
+      }
+    }
+
     if (!input) return { status: "needs-manual", reason: "no-email-input-found" };
 
     await submitNear(input, EMAIL);
