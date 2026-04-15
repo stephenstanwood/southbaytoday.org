@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-04-14 — Cycle 76: Vinci Added to Recently Funded + Full Data Refresh
+
+### Context
+Monday April 14, 2026 (evening). Spring break ongoing through Apr 17 (FUHSD/CUSD/Campbell USD). One new South Bay funding round found and verified.
+
+### What Was Built
+
+**Tech: Added Vinci (Palo Alto) to RECENTLY_FUNDED — $46M for physics-based AI chip design**
+
+Added Vinci to `RECENTLY_FUNDED` in `tech-companies.ts`. Stanford PhD-founded company building a physics-based AI foundation model for semiconductor design and simulation — claims 1,000x faster than traditional FEA solvers, without meshing. Eclipse + Xora-backed. Already deployed at three leading chip manufacturers. Updated TECH_PULSE note from "40" → "41 South Bay startup rounds."
+
+**Full data pipeline refresh**
+
+All 6 data pipeline scripts run successfully:
+- `upcoming-events.json`: 640 events (83 ongoing) from 33 sources
+- `around-town.json`: 8 items including MV capital spending, Sunnyvale tenant protection amendment, Figure AI expansion, Palo Alto historic status
+- `digests.json`: 10 city digests
+- `upcoming-meetings.json`: 7 cities (Palo Alto/Los Altos Apr 15, Saratoga Apr 16, etc.)
+- `weekend-picks.json`: 3 picks for Apr 17-19 (420 in the Park/Wailers, Palo Alto Earth Day, Il Volo)
+- `tech-briefing.json`: regenerated to reflect 41 rounds
+
+### Why This Was the Strongest Move
+Vinci was the one verifiable new South Bay company not yet in the database. Cross-checked 10+ companies from recent search results; all others were either already present or outside the South Bay geography.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 14–20 watch** — Crunchbase weekly article for Apr 11-17 expected Friday/Monday. Check back next cycle.
+2. **Restaurant radar additions** — Asia Live (Santa Clara), Zareen's (Sunnyvale) are confirmed open but sourced from news rather than permits; manual override needed.
+3. **School calendar teacher workdays** — Districts often have extra no-school days not in current entries. Need verified per-district 2025-26 dates.
+
+---
+
 ## 2026-04-14 — Cycle 75: Startup World Cup SV Added to Tech Tab
 
 ### Context
