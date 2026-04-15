@@ -1148,6 +1148,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://axiado.com",
   },
   {
+    id: "vinci",
+    name: "Vinci",
+    city: "Palo Alto",
+    category: "eda",
+    round: "Seed + Series A",
+    amount: "$46M",
+    date: "2025-12-02",
+    tagline: "Physics-based AI foundation model for semiconductor design and simulation — 1,000x faster than traditional FEA solvers, without meshing or hallucinations. Stanford PhD-founded, Eclipse + Xora-backed. Already deployed at three leading chip manufacturers.",
+    color: "#6d28d9",
+    url: "https://getvinci.ai",
+  },
+  {
     id: "glean-series-f",
     name: "Glean",
     city: "Palo Alto",
@@ -1500,7 +1512,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "40 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "41 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
