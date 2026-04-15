@@ -45,8 +45,12 @@ function statusLabel(s: SubscribeStatus): string {
   switch (s) {
     case "not-attempted": return "untouched";
     case "signup-posted": return "signed up";
-    case "confirmed": return "confirmed";
-    case "receiving": return "receiving";
+    // "confirmed" is deprecated — Stephen clicks confirmation links manually,
+    // so there's no auto-confirmation flow. Any leftover confirmed rows display
+    // as "signed up" for visual collapse. Auto-promotion to "receiving" still
+    // happens on first real inbound newsletter (noteInboundFromSender).
+    case "confirmed": return "signed up";
+    case "receiving": return "live";
     case "failed": return "failed";
     case "needs-manual": return "ready";
     case "blocked": return "blocked";
@@ -56,7 +60,7 @@ function statusLabel(s: SubscribeStatus): string {
 function statusColor(s: SubscribeStatus): string {
   switch (s) {
     case "receiving": return "#16a34a";
-    case "confirmed": return "#0ea5e9";
+    case "confirmed": return "#a855f7"; // deprecated — same color as signup-posted
     case "signup-posted": return "#a855f7";
     case "not-attempted": return "#94a3b8";
     case "needs-manual": return "#f59e0b";
@@ -100,16 +104,19 @@ for (const t of targets) {
 
 const summary = {
   total: targets.length,
+  // "live" = receiving actual newsletters. Legacy "confirmed" rows roll up here
+  // too since confirmed is deprecated (collapsed visually into signed up below).
   receiving: targets.filter((t) => t.status === "receiving").length,
-  signupPosted: targets.filter((t) => t.status === "signup-posted").length,
-  confirmed: targets.filter((t) => t.status === "confirmed").length,
+  // "signed up" = submitted, waiting on first real newsletter. Legacy confirmed
+  // rows display as signed up.
+  signupPosted: targets.filter((t) => t.status === "signup-posted" || t.status === "confirmed").length,
   notAttempted: targets.filter((t) => t.status === "not-attempted").length,
   needsManual: targets.filter((t) => t.status === "needs-manual").length,
   failed: targets.filter((t) => t.status === "failed").length,
 };
 
-// "done" = anything that's moved past the initial manual-click phase
-const doneCount = summary.receiving + summary.signupPosted + summary.confirmed;
+// "done" = past the initial manual-click phase (signed up or live)
+const doneCount = summary.receiving + summary.signupPosted;
 const donePct = targets.length > 0 ? Math.round((doneCount / targets.length) * 100) : 0;
 
 // Category ordering for the grid
@@ -499,7 +506,6 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             <div class="summary">
               <div class="stat"><span class="num" style="color:#16a34a">{summary.receiving}</span><span class="lbl">live</span></div>
               <div class="stat"><span class="num" style="color:#a855f7">{summary.signupPosted}</span><span class="lbl">signed up</span></div>
-              <div class="stat"><span class="num" style="color:#0ea5e9">{summary.confirmed}</span><span class="lbl">confirmed</span></div>
               <div class="stat"><span class="num" style="color:#f59e0b">{summary.needsManual}</span><span class="lbl">ready</span></div>
               <div class="stat"><span class="num">{summary.notAttempted}</span><span class="lbl">new</span></div>
             </div>
@@ -811,8 +817,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         const STATUS_LABEL = {
           "not-attempted": "untouched",
           "signup-posted": "signed up",
-          "confirmed": "confirmed",
-          "receiving": "receiving",
+          "confirmed": "signed up", // deprecated — collapse to signup-posted
+          "receiving": "live",
           "failed": "failed",
           "needs-manual": "ready",
           "blocked": "blocked",
@@ -820,7 +826,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         const STATUS_COLOR = {
           "not-attempted": "#94a3b8",
           "signup-posted": "#a855f7",
-          "confirmed": "#0ea5e9",
+          "confirmed": "#a855f7", // deprecated — same as signup-posted
           "receiving": "#16a34a",
           "failed": "#dc2626",
           "needs-manual": "#f59e0b",
@@ -903,30 +909,30 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         function updateSummary(targets) {
           const counts = {
             total: targets.length,
-            receiving: 0, signupPosted: 0, confirmed: 0,
+            receiving: 0, signupPosted: 0,
             notAttempted: 0, needsManual: 0, failed: 0,
           };
           for (const t of targets) {
             switch (t.status) {
               case "receiving": counts.receiving++; break;
-              case "signup-posted": counts.signupPosted++; break;
-              case "confirmed": counts.confirmed++; break;
+              // Legacy "confirmed" rolls into signup-posted (deprecated status)
+              case "signup-posted":
+              case "confirmed": counts.signupPosted++; break;
               case "not-attempted": counts.notAttempted++; break;
               case "needs-manual": counts.needsManual++; break;
               case "failed": counts.failed++; break;
             }
           }
           const stats = document.querySelectorAll(".sticky-header .stat .num");
-          if (stats.length >= 5) {
+          if (stats.length >= 4) {
             stats[0].textContent = String(counts.receiving);
             stats[1].textContent = String(counts.signupPosted);
-            stats[2].textContent = String(counts.confirmed);
-            stats[3].textContent = String(counts.needsManual);
-            stats[4].textContent = String(counts.notAttempted);
+            stats[2].textContent = String(counts.needsManual);
+            stats[3].textContent = String(counts.notAttempted);
           }
 
           // Progress bar
-          const done = counts.receiving + counts.signupPosted + counts.confirmed;
+          const done = counts.receiving + counts.signupPosted;
           const pct = counts.total > 0 ? Math.round((done / counts.total) * 100) : 0;
           const fill = document.querySelector(".progress-fill");
           if (fill) fill.style.width = `${pct}%`;

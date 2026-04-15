@@ -172,10 +172,16 @@ function findTrackerMatch(doc: NewsletterTrackerDoc, fromEmail: string): Newslet
 
 /**
  * Called by the intake webhook when a REAL newsletter email arrives.
- * Bumps lastReceivedAt + receivedCount and promotes signup-posted/confirmed → receiving.
+ * Bumps lastReceivedAt + receivedCount and auto-promotes the tracker from
+ * "signed up" → "live" (receiving) on first real send. This is the
+ * transition Stephen cares about — there is no manual approval step.
  *
- * Do NOT call this for confirmation or ack emails — those go through
- * noteConfirmationClicked() instead so they don't skew receivedCount.
+ * Do NOT call this for confirmation or ack emails — the intake handler
+ * short-circuits those before they reach this function so they don't
+ * skew receivedCount.
+ *
+ * "confirmed" is a legacy status (see noteConfirmationClicked) — we still
+ * promote it here so any pre-existing rows flow through correctly.
  */
 export async function noteInboundFromSender(
   fromEmail: string,
@@ -187,7 +193,14 @@ export async function noteInboundFromSender(
 
   match.lastReceivedAt = receivedAt;
   match.receivedCount = (match.receivedCount ?? 0) + 1;
-  if (match.status === "signup-posted" || match.status === "confirmed") {
+  // Auto-promote signed-up rows to live on first real newsletter.
+  // needs-manual is also promoted — once a real newsletter arrives, the
+  // manual signup must have happened even if we never saw the click.
+  if (
+    match.status === "signup-posted" ||
+    match.status === "confirmed" ||
+    match.status === "needs-manual"
+  ) {
     match.status = "receiving";
   }
   const addr = fromEmail.toLowerCase().trim();
@@ -200,25 +213,18 @@ export async function noteInboundFromSender(
 }
 
 /**
- * Called when the webhook auto-clicks a confirmation/opt-in link.
- * Promotes the matched target from signup-posted → confirmed (if applicable)
- * WITHOUT touching receivedCount or lastReceivedAt — a confirmation email
- * isn't a newsletter, just an opt-in step.
+ * @deprecated "confirmed" is no longer used as a distinct state. Stephen clicks
+ * confirmation links manually (auto-click is disabled to avoid bot-flagging
+ * sandcathype@gmail.com), so there's no auto-confirmation signal to record.
+ * The tracker flows directly from needs-manual → signup-posted → receiving
+ * (the last hop happens automatically in noteInboundFromSender when a real
+ * newsletter arrives).
+ *
+ * Kept as a no-op stub so any lingering callers don't crash. Do not wire new
+ * code to this function.
  */
-export async function noteConfirmationClicked(fromEmail: string): Promise<string | null> {
-  const doc = await readTracker();
-  const match = findTrackerMatch(doc, fromEmail);
-  if (!match) return null;
-
-  if (match.status === "signup-posted" || match.status === "needs-manual" || match.status === "not-attempted") {
-    match.status = "confirmed";
-  }
-  const addr = fromEmail.toLowerCase().trim();
-  if (!match.seenFromAddresses.includes(addr)) {
-    match.seenFromAddresses.push(addr);
-  }
-  await writeTracker(doc);
-  return match.id;
+export async function noteConfirmationClicked(_fromEmail: string): Promise<string | null> {
+  return null;
 }
 
 /**

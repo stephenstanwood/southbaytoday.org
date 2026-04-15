@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-04-15T22:06:25.280Z",
-  "eventCount": 689,
+  "generatedAt": "2026-04-15T22:37:24.059Z",
+  "eventCount": 695,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -22,6 +22,7 @@
     "NWSL",
     "MiLB",
     "Ticketmaster",
+    "Santa Cruz Picks",
     "Palo Alto City Library",
     "MACLA",
     "Heritage Theatre",
@@ -642,23 +643,6 @@
       "kidFriendly": false
     },
     {
-      "id": "scu-92fafc86da73c3e6",
-      "title": "Forge Volunteer Workday Hours",
-      "date": "2026-04-15",
-      "displayDate": "Wed, Apr 15",
-      "time": "1:30 PM",
-      "endTime": null,
-      "venue": "Santa Clara University",
-      "address": "",
-      "city": "santa-clara",
-      "category": "community",
-      "cost": "free",
-      "description": "Students, staff, faculty and the public are welcome to help out at the Forge Garden! Hours are a drop-in basis.",
-      "url": "https://events.scu.edu/sustainability/event/370471-forge-volunteer-workday-hours",
-      "source": "Santa Clara University",
-      "kidFriendly": false
-    },
-    {
       "id": "scu-d6f4c480ebdde4ed",
       "title": "Graduate Business Career Trek: Uber HQ",
       "date": "2026-04-15",
@@ -1076,23 +1060,6 @@
       "url": "https://www.ticketweb.com/event/open-mic-at-the-san-san-jose-improv-tickets/14054234",
       "source": "Ticketmaster",
       "kidFriendly": false
-    },
-    {
-      "id": "paloalto-693b4d847ed7c62f00aa0f42",
-      "title": "Family Craft: Yarn Weaving",
-      "date": "2026-04-15",
-      "displayDate": "Wed, Apr 15",
-      "time": "3:30 PM",
-      "endTime": "4:30 PM",
-      "venue": "Children's Library",
-      "address": "1276  Harriet Street  Palo Alto",
-      "city": "palo-alto",
-      "category": "family",
-      "cost": "free",
-      "description": "Create a beautiful weaving with yarn and plastic needle on a cardboard loom. Family Craft events are designed for children ages 4-11 and their adult companions to enjoy together. Crafts will be…",
-      "url": "https://paloalto.bibliocommons.com/events/693b4d847ed7c62f00aa0f42",
-      "source": "Palo Alto City Library",
-      "kidFriendly": true
     },
     {
       "id": "farmersmarket-710203a91b90e8ce",
@@ -1922,6 +1889,23 @@
       "description": "Join the SJSU Center on Ethics for a conversation with Shannon Vallor (Baillie Gifford Chair in the Ethics of Data and Artificial Intelligence at the Edinburgh Futures Institute (EFI) at the…",
       "url": "https://events.sjsu.edu/event/ai-as-a-tool-of-dispossession",
       "source": "SJSU Events",
+      "kidFriendly": false
+    },
+    {
+      "id": "scu-de0670e4980ae2e8",
+      "title": "Last day to submit incomplete Winter 2026 work to faculty",
+      "date": "2026-04-17",
+      "displayDate": "Fri, Apr 17",
+      "time": null,
+      "endTime": null,
+      "venue": "Santa Clara University",
+      "address": "",
+      "city": "santa-clara",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://events.scu.edu/office-of-the-registrar/event/346100-last-day-to-submit-incomplete-winter-2026-work-to",
+      "source": "Santa Clara University",
       "kidFriendly": false
     },
     {
@@ -3831,6 +3815,23 @@
       "url": "https://www.ticketmaster.com/hatsune-miku-expo-2026-north-america-san-jose-california-04-22-2026/event/1C006356A9678C90",
       "source": "Ticketmaster",
       "kidFriendly": false
+    },
+    {
+      "id": "sc-picks-16acf2a43352ce58",
+      "title": "Monday Night Revels (Santa Cruz Shakespeare)",
+      "date": "2026-04-22",
+      "displayDate": "Wed, Apr 22",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "The Grove at DeLaveaga Park",
+      "address": "501 Upper Park Rd, Santa Cruz, CA 95065",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "description": "One-night-only performance from the Monday Night Revels series — tribute bands, comedy, drag, and local artistic collaborations.",
+      "url": "https://santacruzshakespeare.org",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
     },
     {
       "id": "macla-5a851806828dc0be",
@@ -7530,6 +7531,24 @@
       "kidFriendly": true
     },
     {
+      "id": "sc-picks-f63e006d9f6388b0",
+      "title": "Mother's Day Brunch Train",
+      "date": "2026-05-10",
+      "displayDate": "Sun, May 10",
+      "time": "10:30 AM",
+      "endTime": null,
+      "venue": "Roaring Camp Railroads",
+      "address": "5401 Graham Hill Rd, Felton, CA 95018",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "costNote": "From $55",
+      "description": "Steam train ride through the redwoods followed by brunch on the grounds of Roaring Camp. Advance tickets required.",
+      "url": "https://roaringcamp.com/events/mothers-day-brunch-train",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
+    },
+    {
       "id": "paloalto-67e1fce6a41c77360027b104",
       "title": "Bay Area Quiz Club",
       "date": "2026-05-10",
@@ -8932,6 +8951,23 @@
       "url": "https://www.ticketweb.com/event/maddy-smith-presents-bad-genes-san-jose-improv-tickets/14663723",
       "source": "Ticketmaster",
       "kidFriendly": false
+    },
+    {
+      "id": "sc-picks-ddfe3ead939e4249",
+      "title": "Civil War Memorial Weekend",
+      "date": "2026-05-24",
+      "displayDate": "Sun, May 24",
+      "time": "10:00 AM",
+      "endTime": null,
+      "venue": "Roaring Camp Railroads",
+      "address": "5401 Graham Hill Rd, Felton, CA 95018",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Civil War living-history weekend at Roaring Camp — battle reenactments, period camps, and train rides through the redwoods.",
+      "url": "https://roaringcamp.com/events",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
     },
     {
       "id": "paloalto-68925efdee7045528b812bb1",
@@ -10387,6 +10423,24 @@
       "kidFriendly": false
     },
     {
+      "id": "sc-picks-57ce0313da0ee163",
+      "title": "Free Friday Night Bands at the Boardwalk",
+      "date": "2026-06-19",
+      "displayDate": "Fri, Jun 19",
+      "time": "6:30 PM",
+      "endTime": null,
+      "venue": "Santa Cruz Beach Boardwalk",
+      "address": "400 Beach St, Santa Cruz, CA 95060",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Free live music on the beach bandstand. Bring a blanket — seating is first-come-first-served. Lineup announced monthly at beachboardwalk.com.",
+      "url": "https://beachboardwalk.com/Free-Friday-Night-Bands",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true,
+      "ongoing": true
+    },
+    {
       "id": "historysj-1e6d917e6878894c",
       "title": "Whiskey in the Park 2026",
       "date": "2026-06-20",
@@ -10421,6 +10475,24 @@
       "kidFriendly": true
     },
     {
+      "id": "sc-picks-71841ffb6f773b60",
+      "title": "Father's Day BBQ & Steam Train",
+      "date": "2026-06-21",
+      "displayDate": "Sun, Jun 21",
+      "time": "11:00 AM",
+      "endTime": null,
+      "venue": "Roaring Camp Railroads",
+      "address": "5401 Graham Hill Rd, Felton, CA 95018",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "costNote": "From $45",
+      "description": "BBQ lunch plus steam train ride up Bear Mountain. A signature Roaring Camp family tradition.",
+      "url": "https://roaringcamp.com/events",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
+    },
+    {
       "id": "keplersbooks-4865e382a1d64d3e",
       "title": "This Is Now with Angie Coiro: Cory Doctorow",
       "date": "2026-06-21",
@@ -10436,6 +10508,23 @@
       "url": "https://www.keplers.org/upcoming-events-internal/cory-doctorow-2026",
       "source": "Kepler's Books",
       "kidFriendly": false
+    },
+    {
+      "id": "sc-picks-5c703756b31fbc28",
+      "title": "Santa Cruz Shakespeare 2026 Summer Season Opens",
+      "date": "2026-06-22",
+      "displayDate": "Mon, Jun 22",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "The Grove at DeLaveaga Park",
+      "address": "501 Upper Park Rd, Santa Cruz, CA 95065",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Opening night of Santa Cruz Shakespeare's outdoor summer rep season at the Grove at DeLaveaga Park. Season runs through late August.",
+      "url": "https://santacruzshakespeare.org",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
     },
     {
       "id": "sjpl-692e108051da852800c45901",
@@ -10625,6 +10714,24 @@
       "url": "https://sjmusart.org/event/first-friday-mother-all-demos",
       "source": "San Jose Museum of Art",
       "kidFriendly": false
+    },
+    {
+      "id": "sc-picks-7ca866e44de4538f",
+      "title": "4th of July Fireworks Train",
+      "date": "2026-07-04",
+      "displayDate": "Sat, Jul 4",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Roaring Camp Railroads",
+      "address": "5401 Graham Hill Rd, Felton, CA 95018",
+      "city": "santa-cruz",
+      "category": "arts",
+      "cost": "paid",
+      "costNote": "From $40",
+      "description": "Evening steam train ride ending with fireworks over the redwoods.",
+      "url": "https://roaringcamp.com/events",
+      "source": "Santa Cruz Picks",
+      "kidFriendly": true
     },
     {
       "id": "paloalto-69484721571fb4d550be9787",

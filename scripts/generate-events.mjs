@@ -1911,6 +1911,73 @@ async function fetchShorelineEvents() {
 
 // ── NHL: San Jose Sharks ──
 
+// ── Santa Cruz Picks (hardcoded) ──
+// Curated Santa Cruz venues Stephen explicitly voted in (2026-04-15).
+// We do NOT cover Santa Cruz broadly — only specific picks. Dated events only;
+// Mystery Spot and Henry Cowell Redwoods are always-open destinations, not
+// event venues, so they're not represented here (would need POI treatment).
+//
+// Update cadence: refresh seasonally. Boardwalk Free Friday Night Bands runs
+// June–August; Roaring Camp has themed rides around holidays; SC Shakespeare
+// runs a summer rep season Jun–Aug plus Monday Night Revels in spring.
+
+function fetchSantaCruzPicks() {
+  console.log("  ⏳ Santa Cruz picks (hardcoded)...");
+  const raw = [
+    // ── Santa Cruz Beach Boardwalk — Free Friday Night Bands 2026 ──
+    // 10 weeks starting late June. Specific bands announced ~4 weeks out;
+    // update this list once the official lineup drops.
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-06-19", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand. Bring a blanket — seating is first-come-first-served. Lineup announced monthly at beachboardwalk.com." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-06-26", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-07-03", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand. Stay for the fireworks." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-07-10", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-07-17", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-07-24", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-07-31", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-08-07", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-08-14", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+    { title: "Free Friday Night Bands at the Boardwalk", date: "2026-08-21", time: "6:30 PM", venue: "Santa Cruz Beach Boardwalk", address: "400 Beach St, Santa Cruz, CA 95060", url: "https://beachboardwalk.com/Free-Friday-Night-Bands", description: "Free live music on the beach bandstand." },
+
+    // ── Roaring Camp Railroads — themed seasonal train rides ──
+    { title: "Mother's Day Brunch Train", date: "2026-05-10", time: "10:30 AM", venue: "Roaring Camp Railroads", address: "5401 Graham Hill Rd, Felton, CA 95018", url: "https://roaringcamp.com/events/mothers-day-brunch-train", description: "Steam train ride through the redwoods followed by brunch on the grounds of Roaring Camp. Advance tickets required.", costNote: "From $55" },
+    { title: "Civil War Memorial Weekend", date: "2026-05-24", time: "10:00 AM", venue: "Roaring Camp Railroads", address: "5401 Graham Hill Rd, Felton, CA 95018", url: "https://roaringcamp.com/events", description: "Civil War living-history weekend at Roaring Camp — battle reenactments, period camps, and train rides through the redwoods." },
+    { title: "Father's Day BBQ & Steam Train", date: "2026-06-21", time: "11:00 AM", venue: "Roaring Camp Railroads", address: "5401 Graham Hill Rd, Felton, CA 95018", url: "https://roaringcamp.com/events", description: "BBQ lunch plus steam train ride up Bear Mountain. A signature Roaring Camp family tradition.", costNote: "From $45" },
+    { title: "4th of July Fireworks Train", date: "2026-07-04", time: "6:00 PM", venue: "Roaring Camp Railroads", address: "5401 Graham Hill Rd, Felton, CA 95018", url: "https://roaringcamp.com/events", description: "Evening steam train ride ending with fireworks over the redwoods.", costNote: "From $40" },
+
+    // ── Santa Cruz Shakespeare — Monday Night Revels + 2026 summer season ──
+    // Summer rep runs in the Grove at DeLaveaga Park. Specific plays + show
+    // dates update when SCS publishes the 2026 schedule — swap in titles here.
+    { title: "Monday Night Revels (Santa Cruz Shakespeare)", date: "2026-04-22", time: "7:00 PM", venue: "The Grove at DeLaveaga Park", address: "501 Upper Park Rd, Santa Cruz, CA 95065", url: "https://santacruzshakespeare.org", description: "One-night-only performance from the Monday Night Revels series — tribute bands, comedy, drag, and local artistic collaborations." },
+    { title: "Santa Cruz Shakespeare 2026 Summer Season Opens", date: "2026-06-22", time: "7:30 PM", venue: "The Grove at DeLaveaga Park", address: "501 Upper Park Rd, Santa Cruz, CA 95065", url: "https://santacruzshakespeare.org", description: "Opening night of Santa Cruz Shakespeare's outdoor summer rep season at the Grove at DeLaveaga Park. Season runs through late August." },
+  ];
+  const today = new Date().toISOString().split("T")[0];
+  const events = raw
+    .filter((e) => e.date >= today)
+    .map((e) => {
+      const d = new Date(`${e.date}T12:00:00-07:00`);
+      return {
+        id: h("sc-picks", e.date, e.title, e.venue),
+        title: e.title,
+        date: e.date,
+        displayDate: displayDate(d),
+        time: e.time,
+        endTime: null,
+        venue: e.venue,
+        address: e.address,
+        city: "santa-cruz",
+        category: "arts",
+        cost: "paid",
+        ...(e.costNote ? { costNote: e.costNote } : {}),
+        description: e.description ?? "",
+        url: e.url,
+        source: "Santa Cruz Picks",
+        kidFriendly: true,
+      };
+    });
+  console.log(`  ✅ Santa Cruz Picks: ${events.length} events`);
+  return events;
+}
+
 // ── G League: Santa Cruz Warriors ──
 // Affiliate of Golden State Warriors. Plays at Kaiser Permanente Arena in
 // downtown Santa Cruz. Season runs Nov–Apr. Off-season: returns []. ESPN
@@ -3478,6 +3545,7 @@ async function main() {
     fetchTicketmasterEvents,
     fetchSharksSchedule,
     fetchSantaCruzWarriorsSchedule,
+    fetchSantaCruzPicks,
     fetchMvplEvents,
     // fetchSunnyvaleLibraryEvents, — 403 (Events feature disabled on their BiblioCommons); covered by SCCL
     fetchPaloAltoLibraryEvents,
