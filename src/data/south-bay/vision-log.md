@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-04-15 — Cycle 78: SCUSD Added to School Calendar + Full Data Refresh
+
+### Context
+Wednesday April 15, 2026 (morning). Spring break ongoing for FUHSD/CUSD/Campbell USD through Apr 17. First week back for SJUSD/PAUSD/MVWSD/MVLA.
+
+### What Was Built
+
+**School calendar: Added Santa Clara Unified (SCUSD) as 9th district**
+
+Santa Clara Unified is a K-12 unified district that had been missing from the calendar — families in Santa Clara had no school coverage. Added SCUSD district entry (orange `#c2410c`, city: santa-clara) with two confirmed events:
+- Spring Break: April 13-17, 2026 (confirmed via santaclarausd.org)
+- Memorial Day: May 25, 2026
+
+Updated OverviewView.tsx footer to include SCUSD in the district attribution list.
+
+Note: SCUSD last day of school (conflicting sources: May 27 vs June 5) left out pending verification.
+
+**Full data pipeline refresh**
+
+All data pipeline scripts run (some required retries due to Claude API 529 errors):
+- `around-town.json`: 7 items (San José library plan, Mexican Heritage Plaza grant, pavement contract; Palo Alto mixed-use development, historic building bonus, San Antonio Road plan, storm drain fee)
+- `digests.json`: 10 city digests
+- `city-briefings.json`: 10 city briefings regenerated
+- `weekend-picks.json`: 3 picks (420 in the Park, Palo Alto Earth Day Festival, Randy Ribay book launch)
+
+### Why This Was the Strongest Move
+Santa Clara families were completely unrepresented in the school calendar despite santa-clara being a tracked city. SCUSD is a major K-12 district (not just high school like FUHSD). Adding it fills a real gap for families in one of the South Bay's largest cities.
+
+### Next 3 Strongest Ideas
+1. **SCUSD last day verification** — Conflicting sources (May 27 vs June 5). Check santaclarausd.org directly for confirmed last day before adding.
+2. **RECENTLY_FUNDED: Apr 14–20 watch** — Crunchbase weekly article for Apr 11-17 expected Friday. Check next cycle.
+3. **Restaurant radar additions** — Asia Live (Santa Clara), Zareen's (Sunnyvale) confirmed open but sourced from news; manual override needed.
+
+---
+
 ## 2026-04-14 — Cycle 76: Vinci Added to Recently Funded + Full Data Refresh
 
 ### Context
