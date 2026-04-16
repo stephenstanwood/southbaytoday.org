@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-04-15T23:14:46.224Z",
-  "weekLabel": "Apr 15 – Apr 22",
-  "weekStart": "2026-04-15",
-  "weekEnd": "2026-04-22",
+  "generatedAt": "2026-04-16T11:14:47.534Z",
+  "weekLabel": "Apr 16 – Apr 23",
+  "weekStart": "2026-04-16",
+  "weekEnd": "2026-04-23",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell City Council meets Tuesday at 7pm on North First Street—check the agenda for this week's local decisions affecting your neighborhood.",
+      "summary": "Campbell's Spring Wine Walk hits downtown Thursday night while the Civic Improvement Commission meets same-time—pick your poison, literally or civically.",
       "highlights": [
         {
           "type": "event",
@@ -16,24 +16,24 @@
           "venue": "70 North First Street",
           "category": "community",
           "url": "https://www.campbellca.gov/Calendar.aspx?EID=3911"
+        },
+        {
+          "type": "event",
+          "title": "Spring Wine Walk in Downtown Campbell",
+          "when": "Thu, Apr 23 · 6:00 PM",
+          "venue": "Downtown Campbell",
+          "category": "community",
+          "url": "https://www.downtowncampbell.com"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:31.783Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:34.250Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino's library is stacked this week with creative classes—from garden structures to fantasy character drawing—perfect if you're itching to learn something new.",
+      "summary": "Cupertino City Council meets Tuesday to recognize its Administrative Services Department and approve recent meeting minutes amid spring library programming including fantasy art workshops and book clubs.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Master Gardeners: Making Structures in the Garden",
-          "when": "Wed, Apr 15 · 7:00 PM",
-          "venue": "Santa Clara County Library",
-          "category": "arts",
-          "url": "https://sccl.bibliocommons.com/events/69d819acad384e40edb9f205"
-        },
         {
           "type": "event",
           "title": "Voyagers Book Club Grades 3 and 4",
@@ -41,73 +41,97 @@
           "venue": "Santa Clara County Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/69c1bf958089f23c67643166"
+        },
+        {
+          "type": "event",
+          "title": "Adult Book Discussion: The Husbands",
+          "when": "Thu, Apr 16 · 7:00 PM",
+          "venue": "Santa Clara County Library",
+          "category": "arts",
+          "url": "https://sccl.bibliocommons.com/events/698e44f081b67dfe32a60a34"
+        },
+        {
+          "type": "council",
+          "title": "Subject:  Recognition of the Administrative Services Department (Budget, Finance, and Purchasing Divisions)",
+          "when": "Tue, Apr 21",
+          "venue": null,
+          "category": "government",
+          "url": "https://cupertino.legistar.com/MeetingDetail.aspx?ID=5289&GUID=F6614166-634B-42CF-8489-449889768DD7"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:32.969Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:35.499Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos Library hosts Girls Who Code this Friday while the Housing Resource Fair tackles local affordability—two very different takes on the valley's biggest challenges.",
+      "summary": "City Council greenlit a construction contract with QLM, Inc., while the library hosts everything from mahjong lessons to Girls Who Code this week.",
       "highlights": [
         {
           "type": "event",
-          "title": "Kids Knitting (Ages 7+)",
-          "when": "Wed, Apr 15 · 3:00pm",
+          "title": "Learn to Play Mahjong",
+          "when": "Thu, Apr 16 · 4:30pm",
           "venue": "Los Gatos Library",
-          "category": "community",
-          "url": "https://losgatosca.libcal.com/event/16141316"
+          "category": "arts",
+          "url": "https://losgatosca.libcal.com/event/16585376"
         },
         {
           "type": "event",
-          "title": "West Valley Housing Resource Fair",
-          "when": "Wed, Apr 15 · 6:00 PM",
-          "venue": "Adult Recreation Center",
+          "title": "Chamber U-Pick at Artist's Garden Oasis",
+          "when": "Sat, Apr 18",
+          "venue": "Artist's Garden Oasis",
           "category": "community",
-          "url": "https://www.losgatosca.gov/calendar.aspx?EID=6204"
+          "url": "https://www.losgatoschamber.com"
+        },
+        {
+          "type": "cityhall",
+          "title": "City Council approves construction contract with QLM, Inc.",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://losgatos-ca.municodemeetings.com/"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:34.230Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:36.718Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's City Council is mapping out 2026-27 infrastructure priorities while the contentious 333 Franklin Street zoning hearing gets pushed back again.",
+      "summary": "Mountain View's library packed Wednesday with author Alex Hutchinson and an \"Electrify Your Home\" workshop, while City Council tackles the 2026-27 budget.",
       "highlights": [
         {
           "type": "event",
-          "title": "Ginzton Terrace Apartments",
-          "when": "Wed, Apr 15 · 10:00 am",
+          "title": "Magical Bridge Playground",
+          "when": "Thu, Apr 16 · 10:00 am",
           "venue": "Mountain View Public Library",
           "category": "community",
-          "url": "https://mountainview.libcal.com/event/15921332"
+          "url": "https://mountainview.libcal.com/event/15921460"
         },
         {
           "type": "event",
-          "title": "Bubb Elementary School",
-          "when": "Wed, Apr 15 · 2:30 pm",
+          "title": "How Exploration, Uncertainty, and Risk Help Us Find Meaning with Author Alex Hutchinson",
+          "when": "Thu, Apr 16 · 11:00 am",
           "venue": "Mountain View Public Library",
-          "category": "community",
-          "url": "https://mountainview.libcal.com/event/15921404"
+          "category": "arts",
+          "url": "https://mountainview.libcal.com/event/16321660"
         },
         {
           "type": "cityhall",
-          "title": "City Council reviews 2026-27 capital improvement projects",
+          "title": "City Council discusses 2026-27 capital improvement budget",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://mountainview.legistar.com/Calendar.aspx?From=4%2F14%2F2026&To=4%2F14%2F2026"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:35.382Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:38.065Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga's hitting a cultural sweet spot this week—catch The Everly Set at Montalvo, grab Coffee with the Mayor Thursday morning, or hunt deals at the library's massive paperback sale.",
+      "summary": "Saratoga's massive paperback book sale hits the library Friday, plus grab the mayor at Peet's Thursday morning if you've got gripes.",
       "highlights": [
         {
           "type": "event",
@@ -126,97 +150,89 @@
           "url": "https://montalvoarts.org/"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:36.694Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:39.535Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale City Council is shaking up tenant protections—here's what renters need to know about the proposed rule changes.",
+      "summary": "Sunnyvale City Council is tightening tenant protections this week, signaling renewed focus on housing stability amid rising local displacement concerns.",
       "highlights": [
         {
           "type": "cityhall",
-          "title": "Sunnyvale proposes changes to tenant protection rules",
+          "title": "City Council to revise residential tenant protections rules",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://sunnyvale.legistar.com/Calendar.aspx?From=4%2F14%2F2026&To=4%2F14%2F2026"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:38.031Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:40.742Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "SJSU hosts an arts-and-wellness day Wednesday with gallery openings, a burnout workshop, and a multilingual future panel, while City Hall greenlights water recycling and street repair projects.",
+      "summary": "San José State's arts scene explodes this week with poster exhibitions, gallery shows, and dance performances, while City Hall tackles its notoriously sluggish building permits.",
       "highlights": [
         {
           "type": "event",
-          "title": "Student Art Showcase at King Library",
-          "when": "Wed, Apr 15",
+          "title": "R&R, 2026: Recovering Ricardo Favela’s Royal Chicano Air Force Poster Collection at San José State University at King Library",
+          "when": "Thu, Apr 16",
           "venue": "San Jose State University",
           "category": "arts",
-          "url": "https://events.sjsu.edu/event/student-art-showcase"
+          "url": "https://events.sjsu.edu/event/rr-2026-exhibit"
         },
         {
           "type": "event",
-          "title": "Natalie and James Thompson Gallery: Click on My Mouth: Language and Technology at ART 127: Thompson Gallery",
-          "when": "Wed, Apr 15 · 10:00 AM",
-          "venue": "San Jose State University",
-          "category": "arts",
-          "url": "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-click-on-my-mouth-language-and-technology"
+          "title": "In-Person English Language Learner (ELL) Conversation Club",
+          "when": "Thu, Apr 16 · 10:00 AM",
+          "venue": "Edenvale Library",
+          "category": "education",
+          "url": "https://sjpl.bibliocommons.com/events/68d6c3bc291e343dacd92206"
         },
         {
           "type": "council",
-          "title": "Review of the Retirement Plans’ Pension and Postemployment Healthcare Plan Actuarial Valuations as of June 30, 2025",
-          "when": "Tue, Apr 21",
+          "title": "Study Session – From Ideation to Occupancy: A Guide to Building in San José, Permitting, Timelines, and Coordination",
+          "when": "Mon, Apr 20",
           "venue": null,
           "category": "government",
-          "url": "https://sanjose.legistar.com/MeetingDetail.aspx?ID=7618&GUID=DDA748B2-B6DA-4A5B-98D4-58011B969C56"
+          "url": "https://sanjose.legistar.com/MeetingDetail.aspx?ID=7396&GUID=FCEA99F3-6670-4B96-A54D-40660864CF02"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:39.583Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:42.119Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara University's packed Tuesday lineup spans politics and identity—from Trump's transatlantic tensions to the 10th Annual Queer Film Festival screening Tahara.",
+      "summary": "Santa Clara University's arts and education calendar hits peak density Thursday with four simultaneous events, from illusion exhibitions to a half-century retrospective.",
       "highlights": [
         {
           "type": "event",
-          "title": "Donald Trump and Europe: Just Another Transatlantic Crisis?",
-          "when": "Wed, Apr 15 · 3:30 PM",
+          "title": "State of Illusion Exhibition",
+          "when": "Thu, Apr 16",
           "venue": "Santa Clara University",
-          "category": "education",
-          "url": "https://events.scu.edu/arts-and-sciences/event/451961-donald-trump-and-europe-just-another-transatlantic"
+          "category": "arts",
+          "url": "https://events.scu.edu/arts-and-sciences/event/346643-state-of-illusion-exhibition"
         },
         {
           "type": "event",
-          "title": "Leading With Integrity Through Chaos: My Time at the CDC",
-          "when": "Wed, Apr 15 · 4:00 PM",
+          "title": "Taking the Stage: 50 Years Ago at the Mayer",
+          "when": "Thu, Apr 16",
           "venue": "Santa Clara University",
           "category": "education",
-          "url": "https://events.scu.edu/ethics/event/debra-houry-ethics-public-health"
+          "url": "https://events.scu.edu/archives-and-special-collections/event/452061-taking-the-stage-50-years-ago-at-the-mayer"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:40.829Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:43.467Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos packed with weekend events: historian talk on Partition, craft sustainability workshop, garden party at Linden Tree, plus Family Fun Day at the Community Center.",
+      "summary": "Los Altos Community Center's Family Fun Day on Friday hits transport themes, while Linden Tree Books hosts author Randy Ribay the same morning.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "A Conversation between Historians on Partition and Memory",
-          "when": "Wed, Apr 15 · 5:30 PM",
-          "venue": "Los Altos History Museum",
-          "category": "arts",
-          "url": "https://www.losaltoshistory.org/events/a-conversation-between-historians-on-partition-and-memory/"
-        },
         {
           "type": "event",
           "title": "Stylish Sustainability Craft",
@@ -224,24 +240,24 @@
           "venue": "Santa Clara County Library",
           "category": "arts",
           "url": "https://sccl.bibliocommons.com/events/69bb3a48b6c4ac1fedc6b78c"
+        },
+        {
+          "type": "event",
+          "title": "Books to Blooms: A Garden Lover’s Party",
+          "when": "Fri, Apr 17 · 6PM",
+          "venue": "Linden Tree Books",
+          "category": "outdoor",
+          "url": "https://pci.jotform.com/form/260737800812152"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:42.303Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:44.618Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "David Byrne's hitting Frost Amphitheatre Wednesday night while Palo Alto Earth Day Festival takes over the library Saturday—plus two major downtown development moves just got greenlit.",
+      "summary": "David Byrne hits Frost Amphitheatre Wednesday night while Palo Alto weighs a major mixed-use development on San Antonio Road.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Kelly Yang with Mychal Threets",
-          "when": "Wed, Apr 15 · 7:00 PM",
-          "venue": "Kepler&#39;s Books",
-          "category": "food",
-          "url": "https://www.keplers.org/upcoming-events-internal/kelly-yang-1"
-        },
         {
           "type": "event",
           "title": "Devi S. Laskar with Alka Joshi",
@@ -251,21 +267,29 @@
           "url": "https://www.keplers.org/upcoming-events-internal/devi-laskar"
         },
         {
+          "type": "event",
+          "title": "David Byrne",
+          "when": "Thu, Apr 16 · 8:00 PM",
+          "venue": "Frost Amphitheatre",
+          "category": "music",
+          "url": "https://www.ticketmaster.com/david-byrne-palo-alto-california-04-16-2026/event/Z7r9jZ1A7OdCZ"
+        },
+        {
           "type": "cityhall",
-          "title": "Downtown building gets historic designation upgrade and bonus",
+          "title": "Downtown historic building eligible for major expansion",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://paloalto.legistar.com/Calendar.aspx?From=4%2F9%2F2026&To=4%2F9%2F2026"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:43.756Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:45.761Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas goes green this week with an Earth Day Celebration and craft workshops, plus City Council tackles something special Thursday morning.",
+      "summary": "Milpitas goes green this weekend with an Earth Day Celebration and craft activities, plus a special City Council meeting Thursday morning.",
       "highlights": [
         {
           "type": "event",
@@ -284,8 +308,8 @@
           "url": "https://sccl.bibliocommons.com/events/69bedb951e64afd01e63cb61"
         }
       ],
-      "weekLabel": "Apr 15 – Apr 22",
-      "generatedAt": "2026-04-15T23:14:45.923Z"
+      "weekLabel": "Apr 16 – Apr 23",
+      "generatedAt": "2026-04-16T11:14:47.232Z"
     }
   }
 }
