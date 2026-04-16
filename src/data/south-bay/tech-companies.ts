@@ -1472,6 +1472,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.ricursive.com",
   },
   {
+    id: "eliyan",
+    name: "Eliyan",
+    city: "Santa Clara",
+    category: "chip",
+    round: "Strategic",
+    amount: "$50M",
+    date: "2026-01-28",
+    tagline: "Chiplet interconnect pioneer whose NuLink™ and NuGear™ chiplet families let AI chips share memory and bandwidth across die boundaries — breaking the I/O bottleneck that constrains next-gen AI scale. Backed by AMD, Arm, Meta, Coherent, Samsung Catalyst Fund, and Intel Capital. Every major AI hardware player is betting on chiplets, and Eliyan builds the glue that holds them together.",
+    color: "#0369a1",
+    url: "https://eliyan.com",
+  },
+  {
     id: "ethernovia",
     name: "Ethernovia",
     city: "San Jose",
@@ -1524,7 +1536,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "42 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "43 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
