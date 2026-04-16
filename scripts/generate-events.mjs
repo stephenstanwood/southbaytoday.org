@@ -3348,7 +3348,9 @@ function fetchPlaywrightEvents() {
     }
     const { events } = JSON.parse(readFileSync(path, "utf8"));
     const today = new Date().toISOString().split("T")[0];
-    const filtered = (events || []).filter((e) => e.date >= today);
+    const filtered = (events || [])
+      .filter((e) => e.date >= today)
+      .map((e) => e.time ? { ...e, time: e.time.toUpperCase() } : e);
     console.log(`  ✅ Playwright events: ${filtered.length} events (from ${path.split("/").pop()})`);
     return filtered;
   } catch (err) {

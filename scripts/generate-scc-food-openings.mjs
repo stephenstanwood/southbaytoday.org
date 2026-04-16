@@ -49,6 +49,12 @@ const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAY
 // Patterns for names that need more cleanup
 const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
 
+// Manual blurb overrides keyed by sourceId — these survive AI regeneration
+// Use when AI-generated blurbs are generic or when we have specific local knowledge
+const BLURB_OVERRIDES = {
+  "SR0879467": "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio.",
+};
+
 // Map city names to our city IDs
 const CITY_ID_MAP = {
   "SAN JOSE": "san-jose",
@@ -371,7 +377,7 @@ async function main() {
 
   const openedWithBlurbs = openedDeduped.slice(0, 12).map((i) => ({
     ...i,
-    blurb: blurbs[i.id] ?? null,
+    blurb: (i.sourceId && BLURB_OVERRIDES[i.sourceId]) ?? blurbs[i.id] ?? null,
   }));
 
   // Generate anticipation blurbs for top coming-soon restaurants
@@ -381,7 +387,7 @@ async function main() {
 
   const comingSoonWithBlurbs = comingSoonFinal.slice(0, 12).map((i) => ({
     ...i,
-    blurb: comingSoonBlurbs[i.id] ?? null,
+    blurb: (i.sourceId && BLURB_OVERRIDES[i.sourceId]) ?? comingSoonBlurbs[i.id] ?? null,
   }));
 
   const output = {
