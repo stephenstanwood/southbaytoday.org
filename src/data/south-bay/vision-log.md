@@ -4324,3 +4324,41 @@ nEye.ai's round (April 14) is the most current South Bay funding signal availabl
 1. **RECENTLY_FUNDED: Apr 15–21 watch** — Check Crunchbase weekly roundup (published Fridays) for week of Apr 12–18.
 2. **School calendar: teacher workday/PD days** — Districts often have 1–2 additional no-school days not in current calendar. Need verified 2025-26 dates per district.
 3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked/ECONNREFUSED. Monitor cityofmountainview.gov for changes.
+
+---
+
+## 2026-04-16 — Cycle 86: Data Refresh + Quality Fixes
+
+### Context
+Thursday April 16, 2026 (~4 PM PDT). Spring break week 2 ends Friday for most South Bay districts. Cupertino and Santa Clara had council meetings today. Events coverage at 683 total (111 ongoing), up from 671. Crunchbase weekly roundup for Apr 13–17 not yet published (comes out Fridays).
+
+### What Was Built
+
+**Quality fix: Cedar & Sage blurb (scc-food-openings)**
+
+Added `BLURB_OVERRIDES` mechanism to `generate-scc-food-openings.mjs` — a map keyed by `sourceId` that survives AI regeneration cycles. Pre-filled Cedar & Sage (wine bar/bistro, 180 El Camino Real #1301, Palo Alto at Stanford Shopping Center; permit SR0879467) with curated blurb: "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio." Patched live in JSON immediately.
+
+**Quality fix: Uppercase AM/PM in events**
+
+79 events had lowercase "am"/"pm" time strings (sourced from Mountain View Public Library via LibCal, Los Gatos Library, City of Milpitas, History San Jose, City of Campbell, City Newsletter inbound events). Root cause: `fetchPlaywrightEvents()` passed LibCal data through without normalizing case. Fixed by adding `.toUpperCase()` to the playwright events map. Fixed all 79 existing events in `upcoming-events.json` directly.
+
+**Data refreshed (all core pipelines):**
+- `upcoming-events.json` — 683 events (111 ongoing), 38 sources; 79 time-casing fixes
+- `around-town.json` — 8 items (MV capital improvement, Sunnyvale tenant protections, Cupertino ATP, Milpitas vacancy, Palo Alto historic bonus floors, PA mixed-use on San Antonio, PA San Antonio area plan, Los Gatos QLM)
+- `digests.json` — 10 cities (Cupertino + Santa Clara meetings today)
+- `upcoming-meetings.json` — San José Apr 20 (permitting study session), Palo Alto Apr 20, Cupertino Apr 21, Campbell Apr 21, Milpitas Apr 21, Saratoga May 6, Los Altos Apr 28
+- `real-estate.json` — 10 cities; Cupertino +16.2% YoY, Milpitas -10.2% YoY; MV below inventory threshold
+- `restaurant-radar.json` — Original Joe's San Jose at 2040 N 1st St, Baekjeong $3.1M new build at Stevens Creek, Bistro Demiya at 407 Lytton Ave PA
+- `scc-food-openings.json` — Cedar & Sage blurb filled; permit data current
+
+**Tech tab: No new rounds to add**
+
+Crunchbase weekly roundup not yet published. Extensive scan confirmed no new confirmed South Bay funding from Apr 14–16 not already in database. 43-company `RECENTLY_FUNDED` list is current as of nEye.ai (Apr 14). SandboxAQ $450M excluded (April 2025, not 2026). Taalas excluded (Toronto-based, not South Bay).
+
+### Why This Was the Strongest Move
+Consistency matters as much as novelty — 79 events showing "10:00 am" instead of "10:00 AM" is the kind of polish failure that erodes trust. The BLURB_OVERRIDES mechanism prevents future regressions: curated copy now survives pipeline reruns. Cedar & Sage is one of the higher-profile coming-soon openings in the county (Stanford Shopping Center wine bar), so having that blurb correct matters.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 17–21 watch** — Crunchbase weekly roundup publishes Friday Apr 17. Check for new South Bay rounds.
+2. **School calendar: teacher workday/PD days** — Districts often have 1–2 additional no-school days not in current calendar. Need verified 2025-26 dates per district.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked/ECONNREFUSED. Monitor cityofmountainview.gov for changes.
