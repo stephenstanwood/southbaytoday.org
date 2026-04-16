@@ -644,6 +644,9 @@ function inferCategory(title, desc, type, venue = "") {
   // but the primary category is "arts" when these visual/literary cues are present.
   // Use word-boundary match for "art/arts/artist/artwork" to avoid false positives from
   // words like "department" (dep-ART-ment), "participants" (p-ART-icipants), "party", "earth", etc.
+  // Farmers markets must be categorized as "market" before music/arts checks —
+  // descriptions often mention "live music" incidentally, which would otherwise win.
+  if (/\bfarmers?\s+market\b/.test(titleLower)) return "market";
   const isArtWord = /\barts?\b|\bartist|\bartwork|\bartistry/.test(t);
   if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (isArtWord && !t.includes("martial art"))) return "arts";
   // Book clubs and discussions are arts/reading events, not formal education
@@ -2506,7 +2509,7 @@ function fetchFarmersMarketEvents() {
   const markets = [
     { title: "Mountain View Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Caltrain Station", address: "600 W Evelyn Ave, Mountain View", city: "mountain-view", url: "https://cafarmersmkts.com/mountain-view-market", season: [1, 12] },
     { title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Town Park Plaza", address: "50 University Ave, Los Gatos", city: "los-gatos", url: "https://www.losgatos.ca.gov/1411/Farmers-Market", season: [5, 10] },
-    { title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga", url: "https://cafarmersmkts.com/saratoga-market", season: [5, 11] },
+    { title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga", url: "https://cafarmersmkts.com/saratoga-market", season: [4, 11] },
     { title: "Santana Row Farmers Market", day: 3, time: "11:00 AM", endTime: "3:00 PM", venue: "Santana Row", address: "377 Santana Row, San Jose", city: "san-jose", url: "https://www.santanarow.com/events", season: [1, 12] },
     { title: "Campbell Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell", url: "https://www.downtowncampbell.com/farmers-market", season: [1, 12] },
     { title: "Sunnyvale Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "Murphy Avenue", address: "Murphy Ave, Sunnyvale", city: "sunnyvale", url: "https://urbanvillageonline.com/markets/sunnyvale", season: [1, 12] },
@@ -3396,6 +3399,20 @@ function fetchInboundEvents() {
         timeZone: "America/Los_Angeles",
       }).toLowerCase();
 
+      // Parse end time from endsAt if provided
+      let endTime = null;
+      if (e.endsAt) {
+        const endDate = new Date(e.endsAt);
+        if (!isNaN(endDate.getTime())) {
+          endTime = endDate.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "America/Los_Angeles",
+          }).toLowerCase();
+        }
+      }
+
       // Real category inference instead of hardcoded "community" — this is
       // what makes newsletter events show up on the right tabs (Tech, Sports,
       // Arts, Food, etc) instead of just being lumped into Events.
@@ -3405,15 +3422,19 @@ function fetchInboundEvents() {
       const kidFriendly = /\b(kid|family|children|child|story\s?time|youth|teen|easter\s?egg|egg\s?hunt|preschool)\b/i.test(titleLower)
         || /\b(kid|family|children|story\s?time)\b/i.test(descLower);
 
+      // Extract venue name from location (first part before the comma)
+      const location = e.location ?? "";
+      const venueName = location.includes(",") ? location.split(",")[0].trim() : location;
+
       out.push({
         id: h("inbound", e.id, dateKey, e.title),
         title: e.title,
         date: dateKey,
         displayDate: displayDate(startDate),
         time,
-        endTime: null,
-        venue: e.location ?? "",
-        address: e.location ?? "",
+        endTime,
+        venue: venueName,
+        address: location,
         city: e.cityKey,
         category,
         cost: null,

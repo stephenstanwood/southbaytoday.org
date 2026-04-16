@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-16T11:14:03.950Z",
+  "generatedAt": "2026-04-16T14:11:48.275Z",
   "eventCount": 686,
   "sources": [
     "Stanford Events",
@@ -55,7 +55,7 @@
       "city": "palo-alto",
       "category": "education",
       "cost": "paid",
-      "description": "A Premier Educational Experience in the Heart of Wine Country Join us in the beautiful and serene setting of wine country for the 4th Annual Updates in Gastroenterology and Hepatology—a…",
+      "description": "OverviewA Premier Educational Experience in the Heart of Wine Country Join us in the beautiful and serene setting of wine country for the 4th Annual Updates in Gastroenterology and Hepatology—a…",
       "url": "https://events.stanford.edu/event/4th-annual-updates-in-gastroenterology-hepatology",
       "source": "Stanford Events",
       "kidFriendly": false
@@ -127,7 +127,7 @@
       "city": "palo-alto",
       "category": "arts",
       "cost": "paid",
-      "description": "The Art of Science Competition is a campus wide event to celebrate the aesthetic beauty of science. Last year we received nearly 100 submissions representing more than 40 departments…",
+      "description": "Event Details: The Art of Science Competition is a campus wide event to celebrate the aesthetic beauty of science. Last year we received nearly 100 submissions representing more than 40 departments…",
       "url": "https://events.stanford.edu/event/art-of-science-2026",
       "source": "Stanford Events",
       "kidFriendly": false
@@ -145,7 +145,7 @@
       "city": "palo-alto",
       "category": "arts",
       "cost": "paid",
-      "description": "Rooted in Community. Transforming Care. Celebrating Black Maternal Health Week 2026 This year’s conference holds special significance as it aligns with the ten-year anniversary of Black…",
+      "description": "Overview Rooted in Community. Transforming Care. Celebrating Black Maternal Health Week 2026 This year’s conference holds special significance as it aligns with the ten-year anniversary of Black…",
       "url": "https://events.stanford.edu/event/mccpop-perinatal-potpourri-conference-2026",
       "source": "Stanford Events",
       "kidFriendly": false
@@ -1866,7 +1866,7 @@
       "city": "san-jose",
       "category": "sports",
       "cost": "free",
-      "description": "",
+      "description": "Football - San Jose State vs. 2026 Spring Game https://sjsuspartans.com/boxscore/8431 View on site | Email this event",
       "url": "https://events.sjsu.edu/event/football-san-jose-state-vs-2026-spring-game",
       "source": "SJSU Events",
       "kidFriendly": false
@@ -2130,6 +2130,24 @@
       "kidFriendly": false
     },
     {
+      "id": "farmersmarket-7d9e602e7167e6f6",
+      "title": "Saratoga Farmers Market",
+      "date": "2026-04-18",
+      "displayDate": "Sat, Apr 18",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://cafarmersmkts.com/saratoga-market",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "ongoing": true
+    },
+    {
       "id": "farmersmarket-bb5c801fc0c77ef4",
       "title": "Sunnyvale Farmers Market",
       "date": "2026-04-18",
@@ -2334,24 +2352,6 @@
       "url": "https://fareharbor.com/embeds/book/historysanjose/items/708590/calendar/2026/04/?full-items=yes",
       "source": "History San Jose",
       "kidFriendly": false
-    },
-    {
-      "id": "inbound-f44abb2d6332c9e8",
-      "title": "Saratoga Farmers Market",
-      "date": "2026-04-18",
-      "displayDate": "Sat, Apr 18",
-      "time": "9:00 am",
-      "endTime": null,
-      "venue": "West Valley College Parking Lot",
-      "address": "West Valley College parking lot, 14000 Fruitvale Ave, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": null,
-      "description": "Weekly farmers market featuring fresh local produce, live music, and coffee. Free to attend, dogs welcome.",
-      "url": "https://saratogafarmersmarket.com/",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "ongoing": true
     },
     {
       "id": "sjsu-4fc3ca4e323e4c14",
@@ -2880,7 +2880,7 @@
       "displayDate": "Tue, Apr 21",
       "time": "7pm",
       "endTime": null,
-      "venue": "Campbell City Hall",
+      "venue": "70 North First Street",
       "address": "",
       "city": "campbell",
       "category": "community",
@@ -4290,7 +4290,7 @@
       "displayDate": "Sat, Apr 25",
       "time": "7:30pm",
       "endTime": null,
-      "venue": "Heritage Theatre",
+      "venue": "1 W. Campbell Ave.",
       "address": "",
       "city": "campbell",
       "category": "arts",
@@ -4312,7 +4312,7 @@
       "city": "los-gatos",
       "category": "food",
       "cost": "free",
-      "description": "",
+      "description": "*This event is organized by the Los Gatos Chamber of Commerce. https://www.losgatosca.gov/calendar.aspx?EID=6184",
       "url": null,
       "source": "Town of Los Gatos",
       "kidFriendly": false
@@ -4358,12 +4358,12 @@
       "displayDate": "Sat, Apr 25",
       "time": "8:00 AM",
       "endTime": "10:00 AM",
-      "venue": "",
+      "venue": "Meet at the Parking Location (17301",
       "address": "",
       "city": "saratoga",
       "category": "outdoor",
       "cost": "free",
-      "description": "",
+      "description": "Community Hiking Event https://www.saratoga.ca.us/calendar.aspx?EID=2588",
       "url": null,
       "source": "City of Saratoga",
       "kidFriendly": false
@@ -5277,7 +5277,7 @@
     },
     {
       "id": "tm-G5vYZ_eXqXhtX",
-      "title": "Blessd - El Mejor Hombre del Mundo Tour - San Jose",
+      "title": "Blessd - EL Mejor Hombre DEL Mundo Tour - SAN Jose",
       "date": "2026-04-29",
       "displayDate": "Wed, Apr 29",
       "time": "8:00 PM",
@@ -5333,7 +5333,7 @@
       "displayDate": "Thu, Apr 30",
       "time": "12pm – 1:30pm",
       "endTime": null,
-      "venue": "Heritage Theatre",
+      "venue": "1 W. Campbell Ave.&lt;br&gt;Bldg. F",
       "address": "",
       "city": "campbell",
       "category": "music",
@@ -5750,7 +5750,7 @@
       "city": "los-gatos",
       "category": "community",
       "cost": "free",
-      "description": "",
+      "description": "*This event is hosted by Los Gatos Parent Nursery School. https://www.losgatosca.gov/calendar.aspx?EID=6185",
       "url": null,
       "source": "Town of Los Gatos",
       "kidFriendly": false
@@ -5767,7 +5767,7 @@
       "city": "saratoga",
       "category": "community",
       "cost": "free",
-      "description": "The Mayor invites you to join Office Hours at the Saratoga Farmers’ Market the first Saturday of every month, from 10:00 AM to Noon.",
+      "description": "The Mayor invites you to join Office Hours at the Saratoga Farmers’ Market the first Saturday of every month, from 10:00 AM to Noon. https://www.saratoga.ca.us/calendar.aspx?EID=2541",
       "url": null,
       "source": "City of Saratoga",
       "kidFriendly": false
@@ -6121,8 +6121,8 @@
       "date": "2026-05-02",
       "displayDate": "Sat, May 2",
       "time": "3:00 pm",
-      "endTime": null,
-      "venue": "New Museum Los Gatos (NUMU), 106 E. Main Street, Los Gatos, CA",
+      "endTime": "6:00 pm",
+      "venue": "New Museum Los Gatos (NUMU)",
       "address": "New Museum Los Gatos (NUMU), 106 E. Main Street, Los Gatos, CA",
       "city": "los-gatos",
       "category": "arts",
@@ -7821,7 +7821,7 @@
       "city": "los-gatos",
       "category": "community",
       "cost": "free",
-      "description": "",
+      "description": "*This event if organized by Girls on the Run Silicon Valley https://www.losgatosca.gov/calendar.aspx?EID=6199",
       "url": null,
       "source": "Town of Los Gatos",
       "kidFriendly": false
@@ -9077,7 +9077,7 @@
     },
     {
       "id": "tm-G5vYZ_AlCvzzP",
-      "title": "Maná y Los Fabulosos Cadillacs",
+      "title": "MANÁ y LOS Fabulosos Cadillacs",
       "date": "2026-05-30",
       "displayDate": "Sat, May 30",
       "time": "7:30 PM",
@@ -9591,7 +9591,7 @@
       "city": "saratoga",
       "category": "community",
       "cost": "free",
-      "description": "The Mayor invites you to join Office Hours at the Saratoga Farmers’ Market the first Saturday of every month, from 10:00 AM to Noon.",
+      "description": "The Mayor invites you to join Office Hours at the Saratoga Farmers’ Market the first Saturday of every month, from 10:00 AM to Noon. https://www.saratoga.ca.us/calendar.aspx?EID=2542",
       "url": null,
       "source": "City of Saratoga",
       "kidFriendly": false
@@ -10021,7 +10021,7 @@
       "city": "los-gatos",
       "category": "market",
       "cost": "free",
-      "description": "",
+      "description": "*This event is organized by Muse Markets https://www.losgatosca.gov/calendar.aspx?EID=6200",
       "url": null,
       "source": "Town of Los Gatos",
       "kidFriendly": false
@@ -10390,7 +10390,7 @@
     },
     {
       "id": "tm-G5vYZ_eXH5vGA",
-      "title": "Kid Cudi Presents: The Rebel Ragers Tour 2026",
+      "title": "KID Cudi Presents: THE Rebel Ragers Tour 2026",
       "date": "2026-06-23",
       "displayDate": "Tue, Jun 23",
       "time": "6:30 PM",
