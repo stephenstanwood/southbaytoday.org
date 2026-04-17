@@ -963,7 +963,7 @@ function parseCivicPlusEventTime(eventTimesStr) {
     const h = parseInt(m[1]);
     const min = m[2];
     const ampm = m[3].toUpperCase();
-    return min === "00" ? `${h}${ampm.toLowerCase()}` : `${h}:${min}${ampm.toLowerCase()}`;
+    return min === "00" ? `${h}${ampm}` : `${h}:${min}${ampm}`;
   };
   if (endTime && endTime !== "11:59 PM") return `${fmt(startTime)} – ${fmt(endTime)}`;
   return fmt(startTime);
@@ -1171,7 +1171,7 @@ async function fetchMontalvoEvents() {
           city: "saratoga",
           category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
           cost: "paid",
-          description: item.description || null,
+          description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
           url,
           source: "Montalvo Arts Center",
           kidFriendly: false,
@@ -3409,7 +3409,7 @@ function fetchInboundEvents() {
         minute: "2-digit",
         hour12: true,
         timeZone: "America/Los_Angeles",
-      }).toLowerCase();
+      });
 
       // Parse end time from endsAt if provided
       let endTime = null;
@@ -3421,7 +3421,7 @@ function fetchInboundEvents() {
             minute: "2-digit",
             hour12: true,
             timeZone: "America/Los_Angeles",
-          }).toLowerCase();
+          });
         }
       }
 
@@ -3512,8 +3512,8 @@ async function fetchHistorySanJoseEvents() {
         // Extract time from <span class="eventtime">
         const timeMatch = block.match(/<span class="eventtime">\s*([\d:]+\s*[ap]m)\s*<\/span>/i);
         const endTimeMatch = block.match(/<span class="eventtime">[\s\S]*?<span class="eventtime">\s*([\d:]+\s*[ap]m)\s*<\/span>/i);
-        const time = timeMatch ? timeMatch[1].trim() : null;
-        const endTime = endTimeMatch ? endTimeMatch[1].trim() : null;
+        const time = timeMatch ? timeMatch[1].trim().replace(/\s*(am|pm)$/i, (m) => m.trim().toUpperCase()) : null;
+        const endTime = endTimeMatch ? endTimeMatch[1].trim().replace(/\s*(am|pm)$/i, (m) => m.trim().toUpperCase()) : null;
 
         // Link: prefer backend-button href, fall back to any link
         const linkMatch = block.match(/<a[^>]*class="[^"]*backend-button[^"]*"[^>]*href="([^"]+)"/i)

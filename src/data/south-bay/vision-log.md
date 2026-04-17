@@ -2,6 +2,40 @@
 
 ---
 
+## 2026-04-16 — Cycle 87: AM/PM Casing Fixed at Source + Gas Station Filter
+
+### Context
+Thursday April 16, 2026 (~5 PM PDT). Continuation of Cycle 86's quality work. Events pipeline at 686 total. Crunchbase weekly roundup for Apr 13–17 not yet published.
+
+### What Was Built
+
+**AM/PM casing fixed at source in `generate-events.mjs` (3 scrapers)**
+
+Cycle 86 fixed lowercase am/pm in playwright events only. This cycle identified 3 additional scrapers still producing lowercase:
+1. **`parseCivicPlusEventTime`** (Campbell, Milpitas CivicPlus RSS) — removed explicit `.toLowerCase()` on ampm; already uppercase from regex match group
+2. **Inbound Events / City Newsletter** — removed `.toLowerCase()` from both start and end time `toLocaleTimeString()` calls
+3. **History San Jose** (HTML scrape) — added `.replace(/\s*(am|pm)$/i, ...)` to uppercase am/pm extracted from raw HTML
+
+Also fixed Montalvo Arts Center: description was duplicating the event title — now null'd out when description === title.
+
+**Patched 904 existing events in `upcoming-events.json`** (second-pass Python fix using digit-anchored regex; initial `\b`-based pattern missed "8am"/"7pm" style where `\b` doesn't fire at digit-letter boundary).
+
+**Gas station filter added to `generate-scc-food-openings.mjs`**
+
+Added `GAS_STATION_PATTERNS` constant covering Shell, Chevron, ARCO, Mobil, Exxon, Valero, BP, Circle K, 76 Gas, and others. Wired into `shouldSkip()` — gas station convenience stores no longer appear as restaurant openings.
+
+Removed "Jacklin Shell" (990 Jacklin Rd, Milpitas; permit SR0883730) from `comingSoon` in `scc-food-openings.json`. The AI had generated a fabricated "Seafood lovers, mark your calendars for Milpitas's hottest new coastal spot!" blurb for a Shell station. Gone.
+
+### Why This Was the Strongest Move
+Root-cause fixes are worth more than data patches. Three source scrapers were silently producing inconsistent time formatting — fixing them means every future event ingested from CivicPlus, City Newsletter, or History San Jose is already correct. The Jacklin Shell removal is a trust issue: a confidently wrong AI blurb about a gas station seafood spot would undermine the whole food openings feature.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 17 Crunchbase roundup** — Weekly roundup publishes today (Friday Apr 17). Check for new South Bay rounds from the Apr 13–18 window.
+2. **Wyndham Oaks (San Jose, coming soon)** — Verify if this is a restaurant or hotel/care facility; may need filtering.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked. Monitor cityofmountainview.gov.
+
+---
+
 ## 2026-04-16 — Cycle 85: Data Refresh + Eliyan Chiplet Added (43 Rounds)
 
 ### Context

@@ -46,6 +46,9 @@ const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|M
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE)\b/i;
 
+// Gas station brands — convenience stores at gas stations aren't restaurant openings
+const GAS_STATION_PATTERNS = /\b(SHELL|CHEVRON|ARCO|MOBIL|EXXON|VALERO|BP|CIRCLE K|76 GAS|TEXACO|SINCLAIR|SUNOCO|MARATHON|PHILLIPS 66|LOVE'S|PILOT)\b/i;
+
 // Patterns for names that need more cleanup
 const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
 
@@ -175,6 +178,7 @@ function shouldSkip(item) {
   if (SKIP_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
+  if (GAS_STATION_PATTERNS.test(rawName)) return true;
 
   // Skip entries with no city or city outside South Bay
   const city = (item.city ?? "").toUpperCase();
