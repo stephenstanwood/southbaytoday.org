@@ -130,16 +130,18 @@ ${bodyBlock}`;
   // Pull embedded flyer images so the model can OCR ribbon cuttings /
   // grand openings where all the date/time/address info is baked into an
   // image rather than HTML text. Capped to keep token cost bounded.
+  // Fetch bytes ourselves and pass as base64 — Anthropic's URL fetcher
+  // respects robots.txt, which Constant Contact's CDN disallows. We're the
+  // recipient of the email (not a crawler), so fetching images directly is
+  // normal email-client behavior.
   const imageUrls = email.html ? extractFlyerImageUrls(email.html) : [];
+  const imageBlocks = await Promise.all(imageUrls.map(fetchImageAsBase64));
 
   const userBlocks: Anthropic.MessageParam["content"] = [
     { type: "text", text: textBlock },
   ];
-  for (const url of imageUrls) {
-    userBlocks.push({
-      type: "image",
-      source: { type: "url", url },
-    });
+  for (const block of imageBlocks) {
+    if (block) userBlocks.push(block);
   }
 
   const response = await client.messages.create({
@@ -190,6 +192,43 @@ function sanitizeExtractedEvent(e: ExtractedEvent): ExtractedEvent {
  * Skips tiny tracking pixels, data: URIs, icons, and known non-flyer assets.
  * Caps the list so we don't blow token budget on a newsletter with 40+ images.
  */
+type ImageBlock = {
+  type: "image";
+  source: { type: "base64"; media_type: "image/jpeg" | "image/png" | "image/gif" | "image/webp"; data: string };
+};
+
+async function fetchImageAsBase64(url: string): Promise<ImageBlock | null> {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        // Look like a normal email client, not a bot
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept: "image/webp,image/png,image/jpeg,image/*,*/*;q=0.8",
+      },
+    });
+    if (!res.ok) return null;
+    const contentType = res.headers.get("content-type") || "image/jpeg";
+    const mediaType = normalizeMediaType(contentType);
+    if (!mediaType) return null;
+    const buf = await res.arrayBuffer();
+    // Cap at 5MB per image to keep the message payload sane
+    if (buf.byteLength > 5 * 1024 * 1024) return null;
+    const data = Buffer.from(buf).toString("base64");
+    return { type: "image", source: { type: "base64", media_type: mediaType, data } };
+  } catch {
+    return null;
+  }
+}
+
+function normalizeMediaType(ct: string): ImageBlock["source"]["media_type"] | null {
+  const lc = ct.toLowerCase();
+  if (lc.includes("jpeg") || lc.includes("jpg")) return "image/jpeg";
+  if (lc.includes("png")) return "image/png";
+  if (lc.includes("gif")) return "image/gif";
+  if (lc.includes("webp")) return "image/webp";
+  return null;
+}
+
 function extractFlyerImageUrls(html: string): string[] {
   const urls: string[] = [];
   const seen = new Set<string>();
