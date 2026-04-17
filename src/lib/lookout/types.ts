@@ -12,6 +12,7 @@ export interface InboundEmail {
   to: string;
   subject: string;
   body: string; // text or stripped html
+  html?: string; // raw html when available — preferred by extractor for flyer layouts
   receivedAt: string;
   messageId: string;
 }
@@ -54,6 +55,8 @@ export interface InboundEvent {
 export interface InboundIntakeLog {
   /** Hash of from+subject+messageId — used to dedup re-delivered webhooks. */
   dedupHash: string;
+  /** Content hash (normalized subject + body prefix) — dedups forwards of an already-processed email. */
+  contentHash?: string;
   receivedAt: string;
   from: string;
   subject: string;

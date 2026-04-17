@@ -97,8 +97,12 @@ Other rules:
 - Deduplicate within one email.
 - Do NOT invent fields. If a field is missing, use null (or empty string for description).
 - Prefer the event's own page URL over the newsletter's main URL.
+  - NEVER use a mailto: link as sourceUrl. If the only contact is an email address, set sourceUrl to null.
+  - NEVER use Constant Contact / ccsend / click-tracking redirect URLs that don't point at a public event page. Prefer the venue or chamber's own URL.
 - If the city is Morgan Hill or Gilroy, return cityName: null (we don't cover those).
-- Return ONLY the JSON object, no markdown code fences, no commentary.`;
+- Return ONLY the JSON object, no markdown code fences, no commentary.
+
+FLYER PARSING — chamber newsletters often include event flyers with details laid out in tables or side-by-side cells (date on one side, time + address on the other). When you see a flyer-style block for an event, pull the time and location from the adjacent cells, not just the headline. Ribbon cuttings, grand openings, and mixers usually have a specific street address AND a specific time (e.g. "3:00 PM / 45 W Main Street, Los Gatos, CA") — do not return null for location/startsAt time when the flyer shows them. If a time is given, include it in startsAt as "T15:00:00-07:00" (or the correct offset), not "T00:00:00".`;
 
 export async function extractEvents(
   email: InboundEmail,
@@ -106,12 +110,18 @@ export async function extractEvents(
 ): Promise<ExtractedEvent[]> {
   const client = new Anthropic({ apiKey: opts.anthropicKey });
 
+  // Prefer HTML when available — flyer layouts lose their date/time/location
+  // adjacency when flattened to plain text.
+  const htmlForModel = email.html ? compactHtml(email.html) : "";
+  const bodyBlock = htmlForModel
+    ? `HTML (structure preserved; strip styling but read cell adjacency):\n${truncate(htmlForModel, 60_000)}`
+    : `BODY:\n${truncate(email.body, 30_000)}`;
+
   const userContent = `FROM: ${email.from}
 SUBJECT: ${email.subject}
 RECEIVED: ${email.receivedAt}
 
-BODY:
-${truncate(email.body, 30_000)}`;
+${bodyBlock}`;
 
   const response = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
@@ -158,4 +168,21 @@ function stripCodeFence(text: string): string {
 function truncate(s: string, max: number): string {
   if (s.length <= max) return s;
   return s.slice(0, max) + "\n\n[...truncated]";
+}
+
+/**
+ * Strip noisy HTML that doesn't help extraction (style/script/head/CSS-only
+ * attributes) while preserving tag structure so the model can see which
+ * text cells sit next to each other in a flyer table.
+ */
+function compactHtml(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<head[\s\S]*?<\/head>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/\s(style|class|width|height|align|valign|bgcolor|cellpadding|cellspacing|border)="[^"]*"/gi, "")
+    .replace(/\s(style|class|width|height|align|valign|bgcolor|cellpadding|cellspacing|border)='[^']*'/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }

@@ -32,6 +32,7 @@ import {
   writeIntakeLog,
   generateInboundEventId,
   dedupHashFor,
+  contentHashFor,
 } from "../../../../lib/lookout/storage.ts";
 import { looksLikeConfirmation, looksLikeAck } from "../../../../lib/lookout/confirm.ts";
 import { noteInboundFromSender } from "../../../../lib/lookout/tracker.ts";
@@ -98,6 +99,26 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonError(502, "failed to fetch email body");
   }
 
+  // 4.1. Content-based dedup — same email forwarded from a different address
+  //      (e.g. Stephen forwards a chamber newsletter that already hit our
+  //      inbox directly) hashes the same and short-circuits.
+  const contentHash = contentHashFor(email.subject, email.body);
+  if (log.some((l) => l.contentHash === contentHash)) {
+    console.log(
+      `[intake] content-duplicate — ${email.from} "${email.subject.slice(0, 60)}"`
+    );
+    await appendLog(log, {
+      dedupHash: hash,
+      contentHash,
+      receivedAt: email.receivedAt,
+      from: email.from,
+      subject: email.subject,
+      outcome: "duplicate",
+      eventCount: 0,
+    });
+    return Response.json({ ok: true, outcome: "content-duplicate" });
+  }
+
   // 4.5. Confirmation handling — short-circuit confirmation + ack emails
   //      before the extractor eats the LLM budget.
   //      NOTE: auto-click is DISABLED — Stephen clicks confirm links manually
@@ -110,6 +131,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.log(`[intake] ack-ignored — ${email.from} "${email.subject.slice(0, 60)}"`);
     await appendLog(log, {
       dedupHash: hash,
+      contentHash,
       receivedAt: email.receivedAt,
       from: email.from,
       subject: email.subject,
@@ -125,6 +147,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
     await appendLog(log, {
       dedupHash: hash,
+      contentHash,
       receivedAt: email.receivedAt,
       from: email.from,
       subject: email.subject,
@@ -151,6 +174,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.error("[intake] extractor failed:", (err as Error).message);
     await appendLog(log, {
       dedupHash: hash,
+      contentHash,
       receivedAt: email.receivedAt,
       from: email.from,
       subject: email.subject,
@@ -170,6 +194,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.log(`[intake] no-events — ${email.from} "${email.subject.slice(0, 60)}"`);
     await appendLog(log, {
       dedupHash: hash,
+      contentHash,
       receivedAt: email.receivedAt,
       from: email.from,
       subject: email.subject,
@@ -200,6 +225,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   await appendLog(log, {
     dedupHash: hash,
+    contentHash,
     receivedAt: email.receivedAt,
     from: email.from,
     subject: email.subject,

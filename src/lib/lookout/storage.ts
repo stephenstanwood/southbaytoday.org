@@ -111,6 +111,25 @@ export function dedupHashFor(from: string, subject: string, messageId: string): 
   return createHash("sha1").update(`${from}|${subject}|${messageId}`).digest("hex").slice(0, 16);
 }
 
+/**
+ * Content-based hash for dedup across forwards. Normalizes the subject
+ * (strips FW:/Fwd:/Re: prefixes) and hashes it with the first N chars of
+ * the body, so a forwarded copy of an email we already processed lands on
+ * the same hash as the original.
+ */
+export function contentHashFor(subject: string, body: string): string {
+  const normalizedSubject = subject
+    .replace(/^\s*(fwd?|re|fw):\s*/gi, "")
+    .replace(/^\s*(fwd?|re|fw):\s*/gi, "")
+    .trim()
+    .toLowerCase();
+  const bodySignature = body.slice(0, 1500).replace(/\s+/g, " ").trim();
+  return createHash("sha1")
+    .update(`${normalizedSubject}|${bodySignature}`)
+    .digest("hex")
+    .slice(0, 16);
+}
+
 async function readBlobJson(pathname: string): Promise<string | null> {
   const token = getBlobToken();
   if (!token) return null;
