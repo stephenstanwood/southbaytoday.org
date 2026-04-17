@@ -91,6 +91,10 @@ export interface NewsletterTarget {
   seenFromAddresses: string[];
   /** Domain(s) we've seen — coarser match when the exact address varies. */
   seenFromDomains: string[];
+  /** Per-message dedup keys ("<messageId>::<targetId>") written by the
+   * reconcile cron so repeated runs don't double-count the same email.
+   * Capped to ~200 most recent per row in the reconcile endpoint. */
+  seenMessageIds?: string[];
   /** Error message from the last failed attempt, if any. */
   lastError?: string;
 }

@@ -22,7 +22,7 @@ const CONFIRM_SUBJECTS =
 // Subject patterns that indicate "you're already in, no action needed."
 // These short-circuit before CONFIRM_SUBJECTS so we don't waste a click.
 const ACK_SUBJECTS =
-  /you\s+(have\s+been|are)\s+subscribed|successfully\s+subscribed|welcome\s+to|thanks\s+for\s+signing\s+up|thank\s+you\s+for\s+subscribing|subscription\s+confirmed/i;
+  /you\s+(have\s+been|are|'?ve\s+been|are\s+now)\s+subscribed|successfully\s+subscribed|welcome\s+to|thanks?\s+for\s+(signing\s+up|subscribing|joining)|thank\s+you\s+for\s+subscribing|subscription\s+(confirmed|confirmation|change)|you\s+are\s+now\s+(subscribed|signed\s+up)|your\s+subscription\s+(is|has\s+been)\s+(active|activated|confirmed)/i;
 
 export interface ConfirmEmailInput extends InboundEmail {
   /** Raw HTML body, if available. Confirm logic prefers HTML hrefs to plain-text URLs. */

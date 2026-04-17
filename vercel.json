@@ -1,4 +1,10 @@
 {
   "framework": "astro",
-  "ignoreCommand": "[ \"$VERCEL_ENV\" = \"preview\" ] && exit 0 || exit 1"
+  "ignoreCommand": "[ \"$VERCEL_ENV\" = \"preview\" ] && exit 0 || exit 1",
+  "crons": [
+    {
+      "path": "/api/admin/lookout/reconcile",
+      "schedule": "0 * * * *"
+    }
+  ]
 }
