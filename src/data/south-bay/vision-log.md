@@ -4396,3 +4396,34 @@ Consistency matters as much as novelty — 79 events showing "10:00 am" instead 
 1. **RECENTLY_FUNDED: Apr 17–21 watch** — Crunchbase weekly roundup publishes Friday Apr 17. Check for new South Bay rounds.
 2. **School calendar: teacher workday/PD days** — Districts often have 1–2 additional no-school days not in current calendar. Need verified 2025-26 dates per district.
 3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked/ECONNREFUSED. Monitor cityofmountainview.gov for changes.
+
+---
+
+## 2026-04-17 — Cycle 87: Two New Funded Companies + Data Refresh
+
+### Context
+Friday April 17, 2026 (~2 PM PDT). Spring break ends today for FUHSD, SCUSD, CUSD, and Campbell USD. Crunchbase weekly roundup for Apr 13–17 not yet published as of this cycle. Schools back Monday.
+
+### What Was Built
+
+**Tech tab: 2 new funded companies added to RECENTLY_FUNDED (45 total)**
+
+- **AheadComputing** (Santa Clara, $30M Seed 2, Jan 21, 2026) — CPU microarchitecture for the AI era; $53M total raised; backed by Eclipse Ventures and Toyota Ventures. Previously missing from the 43-company list.
+- **Efficient Computer** (Santa Clara, $60M Series A, Feb 18, 2026) — Energy-efficient general-purpose processors for AI; $76M total raised; led by Triatomic Capital with RTX Ventures, Toyota Ventures. Previously missing.
+
+Both confirmed Santa Clara-based via press release. Found via SemiEngineering Q1 2026 funding roundup.
+
+**Data refreshed:**
+- `scc-food-openings.json` — 12 comingSoon items (up from 0 last cycle; new: Gozen Kamicha, Molly Tea x2, Shu Shia Boba, Bleni Blend, Breakfast Club, Famous Dave's, Sea Restaurant)
+- `restaurant-radar.json` — 12 signals (SJ: 10, PA: 2)
+- `permit-pulse.json` — SJ 20 notable + PA 10 notable, 8 new units
+
+**Crunchbase Apr 17 roundup:** Not published yet as of this cycle. Most recent confirmed: SiFive week (Apr 4–10). All other searches confirmed no additional South Bay rounds from Apr 14–17 not already in database.
+
+### Why This Was the Strongest Move
+The comingSoon section of the Food tab went from empty to 12 items — residents checking what's opening nearby get a genuinely populated list. The two new funded companies (AheadComputing, Efficient Computer) fill real gaps: both confirmed Santa Clara companies with public press releases from Q1 2026 that were previously absent from the 43-company list.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 21 watch** — Crunchbase weekly roundup for Apr 13–17 may publish later today or Monday. Specific targets: any new South Bay AI/chip rounds.
+2. **School calendar: teacher workday/PD days** — Districts often have 1–2 additional no-school days. Need verified 2025-26 dates per district.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked/ECONNREFUSED. Monitor cityofmountainview.gov for changes.
