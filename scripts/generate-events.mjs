@@ -639,6 +639,10 @@ function inferCategory(title, desc, type, venue = "") {
   // Startup pitch events hosted in campus theaters should be community, not arts.
   const isStartupPitch = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night)\b/.test(t);
   if (isStartupPitch) return "community";
+  // Academic/professional conferences in the title are always education — must run BEFORE
+  // the arts check so medical/health conference descriptions containing "performance" (clinical
+  // context) don't get misclassified as arts.
+  if (/\bconference\b/.test(titleLower)) return "education";
   // Exhibits, galleries, and book discussions must be checked BEFORE music — descriptions can
   // mention "music" incidentally (e.g. a printed-books exhibit about a collector who liked music)
   // but the primary category is "arts" when these visual/literary cues are present.
@@ -3748,11 +3752,21 @@ async function main() {
     ...extraEntries,
   ];
 
-  // Normalize whitespace in all string fields — sources often have double spaces,
-  // leading/trailing whitespace in titles and venue names
+  // Normalize whitespace and decode HTML entities in all string fields — sources often
+  // have double spaces, leading/trailing whitespace, or HTML-encoded characters in
+  // titles and venue names (e.g. Kepler&#39;s Books, O&#8217;Flaherty&#8217;s)
   for (const e of collapsedEvents) {
     if (e.title) e.title = e.title.replace(/\s+/g, " ").trim();
-    if (e.venue) e.venue = e.venue.replace(/\s+/g, " ").trim();
+    if (e.venue) {
+      e.venue = e.venue
+        .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+        .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+        .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&nbsp;/g, " ")
+        .replace(/<[^>]+>/g, "")   // strip any residual HTML tags
+        .replace(/[\u00a0]/g, " ") // non-breaking space → regular space
+        .replace(/\s+/g, " ").trim();
+    }
   }
 
   const ongoingCount = collapsedEvents.filter((e) => e.ongoing).length;
