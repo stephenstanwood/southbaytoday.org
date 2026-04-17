@@ -14,7 +14,7 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { head } from "@vercel/blob";
+import { head, list } from "@vercel/blob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,6 +33,7 @@ if (existsSync(envPath)) {
 
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "inbound-events.json");
 const BLOB_KEY = "lookout/inbound-events.json";
+const SHARD_PREFIX = "lookout/events-shards/";
 
 const token = process.env.BLOB_READ_WRITE_TOKEN;
 if (!token) {
@@ -40,30 +41,55 @@ if (!token) {
   process.exit(0);
 }
 
-let raw = null;
+const events = [];
+
+// 1. Legacy monolithic blob (pre-sharding) — keep reading until it's gone.
 try {
   const meta = await head(BLOB_KEY, { token });
   if (meta?.url) {
     const res = await fetch(`${meta.url}?_cb=${Date.now()}`, { cache: "no-store" });
-    if (res.ok) raw = await res.text();
+    if (res.ok) {
+      const parsed = JSON.parse(await res.text());
+      if (Array.isArray(parsed)) events.push(...parsed);
+    }
   }
 } catch (err) {
-  if (err.name === "BlobNotFoundError") {
-    console.log("ℹ️  No inbound events blob yet — writing empty file");
-    writeFileSync(OUT_PATH, JSON.stringify({ events: [], _meta: { pulledAt: new Date().toISOString() } }, null, 2));
-    process.exit(0);
+  if (err.name !== "BlobNotFoundError") {
+    console.error("⚠️  legacy blob read failed:", err.message);
   }
-  console.error("❌ Failed to read blob:", err.message);
-  process.exit(1);
 }
 
-let events = [];
+// 2. Per-email shards (race-free writes).
 try {
-  events = raw ? JSON.parse(raw) : [];
+  const { blobs } = await list({ prefix: SHARD_PREFIX, token });
+  const shards = await Promise.all(
+    blobs.map(async (b) => {
+      try {
+        const res = await fetch(`${b.url}?_cb=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) return null;
+        return JSON.parse(await res.text());
+      } catch {
+        return null;
+      }
+    })
+  );
+  for (const arr of shards) {
+    if (Array.isArray(arr)) events.push(...arr);
+  }
 } catch (err) {
-  console.error("❌ Failed to parse blob JSON:", err.message);
-  process.exit(1);
+  console.error("⚠️  shard list failed:", err.message);
 }
+
+// Dedup by id (legacy + shards overlap is possible).
+const seen = new Set();
+const unique = events.filter((e) => {
+  if (!e || typeof e.id !== "string") return false;
+  if (seen.has(e.id)) return false;
+  seen.add(e.id);
+  return true;
+});
+events.length = 0;
+events.push(...unique);
 
 // Only keep events that are still in the future and approved (or new — we trust the extractor)
 const today = new Date().toISOString().slice(0, 10);

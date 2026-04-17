@@ -26,8 +26,7 @@ import type { APIRoute } from "astro";
 import { Webhook } from "svix";
 import { extractEvents, normalizeCityKey } from "../../../../lib/lookout/extractor.ts";
 import {
-  readInboundEvents,
-  writeInboundEvents,
+  writeInboundEventsForEmail,
   readIntakeLog,
   writeIntakeLog,
   generateInboundEventId,
@@ -204,8 +203,8 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ ok: true, outcome: "no-events" });
   }
 
-  // 7. Persist extracted events
-  const existing = await readInboundEvents();
+  // 7. Persist extracted events — sharded per email (race-free: each
+  //    webhook writes its own blob key, no read-modify-write on a shared blob).
   const fresh: InboundEvent[] = futureEvents.map((e) => ({
     id: generateInboundEventId(),
     receivedAt: email.receivedAt,
@@ -221,7 +220,7 @@ export const POST: APIRoute = async ({ request }) => {
     cityName: e.cityName,
     status: "new",
   }));
-  await writeInboundEvents([...existing, ...fresh]);
+  await writeInboundEventsForEmail(hash, fresh);
 
   await appendLog(log, {
     dedupHash: hash,
