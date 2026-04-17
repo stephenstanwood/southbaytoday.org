@@ -58,6 +58,11 @@ const BLURB_OVERRIDES = {
   "SR0879467": "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio.",
 };
 
+// Source IDs to explicitly skip — non-public venues (apartment amenity kitchens, etc.)
+const SOURCE_ID_SKIP = new Set([
+  "SR0881556", // Palo Alto Central — apartment complex amenity kitchen, not a public restaurant
+]);
+
 // Map city names to our city IDs
 const CITY_ID_MAP = {
   "SAN JOSE": "san-jose",
@@ -96,7 +101,7 @@ function cleanName(raw) {
   s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade|Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Tank\s+Replace)(\s+\d+)?$/i, "").trim();
 
   // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank")
-  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System)\s*$/i, "").trim();
+  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade)\s*$/i, "").trim();
 
   // Strip " At [Venue City]" location descriptors — e.g. "Blendid At City Sports Mountain View"
   // These appear when a kiosk is located inside another business
@@ -175,6 +180,7 @@ function shouldSkip(item) {
   const name = item.business_name ?? "";
   const rawName = name.replace(/^E-\s*/i, "").trim();
 
+  if (item.record_id && SOURCE_ID_SKIP.has(item.record_id)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;

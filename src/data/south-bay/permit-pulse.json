@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-17T19:10:00.337Z",
+      "generatedAt": "2026-04-17T20:11:40.841Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-17T19:10:02.693Z",
+      "generatedAt": "2026-04-17T20:11:43.342Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -160,18 +160,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00945",
-          "address": "754 Southampton Dr",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "RES MEP:  Main Panel Upgrade to 200 Amps with 200A MCB",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-10",
           "subtype": "Permit Issued"
         },
         {
@@ -211,12 +199,36 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-00945",
+          "address": "754 Southampton Dr",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "RES MEP:  Main Panel Upgrade to 200 Amps with 200A MCB",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-10",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-00954",
           "address": "3179 Stockton Pl",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
           "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 2 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-10",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00957",
+          "address": "1066 Maddux Dr",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-10",
@@ -235,16 +247,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00957",
-          "address": "1066 Maddux Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "id": "26PLN-00084",
+          "address": "3401 Hillview Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to remove three Blue Gum trees due to declining health and decay. Nine 15 gallon Island Live Oak trees will be planted onsite as replacement trees. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-10",
-          "subtype": "Permit Issued"
+          "issueDate": "2026-04-14",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00081",
@@ -253,18 +265,6 @@
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Over the Counter Retroactive tree removal  of (8)  failed trees to be replaced with seven (7) 36-inch box trees and nine (9) 24-inch box trees.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-14",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00084",
-          "address": "3401 Hillview Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to remove three Blue Gum trees due to declining health and decay. Nine 15 gallon Island Live Oak trees will be planted onsite as replacement trees. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-14",
