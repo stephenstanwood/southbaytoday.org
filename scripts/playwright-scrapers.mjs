@@ -1114,6 +1114,99 @@ const BN_STORES = [
   { id: "2909", name: "Blossom Hill", city: "san-jose", address: "5630 Cottle Rd, San Jose" },
 ];
 
+// ── Peninsula Open Space Trust (POST) ──
+// openspacetrust.org/events — Cloudflare-protected, needs real browser + a
+// desktop UA (default headless UA is blocked). Event cards are well-structured
+// with article.card-event containing .event-date (month/day/dayofweek),
+// p.event-title > a, ul.pills.badges (category + "In Person"/"Virtual"), and
+// an optional .event-time sibling.
+
+async function scrapePOST(page) {
+  // Force a realistic desktop UA so Cloudflare serves the real page.
+  await page.setExtraHTTPHeaders({
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+  });
+  try {
+    await page.goto("https://openspacetrust.org/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  } catch {
+    return [];
+  }
+  await page.waitForTimeout(4000); // let Cloudflare settle and cards render
+
+  const raw = await page.evaluate(() => {
+    const out = [];
+    const cards = document.querySelectorAll("article.card-event");
+    for (const card of cards) {
+      const month = card.querySelector(".event-month")?.textContent?.trim() ?? "";
+      const day = card.querySelector(".event-day")?.textContent?.trim() ?? "";
+      if (!month || !day) continue;
+
+      const titleLink = card.querySelector("p.event-title a, .event-title a");
+      const title = titleLink?.textContent?.trim() ?? "";
+      const link = titleLink?.href ?? card.querySelector(".event-image a")?.href ?? "";
+      if (!title || title.length < 4) continue;
+
+      const tags = Array.from(card.querySelectorAll("ul.pills li, .pills li, .badges li"))
+        .map((t) => t.textContent?.trim() ?? "")
+        .filter(Boolean);
+      const tagsLower = tags.join("|").toLowerCase();
+
+      // Time pattern: "9:30 A.M. - 1:30 P.M." or "9:00 AM" — in the content area.
+      const content = card.querySelector(".event-content")?.textContent ?? card.textContent ?? "";
+      const timeMatch = content.match(/(\d{1,2}(?::\d{2})?\s*[AP]\.?\s*M\.?)(?:\s*[-–]\s*(\d{1,2}(?::\d{2})?\s*[AP]\.?\s*M\.?))?/i);
+
+      out.push({
+        month, day,
+        title,
+        link,
+        time: timeMatch?.[1] ?? null,
+        endTime: timeMatch?.[2] ?? null,
+        tags,
+        virtual: /\bvirtual\b|\bonline\b|webinar/i.test(tagsLower) || /\bvirtual\b|\bonline\b|webinar/i.test(title),
+        volunteer: /\bvolunteer\b/i.test(tagsLower),
+      });
+    }
+    return out;
+  });
+
+  const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  const now = new Date();
+  const curYear = now.getFullYear();
+  const curMonth = now.getMonth();
+  const seen = new Set();
+  const events = [];
+
+  for (const r of raw) {
+    const m = MONTHS[r.month];
+    if (m == null) continue;
+    // Infer year: if the month is >= 4 months behind now, it's next year.
+    const y = m < curMonth - 3 ? curYear + 1 : curYear;
+    const d = new Date(y, m, parseInt(r.day, 10));
+    const date = isoDate(d);
+    if (date < TODAY) continue;
+
+    const dedup = `${date}|${r.title.toLowerCase()}`;
+    if (seen.has(dedup)) continue;
+    seen.add(dedup);
+
+    events.push({
+      title: r.title,
+      date,
+      time: normalizeTime(r.time?.replace(/\./g, "") ?? null),
+      endTime: normalizeTime(r.endTime?.replace(/\./g, "") ?? null),
+      venue: r.virtual ? "Online (POST Webinar)" : "Peninsula Open Space Trust",
+      address: r.virtual ? "" : "Various POST preserves + partner locations",
+      city: "santa-clara-county",
+      url: r.link || "https://openspacetrust.org/events/",
+      source: "Peninsula Open Space Trust",
+      category: r.volunteer ? "volunteer" : "nature",
+      cost: "free",
+      kidFriendly: /\b(family|kids|children|youth)\b/i.test(r.title),
+    });
+  }
+  return events;
+}
+
 async function scrapeBN(page) {
   const allEvents = [];
   for (const store of BN_STORES) {
@@ -1279,6 +1372,7 @@ async function main() {
   tasks.push({ name: "Books Inc", fn: (b) => runScraper(b, "Books Inc", scrapeBooksInc) });
   tasks.push({ name: "Barnes & Noble", fn: (b) => runScraper(b, "Barnes & Noble", scrapeBN) });
   tasks.push({ name: "Half Price Books", fn: (b) => runScraper(b, "Half Price Books", scrapeHPB) });
+  tasks.push({ name: "POST (Peninsula Open Space Trust)", fn: (b) => runScraper(b, "POST (Peninsula Open Space Trust)", scrapePOST) });
 
   // Run all with bounded concurrency (4 pages at a time)
   console.log(`Running ${tasks.length} scrapers (4 concurrent)...\n`);
