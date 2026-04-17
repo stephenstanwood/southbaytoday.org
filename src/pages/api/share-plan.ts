@@ -65,7 +65,7 @@ function generateId(): string {
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!rateLimit(clientAddress, 5)) return rateLimitResponse();
 
-  let body: { cards: SharedPlanCard[]; city: string; kids: boolean; weather: string | null };
+  let body: { cards: SharedPlanCard[]; city: string; kids: boolean; weather: string | null; planDate?: string };
   try {
     body = await request.json();
   } catch {

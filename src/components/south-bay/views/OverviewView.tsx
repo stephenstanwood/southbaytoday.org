@@ -2002,7 +2002,7 @@ function TechBriefingCallout({ onNavigate }: { onNavigate: (tab: Tab) => void })
 // ── City Hall This Week ───────────────────────────────────────────────────────
 
 function CityHallThisWeek({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
-  const data = upcomingMeetingsJson as { generatedAt: string; meetings: Record<string, MeetingEntry> };
+  const data = upcomingMeetingsJson as unknown as { generatedAt: string; meetings: Record<string, MeetingEntry> };
   if (!data?.meetings) return null;
 
   const sevenDaysOut = new Date(NOW.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
