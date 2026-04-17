@@ -951,12 +951,15 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
 export const EVENT_CATEGORIES: { id: EventCategory | "all"; label: string; emoji: string }[] = [
   { id: "all",       label: "All",       emoji: "✨" },
-  { id: "market",    label: "Markets",   emoji: "🌽" },
-  { id: "family",    label: "Family",    emoji: "👨‍👩‍👧" },
-  { id: "music",     label: "Music",     emoji: "🎵" },
-  { id: "arts",      label: "Arts",      emoji: "🎨" },
-  { id: "sports",    label: "Sports",    emoji: "🏟️" },
   { id: "community", label: "Community", emoji: "🤝" },
+  { id: "arts",      label: "Arts",      emoji: "🎨" },
+  { id: "music",     label: "Music",     emoji: "🎵" },
+  { id: "education", label: "Education", emoji: "📚" },
+  { id: "family",    label: "Family",    emoji: "👨‍👩‍👧" },
+  { id: "outdoor",   label: "Outdoor",   emoji: "🌿" },
+  { id: "sports",    label: "Sports",    emoji: "🏟️" },
+  { id: "food",      label: "Food",      emoji: "🍽️" },
+  { id: "market",    label: "Markets",   emoji: "🌽" },
 ];
 
 export function getEventsForCity(

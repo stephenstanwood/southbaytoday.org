@@ -1043,8 +1043,11 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
         />
       </div>
 
-      {/* Category pills */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+      {/* Category pills — single-row horizontal scroll */}
+      <div style={{
+        display: "flex", gap: 6, overflowX: "auto", marginBottom: 6, paddingBottom: 4,
+        scrollbarWidth: "none" as React.CSSProperties["scrollbarWidth"],
+      }}>
         {EVENT_CATEGORIES.map((cat) => {
           const active = category === cat.id;
           const count = viewMode === "upcoming" ? (categoryCounts[cat.id] ?? 0) : null;
@@ -1054,7 +1057,7 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
               key={cat.id}
               onClick={() => setCategory(cat.id as EventCategory | "all")}
               style={{
-                display: "flex", alignItems: "center", gap: 4,
+                display: "flex", alignItems: "center", gap: 4, flexShrink: 0,
                 padding: "4px 10px",
                 border: `1.5px solid ${active ? "var(--sb-primary)" : "var(--sb-border)"}`,
                 borderRadius: 100, background: active ? "var(--sb-primary)" : "#fff",
@@ -1079,12 +1082,14 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
             </button>
           );
         })}
+      </div>
 
-        <label style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "var(--sb-muted)", cursor: "pointer", userSelect: "none", marginLeft: 8 }}>
+      {/* Kids toggle + event count */}
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 10, gap: 8 }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "var(--sb-muted)", cursor: "pointer", userSelect: "none" }}>
           <input type="checkbox" checked={showKidsOnly} onChange={(e) => setShowKidsOnly(e.target.checked)} style={{ cursor: "pointer" }} />
           👶 Kids only
         </label>
-
         {viewMode !== "venues" && (
           <span style={{ marginLeft: "auto", fontSize: 11, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
             {activeList.length} events
@@ -1159,7 +1164,9 @@ export default function EventsView({ selectedCities, homeCity }: Props) {
           <span style={{ fontSize: 18, lineHeight: 1 }}>🌸</span>
           <div style={{ flex: 1, minWidth: 180 }}>
             <div style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
-              {breakInProgress ? "Spring Break is here!" : `Spring Break in ${daysUntilBreak} day${daysUntilBreak === 1 ? "" : "s"}`}
+              {breakInProgress
+                ? (todayIso === SB_BREAK_END ? "Last day of Spring Break!" : "Spring Break is here!")
+                : `Spring Break in ${daysUntilBreak} day${daysUntilBreak === 1 ? "" : "s"}`}
             </div>
             <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 1 }}>
               SJUSD, PAUSD, MVWSD Apr 3–10 · FUHSD, Cupertino USD, Campbell USD Apr 13–17
