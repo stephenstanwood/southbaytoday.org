@@ -332,11 +332,11 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
       /* Fixed column widths so every per-category table aligns vertically
          and status pills line up regardless of which rows have ✕ undo buttons. */
       table col.col-name { width: auto; }
-      table col.col-city { width: 16%; }
-      table col.col-status { width: 120px; }
-      table col.col-received { width: 110px; }
-      table col.col-count { width: 64px; }
-      table col.col-actions { width: 180px; }
+      table col.col-city { width: 14%; }
+      table col.col-status { width: 170px; }
+      table col.col-received { width: 100px; }
+      table col.col-count { width: 56px; }
+      table col.col-actions { width: 170px; }
       td, th { overflow: hidden; }
       td.meta { white-space: nowrap; text-overflow: ellipsis; }
       th, td {
@@ -402,6 +402,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         border: 0;
         font-family: inherit;
         box-sizing: border-box;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
       .status-pill.clickable {
         cursor: pointer;
