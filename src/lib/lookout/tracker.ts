@@ -147,6 +147,29 @@ export async function readTracker(): Promise<NewsletterTrackerDoc> {
 }
 
 export async function writeTracker(doc: NewsletterTrackerDoc): Promise<void> {
+  // Race-safety for deletions: between our read and write, another request
+  // (another delete click, the mark endpoint, or the intake webhook) may have
+  // landed a newer deletedIds that we'd otherwise clobber. Merge the latest
+  // tombstones from blob (union, never shrink) so deletions are never lost to
+  // concurrent read-modify-write cycles. Also re-filter targets so tombstoned
+  // ids can't sneak back in.
+  if (hasBlobToken()) {
+    try {
+      const latest = await readBlobJson(TRACKER_BLOB_KEY);
+      if (latest) {
+        const parsed = JSON.parse(latest) as NewsletterTrackerDoc;
+        const merged = new Set<string>([
+          ...(doc.deletedIds ?? []),
+          ...(parsed.deletedIds ?? []),
+        ]);
+        doc.deletedIds = Array.from(merged);
+      }
+    } catch {
+      // If the merge-read fails, fall through with our local view. Worst case
+      // is one lost tombstone — we don't want to fail the whole write.
+    }
+  }
+  doc = applyDeletedIds(doc);
   doc.updatedAt = new Date().toISOString();
   const json = JSON.stringify(doc, null, 2);
   if (hasBlobToken()) {
