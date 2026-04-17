@@ -181,17 +181,61 @@ export async function writeTracker(doc: NewsletterTrackerDoc): Promise<void> {
   writeFileSync(TRACKER_PATH, json);
 }
 
+/** Parse a raw From header like `"Foo Bar" <foo@bar.com>` into parts. */
+function parseFromHeader(raw: string): { address: string; displayName: string; domain: string } {
+  if (!raw) return { address: "", displayName: "", domain: "" };
+  const trimmed = raw.trim();
+  const m = trimmed.match(/^(.*?)\s*<([^>]+)>\s*$/);
+  const address = (m ? m[2] : trimmed).toLowerCase().trim();
+  const displayName = m ? m[1].replace(/^["']|["']$/g, "").trim() : "";
+  const domain = address.split("@")[1] ?? "";
+  return { address, displayName, domain };
+}
+
+function rootHost(host: string): string {
+  const h = host.toLowerCase().replace(/^www\./, "");
+  // Keep last two labels for most domains (e.g. sjsu.edu from news.sjsu.edu).
+  // Not perfect for .co.uk etc., but good enough for our use case.
+  const parts = h.split(".");
+  return parts.length >= 2 ? parts.slice(-2).join(".") : h;
+}
+
 function findTrackerMatch(doc: NewsletterTrackerDoc, fromEmail: string): NewsletterTarget | null {
   if (!fromEmail) return null;
-  const addr = fromEmail.toLowerCase().trim();
-  const domain = addr.split("@")[1] ?? "";
+  const { address, domain } = parseFromHeader(fromEmail);
+  if (!address) return null;
+  const senderRoot = rootHost(domain);
+
   return (
     doc.targets.find((t) => {
-      if ((t.seenFromAddresses ?? []).some((a) => a.toLowerCase() === addr)) return true;
+      if ((t.seenFromAddresses ?? []).some((a) => a.toLowerCase() === address)) return true;
       if ((t.seenFromDomains ?? []).some((d) => d.toLowerCase() === domain)) return true;
+      // New: match by signup URL host (exact or root-domain). This auto-links
+      // senders to their target without needing prior manual seeding.
+      if (t.signupUrl) {
+        try {
+          const signupHost = new URL(t.signupUrl).hostname.toLowerCase().replace(/^www\./, "");
+          if (signupHost === domain) return true;
+          if (rootHost(signupHost) === senderRoot) return true;
+        } catch {
+          /* malformed URL — skip */
+        }
+      }
       return false;
     }) ?? null
   );
+}
+
+function autoIdFromDomain(domain: string): string {
+  const slug = domain.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50);
+  return `auto-${slug || "sender"}`;
+}
+
+function prettyNameFromDomain(domain: string): string {
+  // e.g. "mailer.hammertheatre.sjsu.edu" → "Hammertheatre Sjsu"
+  const parts = domain.toLowerCase().split(".").filter((p) => !["www", "mail", "mailer", "news", "email", "em", "m", "smtp", "relay"].includes(p));
+  const core = parts.slice(0, Math.max(1, parts.length - 1)).join(" ");
+  return core.replace(/\b\w/g, (c) => c.toUpperCase()) || domain;
 }
 
 /**
@@ -211,29 +255,71 @@ export async function noteInboundFromSender(
   fromEmail: string,
   receivedAt: string
 ): Promise<string | null> {
+  const { address, displayName, domain } = parseFromHeader(fromEmail);
+  if (!address) return null;
+
   const doc = await readTracker();
   const match = findTrackerMatch(doc, fromEmail);
-  if (!match) return null;
 
-  match.lastReceivedAt = receivedAt;
-  match.receivedCount = (match.receivedCount ?? 0) + 1;
-  // Auto-promote signed-up rows to live on first real newsletter.
-  // needs-manual is also promoted — once a real newsletter arrives, the
-  // manual signup must have happened even if we never saw the click.
-  if (
-    match.status === "signup-posted" ||
-    match.status === "confirmed" ||
-    match.status === "needs-manual"
-  ) {
-    match.status = "receiving";
-  }
-  const addr = fromEmail.toLowerCase().trim();
-  if (!match.seenFromAddresses.includes(addr)) {
-    match.seenFromAddresses.push(addr);
+  if (match) {
+    match.lastReceivedAt = receivedAt;
+    match.receivedCount = (match.receivedCount ?? 0) + 1;
+    // Auto-promote pre-receiving rows to "live" on first real newsletter.
+    // Stephen had flagged retry rows manually — a real email means the retry
+    // finally worked, so promote those too.
+    if (
+      match.status === "signup-posted" ||
+      match.status === "confirmed" ||
+      match.status === "needs-manual" ||
+      match.status === "retry" ||
+      match.status === "not-attempted" ||
+      match.status === "failed"
+    ) {
+      match.status = "receiving";
+    }
+    if (!match.seenFromAddresses.includes(address)) match.seenFromAddresses.push(address);
+    if (domain && !(match.seenFromDomains ?? []).includes(domain)) {
+      match.seenFromDomains = [...(match.seenFromDomains ?? []), domain];
+    }
+    await writeTracker(doc);
+    return match.id;
   }
 
+  // Don't auto-add rows for known non-newsletter domains: our own forwarding
+  // infrastructure, Stephen's personal domains, and Gmail (which shows up
+  // whenever sandcathype forwards or when a human replies directly).
+  const AUTO_ADD_BLOCKLIST = new Set([
+    "gmail.com",
+    "in.southbaytoday.org",
+    "southbaytoday.org",
+    "stanwood.dev",
+    "sandcathype.com",
+  ]);
+  if (AUTO_ADD_BLOCKLIST.has(domain)) return null;
+
+  // No match — auto-add a new row as "receiving" so the sender shows up in
+  // the admin tracker. User can rename / delete / re-categorize from the UI.
+  const id = autoIdFromDomain(domain || address);
+  const tombstones = new Set(doc.deletedIds ?? []);
+  if (tombstones.has(id)) return null; // respect prior user deletion
+  const name = displayName || prettyNameFromDomain(domain) || address;
+  const newTarget: NewsletterTarget = {
+    id,
+    name,
+    signupUrl: "",
+    category: "other",
+    provider: "unknown",
+    priority: 3,
+    status: "receiving",
+    receivedCount: 1,
+    lastReceivedAt: receivedAt,
+    seenFromAddresses: [address],
+    seenFromDomains: domain ? [domain] : [],
+    notes: "Auto-discovered from inbound email; no signup URL on file.",
+  };
+  doc.targets.push(newTarget);
   await writeTracker(doc);
-  return match.id;
+  return id;
 }
 
 /**
