@@ -1569,6 +1569,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#7c3aed",
     url: "https://ridezum.com",
   },
+  {
+    id: "sonire-therapeutics",
+    name: "Sonire Therapeutics",
+    city: "Palo Alto",
+    category: "medtech",
+    round: "Series A",
+    amount: "$18M",
+    date: "2026-04-15",
+    tagline: "Non-invasive HIFU therapy system for pancreatic cancer ablation — treating tumors with focused ultrasound, no incisions, outpatient. FDA Breakthrough Device Designation in 2024. Series A led by Santé Ventures with Japanese co-investors.",
+    color: "#0369a1",
+    url: "https://soniretherapeutics.com",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1586,7 +1598,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "47 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "48 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
