@@ -631,7 +631,9 @@ function inferCity(location, address) {
 function inferCategory(title, desc, type, venue = "") {
   const t = `${title} ${desc} ${type} ${venue}`.toLowerCase();
   const titleLower = title.toLowerCase();
-  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || t.includes("baby") || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t)) return "family";
+  // "baby" check: only match when it's not a proper name (e.g. "Baby Bash" the rapper)
+  const hasBaby = /\bbaby\b/.test(t) && !/\bbaby\s+bash\b/i.test(t);
+  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t)) return "family";
   // Medical/clinical procedure courses are always education, never arts — even if descriptions
   // contain "performance" (as in "procedural performance") or the venue has "theater" (OR).
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
@@ -3685,7 +3687,10 @@ async function main() {
       if (sportsByDateVenue.has(svKey)) return false;
       sportsByDateVenue.add(svKey);
     }
-    const key = `${e.title.toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30)}|${e.date}`;
+    // Strip common venue suffixes (" — San Jose Jazz", " at SJSU", etc.) before comparing
+    const strippedTitle = e.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
+    const normTitle = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);
+    const key = `${normTitle}|${e.date}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -3695,7 +3700,7 @@ async function main() {
   // Collapse to first occurrence only; mark ongoing: true so the UI can separate them
   const titleDates = {};
   deduped.forEach((e) => {
-    const key = e.title.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
+    const key = e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
     if (!titleDates[key]) titleDates[key] = new Set();
     titleDates[key].add(e.date);
   });
@@ -3706,7 +3711,7 @@ async function main() {
   );
   const seenMultiDay = new Set();
   const finalEvents = deduped.filter((e) => {
-    const key = e.title.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
+    const key = e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
     if (multiDayKeys.has(key)) {
       if (seenMultiDay.has(key)) return false;
       seenMultiDay.add(key);
