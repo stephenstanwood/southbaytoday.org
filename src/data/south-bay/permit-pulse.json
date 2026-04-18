@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-18T19:09:55.263Z",
+      "generatedAt": "2026-04-18T20:07:35.585Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-18T19:09:57.770Z",
+      "generatedAt": "2026-04-18T20:07:37.971Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00983",
-          "address": "824 Bryant St",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "COM emergency sewer replacement to planter strip. (SEPARATE PERMIT FROM PUBLIC WORKS REQUIRED)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-14",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00969",
           "address": "180 El Camino Real",
           "category": "commercial",
@@ -187,24 +175,36 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-00975",
-          "address": "1036 Colorado Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "MFR Replace (4) apartment units sewer connection. Re route 2' kitchen line to 6\" sewer main in landscape area",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-00971",
           "address": "690 Wildwood Ln",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
           "description": "Res: Replace valve, expansion tanks, and reinstall laundry box.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-13",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00983",
+          "address": "824 Bryant St",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "COM emergency sewer replacement to planter strip. (SEPARATE PERMIT FROM PUBLIC WORKS REQUIRED)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-14",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00975",
+          "address": "1036 Colorado Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "MFR Replace (4) apartment units sewer connection. Re route 2' kitchen line to 6\" sewer main in landscape area",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-13",

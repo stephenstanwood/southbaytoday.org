@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-04-18 — Cycle 90: Zūm $100M Added to RECENTLY_FUNDED
+
+### Context
+Saturday April 18, 2026 (afternoon). Continued from Cycle 89. Searched for South Bay funding rounds announced April 16–18, 2026.
+
+### What Was Built
+
+**Tech tab: Zūm added to RECENTLY_FUNDED (47 total)**
+
+Zūm (Redwood City) raised $100M strategic investment from TPG's Rise Fund on April 16, 2026, at a ~$1.7B valuation. Zūm builds a Connected Mobility Experience (CMX) platform that manages school bus fleets for K-12 districts across 17 states — routing, real-time tracking, and fleet ops in one system. Confirmed via PR Newswire, ridezum.com press release, and Crunchbase Weekly (Apr 11–17).
+
+**Tech briefing summary updated** to mention Zūm's $100M round.
+
+**Data refreshes committed** (upcoming-events, around-town, tech-briefing, permit-pulse, outages, air-quality from Cycle 89).
+
+### Why This Was the Strongest Move
+Zūm is headquartered in Redwood City and operates at significant scale (17 states, ~$1.7B valuation). The school transportation angle is particularly relevant to South Bay families — this is infrastructure that affects thousands of kids. The round had zero local coverage.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 18–24 watch** — Crunchbase weekly roundup for Apr 18–24 publishes Friday Apr 25. Monitor for new South Bay rounds.
+2. **Sunnyvale events** — Research Sunnyvale's summer lineup: Concerts in the Park, remaining festivals.
+3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked. Monitor cityofmountainview.gov.
+
+---
+
 ## 2026-04-18 — Cycle 89: HYFIX Drone Chip Seed + Cerebras IPO Filing + Data Refresh
 
 ### Context

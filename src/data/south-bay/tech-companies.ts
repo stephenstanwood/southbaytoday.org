@@ -1557,6 +1557,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#1d4ed8",
     url: "https://hyfix.ai",
   },
+  {
+    id: "zum-redwood-city",
+    name: "Zūm",
+    city: "Redwood City",
+    category: "saas",
+    round: "Strategic",
+    amount: "$100M",
+    date: "2026-04-16",
+    tagline: "Connected Mobility Experience platform managing school bus fleets for K-12 districts across 17 states — routing, real-time tracking, and fleet ops in one system. TPG's Rise Fund led the round, valuing Zūm at ~$1.7 billion.",
+    color: "#7c3aed",
+    url: "https://ridezum.com",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1574,7 +1586,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "46 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "47 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
