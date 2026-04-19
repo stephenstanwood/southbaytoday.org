@@ -72,7 +72,7 @@
               "address": "",
               "timeBlock": "2:00 PM - 4:00 PM",
               "blurb": "Head to Hammer Theatre for the SJSU Opera Theatre double bill — La Voix Humaine and Stuck Elevator are two very different pieces and together they make for a genuinely interesting afternoon of live performance.",
-              "why": "It's free and it's live opera in a great venue, which is a rare Sunday afternoon treat.",
+              "why": "It's free and it's live opera in a great venue, which is a rare afternoon treat.",
               "url": "https://events.sjsu.edu/event/sjsu-school-of-music-presents-la-voix-humaine-and-stuck-elevator",
               "cost": "free",
               "costNote": null,
@@ -151,7 +151,7 @@
     },
     "2026-04-18": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Huu Bac Quintet — San Jose Jazz",
@@ -177,7 +177,8 @@
         "imageStyle": "abstract",
         "copyApprovedAt": "2026-04-13T19:16:55.895Z",
         "imageApprovedAt": "2026-04-13T19:16:55.895Z",
-        "generatedAt": "2026-04-13T01:48:29.738Z"
+        "generatedAt": "2026-04-13T01:48:29.738Z",
+        "publishedAt": "2026-04-18T18:45:46.099Z"
       },
       "day-plan": {
         "status": "image-approved",
@@ -248,7 +249,7 @@
               "address": "211 S 9th St, San Jose, CA 95192, USA",
               "timeBlock": "3:45 PM - 5:15 PM",
               "blurb": "Bowl a few frames at the SJSU Student Union Bowling Center. It's a real lanes setup, not a pop-up, and it's open to the public.",
-              "why": "Low-key competitive and way more fun than it sounds on a Monday afternoon.",
+              "why": "Low-key competitive and way more fun than it sounds on a afternoon.",
               "url": "https://www.sjsu.edu/studentunion/student-union/bowling.php",
               "mapsUrl": "https://maps.google.com/?cid=15702490762237224608&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": null,
@@ -285,7 +286,7 @@
               "city": "san-jose",
               "address": "1495 The Alameda, San Jose, CA 95126, USA",
               "timeBlock": "7:00 PM - 8:30 PM",
-              "blurb": "Wrap the night with dinner at LUNA Mexican Kitchen on The Alameda. Order margaritas and something off the dinner menu and call it a good Monday.",
+              "blurb": "Wrap the night with dinner at LUNA Mexican Kitchen on The Alameda. Order margaritas and something off the dinner menu and call it a good.",
               "why": "Solid Mexican food with a vibe that doesn't feel rushed.",
               "url": "http://www.lunamexicankitchen.com/",
               "mapsUrl": "https://maps.google.com/?cid=18435811866372102235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
@@ -552,21 +553,14 @@
         "plan": {
           "cards": [
             {
-              "id": "event:scu-614fd88b12b354a9",
-              "name": "Is a Liveable Planet a Human Right? The International Court of Justice weighs in",
-              "category": "education",
-              "city": "santa-clara",
-              "address": "",
-              "timeBlock": "9:15 AM - 10:30 AM",
-              "blurb": "Catch this talk on whether a liveable planet qualifies as a human right, with the International Court of Justice weighing in — it's the kind of session that actually gives you something to argue about over lunch.",
-              "why": "Free, thought-provoking, and it kicks off your day with something genuinely interesting.",
-              "url": "https://events.scu.edu/arts-and-sciences/event/373092-is-a-liveable-planet-a-human-right-the-international-",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AU_ZVEHGg6_KiuQCW9LbCdc2QzBU1kgGtJs08UGwIh8GnK-leZ1MzUMtEHh4mTJDfWpxEjZ7_K6D5jwYmwR5U855sFXGl19kbI-CM3ex6HSNtKp4rC-ACnFVmjg8t57LYprQ3wayUIO1sr-5yb4U-6UWa0YHuZfp1UbF-qxbv4_GhQ3_ta-1ydDjLog-3aqyzCnxkatEeCydKBWeHK7rGV_HL5pYgEKtSUKH2fINJH9jQkyqq5w1EVATNISIVqqwK1kEhjep4DctO43r2STtmRv7ms4y6D0r67_oziDv911M35S2xvudIB5eXDhRtHYqohlo5pQKsz29KvUC1wWNwPyF70Zpdnv07zWNv43KK_CM-rTQGxWwBVNQ9wf7nnnFHCV-pblhKIikhD7bAcG3oquwf1a84qGd-M7eg6Vh9WphcJ8Pqw",
-              "venue": "Santa Clara University",
-              "source": "event",
-              "locked": false
+              "id": "pad:ChIJNfd2ZMDLj4AR0l6oWUhpdMs",
+              "type": "place",
+              "name": "The Escape Game San Jose",
+              "category": "entertainment",
+              "address": "2855 Stevens Creek Blvd, Santa Clara, CA 95050, USA",
+              "timeBlock": "9:00 AM - 10:00 AM",
+              "neighborhood": "santa-clara",
+              "blurb": "Santa Clara spot worth the stop."
             },
             {
               "id": "place:ChIJm7NJkla3j4AR8vR-HWRxgOo",
@@ -595,7 +589,7 @@
               "address": "888 Villa St, Mountain View, CA 94041, USA",
               "timeBlock": "12:30 PM - 2:00 PM",
               "blurb": "Head to Next Level Board Game Cafe for lunch and pick a game off their massive shelf while you eat — it's a full sit-down experience, not just a cafe with a shelf of Settlers in the corner.",
-              "why": "A Sunday afternoon with board games and good food is basically unbeatable.",
+              "why": "A afternoon with board games and good food is basically unbeatable.",
               "url": "http://www.nextlevelboardgamecafe.com/",
               "mapsUrl": "https://maps.google.com/?cid=12359295199364590308&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": null,
@@ -614,7 +608,7 @@
               "address": "Unnamed Road, Mountain View, CA 94043, USA",
               "timeBlock": "2:00 PM - 3:30 PM",
               "blurb": "Walk the Stevens Creek Trail and let the afternoon light do its thing — flat, easy, and scenic enough that you'll actually enjoy the walk instead of just surviving it.",
-              "why": "75 degrees and sunny on a trail with no agenda is exactly what Sunday was invented for.",
+              "why": "75 degrees and sunny on a trail with no agenda is exactly what was invented for.",
               "url": null,
               "mapsUrl": "https://maps.google.com/?cid=13335278380996292265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": "free",
@@ -626,21 +620,14 @@
               "locked": false
             },
             {
-              "id": "event:scu-647413721f8604a9",
-              "name": "tUrn Climate Science en Español: Glaciares y Deshielo Glaciar | Glaciars & Glacial Melt",
-              "category": "education",
-              "city": "santa-clara",
-              "address": "",
-              "timeBlock": "3:30 PM - 5:00 PM",
-              "blurb": "Catch the Climate Science talk on glaciers and glacial melt, presented in both English and Spanish — it's a tight, focused session that doesn't require a science background to follow.",
-              "why": "Free afternoon talk with real substance, and it sets up a good conversation over dinner.",
-              "url": "https://events.scu.edu/arts-and-sciences/event/373094-turn-climate-science-en-espanol-glaciares-y",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AU_ZVEF657cSu7g8AQ_MTADZlxMZSRUBqNMCD-Vdvm2hBRcwG0PrdknSAr-oBVSoEoo7qVA-inuk96FY5dltEnsnnlh7_MM6J21bM5UDrf8WupSqm_n4b8iSVteEKqs4UgfDFHyOHjGnBXJ5ccDNXINqm7NWn2DeRMF57H1NmXvlPW1nHcjVnmwUCD_rYIYa5nMTLSdQqNzok1bB1EJqB5iJQC-3JwCm_MGLlHYzhQCgisqhllMpnV-YX9lohvgkBciaQb20eoJ0YyHB8Czs0RlwYVKRNUyezr9wP_2dlvj8pNsdHoocS4yFGaR4PI9gLXtREpMAKZg0Lb62Z4L_pPXyzKa2GU5eIV2AYaJDkikhy51cXOeeJd9uk5VRkR_pnTI0zImRA0xFdWsYqB3m_ZJRuFS_LU1LS1F1UlGWzrYSMOUk4w",
-              "venue": "Santa Clara University",
-              "source": "event",
-              "locked": false
+              "id": "pad:ChIJq7iF28bJj4ARdWUD6DQUr3I",
+              "type": "place",
+              "name": "California's Great America",
+              "category": "outdoor",
+              "address": "4701 Great America Pkwy, Santa Clara, CA 95054, USA",
+              "timeBlock": "4:30 PM - 6:00 PM",
+              "neighborhood": "santa-clara",
+              "blurb": "Santa Clara spot worth the stop."
             },
             {
               "id": "place:ChIJP-9U5rC1j4AR2h6zkPDzcv0",
@@ -650,7 +637,7 @@
               "address": "785 Lawrence Expy, Santa Clara, CA 95051, USA",
               "timeBlock": "5:30 PM - 7:00 PM",
               "blurb": "Grab dinner at The Stand on Lawrence Expressway, where the menu leans into elevated American classics done right — burgers, fries, the works.",
-              "why": "Solid food without the Sunday evening wait you'd get at a trendier spot.",
+              "why": "Solid food without the evening wait you'd get at a trendier spot.",
               "url": "http://www.thestand.com/?y_source=1_MTAwNjg1NzAzNi03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D",
               "mapsUrl": "https://maps.google.com/?cid=18262927653486141146&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": null,
@@ -660,34 +647,17 @@
               "venue": null,
               "source": "place",
               "locked": false
-            },
-            {
-              "id": "event:scu-8ef986952f89b744",
-              "name": "tUrn Director’s Keynote: Why do we have catastrophe apathy?",
-              "category": "education",
-              "city": "santa-clara",
-              "address": "",
-              "timeBlock": "8:00 PM - 9:30 PM",
-              "blurb": "End the night at the Director's Keynote asking why humans are so bad at caring about catastrophe — it's provocative, free, and a genuinely great way to close out a day that started with climate science.",
-              "why": "Wraps the whole day into a satisfying arc and gives you something to actually think about on the drive home.",
-              "url": "https://events.scu.edu/arts-and-sciences/event/373119-turn-directors-keynote-why-do-we-have-catastrophe",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AU_ZVEEAjOBSG18fWAWS0DZfNDYtAaTx4zORnAFDqwtshyq4qsVhHBCfBmsls6IawfMjKgCloVfOStxIEeD0FEvAPUJGXhckahpZeWJ4h7eMyXvR9uI_waRwndaVUPhd6VbpFuQqPZ0iOaUCpHmBqEEYqWB86-XjbP8_ML99gmVtV8MBi2e1CWrj2aZlMJmrdmbABG5lcix21xD700ietocD4PTYp4sbtMGhp7DWt4MNH5BVsj9lWo__bogQEDLRwt211E98hqzxTdYGFAaXG99nA14HJ8jJ5bCbt8YWuXkm1X1YyoJ0T9Ql1TnH0JunEprVFs-J5IQXooa3pGnrwSpipjf36ShFP6fdbrie_AQ5MrgNrTGOBWLk8tWKqlMYNbvJhQJtIFHJje-JmoWLPqjwmFbTBp0ouariRD7c7xueYLrTwg",
-              "venue": "Santa Clara University",
-              "source": "event",
-              "locked": false
             }
           ],
           "weather": "71°F, high 75°F"
         },
         "copy": {
-          "x": "Monday in Santa Clara + Mountain View, planned. Big climate questions in the morning, @ComputerHistory in the middle, board games at lunch, a trail walk, more climate talks, dinner at The Stand, and a keynote to close. Full day: https://southbaytoday.org/plan/191533a0",
-          "threads": "We planned your Monday across Santa Clara and Mountain View — and it's a good one 🗓️\n\nStarts with a talk on whether a liveable planet is a human right. Flows into the Computer History Museum, lunch + board games at Next Level, a walk on Stevens Creek Trail, climate science en español, dinner at The Stand, and ends with a keynote on catastrophe apathy.\n\nWe did the legwork. Full day plan here: https://southbaytoday.org/plan/191533a0\n\n#SouthBay #MountainView #SantaClara",
-          "bluesky": "Monday planned: climate talks, Computer History Museum, board games at lunch, a trail walk, dinner at The Stand, and a keynote on why humans ignore catastrophe. Santa Clara + Mountain View. Full day: https://southbaytoday.org/plan/191533a0 #SouthBay #MountainView",
-          "facebook": "Here's your Monday in Santa Clara and Mountain View — we built a whole day around it. ☀️\n\nMorning kicks off with a talk on whether a liveable planet is a human right. Then the @ComputerHistory Museum for a few hours. Lunch and board games at Next Level Board Game Cafe. A flat, easy walk on Stevens Creek Trail. A bilingual climate science talk on glaciers. Dinner at The Stand on Lawrence Expressway. https://southbaytoday.org/plan/191533a0",
-          "instagram": "We planned your Monday — and honestly it came together really well 🌍\n\nHere's how the day runs across Santa Clara and Mountain View:\n\n9:15 AM — A talk on whether a liveable planet qualifies as a human right. The International Court of Justice is weighing in and so can you.\n\n10:30 AM — The Computer History Museum. Give yourself time to wander. The full arc of computing history is a lot to take in.\n\n12:30 PM — Next Level Board Game Cafe for lunch. Pick something off the shelf, eat, play. No rush.\n\n2:00 PM — Stevens Creek Trail. Flat, easy, and the afternoon light is genuinely nice out there. 🌿\n\n3:30 PM — Climate Science en Español: Glaciares y Deshielo Glaciar. Glaciers and glacial melt, presented in both English and Spanish.\n\n5:30 PM — Dinner at The Stand on Lawrence Expressway. Elevated American classics, nothing fussy.\n\n8:00 PM — The Director's Keynote: Why do we have catastrophe apathy? Good question to sit with at the end of a day like this.\n\nWe did the legwork. Full day plan at the link: https://southbaytoday.org/plan/191533a0\n\n#SouthBay #SantaClara #MountainView #SouthBayEvents #BayAreaEvents #ComputerHistoryMuseum #ClimateScience #BoardGameCafe #StevensCeekTrail #BayAreaFood #MondayPlans #SiliconValley #BayArea",
-          "mastodon": "Monday planned: climate talks, Computer History Museum, board games at lunch, a trail walk, dinner at The Stand, and a keynote on why humans ignore catastrophe. Santa Clara + Mountain View. Full day: https://southbaytoday.org/plan/191533a0 #SouthBay #MountainView"
+          "x": "Monday in Mountain View and Santa Clara, planned for you — escape room, Computer History Museum, board game lunch, a trail walk, Great America, and a burger worth the detour. Full day: https://southbaytoday.org/plan/191533a0",
+          "threads": "We built a Monday for you and it's genuinely good 😄 Start with an escape room in Santa Clara, then walk through @computerhistory, grab lunch and a board game at Next Level, hit Stevens Creek Trail, and finish with rides and a great burger. Full plan here: https://southbaytoday.org/plan/191533a0 #SouthBay #MountainView #SantaClara",
+          "bluesky": "Six stops, one solid Monday — escape room, Computer History Museum, board game lunch, a flat trail walk, Great America, and dinner at The Stand. We did the planning: https://southbaytoday.org/plan/191533a0 #SouthBay #MountainView #SantaClara",
+          "facebook": "Monday, April 20 — we planned it so you don't have to. The day starts with an escape room in Santa Clara, swings through the Computer History Museum, lands at Next Level Board Game Cafe for lunch, follows the Stevens Creek Trail in the afternoon, hits California's Great America, and wraps with dinner at The Stand on Lawrence Expressway. Six stops, two cities, one genuinely fun day. Full plan here: https://southbaytoday.org/plan/191533a0",
+          "instagram": "Monday, April 20 — here's a whole day plan across Mountain View and Santa Clara, and it actually flows ✨\n\nFirst stop is The Escape Game in Santa Clara — good way to wake up your brain before the caffeine kicks in. Then head over to the Computer History Museum and let yourself wander through the full arc of computing history. It's one of those places where two hours disappear fast.\n\nLunch is at Next Level Board Game Cafe — order food, pull a game off their shelf, and settle in. No rush. After that, Stevens Creek Trail is the perfect reset: flat, easy, and just scenic enough to feel like you actually went outside 🌿\n\nLate afternoon at California's Great America if you're ready to pick up the energy again, and dinner at The Stand on Lawrence Expressway — elevated American classics that earn the detour.\n\nSix stops. Two cities. We built the whole day — link in bio or here: https://southbaytoday.org/plan/191533a0\n\n#SouthBay #MountainView #SantaClara #SouthBayToday #BayAreaDay #ComputerHistoryMuseum #StevensCreekTrail #GreatAmerica #BoardGameCafe #BayAreaEats #MondayPlans #BayAreaThingsToDo #SiliconValleyLife #BayAreaLocal",
+          "mastodon": "Six stops, one solid Monday — escape room, Computer History Museum, board game lunch, a flat trail walk, Great America, and dinner at The Stand. We did the planning: https://southbaytoday.org/plan/191533a0 #SouthBay #MountainView #SantaClara"
         },
         "imageUrl": null,
         "imageStyle": null,
@@ -929,21 +899,14 @@
               "locked": false
             },
             {
-              "id": "event:sjsu-4882dd2997642100",
-              "name": "Natalie and James Thompson Gallery: Click on My Mouth: Language and Technology at ART 127: Thompson Gallery",
-              "category": "arts",
-              "city": "san-jose",
-              "address": "",
-              "timeBlock": "2:30 PM - 4:00 PM",
-              "blurb": "The Click on My Mouth: Language and Technology show at the Thompson Gallery is worth a look — it's a free exhibition digging into how language and tech collide, with student and visiting artist work on display.",
-              "why": "Free art on a Sunday afternoon is always the right call.",
-              "url": "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-click-on-my-mouth-language-and-technology",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJ1UPeZLjMj4ARDjQ3GXL-fzk/photos/AU_ZVEEweICDZ_EG2y5_Z3tPYBgs4k8wF_ah_sm5iy3_ZOMx1B5Et3X7IvdR1EhN3o0p7-T4P4KaTuumqLBglofDOY0qeNZ4hCm_Kyf50C84ELGVERnTmkHEu_KtQwfZerfOKn0M0jYTnn8abIKNybVkFTo3N6uyBz1BC_bbtqtqmPxoNwcT3VNviCpXupA5dAl0wACIHFZ6Z_noLhPUNmJ_H2Fa_LsLG4lLC-2vzCBwWKj8tOjsVm2CicW_PN7l4cr5NP--9ptf3WI-LVLb_F_9EihKH2ef1qhvmUhGFT1uDhO3R4O2MS17WLnp8jMTcRDnIn1h57FCNUh09VbHaSz-o1YWOMXRSBI-MyfkI_8UEaCBNtwWtogmJCzbxv21Dy5omEGKDSo8VuQa7V3pYmOFXILcRa9WpKMmcfjBJHlMHuNwbg",
-              "venue": "San Jose State University",
-              "source": "event",
-              "locked": false
+              "id": "pad:ChIJbfQgad80joARhVtcjrLOi_E",
+              "type": "place",
+              "name": "Aqui Campbell",
+              "category": "food",
+              "address": "201 E Campbell Ave, Campbell, CA 95008, USA",
+              "timeBlock": "4:30 PM - 6:00 PM",
+              "neighborhood": "campbell",
+              "blurb": "Campbell pick worth the stop."
             },
             {
               "id": "place:ChIJvQ88PywYyUwR3Tcw8JMtTj4",
@@ -953,7 +916,7 @@
               "address": "3955 Freedom Cir, Santa Clara, CA 95054, USA",
               "timeBlock": "5:00 PM - 6:30 PM",
               "blurb": "Birk's is a Santa Clara steakhouse-style spot with a serious wine list and the kind of menu that rewards ordering the most indulgent thing on it — this is the happy hour and dinner combo.",
-              "why": "It's the right vibe for a Sunday evening when you want to eat well and linger.",
+              "why": "It's the right vibe for a evening when you want to eat well and linger.",
               "url": "http://www.birksrestaurant.com/",
               "mapsUrl": "https://maps.google.com/?cid=4489575991948097501&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": null,
@@ -968,12 +931,12 @@
           "weather": "72°F, high 73°F"
         },
         "copy": {
-          "x": "We planned your Wednesday — pastries at Nahita, a trail walk, mummies at the Rosicrucian, Peruvian lunch, a gallery show, and dinner at Birk's. Full day: https://southbaytoday.org/plan/d412c87e",
-          "threads": "We did the work — here's your Wednesday in the South Bay ☀️\n\nStarts with pastries at Nahita Bakery, moves into a shaded walk along Los Gatos Creek Trail, then the Rosicrucian Egyptian Museum (yes, real mummies). Peruvian lunch at The Choclo, a language-and-tech gallery show, and dinner at Birk's.\n\nFull day plan: https://southbaytoday.org/plan/d412c87e\n\n#SouthBay #SanJose #SunnyvaleCA",
-          "bluesky": "We planned your Wednesday — Nahita pastries, Los Gatos Creek Trail, Rosicrucian mummies, Peruvian lunch, a gallery, and Birk's for dinner 🗺️ https://southbaytoday.org/plan/d412c87e #SouthBay #SanJose",
-          "facebook": "We planned your Wednesday so you don't have to 😄 Start the morning at Nahita Bakery, take a walk along the Los Gatos Creek Trail, then head to the Rosicrucian Egyptian Museum — actual mummies, actual ancient artifacts. Lunch at The Choclo for Peruvian plates, a stop at the Thompson Gallery's language-and-tech show, and end the evening at Birk's in Santa Clara. The full day is mapped out here: https://southbaytoday.org/plan/d412c87e",
-          "instagram": "We planned your Wednesday — all six stops, no guesswork 🗓️\n\nHere's how it flows:\n\n☕ 8:00 AM — Nahita Bakery. A pastry and a coffee to ease into things before the day picks up.\n\n🌿 9:15 AM — Los Gatos Creek Trail along Dell Ave. Shaded, flat, and genuinely pretty with the creek running alongside you.\n\n🏺 11:00 AM — Rosicrucian Egyptian Museum in San Jose. Real mummies. Real ancient artifacts. A replica ancient space that's hard to describe until you're standing in it.\n\n🍽️ 1:00 PM — The Choclo. Peruvian plates and drinks worth not skipping.\n\n🖼️ 2:30 PM — Thompson Gallery at ART 127. The \"Click on My Mouth: Language and Technology\" show is running and it's worth a look.\n\n🥩 5:00 PM — Birk's in Santa Clara. Steakhouse-style with a serious wine list and a menu that rewards a slow dinner.\n\nWe built the whole day — full plan at the link 👇\nhttps://southbaytoday.org/plan/d412c87e\n\n#SouthBay #SanJose #Sunnyvale #SantaClara #Campbell #SouthBayEats #BayAreaFood #BayAreaArt #RosicrucianMuseum #BayAreaTrails #PeruvianFood #BayAreaDining #WednesdayVibes #BayAreaLife",
-          "mastodon": "We planned your Wednesday — Nahita pastries, Los Gatos Creek Trail, Rosicrucian mummies, Peruvian lunch, a gallery, and Birk's for dinner 🗺️ https://southbaytoday.org/plan/d412c87e #SouthBay #SanJose"
+          "x": "We planned your Wednesday in the South Bay — pastries at Nahita, mummies at the Rosicrucian, Peruvian food at The Choclo, and a steakhouse finish at Birk's. Full day mapped out here: https://southbaytoday.org/plan/d412c87e",
+          "threads": "We planned your Wednesday so you didn't have to ☕ Start at Nahita Bakery, walk Los Gatos Creek Trail, then spend an hour with actual ancient mummies at the Rosicrucian Egyptian Museum. Lunch is Peruvian at The Choclo, and the evening ends at Birk's in Santa Clara. Full day is right here: https://southbaytoday.org/plan/d412c87e #SouthBay #SanJose #Campbell",
+          "bluesky": "Six stops, one solid Wednesday 🗺️ Nahita Bakery → Los Gatos Creek Trail → Rosicrucian Museum → The Choclo → Aqui Campbell → Birk's. We did the work: https://southbaytoday.org/plan/d412c87e #SouthBay #SanJose",
+          "facebook": "We put together a full Wednesday for you across Sunnyvale, Campbell, San Jose, and Santa Clara 🌿 Morning pastry at Nahita Bakery, a shaded walk along Los Gatos Creek Trail, then actual mummies and ancient artifacts at the Rosicrucian Egyptian Museum. Lunch is Peruvian at The Choclo, a stop at Aqui in Campbell, and the evening ends well at Birk's steakhouse in Santa Clara. All six stops mapped: https://southbaytoday.org/plan/d412c87e",
+          "instagram": "We planned your Wednesday. Six stops across the South Bay — here's how the day looks 🗓️\n\n☕ 8:00 AM — Nahita Bakery (Sunnyvale)\nStart with a pastry and coffee. Ease in before the day picks up.\n\n🌿 9:15 AM — Los Gatos Creek Trail\nFlat, shaded, and genuinely pretty. The creek runs alongside the whole walk.\n\n🏛️ 11:00 AM — Rosicrucian Egyptian Museum (San Jose)\nActual mummies. Real ancient artifacts. A replica tomb you can walk into. It's a lot more than you'd expect.\n\n🍽️ 1:00 PM — The Choclo\nPeruvian plates and drinks worth paying attention to. Don't skip the drinks.\n\n🌮 4:30 PM — Aqui Campbell\nCampbell stop that earns its place in the day.\n\n🥩 5:00 PM — Birk's (Santa Clara)\nSteakhouse-style with a serious wine list. A good way to end it.\n\nWe built the whole day so you can just show up. All stops, details, and everything you need:\nhttps://southbaytoday.org/plan/d412c87e\n\n#SouthBay #SanJose #Campbell #Sunnyvale #SantaClara #SouthBayEats #BayAreaFood #RosicrucianMuseum #BayAreaEvents #WednesdayVibes #BayAreaLife #SiliconValleyFood #VisitSanJose #BayAreaPlaces #SouthBayToday",
+          "mastodon": "Six stops, one solid Wednesday 🗺️ Nahita Bakery → Los Gatos Creek Trail → Rosicrucian Museum → The Choclo → Aqui Campbell → Birk's. We did the work: https://southbaytoday.org/plan/d412c87e #SouthBay #SanJose"
         },
         "imageUrl": null,
         "imageStyle": null,
@@ -1133,7 +1096,7 @@
               "address": "",
               "timeBlock": "3:00 PM - 4:30 PM",
               "blurb": "Swing through Saratoga for the Arbor Day Celebration and watch the ceremonial tree planting. It's a free, easy community event with a nice outdoor setting.",
-              "why": "It's free, it's outside, and it's a nice low-key way to spend a Sunday afternoon.",
+              "why": "It's free, it's outside, and it's a nice low-key way to spend a afternoon.",
               "url": "https://www.saratoga.ca.us/calendar.aspx?EID=2589",
               "cost": "free",
               "costNote": null,
@@ -1236,6 +1199,16 @@
               "locked": false
             },
             {
+              "id": "pad:ChIJ3Up278C0j4ARkU8YVZQFV8I",
+              "type": "place",
+              "name": "La Cueva",
+              "category": "food",
+              "address": "18486 Prospect Rd, Saratoga, CA 95070, USA",
+              "timeBlock": "10:30 AM - 12:00 PM",
+              "neighborhood": "saratoga",
+              "blurb": "Saratoga pick worth the stop."
+            },
+            {
               "id": "place:ChIJSdglI1lLjoAR_hylBl1RS1E",
               "name": "Savannah-Chanelle Vineyards",
               "category": "food",
@@ -1243,7 +1216,7 @@
               "address": "23600 Congress Springs Rd, Saratoga, CA 95070, USA",
               "timeBlock": "12:00 PM - 1:30 PM",
               "blurb": "Head up Congress Springs Road to Savannah-Chanelle Vineyards for a tasting. Sip on estate reds on the hillside and take in the views.",
-              "why": "A Sunday afternoon wine tasting in the Saratoga hills is hard to beat.",
+              "why": "A afternoon wine tasting in the Saratoga hills is hard to beat.",
               "url": "http://www.savannahchanelle.com/",
               "mapsUrl": "https://maps.google.com/?cid=5857865200310754558&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "cost": null,
@@ -1283,34 +1256,17 @@
               "timeBlock": "6:30 PM - 8:00 PM",
               "neighborhood": "saratoga",
               "blurb": "Top-rated outdoor spot in saratoga."
-            },
-            {
-              "id": "event:campbell-c0fafc6b27e3cc5e",
-              "name": "Stroll Down Penny Lane - Celebrating the Life & Music of Sir Paul McCartney",
-              "category": "arts",
-              "city": "campbell",
-              "address": "",
-              "timeBlock": "7:30 PM - 9:00 PM",
-              "blurb": "Head to Campbell for Stroll Down Penny Lane, a free tribute celebrating the life and music of Paul McCartney. Good vibes, great songs, no ticket needed.",
-              "why": "Free live music on a Sunday night is a perfect way to close out the day.",
-              "url": "https://www.campbellca.gov/Calendar.aspx?EID=3849",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJNeFXGt80joARpW3Xea5Guc4/photos/AU_ZVEHb_BLXdpNcZB3G92_mys-xSv8bl994Qudq3r8X_Y2iSjyRzlEDZlpohkHWi5_H-2LWqCXf_ZvgH9P69-FM9b1yaPisWOUm6rgF3AeFk-XD6vZsJ2r3ZrhS_L-qZoxuLFWEPbffPpFLHFAZgBbzYW5JgMaNvxJ-tMGEaBX05zTeNkQ_o37qhQX6StWZ2V1NNVvtxo-SF4dgz47s96a-idD03dVUD7meMvT2AigQuJuJNt-SiPLmKZdbyNnI25wjJjeMNc8YAOHbLLzDUjg7HygP_QzzA87_S6qLgzDZ3fKyCg",
-              "venue": "Campbell",
-              "source": "event",
-              "locked": false
             }
           ],
           "weather": "72°F, high 73°F"
         },
         "copy": {
-          "x": "We planned your Friday. Hakone Gardens at 9:30, a hilltop wine tasting in Saratoga, trails, arts, and a free Paul McCartney tribute in Campbell to close it out. Full day. Zero excuses. 🌿\nhttps://southbaytoday.org/plan/bf09252f",
-          "threads": "We planned your Friday in the South Bay and it's a good one 🌿\n\nMorning in the bamboo grove at Hakone Estate → hilltop wines at Savannah-Chanelle → trails at Sanborn → arts at FatCats → Montalvo at golden hour → free Paul McCartney tribute in Campbell to end the night 🎸\n\nFull itinerary: https://southbaytoday.org/plan/bf09252f\n\n#SouthBay #Saratoga #Campbell",
-          "bluesky": "We planned your Friday. Hakone Gardens, a hilltop wine tasting, Sanborn trails, and a free Paul McCartney tribute in Campbell to close out the night 🌿🎸\nhttps://southbaytoday.org/plan/bf09252f #SouthBay #Saratoga",
-          "facebook": "We did the planning so you don't have to — here's your Friday in Saratoga and Campbell. 🌿\n\nStart the morning wandering Hakone Estate's bamboo grove, head up to Savannah-Chanelle Vineyards for a hilltop tasting, then spend the afternoon at Sanborn County Park and FatCats before a sunset stop at Montalvo Arts Center. Cap it all off with a free Paul McCartney tribute show in Campbell. It's a full, beautiful day.\n\nhttps://southbaytoday.org/plan/bf09252f",
-          "instagram": "We planned your Friday. Here's how it goes. 🌿\n\n9:30 AM — Hakone Estate & Gardens in Saratoga. Wander the Japanese-style gardens, walk the bamboo grove, take your time. It earns its reputation.\n\n12:00 PM — Drive up Congress Springs Road to Savannah-Chanelle Vineyards. Estate reds on a hillside. Yes please.\n\n2:30 PM — Sanborn County Park for some fresh air and trails. One of the most underrated outdoor spots in the area.\n\n4:30 PM — FatCats Saratoga Springs for an arts detour before the evening kicks in.\n\n6:30 PM — Montalvo Arts Center as the light gets good. Walk the grounds, breathe it in.\n\n7:30 PM — Head to Campbell for Stroll Down Penny Lane, a free tribute celebrating the life and music of Paul McCartney. 🎸 The perfect way to close out the day.\n\nWe do the legwork so you don't have to. Full details at the link.\n\nhttps://southbaytoday.org/plan/bf09252f\n\n#SouthBay #Saratoga #Campbell #HakoneGardens #SanborncountyPark #MontalvoArts #SiliconValleyLife #BayAreaWeekend #BayAreaEvents #FridayVibes #SouthBayToday #WineCountry #BayAreaArtists #FreeEvents #BayAreaOutdoors",
-          "mastodon": "We planned your Friday. Hakone Gardens, a hilltop wine tasting, Sanborn trails, and a free Paul McCartney tribute in Campbell to close out the night 🌿🎸\nhttps://southbaytoday.org/plan/bf09252f #SouthBay #Saratoga"
+          "x": "Friday in Saratoga, planned for you 🌿 Gardens, a hilltop winery, redwoods, and an evening at Montalvo Arts Center. We did the legwork. https://southbaytoday.org/plan/bf09252f",
+          "threads": "Saratoga has a really good Friday in it if you know where to point yourself 🌿 Start the morning at Hakone Estate, grab lunch at La Cueva, then wind up Congress Springs Road to Savannah-Chanelle for a tasting. The afternoon takes you into Sanborn County Park and it just gets better from there. Full day plan linked. https://southbaytoday.org/plan/bf09252f #SouthBay #Saratoga #SouthBayToday",
+          "bluesky": "Saratoga on a Friday hits different 🍷 Hakone Gardens in the morning, a hilltop winery after lunch, redwoods at Sanborn, and Montalvo at dusk. Full plan here: https://southbaytoday.org/plan/bf09252f #SouthBay #Saratoga",
+          "facebook": "We planned your Friday in Saratoga and honestly it came together really well. Morning at Hakone Estate & Gardens for the bamboo grove and a slow walk, then lunch at La Cueva. After that, head up to Savannah-Chanelle Vineyards for a hilltop tasting. The afternoon opens up at Sanborn County Park, then FatCats Saratoga Springs, and the evening lands at Montalvo Arts Center. Six stops, one really good day. https://southbaytoday.org/plan/bf09252f",
+          "instagram": "We built a Friday in Saratoga from scratch and it's a good one 🌿\n\nHere's how it flows:\n\n9:30 AM — Hakone Estate & Gardens. Wander the Japanese-style gardens, walk the bamboo grove, take your time. It earns a slow morning.\n\n10:30 AM — La Cueva. A Saratoga lunch stop worth knowing about.\n\n12:00 PM — Savannah-Chanelle Vineyards. Drive up Congress Springs Road and sip estate reds on the hillside. 🍷\n\n2:30 PM — Sanborn County Park. Redwoods, trails, and a genuine exhale.\n\n4:30 PM — FatCats Saratoga Springs. A creative detour before the evening settles in.\n\n6:30 PM — Montalvo Arts Center. One of the best ways to end a day in the South Bay.\n\nWe did the planning so you can just show up. Full day plan at the link in bio or right here: https://southbaytoday.org/plan/bf09252f\n\n#Saratoga #SouthBay #SouthBayToday #BayAreaLife #SiliconValley #BayAreaWeekend #ThingsToDo #HakoneGardens #WineTasting #MontalvoArts #SanbornPark #BayAreaFood #LocalGuide #FridayPlans #NorCalLife",
+          "mastodon": "Saratoga on a Friday hits different 🍷 Hakone Gardens in the morning, a hilltop winery after lunch, redwoods at Sanborn, and Montalvo at dusk. Full plan here: https://southbaytoday.org/plan/bf09252f #SouthBay #Saratoga"
         },
         "imageUrl": null,
         "imageStyle": null,
@@ -1378,7 +1334,7 @@
               "city": "cupertino",
               "address": "Fremont Older Open Space Preserve",
               "timeBlock": "9:30 AM - 11:30 AM",
-              "blurb": "Lace up and get into the Fremont Older Open Space Preserve. The foothill trails open up to sweeping views of the valley and barely anyone is out here on a Sunday morning.",
+              "blurb": "Lace up and get into the Fremont Older Open Space Preserve. The foothill trails open up to sweeping views of the valley and barely anyone is out here on a morning.",
               "why": "Perfect temperature for a hike and the views at the top are genuinely worth it.",
               "url": "https://www.openspace.org/preserves/fremont-older",
               "mapsUrl": null,
@@ -1417,7 +1373,7 @@
               "address": "",
               "timeBlock": "2:00 PM - 4:30 PM",
               "blurb": "Head over to Los Gatos for the Spring Wine Walk. You stroll through downtown, pop into shops and tasting spots, and sip your way through the afternoon.",
-              "why": "A gorgeous 74-degree Sunday afternoon in Los Gatos is basically the platonic ideal setting for a wine walk.",
+              "why": "A gorgeous 74-degree afternoon in Los Gatos is basically the platonic ideal setting for a wine walk.",
               "url": null,
               "cost": "free",
               "costNote": null,
@@ -1704,335 +1660,6 @@
         }
       }
     },
-    "2026-05-01": {
-      "tonight-pick": {
-        "status": "draft",
-        "scheduledAt": "2026-05-01T11:45:00-07:00",
-        "item": {
-          "id": "sjz-sjz-break-room-jazz-jam-ft-mart-n-perna-2026-05-01",
-          "title": "SJZ Break Room Jazz Jam Ft. Martín Perna",
-          "name": "SJZ Break Room Jazz Jam Ft. Martín Perna",
-          "venue": "SJZ Break Room",
-          "city": "san-jose",
-          "date": "2026-05-01",
-          "time": "7:00 PM",
-          "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/",
-          "summary": "San Jose Jazz presents free live music programming in conjunction with South First Friday. Following sets by our SJZ U19s and the Michael Webster Quartet, our all-ages jazz jam features special gue…",
-          "category": "music"
-        },
-        "copy": {
-          "x": "Tonight in San Jose: free jazz at the SJZ Break Room. The U19s play, then the Michael Webster Quartet, then an all-ages jam with special guest Martín Perna. Starts at 7. https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/",
-          "threads": "Tonight in San Jose, the SJZ Break Room is the place to be. 🎷 Free live jazz starting at 7 PM — the SJZ U19s kick things off, the Michael Webster Quartet follows, and then an all-ages jam with special guest Martín Perna. It's part of South First Friday, so the whole block has energy. No cover, all ages, genuinely fun. https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/ #SouthBay #SanJose #Jazz",
-          "bluesky": "Tonight in San Jose: free jazz at the SJZ Break Room starting at 7 PM. 🎷 U19s, Michael Webster Quartet, then an all-ages jam with Martín Perna. South First Friday energy all around. https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/ #SanJose #Jazz #SouthFirstFriday",
-          "facebook": "Tonight's pick: head to the SJZ Break Room in San Jose for a free jazz night that's part of South First Friday. It starts at 7 PM with the SJZ Under-19 musicians, then the Michael Webster Quartet takes the stage, and the evening closes out with an all-ages jam featuring special guest Martín Perna. No cover charge, open to everyone — this is exactly the kind of Friday night that's easy to say yes to. https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/",
-          "instagram": "Tonight's pick for the South Bay 🎷\n\nThe SJZ Break Room in San Jose is hosting a free jazz night starting at 7 PM, and the lineup is genuinely worth rearranging your evening for. It's part of South First Friday, so the whole SOFA district has that good neighborhood energy.\n\nHere's how the night flows: the SJZ U19s open things up — always a reminder that the next generation of jazz is doing just fine — then the Michael Webster Quartet steps in, and the evening wraps with an all-ages jam featuring special guest Martín Perna. Free, all ages, no ticket required.\n\nIf you've never wandered into the Break Room on a South First Friday, this is a solid night to start. 🎶\n\nLink in bio or head straight to: https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/\n\n#SanJose #SouthBay #SouthBayToday #Jazz #LiveJazz #SJZ #SanJoseJazz #SouthFirstFriday #SOFAdistrict #BayAreaJazz #FreeMusicFriday #BayAreaMusic #LiveMusicBayArea #AllAges",
-          "mastodon": "Tonight in San Jose: free jazz at the SJZ Break Room starting at 7 PM. 🎷 U19s, Michael Webster Quartet, then an all-ages jam with Martín Perna. South First Friday energy all around. https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/ #SanJose #Jazz #SouthFirstFriday"
-        }
-      },
-      "_reviewHistory": [
-        {
-          "slotType": "day-plan",
-          "reason": "spa saturation (2 spa plans in 7 days)",
-          "at": "2026-04-19T19:35:41.378Z",
-          "prevStatus": "draft",
-          "prevTitle": "Milpitas",
-          "hardBlock": false
-        }
-      ],
-      "day-plan": {
-        "status": "draft",
-        "slotType": "day-plan",
-        "city": "milpitas",
-        "cityName": "Milpitas",
-        "planUrl": "https://southbaytoday.org/plan/1fc6ac25",
-        "plan": {
-          "cards": [
-            {
-              "id": "place:ChIJM_mn-aC1j4ARlDR1Rb2pCns",
-              "name": "Tokyo Central Cupertino",
-              "category": "food",
-              "city": "cupertino",
-              "address": "19750 Stevens Creek Blvd, Cupertino, CA 95014, USA",
-              "timeBlock": "8:00 AM - 9:00 AM",
-              "blurb": "Tokyo Central Cupertino is open early — swing by for a Japanese breakfast spread, grab some onigiri, or pick up a pastry and a coffee to ease into the morning.",
-              "why": "It's one of the few spots open this early with actual good food, not just a sad muffin.",
-              "url": "https://www.tokyocentral.com/",
-              "mapsUrl": "https://maps.google.com/?cid=8866085446811464852&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJM_mn-aC1j4ARlDR1Rb2pCns/photos/AU_ZVEHIsTdw_EmSKOYloYNYhoFr9mq4cPv1ZnBdHArRaAwobs3TEFwHn5_JTtOAweR_aVplXTvmpHxEXYjFs9joLaG5ONxM9e2BT0OiH_uBwHZCH-T0a4UUD436Jd18rI0fNIzy7i_QjwZ909Fswh_rq6r9LxP8GoU91IGZmcJuKiBJFc7bcb31X7Fb67ZBXGktRufPPgoOHtL0OzAF3NWSoRibp3J28QjH45N7Cnp6Imsh40j9RojC4PX4TqNaANvsEq4zzcf1jkeEiBTvCHT8ZMo445vho8FuP3_AmSUjPLWUvOfG8hW-I8lPGj9HD7o-uV9LhIkjjLUof2r_grfnH97YSX1Xiom5BrCDCHTBNZBeFeqydgqf65cg1oMF2Z7D70pS4wBBQblHkvM-feyLnzAiTt0_F6sstd3TTzM_3qI7aeg",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "pad:ChIJcROz_crOj4AR3blv_XtAWJM",
-              "type": "place",
-              "name": "Great Mall",
-              "category": "shopping",
-              "address": "447 Great Mall Dr, Milpitas, CA 95035, USA",
-              "timeBlock": "10:30 AM - 12:00 PM",
-              "neighborhood": "milpitas",
-              "blurb": "Top-rated shopping spot in milpitas."
-            },
-            {
-              "id": "place:ChIJnQ50Z940joARnN7L2Yff9AY",
-              "name": "Naschmarkt Restaurant - Campbell",
-              "category": "food",
-              "city": "campbell",
-              "address": "384 E Campbell Ave, Campbell, CA 95008, USA",
-              "timeBlock": "12:00 PM - 1:30 PM",
-              "blurb": "Head to Naschmarkt in Campbell for a proper Austrian-inspired sit-down lunch. The menu is a little unexpected for the South Bay, and that's exactly the point — order something you wouldn't normally pick.",
-              "why": "It's one of the better lunch spots in the area and the price is worth it for a Sunday treat.",
-              "url": "http://naschmarktrestaurants.com/",
-              "mapsUrl": "https://maps.google.com/?cid=501271233112563356&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "$30–60/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJnQ50Z940joARnN7L2Yff9AY/photos/AU_ZVEHUucvB90Lrk2K3tOR4T0hRb2sjvNzAeOn_A3atoSag8pue7j7W13XMnGzQbotqP8XeMVeusW6EpqjE5Tht0XYofIYaH_rFBy57-oCiL7KLoqDNkBZ9Ey-AGigHFOXBTe4bgVLrmN6yWbwo8DzEvNbkXbYmRAG968QCwJjSj6oQYT7NmMaDJ7Dq5FLSY0iHRVg1ET5u9m1oij2Tdci4kaaYguB_zOljBfuanBGP0l1aVn77JW-hLaqxihbnoMEx0TeO4PRLenu2mxufkOuJcGLCTFG5ozT0YdVLgM0SNqTEuQ",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJ7xusA980joARSIOUwB_Xs7I",
-              "name": "Recycle Bookstore West",
-              "category": "shopping",
-              "city": "campbell",
-              "address": "275 E Campbell Ave, Campbell, CA 95008, USA",
-              "timeBlock": "1:30 PM - 2:30 PM",
-              "blurb": "Wander into Recycle Bookstore on East Campbell Ave and dig through the stacks — used books, vinyl, vintage magazines, and the kind of random finds you can't plan for.",
-              "why": "Campbell Ave is a great strip to walk after lunch and this place is genuinely fun to browse.",
-              "url": "http://recyclebookstore.com/",
-              "mapsUrl": "https://maps.google.com/?cid=12876872290957296456&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJ7xusA980joARSIOUwB_Xs7I/photos/AU_ZVEFGv5NpZyf5P7UMxlTbVbqVDUzPBfheITX3V0FGPWhtwut4rsxRo7r4g363lfUTiMKN36wXJ9Kt9ROCQOAqWiCXRbpjlc2QgeS4eUGaqpzN5j1fF6vO4RHsx8SgHIET9ioBu74BDqn3lNvkI5SZG0Yf3jovG-bREy0WoM8hmaAGLZNWtbiDPRio6SjULbVBgRc_efpR7DwPikRc7cKuTVh89Fb20qjG60DRPbgGFAuZpNIzZ_FDFS8f21fdVbbPZ5RjfpwhdYCkDmbQZyRKq4jgDO-G18hnRKfV4Koet7Fkhj-xviFuMW6qZ0IBgtDAQsNKnev0xbBzKOux-5NNg7dxv2owc7bbwwvz17aC2oaR4Cw3WRm_u_BQjt-MDyjz5SIiAThMniJJ2eIt2lbzol2xItPS6jJb7j0aKfi8hq4aMGc",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "pad:ChIJO94mDQDPj4ARYD1NGxPIhbM",
-              "type": "place",
-              "name": "The Escape Game Milpitas",
-              "category": "entertainment",
-              "address": "123 Great Mall Dr, Milpitas, CA 95035, USA",
-              "timeBlock": "4:30 PM - 6:00 PM",
-              "neighborhood": "milpitas",
-              "blurb": "Top-rated entertainment spot in milpitas."
-            },
-            {
-              "id": "pad:ChIJrY0JMwbPj4AR2EP1nd_AO9U",
-              "type": "place",
-              "name": "Ed R. Levin County Park",
-              "category": "outdoor",
-              "address": "3100 Calaveras Rd, Milpitas, CA 95035, USA",
-              "timeBlock": "6:30 PM - 8:00 PM",
-              "neighborhood": "milpitas",
-              "blurb": "Top-rated outdoor spot in milpitas."
-            }
-          ],
-          "weather": "71°F, high 75°F"
-        },
-        "copy": {
-          "x": "We planned your Friday in the South Bay. Onigiri in Cupertino, Austrian lunch in Campbell, used books and vinyl after. Full itinerary at https://southbaytoday.org/plan/1fc6ac25",
-          "threads": "We did the work — here's your Friday. Start with a Japanese breakfast at Tokyo Central in Cupertino, sit down for Austrian-inspired lunch at Naschmarkt in Campbell, then dig through Recycle Bookstore's shelves. Full day plan is live. 🗓️\n\nhttps://southbaytoday.org/plan/1fc6ac25\n\n#SouthBay #CampbellCA #Cupertino",
-          "bluesky": "We planned your Friday. Japanese breakfast in Cupertino → Austrian lunch in Campbell → used books and vinyl on East Campbell Ave. Full itinerary: https://southbaytoday.org/plan/1fc6ac25 🍙 #SouthBay #CampbellCA",
-          "facebook": "We mapped out a full Friday for you across the South Bay. Start the morning at Tokyo Central in Cupertino for onigiri and a Japanese breakfast spread. Lunch is at Naschmarkt in Campbell — Austrian-inspired, a little unexpected, really good. After that, wander Recycle Bookstore on East Campbell Ave for used books and vinyl. It's a solid day. Full plan here: https://southbaytoday.org/plan/1fc6ac25",
-          "instagram": "We planned your Friday so you don't have to. Here's how it looks. 🗓️\n\n8:00 AM — Tokyo Central, Cupertino. Start the morning right with a Japanese breakfast spread. Grab some onigiri for the road.\n\n10:30 AM — Great Mall, Milpitas. Top-rated shopping stop if you want to browse before lunch.\n\n12:00 PM — Naschmarkt, Campbell. Sit-down Austrian-inspired lunch on a Friday? Yes. The menu is a little unexpected and very worth it.\n\n1:30 PM — Recycle Bookstore West, Campbell. Wander East Campbell Ave and dig through the stacks — used books, vinyl, the works. Easy to lose an hour here. 📚\n\n4:30 PM — The Escape Game, Milpitas. Top-rated entertainment spot. Good way to shake off the afternoon.\n\n6:30 PM — Ed R. Levin County Park, Milpitas. End the day outside. One of the better outdoor spots in the area for a reason.\n\nFull day plan at the link in bio, or head straight to 👉 https://southbaytoday.org/plan/1fc6ac25\n\n#SouthBay #SouthBayToday #Cupertino #CampbellCA #Milpitas #SanJoseEats #BayAreaFood #BayAreaWeekend #BayAreaEvents #ThingsToDo #BayAreaLife #EastCampbell #WeekendPlans #FridayVibes",
-          "mastodon": "We planned your Friday. Japanese breakfast in Cupertino → Austrian lunch in Campbell → used books and vinyl on East Campbell Ave. Full itinerary: https://southbaytoday.org/plan/1fc6ac25 🍙 #SouthBay #CampbellCA"
-        },
-        "imageUrl": null,
-        "imageStyle": null,
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
-        "generatedAt": "2026-04-19T19:39:41.484Z"
-      }
-    },
-    "2026-05-02": {
-      "tonight-pick": {
-        "status": "image-approved",
-        "slotType": "tonight-pick",
-        "item": {
-          "title": "Play Your Way - Sensory Spring",
-          "city": "san-jose",
-          "cityName": "San Jose",
-          "venue": "Children's Discovery Museum of San Jose",
-          "date": "2026-05-02",
-          "time": "5:00 PM",
-          "category": "community",
-          "summary": "Sensory-friendly evening event designed for children with autism and their families, featuring hands-on museum activities with limited attendance and reduced noise and bright lights.",
-          "url": "http://connect.cdm.org/site/R?i=1GKQonkM9fBYb_lZAg2ykSXA-K0geyW4O8Y9AeLh0nf7EymSkLRgcQ",
-          "cost": ""
-        },
-        "copy": {
-          "x": "Tonight in San Jose: Children's Discovery Museum is hosting Play Your Way—a sensory-friendly evening designed for kids with autism and their families. http://connect.cdm.org/site/R?i=1GKQonkM9fBYb_lZAg2ykSXA-K0geyW4O8Y9AeLh0nf7EymSkLRgcQ",
-          "threads": "Tonight in San Jose: The Children's Discovery Museum is hosting Play Your Way—a sensory-friendly evening perfect for kids with autism and their families. You get hands-on museum activities in a thoughtfully designed space: reduced noise, dimmed lights, limited attendance. Starts at 5 PM. It's the kind of thing that makes a real difference 💙 http://connect.cdm.org/site/R?i=1GKQonkM9fBYb_lZAg2ykSXA-K0geyW4O8Y9AeLh0nf7EymSkLRgcQ #SanJose #FamilyFriendly #SensoryFriendly",
-          "bluesky": "Tonight in San Jose: Children's Discovery Museum hosting Play Your Way—sensory-friendly evening for kids with autism and families. Hands-on activities, calm space, limited crowds. #SanJose #FamilyFriendly #SensoryFriendly",
-          "facebook": "Tonight in San Jose: The Children's Discovery Museum is hosting Play Your Way—a sensory-friendly evening designed specifically for kids with autism and their families. It's all hands-on activities in a carefully thoughtful space with reduced noise, dimmed lights, and limited attendance so everyone can actually enjoy themselves. Starts at 5 PM. http://connect.cdm.org/site/R?i=1GKQonkM9fBYb_lZAg2ykSXA-K0geyW4O8Y9AeLh0nf7EymSkLRgcQ",
-          "instagram": "Tonight in San Jose: The Children's Discovery Museum is hosting Play Your Way—a sensory-friendly evening designed for kids with autism and their families, and it sounds genuinely thoughtful 💙\n\nInstead of the usual museum chaos, this is a calm, welcoming space. Reduced noise, dimmed lights, hands-on activities, limited attendance. The kind of thing that makes a real difference for families who want to explore together without sensory overload.\n\nStarts at 5 PM. Worth checking out if this is your family's vibe.\n\nhttp://connect.cdm.org/site/R?i=1GKQonkM9fBYb_lZAg2ykSXA-K0geyW4O8Y9AeLh0nf7EymSkLRgcQ\n\n#SanJose #ChildrensMusceum #SensoryFriendly #SanJoseFamily #FamilyFun #Autism #AccessibilityMatters #SouthBayTonight #SanJoseFamilies #CommunityEvent #SouthBay",
-          "mastodon": "Tonight in San Jose: Children's Discovery Museum hosting Play Your Way—sensory-friendly evening for kids with autism and families. Hands-on activities, calm space, limited crowds. #SanJose #FamilyFriendly #SensoryFriendly"
-        },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-02-tonight-pick-1776605569359.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": "2026-04-19T13:32:30.877Z",
-        "imageApprovedAt": "2026-04-19T13:33:13.820Z",
-        "generatedAt": "2026-04-19T09:22:49.477Z",
-        "imagePrompt": "Isometric flat illustration in bold primary colors (cobalt, coral, mustard). Abstract geometric playground structure with fragmented building blocks, floating puzzle pieces, and stylized museum doorway in layered perspective. Soft warm accent colors for sensory-friendly warmth. Clean lines, spatial depth, modern architectural feel. NO PEOPLE, NO TEXT. Portrait 4:5 ratio."
-      },
-      "_reviewHistory": [
-        {
-          "slotType": "day-plan",
-          "reason": "spa saturation (2 spa plans in 7 days)",
-          "at": "2026-04-19T19:35:41.378Z",
-          "prevStatus": "draft",
-          "prevTitle": "San Jose",
-          "hardBlock": false
-        }
-      ],
-      "day-plan": {
-        "status": "draft",
-        "slotType": "day-plan",
-        "city": "san-jose",
-        "cityName": "San Jose",
-        "planUrl": "https://southbaytoday.org/plan/f4caa2bf",
-        "plan": {
-          "cards": [
-            {
-              "id": "place:ChIJUzuLmwLNj4ARbGiErgv5cJY",
-              "name": "Panapolis mexican bakery",
-              "category": "food",
-              "city": "san-jose",
-              "address": "784 N 13th St, San Jose, CA 95112, USA",
-              "timeBlock": "8:30 AM - 9:30 AM",
-              "blurb": "Kick off the morning at Panapolis, a Mexican bakery open early with fresh pan dulce and coffee to get you going before the day picks up.",
-              "why": "Hard to beat a warm pastry and coffee at 8:30 on a Sunday.",
-              "url": "https://www.instagram.com/panapolispanaderiaa?igsh=MzRlODBiNWFlZA==",
-              "mapsUrl": "https://maps.google.com/?cid=10840438131648653420&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "Under $15/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJUzuLmwLNj4ARbGiErgv5cJY/photos/AU_ZVEHuvH4tR7SDSNDC39ETMcv7Olm3Itu8gT0bqHRc3b1gZbJc4yvlQhXPvF3BQJI6XS-hPKcowHJ1qIteK63M5FpapI7TDpDpk_iBhaVPklJ4BJmezaI_ljNOGgokCunGVhh3dlOLiWavMeiewkybiKPTHGMGhI4HOV96w4nQUH0kna0hjPwVE5p7hPTJBhnO99TJXI6O1o-7T7FfTA9F7__RUuNpE6EX23HHLXF-_nTzc4AG7V9yDx3acbZYOIerK2vGS_QkQXgOsQ61phRZBGPT12bPnjz_7dJqT4NmD2FTpw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "event:sjpl-69cf1ddab48451fc3c0d0dfb",
-              "name": "Friends of the Pearl Avenue Branch Book Sale",
-              "category": "education",
-              "city": "san-jose",
-              "address": "4270 Pearl Ave. San Jose",
-              "timeBlock": "9:30 AM - 11:00 AM",
-              "blurb": "Choose from a large collection of books and media, both donations and discarded library items. Proceeds go toward funding library programs, books, and supplies.",
-              "why": "A solid pick to break up the day.",
-              "url": "https://sjpl.bibliocommons.com/events/69cf1ddab48451fc3c0d0dfb",
-              "mapsUrl": null,
-              "cost": "free",
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJn7JWbsgzjoARLxd7jcF5jNM/photos/AU_ZVEGKEoN5-ohc3sASJyxolEZJy_rRS-zXedMXNyDg4GPikpPaVuTlsGGZPzne38gaB2tGFLTXnbkhiuAyY2p44koz69c1ZzPbGpzQ9oBf9xXq2PIT6Mwsp9cQPb6xd4-lvHnepdqV_syqdiSYjXUZyKnRahL6hZOHgzQ-9L96qXMPYAxYNSlBqSjkc2eNLr57Nd56d26kWbdH9X6eeABOM9Ct89e5MJHIUw9Slm0sh5vaBs0lj5Y3zot7Ucwfua1DhgRnNvMusAahHA7uPpsNeJkcgrXKAP9hwYMnJMShpYUVGg",
-              "venue": "Pearl Avenue Library",
-              "source": "event",
-              "locked": false
-            },
-            {
-              "id": "place:curated:municipal-rose-garden",
-              "name": "San Jose Municipal Rose Garden",
-              "category": "outdoor",
-              "city": "san-jose",
-              "address": "Municipal Rose Garden",
-              "timeBlock": "11:00 AM - 12:00 PM",
-              "blurb": "The rose garden hits peak bloom in spring, so take a slow lap through the beds and enjoy one of the prettiest free spots in the South Bay.",
-              "why": "April is the absolute best time to catch this place — it earns its reputation.",
-              "url": "https://www.sanjoseca.gov/your-government/departments-offices/parks-recreation-neighborhood-services/parks/rose-garden",
-              "mapsUrl": null,
-              "cost": "free",
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJb5KWbRTLj4AR1iYBl5vpNf8/photos/AU_ZVEE-ttAkOY8PgjE08tf4CoDEb4Id_8lZiqH9-nQoYyiN1OiG2Fw-dlyueXq8MC6BIfrcOQihfQOqG9UoJU0of7-C4AtGjwNx_6Qtr57mstSJLtES3W8_0rYO5CJwG9Dt_sFDZL6LWtP4HYxlLH41q5GDl_lAh9lK6y0WnAHG7UExEqr57JRu0XlPN_5htNK1Jx2_1azzCwPloGo5RROewka7A064KCp3GrHDlO4yNg6Ag5HQKtt-1u4iU3hnmZZ9bTBigTcj3aqpfK-BjY5dK12Dwjk1NGQ6xINqYf1KZi7jrgE6sSE7cJc8viEWDE0O4AA7bFWEkN6LT0OTrPJTB7Y4Gyt6IgVKqmi2n6hpc50zc1baAxxx_Siq10i4btZoWGwBl7jO-4x7_9A54iWNVTpFLGwot-_qgTLUTquY49ImLkkPKMdUDb4_Dn9ThBJs",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJASO65Z21j4ARKODIVSbFa-8",
-              "name": "Main Street Cupertino",
-              "category": "shopping",
-              "city": "cupertino",
-              "address": "19401 Stevens Creek Blvd, Cupertino, CA 95014, USA",
-              "timeBlock": "12:00 PM - 1:30 PM",
-              "blurb": "Head to Main Street Cupertino for lunch at one of the outdoor plaza restaurants, then walk the open-air stretch steps from Apple Park.",
-              "why": "Good mix of lunch options and a pleasant walkable plaza to stretch out after eating.",
-              "url": "http://mainstreetcupertino.com/",
-              "mapsUrl": "https://maps.google.com/?cid=17252099566011473960&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": "free",
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJASO65Z21j4ARKODIVSbFa-8/photos/AU_ZVEHE_UYFgTQd7xtBdE9Gef1llJHfGObOgnRC0UgX0bxR4c96VSdrgb2mHhcifvI8hH92acbDc1r9J-qv_-5sxTYSYFHb9W1YfKOiojfJIuF0SPD_RTN7deTI8hvrOdNs0Mg4AvoIE14ZRiWv5xMby8VtSorlDMrXxDIqFoPJR11GTS_vNl-5vAcUzUJh8lVnprFLWcJrwx15I4TP4IRtWYunZMt5UhBidyWMClgFalFJl3YWOh9RIVKv0sJRSBHxRnShMrPwPG0sLEWthvt0m3JgP8Zk33jx1krnTs-2vIRqnz_21pxx1c3SIrMp-37iYlrO5WsQOWayRgpEtYPermM7xMqVypF_0q1ZYB0NwXN1YWzM4YuhXqhMsLPPjnlV3MF6bdyDxwmb0ahePSdad4s8XRDxXw9qnGMNaibiOAcXRLzm",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJEVyf9c81joAR3HYK0oN_MuI",
-              "name": "Beyond Text Bookstore",
-              "category": "shopping",
-              "city": "los-gatos",
-              "address": "318 N Santa Cruz Ave, Los Gatos, CA 95030, USA",
-              "timeBlock": "4:00 PM - 5:30 PM",
-              "blurb": "Browse Beyond Text Bookstore on Santa Cruz Ave in Los Gatos — it's an independent shop worth poking around for a solid hour.",
-              "why": "Los Gatos is a great late-afternoon neighborhood and this bookstore is genuinely special.",
-              "url": "https://www.beyondtextbookstore.com/",
-              "mapsUrl": "https://maps.google.com/?cid=16299230205548590812&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJEVyf9c81joAR3HYK0oN_MuI/photos/AU_ZVEEbdEsOAJcOismteAMlOI0FL0Grabf-mPRjOq5e75zhxZSE3GYPucuk_e0T5ssCzpkcAOxOrXXgaGSzRIzx19okf0tkXac9SP_h9KKm-QSfFsya3Q48zmZtRDhBis56YGezDfSDYfaf4XiSST3adcb2rHh3xM0xPg_keT5prm_8VEUK92fOY2j33aSQ2rZdGzer-O2KLEr4Mzqe5kXnnAy8vxtSVQ7FjktK4cRNrkKG2FVwsZB7vv804eiFap15cp44viO1i8uap2WGCSRhk_WPSYKGW5cgde684vpA3wxMLA",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJR1k_nuBKjoARjagqU7uGfTk",
-              "name": "Bai Tong",
-              "category": "food",
-              "city": "saratoga",
-              "address": "6011 14515 Big Basin Wy, Saratoga, CA 95070, USA",
-              "timeBlock": "6:00 PM - 7:30 PM",
-              "blurb": "Wrap the night with dinner at Bai Tong in Saratoga, a Thai spot worth sitting down for with a proper meal and a relaxed pace.",
-              "why": "A solid dinner to close out the day without rushing anywhere.",
-              "url": "http://www.baitong-thaibistro.com/",
-              "mapsUrl": "https://maps.google.com/?cid=4142615371363035277&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "$15–30/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJR1k_nuBKjoARjagqU7uGfTk/photos/AU_ZVEEI0XdA2RG_6n7PwQLv0O5F84mCnOSzx7LVRs6n8b8aEZh1wRSGaNt2xPWRZ5HzExmPpbF-ZjmLmCTia_Dkad8gGJUX_0N5MtqyNu5ukCRoDHcG0NDOzibqaY4Zz-SHK8DF8b0Gk0W43Q2Nl5_sr3XH45hUpNNouRF-vnfpCuharrtLBLp9-0vfpDk2sTghRpX0jR0smCeW6AvFjq5wzL7Sr067aNGiDotFPFXwcjDLFB0dXBb2unS3DyecQHB6nPIThT3k2FK-fUqrl-u-QN9fEscG4RiUfOUVzI7RiRB3cVbE3JRNFwMG2WtIn2xn6MWmGynayEbYchvcYsV_MO2TFB2exxcOp_ty0QQ9dVTDEFR36okwiqtCpcdF4VeRLol8DfyH-v38S2tg_m6aPDym1FYrLyt1AEjESDNJbqsegJrr785IcizpakuYRw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            }
-          ],
-          "weather": "74°F, high 75°F"
-        },
-        "copy": {
-          "x": "We planned your Saturday. Pan dulce in San Jose → book sale → rose garden in bloom → lunch in Cupertino → indie bookshop in Los Gatos → Thai dinner in Saratoga. Full itinerary: https://southbaytoday.org/plan/f4caa2bf",
-          "threads": "We did the work — here's your Saturday in the South Bay 🌹\n\nStarts with fresh pan dulce at Panapolis, winds through a book sale and the rose garden at peak bloom, lunch at Main Street Cupertino, a stop at Beyond Text in Los Gatos, and dinner at Bai Tong in Saratoga. Full plan: https://southbaytoday.org/plan/f4caa2bf\n\n#SouthBay #SanJose #LosGatos",
-          "bluesky": "We planned your Saturday ☀️ Pan dulce → book sale → rose garden → Cupertino lunch → indie bookshop in Los Gatos → Thai dinner in Saratoga. Full itinerary: https://southbaytoday.org/plan/f4caa2bf #SouthBay #SanJose",
-          "facebook": "We planned your Saturday so you don't have to. Start the morning with fresh pan dulce and coffee at Panapolis in San Jose, then hit a Friends of the Library book sale nearby. Slow lap through the rose garden while it's at peak bloom, lunch at Main Street Cupertino, an afternoon browse at Beyond Text bookstore in Los Gatos, and dinner at Bai Tong in Saratoga. Six stops, four cities. Full itinerary here: https://southbaytoday.org/plan/f4caa2bf",
-          "instagram": "We planned your Saturday. Four cities, six stops — here's how it goes 🌸\n\n8:30 AM — Panapolis, San Jose. Fresh pan dulce and coffee to start the day right.\n\n9:30 AM — Friends of the Pearl Avenue Branch Book Sale. Donations and discarded library finds, priced to move.\n\n11:00 AM — San Jose Municipal Rose Garden. Spring peak bloom. Take the slow lap.\n\n12:00 PM — Main Street Cupertino. Outdoor lunch in the plaza, then a walk through the open-air shops.\n\n4:00 PM — Beyond Text Bookstore, Los Gatos. Independent, Santa Cruz Ave, worth the browse 📚\n\n6:00 PM — Bai Tong, Saratoga. Sit-down Thai dinner to close out a genuinely good day.\n\nFull itinerary at https://southbaytoday.org/plan/f4caa2bf\n\n#SouthBay #SanJose #Cupertino #LosGatos #Saratoga #SouthBayEats #BayAreaFood #BayAreaBooks #WeekendVibes #BayAreaWeekend #SiliconValleyLife #BayAreaLocal #ThingsToDo #BayAreaFoodie #SFBayArea",
-          "mastodon": "We planned your Saturday ☀️ Pan dulce → book sale → rose garden → Cupertino lunch → indie bookshop in Los Gatos → Thai dinner in Saratoga. Full itinerary: https://southbaytoday.org/plan/f4caa2bf #SouthBay #SanJose"
-        },
-        "imageUrl": null,
-        "imageStyle": null,
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
-        "generatedAt": "2026-04-19T19:40:17.095Z"
-      }
-    },
     "2026-04-27": {
       "tonight-pick": {
         "status": "draft",
@@ -2240,7 +1867,7 @@
               "city": "palo-alto",
               "address": "Cantor Arts Center, Stanford University",
               "timeBlock": "12:00 PM - 2:00 PM",
-              "blurb": "Swing through the Cantor Arts Center on Stanford's campus and spend some time with the permanent collection and the Rodin Sculpture Garden out front. It's free, it's world-class, and the campus on a Sunday is genuinely beautiful.",
+              "blurb": "Swing through the Cantor Arts Center on Stanford's campus and spend some time with the permanent collection and the Rodin Sculpture Garden out front. It's free, it's world-class, and the campus on is genuinely beautiful.",
               "why": "Free art on a gorgeous day with no crowds to fight.",
               "url": "https://museum.stanford.edu",
               "mapsUrl": null,
@@ -2339,334 +1966,6 @@
           "facebook": "Looking for something good to do tonight? Head to Kepler's Books in Palo Alto at 7 PM — Jesse Q. Sutanto, the USA Today bestselling author of Vera Wong's Unsolicited Advice for Murderers, is there with Stacey Lee to talk about her new book, Ms. Mebel Goes Back to the Chopping Block. Kepler's author events are always worth showing up for. https://www.keplers.org/upcoming-events-internal/jesse-sutanto",
           "instagram": "Tonight's pick 📚 If you haven't discovered Jesse Q. Sutanto yet, this is a great place to start — and if you already love her, you already know what to do.\n\nJesse Q. Sutanto, the USA Today bestselling author of Vera Wong's Unsolicited Advice for Murderers, is at Kepler's Books in Palo Alto tonight at 7 PM. She'll be in conversation with Stacey Lee, talking about her sharp, witty new book Ms. Mebel Goes Back to the Chopping Block. 🩸😄\n\nKepler's is one of the best independent bookstores in the Bay Area, and their author events are genuinely fun — not just a reading, but a real conversation. Worth the drive.\n\nFull details at the link in bio, or go straight to: https://www.keplers.org/upcoming-events-internal/jesse-sutanto\n\n#PaloAlto #SouthBay #KeplersBooks #BookEvent #AuthorEvent #JesseQSutanto #StaceyLee #IndieBookstore #BayAreaBooks #SiliconValley #BayAreaEvents #NightOut #Booklovers #LocalEvents #SouthBayToday",
           "mastodon": "Tonight at Kepler's, Palo Alto 📚 Jesse Q. Sutanto talks her new book Ms. Mebel Goes Back to the Chopping Block with Stacey Lee at 7 PM. Smart, fun author event at a great bookstore. https://www.keplers.org/upcoming-events-internal/jesse-sutanto #PaloAlto #SouthBay"
-        }
-      }
-    },
-    "2026-04-29": {
-      "day-plan": {
-        "status": "draft",
-        "slotType": "day-plan",
-        "city": "santa-clara",
-        "cityName": "Santa Clara",
-        "planUrl": "https://southbaytoday.org/plan/c152f968",
-        "plan": {
-          "cards": [
-            {
-              "id": "place:ChIJl-ecbF3Lj4ARb2Fk9wcPDb8",
-              "name": "Greenlee's Bakery",
-              "category": "food",
-              "city": "san-jose",
-              "address": "1081 The Alameda, San Jose, CA 95126, USA",
-              "timeBlock": "8:30 AM - 9:30 AM",
-              "blurb": "Kick off the morning at Greenlee's Bakery on The Alameda. Grab a pastry and coffee and ease into the day at a proper neighborhood bakery before things get busy.",
-              "why": "Best way to start a Sunday is a good bakery, full stop.",
-              "url": "https://greenleesbakerysj.com/?utm_source=google",
-              "mapsUrl": "https://maps.google.com/?cid=13766676162831212911&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "$15–30/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJl-ecbF3Lj4ARb2Fk9wcPDb8/photos/AU_ZVEHUKRGkRJzJMursxSd2-t3X-_BUULJYD-6OVgTeB6GGH4YOSjN6qQn9SIa1HLmmVBUFXm6HUB9RC0VsWHEN0k1HrVh3OR9xTa6xYO3UOUQFy6ON5o2VufRiZ8ofFe7wCaKjrF5IJ-5yICOAidfqQNLwgKYWzDSipOzne4jYoz1JwHUoDEAIGcIMjpZS1mB9iEUx362SWt0DDcu0Zbq8HrVR861irSQ2ioW5jki8BKDdxJkuEwRAkVBUciObqi76I_Er8CxzAQzyCqFTYS5vFPDqKAsx3BVyHrFoua9i6mLlLA",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "pad:ChIJNfd2ZMDLj4AR0l6oWUhpdMs",
-              "type": "place",
-              "name": "The Escape Game San Jose",
-              "category": "entertainment",
-              "address": "2855 Stevens Creek Blvd, Santa Clara, CA 95050, USA",
-              "timeBlock": "10:30 AM - 12:00 PM",
-              "neighborhood": "santa-clara",
-              "blurb": "Top-rated entertainment spot in santa-clara."
-            },
-            {
-              "id": "place:ChIJVx91TrvMj4ARzWqeIcRwuXs",
-              "name": "San Jose Museum of Art",
-              "category": "museum",
-              "city": "san-jose",
-              "address": "110 S Market St, San Jose, CA 95113, USA",
-              "timeBlock": "11:00 AM - 1:00 PM",
-              "blurb": "San Jose Museum of Art has rotating contemporary exhibitions worth actually spending time with. Walk through slowly, read the wall text, and don't rush it.",
-              "why": "It's a genuinely good contemporary museum and $20 is a fair ask for two hours of interesting art.",
-              "url": "http://sjmusart.org/",
-              "mapsUrl": "https://maps.google.com/?cid=8915280925036538573&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": "low",
-              "costNote": "$20 adults, free 3rd Fridays",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJVx91TrvMj4ARzWqeIcRwuXs/photos/AU_ZVEFnJk369-yFQ-tQpY1Vg80VwOPYAdoH6GP85qNN7IEmkQRCdmeIVojdjTJLmUcsf-Ap_zqO5qZaDiGgTvpNjviiXXGwXdeR4m1MJaie0COoWzgPiN4CUiliUCzhSD5oJyXbBDi8zY_r3LgWibqs1UYsB1ABFJJEIUKdGXaZbxD6maQHXoudPcdOVvmwrLNDYas4Y-tD0IZXrc8Twr8doMGTru3HFbdyge2G41LxA8JP_NYblmmk7q_uf6Kzogfzwf6Jt-_0x2zYKI2PX74qdnhS5SYGgvrMWEZOH4_1hjNhIPh1zGqKMpjuo-nUmlqlIlf0cdUojdufh9BIFPV6tfydhOvERdRf0DJelJPLarirlOLEdl6Il5PXyFlNNvwJun31dYtazBf9v3J2wcDDaVbhguFNj-fVX3Vl0DguPv7Lbw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJwWBrSek0joARBqJeWmzDito",
-              "name": "Yiassoo",
-              "category": "food",
-              "city": "campbell",
-              "address": "2180 S Bascom Ave, Campbell, CA 95008, USA",
-              "timeBlock": "1:30 PM - 2:45 PM",
-              "blurb": "Yiassoo is a Greek spot on Bascom. Order the gyro, grab some hummus, and sit down for a proper lunch after the show.",
-              "why": "Good Greek food at under $15 a head is always the right call after a free show.",
-              "url": "https://www.yiassoo.biz/",
-              "mapsUrl": "https://maps.google.com/?cid=15747613917194396166&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "Under $15/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJwWBrSek0joARBqJeWmzDito/photos/AU_ZVEFDwxBpEIq29W1vkJXvULKpvZbD1r1DS8qUHxkA45Rz1vmv_-qXnrXvn-45wotIo324jsikmGRDxAU4GEpJAyIBXkwzWSyE5xmE5n8p_KlGCORZkU-aawS_goGpwteOIRevFWcr87YJJOdpZ2QSG8EBiH0-aFSS5zWncrbBSxlRxmRfRS3GW_ppgr8NTvoRQXK5gwoWTHhfoXx6fqY1BhM9YHVhliIse4qCz2p8He-HlLMMyRdo2-nvyKylLaCOE0BbKC3RBgKJhGp2f-_LYhZDSvG1gOzYO4bNVW9ExH235yS26HWxAJr2kBMkERm3dKHBDsxNeT84yrCeu9Rmm4YgrWL69jEQBhlNrJNZ02Szx_V95gzw8RNmHDDxXiKkYlU-1ug1OG7v3JJUO5u4MJTg5kmwss-6t01Yf22Tfvc",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJHTzxGMfLj4AR6EvOcKgL10E",
-              "name": "Smash City Rage Rooms",
-              "category": "entertainment",
-              "city": "san-jose",
-              "address": "858 Park Ave, San Jose, CA 95126, USA",
-              "timeBlock": "3:00 PM - 4:30 PM",
-              "blurb": "Smash City Rage Rooms lets you pick your gear, pick your playlist, and break things in a controlled environment. It's genuinely cathartic and a little absurd in the best way.",
-              "why": "Nothing burns off a lazy Sunday afternoon like smashing stuff with a baseball bat.",
-              "url": "https://www.smashandrageroom.com/san-jose",
-              "mapsUrl": "https://maps.google.com/?cid=4744273550533086184&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJHTzxGMfLj4AR6EvOcKgL10E/photos/AU_ZVEHT_O58Z64V-PdJBk3-Maw-lbsiIHzJ3oIrsCfZ6F6LLXua3_ACaeNL-PIWIRsOlR7XmUkubYR6aMLBLEnheQePe6G51Zwl8JemI87w0eX0l1lnwjHecK6hpYeEl6VeEnh-HCpkoo1rePfk1m0DFMGtLm2jXl8FiOkznWnYDmZiAfEvLxTuKF8Te2SxgZYHfKNuWEAe8GRUrDuBBtZkyeNdb8d_TqmW7xslgD54htF0SGSj4VcQUs9op0BusBpsXYMwb7qHtUnjOWz7F8ADDSmhvqJtgPbuC4OQv6q7v9Q0qw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "pad:ChIJq7iF28bJj4ARdWUD6DQUr3I",
-              "type": "place",
-              "name": "California's Great America",
-              "category": "outdoor",
-              "address": "4701 Great America Pkwy, Santa Clara, CA 95054, USA",
-              "timeBlock": "6:30 PM - 8:00 PM",
-              "neighborhood": "santa-clara",
-              "blurb": "Top-rated outdoor spot in santa-clara."
-            }
-          ],
-          "weather": "74°F, high 75°F"
-        },
-        "copy": {
-          "x": "We planned your Wednesday. Pastries at Greenlee's → escape room → @sjmusart → Greek lunch → rage room → Great America. San Jose and Campbell, start to finish. https://southbaytoday.org/plan/c152f968",
-          "threads": "We did the work — here's your Wednesday in San Jose and Campbell 🗓️\n\nMorning pastry at Greenlee's Bakery on The Alameda, then an escape room, then time at @sjmusart. Lunch is a gyro at Yiassoo on Bascom, followed by breaking things at Smash City, then closing out at Great America.\n\nhttps://southbaytoday.org/plan/c152f968 #SanJose #SouthBay #ThingsToDo",
-          "bluesky": "We planned your Wednesday — pastries, escape rooms, a museum, Greek food, a rage room, and Great America. San Jose + Campbell, all day. 🗓️ https://southbaytoday.org/plan/c152f968 #SanJose #SouthBay",
-          "facebook": "We planned your Wednesday so you don't have to 😄 Start the morning with a pastry and coffee at Greenlee's Bakery on The Alameda. From there: an escape room, a walk through San Jose Museum of Art, a proper gyro lunch at Yiassoo on Bascom, some very satisfying destruction at Smash City Rage Rooms, and an evening at California's Great America. San Jose and Campbell — one great day. Full details at https://southbaytoday.org/plan/c152f968",
-          "instagram": "We planned your Wednesday. You're welcome. 😄\n\nHere's the full day across San Jose and Campbell:\n\n☕ Greenlee's Bakery on The Alameda — start with a pastry and coffee and ease into the morning properly.\n\n🔐 The Escape Game San Jose — get your team together and see if you make it out.\n\n🎨 San Jose Museum of Art (@sjmusart) — rotating contemporary exhibitions that are actually worth slowing down for.\n\n🥙 Yiassoo — a Greek spot on Bascom. Order the gyro, get the hummus, sit down for a real lunch.\n\n💥 Smash City Rage Rooms — pick your gear, pick your playlist, break things. No questions asked.\n\n🎢 California's Great America — close out the evening with some rides and a lot of screaming.\n\nSix stops, one solid Wednesday. Full plan at the link. 👇\n\nhttps://southbaytoday.org/plan/c152f968\n\n#SanJose #Campbell #SouthBay #SanJoseEats #ThingsToDo #BayAreaFood #BayAreaLife #SJMuseumOfArt #GreekFood #EscapeRoom #RageRoom #GreatAmerica #BayAreaActivities #WednesdayVibes",
-          "mastodon": "We planned your Wednesday — pastries, escape rooms, a museum, Greek food, a rage room, and Great America. San Jose + Campbell, all day. 🗓️ https://southbaytoday.org/plan/c152f968 #SanJose #SouthBay"
-        },
-        "imageUrl": null,
-        "imageStyle": null,
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
-        "generatedAt": "2026-04-19T19:33:37.604Z"
-      },
-      "_reviewHistory": [
-        {
-          "slotType": "tonight-pick",
-          "reason": "broken venue \"457\"",
-          "at": "2026-04-19T19:35:41.378Z",
-          "prevStatus": "draft",
-          "prevTitle": "Black April Commemoration",
-          "hardBlock": false
-        },
-        {
-          "slotType": "tonight-pick",
-          "reason": "broken venue string",
-          "at": "2026-04-19T19:41:06.266Z",
-          "prevTitle": "Black April Commemoration"
-        }
-      ],
-      "tonight-pick": {
-        "status": "draft",
-        "scheduledAt": "2026-04-29T11:45:00-07:00",
-        "item": {
-          "id": "opened-SR0883588",
-          "title": "King's Jok-Bal",
-          "name": "King's Jok-Bal",
-          "venue": "King's Jok-Bal",
-          "city": "santa-clara",
-          "address": "2374 El Camino Real",
-          "date": "2026-04-29",
-          "category": "food",
-          "subtype": "recent-opening",
-          "openedDate": "2026-04-10",
-          "summary": "Korean rice porridge and comfort food on El Camino Real.",
-          "url": ""
-        },
-        "copy": {
-          "x": "Tonight's pick: King's Jok-Bal in Santa Clara. Korean rice porridge and comfort food on El Camino Real. Sometimes the best evening plan is a warm bowl and zero stress. 🍚",
-          "threads": "Tonight's pick is King's Jok-Bal in Santa Clara — Korean rice porridge and comfort food on El Camino Real. If your evening could use something warm, quiet, and genuinely satisfying, this is the move. 🍚 #SouthBay #SantaClara #KoreanFood",
-          "bluesky": "Tonight: King's Jok-Bal in Santa Clara. Korean rice porridge and comfort food on El Camino Real. Warm, simple, and exactly what a weeknight dinner should be. 🍚 #SouthBay #SantaClara #KoreanFood",
-          "facebook": "Tonight's dinner idea: King's Jok-Bal on El Camino Real in Santa Clara. They do Korean rice porridge and comfort food — the kind of meal that just settles you. If you've never had jok-bal-style Korean comfort food, this is a solid place to start. Low-key, warming, and a nice change of pace for a weeknight. 🍚",
-          "instagram": "Tonight's pick 🍚\n\nKing's Jok-Bal in Santa Clara is serving Korean rice porridge and comfort food on El Camino Real — and honestly, some nights that's exactly what you need. Not a loud scene, not a production. Just a warm bowl and good food that does its job.\n\nIf you haven't explored Korean juk (rice porridge) much, it's gentle, deeply savory, and the kind of thing that makes you feel like someone's actually taking care of you. Add the comfort food side of the menu and you've got a full, satisfying evening for not a lot of effort.\n\nWorth knowing about. Worth going tonight. 🙌\n\n#SouthBay #SantaClara #KoreanFood #KoreanComfortFood #Juk #RicePorridge #ElCaminoReal #SouthBayEats #SanJoseFoodie #BayAreaFood #WeekdayDinner #ComfortFood #LocalEats #TonightsDinner",
-          "mastodon": "Tonight: King's Jok-Bal in Santa Clara. Korean rice porridge and comfort food on El Camino Real. Warm, simple, and exactly what a weeknight dinner should be. 🍚 #SouthBay #SantaClara #KoreanFood"
-        }
-      }
-    },
-    "2026-04-30": {
-      "day-plan": {
-        "status": "draft",
-        "slotType": "day-plan",
-        "city": "los-altos",
-        "cityName": "Los Altos",
-        "planUrl": "https://southbaytoday.org/plan/76d4c75f",
-        "plan": {
-          "cards": [
-            {
-              "id": "place:ChIJqbeVHSy1j4ARvegwMfaGxAs",
-              "name": "Saratoga Bagels",
-              "category": "food",
-              "city": "saratoga",
-              "address": "12840 Saratoga Sunnyvale Rd #200, Saratoga, CA 95070, USA",
-              "timeBlock": "7:00 AM - 8:30 AM",
-              "blurb": "Kick off the morning with fresh bagels from Saratoga Bagels. Grab your order and settle in — it's the kind of low-key spot that makes Sunday feel like Sunday.",
-              "why": "Perfect way to ease into the day before the city wakes up.",
-              "url": "http://www.saratoga-bagels.com/",
-              "mapsUrl": "https://maps.google.com/?cid=847951021797861565&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "Under $15/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJqbeVHSy1j4ARvegwMfaGxAs/photos/AU_ZVEHr-8PeK7RuE9C_1LSSQg9v2676lZqqL-CCEcByLCE23FJrhPue4jkvjO8sX6iYdtJZr_23FtYhG0nN36Ey8J5u7E_mBbOduJtRMQpByvr_37I5M3wcuDmiu14GDpip7nx4Az6FvdeqvOjfRhg1WYcM-Z-LrDcNsVkdoPsyTBR5mHQeqW1t3iNMPxSwVxycWnbRaClynuA9DL_pM_Vth5-D4wzUXanHjguPRAalYR8cIg-LUu6Jux1v_eLgOidIryWIEIkNFCo947IIxZLZEpZx41eyMNBt6YZTb-XLjULKkw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJedq7TbRKjoARHPR9Kw_HKaM",
-              "name": "Congress Springs Park",
-              "category": "outdoor",
-              "city": "saratoga",
-              "address": "12970 Glen Brae Dr, Saratoga, CA 95070, USA",
-              "timeBlock": "8:30 AM - 10:30 AM",
-              "blurb": "Walk the trails at Congress Springs Park while the morning is still cool and quiet. Good mix of open grass and wooded paths, solid spot to stretch your legs before things get busier.",
-              "why": "71 degrees and sunny is basically a gift — get outside while it's still crisp.",
-              "url": "https://www.saratoga.ca.us/592/Congress-Springs-Park",
-              "mapsUrl": "https://maps.google.com/?cid=11757147170195502108&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJedq7TbRKjoARHPR9Kw_HKaM/photos/AU_ZVEGg9aaGZ0gni0JypQ0BitW2LqT-r2aa5UPkG0UHlb_4JrkL91orQOk5XXKBKfiOL96E-DXCsXWrD_Ti3OHt_b-sU4IpHaMGqBZ-8sH3JqXODgHItrRCe4oyWLFYLvSbjOQWKbMBZVnJcMei07ggnzByLvY3JcbV4O28phKNtWa7hWJuT69-NLeBxfgUM4TwDwet9NfMQX7RxS7Xcssovilfetl_8p-Er8Y1yuHFIGtIpK0pVbFTcqfi9ecTtZXGaAWRcOdzkTsRqUNjf3cKYYUJFgA0WG_-lRIFOrwF0b_fFMh-iiWjvpJTh04iuAVHQUv7_YRBt4ObeT45kulaNWr5I_B_idaxLLrhUJugRjgXYzBJDVQBg7TvJ89DPa0hp0XaH1PP5Cx6U-aw2TdPynXfvkzJ7jK7cA_VQmn0ss54a-ME",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJy5mL7u6wj4ARzGdVAc90mqE",
-              "name": "Los Altos History Museum",
-              "category": "museum",
-              "city": "los-altos",
-              "address": "51 S San Antonio Rd, Los Altos, CA 94022, USA",
-              "timeBlock": "12:00 PM - 2:00 PM",
-              "blurb": "The Los Altos History Museum opens at noon, so you'll be right on time. Wander through exhibits on local history and the stories behind the neighborhoods you're driving through all week.",
-              "why": "It's a genuinely interesting little museum and a nice way to spend a slow afternoon hour.",
-              "url": "http://www.losaltoshistory.org/",
-              "mapsUrl": "https://maps.google.com/?cid=11644748218949265356&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJy5mL7u6wj4ARzGdVAc90mqE/photos/AU_ZVEFWyDSMZ7CbSO2lbcW08DpCYGcsS3B1RwSXZE1NF5ZzvcWJHcPGL_IvL9STu1r_saWQDS5Bl4ycvp2PSdG3m-dazfv7GNIZfweYOs_JtuPQmFS3uum30rCCqm-KHFPqii0MafFiUa0fTzMU4cTb93MSKjn61XA3rqi3JOzAtTssQslSEsgg-tLPo01t5ScBMlZktt1eznafaE1Qgk5b9ZN-q4bktcJt17oPFmwkoIs-sd29lhFDtN8SrB4iIVjkckX2lWQ0py8VVz9yPuOVmRbeIJRBC6WNWr1sut8ttoFBCw",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJG0vCs--wj4AR-NyALH6gIW8",
-              "name": "Satura Cakes",
-              "category": "food",
-              "city": "los-altos",
-              "address": "200 Main St, Los Altos, CA 94022, USA",
-              "timeBlock": "2:00 PM - 3:00 PM",
-              "blurb": "Stop into Satura Cakes on Main Street for a late-afternoon treat. The cakes are the move here — grab a slice and take your time with it.",
-              "why": "You're already on Main Street and skipping this would honestly be a mistake.",
-              "url": "http://www.saturacakes.com/",
-              "mapsUrl": "https://maps.google.com/?cid=8007858076214418680&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": "$15–30/person",
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJG0vCs--wj4AR-NyALH6gIW8/photos/AU_ZVEGlwcKT3e6b0p6Rlsn0OBny9gTlvpRYb78zg3Ovci7QyShlzh-c_tOsegnuxDCH57dLR9LqZ2leIzop87t286doqI7EaxhBpJSHaHoDwzyfX0tUK5DKiadGxGW3ik_MVUhApjVu2Z0hk-Yf4vWHG-XNhlN5aR2Wdctsc6eoaujiGZoPIYQusMlNapRrNKuE66EimN_GpZYgbRu_rvWUwlG_akLFVLR22di1GjFWgHBFMylzdZ81Iaqu-tTj54GdIa6oN6ocmNUhDENwVrAmRZVzHX08qLyU0mAmwc3sruoSjLuY_iAQGRFZ24DT7PXUXOe7nUAyg4C10KV5Had2B_LCXqbV7DLvZ7qpRN9VfY65QACFz1MLXdq3PB91YvoS_kkUayWQJDdJj4iUuJaZYoUn_8ndlWckbyhON2Qd_C0",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "place:ChIJIShxXedKjoAR03spiHREl_4",
-              "name": "Book-Go-Round Used Bookstore",
-              "category": "shopping",
-              "city": "saratoga",
-              "address": "14410 Oak St, Saratoga, CA 95070, USA",
-              "timeBlock": "3:00 PM - 4:45 PM",
-              "blurb": "Book-Go-Round is a well-curated used bookstore in Saratoga with the kind of shelf-browsing energy that makes an hour disappear fast. Good for picking up something to read with dinner.",
-              "why": "There's something about a great used bookstore on a Sunday that just hits right.",
-              "url": "https://www.fslonline.org/bookgoround",
-              "mapsUrl": "https://maps.google.com/?cid=18345206874408319955&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "cost": null,
-              "costNote": null,
-              "kidsCostNote": null,
-              "photoRef": "places/ChIJIShxXedKjoAR03spiHREl_4/photos/AU_ZVEEZB56920OGLKg67A0pmL50r13AGJmdrsJ9NwkMAiBFVEb8qg6Yttz_EjIv8nCjxtKnV9PDomsrbfLT_egvsRbtmsRyldp_MRo_8ZEGLOIIDGkx_-Y2xeO2PIrt_BzcaErDtMCvaF3drgfv3QDMMDKkLnyamAxWcEVh303QzDoHF5-okWnpVDd-DIBYsy7y6B8XuQgRP4MRuCaw3V5WlTWrMk4jE5NBO-3NmWdaR5HVrzWVnoeO9v2tY7jg97pHgi9-FXH34bfVkHHxMZDUApOP_REsD3r_o0kx9L4pKXz4A10QVrpSvGJrPxuekuvw3gPL2sxiYvviCOo3Ey4HgTkkjtNN3Pr4gFxdtjOJoWSeoOnFxdqQcHDLz-lTQLGkEom68PSEj0FErCi6CiBTGyzgx2fbaLeW2Hs9C5vIpKk9UuWGNTuFeeDjOHNL9P_-",
-              "venue": null,
-              "source": "place",
-              "locked": false
-            },
-            {
-              "id": "event:sccl-69a88b04cbf6405d356956fc",
-              "name": "Aging with Grace: The Life of the Great Basin Bristlecone Pine A talk by Tim Aston at Los Altos Library",
-              "category": "arts",
-              "city": "los-altos",
-              "address": "",
-              "timeBlock": "7:00 PM - 8:30 PM",
-              "blurb": "Head to the Los Altos Library tonight for Tim Aston's talk on the Bristlecone Pine — these trees live for thousands of years and the story of how they do it is genuinely wild. Free, no ticket needed.",
-              "why": "A great free evening lecture in the neighborhood — way better than defaulting to your couch.",
-              "url": "https://sccl.bibliocommons.com/events/69a88b04cbf6405d356956fc",
-              "cost": "free",
-              "costNote": null,
-              "photoRef": "places/ChIJIz10w-6wj4ARxi32a6iumfw/photos/AU_ZVEE2K_arqUvmJWLei53bzLlWC6FvnbAFiF547M-KNzjNWwJZgfV4i7ajh4ZTrrKLaegyb9a25wM0nbb2cttILX3aY2myrtCOokk7NrVP_zLGF3UjPA0B6CuQI286N6QDA0e8YItZ-F6YnYk0yl-0_XU5L0Feg-tZ6syzyoNS22NSUTZ3uRSLzuBWyxm6dlCD9kSTp7eHAHvYiCsksOHkWgALlp-UsQiHIfNWEsI9R5ZsBd2ma1x2gBF7tHAJB81z71tCl9-_gO5SgoIHS32MBuK4EBupjNSgG8cFbzBgDqDd-CHq4WzU6Q9voevzJ4xvwkLzXARck4OBMan6k6eo62dMG4PuvEoWiTmrXDCp3p7yx1FzCujBYgUvIHeqrFTQqVNB2QQDsqoGPyXSMI80AvtrnbYRy_63OssK9FEQoZdzgypv",
-              "venue": "Santa Clara County Library",
-              "source": "event",
-              "locked": false
-            }
-          ],
-          "weather": "71°F, high 75°F"
-        },
-        "copy": {
-          "x": "We planned your Thursday in Saratoga + Los Altos 🗓️ Bagels at 7, a morning trail walk, the Los Altos History Museum at noon, cake, used books, and a talk on trees that outlive civilizations tonight. https://southbaytoday.org/plan/76d4c75f",
-          "threads": "We planned your Thursday so you didn't have to ☀️ Start with fresh bagels in Saratoga, walk Congress Springs while it's still quiet, hit the Los Altos History Museum at noon, grab something from Satura Cakes, browse Book-Go-Round, then head to the library tonight for a talk on Bristlecone Pines — trees that have been alive for thousands of years. Good day. https://southbaytoday.org/plan/76d4c75f #SouthBay #LosAltos #Saratoga",
-          "bluesky": "We planned your Thursday 🌲 Bagels, a morning trail, the Los Altos History Museum, cake from Satura, used books, and tonight — a library talk on trees older than most civilizations. Saratoga + Los Altos. https://southbaytoday.org/plan/76d4c75f #SouthBay #LosAltos",
-          "facebook": "We mapped out a really good Thursday for you — all in Saratoga and Los Altos. Fresh bagels to start the morning, a quiet trail walk at Congress Springs, the Los Altos History Museum opening right at noon, a stop at Satura Cakes on Main Street, some shelf-browsing at Book-Go-Round, and then tonight at the Los Altos Library, a talk on Bristlecone Pines — trees that have been alive for thousands of years 🌲 Full details at https://southbaytoday.org/plan/76d4c75f",
-          "instagram": "We planned your Thursday. All you have to do is show up ☀️\n\n7:00 AM — Saratoga Bagels. Fresh bagels, good energy, easy start.\n\n8:30 AM — Congress Springs Park. Walk the trails while the morning is still cool and quiet. One of those spots that just feels good early.\n\n12:00 PM — Los Altos History Museum. Opens at noon — wander through local history exhibits at a pace that feels like a Saturday, even on a Thursday.\n\n2:00 PM — Satura Cakes, Los Altos. The cakes are the move. Grab something and take your time with it.\n\n3:00 PM — Book-Go-Round Used Bookstore, Saratoga. Well-curated shelves, the kind of place where you go in for one book and leave with four.\n\n7:00 PM — Los Altos Library. Tim Aston is giving a talk tonight on the Great Basin Bristlecone Pine 🌲 These trees have been alive for thousands of years. It's the kind of thing you didn't know you wanted to hear about until you're in the room.\n\nSaratoga + Los Altos. Thursday, April 30. Full details at https://southbaytoday.org/plan/76d4c75f\n\n#SouthBay #SaratogaCA #LosAltos #SouthBayToday #BayAreaThingsToDo #BayAreaLocal #LosAltosCA #SaratogaBagels #SaturaCakes #BookGoRound #LosAltosLibrary #BayAreaEvents #ThingsToDoBayArea",
-          "mastodon": "We planned your Thursday 🌲 Bagels, a morning trail, the Los Altos History Museum, cake from Satura, used books, and tonight — a library talk on trees older than most civilizations. Saratoga + Los Altos. https://southbaytoday.org/plan/76d4c75f #SouthBay #LosAltos"
-        },
-        "imageUrl": null,
-        "imageStyle": null,
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
-        "generatedAt": "2026-04-19T19:34:27.061Z"
-      },
-      "tonight-pick": {
-        "status": "draft",
-        "scheduledAt": "2026-04-30T11:45:00-07:00",
-        "item": {
-          "id": "keplersbooks-118356b31e3562ac",
-          "title": "Annie Leonard and André Carothers on Protest",
-          "name": "Annie Leonard and André Carothers on Protest",
-          "venue": "Kepler's Books",
-          "city": "palo-alto",
-          "date": "2026-04-30",
-          "time": "6:00 PM",
-          "url": "https://www.keplers.org/upcoming-events-internal/protest",
-          "summary": "What would the world look like if we couldn’t express outrage against the systems we disagree with or support the changes we seek? In Protest! Respect It Defend It Use It, lifelong activists Annie Leonard and André Carothers celebrate what collective action can achieve, and invite each of us to make a difference.",
-          "category": "education"
-        },
-        "copy": {
-          "x": "Tonight at Kepler's in Palo Alto: Annie Leonard & André Carothers are talking about protest — why it matters, how to do it, and what's at stake when we can't. 6 PM. https://www.keplers.org/upcoming-events-internal/protest",
-          "threads": "Tonight at Kepler's in Palo Alto, two lifelong activists sit down to talk about something pretty timely: protest. Annie Leonard & André Carothers wrote the book on collective action — literally — and they're discussing it at 6 PM. Worth the drive. 📣 https://www.keplers.org/upcoming-events-internal/protest #PaloAlto #SouthBay #Books",
-          "bluesky": "Tonight at Kepler's in Palo Alto: Annie Leonard & André Carothers on protest — why it works, why it matters, and how to use it. 6 PM. 📣 https://www.keplers.org/upcoming-events-internal/protest #PaloAlto #SouthBay",
-          "facebook": "If you've got a free evening, Kepler's Books in Palo Alto is hosting a really interesting one tonight. Annie Leonard and André Carothers — both lifelong activists — are talking about their new book on protest: what collective action has achieved, why the right to protest is worth defending, and how each of us fits in. Starts at 6 PM. https://www.keplers.org/upcoming-events-internal/protest",
-          "instagram": "Tonight's pick: head to Kepler's Books in Palo Alto for a conversation that feels pretty relevant right now. 📣\n\nAnnie Leonard and André Carothers — two people who've spent their lives in collective action — are discussing their new book, Protest! Respect It Defend It Use It. It's a celebration of what ordinary people can accomplish when they show up together, and an honest look at what's at stake when that ability gets threatened.\n\nKepler's has been a gathering place for exactly these kinds of conversations for decades. Tonight's one of the good ones.\n\n6 PM, Kepler's Books, Palo Alto.\n\nhttps://www.keplers.org/upcoming-events-internal/protest\n\n#PaloAlto #SouthBay #KeplersBooks #Protest #CollectiveAction #CivicLife #Activism #BayAreaBooks #BayAreaEvents #SanJose #Sunnyvale #MountainView #Bookstore #BookEvent #TonightInTheBayArea",
-          "mastodon": "Tonight at Kepler's in Palo Alto: Annie Leonard & André Carothers on protest — why it works, why it matters, and how to use it. 6 PM. 📣 https://www.keplers.org/upcoming-events-internal/protest #PaloAlto #SouthBay"
         }
       }
     }
