@@ -33,7 +33,41 @@ const TERMINOLOGY_FIXES = [
   { pattern: /\baids\b(?!\w)/g, replacement: "AIDS" },
   // "AIDS pandemic" is wrong; correct medical term is "epidemic"
   { pattern: /AIDS pandemic/g, replacement: "AIDS epidemic" },
+  // "pandemic history" used loosely for AIDS exhibit context — it's an epidemic
+  { pattern: /\bpandemic history\b/gi, replacement: "epidemic history" },
+  { pattern: /\bthe pandemic\b(?=[^.]{0,80}\b(AIDS|HIV)\b)/gi, replacement: "the epidemic" },
 ];
+
+// SBS covers these 11 cities. Anything else is out-of-area for SBS audience.
+const IN_AREA_CITIES = new Set([
+  "san jose", "santa clara", "sunnyvale", "mountain view", "palo alto",
+  "los altos", "cupertino", "campbell", "los gatos", "saratoga", "milpitas",
+]);
+
+// Out-of-area red flags in venue/title/summary. If the venue mentions one
+// of these cities explicitly, it's not us.
+const OUT_OF_AREA_CITIES = [
+  "santa cruz", "oakland", "berkeley", "san francisco", "hayward",
+  "fremont", "union city", "daly city", "san mateo", "redwood city",
+  "menlo park", "walnut creek", "concord", "monterey", "capitola",
+  "half moon bay", "gilroy", "morgan hill", "watsonville",
+];
+
+// Phrases that mean the event isn't an in-person experience worth ticketing.
+const VIRTUAL_SIGNALS = [
+  /\bvirtual(ly)?\b/i,
+  /\bonline\b/i,
+  /\bzoom\b/i,
+  /\blivestream/i,
+  /\bwebinar\b/i,
+  /\bdial[- ]?in\b/i,
+  /\bremote\b/i,
+];
+
+// Category keywords for saturation checks (spa/massage is noisy right now).
+const CATEGORY_KEYWORDS = {
+  spa: [/\bspa\b/i, /\bmassage\b/i, /\bsauna\b/i, /\bfacial\b/i, /\bthai massage\b/i],
+};
 
 // Tonight-pick titles that often contain these keywords shouldn't be shipped
 // — they're not evening-entertainment fare for the tonight slot.
@@ -155,6 +189,57 @@ function dowMismatch(dateStr, copyText) {
   return null;
 }
 
+function outOfArea(slot) {
+  const haystack = [
+    slot?.item?.venue,
+    slot?.item?.title,
+    slot?.item?.name,
+    slot?.item?.summary,
+    slot?.item?.city,
+    slot?.cityName,
+  ].filter(Boolean).map((s) => String(s).toLowerCase()).join(" | ");
+  if (!haystack) return null;
+  for (const city of OUT_OF_AREA_CITIES) {
+    const re = new RegExp(`\\b${city.replace(/\s+/g, "\\s+")}\\b`, "i");
+    if (re.test(haystack)) return `out-of-area (${city})`;
+  }
+  return null;
+}
+
+function isVirtual(slot) {
+  const haystack = [
+    slot?.item?.venue,
+    slot?.item?.title,
+    slot?.item?.name,
+    slot?.item?.summary,
+  ].filter(Boolean).join(" | ");
+  for (const re of VIRTUAL_SIGNALS) if (re.test(haystack)) return "virtual/online event";
+  return null;
+}
+
+function matchesCategory(text, patterns) {
+  if (!text) return false;
+  return patterns.some((re) => re.test(text));
+}
+
+function countDayPlanCities(slot) {
+  const cards = slot?.plan?.cards || [];
+  const cities = new Set();
+  for (const c of cards) {
+    const city = (c.city || c.cityName || "").trim().toLowerCase();
+    if (city) cities.add(city);
+  }
+  return cities.size;
+}
+
+function dayPlanHasCategory(slot, patterns) {
+  const cards = slot?.plan?.cards || [];
+  return cards.some((c) => {
+    const text = [c.title, c.name, c.featuredPlace, c.summary, c.blurb].filter(Boolean).join(" | ");
+    return matchesCategory(text, patterns);
+  });
+}
+
 /**
  * Run the quality review across a schedule's days.
  *
@@ -183,15 +268,17 @@ export function runQualityReview(schedule, options = {}) {
     for (const slotType of ["day-plan", "tonight-pick", "wildcard"]) {
       const slot = day[slotType];
       if (!slot) continue;
-      // Never touch approved/published/rejected slots
-      if (slot.status && !["draft"].includes(slot.status)) continue;
+      if (slot.status === "rejected") continue;
 
+      // Terminology fixes are safe text rewrites — apply even on approved
+      // slots so mistakes don't ship just because they made it past review once.
       const termChanges = applyTerminologyFixes(slot);
       if (termChanges > 0) {
         autoFixed.push({ date, slotType, kind: "terminology", details: `${termChanges} fix(es)` });
       }
 
-      if (slotType === "day-plan") {
+      // Structural fixes only on drafts.
+      if (slot.status === "draft" && slotType === "day-plan") {
         const resorted = sortDayPlanCards(slot);
         if (resorted) {
           autoFixed.push({ date, slotType, kind: "chronology", details: "resorted cards" });
@@ -223,7 +310,10 @@ export function runQualityReview(schedule, options = {}) {
 
     // ── Day plan ──
     const dp = day["day-plan"];
-    if (dp && dp.status === "draft") {
+    const dpStatus = dp?.status;
+    const dpIsDraft = dpStatus === "draft";
+    const dpIsLive = dp && !["rejected", "published"].includes(dpStatus);
+    if (dp && dpIsDraft) {
       const cards = dp.plan?.cards || [];
       if (cards.length < 5) {
         flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops` });
@@ -234,10 +324,38 @@ export function runQualityReview(schedule, options = {}) {
         }
       }
     }
+    // Hard-block checks on day-plan regardless of status (sprawl, virtual, saturated spa).
+    if (dp && dpIsLive) {
+      const cityCount = countDayPlanCities(dp);
+      if (cityCount >= 5) {
+        flagged.push({ date, slotType: "day-plan", reason: `too much driving (${cityCount} cities)` });
+      }
+      // Demographic coherence: spa cooldown across the window.
+      const hasSpa = dayPlanHasCategory(dp, CATEGORY_KEYWORDS.spa);
+      if (hasSpa) {
+        // Count other spa day-plans within ±3 days.
+        let spaNeighbors = 0;
+        for (let off = -3; off <= 3; off++) {
+          if (off === 0) continue;
+          const d = new Date(date + "T12:00:00");
+          d.setDate(d.getDate() + off);
+          const neighbor = d.toISOString().slice(0, 10);
+          const ndp = schedule.days?.[neighbor]?.["day-plan"];
+          if (!ndp || ["rejected"].includes(ndp.status)) continue;
+          if (dayPlanHasCategory(ndp, CATEGORY_KEYWORDS.spa)) spaNeighbors++;
+        }
+        if (spaNeighbors >= 1) {
+          flagged.push({ date, slotType: "day-plan", reason: `spa saturation (${spaNeighbors + 1} spa plans in 7 days)` });
+        }
+      }
+    }
 
     // ── Tonight pick ──
     const tp = day["tonight-pick"];
-    if (tp && tp.status === "draft") {
+    const tpStatus = tp?.status;
+    const tpIsDraft = tpStatus === "draft";
+    const tpIsLive = tp && !["rejected", "published"].includes(tpStatus);
+    if (tp && tpIsDraft) {
       const venue = normalize(tp.item?.venue);
       const title = normalize(tp.item?.title || tp.item?.name);
 
@@ -253,12 +371,6 @@ export function runQualityReview(schedule, options = {}) {
           break;
         }
       }
-
-      // Day-of-week mismatch (check first platform copy we find)
-      const strs = allCopyStrings(tp);
-      const copySample = strs.find((s) => s.text)?.text || title;
-      const mm = dowMismatch(date, copySample);
-      if (mm) flagged.push({ date, slotType: "tonight-pick", reason: mm });
 
       // Same venue on an adjacent day (±1)
       if (venue) {
@@ -286,6 +398,19 @@ export function runQualityReview(schedule, options = {}) {
           flagged.push({ date, slotType: "tonight-pick", reason: `venue saturated (${venue} ${count}× in 7 days)` });
         }
       }
+    }
+    // Hard-block checks for tonight-pick: fire regardless of approval status.
+    // These are ship-blockers (wrong city, wrong day, virtual-only).
+    if (tp && tpIsLive) {
+      const title = normalize(tp.item?.title || tp.item?.name);
+      const strs = allCopyStrings(tp);
+      const copySample = strs.find((s) => s.text)?.text || title;
+      const mm = dowMismatch(date, copySample) || dowMismatch(date, title);
+      if (mm) flagged.push({ date, slotType: "tonight-pick", reason: mm, hardBlock: true });
+      const ooa = outOfArea(tp);
+      if (ooa) flagged.push({ date, slotType: "tonight-pick", reason: ooa, hardBlock: true });
+      const virt = isVirtual(tp);
+      if (virt) flagged.push({ date, slotType: "tonight-pick", reason: virt, hardBlock: true });
     }
 
     // ── Wildcard ──
@@ -334,24 +459,31 @@ export function runQualityReview(schedule, options = {}) {
     uniqueFlagged.push({ ...f });
   }
 
-  if (resetFlaggedToDraft) {
-    for (const f of uniqueFlagged) {
-      const day = schedule.days[f.date];
-      if (!day) continue;
-      // Delete the slot so the regenerator creates a fresh one. Keep a
-      // note of why on a sibling key so we can inspect history.
-      const existing = day[f.slotType];
-      if (existing) {
-        day._reviewHistory ??= [];
-        day._reviewHistory.push({
-          slotType: f.slotType,
-          reason: f.reason,
-          at: new Date().toISOString(),
-          prevTitle: existing.item?.title || existing.item?.name || existing.cityName || null,
-        });
-        delete day[f.slotType];
-      }
-    }
+  // Merge hardBlock flag onto dedup'd entries (if any sub-flag was hardBlock,
+  // the merged entry is hardBlock too).
+  for (const f of flagged) {
+    if (!f.hardBlock) continue;
+    const match = uniqueFlagged.find((x) => x.date === f.date && x.slotType === f.slotType);
+    if (match) match.hardBlock = true;
+  }
+
+  for (const f of uniqueFlagged) {
+    const day = schedule.days[f.date];
+    if (!day) continue;
+    const existing = day[f.slotType];
+    if (!existing) continue;
+    const shouldDelete = resetFlaggedToDraft || f.hardBlock;
+    if (!shouldDelete) continue;
+    day._reviewHistory ??= [];
+    day._reviewHistory.push({
+      slotType: f.slotType,
+      reason: f.reason,
+      at: new Date().toISOString(),
+      prevStatus: existing.status || null,
+      prevTitle: existing.item?.title || existing.item?.name || existing.cityName || null,
+      hardBlock: !!f.hardBlock,
+    });
+    delete day[f.slotType];
   }
 
   return { autoFixed, flagged: uniqueFlagged };

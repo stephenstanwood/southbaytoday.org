@@ -1211,7 +1211,18 @@ function renderExpandedSlot(dateStr, slotType, slot) {
       const len = slot.copy[p].length;
       const limit = CHAR_LIMITS[p] || 500;
       const over = len > limit;
-      html += '<div class="cal-expanded-platform"><strong>' + p.toUpperCase() + '</strong> <span style="font-size:11px;color:' + (over ? '#c0392b;font-weight:700' : '#aaa') + '">' + len + ' / ' + limit + '</span><br><div style="white-space:pre-wrap;word-wrap:break-word;margin-top:4px">' + urlify(escapeHtml(slot.copy[p])) + '</div></div>';
+      const textareaId = 'cal-copy-' + dateStr + '-' + slotType + '-' + p;
+      html += '<div class="cal-expanded-platform" data-platform="' + p + '">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
+          '<strong>' + p.toUpperCase() + '</strong>' +
+          '<span><span class="cal-char-count" id="' + textareaId + '-count" style="font-size:11px;color:' + (over ? '#c0392b;font-weight:700' : '#aaa') + '">' + len + ' / ' + limit + '</span>' +
+          '<button class="btn-save-copy" data-pending="0" style="margin-left:8px;padding:3px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:11px;cursor:pointer" onclick="calSaveCopy(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'' + p + '\\'); event.stopPropagation();">Save</button></span>' +
+        '</div>' +
+        '<textarea id="' + textareaId + '" data-limit="' + limit + '" class="cal-copy-textarea" ' +
+          'style="width:100%;min-height:80px;font-family:inherit;font-size:13px;line-height:1.45;padding:6px 8px;border:1px solid #E5E2DB;border-radius:6px;background:#fafaf7;box-sizing:border-box;resize:vertical" ' +
+          'onclick="event.stopPropagation()" ' +
+          'oninput="calUpdateCount(\\'' + textareaId + '\\')">' + escapeHtml(slot.copy[p]) + '</textarea>' +
+      '</div>';
     }
     html += '</div>';
   }
@@ -1305,6 +1316,70 @@ async function calAction(dateStr, slotType, action) {
 
 async function calApproveBoth(dateStr, slotType) {
   calAction(dateStr, slotType, 'approve-both');
+}
+
+function calUpdateCount(textareaId) {
+  const ta = document.getElementById(textareaId);
+  if (!ta) return;
+  const countEl = document.getElementById(textareaId + '-count');
+  const limit = parseInt(ta.dataset.limit || '500');
+  const len = ta.value.length;
+  if (countEl) {
+    countEl.textContent = len + ' / ' + limit;
+    countEl.style.color = len > limit ? '#c0392b' : '#aaa';
+    countEl.style.fontWeight = len > limit ? '700' : '400';
+  }
+  // Mark the save button as dirty
+  const wrap = ta.closest('.cal-expanded-platform');
+  const btn = wrap && wrap.querySelector('.btn-save-copy');
+  if (btn) {
+    btn.dataset.pending = '1';
+    btn.style.background = '#fff8e1';
+    btn.style.borderColor = '#e0b84c';
+  }
+}
+
+async function calSaveCopy(dateStr, slotType, platform) {
+  const textareaId = 'cal-copy-' + dateStr + '-' + slotType + '-' + platform;
+  const ta = document.getElementById(textareaId);
+  if (!ta) return;
+  const text = ta.value;
+  const wrap = ta.closest('.cal-expanded-platform');
+  const btn = wrap && wrap.querySelector('.btn-save-copy');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; btn.style.opacity = '0.6'; }
+  try {
+    const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/save-copy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ platform, text }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      if (data.schedule) scheduleData = data.schedule;
+      if (btn) {
+        btn.textContent = 'Saved';
+        btn.style.background = '#dcfce7';
+        btn.style.borderColor = '#10b981';
+        btn.dataset.pending = '0';
+        setTimeout(() => {
+          if (btn) {
+            btn.textContent = 'Save';
+            btn.style.background = '#fff';
+            btn.style.borderColor = '#ddd';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          }
+        }, 1200);
+      }
+      // Don't re-render — user may be editing another platform
+    } else {
+      alert('Save failed: ' + (data.error || 'unknown'));
+      if (btn) { btn.disabled = false; btn.textContent = 'Save'; btn.style.opacity = '1'; }
+    }
+  } catch (err) {
+    alert('Save failed: ' + err.message);
+    if (btn) { btn.disabled = false; btn.textContent = 'Save'; btn.style.opacity = '1'; }
+  }
 }
 
 async function calEditCopy(dateStr, slotType) {
@@ -1962,6 +2037,26 @@ const server = createServer((req, res) => {
             res.end(JSON.stringify({ ok: false, error: err.message }));
             return;
           }
+          saveScheduleFile(schedule);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: true, schedule }));
+          return;
+        }
+
+        if (action === "save-copy") {
+          const params = JSON.parse(body || "{}");
+          const { platform, text } = params;
+          if (!platform || typeof text !== "string") {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ok: false, error: "Missing platform or text" }));
+            return;
+          }
+          if (!slot.copy) slot.copy = {};
+          slot.copy[platform] = text;
+          // Manual edits reset approval state so the image regen picks up new copy.
+          slot.copyApprovedAt = null;
+          if (slot.status !== "rejected") slot.status = "draft";
+          console.log(`  ✏️  Copy saved: ${date} ${slotType} ${platform} (${text.length} chars)`);
           saveScheduleFile(schedule);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ ok: true, schedule }));
