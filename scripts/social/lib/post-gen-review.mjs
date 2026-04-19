@@ -81,6 +81,51 @@ const WEAK_TONIGHT_PATTERNS = [
   /\bpreschool\b/i,
   /\bhomework help\b/i,
   /\bsupport group\b/i,
+  /\bproperty assessment\b/i,
+  /\bworkshop\b.*\b(tax|assessment|benefit)\b/i,
+  /\b(knit|crochet)\b.*\bcircle\b/i,
+  /\b(crystal|singing) bowls?\b/i,
+  /\btown council\b/i,
+];
+
+// Day-plan card-level bad patterns. Cards matching any of these get SURGICALLY
+// REMOVED from the plan (not flagged at plan level). This keeps the good parts
+// of a plan and just drops the junk.
+const BAD_CARD_TITLE_PATTERNS = [
+  /\b(thai )?massage\b/i,
+  /\b(day )?spa\b/i,
+  /\bacupuncture\b/i,
+  /\bsauna\b/i,
+  /\bfacial\b/i,
+  // niche meetups / practices
+  /\bsig\b/i,
+  /\bbook club\b/i,
+  /\b(knit|crochet) circle\b/i,
+  /\bband jam\b/i,
+  /\b(dance|music)\s+(practice|rehearsal)\b/i,
+  /\brehearsal\b/i,
+  /\bsupport group\b/i,
+  /\bhomework (help|club)\b/i,
+  /\btoddler\b/i,
+  /\bpreschool\b/i,
+  /\bjunior musical\b/i,
+  /\bkindergart?en (play|music)\b/i,
+  /\bstory ?time\b/i,
+  /\bwednesday meditation\b/i,
+  /\bthursday .* meditation\b/i,
+  /\bmeditation and mindfulness\b/i,
+  // internal commemorations / gov meetings
+  /\bcommemoration\b/i,
+  /\bregular meeting\b/i,
+  /\bcommission meeting\b/i,
+  /\bcommittee meeting\b/i,
+  /\bstudy session\b/i,
+  /\bclass of \d{4} reunion\b/i,
+];
+
+const BAD_CARD_VENUE_PATTERNS = [
+  /^\d+$/, // truncated number
+  /^[a-z]{1,2}$/i, // 1-2 char stub
 ];
 
 // Evidence that a venue field is truncated / broken data
@@ -240,6 +285,76 @@ function dayPlanHasCategory(slot, patterns) {
   });
 }
 
+// Remove obviously-bad cards from a day-plan (niche meetups, missing venues,
+// internal commemorations). Returns {removed: number, reasons: string[]}.
+function pruneBadCards(slot) {
+  const cards = slot?.plan?.cards;
+  if (!Array.isArray(cards) || cards.length === 0) return { removed: 0, reasons: [] };
+  const reasons = [];
+  const keep = [];
+  for (const c of cards) {
+    const title = String(c.title || c.name || "").trim();
+    const venue = String(c.venue || c.address || "").trim();
+    const badTitle = BAD_CARD_TITLE_PATTERNS.find((re) => re.test(title));
+    if (badTitle) {
+      reasons.push(`"${title}" (${badTitle})`);
+      continue;
+    }
+    const hasLocation = (c.address && c.address.length > 2) || (c.neighborhood && c.neighborhood.length > 2) || (c.venue && c.venue.length > 2);
+    if (!hasLocation) {
+      reasons.push(`"${title}" (missing location)`);
+      continue;
+    }
+    const badVenue = venue && BAD_CARD_VENUE_PATTERNS.find((re) => re.test(venue));
+    if (badVenue) {
+      reasons.push(`"${title}" @ "${venue}" (broken venue)`);
+      continue;
+    }
+    keep.push(c);
+  }
+  const removed = cards.length - keep.length;
+  if (removed > 0) slot.plan.cards = keep;
+  return { removed, reasons };
+}
+
+// Drop wellness/spa cards beyond the first one across the whole window.
+// We're oversaturated on spas — keep max 1 per 7-day rolling window.
+function capSpaFrequency(schedule, dates) {
+  const touched = [];
+  const spaByDate = new Map();
+  for (const date of dates) {
+    const day = schedule.days?.[date];
+    if (!day) continue;
+    const dp = day["day-plan"];
+    if (!dp || ["rejected", "published", "image-approved"].includes(dp.status)) continue;
+    const cards = dp.plan?.cards || [];
+    const spaIdx = cards.findIndex((c) => {
+      const text = [c.title, c.name, c.featuredPlace, c.category].filter(Boolean).join(" | ");
+      return matchesCategory(text, CATEGORY_KEYWORDS.spa);
+    });
+    if (spaIdx >= 0) spaByDate.set(date, { dp, cards, spaIdx });
+  }
+  // Greedy: keep earliest in each 7-day window, remove others.
+  const kept = [];
+  const sortedDates = [...spaByDate.keys()].sort();
+  for (const date of sortedDates) {
+    const d = new Date(date + "T12:00:00");
+    const tooClose = kept.some((k) => {
+      const kd = new Date(k + "T12:00:00");
+      return Math.abs((d - kd) / 86400000) < 7;
+    });
+    if (tooClose) {
+      const { dp, cards, spaIdx } = spaByDate.get(date);
+      const removed = cards.splice(spaIdx, 1)[0];
+      dp.plan.cards = cards;
+      touched.push({ date, removed: removed.title || removed.name });
+    } else {
+      kept.push(date);
+    }
+  }
+  return touched;
+}
+
 /**
  * Run the quality review across a schedule's days.
  *
@@ -283,8 +398,18 @@ export function runQualityReview(schedule, options = {}) {
         if (resorted) {
           autoFixed.push({ date, slotType, kind: "chronology", details: "resorted cards" });
         }
+        const pruneResult = pruneBadCards(slot);
+        if (pruneResult.removed > 0) {
+          autoFixed.push({ date, slotType, kind: "card-prune", details: `removed ${pruneResult.removed}: ${pruneResult.reasons.join("; ")}` });
+        }
       }
     }
+  }
+
+  // Cap spa/massage frequency — at most 1 per 7-day window.
+  const spaCapped = capSpaFrequency(schedule, dates);
+  for (const t of spaCapped) {
+    autoFixed.push({ date: t.date, slotType: "day-plan", kind: "spa-cap", details: `removed spa card: ${t.removed}` });
   }
 
   // Build a venue-by-date map for window checks ─────────────────────────
@@ -315,8 +440,8 @@ export function runQualityReview(schedule, options = {}) {
     const dpIsLive = dp && !["rejected", "published"].includes(dpStatus);
     if (dp && dpIsDraft) {
       const cards = dp.plan?.cards || [];
-      if (cards.length < 5) {
-        flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops` });
+      if (cards.length < 6) {
+        flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops (need 6+)` });
       } else {
         const firstHour = parseHour((cards[0].timeBlock || "").split(/\s*-\s*/)[0]);
         if (firstHour !== null && firstHour > 11) {
