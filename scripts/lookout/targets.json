@@ -5,7 +5,7 @@
     "conventions": {
       "provider": "civicplus_notifyme | mailchimp | constant_contact | squarespace | chambermaster | libraryaware | generic_html_form | unknown",
       "priority": "1 = highest (big city weekly, top chambers, major venues); 2 = mid; 3 = low",
-      "category": "city | chamber | library | museum | parks | arts | business-district | school | transit | news | venue | food | nature | other"
+      "category": "city | chamber | library | museum | parks | arts | business-district | news | venue | food | nature | other"
     }
   },
   "targets": [
@@ -155,14 +155,6 @@
     { "id": "el-camino-health", "name": "El Camino Health Events", "signupUrl": "https://www.elcaminohealth.org/classes-events", "city": "mountain-view", "category": "other", "provider": "unknown", "priority": 3 },
     { "id": "stanford-medicine-events", "name": "Stanford Health Care Classes & Events", "signupUrl": "https://stanfordhealthcare.org/for-patients-visitors/classes-events.html", "city": "palo-alto", "category": "other", "provider": "unknown", "priority": 3 },
 
-    { "id": "stanford-events", "name": "Stanford University Events", "signupUrl": "https://events.stanford.edu/", "city": "palo-alto", "category": "school", "provider": "unknown", "priority": 2 },
-    { "id": "sjsu-events", "name": "SJSU Events & Activities", "signupUrl": "https://www.sjsu.edu/events/", "city": "san-jose", "category": "school", "provider": "unknown", "priority": 2 },
-    { "id": "santa-clara-university", "name": "Santa Clara University Events", "signupUrl": "https://www.scu.edu/events/", "city": "santa-clara", "category": "school", "provider": "unknown", "priority": 2 },
-    { "id": "foothill-college", "name": "Foothill College Events", "signupUrl": "https://foothill.edu/", "city": "los-altos", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "de-anza-college", "name": "De Anza College Events", "signupUrl": "https://www.deanza.edu/", "city": "cupertino", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "west-valley-college", "name": "West Valley College Events", "signupUrl": "https://www.westvalley.edu/", "city": "saratoga", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "mission-college", "name": "Mission College Events", "signupUrl": "https://missioncollege.edu/", "city": "santa-clara", "category": "school", "provider": "unknown", "priority": 3 },
-
     { "id": "san-jose-clean-energy", "name": "San Jose Clean Energy", "signupUrl": "https://www.sanjosecleanenergy.org/", "city": "san-jose", "category": "other", "provider": "unknown", "priority": 3 },
     { "id": "silicon-valley-clean-energy", "name": "Silicon Valley Clean Energy", "signupUrl": "https://svcleanenergy.org/", "city": "santa-clara-county", "category": "other", "provider": "unknown", "priority": 3 },
     { "id": "pgande", "name": "PG&E Outage Alerts", "signupUrl": "https://www.pge.com/", "city": "santa-clara-county", "category": "other", "provider": "unknown", "priority": 3 },
@@ -175,13 +167,6 @@
     { "id": "cupertino-senior-center", "name": "Cupertino Senior Center", "signupUrl": "https://www.cupertino.org/our-city/departments/parks-recreation/senior-center", "city": "cupertino", "category": "other", "provider": "unknown", "priority": 3 },
 
     { "id": "silicon-valley-creates", "name": "SV Creates (arts grant nonprofit)", "signupUrl": "https://svcreates.org/", "city": "san-jose", "category": "arts", "provider": "unknown", "priority": 2 },
-    { "id": "kaiser-mv", "name": "Kaiser Permanente MV Events", "signupUrl": "https://healthy.kaiserpermanente.org/northern-california", "city": "mountain-view", "category": "other", "provider": "unknown", "priority": 3 },
-
-    { "id": "mvla-school-district", "name": "MVLA High School District", "signupUrl": "https://www.mvla.net/", "city": "mountain-view", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "fremont-union-hsd", "name": "Fremont Union HSD (Cupertino)", "signupUrl": "https://www.fuhsd.org/", "city": "cupertino", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "los-gatos-saratoga-hsd", "name": "Los Gatos-Saratoga HSD", "signupUrl": "https://www.lgsuhsd.org/", "city": "los-gatos", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "campbell-union-hsd", "name": "Campbell Union HSD", "signupUrl": "https://www.cuhsd.org/", "city": "campbell", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "paloalto-usd", "name": "Palo Alto Unified School District", "signupUrl": "https://www.pausd.org/", "city": "palo-alto", "category": "school", "provider": "unknown", "priority": 3 },
-    { "id": "cupertino-usd", "name": "Cupertino Union School District", "signupUrl": "https://www.cusdk8.org/", "city": "cupertino", "category": "school", "provider": "unknown", "priority": 3 }
+    { "id": "kaiser-mv", "name": "Kaiser Permanente MV Events", "signupUrl": "https://healthy.kaiserpermanente.org/northern-california", "city": "mountain-view", "category": "other", "provider": "unknown", "priority": 3 }
   ]
 }
