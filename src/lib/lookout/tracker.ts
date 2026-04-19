@@ -175,6 +175,28 @@ export async function writeTracker(doc: NewsletterTrackerDoc): Promise<void> {
     }
   }
   doc = applyDeletedIds(doc);
+
+  // Guard against the wipe race: if our local view has zero targets but the
+  // latest blob has any, we almost certainly raced a writer's del()→put()
+  // cycle and read an empty doc by mistake. Refuse the write — losing the
+  // current edit is far cheaper than wiping 150+ rows.
+  if (hasBlobToken() && doc.targets.length === 0) {
+    try {
+      const latest = await readBlobJson(TRACKER_BLOB_KEY);
+      if (latest) {
+        const parsed = JSON.parse(latest) as NewsletterTrackerDoc;
+        if ((parsed.targets ?? []).length > 0) {
+          console.warn(
+            `[tracker] refusing to write empty targets over a non-empty blob (${parsed.targets.length} rows). Likely read/del race.`
+          );
+          return;
+        }
+      }
+    } catch {
+      // If the safety read fails, fall through — we don't want to block all writes.
+    }
+  }
+
   doc.updatedAt = new Date().toISOString();
   const json = JSON.stringify(doc, null, 2);
   if (hasBlobToken()) {
