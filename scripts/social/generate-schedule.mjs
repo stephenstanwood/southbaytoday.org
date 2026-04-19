@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // ---------------------------------------------------------------------------
-// South Bay Today — 14-Day Schedule Generator
+// South Bay Today — 10-Day Schedule Generator
 // Populates the 3-slot daily schedule with draft content:
 //   07:15 — Day Plan (from default-plans.json)
 //   11:45 — Tonight Pick (best evening event)
@@ -42,7 +42,7 @@ if (!process.env.ANTHROPIC_API_KEY) {
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
-const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || "14");
+const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || "10");
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
