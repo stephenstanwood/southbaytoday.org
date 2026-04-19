@@ -1339,9 +1339,17 @@ function openAllDayPlans() {
     if (dp && dp.planUrl) urls.push(dp.planUrl);
   }
   if (!urls.length) { alert('No day-plan URLs found.'); return; }
-  if (!confirm('Open ' + urls.length + ' day plan tabs?')) return;
-  // Stagger opens so the browser doesn't consolidate them into one tab
-  urls.forEach((url, i) => setTimeout(() => window.open(url, '_blank', 'noopener'), i * 150));
+  // Open synchronously via <a> clicks — keeps each open inside the user-gesture
+  // window so Chrome/Brave popup blocker doesn't collapse them to one tab.
+  for (const url of urls) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
 }
 
 function calAutosize(ta) {
