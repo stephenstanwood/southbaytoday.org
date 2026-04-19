@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Tech Companies — curated snapshot, Q1 2026
+// South Bay Tech Companies — curated snapshot, Q1–Q2 2026
 // sccEmployeesK: Santa Clara County local jobs estimate (not global headcount)
 // Sources: company filings, campus reports, EDD data, news coverage
 // ---------------------------------------------------------------------------

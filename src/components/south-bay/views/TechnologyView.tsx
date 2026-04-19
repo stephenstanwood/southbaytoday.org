@@ -669,9 +669,9 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
   );
 }
 
-// Q1 2026 stats — derived from RECENTLY_FUNDED, hardcoded for display accuracy
-const Q1_2026_ROUNDS = RECENTLY_FUNDED.filter(
-  (r) => r.date >= "2026-01-01" && r.date <= "2026-03-31"
+// 2026 YTD stats — derived from RECENTLY_FUNDED
+const ROUNDS_2026 = RECENTLY_FUNDED.filter(
+  (r) => r.date >= "2026-01-01"
 ).length;
 
 const EARLY_STAGES = new Set(["Seed", "Pre-Seed", "Series A", "Series A1"]);
@@ -688,7 +688,7 @@ function RecentlyFundedSection() {
         <span className="tech-section-note">South Bay startups · Q4 2025 – Q2 2026 · {RECENTLY_FUNDED.length} rounds</span>
       </div>
 
-      {/* Q1 2026 Recap */}
+      {/* 2026 YTD Recap */}
       <div
         style={{
           display: "flex",
@@ -708,8 +708,8 @@ function RecentlyFundedSection() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$4.3B+</div>
-          <div style={{ fontSize: 10, color: "#6b21a8", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>Q1 2026 RAISED</div>
+          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$6B+</div>
+          <div style={{ fontSize: 10, color: "#6b21a8", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>2026 YTD RAISED</div>
         </div>
         <div
           style={{
@@ -720,8 +720,8 @@ function RecentlyFundedSection() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#4c1d95", lineHeight: 1 }}>{Q1_2026_ROUNDS}</div>
-          <div style={{ fontSize: 10, color: "#5b21b6", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>Q1 ROUNDS</div>
+          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#4c1d95", lineHeight: 1 }}>{ROUNDS_2026}</div>
+          <div style={{ fontSize: 10, color: "#5b21b6", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>2026 ROUNDS</div>
         </div>
         <div
           style={{
@@ -733,8 +733,8 @@ function RecentlyFundedSection() {
             justifyContent: "center",
           }}
         >
-          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)", marginBottom: 3 }}>Q1 2026 — South Bay VC wrap</div>
-          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>Four $500M rounds (Nexthop AI, MatX, Ayar Labs, Mind Robotics) anchored a record quarter. Chips, robotics, and AI networking dominated deal flow.</div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)", marginBottom: 3 }}>Q1–Q2 2026 — South Bay VC surge</div>
+          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>SiFive ($400M Series G), Aria Networks ($125M), and Genspark ($110M) kick off Q2. Chips, robotics, and AI networking keep dominating deal flow.</div>
         </div>
       </div>
 
