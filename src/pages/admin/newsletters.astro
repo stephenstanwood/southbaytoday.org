@@ -43,7 +43,7 @@ function googleSearchUrl(name: string, city: string | undefined): string {
 
 function statusLabel(s: SubscribeStatus): string {
   switch (s) {
-    case "not-attempted": return "untouched";
+    case "not-attempted": return "ready";
     case "signup-posted": return "signed up";
     // "confirmed" is deprecated — Stephen clicks confirmation links manually,
     // so there's no auto-confirmation flow. Any leftover confirmed rows display
@@ -52,7 +52,7 @@ function statusLabel(s: SubscribeStatus): string {
     case "confirmed": return "signed up";
     case "receiving": return "live";
     case "failed": return "failed";
-    case "needs-manual": return "ready";
+    case "needs-manual": return "ready"; // deprecated — same as not-attempted
     case "retry": return "retry";
     case "blocked": return "blocked";
   }
@@ -63,8 +63,8 @@ function statusColor(s: SubscribeStatus): string {
     case "receiving": return "#16a34a";
     case "confirmed": return "#a855f7"; // deprecated — same color as signup-posted
     case "signup-posted": return "#a855f7";
-    case "not-attempted": return "#94a3b8";
-    case "needs-manual": return "#f59e0b";
+    case "not-attempted": return "#f59e0b";
+    case "needs-manual": return "#f59e0b"; // deprecated — same as not-attempted
     case "retry": return "#3b82f6";
     case "failed": return "#dc2626";
     case "blocked": return "#7c2d12";
@@ -527,8 +527,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
               <div class="stat"><span class="num" style="color:#16a34a">{summary.receiving}</span><span class="lbl">live</span></div>
               <div class="stat"><span class="num" style="color:#a855f7">{summary.signupPosted}</span><span class="lbl">signed up</span></div>
               <div class="stat"><span class="num" style="color:#3b82f6">{summary.retry}</span><span class="lbl">retry</span></div>
-              <div class="stat"><span class="num" style="color:#f59e0b">{summary.needsManual}</span><span class="lbl">ready</span></div>
-              <div class="stat"><span class="num">{summary.notAttempted}</span><span class="lbl">new</span></div>
+              <div class="stat"><span class="num" style="color:#f59e0b">{summary.needsManual + summary.notAttempted}</span><span class="lbl">ready</span></div>
             </div>
           </div>
         </header>
@@ -606,12 +605,12 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                           <td>
                             <span class="status-wrap">
                               <button
-                                class={`status-pill ${(t.status === "needs-manual" || t.status === "signup-posted" || t.status === "confirmed" || t.status === "retry") ? "clickable" : ""}`}
+                                class={`status-pill ${(t.status === "not-attempted" || t.status === "needs-manual" || t.status === "signup-posted" || t.status === "confirmed" || t.status === "retry") ? "clickable" : ""}`}
                                 style={`background: ${statusColor(t.status)}`}
                                 data-id={t.id}
                                 data-status={t.status}
                                 title={
-                                  t.status === "needs-manual" ? "Click: mark as signed up" :
+                                  (t.status === "not-attempted" || t.status === "needs-manual") ? "Click: mark as signed up" :
                                   (t.status === "signup-posted" || t.status === "confirmed") ? "Click: flag for retry" :
                                   t.status === "retry" ? "Click: back to ready" : ""
                                 }
@@ -740,9 +739,9 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             const id = pill.dataset.id;
             const current = pill.dataset.status;
             const next =
-              current === "needs-manual" ? "signup-posted" :
+              (current === "not-attempted" || current === "needs-manual") ? "signup-posted" :
               (current === "signup-posted" || current === "confirmed") ? "retry" :
-              current === "retry" ? "needs-manual" :
+              current === "retry" ? "not-attempted" :
               null;
             if (!next) return;
             pill.disabled = true;
@@ -759,9 +758,10 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
               }
               const row = pill.closest("tr");
               if (row) {
-                const labels = { "needs-manual": "ready", "signup-posted": "signed up", "retry": "retry" };
-                const colors = { "needs-manual": "#f59e0b", "signup-posted": "#a855f7", "retry": "#3b82f6" };
+                const labels = { "not-attempted": "ready", "needs-manual": "ready", "signup-posted": "signed up", "retry": "retry" };
+                const colors = { "not-attempted": "#f59e0b", "needs-manual": "#f59e0b", "signup-posted": "#a855f7", "retry": "#3b82f6" };
                 const titles = {
+                  "not-attempted": "Click: mark as signed up",
                   "needs-manual": "Click: mark as signed up",
                   "signup-posted": "Click: flag for retry",
                   "retry": "Click: back to ready",
@@ -775,7 +775,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                 // Ensure undo ✕ exists for non-ready states; remove for ready
                 const wrap = row.querySelector(".status-wrap");
                 let undo = wrap?.querySelector(".undo-btn");
-                if (next === "needs-manual") {
+                if (next === "not-attempted" || next === "needs-manual") {
                   undo?.remove();
                 } else if (wrap && !undo) {
                   const btn = document.createElement("button");
@@ -797,14 +797,14 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             return;
           }
 
-          // Undo — reset a row back to needs-manual ("ready")
+          // Undo — reset a row back to not-attempted ("ready")
           const undoBtn = e.target.closest(".undo-btn");
           if (undoBtn) {
             const id = undoBtn.dataset.id;
             undoBtn.disabled = true;
             try {
               const res = await fetch(
-                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=needs-manual&key=${encodeURIComponent(providedKey)}`,
+                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=not-attempted&key=${encodeURIComponent(providedKey)}`,
                 { method: "POST" }
               );
               if (!res.ok) {
@@ -815,12 +815,12 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
               }
               const row = undoBtn.closest("tr");
               if (row) {
-                row.className = "status-needs-manual";
+                row.className = "status-not-attempted";
                 const pill = row.querySelector(".status-pill");
                 if (pill) {
                   pill.textContent = "ready";
                   pill.style.background = "#f59e0b";
-                  pill.dataset.status = "needs-manual";
+                  pill.dataset.status = "not-attempted";
                   pill.classList.add("clickable");
                   pill.title = "Click: mark as signed up";
                 }
@@ -882,27 +882,28 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         // reload — preserves scroll position.
         const POLL_INTERVAL = 15000;
         const STATUS_LABEL = {
-          "not-attempted": "untouched",
+          "not-attempted": "ready",
           "signup-posted": "signed up",
           "confirmed": "signed up", // deprecated — collapse to signup-posted
           "receiving": "live",
           "failed": "failed",
-          "needs-manual": "ready",
+          "needs-manual": "ready", // deprecated — same as not-attempted
           "retry": "retry",
           "blocked": "blocked",
         };
         const STATUS_COLOR = {
-          "not-attempted": "#94a3b8",
+          "not-attempted": "#f59e0b",
           "signup-posted": "#a855f7",
           "confirmed": "#a855f7", // deprecated — same as signup-posted
           "receiving": "#16a34a",
           "failed": "#dc2626",
-          "needs-manual": "#f59e0b",
+          "needs-manual": "#f59e0b", // deprecated — same as not-attempted
           "retry": "#3b82f6",
           "blocked": "#7c2d12",
         };
-        const CLICKABLE_STATUSES = new Set(["needs-manual", "signup-posted", "confirmed", "retry"]);
+        const CLICKABLE_STATUSES = new Set(["not-attempted", "needs-manual", "signup-posted", "confirmed", "retry"]);
         const PILL_TITLES = {
+          "not-attempted": "Click: mark as signed up",
           "needs-manual": "Click: mark as signed up",
           "signup-posted": "Click: flag for retry",
           "confirmed": "Click: flag for retry",
@@ -1002,12 +1003,11 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             }
           }
           const stats = document.querySelectorAll(".sticky-header .stat .num");
-          if (stats.length >= 5) {
+          if (stats.length >= 4) {
             stats[0].textContent = String(counts.receiving);
             stats[1].textContent = String(counts.signupPosted);
             stats[2].textContent = String(counts.retry);
-            stats[3].textContent = String(counts.needsManual);
-            stats[4].textContent = String(counts.notAttempted);
+            stats[3].textContent = String(counts.needsManual + counts.notAttempted);
           }
 
           // Progress bar
