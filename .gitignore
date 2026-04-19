@@ -25,3 +25,6 @@ src/data/south-bay/.dev-status-cache.json
 
 # Social URL rejection cache — regenerates from failed URLs, not worth tracking
 src/data/south-bay/social-url-rejects.json
+
+# Local-only snapshots of approved social schedule / shared plans
+.snapshots/

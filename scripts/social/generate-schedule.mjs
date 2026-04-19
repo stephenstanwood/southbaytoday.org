@@ -21,6 +21,7 @@ import { generateDayPlanCopy, generateTonightPickCopy, generateWildcardCopy } fr
 import { SLOT_TYPES, TYPED_SLOTS, todayPT, addDays } from "./lib/slot-scheduler.mjs";
 import { CITY_NAMES } from "./lib/constants.mjs";
 import { runQualityReview } from "./lib/post-gen-review.mjs";
+import { normalizeName } from "./lib/normalizeName.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
@@ -104,7 +105,7 @@ async function enrichCardPhotos(cards) {
 
 /** Call the plan API for a specific city + date. Returns plan data or null. */
 async function fetchPlanFromApi(city, dateStr, opts = {}) {
-  const { blockedNames = [] } = opts;
+  const { blockedNames = [], weekContext } = opts;
   try {
     const res = await fetch(`${PLAN_API_BASE}/api/plan-day`, {
       method: "POST",
@@ -115,6 +116,7 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
         currentHour: 7, // start with breakfast — enforced by plan-day prompt
         planDate: dateStr,
         blockedNames,
+        weekContext,
       }),
       signal: AbortSignal.timeout(45000),
     });
@@ -140,7 +142,7 @@ function planPassesQuality(plan, usedNames) {
     return { ok: false, reason: `starts too late (${cards[0].timeBlock})` };
   }
   // Reject if >= 2 anchor POIs repeat a previously-used name this run
-  const names = cards.map((c) => (c.name || "").trim().toLowerCase()).filter(Boolean);
+  const names = cards.map((c) => normalizeName(c.name)).filter(Boolean);
   const overlap = names.filter((n) => usedNames.has(n));
   if (overlap.length >= 2) {
     return { ok: false, reason: `${overlap.length} repeats: ${overlap.slice(0, 3).join(", ")}` };
@@ -235,7 +237,7 @@ function pickTonightEvent(candidates, dateStr, recentVenues = new Set(), recentT
   // Boring event patterns — skip these as tonight picks
   const BORING_TONIGHT = /\b(board of|trustees|commission|committee|council meeting|task force|budget hearing|town hall meeting|book club|chess club|book sale)\b/i;
 
-  const norm = (s) => (s || "").trim().toLowerCase();
+  const norm = normalizeName;
 
   // Only events starting at 5 PM or later, not boring government/library stuff
   const evening = dateEvents.filter((c) => {
@@ -383,26 +385,38 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
   const recentTonightTitles = new Set();
   const recentTonightVenues = new Set();
   const usedDayPlanNames = new Set();
+  // Week-level context for plan-day — anchor cities seen this batch + category counts.
+  const anchorCitiesThisWeek = [];
+  const categorySaturation = {};
+  const recordPlanForContext = (plan, cityName) => {
+    if (cityName) anchorCitiesThisWeek.push(cityName);
+    for (const c of (plan?.cards || [])) {
+      const cat = (c.category || "").toLowerCase();
+      if (!cat) continue;
+      categorySaturation[cat] = (categorySaturation[cat] || 0) + 1;
+    }
+  };
   const seedUsedFromSchedule = () => {
     for (const d of Object.keys(schedule.days)) {
       const day = schedule.days[d];
       const dp = day["day-plan"];
       if (dp?.plan?.cards) {
         for (const c of dp.plan.cards) {
-          const n = (c.name || "").trim().toLowerCase();
+          const n = normalizeName(c.name);
           if (n) usedDayPlanNames.add(n);
         }
+        recordPlanForContext(dp.plan, dp.cityName);
       }
       const tp = day["tonight-pick"];
       if (tp?.item) {
-        const t = (tp.item.title || tp.item.name || "").trim().toLowerCase();
-        const v = (tp.item.venue || "").trim().toLowerCase();
+        const t = normalizeName(tp.item.title || tp.item.name);
+        const v = normalizeName(tp.item.venue);
         if (t) recentTonightTitles.add(t);
         if (v) recentTonightVenues.add(v);
       }
       const wc = day["wildcard"];
       if (wc?.item) {
-        const t = (wc.item.title || wc.item.name || "").trim().toLowerCase();
+        const t = normalizeName(wc.item.title || wc.item.name);
         if (t) recentWildcardTitles.add(t);
       }
     }
@@ -439,7 +453,11 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
         console.log(`    📋 Fetching plan for ${cityName} on ${dateStr}...`);
         try {
           const blockedNames = Array.from(usedDayPlanNames);
-          const candidate = await fetchPlanFromApi(citySlug, dateStr, { blockedNames });
+          const weekContext = {
+            anchorCities: anchorCitiesThisWeek.slice(),
+            categorySaturation: { ...categorySaturation },
+          };
+          const candidate = await fetchPlanFromApi(citySlug, dateStr, { blockedNames, weekContext });
           if (!candidate) {
             lastReason = "api returned nothing";
           } else {
@@ -471,9 +489,10 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
 
           // Register every featured POI as used for the rest of this run
           for (const c of plan.cards) {
-            const n = (c.name || "").trim().toLowerCase();
+            const n = normalizeName(c.name);
             if (n) usedDayPlanNames.add(n);
           }
+          recordPlanForContext(plan, cityName);
 
           // Create a shared plan entry and get a shareable URL
           const planUrl = createSharedPlanUrl(plan, dateStr);
@@ -508,9 +527,10 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
       // Still register its cards so future days dedup against it
       const existing = day["day-plan"].plan?.cards || [];
       for (const c of existing) {
-        const n = (c.name || "").trim().toLowerCase();
+        const n = normalizeName(c.name);
         if (n) usedDayPlanNames.add(n);
       }
+      recordPlanForContext(day["day-plan"].plan, day["day-plan"].cityName);
     }
 
     // ── Tonight Pick (11:45 AM) ─────────────────────────────────────────
@@ -522,8 +542,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
         } else {
           try {
             const copy = await generateTonightPickCopy(tonight);
-            const tTitle = (tonight.title || tonight.name || "").trim().toLowerCase();
-            const tVenue = (tonight.venue || "").trim().toLowerCase();
+            const tTitle = normalizeName(tonight.title || tonight.name);
+            const tVenue = normalizeName(tonight.venue);
             if (tTitle) recentTonightTitles.add(tTitle);
             if (tVenue) recentTonightVenues.add(tVenue);
             day["tonight-pick"] = {
@@ -554,8 +574,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
     } else {
       skipped++;
       const existing = day["tonight-pick"].item || {};
-      const t = (existing.title || existing.name || "").trim().toLowerCase();
-      const v = (existing.venue || "").trim().toLowerCase();
+      const t = normalizeName(existing.title || existing.name);
+      const v = normalizeName(existing.venue);
       if (t) recentTonightTitles.add(t);
       if (v) recentTonightVenues.add(v);
       console.log(`    🌙 Tonight: already ${day["tonight-pick"].status}`);

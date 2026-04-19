@@ -1,0 +1,340 @@
+{
+  "_meta": {
+    "auditedAt": "2026-04-19T22:55:18.947Z",
+    "placesTotal": 2496,
+    "totals": {
+      "hard": 0,
+      "soft": 0,
+      "info": 22
+    },
+    "byReason": {
+      "no-ca-zip": 22,
+      "address-no-city-token": 7
+    }
+  },
+  "hard": [],
+  "soft": [],
+  "info": [
+    {
+      "id": "curated:downtown-campbell",
+      "name": "Downtown Campbell",
+      "city": "campbell",
+      "address": "Campbell Ave & E Campbell Ave",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "ChIJ2dQVnHexj4ARXlmGG7n0BsQ",
+      "name": "Rancho San Antonio County Park & Open Space Preserve",
+      "city": "cupertino",
+      "address": "Cupertino, CA, USA",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:fremont-older",
+      "name": "Fremont Older Open Space",
+      "city": "cupertino",
+      "address": "Fremont Older Open Space Preserve",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"cupertino\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:rancho-san-antonio",
+      "name": "Rancho San Antonio Open Space",
+      "city": "los-altos",
+      "address": "Rancho San Antonio County Park",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"los altos\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:los-gatos-village",
+      "name": "Los Gatos Village",
+      "city": "los-gatos",
+      "address": "Santa Cruz Ave & N Santa Cruz Ave, Los Gatos",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:castro-street-mv",
+      "name": "Castro Street, Mountain View",
+      "city": "mountain-view",
+      "address": "Castro Street, Mountain View",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:shoreline-park",
+      "name": "Shoreline Park & Lake",
+      "city": "mountain-view",
+      "address": "Shoreline at Mountain View",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:cantor-arts",
+      "name": "Cantor Arts Center",
+      "city": "palo-alto",
+      "address": "Cantor Arts Center, Stanford University",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:downtown-palo-alto",
+      "name": "Downtown Palo Alto",
+      "city": "palo-alto",
+      "address": "University Ave, Palo Alto",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:the-dish",
+      "name": "The Dish Trail",
+      "city": "palo-alto",
+      "address": "Stanford Foothills (Stanford Ave trailhead)",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:childrens-discovery-museum",
+      "name": "Children's Discovery Museum",
+      "city": "san-jose",
+      "address": "Children's Discovery Museum of San Jose",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:peralta-adobe",
+      "name": "Peralta Adobe & Fallon House",
+      "city": "san-jose",
+      "address": "Peralta Adobe, Downtown San Jose",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:willow-glen",
+      "name": "Willow Glen",
+      "city": "san-jose",
+      "address": "Lincoln Ave, Willow Glen, San Jose",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:japantown-sj",
+      "name": "Japantown San Jose",
+      "city": "san-jose",
+      "address": "Japantown, San Jose",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:guadalupe-river-park",
+      "name": "Guadalupe River Park & Gardens",
+      "city": "san-jose",
+      "address": "Guadalupe River Park",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"san jose\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:municipal-rose-garden",
+      "name": "San Jose Municipal Rose Garden",
+      "city": "san-jose",
+      "address": "Municipal Rose Garden",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"san jose\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:history-park",
+      "name": "History Park at Kelley Park",
+      "city": "san-jose",
+      "address": "History Park at Kelley Park",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"san jose\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:downtown-santa-clara",
+      "name": "Downtown Santa Clara",
+      "city": "santa-clara",
+      "address": "Franklin St, Downtown Santa Clara",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:saratoga-village",
+      "name": "Saratoga Village",
+      "city": "saratoga",
+      "address": "Big Basin Way, Saratoga Village",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:hakone-gardens",
+      "name": "Hakone Estate & Gardens",
+      "city": "saratoga",
+      "address": "Hakone Estate & Gardens",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"saratoga\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:villa-montalvo",
+      "name": "Montalvo Arts Center Arboretum",
+      "city": "saratoga",
+      "address": "Montalvo Arts Center",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "address-no-city-token",
+          "detail": "address does not reference \"saratoga\""
+        },
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    },
+    {
+      "id": "curated:downtown-sunnyvale",
+      "name": "Downtown Sunnyvale",
+      "city": "sunnyvale",
+      "address": "Murphy Ave, Downtown Sunnyvale",
+      "findings": [
+        {
+          "severity": "info",
+          "reason": "no-ca-zip",
+          "detail": "address lacks CA ZIP — verify it's not out-of-state"
+        }
+      ]
+    }
+  ]
+}

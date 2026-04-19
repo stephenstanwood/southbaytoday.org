@@ -15,6 +15,11 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { head, list } from "@vercel/blob";
+import {
+  ACRONYM_FIXES,
+  VIRTUAL_TITLE_SIGNALS,
+  VIRTUAL_ADDRESS_SIGNALS,
+} from "./social/lib/content-rules.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -98,6 +103,24 @@ const fresh = events.filter((e) => {
   const date = (e.startsAt || "").slice(0, 10);
   return date >= today;
 });
+
+// Systematic normalization so the inbound file matches the upcoming-events
+// hygiene guarantees. Title-case acronyms + auto-flag virtual events — the
+// same passes generate-events runs at its tail, applied here too so audits
+// against inbound-events.json never surface issues the upstream already fixes.
+for (const e of fresh) {
+  for (const field of ["title", "description"]) {
+    if (!e[field]) continue;
+    for (const [up, re] of ACRONYM_FIXES) e[field] = e[field].replace(re, up);
+  }
+  if (e.virtual !== true) {
+    const title = e.title || "";
+    const loc = e.location || "";
+    if (VIRTUAL_TITLE_SIGNALS.some(r => r.test(title)) || VIRTUAL_ADDRESS_SIGNALS.some(r => r.test(loc))) {
+      e.virtual = true;
+    }
+  }
+}
 
 const out = {
   _meta: {

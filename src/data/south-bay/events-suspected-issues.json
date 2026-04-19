@@ -1,0 +1,620 @@
+{
+  "_meta": {
+    "auditedAt": "2026-04-19T22:56:33.016Z"
+  },
+  "upcoming": {
+    "label": "upcoming-events.json",
+    "total": 553,
+    "totals": {
+      "hard": 25,
+      "soft": 16,
+      "info": 0
+    },
+    "byReason": {
+      "virtual-not-flagged": 4,
+      "meeting-title": 2,
+      "out-of-area": 25,
+      "unknown-slug": 12
+    },
+    "hard": [
+      {
+        "id": "keplersbooks-146ae5fe34ea1f49",
+        "title": "Dr. Rachel Zoffness with Dr. Sara Elizabeth Williams",
+        "city": "palo-alto",
+        "date": "2026-04-23",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-5fb3f5b86623e617",
+        "title": "From Bestseller to Classic: What Makes a Book Endure?",
+        "city": "palo-alto",
+        "date": "2026-04-24",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"san francisco\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-f3b71f5a5032e86d",
+        "title": "Independent Bookstore Day with Literary Trivia and Laura Dave",
+        "city": "palo-alto",
+        "date": "2026-04-25",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-d8e6c0c0e0ad6323",
+        "title": "This Is Now with Angie Coiro: Rebecca Solnit",
+        "city": "palo-alto",
+        "date": "2026-04-27",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-01cd19ee18df0fa5",
+        "title": "Jesse Q. Sutanto with Stacey Lee",
+        "city": "palo-alto",
+        "date": "2026-04-28",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-118356b31e3562ac",
+        "title": "Annie Leonard and André Carothers on Protest",
+        "city": "palo-alto",
+        "date": "2026-04-30",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-4d9b621cf552b4fa",
+        "title": "Mary Cain with Laurel Braitman",
+        "city": "palo-alto",
+        "date": "2026-05-05",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-651235ba939b10f1",
+        "title": "Bay Area Writes",
+        "city": "palo-alto",
+        "date": "2026-05-09",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-2c97bb7b551a12c4",
+        "title": "Lindy West",
+        "city": "palo-alto",
+        "date": "2026-05-13",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-3c2cc58e745ccc18",
+        "title": "Lerone A. Martin",
+        "city": "palo-alto",
+        "date": "2026-05-14",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-cbe8a0e6156f38ef",
+        "title": "Josh Tyrangiel with Ashlee Vance",
+        "city": "palo-alto",
+        "date": "2026-05-18",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-b1d6ce07219716ec",
+        "title": "Karen Nelson with Pam Houston",
+        "city": "palo-alto",
+        "date": "2026-05-20",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-d7b711f7f144c040",
+        "title": "Alvin E. Roth",
+        "city": "palo-alto",
+        "date": "2026-05-21",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-eaf5ddb5bf943752",
+        "title": "Story Is the Thing",
+        "city": "palo-alto",
+        "date": "2026-05-28",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-de7741a361e342fb",
+        "title": "Kevin Wilson with Kate Folk",
+        "city": "palo-alto",
+        "date": "2026-05-30",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-14d99dee79c54a1e",
+        "title": "Deep Cuts Book Club: Dcbc Comes of Age",
+        "city": "palo-alto",
+        "date": "2026-06-01",
+        "location": "1010 El Camino Real #100, Menlo Park, CA 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-4d20e9893904ae63",
+        "title": "Eric Ries with Kim Scott",
+        "city": "palo-alto",
+        "date": "2026-06-02",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-d1fb2f2ebb07525f",
+        "title": "Ruth Ozeki with Molly Antopol",
+        "city": "palo-alto",
+        "date": "2026-06-09",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-6bed8847bd7a1081",
+        "title": "James Ellroy",
+        "city": "palo-alto",
+        "date": "2026-06-12",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-b27cfccefae7f538",
+        "title": "Dave Eggers",
+        "city": "palo-alto",
+        "date": "2026-06-17",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-57ce0313da0ee163",
+        "title": "Free Friday Night Bands at the Boardwalk",
+        "city": "santa-cruz",
+        "date": "2026-06-19",
+        "location": "400 Beach St, Santa Cruz, CA 95060",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"santa cruz\" with no in-area city token"
+          },
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-4865e382a1d64d3e",
+        "title": "This Is Now with Angie Coiro: Cory Doctorow",
+        "city": "palo-alto",
+        "date": "2026-06-21",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-5c703756b31fbc28",
+        "title": "Santa Cruz Shakespeare 2026 Summer Season Opens",
+        "city": "santa-cruz",
+        "date": "2026-06-22",
+        "location": "501 Upper Park Rd, Santa Cruz, CA 95065",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"santa cruz\" with no in-area city token"
+          },
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-d6d3af10a110d7d5",
+        "title": "Jesse Wegman",
+        "city": "palo-alto",
+        "date": "2026-07-15",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "keplersbooks-1edcdd209e0acb68",
+        "title": "Vinita Gupta with Shantanu Narayen",
+        "city": "palo-alto",
+        "date": "2026-07-28",
+        "location": "1010 El Camino Real, Menlo Park, CA, 94025",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      }
+    ],
+    "soft": [
+      {
+        "id": "chm-3c88b0ea800f3e91",
+        "title": "Steve Jobs in Exile",
+        "city": "mountain-view",
+        "date": "2026-04-19",
+        "location": "1401 N Shoreline Blvd, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "chm-d03ed1cf869d7d36",
+        "title": "2026 Fellow Awards Ceremony",
+        "city": "mountain-view",
+        "date": "2026-04-19",
+        "location": "1401 N Shoreline Blvd, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "chm-8824246062ee6f36",
+        "title": "Apple at 50",
+        "city": "mountain-view",
+        "date": "2026-04-19",
+        "location": "1401 N Shoreline Blvd, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "milpitas-391777e236c94bb1",
+        "title": "City Council Meeting",
+        "city": "milpitas",
+        "date": "2026-04-20",
+        "location": "City of Milpitas",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\bcity\\s+council\\s+meeting\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "los-gatos-71349484f361b63c",
+        "title": "Town Council Meeting",
+        "city": "los-gatos",
+        "date": "2026-04-21",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "02ac95841716",
+        "title": "Morgan Hill Earth Day Festival",
+        "city": "santa-clara-county",
+        "date": "2026-04-25",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "fd2a44fbf479",
+        "title": "Volunteer Outdoors in East Palo Alto at Ravenswood Preserve",
+        "city": "santa-clara-county",
+        "date": "2026-04-25",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "8317f1bff122",
+        "title": "Alum Rock Park BioBlitz with Keep Coyote Creek Beautiful",
+        "city": "santa-clara-county",
+        "date": "2026-04-26",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "07777851ff1c",
+        "title": "Hellyer County Park BioBlitz",
+        "city": "santa-clara-county",
+        "date": "2026-05-02",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "414c41292b0b",
+        "title": "Hike at Windy Hill",
+        "city": "santa-clara-county",
+        "date": "2026-05-09",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-f63e006d9f6388b0",
+        "title": "Mother's Day Brunch Train",
+        "city": "santa-cruz",
+        "date": "2026-05-10",
+        "location": "5401 Graham Hill Rd, Felton, CA 95018",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "510953b0f66f",
+        "title": "Coastal Walk at Cowell-Purisima Trail",
+        "city": "santa-clara-county",
+        "date": "2026-05-14",
+        "location": "Various POST preserves + partner locations",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-ddfe3ead939e4249",
+        "title": "Civil War Memorial Weekend",
+        "city": "santa-cruz",
+        "date": "2026-05-24",
+        "location": "5401 Graham Hill Rd, Felton, CA 95018",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-71841ffb6f773b60",
+        "title": "Father's Day BBQ & Steam Train",
+        "city": "santa-cruz",
+        "date": "2026-06-21",
+        "location": "5401 Graham Hill Rd, Felton, CA 95018",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "sc-picks-7ca866e44de4538f",
+        "title": "4th of July Fireworks Train",
+        "city": "santa-cruz",
+        "date": "2026-07-04",
+        "location": "5401 Graham Hill Rd, Felton, CA 95018",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "paloalto-69cf2b70491b809c6f24e18a",
+        "title": "Short Story Social",
+        "city": "palo-alto",
+        "date": "2026-09-24",
+        "location": "Palo Alto City Library",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      }
+    ]
+  },
+  "inbound": {
+    "label": "inbound-events.json",
+    "total": 43,
+    "totals": {
+      "hard": 0,
+      "soft": 0,
+      "info": 0
+    },
+    "byReason": {},
+    "hard": [],
+    "soft": []
+  }
+}

@@ -3813,6 +3813,42 @@ async function main() {
     }
   }
 
+  // Shared rules — keep in sync with scripts/social/lib/content-rules.mjs.
+  const { ACRONYM_FIXES, VIRTUAL_TITLE_SIGNALS, VIRTUAL_ADDRESS_SIGNALS } =
+    await import("./social/lib/content-rules.mjs");
+
+  // Title-casing fixes for common acronyms — library/museum scrapers write
+  // them as "Aids", "Hiv", "Covid", etc. Plan blurbs shouldn't propagate the
+  // mistake. Two generate-events-local extras (TED, STEM) that are too
+  // context-dependent for the shared list live inline below.
+  const LOCAL_ACRONYM_FIXES = [
+    ...ACRONYM_FIXES,
+    ["TED", /\bTed\b(?= talk| talks)/gi],
+    ["STEM", /\b(Stem)\b(?= (?:night|lab|workshop|event|program|education|kids))/g],
+  ];
+  for (const e of collapsedEvents) {
+    for (const field of ["title", "venue", "description"]) {
+      if (!e[field]) continue;
+      for (const [up, re] of LOCAL_ACRONYM_FIXES) e[field] = e[field].replace(re, up);
+    }
+  }
+
+  // Virtual-flag normalization — if the title or address has a strong virtual
+  // signal, mark the event virtual:true so downstream consumers (plan-day,
+  // tonight-pick) can filter it out. This prevents "Online Author Talk: …"
+  // from appearing as a place to "stop by" in a day-plan.
+  let virtualFlagged = 0;
+  for (const e of collapsedEvents) {
+    if (e.virtual === true) continue;
+    const title = e.title || "";
+    const addr = e.address || e.location || "";
+    if (VIRTUAL_TITLE_SIGNALS.some(r => r.test(title)) || VIRTUAL_ADDRESS_SIGNALS.some(r => r.test(addr))) {
+      e.virtual = true;
+      virtualFlagged++;
+    }
+  }
+  if (virtualFlagged) console.log(`   🛰  auto-flagged ${virtualFlagged} virtual event(s)`);
+
   const ongoingCount = collapsedEvents.filter((e) => e.ongoing).length;
 
   const output = {

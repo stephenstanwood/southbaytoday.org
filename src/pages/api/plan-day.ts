@@ -18,6 +18,7 @@ import { errJson, okJson, toErrMsg } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
+import { normalizeName } from "../../lib/south-bay/normalizeName";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
@@ -46,6 +47,14 @@ interface PlanRequest {
    *  schedule generator to prevent the same venue anchoring multiple days in
    *  the same week. */
   blockedNames?: string[];
+  /** Week-level context so Claude can diversify across the batch. Optional —
+   *  only populated by generate-schedule.mjs when building a 10-day run. */
+  weekContext?: {
+    /** Anchor cities already used this week (human names, e.g. "Palo Alto"). */
+    anchorCities?: string[];
+    /** Per-category saturation counts across the batch so far. */
+    categorySaturation?: Record<string, number>;
+  };
 }
 
 interface Candidate {
@@ -392,7 +401,7 @@ function buildCandidatePool(
   const today = targetDate || todayStr();
   const isBlocked = (name: string | null | undefined) => {
     if (!blockedNames || blockedNames.size === 0) return false;
-    const n = (name || "").trim().toLowerCase();
+    const n = normalizeName(name);
     return !!n && blockedNames.has(n);
   };
 
@@ -413,8 +422,21 @@ function buildCandidatePool(
     /\bstorytime\b/i,
   ];
   const events = (eventsData as any).events ?? [];
+  // Virtual events are never valid day-plan stops. We rely on the upstream
+  // generator to set evt.virtual, but fall back to title/address sniffing as
+  // a safety net so the plan pool is never contaminated.
+  const VIRTUAL_TITLE_RE = [
+    /^online[:\s-]/i,
+    /^virtual[:\s-]/i,
+    /^\[online\]/i,
+    /^\[virtual\]/i,
+    /\bwebinar\b/i,
+    /\blivestream\b/i,
+  ];
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
+    if (evt.virtual === true) continue;
+    if (evt.title && VIRTUAL_TITLE_RE.some((re) => re.test(evt.title))) continue;
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;
     if (isBlocked(evt.title) || isBlocked(evt.venue)) continue;
 
@@ -589,6 +611,8 @@ async function sequenceWithClaude(
   kids: boolean,
   hour: number,
   prefs?: UserPreferences,
+  targetDate?: string,
+  weekContext?: { anchorCities?: string[]; categorySaturation?: Record<string, number> },
 ): Promise<DayCard[]> {
   const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
   const cityName = getCityName(city);
@@ -646,12 +670,35 @@ async function sequenceWithClaude(
     .filter((line): line is string => line !== null)
     .join("\n");
 
+  // Week-level context — when the caller (generate-schedule.mjs) is batching
+  // multiple days, give Claude visibility into what's already in the batch so
+  // it can diversify rather than stacking the same venues/categories.
+  let weekContextSection = "";
+  if (weekContext) {
+    const parts: string[] = [];
+    const anchors = (weekContext.anchorCities || []).filter(Boolean);
+    if (anchors.length) {
+      const counts: Record<string, number> = {};
+      for (const a of anchors) counts[a] = (counts[a] || 0) + 1;
+      const summary = Object.entries(counts)
+        .map(([c, n]) => (n > 1 ? `${c} (${n}×)` : c))
+        .join(", ");
+      parts.push(`Anchor cities already picked this week: ${summary}. Prefer neighborhoods that complement, not duplicate — but don't force a far-away city just to be different.`);
+    }
+    const cats = weekContext.categorySaturation || {};
+    const saturated = Object.entries(cats).filter(([, n]) => n >= 2);
+    if (saturated.length) {
+      parts.push(`Category saturation so far this week: ${saturated.map(([c, n]) => `${c} ×${n}`).join(", ")}. Lean AWAY from these categories when there's an equally good alternative.`);
+    }
+    if (parts.length) weekContextSection = `\n\nTHIS-WEEK CONTEXT (use to diversify):\n${parts.join("\n")}`;
+  }
+
   const prompt = `You are the day-planning engine for South Bay Today, a local guide for the South Bay region of California. Today's plan is anchored around ${cityName}, but the candidate pool pulls from the whole South Bay — stops in adjacent cities (Santa Clara, Campbell, Sunnyvale, Mountain View, Cupertino, Los Gatos, etc.) are totally fine when they cluster geographically.
 
 It's ${today}, ${timeSlot} (${hour}:00). ${weather ? `Weather: ${weather}.` : ""}
 ${kids ? "This plan is for a family WITH KIDS. Prioritize kid-friendly activities." : "This plan is for adults WITHOUT KIDS."}
 ${describePreferences(prefs)}
-${lockedSection}
+${lockedSection}${weekContextSection}
 
 CANDIDATE POOL:
 ${poolText}
@@ -1019,8 +1066,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson("Invalid JSON body", 400);
   }
 
-  const { city, kids = false, lockedIds = [], dismissedIds = [], currentHour, planDate, preferences, blockedNames = [] } = body;
-  const blockedSet = new Set(blockedNames.map((n) => (n || "").trim().toLowerCase()).filter(Boolean));
+  const { city, kids = false, lockedIds = [], dismissedIds = [], currentHour, planDate, preferences, blockedNames = [], weekContext } = body;
+  const blockedSet = new Set(blockedNames.map((n) => normalizeName(n)).filter(Boolean));
 
   // Validate city
   if (!city || !VALID_CITIES.has(city)) {
@@ -1140,6 +1187,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       kids,
       hour,
       preferences,
+      planDate,
+      weekContext,
     );
 
     const responseData = {

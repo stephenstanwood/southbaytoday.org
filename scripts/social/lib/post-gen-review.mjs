@@ -16,6 +16,12 @@
 // more pass.
 // ---------------------------------------------------------------------------
 
+import {
+  IN_AREA_CITIES,
+  OUT_OF_AREA_CITIES,
+  VIRTUAL_SIGNALS,
+} from "./content-rules.mjs";
+
 const DOW_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const DOW_ALIASES = {
   Sunday: ["sunday", "sun "],
@@ -38,31 +44,8 @@ const TERMINOLOGY_FIXES = [
   { pattern: /\bthe pandemic\b(?=[^.]{0,80}\b(AIDS|HIV)\b)/gi, replacement: "the epidemic" },
 ];
 
-// SBS covers these 11 cities. Anything else is out-of-area for SBS audience.
-const IN_AREA_CITIES = new Set([
-  "san jose", "santa clara", "sunnyvale", "mountain view", "palo alto",
-  "los altos", "cupertino", "campbell", "los gatos", "saratoga", "milpitas",
-]);
-
-// Out-of-area red flags in venue/title/summary. If the venue mentions one
-// of these cities explicitly, it's not us.
-const OUT_OF_AREA_CITIES = [
-  "santa cruz", "oakland", "berkeley", "san francisco", "hayward",
-  "fremont", "union city", "daly city", "san mateo", "redwood city",
-  "menlo park", "walnut creek", "concord", "monterey", "capitola",
-  "half moon bay", "gilroy", "morgan hill", "watsonville",
-];
-
-// Phrases that mean the event isn't an in-person experience worth ticketing.
-const VIRTUAL_SIGNALS = [
-  /\bvirtual(ly)?\b/i,
-  /\bonline\b/i,
-  /\bzoom\b/i,
-  /\blivestream/i,
-  /\bwebinar\b/i,
-  /\bdial[- ]?in\b/i,
-  /\bremote\b/i,
-];
+// IN_AREA_CITIES, OUT_OF_AREA_CITIES, VIRTUAL_SIGNALS are imported from
+// content-rules.mjs above — shared with audit-events and validate-places.
 
 // Category keywords for saturation checks (spa/massage is noisy right now).
 const CATEGORY_KEYWORDS = {
@@ -158,11 +141,13 @@ function parseHour(timeStr) {
   return null;
 }
 
+import { normalizeName } from "./normalizeName.mjs";
+
+// Canonical form for dedup: handles "&" vs "and", curly quotes, and
+// punctuation drift so venue-repeat detection and title-repeat detection
+// catch Hakone Estate & Gardens vs Hakone Estate and Gardens.
 function normalize(s) {
-  return String(s || "")
-    .toLowerCase()
-    .replace(/\s+/g, " ")
-    .trim();
+  return normalizeName(s);
 }
 
 function allCopyStrings(slot) {
@@ -226,8 +211,11 @@ function dowMismatch(dateStr, copyText) {
   for (const [day, aliases] of Object.entries(DOW_ALIASES)) {
     if (day === dow) continue;
     for (const alias of aliases) {
-      // Match "Monday Night", "Tuesday evening", etc. — day-of-week used as adjective
-      const re = new RegExp(`\\b${alias}(night|evening|afternoon|morning)\\b`, "i");
+      // Match "Monday Night", "Tuesday evening", etc. — day-of-week used as adjective.
+      // `\\s*` between alias and descriptor lets us catch "Sunday afternoon" (space)
+      // as well as "Sundaynight" (no space, rare but possible after copy editing).
+      const trimmed = alias.trim();
+      const re = new RegExp(`\\b${trimmed}\\s*(night|evening|afternoon|morning)\\b`, "i");
       if (re.test(text)) return `title implies ${day} but slot is ${dow}`;
     }
   }
@@ -235,11 +223,15 @@ function dowMismatch(dateStr, copyText) {
 }
 
 function outOfArea(slot) {
+  // Do NOT scan the summary — third-party references leak through (e.g.
+  // "...formerly of the San Francisco Chronicle..." is talking about a
+  // speaker's old job, not the event location). Stick to fields that
+  // describe the event's actual place.
   const haystack = [
     slot?.item?.venue,
     slot?.item?.title,
     slot?.item?.name,
-    slot?.item?.summary,
+    slot?.item?.address,
     slot?.item?.city,
     slot?.cityName,
   ].filter(Boolean).map((s) => String(s).toLowerCase()).join(" | ");

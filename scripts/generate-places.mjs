@@ -567,6 +567,20 @@ async function main() {
   const outPath = join(DATA_DIR, "places.json");
   writeFileSync(outPath, JSON.stringify(output, null, 2));
 
+  // Gate: block bad regenerations from going out (e.g. non-CA contamination,
+  // slug/address mismatches). Script exits non-zero on failure; caller sees
+  // both the written file path AND the validation report before shipping.
+  const { spawnSync } = await import("node:child_process");
+  const validate = spawnSync(process.execPath, [join(REPO_ROOT, "scripts/validate-places.mjs"), `--path=${outPath}`], {
+    stdio: "inherit",
+  });
+  if (validate.status !== 0) {
+    console.error("\n❌ validate-places failed — new places.json has hard findings.");
+    console.error("   Fix the flagged rows (often a wrong city slug or non-CA address),");
+    console.error("   then re-run `npm run generate-places`, or revert the file.");
+    process.exit(validate.status || 1);
+  }
+
   console.log("✅ Done!");
   console.log(`   Total places: ${allPlaces.length}`);
   console.log(`   Curated:      ${curatedCount} (${curatedPOIs.length} POIs, ${curatedCount} merged)`);
