@@ -7,17 +7,10 @@
  * at receiving/needs-manual/etc.
  */
 
-import { readFileSync } from "fs";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import { head, put } from "@vercel/blob";
+import { readTracker, setTargetStatus, sql } from "./_tracker-pg.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const token = process.env.BLOB_READ_WRITE_TOKEN;
 const resendKey = process.env.RESEND_API_KEY;
-if (!token || !resendKey) { console.error("need BLOB_READ_WRITE_TOKEN + RESEND_API_KEY"); process.exit(1); }
-
-const KEY = "lookout/newsletter-tracker.json";
+if (!resendKey) { console.error("need RESEND_API_KEY"); process.exit(1); }
 
 async function rget(p) {
   const r = await fetch(`https://api.resend.com${p}`, { headers: { Authorization: `Bearer ${resendKey}` } });
@@ -62,7 +55,7 @@ function score(t, s) {
   let best = 0;
   for (const f of fr) { const k = nk(f); if (!k) continue;
     if (k===tk||k===tik) best=Math.max(best,700);
-    else if (tk.includes(k)||k.includes(tk)) best=Math.max(best,650);
+    else if (tk.includes(k)||k.includes(tik)) best=Math.max(best,650);
     else if (tik.includes(k)||k.includes(tik)) best=Math.max(best,600);
   }
   if (best>0) return best;
@@ -97,8 +90,7 @@ for (const e of details) {
   if (SELF.has(parseFrom(e.from).address) && e.replyTo) e.from = e.replyTo;
 }
 
-const meta = await head(KEY, { token });
-const doc = await (await fetch(`${meta.url}?_cb=${Date.now()}`)).json();
+const doc = await readTracker();
 console.log(`tracker: ${doc.targets.length} targets`);
 
 let promoted = 0;
@@ -111,16 +103,19 @@ for (const e of details) {
   for (const t of doc.targets) { const sc=score(t,s); if (sc>bestScore){bestScore=sc;best=t;} }
   if (!best || bestScore < 450) continue;
   if (best.status !== "not-attempted") continue;
-  best.status = "signup-posted";
-  best.attemptedAt = e.receivedAt;
+
+  // Update via setTargetStatus (writes audit entry inline) and pin
+  // attempted_at to the email's received timestamp.
+  await setTargetStatus(best.id, "signup-posted");
+  await sql`
+    UPDATE newsletter_targets
+    SET attempted_at = ${e.receivedAt}, updated_at = now()
+    WHERE id = ${best.id} AND is_deleted = FALSE
+  `;
+  best.status = "signup-posted"; // keep in-memory copy in sync to avoid double-promoting
   promoted++;
   promotedIds.add(best.id);
 }
-
-doc.updatedAt = new Date().toISOString();
-await put(KEY, JSON.stringify(doc, null, 2), {
-  access: "public", token, allowOverwrite: true, cacheControlMaxAge: 0, contentType: "application/json",
-});
 
 console.log(`promoted ${promoted} rows from not-attempted → signup-posted (${promotedIds.size} unique targets)`);
 for (const id of promotedIds) console.log(`  - ${id}`);

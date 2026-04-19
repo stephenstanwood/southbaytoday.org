@@ -1,5 +1,5 @@
 /**
- * One-shot: add (or upsert) a row in the prod tracker blob.
+ * One-shot: add (or upsert) a row in the prod tracker.
  *
  * Usage:
  *   node scripts/lookout/add-tracker-row.mjs <id>
@@ -12,27 +12,9 @@
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { head, put } from "@vercel/blob";
+import { upsertTarget, sql } from "./_tracker-pg.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Load .env.local manually (no dotenv dep)
-try {
-  const env = readFileSync(join(__dirname, "../../.env.local"), "utf8");
-  for (const line of env.split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m && !process.env[m[1]]) {
-      process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-    }
-  }
-} catch {}
-
-const BLOB_KEY = "lookout/newsletter-tracker.json";
-const token = process.env.BLOB_READ_WRITE_TOKEN;
-if (!token) {
-  console.error("BLOB_READ_WRITE_TOKEN not set");
-  process.exit(1);
-}
 
 const id = process.argv[2];
 if (!id) {
@@ -48,43 +30,17 @@ if (!target) {
   process.exit(1);
 }
 
-const meta = await head(BLOB_KEY, { token });
-const res = await fetch(`${meta.url}?_cb=${Date.now()}`);
-const doc = await res.json();
-
-const deletedIds = new Set(doc.deletedIds ?? []);
-if (deletedIds.has(id)) {
-  console.error(`refusing to add tombstoned target: ${id} (in deletedIds). Remove it from deletedIds first if you really want to re-add it.`);
+const tomb = await sql`SELECT 1 FROM newsletter_targets WHERE id = ${id} AND is_deleted = TRUE`;
+if (tomb.length > 0) {
+  console.error(`refusing to add tombstoned target: ${id}. Un-tombstone it in Postgres first.`);
   process.exit(1);
 }
 
-const existing = doc.targets.find((t) => t.id === id);
-const now = new Date().toISOString();
-
-if (existing) {
-  existing.status = "signup-posted";
-  existing.attemptedAt = now;
-  console.log(`flipped existing row ${id} → signup-posted`);
-} else {
-  doc.targets.push({
-    ...target,
-    status: "signup-posted",
-    attemptedAt: now,
-    receivedCount: 0,
-    seenFromAddresses: [],
-    seenFromDomains: [],
-  });
-  console.log(`added new row ${id} (status: signup-posted)`);
-}
-
-doc.updatedAt = now;
-
-await put(BLOB_KEY, JSON.stringify(doc, null, 2), {
-  access: "public",
-  token,
-  allowOverwrite: true,
-  cacheControlMaxAge: 0,
-  contentType: "application/json",
+await upsertTarget({
+  ...target,
+  status: "signup-posted",
+  attemptedAt: new Date().toISOString(),
 });
 
-console.log("done. tracker now has", doc.targets.length, "targets");
+const [{ count }] = await sql`SELECT COUNT(*)::int AS count FROM newsletter_targets WHERE NOT is_deleted`;
+console.log(`upserted ${id} → signup-posted. tracker now has ${count} live targets.`);

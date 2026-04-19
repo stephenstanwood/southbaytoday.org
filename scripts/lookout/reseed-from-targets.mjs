@@ -1,86 +1,54 @@
 /**
- * Emergency restore: rebuild the tracker blob from targets.json after a wipe.
+ * Seed any missing targets from targets.json into Postgres.
  *
- * Reads any existing deletedIds from the blob (so tombstones survive),
- * seeds every non-tombstoned target at status "not-attempted", then writes.
+ * Tombstoned ids are preserved (the helper refuses to resurrect them).
+ * Rows that already exist are left untouched — this is additive only, no
+ * status downgrades.
  *
- * After running this, run scripts/lookout/resync-from-resend.mjs to recover
- * "receiving" status from Resend's inbox history.
- *
- * Does NOT del() before put() — that race is what wiped the blob in the
- * first place.
+ * After running this, you can run scripts/lookout/resync-from-resend.mjs to
+ * recover "receiving" status from Resend's inbox history.
  */
 
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { head, put } from "@vercel/blob";
+import { readTracker, upsertTarget } from "./_tracker-pg.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-try {
-  const env = readFileSync(join(__dirname, "../../.env.local"), "utf8");
-  for (const line of env.split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-  }
-} catch {}
-
-const token = process.env.BLOB_READ_WRITE_TOKEN;
-if (!token) { console.error("BLOB_READ_WRITE_TOKEN missing"); process.exit(1); }
-
-const KEY = "lookout/newsletter-tracker.json";
 const targetsPath = join(__dirname, "targets.json");
 const { targets } = JSON.parse(readFileSync(targetsPath, "utf8"));
 
-let existingDeletedIds = [];
-let existingTargets = [];
-try {
-  const meta = await head(KEY, { token });
-  const cur = await (await fetch(`${meta.url}?_cb=${Date.now()}`)).json();
-  existingDeletedIds = cur.deletedIds ?? [];
-  existingTargets = cur.targets ?? [];
-  console.log(`current blob: ${existingTargets.length} targets, ${existingDeletedIds.length} tombstones`);
-} catch (err) {
-  console.warn(`could not read current blob (${err.message}) — proceeding with empty baseline`);
-}
+const doc = await readTracker();
+const tombstoned = new Set(doc.deletedIds ?? []);
+const existingIds = new Set(doc.targets.map((t) => t.id));
 
-if (existingTargets.length >= targets.length) {
-  console.error(`refusing to reseed: blob already has ${existingTargets.length} targets (>= ${targets.length} in targets.json). Nothing to restore.`);
-  process.exit(1);
-}
+console.log(`current: ${doc.targets.length} live targets, ${tombstoned.size} tombstones`);
+console.log(`targets.json: ${targets.length} rows`);
 
-const tombstoned = new Set(existingDeletedIds);
-const existingById = new Map(existingTargets.map((t) => [t.id, t]));
-const now = new Date().toISOString();
+let inserted = 0;
+let skippedTomb = 0;
+let skippedExisting = 0;
 
-const newTargets = [];
 for (const t of targets) {
-  if (tombstoned.has(t.id)) continue;
-  const prior = existingById.get(t.id);
-  if (prior) {
-    newTargets.push(prior);
-    continue;
-  }
-  newTargets.push({
-    ...t,
+  if (tombstoned.has(t.id)) { skippedTomb++; continue; }
+  if (existingIds.has(t.id)) { skippedExisting++; continue; }
+  await upsertTarget({
+    id: t.id,
+    name: t.name,
+    signupUrl: t.signupUrl,
+    city: t.city,
+    category: t.category,
+    provider: t.provider,
+    priority: t.priority,
+    notes: t.notes,
     status: "not-attempted",
     receivedCount: 0,
     seenFromAddresses: [],
     seenFromDomains: [],
   });
+  inserted++;
 }
 
-const doc = {
-  version: 1,
-  updatedAt: now,
-  targets: newTargets,
-  deletedIds: existingDeletedIds,
-};
-
-await put(KEY, JSON.stringify(doc, null, 2), {
-  access: "public", token, allowOverwrite: true, cacheControlMaxAge: 0,
-  contentType: "application/json",
-});
-
-console.log(`reseeded: ${newTargets.length} targets, ${existingDeletedIds.length} tombstones preserved`);
-console.log("next: node scripts/lookout/resync-from-resend.mjs");
+console.log(`inserted: ${inserted}`);
+console.log(`skipped (tombstoned): ${skippedTomb}`);
+console.log(`skipped (already present): ${skippedExisting}`);

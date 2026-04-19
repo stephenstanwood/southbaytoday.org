@@ -9,7 +9,7 @@
  */
 
 import type { APIRoute } from "astro";
-import { readTracker, writeTracker, writeAuditEntry } from "../../../../lib/lookout/tracker.ts";
+import { setTargetStatus } from "../../../../lib/lookout/tracker.ts";
 import type { SubscribeStatus } from "../../../../lib/lookout/tracker.ts";
 
 export const prerender = false;
@@ -38,18 +38,10 @@ async function handle(request: Request): Promise<Response> {
   if (!id) return Response.json({ ok: false, error: "missing id" }, { status: 400 });
   if (!VALID.includes(status)) return Response.json({ ok: false, error: "invalid status" }, { status: 400 });
 
-  const doc = await readTracker();
-  const target = doc.targets.find((t) => t.id === id);
-  if (!target) return Response.json({ ok: false, error: "not found" }, { status: 404 });
+  const result = await setTargetStatus(id, status);
+  if (!result.updated) return Response.json({ ok: false, error: "not found" }, { status: 404 });
 
-  const fromStatus = target.status;
-  const at = new Date().toISOString();
-  target.status = status;
-  target.attemptedAt = at;
-  await writeAuditEntry({ at, action: "status-change", id, fromStatus, toStatus: status });
-  await writeTracker(doc);
-
-  return Response.json({ ok: true, id, status });
+  return Response.json({ ok: true, id, status, fromStatus: result.fromStatus });
 }
 
 export const POST: APIRoute = ({ request }) => handle(request);

@@ -4,7 +4,8 @@
  *
  * Reads targets from scripts/lookout/targets.json, attempts to submit
  * each signup form with sandcathype@gmail.com, writes results to the
- * newsletter tracker (Vercel Blob).
+ * Postgres tracker (newsletter_targets table) one row at a time —
+ * eliminating the read-modify-write race that wiped the old blob.
  *
  * Provider strategies:
  *   - civicplus_notifyme: ASP.NET WebForms, preserve __VIEWSTATE + __EVENTVALIDATION
@@ -24,27 +25,16 @@
  *   node scripts/lookout/subscribe.mjs --retry-failed
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { put, head } from "@vercel/blob";
+import { readTracker, upsertTarget } from "./_tracker-pg.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// ── Load .env.local ─────────────────────────────────────────────────────────
-const envPath = join(__dirname, "..", "..", ".env.local");
-if (existsSync(envPath)) {
-  for (const line of readFileSync(envPath, "utf8").split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-  }
-}
-
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 const EMAIL = process.env.LOOKOUT_SIGNUP_EMAIL || "sandcathype@gmail.com";
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
-const TRACKER_BLOB_KEY = "lookout/newsletter-tracker.json";
 const TARGETS_PATH = join(__dirname, "targets.json");
 
 const args = new Set(process.argv.slice(2));
@@ -94,63 +84,8 @@ async function fetchWithRetry(url, init = {}, attempts = 2) {
   }
 }
 
-// ── Tracker I/O (mirrors src/lib/lookout/tracker.ts) ───────────────────────
-
-async function readTracker() {
-  if (!BLOB_TOKEN) return emptyTracker();
-  try {
-    const meta = await head(TRACKER_BLOB_KEY, { token: BLOB_TOKEN });
-    if (!meta?.url) return emptyTracker();
-    const res = await fetch(`${meta.url}?_cb=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`fetch ${res.status}`);
-    return JSON.parse(await res.text());
-  } catch (err) {
-    if (err.name === "BlobNotFoundError" || /404/.test(err.message || "")) return emptyTracker();
-    throw err;
-  }
-}
-
-async function writeTracker(doc) {
-  doc.updatedAt = new Date().toISOString();
-  if (!BLOB_TOKEN) {
-    const fs = await import("fs");
-    const p = join(__dirname, "..", "..", "src", "data", "south-bay", "newsletter-tracker.json");
-    fs.writeFileSync(p, JSON.stringify(doc, null, 2));
-    return;
-  }
-  await put(TRACKER_BLOB_KEY, JSON.stringify(doc, null, 2), {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: "application/json",
-    token: BLOB_TOKEN,
-    cacheControlMaxAge: 0,
-  });
-}
-
-function emptyTracker() {
-  return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
-}
-
-function upsert(doc, target) {
-  const idx = doc.targets.findIndex((t) => t.id === target.id);
-  const merged = {
-    receivedCount: 0,
-    seenFromAddresses: [],
-    seenFromDomains: [],
-    ...(idx >= 0 ? doc.targets[idx] : {}),
-    ...target,
-  };
-  if (idx >= 0) doc.targets[idx] = merged;
-  else doc.targets.push(merged);
-}
-
 // ── Form parsing (regex-based — no cheerio dep) ─────────────────────────────
 
-/**
- * Extract all <form> elements from HTML with their fields.
- * Returns array of { action, method, fields: {name: value}, emailField: string|null }
- */
 function parseForms(html, baseUrl) {
   const forms = [];
   const formRegex = /<form\b[^>]*>([\s\S]*?)<\/form>/gi;
@@ -164,7 +99,6 @@ function parseForms(html, baseUrl) {
     const fields = {};
     let emailField = null;
 
-    // <input>
     const inputRegex = /<input\b([^>]*)\/?>/gi;
     let im;
     while ((im = inputRegex.exec(inner)) !== null) {
@@ -178,7 +112,6 @@ function parseForms(html, baseUrl) {
       if (type === "email" || /email/i.test(name)) emailField = name;
     }
 
-    // <textarea>
     const textareaRegex = /<textarea\b([^>]*)>([\s\S]*?)<\/textarea>/gi;
     let tm;
     while ((tm = textareaRegex.exec(inner)) !== null) {
@@ -186,7 +119,6 @@ function parseForms(html, baseUrl) {
       if (name) fields[name] = tm[2];
     }
 
-    // <select> — use first <option value> (usually the default)
     const selectRegex = /<select\b([^>]*)>([\s\S]*?)<\/select>/gi;
     let sm;
     while ((sm = selectRegex.exec(inner)) !== null) {
@@ -201,8 +133,6 @@ function parseForms(html, baseUrl) {
       method,
       fields,
       emailField,
-      // Bonus: collect submit button names so we can set the default button field
-      // (CivicPlus ASP.NET __doPostBack uses this)
       submitButtons: [...inner.matchAll(/<input\b[^>]*type\s*=\s*["']submit["'][^>]*>/gi)].map((btn) => {
         const nameMatch = btn[0].match(/\bname\s*=\s*["']([^"']*)["']/i);
         const valueMatch = btn[0].match(/\bvalue\s*=\s*["']([^"']*)["']/i);
@@ -214,7 +144,6 @@ function parseForms(html, baseUrl) {
 }
 
 function pickSignupForm(forms) {
-  // Prefer the smallest form with an email field
   const withEmail = forms.filter((f) => f.emailField);
   if (withEmail.length === 0) return null;
   return withEmail.sort((a, b) => Object.keys(a.fields).length - Object.keys(b.fields).length)[0];
@@ -230,10 +159,8 @@ async function submitGenericForm(target, email) {
   const form = pickSignupForm(forms);
   if (!form) throw new Error("no form with email field found on page");
 
-  // Set the email
   form.fields[form.emailField] = email;
 
-  // If any submit button has a name/value, include it (CivicPlus, etc.)
   for (const btn of form.submitButtons) {
     if (btn.name) form.fields[btn.name] = btn.value || "Submit";
   }
@@ -259,7 +186,6 @@ async function submitGenericForm(target, email) {
       ok: postRes.ok,
       status: postRes.status,
       snippet,
-      // Indicators of success
       looksOk:
         postRes.ok &&
         (/thank you|success|confirm|check your|sent|subscribed/i.test(snippet) ||
@@ -267,14 +193,12 @@ async function submitGenericForm(target, email) {
     };
   }
 
-  // GET-only signup forms (rare)
   const q = new URLSearchParams(form.fields).toString();
   const getRes = await fetchWithRetry(`${form.action}?${q}`);
   return { ok: getRes.ok, status: getRes.status };
 }
 
 async function submitMailchimp(target, email) {
-  // Mailchimp forms have action */subscribe/post. Autodetect.
   const res = await fetchWithRetry(target.signupUrl);
   const html = await res.text();
   const forms = parseForms(html, target.signupUrl);
@@ -282,7 +206,6 @@ async function submitMailchimp(target, email) {
   if (!mcForm) return submitGenericForm(target, email);
 
   mcForm.fields["EMAIL"] = email;
-  // Mailchimp honeypot — must be empty
   const honeypot = Object.keys(mcForm.fields).find((k) => /^b_/.test(k));
   if (honeypot) mcForm.fields[honeypot] = "";
 
@@ -337,9 +260,12 @@ async function main() {
     console.log(`ℹ️  skipping ${deletedIds.size} user-deleted targets`);
   }
 
-  // Seed: ensure every target exists in the tracker
+  // Seed: ensure every target exists in the tracker (one upsert each;
+  // the helper refuses to resurrect tombstones)
+  const existingById = new Map(doc.targets.map((d) => [d.id, d]));
   for (const t of targets) {
-    upsert(doc, {
+    if (existingById.has(t.id)) continue;
+    await upsertTarget({
       id: t.id,
       name: t.name,
       signupUrl: t.signupUrl,
@@ -348,19 +274,19 @@ async function main() {
       provider: t.provider,
       priority: t.priority,
       notes: t.notes,
-      status: doc.targets.find((d) => d.id === t.id)?.status ?? "not-attempted",
-      seenFromAddresses: t.seenFromAddresses ?? [],
-      seenFromDomains: t.seenFromDomains ?? [],
+      status: "not-attempted",
+      seenFromAddresses: [],
+      seenFromDomains: [],
     });
   }
 
   const queue = targets.filter((t) => {
     if (ONLY && t.id !== ONLY) return false;
-    const existing = doc.targets.find((d) => d.id === t.id);
+    const existing = existingById.get(t.id);
     if (!existing) return true;
     if (RETRY_FAILED && existing.status === "failed") return true;
     if (["receiving", "confirmed", "signup-posted", "needs-manual", "blocked"].includes(existing.status)) {
-      return false; // don't re-attempt
+      return false;
     }
     return true;
   });
@@ -393,7 +319,7 @@ async function main() {
         ? "signup-posted"
         : "failed";
 
-      upsert(doc, {
+      await upsertTarget({
         id: target.id,
         name: target.name,
         signupUrl: target.signupUrl,
@@ -404,7 +330,7 @@ async function main() {
         notes: target.notes,
         status: doneStatus,
         attemptedAt: new Date().toISOString(),
-        lastError: doneStatus === "failed" ? JSON.stringify(result).slice(0, 300) : undefined,
+        lastError: doneStatus === "failed" ? JSON.stringify(result).slice(0, 300) : null,
       });
 
       if (doneStatus === "signup-posted") {
@@ -418,7 +344,7 @@ async function main() {
       }
     } catch (err) {
       byHost.set(host, Date.now());
-      upsert(doc, {
+      await upsertTarget({
         id: target.id,
         name: target.name,
         signupUrl: target.signupUrl,
@@ -434,16 +360,12 @@ async function main() {
       console.log(`🟡 needs-manual (${err.message?.slice(0, 60)})`);
       manualNeeded++;
     }
-
-    // Persist after each attempt so we don't lose progress on crash
-    await writeTracker(doc);
   }
 
   console.log(`\n─────────────────────────────────────`);
   console.log(`✅ success:      ${success}`);
   console.log(`❌ failed:       ${failed}`);
   console.log(`🟡 needs-manual: ${manualNeeded}`);
-  console.log(`\ntracker: ${doc.targets.length} total rows`);
 }
 
 main().catch((err) => {

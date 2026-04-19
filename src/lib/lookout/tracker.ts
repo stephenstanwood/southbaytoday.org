@@ -1,44 +1,28 @@
 /**
- * Newsletter subscription tracker.
+ * Newsletter subscription tracker — Postgres edition.
  *
  * Tracks the state of every newsletter / mailing list we've tried to
- * subscribe `sandcathype@gmail.com` to. The subscribe script writes rows
- * as it attempts each signup. The intake webhook updates rows when real
- * emails arrive from a tracked sender.
+ * subscribe `sandcathype@gmail.com` to. Backed by Neon Postgres
+ * (`newsletter_targets` + `tracker_audit`) — the previous Vercel Blob
+ * single-document store kept getting wiped by read/modify/write races.
  *
- * Storage: Vercel Blob in prod, filesystem locally (same pattern as the
- * events/log stores).
- *
- * Access: /admin/newsletters?key=<ADMIN_KEY> renders the table.
+ * Public API kept stable so existing callers (mark/delete/state endpoints,
+ * reconcile cron, intake webhook) keep working.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
-import { put, head, del } from "@vercel/blob";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-function dataPath(name: string): string {
-  return join(__dirname, "../../../src/data/south-bay", name);
-}
-
-const TRACKER_PATH = dataPath("newsletter-tracker.json");
-const TRACKER_BLOB_KEY = "lookout/newsletter-tracker.json";
-const AUDIT_BLOB_PREFIX = "lookout/tracker-audit/";
+import { sql } from "./db.ts";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
 export type SubscribeStatus =
-  | "not-attempted" // row exists but we haven't hit the form yet
-  | "signup-posted" // we submitted the form, waiting for confirmation email
-  | "confirmed" // confirmation email auto-clicked or direct add
-  | "receiving" // at least one real newsletter has arrived
-  | "failed" // subscribe attempt failed
-  | "needs-manual" // requires a human click — CAPTCHA, multi-step, SSO, etc.
-  | "retry" // signup attempted but failed (CC throttle, form error, etc.) — come back to this later
-  | "blocked"; // site refused / terms-incompatible
+  | "not-attempted"
+  | "signup-posted"
+  | "confirmed"
+  | "receiving"
+  | "failed"
+  | "needs-manual"
+  | "retry"
+  | "blocked";
 
 export type ProviderType =
   | "civicplus_notifyme"
@@ -51,15 +35,10 @@ export type ProviderType =
   | "unknown";
 
 export interface NewsletterTarget {
-  /** Stable id — kebab-case slug, e.g. "saratoga-source". */
   id: string;
-  /** Display name. */
   name: string;
-  /** Signup page URL. */
   signupUrl: string;
-  /** Which south bay city/region this serves (best-effort). */
   city?: string;
-  /** High-level category for grouping in the UI. */
   category:
     | "city"
     | "chamber"
@@ -71,32 +50,18 @@ export interface NewsletterTarget {
     | "school"
     | "transit"
     | "other";
-  /** Detected or known provider. */
   provider: ProviderType;
-  /** Priority: 1 = highest (big cities, weekly volume), 3 = lowest. */
   priority: 1 | 2 | 3;
-  /** Notes / quirks for Stephen. */
   notes?: string;
 
-  // ── Runtime state (updated by subscribe script + webhook) ──
   status: SubscribeStatus;
-  /** ISO timestamp of the most recent subscribe attempt. */
   attemptedAt?: string;
-  /** ISO timestamp the subscription was confirmed (auto or manual). */
   confirmedAt?: string;
-  /** ISO timestamp of the most recently received newsletter from this source. */
   lastReceivedAt?: string;
-  /** Total number of newsletters received from this source. */
   receivedCount: number;
-  /** Email addresses we've seen this source send from (for auto-matching inbound mail). */
   seenFromAddresses: string[];
-  /** Domain(s) we've seen — coarser match when the exact address varies. */
   seenFromDomains: string[];
-  /** Per-message dedup keys ("<messageId>::<targetId>") written by the
-   * reconcile cron so repeated runs don't double-count the same email.
-   * Capped to ~200 most recent per row in the reconcile endpoint. */
   seenMessageIds?: string[];
-  /** Error message from the last failed attempt, if any. */
   lastError?: string;
 }
 
@@ -104,111 +69,187 @@ export interface NewsletterTrackerDoc {
   version: 1;
   updatedAt: string;
   targets: NewsletterTarget[];
-  /** Target ids the user has explicitly deleted — don't re-add them on re-seed. */
+  /** Soft-deleted target ids — kept for back-compat with callers that filter on this. */
   deletedIds?: string[];
 }
 
-// ── Public API ──────────────────────────────────────────────────────────────
+// ── Row mapping ─────────────────────────────────────────────────────────────
 
-function getBlobToken(): string | null {
-  const fromProcess = typeof process !== "undefined" ? process.env?.BLOB_READ_WRITE_TOKEN : undefined;
-  const fromImport = typeof import.meta !== "undefined" ? (import.meta as ImportMeta).env?.BLOB_READ_WRITE_TOKEN : undefined;
-  return (fromProcess ?? fromImport) || null;
+interface TargetRow {
+  id: string;
+  name: string;
+  signup_url: string;
+  city: string | null;
+  category: string;
+  provider: string;
+  priority: number;
+  notes: string | null;
+  status: string;
+  attempted_at: string | null;
+  confirmed_at: string | null;
+  last_received_at: string | null;
+  received_count: number;
+  seen_from_addresses: string[];
+  seen_from_domains: string[];
+  seen_message_ids: string[];
+  last_error: string | null;
+  is_deleted: boolean;
+  deleted_at: string | null;
+  updated_at: string;
 }
 
-function hasBlobToken(): boolean {
-  return !!getBlobToken();
+function rowToTarget(r: TargetRow): NewsletterTarget {
+  const t: NewsletterTarget = {
+    id: r.id,
+    name: r.name,
+    signupUrl: r.signup_url,
+    category: r.category as NewsletterTarget["category"],
+    provider: r.provider as ProviderType,
+    priority: r.priority as 1 | 2 | 3,
+    status: r.status as SubscribeStatus,
+    receivedCount: r.received_count ?? 0,
+    seenFromAddresses: r.seen_from_addresses ?? [],
+    seenFromDomains: r.seen_from_domains ?? [],
+  };
+  if (r.city) t.city = r.city;
+  if (r.notes) t.notes = r.notes;
+  if (r.attempted_at) t.attemptedAt = r.attempted_at;
+  if (r.confirmed_at) t.confirmedAt = r.confirmed_at;
+  if (r.last_received_at) t.lastReceivedAt = r.last_received_at;
+  if (r.seen_message_ids?.length) t.seenMessageIds = r.seen_message_ids;
+  if (r.last_error) t.lastError = r.last_error;
+  return t;
+}
+
+// ── Public read API ─────────────────────────────────────────────────────────
+
+export async function readTracker(): Promise<NewsletterTrackerDoc> {
+  const q = sql();
+  const rows = (await q`
+    SELECT id, name, signup_url, city, category, provider, priority, notes,
+           status, attempted_at, confirmed_at, last_received_at,
+           received_count, seen_from_addresses, seen_from_domains,
+           seen_message_ids, last_error, is_deleted, deleted_at, updated_at
+    FROM newsletter_targets
+    WHERE is_deleted = FALSE
+    ORDER BY category, name
+  `) as TargetRow[];
+
+  const deletedRows = (await q`
+    SELECT id FROM newsletter_targets WHERE is_deleted = TRUE
+  `) as Array<{ id: string }>;
+
+  return {
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    targets: rows.map(rowToTarget),
+    deletedIds: deletedRows.map((r) => r.id),
+  };
+}
+
+// ── Public write API ────────────────────────────────────────────────────────
+
+/**
+ * Write a full tracker document. Used by the reconcile cron and other
+ * legacy callers that read-mutate-write the whole doc. Each target is
+ * upserted; deletedIds become soft-delete flags. Wrapped in a transaction.
+ *
+ * For simple status changes, prefer `setTargetStatus(id, status)` — it's
+ * a single targeted UPDATE with no race window.
+ */
+export async function writeTracker(doc: NewsletterTrackerDoc): Promise<void> {
+  const q = sql();
+  const targets = doc.targets ?? [];
+  const deletedIds = doc.deletedIds ?? [];
+
+  for (const t of targets) {
+    await q`
+      INSERT INTO newsletter_targets (
+        id, name, signup_url, city, category, provider, priority, notes,
+        status, attempted_at, confirmed_at, last_received_at, received_count,
+        seen_from_addresses, seen_from_domains, seen_message_ids, last_error,
+        updated_at
+      ) VALUES (
+        ${t.id}, ${t.name}, ${t.signupUrl}, ${t.city ?? null}, ${t.category},
+        ${t.provider}, ${t.priority}, ${t.notes ?? null},
+        ${t.status}, ${t.attemptedAt ?? null}, ${t.confirmedAt ?? null},
+        ${t.lastReceivedAt ?? null}, ${t.receivedCount ?? 0},
+        ${t.seenFromAddresses ?? []}, ${t.seenFromDomains ?? []},
+        ${t.seenMessageIds ?? []}, ${t.lastError ?? null},
+        now()
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        name = EXCLUDED.name,
+        signup_url = EXCLUDED.signup_url,
+        city = EXCLUDED.city,
+        category = EXCLUDED.category,
+        provider = EXCLUDED.provider,
+        priority = EXCLUDED.priority,
+        notes = EXCLUDED.notes,
+        status = EXCLUDED.status,
+        attempted_at = EXCLUDED.attempted_at,
+        confirmed_at = EXCLUDED.confirmed_at,
+        last_received_at = EXCLUDED.last_received_at,
+        received_count = EXCLUDED.received_count,
+        seen_from_addresses = EXCLUDED.seen_from_addresses,
+        seen_from_domains = EXCLUDED.seen_from_domains,
+        seen_message_ids = EXCLUDED.seen_message_ids,
+        last_error = EXCLUDED.last_error,
+        updated_at = now()
+    `;
+  }
+
+  if (deletedIds.length > 0) {
+    await q`
+      UPDATE newsletter_targets
+      SET is_deleted = TRUE,
+          deleted_at = COALESCE(deleted_at, now()),
+          updated_at = now()
+      WHERE id = ANY(${deletedIds}) AND is_deleted = FALSE
+    `;
+  }
 }
 
 /**
- * Strip any targets whose id is in deletedIds. Defense-in-depth: even if a
- * subscribe script or stale write resurrects a row that was supposed to be
- * gone, the read path will hide it. The tombstone in deletedIds is the source
- * of truth for "this should not exist."
+ * Granular status change. Single UPDATE, no read/modify/write window.
+ * Returns true if the row existed and was updated, false otherwise.
  */
-function applyDeletedIds(doc: NewsletterTrackerDoc): NewsletterTrackerDoc {
-  const deleted = new Set(doc.deletedIds ?? []);
-  if (deleted.size === 0) return doc;
-  const filtered = doc.targets.filter((t) => !deleted.has(t.id));
-  if (filtered.length === doc.targets.length) return doc;
-  return { ...doc, targets: filtered };
+export async function setTargetStatus(
+  id: string,
+  status: SubscribeStatus
+): Promise<{ updated: boolean; fromStatus?: SubscribeStatus }> {
+  const q = sql();
+  const at = new Date().toISOString();
+  const rows = (await q`
+    WITH old AS (
+      SELECT status FROM newsletter_targets WHERE id = ${id} AND is_deleted = FALSE
+    )
+    UPDATE newsletter_targets t
+    SET status = ${status},
+        attempted_at = ${at},
+        updated_at = now()
+    FROM old
+    WHERE t.id = ${id} AND t.is_deleted = FALSE
+    RETURNING old.status AS prior_status
+  `) as Array<{ prior_status: string }>;
+
+  if (rows.length === 0) return { updated: false };
+  const fromStatus = rows[0].prior_status as SubscribeStatus;
+
+  await q`
+    INSERT INTO tracker_audit (action, target_id, from_status, to_status)
+    VALUES ('status-change', ${id}, ${fromStatus}, ${status})
+  `;
+
+  return { updated: true, fromStatus };
 }
 
-export async function readTracker(): Promise<NewsletterTrackerDoc> {
-  if (hasBlobToken()) {
-    const raw = await readBlobJson(TRACKER_BLOB_KEY);
-    if (raw === null) return emptyDoc();
-    try {
-      return applyDeletedIds(JSON.parse(raw) as NewsletterTrackerDoc);
-    } catch {
-      return emptyDoc();
-    }
-  }
-  if (!existsSync(TRACKER_PATH)) return emptyDoc();
-  try {
-    return applyDeletedIds(JSON.parse(readFileSync(TRACKER_PATH, "utf-8")) as NewsletterTrackerDoc);
-  } catch {
-    return emptyDoc();
-  }
-}
+// ── Matching ────────────────────────────────────────────────────────────────
+// Senders rarely come from the signup domain — they come from the mailing
+// platform's infrastructure (ccsend.com, libraryaware.com, list-manage.com,
+// etc.) with the org identity embedded in a subdomain or display name.
+// Score-based matcher with a high threshold.
 
-export async function writeTracker(doc: NewsletterTrackerDoc): Promise<void> {
-  // Race-safety for deletions: between our read and write, another request
-  // (another delete click, the mark endpoint, or the intake webhook) may have
-  // landed a newer deletedIds that we'd otherwise clobber. Merge the latest
-  // tombstones from blob (union, never shrink) so deletions are never lost to
-  // concurrent read-modify-write cycles. Also re-filter targets so tombstoned
-  // ids can't sneak back in.
-  if (hasBlobToken()) {
-    try {
-      const latest = await readBlobJson(TRACKER_BLOB_KEY);
-      if (latest) {
-        const parsed = JSON.parse(latest) as NewsletterTrackerDoc;
-        const merged = new Set<string>([
-          ...(doc.deletedIds ?? []),
-          ...(parsed.deletedIds ?? []),
-        ]);
-        doc.deletedIds = Array.from(merged);
-      }
-    } catch {
-      // If the merge-read fails, fall through with our local view. Worst case
-      // is one lost tombstone — we don't want to fail the whole write.
-    }
-  }
-  doc = applyDeletedIds(doc);
-
-  // Guard against the wipe race: if our local view has zero targets but the
-  // latest blob has any, we almost certainly raced a writer's del()→put()
-  // cycle and read an empty doc by mistake. Refuse the write — losing the
-  // current edit is far cheaper than wiping 150+ rows.
-  if (hasBlobToken() && doc.targets.length === 0) {
-    try {
-      const latest = await readBlobJson(TRACKER_BLOB_KEY);
-      if (latest) {
-        const parsed = JSON.parse(latest) as NewsletterTrackerDoc;
-        if ((parsed.targets ?? []).length > 0) {
-          console.warn(
-            `[tracker] refusing to write empty targets over a non-empty blob (${parsed.targets.length} rows). Likely read/del race.`
-          );
-          return;
-        }
-      }
-    } catch {
-      // If the safety read fails, fall through — we don't want to block all writes.
-    }
-  }
-
-  doc.updatedAt = new Date().toISOString();
-  const json = JSON.stringify(doc, null, 2);
-  if (hasBlobToken()) {
-    await writeBlobJson(TRACKER_BLOB_KEY, json);
-    return;
-  }
-  ensureDir(TRACKER_PATH);
-  writeFileSync(TRACKER_PATH, json);
-}
-
-/** Parse a raw From header like `"Foo Bar" <foo@bar.com>` into parts. */
 function parseFromHeader(raw: string): { address: string; displayName: string; domain: string } {
   if (!raw) return { address: "", displayName: "", domain: "" };
   const trimmed = raw.trim();
@@ -219,18 +260,10 @@ function parseFromHeader(raw: string): { address: string; displayName: string; d
   return { address, displayName, domain };
 }
 
-// ── Matching ────────────────────────────────────────────────────────────────
-// Senders rarely come from the signup domain — they come from the mailing
-// platform's infrastructure (ccsend.com, libraryaware.com, list-manage.com,
-// etc.) with the org identity embedded in a subdomain or display name.
-// So we score multiple signals and pick the best match above a threshold.
-
-/** Collapse a string to alphanumerics only, lowercase. "Los Gatos Chamber" → "losgatoschamber". */
 function normalizeKey(s: string): string {
   return (s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-/** Tokens of length ≥ 4, excluding generic mailer/tld noise. */
 const STOPWORDS = new Set([
   "www", "mail", "mailer", "mails", "email", "emails", "news", "newsletter",
   "info", "hello", "contact", "subscribe", "updates", "update", "noreply",
@@ -245,12 +278,10 @@ function tokenize(s: string): string[] {
   return (s || "").toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 4 && !STOPWORDS.has(t));
 }
 
-/** Meaningful subdomain fragments: strip www/mail/etc., also strip the TLD. */
 function senderIdentityFragments(domain: string): string[] {
   const parts = domain.toLowerCase().split(".").filter(Boolean);
   const skip = new Set(["www", "mail", "mailer", "news", "email", "em", "m", "smtp", "relay", "ccsend", "ccsend2", "list-manage", "list", "lt", "campaign", "go", "click", "e"]);
   const filtered = parts.filter((p) => !skip.has(p));
-  // Drop final TLD-looking part (usually last) so we end up with org-ish tokens
   if (filtered.length > 1) filtered.pop();
   return filtered;
 }
@@ -262,15 +293,9 @@ interface SenderInfo {
 }
 
 function scoreMatch(target: NewsletterTarget, s: SenderInfo): number {
-  // Exact prior-seen address / domain — canonical matches.
   if ((target.seenFromAddresses ?? []).some((a) => a.toLowerCase() === s.address)) return 1000;
   if (s.domain && (target.seenFromDomains ?? []).some((d) => d.toLowerCase() === s.domain)) return 900;
 
-  // Signup URL host — exact match only. Tempting to collapse to last-2-labels
-  // (e.g. "sunnyvale.ca.gov" → "ca.gov"), but that falsely matches any
-  // *.ca.gov sender to any *.ca.gov target, since ".ca.gov" is a state-wide
-  // registrar shared by independent entities. Fragment/token scoring below
-  // catches the common "org slug in mailer subdomain" case.
   if (target.signupUrl) {
     try {
       const host = new URL(target.signupUrl).hostname.toLowerCase().replace(/^www\./, "");
@@ -283,9 +308,6 @@ function scoreMatch(target: NewsletterTarget, s: SenderInfo): number {
   const targetKey = normalizeKey(target.name);
   const targetIdKey = normalizeKey(target.id);
 
-  // Senders routed through a mailing platform embed the org slug in the
-  // subdomain — e.g. "losgatoschamber.ccsend.com" for Los Gatos Chamber.
-  // Also check display name and address local-part.
   const fragments = [
     ...senderIdentityFragments(s.domain),
     normalizeKey(s.displayName),
@@ -302,8 +324,6 @@ function scoreMatch(target: NewsletterTarget, s: SenderInfo): number {
   }
   if (best > 0) return best;
 
-  // Multi-token overlap (distinct, ≥ 4 chars, non-stopword) — guards against
-  // accidental matches like "center" matching 20 orgs.
   const senderTokens = new Set<string>([
     ...tokenize(s.displayName),
     ...tokenize(s.domain),
@@ -319,14 +339,14 @@ function scoreMatch(target: NewsletterTarget, s: SenderInfo): number {
 
 const MATCH_THRESHOLD = 450;
 
-function findTrackerMatch(doc: NewsletterTrackerDoc, fromEmail: string): NewsletterTarget | null {
+function findTrackerMatch(targets: NewsletterTarget[], fromEmail: string): NewsletterTarget | null {
   if (!fromEmail) return null;
   const sender = parseFromHeader(fromEmail);
   if (!sender.address) return null;
 
   let bestScore = 0;
   let best: NewsletterTarget | null = null;
-  for (const t of doc.targets) {
+  for (const t of targets) {
     const s = scoreMatch(t, sender);
     if (s > bestScore) {
       bestScore = s;
@@ -338,16 +358,8 @@ function findTrackerMatch(doc: NewsletterTrackerDoc, fromEmail: string): Newslet
 
 /**
  * Called by the intake webhook when a REAL newsletter email arrives.
- * Bumps lastReceivedAt + receivedCount and auto-promotes the tracker from
- * "signed up" → "live" (receiving) on first real send. This is the
- * transition Stephen cares about — there is no manual approval step.
- *
- * Do NOT call this for confirmation or ack emails — the intake handler
- * short-circuits those before they reach this function so they don't
- * skew receivedCount.
- *
- * "confirmed" is a legacy status (see noteConfirmationClicked) — we still
- * promote it here so any pre-existing rows flow through correctly.
+ * Bumps lastReceivedAt + receivedCount and auto-promotes the row to
+ * "receiving" on first send. Single targeted UPDATE — no read/write race.
  */
 export async function noteInboundFromSender(
   fromEmail: string,
@@ -357,60 +369,64 @@ export async function noteInboundFromSender(
   if (!address) return null;
 
   const doc = await readTracker();
-  const match = findTrackerMatch(doc, fromEmail);
+  const match = findTrackerMatch(doc.targets, fromEmail);
 
-  if (match) {
-    match.lastReceivedAt = receivedAt;
-    match.receivedCount = (match.receivedCount ?? 0) + 1;
-    // Auto-promote pre-receiving rows to "live" on first real newsletter.
-    // Stephen had flagged retry rows manually — a real email means the retry
-    // finally worked, so promote those too.
-    if (
-      match.status === "signup-posted" ||
-      match.status === "confirmed" ||
-      match.status === "needs-manual" ||
-      match.status === "retry" ||
-      match.status === "not-attempted" ||
-      match.status === "failed"
-    ) {
-      match.status = "receiving";
-    }
-    if (!match.seenFromAddresses.includes(address)) match.seenFromAddresses.push(address);
-    if (domain && !(match.seenFromDomains ?? []).includes(domain)) {
-      match.seenFromDomains = [...(match.seenFromDomains ?? []), domain];
-    }
-    await writeTracker(doc);
-    return match.id;
+  if (!match) {
+    console.warn(
+      `[tracker] unmatched inbound sender: ${fromEmail} (address=${address}, domain=${domain}, displayName=${JSON.stringify(displayName)})`
+    );
+    return null;
   }
 
-  // No match above the score threshold. Don't auto-add — 95% of real
-  // inbound is from a list we already have in the tracker; if it isn't
-  // matching, the right answer is to improve matching or manually link it,
-  // not to clutter the tracker with junk rows. Log so it's visible in
-  // Vercel function logs.
-  console.warn(
-    `[tracker] unmatched inbound sender: ${fromEmail} (address=${address}, domain=${domain}, displayName=${JSON.stringify(displayName)})`
-  );
-  return null;
+  const promotable = new Set<SubscribeStatus>([
+    "signup-posted",
+    "confirmed",
+    "needs-manual",
+    "retry",
+    "not-attempted",
+    "failed",
+  ]);
+  const newStatus = promotable.has(match.status) ? "receiving" : match.status;
+
+  const newAddrs = match.seenFromAddresses.includes(address)
+    ? match.seenFromAddresses
+    : [...match.seenFromAddresses, address];
+  const newDomains = domain && !match.seenFromDomains.includes(domain)
+    ? [...match.seenFromDomains, domain]
+    : match.seenFromDomains;
+
+  const q = sql();
+  await q`
+    UPDATE newsletter_targets
+    SET last_received_at = ${receivedAt},
+        received_count = received_count + 1,
+        status = ${newStatus},
+        seen_from_addresses = ${newAddrs},
+        seen_from_domains = ${newDomains},
+        updated_at = now()
+    WHERE id = ${match.id} AND is_deleted = FALSE
+  `;
+
+  if (newStatus !== match.status) {
+    await q`
+      INSERT INTO tracker_audit (action, target_id, from_status, to_status)
+      VALUES ('status-change', ${match.id}, ${match.status}, ${newStatus})
+    `;
+  }
+
+  return match.id;
 }
 
 /**
- * @deprecated "confirmed" is no longer used as a distinct state. Stephen clicks
- * confirmation links manually (auto-click is disabled to avoid bot-flagging
- * sandcathype@gmail.com), so there's no auto-confirmation signal to record.
- * The tracker flows directly from needs-manual → signup-posted → receiving
- * (the last hop happens automatically in noteInboundFromSender when a real
- * newsletter arrives).
- *
- * Kept as a no-op stub so any lingering callers don't crash. Do not wire new
- * code to this function.
+ * @deprecated kept as a no-op stub.
  */
 export async function noteConfirmationClicked(_fromEmail: string): Promise<string | null> {
   return null;
 }
 
 /**
- * Called by the subscribe script to upsert a target row.
+ * Upsert a target row. Used by the subscribe script. Refuses to resurrect
+ * rows that have been soft-deleted.
  */
 export async function upsertTarget(
   target: Omit<NewsletterTarget, "receivedCount" | "seenFromAddresses" | "seenFromDomains"> & {
@@ -419,56 +435,61 @@ export async function upsertTarget(
     seenFromDomains?: string[];
   }
 ): Promise<void> {
-  const doc = await readTracker();
-  const deleted = new Set(doc.deletedIds ?? []);
-  if (deleted.has(target.id)) {
-    // Refuse to resurrect a tombstoned target. Subscribe scripts already
-    // filter on this, but enforce here too in case a one-off path skips it.
-    return;
-  }
-  const idx = doc.targets.findIndex((t) => t.id === target.id);
-  const merged: NewsletterTarget = {
-    receivedCount: 0,
-    seenFromAddresses: [],
-    seenFromDomains: [],
-    ...(idx >= 0 ? doc.targets[idx] : {}),
-    ...target,
-  } as NewsletterTarget;
-  if (idx >= 0) doc.targets[idx] = merged;
-  else doc.targets.push(merged);
-  await writeTracker(doc);
-}
+  const q = sql();
+  const tombstoned = (await q`
+    SELECT 1 FROM newsletter_targets WHERE id = ${target.id} AND is_deleted = TRUE
+  `) as Array<unknown>;
+  if (tombstoned.length > 0) return;
 
-// ── Storage helpers ─────────────────────────────────────────────────────────
-
-function emptyDoc(): NewsletterTrackerDoc {
-  return { version: 1, updatedAt: new Date().toISOString(), targets: [], deletedIds: [] };
+  await q`
+    INSERT INTO newsletter_targets (
+      id, name, signup_url, city, category, provider, priority, notes,
+      status, attempted_at, confirmed_at, last_received_at, received_count,
+      seen_from_addresses, seen_from_domains, last_error, updated_at
+    ) VALUES (
+      ${target.id}, ${target.name}, ${target.signupUrl}, ${target.city ?? null},
+      ${target.category}, ${target.provider}, ${target.priority}, ${target.notes ?? null},
+      ${target.status}, ${target.attemptedAt ?? null}, ${target.confirmedAt ?? null},
+      ${target.lastReceivedAt ?? null}, ${target.receivedCount ?? 0},
+      ${target.seenFromAddresses ?? []}, ${target.seenFromDomains ?? []},
+      ${target.lastError ?? null}, now()
+    )
+    ON CONFLICT (id) DO UPDATE SET
+      name = EXCLUDED.name,
+      signup_url = EXCLUDED.signup_url,
+      city = EXCLUDED.city,
+      category = EXCLUDED.category,
+      provider = EXCLUDED.provider,
+      priority = EXCLUDED.priority,
+      notes = EXCLUDED.notes,
+      status = EXCLUDED.status,
+      attempted_at = COALESCE(EXCLUDED.attempted_at, newsletter_targets.attempted_at),
+      confirmed_at = COALESCE(EXCLUDED.confirmed_at, newsletter_targets.confirmed_at),
+      last_error = EXCLUDED.last_error,
+      updated_at = now()
+  `;
 }
 
 /**
- * Mark an id as explicitly deleted (permanent blocklist).
- * Subscribe scripts should refuse to re-add anything in this list.
+ * Soft-delete a target. Single UPDATE — no race window.
  */
 export async function markDeleted(id: string): Promise<void> {
-  const doc = await readTracker();
-  const prior = doc.targets.find((t) => t.id === id);
-  doc.deletedIds = doc.deletedIds ?? [];
-  if (!doc.deletedIds.includes(id)) doc.deletedIds.push(id);
-  doc.targets = doc.targets.filter((t) => t.id !== id);
-  await writeAuditEntry({ at: new Date().toISOString(), action: "delete", id, fromStatus: prior?.status });
-  await writeTracker(doc);
+  const q = sql();
+  const prior = (await q`
+    SELECT status FROM newsletter_targets WHERE id = ${id} AND is_deleted = FALSE
+  `) as Array<{ status: string }>;
+  await q`
+    UPDATE newsletter_targets
+    SET is_deleted = TRUE, deleted_at = now(), updated_at = now()
+    WHERE id = ${id}
+  `;
+  await q`
+    INSERT INTO tracker_audit (action, target_id, from_status)
+    VALUES ('delete', ${id}, ${prior[0]?.status ?? null})
+  `;
 }
 
 // ── Audit log ───────────────────────────────────────────────────────────────
-// Every user-initiated mutation (status change, delete) is written as its
-// own blob under lookout/tracker-audit/<ts>-<action>-<id>.json BEFORE the
-// main tracker blob is updated. Per-entry blobs sidestep the read/modify/
-// write race that wiped the tracker on 2026-04-19 — each click is its own
-// independent object, so concurrent writers can never clobber each other.
-//
-// Replay with scripts/lookout/replay-audit.mjs: list the prefix, fetch each
-// entry in timestamp order, re-apply to the live tracker. This is the
-// recovery path of last resort if the tracker blob is ever wiped again.
 
 export interface AuditEntry {
   at: string;
@@ -478,79 +499,16 @@ export interface AuditEntry {
   toStatus?: SubscribeStatus;
 }
 
+/**
+ * Append an audit entry. Most callers don't need to invoke this directly
+ * — setTargetStatus / markDeleted / noteInboundFromSender already log
+ * their own audit entries inline. Kept for back-compat with code that
+ * wants to log a custom entry alongside a writeTracker() call.
+ */
 export async function writeAuditEntry(entry: AuditEntry): Promise<void> {
-  const token = getBlobToken();
-  if (!token) return;
-  const safeTs = entry.at.replace(/[:.]/g, "-");
-  const safeId = entry.id.replace(/[^a-z0-9_-]/gi, "_");
-  const key = `${AUDIT_BLOB_PREFIX}${safeTs}-${entry.action}-${safeId}.json`;
-  try {
-    await put(key, JSON.stringify(entry), {
-      access: "public",
-      addRandomSuffix: true,
-      contentType: "application/json",
-      cacheControlMaxAge: 0,
-      token,
-    });
-  } catch (err) {
-    console.warn(`[tracker] audit write failed: ${(err as Error).message ?? err}`);
-  }
-}
-
-async function readBlobJson(pathname: string): Promise<string | null> {
-  const token = getBlobToken();
-  if (!token) return null;
-  try {
-    // head() returns metadata including the downloadUrl for the blob.
-    // For public blobs we can fetch the URL directly; for private we need token.
-    const meta = await head(pathname, { token });
-    if (!meta?.url) return null;
-    // Cache-bust the fetch: the same URL is reused across writes and Vercel's
-    // edge cache will happily serve stale content for minutes otherwise.
-    const cacheBuster = `?_cb=${Date.now()}`;
-    const res = await fetch(meta.url + cacheBuster, { cache: "no-store" });
-    if (!res.ok) throw new Error(`fetch ${res.status}`);
-    return await res.text();
-  } catch (err) {
-    if ((err as Error).name === "BlobNotFoundError") return null;
-    if (/404|not.found/i.test((err as Error).message)) return null;
-    throw err;
-  }
-}
-
-async function writeBlobJson(pathname: string, json: string): Promise<void> {
-  const token = getBlobToken();
-  if (!token) throw new Error("BLOB_READ_WRITE_TOKEN not available");
-  // Vercel Blob's CDN caches GETs by URL. When you put() to the same pathname,
-  // the URL is reused but the CDN keeps serving stale content for minutes even
-  // with cacheControlMaxAge: 0 (observed 2026-04-17 — schrodinger reads where
-  // different edges return different content for the same URL within seconds
-  // of a write). Deleting before put forces the CDN to invalidate the cached
-  // object at that URL. put() recreates it immediately after.
-  try {
-    await del(pathname, { token });
-  } catch (err) {
-    // If the blob doesn't exist yet, del() throws — safe to ignore.
-    const msg = (err as Error).message ?? "";
-    if (!/not.found|404/i.test(msg) && (err as Error).name !== "BlobNotFoundError") {
-      // Real error — continue to put anyway; worst case write succeeds and
-      // we've just lost the CDN invalidation benefit for this one write.
-      console.warn(`[tracker] del() before put failed: ${msg}`);
-    }
-  }
-  await put(pathname, json, {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: "application/json",
-    token,
-    cacheControlMaxAge: 0,
-  });
-}
-
-function ensureDir(filePath: string): void {
-  const dir = dirname(filePath);
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
-  }
+  const q = sql();
+  await q`
+    INSERT INTO tracker_audit (at, action, target_id, from_status, to_status)
+    VALUES (${entry.at}, ${entry.action}, ${entry.id}, ${entry.fromStatus ?? null}, ${entry.toStatus ?? null})
+  `;
 }

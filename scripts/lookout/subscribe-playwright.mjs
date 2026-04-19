@@ -8,7 +8,7 @@
  *     (footer, embedded, or popup)
  *  3. Fill email, click submit
  *  4. Wait for success indicator (URL change, toast text, form replacement)
- *  5. Record outcome in tracker
+ *  5. Record outcome in tracker (Postgres, one row per attempt)
  *
  * Politeness:
  *  - 4-8 sec delay between targets on the same host
@@ -25,27 +25,16 @@
  *   node scripts/lookout/subscribe-playwright.mjs --max=10
  */
 
-import { readFileSync, existsSync } from "fs";
+import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
-import { put, head } from "@vercel/blob";
+import { readTracker, upsertTarget } from "./_tracker-pg.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// ── Env ─────────────────────────────────────────────────────────────────────
-const envPath = join(__dirname, "..", "..", ".env.local");
-if (existsSync(envPath)) {
-  for (const line of readFileSync(envPath, "utf8").split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-  }
-}
-
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 const EMAIL = process.env.LOOKOUT_SIGNUP_EMAIL || "sandcathype@gmail.com";
-const TRACKER_BLOB_KEY = "lookout/newsletter-tracker.json";
 const TARGETS_PATH = join(__dirname, "targets.json");
 
 const args = new Set(process.argv.slice(2));
@@ -54,64 +43,14 @@ const RETRY_FAILED = args.has("--retry-failed");
 const ONLY = [...args].find((a) => a.startsWith("--only="))?.split("=")[1];
 const CATEGORY = [...args].find((a) => a.startsWith("--category="))?.split("=")[1];
 const MAX = parseInt([...args].find((a) => a.startsWith("--max="))?.split("=")[1] || "0", 10);
-const SKIP_CIVICPLUS = args.has("--skip-civicplus"); // handled by HTTP script instead
+const SKIP_CIVICPLUS = args.has("--skip-civicplus");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const jitter = (min, max) => min + Math.floor(Math.random() * (max - min));
 
-// ── Tracker I/O ─────────────────────────────────────────────────────────────
-
-async function readTracker() {
-  if (!BLOB_TOKEN) return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
-  try {
-    const meta = await head(TRACKER_BLOB_KEY, { token: BLOB_TOKEN });
-    if (!meta?.url) return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
-    const res = await fetch(`${meta.url}?_cb=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`fetch ${res.status}`);
-    return JSON.parse(await res.text());
-  } catch (err) {
-    if (err.name === "BlobNotFoundError" || /404/.test(err.message || "")) {
-      return { version: 1, updatedAt: new Date().toISOString(), targets: [] };
-    }
-    throw err;
-  }
-}
-
-async function writeTracker(doc) {
-  doc.updatedAt = new Date().toISOString();
-  if (!BLOB_TOKEN) return;
-  await put(TRACKER_BLOB_KEY, JSON.stringify(doc, null, 2), {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: "application/json",
-    token: BLOB_TOKEN,
-    cacheControlMaxAge: 0,
-  });
-}
-
-function upsert(doc, target) {
-  const idx = doc.targets.findIndex((t) => t.id === target.id);
-  const merged = {
-    receivedCount: 0,
-    seenFromAddresses: [],
-    seenFromDomains: [],
-    ...(idx >= 0 ? doc.targets[idx] : {}),
-    ...target,
-  };
-  if (idx >= 0) doc.targets[idx] = merged;
-  else doc.targets.push(merged);
-}
-
 // ── Playwright-based signup flow ───────────────────────────────────────────
 
-/**
- * Find and return the first email input on the page, OR null.
- * Checks type=email, then name/id/placeholder matching "email".
- * Prefers visible inputs.
- */
 async function findEmailInput(page) {
-  // Accept cookie banners first so they don't overlay forms
   try {
     const cookieSelectors = [
       'button:has-text("Accept")',
@@ -130,7 +69,6 @@ async function findEmailInput(page) {
     }
   } catch {}
 
-  // Scroll to the footer — most newsletter forms are there
   try {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await sleep(500);
@@ -155,14 +93,10 @@ async function findEmailInput(page) {
   return null;
 }
 
-/**
- * Submit: fill the email, then click the nearest submit button.
- */
 async function submitNear(input, email) {
   await input.fill(email);
   await sleep(200);
 
-  // Try to find a submit button inside the same form, or press Enter as fallback.
   try {
     const clicked = await input.evaluate((el) => {
       const form = el.closest("form");
@@ -180,19 +114,13 @@ async function submitNear(input, email) {
     if (clicked) return true;
   } catch {}
 
-  // Fallback: press Enter inside the email field
   try {
     await input.press("Enter");
   } catch {}
   return true;
 }
 
-/**
- * After submit, look for success indicators.
- * Returns { ok, reason }.
- */
 async function detectSuccess(page, beforeUrl) {
-  // Wait briefly for network / DOM updates
   await page.waitForLoadState("networkidle", { timeout: 10_000 }).catch(() => {});
   await sleep(1500);
 
@@ -215,12 +143,10 @@ async function detectSuccess(page, beforeUrl) {
     if (p.test(bodyText)) return { ok: true, reason: p.source };
   }
 
-  // URL change heuristic — redirected to /thank-you or /confirm
   if (afterUrl !== beforeUrl && /thank|confirm|subscribed|success/i.test(afterUrl)) {
     return { ok: true, reason: `url:${afterUrl}` };
   }
 
-  // Error indicators
   if (/invalid\s+email|already\s+subscribed|error|try\s+again/i.test(bodyText.slice(0, 2000))) {
     if (/already\s+subscribed/i.test(bodyText)) return { ok: true, reason: "already-subscribed" };
     return { ok: false, reason: "error-text-detected" };
@@ -229,10 +155,6 @@ async function detectSuccess(page, beforeUrl) {
   return { ok: false, reason: "no-success-indicator" };
 }
 
-/**
- * If the landing page has no email input, look for a link to a subscribe /
- * newsletter page and follow it. Returns true if it found and followed a link.
- */
 async function followSubscribeLink(page) {
   const linkSelectors = [
     'a:has-text("Subscribe"):visible',
@@ -274,7 +196,6 @@ async function subscribeOne(browser, target) {
   });
   const page = await context.newPage();
 
-  // Block heavy media + analytics to speed up
   await context.route("**/*", (route) => {
     const type = route.request().resourceType();
     if (type === "image" || type === "font" || type === "media") return route.abort();
@@ -287,7 +208,6 @@ async function subscribeOne(browser, target) {
 
     let input = await findEmailInput(page);
 
-    // If not found on landing page, try following a Subscribe/Newsletter link
     if (!input) {
       const followed = await followSubscribeLink(page);
       if (followed) {
@@ -316,16 +236,16 @@ async function main() {
   const doc = await readTracker();
   const deletedIds = new Set(doc.deletedIds ?? []);
 
-  // Filter out anything the user has explicitly deleted from the tracker
   const targets = rawTargets.filter((t) => !deletedIds.has(t.id));
   if (deletedIds.size > 0) {
     console.log(`ℹ️  skipping ${deletedIds.size} user-deleted targets`);
   }
 
-  // Seed every target into the tracker (upsert)
+  // Seed every missing target into the tracker
+  const existingById = new Map(doc.targets.map((d) => [d.id, d]));
   for (const t of targets) {
-    const existing = doc.targets.find((d) => d.id === t.id);
-    upsert(doc, {
+    if (existingById.has(t.id)) continue;
+    await upsertTarget({
       id: t.id,
       name: t.name,
       signupUrl: t.signupUrl,
@@ -334,7 +254,7 @@ async function main() {
       provider: t.provider,
       priority: t.priority,
       notes: t.notes,
-      status: existing?.status ?? "not-attempted",
+      status: "not-attempted",
     });
   }
 
@@ -342,7 +262,7 @@ async function main() {
     if (ONLY && t.id !== ONLY) return false;
     if (CATEGORY && t.category !== CATEGORY) return false;
     if (SKIP_CIVICPLUS && t.provider === "civicplus_notifyme") return false;
-    const existing = doc.targets.find((d) => d.id === t.id);
+    const existing = existingById.get(t.id);
     if (!existing) return true;
     if (RETRY_FAILED && (existing.status === "failed" || existing.status === "needs-manual")) return true;
     if (["receiving", "confirmed", "signup-posted"].includes(existing.status)) return false;
@@ -370,11 +290,18 @@ async function main() {
     const result = await subscribeOne(browser, target);
     byHost.set(host, Date.now());
 
-    upsert(doc, {
-      ...target,
+    await upsertTarget({
+      id: target.id,
+      name: target.name,
+      signupUrl: target.signupUrl,
+      city: target.city,
+      category: target.category,
+      provider: target.provider,
+      priority: target.priority,
+      notes: target.notes,
       status: result.status,
       attemptedAt: new Date().toISOString(),
-      lastError: result.status !== "signup-posted" ? result.reason : undefined,
+      lastError: result.status !== "signup-posted" ? result.reason : null,
     });
 
     if (result.status === "signup-posted") {
@@ -384,8 +311,6 @@ async function main() {
       console.log(`🟡 ${result.reason?.slice(0, 50)}`);
       manual++;
     }
-
-    await writeTracker(doc);
   }
 
   await browser.close();

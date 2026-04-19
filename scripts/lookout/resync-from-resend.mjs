@@ -2,46 +2,30 @@
  * Rebuild the newsletter tracker's "seen" / "received" state from Resend's
  * /emails/receiving API — the ground truth for what actually hit the webhook.
  *
- * Why not the intake log? It's blob-stored, capped at 500 entries, and can
- * lose writes. Resend's server is the authoritative source.
+ * Why? Webhook intake can drop writes; Resend's server is authoritative.
  *
  * Why list + per-email detail fetch? The list endpoint reports `from` as our
  * receiving address (the envelope MAIL FROM). The detail endpoint
  * /emails/receiving/{id} returns the real message-From header.
  *
- * This script:
- *   1. Paginates the full Resend inbox
- *   2. Fetches detail for each (throttled) to get true From
- *   3. Reads tracker once, resets all seen/count/status in memory
- *   4. Smart-matches each email to an existing target and bumps state
- *   5. Writes tracker ONCE at the end (atomic — no stale-read windows)
+ * Pipeline:
+ *   1. Paginate the full Resend inbox
+ *   2. Fetch detail for each (throttled) to get true From
+ *   3. Bulk-reset all live targets' receive state in Postgres
+ *   4. Smart-match each email to a target and accumulate state in memory
+ *   5. Upsert each touched target back to Postgres
  *
  * Does NOT auto-add rows. Unmatched senders print at the end for manual
  * review.
  */
 
-import { readFileSync } from "fs";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import { head, put, del } from "@vercel/blob";
+import { readTracker, upsertTarget, sql } from "./_tracker-pg.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-try {
-  const env = readFileSync(join(__dirname, "../../.env.local"), "utf8");
-  for (const line of env.split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-  }
-} catch {}
-
-const token = process.env.BLOB_READ_WRITE_TOKEN;
 const resendKey = process.env.RESEND_API_KEY;
-if (!token || !resendKey) {
-  console.error("need BLOB_READ_WRITE_TOKEN and RESEND_API_KEY");
+if (!resendKey) {
+  console.error("RESEND_API_KEY missing");
   process.exit(1);
 }
-
-const TRACKER_KEY = "lookout/newsletter-tracker.json";
 
 // ── Resend pagination ──────────────────────────────────────────────────────
 
@@ -64,28 +48,9 @@ async function fetchAllReceived() {
     out.push(...data);
     if (!page.has_more || data.length === 0) break;
     after = data[data.length - 1].id;
-    // polite pause
     await new Promise((r) => setTimeout(r, 150));
   }
   return out;
-}
-
-// ── Blob I/O ───────────────────────────────────────────────────────────────
-
-async function readTracker() {
-  const meta = await head(TRACKER_KEY, { token });
-  const res = await fetch(`${meta.url}?_cb=${Date.now()}`, { cache: "no-store" });
-  return res.json();
-}
-
-async function writeTracker(doc) {
-  try {
-    await del(TRACKER_KEY, { token });
-  } catch {}
-  await put(TRACKER_KEY, JSON.stringify(doc, null, 2), {
-    access: "public", token, allowOverwrite: true, cacheControlMaxAge: 0,
-    contentType: "application/json",
-  });
 }
 
 // ── Matching (mirrors src/lib/lookout/tracker.ts) ──────────────────────────
@@ -165,11 +130,11 @@ function scoreMatch(target, s) {
 }
 
 const MATCH_THRESHOLD = 450;
-function findMatch(doc, fromHeader) {
+function findMatch(targets, fromHeader) {
   const sender = parseFromHeader(fromHeader);
   if (!sender.address) return { match: null, score: 0 };
   let bestScore = 0, best = null;
-  for (const t of doc.targets) {
+  for (const t of targets) {
     const s = scoreMatch(t, sender);
     if (s > bestScore) { bestScore = s; best = t; }
   }
@@ -186,7 +151,7 @@ function isConfirmationSubject(subject) {
     /please.*confirm/i.test(s) ||
     /subscription.+(change|confirmation)/i.test(s) ||
     /thank.*you.*for.*subscribing/i.test(s) ||
-    /you.*(have been|are now|'?ve been).*subscribed to/i.test(s) ||  // CivicPlus NotifyMe
+    /you.*(have been|are now|'?ve been).*subscribed to/i.test(s) ||
     /you have successfully subscribed/i.test(s) ||
     /opt.?in|opt-in/i.test(s)
   );
@@ -220,10 +185,8 @@ for (let i = 0; i < listItems.length; i++) {
 }
 console.log(`\ndetail fetches: ${details.length}`);
 
-// Sort chronologically
 details.sort((a, b) => (a.receivedAt ?? "").localeCompare(b.receivedAt ?? ""));
 
-// Prefer reply_to as the true sender when Resend's detail.from is our own address
 const SELF_ADDRESSES = new Set(["events@in.southbaytoday.org"]);
 for (const e of details) {
   const { address } = parseFromHeader(e.from);
@@ -232,21 +195,26 @@ for (const e of details) {
   }
 }
 
-// Read tracker once
-console.log("\nreading tracker...");
+// Bulk reset all live targets' receive state. Demote any "receiving" rows
+// back to "signup-posted" — we'll re-promote anything that actually has
+// matches in the inbox.
+console.log("\nresetting receive state in Postgres...");
+const reset = await sql`
+  UPDATE newsletter_targets
+  SET received_count = 0,
+      last_received_at = NULL,
+      seen_from_addresses = '{}',
+      seen_from_domains = '{}',
+      status = CASE WHEN status = 'receiving' THEN 'signup-posted' ELSE status END,
+      updated_at = now()
+  WHERE is_deleted = FALSE
+  RETURNING id
+`;
+console.log(`  reset ${reset.length} rows`);
+
 const doc = await readTracker();
 console.log(`  targets: ${doc.targets.length}, tombstones: ${(doc.deletedIds ?? []).length}`);
 
-// Reset all state in memory
-for (const t of doc.targets) {
-  t.receivedCount = 0;
-  delete t.lastReceivedAt;
-  t.seenFromAddresses = [];
-  t.seenFromDomains = [];
-  if (t.status === "receiving") t.status = "signup-posted";
-}
-
-// Classify & match
 const IGNORE_DOMAINS = new Set(["in.southbaytoday.org", "southbaytoday.org", "stanwood.dev", "gmail.com"]);
 let skippedConfirm = 0;
 let skippedIgnore = 0;
@@ -254,6 +222,7 @@ let matched = 0;
 let promoted = 0;
 const unmatched = new Map();
 const matchReport = new Map();
+const touched = new Set();
 
 for (const e of details) {
   const { address, domain } = parseFromHeader(e.from);
@@ -261,7 +230,7 @@ for (const e of details) {
   if (IGNORE_DOMAINS.has(domain)) { skippedIgnore++; continue; }
   if (isConfirmationSubject(e.subject)) { skippedConfirm++; continue; }
 
-  const { match, score } = findMatch(doc, e.from);
+  const { match, score } = findMatch(doc.targets, e.from);
   if (!match) {
     const key = `${e.from}  —  ${e.subject?.slice(0, 60)}`;
     unmatched.set(key, (unmatched.get(key) ?? 0) + 1);
@@ -279,12 +248,17 @@ for (const e of details) {
   if (domain && !(match.seenFromDomains ?? []).includes(domain)) {
     match.seenFromDomains = [...(match.seenFromDomains ?? []), domain];
   }
+  touched.add(match.id);
   const prev = matchReport.get(match.id) ?? { name: match.name, count: 0, score };
   matchReport.set(match.id, { name: match.name, count: prev.count + 1, score: Math.max(prev.score, score) });
 }
 
-doc.updatedAt = new Date().toISOString();
-await writeTracker(doc);
+// Persist touched targets back to Postgres.
+console.log(`\npersisting ${touched.size} matched targets...`);
+for (const t of doc.targets) {
+  if (!touched.has(t.id)) continue;
+  await upsertTarget(t);
+}
 
 console.log(`\nskipped (confirmation emails): ${skippedConfirm}`);
 console.log(`skipped (self/infra senders): ${skippedIgnore}`);
