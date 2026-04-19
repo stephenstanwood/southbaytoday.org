@@ -1,8 +1,13 @@
 // ---------------------------------------------------------------------------
 // South Bay Today — Recraft Poster Style Pool
-// 13 approved style categories + prompt templates per content type
-// 80% approved styles, 20% novel/experimental
+// 13 original approved styles + 8 additions (2026-04-19) + prompt templates.
+// 80% approved styles, 20% novel/experimental.
+// Composition axes (poster-composition.mjs) layer on top to diversify
+// layout/typography/accent independently of style — so two rainbow-stripes
+// posters can still look meaningfully different.
 // ---------------------------------------------------------------------------
+
+import { sampleComposition, sampleAbstractComposition } from "./poster-composition.mjs";
 
 /**
  * Approved style categories — each has a design direction and optional color palette.
@@ -87,6 +92,55 @@ export const APPROVED_STYLES = [
     style: `Scrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.`,
     colors: [{ rgb: [180, 140, 100] }, { rgb: [255, 255, 255] }, { rgb: [255, 100, 100] }, { rgb: [100, 180, 220] }, { rgb: [255, 220, 50] }],
   },
+  // ── 2026-04-19 additions: broaden the pool to fight same-y output ────
+  {
+    id: "art-deco-travel",
+    label: "Art Deco Travel",
+    style: `Art Deco travel poster aesthetic (1930s golden age). Bold geometric sunbursts, stepped triangular motifs, streamlined chrome-style lines. Deep teal, burnt orange, cream, and gold accents. Elegant Art Deco sans-serif type with condensed letterforms. Hint of travel poster nostalgia meets modern city guide.`,
+    colors: [{ rgb: [0, 90, 100] }, { rgb: [220, 120, 50] }, { rgb: [245, 235, 210] }, { rgb: [200, 160, 80] }],
+  },
+  {
+    id: "linocut-block",
+    label: "Linocut Block",
+    style: `Linocut / block print aesthetic. Bold carved-looking shapes with visible texture in the inked areas, rough uneven edges, high contrast. Two-to-three color palette: ink black plus one or two warm accents (brick red, mustard yellow, forest green). Handmade, tactile, indie-press feel. Chunky hand-carved sans-serif headlines.`,
+    colors: [{ rgb: [25, 25, 30] }, { rgb: [180, 60, 50] }, { rgb: [230, 180, 60] }, { rgb: [240, 225, 210] }],
+  },
+  {
+    id: "sumi-e-ink",
+    label: "Sumi-e Ink",
+    style: `Japanese sumi-e ink wash aesthetic. Cream/off-white rice paper background. Broad brush strokes in deep black ink, with subtle gray gradients. One small accent color (vermilion red or indigo blue) used sparingly like a seal stamp. Elegant condensed type feels like it belongs in a tea ceremony program. Generous negative space, meditative and calm.`,
+    colors: [{ rgb: [248, 242, 230] }, { rgb: [30, 30, 35] }, { rgb: [110, 110, 115] }, { rgb: [200, 50, 40] }],
+  },
+  {
+    id: "vintage-airbrush",
+    label: "Vintage Airbrush 80s",
+    style: `1980s airbrush-illustration aesthetic. Soft gradient color fields (sunset pinks blending into purples, chrome blues), smooth faded edges, subtle grain. Chrome-effect metallic accents. Retro-futurist sans-serif type with slight italic slant. Vibes of an old Atari box, Miami Vice intro, or Trapper Keeper cover.`,
+    colors: [{ rgb: [255, 110, 200] }, { rgb: [120, 80, 220] }, { rgb: [80, 200, 220] }, { rgb: [255, 240, 180] }],
+  },
+  {
+    id: "terrazzo-modern",
+    label: "Terrazzo Modern",
+    style: `Terrazzo pattern aesthetic. Off-white or cream background scattered with small irregular stone-chip shapes in muted accent colors (dusty rose, sage green, soft navy, mustard). Clean modern sans-serif type sits in calm panels on top of the terrazzo field. Interior design / coffee shop aesthetic. Sophisticated, earthy, contemporary.`,
+    colors: [{ rgb: [245, 240, 230] }, { rgb: [200, 140, 140] }, { rgb: [140, 175, 150] }, { rgb: [50, 80, 120] }, { rgb: [210, 170, 70] }],
+  },
+  {
+    id: "editorial-magazine",
+    label: "Editorial Magazine",
+    style: `High-end editorial magazine layout (think New York Magazine or The Gentlewoman). Large expressive serif display headline dominates the top. Clean grid with rule lines between sections. Single bold accent color against generous white space. Sophisticated, restrained, reads like a print feature.`,
+    colors: [{ rgb: [255, 255, 255] }, { rgb: [20, 20, 25] }, { rgb: [200, 55, 65] }, { rgb: [180, 180, 180] }],
+  },
+  {
+    id: "risograph-duotone",
+    label: "Risograph Duotone",
+    style: `True duotone risograph print — only two colors overlapping (fluorescent orange + deep teal, OR hot pink + navy, OR chartreuse + burgundy — pick one palette). Visible halftone dot patterns, slight misregistration, grainy paper texture. Minimal layout, indie-zine feel, chunky display sans-serif.`,
+    colors: [{ rgb: [255, 80, 40] }, { rgb: [30, 90, 110] }, { rgb: [240, 235, 220] }],
+  },
+  {
+    id: "postcard-stamp",
+    label: "Postcard Stamp",
+    style: `Vintage postcard / stamp aesthetic. Bordered postcard frame with a subtle scalloped or dashed edge. Sepia/vintage photo color treatment for any illustrative areas, but bright modern accent colors (coral, teal) for the text blocks. "Greetings from the South Bay" energy. Slight grain and faded edges. Travel-nostalgia meets current-day.`,
+    colors: [{ rgb: [230, 215, 185] }, { rgb: [200, 100, 80] }, { rgb: [60, 130, 140] }, { rgb: [40, 40, 40] }],
+  },
 ];
 
 /**
@@ -100,23 +154,62 @@ const NOVEL_DIRECTIONS = [
   `Watercolor wash aesthetic with soft bleeding edges between sections, hand-painted feel, elegant script headings.`,
   `Cut paper collage / Matisse-style with bold organic shapes, bright colors, layered paper textures.`,
   `Vintage travel poster (1930s-1950s) with art deco typography, flat illustrated landmarks, bold simplified shapes.`,
-  `Psychedelic 1960s poster with swirling organic type, vibrant contrasting colors, optical illusions.`,
   `Minimalist Scandinavian design with lots of white space, thin sans-serif type, muted earth tones, simple line illustrations.`,
   `Street art / graffiti aesthetic with spray paint textures, stencil type, urban color palette, raw energy.`,
   `Stained glass window design with bold black leading lines, jewel-tone colored sections, gothic-inspired type.`,
   `Retro video game pixel art aesthetic with 8-bit style icons, neon colors on dark background, pixelated type.`,
   `Art nouveau poster with flowing organic lines, ornamental borders, elegant serif type, gold and deep green.`,
   `Brutalist graphic design with harsh type, raw concrete textures, stark black and white with one accent color.`,
-  `Terrazzo / mid-century modern pattern background with atomic age typography, warm retro palette.`,
   `Origami / paper fold aesthetic with geometric faceted shapes, subtle shadows, clean modern type.`,
+  // ── 2026-04-19 additions ─────────────────────────────────────────────
+  `Chromatic aberration / glitch aesthetic with RGB channel offsets, scanlines, and digital-degraded typography over clean design underneath.`,
+  `Chinese paper-cut (jianzhi) aesthetic with intricate symmetrical red cutouts on cream, bold negative shapes, traditional patterns.`,
+  `Neon noir aesthetic — dark rainy city night backdrop with saturated neon sign glow, film-grain texture, chrome edges on type.`,
+  `Mid-century Cuban travel poster aesthetic with bright coral/turquoise/yellow, illustrated silhouettes of classic cars or palm trees, hand-lettered feel.`,
+  `Book cover / penguin classics aesthetic — strict horizontal bands of solid color, serif type centered, tiny author-like attribution at bottom.`,
+  `Sushi menu / kaiseki aesthetic — cream paper, vertical Japanese-inspired layout, small brush-stroke ornaments, red seal accents, quiet dignity.`,
+  `Concert flyer / xeroxed punk aesthetic — high-contrast black-and-white with photocopy grain, torn edges, ransom-note mixed-font typography, DIY energy.`,
+  `Architectural drawing aesthetic — isometric building silhouettes, thin construction lines, dimension annotations, paper-drafting feel in sepia + accent.`,
+  `South Bay redwood/rolling-hills nature poster — soft gradients of eucalyptus green, fog gray, golden hour amber; subtle stylized hill silhouettes behind text.`,
+  `Farmers-market chalkboard-meets-linen aesthetic — linen cream texture, hand-painted sign look, small produce illustrations between sections.`,
 ];
 
 /**
- * Pick a style: 80% from approved pool (weighted by feedback), 20% novel/experimental.
- * @returns {{ style: string, colors: Array|null, id: string, isNovel: boolean }}
+ * Read recently-used style IDs so we can damp them (fights same-y feeds when
+ * one style randomly wins two days in a row). The feedback log is the source
+ * of truth for "what we just used" — we don't track separately.
+ *
+ * @param {number} lookback - How many most-recent entries to consider
+ * @returns {Map<string, number>} styleId → count in the last N picks
  */
-export async function pickStyle() {
-  if (Math.random() < 0.2) {
+async function getRecentStyleCounts(lookback = 6) {
+  try {
+    const { readFeedback } = await import("./recraft-feedback.mjs");
+    const entries = readFeedback();
+    const recent = entries.slice(-lookback);
+    const counts = new Map();
+    for (const e of recent) {
+      if (!e.style) continue;
+      counts.set(e.style, (counts.get(e.style) || 0) + 1);
+    }
+    return counts;
+  } catch {
+    return new Map();
+  }
+}
+
+/**
+ * Pick a style: 80% from approved pool (weighted by feedback × adjacency-decay),
+ * 20% novel/experimental. Adjacency decay halves weight for each recent
+ * appearance in the last 6 picks, so the same style can't anchor the feed.
+ *
+ * @param {object} [opts]
+ * @param {number} [opts.novelRate=0.2] - Probability of picking from NOVEL_DIRECTIONS
+ * @returns {Promise<{ style: string, colors: Array|null, id: string, isNovel: boolean }>}
+ */
+export async function pickStyle(opts = {}) {
+  const novelRate = opts.novelRate ?? 0.2;
+  if (Math.random() < novelRate) {
     const dir = NOVEL_DIRECTIONS[Math.floor(Math.random() * NOVEL_DIRECTIONS.length)];
     return { style: dir, colors: null, id: "novel", isNovel: true };
   }
@@ -130,10 +223,16 @@ export async function pickStyle() {
     weights = new Map();
   }
 
-  const weighted = APPROVED_STYLES.map((s) => ({
-    ...s,
-    weight: weights.get(s.id) ?? 1.0,
-  }));
+  // Adjacency decay — if a style was picked recently, scale its weight down
+  // so the feed doesn't feel same-y. Two recent uses → 0.25× weight.
+  const recentCounts = await getRecentStyleCounts(6);
+
+  const weighted = APPROVED_STYLES.map((s) => {
+    const base = weights.get(s.id) ?? 1.0;
+    const recentUses = recentCounts.get(s.id) ?? 0;
+    const decay = Math.pow(0.5, recentUses);
+    return { ...s, weight: Math.max(0.05, base * decay) };
+  });
   const totalWeight = weighted.reduce((sum, s) => sum + s.weight, 0);
   let roll = Math.random() * totalWeight;
   for (const s of weighted) {
@@ -170,6 +269,8 @@ export function dayPlanPrompt(plan, dateStr, styleDirection) {
     stopsText += `\n${time} — ${card.name}\n${blurb.slice(0, 80)}\n`;
   }
 
+  const composition = sampleComposition();
+
   return `Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:
 
 "${dayName.toUpperCase()} IN THE SOUTH BAY"
@@ -179,6 +280,9 @@ southbaytoday.org
 
 DESIGN DIRECTION:
 ${styleDirection}
+
+COMPOSITION DIRECTION (interpret within the style above):
+${composition.hints}
 
 CRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include "STOP 1", "STOP 2" labels — just the times and venue names.`;
 }
@@ -194,6 +298,7 @@ export function tonightPickPrompt(item, styleDirection) {
   const city = item.cityName || item.city || "";
   const time = item.time || "";
   const cost = item.costNote || item.cost || "";
+  const composition = sampleComposition();
 
   return `Design a portrait 4:5 Instagram poster highlighting ONE evening event/activity. Bold, eye-catching, designed to make someone want to go tonight.
 
@@ -210,6 +315,9 @@ southbaytoday.org
 DESIGN DIRECTION:
 ${styleDirection}
 
+COMPOSITION DIRECTION (interpret within the style above):
+${composition.hints}
+
 This is a SINGLE EVENT spotlight, not a multi-stop day plan. Make the event name large and prominent. Evening/night energy. NOT a photograph — graphic design poster. All text must be spelled correctly and fully legible.`;
 }
 
@@ -221,6 +329,9 @@ This is a SINGLE EVENT spotlight, not a multi-stop day plan. Make the event name
  * @returns {string}
  */
 export function wildcardPrompt(item, subtype, styleDirection) {
+  const composition = sampleComposition();
+  const compositionBlock = `\nCOMPOSITION DIRECTION (interpret within the style above):\n${composition.hints}\n`;
+
   if (subtype === "sv-history") {
     return `Design a portrait 4:5 Instagram poster for a "Silicon Valley History" feature. Retro-tech meets modern design.
 
@@ -234,7 +345,7 @@ southbaytoday.org
 
 DESIGN DIRECTION:
 ${styleDirection}
-
+${compositionBlock}
 Historic/nostalgic energy but with modern design sensibility. NOT a photograph — graphic design poster. All text must be spelled correctly and fully legible.`;
   }
 
@@ -251,7 +362,7 @@ southbaytoday.org
 
 DESIGN DIRECTION:
 ${styleDirection}
-
+${compositionBlock}
 Food/dining energy — warm, appetizing, inviting. NOT a photograph — graphic design poster. All text must be spelled correctly and fully legible.`;
   }
 
@@ -268,7 +379,7 @@ southbaytoday.org
 
 DESIGN DIRECTION:
 ${styleDirection}
-
+${compositionBlock}
 NOT a photograph — graphic design poster. All text must be spelled correctly and fully legible.`;
 }
 
@@ -289,6 +400,28 @@ NOT a photograph — graphic design poster. All text must be spelled correctly a
  * @param {string} category - Event category
  * @returns {Promise<string>} Recraft-ready prompt
  */
+// Abstract aesthetic pool — Claude picks ONE per image. Keep these short and
+// distinct; the goal is to give the model a large menu so feeds don't cluster.
+// "psychedelic/kaleidoscope/tie-dye" is intentionally NOT here — see
+// feedback_recraft_style_diversity.md.
+const ABSTRACT_AESTHETICS = [
+  "Clean geometric / Bauhaus (primary shapes, grid-based, structured)",
+  "Mid-century modern (organic curves, muted warm palette, atomic-era)",
+  "Paper cut / collage (layered flat shapes, subtle shadows, craft feel)",
+  "Risograph / screen print (grainy textures, 2-3 color overprint, zine energy)",
+  "Minimal line art with bold color fills (few clean strokes, large color areas)",
+  "Isometric / architectural (3D-ish flat illustration, spatial depth)",
+  "Art Deco travel poster (stepped geometric, chrome lines, rich teal and gold)",
+  "Linocut / block print (carved texture, visible grain, 2-3 inks, indie feel)",
+  "Sumi-e ink wash (rice-paper cream, broad black brush, one red seal accent)",
+  "Scandinavian minimal (lots of whitespace, muted earth tones, thin lines)",
+  "Chromatic aberration / glitch (RGB channel offsets, scanlines, digital grain)",
+  "Terrazzo pattern (cream field with scattered small stone chips in muted accents)",
+  "Cut-paper Matisse (bold organic shapes, clean edges, layered flat color)",
+  "Editorial magazine (wide margins, single bold accent color, sophisticated restraint)",
+  "Redwood / fog-gray California landscape abstraction (stylized hills, golden hour)",
+];
+
 export async function buildImagePrompt(postCopy, category) {
   // Load feedback guidance if available
   let guidanceBlock = "";
@@ -302,6 +435,12 @@ export async function buildImagePrompt(postCopy, category) {
       guidanceBlock += `\n\nRECENT PROMPTS THAT WERE REJECTED (avoid these patterns):\n${avoidPatterns.map((p, i) => `${i + 1}. ${p}`).join("\n")}`;
     }
   } catch {}
+
+  // Pick a single aesthetic + composition profile deterministically before we
+  // prompt Claude. Letting Claude "pick one from a menu" every time lets it
+  // drift back to favorites. Pre-selecting forces true variety across runs.
+  const aesthetic = ABSTRACT_AESTHETICS[Math.floor(Math.random() * ABSTRACT_AESTHETICS.length)];
+  const composition = sampleAbstractComposition();
 
   // Try Claude first to craft a tailored prompt
   try {
@@ -324,6 +463,12 @@ export async function buildImagePrompt(postCopy, category) {
 
 POST: "${postCopy.slice(0, 300)}"
 
+REQUIRED AESTHETIC FOR THIS IMAGE: ${aesthetic}
+— the prompt you write MUST commit to this aesthetic. Do not default to a generic flat-vector look.
+
+REQUIRED COMPOSITION DIRECTIONS (interpret inside the aesthetic):
+${composition.hints}
+
 RULES for the prompt you write:
 - Lean ABSTRACT but still topically connected — recognizable objects can appear but should be stylized, fragmented, or woven into an abstract composition (think: album art, not clip art)
 - NO PEOPLE — no faces, hands, or human figures
@@ -331,15 +476,8 @@ RULES for the prompt you write:
 - The image should make someone stop scrolling — bold composition, rich colors, visual energy
 - 4:5 portrait ratio
 - Include 1-2 recognizable visual anchors from the subject (e.g. a stylized guitar shape, an abstracted book spine, a flowing coffee cup silhouette) but let the rest be abstract color fields, patterns, and shapes
-- IMPORTANT: Vary the style across these different aesthetics (pick ONE per image, don't always default to the same):
-  * Clean geometric / Bauhaus (primary shapes, grid-based, structured)
-  * Mid-century modern (organic curves, muted warm palette, atomic-era)
-  * Paper cut / collage (layered flat shapes, subtle shadows, craft feel)
-  * Risograph / screen print (grainy textures, 2-3 color overprint, zine energy)
-  * Minimal line art with bold color fills (few clean strokes, large color areas)
-  * Isometric / architectural (3D-ish flat illustration, spatial depth)
-- AVOID: swirling psychedelic patterns, trippy optical illusions, melting/morphing shapes, tie-dye aesthetics, kaleidoscope effects. These are fine occasionally but should NOT be the default.
-- Keep it under 100 words${guidanceBlock}
+- AVOID: swirling psychedelic patterns, trippy optical illusions, melting/morphing shapes, tie-dye aesthetics, kaleidoscope effects.
+- Keep it under 120 words${guidanceBlock}
 
 Return ONLY the prompt text, nothing else.`
         }],
@@ -353,6 +491,6 @@ Return ONLY the prompt text, nothing else.`
     }
   } catch {}
 
-  // Fallback: simple template
-  return `Stylized flat vector illustration. NO PEOPLE, NO TEXT. Bold saturated colors, clean geometric shapes, retro/mid-century influence. Subject: ${postCopy.slice(0, 150)}. 4:5 portrait ratio.`;
+  // Fallback: simple template that still uses the chosen aesthetic + mood.
+  return `${aesthetic}. ${composition.hints} NO PEOPLE, NO TEXT. Subject: ${postCopy.slice(0, 150)}. 4:5 portrait ratio.`;
 }

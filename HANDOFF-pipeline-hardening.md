@@ -1,8 +1,33 @@
 # Handoff: Social Pipeline Hardening
 
 **Written:** 2026-04-19, end-of-day
+**Updated:** 2026-04-19 (second pass — tier 1, 1.3, 2.2, 2.3, 4.2, 4.3 now shipped)
 **For:** the next Claude session digging into `southbaytoday.org`'s social post generation pipeline
 **Goal:** make this system robust enough that Stephen spends ~10 minutes reviewing, not ~8 hours fighting.
+
+---
+
+## 📌 Update — 2026-04-19, second session (commit `e1c2951`)
+
+**Shipped this session:**
+- **Tier 1.1** — `scripts/audit-places.mjs` + `scripts/validate-places.mjs` wired into `generate-places` regen. One BC Canada entry purged. 22 remaining "info" flags are legitimate curated landmarks.
+- **Tier 1.2** — `scripts/audit-events.mjs`. Virtual-flag auto-detection + acronym normalization added to BOTH `generate-events.mjs` (tail pass) and `pull-inbound-events.mjs` (intake) so every ingestion path normalizes.
+- **Tier 1.3** — `src/lib/south-bay/normalizeName.ts` + `scripts/social/lib/normalizeName.mjs`. "Hakone Estate & Gardens" now dedups against "Hakone Estate and Gardens" in plan-day blocked-names, generate-schedule usedDayPlanNames, and post-gen-review venue-repeat detection. AIDS/HIV/COVID/DMV/CPR/DIY/LGBTQ/NASA/TED/STEM title-casing fixes applied in generate-events.
+- **Tier 2.2** — `weekContext { anchorCities, categorySaturation }` flows from `generate-schedule.mjs` into the plan-day Claude prompt so batches diversify across the week.
+- **Tier 2.3** — `scripts/social/lib/post-gen-review.test.mjs`, 19 tests covering every failure class. Surfaced + fixed 2 real source bugs:
+  - DOW regex didn't match "Sunday afternoon" (no whitespace allowance). Now does.
+  - `outOfArea()` was scanning slot summary → false-positive on the 4/24 Kepler's event ("San Francisco Chronicle" referenced a speaker's former employer). Now scans venue/title/name/address/city only.
+- **Tier 4.2** — `scripts/validate-schedule.mjs` + `npm run check` runs `validate-places && validate-schedule && test`.
+- **Tier 4.3** — `scripts/social/lib/content-rules.mjs` is the single source of truth for `SLUG_TO_CITY_TOKENS`, `IN/OUT_OF_AREA_CITIES`, `NON_CA_STATES`, virtual signals, meeting patterns, acronym fixes. Six files import from it.
+- **Plan-day side quest** — threaded `targetDate` through `sequenceWithClaude` signature (pre-existing TS error surfaced by the test suite).
+
+**Still outstanding:** Tier 3.1, 3.2, 3.3, 3.4, Tier 4.1, Tier 4.4 — details below in the original list.
+
+**Open policy question (not blocking):** 25 Kepler's Books events at 1010 El Camino Real, Menlo Park are tagged `palo-alto`. The audit flags them as out-of-area. They're premium cultural content and losing them hurts. Options: (a) keep as-is, accept the audit flag, (b) re-slug to a new "near-area cultural" bucket, (c) drop entirely. Stephen hasn't decided.
+
+**Policy also outstanding:** 12 `santa-cruz` + `santa-clara-county` slug events in `upcoming-events.json`. Currently harmless (plan-day filters by CITY_MAP nearness + `CITY_NAMES` rotation doesn't include Santa Cruz, so they can't enter plans), but clutter the audit. Decide whether to drop the hardcoded Santa Cruz entries from `generate-events.mjs:2004+`.
+
+**New npm scripts:** `audit-places`, `validate-places`, `audit-events`, `validate-schedule`, `test`, `check`.
 
 ---
 
@@ -117,41 +142,17 @@ Don't redo these — they're already in place. Verify the code/behavior before a
 
 Work your way down. Each item has a concrete acceptance check.
 
-### Tier 1: source-data hygiene (high ROI, low risk)
+### ✅ Completed (see 2026-04-19 second-session update above)
 
-These prevent bad data from ever reaching a plan.
+- Tier 1.1 — places contamination scan + validator gate
+- Tier 1.2 — events audit + virtual-flag normalization at source (both generate-events and pull-inbound-events)
+- Tier 1.3 — acronym title-casing fixes + "&"↔"and" name canonicalization (shared `normalizeName` util)
+- Tier 2.2 — week-level context (anchorCities + categorySaturation) in the plan-day prompt
+- Tier 2.3 — 19 fixture tests for `post-gen-review.mjs`, surfaced/fixed DOW-regex + summary-scan source bugs
+- Tier 4.2 — `validate-schedule.mjs` + `npm run check` one-command gate
+- Tier 4.3 — `scripts/social/lib/content-rules.mjs` single source of truth
 
-#### 1.1 Scan all of `places.json` for cross-state contamination
-Today we caught 18 NY/UT places in `city: saratoga`. Check every other city slug the same way.
-
-- Script: for each `city` value, flag any place whose address doesn't contain that city's real name or the correct CA ZIP range. Cross-reference address city name vs slug.
-- Also flag addresses with **any US state code that isn't CA** or any non-US country.
-- Output a report; don't delete without review. Commit a `places-suspected-contamination.json` diff for Stephen to approve.
-- Bonus: add a `scripts/validate-places.mjs` that runs on every `generate-places` regen and fails the commit if contamination is detected.
-
-**Check:** After the scan, `grep -E "\b(NY|UT|NV|OR|WA|AZ)\s+\d{5}" src/data/south-bay/places.json` returns zero results. A CI job or a git pre-commit hook catches it if regressions sneak in.
-
-#### 1.2 Address-verify events the same way
-Events in `upcoming-events.json` and `inbound-events.json` can have similar issues. Same pass:
-- Flag events whose `city` slug doesn't match the address/venue.
-- Flag events tagged as "Education" but with meeting/commission title patterns.
-- Flag virtual events not marked as virtual.
-
-**Check:** `grep -iE "zoom|virtual|online|dial-?in" src/data/south-bay/upcoming-events.json` cross-referenced with the `virtual` field returns no false negatives.
-
-#### 1.3 Fix title casing at scraper source
-The "Aids:" capitalization came from the SJSU Events scraper. Investigate:
-- Where is that scraper? (Likely in `scripts/generate-events.mjs` — search for `sjsu`.)
-- Add a title-casing normalizer that handles acronyms: AIDS, HIV, COVID, DMV, CPR, etc. should be fully capitalized regardless of source casing.
-- Also normalize "& " vs " and " so padding dedup actually works (today's Hakone duplicate happened because dedup couldn't match "Hakone Estate & Gardens" against "Hakone Estate and Gardens").
-
-**Check:** Run scraper in a test mode; titles like "aids", "AIDS:", "Aids:" all normalize to "AIDS:".
-
----
-
-### Tier 2: plan-day.ts generation quality
-
-These improve what Claude produces in the first place.
+### Tier 2 remainder
 
 #### 2.1 Context-aware padding when Claude returns <6 stops
 Today we padded thin plans with generic top-rated places + generic blurbs ("Saratoga pick worth the stop"). That's passable but flat.
@@ -161,28 +162,6 @@ Better approach:
 - Preserve the existing cards; model only generates the pads.
 
 **Check:** Force a thin initial response (e.g. by constraining candidate pool), verify the padding call returns cards with proper blurbs + why fields + real venue descriptions.
-
-#### 2.2 Surface week-level context in the plan-day prompt
-Today `plan-day` only knew about `blockedNames`. That stops Ichika from appearing twice, but doesn't stop "5 spas in 14 days."
-
-Add to the prompt:
-- "This week's other plans are anchored in: [city list]. Pick stops that complement, not duplicate."
-- "Already used in this batch: [venue names]."
-- Category saturation hint: "This batch already has N spa stops. Pick non-spa if possible."
-
-This is mostly just extending the context the caller (`generate-schedule.mjs`) passes in. `blockedNames` is the existing hook.
-
-**Check:** Generate a fresh 10-day batch and verify no venue/POI appears more than once, no category appears more than 2× (spa 1×, food-type-x not saturated, etc.).
-
-#### 2.3 Write tests for `post-gen-review.mjs`
-Today's review module is the heart of the safety net. It needs tests.
-
-- Create `scripts/social/lib/post-gen-review.test.mjs` (or equivalent).
-- Feed fixture plans covering each failure mode: virtual, out-of-area, DOW mismatch, thin plan, city sprawl, spa saturation, venue repeat, commission meeting, bare URL, etc.
-- Assert the right `autoFixed` or `flagged` entries come out.
-- Run tests in CI.
-
-**Check:** `npm test` (or whatever the runner is — there may not be one yet; set it up if not) produces green output.
 
 ---
 
@@ -243,29 +222,6 @@ Today's `/plan/` 500s were caused by thin cards missing fields the renderer expe
 
 **Check:** Deliberately write a thin card to shared-plans, hit the `/plan/` URL, verify it renders (with some fields empty) instead of 500ing.
 
-#### 4.2 Pre-commit quality gate
-Today's bad batch got pushed and reviewed. A pre-commit gate could've caught hard-blocks.
-
-- Git hook or `pre-push` that runs `runQualityReview` on `social-schedule.json`.
-- If any hard-block flag fires, abort the commit.
-- Soft flags (thin plan, weak tonight) warn but allow.
-
-**Check:** `git commit` a bad schedule (virtual event, out-of-area tonight-pick) and verify the hook blocks it.
-
-#### 4.3 Consolidate config
-Today the TITLE_BLOCKLIST, weak-tonight patterns, spa patterns, and city lists are in 3+ files. Changes require touching all of them.
-
-- Create `scripts/social/lib/content-rules.mjs` as the single source of truth for:
-  - Bad title patterns
-  - Weak tonight patterns  
-  - Category keywords
-  - In-area / out-of-area city lists
-  - Virtual signals
-  - DOW aliases
-- All three of `post-gen-review.mjs`, `plan-day.ts`, and `generate-events.mjs` import from here.
-
-**Check:** Adding a new bad pattern requires changing one file.
-
 #### 4.4 Observability: log every decision
 Today's debugging was painful because we couldn't easily see why something did or didn't happen.
 
@@ -307,17 +263,20 @@ Today's debugging was painful because we couldn't easily see why something did o
 
 ## 📊 Success criteria
 
-By the end of your session, next Saturday's 3:30 AM batch should produce a schedule where Stephen's review is ~10 minutes, not ~8 hours. Specifically:
+By the end of your session, next Saturday's 3:30 AM batch should produce a schedule where Stephen's review is ~10 minutes, not ~8 hours.
 
-- [ ] Zero cross-state contaminated places in padding picks
-- [ ] Zero commission/gov meetings in day-plans
-- [ ] Zero virtual events in tonight-picks
-- [ ] Zero venue repeats across consecutive days in the batch
-- [ ] Every day-plan has 6+ stops with breakfast before 10 AM and an evening activity after 6 PM
+Checked boxes are now **enforced by code** (normalizer, validator, or test). Unchecked boxes are what's left to build.
+
+- [x] Zero cross-state contaminated places in padding picks *(validate-places gate in generate-places)*
+- [x] Zero commission/gov meetings in day-plans *(generate-events title blocklist + plan-day defense-in-depth)*
+- [x] Zero virtual events in tonight-picks *(generate-events auto-flags virtual + post-gen-review hard-blocks + plan-day filters pool)*
+- [x] Zero venue repeats across consecutive days in the batch *(post-gen-review + normalizeName catches "&/and" dedup drift)*
+- [x] Zero DOW mismatches in blurbs ("Sunday afternoon" on a Monday plan) *(regex now handles whitespace; regression test in place)*
+- [x] `weekContext` (anchorCities + category saturation) passed into plan-day so batches diversify
+- [ ] Every day-plan has 6+ stops with breakfast before 10 AM and an evening activity after 6 PM *(prompt mandates it but thin-plan still possible → Tier 2.1 padding call)*
 - [ ] Zero bare `https://southbaytoday.org` URLs in copy (all are full `/plan/XXX`)
-- [ ] Zero DOW mismatches in blurbs ("Sunday afternoon" on a Monday plan)
-- [ ] Review portal shows issues visually so Stephen doesn't have to read every copy variant
-- [ ] `/plan/XXX` URLs return 200 for every generated plan
+- [ ] Review portal shows issues visually so Stephen doesn't have to read every copy variant *(Tier 3.1)*
+- [ ] `/plan/XXX` URLs return 200 for every generated plan *(Tier 4.1 canonicalize-at-write-time)*
 
 Each unchecked box is a concrete thing to work on.
 
@@ -329,15 +288,23 @@ Each unchecked box is a concrete thing to work on.
 |------|------|
 | `scripts/social/generate-schedule.mjs` | Orchestrates batch generation across N days |
 | `scripts/social/lib/post-gen-review.mjs` | Quality review that runs after each batch |
+| `scripts/social/lib/post-gen-review.test.mjs` | 19 fixture tests — run with `npm test` |
+| `scripts/social/lib/content-rules.mjs` | **Single source of truth** for city/virtual/acronym/meeting patterns |
+| `scripts/social/lib/normalizeName.mjs` | Canonical-form util for venue/title dedup (handles "&" vs "and") |
 | `scripts/social/lib/copy-gen.mjs` | Claude calls for social copy (6 platforms) |
 | `scripts/social/copy-review-server.mjs` | The review portal on port 3456 |
 | `src/pages/api/plan-day.ts` | Day-plan generation engine (Claude Sonnet sequencing) |
 | `src/pages/plan/[id].ts` | Public shareable plan page — reads shared-plans.json |
+| `src/lib/south-bay/normalizeName.ts` | TS mirror of the normalizer (keep in sync with .mjs) |
 | `src/data/south-bay/social-schedule.json` | The authoritative batch state |
 | `src/data/south-bay/shared-plans.json` | Plans referenced by `/plan/XXX` URLs |
 | `src/data/south-bay/places.json` | Curated POI list (2500+ entries) |
 | `src/data/south-bay/upcoming-events.json` | Scraped events |
-| `scripts/generate-events.mjs` | Main event scraper/aggregator |
+| `scripts/generate-events.mjs` | Main event scraper/aggregator (tail-pass normalizers live here) |
+| `scripts/pull-inbound-events.mjs` | Mirrors inbound-events Blob → local JSON (normalizes on intake) |
+| `scripts/audit-places.mjs` / `scripts/validate-places.mjs` | `npm run audit-places` + CI gate |
+| `scripts/audit-events.mjs` | `npm run audit-events` — report, not gate |
+| `scripts/validate-schedule.mjs` | `npm run validate-schedule` — fails on any hard-block |
 
 ---
 
