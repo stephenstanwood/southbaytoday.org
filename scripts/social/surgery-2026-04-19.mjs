@@ -27,7 +27,7 @@ for (const f of reviewResult.autoFixed) {
 // Step 2: pad thin day-plans using top-rated places in the anchor city
 console.log('\nStep 2: pad thin day-plans\n');
 
-const placesArr = Array.isArray(places) ? places : Object.values(places);
+const placesArr = Array.isArray(places) ? places : (places.places || Object.values(places));
 const placesByCity = {};
 for (const p of placesArr) {
   if (!p.rating || p.rating < 4.3) continue;
