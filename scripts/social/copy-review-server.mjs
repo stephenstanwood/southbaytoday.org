@@ -1136,9 +1136,13 @@ function renderCalendar() {
       }
     }
 
+    const planUrl = dayData['day-plan']?.planUrl;
+    const planLink = planUrl
+      ? ' <a href="' + escapeHtml(planUrl) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="margin-left:10px;padding:3px 10px;border:1px solid #1a1a1a;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#1a1a1a;text-decoration:none;vertical-align:middle">Day Plan ↗</a>'
+      : '';
     html += '<div class="cal-day' + (isToday ? ' today' : '') + '">';
     html += '<div class="cal-day-header">';
-    html += '<h3>' + dayName + (isToday ? ' (Today)' : '') + '</h3>';
+    html += '<h3>' + dayName + (isToday ? ' (Today)' : '') + planLink + '</h3>';
     html += '<div style="display:flex;align-items:center;gap:4px"><span class="cal-date">' + monthDay + '</span>' + headerBadges + '</div>';
     html += '</div>';
     html += '<div class="cal-slots">';

@@ -226,7 +226,7 @@ const dummyShortUrl = (id, url) => url; // skip shortening for speed; the publis
 
 async function regenDayPlanCopy(date, dp) {
   try {
-    const planUrl = dp.plan?.planId ? `https://southbaytoday.org/plan/${dp.plan.planId}` : '';
+    const planUrl = dp.planUrl || (dp.plan?.planId ? `https://southbaytoday.org/plan/${dp.plan.planId}` : '');
     const copy = await generateDayPlanCopy(dp.plan, date, planUrl);
     dp.copy = copy;
     console.log(`  ${date} day-plan: regenerated copy`);
