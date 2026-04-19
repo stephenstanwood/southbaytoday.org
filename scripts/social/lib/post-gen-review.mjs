@@ -344,7 +344,7 @@ export function runQualityReview(schedule, options = {}) {
           if (!ndp || ["rejected"].includes(ndp.status)) continue;
           if (dayPlanHasCategory(ndp, CATEGORY_KEYWORDS.spa)) spaNeighbors++;
         }
-        if (spaNeighbors >= 1) {
+        if (spaNeighbors >= 2) {
           flagged.push({ date, slotType: "day-plan", reason: `spa saturation (${spaNeighbors + 1} spa plans in 7 days)` });
         }
       }
