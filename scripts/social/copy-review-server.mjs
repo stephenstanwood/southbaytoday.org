@@ -680,6 +680,7 @@ const HTML = `<!DOCTYPE html>
 </div>
 
 <div id="calendar-view">
+  <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button onclick="openAllDayPlans()" style="padding:6px 12px;border:1px solid #1a1a1a;background:#fff;border-radius:999px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;cursor:pointer">Open all day plans ↗</button></div>
   <div id="calendar-grid"></div>
 </div>
 
@@ -1107,9 +1108,9 @@ function renderCalendar() {
   const today = todayStr();
   const days = scheduleData.days || {};
 
-  // Generate 14 days starting from today
+  // Generate 10 days starting from today
   let html = '';
-  for (let offset = 0; offset < 14; offset++) {
+  for (let offset = 0; offset < 10; offset++) {
     const d = new Date(today + 'T12:00:00');
     d.setDate(d.getDate() + offset);
     const dateStr = d.toLocaleDateString('en-CA');
@@ -1324,6 +1325,23 @@ async function calAction(dateStr, slotType, action) {
 
 async function calApproveBoth(dateStr, slotType) {
   calAction(dateStr, slotType, 'approve-both');
+}
+
+function openAllDayPlans() {
+  const urls = [];
+  const days = (scheduleData && scheduleData.days) || {};
+  const today = todayStr();
+  for (let offset = 0; offset < 10; offset++) {
+    const d = new Date(today + 'T12:00:00');
+    d.setDate(d.getDate() + offset);
+    const dateStr = d.toLocaleDateString('en-CA');
+    const dp = days[dateStr] && days[dateStr]['day-plan'];
+    if (dp && dp.planUrl) urls.push(dp.planUrl);
+  }
+  if (!urls.length) { alert('No day-plan URLs found.'); return; }
+  if (!confirm('Open ' + urls.length + ' day plan tabs?')) return;
+  // Stagger opens so the browser doesn't consolidate them into one tab
+  urls.forEach((url, i) => setTimeout(() => window.open(url, '_blank', 'noopener'), i * 150));
 }
 
 function calAutosize(ta) {

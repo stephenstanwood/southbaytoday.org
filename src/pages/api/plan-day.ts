@@ -592,7 +592,11 @@ async function sequenceWithClaude(
 ): Promise<DayCard[]> {
   const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
   const cityName = getCityName(city);
-  const today = new Date().toLocaleDateString("en-US", {
+  // The DOW/date we put in the prompt MUST be the plan's date, not generation
+  // time. Otherwise the model writes blurbs referencing the wrong day of week
+  // (e.g. "a great Sunday afternoon" on a Monday plan).
+  const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
+  const today = planDateObj.toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles",
     weekday: "long",
     month: "long",
