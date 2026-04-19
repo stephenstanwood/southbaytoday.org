@@ -721,6 +721,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                 }
               }
               openBtn.textContent = "✓ posted";
+              recomputeSummaryFromDOM();
               setTimeout(() => {
                 openBtn.disabled = false;
                 openBtn.textContent = "signing up ↗";
@@ -789,6 +790,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                 row.classList.remove("just-updated");
                 void row.offsetWidth;
                 row.classList.add("just-updated");
+                recomputeSummaryFromDOM();
               }
             } catch (err) {
               alert("mark error: " + err.message);
@@ -826,6 +828,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                 }
                 // Remove the undo button itself
                 undoBtn.remove();
+                recomputeSummaryFromDOM();
               }
             } catch (err) {
               alert("undo error: " + err.message);
@@ -849,6 +852,19 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
               );
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
+                // Orphan row (already gone server-side) — just remove from UI
+                if (res.status === 404 || err.error === "not found") {
+                  const row = delBtn.closest("tr");
+                  const section = row?.closest("section.section");
+                  row?.remove();
+                  const countEl = section?.querySelector("[data-count]");
+                  if (countEl) {
+                    const remaining = section?.querySelectorAll("tbody tr[data-target-id]").length ?? 0;
+                    countEl.textContent = String(remaining);
+                  }
+                  recomputeSummaryFromDOM();
+                  return;
+                }
                 alert(`delete failed: ${err.error || res.status}`);
                 delBtn.disabled = false;
                 delBtn.textContent = "✕";
@@ -866,6 +882,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
                     const remaining = section?.querySelectorAll("tbody tr[data-target-id]").length ?? 0;
                     countEl.textContent = String(remaining);
                   }
+                  recomputeSummaryFromDOM();
                 }, 300);
               }
             } catch (err) {
@@ -984,24 +1001,7 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
           localState.set(t.id, { ...t });
         }
 
-        function updateSummary(targets) {
-          const counts = {
-            total: targets.length,
-            receiving: 0, signupPosted: 0, retry: 0,
-            notAttempted: 0, needsManual: 0, failed: 0,
-          };
-          for (const t of targets) {
-            switch (t.status) {
-              case "receiving": counts.receiving++; break;
-              // Legacy "confirmed" rolls into signup-posted (deprecated status)
-              case "signup-posted":
-              case "confirmed": counts.signupPosted++; break;
-              case "retry": counts.retry++; break;
-              case "not-attempted": counts.notAttempted++; break;
-              case "needs-manual": counts.needsManual++; break;
-              case "failed": counts.failed++; break;
-            }
-          }
+        function renderSummaryCounts(counts) {
           const stats = document.querySelectorAll(".sticky-header .stat .num");
           if (stats.length >= 4) {
             stats[0].textContent = String(counts.receiving);
@@ -1009,8 +1009,6 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             stats[2].textContent = String(counts.retry);
             stats[3].textContent = String(counts.needsManual + counts.notAttempted);
           }
-
-          // Progress bar
           const done = counts.receiving + counts.signupPosted;
           const pct = counts.total > 0 ? Math.round((done / counts.total) * 100) : 0;
           const fill = document.querySelector(".progress-fill");
@@ -1019,6 +1017,38 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
           if (label) {
             label.innerHTML = `<b>${done}</b> of ${counts.total} complete · <b>${pct}%</b> through the grind`;
           }
+        }
+
+        function emptyCounts(total) {
+          return { total, receiving: 0, signupPosted: 0, retry: 0, notAttempted: 0, needsManual: 0, failed: 0 };
+        }
+
+        function bumpCount(counts, status, delta) {
+          switch (status) {
+            case "receiving": counts.receiving += delta; break;
+            case "signup-posted":
+            case "confirmed": counts.signupPosted += delta; break;
+            case "retry": counts.retry += delta; break;
+            case "not-attempted": counts.notAttempted += delta; break;
+            case "needs-manual": counts.needsManual += delta; break;
+            case "failed": counts.failed += delta; break;
+          }
+        }
+
+        function recomputeSummaryFromDOM() {
+          const rows = document.querySelectorAll("tr[data-target-id]");
+          const counts = emptyCounts(rows.length);
+          for (const tr of rows) {
+            const pill = tr.querySelector(".status-pill");
+            if (pill) bumpCount(counts, pill.dataset.status, 1);
+          }
+          renderSummaryCounts(counts);
+        }
+
+        function updateSummary(targets) {
+          const counts = emptyCounts(targets.length);
+          for (const t of targets) bumpCount(counts, t.status, 1);
+          renderSummaryCounts(counts);
         }
 
         async function pollOnce() {
