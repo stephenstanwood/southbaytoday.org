@@ -360,8 +360,20 @@ function weightedRandomPick(items) {
 /** One pass of generation over `daysAhead` days.
  *  Mutates `schedule` in place. Callable multiple times: the second call will
  *  regen any slot that was deleted between calls (e.g. by the quality review).
+ *
+ *  @param {object} opts
+ *  @param {"draft-or-missing"|"missing-only"} [opts.regenMode="draft-or-missing"]
+ *    - "draft-or-missing": replace existing draft slots and fill missing slots
+ *      (used for Pass 1)
+ *    - "missing-only": only fill missing slots, leave existing drafts alone
+ *      (used for Pass 2 — flagged slots were deleted, everything else is keep)
  */
-async function runGenerationPass(schedule, plansData, scored, { passLabel = "pass" } = {}) {
+async function runGenerationPass(schedule, plansData, scored, { passLabel = "pass", regenMode = "draft-or-missing" } = {}) {
+  const shouldFill = (slot) => {
+    if (!slot) return true;
+    if (regenMode === "missing-only") return false;
+    return slot.status === "draft";
+  };
   const today = todayPT();
   let generated = 0;
   let skipped = 0;
@@ -407,7 +419,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
     console.log(`\n  ${dayName} ${dateStr}:`);
 
     // ── Day Plan (7:15 AM) ──────────────────────────────────────────────
-    if (!day["day-plan"] || day["day-plan"].status === "draft") {
+    if (shouldFill(day["day-plan"])) {
       // Anchor city rotates by day-of-year for flavor. The plan-day API
       // pulls candidates from the full South Bay region (20km radius), so
       // the "city" is more of a center-of-gravity than a hard filter.
@@ -502,7 +514,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
     }
 
     // ── Tonight Pick (11:45 AM) ─────────────────────────────────────────
-    if (!day["tonight-pick"] || day["tonight-pick"].status === "draft") {
+    if (shouldFill(day["tonight-pick"])) {
       const tonight = pickTonightEvent(scored, dateStr, recentTonightVenues, recentTonightTitles);
       if (tonight) {
         if (dryRun) {
@@ -552,7 +564,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
     // ── Wildcard (4:30 PM) — SV History only ────────────────────────────
     // General/restaurant wildcards are paused; only create the slot on
     // anniversary dates that match a SV tech milestone.
-    if (!day["wildcard"] || day["wildcard"].status === "draft") {
+    if (shouldFill(day["wildcard"])) {
       const wildRaw = pickWildcard(scored, dateStr, recentWildcardTitles);
       const wild = wildRaw && wildRaw.subtype === "sv-history" ? wildRaw : null;
       if (!wild && wildRaw) {
@@ -627,9 +639,12 @@ async function main() {
   console.log(`\n▶︎ Pass 1: ${p1.generated} generated, ${p1.skipped} preserved`);
 
   // ── Quality review ────────────────────────────────────────────────────
+  // Restrict to the active generation window — we don't want to delete a
+  // slot we can't refill on Pass 2.
+  const windowDates = Array.from({ length: daysAhead }, (_, i) => addDays(today, i));
   if (!dryRun) {
     console.log(`\n🔍 Running quality review...`);
-    const review = runQualityReview(schedule, { resetFlaggedToDraft: true });
+    const review = runQualityReview(schedule, { dates: windowDates, resetFlaggedToDraft: true });
     for (const a of review.autoFixed) {
       console.log(`   🔧 auto-fix [${a.date} ${a.slotType}] ${a.kind}: ${a.details}`);
     }
@@ -637,16 +652,16 @@ async function main() {
       console.log(`   🚩 flag [${f.date} ${f.slotType}] ${f.reason} — will regen`);
     }
 
-    // ── Pass 2: regenerate flagged slots (flagged slots were deleted) ────
+    // ── Pass 2: regenerate only the slots that were deleted by review ────
     if (review.flagged.length) {
       console.log(`\n🔁 Pass 2: regenerating ${review.flagged.length} flagged slot(s)...`);
-      const p2 = await runGenerationPass(schedule, plansData, scored, { passLabel: "regen" });
+      const p2 = await runGenerationPass(schedule, plansData, scored, { passLabel: "regen", regenMode: "missing-only" });
       console.log(`✅ Pass 2: ${p2.generated} regenerated`);
 
       // Re-run the deterministic portion of the review (terminology,
       // chronological sort) on the newly-regenerated slots. Don't reset
       // flags this time — avoid regen loops.
-      const review2 = runQualityReview(schedule, { resetFlaggedToDraft: false });
+      const review2 = runQualityReview(schedule, { dates: windowDates, resetFlaggedToDraft: false });
       for (const a of review2.autoFixed) {
         console.log(`   🔧 auto-fix [${a.date} ${a.slotType}] ${a.kind}: ${a.details}`);
       }
