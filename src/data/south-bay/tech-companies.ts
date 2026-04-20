@@ -1330,6 +1330,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://sifive.com",
   },
   {
+    id: "elorian",
+    name: "Elorian",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$55M",
+    date: "2026-04-09",
+    tagline: "Visual reasoning AI that understands the world directly through images — no text translation step. Founded by ex-Google DeepMind researchers led by Andrew Dai; backed by NVIDIA, Menlo Ventures, and Altimeter at a $300M valuation. One of the largest AI seed rounds of 2026.",
+    color: "#6366f1",
+    url: "https://elorian.ai",
+  },
+  {
     id: "sima-ai",
     name: "SiMa.ai",
     city: "San Jose",
@@ -1598,7 +1610,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "48 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "49 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
