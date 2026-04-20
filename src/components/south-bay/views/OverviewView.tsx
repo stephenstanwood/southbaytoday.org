@@ -1305,6 +1305,203 @@ function SpringBreakCard({ todayForecast }: { todayForecast?: ForecastDay | null
   );
 }
 
+// ── Earth Day callout (Apr 20-26) ─────────────────────────────────────────────
+
+const EARTH_DAY_ISO = "2026-04-22";
+const EARTH_DAY_SHOW_START = "2026-04-20";
+const EARTH_DAY_SHOW_END = "2026-04-26";
+
+const EARTH_DAY_EVENTS = [
+  {
+    id: "ed-ejw",
+    title: "Environmental Justice Week 2026",
+    date: "2026-04-20",
+    dateLabel: "Today",
+    venue: "Stanford University",
+    city: "Palo Alto",
+    time: null as string | null,
+    free: false,
+    url: "https://events.stanford.edu/event/environmental-justice-week-2026",
+  },
+  {
+    id: "ed-scu-climate",
+    title: "tUrn Climate Science en Español: Glaciares y Deshielo Glaciar",
+    date: "2026-04-20",
+    dateLabel: "Today",
+    venue: "Santa Clara University",
+    city: "Santa Clara",
+    time: "3:30 PM" as string | null,
+    free: true,
+    url: "https://events.scu.edu/arts-and-sciences/event/373094-turn-climate-science-en-espanol-glaciares-y",
+  },
+  {
+    id: "ed-sccl",
+    title: "Still No Miracles Needed: How Today's Technology Can Save Our Climate",
+    date: "2026-04-21",
+    dateLabel: "Tue, Apr 21",
+    venue: "Santa Clara County Library",
+    city: "Los Altos",
+    time: "7:00 PM" as string | null,
+    free: true,
+    url: "https://sccl.bibliocommons.com/events/69bc5954ad384e40edb58af8",
+  },
+  {
+    id: "ed-sjsu-games",
+    title: "Using Board Games & Public Arts to Explore Climate Solutions",
+    date: "2026-04-22",
+    dateLabel: "Earth Day · Apr 22",
+    venue: "San Jose State University",
+    city: "San Jose",
+    time: "10:30 AM" as string | null,
+    free: true,
+    url: "https://events.sjsu.edu/event/using-board-games-and-the-public-arts-to-explore-climate-solutions-public-humanities-salons",
+  },
+  {
+    id: "ed-mh-festival",
+    title: "Morgan Hill Earth Day Festival",
+    date: "2026-04-25",
+    dateLabel: "Sat, Apr 25",
+    venue: "Morgan Hill",
+    city: "Morgan Hill",
+    time: "9:00 AM" as string | null,
+    free: true,
+    url: "https://www.aauwmh.org/2026-earth-day-celebration/",
+  },
+];
+
+function EarthDayCallout() {
+  if (TODAY_ISO < EARTH_DAY_SHOW_START || TODAY_ISO > EARTH_DAY_SHOW_END) return null;
+
+  const daysUntil = Math.ceil(
+    (new Date(EARTH_DAY_ISO + "T12:00:00").getTime() - new Date(TODAY_ISO + "T12:00:00").getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+  const isEarthDay = TODAY_ISO === EARTH_DAY_ISO;
+  const pastEarthDay = TODAY_ISO > EARTH_DAY_ISO;
+
+  const visibleEvents = EARTH_DAY_EVENTS.filter((e) => e.date >= TODAY_ISO);
+  if (visibleEvents.length === 0) return null;
+
+  const headerLabel = isEarthDay
+    ? "Happy Earth Day!"
+    : pastEarthDay
+      ? "Earth Day Week"
+      : daysUntil === 1
+        ? "Earth Day Tomorrow"
+        : `Earth Day in ${daysUntil} Days`;
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <div className="sb-section-header" style={{ marginBottom: 12 }}>
+        <span className="sb-section-title">🌍 {headerLabel}</span>
+        <span style={{ fontSize: 11, color: "#166534", fontWeight: 500 }}>
+          South Bay events · April 20–26
+        </span>
+        <div className="sb-section-line" />
+      </div>
+
+      <div
+        style={{
+          background: "#f0fdf4",
+          border: "1px solid #bbf7d0",
+          borderLeft: "4px solid #16a34a",
+          borderRadius: 6,
+          padding: "10px 14px",
+          marginBottom: 12,
+          fontSize: 12,
+          color: "#166534",
+          lineHeight: 1.5,
+        }}
+      >
+        {isEarthDay
+          ? "Earth Day 2026 — here's how South Bay residents are getting involved today."
+          : pastEarthDay
+            ? "Earth Day was Tuesday. Earth Day Week continues through Saturday with events across the South Bay."
+            : `Earth Day is ${daysUntil === 1 ? "tomorrow" : "Tuesday, April 22"}. From library talks to outdoor festivals, the South Bay has a full week of ways to get involved.`}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {visibleEvents.map((e, i) => (
+          <a
+            key={e.id}
+            href={e.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 10,
+              padding: "10px 0",
+              borderBottom: i < visibleEvents.length - 1 ? "1px solid #dcfce7" : "none",
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                fontFamily: "'Space Mono', monospace",
+                color:
+                  e.date === EARTH_DAY_ISO
+                    ? "#16a34a"
+                    : e.date === TODAY_ISO
+                      ? "var(--sb-accent)"
+                      : "var(--sb-muted)",
+                fontWeight: e.date === EARTH_DAY_ISO ? 700 : 400,
+                whiteSpace: "nowrap",
+                minWidth: 84,
+                paddingTop: 1,
+              }}
+            >
+              {e.dateLabel}
+              {e.time && (
+                <>
+                  <br />
+                  {e.time}
+                </>
+              )}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  fontFamily: "var(--sb-sans)",
+                  lineHeight: 1.3,
+                  color: "var(--sb-ink)",
+                }}
+              >
+                {e.title} ↗
+              </div>
+              <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2 }}>
+                {e.venue} · {e.city}
+              </div>
+            </div>
+            {e.free && (
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: "#166534",
+                  background: "#dcfce7",
+                  border: "1px solid #bbf7d0",
+                  borderRadius: 3,
+                  padding: "2px 6px",
+                  flexShrink: 0,
+                  alignSelf: "center",
+                  fontFamily: "'Space Mono', monospace",
+                }}
+              >
+                FREE
+              </span>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── 5-day forecast strip ──────────────────────────────────────────────────────
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -3012,6 +3209,9 @@ export default function OverviewView({ homeCity, setHomeCity, onNavigate }: Prop
 
       {/* ── Spring Break Guide (shown Mar 28 – Apr 17, promoted to top during break) ── */}
       {!changingCity && <SpringBreakCard todayForecast={forecast?.[0] ?? null} />}
+
+      {/* ── Earth Day events (Apr 20-26) ── */}
+      {!changingCity && <EarthDayCallout />}
 
       {/* ── Our Picks (weekends only) ── */}
       {IS_WEEKEND_MODE && !changingCity && <WeekendPicksCard />}
