@@ -23,17 +23,6 @@
       "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
     },
     {
-      "business_id": "PR0423728",
-      "name": "Giwa",
-      "city": "Santa Clara",
-      "address": "1494 Halford Av",
-      "date": "2026-04-16",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "The facility is hereby CLOSED by this department due to evidence of vermin infestation (see violation K23)"
-    },
-    {
       "business_id": "PR0306461",
       "name": "Mountain Mikes Pizza",
       "city": "Campbell",
@@ -54,6 +43,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "OWNERSHIP CHANGE INFORMATION"
+    },
+    {
+      "business_id": "PR0423728",
+      "name": "Giwa",
+      "city": "Santa Clara",
+      "address": "1494 Halford Av",
+      "date": "2026-04-16",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "The facility is hereby CLOSED by this department due to evidence of vermin infestation (see violation K23)"
     },
     {
       "business_id": "PR0306424",
@@ -78,26 +78,26 @@
       "summary": "This inspection was conducted in conjunction with complaint investigation: CO0159386"
     },
     {
-      "business_id": "PR0305555",
-      "name": "Da Sichuan Bistro",
-      "city": "Palo Alto",
-      "address": "3781 El Camino Real",
-      "date": "2026-04-15",
-      "score": 81,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
-    },
-    {
-      "business_id": "PR0452650",
-      "name": "Banh Mi Oven",
-      "city": "San Jose",
-      "address": "1143 Story Rd # 196",
+      "business_id": "PR0424154",
+      "name": "Naisnow Tea & Bakery",
+      "city": "Cupertino",
+      "address": "19600 Vallco Py # 100",
       "date": "2026-04-15",
       "score": null,
       "result": "Y",
       "type": "FOLLOW-UP INSPECTION",
-      "summary": "- Two or more major violations were observed during the routine inspection"
+      "summary": "Follow-up for facility that was closed for being unable to protect food from contamination due to removal of required equipment"
+    },
+    {
+      "business_id": "PR0306362",
+      "name": "Capitol Valero",
+      "city": "San Jose",
+      "address": "1898 N Capitol Av",
+      "date": "2026-04-15",
+      "score": 74,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Note: The store sells coffee and other prepackaged food products"
     },
     {
       "business_id": "PR0428892",
@@ -109,28 +109,6 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "- On-site for operator scheduled follow-up inspection after facility was closed due to evidence of a vermin infestation"
-    },
-    {
-      "business_id": "PR0374901",
-      "name": "Egghead",
-      "city": "Santa Clara",
-      "address": "3957 Rivermark Plz # F",
-      "date": "2026-04-15",
-      "score": null,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Limited inspection conducted in conjunction with foodborne illness investigation CO0159367"
-    },
-    {
-      "business_id": "PR0424154",
-      "name": "Naisnow Tea & Bakery",
-      "city": "Cupertino",
-      "address": "19600 Vallco Py # 100",
-      "date": "2026-04-15",
-      "score": null,
-      "result": "Y",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow-up for facility that was closed for being unable to protect food from contamination due to removal of required equipment"
     },
     {
       "business_id": "PR0306143",
@@ -155,26 +133,37 @@
       "summary": "Onsite to conduct a routine inspection, during walk through observed a dead rodent and several droppings in the back of house area"
     },
     {
-      "business_id": "PR0306362",
-      "name": "Capitol Valero",
-      "city": "San Jose",
-      "address": "1898 N Capitol Av",
+      "business_id": "PR0374901",
+      "name": "Egghead",
+      "city": "Santa Clara",
+      "address": "3957 Rivermark Plz # F",
       "date": "2026-04-15",
-      "score": 74,
+      "score": null,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Note: The store sells coffee and other prepackaged food products"
+      "summary": "Limited inspection conducted in conjunction with foodborne illness investigation CO0159367"
     },
     {
-      "business_id": "PR0304119",
-      "name": "Tung Kee Noodle House",
+      "business_id": "PR0452650",
+      "name": "Banh Mi Oven",
       "city": "San Jose",
-      "address": "1818 Tully Rd 162b",
-      "date": "2026-04-14",
-      "score": 52,
+      "address": "1143 Story Rd # 196",
+      "date": "2026-04-15",
+      "score": null,
       "result": "Y",
-      "type": "ROUTINE INSPECTION",
+      "type": "FOLLOW-UP INSPECTION",
       "summary": "- Two or more major violations were observed during the routine inspection"
+    },
+    {
+      "business_id": "PR0305555",
+      "name": "Da Sichuan Bistro",
+      "city": "Palo Alto",
+      "address": "3781 El Camino Real",
+      "date": "2026-04-15",
+      "score": 81,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
     },
     {
       "business_id": "PR0430640",
@@ -199,6 +188,17 @@
       "summary": "Note: Food safety manager certificate: Hao Le - 2/19/2027"
     },
     {
+      "business_id": "PR0304119",
+      "name": "Tung Kee Noodle House",
+      "city": "San Jose",
+      "address": "1818 Tully Rd 162b",
+      "date": "2026-04-14",
+      "score": 52,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "- Two or more major violations were observed during the routine inspection"
+    },
+    {
       "business_id": "PR0306310",
       "name": "Emelina's #3",
       "city": "San Jose",
@@ -208,17 +208,6 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "Onsite for the first follow up inspection where numerous old rodent droppings were observed in an unused oven"
-    },
-    {
-      "business_id": "PR0304511",
-      "name": "Gio Cha Ngon",
-      "city": "San Jose",
-      "address": "1130 Lucretia Av G",
-      "date": "2026-04-13",
-      "score": 59,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "** Facility is hereby closed due to evidence of a vermin infestation, as well as lacking any type of sanitizer"
     },
     {
       "business_id": "PR0427778",
@@ -232,17 +221,6 @@
       "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
-      "business_id": "PR0424154",
-      "name": "Naisnow Tea & Bakery",
-      "city": "Cupertino",
-      "address": "19600 Vallco Py # 100",
-      "date": "2026-04-13",
-      "score": 49,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is closed due to being able to protect food from contamination"
-    },
-    {
       "business_id": "PR0373160",
       "name": "Kanji Sushi & Ramen",
       "city": "Palo Alto",
@@ -254,6 +232,39 @@
       "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
     },
     {
+      "business_id": "PR0304511",
+      "name": "Gio Cha Ngon",
+      "city": "San Jose",
+      "address": "1130 Lucretia Av G",
+      "date": "2026-04-13",
+      "score": 59,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "** Facility is hereby closed due to evidence of a vermin infestation, as well as lacking any type of sanitizer"
+    },
+    {
+      "business_id": "PR0424154",
+      "name": "Naisnow Tea & Bakery",
+      "city": "Cupertino",
+      "address": "19600 Vallco Py # 100",
+      "date": "2026-04-13",
+      "score": 49,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is closed due to being able to protect food from contamination"
+    },
+    {
+      "business_id": "PR0394527",
+      "name": "Sjc-ta-a3-baggage Claim-euro Café #766/hudson News #765",
+      "city": "San Jose",
+      "address": "1701 Airport Bl",
+      "date": "2026-04-10",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is hereby closed due to evidence of a pest/vermin infestation"
+    },
+    {
       "business_id": "PR0428892",
       "name": "360 Restaurant",
       "city": "San Jose",
@@ -263,17 +274,6 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "- Complaint investigation was conducted concurrently with routine inspection"
-    },
-    {
-      "business_id": "PR0305449",
-      "name": "House Of Bagels #2",
-      "city": "San Jose",
-      "address": "5353 Almaden Ex N63",
-      "date": "2026-04-10",
-      "score": 63,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0422571",
@@ -298,15 +298,15 @@
       "summary": "- Two or more major violations were observed during the routine inspection"
     },
     {
-      "business_id": "PR0394527",
-      "name": "Sjc-ta-a3-baggage Claim-euro Café #766/hudson News #765",
+      "business_id": "PR0305449",
+      "name": "House Of Bagels #2",
       "city": "San Jose",
-      "address": "1701 Airport Bl",
+      "address": "5353 Almaden Ex N63",
       "date": "2026-04-10",
-      "score": null,
-      "result": "R",
+      "score": 63,
+      "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Facility is hereby closed due to evidence of a pest/vermin infestation"
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0300107",
@@ -331,7 +331,7 @@
       "summary": "Time as a public health control; procedures & records"
     }
   ],
-  "generatedAt": "2026-04-19T12:52:40.750Z",
+  "generatedAt": "2026-04-20T02:55:40.580Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

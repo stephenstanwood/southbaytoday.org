@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-19T14:10:32.418Z",
+      "generatedAt": "2026-04-20T02:56:10.509Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,14 +137,14 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-19T14:10:34.760Z",
+      "generatedAt": "2026-04-20T02:56:13.008Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
       "dateRange": "Apr 12 – Apr 19",
       "stats": {
-        "total": 103,
+        "total": 101,
         "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
@@ -211,24 +211,24 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00084",
-          "address": "3401 Hillview Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to remove three Blue Gum trees due to declining health and decay. Nine 15 gallon Island Live Oak trees will be planted onsite as replacement trees. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-14",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00081",
           "address": "650 San Antonio Rd",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Over the Counter Retroactive tree removal  of (8)  failed trees to be replaced with seven (7) 36-inch box trees and nine (9) 24-inch box trees.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-14",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00084",
+          "address": "3401 Hillview Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to remove three Blue Gum trees due to declining health and decay. Nine 15 gallon Island Live Oak trees will be planted onsite as replacement trees. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-14",
