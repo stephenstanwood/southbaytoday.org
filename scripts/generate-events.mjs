@@ -139,6 +139,12 @@ function isoDate(d) {
   return `${parts[2]}-${parts[0]}-${parts[1]}`;
 }
 
+// Returns today's date in Pacific time (YYYY-MM-DD). Using PT everywhere avoids
+// the UTC-midnight off-by-one that drops today's events from the feed after ~5 PM local.
+function todayPT() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+
 function displayDate(d) {
   if (!d) return "";
   return d.toLocaleDateString("en-US", {
@@ -1989,7 +1995,7 @@ function fetchSantaCruzPicks() {
     // downstream plans (e.g. a "Monday Night" event appearing on a Wednesday).
     { title: "Santa Cruz Shakespeare 2026 Summer Season Opens", date: "2026-06-22", time: "7:30 PM", venue: "The Grove at DeLaveaga Park", address: "501 Upper Park Rd, Santa Cruz, CA 95065", url: "https://santacruzshakespeare.org", description: "Opening night of Santa Cruz Shakespeare's outdoor summer rep season at the Grove at DeLaveaga Park. Season runs through late August." },
   ];
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   const events = raw
     .filter((e) => e.date >= today)
     .map((e) => {
@@ -2031,7 +2037,7 @@ async function fetchSantaCruzWarriorsSchedule() {
     );
     if (!res.ok) throw new Error(`${res.status}`);
     const data = await res.json();
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const events = (data.events || []).map((e) => {
       const comp = e.competitions?.[0];
       if (!comp) return null;
@@ -2077,7 +2083,7 @@ async function fetchSharksSchedule() {
     });
     if (!res.ok) throw new Error(`${res.status}`);
     const data = await res.json();
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const events = (data.games || [])
       .filter((g) => g.gameType === 2) // regular season only
       .map((g) => {
@@ -2127,7 +2133,7 @@ async function fetchEarthquakesSchedule() {
     );
     if (!res.ok) throw new Error(`${res.status}`);
     const data = await res.json();
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const events = (data.events || []).map((e) => {
       const comp = e.competitions?.[0];
       if (!comp) return null;
@@ -2170,7 +2176,7 @@ async function fetchEarthquakesSchedule() {
 async function fetchSJGiantsSchedule() {
   console.log("  ⏳ SJ Giants (MiLB Stats API)...");
   try {
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const season = new Date().getFullYear();
     const res = await fetch(
       `https://statsapi.mlb.com/api/v1/schedule?sportId=14&teamId=476&startDate=${today}&endDate=${season}-09-30&gameType=R`,
@@ -2227,7 +2233,7 @@ async function fetchBayFCSchedule() {
     );
     if (!res.ok) throw new Error(`${res.status}`);
     const data = await res.json();
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const events = (data.events || []).map((e) => {
       const comp = e.competitions?.[0];
       if (!comp) return null;
@@ -2501,7 +2507,7 @@ function fetchScccfdEvents() {
       url: "https://www.eventbrite.com/e/wildfire-preparedness-workshop-los-altos-community-center-2026-tickets-1979749851098",
     },
   ];
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   const events = raw
     .filter((e) => e.date >= today)
     .map((e) => {
@@ -2544,14 +2550,14 @@ function fetchFarmersMarketEvents() {
 
   const events = [];
   const now = new Date();
-  const today = now.toISOString().split("T")[0];
+  const today = todayPT();
   // Generate instances for the next 90 days
   for (let offset = 0; offset <= 90; offset++) {
     const d = new Date(now);
     d.setDate(d.getDate() + offset);
     const dayOfWeek = d.getDay(); // 0=Sun
     const month = d.getMonth() + 1; // 1-indexed
-    const dateStr = d.toISOString().split("T")[0];
+    const dateStr = isoDate(d);
     if (dateStr < today) continue;
 
     for (const m of markets) {
@@ -2645,7 +2651,7 @@ function fetchMiscHardcodedEvents() {
       kidFriendly: true,
     },
   ];
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   const events = raw
     .filter((e) => e.date >= today)
     .map((e) => {
@@ -2740,7 +2746,7 @@ function fetchLgChamberEvents() {
       url: "https://www.losgatoschamber.com",
     },
   ];
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   const events = raw
     .filter((e) => e.date >= today)
     .map((e) => {
@@ -3229,8 +3235,8 @@ async function fetchSjdaEvents() {
     const perPage = 50;
     // Paginate — API has 1000+ events, but we only need the next 180 days
     const maxDate = new Date(now.getTime() + 180 * 86400000);
-    const startStr = now.toISOString().split("T")[0];
-    const endStr = maxDate.toISOString().split("T")[0];
+    const startStr = todayPT();
+    const endStr = maxDate.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
     for (let page = 1; page <= 10; page++) {
       const url = `https://sjdowntown.com/wp-json/tribe/events/v1/events?per_page=${perPage}&page=${page}&start_date=${startStr}&end_date=${endStr}`;
@@ -3392,7 +3398,7 @@ function fetchPlaywrightEvents() {
       return [];
     }
     const { events } = JSON.parse(readFileSync(path, "utf8"));
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
     const filtered = (events || [])
       .filter((e) => e.date >= today)
       .map((e) => e.time ? { ...e, time: e.time.toUpperCase() } : e);
@@ -3425,7 +3431,7 @@ function fetchInboundEvents() {
       return [];
     }
     const { events } = JSON.parse(readFileSync(INBOUND_EVENTS_PATH, "utf8"));
-    const today = new Date().toISOString().split("T")[0];
+    const today = todayPT();
 
     const out = [];
     let skipBlocked = 0, skipCity = 0, skipPast = 0;
@@ -3673,9 +3679,9 @@ async function main() {
   // Filter: must have date and city and title, must be today or future, must be public, not cancelled
   // Also skip zero-duration university calendar markers (e.g. "5:00 PM – 5:00 PM")
   const uniSources = new Set(["Stanford Events", "Santa Clara University", "SJSU Events"]);
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   // Cap non-sports events to 180 days out; sports schedules can go further
-  const maxFuture = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const maxFuture = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const valid = allEvents.filter(
     (e) =>
       e.date &&
