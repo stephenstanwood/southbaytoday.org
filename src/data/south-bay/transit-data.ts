@@ -72,7 +72,7 @@ export const TRANSIT_AGENCIES: TransitAgency[] = [
     color: "#C0392B",
     status: "normal",
     statusNote: "Electrified service running on schedule",
-    description: "Baby Bullet and local service connecting San Jose to San Francisco, 77 miles of peninsula rail.",
+    description: "Baby Bullet and local service connecting San José to San Francisco. 77-mile corridor extends south to Gilroy.",
     url: "https://www.caltrain.com",
     realtimeUrl: "https://www.caltrain.com/schedules/real-time-departures",
     keyRoutes: ["Baby Bullet (Limited stops)", "Limited (Express)", "Local (All stops)"],
