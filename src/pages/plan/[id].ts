@@ -38,6 +38,7 @@ export const GET: APIRoute = async ({ params, url }) => {
   if (!id) return new Response("Not found", { status: 404 });
 
   const origin = url.origin;
+  const debug = url.searchParams.get("debug") === "1";
 
   // Read plan from shared-plans.json (committed to git, deployed with the site)
   const plans = loadSharedPlans();
@@ -166,6 +167,7 @@ export const GET: APIRoute = async ({ params, url }) => {
           <p style="font-size:13px;color:#555;margin:0 0 4px;line-height:1.45">${esc(card.blurb)}</p>
           <p style="font-size:12px;font-weight:600;color:#FF6B35;margin:0;line-height:1.35;font-style:italic">${esc(card.why)}</p>
           ${costBadge}
+          ${debug && card.rationale ? `<div style="margin-top:8px;padding:6px 8px;background:#f3f4f6;border-left:3px solid #6366f1;font-size:10px;color:#4b5563;font-family:monospace;letter-spacing:0.2px">🔍 ${esc(card.rationale)}</div>` : ""}
         </div>
       ${linkClose}`;
   }).join("\n");

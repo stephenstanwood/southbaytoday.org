@@ -22,6 +22,7 @@ import {
   VIRTUAL_SIGNALS,
   isBorderAllowedVenue,
 } from "./content-rules.mjs";
+import { logDecision } from "../../../src/lib/south-bay/decisionLog.mjs";
 
 const DOW_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const DOW_ALIASES = {
@@ -605,6 +606,26 @@ export function runQualityReview(schedule, options = {}) {
       hardBlock: !!f.hardBlock,
     });
     delete day[f.slotType];
+  }
+
+  // Structured decision log — one line per outcome, for offline grep.
+  for (const af of autoFixed) {
+    logDecision({
+      script: "post-gen-review",
+      action: "autofixed",
+      target: `${af.date}/${af.slotType}`,
+      reason: `${af.kind}: ${af.details}`,
+      meta: { date: af.date, slotType: af.slotType, kind: af.kind },
+    });
+  }
+  for (const f of uniqueFlagged) {
+    logDecision({
+      script: "post-gen-review",
+      action: f.hardBlock ? "hard-blocked" : "flagged",
+      target: `${f.date}/${f.slotType}`,
+      reason: f.reason,
+      meta: { date: f.date, slotType: f.slotType, hardBlock: !!f.hardBlock },
+    });
   }
 
   return { autoFixed, flagged: uniqueFlagged };

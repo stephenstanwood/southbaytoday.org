@@ -19,6 +19,7 @@ import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
+import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
@@ -101,6 +102,10 @@ interface DayCard {
   photoRef?: string | null;
   source: "event" | "place";
   locked: boolean;
+  /** Breadcrumb for debugging — describes why this card ended up in the plan.
+   *  e.g. "claude:pool-rank-12 | score=15.4 | EVENT TODAY"
+   *  Surfaced via /plan/<id>?debug=1 and structured decision log. */
+  rationale?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -813,6 +818,9 @@ Return ONLY the JSON array. No explanation.`;
     return `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
   };
 
+  // Map id → pool rank (1-based) for the rationale breadcrumb.
+  const poolRank = new Map(topPool.map((c, i) => [c.id, i + 1]));
+
   const cards: DayCard[] = [];
   for (const pick of picks) {
     const candidate = candidateMap.get(pick.id);
@@ -823,6 +831,17 @@ Return ONLY the JSON array. No explanation.`;
     const timeBlock = isValidTimeBlock(pick.timeBlock)
       ? pick.timeBlock
       : timeBlockFromEventTime(candidate.eventTime);
+
+    const isLocked = lockedCandidates.some((l) => l.id === candidate.id);
+    const rank = poolRank.get(candidate.id);
+    const rationaleParts: string[] = [];
+    if (isLocked) rationaleParts.push("locked-by-caller");
+    else if (rank) rationaleParts.push(`claude:pool-rank-${rank}/${topPool.length}`);
+    else rationaleParts.push("claude:pick");
+    if (candidate.source === "event") rationaleParts.push(candidate.ongoing ? "ongoing-exhibit" : "event-today");
+    if (candidate.rating) rationaleParts.push(`rating=${candidate.rating}`);
+    if (candidate.category) rationaleParts.push(`cat=${candidate.category}`);
+    const rationale = rationaleParts.join(" | ");
 
     cards.push({
       id: candidate.id,
@@ -841,7 +860,16 @@ Return ONLY the JSON array. No explanation.`;
       photoRef: (candidate as any).photoRef || null,
       venue: candidate.venue || null,
       source: candidate.source,
-      locked: lockedCandidates.some((l) => l.id === candidate.id),
+      locked: isLocked,
+      rationale,
+    });
+
+    logDecision({
+      script: "plan-day",
+      action: "picked",
+      target: `${candidate.name} (${candidate.id})`,
+      reason: rationale,
+      meta: { city, targetDate, timeBlock, kids },
     });
   }
 
@@ -868,6 +896,14 @@ Return ONLY the JSON array. No explanation.`;
         venue: locked.venue || null,
         source: locked.source,
         locked: true,
+        rationale: "locked-force-insert | claude-omitted",
+      });
+      logDecision({
+        script: "plan-day",
+        action: "force-inserted",
+        target: `${locked.name} (${locked.id})`,
+        reason: "locked item missing from Claude output",
+        meta: { city, targetDate },
       });
     }
   }
@@ -886,6 +922,13 @@ Return ONLY the JSON array. No explanation.`;
       const startTime = cards[i].timeBlock.split(/\s*-\s*/)[0];
       const h = parseHour(startTime);
       if (h !== null && h >= KIDS_CURFEW_HOUR && !cards[i].locked) {
+        logDecision({
+          script: "plan-day",
+          action: "dropped",
+          target: `${cards[i].name} (${cards[i].id})`,
+          reason: `kids curfew — starts at ${startTime}, cutoff ${KIDS_CURFEW_HOUR}:00`,
+          meta: { city, targetDate, kids: true },
+        });
         cards.splice(i, 1);
       }
     }
@@ -926,6 +969,13 @@ Return ONLY the JSON array. No explanation.`;
       const hasOverlap = nameWords.some((w) => blurb.includes(w));
       if (!hasOverlap) {
         console.log(`[plan-day] dropped blurb mismatch: card="${cards[i].name}" blurb="${cards[i].blurb?.slice(0, 80)}..."`);
+        logDecision({
+          script: "plan-day",
+          action: "dropped",
+          target: `${cards[i].name} (${cards[i].id})`,
+          reason: "blurb↔card mismatch (zero word overlap)",
+          meta: { city, targetDate, blurb: cards[i].blurb?.slice(0, 80) },
+        });
         cards.splice(i, 1);
       }
     }
@@ -1049,6 +1099,155 @@ Return ONLY the JSON array. No explanation.`;
   });
 
   return cards;
+}
+
+// ---------------------------------------------------------------------------
+// padWithClaude — second Claude call that fills in missing stops for a
+// thin plan. Used when sequenceWithClaude returns <6 cards. Context-aware:
+// shows Claude the existing cards and asks it to fill the gaps with picks
+// that fit the plan's geographic cluster and timeline.
+// ---------------------------------------------------------------------------
+
+async function padWithClaude(args: {
+  partial: DayCard[];
+  pool: Candidate[];
+  targetTotal: number;
+  city: City;
+  kids: boolean;
+  weather: string | null;
+  targetDate?: string;
+}): Promise<DayCard[]> {
+  const { partial, pool, targetTotal, city, kids, weather, targetDate } = args;
+  const needed = targetTotal - partial.length;
+  if (needed <= 0 || pool.length === 0) return [];
+
+  const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
+  const cityName = getCityName(city);
+
+  const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
+  const today = planDateObj.toLocaleDateString("en-US", {
+    timeZone: "America/Los_Angeles",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
+  // Describe the plan so far — cards the pad must fit around.
+  const existingText = partial
+    .map((c) => `  • ${c.timeBlock} — ${c.name} (${c.category}, ${c.city})`)
+    .join("\n");
+
+  // Identify the time gaps. Simple version: if there's no card before 11 AM
+  // flag "needs breakfast/morning"; if nothing after 6 PM flag "needs evening".
+  const startHours = partial
+    .map((c) => parseHour(c.timeBlock.split(/\s*-\s*/)[0]))
+    .filter((h): h is number => h !== null);
+  const earliest = startHours.length ? Math.min(...startHours) : 12;
+  const latest = startHours.length ? Math.max(...startHours) : 12;
+  const gapHints: string[] = [];
+  if (earliest > 10) gapHints.push("Plan is missing a breakfast/morning-coffee stop (before 10 AM).");
+  if (latest < 13) gapHints.push("Plan is missing lunch (12–2 PM).");
+  if (latest < 18 && !kids) gapHints.push("Plan is missing dinner / evening activity (6–9 PM).");
+  if (!partial.some((c) => c.category === "food")) gapHints.push("Plan has no food stops at all — add at least one meal.");
+  if (gapHints.length === 0) gapHints.push(`Plan has ${partial.length} stops; extend the timeline naturally.`);
+
+  // Pool text with ids so the model returns real candidates.
+  const topPool = pool.slice(0, CANDIDATE_POOL_SIZE);
+  const poolText = topPool
+    .map((c, i) => {
+      const parts = [`${i + 1}. [${c.id}] ${c.name}`, `category: ${c.category}`, `city: ${c.city}`];
+      if (c.address) parts.push(`address: ${c.address}`);
+      if (c.eventTime) parts.push(`time: ${c.eventTime}`);
+      if (c.rating) parts.push(`rating: ${c.rating}`);
+      if (c.costNote) parts.push(`price: ${c.costNote}`);
+      return parts.join(" | ");
+    })
+    .join("\n");
+
+  const prompt = `You are padding an incomplete day plan for South Bay Today. The partial plan already has ${partial.length} stops — your job is to ADD ${needed} more stops that fill the gaps. DO NOT change or repeat the existing stops.
+
+It's ${today}. Anchor: ${cityName}. ${weather ? `Weather: ${weather}.` : ""}
+
+EXISTING STOPS (already locked in — do not return these):
+${existingText}
+
+GAPS TO FILL:
+${gapHints.map((g) => `- ${g}`).join("\n")}
+
+CANDIDATE POOL (pick ${needed} from here):
+${poolText}
+
+RULES:
+- Return exactly ${needed} new stops, no more.
+- Use ids from the pool. Do not invent ids.
+- Each new stop needs a timeBlock that fits between/around the existing stops without overlapping them.
+- Cluster geographically with the existing cards; don't send the user across the region for a single stop.
+- NEVER pick the same category as an adjacent existing stop.
+- Blurbs: what to do at that specific place. Why: one casual sentence. No "real event", "only today", "unforgettable". No distance/travel mentions. No star ratings.
+
+OUTPUT FORMAT (JSON array, no markdown fences, exactly ${needed} entries):
+[{ "id": "...", "timeBlock": "HH:MM AM/PM - HH:MM AM/PM", "blurb": "...", "why": "..." }]
+
+Return ONLY the JSON array.`;
+
+  const response = await client.messages.create({
+    model: CLAUDE_SONNET,
+    max_tokens: 1200,
+    messages: [{ role: "user", content: prompt }],
+  });
+
+  const text = extractText(response.content);
+  const cleaned = stripFences(text);
+
+  let picks: Array<{ id: string; timeBlock: string; blurb: string; why: string }>;
+  try {
+    picks = JSON.parse(cleaned);
+  } catch {
+    console.warn(`[plan-day] padWithClaude: failed to parse response: ${cleaned.slice(0, 200)}`);
+    return [];
+  }
+
+  const candidateMap = new Map(topPool.map((c) => [c.id, c]));
+  const padded: DayCard[] = [];
+  const isValidTimeBlock = (tb: string | null | undefined): boolean => {
+    if (!tb) return false;
+    return /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(tb);
+  };
+
+  for (const pick of picks) {
+    const candidate = candidateMap.get(pick.id);
+    if (!candidate) continue;
+    const timeBlock = isValidTimeBlock(pick.timeBlock) ? pick.timeBlock : "12:00 PM - 1:00 PM";
+    padded.push({
+      id: candidate.id,
+      name: candidate.name,
+      category: candidate.category,
+      city: candidate.city,
+      address: candidate.address,
+      timeBlock,
+      blurb: pick.blurb,
+      why: pick.why,
+      url: candidate.url,
+      mapsUrl: candidate.mapsUrl,
+      cost: candidate.cost,
+      costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
+      kidsCostNote: candidate.kidsCostNote,
+      photoRef: (candidate as any).photoRef || null,
+      venue: candidate.venue || null,
+      source: candidate.source,
+      locked: false,
+      rationale: `claude:pad | gap-fill | partial-had-${partial.length}`,
+    });
+    logDecision({
+      script: "plan-day",
+      action: "padded",
+      target: `${candidate.name} (${candidate.id})`,
+      reason: `context-aware pad to reach ${targetTotal} stops`,
+      meta: { city, targetDate, partialCount: partial.length, timeBlock },
+    });
+  }
+
+  return padded;
 }
 
 // ---------------------------------------------------------------------------
@@ -1179,7 +1378,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     }
 
     // 6. Claude sequences the plan
-    const cards = await sequenceWithClaude(
+    let cards = await sequenceWithClaude(
       diversePool,
       lockedCandidates,
       weatherData.weather,
@@ -1190,6 +1389,39 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       planDate,
       weekContext,
     );
+
+    // 6b. Context-aware padding (Tier 2.1): if sequenceWithClaude returned a
+    // thin plan, call Claude again with the partial + remaining pool to fill
+    // the gaps with proper blurbs instead of generic padding picks.
+    const MIN_STOPS = 6;
+    if (cards.length < MIN_STOPS) {
+      const usedIds = new Set(cards.map((c) => c.id));
+      const remainingPool = diversePool.filter((c) => !usedIds.has(c.id));
+      if (remainingPool.length > 0) {
+        console.log(`[plan-day] thin plan (${cards.length}/${MIN_STOPS}) — calling padWithClaude for ${MIN_STOPS - cards.length} more stops`);
+        try {
+          const padded = await padWithClaude({
+            partial: cards,
+            pool: remainingPool,
+            targetTotal: MIN_STOPS + 1,
+            city,
+            kids,
+            weather: weatherData.weather,
+            targetDate: planDate,
+          });
+          if (padded.length > 0) {
+            cards = [...cards, ...padded].sort((a, b) => {
+              const aH = parseHour(a.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
+              const bH = parseHour(b.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
+              return aH - bH;
+            });
+            console.log(`[plan-day] padded ${padded.length} card(s) → ${cards.length} total`);
+          }
+        } catch (err) {
+          console.warn(`[plan-day] padWithClaude failed: ${(err as Error).message}`);
+        }
+      }
+    }
 
     const responseData = {
       cards,
