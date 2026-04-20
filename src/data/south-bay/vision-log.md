@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-04-19 — Cycle 94: Fix UTC Event Cutoff (Events Now Survive Until Midnight Pacific)
+
+### Context
+Easter Sunday April 19, 2026. All pipelines had run, but upcoming-events.json showed 0 events for today — the feed started April 20. Root cause: `generate-events.mjs` used `new Date().toISOString().split("T")[0]` (UTC date) in 13 places for event date filtering. When run at 7 PM PDT = 2 AM UTC the next day, this expired today's events prematurely.
+
+### What Was Built
+
+**`scripts/generate-events.mjs` — `todayPT()` helper + 13 UTC date replacements**
+
+Added `todayPT()` function using `new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" })` and replaced all 13 occurrences of the UTC date pattern:
+- All per-source filter steps (`fetchSantaCruzPicks`, `fetchSJGiantsSchedule`, `fetchEspnSantaClaraAthletics`, etc.)
+- The final dedup/validation step at line 3682 (previously dropped today's events in afternoon)
+- `maxFuture` cap at 180 days now also uses PT
+- SJDA API start/end date params (Tribe Events API)
+- Recurring markets day generator — `dateStr` now uses `isoDate(d)` (already PT-aware)
+
+**Result:** 42 events now visible for Easter Sunday (was 0). Weekend picks regenerated: 3 picks populated (was 0).
+- SJZ Boombox Truck at Viva Calle
+- VW Spring Meet 2026 at History Park
+- Story Writing Workshops for Kids & Teens (Los Altos Books)
+
+### Why This Was the Strongest Move
+Every single day at ~5 PM Pacific, today's remaining events vanished from the site. Easter Sunday made it visually obvious (0 events on a busy holiday), but this bug affected every afternoon. Fixing it adds 42 events to today's feed and unlocks weekend picks.
+
+### Next 3 Strongest Ideas
+1. **Content-rules: add `santa-cruz` + `santa-clara-county` to coverage map** — 2 hard audit errors (false positives) + 10 unknown-slug soft issues will clear.
+2. **RECENTLY_FUNDED: Apr 19–21 watch** — Weekend roundup not yet published. Monitor for new South Bay AI/chip/robotics rounds Sunday/Monday.
+3. **School calendar: end-of-year** — Current data has AP Exams (May 4), Finals (May 22-28), Last Day (May 29-Jun 11). Check for any missing Graduation dates.
+
+---
+
 ## 2026-04-19 — Cycle 93: Food Openings Data Quality Pass
 
 ### Context
