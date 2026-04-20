@@ -967,7 +967,9 @@ function parseCivicPlusEventDates(eventDatesStr) {
   if (!eventDatesStr) return null;
   // Strip trailing date range (take the start date only)
   const start = eventDatesStr.split(/\s*[-–]\s*/)[0].trim();
-  const d = new Date(start);
+  // Append noon to avoid UTC-midnight off-by-one: if process runs in UTC,
+  // new Date("April 21, 2026") = midnight UTC = April 20 PT after isoDate().
+  const d = new Date(start + " 12:00:00");
   if (!isNaN(d.getTime())) return d;
   return null;
 }
