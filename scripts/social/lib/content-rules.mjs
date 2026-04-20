@@ -13,7 +13,8 @@
 // keep their own inline copies for now — update both when adding a rule.
 // ---------------------------------------------------------------------------
 
-// 11 cities in the South Bay Today coverage map → canonical address tokens.
+// 11 in-area cities + curated out-of-area slugs used for hand-picked POIs and
+// regional events (santa-cruz day-trip landmarks, santa-clara-county events).
 // A place/event slug matches when ANY of the slug's tokens appears in the
 // address (case-insensitively).
 export const SLUG_TO_CITY_TOKENS = {
@@ -28,6 +29,9 @@ export const SLUG_TO_CITY_TOKENS = {
   "santa-clara": ["santa clara"],
   saratoga: ["saratoga"],
   sunnyvale: ["sunnyvale"],
+  // Curated out-of-area slugs — allowed for hand-picked landmarks/events only.
+  "santa-cruz": ["santa cruz", "felton", "capitola"],
+  "santa-clara-county": ["santa clara county"],
 };
 
 // Human-readable names for the 11 cities (lowercase tokens).

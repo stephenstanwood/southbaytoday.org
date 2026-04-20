@@ -330,13 +330,14 @@ function cleanPlaceName(name) {
 
 function detectCity(address) {
   const addr = address.toLowerCase();
+  // Must be a California address — otherwise substring matches on "Saratoga"
+  // pick up Saratoga Springs NY/UT, etc.
+  if (!/,\s*ca\s+\d{5}/.test(addr) && !addr.includes(", ca,")) return null;
   for (const city of CITIES) {
-    // Match "Campbell, CA" or "Campbell," in the address
-    if (addr.includes(city.name.toLowerCase() + ",")) return city.slug;
-  }
-  // Fallback: check if any city name appears
-  for (const city of CITIES) {
-    if (addr.includes(city.name.toLowerCase())) return city.slug;
+    // Match "Campbell, CA" — city name followed by comma then CA
+    const name = city.name.toLowerCase();
+    const re = new RegExp(`\\b${name.replace(/\s+/g, "\\s+")},\\s*ca\\b`);
+    if (re.test(addr)) return city.slug;
   }
   return null;
 }
