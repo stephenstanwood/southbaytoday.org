@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-20T11:15:23.150Z",
+      "generatedAt": "2026-04-21T02:08:24.144Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,67 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-20T11:15:25.442Z",
+      "generatedAt": "2026-04-21T02:08:26.427Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
       "dateRange": "Apr 13 – Apr 20",
       "stats": {
-        "total": 106,
-        "notable": 8,
+        "total": 76,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-00976",
-          "address": "365 College Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "RES: Main panel upgrade from 100A to 200A  in the same location",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00971",
-          "address": "690 Wildwood Ln",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Replace valve, expansion tanks, and reinstall laundry box.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00975",
-          "address": "1036 Colorado Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "MFR Replace (4) apartment units sewer connection. Re route 2' kitchen line to 6\" sewer main in landscape area",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-00969",
-          "address": "180 El Camino Real",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "COM: 'J.CREW' Space #CC1240: Temporary construction barricade - 12' Parapet Option w/ Scrim, associated master barricade permit under 26MRP-00003.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-13",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-00983",
           "address": "824 Bryant St",

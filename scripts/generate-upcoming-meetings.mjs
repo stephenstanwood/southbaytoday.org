@@ -297,7 +297,7 @@ async function fetchMilpitasMeeting() {
   // CivicClerk portal is client-rendered — no server-side dates to scrape
   // Compute next meeting from known schedule
   const today = new Date();
-  const todayIso = today.toISOString().split("T")[0];
+  const todayIso = today.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
   for (let offset = 0; offset < 45; offset++) {
     const d = new Date(today);
@@ -305,7 +305,7 @@ async function fetchMilpitasMeeting() {
     if (d.getDay() !== 2) continue; // not Tuesday
     const weekOfMonth = Math.ceil(d.getDate() / 7);
     if (weekOfMonth !== 1 && weekOfMonth !== 3) continue;
-    const iso = d.toISOString().split("T")[0];
+    const iso = d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
     if (iso < todayIso) continue;
 
     return {
