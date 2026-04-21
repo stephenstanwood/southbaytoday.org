@@ -61,6 +61,9 @@ const BLURB_OVERRIDES = {
   "SR0880573": "Molly Tea opening a second South Bay location at Rivermark Plaza in Santa Clara.",
   "SR0884317": "Molly Tea's Stevens Creek location — bubble tea and snacks in Cupertino's Stevens Creek corridor.",
   // April 2026 openings
+  "SR0878726": "T&T Supermarket — a major Canadian Asian grocery chain — opens its Westgate Mall location, bringing fresh produce, seafood, and imported Asian goods to West San Jose.",
+  "SR0884181": "Health-focused cafe and restaurant inside Bay Club Santa Clara — smoothies, salads, and fresh meals for members and guests.",
+  "SR0876717": "Ramen and Japanese comfort food at 180 S. Market St in downtown San Jose.",
   "SR0877677": "Filipino fast-food chain known for Chickenjoy fried chicken and Jolly Spaghetti — new South San Jose location.",
   "SR0882706": "New Cupertino Whole Foods at 20955 Stevens Creek Blvd — long-awaited grocery anchor for the Stevens Creek corridor.",
   "SR0882358": "New Milpitas location for the popular chicken sandwich chain at 755 E Calaveras Blvd.",
