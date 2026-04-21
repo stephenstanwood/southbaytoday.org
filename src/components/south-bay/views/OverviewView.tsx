@@ -1357,6 +1357,17 @@ const EARTH_DAY_EVENTS = [
     url: "https://events.sjsu.edu/event/using-board-games-and-the-public-arts-to-explore-climate-solutions-public-humanities-salons",
   },
   {
+    id: "ed-fuhsd-chm",
+    title: "FUHSD Earth Day Celebration — Student Climate Showcase",
+    date: "2026-04-22",
+    dateLabel: "Earth Day · Apr 22",
+    venue: "Computer History Museum",
+    city: "Mountain View",
+    time: "4:00 PM" as string | null,
+    free: true,
+    url: "https://www.fuhsdclimatecollective.com/",
+  },
+  {
     id: "ed-mh-festival",
     title: "Morgan Hill Earth Day Festival",
     date: "2026-04-25",
