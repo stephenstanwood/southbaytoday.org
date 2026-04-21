@@ -396,6 +396,7 @@ async function main() {
           workLower.includes("reroof") ||
           workLower.includes("re-roof") ||
           workLower.includes("sign") ||
+          workLower.includes("temporary power") ||
           workLower === "plumbing only" ||
           workLower === "electrical only" ||
           workLower === "mechanical only")
