@@ -283,9 +283,9 @@ export const QUICK_LINKS = [
 
 export const TRANSIT_PULSE = [
   {
-    value: "~16M",
+    value: "~17M",
     label: "Annual Caltrain Riders",
-    note: "Approx. pre-COVID peak (FY 2018-19); FY 2022-23 was lower (~10-11M) during recovery",
+    note: "Approx. pre-COVID peak (FY 2018-19 was ~17.4M); FY 2022-23 was lower (~10-11M) during recovery",
   },
   {
     value: "77mi",
