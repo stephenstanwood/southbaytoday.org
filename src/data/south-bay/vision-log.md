@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-04-21 — Cycle 99: Earth Day Callout, VTA Workshop, Permit Pulse
+
+### Context
+Tuesday April 21, 2026. San José city council meets today. Earth Day (Apr 22) approaching — added midday SCU concert to fill the callout's time gap. VTA ABC Plan online workshop had a broken `cityKey: null`, silently dropping it from the events feed.
+
+### What Was Built
+
+**Full pipeline refresh** — 10 data files regenerated (events, around-town, digests, meetings, restaurant-radar, scc-food-openings, shared-plans, tech-briefing, weekend-picks, real-estate)
+
+**`src/data/south-bay/inbound-events.json`** — Fixed VTA Across Barrier Connections (ABC) Plan online workshop (Apr 22, 6 PM): `cityKey: null → "san-jose"`, `location: null → "Online (Zoom)"`. Event was being silently dropped by inbound pipeline filter.
+
+**`src/components/south-bay/views/OverviewView.tsx`** — Added SCU Music@Noon "New Music for Earth Day" concert (Apr 22, noon, free) to `EARTH_DAY_EVENTS` array. Fills midday slot between SJSU 10:30 AM and FUHSD/CHM 4 PM events.
+
+**`src/data/south-bay/permit-pulse.json`** — Refreshed: SJ 283 total / 17 notable / 8 new units / $156M valuation; PA 15 issued / 6 notable.
+
+**Weekend picks** — Stroll Down Penny Lane (Campbell, free Sat), Morgan Hill Earth Day Festival (free Sat), Independent Bookstore Day at Kepler's (PA, Sat 2–5:30 PM)
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 21–28 watch** — Crunchbase Apr 18–24 roundup publishes ~Apr 25; check for new South Bay rounds
+2. **Campbell staleness** — Stoa has no Campbell data past Feb 3, 2026; Playwright scrape of campbellca.gov Agenda Center needed
+3. **Los Altos gap** — No Stoa data at all; investigate losaltos-ca.municodemeetings.com as fallback source
+
+---
+
 ## 2026-04-21 — Cycle 98: Food Blurbs, School Calendar, Around Town
 
 ### Context
