@@ -1357,6 +1357,17 @@ const EARTH_DAY_EVENTS = [
     url: "https://events.sjsu.edu/event/using-board-games-and-the-public-arts-to-explore-climate-solutions-public-humanities-salons",
   },
   {
+    id: "ed-scu-music-noon",
+    title: "Music@Noon — New Music for Earth Day",
+    date: "2026-04-22",
+    dateLabel: "Earth Day · Apr 22",
+    venue: "Santa Clara University",
+    city: "Santa Clara",
+    time: "12:00 PM" as string | null,
+    free: true,
+    url: "https://events.scu.edu/arts-and-sciences/event/372663-musicnoon-new-music-for-earth-day",
+  },
+  {
     id: "ed-fuhsd-chm",
     title: "FUHSD Earth Day Celebration — Student Climate Showcase",
     date: "2026-04-22",
