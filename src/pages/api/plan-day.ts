@@ -21,6 +21,7 @@ import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
+import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
@@ -499,7 +500,7 @@ function buildCandidatePool(
     candidates.push({
       id: `event:${evt.id}`,
       name: evt.title,
-      category: evt.category || "events",
+      category: canonicalCategory(evt.category || "events"),
       city: evt.city,
       address: evt.address || "",
       venue: evt.venue || null,
@@ -576,7 +577,7 @@ function buildCandidatePool(
     candidates.push({
       id: `place:${p.id}`,
       name: p.name,
-      category: p.category || "food",
+      category: canonicalCategory(p.category || "food"),
       city: p.city,
       address: p.address || "",
       description: p.curated ? undefined : undefined, // places don't have descriptions
@@ -1456,7 +1457,19 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     // Fill remaining slots with diverse non-food places
     const catCounts: Record<string, number> = {};
-    const CAT_CAPS: Record<string, number> = { outdoor: 3, museum: 2, entertainment: 3, wellness: 1, shopping: 2 };
+    // Caps use CANONICAL categories (see src/lib/south-bay/categories.mjs).
+    // Any event-specific label like "music" gets mapped to "entertainment"
+    // before the pool is built, so a single cap applies consistently.
+    const CAT_CAPS: Record<string, number> = {
+      outdoor: 3,
+      museum: 2,
+      entertainment: 3,
+      wellness: 1,
+      shopping: 2,
+      arts: 3,
+      sports: 2,
+      events: 3,
+    };
     for (const c of otherPlaces) {
       const count = catCounts[c.category] || 0;
       const maxForCat = CAT_CAPS[c.category] ?? 3;
