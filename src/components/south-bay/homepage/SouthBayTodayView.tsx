@@ -344,9 +344,24 @@ export default function SouthBayTodayView({ homeCity }: Props) {
     }
   }, [state.kids, state.dismissed, state.locked]);
 
-  // Skip API call if we have a pre-generated plan (first-visit or cached).
-  // The API call fires when they toggle KIDS or hit SHUFFLE.
-  useEffect(() => { if (!hasDefaultPlan) fetchPlan(); }, []);
+  // Skip API call if we have a fresh pre-generated plan (<6h old). If the
+  // default is stale, show it instantly anyway (for first-paint speed) then
+  // silently refresh in the background so the user catches today's actual
+  // event pool rather than the 2 AM snapshot.
+  useEffect(() => {
+    if (!hasDefaultPlan) {
+      fetchPlan();
+      return;
+    }
+    const generatedAt = (defaultPlansJson as any)?._meta?.generatedAt;
+    const ageMs = generatedAt ? Date.now() - new Date(generatedAt).getTime() : Infinity;
+    const STALE_MS = 6 * 60 * 60 * 1000;
+    if (ageMs > STALE_MS) {
+      // Background refresh — give the user a sec to see the instant plan,
+      // then quietly swap in a fresh one.
+      setTimeout(() => fetchPlanRef.current?.(), 1500);
+    }
+  }, []);
 
   // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
