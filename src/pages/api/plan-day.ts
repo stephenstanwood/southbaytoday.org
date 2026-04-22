@@ -1022,9 +1022,25 @@ Return ONLY the JSON array. No explanation.`;
   if (kids) {
     const before = cards.length;
     for (let i = cards.length - 1; i >= 0; i--) {
+      if (cards[i].locked) continue;
       const startTime = cards[i].timeBlock.split(/\s*-\s*/)[0];
       const h = parseHour(startTime);
-      if (h !== null && h >= KIDS_CURFEW_HOUR && !cards[i].locked) {
+      // Malformed timeBlock is treated as a drop-worthy failure in kids mode:
+      // we can't prove it's before curfew, and shipping an unparseable time
+      // to a kids plan is worse than dropping one card.
+      if (h === null) {
+        console.warn(`[plan-day] kids curfew: unparseable timeBlock "${cards[i].timeBlock}" for ${cards[i].name} — dropping`);
+        logDecision({
+          script: "plan-day",
+          action: "dropped",
+          target: `${cards[i].name} (${cards[i].id})`,
+          reason: `kids curfew — unparseable timeBlock "${cards[i].timeBlock}"`,
+          meta: { city, targetDate, kids: true },
+        });
+        cards.splice(i, 1);
+        continue;
+      }
+      if (h >= KIDS_CURFEW_HOUR) {
         logDecision({
           script: "plan-day",
           action: "dropped",
@@ -1036,7 +1052,7 @@ Return ONLY the JSON array. No explanation.`;
       }
     }
     if (cards.length < before) {
-      console.log(`[plan-day] kids curfew: dropped ${before - cards.length} card(s) starting after ${KIDS_CURFEW_HOUR}:00`);
+      console.log(`[plan-day] kids curfew: dropped ${before - cards.length} card(s) (past curfew or malformed time)`);
     }
   }
 
