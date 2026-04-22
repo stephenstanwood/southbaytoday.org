@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-04-22 — Cycle 101: Simile Added to RECENTLY_FUNDED, Tech Briefing Fix
+
+### Context
+Wednesday April 22, 2026 (afternoon). Searched extensively for new South Bay funding rounds from Apr 17–22. No new rounds found beyond NeoCognition (already in DB from cycle 100). Identified Simile (Palo Alto, $100M Series A, Feb 12) — confirmed South Bay company missing from the database. Also corrected a factual error in the tech briefing (Rhoda AI listed as $500M when actual amount is $450M).
+
+### What Was Built
+
+**`src/data/south-bay/tech-companies.ts`** — Added Simile (Palo Alto, $100M Series A, Feb 12, 2026): AI digital twin platform that creates synthetic consumer populations to predict how real people respond to new products, UI changes, and pricing — replacing focus groups. Led by Index Ventures; Fei-Fei Li and Andrej Karpathy are investors. Updated TECH_PULSE round count 50 → 51.
+
+**`src/data/south-bay/tech-briefing.json`** — Regenerated. Fixed factual error in previous briefing that incorrectly stated "Rhoda AI $500M" (actual: $450M Series A). New briefing accurately references Rhoda AI $450M and SiFive $400M.
+
+**`src/data/south-bay/shared-plans.json`** — Committed pipeline refresh data from morning run (was unstaged).
+
+### Funding search notes (Apr 17–22)
+- Confirmed not South Bay: Loop (SF), Parasail (SF/San Mateo), Cognichip (Redwood City), Bluefish (NYC)
+- No new rounds found for Apr 17–22 specifically; next Crunchbase weekly roundup ~Apr 25
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED Apr 25 watch** — Crunchbase weekly roundup for Apr 18–25 publishes ~Friday. Check for new South Bay rounds.
+2. **Events tab UX** — sticky filter bar (category chips currently require scrolling back to top to change)
+3. **Campbell staleness** — Stoa has no Campbell council data past Feb 3, 2026. Playwright scrape of campbellca.gov Agenda Center as fallback.
+
+---
+
 ## 2026-04-22 — Cycle 100: NeoCognition Added, Full Pipeline Refresh, Bloom Blurb
 
 ### Context
