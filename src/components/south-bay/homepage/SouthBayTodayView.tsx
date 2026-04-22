@@ -309,13 +309,22 @@ export default function SouthBayTodayView({ homeCity }: Props) {
       ? [...new Set([...state.locked, ...extraLockedIds])]
       : state.locked;
 
+    // Richer lock info: pair each locked id with the card's current timeBlock
+    // so the server can anchor Claude's plan around it instead of defaulting
+    // to 7 PM. We look up each locked id in the current `cards` state.
+    const lockedCards = allLocked.map((id) => {
+      const card = cards.find((c) => c.id === id);
+      return { id, timeBlock: card?.timeBlock ?? null };
+    });
+
     try {
       const res = await fetch("/api/plan-day", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city: anchor, kids: state.kids,
-          lockedIds: allLocked,
+          lockedIds: allLocked, // keep for backward compat
+          lockedCards,
           dismissedIds: Object.keys(state.dismissed),
           currentHour: new Date().getHours(),
           currentMinute: new Date().getMinutes(),
@@ -342,7 +351,7 @@ export default function SouthBayTodayView({ homeCity }: Props) {
         setSwapLoading(false);
       }
     }
-  }, [state.kids, state.dismissed, state.locked]);
+  }, [state.kids, state.dismissed, state.locked, cards]);
 
   // Skip API call if we have a fresh pre-generated plan (<6h old). If the
   // default is stale, show it instantly anyway (for first-paint speed) then

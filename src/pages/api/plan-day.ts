@@ -42,6 +42,11 @@ interface PlanRequest {
   city: City;
   kids: boolean;
   lockedIds?: string[];
+  /** Richer lock info: pairs an id with the current timeBlock so Claude can
+   *  anchor the plan around it (and the force-insert fallback uses the same
+   *  timeBlock instead of defaulting to 7 PM for places). Takes precedence
+   *  over lockedIds when both are sent. */
+  lockedCards?: Array<{ id: string; timeBlock?: string | null }>;
   dismissedIds?: string[];
   currentHour?: number; // 0-23, defaults to now
   currentMinute?: number; // 0-59, used with currentHour to round start time to next :00/:30
@@ -649,6 +654,7 @@ async function sequenceWithClaude(
   targetDate?: string,
   weekContext?: { anchorCities?: string[]; categorySaturation?: Record<string, number> },
   startTime?: { startHour: number; startMinute: number; formatted: string },
+  lockedTimeMap?: Map<string, string>,
 ): Promise<DayCard[]> {
   const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
   const cityName = getCityName(city);
@@ -671,8 +677,17 @@ async function sequenceWithClaude(
 
   // Format locked items. Avoid the word "LOCKED" in the section header
   // because the model has echoed it back as a literal timeBlock value.
+  // If the caller supplied a timeBlock for a locked card (e.g. the user
+  // locked it at a specific slot), pass it to Claude so the plan is
+  // anchored to that time rather than Claude re-guessing.
   const lockedSection = lockedCandidates.length > 0
-    ? `\n\nMUST-INCLUDE ITEMS (plan around these — always include every one):\n${lockedCandidates.map((c) => `- ${c.name} (${c.category}, ${c.city})${c.eventTime ? ` at ${c.eventTime}` : ""}`).join("\n")}`
+    ? `\n\nMUST-INCLUDE ITEMS (plan around these — always include every one):\n${lockedCandidates.map((c) => {
+        const pinnedTime = lockedTimeMap?.get(c.id);
+        const timeHint = pinnedTime
+          ? ` — keep at ${pinnedTime}`
+          : c.eventTime ? ` at ${c.eventTime}` : "";
+        return `- ${c.name} (${c.category}, ${c.city})${timeHint}`;
+      }).join("\n")}`
     : "";
 
   // Format candidate pool (top items by score)
@@ -924,11 +939,15 @@ Return ONLY the JSON array. No explanation.`;
     });
   }
 
-  // Post-process: force locked items into the plan if Claude forgot them
+  // Post-process: force locked items into the plan if Claude forgot them.
+  // Time precedence: caller-pinned timeBlock > event's scheduled time >
+  // fallback slot. This keeps a place locked at 10:30 AM from drifting
+  // to a default 7 PM slot.
   for (const locked of lockedCandidates) {
     if (!cards.some((c) => c.id === locked.id)) {
       console.log(`[plan-day] forcing locked item: ${locked.name}`);
-      const timeBlock = timeBlockFromEventTime(locked.eventTime);
+      const pinnedTime = lockedTimeMap?.get(locked.id);
+      const timeBlock = pinnedTime || timeBlockFromEventTime(locked.eventTime);
       cards.push({
         id: locked.id,
         name: locked.name,
@@ -1352,7 +1371,16 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson("Invalid JSON body", 400);
   }
 
-  const { city, kids = false, lockedIds = [], dismissedIds = [], currentHour, currentMinute, planDate, preferences, blockedNames = [], weekContext, noCache = false } = body;
+  const { city, kids = false, lockedIds = [], lockedCards = [], dismissedIds = [], currentHour, currentMinute, planDate, preferences, blockedNames = [], weekContext, noCache = false } = body;
+
+  // Merge lockedCards into lockedIds + a time map. lockedCards is the richer
+  // format; we accept lockedIds separately for backwards compat with older
+  // callers (scripts, pre-rebuild clients).
+  const lockedTimeMap = new Map<string, string>();
+  for (const lc of lockedCards) {
+    if (lc?.id && !lockedIds.includes(lc.id)) lockedIds.push(lc.id);
+    if (lc?.id && lc.timeBlock) lockedTimeMap.set(lc.id, lc.timeBlock);
+  }
   const blockedSet = new Set(blockedNames.map((n) => normalizeName(n)).filter(Boolean));
 
   // Validate city
@@ -1492,6 +1520,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       planDate,
       weekContext,
       startTime,
+      lockedTimeMap,
     );
 
     // 6b. Context-aware padding (Tier 2.1): if sequenceWithClaude returned a
