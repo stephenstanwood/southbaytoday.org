@@ -1045,42 +1045,71 @@ Return ONLY the JSON array. No explanation.`;
   // the pool. The merge step uses the id to look up the candidate but keeps
   // the wrong blurb verbatim, producing cards like:
   //   "The Tech Interactive" + "Spend hours at the Rosicrucian Egyptian Museum"
-  // Detection: check if the blurb contains ANY significant word from the
-  // place name OR mentions the place name as a substring. If zero overlap,
-  // the blurb was probably written for a different candidate — drop it.
+  //
+  // New rule: only drop if the blurb clearly describes a DIFFERENT pool
+  // candidate (contains that candidate's distinctive name). Otherwise keep
+  // it — generic-sounding blurbs for locally-vague venues like "Main Street
+  // Cupertino" no longer get yanked because the name had no long unique word.
   {
     const before = cards.length;
-    const stopwords = new Set([
-      "the", "and", "for", "with", "from", "into", "onto", "this", "that",
-      "your", "their", "at", "in", "on", "of", "to", "a", "an", "is", "it",
-      "its", "by", "as", "or", "but", "be", "you", "are", "san", "jose",
-      "san-jose", "los", "gatos", "palo", "alto", "santa", "clara", "mountain",
-      "view", "cupertino", "sunnyvale", "milpitas", "campbell", "saratoga",
+    // Pre-compute "distinctive tokens" per pool candidate: long words (>=5
+    // chars) from the venue name that aren't city names or generic fillers.
+    const CITY_TOKENS = new Set([
+      "san", "jose", "san-jose", "los", "gatos", "palo", "alto", "santa",
+      "clara", "mountain", "view", "cupertino", "sunnyvale", "milpitas",
+      "campbell", "saratoga", "south", "north", "east", "west", "downtown",
     ]);
+    const GENERIC_TOKENS = new Set([
+      "market", "museum", "center", "street", "avenue", "park", "plaza",
+      "restaurant", "cafe", "bar", "library", "community",
+    ]);
+    const distinctive = (name: string): string[] => {
+      return (name || "")
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((w) => w.length >= 5 && !CITY_TOKENS.has(w) && !GENERIC_TOKENS.has(w));
+    };
+    const poolDistinct = new Map<string, string[]>();
+    for (const c of pool) poolDistinct.set(c.id, distinctive(c.name));
+
     for (let i = cards.length - 1; i >= 0; i--) {
       if (cards[i].locked) continue;
+      const cardId = cards[i].id;
       const name = (cards[i].name || "").toLowerCase();
       const blurb = (cards[i].blurb || "").toLowerCase();
       if (!name || !blurb) continue;
-      // Quick win: if full name is substring of blurb, accept
+
+      // Accept immediately if full name is substring of blurb.
       if (blurb.includes(name)) continue;
-      // Otherwise: look for any significant word overlap
-      const nameWords = name
-        .split(/[^a-z0-9]+/)
-        .filter((w) => w.length > 3 && !stopwords.has(w));
-      if (nameWords.length === 0) continue; // name too generic to validate
-      const hasOverlap = nameWords.some((w) => blurb.includes(w));
-      if (!hasOverlap) {
-        console.log(`[plan-day] dropped blurb mismatch: card="${cards[i].name}" blurb="${cards[i].blurb?.slice(0, 80)}..."`);
+
+      // Accept if the blurb contains a distinctive token from THIS card's name.
+      const ownDistinct = poolDistinct.get(cardId) || distinctive(name);
+      if (ownDistinct.some((w) => blurb.includes(w))) continue;
+
+      // Otherwise: check if the blurb clearly describes a DIFFERENT candidate.
+      // Look for a distinctive token from any other pool candidate.
+      let mismatchedTo: string | null = null;
+      for (const [otherId, tokens] of poolDistinct.entries()) {
+        if (otherId === cardId) continue;
+        if (tokens.some((w) => blurb.includes(w))) {
+          mismatchedTo = otherId;
+          break;
+        }
+      }
+
+      if (mismatchedTo) {
+        console.log(`[plan-day] dropped blurb mismatch: card="${cards[i].name}" describes ${mismatchedTo} blurb="${cards[i].blurb?.slice(0, 80)}..."`);
         logDecision({
           script: "plan-day",
           action: "dropped",
           target: `${cards[i].name} (${cards[i].id})`,
-          reason: "blurb↔card mismatch (zero word overlap)",
+          reason: `blurb describes different pool candidate (${mismatchedTo})`,
           meta: { city, targetDate, blurb: cards[i].blurb?.slice(0, 80) },
         });
         cards.splice(i, 1);
       }
+      // Else: blurb is generic (no distinctive tokens from any candidate).
+      // Keep it — Claude likely wrote a vague but on-topic description.
     }
     if (cards.length < before) {
       console.log(`[plan-day] blurb validator: dropped ${before - cards.length} mismatched card(s)`);
