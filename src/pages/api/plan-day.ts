@@ -1515,8 +1515,25 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     // 3. Score candidates
     const scored = scoreCandidates(allCandidates, weatherContext, hour, kids, preferences);
 
-    // 4. Separate locked items
+    // 4. Separate locked items. Any id the client sent that's NOT in the
+    // current pool is stale (event cancelled, place archived) — return
+    // them to the client so it can purge state.locked instead of silently
+    // shipping fewer cards every shuffle.
     const lockedCandidates = scored.filter((c) => lockedSet.has(c.id));
+    const foundLockedIds = new Set(lockedCandidates.map((c) => c.id));
+    const invalidLockedIds = [...lockedSet].filter((id) => !foundLockedIds.has(id));
+    if (invalidLockedIds.length > 0) {
+      console.log(`[plan-day] ${invalidLockedIds.length} invalid lockedId(s) (not in pool): ${invalidLockedIds.join(", ")}`);
+      for (const id of invalidLockedIds) {
+        logDecision({
+          script: "plan-day",
+          action: "invalid-lock",
+          target: id,
+          reason: "locked id not present in candidate pool (cancelled/archived)",
+          meta: { city, targetDate: planDate },
+        });
+      }
+    }
     const unlockedPool = scored.filter((c) => !lockedSet.has(c.id));
 
     // 5. Build diverse pool — balance events, food, and activities
@@ -1664,6 +1681,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       kids,
       generatedAt: new Date().toISOString(),
       poolSize: allCandidates.length,
+      // IDs the client sent in lockedIds/lockedCards that aren't in the
+      // current pool. Client should purge these from its state so they
+      // stop haunting future shuffles.
+      invalidLockedIds: invalidLockedIds.length > 0 ? invalidLockedIds : undefined,
     };
 
     // Cache default requests for 5 min

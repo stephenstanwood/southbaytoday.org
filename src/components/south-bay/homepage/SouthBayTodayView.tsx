@@ -41,6 +41,10 @@ interface PlanResponse {
   kids: boolean;
   generatedAt: string;
   poolSize: number;
+  /** Locked ids the server couldn't find — event cancelled, place archived.
+   *  Client should purge these from state.locked so they stop haunting
+   *  future shuffles. */
+  invalidLockedIds?: string[];
 }
 
 type DismissType = "skip" | "hide";
@@ -343,6 +347,14 @@ export default function SouthBayTodayView({ homeCity }: Props) {
       setCards(sorted.map((c) => ({ ...c, locked: state.locked.includes(c.id) })));
       setReplacedIds(new Set());
       setWeather(data.weather);
+      // Purge any locked IDs the server couldn't find (event cancelled,
+      // place archived). Otherwise they haunt future shuffles as ghost locks.
+      if (data.invalidLockedIds?.length) {
+        setState((s) => ({
+          ...s,
+          locked: s.locked.filter((id) => !data.invalidLockedIds!.includes(id)),
+        }));
+      }
     } catch (err) {
       if (id === fetchRef.current) setError(err instanceof Error ? err.message : "Failed to plan your day");
     } finally {

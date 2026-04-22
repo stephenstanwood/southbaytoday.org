@@ -51,28 +51,37 @@ function readSeedVotes() {
 
 function loadVotes() {
   const seed = readSeedVotes();
-  let saved = { approved: [], rejected: [] };
-  if (existsSync(VOTES_FILE)) {
+  let saved = { approved: [], rejected: [], seen: [] };
+  const votesExisted = existsSync(VOTES_FILE);
+  if (votesExisted) {
     try { saved = JSON.parse(readFileSync(VOTES_FILE, "utf8")); } catch {}
   }
   // Union saved + seed so in-session edits persist but we never re-show a
   // photo that's already approved-on-site or hard-blocked.
   const approved = new Set([...(saved.approved || []), ...seed.approved]);
   const rejected = new Set([...(saved.rejected || []), ...seed.rejected]);
+  const seen = new Set(saved.seen || []);
 
-  // Cutoff-based auto-reject: Stephen's initial approve/deny run landed on
-  // 2026-03-30 (commit "158 curated photos"). Anything in today's photo-data
-  // that isn't approved was almost certainly already rejected back then. Treat
-  // every un-approved, un-rejected photo as rejected so the Unvoted filter
-  // surfaces ONLY genuinely new photos (those pulled in by future photo-review
-  // runs from Flickr/Wikimedia/etc).
-  for (const p of photos) {
-    if (!approved.has(p.id) && !rejected.has(p.id)) rejected.add(p.id);
+  // First-ever load (no seen set yet): snapshot the current photo dataset as
+  // "already reviewed" so Stephen's pre-2026-03-30 implicit rejections stick.
+  // Un-approved photos → rejected. From now on, only photos NOT in `seen`
+  // will be unvoted — i.e., genuinely new hits from future photo-review runs.
+  if (seen.size === 0) {
+    for (const p of photos) {
+      seen.add(p.id);
+      if (!approved.has(p.id) && !rejected.has(p.id)) rejected.add(p.id);
+    }
+    saveVotes({
+      approved: [...approved],
+      rejected: [...rejected],
+      seen: [...seen],
+    });
   }
 
   return {
     approved: [...approved],
     rejected: [...rejected],
+    seen: [...seen],
     lastUpdated: saved.lastUpdated,
   };
 }
@@ -474,6 +483,9 @@ const server = createServer((req, res) => {
         votes.rejected = votes.rejected.filter(x => x !== id);
         if (decision === "approved") votes.approved.push(id);
         else if (decision === "rejected") votes.rejected.push(id);
+        // Mark as seen so a future run won't re-offer this as "new".
+        if (!votes.seen) votes.seen = [];
+        if (!votes.seen.includes(id)) votes.seen.push(id);
         saveVotes(votes);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: true }));
