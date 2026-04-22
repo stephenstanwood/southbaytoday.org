@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-21T02:08:24.144Z",
+      "generatedAt": "2026-04-22T02:15:20.818Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 13 – Apr 20",
+      "dateRange": "Apr 14 – Apr 21",
       "stats": {
-        "total": 368,
-        "notable": 18,
+        "total": 283,
+        "notable": 17,
         "newUnits": 8,
-        "totalValuation": 157481397
+        "totalValuation": 156748827
       },
       "permits": [
         {
@@ -137,29 +137,65 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-21T02:08:26.427Z",
+      "generatedAt": "2026-04-22T02:15:23.135Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 13 – Apr 20",
+      "dateRange": "Apr 14 – Apr 21",
       "stats": {
-        "total": 76,
-        "notable": 4,
+        "total": 87,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-00983",
-          "address": "824 Bryant St",
+          "id": "26BLD-00996",
+          "address": "1655 Middlefield Rd",
           "category": "commercial",
           "categoryLabel": "Commercial Project",
           "workType": "Building Permit",
-          "description": "COM emergency sewer replacement to planter strip. (SEPARATE PERMIT FROM PUBLIC WORKS REQUIRED)",
+          "description": "Res MEP: Replace tankless water heater, like for like in the basement.  Electrical outlet was provided.  No gas plumbing was done.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-14",
+          "issueDate": "2026-04-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-00989",
+          "address": "864 Ames Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res MEP: Upgrade main electrical panel to 200A and meter socket at the same location as existing main panel and socket.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-15",
+          "subtype": "Finaled"
+        },
+        {
+          "id": "26BLD-00990",
+          "address": "2680 Ramona St",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "RES MEP: 15 duct supply & 1 duct return c/o.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01028",
+          "address": "4163 Park Bl",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-20",
           "subtype": "Permit Issued"
         },
         {
@@ -175,27 +211,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00084",
-          "address": "3401 Hillview Av",
+          "id": "26PLN-00088",
+          "address": "180 University Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to remove three Blue Gum trees due to declining health and decay. Nine 15 gallon Island Live Oak trees will be planted onsite as replacement trees. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "description": "New wall mounted display case along University Ave for Art Gallery",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-14",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00081",
-          "address": "650 San Antonio Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over the Counter Retroactive tree removal  of (8)  failed trees to be replaced with seven (7) 36-inch box trees and nine (9) 24-inch box trees.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-14",
+          "issueDate": "2026-04-20",
           "subtype": "Over the Counter Approved"
         }
       ]
