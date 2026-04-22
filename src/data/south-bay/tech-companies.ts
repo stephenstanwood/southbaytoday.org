@@ -1605,6 +1605,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#7c3aed",
     url: "https://neocognition.ai",
   },
+  {
+    id: "simile",
+    name: "Simile",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Series A",
+    amount: "$100M",
+    date: "2026-02-12",
+    tagline: "AI simulation platform that creates digital twins of real consumers — letting companies stress-test new products, UI changes, and pricing moves against synthetic populations before talking to a single real customer. Led by Index Ventures; Fei-Fei Li and Andrej Karpathy are investors. Emerged from stealth February 2026.",
+    color: "#4f46e5",
+    url: "https://simile.ai",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1622,7 +1634,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "50 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "51 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
