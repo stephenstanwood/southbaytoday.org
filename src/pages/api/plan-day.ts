@@ -20,6 +20,7 @@ import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
+import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
@@ -453,20 +454,13 @@ function buildCandidatePool(
   ];
   const events = (eventsData as any).events ?? [];
   // Virtual events are never valid day-plan stops. We rely on the upstream
-  // generator to set evt.virtual, but fall back to title/address sniffing as
-  // a safety net so the plan pool is never contaminated.
-  const VIRTUAL_TITLE_RE = [
-    /^online[:\s-]/i,
-    /^virtual[:\s-]/i,
-    /^\[online\]/i,
-    /^\[virtual\]/i,
-    /\bwebinar\b/i,
-    /\blivestream\b/i,
-  ];
+  // generator to set evt.virtual, but fall back to title/description sniffing
+  // via the SHARED filter module so the plan pool is never contaminated even
+  // if generation missed a pattern.
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
     if (evt.virtual === true) continue;
-    if (evt.title && VIRTUAL_TITLE_RE.some((re) => re.test(evt.title))) continue;
+    if (isVirtualEvent(evt)) continue;
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;
     if (isBlocked(evt.title) || isBlocked(evt.venue)) continue;
 

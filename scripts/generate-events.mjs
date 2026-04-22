@@ -43,6 +43,7 @@ import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
+import { VIRTUAL_EVENT_PATTERNS } from "../src/lib/south-bay/eventFilters.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -339,13 +340,10 @@ const INTERNAL_EVENT_PATTERNS = [
   /^ONLINE ONLY:/i,
   /^HYBRID:/i,
   /^OSHER\s+ONLINE/i,
-  // Virtual / online / livestream / webinar — not things you can physically attend
-  /\btUrn\b/i,                    // SCU tUrn climate lectures — academic-only, no address
-  /\bonline\s+(author\s+talk|book\s+club|discussion|talk|lecture|q&a|class|workshop|group)\b/i,
-  /\bonline\s+conversation\s+group\b/i,
-  /\b(webinar|livestream|live[-\s]?stream|virtual\s+(event|talk|class|meeting|tour|gathering|reading))\b/i,
-  /\bzoom\s+(meeting|call|session|event|webinar|link)\b/i,
-  /^(virtual|online):\s+/i,
+  // Virtual / online / livestream / webinar patterns are sourced from the
+  // SHARED filter module (src/lib/south-bay/eventFilters.mjs) so plan-day.ts
+  // uses the exact same patterns at runtime.
+  ...VIRTUAL_EVENT_PATTERNS,
   /\bcourse\s+lecture\b/i,
   /\bclass\s+session\b/i,
   /\bclasses\s+begin\b/i,
