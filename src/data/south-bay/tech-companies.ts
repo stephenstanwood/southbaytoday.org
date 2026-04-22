@@ -1593,6 +1593,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#0369a1",
     url: "https://soniretherapeutics.com",
   },
+  {
+    id: "neocognition",
+    name: "NeoCognition",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$40M",
+    date: "2026-04-21",
+    tagline: "Self-improving AI agents that continuously learn and specialize toward expert-level intelligence — without constant retraining. Emerged from stealth April 21, 2026; co-led by Cambium Capital and Walden Catalyst Ventures with Vista Equity, Intel CEO Lip-Bu Tan, and Databricks co-founder Ion Stoica as backers.",
+    color: "#7c3aed",
+    url: "https://neocognition.ai",
+  },
 ];
 
 // Pulse stats for the header strip
@@ -1610,7 +1622,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "49 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "50 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",

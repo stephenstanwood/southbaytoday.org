@@ -72,7 +72,7 @@ const BLURB_OVERRIDES = {
   "SR0883588": "Korean braised pork knuckle specialist at El Camino Real in Santa Clara.",
   "SR0876718": "Boba tea and Japanese-inspired drinks near South First Street in downtown San Jose.",
   "SR0883940": "Coffee and tea shop at S Winchester Blvd in San Jose's Cambrian neighborhood.",
-  "SR0882015": "New restaurant at 225 W Santa Clara St in downtown San Jose.",
+  "SR0882015": "Modern brunch bistro from Bloom Eatery (Santa Clara) — inventive breakfast dishes, hearty lunches, and seasonal cocktails in downtown San Jose.",
   "SR0879599": "Taiwanese tea and light food in Milpitas.",
   "SR0884051": "Boba tea shop at San Antonio Rd in Mountain View.",
   // Coming soon — April 2026

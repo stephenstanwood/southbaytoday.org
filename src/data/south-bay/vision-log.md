@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-04-22 — Cycle 100: NeoCognition Added, Full Pipeline Refresh, Bloom Blurb
+
+### Context
+Earth Day, Wednesday April 22, 2026. Earth Day callout is live and showing today's events. Focus: full data pipeline refresh + tech tab update with fresh Palo Alto AI startup round.
+
+### What Was Built
+
+**`src/data/south-bay/tech-companies.ts`** — Added NeoCognition (Palo Alto, $40M Seed, April 21, 2026): self-improving AI agents that continuously specialize toward expert-level intelligence without retraining. Emerged from stealth yesterday; backed by Cambium Capital, Walden Catalyst, Vista Equity, Intel CEO Lip-Bu Tan, and Databricks co-founder Ion Stoica. Also updated TECH_PULSE round count from 49 → 50.
+
+**`scripts/generate-scc-food-openings.mjs`** — Improved Bloom (SR0882015) blurb from generic placeholder to: "Modern brunch bistro from Bloom Eatery (Santa Clara) — inventive breakfast dishes, hearty lunches, and seasonal cocktails in downtown San Jose."
+
+**Full pipeline refresh** — 8 data files regenerated: upcoming-events (688 events, 80 today), around-town (8 items), upcoming-meetings (6 cities), digests (10 cities), city-briefings (11 briefings), tech-briefing (50 rounds summary), weekend-picks (Penny Lane tribute + Morgan Hill Earth Day + Nikkei Matsuri), scc-food-openings.
+
+### Next 3 Strongest Ideas
+1. **Events tab UX** — 688 events makes filtering critical. Category chips could be stickier (scroll back to top to change category is friction). A sticky filter bar that stays visible while scrolling would help.
+2. **Campbell staleness** — Stoa has no Campbell council data past Feb 3, 2026. Playwright scrape of campbellca.gov Agenda Center as fallback.
+3. **RECENTLY_FUNDED April 21-28 watch** — Next Crunchbase weekly roundup ~Apr 25; check for new South Bay rounds then.
+
+---
+
 ## 2026-04-21 — Cycle 99: Earth Day Callout, VTA Workshop, Permit Pulse
 
 ### Context
