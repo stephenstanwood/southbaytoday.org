@@ -41,18 +41,24 @@ function ensureDir() {
  *   - meta:    optional free-form object (date, slotType, poolRank, etc.)
  */
 export function logDecision({ script, action, target, reason, meta } = {}) {
+  const entry = {
+    t: new Date().toISOString(),
+    pid: process.pid,
+    script: script || "unknown",
+    action: action || "unknown",
+    target: target || "",
+    reason: reason || "",
+    ...(meta ? { meta } : {}),
+  };
+  const line = JSON.stringify(entry);
+  // Always emit to stdout — on Vercel this is the only sink (no writable
+  // filesystem for ~/Library/Logs). Grep Vercel function logs for "[decision]"
+  // to recover structured data. Prefixed so it's filterable in log viewers.
+  try { console.log("[decision]", line); } catch {}
+  // Also try the file sink — succeeds on the Mini, silently fails on Vercel.
   try {
     ensureDir();
-    const entry = {
-      t: new Date().toISOString(),
-      pid: process.pid,
-      script: script || "unknown",
-      action: action || "unknown",
-      target: target || "",
-      reason: reason || "",
-      ...(meta ? { meta } : {}),
-    };
-    appendFileSync(LOG_PATH, JSON.stringify(entry) + "\n");
+    appendFileSync(LOG_PATH, line + "\n");
   } catch {
     // Never let logging break a pipeline run.
   }
