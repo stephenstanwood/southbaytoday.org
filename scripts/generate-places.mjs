@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ARTIFACTS, DATA_DIR, REPO_ROOT, generatorMeta } from "./lib/paths.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { autotagPlace } from "./lib/infer-place-tags.mjs";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -629,6 +630,20 @@ async function main() {
       curatedCount++;
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // Autotag kidFriendly + indoorOutdoor for anything the curated data didn't
+  // already set. Curated values win — the inference only fills nullish fields.
+  // ---------------------------------------------------------------------------
+
+  let kfTagged = 0;
+  let ioTagged = 0;
+  for (const place of seen.values()) {
+    const { kidFriendlyChanged, indoorOutdoorChanged } = autotagPlace(place);
+    if (kidFriendlyChanged) kfTagged++;
+    if (indoorOutdoorChanged) ioTagged++;
+  }
+  console.log(`🏷️  Autotagged ${kfTagged} kidFriendly, ${ioTagged} indoorOutdoor`);
 
   // ---------------------------------------------------------------------------
   // Sort and write output
