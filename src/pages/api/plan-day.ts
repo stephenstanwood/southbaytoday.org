@@ -51,6 +51,9 @@ interface PlanRequest {
   currentHour?: number; // 0-23, defaults to now
   currentMinute?: number; // 0-59, used with currentHour to round start time to next :00/:30
   planDate?: string;    // YYYY-MM-DD — plan for a specific date (default: today)
+  /** Bypass the 5-min in-memory plan cache — SHUFFLE sets this so each
+   *  click gets a freshly generated plan instead of a recent hit. */
+  noCache?: boolean;
   preferences?: UserPreferences;
   /** Lowercase POI/event names to hard-exclude from this plan. Used by the
    *  schedule generator to prevent the same venue anchoring multiple days in
@@ -85,6 +88,7 @@ interface Candidate {
   hours?: Record<string, string> | null;
   venue?: string | null;
   photoRef?: string | null;
+  image?: string | null;
   displayType?: string | null;
   source: "event" | "place";
   eventDate?: string;
@@ -129,6 +133,14 @@ interface DayCard {
 // santa-cruz is in CITY_MAP for POI/event display but excluded from plan-day
 // (case-by-case picks only, not full coverage with enough POIs to fill a plan)
 const VALID_CITIES = new Set(Object.keys(CITY_MAP).filter((c) => c !== "santa-cruz"));
+
+// Permanently-closed / never-recommend places + venues. Keyed by normalizeName()
+// so the match survives apostrophe/quote/ampersand variants. Add an entry here
+// (not in blockedNames) when a place is gone for good — this applies to every
+// plan, not just one shuffle.
+const PERMANENT_NAME_BLOCKLIST = new Set<string>([
+  normalizeName("3Below Theaters"), // San Jose — closed
+].filter(Boolean));
 const MAX_CARDS = 7;
 const CANDIDATE_POOL_SIZE = 35; // expanded region = bigger pool, more variety
 
@@ -194,6 +206,143 @@ function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): nu
 
 function todayStr(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+
+// Category-aware fallback blurbs used when an event/place has no description
+// and we're force-inserting or replacing without a Claude-generated blurb.
+// Keep these varied + specific so cards never collapse to "Swing by X and
+// see what's going on" (which reads as filler, not recommendation).
+const FALLBACK_BLURB_POOL: Record<string, string[]> = {
+  "event.food": [
+    "Food event — grab something to eat and post up.",
+    "Local food happening — bring an appetite.",
+    "Food pop-up worth stopping in for.",
+  ],
+  "event.arts": [
+    "Art happening — step in and see the work.",
+    "Gallery event — quick browse, easy stop.",
+    "Arts event, low-key drop-in vibe.",
+  ],
+  "event.music": [
+    "Live music — catch a set.",
+    "Music night at this spot.",
+    "Concert-style evening — stay for a song or two.",
+  ],
+  "event.entertainment": [
+    "Live entertainment — worth a stop.",
+    "Show on tonight — walk in and see what's playing.",
+    "Performance slot — settle in and enjoy.",
+  ],
+  "event.sports": [
+    "Game-time — good excuse to cheer.",
+    "Sports event — quick stop for the action.",
+  ],
+  "event.outdoor": [
+    "Outdoor event — get some fresh air.",
+    "Outdoors thing — stretch the legs and poke around.",
+  ],
+  "event.shopping": [
+    "Market/pop-up — browse the stalls.",
+    "Shopping event — pick up something local.",
+  ],
+  "event.museum": [
+    "Museum event — small-scale, easy visit.",
+    "Exhibit-adjacent event — plan an hour.",
+  ],
+  "event.wellness": [
+    "Low-key wellness drop-in.",
+    "Wellness event — easy hour.",
+  ],
+  "event.events": [ // community/family/education catchall
+    "Community event — free to drop in.",
+    "Local gathering — everyone welcome.",
+    "Free event, casual drop-in vibe.",
+    "Neighborhood thing — stop by for a bit.",
+  ],
+  "place.food": [
+    "Solid local pick for a meal.",
+    "Go-to spot nearby — easy table.",
+    "Good food, no fuss.",
+  ],
+  "place.outdoor": [
+    "Good place to walk and clear your head.",
+    "Nice spot to get some air.",
+    "Easy outdoor stretch.",
+  ],
+  "place.arts": [
+    "Worth a quick gallery browse.",
+    "Low-key arts stop.",
+  ],
+  "place.museum": [
+    "Short museum stop — worth an hour.",
+    "Easy browse, rotating exhibits.",
+  ],
+  "place.shopping": [
+    "Fun to poke around.",
+    "Good browse — pick something up or don't.",
+  ],
+  "place.entertainment": [
+    "Nice spot to unwind for an hour or two.",
+  ],
+  "place.wellness": [
+    "Wind-down stop.",
+  ],
+  "place.sports": [
+    "Good slot to stay active.",
+  ],
+};
+
+function fallbackBlurb(
+  source: "event" | "place",
+  category: string | null | undefined,
+  name: string,
+  venue: string | null | undefined,
+): string {
+  const cat = (category || "").toLowerCase();
+  const key = `${source}.${cat}`;
+  const pool = FALLBACK_BLURB_POOL[key] || FALLBACK_BLURB_POOL[`${source}.events`] || [];
+  if (pool.length === 0) {
+    // Last-ditch generic — still better than "swing by X".
+    const at = venue && venue !== name ? ` at ${venue}` : "";
+    return `Quick stop${at}.`;
+  }
+  // Deterministic-but-varied: hash name so the same card gets the same
+  // blurb every render (no flicker on re-fetch) but different cards pick
+  // different templates.
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) | 0;
+  return pool[Math.abs(h) % pool.length];
+}
+
+// Build a "HH:MM AM/PM - HH:MM AM/PM" timeBlock from an event's start time.
+// Prefers a given endTime; otherwise defaults to start + 90 minutes. Used by
+// both sequenceWithClaude and padWithClaude to force event cards onto their
+// actual time regardless of what Claude picked.
+function timeBlockFromEventTime(
+  eventTime: string | null | undefined,
+  eventEndTime?: string | null,
+  fallback = "7:00 PM - 8:30 PM",
+): string {
+  if (!eventTime) return fallback;
+  const startMatch = eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+  if (!startMatch) return fallback;
+  const startH = parseHour(startMatch[1]);
+  if (startH === null) return startMatch[1];
+
+  // If we have an explicit endTime, use it verbatim.
+  if (eventEndTime) {
+    const endMatch = eventEndTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+    if (endMatch) return `${startMatch[1]} - ${endMatch[1]}`;
+  }
+
+  // Else default to +90 min.
+  const startMin = parseInt(eventTime.match(/\d{1,2}:(\d{2})/)?.[1] || "0", 10);
+  const totalEndMin = startH * 60 + startMin + 90;
+  const endH = Math.floor(totalEndMin / 60) % 24;
+  const endMin = totalEndMin % 60;
+  const endAmPm = endH >= 12 ? "PM" : "AM";
+  const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
+  return `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
 }
 
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
@@ -502,14 +651,17 @@ function buildCandidatePool(
   lockedIds: Set<string>,
   targetDate?: string,
   blockedNames?: Set<string>,
+  startTimeContext?: { startHour: number; startMinute: number; formatted: string },
 ): Candidate[] {
   const candidates: Candidate[] = [];
   const cityConfig = CITY_MAP[city];
   const today = targetDate || todayStr();
   const isBlocked = (name: string | null | undefined) => {
-    if (!blockedNames || blockedNames.size === 0) return false;
     const n = normalizeName(name);
-    return !!n && blockedNames.has(n);
+    if (!n) return false;
+    if (PERMANENT_NAME_BLOCKLIST.has(n)) return true;
+    if (!blockedNames || blockedNames.size === 0) return false;
+    return blockedNames.has(n);
   };
 
   // --- Events happening today or soon, in/near the city ---
@@ -570,6 +722,31 @@ function buildCandidatePool(
     if (kids && evt.time) {
       const startH = parseHour(evt.time.split(/\s*-\s*/)[0]);
       if (startH !== null && startH >= KIDS_CURFEW_HOUR) continue;
+    }
+
+    // Past-today filter: drop today's timed events whose end is before the
+    // plan's start. e.g. at 5 PM, don't surface a 3 PM library class —
+    // it's already over. Ongoing exhibits (no time, or already passed
+    // start-date) are handled above.
+    if (isToday && evt.time && startTimeContext) {
+      const startH = parseHour(evt.time.split(/\s*-\s*/)[0]);
+      if (startH !== null) {
+        const startM = (evt.time.match(/\d{1,2}:(\d{2})/)?.[1]) || "00";
+        const evtStartMin = startH * 60 + parseInt(startM, 10);
+        const evtDurationMin = computeDurationMin(evt.time, evt.endTime) || 90;
+        const evtEndMin = evtStartMin + evtDurationMin;
+        const planStartMin = startTimeContext.startHour * 60 + startTimeContext.startMinute;
+        if (evtEndMin <= planStartMin) {
+          logDecision({
+            script: "plan-day",
+            action: "dropped",
+            target: `${evt.title} (event:${evt.id})`,
+            reason: `event ended before plan start (evt ${evt.time} +${evtDurationMin}m, plan starts ${startTimeContext.formatted})`,
+            meta: { city, targetDate: today },
+          });
+          continue;
+        }
+      }
     }
 
     candidates.push({
@@ -957,21 +1134,6 @@ Return ONLY the JSON array. No explanation.`;
     return /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(tb);
   };
 
-  // Compute a reasonable "HH:MM AM/PM - HH:MM AM/PM" block from an eventTime
-  // string, or a fallback slot if eventTime is missing/unparseable.
-  const timeBlockFromEventTime = (eventTime: string | null | undefined, fallback = "7:00 PM - 8:30 PM"): string => {
-    if (!eventTime) return fallback;
-    const startMatch = eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
-    if (!startMatch) return fallback;
-    const startH = parseHour(startMatch[1]);
-    if (startH === null) return startMatch[1];
-    const endH = startH + 1;
-    const endMin = 30;
-    const endAmPm = endH >= 12 ? "PM" : "AM";
-    const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
-    return `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
-  };
-
   // Map id → pool rank (1-based) for the rationale breadcrumb.
   const poolRank = new Map(topPool.map((c, i) => [c.id, i + 1]));
 
@@ -980,11 +1142,29 @@ Return ONLY the JSON array. No explanation.`;
     const candidate = candidateMap.get(pick.id);
     if (!candidate) continue;
 
-    // Sanitize: if the model returned a bogus timeBlock (e.g. "LOCKED", "TBD",
-    // empty), derive one from the candidate's eventTime instead.
-    const timeBlock = isValidTimeBlock(pick.timeBlock)
-      ? pick.timeBlock
-      : timeBlockFromEventTime(candidate.eventTime);
+    // Force event cards to use the event's actual start time — Claude has
+    // shown a habit of parking events in convenient slots ("Kids Knitting
+    // 8:30 PM" for an event that was really at 3 PM). Events have a known
+    // real-world time; Claude doesn't get to rewrite it. Only places (no
+    // eventTime) get Claude's chosen timeBlock.
+    let timeBlock: string;
+    if (candidate.source === "event" && candidate.eventTime) {
+      const forced = timeBlockFromEventTime(candidate.eventTime, candidate.eventEndTime);
+      if (pick.timeBlock && pick.timeBlock !== forced) {
+        logDecision({
+          script: "plan-day",
+          action: "autofixed",
+          target: `${candidate.name} (${candidate.id})`,
+          reason: `forced event timeBlock: claude said "${pick.timeBlock}", actual is "${forced}"`,
+          meta: { city, targetDate, eventTime: candidate.eventTime },
+        });
+      }
+      timeBlock = forced;
+    } else {
+      timeBlock = isValidTimeBlock(pick.timeBlock)
+        ? pick.timeBlock
+        : timeBlockFromEventTime(candidate.eventTime);
+    }
 
     const isLocked = lockedCandidates.some((l) => l.id === candidate.id);
     const rank = poolRank.get(candidate.id);
@@ -1044,7 +1224,7 @@ Return ONLY the JSON array. No explanation.`;
         city: locked.city,
         address: locked.address,
         timeBlock,
-        blurb: locked.description?.slice(0, 200) || `Head to ${locked.name} and see what's going on.`,
+        blurb: locked.description?.slice(0, 200) || fallbackBlurb(locked.source, locked.category, locked.name, locked.venue),
         why: locked.why || "This is the one the day is built around.",
         url: locked.url,
         mapsUrl: locked.mapsUrl,
@@ -1311,7 +1491,7 @@ Return ONLY the JSON array. No explanation.`;
         city: replacement.city,
         address: replacement.address,
         timeBlock: cur.timeBlock,
-        blurb: replacement.description?.slice(0, 160) || `Swing by ${replacement.name} and see what's going on.`,
+        blurb: replacement.description?.slice(0, 160) || fallbackBlurb(replacement.source, replacement.category, replacement.name, replacement.venue),
         why: replacement.why || "A solid pick to break up the day.",
         url: replacement.url ?? null,
         mapsUrl: replacement.mapsUrl ?? null,
@@ -1457,7 +1637,15 @@ Return ONLY the JSON array.`;
   for (const pick of picks) {
     const candidate = candidateMap.get(pick.id);
     if (!candidate) continue;
-    const timeBlock = isValidTimeBlock(pick.timeBlock) ? pick.timeBlock : "12:00 PM - 1:00 PM";
+    // Same force-fix as main planner: event cards MUST use the event's real
+    // start time. Padder Claude runs a less careful prompt and is even more
+    // likely to park events in convenient slots.
+    let timeBlock: string;
+    if (candidate.source === "event" && (candidate as any).eventTime) {
+      timeBlock = timeBlockFromEventTime((candidate as any).eventTime, (candidate as any).eventEndTime);
+    } else {
+      timeBlock = isValidTimeBlock(pick.timeBlock) ? pick.timeBlock : "12:00 PM - 1:00 PM";
+    }
     padded.push({
       id: candidate.id,
       name: candidate.name,
@@ -1551,8 +1739,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const weatherData = await fetchWeather(city);
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
 
-    // 2. Build candidate pool
-    const allCandidates = buildCandidatePool(city, kids, dismissedSet, lockedSet, planDate, blockedSet);
+    // 2. Build candidate pool — pass startTime so past-today events get dropped
+    const allCandidates = buildCandidatePool(city, kids, dismissedSet, lockedSet, planDate, blockedSet, startTime);
 
     // 3. Score candidates
     const scored = scoreCandidates(allCandidates, weatherContext, hour, kids, preferences);
