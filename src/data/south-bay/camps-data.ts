@@ -389,9 +389,9 @@ export const CAMPS: Camp[] = [
     ],
     description: "All-day camp at Y sites across the South Bay. Swimming, sports, arts, and field trips. Financial assistance available through the Y's scholarship program.",
     registerUrl: "https://www.ymcasv.org/child-care-camps/summer-day-camps",
-    priceNote: "Financial assistance — apply at ymcasv.org/financial-assistance",
+    priceNote: "Quest core camp (ages 6–8): $414 member / $452 community · Little Campsters $752–$832 · Specialty weeks $522–$1,058 · Financial assistance at ymcasv.org/financial-assistance",
     featured: true,
-    weeks: [wk(3, null), wk(4, null), wk(5, null), wk(6, null), wk(7, null), wk(8, null), wk(9, null), wk(10, null), wk(11, null)],
+    weeks: [wk(3, 414), wk(4, 414), wk(5, 414), wk(6, 414), wk(7, 414), wk(8, 414), wk(9, 414), wk(10, 414), wk(11, 414)],
   },
 
   {
@@ -619,8 +619,8 @@ export const CAMPS: Camp[] = [
     locations: ["Western Ballet, 914 N. Rengstorff Ave, Mountain View"],
     description: "Classical ballet summer intensive — ballet, pointe, character, jazz, and contemporary with an end-of-session performance. Run by artistic director Alexi Zubiria.",
     registerUrl: "https://westernballet.org/summerintensive/",
-    priceNote: "Group 1 (13–19) $2,132–$3,242 · Group 2 (8–13) $2,056–$3,128 · 1–4 week commitment.",
-    weeks: [wk(5, null), wk(6, null), wk(7, null), wk(8, null)],
+    priceNote: "Group I (13–19) $2,132/wk base · Group II (8–13) $2,056/wk base · 1–4 week commitment · registration fee waived if paid by Mar 31.",
+    weeks: [wk(5, 2132), wk(6, 2132), wk(7, 2132), wk(8, 2132)],
   },
 
   {
@@ -794,8 +794,8 @@ export const CAMPS: Camp[] = [
     days: "Mon–Fri",
     locations: ["Addison-Penzak JCC, 14855 Oka Rd, Los Gatos"],
     description: "Traditional JCC day camp — song circles, art, sports, cooking, science, daily heated-pool swim, and weekly South Bay field trips. Welcoming to all faiths.",
-    registerUrl: "https://jsv.campintouch.com/ui/forms/application/camper/App",
-    notes: "First day Jun 8. Pricing on request.",
+    registerUrl: "https://apjcc.org/summer/",
+    notes: "First day Jun 8. Pricing on request via the registration portal linked from apjcc.org/summer.",
     weeks: [wk(1, null), wk(2, null), wk(3, null), wk(4, null), wk(5, null), wk(6, null), wk(7, null), wk(8, null), wk(9, null)],
   },
 
