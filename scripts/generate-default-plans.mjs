@@ -56,6 +56,39 @@ const FEATURED_CITIES = loadFeaturedCities();
 function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
+// Category → Unsplash URL cache so we only call once per category per run.
+// Cards whose photoRef + image are both null would otherwise flash the
+// category emoji on load before the client-side Unsplash fallback resolves;
+// pre-baking the URL means the browser renders the image immediately.
+const unsplashByCategory = new Map();
+
+async function unsplashForCategory(category) {
+  if (!category) return null;
+  if (unsplashByCategory.has(category)) return unsplashByCategory.get(category);
+  try {
+    const res = await fetch(`${API_BASE}/api/unsplash-photo?query=${encodeURIComponent(category)}`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) { unsplashByCategory.set(category, null); return null; }
+    const data = await res.json();
+    const url = data?.url || null;
+    unsplashByCategory.set(category, url);
+    return url;
+  } catch {
+    unsplashByCategory.set(category, null);
+    return null;
+  }
+}
+
+async function enrichMissingImages(cards) {
+  for (const c of cards) {
+    if (c.photoRef || c.image) continue;
+    const url = await unsplashForCategory(c.category);
+    if (url) c.image = url;
+  }
+  return cards;
+}
+
 async function fetchPlan(city, kids, anchorHour) {
   const url = `${API_BASE}/api/plan-day`;
   const res = await fetch(url, {
@@ -94,8 +127,9 @@ async function main() {
       console.log(`  → ${key} (anchored in ${city})`);
       try {
         const data = await fetchPlan(city, kids, anchor);
+        const cards = await enrichMissingImages(data.cards || []);
         plans[key] = {
-          cards: data.cards || [],
+          cards,
           weather: data.weather || null,
           city,
           kids,
@@ -103,7 +137,8 @@ async function main() {
           generatedAt: new Date().toISOString(),
           poolSize: data.poolSize || 0,
         };
-        console.log(`  ✓ ${key}: ${plans[key].cards.length} cards`);
+        const withImg = cards.filter((c) => c.photoRef || c.image).length;
+        console.log(`  ✓ ${key}: ${cards.length} cards (${withImg} with image)`);
       } catch (err) {
         console.error(`  ✗ ${key}: ${err.message}`);
         errors++;
