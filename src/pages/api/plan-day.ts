@@ -728,6 +728,32 @@ function buildCandidatePool(
       if (startH !== null && startH >= KIDS_CURFEW_HOUR) continue;
     }
 
+    // Audience-age filter — events tagged at ingest as kids-only should
+    // never appear in adult plans, and 21+/drag/tasting events should never
+    // appear in kids plans. "all" (default for most events) passes both.
+    // Missing tag also passes — we never had it tagged before 2026-04-22.
+    const aa = (evt as any).audienceAge as string | undefined;
+    if (aa === "kids" && !kids) {
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${evt.title} (event:${evt.id})`,
+        reason: `kids-only event in adult plan`,
+        meta: { city, targetDate: today, audienceAge: aa },
+      });
+      continue;
+    }
+    if (aa === "adult" && kids) {
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${evt.title} (event:${evt.id})`,
+        reason: `adult-only event in kids plan`,
+        meta: { city, targetDate: today, audienceAge: aa },
+      });
+      continue;
+    }
+
     // Past-today filter: drop today's timed events whose end is before the
     // plan's start. e.g. at 5 PM, don't surface a 3 PM library class —
     // it's already over. Ongoing exhibits (no time, or already passed

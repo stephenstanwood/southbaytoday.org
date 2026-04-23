@@ -3866,6 +3866,20 @@ async function main() {
   }
   if (virtualFlagged) console.log(`   🛰  auto-flagged ${virtualFlagged} virtual event(s)`);
 
+  // Audience-age classification — tag every event "kids" | "adult" | "all"
+  // based on title + description. Plan-day uses this to exclude kids-only
+  // events from adult plans (e.g. "Kids Knitting") and 21+/drag/tasting
+  // events from kids plans. Bias is conservative — default is "all" unless
+  // the signal is strong.
+  const { classifyAudienceAge } = await import("../src/lib/south-bay/audienceAge.mjs");
+  const audienceCounts = { kids: 0, adult: 0, all: 0 };
+  for (const e of collapsedEvents) {
+    const tag = classifyAudienceAge(e);
+    e.audienceAge = tag;
+    audienceCounts[tag]++;
+  }
+  console.log(`   👥 audience: kids=${audienceCounts.kids} adult=${audienceCounts.adult} all=${audienceCounts.all}`);
+
   // Image resolution — Tier 1 (Places venue match) + Tier 2 (OG scrape) run
   // always; Tier 3 (Recraft) is opt-in via RESOLVE_EVENT_IMAGES_RECRAFT=1
   // since it costs money. Cache is persisted so re-runs don't re-fetch.
