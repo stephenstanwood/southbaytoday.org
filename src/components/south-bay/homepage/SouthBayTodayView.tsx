@@ -164,13 +164,21 @@ function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null
     const chosenAnchor = eff.isTomorrow
       ? (anchorHours.includes(9) ? 9 : anchorHours.slice().sort((a, b) => a - b)[0])
       : pickNearestAnchor(anchorHours, eff.currentHour);
-    const city = pickRandomAnchor();
     const kidsSuffix = kids ? "kids" : "adults";
 
-    // Try anchored key first, fall back to legacy un-anchored key.
-    const anchoredKey = `${city}:${kidsSuffix}:h${chosenAnchor}`;
-    const legacyKey = `${city}:${kidsSuffix}`;
-    const plan = plans[anchoredKey] || plans[legacyKey];
+    // New hero schema: one plan per (kids × anchor). Falls back to the
+    // old per-city schema for backward compat during rollout + for any
+    // build where the generator hasn't run yet.
+    const heroKey = `${kidsSuffix}:h${chosenAnchor}`;
+    let plan = plans[heroKey];
+    let city: City = (plan?.city as City) || pickRandomAnchor();
+    if (!plan?.cards?.length) {
+      // Legacy fallback.
+      city = pickRandomAnchor();
+      const anchoredKey = `${city}:${kidsSuffix}:h${chosenAnchor}`;
+      const legacyKey = `${city}:${kidsSuffix}`;
+      plan = plans[anchoredKey] || plans[legacyKey];
+    }
     if (!plan?.cards?.length) return { cards: [], anchor: null };
 
     // Filter out cards whose timeBlock is in the past — only for today's
@@ -490,11 +498,11 @@ export default function SouthBayTodayView(_props: Props) {
 
       {/* Header */}
       <div className="sbt-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 0 10px", gap: 12, flexWrap: "wrap" }}>
-        <div className="sbt-time-row" style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+        <div className="sbt-time-row" style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div className="sbt-time-display" style={{ fontFamily: "'Inter', sans-serif", fontSize: 48, fontWeight: 900, letterSpacing: -2, color: "#000", lineHeight: 1 }}>{timeDisplay}</div>
-          <div>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 700, color: "#333" }}>{headline}</div>
-            {weather && <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#888", marginTop: 2 }}>🌤 {weather}</div>}
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 700, color: "#333", lineHeight: 1.2 }}>{headline}</div>
+            {weather && <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#888", lineHeight: 1.2 }}>🌤 {weather}</div>}
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
