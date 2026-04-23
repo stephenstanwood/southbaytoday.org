@@ -89,3 +89,22 @@ export function canonicalizePlanCards(cards) {
   if (!Array.isArray(cards)) return [];
   return cards.map(canonicalizeCard).filter(isRenderableCard);
 }
+
+/**
+ * Canonicalize a whole shared-plan wrapper. Returns null if the plan is
+ * unsalvageable (missing id or has no renderable cards) so the renderer can
+ * redirect home instead of 500ing on thin data.
+ */
+export function canonicalizeSharedPlan(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const cards = canonicalizePlanCards(raw.cards);
+  if (cards.length === 0) return null;
+  return {
+    ...raw,
+    id: str(raw.id),
+    city: str(raw.city),
+    planDate: nullableStr(raw.planDate),
+    createdAt: nullableStr(raw.createdAt || raw.generatedAt),
+    cards,
+  };
+}

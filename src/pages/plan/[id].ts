@@ -8,9 +8,7 @@ export const prerender = false;
 // ---------------------------------------------------------------------------
 
 import type { APIRoute } from "astro";
-import { getCityName } from "../../lib/south-bay/cities";
-import type { City } from "../../lib/south-bay/types";
-import { canonicalizePlanCards } from "../../lib/south-bay/canonicalizeCard.mjs";
+import { canonicalizeSharedPlan } from "../../lib/south-bay/canonicalizeCard.mjs";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -40,18 +38,15 @@ export const GET: APIRoute = async ({ params, url }) => {
   const origin = url.origin;
   const debug = url.searchParams.get("debug") === "1";
 
-  // Read plan from shared-plans.json (committed to git, deployed with the site)
+  // Read plan from shared-plans.json (committed to git, deployed with the site).
+  // canonicalizeSharedPlan returns null for unsalvageable plans (no id, no
+  // renderable cards) so we redirect home instead of 500ing on thin data.
   const plans = loadSharedPlans();
-  const plan = plans[id];
+  const plan = canonicalizeSharedPlan(plans[id]);
   if (!plan) {
     return Response.redirect(`${origin}/`, 302);
   }
 
-  // Canonicalize every card at read-time as belt-and-suspenders — if any writer
-  // drifts from the canonical shape, we still render (and drop truly broken ones).
-  plan.cards = canonicalizePlanCards(plan.cards);
-
-  const cityName = getCityName(plan.city as City);
   const canonical = `${origin}/plan/${id}`;
 
   // OG image: use first card's Google Places photo if available, else default
