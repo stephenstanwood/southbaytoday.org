@@ -300,6 +300,7 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bprayer\s+service\b/i,
   /\b11th\s+hour\s+(prayer|calling)\b/i,
   // Collaboration/classroom tool training (not public events)
+  /\bgrackle\b/i,
   /\blucidspark\b/i,
   /\blucidchart\b/i,
   /\biclicker\b/i,
@@ -355,6 +356,12 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bfinance\s+what'?s?\s+up\b/i,
   /\bspring\s+budget\b/i,
   /\bchhs\b.*\bjournal\s+club\b/i,
+  // Academic administrative deadlines (not resident-facing)
+  /^last\s+day\s+to\s+(petition|submit|remove|add|drop|withdraw|file)\b/i,
+  /\bpetition\s+for\s+degrees?\s+to\s+be\s+conferred\b/i,
+  /\bremove\s+(winter|spring|summer|fall)\s+\d{4}\s+incompletes?\b/i,
+  // Private class visits (faculty-arranged, not public)
+  /\bclass\s+visit\b/i,
   // Internal seminar series / recurring workshop codes (not public events)
   /\bBRICS\s+Session\b/i,
   /^[A-Z]{3,5}\s+Session$/,

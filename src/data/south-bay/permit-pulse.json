@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-23T19:09:39.445Z",
+      "generatedAt": "2026-04-23T23:12:59.573Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-23T19:09:41.755Z",
+      "generatedAt": "2026-04-23T23:13:01.359Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -199,27 +199,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01028",
-          "address": "4163 Park Bl",
+          "id": "26BLD-01054",
+          "address": "4112 Amaranta Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-20",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01044",
-          "address": "631 Saint Claire Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-21",
+          "issueDate": "2026-04-22",
           "subtype": "Permit Issued"
         },
         {
@@ -235,15 +223,27 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01054",
-          "address": "4112 Amaranta Av",
+          "id": "26BLD-01044",
+          "address": "631 Saint Claire Dr",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-22",
+          "issueDate": "2026-04-21",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01028",
+          "address": "4163 Park Bl",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-20",
           "subtype": "Permit Issued"
         },
         {
