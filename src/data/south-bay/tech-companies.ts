@@ -1606,6 +1606,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://neocognition.ai",
   },
   {
+    id: "point2-technology",
+    name: "Point2 Technology",
+    city: "San Jose",
+    category: "chip",
+    round: "Series B ext.",
+    amount: "$76M",
+    date: "2026-04-21",
+    tagline: "RF-based interconnect chips for AI data centers — proprietary e-Tube platform transmits over plastic waveguides instead of copper, delivering 10x the reach at 3x lower power and near-zero latency. Backed by NVIDIA's NVentures and Maverick Silicon; targets the scale-up interconnect bottleneck as AI racks keep growing.",
+    color: "#0284c7",
+    url: "https://point2tech.com",
+  },
+  {
     id: "simile",
     name: "Simile",
     city: "Palo Alto",
@@ -1646,7 +1658,7 @@ export const TECH_PULSE = [
   {
     value: "$6B+",
     label: "Raised in Q1–Q2 2026",
-    note: "52 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
+    note: "53 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
