@@ -138,6 +138,39 @@ const CANDIDATE_POOL_SIZE = 35; // expanded region = bigger pool, more variety
 // enforces geographic clustering so plans don't zigzag.
 const NEARBY_KM = 20;
 
+// Venue photo lookup — maps a normalized venue name to a photoRef from
+// places.json so events inherit photos from their host venue. Computed
+// once at module load (places.json is committed + imported statically).
+// Expect ~40% hit rate on event venues; campus building names (Stanford,
+// SCU sub-buildings) miss and fall through to the Unsplash category
+// fallback in the UI.
+const VENUE_PHOTO_LOOKUP: Map<string, string> = (() => {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const map = new Map<string, string>();
+  const places = (placesData as any).places ?? [];
+  for (const p of places) {
+    if (!p?.photoRef || !p?.name) continue;
+    map.set(norm(p.name), p.photoRef);
+  }
+  return map;
+})();
+
+function lookupVenuePhoto(venue: string | null | undefined): string | null {
+  if (!venue) return null;
+  const norm = venue.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  if (!norm) return null;
+  // Exact normalized match.
+  const exact = VENUE_PHOTO_LOOKUP.get(norm);
+  if (exact) return exact;
+  // Substring match — either the venue contains a place name or vice versa.
+  // Only consider place names ≥9 chars to avoid spurious hits on short words.
+  for (const [placeName, photoRef] of VENUE_PHOTO_LOOKUP) {
+    if (placeName.length < 9) continue;
+    if (norm.includes(placeName) || placeName.includes(norm)) return photoRef;
+  }
+  return null;
+}
+
 // In-memory plan cache: city:kids:hour → { data, ts }
 const planCache = new Map<string, { data: any; ts: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -548,6 +581,9 @@ function buildCandidatePool(
       costNote: (evt as any).costNote || null,
       kidFriendly: evt.kidFriendly ?? null,
       url: evt.url,
+      // Inherit the venue's Google Places photo if we can match it — events
+      // don't have their own photos but their host venue usually does.
+      photoRef: lookupVenuePhoto(evt.venue),
       source: "event",
       eventDate: evt.date,
       eventTime: evt.time,

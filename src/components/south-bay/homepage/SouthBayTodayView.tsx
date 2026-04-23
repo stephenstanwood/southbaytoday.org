@@ -594,9 +594,7 @@ export default function SouthBayTodayView({ homeCity }: Props) {
           padding: 4px 14px;
           border-radius: 14px;
           border: 2px solid #000;
-          background: linear-gradient(135deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC);
-          background-size: 200% 200%;
-          animation: rainbow 3s ease infinite;
+          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
           color: #fff;
           cursor: pointer;
           text-transform: uppercase;
@@ -605,6 +603,9 @@ export default function SouthBayTodayView({ homeCity }: Props) {
           position: relative;
           overflow: hidden;
           z-index: 0;
+        }
+        .sbt-shuffle:hover {
+          filter: brightness(1.1);
         }
         .sbt-shuffle--loading {
           background: #ddd;
@@ -617,7 +618,7 @@ export default function SouthBayTodayView({ homeCity }: Props) {
           position: absolute;
           top: 0; left: 0; bottom: 0;
           width: 0%;
-          background: linear-gradient(90deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC);
+          background: linear-gradient(90deg, #1E3A8A, #4C1D95);
           animation: fillRight 4s ease-out forwards;
           z-index: -1;
         }
