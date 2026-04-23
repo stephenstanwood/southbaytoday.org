@@ -2208,6 +2208,7 @@ export interface TechConference {
   description: string;
   url: string;
   scale: "global" | "regional";
+  applicationDeadline?: string; // ISO date string, e.g. "2026-04-26"
 }
 
 export const TECH_CONFERENCES: TechConference[] = [
@@ -2287,8 +2288,9 @@ export const TECH_CONFERENCES: TechConference[] = [
     city: "Mountain View",
     typicalMonth: 5,
     typicalDay: 7,
-    description: "Silicon Valley's regional qualifier for the Startup World Cup — top 15 selected startups pitch live before leading investors and executives at the Computer History Museum. The winner advances to the Grand Finale in San Francisco (Nov 6) where 100+ regional champions compete for a $1M investment prize. Apply by April 26.",
+    description: "Silicon Valley's regional qualifier for the Startup World Cup — top 15 selected startups pitch live before leading investors and executives at the Computer History Museum. The winner advances to the Grand Finale in San Francisco (Nov 6) where 100+ regional champions compete for a $1M investment prize.",
     url: "https://www.startupworldcup.io/silicon-valley-regional",
     scale: "regional",
+    applicationDeadline: "2026-04-26",
   },
 ];

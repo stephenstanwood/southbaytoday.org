@@ -1026,10 +1026,23 @@ function getConferenceNextDate(conf: TechConference, now: Date): { label: string
   return { label, sortMs: targetMs, isUpcoming };
 }
 
+function getDeadlineBadge(deadline?: string): { label: string; urgent: boolean } | null {
+  if (!deadline) return null;
+  const days = Math.ceil((new Date(deadline).getTime() - Date.now()) / 86400000);
+  if (days < 0 || days > 14) return null;
+  const d = new Date(deadline);
+  const mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];
+  const label = days === 0 ? `Apply today — ${mon} ${d.getDate()}` :
+    days === 1 ? `Apply by ${mon} ${d.getDate()} — tomorrow` :
+    `Apply by ${mon} ${d.getDate()} — ${days} days`;
+  return { label, urgent: days <= 5 };
+}
+
 function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; dateLabel: string; highlight: boolean }) {
   const scaleStyle = conf.scale === "global"
     ? { bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe", text: "Global" }
     : { bg: "#f0fdf4", color: "#166534", border: "#bbf7d0", text: "Regional" };
+  const deadlineBadge = getDeadlineBadge(conf.applicationDeadline);
   return (
     <a
       href={conf.url}
@@ -1080,6 +1093,17 @@ function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; d
           }}>
             {scaleStyle.text}
           </span>
+          {deadlineBadge && (
+            <span style={{
+              fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+              background: deadlineBadge.urgent ? "#fef2f2" : "#fff7ed",
+              color: deadlineBadge.urgent ? "#b91c1c" : "#c2410c",
+              border: `1px solid ${deadlineBadge.urgent ? "#fecaca" : "#fed7aa"}`,
+              borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap",
+            }}>
+              ⚡ {deadlineBadge.label}
+            </span>
+          )}
         </div>
         <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 4 }}>
           {conf.venue} · {conf.city}
