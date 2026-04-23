@@ -848,7 +848,11 @@ function buildCandidatePool(
       indoorOutdoor: p.indoorOutdoor || null,
       url: p.url,
       mapsUrl: p.mapsUrl,
-      photoRef: p.photoRef || null,
+      // Fall back to venue-match lookup — places.json has ~38 entries and
+      // occasional dupes where one row is missing photoRef. The lookup
+      // table picks any matching row's photoRef, so "DishDash" (null)
+      // inherits from "Dishdash Middle Eastern Cuisine" (populated).
+      photoRef: p.photoRef || lookupVenuePhoto(p.name) || null,
       hours: p.hours,
       displayType: p.displayType || null,
       source: "place",
