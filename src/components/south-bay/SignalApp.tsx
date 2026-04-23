@@ -1,16 +1,20 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, lazy, Suspense } from "react";
 import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES } from "../../lib/south-bay/cities";
-import SportsView from "./views/SportsView";
 import SouthBayTodayView from "./homepage/SouthBayTodayView";
-import GovernmentView from "./views/GovernmentView";
-import EventsView from "./views/EventsView";
-import TechnologyView from "./views/TechnologyView";
-import DevelopmentView from "./views/DevelopmentView";
-import WeatherView from "./views/WeatherView";
-import FoodView from "./views/FoodView";
-import CampsView from "./views/CampsView";
+
+// Non-default tabs are lazy-loaded so a user who only looks at the Today tab
+// doesn't pay for Sports/Events/Tech/etc. code + their deps (recharts, etc.)
+// upfront. Each becomes its own chunk the browser fetches on tab activation.
+const SportsView = lazy(() => import("./views/SportsView"));
+const GovernmentView = lazy(() => import("./views/GovernmentView"));
+const EventsView = lazy(() => import("./views/EventsView"));
+const TechnologyView = lazy(() => import("./views/TechnologyView"));
+const DevelopmentView = lazy(() => import("./views/DevelopmentView"));
+const WeatherView = lazy(() => import("./views/WeatherView"));
+const FoodView = lazy(() => import("./views/FoodView"));
+const CampsView = lazy(() => import("./views/CampsView"));
 
 const TODAY = new Date().toLocaleDateString("en-US", {
   weekday: "long",
@@ -197,18 +201,22 @@ export default function SignalApp() {
         {activeTab === "overview" && (
           <SouthBayTodayView onNavigate={navigateTo} />
         )}
-        {activeTab === "sports" && <SportsView />}
-        {activeTab === "events" && (
-          <EventsView selectedCities={selectedCities} />
+        {activeTab !== "overview" && (
+          <Suspense fallback={<div className="sb-loading"><div className="sb-spinner" /><div className="sb-loading-text">Loading…</div></div>}>
+            {activeTab === "sports" && <SportsView />}
+            {activeTab === "events" && (
+              <EventsView selectedCities={selectedCities} />
+            )}
+            {activeTab === "government" && (
+              <GovernmentView selectedCities={selectedCities} />
+            )}
+            {activeTab === "technology" && <TechnologyView />}
+            {activeTab === "development" && <DevelopmentView />}
+            {activeTab === "food" && <FoodView />}
+            {activeTab === "weather" && <WeatherView />}
+            {activeTab === "camps" && <CampsView />}
+          </Suspense>
         )}
-        {activeTab === "government" && (
-          <GovernmentView selectedCities={selectedCities} />
-        )}
-        {activeTab === "technology" && <TechnologyView />}
-        {activeTab === "development" && <DevelopmentView />}
-        {activeTab === "food" && <FoodView />}
-        {activeTab === "weather" && <WeatherView />}
-        {activeTab === "camps" && <CampsView />}
       </main>
 
       {/* Footer */}
