@@ -3882,6 +3882,21 @@ async function main() {
   const resolved = imgStats.tier1 + imgStats.tier2_cached + imgStats.tier2_fetched + imgStats.tier3_cached + imgStats.tier3_generated + imgStats.preexisting;
   console.log(`   Total images resolved: ${resolved} / ${collapsedEvents.length} (${((resolved / collapsedEvents.length) * 100).toFixed(0)}%)`);
 
+  // Blurb resolution — one Haiku pass per ingest so every event ships with a
+  // stable "what to do here" sentence. Cache is persistent (keyed by URL), so
+  // reruns only spend tokens on new/changed events. Behind RESOLVE_EVENT_BLURBS=1
+  // so local dev doesn't pay unless explicitly asked.
+  const { resolveEventBlurbs } = await import("../src/lib/south-bay/eventBlurbs.mjs");
+  console.log("\n📝 Resolving event blurbs (cache → Haiku batch)...");
+  const blurbStats = await resolveEventBlurbs(collapsedEvents);
+  console.log(`   preexisting:   ${blurbStats.preexisting}`);
+  console.log(`   cache hits:    ${blurbStats.cache_hits}`);
+  console.log(`   generated:     ${blurbStats.generated}`);
+  console.log(`   failed:        ${blurbStats.failed}`);
+  console.log(`   skipped:       ${blurbStats.skipped}`);
+  const blurbed = blurbStats.preexisting + blurbStats.cache_hits + blurbStats.generated;
+  console.log(`   Total blurbed: ${blurbed} / ${collapsedEvents.length} (${((blurbed / collapsedEvents.length) * 100).toFixed(0)}%)`);
+
   const ongoingCount = collapsedEvents.filter((e) => e.ongoing).length;
 
   const output = {

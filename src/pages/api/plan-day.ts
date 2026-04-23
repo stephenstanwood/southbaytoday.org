@@ -76,6 +76,10 @@ interface Candidate {
   city: string;
   address: string;
   description?: string;
+  /** Ingest-time blurb from eventBlurbs.mjs (events only). Preferred source
+   *  for the card's visible blurb — stable across shuffles, Haiku-written
+   *  once per event. Falls through to description → fallbackBlurb() pool. */
+  blurb?: string | null;
   why?: string;
   rating?: number | null;
   cost?: string | null;
@@ -757,6 +761,7 @@ function buildCandidatePool(
       address: evt.address || "",
       venue: evt.venue || null,
       description: evt.description?.slice(0, 200),
+      blurb: (evt as any).blurb || null,
       cost: evt.cost,
       costNote: (evt as any).costNote || null,
       kidFriendly: evt.kidFriendly ?? null,
@@ -977,6 +982,10 @@ async function sequenceWithClaude(
       if (c.kidFriendly === true) parts.push(`kid-friendly`);
       if (c.why) parts.push(`note: ${c.why}`);
       if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
+      // Pre-written blurb from ingest pass — if this candidate is picked,
+      // we'll overwrite Claude's blurb with this one anyway. Including it
+      // lets Claude know what the event actually is instead of inventing.
+      if (c.blurb) parts.push(`blurb: ${c.blurb}`);
       // Only include places that are actually open. If hours data is present
       // and there's no entry for today, skip entirely (closed today).
       const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
@@ -1181,6 +1190,17 @@ Return ONLY the JSON array. No explanation.`;
     if (candidate.category) rationaleParts.push(`cat=${candidate.category}`);
     const rationale = rationaleParts.join(" | ");
 
+    // Blurb precedence for cards: ingest-time blurb (stable across shuffles,
+    // Haiku-written with the real description for context) > Claude's per-run
+    // improvisation > cached description prose > category fallback pool.
+    // Events with ingest blurbs never drift into "Swing by X and see what's
+    // going on" territory.
+    const cardBlurb =
+      candidate.blurb ||
+      pick.blurb ||
+      candidate.description?.slice(0, 200) ||
+      fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue);
+
     cards.push({
       id: candidate.id,
       name: candidate.name,
@@ -1188,7 +1208,7 @@ Return ONLY the JSON array. No explanation.`;
       city: candidate.city,
       address: candidate.address,
       timeBlock,
-      blurb: pick.blurb,
+      blurb: cardBlurb,
       why: pick.why,
       url: candidate.url,
       mapsUrl: candidate.mapsUrl,
@@ -1228,7 +1248,7 @@ Return ONLY the JSON array. No explanation.`;
         city: locked.city,
         address: locked.address,
         timeBlock,
-        blurb: locked.description?.slice(0, 200) || fallbackBlurb(locked.source, locked.category, locked.name, locked.venue),
+        blurb: locked.blurb || locked.description?.slice(0, 200) || fallbackBlurb(locked.source, locked.category, locked.name, locked.venue),
         why: locked.why || "This is the one the day is built around.",
         url: locked.url,
         mapsUrl: locked.mapsUrl,
