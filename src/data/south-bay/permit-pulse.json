@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-23T11:22:12.029Z",
+      "generatedAt": "2026-04-23T14:49:25.458Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-23T11:22:14.225Z",
+      "generatedAt": "2026-04-23T14:49:28.021Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-01012",
-          "address": "853 Thornwood Dr",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Remove and replace siding and trim on whole home, like for like style. no change to square footage.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-16",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01024",
           "address": "3790 Ross Rd",
           "category": "commercial",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-20",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01012",
+          "address": "853 Thornwood Dr",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Remove and replace siding and trim on whole home, like for like style. no change to square footage.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-16",
           "subtype": "Permit Issued"
         },
         {
@@ -199,18 +199,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01021",
-          "address": "957 Colonial Ln",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-19",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01028",
           "address": "4163 Park Bl",
           "category": "residential-large",
@@ -220,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-20",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01044",
+          "address": "631 Saint Claire Dr",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-21",
           "subtype": "Permit Issued"
         },
         {
@@ -235,15 +235,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01044",
-          "address": "631 Saint Claire Dr",
+          "id": "26BLD-01021",
+          "address": "957 Colonial Ln",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-21",
+          "issueDate": "2026-04-19",
           "subtype": "Permit Issued"
         },
         {
