@@ -15,7 +15,6 @@ import {
   formatAge,
 } from "../../../lib/south-bay/timeHelpers";
 
-import upcomingJson from "../../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../../data/south-bay/digests.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
@@ -115,6 +114,7 @@ function isActiveToday(e: SBEvent): boolean {
 export function useHomepageData(homeCity: City | null) {
   const [weather, setWeather] = useState<string | null>(null);
   const [forecast, setForecast] = useState<ForecastDay[] | null>(null);
+  const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[]; generatedAt?: string } | null>(null);
 
   useEffect(() => {
     const cityParam = homeCity ? `?city=${homeCity}` : "";
@@ -127,10 +127,17 @@ export function useHomepageData(homeCity: City | null) {
       .catch(() => {});
   }, [homeCity]);
 
+  useEffect(() => {
+    fetch("/api/south-bay/upcoming-events")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => setUpcomingData(d ?? { events: [] }))
+      .catch(() => setUpcomingData({ events: [] }));
+  }, []);
+
   return useMemo(() => {
     // ── All upcoming events ──
-    const rawUpcoming = (upcomingJson as { events: UpcomingEvent[]; generatedAt?: string }).events ?? [];
-    const eventsGeneratedAt = (upcomingJson as any).generatedAt;
+    const rawUpcoming = upcomingData?.events ?? [];
+    const eventsGeneratedAt = upcomingData?.generatedAt;
 
     // Collapse library closures
     const allUpcoming = collapseClosures(rawUpcoming);
@@ -231,7 +238,7 @@ export function useHomepageData(homeCity: City | null) {
       photo,
       freshness,
     };
-  }, [homeCity, weather, forecast]);
+  }, [homeCity, weather, forecast, upcomingData]);
 }
 
 // ── Collapse library closures ──
