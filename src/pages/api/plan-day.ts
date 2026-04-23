@@ -1515,7 +1515,7 @@ Return ONLY the JSON array. No explanation.`;
         city: replacement.city,
         address: replacement.address,
         timeBlock: cur.timeBlock,
-        blurb: replacement.description?.slice(0, 160) || fallbackBlurb(replacement.source, replacement.category, replacement.name, replacement.venue),
+        blurb: replacement.blurb || replacement.description?.slice(0, 160) || fallbackBlurb(replacement.source, replacement.category, replacement.name, replacement.venue),
         why: replacement.why || "A solid pick to break up the day.",
         url: replacement.url ?? null,
         mapsUrl: replacement.mapsUrl ?? null,
@@ -1603,6 +1603,7 @@ async function padWithClaude(args: {
       if (c.eventTime) parts.push(`time: ${c.eventTime}`);
       if (c.rating) parts.push(`rating: ${c.rating}`);
       if (c.costNote) parts.push(`price: ${c.costNote}`);
+      if (c.blurb) parts.push(`blurb: ${c.blurb}`);
       return parts.join(" | ");
     })
     .join("\n");
@@ -1670,6 +1671,11 @@ Return ONLY the JSON array.`;
     } else {
       timeBlock = isValidTimeBlock(pick.timeBlock) ? pick.timeBlock : "12:00 PM - 1:00 PM";
     }
+    const padBlurb =
+      candidate.blurb ||
+      pick.blurb ||
+      candidate.description?.slice(0, 200) ||
+      fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue);
     padded.push({
       id: candidate.id,
       name: candidate.name,
@@ -1677,7 +1683,7 @@ Return ONLY the JSON array.`;
       city: candidate.city,
       address: candidate.address,
       timeBlock,
-      blurb: pick.blurb,
+      blurb: padBlurb,
       why: pick.why,
       url: candidate.url,
       mapsUrl: candidate.mapsUrl,
