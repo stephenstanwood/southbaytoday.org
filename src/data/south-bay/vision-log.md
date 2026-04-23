@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-04-22 — Cycle 105: Point2 Technology Funding + Data Refresh
+
+### Context
+Wednesday April 22, 2026 (~6 PM PDT). Session picked up from a context-compaction mid-cycle. Crunchbase weekly roundup for Apr 18-25 not yet published (publishes Friday Apr 25). Searched vcnewsdaily, Crunchbase roundups Mar–Apr 2026, and general tech news for untracked South Bay funding rounds. Found one new confirmed entry: Point2 Technology (San José), $76M Series B extension announced April 21, 2026.
+
+### What Was Built
+
+**Tech: Point2 Technology added to RECENTLY_FUNDED (53rd round)**
+
+Point2 Technology is a San José–based chip startup building RF-based interconnect chips for AI data centers. Their proprietary e-Tube platform transmits signals over plastic waveguides instead of copper, delivering 10x the reach at 3x lower power with near-zero latency — targeting the scale-up interconnect bottleneck as AI racks keep growing. The $76M Series B extension was led by Maverick Silicon with NVIDIA's NVentures and UMC Capital participating.
+
+- Added `point2-technology` entry to `RECENTLY_FUNDED` in `tech-companies.ts`
+- Updated TECH_PULSE from "52" to "53 South Bay startup rounds"
+- Regenerated `tech-briefing.json`
+
+**Data refreshed:**
+- `upcoming-events.json` — 660 events (94 ongoing) from 37 sources
+- `around-town.json` — 6 items, 10-day lookback (SJ permit Apr 20, MV/Sunnyvale council Apr 14, SJ council x2 + PA council Apr 9)
+- `event-image-cache.json` — 634/660 resolved (96%)
+
+### Why This Was the Strongest Move
+Point2 Technology's $76M round from NVIDIA's own VC arm is a significant South Bay chip deal — RF waveguide interconnects are a genuine engineering differentiator at a moment when AI data center scaling is a mainstream story. Keeping the RECENTLY_FUNDED list current ensures the Tech tab stays credible as a local funding tracker, not a stale showcase.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 25 watch** — Crunchbase weekly roundup for Apr 18–25 publishes Friday. Check for new South Bay rounds; NVIDIA/Maverick adjacencies likely active this week.
+2. **Campbell council data gap** — Stoa has no Campbell council data past Feb 3, 2026. Playwright scrape of campbellca.gov Agenda Center (CivicEngage, JS-rendered) needed as fallback.
+3. **Weekend picks freshness** — Weekend picks currently regenerated ad-hoc. Consider scheduling a Thu/Fri regeneration pass so Sat/Sun events are always fresh.
+
+---
+
 ## 2026-04-22 — Cycle 104: SJ Neighborhood Filter Sticky + Data Refresh
 
 ### Context
