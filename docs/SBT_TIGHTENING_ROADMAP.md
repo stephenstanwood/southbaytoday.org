@@ -153,7 +153,9 @@ committing — should see different events every click.
 
 ---
 
-### ⬛ Session 6 — Items #9 + #10: Empty-state upgrade + minimal test harness
+### ✅ Session 6 — Items #9 + #10: Empty-state upgrade + minimal test harness [2026-04-22]
+
+Shipped. Empty-state panel in `SouthBayTodayView.tsx` replaces the dead-end "Couldn't plan your day" screen: weather + 3 evergreen picks + Try Again + Browse Events CTA, triggered on `error || (!loading && cards.length === 0)`. Test harness in `src/pages/api/plan-day.test.ts` — 11 node:test cases covering `parseHour`, `timeBlockFromEventTime`, `fallbackBlurb`. Uses tsx (already in devDeps) via `--import tsx`. New npm scripts `test` (full) and `test:plan-day` (isolated). All 11 pass in ~240ms.
 
 **Scope:** Don't show "Couldn't plan your day" when API returns 0 cards — fall back to a curated template plan. Also land a 30-line vitest for the brittle plan-day math.
 
