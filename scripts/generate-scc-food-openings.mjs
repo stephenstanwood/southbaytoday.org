@@ -15,16 +15,9 @@ import { writeFileSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
+import { loadEnvLocal } from "./lib/env.mjs";
 
-// Load .env.local if present (for ANTHROPIC_API_KEY)
-try {
-  const envPath = join(dirname(fileURLToPath(import.meta.url)), "..", ".env.local");
-  const envText = readFileSync(envPath, "utf8");
-  for (const line of envText.split("\n")) {
-    const m = line.match(/^([A-Z0-9_]+)="?([^"]*)"?\s*$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
-  }
-} catch { /* no .env.local */ }
+loadEnvLocal();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-openings.json");

@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { loadEnvLocal } from "./lib/env.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -21,16 +22,7 @@ const TECH_TS_PATH   = join(__dirname, "..", "src", "data", "south-bay", "tech-c
 const EVENTS_PATH    = join(__dirname, "..", "src", "data", "south-bay", "upcoming-events.json");
 const OUT_PATH       = join(__dirname, "..", "src", "data", "south-bay", "tech-briefing.json");
 
-// Load env if needed
-if (!process.env.ANTHROPIC_API_KEY) {
-  try {
-    const lines = readFileSync(join(__dirname, "..", ".env.local"), "utf8").split("\n");
-    for (const line of lines) {
-      const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
-      if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
-    }
-  } catch {}
-}
+loadEnvLocal();
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!ANTHROPIC_API_KEY) {

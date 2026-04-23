@@ -17,18 +17,12 @@ import { writeFileSync, readFileSync, existsSync } from "fs";
 import { createHash } from "crypto";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { loadEnvLocal } from "./lib/env.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "../src/data/south-bay/photos.json");
 
-// Load .env.local if needed
-if (!process.env.FLICKR_API_KEY && existsSync(join(__dirname, "../.env.local"))) {
-  const env = readFileSync(join(__dirname, "../.env.local"), "utf8");
-  for (const line of env.split("\n")) {
-    const m = line.match(/^([^#=]+)=(.*)$/);
-    if (m) process.env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, "");
-  }
-}
+loadEnvLocal();
 
 const API_KEY = process.env.FLICKR_API_KEY;
 if (!API_KEY) {
