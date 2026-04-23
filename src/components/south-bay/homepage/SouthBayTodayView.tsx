@@ -302,8 +302,10 @@ const REGIONAL_ANCHOR: City = "san-jose";
 export default function SouthBayTodayView(_props: Props) {
   const [state, setState] = useState<LocalState>(() => loadState());
   // Random anchor for initial render so first-visit users see variety.
+  // Use state.kids (from localStorage) so returning users see the right
+  // mode on first paint — not always adults.
   const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null } | null>(null);
-  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(false);
+  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids);
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
   const [weather, setWeather] = useState<string | null>(() => {
@@ -312,15 +314,16 @@ export default function SouthBayTodayView(_props: Props) {
       const json = defaultPlansJson as any;
       const plans = json.plans || {};
       const anchor = initialPlan.current.anchor;
+      const kidsSuffix = state.kids ? "kids" : "adults";
       // Match whatever key we used for the cards — try every anchored key
       // for this city first, then the legacy un-anchored key.
       const anchorHours: number[] = Array.isArray(json._meta?.anchorHours)
         ? json._meta.anchorHours : [9];
       for (const h of anchorHours) {
-        const w = plans[`${anchor}:adults:h${h}`]?.weather;
+        const w = plans[`${anchor}:${kidsSuffix}:h${h}`]?.weather;
         if (w) return w;
       }
-      return plans[`${anchor}:adults`]?.weather || null;
+      return plans[`${anchor}:${kidsSuffix}`]?.weather || null;
     } catch { return null; }
   });
   const [loading, setLoading] = useState(!hasDefaultPlan);
@@ -431,14 +434,14 @@ export default function SouthBayTodayView(_props: Props) {
   }, [state.kids, state.dismissed, state.locked, cards]);
 
   // Freshness policy for the pre-generated plan:
-  //   age < 6h    → show instantly, no refresh
-  //   6h ≤ age ≤ 26h → show instantly, silent background refresh
-  //   age > 26h   → hard-stale (cron missed its window). Don't show the
-  //                 cached plan at all — fire an API call with loading state.
+  //   age ≤ 26h  → show the cached plan, no refresh. The 2 AM nightly regen
+  //                gives a fresh plan every morning; users get instant load
+  //                and no surprise shuffle-after-landing.
+  //   age > 26h  → hard-stale (cron missed its window). Fire an API call
+  //                with loading state because the cached plan is stale
+  //                enough to mislead.
   //
-  // 26h is chosen to span the 2 AM nightly regen + a 2-hour buffer for
-  // cron delays. If we're past that window, something is wrong with the
-  // generator and the cached plan is more likely to mislead than help.
+  // 26h spans the 2 AM nightly regen + a 2-hour buffer for cron delays.
   useEffect(() => {
     if (!hasDefaultPlan) {
       fetchPlan();
@@ -446,18 +449,11 @@ export default function SouthBayTodayView(_props: Props) {
     }
     const generatedAt = (defaultPlansJson as any)?._meta?.generatedAt;
     const ageMs = generatedAt ? Date.now() - new Date(generatedAt).getTime() : Infinity;
-    const STALE_MS = 6 * 60 * 60 * 1000;
     const HARD_STALE_MS = 26 * 60 * 60 * 1000;
     if (ageMs > HARD_STALE_MS) {
       console.warn(`[sbt] default-plans age ${Math.round(ageMs / 3600000)}h exceeds 26h — forcing live fetch`);
       setLoading(true);
       fetchPlan();
-      return;
-    }
-    if (ageMs > STALE_MS) {
-      // Background refresh — give the user a sec to see the instant plan,
-      // then quietly swap in a fresh one.
-      setTimeout(() => fetchPlanRef.current?.(), 1500);
     }
   }, []);
 
@@ -466,9 +462,33 @@ export default function SouthBayTodayView(_props: Props) {
 
   // Actions
   const handleKidsToggle = () => {
-    setState((s) => ({ ...s, kids: !s.kids }));
-    // Use fetchPlanRef so we invoke the latest fetchPlan after the state
-    // update lands, not a stale closure bound to the previous `kids` value.
+    const nextKids = !state.kids;
+    setState((s) => ({ ...s, kids: nextKids }));
+    // Try the pre-generated plan for the new mode first — that's the whole
+    // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
+    // to a network shuffle if default-plans.json doesn't have the mode.
+    const preGen = loadDefaultPlan(nextKids);
+    if (preGen.cards.length > 0) {
+      setCards(preGen.cards);
+      lastAnchorRef.current = preGen.anchor;
+      recentAnchorsRef.current = preGen.anchor ? [preGen.anchor] : [];
+      recentCardIdsRef.current = preGen.cards.map((c) => c.id);
+      setReplacedIds(new Set());
+      // Swap the weather line to match the new mode's anchor.
+      try {
+        const json = defaultPlansJson as any;
+        const plans = json.plans || {};
+        const kidsSuffix = nextKids ? "kids" : "adults";
+        const anchorHours: number[] = Array.isArray(json._meta?.anchorHours)
+          ? json._meta.anchorHours : [9];
+        for (const h of anchorHours) {
+          const w = plans[`${preGen.anchor}:${kidsSuffix}:h${h}`]?.weather;
+          if (w) { setWeather(w); break; }
+        }
+      } catch {}
+      return;
+    }
+    // Fallback: hero plan missing for this mode → live fetch.
     setTimeout(() => fetchPlanRef.current?.(), 50);
   };
   const handleNewPlan = () => fetchPlan(undefined, true);
