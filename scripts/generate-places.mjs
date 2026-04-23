@@ -511,6 +511,13 @@ async function main() {
           // Quality filter
           if (rating < MIN_RATING || ratingCount < MIN_RATINGS_COUNT) continue;
 
+          // Skip places Google has no photo for — they're almost always
+          // low-quality listings (business-corp spas, preschools, private
+          // community centers) that also fall over in any photo-forward UI.
+          // If it doesn't have a Google Places photo, it doesn't belong in
+          // the day-plan pool.
+          if (!place.photos?.[0]?.name) continue;
+
           // Detect city from address
           const detectedCity = detectCity(place.formattedAddress || "");
           // Must be in one of our cities
