@@ -3663,14 +3663,18 @@ async function main() {
   });
 
   // Detect multi-day events and collapse to first occurrence as ongoing.
-  // Two rules:
+  // Three rules:
   //   1. Same title + same URL (non-null) + no time → exhibit/gallery, 2+ dates suffices
   //   2. Same title + 3+ distinct dates → recurring event regardless of URL
+  //   3. Same title + same source + same venue + 2+ dates within 5 days → multi-day show/festival (not Ticketmaster)
   const normTitle = (e) =>
     e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
+  const normVenue = (e) =>
+    (e.venue || "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 40);
 
   const titleDates = {};
   const urlDates = {};
+  const titleSourceVenueDates = {};
   deduped.forEach((e) => {
     const k = normTitle(e);
     if (!titleDates[k]) titleDates[k] = new Set();
@@ -3680,6 +3684,12 @@ async function main() {
       const uk = `url:${e.url}`;
       if (!urlDates[uk]) urlDates[uk] = { dates: new Set(), key: k };
       urlDates[uk].dates.add(e.date);
+    }
+    // Track same title+source+venue for multi-day show detection (Rule 3)
+    if (e.source !== "Ticketmaster" && normVenue(e)) {
+      const tsvk = `${k}|${e.source}|${normVenue(e)}`;
+      if (!titleSourceVenueDates[tsvk]) titleSourceVenueDates[tsvk] = { dates: new Set(), key: k };
+      titleSourceVenueDates[tsvk].dates.add(e.date);
     }
   });
 
@@ -3692,6 +3702,15 @@ async function main() {
     ...Object.entries(titleDates)
       .filter(([, dates]) => dates.size >= 3)
       .map(([key]) => key),
+    // Rule 3: same title + same source + same venue + 2+ dates all within 5 days (not Ticketmaster)
+    ...Object.values(titleSourceVenueDates)
+      .filter((v) => {
+        if (v.dates.size < 2) return false;
+        const sorted = [...v.dates].sort();
+        const spanDays = (new Date(sorted[sorted.length - 1]) - new Date(sorted[0])) / (1000 * 60 * 60 * 24);
+        return spanDays <= 5;
+      })
+      .map((v) => v.key),
   ]);
 
   const seenMultiDay = new Set();
@@ -3764,7 +3783,12 @@ async function main() {
   // normalizeName(title) + date + normalizeName(venue), keep the richest
   // entry (longest description, has time, has image/photoRef, has url).
   {
-    const normKey = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const normKey = (s) => {
+      let v = String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+      // Strip "Venue/org presents: " prefixes so "MACLA Presents: X" == "X" same venue+date
+      v = v.replace(/^[a-z\s]{2,30}\s+presents?\s+/i, "");
+      return v.trim();
+    };
     const scoreRichness = (e) => {
       let s = 0;
       if (e.description) s += Math.min(e.description.length / 100, 5);
