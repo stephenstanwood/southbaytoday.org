@@ -34,10 +34,10 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b/i;
+const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
-const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE)\b/i;
+const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART)\b/i;
 
 // Gas station brands — convenience stores at gas stations aren't restaurant openings
 const GAS_STATION_PATTERNS = /\b(SHELL|CHEVRON|ARCO|MOBIL|EXXON|VALERO|BP|CIRCLE K|76 GAS|TEXACO|SINCLAIR|SUNOCO|MARATHON|PHILLIPS 66|LOVE'S|PILOT)\b/i;
@@ -53,7 +53,9 @@ const BLURB_OVERRIDES = {
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
   "SR0880573": "Molly Tea opening a second South Bay location at Rivermark Plaza in Santa Clara.",
   "SR0884317": "Molly Tea's Stevens Creek location — bubble tea and snacks in Cupertino's Stevens Creek corridor.",
-  // April 2026 openings
+  // April 2026 opened
+  "SR0880717": "Dairy Queen opens on S Winchester Blvd in Campbell — ice cream, Blizzards, and fast food.",
+  "SR0880767": "Dough Zone opens at 1875 S Bascom Ave in Campbell — Taiwanese dumplings and buns, second South Bay location.",
   "SR0878726": "T&T Supermarket — a major Canadian Asian grocery chain — opens its Westgate Mall location, bringing fresh produce, seafood, and imported Asian goods to West San Jose.",
   "SR0884181": "Health-focused cafe and restaurant inside Bay Club Santa Clara — smoothies, salads, and fresh meals for members and guests.",
   "SR0876717": "Ramen and Japanese comfort food at 180 S. Market St in downtown San Jose.",
@@ -69,12 +71,20 @@ const BLURB_OVERRIDES = {
   "SR0879599": "Taiwanese tea and light food in Milpitas.",
   "SR0884051": "Boba tea shop at San Antonio Rd in Mountain View.",
   // Coming soon — April 2026
+  "SR0884326": "Pizza shop coming to Alum Rock Ave in East San Jose.",
+  "SR0884064": "Boba tea shop coming to Camden Ave in South San Jose.",
+  "SR0884383": "Grocery Outlet discount grocery — coming to Homestead Rd in Santa Clara.",
+  "SR0884339": "Heytea — a popular Chinese tea chain known for fresh fruit teas — opening at Barber Ln in Milpitas.",
+  "SR0884243": "Toastique — upscale avocado toast and cold-pressed juice bar — opening downtown San Jose on W Santa Clara St.",
+  "SR0880648": "Crepe Shibuya — Japanese-style street crepes — coming to Ranch Dr in Milpitas.",
+  "SR0880855": "Johnny Donuts coming to Santana Row area — handcrafted doughnuts and coffee at Olin Ave.",
+  "SR0883952": "Chama Nativa Brazilian Steakhouse — rodizio churrasco with tableside carving service — opening on Blossom Hill Rd in San Jose.",
   "SR0884604": "Sushi restaurant opening at 15650 Los Gatos Blvd in Los Gatos.",
   "SR0880082": "Seafood restaurant focusing on crab dishes — coming to 625 Coleman Ave in San Jose.",
   "SR0884303": "Boba tea shop opening at De Anza Blvd in Cupertino's shopping district.",
   "SR0884106": "Japanese restaurant opening at 10445 S De Anza Blvd in Cupertino.",
-  "SR0884217": "Breakfast and brunch spot coming to 545 San Antonio Rd in Mountain View.",
-  "SR0879164": "Seafood restaurant opening on E Calaveras Blvd in Milpitas.",
+  "SR0884217": "Breakfast and brunch spot at 545 San Antonio Rd in Mountain View.",
+  "SR0879164": "Seafood restaurant at E Calaveras Blvd in Milpitas.",
   "SR0884293": "Classic American BBQ chain with smoked meats — returning to San Jose at 61 Curtner Ave.",
   "SR0883509": "Tisane tea house opening a new location at 2980 E Capitol Expwy in San Jose.",
 };
@@ -92,6 +102,8 @@ const SOURCE_ID_SKIP = new Set([
   "SR0883371", // Byte Coolers (Terminal B) — airport terminal concession, not a public SB restaurant
   "SR0883372", // Byte Coolers (Terminal B) — airport terminal concession, not a public SB restaurant
   "SR0884107", // Indoor Food Facility For Cbre — corporate cafeteria at 4353 N First St, not public
+  "SR0881676", // Walmart Nsvc B4 Breakrooms — employee break rooms at Walmart, not a public restaurant
+  "SR0883046", // Life Time Fitness - Santana Row — gym with internal food facility, not a standalone restaurant
 ]);
 
 // Map city names to our city IDs

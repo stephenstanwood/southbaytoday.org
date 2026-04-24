@@ -1653,6 +1653,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#0ea5e9",
     url: "https://www.cadence.com",
   },
+  {
+    id: "lightwheel-ai",
+    name: "Lightwheel",
+    city: "Santa Clara",
+    category: "robotics",
+    round: "Series A",
+    amount: "$146M",
+    date: "2026-04-22",
+    tagline: "Synthetic data platform for training and evaluating robotic AI — generates high-fidelity simulated environments so robots learn real-world tasks without requiring millions of expensive physical experiments. $1B valuation on Series A; building the data infrastructure layer that humanoid robot companies depend on.",
+    color: "#7c3aed",
+    url: "https://lightwheel.ai",
+  },
 ];
 
 // Pulse stats for the header strip

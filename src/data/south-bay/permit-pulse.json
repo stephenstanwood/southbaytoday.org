@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-24T19:11:15.695Z",
+      "generatedAt": "2026-04-24T20:07:46.570Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-24T19:11:18.003Z",
+      "generatedAt": "2026-04-24T20:07:48.802Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -187,6 +187,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01043",
+          "address": "365 College Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-21",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01054",
           "address": "4112 Amaranta Av",
           "category": "residential-large",
@@ -196,18 +208,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-22",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01044",
-          "address": "631 Saint Claire Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-21",
           "subtype": "Permit Issued"
         },
         {
@@ -235,12 +235,12 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01043",
-          "address": "365 College Av",
+          "id": "26BLD-01044",
+          "address": "631 Saint Claire Dr",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-21",
