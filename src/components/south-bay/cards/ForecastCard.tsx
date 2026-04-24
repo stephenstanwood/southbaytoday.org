@@ -16,8 +16,24 @@ interface Props {
   homeCity: City | null;
 }
 
+function ptTodayISO(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+
 export default function ForecastCard({ homeCity }: Props) {
   const [forecast, setForecast] = useState<ForecastDay[] | null>(null);
+  const [todayISO, setTodayISO] = useState<string>(() => ptTodayISO());
+
+  // Roll the PT date forward once per minute so a tab left open past
+  // midnight refetches the forecast (dropping yesterday, marking the
+  // new day as TODAY).
+  useEffect(() => {
+    const id = setInterval(() => {
+      const next = ptTodayISO();
+      setTodayISO((prev) => (prev === next ? prev : next));
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const cityParam = homeCity ? `?city=${homeCity}` : "";
@@ -25,11 +41,9 @@ export default function ForecastCard({ homeCity }: Props) {
       .then((r) => r.json())
       .then((d) => setForecast(d.forecast ?? null))
       .catch(() => {});
-  }, [homeCity]);
+  }, [homeCity, todayISO]);
 
   if (!forecast || forecast.length === 0) return null;
-
-  const todayISO = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
   const tempColor = (t: number) => {
     if (t >= 95) return "#C2290A";

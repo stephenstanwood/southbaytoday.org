@@ -527,6 +527,33 @@ export default function SouthBayTodayView(_props: Props) {
   // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
 
+  // Auto-flip to tomorrow's plan when today's plan is exhausted. Fires
+  // when the last today-card's end time passes OR when the page crosses
+  // midnight PT with a stale today plan still mounted. Reuses the
+  // pre-generated tomorrow hero plan so we don't hit /api/plan-day.
+  useEffect(() => {
+    if (loading || cards.length === 0) return;
+    const today = getTodayISOInPT();
+    if (planDateISO > today) return; // already showing tomorrow
+    const stillHasTodayCards = planDateISO === today && cards.some((c) => {
+      const end = parseEndMinutes(c.timeBlock);
+      return end === null ? true : end > nowMinutes;
+    });
+    if (stillHasTodayCards) return;
+    const tom = loadTomorrowPlan(state.kids);
+    if (!tom.cards.length) return;
+    setCards(tom.cards);
+    setPlanDateISO(getTomorrowISOInPT());
+    setReplacedIds(new Set());
+    lastAnchorRef.current = tom.anchor;
+    recentAnchorsRef.current = tom.anchor ? [tom.anchor] : [];
+    if (tom.weather) setWeather(tom.weather);
+    setState((s) => ({
+      ...s,
+      recentlyShown: mergeRecent(s.recentlyShown, tom.cards.map((c) => ({ id: c.id, name: c.name }))),
+    }));
+  }, [cards, planDateISO, nowMinutes, loading, state.kids]);
+
   // Actions
   const handleKidsToggle = () => {
     const nextKids = !state.kids;
@@ -605,15 +632,11 @@ export default function SouthBayTodayView(_props: Props) {
   };
 
   // Tomorrow mode: 6pm for kids, 8pm for adults — same cutoff used in
-  // getEffectiveTime so the headline and the actual plan always agree.
-  const headline = getEffectiveTime(state.kids).isTomorrow
+  // Headline follows the plan date — if we've auto-flipped to tomorrow
+  // (cards exhausted OR past 8 PM cutoff), say "tomorrow".
+  const headline = planDateISO > getTodayISOInPT()
     ? "What should we do tomorrow?"
     : "What should we do today?";
-
-  // AP Exams countdown — show 14 days before May 4 through May 3
-  const apExamStart = new Date("2026-05-04T00:00:00");
-  const apDaysUntil = Math.ceil((apExamStart.getTime() - Date.now()) / 86_400_000);
-  const showApBanner = apDaysUntil >= 1 && apDaysUntil <= 14;
 
   // Live card filter. Tomorrow-mode plans show everything (all future).
   // Today plans filter cards whose end time has already passed. Stale
@@ -663,16 +686,6 @@ export default function SouthBayTodayView(_props: Props) {
       <div style={{ margin: "0 -16px 14px" }}>
         <PhotoStrip />
       </div>
-
-      {/* AP Exams countdown */}
-      {showApBanner && (
-        <div style={{ background: "#fefce8", border: "1px solid #fde047", borderRadius: 8, padding: "8px 12px", marginBottom: 12, display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter', sans-serif" }}>
-          <span style={{ fontSize: 16 }}>📚</span>
-          <span style={{ fontSize: 13, fontWeight: 600, color: "#713f12" }}>
-            AP Exams begin in {apDaysUntil} day{apDaysUntil !== 1 ? "s" : ""} · May 4–15 &nbsp;·&nbsp; SJUSD, PAUSD, FUHSD
-          </span>
-        </div>
-      )}
 
       {/* Instruction line */}
       {visibleCards.length > 0 && (
@@ -1123,6 +1136,42 @@ function getNowMinutesPT(): number {
 /** YYYY-MM-DD in America/Los_Angeles. */
 function getTodayISOInPT(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+
+/** Tomorrow's YYYY-MM-DD in America/Los_Angeles. */
+function getTomorrowISOInPT(): string {
+  const today = getTodayISOInPT();
+  const [y, m, d] = today.split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + 1));
+  return t.toISOString().slice(0, 10);
+}
+
+/** Load the tomorrow-anchor hero plan from default-plans.json. Used when
+ *  today's plan runs out mid-session so we can flip into the tomorrow
+ *  view without a network round-trip. Mirrors loadDefaultPlan's hero
+ *  lookup but hard-forces the morning anchor + skips the past filter. */
+function loadTomorrowPlan(kids: boolean): { cards: DayCard[]; anchor: City | null; weather: string | null } {
+  try {
+    const json = defaultPlansJson as any;
+    const plans = json.plans || {};
+    const anchorHours: number[] = Array.isArray(json._meta?.anchorHours) && json._meta.anchorHours.length
+      ? json._meta.anchorHours : [9];
+    const chosenAnchor = anchorHours.includes(9) ? 9 : anchorHours.slice().sort((a, b) => a - b)[0];
+    const kidsSuffix = kids ? "kids" : "adults";
+    const heroKey = `${kidsSuffix}:h${chosenAnchor}`;
+    let plan = plans[heroKey];
+    let city: City = (plan?.city as City) || pickRandomAnchor();
+    if (!plan?.cards?.length) {
+      city = pickRandomAnchor();
+      const anchoredKey = `${city}:${kidsSuffix}:h${chosenAnchor}`;
+      const legacyKey = `${city}:${kidsSuffix}`;
+      plan = plans[anchoredKey] || plans[legacyKey];
+    }
+    if (!plan?.cards?.length) return { cards: [], anchor: null, weather: null };
+    return { cards: plan.cards, anchor: city, weather: plan.weather || null };
+  } catch {
+    return { cards: [], anchor: null, weather: null };
+  }
 }
 
 const LOADING_VERBS = [

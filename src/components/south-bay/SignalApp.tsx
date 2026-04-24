@@ -13,13 +13,15 @@ const TechnologyView = lazy(() => import("./views/TechnologyView"));
 const FoodView = lazy(() => import("./views/FoodView"));
 const CampsView = lazy(() => import("./views/CampsView"));
 
-const TODAY = new Date().toLocaleDateString("en-US", {
-  weekday: "long",
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-  timeZone: "America/Los_Angeles",
-});
+function formatTodayLabel(): string {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "America/Los_Angeles",
+  });
+}
 
 const TAB_IDS = new Set<string>(TABS.map((t) => t.id));
 
@@ -30,6 +32,16 @@ function getTabFromHash(): Tab {
 
 export default function SignalApp() {
   const [activeTab, setActiveTab] = useState<Tab>(getTabFromHash);
+  // Auto-refresh the masthead date on day rollover so a tab left open past
+  // midnight doesn't show yesterday's label.
+  const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
+  useEffect(() => {
+    const id = setInterval(() => {
+      const next = formatTodayLabel();
+      setTodayLabel((prev) => (prev === next ? prev : next));
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   const navigateTo = useCallback((tab: Tab) => {
     setActiveTab(tab);
@@ -115,7 +127,7 @@ export default function SignalApp() {
             </span>
           </a>
           <div className="sb-date">
-            <div>{TODAY}</div>
+            <div>{todayLabel}</div>
           </div>
           <div className="sb-slogan">All local. Good vibes. No ads.</div>
           <div className="sb-social-links">
