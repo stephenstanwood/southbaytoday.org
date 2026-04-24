@@ -143,9 +143,24 @@ export const GET: APIRoute = async ({ params, url }) => {
     const cardUrl = card.source === "event"
       ? (card.url || card.mapsUrl)
       : (card.mapsUrl || card.url);
+    // Emit end-minutes so the live-tick script can hide the card once its
+    // end time has passed without a reload. Null ("All day", single-time
+    // blocks) → no data-end, card stays.
+    const endMin = (function () {
+      const parts = String(card.timeBlock || "").split(/\s*-\s*/);
+      if (parts.length < 2) return null;
+      const m = parts[1].match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!m) return null;
+      let h = parseInt(m[1], 10);
+      const min = parseInt(m[2], 10);
+      if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+      if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+      return h * 60 + min;
+    })();
+    const endAttr = endMin !== null ? ` data-end="${endMin}"` : "";
     const linkOpen = cardUrl
-      ? `<a href="${esc(cardUrl)}" target="_blank" rel="noopener noreferrer" style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px;text-decoration:none;color:inherit;transition:box-shadow 0.15s" onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='none'">`
-      : `<div style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px">`;
+      ? `<a class="sbt-card"${endAttr} href="${esc(cardUrl)}" target="_blank" rel="noopener noreferrer" style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px;text-decoration:none;color:inherit;transition:box-shadow 0.15s,opacity 0.25s" onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='none'">`
+      : `<div class="sbt-card"${endAttr} style="display:flex;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e8e8e8;margin-bottom:8px;transition:opacity 0.25s">`;
     const linkClose = cardUrl ? `</a>` : `</div>`;
 
     return `
@@ -201,21 +216,72 @@ export const GET: APIRoute = async ({ params, url }) => {
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" data-plan-date="${esc(planTargetDate)}">
   <div class="header">
     <div class="logo">South Bay Today</div>
     <h1>${esc(dateStr)}</h1>
     <div class="meta">
-      ${plan.weather ? `🌤 ${esc(plan.weather)} · ` : ""}${plan.cards.length} stops${plan.kids ? " · Family-friendly" : ""}
+      ${plan.weather ? `🌤 ${esc(plan.weather)} · ` : ""}<span class="sbt-stop-count">${plan.cards.length}</span> stops${plan.kids ? " · Family-friendly" : ""}
     </div>
   </div>
   ${timeNote}
-  ${cardsHtml}
+  <div class="sbt-cards">${cardsHtml}</div>
+  <div class="sbt-all-done" style="display:none;text-align:center;padding:32px 16px 8px;color:#888;font-size:14px">That's a wrap — every stop on this plan has passed.</div>
   <div class="footer">
     <a href="${esc(origin)}/?city=${esc(plan.city)}" class="cta">Build Your Own Day →</a>
     <p style="margin-top:16px">Powered by <a href="${esc(origin)}/" style="color:#888">southbaytoday.org</a></p>
   </div>
 </div>
+<script>
+(function(){
+  var container = document.querySelector('.container');
+  if (!container) return;
+  var planDate = container.getAttribute('data-plan-date') || '';
+  function todayPT(){
+    return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+  }
+  function nowMinPT(){
+    var s = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false });
+    var p = s.split(':');
+    return (parseInt(p[0],10) || 0) * 60 + (parseInt(p[1],10) || 0);
+  }
+  function tick(){
+    var today = todayPT();
+    // Future plan — leave everything alone.
+    if (planDate > today) return;
+    var cards = container.querySelectorAll('.sbt-card');
+    var visible = 0;
+    if (planDate < today) {
+      // Stale plan from a past day — every stop is behind us.
+      cards.forEach(function(el){
+        if (el.style.display !== 'none') {
+          el.style.opacity = '0';
+          setTimeout(function(){ el.style.display = 'none'; }, 250);
+        }
+      });
+    } else {
+      var now = nowMinPT();
+      cards.forEach(function(el){
+        var end = parseInt(el.getAttribute('data-end') || '', 10);
+        if (!isNaN(end) && end <= now) {
+          if (el.style.display !== 'none') {
+            el.style.opacity = '0';
+            setTimeout(function(){ el.style.display = 'none'; }, 250);
+          }
+        } else {
+          visible++;
+        }
+      });
+    }
+    var count = container.querySelector('.sbt-stop-count');
+    if (count) count.textContent = String(visible);
+    var done = container.querySelector('.sbt-all-done');
+    if (done) done.style.display = (cards.length > 0 && visible === 0) ? 'block' : 'none';
+  }
+  tick();
+  setInterval(tick, 30000);
+})();
+</script>
 </body>
 </html>`;
 

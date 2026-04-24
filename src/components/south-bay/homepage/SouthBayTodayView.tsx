@@ -368,6 +368,14 @@ export default function SouthBayTodayView(_props: Props) {
   const [replacedIds, setReplacedIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
+  // Live "now" signal so past cards fall off without a reload. planDateISO
+  // is the target date of the plan in view — when it's today we filter
+  // cards whose end time has already passed.
+  const [nowMinutes, setNowMinutes] = useState(() => getNowMinutesPT());
+  const [planDateISO, setPlanDateISO] = useState<string>(() => {
+    const eff = getEffectiveTime(state.kids);
+    return eff.planDate || getTodayISOInPT();
+  });
   const fetchRef = useRef(0);
   const lastAnchorRef = useRef<City | null>(initialPlan.current.anchor);
   // Anchor diversity within a single session. Card-level variety is
@@ -381,9 +389,14 @@ export default function SouthBayTodayView(_props: Props) {
   // or san-jose (center of south bay) as a neutral default.
   const displayCity: City = REGIONAL_ANCHOR;
 
-  // Keep time display live
+  // Keep the clock + nowMinutes live. 30 s is plenty — card end times are
+  // minute-resolution, and re-renders bail when the value hasn't changed.
   useEffect(() => {
-    const t = setInterval(() => setTimeDisplay(formatTime()), 30000);
+    const tick = () => {
+      setTimeDisplay(formatTime());
+      setNowMinutes(getNowMinutesPT());
+    };
+    const t = setInterval(tick, 30000);
     return () => clearInterval(t);
   }, []);
 
@@ -462,6 +475,7 @@ export default function SouthBayTodayView(_props: Props) {
       const sorted = [...data.cards].sort((a, b) => parseTimeBlock(a.timeBlock) - parseTimeBlock(b.timeBlock));
       // Only show green lock icon for user-explicitly-locked cards, not auto-kept ones
       setCards(sorted.map((c) => ({ ...c, locked: state.locked.includes(c.id) })));
+      setPlanDateISO(eff.planDate || getTodayISOInPT());
       setState((s) => ({
         ...s,
         recentlyShown: mergeRecent(s.recentlyShown, sorted.map((c) => ({ id: c.id, name: c.name }))),
@@ -530,6 +544,7 @@ export default function SouthBayTodayView(_props: Props) {
         recentlyShown: mergeRecent(s.recentlyShown, preGen.cards.map((c) => ({ id: c.id, name: c.name }))),
       }));
       setReplacedIds(new Set());
+      setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
       // Swap the weather line to match the new mode's anchor.
       try {
         const json = defaultPlansJson as any;
@@ -600,6 +615,23 @@ export default function SouthBayTodayView(_props: Props) {
   const apDaysUntil = Math.ceil((apExamStart.getTime() - Date.now()) / 86_400_000);
   const showApBanner = apDaysUntil >= 1 && apDaysUntil <= 14;
 
+  // Live card filter. Tomorrow-mode plans show everything (all future).
+  // Today plans filter cards whose end time has already passed. Stale
+  // plans from yesterday (tab left open past midnight) hide everything —
+  // every stop is behind us.
+  const todayPT = getTodayISOInPT();
+  let visibleCards: DayCard[];
+  if (planDateISO > todayPT) {
+    visibleCards = cards;
+  } else if (planDateISO < todayPT) {
+    visibleCards = [];
+  } else {
+    visibleCards = cards.filter((c) => {
+      const end = parseEndMinutes(c.timeBlock);
+      return end === null ? true : end > nowMinutes;
+    });
+  }
+
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
       {/* Weekly forecast banner */}
@@ -643,7 +675,7 @@ export default function SouthBayTodayView(_props: Props) {
       )}
 
       {/* Instruction line */}
-      {cards.length > 0 && (
+      {visibleCards.length > 0 && (
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#999", margin: "0 0 10px", textAlign: "right", letterSpacing: 0.2 }}>
           <span style={{ color: "#22c55e" }}>✓</span> Sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Not today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Never
         </p>
@@ -653,10 +685,14 @@ export default function SouthBayTodayView(_props: Props) {
           Instead of a dead end, give the user a weather snapshot + a handful
           of always-good options + the Events tab so they have somewhere to
           land. */}
-      {(error || (!loading && cards.length === 0)) && (
+      {(error || (!loading && visibleCards.length === 0)) && (
         <div style={{ padding: "24px 0", fontFamily: "'Inter', sans-serif" }}>
           <p style={{ fontSize: 16, fontWeight: 700, margin: 0, marginBottom: 4 }}>
-            {error ? "Plan didn't load — try these classics" : "Nothing in the pool right now — try these classics"}
+            {error
+              ? "Plan didn't load — try these classics"
+              : cards.length > 0
+                ? "That's a wrap on today's plan — shuffle for tomorrow or try these classics"
+                : "Nothing in the pool right now — try these classics"}
           </p>
           {error && <p style={{ fontSize: 12, color: "#888", margin: 0, marginBottom: 10 }}>{error}</p>}
           {weather && <p style={{ fontSize: 13, color: "#555", margin: 0, marginBottom: 14 }}>{weather}</p>}
@@ -679,7 +715,7 @@ export default function SouthBayTodayView(_props: Props) {
       )}
 
       {/* Loading — single card with verb inside */}
-      {loading && cards.length === 0 && (
+      {loading && visibleCards.length === 0 && (
         <div style={{ padding: "8px 0 20px", margin: "0 -16px" }}>
           <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cardAppear 0.4s ease-out 0.1s forwards" }}>
             <div style={{ width: 20, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", backgroundSize: "100% 200%", animation: "rainbow 3s ease infinite", flexShrink: 0 }} />
@@ -691,12 +727,12 @@ export default function SouthBayTodayView(_props: Props) {
       )}
 
       {/* ═══ LIST VIEW ═══ */}
-      {cards.length > 0 && (
+      {visibleCards.length > 0 && (
         <div
           className={loading && !swapLoading ? "sbt-cards sbt-cards--loading" : "sbt-cards"}
           style={{ display: "flex", flexDirection: "column", gap: 8, margin: "0 -16px" }}
         >
-          {cards.map((card, i) => {
+          {visibleCards.map((card, i) => {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const emoji = CATEGORY_EMOJI[card.category] || "📍";
             const isReplaced = replacedIds.has(card.id);
@@ -769,10 +805,12 @@ export default function SouthBayTodayView(_props: Props) {
         </div>
       )}
 
-      {/* Share button */}
-      {cards.length > 1 && !loading && (
+      {/* Share button — share what's still on the table, not the full
+          original plan. No point sending a friend stops that have already
+          passed. */}
+      {visibleCards.length > 1 && !loading && (
         <div style={{ textAlign: "center", padding: "16px 0 0" }}>
-          <ShareButton cards={cards} city={displayCity} kids={state.kids} weather={weather} />
+          <ShareButton cards={visibleCards} city={displayCity} kids={state.kids} weather={weather} />
         </div>
       )}
 
@@ -1052,6 +1090,39 @@ function parseTimeBlock(tb: string): number {
   if (pm && h !== 12) h += 12;
   if (!pm && h === 12) h = 0;
   return h * 60 + min;
+}
+
+/** Parse the end time from "2:30 PM - 4:00 PM" → 240. Returns null if
+ *  the timeBlock has no second half (e.g. "All day", "6 PM"); caller
+ *  should keep such cards visible. */
+function parseEndMinutes(tb: string): number | null {
+  if (!tb) return null;
+  const parts = tb.split(/\s*-\s*/);
+  if (parts.length < 2) return null;
+  const m = parts[1].match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  const min = parseInt(m[2], 10);
+  if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+  if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
+/** Minutes since midnight, in America/Los_Angeles. */
+function getNowMinutesPT(): number {
+  const hhmm = new Date().toLocaleString("en-US", {
+    timeZone: "America/Los_Angeles",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const [h, m] = hhmm.split(":").map((n) => parseInt(n, 10));
+  return (h || 0) * 60 + (m || 0);
+}
+
+/** YYYY-MM-DD in America/Los_Angeles. */
+function getTodayISOInPT(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
 const LOADING_VERBS = [
