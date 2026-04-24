@@ -5040,3 +5040,40 @@ A resident opening the Events tab shouldn't see "Last day to remove Winter 2026 
 1. **RECENTLY_FUNDED: Apr 21+ watch** — NeoCognition ($40M) and Point2 Technology ($76M) added Apr 21. Crunchbase weekly roundup for Apr 21–25 may publish Friday.
 2. **Ongoing exhibit dedup** — MACLA and SJSU gallery exhibits appear as separate daily entries with no time and no `ongoing` flag. Same-URL multi-day entries should collapse to one ongoing event.
 3. **Permit Pulse: Mountain View** — All known MV permit portals remain blocked/ECONNREFUSED. Monitor cityofmountainview.gov for changes.
+
+## 2026-04-24 — Cycle 89: Multi-Day Collapse + City Newsletter Time Fix
+
+### Context
+Thursday April 24, 2026. Continuous improvement mode.
+
+### What Was Built
+
+**generate-events.mjs: Rule 3 multi-day collapse**
+
+Added a third multi-day dedup rule for events sharing the same title, source, and venue across 2+ dates within a 5-day span (Ticketmaster excluded, since their multi-night shows are separately-ticketed). This catches 2-day art shows and festivals that have times (Rules 1 and 2 require 3+ dates or same URL + no time).
+
+4 events collapsed to ongoing:
+- Monette (theater run)
+- Rotary Art Show
+- Sunnyvale Art & Wine Festival (separate entry from the existing ongoing one)
+- PA Independence Day 5K (multi-day registration window)
+
+**generate-events.mjs: presenter prefix stripping in cross-source dedup**
+
+`normKey` now strips "Venue Presents: " prefixes so "MACLA Presents: X" and "X" (from City Newsletter) deduplicate to the same key. Previously these were two separate entries for the same event.
+
+**generate-events.mjs: fix City Newsletter midnight fallback → null**
+
+The intake extractor writes `T00:00:00` in `startsAt` when no time is found in the newsletter email. `generate-events.mjs` was converting that to "12:00 AM". Now any inbound event with a local midnight hour is treated as time-unknown (`null`), displaying as an all-day event instead of showing "12:00 AM" to residents.
+
+17 events fixed (Amazing Art Expo, Godspell, Kingdom of Cards, Hansel and Gretel, Bioblitz, ribbon cuttings, etc.)
+
+**upcoming-events.json:** 737 events (was 741 → collapsed 4 dupes → 735 → regen with time fix → 737 due to fresh inbound data)
+
+### Why This Was the Strongest Move
+"Amazing Art Expo starts at 12:00 AM" would confuse any resident checking the feed. The midnight default silently affected 17 events from a growing source (City Newsletter). The fix is durable — applies to all future inbound events where the newsletter doesn't include a time.
+
+### Next 3 Strongest Ideas
+1. **City Newsletter: review time extraction** — Investigate whether the intake extractor could parse times better from newsletter body (many events include time in the text but the extractor fails to capture it).
+2. **RECENTLY_FUNDED: monitor Apr 28+ window** — Crunchbase weekly roundup for late April may surface new South Bay funding rounds.
+3. **Permit Pulse: Mountain View** — cityofmountainview.gov permit portal still blocked. Monitor for changes.
