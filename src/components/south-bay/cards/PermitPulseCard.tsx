@@ -1,5 +1,5 @@
+import { useState } from "react";
 import permitPulseJson from "../../../data/south-bay/permit-pulse.json";
-import type { City } from "../../../lib/south-bay/types";
 
 interface Permit {
   id: string;
@@ -32,6 +32,17 @@ interface PermitPulseData {
 
 const allData = (permitPulseJson as { cities: Record<string, PermitPulseData> }).cities;
 
+const CITY_LABELS: Record<string, string> = {
+  "san-jose": "San José",
+  "palo-alto": "Palo Alto",
+  "sunnyvale": "Sunnyvale",
+  "santa-clara": "Santa Clara",
+  "mountain-view": "Mountain View",
+  "cupertino": "Cupertino",
+  "campbell": "Campbell",
+  "milpitas": "Milpitas",
+};
+
 const CATEGORY_ICON: Record<string, string> = {
   "multi-family-new": "🏘️",
   "residential-new": "🏠",
@@ -49,12 +60,16 @@ function formatMoney(n: number): string {
 }
 
 export default function PermitPulseCard() {
-  // Regional view — show whatever city has data first.
-  const data = Object.values(allData)[0] || null;
-  if (!data || !data.permits || data.permits.length === 0) return null;
+  const cityKeys = Object.keys(allData).filter(
+    (k) => allData[k]?.permits?.length > 0
+  );
+  const [activeCity, setActiveCity] = useState(cityKeys[0] ?? "");
 
-  const isRegional = true;
-  const { stats, permits, dateRange, city, sourceUrl, source } = data;
+  if (cityKeys.length === 0) return null;
+
+  const data = allData[activeCity];
+  if (!data) return null;
+  const { stats, permits, dateRange, sourceUrl, source } = data;
 
   return (
     <section
@@ -91,7 +106,7 @@ export default function PermitPulseCard() {
               textTransform: "uppercase",
             }}
           >
-            {isRegional ? `${city} (Regional) · ` : `${city} · `}{dateRange}
+            {dateRange}
           </div>
         </div>
         <a
@@ -109,6 +124,45 @@ export default function PermitPulseCard() {
           Open Data ↗
         </a>
       </div>
+
+      {/* City tabs — only shown when multiple cities have data */}
+      {cityKeys.length > 1 && (
+        <div
+          style={{
+            display: "flex",
+            gap: 4,
+            marginBottom: 14,
+            borderBottom: "1px solid #E5E7EB",
+            paddingBottom: 0,
+          }}
+        >
+          {cityKeys.map((key) => {
+            const label = CITY_LABELS[key] ?? key;
+            const isActive = key === activeCity;
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveCity(key)}
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: 12,
+                  fontWeight: isActive ? 600 : 400,
+                  color: isActive ? "#1A1A1A" : "#6B7280",
+                  background: "none",
+                  border: "none",
+                  borderBottom: isActive ? "2px solid #1A1A1A" : "2px solid transparent",
+                  padding: "4px 10px 8px",
+                  cursor: "pointer",
+                  marginBottom: -1,
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Stats row */}
       <div
