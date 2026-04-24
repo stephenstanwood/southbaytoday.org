@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-23T23:12:59.573Z",
+      "generatedAt": "2026-04-24T11:07:20.150Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 16 – Apr 23",
+      "dateRange": "Apr 17 – Apr 24",
       "stats": {
-        "total": 378,
-        "notable": 30,
-        "newUnits": 23,
-        "totalValuation": 13543369
+        "total": 417,
+        "notable": 35,
+        "newUnits": 24,
+        "totalValuation": 16993511
       },
       "permits": [
         {
@@ -137,43 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-23T23:13:01.359Z",
+      "generatedAt": "2026-04-24T11:07:22.166Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 16 – Apr 23",
+      "dateRange": "Apr 17 – Apr 24",
       "stats": {
-        "total": 109,
+        "total": 117,
         "notable": 9,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01023",
-          "address": "3608 South Ct",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Replace water heater with heat pump water heater at utility closet. Add a 100-amp sub panel and wiring for future appliance. Separate building permit required when future appliance is proposed.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-20",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01012",
-          "address": "853 Thornwood Dr",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Remove and replace siding and trim on whole home, like for like style. no change to square footage.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-16",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01024",
           "address": "3790 Ross Rd",
@@ -187,39 +163,27 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01043",
-          "address": "365 College Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "id": "26BLD-01023",
+          "address": "3608 South Ct",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Replace water heater with heat pump water heater at utility closet. Add a 100-amp sub panel and wiring for future appliance. Separate building permit required when future appliance is proposed.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-21",
+          "issueDate": "2026-04-20",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01054",
-          "address": "4112 Amaranta Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "id": "26BLD-01017",
+          "address": "960 Shauna Ln",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "RES: electrical upgrade, replacing an existing 100A subpanel with a 125A subpanel in the same location (no relocation).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-22",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01021",
-          "address": "957 Colonial Ln",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-19",
+          "issueDate": "2026-04-17",
           "subtype": "Permit Issued"
         },
         {
@@ -235,6 +199,30 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01021",
+          "address": "957 Colonial Ln",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-19",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01043",
+          "address": "365 College Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-21",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01028",
           "address": "4163 Park Bl",
           "category": "residential-large",
@@ -244,6 +232,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-20",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01054",
+          "address": "4112 Amaranta Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-22",
           "subtype": "Permit Issued"
         },
         {
