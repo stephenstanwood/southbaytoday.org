@@ -86,6 +86,12 @@ const SOURCE_ID_SKIP = new Set([
   "SR0883385", // SAP Center Phase Concession — arena concession permit, not a public restaurant opening
   "SR0883386", // SAP Center South Concourse Bar — arena bar permit, not a public restaurant opening
   "SR0883387", // SAP Center Press Box Kitchenette — arena internal kitchen, not a public restaurant opening
+  "SR0883017", // Villa Sport Fitness - Whirlpool #1 — gym equipment permit, not a food opening
+  "SR0883020", // Villa Sport Fitness - Whirlpool #2 — gym equipment permit, not a food opening
+  "SR0879553", // Autochlor Dishwasher — commercial dishwasher service company, not a restaurant
+  "SR0883371", // Byte Coolers (Terminal B) — airport terminal concession, not a public SB restaurant
+  "SR0883372", // Byte Coolers (Terminal B) — airport terminal concession, not a public SB restaurant
+  "SR0884107", // Indoor Food Facility For Cbre — corporate cafeteria at 4353 N First St, not public
 ]);
 
 // Map city names to our city IDs

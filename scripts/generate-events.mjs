@@ -3662,22 +3662,41 @@ async function main() {
     return true;
   });
 
-  // Detect multi-day events (same title on 3+ distinct dates = ongoing exhibit/show)
-  // Collapse to first occurrence only; mark ongoing: true so the UI can separate them
+  // Detect multi-day events and collapse to first occurrence as ongoing.
+  // Two rules:
+  //   1. Same title + same URL (non-null) + no time → exhibit/gallery, 2+ dates suffices
+  //   2. Same title + 3+ distinct dates → recurring event regardless of URL
+  const normTitle = (e) =>
+    e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
+
   const titleDates = {};
+  const urlDates = {};
   deduped.forEach((e) => {
-    const key = e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
-    if (!titleDates[key]) titleDates[key] = new Set();
-    titleDates[key].add(e.date);
+    const k = normTitle(e);
+    if (!titleDates[k]) titleDates[k] = new Set();
+    titleDates[k].add(e.date);
+    // Track same-URL + no-time events separately (gallery/exhibit detection)
+    if (e.url && !e.time) {
+      const uk = `url:${e.url}`;
+      if (!urlDates[uk]) urlDates[uk] = { dates: new Set(), key: k };
+      urlDates[uk].dates.add(e.date);
+    }
   });
-  const multiDayKeys = new Set(
-    Object.entries(titleDates)
+
+  const multiDayKeys = new Set([
+    // Rule 1: same URL + no time + 2+ dates
+    ...Object.values(urlDates)
+      .filter((v) => v.dates.size >= 2)
+      .map((v) => v.key),
+    // Rule 2: same title + 3+ dates
+    ...Object.entries(titleDates)
       .filter(([, dates]) => dates.size >= 3)
       .map(([key]) => key),
-  );
+  ]);
+
   const seenMultiDay = new Set();
   const finalEvents = deduped.filter((e) => {
-    const key = e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
+    const key = normTitle(e);
     if (multiDayKeys.has(key)) {
       if (seenMultiDay.has(key)) return false;
       seenMultiDay.add(key);

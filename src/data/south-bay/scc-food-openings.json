@@ -1,8 +1,41 @@
 {
-  "generatedAt": "2026-04-23T11:14:09.160Z",
+  "generatedAt": "2026-04-24T02:15:07.635Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0880717",
+      "name": "Dairy Queen",
+      "address": "2255 S Winchester Blvd",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-04-21",
+      "status": "opened",
+      "sourceId": "SR0880717",
+      "blurb": null
+    },
+    {
+      "id": "opened-SR0880767",
+      "name": "Dough Zone",
+      "address": "1875 S Bascom Ave., Ste. 405",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-04-21",
+      "status": "opened",
+      "sourceId": "SR0880767",
+      "blurb": null
+    },
+    {
+      "id": "opened-SR0881676",
+      "name": "Walmart Nsvc B4 Breakrooms Interior Ti Level",
+      "address": "1275 Crossman Ave",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "date": "2026-04-21",
+      "status": "opened",
+      "sourceId": "SR0881676",
+      "blurb": null
+    },
     {
       "id": "opened-SR0877677",
       "name": "Jollibee",
@@ -37,15 +70,15 @@
       "blurb": "Health-focused cafe and restaurant inside Bay Club Santa Clara — smoothies, salads, and fresh meals for members and guests."
     },
     {
-      "id": "opened-SR0882015",
-      "name": "Bloom",
-      "address": "225 W Santa Clara St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
+      "id": "opened-SR0879599",
+      "name": "Joy Cafe T-Go Restaurant",
+      "address": "1748 N Milpitas Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
       "date": "2026-04-15",
       "status": "opened",
-      "sourceId": "SR0882015",
-      "blurb": "Modern brunch bistro from Bloom Eatery (Santa Clara) — inventive breakfast dishes, hearty lunches, and seasonal cocktails in downtown San Jose."
+      "sourceId": "SR0879599",
+      "blurb": "Taiwanese tea and light food in Milpitas."
     },
     {
       "id": "opened-SR0882706",
@@ -59,15 +92,15 @@
       "blurb": "New Cupertino Whole Foods at 20955 Stevens Creek Blvd — long-awaited grocery anchor for the Stevens Creek corridor."
     },
     {
-      "id": "opened-SR0879599",
-      "name": "Joy Cafe T-Go Restaurant",
-      "address": "1748 N Milpitas Blvd",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
+      "id": "opened-SR0882015",
+      "name": "Bloom",
+      "address": "225 W Santa Clara St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
       "date": "2026-04-15",
       "status": "opened",
-      "sourceId": "SR0879599",
-      "blurb": "Taiwanese tea and light food in Milpitas."
+      "sourceId": "SR0882015",
+      "blurb": "Modern brunch bistro from Bloom Eatery (Santa Clara) — inventive breakfast dishes, hearty lunches, and seasonal cocktails in downtown San Jose."
     },
     {
       "id": "opened-SR0884051",
@@ -101,52 +134,19 @@
       "status": "opened",
       "sourceId": "SR0882358",
       "blurb": "New Milpitas location for the popular chicken sandwich chain at 755 E Calaveras Blvd."
-    },
-    {
-      "id": "opened-SR0883358",
-      "name": "Blendid",
-      "address": "1040 Grant Rd.., Ste. 165",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "date": "2026-04-09",
-      "status": "opened",
-      "sourceId": "SR0883358",
-      "blurb": "Robotic smoothie kiosk at Grant Rd and El Camino Real in Mountain View."
-    },
-    {
-      "id": "opened-SR0876717",
-      "name": "Sakura Market Ramen",
-      "address": "180 S. Market St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-08",
-      "status": "opened",
-      "sourceId": "SR0876717",
-      "blurb": "Ramen and Japanese comfort food at 180 S. Market St in downtown San Jose."
-    },
-    {
-      "id": "opened-SR0883940",
-      "name": "Tojo Coffee Tea House",
-      "address": "980 S Winchester Blvd Ste. 20",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-07",
-      "status": "opened",
-      "sourceId": "SR0883940",
-      "blurb": "Coffee and tea shop at S Winchester Blvd in San Jose's Cambrian neighborhood."
     }
   ],
   "comingSoon": [
     {
-      "id": "soon-SR0883372",
-      "name": "Byte Coolers",
-      "address": "1701 Airport Blvd., Terminal B",
+      "id": "soon-SR0884326",
+      "name": "Johan's Pizza",
+      "address": "1948 Alum Rock Ave",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
-      "date": "2026-04-20",
+      "date": "2026-04-21",
       "status": "coming-soon",
-      "sourceId": "SR0883372",
-      "blurb": "Beverage concept opening in San Jose International Airport Terminal B."
+      "sourceId": "SR0884326",
+      "blurb": null
     },
     {
       "id": "soon-SR0884064",
@@ -157,40 +157,7 @@
       "date": "2026-04-20",
       "status": "coming-soon",
       "sourceId": "SR0884064",
-      "blurb": "Tea shop coming to Camden Ave in San Jose."
-    },
-    {
-      "id": "soon-SR0880648",
-      "name": "Crepe Shibuya",
-      "address": "76 Ranch Dr",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
-      "date": "2026-04-20",
-      "status": "coming-soon",
-      "sourceId": "SR0880648",
-      "blurb": "Japanese crepe restaurant opening on Ranch Dr in Milpitas."
-    },
-    {
-      "id": "soon-SR0883046",
-      "name": "Life Time Fitness - Santana Row",
-      "address": "3090 Stevens Creek Blvd",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-20",
-      "status": "coming-soon",
-      "sourceId": "SR0883046",
-      "blurb": "Fitness facility with dining options at Santana Row in San Jose."
-    },
-    {
-      "id": "soon-SR0880855",
-      "name": "Johnny Donuts",
-      "address": "3055 Olin Ave., Ste. 1045, Kiosk 1",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-20",
-      "status": "coming-soon",
-      "sourceId": "SR0880855",
-      "blurb": "Donut shop opening as kiosk on Olin Ave in San Jose."
+      "blurb": null
     },
     {
       "id": "soon-SR0884383",
@@ -201,7 +168,7 @@
       "date": "2026-04-20",
       "status": "coming-soon",
       "sourceId": "SR0884383",
-      "blurb": "Discount grocery store opening on Homestead Rd in Santa Clara."
+      "blurb": null
     },
     {
       "id": "soon-SR0884339",
@@ -212,7 +179,7 @@
       "date": "2026-04-20",
       "status": "coming-soon",
       "sourceId": "SR0884339",
-      "blurb": "Bubble tea chain opening on Barber Ln in Milpitas."
+      "blurb": null
     },
     {
       "id": "soon-SR0884243",
@@ -223,7 +190,40 @@
       "date": "2026-04-20",
       "status": "coming-soon",
       "sourceId": "SR0884243",
-      "blurb": "Toast and brunch concept coming to West Santa Clara St in San Jose."
+      "blurb": null
+    },
+    {
+      "id": "soon-SR0880648",
+      "name": "Crepe Shibuya",
+      "address": "76 Ranch Dr",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-04-20",
+      "status": "coming-soon",
+      "sourceId": "SR0880648",
+      "blurb": null
+    },
+    {
+      "id": "soon-SR0883046",
+      "name": "Life Time Fitness - Santana Row",
+      "address": "3090 Stevens Creek Blvd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-20",
+      "status": "coming-soon",
+      "sourceId": "SR0883046",
+      "blurb": null
+    },
+    {
+      "id": "soon-SR0880855",
+      "name": "Johnny Donuts",
+      "address": "3055 Olin Ave., Ste. 1045, Kiosk 1",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-04-20",
+      "status": "coming-soon",
+      "sourceId": "SR0880855",
+      "blurb": null
     },
     {
       "id": "soon-SR0883952",
@@ -234,18 +234,7 @@
       "date": "2026-04-20",
       "status": "coming-soon",
       "sourceId": "SR0883952",
-      "blurb": "Brazilian steakhouse opening on Blossom Hill Rd in San Jose."
-    },
-    {
-      "id": "soon-SR0884107",
-      "name": "Indoor Food Facility For Cbre",
-      "address": "4353 N First St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-04-20",
-      "status": "coming-soon",
-      "sourceId": "SR0884107",
-      "blurb": "Corporate food facility opening on N First St in San Jose."
+      "blurb": null
     },
     {
       "id": "soon-SR0883251",
@@ -268,6 +257,17 @@
       "status": "coming-soon",
       "sourceId": "SR0880082",
       "blurb": "Seafood restaurant focusing on crab dishes — coming to 625 Coleman Ave in San Jose."
+    },
+    {
+      "id": "soon-SR0884604",
+      "name": "Genji Sushi",
+      "address": "15650 Los Gatos Blvd",
+      "cityId": "los-gatos",
+      "cityName": "LOS GATOS",
+      "date": "2026-04-16",
+      "status": "coming-soon",
+      "sourceId": "SR0884604",
+      "blurb": "Sushi restaurant opening at 15650 Los Gatos Blvd in Los Gatos."
     }
   ]
 }

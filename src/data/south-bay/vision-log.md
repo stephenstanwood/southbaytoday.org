@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-04-23 — Cycle 107: Exhibit Dedup Fix + SCC False Positive Cleanup
+
+### Context
+Thursday April 23, 2026 (~4 PM PDT). Automated cycle. Continued from context-compaction mid-cycle.
+
+### What Was Built
+
+**Event dedup: gallery/exhibit collapse at 2+ dates**
+
+`generate-events.mjs` multi-day collapse logic previously required 3+ distinct dates to mark an event `ongoing: true`. This meant exhibit events like SJSU's "R&R, 2026" (appearing Apr 23 + Apr 24 via same URL, no time) showed as two separate entries instead of one ongoing exhibit. Added a second collapse rule: same URL + no time + 2+ dates → `ongoing: true`. Timed recurring events (Music on Castro) are unaffected due to the `!e.time` guard.
+
+**SCC food openings: 8 false positives removed**
+
+Added to `SOURCE_ID_SKIP` in `generate-scc-food-openings.mjs`:
+- SR0883017, SR0883020 — Villa Sport Fitness Whirlpool #1 and #2 (gym equipment, not food)
+- SR0879553 — Autochlor Dishwasher (commercial dishwasher service company)
+- SR0883371, SR0883372 — Byte Coolers at Terminal B (airport terminal concession)
+- SR0884107 — Indoor Food Facility For Cbre (corporate cafeteria)
+
+**Data refreshed:** `upcoming-events.json` (741 events, 111 ongoing), `scc-food-openings.json` (27 opened, 43 coming soon), `restaurant-radar.json`
+
+### Why This Was the Strongest Move
+Residents clicking "SJSU R&R exhibit" were hitting a duplicate event. The SCC false positives (gym whirlpool, dishwasher company, corporate cafeteria) eroded trust in the restaurant tracker — filtering them makes the feed credible.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED: Apr 25 Crunchbase watch** — Weekly roundup for Apr 18-25 publishes Friday. Check for South Bay rounds; Lightwheel (Santa Clara) worth a second look if a clean English-language press release surfaces.
+2. **Campbell council data gap** — Stoa has no Campbell council data past Feb 3, 2026. Playwright scrape of campbellca.gov needed.
+3. **AP Exams / Finals season banner** — AP Exams start May 4. Consider a school-calendar callout on the homepage for the cramming season ahead.
+
+---
+
 ## 2026-04-23 — Cycle 106: Build Fix + Full Data Refresh
 
 ### Context
