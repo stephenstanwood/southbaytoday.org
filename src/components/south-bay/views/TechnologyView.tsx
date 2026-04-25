@@ -1,21 +1,12 @@
 import { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from "recharts";
+import { CompanyLogo } from "../CompanyLogo";
+import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
 import techBriefingJson from "../../../data/south-bay/tech-briefing.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import {
   TECH_COMPANIES,
   TECH_PULSE,
   CATEGORY_LABELS,
-  CHART_DATA,
   SCC_SPOTLIGHT,
   RECENTLY_FUNDED,
   TECH_MILESTONES,
@@ -28,78 +19,165 @@ import {
   type TechConference,
 } from "../../../data/south-bay/tech-companies";
 
-// ── Tooltip for chart ──────────────────────────────────────────────────────
+// ── Logo resolvers per data type ───────────────────────────────────────────
+// Returns both the cascade domain and an optional pinned high-res URL. The
+// directUrl wins over the cascade when set (used for hard-to-resolve brands).
 
-interface TooltipPayload {
-  payload?: { name: string; headcount: number; trend: TechTrend }; // headcount = sccEmployeesK
+interface LogoInfo {
+  domain: string;
+  directUrl?: string;
 }
 
-function ChartTooltip({ active, payload }: { active?: boolean; payload?: TooltipPayload[] }) {
-  if (!active || !payload?.length || !payload[0].payload) return null;
-  const d = payload[0].payload;
-  const trendColor =
-    d.trend === "up" ? "#16a34a" : d.trend === "down" ? "#dc2626" : "#6b7280";
-  return (
-    <div
-      style={{
-        background: "#fff",
-        border: "1px solid #e5e7eb",
-        borderRadius: 4,
-        padding: "8px 12px",
-        fontSize: 12,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-        fontFamily: "var(--sb-sans)",
-      }}
-    >
-      <div style={{ fontWeight: 600, marginBottom: 4 }}>{d.name}</div>
-      <div style={{ color: trendColor, fontWeight: 500 }}>
-        {d.headcount.toLocaleString()}K SCC employees (est.)
-      </div>
-    </div>
-  );
+function logoForCompany(c: TechCompany): LogoInfo {
+  return {
+    domain: LOGO_DOMAIN_BY_ID[c.id] || urlToDomain(c.careersUrl),
+    directUrl: LOGO_URL_BY_ID[c.id],
+  };
+}
+function logoForSpotlight(c: SccTechSpotlight): LogoInfo {
+  return {
+    domain: LOGO_DOMAIN_BY_ID[c.id] || urlToDomain(c.url),
+    directUrl: LOGO_URL_BY_ID[c.id],
+  };
+}
+function logoForFunded(c: RecentlyFunded): LogoInfo {
+  return {
+    domain: LOGO_DOMAIN_BY_ID[c.id] || urlToDomain(c.url),
+    directUrl: LOGO_URL_BY_ID[c.id],
+  };
+}
+function logoForMilestone(m: TechMilestone): LogoInfo {
+  return {
+    domain: LOGO_DOMAIN_BY_ID[m.id] || urlToDomain(m.url),
+    directUrl: LOGO_URL_BY_ID[m.id],
+  };
+}
+function logoForConference(c: TechConference): LogoInfo {
+  return {
+    domain: LOGO_DOMAIN_BY_ID[c.id] || urlToDomain(c.url),
+    directUrl: LOGO_URL_BY_ID[c.id],
+  };
 }
 
 // ── Trend badge ────────────────────────────────────────────────────────────
 
 function TrendBadge({ trend }: { trend: TechTrend }) {
-  if (trend === "up")
-    return (
-      <span className="tech-trend tech-trend--up">▲ Growing</span>
-    );
-  if (trend === "down")
-    return (
-      <span className="tech-trend tech-trend--down">▼ Shrinking</span>
-    );
+  if (trend === "up") return <span className="tech-trend tech-trend--up">▲ Growing</span>;
+  if (trend === "down") return <span className="tech-trend tech-trend--down">▼ Shrinking</span>;
   return <span className="tech-trend tech-trend--flat">— Stable</span>;
 }
 
-// ── Company card ───────────────────────────────────────────────────────────
+// ── Top Employers Leaderboard (replaces recharts bar chart) ────────────────
+
+function TopEmployersLeaderboard() {
+  const top = [...TECH_COMPANIES]
+    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
+    .slice(0, 12);
+  const max = Math.max(...top.map((c) => c.sccEmployeesK));
+
+  return (
+    <div className="tech-leaderboard">
+      {top.map((c, i) => {
+        const widthPct = (c.sccEmployeesK / max) * 100;
+        const trendArrow = c.trend === "up" ? "▲" : c.trend === "down" ? "▼" : "—";
+        const trendColor = c.trend === "up" ? "#15803d" : c.trend === "down" ? "#b91c1c" : "#9ca3af";
+        const isLink = !!c.careersUrl;
+        const innerContent = (
+          <>
+            <span className="tech-leaderboard-rank">{String(i + 1).padStart(2, "0")}</span>
+            <CompanyLogo
+              {...logoForCompany(c)}
+              name={c.name}
+              size={36}
+              fallbackColor={c.color}
+              borderRadius={6}
+            />
+            <div className="tech-leaderboard-info">
+              <div className="tech-leaderboard-name">
+                {c.name}
+                {isLink && <span className="tech-leaderboard-arrow-out">↗</span>}
+              </div>
+              <div className="tech-leaderboard-meta">
+                {c.city} · {CATEGORY_LABELS[c.category]}
+              </div>
+            </div>
+            <div className="tech-leaderboard-bar-wrap" aria-hidden="true">
+              <div
+                className="tech-leaderboard-bar"
+                style={{
+                  width: `${widthPct}%`,
+                  background: c.color,
+                  opacity: c.trend === "down" ? 0.5 : 0.85,
+                }}
+              />
+            </div>
+            <div className="tech-leaderboard-num">
+              <span className="tech-leaderboard-num-value">{c.sccEmployeesK.toLocaleString()}K</span>
+              <span className="tech-leaderboard-arrow" style={{ color: trendColor }}>
+                {trendArrow}
+              </span>
+            </div>
+          </>
+        );
+        return isLink ? (
+          <a
+            key={c.id}
+            href={c.careersUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tech-leaderboard-row"
+          >
+            {innerContent}
+          </a>
+        ) : (
+          <div key={c.id} className="tech-leaderboard-row">
+            {innerContent}
+          </div>
+        );
+      })}
+      <div className="tech-leaderboard-footnote">
+        SCC local jobs only — global headcount is much larger. Bar widths scaled to top employer.
+      </div>
+    </div>
+  );
+}
+
+// ── Company card (All Companies grid) ─────────────────────────────────────
 
 function CompanyCard({ company }: { company: TechCompany }) {
   return (
-    <div className="tech-card">
-      <div className="tech-card-top">
-        <div className="tech-card-identity">
-          <span className="tech-card-name">{company.name}</span>
-          {company.ticker && company.ticker !== "MSFT" && company.ticker !== "HPE" && (
-            <span className="tech-card-ticker">{company.ticker}</span>
-          )}
+    <div className="tech-card" style={{ borderTop: `3px solid ${company.color}` }}>
+      <div className="tech-card-header">
+        <CompanyLogo
+          {...logoForCompany(company)}
+          name={company.name}
+          size={52}
+          fallbackColor={company.color}
+          borderRadius={10}
+        />
+        <div className="tech-card-id">
+          <div className="tech-card-name-row">
+            <span className="tech-card-name">{company.name}</span>
+            {company.ticker && company.ticker !== "MSFT" && company.ticker !== "HPE" && (
+              <span className="tech-card-ticker">{company.ticker}</span>
+            )}
+          </div>
+          <div className="tech-card-meta">
+            <span className="tech-card-city">{company.city}</span>
+            <span className="tech-card-dot">·</span>
+            <span className="tech-card-category">{CATEGORY_LABELS[company.category]}</span>
+          </div>
         </div>
         <TrendBadge trend={company.trend} />
       </div>
 
-      <div className="tech-card-meta">
-        <span className="tech-card-city">{company.city}</span>
-        <span className="tech-card-dot">·</span>
-        <span className="tech-card-category">{CATEGORY_LABELS[company.category]}</span>
-        <span className="tech-card-dot">·</span>
-        <span className="tech-card-headcount">{company.sccEmployeesK.toLocaleString()}K SCC jobs (est.)</span>
+      <div className="tech-card-stat">
+        <span className="tech-card-stat-value">{company.sccEmployeesK.toLocaleString()}K</span>
+        <span className="tech-card-stat-label">SCC jobs (est.)</span>
       </div>
 
       <p className="tech-card-desc">{company.description}</p>
-
       <div className="tech-card-trend-note">{company.trendNote}</div>
-
       <ul className="tech-card-highlights">
         {company.highlights.map((h, i) => (
           <li key={i}>{h}</li>
@@ -109,7 +187,7 @@ function CompanyCard({ company }: { company: TechCompany }) {
   );
 }
 
-// ── Spotlight card (startups + mid-size) ───────────────────────────────────
+// ── Spotlight card (More South Bay Tech) ──────────────────────────────────
 
 const STAGE_LABELS: Record<SccTechSpotlight["stage"], string> = {
   public: "Public",
@@ -118,42 +196,53 @@ const STAGE_LABELS: Record<SccTechSpotlight["stage"], string> = {
 };
 
 function SpotlightCard({ company }: { company: SccTechSpotlight }) {
+  const stageColor =
+    company.stage === "startup"
+      ? "#92400e"
+      : company.stage === "growth"
+        ? "#1e40af"
+        : "#374151";
+  const stageBg =
+    company.stage === "startup"
+      ? "#fef3c7"
+      : company.stage === "growth"
+        ? "#dbeafe"
+        : "#f3f4f6";
   return (
-    <div
+    <a
+      href={company.url}
+      target="_blank"
+      rel="noopener noreferrer"
       className="tech-spotlight-card"
       style={{ borderTop: `3px solid ${company.color}` }}
     >
-      <div className="tech-spotlight-top">
-        <a
-          href={company.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="tech-spotlight-name"
-          style={{ color: "inherit", textDecoration: "none" }}
-        >
-          {company.name} ↗
-        </a>
+      <div className="tech-spotlight-header">
+        <CompanyLogo
+          {...logoForSpotlight(company)}
+          name={company.name}
+          size={44}
+          fallbackColor={company.color}
+        />
+        <div className="tech-spotlight-id">
+          <div className="tech-spotlight-name">
+            {company.name} <span className="tech-spotlight-arrow">↗</span>
+          </div>
+          <div className="tech-spotlight-meta">{company.city}</div>
+        </div>
         <span
           className="tech-spotlight-stage"
-          style={{
-            background: company.stage === "startup" ? "#fef3c7" : company.stage === "growth" ? "#dbeafe" : "#f3f4f6",
-            color: company.stage === "startup" ? "#92400e" : company.stage === "growth" ? "#1e40af" : "#374151",
-          }}
+          style={{ background: stageBg, color: stageColor }}
         >
           {STAGE_LABELS[company.stage]}
         </span>
       </div>
-      <div className="tech-spotlight-city" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <span>{company.city}</span>
-        <span style={{ color: "var(--sb-border)" }}>·</span>
-        <span style={{ fontSize: 11, color: "var(--sb-muted)" }}>{company.employeesNote}</span>
-      </div>
       <p className="tech-spotlight-tagline">{company.tagline}</p>
-    </div>
+      <div className="tech-spotlight-employees">{company.employeesNote}</div>
+    </a>
   );
 }
 
-// ── Hiring Pulse row ────────────────────────────────────────────────────────
+// ── Hiring Pulse row ──────────────────────────────────────────────────────
 
 function HiringRow({ company }: { company: TechCompany }) {
   const isUp = company.trend === "up";
@@ -162,52 +251,38 @@ function HiringRow({ company }: { company: TechCompany }) {
   const statusBg = isUp ? "#f0fdf4" : isDown ? "#fef2f2" : "#f9fafb";
   const statusLabel = isUp ? "▲ Hiring" : isDown ? "▼ Reduced" : "→ Selective";
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "9px 0",
-        borderBottom: "1px solid var(--sb-border-light)",
-      }}
-    >
-      <div
-        style={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: statusColor,
-          flexShrink: 0,
-        }}
+  const content = (
+    <>
+      <CompanyLogo
+        {...logoForCompany(company)}
+        name={company.name}
+        size={32}
+        fallbackColor={company.color}
+        borderRadius={6}
       />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          {company.careersUrl ? (
-            <a
-              href={company.careersUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontWeight: 600,
-                fontSize: 13,
-                color: "var(--sb-ink)",
-                textDecoration: "none",
-                fontFamily: "var(--sb-sans)",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-              onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-            >
-              {company.name} ↗
-            </a>
-          ) : (
-            <span style={{ fontWeight: 600, fontSize: 13, fontFamily: "var(--sb-sans)" }}>
-              {company.name}
-            </span>
-          )}
+          <span
+            style={{
+              fontWeight: 600,
+              fontSize: 13,
+              color: "var(--sb-ink)",
+              fontFamily: "var(--sb-sans)",
+            }}
+          >
+            {company.name}
+            {company.careersUrl ? " ↗" : ""}
+          </span>
           <span style={{ fontSize: 11, color: "var(--sb-muted)" }}>{company.city}</span>
         </div>
-        <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 1, lineHeight: 1.4 }}>
+        <div
+          style={{
+            fontSize: 11,
+            color: "var(--sb-muted)",
+            marginTop: 1,
+            lineHeight: 1.4,
+          }}
+        >
           {company.trendNote}
         </div>
       </div>
@@ -227,7 +302,30 @@ function HiringRow({ company }: { company: TechCompany }) {
       >
         {statusLabel}
       </span>
-    </div>
+    </>
+  );
+
+  const baseStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "9px 0",
+    borderBottom: "1px solid var(--sb-border-light)",
+    textDecoration: "none",
+    color: "inherit",
+  };
+
+  return company.careersUrl ? (
+    <a
+      href={company.careersUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={baseStyle}
+    >
+      {content}
+    </a>
+  ) : (
+    <div style={baseStyle}>{content}</div>
   );
 }
 
@@ -260,7 +358,10 @@ function getGovTechItems(): GovTechItem[] {
   const data = upcomingMeetingsJson as { meetings: Record<string, UpcomingMeeting> };
   const results: GovTechItem[] = [];
   for (const [cityId, meeting] of Object.entries(data.meetings)) {
-    const cityName = cityId.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+    const cityName = cityId
+      .split("-")
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join(" ");
     for (const item of meeting.agendaItems) {
       if (GOV_TECH_KEYWORDS.test(item.title)) {
         results.push({
@@ -284,7 +385,9 @@ function GovTechCallout() {
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">City Hall × Tech</h3>
-        <span className="tech-section-note">Tech-relevant items on upcoming council agendas</span>
+        <span className="tech-section-note">
+          Tech-relevant items on upcoming council agendas
+        </span>
       </div>
       {items.map((item, i) => (
         <a
@@ -336,7 +439,7 @@ function GovTechCallout() {
   );
 }
 
-// ── Tech Events Near You ────────────────────────────────────────────────────
+// ── Tech Events Near You ──────────────────────────────────────────────────
 
 interface UpcomingEvent {
   id: string;
@@ -355,20 +458,28 @@ const TECH_EVENT_EXCLUDES = /\bhelp\b|digital skills|computer help|tech help|1-o
 
 function isTechEvent(e: UpcomingEvent): boolean {
   const isChm = !!e.venue?.toLowerCase().includes("computer history");
-  const isTechTitle = TECH_EVENT_KEYWORDS.test(e.title) && !TECH_EVENT_EXCLUDES.test(e.title);
+  const isTechTitle =
+    TECH_EVENT_KEYWORDS.test(e.title) && !TECH_EVENT_EXCLUDES.test(e.title);
   return isChm || isTechTitle;
 }
 
 function filterTechEvents(allEvents: UpcomingEvent[]): UpcomingEvent[] {
   const today = new Date().toISOString().slice(0, 10);
-  const cutoff = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const cutoff = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
 
-  // CHM ongoing exhibits (deduplicate by venue, pick the best ones)
   const chmExhibits = allEvents
-    .filter((e) => e.venue?.toLowerCase().includes("computer history") && e.ongoing)
-    .filter((e) => !["2026 Fellow Awards Ceremony", "Read Me", "To Infinity and Beyond"].includes(e.title));
+    .filter(
+      (e) => e.venue?.toLowerCase().includes("computer history") && e.ongoing
+    )
+    .filter(
+      (e) =>
+        !["2026 Fellow Awards Ceremony", "Read Me", "To Infinity and Beyond"].includes(
+          e.title
+        )
+    );
 
-  // Upcoming dated tech events
   const upcoming = allEvents
     .filter((e) => !e.ongoing && e.date >= today && e.date <= cutoff && isTechEvent(e))
     .sort((a, b) => a.date.localeCompare(b.date));
@@ -380,21 +491,27 @@ function TechEventsSection() {
   const [allEvents, setAllEvents] = useState<UpcomingEvent[]>([]);
   useEffect(() => {
     fetch("/api/south-bay/upcoming-events")
-      .then((r) => r.ok ? r.json() : null)
+      .then((r) => (r.ok ? r.json() : null))
       .then((d) => setAllEvents(d?.events ?? []))
       .catch(() => {});
   }, []);
   const events = filterTechEvents(allEvents);
   if (events.length === 0) return null;
 
-  const chmEvents = events.filter((e) => e.venue?.toLowerCase().includes("computer history"));
-  const upcomingEvents = events.filter((e) => !e.venue?.toLowerCase().includes("computer history"));
+  const chmEvents = events.filter((e) =>
+    e.venue?.toLowerCase().includes("computer history")
+  );
+  const upcomingEvents = events.filter(
+    (e) => !e.venue?.toLowerCase().includes("computer history")
+  );
 
   return (
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">Tech Events Near You</h3>
-        <span className="tech-section-note">South Bay · Computer History Museum · upcoming talks</span>
+        <span className="tech-section-note">
+          South Bay · Computer History Museum · upcoming talks
+        </span>
       </div>
 
       {chmEvents.length > 0 && (
@@ -447,7 +564,14 @@ function TechEventsSection() {
                 onMouseLeave={(el) => (el.currentTarget.style.borderLeftColor = "#b45309")}
               >
                 {e.title}
-                <div style={{ fontSize: 11, color: "var(--sb-muted)", fontWeight: 400, marginTop: 3 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "var(--sb-muted)",
+                    fontWeight: 400,
+                    marginTop: 3,
+                  }}
+                >
                   Ongoing exhibit · {e.cost === "paid" ? "Admission required" : "Free"}
                 </div>
               </a>
@@ -499,17 +623,35 @@ function TechEventsSection() {
                   paddingTop: 1,
                 }}
               >
-                {new Date(e.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                {e.time ? <><br />{e.time}</> : null}
+                {new Date(e.date + "T12:00:00").toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+                {e.time ? (
+                  <>
+                    <br />
+                    {e.time}
+                  </>
+                ) : null}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, fontFamily: "var(--sb-sans)", lineHeight: 1.3 }}>
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    fontFamily: "var(--sb-sans)",
+                    lineHeight: 1.3,
+                  }}
+                >
                   {e.title} ↗
                 </div>
                 {e.venue && (
                   <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2 }}>
                     {e.venue}
-                    {e.city && ` · ${e.city.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}`}
+                    {e.city &&
+                      ` · ${e.city
+                        .replace(/-/g, " ")
+                        .replace(/\b\w/g, (c) => c.toUpperCase())}`}
                   </div>
                 )}
               </div>
@@ -539,22 +681,22 @@ function TechEventsSection() {
   );
 }
 
-// ── Recently Funded ────────────────────────────────────────────────────────
+// ── Recently Funded ───────────────────────────────────────────────────────
 
 const ROUND_COLORS: Record<string, { bg: string; color: string; border: string }> = {
-  "Seed":      { bg: "#fef3c7", color: "#92400e", border: "#fcd34d" },
-  "Pre-Seed":  { bg: "#fef3c7", color: "#92400e", border: "#fcd34d" },
-  "Series A":  { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
+  Seed: { bg: "#fef3c7", color: "#92400e", border: "#fcd34d" },
+  "Pre-Seed": { bg: "#fef3c7", color: "#92400e", border: "#fcd34d" },
+  "Series A": { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
   "Series A1": { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
-  "Series B":  { bg: "#f3e8ff", color: "#6b21a8", border: "#c4b5fd" },
-  "Series C":  { bg: "#fce7f3", color: "#9d174d", border: "#f9a8d4" },
-  "Series D":  { bg: "#fff7ed", color: "#9a3412", border: "#fdba74" },
-  "Series E":  { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
-  "Series F":  { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
+  "Series B": { bg: "#f3e8ff", color: "#6b21a8", border: "#c4b5fd" },
+  "Series C": { bg: "#fce7f3", color: "#9d174d", border: "#f9a8d4" },
+  "Series D": { bg: "#fff7ed", color: "#9a3412", border: "#fdba74" },
+  "Series E": { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
+  "Series F": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
   "Series F+": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
-  "Strategic":   { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
-  "Convertible": { bg: "#f0f9ff", color: "#0369a1", border: "#7dd3fc" },
-  "Acquired":    { bg: "#f0fdfa", color: "#0f766e", border: "#5eead4" },
+  Strategic: { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
+  Convertible: { bg: "#f0f9ff", color: "#0369a1", border: "#7dd3fc" },
+  Acquired: { bg: "#f0fdfa", color: "#0f766e", border: "#5eead4" },
 };
 
 function RoundBadge({ round }: { round: string }) {
@@ -582,28 +724,25 @@ function RoundBadge({ round }: { round: string }) {
 
 function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
   const d = new Date(company.date + "T12:00:00");
-  const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const dateLabel = d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
-    <div
-      style={{
-        padding: "14px 0",
-        borderBottom: "1px solid var(--sb-border-light)",
-        display: "flex",
-        gap: 12,
-        alignItems: "flex-start",
-      }}
+    <a
+      href={company.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="tech-funded-row"
     >
-      {/* Color bar */}
-      <div
-        style={{
-          width: 3,
-          alignSelf: "stretch",
-          background: company.color,
-          borderRadius: 2,
-          flexShrink: 0,
-          minHeight: 40,
-        }}
+      <CompanyLogo
+        {...logoForFunded(company)}
+        name={company.name}
+        size={44}
+        fallbackColor={company.color}
+        borderRadius={8}
       />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
@@ -615,22 +754,16 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
             marginBottom: 4,
           }}
         >
-          <a
-            href={company.url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <span
             style={{
               fontWeight: 700,
               fontSize: 14,
               color: "var(--sb-ink)",
-              textDecoration: "none",
               fontFamily: "var(--sb-sans)",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
           >
             {company.name} ↗
-          </a>
+          </span>
           <RoundBadge round={company.round} />
           <span
             style={{
@@ -655,7 +788,9 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
         >
           <span>{company.city}</span>
           <span style={{ color: "var(--sb-border)" }}>·</span>
-          <span>{CATEGORY_LABELS[company.category as keyof typeof CATEGORY_LABELS] ?? company.category}</span>
+          <span>
+            {CATEGORY_LABELS[company.category as keyof typeof CATEGORY_LABELS] ?? company.category}
+          </span>
           <span style={{ color: "var(--sb-border)" }}>·</span>
           <span>{dateLabel}</span>
         </div>
@@ -671,27 +806,67 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
           {company.tagline}
         </p>
       </div>
-    </div>
+    </a>
   );
 }
 
-// 2026 YTD stats — derived from RECENTLY_FUNDED
-const ROUNDS_2026 = RECENTLY_FUNDED.filter(
-  (r) => r.date >= "2026-01-01"
-).length;
-
+const ROUNDS_2026 = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01").length;
 const EARLY_STAGES = new Set(["Seed", "Pre-Seed", "Series A", "Series A1"]);
+
+// Top 5 most-recent rounds — used for the "Latest Funding" ticker strip.
+function getLatestFundedRounds(n = 6): RecentlyFunded[] {
+  return [...RECENTLY_FUNDED].sort((a, b) => b.date.localeCompare(a.date)).slice(0, n);
+}
+
+function FundingTicker() {
+  const latest = getLatestFundedRounds(6);
+  return (
+    <div className="tech-ticker">
+      <div className="tech-ticker-label">Latest funding ↘</div>
+      <div className="tech-ticker-track">
+        {latest.map((r) => (
+          <a
+            key={r.id + r.date}
+            href={r.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tech-ticker-item"
+          >
+            <CompanyLogo
+              {...logoForFunded(r)}
+              name={r.name}
+              size={28}
+              fallbackColor={r.color}
+              borderRadius={5}
+              bordered={false}
+            />
+            <div className="tech-ticker-text">
+              <div className="tech-ticker-name">{r.name}</div>
+              <div className="tech-ticker-meta">
+                <span className="tech-ticker-amount">{r.amount}</span>
+                <span className="tech-ticker-round">{r.round}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function RecentlyFundedSection() {
   const [stageFilter, setStageFilter] = useState<"all" | "early">("all");
   const sorted = [...RECENTLY_FUNDED].sort((a, b) => b.date.localeCompare(a.date));
   const earlyCount = sorted.filter((r) => EARLY_STAGES.has(r.round)).length;
-  const filtered = stageFilter === "early" ? sorted.filter((r) => EARLY_STAGES.has(r.round)) : sorted;
+  const filtered =
+    stageFilter === "early" ? sorted.filter((r) => EARLY_STAGES.has(r.round)) : sorted;
   return (
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">Recently Funded</h3>
-        <span className="tech-section-note">South Bay startups · Q4 2025 – Q2 2026 · {RECENTLY_FUNDED.length} rounds</span>
+        <span className="tech-section-note">
+          South Bay startups · Q4 2025 – Q2 2026 · {RECENTLY_FUNDED.length} rounds
+        </span>
       </div>
 
       {/* 2026 YTD Recap */}
@@ -714,8 +889,28 @@ function RecentlyFundedSection() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#581c87", lineHeight: 1 }}>$6B+</div>
-          <div style={{ fontSize: 10, color: "#6b21a8", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>2026 YTD RAISED</div>
+          <div
+            style={{
+              fontSize: 20,
+              fontWeight: 700,
+              fontFamily: "'Space Mono', monospace",
+              color: "#581c87",
+              lineHeight: 1,
+            }}
+          >
+            $6B+
+          </div>
+          <div
+            style={{
+              fontSize: 10,
+              color: "#6b21a8",
+              fontFamily: "'Space Mono', monospace",
+              marginTop: 4,
+              letterSpacing: "0.04em",
+            }}
+          >
+            2026 YTD RAISED
+          </div>
         </div>
         <div
           style={{
@@ -726,8 +921,28 @@ function RecentlyFundedSection() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", color: "#4c1d95", lineHeight: 1 }}>{ROUNDS_2026}</div>
-          <div style={{ fontSize: 10, color: "#5b21b6", fontFamily: "'Space Mono', monospace", marginTop: 4, letterSpacing: "0.04em" }}>2026 ROUNDS</div>
+          <div
+            style={{
+              fontSize: 20,
+              fontWeight: 700,
+              fontFamily: "'Space Mono', monospace",
+              color: "#4c1d95",
+              lineHeight: 1,
+            }}
+          >
+            {ROUNDS_2026}
+          </div>
+          <div
+            style={{
+              fontSize: 10,
+              color: "#5b21b6",
+              fontFamily: "'Space Mono', monospace",
+              marginTop: 4,
+              letterSpacing: "0.04em",
+            }}
+          >
+            2026 ROUNDS
+          </div>
         </div>
         <div
           style={{
@@ -739,8 +954,21 @@ function RecentlyFundedSection() {
             justifyContent: "center",
           }}
         >
-          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)", marginBottom: 3 }}>Q1–Q2 2026 — South Bay VC surge</div>
-          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>SiFive ($400M Series G), Aria Networks ($125M), and Genspark ($110M) kick off Q2. Chips, robotics, and AI networking keep dominating deal flow.</div>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: "var(--sb-ink)",
+              fontFamily: "var(--sb-sans)",
+              marginBottom: 3,
+            }}
+          >
+            Q1–Q2 2026 — South Bay VC surge
+          </div>
+          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>
+            SiFive ($400M Series G), Aria Networks ($125M), and Genspark ($110M) kick off Q2.
+            Chips, robotics, and AI networking keep dominating deal flow.
+          </div>
         </div>
       </div>
 
@@ -770,7 +998,7 @@ function RecentlyFundedSection() {
 
       <div>
         {filtered.map((company) => (
-          <RecentlyFundedCard key={company.id} company={company} />
+          <RecentlyFundedCard key={company.id + company.date} company={company} />
         ))}
       </div>
       <div
@@ -787,14 +1015,13 @@ function RecentlyFundedSection() {
   );
 }
 
-// ── This Week in SV History ────────────────────────────────────────────────
+// ── This Week in SV History ───────────────────────────────────────────────
 
-const WINDOW_DAYS = 8; // show milestone if within ±8 days
+const WINDOW_DAYS = 8;
 
 function getActiveMilestones(): TechMilestone[] {
   const now = new Date();
   return TECH_MILESTONES.filter((m) => {
-    // Build a date for this milestone in the current year
     const mDate = new Date(now.getFullYear(), m.month - 1, m.day);
     const diff = Math.abs(mDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
     return diff <= WINDOW_DAYS;
@@ -805,9 +1032,7 @@ function getNextMilestone(): { milestone: TechMilestone; daysUntil: number } | n
   const now = new Date();
   const nowMs = now.getTime();
   let best: { milestone: TechMilestone; daysUntil: number } | null = null;
-
   for (const m of TECH_MILESTONES) {
-    // Try current year first, then next year if already passed
     for (const yearOffset of [0, 1]) {
       const mDate = new Date(now.getFullYear() + yearOffset, m.month - 1, m.day);
       const diffMs = mDate.getTime() - nowMs;
@@ -849,42 +1074,28 @@ function SvHistorySection() {
       <div className="tech-section">
         <div className="tech-section-head">
           <h3 className="tech-section-title">Coming Up in SV History</h3>
-          <span className="tech-section-note">Next local milestone in {daysUntil} day{daysUntil === 1 ? "" : "s"}</span>
+          <span className="tech-section-note">
+            Next local milestone in {daysUntil} day{daysUntil === 1 ? "" : "s"}
+          </span>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-            padding: "12px 16px",
-            background: "#f9fafb",
-            border: "1px solid var(--sb-border-light)",
-            borderLeft: "4px solid #9ca3af",
-            borderRadius: 6,
-          }}
-        >
+        <div className="tech-milestone tech-milestone--upcoming">
+          <CompanyLogo
+            {...logoForMilestone(m)}
+            name={m.company}
+            size={48}
+            borderRadius={8}
+          />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
-                {m.company}
-              </span>
-              <span
-                style={{
-                  fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-                  letterSpacing: "0.06em", textTransform: "uppercase",
-                  color: "#6b7280", background: "#f3f4f6",
-                  padding: "2px 7px", borderRadius: 3,
-                }}
-              >
+            <div className="tech-milestone-top">
+              <span className="tech-milestone-name">{m.company}</span>
+              <span className="tech-milestone-pill tech-milestone-pill--gray">
                 {monthLabel} · {ordinal(age)} anniversary
               </span>
-              <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "var(--sb-sans)" }}>
+              <span className="tech-milestone-loc">
                 {m.city} · est. {m.foundedYear}
               </span>
             </div>
-            <p style={{ margin: 0, fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.5 }}>
-              {m.tagline}
-            </p>
+            <p className="tech-milestone-note">{m.tagline}</p>
           </div>
         </div>
       </div>
@@ -895,101 +1106,38 @@ function SvHistorySection() {
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">This Week in SV History</h3>
-        <span className="tech-section-note">Local company milestones happening right now</span>
+        <span className="tech-section-note">
+          Local company milestones happening right now
+        </span>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {milestones.map((m) => {
           const age = milestoneAge(m);
           return (
-            <div
-              key={m.id}
-              style={{
-                display: "flex",
-                gap: 14,
-                padding: "14px 16px",
-                background: "#fdf8f0",
-                border: "1px solid var(--sb-border-light)",
-                borderLeft: "4px solid #b45309",
-                borderRadius: 6,
-              }}
-            >
+            <div key={m.id} className="tech-milestone tech-milestone--active">
+              <CompanyLogo
+                {...logoForMilestone(m)}
+                name={m.company}
+                size={56}
+                borderRadius={10}
+              />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 8,
-                    flexWrap: "wrap",
-                    marginBottom: 4,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 700,
-                      color: "var(--sb-ink)",
-                      fontFamily: "var(--sb-sans)",
-                    }}
-                  >
-                    {m.company}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      fontFamily: "'Space Mono', monospace",
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      color: "#b45309",
-                      background: "#fef3c7",
-                      padding: "2px 7px",
-                      borderRadius: 3,
-                    }}
-                  >
+                <div className="tech-milestone-top">
+                  <span className="tech-milestone-name">{m.company}</span>
+                  <span className="tech-milestone-pill tech-milestone-pill--amber">
                     {m.defunct ? `${age} years ago` : `${ordinal(age)} anniversary`}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: "var(--sb-muted)",
-                      fontFamily: "var(--sb-sans)",
-                    }}
-                  >
+                  <span className="tech-milestone-loc">
                     {m.city} · est. {m.foundedYear}
                   </span>
                 </div>
-
-                <p
-                  style={{
-                    margin: "0 0 6px",
-                    fontSize: 13,
-                    lineHeight: 1.55,
-                    color: "var(--sb-ink)",
-                  }}
-                >
-                  {m.anniversaryNote}
-                </p>
-
+                <p className="tech-milestone-note">{m.anniversaryNote}</p>
                 {m.chmExhibit && (
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 5,
-                      fontSize: 11,
-                      color: "#1d4ed8",
-                      background: "#eff6ff",
-                      border: "1px solid #bfdbfe",
-                      borderRadius: 4,
-                      padding: "3px 8px",
-                      marginTop: 2,
-                    }}
-                  >
+                  <div className="tech-milestone-chm">
                     <span>🏛️</span>
                     <span>
-                      Computer History Museum:{" "}
-                      <strong>{m.chmExhibit}</strong>
+                      Computer History Museum: <strong>{m.chmExhibit}</strong>
                     </span>
                   </div>
                 )}
@@ -1002,19 +1150,20 @@ function SvHistorySection() {
   );
 }
 
-// ── Annual Tech Conferences ────────────────────────────────────────────────
+// ── Annual Tech Conferences ───────────────────────────────────────────────
 
 const MONTH_NAMES_FULL = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December",
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
-function getConferenceNextDate(conf: TechConference, now: Date): { label: string; sortMs: number; isUpcoming: boolean } {
-  const currentMonth = now.getMonth() + 1;
+function getConferenceNextDate(
+  conf: TechConference,
+  now: Date
+): { label: string; sortMs: number; isUpcoming: boolean } {
   const startMonth = conf.typicalMonth;
   const endMonth = conf.typicalEndMonth ?? startMonth;
   const endDayForBound = conf.typicalEndDay ?? conf.typicalDay ?? 15;
-  // If the conference's last day this year is already >7 days past, push to next year.
   const thisYearEndMs = new Date(now.getFullYear(), endMonth - 1, endDayForBound).getTime();
   const yearOffset = (thisYearEndMs - now.getTime()) / 86400000 < -7 ? 1 : 0;
   const year = now.getFullYear() + yearOffset;
@@ -1043,16 +1192,26 @@ function getDeadlineBadge(deadline?: string): { label: string; urgent: boolean }
   if (days < 0 || days > 14) return null;
   const d = new Date(deadline);
   const mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];
-  const label = days === 0 ? `Apply today — ${mon} ${d.getDate()}` :
+  const label =
+    days === 0 ? `Apply today — ${mon} ${d.getDate()}` :
     days === 1 ? `Apply by ${mon} ${d.getDate()} — tomorrow` :
     `Apply by ${mon} ${d.getDate()} — ${days} days`;
   return { label, urgent: days <= 5 };
 }
 
-function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; dateLabel: string; highlight: boolean }) {
-  const scaleStyle = conf.scale === "global"
-    ? { bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe", text: "Global" }
-    : { bg: "#f0fdf4", color: "#166534", border: "#bbf7d0", text: "Regional" };
+function ConferenceRow({
+  conf,
+  dateLabel,
+  highlight,
+}: {
+  conf: TechConference;
+  dateLabel: string;
+  highlight: boolean;
+}) {
+  const scaleStyle =
+    conf.scale === "global"
+      ? { bg: "#eff6ff", color: "#1e40af", border: "#bfdbfe", text: "Global" }
+      : { bg: "#f0fdf4", color: "#166534", border: "#bbf7d0", text: "Regional" };
   const deadlineBadge = getDeadlineBadge(conf.applicationDeadline);
   return (
     <a
@@ -1070,48 +1229,87 @@ function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; d
       }}
     >
       <div style={{ minWidth: 82, paddingTop: 2, flexShrink: 0 }}>
-        <div style={{
-          fontSize: 11,
-          fontFamily: "'Space Mono', monospace",
-          color: highlight ? "#16a34a" : "var(--sb-muted)",
-          fontWeight: highlight ? 700 : 400,
-          lineHeight: 1.3,
-        }}>
+        <div
+          style={{
+            fontSize: 11,
+            fontFamily: "'Space Mono', monospace",
+            color: highlight ? "#16a34a" : "var(--sb-muted)",
+            fontWeight: highlight ? 700 : 400,
+            lineHeight: 1.3,
+          }}
+        >
           {dateLabel}
         </div>
         {highlight && (
-          <div style={{
-            fontSize: 9,
-            fontFamily: "'Space Mono', monospace",
-            color: "#16a34a",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            marginTop: 2,
-          }}>
+          <div
+            style={{
+              fontSize: 9,
+              fontFamily: "'Space Mono', monospace",
+              color: "#16a34a",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              marginTop: 2,
+            }}
+          >
             Coming up
           </div>
         )}
       </div>
+      <CompanyLogo
+        {...logoForConference(conf)}
+        name={conf.organizer}
+        size={36}
+        borderRadius={6}
+      />
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, fontFamily: "var(--sb-sans)", color: "var(--sb-ink)" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            flexWrap: "wrap",
+            marginBottom: 3,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              fontFamily: "var(--sb-sans)",
+              color: "var(--sb-ink)",
+            }}
+          >
             {conf.name} ↗
           </span>
-          <span style={{
-            fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            background: scaleStyle.bg, color: scaleStyle.color, border: `1px solid ${scaleStyle.border}`,
-            borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap",
-          }}>
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              fontFamily: "'Space Mono', monospace",
+              background: scaleStyle.bg,
+              color: scaleStyle.color,
+              border: `1px solid ${scaleStyle.border}`,
+              borderRadius: 3,
+              padding: "2px 6px",
+              whiteSpace: "nowrap",
+            }}
+          >
             {scaleStyle.text}
           </span>
           {deadlineBadge && (
-            <span style={{
-              fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-              background: deadlineBadge.urgent ? "#fef2f2" : "#fff7ed",
-              color: deadlineBadge.urgent ? "#b91c1c" : "#c2410c",
-              border: `1px solid ${deadlineBadge.urgent ? "#fecaca" : "#fed7aa"}`,
-              borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap",
-            }}>
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                fontFamily: "'Space Mono', monospace",
+                background: deadlineBadge.urgent ? "#fef2f2" : "#fff7ed",
+                color: deadlineBadge.urgent ? "#b91c1c" : "#c2410c",
+                border: `1px solid ${deadlineBadge.urgent ? "#fecaca" : "#fed7aa"}`,
+                borderRadius: 3,
+                padding: "2px 6px",
+                whiteSpace: "nowrap",
+              }}
+            >
               ⚡ {deadlineBadge.label}
             </span>
           )}
@@ -1119,7 +1317,14 @@ function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; d
         <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 4 }}>
           {conf.venue} · {conf.city}
         </div>
-        <div style={{ fontSize: 12, color: "#374151", lineHeight: 1.5, fontFamily: "var(--sb-sans)" }}>
+        <div
+          style={{
+            fontSize: 12,
+            color: "#374151",
+            lineHeight: 1.5,
+            fontFamily: "var(--sb-sans)",
+          }}
+        >
           {conf.description}
         </div>
       </div>
@@ -1129,9 +1334,10 @@ function ConferenceRow({ conf, dateLabel, highlight }: { conf: TechConference; d
 
 function AnnualConferencesSection() {
   const now = new Date();
-  const withDates = TECH_CONFERENCES
-    .map((conf) => ({ conf, ...getConferenceNextDate(conf, now) }))
-    .sort((a, b) => a.sortMs - b.sortMs);
+  const withDates = TECH_CONFERENCES.map((conf) => ({
+    conf,
+    ...getConferenceNextDate(conf, now),
+  })).sort((a, b) => a.sortMs - b.sortMs);
 
   const upcoming = withDates.filter((c) => c.isUpcoming);
   const later = withDates.filter((c) => !c.isUpcoming);
@@ -1140,17 +1346,26 @@ function AnnualConferencesSection() {
     <div className="tech-section">
       <div className="tech-section-head">
         <h3 className="tech-section-title">Annual Tech Conferences</h3>
-        <span className="tech-section-note">Major SV events · South Bay and nearby · typical annual timing</span>
+        <span className="tech-section-note">
+          Major SV events · South Bay and nearby · typical annual timing
+        </span>
       </div>
 
       {upcoming.length > 0 && (
         <>
-          <div style={{
-            fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.08em", textTransform: "uppercase",
-            color: "#16a34a", marginBottom: 10, paddingBottom: 6,
-            borderBottom: "2px solid var(--sb-border-light)",
-          }}>
+          <div
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              fontFamily: "'Space Mono', monospace",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#16a34a",
+              marginBottom: 10,
+              paddingBottom: 6,
+              borderBottom: "2px solid var(--sb-border-light)",
+            }}
+          >
             Coming Up
           </div>
           {upcoming.map(({ conf, label }) => (
@@ -1161,14 +1376,20 @@ function AnnualConferencesSection() {
 
       {later.length > 0 && (
         <>
-          <div style={{
-            fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.08em", textTransform: "uppercase",
-            color: "#6b7280",
-            marginTop: upcoming.length > 0 ? 16 : 0,
-            marginBottom: 10, paddingBottom: 6,
-            borderBottom: "2px solid var(--sb-border-light)",
-          }}>
+          <div
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              fontFamily: "'Space Mono', monospace",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#6b7280",
+              marginTop: upcoming.length > 0 ? 16 : 0,
+              marginBottom: 10,
+              paddingBottom: 6,
+              borderBottom: "2px solid var(--sb-border-light)",
+            }}
+          >
             Later This Year
           </div>
           {later.map(({ conf, label }) => (
@@ -1184,9 +1405,8 @@ function AnnualConferencesSection() {
   );
 }
 
-// ── Main view ──────────────────────────────────────────────────────────────
+// ── Main view ─────────────────────────────────────────────────────────────
 
-// Category filters for the All Companies grid (only cats with ≥2 companies)
 const COMPANY_CATEGORY_FILTERS = [
   { key: null, label: "All" },
   { key: "chip", label: "Chip" },
@@ -1199,7 +1419,6 @@ const COMPANY_CATEGORY_FILTERS = [
   { key: "software", label: "Software" },
 ] as const;
 
-// City filters for the More South Bay Tech spotlight
 const SPOTLIGHT_CITY_FILTERS = [
   { key: null, label: "All" },
   { key: "San Jose", label: "San Jose" },
@@ -1220,9 +1439,10 @@ export default function TechnologyView() {
     .filter((c) => companyCategoryFilter === null || c.category === companyCategoryFilter)
     .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK);
 
-  const filteredSpotlight = spotlightCityFilter === null
-    ? SCC_SPOTLIGHT
-    : SCC_SPOTLIGHT.filter((c) => c.city === spotlightCityFilter);
+  const filteredSpotlight =
+    spotlightCityFilter === null
+      ? SCC_SPOTLIGHT
+      : SCC_SPOTLIGHT.filter((c) => c.city === spotlightCityFilter);
 
   const hiringGroups = [
     {
@@ -1255,8 +1475,8 @@ export default function TechnologyView() {
         <div className="tech-header-eyebrow">South Bay</div>
         <h2 className="tech-header-title">Technology</h2>
         <p className="tech-header-subtitle">
-          The companies headquartered in your backyard — and how many people
-          they employ right here in Santa Clara County.
+          The companies headquartered in your backyard — and how many people they
+          employ right here in Santa Clara County.
         </p>
         <div className="tech-header-note">
           Data snapshot · Q1 2026 · Santa Clara County employment estimates · Not affiliated with any company listed
@@ -1265,61 +1485,14 @@ export default function TechnologyView() {
 
       {/* ── Weekly Tech Briefing ── */}
       {techBriefingJson?.summary && (
-        <div
-          style={{
-            margin: "0 0 20px",
-            padding: "14px 16px",
-            background: "var(--sb-cream, #fdf8f0)",
-            border: "1px solid var(--sb-border-light)",
-            borderLeft: "4px solid #7c3aed",
-            borderRadius: 6,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              gap: 10,
-              marginBottom: 8,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#7c3aed",
-              }}
-            >
-              This Week in South Bay Tech
-            </span>
-            <span
-              style={{
-                fontSize: 10,
-                color: "var(--sb-muted)",
-                fontFamily: "'Space Mono', monospace",
-              }}
-            >
-              {techBriefingJson.weekLabel}
-            </span>
+        <div className="tech-briefing">
+          <div className="tech-briefing-head">
+            <span className="tech-briefing-eyebrow">This Week in South Bay Tech</span>
+            <span className="tech-briefing-week">{techBriefingJson.weekLabel}</span>
           </div>
-          <p
-            style={{
-              margin: 0,
-              fontSize: 13,
-              lineHeight: 1.6,
-              color: "var(--sb-ink)",
-            }}
-          >
-            {techBriefingJson.summary}
-          </p>
+          <p className="tech-briefing-body">{techBriefingJson.summary}</p>
         </div>
       )}
-
-      {/* ── This Week in SV History ── */}
-      <SvHistorySection />
 
       {/* ── Pulse strip ── */}
       <div className="tech-pulse">
@@ -1332,14 +1505,42 @@ export default function TechnologyView() {
         ))}
       </div>
 
+      {/* ── Latest Funding ticker ── */}
+      <FundingTicker />
+
+      {/* ── Top Employers Leaderboard ── */}
+      <div className="tech-section">
+        <div className="tech-section-head">
+          <h3 className="tech-section-title">Top Employers</h3>
+          <span className="tech-section-note">
+            Ranked by Santa Clara County local jobs · Q1 2026
+          </span>
+        </div>
+        <TopEmployersLeaderboard />
+      </div>
+
+      {/* ── This Week in SV History ── */}
+      <SvHistorySection />
+
+      {/* ── Recently Funded ── */}
+      <RecentlyFundedSection />
+
       {/* ── Hiring Pulse ── */}
       <div className="tech-section">
         <div className="tech-section-head">
           <h3 className="tech-section-title">Hiring Pulse</h3>
-          <span className="tech-section-note">Q1 2026 · South Bay tech hiring at a glance</span>
+          <span className="tech-section-note">
+            Q1 2026 · South Bay tech hiring at a glance
+          </span>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 24,
+          }}
+        >
           {hiringGroups.map((group) => (
             <div key={group.label}>
               <div
@@ -1349,7 +1550,12 @@ export default function TechnologyView() {
                   fontFamily: "'Space Mono', monospace",
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  color: group.label === "Actively Hiring" ? "#16a34a" : group.label === "Reduced Hiring" ? "#dc2626" : "#6b7280",
+                  color:
+                    group.label === "Actively Hiring"
+                      ? "#16a34a"
+                      : group.label === "Reduced Hiring"
+                        ? "#dc2626"
+                        : "#6b7280",
                   marginBottom: 6,
                   paddingBottom: 6,
                   borderBottom: "2px solid var(--sb-border-light)",
@@ -1383,66 +1589,8 @@ export default function TechnologyView() {
             fontStyle: "italic",
           }}
         >
-          Based on public filings, layoff announcements, and job board activity as of Q1 2026. Not investment advice.
-          Career links go to each company's official jobs page.
-        </div>
-      </div>
-
-      {/* ── Recently Funded ── */}
-      <RecentlyFundedSection />
-
-      {/* ── Top Employers Chart ── */}
-      <div className="tech-section">
-        <div className="tech-section-head">
-          <h3 className="tech-section-title">Top Employers</h3>
-          <span className="tech-section-note">SCC local jobs, thousands · Top 10 by size</span>
-        </div>
-
-        <div className="tech-chart-wrap">
-          <ResponsiveContainer width="100%" height={320}>
-            <BarChart
-              data={CHART_DATA}
-              layout="vertical"
-              margin={{ top: 4, right: 48, bottom: 4, left: 80 }}
-            >
-              <CartesianGrid
-                strokeDasharray="3 3"
-                horizontal={false}
-                stroke="#e5e7eb"
-              />
-              <XAxis
-                type="number"
-                tick={{ fontSize: 11, fill: "#6b7280", fontFamily: "var(--sb-sans)" }}
-                tickFormatter={(v) => `${v}K`}
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                type="category"
-                dataKey="name"
-                tick={{ fontSize: 12, fill: "#374151", fontFamily: "var(--sb-sans)" }}
-                width={76}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(0,0,0,0.03)" }} />
-              <Bar dataKey="headcount" radius={[0, 3, 3, 0]} maxBarSize={22}>
-                {CHART_DATA.map((entry, i) => (
-                  <Cell
-                    key={i}
-                    fill={entry.color}
-                    opacity={entry.trend === "down" ? 0.55 : 0.9}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="tech-chart-legend">
-          <span className="tech-legend-up">▲ Growing</span>
-          <span className="tech-legend-down">▼ Shrinking (shown lighter)</span>
-          <span className="tech-legend-note">Estimates only. Not investment advice.</span>
+          Based on public filings, layoff announcements, and job board activity as of Q1 2026.
+          Not investment advice. Career links go to each company's official jobs page.
         </div>
       </div>
 
@@ -1474,7 +1622,9 @@ export default function TechnologyView() {
       <div className="tech-section">
         <div className="tech-section-head">
           <h3 className="tech-section-title">More South Bay Tech</h3>
-          <span className="tech-section-note">Notable SCC companies beyond the top employers · {SCC_SPOTLIGHT.length} companies</span>
+          <span className="tech-section-note">
+            Notable SCC companies beyond the top employers · {SCC_SPOTLIGHT.length} companies
+          </span>
         </div>
         <div className="tech-filter-strip">
           {SPOTLIGHT_CITY_FILTERS.map((f) => (
@@ -1492,7 +1642,9 @@ export default function TechnologyView() {
             <SpotlightCard key={company.id} company={company} />
           ))}
           {filteredSpotlight.length === 0 && (
-            <p className="tech-filter-empty">No companies in {spotlightCityFilter} yet.</p>
+            <p className="tech-filter-empty">
+              No companies in {spotlightCityFilter} yet.
+            </p>
           )}
         </div>
       </div>
@@ -1508,9 +1660,10 @@ export default function TechnologyView() {
 
       {/* ── Footer note ── */}
       <div className="tech-footer-note">
-        Employment figures are Santa Clara County estimates as of Q1 2026, derived from campus headcount reports,
-        company filings, EDD data, and news coverage. Global headcounts are much larger. South Bay Today is not
-        affiliated with any company listed and this is not investment advice.
+        Employment figures are Santa Clara County estimates as of Q1 2026, derived from campus
+        headcount reports, company filings, EDD data, and news coverage. Global headcounts are
+        much larger. South Bay Today is not affiliated with any company listed and this is not
+        investment advice.
       </div>
     </div>
   );
