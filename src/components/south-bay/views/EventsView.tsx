@@ -857,7 +857,7 @@ export default function EventsView({ selectedCities }: Props) {
 
   return (
     <>
-      <div className="sb-section-header">
+      <div className="sb-section-header sb-events-header">
         <span className="sb-section-title">
           Events
           <span style={{ fontSize: 13, fontWeight: 400, color: "var(--sb-muted)", marginLeft: 8 }}>
@@ -943,8 +943,8 @@ export default function EventsView({ selectedCities }: Props) {
           </label>
         </div>
 
-        {/* Category pills — wrap, no horizontal scroll */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {/* Category pills — wrap on desktop, horizontal scroll with fade on mobile */}
+        <div className="sb-events-cat-row">
           {EVENT_CATEGORIES.map((cat) => {
             const active = category === cat.id;
             const count = viewMode === "upcoming" ? (categoryCounts[cat.id] ?? 0) : null;

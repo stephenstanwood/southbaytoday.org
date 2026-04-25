@@ -216,6 +216,22 @@ const title = "The South Bay Today";
         gap: 6px 8px;
         flex-wrap: wrap;
       }
+      @media (max-width: 640px) {
+        .sb-filters {
+          padding: 8px 16px;
+        }
+        .sb-filters-inner {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          mask-image: linear-gradient(to right, black calc(100% - 18px), transparent);
+          -webkit-mask-image: linear-gradient(to right, black calc(100% - 18px), transparent);
+          padding-right: 18px;
+        }
+        .sb-filters-inner::-webkit-scrollbar { display: none; }
+        .sb-filters-inner > * { flex-shrink: 0; }
+      }
       .sb-filter-label {
         font-size: 12px;
         font-weight: 600;
@@ -265,13 +281,33 @@ const title = "The South Bay Today";
         margin-bottom: 12px;
         box-shadow: 0 2px 8px -6px rgba(0, 0, 0, 0.08);
       }
+      .sb-events-cat-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
       @media (max-width: 640px) {
         .sb-events-sticky-filter {
           top: 35px;
           margin-left: -16px;
           margin-right: -16px;
-          padding: 10px 16px 10px;
+          padding: 8px 16px 8px;
+          margin-bottom: 8px;
         }
+        /* Mobile: events section header is redundant with the EVENTS tab */
+        .sb-section-header.sb-events-header { display: none; }
+        /* Categories: horizontal scroll with fade on mobile */
+        .sb-events-cat-row {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          mask-image: linear-gradient(to right, black calc(100% - 18px), transparent);
+          -webkit-mask-image: linear-gradient(to right, black calc(100% - 18px), transparent);
+          padding-right: 18px;
+        }
+        .sb-events-cat-row::-webkit-scrollbar { display: none; }
+        .sb-events-cat-row > * { flex-shrink: 0; }
       }
 
       /* ── Content area ── */
