@@ -192,24 +192,33 @@ function FarmersMarkets() {
             <div key={dayIdx} className={`market-day ${isToday ? "market-day-active" : ""}`}>
               <div className="market-day-head">{label}</div>
               <div className="market-day-items">
-                {byDay[dayIdx].map((m) => (
-                  <a
-                    key={m.id}
-                    href={m.url ?? undefined}
-                    target={m.url ? "_blank" : undefined}
-                    rel={m.url ? "noopener noreferrer" : undefined}
-                    className="market-row"
-                  >
-                    <span className="market-emoji">{m.emoji ?? "🥕"}</span>
-                    <div className="market-row-body">
-                      <div className="market-name">{m.title}</div>
-                      <div className="market-meta">
-                        {m.venue} · {cityFor(m.city)}
-                        {m.time ? ` · ${m.time}` : ""}
+                {byDay[dayIdx].map((m) => {
+                  const inner = (
+                    <>
+                      <span className="market-emoji">{m.emoji ?? "🥕"}</span>
+                      <div className="market-row-body">
+                        <div className="market-name">{m.title}</div>
+                        <div className="market-meta">
+                          {m.venue} · {cityFor(m.city)}
+                          {m.time ? ` · ${m.time}` : ""}
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                ))}
+                    </>
+                  );
+                  return m.url ? (
+                    <a
+                      key={m.id}
+                      href={m.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="market-row"
+                    >
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={m.id} className="market-row">{inner}</div>
+                  );
+                })}
               </div>
             </div>
           );
