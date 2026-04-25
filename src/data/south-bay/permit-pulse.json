@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-25T19:12:55.456Z",
+      "generatedAt": "2026-04-25T23:10:33.723Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-25T19:12:57.800Z",
+      "generatedAt": "2026-04-25T23:10:36.163Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -150,6 +150,18 @@
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01073",
+          "address": "4112 Amaranta Av",
+          "category": "commercial",
+          "categoryLabel": "Commercial Project",
+          "workType": "Building Permit",
+          "description": "Res: Remove torch down roofing and replace with membrane.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-23",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01023",
           "address": "3608 South Ct",
@@ -175,18 +187,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01073",
-          "address": "4112 Amaranta Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial Project",
-          "workType": "Building Permit",
-          "description": "Res: Remove torch down roofing and replace with membrane.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-23",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01065",
           "address": "228 E Charleston Rd",
           "category": "commercial",
@@ -196,42 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-23",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01044",
-          "address": "631 Saint Claire Dr",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-21",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01028",
-          "address": "4163 Park Bl",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-20",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01076",
-          "address": "1624 Channing Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Web - Heat Pump Mechanical",
-          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-24",
           "subtype": "Permit Issued"
         },
         {
@@ -259,15 +223,51 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01021",
-          "address": "957 Colonial Ln",
+          "id": "26BLD-01076",
+          "address": "1624 Channing Av",
           "category": "residential-large",
           "categoryLabel": "Major Renovation",
           "workType": "Web - Heat Pump Mechanical",
           "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-19",
+          "issueDate": "2026-04-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01028",
+          "address": "4163 Park Bl",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-20",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01079",
+          "address": "3200 Ramona St",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Heat Pump Mechanical",
+          "description": "Residential - Single Family/ADU/Duplex: Instant permit to install 1 heat pump space conditioning systems(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01044",
+          "address": "631 Saint Claire Dr",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-21",
           "subtype": "Permit Issued"
         }
       ]
