@@ -1,297 +1,8 @@
-import { useState, useEffect } from "react";
-import HealthScoresCard from "../cards/HealthScoresCard";
-import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
-import { SOUTH_BAY_EVENTS } from "../../../data/south-bay/events-data";
+import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
 
-type UpcomingEvent = {
-  id: string;
-  title: string;
-  date: string;
-  displayDate: string;
-  time: string | null;
-  venue: string;
-  city: string;
-  category: string;
-  cost: string;
-  description: string;
-  url: string | null;
-};
-
-const TODAY = new Date().toISOString().split("T")[0];
-const NINETY_DAYS = new Date(Date.now() + 90 * 86400000).toISOString().split("T")[0];
-
-function cityLabel(city: string) {
-  return city.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
-}
-
-function FarmersMarkets() {
-  const [allUpcoming, setAllUpcoming] = useState<UpcomingEvent[]>([]);
-  useEffect(() => {
-    fetch("/api/south-bay/upcoming-events")
-      .then((r) => r.ok ? r.json() : null)
-      .then((d) => setAllUpcoming(d?.events ?? []))
-      .catch(() => {});
-  }, []);
-
-  // From recurring events-data
-  const today = new Date();
-  const dayName = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][today.getDay()];
-  const month = today.getMonth() + 1;
-
-  const markets = SOUTH_BAY_EVENTS.filter((e) => e.category === "market");
-  const todayMarkets = markets.filter((e) => {
-    if (e.months && !e.months.includes(month)) return false;
-    if (!e.days) return true;
-    return e.days.includes(dayName as any);
-  });
-  const upcomingMarkets = markets.filter((e) => !todayMarkets.includes(e));
-
-  // Also pull market events from upcoming-events.json
-  const upcomingFoodEvents = allUpcoming
-    .filter((e) => e.category === "market" || e.category === "food")
-    .filter((e) => e.date >= TODAY && e.date <= NINETY_DAYS)
-    .slice(0, 6);
-
-  return (
-    <div style={{ marginBottom: 28 }}>
-      <div className="sb-section-header" style={{ marginBottom: 12 }}>
-        <span className="sb-section-title">🛒 Farmers Markets</span>
-      </div>
-
-      {todayMarkets.length > 0 && (
-        <div style={{ marginBottom: 12 }}>
-          <div style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "var(--sb-accent)", marginBottom: 8,
-          }}>
-            Today
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {todayMarkets.map((e) => (
-              <div key={e.id} style={{
-                display: "flex", alignItems: "baseline", gap: 10,
-                padding: "8px 0",
-                borderBottom: "1px solid var(--sb-border-light)",
-              }}>
-                <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>{e.emoji}</span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--sb-ink)" }}>{e.title}</div>
-                  <div style={{ fontSize: 11, color: "var(--sb-muted)" }}>
-                    {e.venue} · {cityLabel(e.city)}{e.time ? ` · ${e.time}` : ""}
-                  </div>
-                </div>
-                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace", flexShrink: 0 }}>FREE</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {upcomingMarkets.length > 0 && (
-        <div style={{ marginBottom: 12 }}>
-          <div style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "var(--sb-muted)", marginBottom: 8,
-          }}>
-            Weekly
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {upcomingMarkets.map((e) => (
-              <div key={e.id} style={{
-                display: "flex", alignItems: "baseline", gap: 10,
-                padding: "8px 0",
-                borderBottom: "1px solid var(--sb-border-light)",
-              }}>
-                <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>{e.emoji}</span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--sb-ink)" }}>{e.title}</div>
-                  <div style={{ fontSize: 11, color: "var(--sb-muted)" }}>
-                    {e.venue} · {cityLabel(e.city)}{e.time ? ` · ${e.time}` : ""}{e.days ? ` · ${e.days.map((d) => d[0].toUpperCase() + d.slice(1)).join(", ")}` : ""}
-                  </div>
-                </div>
-                <span style={{ fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace", flexShrink: 0 }}>FREE</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {upcomingFoodEvents.length > 0 && (
-        <div>
-          <div style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "var(--sb-muted)", marginBottom: 8,
-          }}>
-            Upcoming Food Events
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {upcomingFoodEvents.map((e) => (
-              <div key={e.id} style={{
-                display: "flex", alignItems: "baseline", gap: 10,
-                padding: "8px 0",
-                borderBottom: "1px solid var(--sb-border-light)",
-              }}>
-                <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>🥗</span>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--sb-ink)" }}>{e.title}</div>
-                  <div style={{ fontSize: 11, color: "var(--sb-muted)" }}>
-                    {e.venue} · {cityLabel(e.city)} · {e.displayDate}{e.time ? ` · ${e.time}` : ""}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Restaurant Radar ────────────────────────────────────────────────────────
-
-type RadarItem = {
-  id: string;
-  city?: string;
-  address: string;
-  name: string | null;
-  blurb?: string | null;
-  description: string;
-  workType: string;
-  signal: "opening" | "closing" | "activity";
-  label: string;
-  valuation: number;
-  date: string;
-};
-
-const SIGNAL_STYLES: Record<string, { bg: string; color: string; border: string }> = {
-  "New Build":      { bg: "#dcfce7", color: "#166534", border: "#86efac" },
-  "New Opening":    { bg: "#dcfce7", color: "#166534", border: "#86efac" },
-  "Major Buildout": { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
-  "New Buildout":   { bg: "#dbeafe", color: "#1e40af", border: "#93c5fd" },
-  "Renovation":     { bg: "#fef3c7", color: "#92400e", border: "#fcd34d" },
-  "Conditional Use": { bg: "#f5f3ff", color: "#5b21b6", border: "#c4b5fd" },
-  "Possible Closure": { bg: "#fee2e2", color: "#991b1b", border: "#fca5a5" },
-  "Permit Activity": { bg: "#f3f4f6", color: "#374151", border: "#d1d5db" },
-};
-
-const CITY_LABELS: Record<string, string> = {
-  "san-jose": "San José",
-  "palo-alto": "Palo Alto",
-};
-
-function RestaurantRadar() {
-  const data = restaurantRadarJson as { items: RadarItem[]; cities?: string[]; city?: string; generatedAt: string };
-  const items = data.items;
-  if (!items || items.length === 0) return null;
-
-  // Only show opening/closing signals (skip generic "Permit Activity" unless named)
-  const notable = items.filter((it) => it.label !== "Permit Activity" || it.name);
-  if (notable.length === 0) return null;
-
-  const updatedDate = new Date(restaurantRadarJson.generatedAt).toLocaleDateString("en-US", {
-    month: "short", day: "numeric",
-  });
-
-  const cityList = data.cities ? data.cities.join(" · ") : (data.city ?? "San Jose");
-
-  return (
-    <div style={{ marginBottom: 28 }}>
-      <div className="sb-section-header" style={{ marginBottom: 4 }}>
-        <span className="sb-section-title">🍽 Restaurant Radar</span>
-      </div>
-      <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 12 }}>
-        New buildouts &amp; permit activity · {cityList} · Updated {updatedDate}
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        {notable.map((item) => {
-          const styles = SIGNAL_STYLES[item.label] ?? SIGNAL_STYLES["Permit Activity"];
-          const dateLabel = new Date(item.date + "T12:00:00").toLocaleDateString("en-US", {
-            month: "short", day: "numeric",
-          });
-          const cityLabel = item.city ? CITY_LABELS[item.city] ?? item.city : null;
-          return (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 10,
-                padding: "10px 0",
-                borderBottom: "1px solid var(--sb-border-light)",
-              }}
-            >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap", marginBottom: 3,
-                }}>
-                  <span style={{
-                    fontWeight: 600, fontSize: 13, fontFamily: "var(--sb-sans)",
-                    color: "var(--sb-ink)",
-                  }}>
-                    {item.name ?? item.address}
-                  </span>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-                    background: styles.bg, color: styles.color, border: `1px solid ${styles.border}`,
-                    borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap",
-                  }}>
-                    {item.label}
-                  </span>
-                </div>
-                {item.blurb && (
-                  <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.5, marginBottom: 4 }}>
-                    {item.blurb}
-                  </div>
-                )}
-                <div style={{ fontSize: 11, color: "var(--sb-muted)", display: "flex", gap: 6, flexWrap: "wrap" }}>
-                  <span>{item.address}</span>
-                  {cityLabel && (
-                    <>
-                      <span style={{ color: "var(--sb-border)" }}>·</span>
-                      <span>{cityLabel}</span>
-                    </>
-                  )}
-                  <span style={{ color: "var(--sb-border)" }}>·</span>
-                  <span>{item.workType}</span>
-                  {item.valuation > 0 && (
-                    <>
-                      <span style={{ color: "var(--sb-border)" }}>·</span>
-                      <span>${item.valuation.toLocaleString()}</span>
-                    </>
-                  )}
-                  <span style={{ color: "var(--sb-border)" }}>·</span>
-                  <span>{dateLabel}</span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, fontStyle: "italic" }}>
-        Based on building permits issued by San José and Palo Alto. A permit doesn't mean open yet — it means construction is underway.
-      </div>
-    </div>
-  );
-}
-
-// ── SCC Food Openings ───────────────────────────────────────────────────────
-
-type SccFoodItem = {
-  id: string;
-  name: string;
-  address: string | null;
-  cityId: string | null;
-  cityName: string;
-  date: string | null;
-  status: "opened" | "coming-soon";
-  sourceId: string | null;
-  blurb?: string | null;
-};
+const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
+const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 const CITY_DISPLAY: Record<string, string> = {
   "san-jose": "San José",
@@ -307,142 +18,379 @@ const CITY_DISPLAY: Record<string, string> = {
   "palo-alto": "Palo Alto",
 };
 
-function formatSccDate(iso: string | null): string {
-  if (!iso) return "";
-  const d = new Date(iso + "T12:00:00");
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+function cityFor(cityId: string | null | undefined, fallback?: string): string {
+  if (cityId && CITY_DISPLAY[cityId]) return CITY_DISPLAY[cityId];
+  if (fallback) {
+    return fallback.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+  return "";
 }
 
-function SccFoodOpeningsCard() {
-  const data = sccFoodOpeningsJson as {
-    generatedAt: string;
-    lookbackDays: number;
-    sourceUrl: string;
-    opened: SccFoodItem[];
-    comingSoon: SccFoodItem[];
-  };
+function formatShortDate(iso: string | null): string {
+  if (!iso) return "";
+  return new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
 
-  const opened = (data.opened ?? []).slice(0, 10);
-  const comingSoon = (data.comingSoon ?? []).slice(0, 10);
+// ── New & Coming Soon ───────────────────────────────────────────────────────
 
-  if (opened.length === 0 && comingSoon.length === 0) return null;
+type FoodItem = {
+  id: string;
+  name: string;
+  address: string | null;
+  cityId: string | null;
+  cityName: string;
+  date: string | null;
+  status: "opened" | "coming-soon";
+  blurb?: string | null;
+  photoRef?: string | null;
+};
 
-  const updatedDate = new Date(data.generatedAt).toLocaleDateString("en-US", {
-    month: "short", day: "numeric",
-  });
-
-  function FoodRow({ item, accent }: { item: SccFoodItem; accent: string }) {
-    const city = item.cityId ? CITY_DISPLAY[item.cityId] ?? item.cityName : item.cityName;
-    // For coming-soon items, the date is when the plan was approved (not the opening date)
-    const dateLabel = item.date
-      ? item.status === "coming-soon"
-        ? `Permit approved ${formatSccDate(item.date)}`
-        : formatSccDate(item.date)
-      : "";
-    return (
-      <div style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 10,
-        padding: "9px 0",
-        borderBottom: "1px solid var(--sb-border-light)",
-      }}>
-        <div style={{
-          width: 3, minHeight: 32, borderRadius: 2,
-          background: accent, flexShrink: 0, marginTop: 3,
-        }} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            fontWeight: 600, fontSize: 13,
-            color: "var(--sb-ink)", fontFamily: "var(--sb-sans)",
-            marginBottom: 2,
-          }}>
-            {item.name}
-          </div>
-          {item.blurb && (
-            <div style={{
-              fontSize: 12, color: "var(--sb-ink-muted)",
-              fontStyle: "italic", marginBottom: 3, lineHeight: 1.4,
-            }}>
-              {item.blurb}
-            </div>
-          )}
-          <div style={{
-            fontSize: 11, color: "var(--sb-muted)",
-            display: "flex", gap: 5, flexWrap: "wrap",
-          }}>
-            {item.address && <span>{item.address}</span>}
-            {city && (
-              <>
-                <span style={{ color: "var(--sb-border)" }}>·</span>
-                <span>{city}</span>
-              </>
-            )}
-            {dateLabel && (
-              <>
-                <span style={{ color: "var(--sb-border)" }}>·</span>
-                <span>{dateLabel}</span>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
+function FoodTile({ item }: { item: FoodItem }) {
+  const isOpen = item.status === "opened";
+  const fallback = isOpen
+    ? "linear-gradient(135deg, #14b8a6 0%, #2563eb 100%)"
+    : "linear-gradient(135deg, #6366f1 0%, #db2777 100%)";
+  const photo = item.photoRef
+    ? `/api/place-photo?ref=${encodeURIComponent(item.photoRef)}&w=480&h=480`
+    : null;
+  const city = cityFor(item.cityId, item.cityName);
+  const mapsQuery = encodeURIComponent(
+    [item.name, item.address, city].filter(Boolean).join(" "),
+  );
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+  const dateLabel = formatShortDate(item.date);
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      <div className="sb-section-header" style={{ marginBottom: 4 }}>
-        <span className="sb-section-title">🆕 New &amp; Coming Soon</span>
+    <a
+      href={mapsHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="food-tile"
+      style={{
+        background: photo
+          ? `#000 url(${photo}) center/cover no-repeat`
+          : fallback,
+      }}
+    >
+      <div className="food-tile-shade" />
+      <div className="food-tile-top">
+        <span className="food-pill food-pill-light">{city}</span>
+        <span className={`food-pill food-pill-${isOpen ? "open" : "soon"}`}>
+          {isOpen ? "NEW" : "COMING SOON"}
+        </span>
       </div>
-      <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 12 }}>
-        Restaurant &amp; food permit activity across the South Bay · Updated {updatedDate}
+      <div className="food-tile-bottom">
+        <div className="food-tile-name">{item.name}</div>
+        {item.blurb && <div className="food-tile-blurb">{item.blurb}</div>}
+        <div className="food-tile-meta">
+          {item.address && <span className="food-tile-addr">{item.address}</span>}
+          {dateLabel && (
+            <span>
+              {isOpen ? `Opened ${dateLabel}` : `Permit ${dateLabel}`}
+            </span>
+          )}
+        </div>
       </div>
+    </a>
+  );
+}
+
+function NewAndComingSoon() {
+  const data = sccFoodOpeningsJson as {
+    generatedAt: string;
+    opened: FoodItem[];
+    comingSoon: FoodItem[];
+  };
+  const opened = (data.opened ?? []).filter((i) => i.name && i.cityId);
+  const comingSoon = (data.comingSoon ?? []).filter((i) => i.name && i.cityId);
+  if (opened.length === 0 && comingSoon.length === 0) return null;
+
+  const updated = formatShortDate(data.generatedAt.slice(0, 10));
+
+  return (
+    <section className="food-section">
+      <header className="food-section-head">
+        <h2 className="food-h2">New &amp; Coming Soon</h2>
+        <p className="food-sub">
+          Restaurants and food spots opening across the South Bay
+          {updated && <> · Updated {updated}</>}
+        </p>
+      </header>
 
       {opened.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
-          <div style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "#16a34a", marginBottom: 6,
-          }}>
-            Recently Opened
+        <>
+          <div className="food-eyebrow food-eyebrow-open">Recently Opened</div>
+          <div className="food-tile-grid">
+            {opened.map((item) => <FoodTile key={item.id} item={item} />)}
           </div>
-          {opened.map((item) => (
-            <FoodRow key={item.id} item={item} accent="#16a34a" />
-          ))}
-        </div>
+        </>
       )}
 
       {comingSoon.length > 0 && (
-        <div>
-          <div style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "#2563eb", marginBottom: 6,
-          }}>
+        <>
+          <div className="food-eyebrow food-eyebrow-soon" style={{ marginTop: opened.length > 0 ? 28 : 0 }}>
             Coming Soon
           </div>
-          {comingSoon.map((item) => (
-            <FoodRow key={item.id} item={item} accent="#2563eb" />
-          ))}
-        </div>
+          <div className="food-tile-grid">
+            {comingSoon.map((item) => <FoodTile key={item.id} item={item} />)}
+          </div>
+        </>
       )}
 
-      <div style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, fontStyle: "italic" }}>
-        Based on SCC Environmental Health permit records. "Coming Soon" = plans approved, building out. "Recently Opened" = passed final health inspection.
-      </div>
-    </div>
+      <p className="food-tile-note">
+        Sourced from Santa Clara County health-permit records · Tap a tile to find it on Google Maps
+      </p>
+    </section>
   );
 }
+
+// ── Farmers Markets ─────────────────────────────────────────────────────────
+
+function FarmersMarkets() {
+  const today = new Date();
+  const todayIdx = today.getDay();
+  const month = today.getMonth() + 1;
+
+  const markets = SOUTH_BAY_EVENTS.filter((e) => e.category === "market");
+  const inSeason = (e: SBEvent) => !e.months || e.months.includes(month);
+
+  // Bucket by day-of-week so the schedule reads like a weekly calendar.
+  const byDay: SBEvent[][] = [[], [], [], [], [], [], []];
+  for (const m of markets) {
+    if (!inSeason(m)) continue;
+    if (!m.days) continue;
+    for (const d of m.days) {
+      const idx = DAY_NAMES.indexOf(d as typeof DAY_NAMES[number]);
+      if (idx >= 0) byDay[idx].push(m);
+    }
+  }
+
+  // Re-order so today is first; trailing empty days get dropped.
+  const orderedDays = Array.from({ length: 7 }, (_, i) => (todayIdx + i) % 7);
+  const visibleDays = orderedDays.filter((d) => byDay[d].length > 0);
+  if (visibleDays.length === 0) return null;
+
+  return (
+    <section className="food-section food-section-markets">
+      <header className="food-section-head">
+        <h2 className="food-h2">Farmers Markets</h2>
+        <p className="food-sub">
+          Weekly schedule across the South Bay — starting today
+        </p>
+      </header>
+
+      <div className="market-week">
+        {visibleDays.map((dayIdx, i) => {
+          const isToday = i === 0;
+          const label = isToday ? "Today" : DAY_LABEL[dayIdx];
+          return (
+            <div key={dayIdx} className={`market-day ${isToday ? "market-day-active" : ""}`}>
+              <div className="market-day-head">{label}</div>
+              <div className="market-day-items">
+                {byDay[dayIdx].map((m) => (
+                  <a
+                    key={m.id}
+                    href={m.url ?? undefined}
+                    target={m.url ? "_blank" : undefined}
+                    rel={m.url ? "noopener noreferrer" : undefined}
+                    className="market-row"
+                  >
+                    <span className="market-emoji">{m.emoji ?? "🥕"}</span>
+                    <div className="market-row-body">
+                      <div className="market-name">{m.title}</div>
+                      <div className="market-meta">
+                        {m.venue} · {cityFor(m.city)}
+                        {m.time ? ` · ${m.time}` : ""}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── View ────────────────────────────────────────────────────────────────────
 
 export default function FoodView() {
   return (
     <>
-      <SccFoodOpeningsCard />
-      <RestaurantRadar />
+      <NewAndComingSoon />
       <FarmersMarkets />
-      <HealthScoresCard />
+      <FoodViewStyles />
     </>
+  );
+}
+
+function FoodViewStyles() {
+  return (
+    <style>{`
+      .food-section { font-family: 'Inter', sans-serif; }
+      .food-section + .food-section { margin-top: 36px; padding-top: 28px; border-top: 1px solid #eee; }
+
+      .food-section-head { margin-bottom: 16px; }
+      .food-h2 {
+        font-size: 26px; font-weight: 900; margin: 0;
+        letter-spacing: -1px; color: #000; line-height: 1.05;
+      }
+      .food-sub {
+        font-size: 13px; color: #666;
+        margin: 4px 0 0; font-weight: 500;
+      }
+
+      .food-eyebrow {
+        font-size: 10px; font-weight: 800; font-family: 'Space Mono', monospace;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .food-eyebrow-open { color: #16a34a; }
+      .food-eyebrow-soon { color: #2563eb; }
+
+      .food-tile-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .food-tile {
+        position: relative;
+        display: block;
+        aspect-ratio: 1 / 1;
+        border-radius: 14px;
+        overflow: hidden;
+        text-decoration: none;
+        color: #fff;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+        cursor: pointer;
+      }
+      .food-tile:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+      }
+      .food-tile-shade {
+        position: absolute; inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.0) 0%,
+          rgba(0,0,0,0.0) 28%,
+          rgba(0,0,0,0.62) 72%,
+          rgba(0,0,0,0.92) 100%
+        );
+        pointer-events: none;
+      }
+      .food-tile-top {
+        position: absolute; top: 8px; left: 8px; right: 8px;
+        display: flex; justify-content: space-between; gap: 6px;
+        z-index: 2;
+      }
+      .food-pill {
+        font-size: 9px; font-weight: 800;
+        letter-spacing: 0.04em; line-height: 1;
+        padding: 4px 7px; border-radius: 999px;
+        text-transform: uppercase; white-space: nowrap;
+        max-width: 60%; overflow: hidden; text-overflow: ellipsis;
+      }
+      .food-pill-light { background: rgba(255,255,255,0.95); color: #111; }
+      .food-pill-open  { background: #16a34a; color: #fff; }
+      .food-pill-soon  { background: #2563eb; color: #fff; }
+      .food-tile-bottom {
+        position: absolute; left: 12px; right: 12px; bottom: 10px;
+        z-index: 2;
+      }
+      .food-tile-name {
+        font-size: 14px; font-weight: 800;
+        line-height: 1.2; color: #fff;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 3px;
+      }
+      .food-tile-blurb {
+        font-size: 11px; font-weight: 500;
+        color: rgba(255,255,255,0.92);
+        line-height: 1.3;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.45);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+      .food-tile-meta {
+        display: flex; flex-wrap: wrap; gap: 6px;
+        font-size: 10px; font-weight: 600;
+        color: rgba(255,255,255,0.78);
+        text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+      }
+      .food-tile-addr {
+        max-width: 100%;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .food-tile-note {
+        margin-top: 14px; font-size: 11px; color: #aaa;
+        text-align: right;
+      }
+
+      /* Farmers markets — weekly schedule */
+      .market-week {
+        display: flex; flex-direction: column; gap: 14px;
+      }
+      .market-day {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 14px;
+        padding: 10px 12px 10px 0;
+        border-top: 1px solid var(--sb-border-light, #eee);
+      }
+      .market-day:first-child { border-top: none; padding-top: 0; }
+      .market-day-active .market-day-head {
+        color: var(--sb-accent, #2563eb);
+      }
+      .market-day-head {
+        font-size: 11px; font-weight: 800;
+        font-family: 'Space Mono', monospace;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--sb-muted, #666);
+        padding-top: 4px;
+      }
+      .market-day-items {
+        display: flex; flex-direction: column; gap: 1px;
+      }
+      .market-row {
+        display: flex; align-items: baseline; gap: 10px;
+        padding: 6px 0;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--sb-border-light, #f1f1f1);
+      }
+      .market-row:last-child { border-bottom: none; }
+      .market-row:hover .market-name {
+        color: var(--sb-accent, #2563eb);
+      }
+      .market-emoji { font-size: 18px; line-height: 1; flex-shrink: 0; }
+      .market-row-body { flex: 1; min-width: 0; }
+      .market-name {
+        font-size: 13px; font-weight: 600;
+        color: var(--sb-ink, #111);
+        transition: color 0.15s;
+      }
+      .market-meta {
+        font-size: 11px; color: var(--sb-muted, #666);
+        margin-top: 1px;
+      }
+
+      @media (max-width: 760px) {
+        .food-tile-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .food-tile-name { font-size: 13px; }
+        .food-tile-blurb { -webkit-line-clamp: 2; }
+        .market-day { grid-template-columns: 56px 1fr; gap: 10px; }
+      }
+    `}</style>
   );
 }

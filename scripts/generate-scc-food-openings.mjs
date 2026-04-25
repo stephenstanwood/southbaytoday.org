@@ -11,16 +11,18 @@
  * Run: node scripts/generate-scc-food-openings.mjs
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
 
 loadEnvLocal();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-openings.json");
+const PHOTO_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-photo-cache.json");
 
 const API_BASE = "https://data.sccgov.org/resource/skd7-7ix3.json";
 const LOOKBACK_DAYS = 45;
@@ -343,6 +345,76 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
   }
 }
 
+// ── Google Places photoRef enrichment ────────────────────────────────────
+// Tile UI on /#food shows each opening as a square card with a real photo.
+// First try places.json (free; covers existing chains). Fall back to a live
+// Places Text Search for new locations. Cache misses too — sub-second cost,
+// but no point hammering Google on items we know have no photo.
+function loadPhotoCache() {
+  if (!existsSync(PHOTO_CACHE_PATH)) return { byKey: {} };
+  try { return JSON.parse(readFileSync(PHOTO_CACHE_PATH, "utf8")); } catch { return { byKey: {} }; }
+}
+
+function savePhotoCache(cache) {
+  cache.generatedAt = new Date().toISOString();
+  writeFileSync(PHOTO_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+}
+
+async function searchPlacesPhotoRef(name, address, cityId, apiKey) {
+  if (!apiKey) return null;
+  const cityLabel = (cityId || "").replace(/-/g, " ");
+  const query = address ? `${name} ${address} ${cityLabel}` : `${name} ${cityLabel}`;
+  try {
+    const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask": "places.photos",
+      },
+      body: JSON.stringify({ textQuery: query, maxResultCount: 1 }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.places?.[0]?.photos?.[0]?.name || null;
+  } catch (err) {
+    console.warn(`  ⚠️  Places lookup failed for ${name}: ${err.message}`);
+    return null;
+  }
+}
+
+async function enrichWithPhotos(items) {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  const cache = loadPhotoCache();
+  let venueHits = 0, cacheHits = 0, apiHits = 0, missing = 0;
+
+  for (const item of items) {
+    // Tier 1: places.json by name (free, instant).
+    const venueRef = lookupVenuePhoto(item.name);
+    if (venueRef) { item.photoRef = venueRef; venueHits++; continue; }
+
+    // Tier 2: scc-food-photo-cache.json keyed by sourceId.
+    const key = item.sourceId || `${item.name}|${item.address || ""}|${item.cityId || ""}`;
+    if (Object.prototype.hasOwnProperty.call(cache.byKey, key)) {
+      const cached = cache.byKey[key];
+      if (cached) { item.photoRef = cached; cacheHits++; }
+      else missing++;
+      continue;
+    }
+
+    // Tier 3: live Google Places Text Search (paid, cached).
+    const ref = await searchPlacesPhotoRef(item.name, item.address, item.cityId, apiKey);
+    cache.byKey[key] = ref;
+    if (ref) { item.photoRef = ref; apiHits++; }
+    else missing++;
+    await new Promise((r) => setTimeout(r, 250));
+  }
+
+  savePhotoCache(cache);
+  console.log(`  Photos: ${venueHits} from places.json, ${cacheHits} cached, ${apiHits} new lookups, ${missing} no photo`);
+}
+
 async function fetchPage(whereClause, orderField, limit = 50) {
   const params = new URLSearchParams({
     $where: whereClause,
@@ -472,6 +544,11 @@ async function main() {
     ...i,
     blurb: (i.sourceId && BLURB_OVERRIDES[i.sourceId]) ?? comingSoonBlurbs[i.id] ?? null,
   }));
+
+  // Attach Google Places photoRef so /#food can render real-photo tiles.
+  console.log("Looking up Google Places photos…");
+  await enrichWithPhotos(openedWithBlurbs);
+  await enrichWithPhotos(comingSoonWithBlurbs);
 
   const output = {
     generatedAt: new Date().toISOString(),
