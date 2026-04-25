@@ -43,6 +43,7 @@ type FoodItem = {
   status: "opened" | "coming-soon";
   blurb?: string | null;
   photoRef?: string | null;
+  image?: string | null;
 };
 
 function FoodTile({ item }: { item: FoodItem }) {
@@ -50,9 +51,13 @@ function FoodTile({ item }: { item: FoodItem }) {
   const fallback = isOpen
     ? "linear-gradient(135deg, #14b8a6 0%, #2563eb 100%)"
     : "linear-gradient(135deg, #6366f1 0%, #db2777 100%)";
+  // Tier 1: real Google Places photo. Tier 2: Recraft food illustration.
+  // Tier 3: status-themed gradient.
   const photo = item.photoRef
     ? `/api/place-photo?ref=${encodeURIComponent(item.photoRef)}&w=480&h=480`
-    : null;
+    : item.image
+      ? item.image
+      : null;
   const city = cityFor(item.cityId, item.cityName);
   const mapsQuery = encodeURIComponent(
     [item.name, item.address, city].filter(Boolean).join(" "),

@@ -23,6 +23,7 @@ loadEnvLocal();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-openings.json");
 const PHOTO_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-photo-cache.json");
+const IMAGE_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-food-image-cache.json");
 
 const API_BASE = "https://data.sccgov.org/resource/skd7-7ix3.json";
 const LOOKBACK_DAYS = 45;
@@ -415,6 +416,134 @@ async function enrichWithPhotos(items) {
   console.log(`  Photos: ${venueHits} from places.json, ${cacheHits} cached, ${apiHits} new lookups, ${missing} no photo`);
 }
 
+// ── Recraft fallback for items without a Google Places photo ─────────────
+// Generates a stylized food illustration so the tile grid never falls back
+// to a flat gradient. Cached by sourceId so the same item reuses its tile
+// across daily regens. Pruned after 30 days of being out of the feed.
+function loadImageCache() {
+  if (!existsSync(IMAGE_CACHE_PATH)) return {};
+  try { return JSON.parse(readFileSync(IMAGE_CACHE_PATH, "utf8")); } catch { return {}; }
+}
+
+function saveImageCache(cache) {
+  writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+}
+
+async function generateRecraftPrompts(items) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey || items.length === 0) return {};
+  const client = new Anthropic({ apiKey });
+  const list = items.map((i) => `- ${i.sourceId}: ${i.name} — ${i.blurb || "new spot"}`).join("\n");
+
+  const prompt = `Generate a Recraft image prompt for each food spot below. Each prompt must:
+- Be a short bold flat-color illustration prompt (12-22 words)
+- Center on the food/cuisine type, not the building or signage
+- Include a vivid 2-color palette hint (vary between items so the grid feels colorful)
+- End with: "no text, no people, no logos, no faces"
+
+Examples:
+- "playful flat illustration of a French dip sandwich with melted cheese, bright purple and orange palette, no text, no people, no logos, no faces"
+- "stack of colorful Japanese street crepes with strawberries and cream, pop-art style, vivid teal and pink palette, no text, no people, no logos, no faces"
+- "abstract donut tower with sprinkles and glaze swirls, bold flat shapes, magenta and lemon yellow palette, no text, no people, no logos, no faces"
+
+Items:
+${list}
+
+Respond with JSON: array of objects with "sourceId" and "prompt" fields only. No markdown.`;
+
+  try {
+    const msg = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 1500,
+      messages: [{ role: "user", content: prompt }],
+    });
+    let text = msg.content[0]?.text ?? "[]";
+    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
+    const parsed = JSON.parse(text);
+    const map = {};
+    for (const e of parsed) if (e.sourceId && e.prompt) map[e.sourceId] = e.prompt;
+    return map;
+  } catch (err) {
+    console.warn(`  ⚠️  prompt generation failed: ${err.message}`);
+    return {};
+  }
+}
+
+async function generateFallbackImages(items) {
+  const need = items.filter((i) => !i.photoRef && i.sourceId);
+  if (need.length === 0) {
+    console.log("  All items have Google Places photos — no Recraft fallbacks needed.");
+    return;
+  }
+
+  const cache = loadImageCache();
+  const cachedHits = need.filter((i) => cache[i.sourceId]?.url);
+  for (const item of cachedHits) item.image = cache[item.sourceId].url;
+
+  const fresh = need.filter((i) => !cache[i.sourceId]?.url);
+  if (fresh.length === 0) {
+    console.log(`  Recraft fallbacks: ${cachedHits.length} cached, 0 new.`);
+    saveImageCache(cache);
+    return;
+  }
+
+  if (!process.env.RECRAFT_API_KEY) {
+    console.warn(`  ⏭️  ${fresh.length} item(s) need Recraft tiles but RECRAFT_API_KEY is unset — skipping.`);
+    saveImageCache(cache);
+    return;
+  }
+
+  const prompts = await generateRecraftPrompts(fresh);
+  const { generateAndUpload } = await import("./social/lib/recraft.mjs");
+
+  console.log(`  Recraft fallbacks: ${cachedHits.length} cached, generating ${fresh.length} new…`);
+  for (const item of fresh) {
+    const baseCue = prompts[item.sourceId]
+      || `stylized food illustration for ${item.name}, bold flat-color graphic, vivid colors, no text, no people, no logos, no faces`;
+    const fullPrompt = `${baseCue}. Bold flat-color illustration, vibrant colors, decorative composition, square 1:1 ratio. Absolutely NO TEXT, no letters, no words, no logos, no people, no faces.`;
+
+    let url = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const result = await generateAndUpload({
+          prompt: fullPrompt,
+          pathname: `food-tiles/${item.sourceId}.png`,
+          size: "1024x1024",
+        });
+        url = result.url;
+        break;
+      } catch (err) {
+        const msg = err.message || "";
+        if (msg.includes("429") && attempt < 2) {
+          const wait = 4000 * (attempt + 1);
+          console.warn(`  ⏳ ${item.name} rate-limited, waiting ${wait}ms…`);
+          await new Promise((r) => setTimeout(r, wait));
+          continue;
+        }
+        console.warn(`  ⚠️  ${item.name}: ${msg}`);
+        break;
+      }
+    }
+
+    if (url) {
+      item.image = url;
+      cache[item.sourceId] = { url, prompt: baseCue, generatedAt: new Date().toISOString() };
+      console.log(`  ✓ tile ${item.name}`);
+    }
+    await new Promise((r) => setTimeout(r, 1500));
+  }
+
+  // Prune entries not seen in current items + older than 30 days.
+  const liveIds = new Set(items.map((i) => i.sourceId).filter(Boolean));
+  const now = Date.now();
+  const pruned = {};
+  for (const [id, entry] of Object.entries(cache)) {
+    const ageDays = (now - new Date(entry.generatedAt).getTime()) / 86400000;
+    if (liveIds.has(id) || ageDays < 30) pruned[id] = entry;
+  }
+  saveImageCache(pruned);
+}
+
 async function fetchPage(whereClause, orderField, limit = 50) {
   const params = new URLSearchParams({
     $where: whereClause,
@@ -549,6 +678,10 @@ async function main() {
   console.log("Looking up Google Places photos…");
   await enrichWithPhotos(openedWithBlurbs);
   await enrichWithPhotos(comingSoonWithBlurbs);
+
+  // Generate Recraft food illustrations for items that didn't get a Places photo.
+  console.log("Recraft fallback for items without Places photo…");
+  await generateFallbackImages([...openedWithBlurbs, ...comingSoonWithBlurbs]);
 
   const output = {
     generatedAt: new Date().toISOString(),
