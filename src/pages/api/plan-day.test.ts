@@ -47,19 +47,19 @@ test("timeBlockFromEventTime: null/invalid falls back", () => {
   assert.equal(timeBlockFromEventTime("TBD"), "7:00 PM - 8:30 PM");
 });
 
-test("timeBlockFromEventTime: sports show start time only", () => {
+test("timeBlockFromEventTime: sports default to 3-hour window", () => {
   assert.equal(
     timeBlockFromEventTime("7:00 PM", null, undefined, "sports"),
-    "7:00 PM",
+    "7:00 PM - 10:00 PM",
   );
   assert.equal(
     timeBlockFromEventTime("5:00 PM", null, undefined, "sports"),
-    "5:00 PM",
+    "5:00 PM - 8:00 PM",
   );
   // Explicit endTime still wins, even for sports
   assert.equal(
-    timeBlockFromEventTime("7:00 PM", "10:00 PM", undefined, "sports"),
-    "7:00 PM - 10:00 PM",
+    timeBlockFromEventTime("7:00 PM", "9:30 PM", undefined, "sports"),
+    "7:00 PM - 9:30 PM",
   );
 });
 

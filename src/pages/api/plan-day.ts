@@ -334,9 +334,10 @@ export function fallbackBlurb(
 }
 
 // Build a "HH:MM AM/PM - HH:MM AM/PM" timeBlock from an event's start time.
-// Prefers a given endTime; otherwise defaults to start + 90 minutes. Sports
-// events return just the start time — you don't show up halfway through a
-// baseball game.
+// Prefers a given endTime; otherwise defaults to start + a category-aware
+// duration (sports run long; everything else gets 90 min). Used by both
+// sequenceWithClaude and padWithClaude to force event cards onto their actual
+// time regardless of what Claude picked.
 export function timeBlockFromEventTime(
   eventTime: string | null | undefined,
   eventEndTime?: string | null,
@@ -355,15 +356,12 @@ export function timeBlockFromEventTime(
     if (endMatch) return `${startMatch[1]} - ${endMatch[1]}`;
   }
 
-  // Sports: just the start time. Games run 2-3+ hours and you arrive at
-  // first pitch / kickoff, not in the middle.
-  if ((category || "").toLowerCase() === "sports") {
-    return startMatch[1];
-  }
-
-  // Else default to +90 min.
+  // Sports games run 2-3 hours; bump the default so cards show a realistic
+  // window. Fetchers should set explicit endTime per sport, but if one slips
+  // through (or a hardcoded entry has none) this is a safer fallback than 90m.
+  const fallbackMin = (category || "").toLowerCase() === "sports" ? 180 : 90;
   const startMin = parseInt(eventTime.match(/\d{1,2}:(\d{2})/)?.[1] || "0", 10);
-  const totalEndMin = startH * 60 + startMin + 90;
+  const totalEndMin = startH * 60 + startMin + fallbackMin;
   const endH = Math.floor(totalEndMin / 60) % 24;
   const endMin = totalEndMin % 60;
   const endAmPm = endH >= 12 ? "PM" : "AM";
