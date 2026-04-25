@@ -787,7 +787,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 fontWeight: 800,
                 fontFamily: "'Space Mono', monospace",
                 letterSpacing: "0.08em",
-                color: selectedDate === todayIso ? "var(--sb-accent, #7C3AED)" : "var(--sb-ink)",
+                color: "var(--sb-ink)",
                 lineHeight: 1.1,
               }}>
                 {dayLbl.primary}
