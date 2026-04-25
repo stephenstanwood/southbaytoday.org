@@ -67,6 +67,7 @@ export default function RedditPulseTeaser() {
         {posts.map((p) => {
           const tint = CATEGORY_TINT[p.category] ?? "#475569";
           const label = CATEGORY_LABEL[p.category] ?? null;
+          const showSummary = Boolean(p.summary) && p.summary.toLowerCase() !== p.title.toLowerCase();
           return (
             <li key={p.id}>
               <a
@@ -87,22 +88,20 @@ export default function RedditPulseTeaser() {
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#eee"; }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, fontSize: 11, fontWeight: 700, color: "#888", letterSpacing: 0.2, textTransform: "uppercase" }}>
-                  {label && (
-                    <span style={{ color: tint }}>{label}</span>
-                  )}
-                  {label && <span style={{ color: "#ddd" }}>·</span>}
+                  {label ? <span style={{ color: tint }}>{label}</span> : null}
+                  {label ? <span style={{ color: "#ddd" }}>·</span> : null}
                   <span>r/{p.sub}</span>
                   <span style={{ color: "#ddd" }}>·</span>
                   <span style={{ fontWeight: 500, textTransform: "none", letterSpacing: 0 }}>
                     ↑ {p.score} &nbsp;·&nbsp; 💬 {p.numComments} &nbsp;·&nbsp; {formatAge(p.ageHours)}
                   </span>
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#000", lineHeight: 1.3, marginBottom: p.summary && p.summary.toLowerCase() !== p.title.toLowerCase() ? 4 : 0 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#000", lineHeight: 1.3, marginBottom: showSummary ? 4 : 0 }}>
                   {p.title}
                 </div>
-                {p.summary && p.summary.toLowerCase() !== p.title.toLowerCase() && (
+                {showSummary ? (
                   <div style={{ fontSize: 13, color: "#555", lineHeight: 1.4 }}>{p.summary}</div>
-                )}
+                ) : null}
               </a>
             </li>
           );
