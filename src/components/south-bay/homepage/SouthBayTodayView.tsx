@@ -786,6 +786,10 @@ export default function SouthBayTodayView(_props: Props) {
           </div>
           {/* New Plan */}
           <button onClick={handleNewPlan} disabled={loading && !swapLoading} className={(loading && !swapLoading) ? "sbt-shuffle sbt-shuffle--loading" : "sbt-shuffle"}>Reshuffle ↻</button>
+          {/* Share — only when there's a plan worth sharing */}
+          {visibleCards.length > 1 && !loading && (
+            <ShareButton cards={visibleCards} city={displayCity} kids={state.kids} weather={weather} compact />
+          )}
         </div>
       </div>
 
@@ -925,15 +929,6 @@ export default function SouthBayTodayView(_props: Props) {
         </div>
       )}
 
-      {/* Share button — share what's still on the table, not the full
-          original plan. No point sending a friend stops that have already
-          passed. */}
-      {visibleCards.length > 1 && !loading && (
-        <div style={{ textAlign: "center", padding: "16px 0 0" }}>
-          <ShareButton cards={visibleCards} city={displayCity} kids={state.kids} weather={weather} />
-        </div>
-      )}
-
       {/* Reddit pulse — what people are saying on regional subs */}
       <RedditPulseTeaser />
 
@@ -982,6 +977,30 @@ export default function SouthBayTodayView(_props: Props) {
           0%   { background-position: 150% 0; }
           100% { background-position: -150% 0; }
         }
+        .sbt-share-pill {
+          font-family: 'Inter', sans-serif;
+          font-size: 11px;
+          font-weight: 900;
+          padding: 4px 14px;
+          border-radius: 14px;
+          border: 2px solid #000;
+          background: #fff;
+          color: #000;
+          cursor: pointer;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          transition: all 0.15s;
+          line-height: 1.2;
+          white-space: nowrap;
+        }
+        .sbt-share-pill:hover {
+          background: #000;
+          color: #fff;
+        }
+        .sbt-share-pill:disabled {
+          opacity: 0.6;
+        }
+
         /* Cards dim + desaturate during loading so the eye sees "this is
            about to change" the instant SHUFFLE is clicked. Transition is
            fast (180ms) so there's no gap between click and feedback. */
@@ -1403,7 +1422,7 @@ function SwapVerb() {
   );
 }
 
-function ShareButton({ cards, city, kids, weather }: { cards: DayCard[]; city: string; kids: boolean; weather: string | null }) {
+function ShareButton({ cards, city, kids, weather, compact }: { cards: DayCard[]; city: string; kids: boolean; weather: string | null; compact?: boolean }) {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -1446,6 +1465,25 @@ function ShareButton({ cards, city, kids, weather }: { cards: DayCard[]; city: s
       setTimeout(() => setCopied(false), 2000);
     } catch {}
   };
+
+  if (compact) {
+    return (
+      <button
+        onClick={handleShare}
+        disabled={sharing}
+        title="Share this plan"
+        aria-label="Share this plan"
+        className="sbt-share-pill"
+        style={{
+          color: copied ? "#16a34a" : undefined,
+          borderColor: copied ? "#16a34a" : undefined,
+          cursor: sharing ? "wait" : "pointer",
+        }}
+      >
+        {copied ? "COPIED ✓" : sharing ? "…" : "SHARE ↗"}
+      </button>
+    );
+  }
 
   return (
     <button

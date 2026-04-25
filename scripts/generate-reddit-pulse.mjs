@@ -328,8 +328,12 @@ Return ONLY a JSON array of objects, no other text.`;
 
   // Topic dedupe: keep only the highest-ranked post per topic. Two Earthquakes-win
   // posts with the same topic will collapse to one. Sub cap stays as a secondary
-  // safeguard. Sports cap of 1 because the same season run shows up across many
-  // posts even when topics technically differ.
+  // safeguard. Sports cap because the same season run shows up across many posts
+  // even when topics technically differ.
+  const PULSE_TARGET = 12;
+  const PER_SUB_CAP = 3;   // bumped from 2 to support 12 total
+  const SPORTS_CAP = 2;    // bumped from 1 — at 12 total, 2 sports is fine
+
   const seenTopics = new Set();
   const subCounts = new Map();
   let sportsCount = 0;
@@ -337,13 +341,13 @@ Return ONLY a JSON array of objects, no other text.`;
   for (const p of pulseEligible) {
     if (p.topic && seenTopics.has(p.topic)) continue;
     const n = subCounts.get(p.sub) ?? 0;
-    if (n >= 2) continue;
-    if (p.category === "sports" && sportsCount >= 1) continue;
+    if (n >= PER_SUB_CAP) continue;
+    if (p.category === "sports" && sportsCount >= SPORTS_CAP) continue;
     pulse.push(p);
     if (p.topic) seenTopics.add(p.topic);
     subCounts.set(p.sub, n + 1);
     if (p.category === "sports") sportsCount++;
-    if (pulse.length >= 8) break;
+    if (pulse.length >= PULSE_TARGET) break;
   }
 
   // ─── PHASE 3a: Generate Recraft images per post (cached) ────────────
