@@ -320,11 +320,10 @@ Return ONLY a JSON array of objects, no other text.`;
     .filter((p) => POSITIVE_CATEGORIES.has(p.category))
     .filter((p) => p.relevance >= 6)
     .filter((p) => p.ageHours <= 72)
-    .sort((a, b) => {
-      const sa = a.relevance * a.weight + Math.min(a.score / 50, 2) + (24 - Math.min(a.ageHours, 24)) / 48;
-      const sb = b.relevance * b.weight + Math.min(b.score / 50, 2) + (24 - Math.min(b.ageHours, 24)) / 48;
-      return sb - sa;
-    });
+    // Sort by recency — newest first. Quality is enforced by the relevance/category
+    // gates above plus the topic-dedupe + sub-cap below, so we don't need engagement
+    // weighting in the sort. Pure recency keeps the feed feeling live.
+    .sort((a, b) => b.createdUtc - a.createdUtc);
 
   // Topic dedupe: keep only the highest-ranked post per topic. Two Earthquakes-win
   // posts with the same topic will collapse to one. Sub cap stays as a secondary
@@ -350,7 +349,61 @@ Return ONLY a JSON array of objects, no other text.`;
     if (pulse.length >= PULSE_TARGET) break;
   }
 
-  // ─── PHASE 3a: Generate Recraft images per post (cached) ────────────
+  // ─── PHASE 3a: Light-touch title polish ─────────────────────────────
+  // Fixes obvious grammar/punctuation/typo issues without touching Reddit voice.
+  // One Haiku call for all 12 pulse titles; original `title` is preserved on
+  // each post (for traceability) and `displayTitle` is what the UI renders.
+  if (pulse.length > 0) {
+    const titlesBlock = pulse
+      .map((p, i) => `${i + 1}. ${p.title}`)
+      .join("\n");
+    const polishPrompt = `Below are Reddit post titles. Apply the LIGHTEST possible touch-up to each — fix things the OP themselves would fix on a re-read, and nothing more.
+
+DO fix:
+- Stray/wrong commas (e.g. "Bed Bath and Beyond will return, at Stanford" → drop the comma)
+- Trailing periods on sentence fragments / phrases (e.g. "New Lakewood Park Library and Renovation." → drop the period)
+- Doubled spaces, missing spaces around punctuation
+- Obvious typos and missing words (e.g. "How many game are Drew" → "How many games are Drew")
+- Stylized ALL CAPS in the middle of an otherwise sentence-cased title (e.g. "22 Events in SAN JOSE — Today APR 25, 2026" → "22 Events in San Jose — Today Apr 25, 2026")
+
+DO NOT touch:
+- Reddit voice: a title that's ALL CAPS as a whole, lots of exclamation points, emoji decoration, slang, "!!!!" — that's the OP's voice; leave it
+- Meaning, structure, word order
+- Names of places, people, things
+- Quotes inside the title
+
+If a title needs no edits, return it unchanged verbatim.
+
+TITLES:
+${titlesBlock}
+
+Return ONLY a JSON array of objects, in the same order:
+[
+  {"i": 1, "displayTitle": "..."},
+  {"i": 2, "displayTitle": "..."},
+  ...
+]
+No other text.`;
+
+    try {
+      console.log("Polishing titles…");
+      const raw = await callClaude(polishPrompt, 4096);
+      const polished = parseJson(raw);
+      for (const item of polished) {
+        const post = pulse[item.i - 1];
+        if (!post) continue;
+        const cleaned = (item.displayTitle || "").trim();
+        if (cleaned && cleaned !== post.title) {
+          post.displayTitle = cleaned;
+          console.log(`  ✎ "${post.title}" → "${cleaned}"`);
+        }
+      }
+    } catch (err) {
+      console.warn(`  ⚠️  polish failed: ${err.message}`);
+    }
+  }
+
+  // ─── PHASE 3b: Generate Recraft images per post (cached) ────────────
   // Cache by post.id so a post that survives across runs reuses its image.
   // Generate in parallel — Recraft is async-friendly.
   let imageCache = {};
@@ -428,6 +481,7 @@ Return ONLY a JSON array of objects, no other text.`;
       id: p.id,
       sub: p.sub,
       title: p.title,
+      displayTitle: p.displayTitle || p.title,
       summary: p.summary,
       category: p.category,
       topic: p.topic,

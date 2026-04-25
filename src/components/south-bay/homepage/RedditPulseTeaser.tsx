@@ -11,6 +11,9 @@ interface PulsePost {
   id: string;
   sub: string;
   title: string;
+  /** Light-touch grammar/punctuation/casing cleanup of `title`. Falls back to
+   *  `title` if absent. UI should always render `displayTitle ?? title`. */
+  displayTitle?: string;
   summary: string;
   category: string;
   topic?: string;
@@ -88,7 +91,7 @@ export default function RedditPulseTeaser() {
 
               {/* Bottom: title + footer metadata */}
               <div className="rp-tile-bottom">
-                <div className="rp-title">{p.title}</div>
+                <div className="rp-title">{p.displayTitle || p.title}</div>
                 <div className="rp-meta">
                   <span>↑ {p.score}</span>
                   <span>·</span>
