@@ -143,15 +143,27 @@ function normalizeLedgerName(name: string | null | undefined): string {
   return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 
+/** Normalize an `id:` so historical `pad:X` prefixes (from one-off surgery
+ *  scripts) match the canonical `place:X` form used by the live API. */
+function canonicalCardId(id: string): string {
+  return id.startsWith("pad:") ? "place:" + id.slice(4) : id;
+}
+
 /** True when a card matches an active dismiss in localStorage state.
  *  loadState() prunes stale skips, so any entry here is still active. ID
- *  match is exact; name match is normalized so the "hide" survives an ID
- *  change (curated → Google Places re-keying after a place upgrade). */
+ *  match is exact (with pad:/place: normalized); name match is normalized
+ *  so the "hide" survives an ID change (curated → Google Places re-keying
+ *  after a place upgrade). */
 function isDismissedCard(
   card: { id: string; name: string },
   dismissed: Record<string, DismissedEntry>,
 ): boolean {
-  if (dismissed[card.id]) return true;
+  const cid = canonicalCardId(card.id);
+  if (dismissed[card.id] || dismissed[cid]) return true;
+  // Also check whether any stored key matches the canonical form
+  for (const k of Object.keys(dismissed)) {
+    if (canonicalCardId(k) === cid) return true;
+  }
   const norm = normalizeLedgerName(card.name);
   if (!norm) return false;
   for (const entry of Object.values(dismissed)) {
@@ -515,6 +527,9 @@ export default function SouthBayTodayView(_props: Props) {
       const dismissedNames = Object.values(state.dismissed)
         .map((d) => d.name)
         .filter((n): n is string => typeof n === "string" && n.length > 0);
+      // Send canonical IDs so any legacy pad: keys still in state match the
+      // server's place:/event: candidate-pool prefixes.
+      const dismissedIdsCanonical = Object.keys(state.dismissed).map(canonicalCardId);
       const res = await fetch("/api/plan-day", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -522,7 +537,7 @@ export default function SouthBayTodayView(_props: Props) {
           city: anchor, kids: state.kids,
           lockedIds: allLocked, // keep for backward compat
           lockedCards,
-          dismissedIds: Object.keys(state.dismissed),
+          dismissedIds: dismissedIdsCanonical,
           dismissedNames,
           currentHour: eff.currentHour,
           currentMinute: eff.currentMinute,
@@ -700,12 +715,22 @@ export default function SouthBayTodayView(_props: Props) {
     const keepIds = cards.filter((c) => c.id !== cardId).map((c) => c.id);
 
     const cardName = card?.name;
+    // Skip lasts 3 days: today + 2 → returns next on day 4. PT date math.
+    const skipUntilPT = (() => {
+      const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+      const [y, m, d] = today.split("-").map(Number);
+      const dt = new Date(Date.UTC(y, m - 1, d + 2));
+      return dt.toISOString().slice(0, 10);
+    })();
     const entry: DismissedEntry = type === "hide"
       ? { type: "hide", permanent: true, name: cardName }
-      : { type: "skip", until: new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }), name: cardName };
+      : { type: "skip", until: skipUntilPT, name: cardName };
+    // Store under the canonical id so a later hero with a re-keyed prefix
+    // (pad: → place:) still matches the dismiss.
+    const storeKey = canonicalCardId(cardId);
     setState((s) => ({
       ...s,
-      dismissed: { ...s.dismissed, [cardId]: entry },
+      dismissed: { ...s.dismissed, [storeKey]: entry },
       locked: s.locked.filter((id) => id !== cardId),
     }));
     // Refetch with other cards auto-locked so only the dismissed slot changes

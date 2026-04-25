@@ -1927,7 +1927,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const hour = typeof currentHour === "number" ? currentHour : Number(currentPTHour());
   const minute = typeof currentMinute === "number" ? currentMinute : 0;
   const startTime = computeStartTime(hour, minute);
-  const dismissedSet = new Set(dismissedIds);
+  // Normalize legacy `pad:X` prefixes (from old surgery scripts) to the
+  // canonical `place:X` form so they still match candidate-pool IDs.
+  const canonicalDismissed = (dismissedIds as string[]).flatMap((id) =>
+    id.startsWith("pad:") ? [id, "place:" + id.slice(4)] : [id],
+  );
+  const dismissedSet = new Set(canonicalDismissed);
   const dismissedNameSet = new Set(
     (Array.isArray(dismissedNames) ? dismissedNames : [])
       .map((n: string) => normalizeName(n))
