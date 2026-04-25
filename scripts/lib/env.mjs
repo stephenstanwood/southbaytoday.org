@@ -18,6 +18,8 @@ export function loadEnvLocal(path = join(REPO_ROOT, ".env.local")) {
     if (idx === -1) continue;
     const key = trimmed.slice(0, idx).trim();
     const val = trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, "");
-    if (key && !(key in process.env)) process.env[key] = val;
+    // Treat empty-string env vars as unset (some shells leak `KEY=""` into the env,
+    // which would otherwise block .env.local from filling them in).
+    if (key && !process.env[key]) process.env[key] = val;
   }
 }

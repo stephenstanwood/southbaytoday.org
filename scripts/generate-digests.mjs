@@ -32,19 +32,27 @@ const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
 
 // ── City config (SBS city IDs → Stoa city names + schedule) ──
 
+// `legistar` is the public *.legistar.com subdomain (used to build agenda links).
+// `legistarApi` is the Web API client name (often the same, but Sunnyvale +
+// Palo Alto differ). Both are needed because the public site and the Web API
+// don't always agree.
 const CITIES = [
   { city: "campbell",      stoaCity: "Campbell",      cityName: "Campbell",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://www.campbellca.gov/AgendaCenter/City-Council-10" },
   { city: "saratoga",      stoaCity: "Saratoga",      cityName: "Saratoga",      schedule: "1st and 3rd Wednesday", agendaUrl: "https://saratoga-ca.municodemeetings.com/" },
   { city: "los-altos",     stoaCity: "Los Altos",     cityName: "Los Altos",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://losaltos-ca.municodemeetings.com/" },
   { city: "los-gatos",     stoaCity: "Los Gatos",     cityName: "Los Gatos",     schedule: "1st and 3rd Monday",    agendaUrl: "https://losgatos-ca.municodemeetings.com/" },
-  { city: "san-jose",      stoaCity: "San Jose",      cityName: "San José",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",      legistar: "sanjose" },
-  { city: "mountain-view", stoaCity: "Mountain View", cityName: "Mountain View", schedule: "2nd and 4th Tuesday",   agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview" },
-  { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale" },
-  { city: "cupertino",     stoaCity: "Cupertino",     cityName: "Cupertino",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino" },
-  { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara" },
+  { city: "san-jose",      stoaCity: "San Jose",      cityName: "San José",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",      legistar: "sanjose",      legistarApi: "sanjose" },
+  { city: "mountain-view", stoaCity: "Mountain View", cityName: "Mountain View", schedule: "2nd and 4th Tuesday",   agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview", legistarApi: "mountainview" },
+  { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale",    legistarApi: "sunnyvaleca" },
+  { city: "cupertino",     stoaCity: "Cupertino",     cityName: "Cupertino",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino",    legistarApi: "cupertino" },
+  { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",   legistarApi: "santaclara" },
   { city: "milpitas",      stoaCity: "Milpitas",      cityName: "Milpitas",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://www.ci.milpitas.ca.gov/government/council/" },
-  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.cityofpaloalto.org/Government/City-Clerk/Meetings-Agendas-Minutes", legistar: "paloalto" },
+  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.cityofpaloalto.org/Government/City-Clerk/Meetings-Agendas-Minutes", legistar: "paloalto", legistarApi: "paloalto" },
 ];
+
+// If Stoa's most recent record for a city is older than this many days, we try
+// to pull the latest past meeting directly from Legistar.
+const STOA_STALENESS_DAYS = 21;
 
 // ── Helpers ──
 
@@ -91,6 +99,57 @@ async function fetchStoaMeetings() {
   }
   console.log(`  Got ${allRecords.length} records total\n`);
   return allRecords;
+}
+
+// ── Legistar past-meeting fallback ──
+//
+// When Stoa hasn't ingested a city's most recent agenda yet, hit the Legistar
+// Web API directly. Returns a record shaped like a Stoa record so the rest of
+// the pipeline (hasRealContent, summarize, etc.) treats it the same way.
+const LEGISTAR_UA = "SouthBaySignal/1.0 (stanwood.dev; civic data aggregator)";
+
+async function fetchLegistarPastMeeting(client) {
+  const today = new Date().toISOString().split("T")[0];
+  const url =
+    `https://webapi.legistar.com/v1/${client}/Events` +
+    `?$filter=EventBodyName eq 'City Council' and EventDate lt datetime'${today}T23:59:59'` +
+    `&$orderby=EventDate desc&$top=3`;
+
+  const res = await fetch(url, {
+    headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) return null;
+  const events = await res.json();
+  if (!events?.length) return null;
+
+  for (const ev of events) {
+    const itemsRes = await fetch(
+      `https://webapi.legistar.com/v1/${client}/Events/${ev.EventId}/EventItems`,
+      { headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" }, signal: AbortSignal.timeout(15_000) },
+    );
+    if (!itemsRes.ok) continue;
+    const items = await itemsRes.json();
+    const substantive = items
+      .map((i) => (i.EventItemTitle || "").split(/\r?\n/)[0].trim())
+      .filter((t) => t.length > 25 && t.length < 300)
+      .filter((t) => !/^(roll call|call to order|pledge of allegiance|adjournment|closed session|public comment|consent calendar|recess)/i.test(t))
+      .filter((t) => t !== t.toUpperCase());
+    if (substantive.length < 2) continue;
+
+    const excerpt = substantive.slice(0, 12).join(". ");
+    return {
+      id: `legistar-${client}-${ev.EventId}`,
+      city: null,
+      date: new Date(ev.EventDate).toISOString().split("T")[0],
+      meetingType: "City Council",
+      title: `City Council — ${ev.EventDate}`,
+      excerpt,
+      keywords: substantive.slice(0, 5),
+      source: "legistar-direct",
+    };
+  }
+  return null;
 }
 
 // ── Claude summarization ──
@@ -206,10 +265,32 @@ async function main() {
 
   const digests = {};
 
+  // Cutoff: if Stoa's record is older than this, try Legistar fallback
+  const stoaStaleCutoff = new Date(Date.now() - STOA_STALENESS_DAYS * 86_400_000)
+    .toISOString().split("T")[0];
+
   for (const config of CITIES) {
-    const meeting = byCity[config.stoaCity];
+    let meeting = byCity[config.stoaCity];
+
+    const stoaStale = !meeting || meeting.date < stoaStaleCutoff;
+    if (stoaStale && config.legistarApi) {
+      const stoaDateLabel = meeting ? meeting.date : "none";
+      process.stdout.write(`  ↻ ${config.cityName}: Stoa stale (${stoaDateLabel}), trying Legistar...`);
+      try {
+        const fallback = await fetchLegistarPastMeeting(config.legistarApi);
+        if (fallback && (!meeting || fallback.date > meeting.date)) {
+          meeting = fallback;
+          console.log(` ✅ got ${fallback.date}`);
+        } else {
+          console.log(` — no newer record`);
+        }
+      } catch (e) {
+        console.log(` ⚠️  ${e.message}`);
+      }
+    }
+
     if (!meeting) {
-      console.log(`  ⚠️  ${config.cityName}: no recent City Council meeting in Stoa data`);
+      console.log(`  ⚠️  ${config.cityName}: no recent City Council meeting from any source`);
       continue;
     }
     if (meeting.date < staleIso) {

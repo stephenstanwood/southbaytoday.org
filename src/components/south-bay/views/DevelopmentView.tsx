@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import PermitPulseCard from "../cards/PermitPulseCard";
-import type { City } from "../../../lib/south-bay/types";
 import {
   DEV_PROJECTS,
   STATUS_CONFIG,
@@ -9,6 +8,17 @@ import {
   type DevCategory,
   type DevProject,
 } from "../../../data/south-bay/development-data";
+
+// Hide far-horizon projects (2030s+, vague "long-term") unless they're already
+// physically under construction. Keeps the page about what's actually happening
+// in the next few years rather than aspirational regional plans.
+function isFarHorizon(p: DevProject): boolean {
+  if (p.status === "under-construction" || p.status === "opening-soon") return false;
+  const t = (p.timeline ?? "").toLowerCase();
+  return /\b203\ds?\b|\b204\ds?\b|long[- ]term/.test(t);
+}
+
+const NEAR_TERM_PROJECTS = DEV_PROJECTS.filter((p) => !isFarHorizon(p));
 
 // ── Category filter ──────────────────────────────────────────────────────────
 
@@ -247,7 +257,7 @@ export default function DevelopmentView() {
   const [categoryFilter, setCategoryFilter] = useState<DevCategory | "all">("all");
 
   const byStatus = useMemo(() => {
-    const filtered = DEV_PROJECTS.filter((p) =>
+    const filtered = NEAR_TERM_PROJECTS.filter((p) =>
       categoryFilter === "all" || p.category === categoryFilter
     );
     const map: Partial<Record<DevStatus, DevProject[]>> = {};
@@ -257,7 +267,7 @@ export default function DevelopmentView() {
     return map;
   }, [categoryFilter]);
 
-  const activeCount = DEV_PROJECTS.filter(
+  const activeCount = NEAR_TERM_PROJECTS.filter(
     (p) => p.status === "under-construction" || p.status === "opening-soon" || p.status === "approved"
   ).length;
 
