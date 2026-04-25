@@ -2119,7 +2119,15 @@ async function fetchSJGiantsSchedule() {
       for (const game of dateRec.games || []) {
         const homeTeam = game.teams?.home?.team?.name || "";
         if (!homeTeam.toLowerCase().includes("san jose")) continue; // home games only
-        const awayTeam = game.teams?.away?.team?.name || "Opponent";
+        // Use locationName + teamName for the canonical opponent name. The
+        // top-level `name` field can return Copa de la Diversión promotional
+        // identities ("Ontario Tower Buzzers") for theme-night games, which
+        // mismatches the description and confuses readers.
+        const awayLoc = game.teams?.away?.team?.locationName;
+        const awayMascot = game.teams?.away?.team?.teamName;
+        const awayTeam = (awayLoc && awayMascot)
+          ? `${awayLoc} ${awayMascot}`
+          : (game.teams?.away?.team?.name || "Opponent");
         const gameDate = dateRec.date;
         const startUtc = game.gameDate ? new Date(game.gameDate) : null;
         events.push({
@@ -2139,6 +2147,10 @@ async function fetchSJGiantsSchedule() {
           url: "https://www.milb.com/san-jose",
           source: "MiLB",
           kidFriendly: true,
+          // Override the OG-scraped image (which is just the team logo on a
+          // baseball) with a stadium photo of San José Municipal Stadium /
+          // Excite Ballpark (Wikimedia Commons, freely licensed).
+          image: "https://upload.wikimedia.org/wikipedia/commons/5/59/San_Jos%C3%A9_Municipal_Stadium_3667_01.JPG",
         });
       }
     }

@@ -2145,6 +2145,34 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
 
+    // 6c. Final hours sweep — applies to BOTH sequenced and padded cards.
+    // sequenceWithClaude has its own check, but padded cards bypass it. Without
+    // this sweep a padder pick like "Triton Museum at 7:30 AM" (museum opens 11)
+    // slips through into the user-visible plan.
+    {
+      const candidateById = new Map(diversePool.map((c) => [c.id, c]));
+      const before = cards.length;
+      for (let i = cards.length - 1; i >= 0; i--) {
+        if (cards[i].locked) continue;
+        if (cards[i].source === "event") continue; // events keep their announced time
+        const candidate = candidateById.get(cards[i].id);
+        if (!candidate) continue;
+        const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
+        if (!hoursObj) continue;
+        const [startStr, endStr] = cards[i].timeBlock.split(/\s*-\s*/);
+        const startH = parseHour(startStr || "");
+        const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
+        if (startH === null || endH === null) continue;
+        if (!fitsInOpenRange(hoursObj, startH, endH)) {
+          console.log(`[plan-day] final hours sweep dropped ${cards[i].name} — ${cards[i].timeBlock} doesn't fit venue hours`);
+          cards.splice(i, 1);
+        }
+      }
+      if (cards.length < before) {
+        console.log(`[plan-day] final hours sweep: dropped ${before - cards.length} card(s)`);
+      }
+    }
+
     const responseData = {
       cards,
       weather: weatherData.weather,

@@ -1139,20 +1139,6 @@ export default function CampsView() {
       </div>
 
       {mode === "browse" ? <BrowseMode /> : <SummerBuilderMode />}
-
-      {/* Footer disclaimer */}
-      <div style={{
-        marginTop: 32,
-        padding: "12px 16px",
-        background: "var(--sb-card)",
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: "var(--sb-radius)",
-        fontSize: 12,
-        color: "var(--sb-muted)",
-        lineHeight: 1.6,
-      }}>
-        <strong style={{ color: "var(--sb-ink)" }}>About this data:</strong> All {CAMPS.length} listings are hand-curated and every link was checked on {verifiedDisplay}. Prices are approximate and should be verified directly with each program before registering. Spot something wrong? Email <a href="mailto:fix@southbaytoday.org" style={{ color: "var(--sb-ink)" }}>fix@southbaytoday.org</a>.
-      </div>
     </div>
   );
 }
