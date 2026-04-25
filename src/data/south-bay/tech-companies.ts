@@ -2216,6 +2216,7 @@ export interface TechConference {
   city: string;
   typicalMonth: number;
   typicalDay?: number;
+  typicalEndMonth?: number; // for conferences that span months (e.g. Apr 27 – May 1)
   typicalEndDay?: number;
   description: string;
   url: string;
@@ -2231,6 +2232,8 @@ export const TECH_CONFERENCES: TechConference[] = [
     venue: "San Jose Convention Center",
     city: "San Jose",
     typicalMonth: 3,
+    typicalDay: 17,
+    typicalEndDay: 21,
     description: "The premier AI and accelerated computing conference — 300+ sessions, 1,000+ speakers. Jensen Huang's keynotes have become unmissable Silicon Valley events. Held annually at the San Jose Convention Center.",
     url: "https://www.nvidia.com/gtc/",
     scale: "global",
@@ -2255,6 +2258,9 @@ export const TECH_CONFERENCES: TechConference[] = [
     venue: "Moscone Center",
     city: "San Francisco",
     typicalMonth: 4,
+    typicalDay: 27,
+    typicalEndMonth: 5,
+    typicalEndDay: 1,
     description: "The world's leading cybersecurity event — 40,000+ attendees. Security is one of the South Bay's fastest-growing tech sectors; RSAC is where the industry sets the agenda for the year.",
     url: "https://www.rsaconference.com/",
     scale: "global",

@@ -1011,17 +1011,28 @@ const MONTH_NAMES_FULL = [
 
 function getConferenceNextDate(conf: TechConference, now: Date): { label: string; sortMs: number; isUpcoming: boolean } {
   const currentMonth = now.getMonth() + 1;
-  const year = conf.typicalMonth < currentMonth ? now.getFullYear() + 1 : now.getFullYear();
-  const monthName = MONTH_NAMES_FULL[conf.typicalMonth - 1];
+  const startMonth = conf.typicalMonth;
+  const endMonth = conf.typicalEndMonth ?? startMonth;
+  const endDayForBound = conf.typicalEndDay ?? conf.typicalDay ?? 15;
+  // If the conference's last day this year is already >7 days past, push to next year.
+  const thisYearEndMs = new Date(now.getFullYear(), endMonth - 1, endDayForBound).getTime();
+  const yearOffset = (thisYearEndMs - now.getTime()) / 86400000 < -7 ? 1 : 0;
+  const year = now.getFullYear() + yearOffset;
+  const startMonthName = MONTH_NAMES_FULL[startMonth - 1];
+  const endMonthName = MONTH_NAMES_FULL[endMonth - 1];
   const approxDay = conf.typicalDay ?? 15;
-  const targetMs = new Date(year, conf.typicalMonth - 1, approxDay).getTime();
+  const targetMs = new Date(year, startMonth - 1, approxDay).getTime();
   const diffDays = (targetMs - now.getTime()) / (1000 * 60 * 60 * 24);
   const isUpcoming = diffDays >= -7 && diffDays <= 90;
-  let label = `${monthName} ${year}`;
+  let label = `${startMonthName} ${year}`;
   if (conf.typicalDay) {
-    label = conf.typicalEndDay
-      ? `${monthName} ${conf.typicalDay}–${conf.typicalEndDay}, ${year}`
-      : `${monthName} ${conf.typicalDay}, ${year}`;
+    if (conf.typicalEndDay && endMonth !== startMonth) {
+      label = `${startMonthName} ${conf.typicalDay} – ${endMonthName} ${conf.typicalEndDay}, ${year}`;
+    } else if (conf.typicalEndDay) {
+      label = `${startMonthName} ${conf.typicalDay}–${conf.typicalEndDay}, ${year}`;
+    } else {
+      label = `${startMonthName} ${conf.typicalDay}, ${year}`;
+    }
   }
   return { label, sortMs: targetMs, isUpcoming };
 }
