@@ -1,85 +1,23 @@
 // ── 2026 Elections Card ──────────────────────────────────────────────────────
-// Shows countdown to CA Primary, voter registration deadlines, and key races.
-// Displayed on the Government tab.
+// Countdown to CA Primary, voter deadlines, and the actual races + candidates
+// on the South Bay ballot.
 
-const PRIMARY_DATE = new Date("2026-06-02T07:00:00-07:00"); // CA Primary, polls open 7am
-const GENERAL_DATE = new Date("2026-11-03T07:00:00-08:00");  // General Election
-const REG_DEADLINE = new Date("2026-05-18T23:59:59-07:00");   // Online/mail reg deadline
-const VBM_DEADLINE = new Date("2026-05-26T23:59:59-07:00");   // Vote-by-mail request deadline
-const EARLY_VOTE_START = new Date("2026-05-09T00:00:00-07:00"); // Vote centers open
+import { useState } from "react";
+import { RACES, GOV_POLLING_NOTE, PARTY_COLOR, type Race } from "../../../data/south-bay/elections-2026";
 
 interface KeyDate {
   label: string;
   sublabel: string;
   isoDate: string;
   accentColor: string;
-  urgent: boolean; // highlight if <30 days away
 }
 
 const KEY_DATES: KeyDate[] = [
-  {
-    label: "Voter Reg Deadline",
-    sublabel: "Online / mail-in",
-    isoDate: "2026-05-18",
-    accentColor: "#1d4ed8",
-    urgent: true,
-  },
-  {
-    label: "Vote-by-Mail Cutoff",
-    sublabel: "Request deadline",
-    isoDate: "2026-05-26",
-    accentColor: "#1d4ed8",
-    urgent: true,
-  },
-  {
-    label: "Early Voting Opens",
-    sublabel: "Vote centers + drop boxes",
-    isoDate: "2026-05-09",
-    accentColor: "#065f46",
-    urgent: false,
-  },
-  {
-    label: "CA Primary Election",
-    sublabel: "All registered voters",
-    isoDate: "2026-06-02",
-    accentColor: "#c0392b",
-    urgent: true,
-  },
-  {
-    label: "General Election",
-    sublabel: "November statewide",
-    isoDate: "2026-11-03",
-    accentColor: "#7c3aed",
-    urgent: false,
-  },
-];
-
-const KEY_RACES = [
-  {
-    race: "California Governor",
-    note: "Open seat — Newsom term-limited",
-    emoji: "🏛️",
-  },
-  {
-    race: "US Senate — California",
-    note: "Alex Padilla (D) on ballot",
-    emoji: "🇺🇸",
-  },
-  {
-    race: "State Assembly & Senate",
-    note: "Multiple South Bay districts",
-    emoji: "📋",
-  },
-  {
-    race: "SCC Board of Supervisors",
-    note: "Santa Clara County seats",
-    emoji: "🏙️",
-  },
-  {
-    race: "City Council Races",
-    note: "San Jose, Sunnyvale, Mountain View + more",
-    emoji: "🗳️",
-  },
+  { label: "Voter Reg Deadline",   sublabel: "Online / mail-in",         isoDate: "2026-05-18", accentColor: "#1d4ed8" },
+  { label: "Vote-by-Mail Cutoff",  sublabel: "Request deadline",          isoDate: "2026-05-26", accentColor: "#1d4ed8" },
+  { label: "Early Voting Opens",   sublabel: "Vote centers + drop boxes", isoDate: "2026-05-09", accentColor: "#065f46" },
+  { label: "CA Primary Election",  sublabel: "All registered voters",     isoDate: "2026-06-02", accentColor: "#c0392b" },
+  { label: "General Election",     sublabel: "November statewide",        isoDate: "2026-11-03", accentColor: "#7c3aed" },
 ];
 
 function daysUntil(isoDate: string): number {
@@ -87,8 +25,7 @@ function daysUntil(isoDate: string): number {
   const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const [y, m, d] = isoDate.split("-").map(Number);
   const target = new Date(y, m - 1, d);
-  const diff = Math.ceil((target.getTime() - nowMidnight.getTime()) / (1000 * 60 * 60 * 24));
-  return diff;
+  return Math.ceil((target.getTime() - nowMidnight.getTime()) / (1000 * 60 * 60 * 24));
 }
 
 function formatDateLabel(isoDate: string): string {
@@ -97,21 +34,125 @@ function formatDateLabel(isoDate: string): string {
   return dt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+function PartyChip({ party }: { party: Race["candidates"][number]["party"] }) {
+  const c = PARTY_COLOR[party];
+  return (
+    <span style={{
+      fontSize: 9,
+      fontWeight: 700,
+      padding: "1px 5px",
+      borderRadius: 3,
+      background: c.bg,
+      color: c.fg,
+      letterSpacing: "0.04em",
+      flexShrink: 0,
+    }}>
+      {party}
+    </span>
+  );
+}
+
+function RaceRow({ race }: { race: Race }) {
+  const [expanded, setExpanded] = useState(false);
+  const hasCandidates = race.candidates.length > 0;
+
+  return (
+    <div
+      style={{
+        padding: "10px 12px",
+        border: "1px solid var(--sb-border-light)",
+        borderRadius: 4,
+        background: race.unopposed ? "#fafafa" : "#fff",
+      }}
+    >
+      <button
+        onClick={() => setExpanded((v) => !v)}
+        disabled={!hasCandidates}
+        style={{
+          all: "unset",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 8,
+          width: "100%",
+          cursor: hasCandidates ? "pointer" : "default",
+        }}
+      >
+        <span style={{ fontSize: 14, marginTop: 1, flexShrink: 0 }}>{race.emoji}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--sb-ink)" }}>
+              {race.race}
+            </span>
+            {race.unopposed && (
+              <span style={{ fontSize: 9, fontWeight: 700, color: "#6b7280", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                Unopposed
+              </span>
+            )}
+          </div>
+          <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.4, marginTop: 2 }}>
+            {race.summary}
+          </div>
+        </div>
+        {hasCandidates && (
+          <span style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2, flexShrink: 0 }}>
+            {expanded ? "▴" : `▾ ${race.candidates.length}`}
+          </span>
+        )}
+      </button>
+
+      {expanded && hasCandidates && (
+        <div style={{ marginTop: 10, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 5 }}>
+          {race.candidates.map((c) => (
+            <div key={c.name} style={{ display: "flex", alignItems: "flex-start", gap: 6, fontSize: 11 }}>
+              <PartyChip party={c.party} />
+              <span style={{ fontWeight: 600, color: "var(--sb-ink)" }}>{c.name}</span>
+              {c.incumbent && (
+                <span style={{ fontSize: 9, color: "#065f46", fontWeight: 700, padding: "1px 4px", background: "#d1fae5", borderRadius: 2, marginTop: 1 }}>
+                  INC
+                </span>
+              )}
+              {c.note && (
+                <span style={{ color: "var(--sb-muted)", lineHeight: 1.4 }}>— {c.note}</span>
+              )}
+            </div>
+          ))}
+          {race.id === "ca-governor" && (
+            <div style={{ marginTop: 6, padding: "6px 8px", background: "#fef9ec", border: "1px solid #fde68a", borderRadius: 3, fontSize: 10, color: "#78350f", lineHeight: 1.5 }}>
+              <strong>Polls:</strong> {GOV_POLLING_NOTE}
+            </div>
+          )}
+          <a
+            href={race.infoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: 10,
+              color: "var(--sb-accent)",
+              textDecoration: "none",
+              fontWeight: 600,
+              marginTop: 4,
+              alignSelf: "flex-start",
+            }}
+          >
+            Race details →
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ElectionsCard() {
-  const now = new Date();
   const primaryDays = daysUntil("2026-06-02");
   const generalDays = daysUntil("2026-11-03");
 
   // Don't show if both elections are past
   if (primaryDays < -7 && generalDays < -7) return null;
 
-  // Show general-election-focused messaging after primary
   const pastPrimary = primaryDays < -7;
-  const focusDate = pastPrimary ? "2026-11-03" : "2026-06-02";
   const focusDays = pastPrimary ? generalDays : primaryDays;
   const focusLabel = pastPrimary ? "General Election" : "CA Primary";
 
-  // Sort dates: show upcoming only, sorted ascending
   const upcomingDates = KEY_DATES
     .filter((kd) => daysUntil(kd.isoDate) >= 0)
     .sort((a, b) => a.isoDate.localeCompare(b.isoDate))
@@ -229,11 +270,7 @@ export default function ElectionsCard() {
                     flexShrink: 0,
                   }}
                 >
-                  {days === 0
-                    ? "Today"
-                    : days === 1
-                    ? "Tomorrow"
-                    : `${days}d`}
+                  {days === 0 ? "Today" : days === 1 ? "Tomorrow" : `${days}d`}
                 </span>
               </div>
             );
@@ -241,7 +278,7 @@ export default function ElectionsCard() {
         </div>
       </div>
 
-      {/* ── Key races ── */}
+      {/* ── Races on the ballot ── */}
       <div style={{ marginBottom: 14 }}>
         <div
           style={{
@@ -254,39 +291,16 @@ export default function ElectionsCard() {
             fontFamily: "'Space Mono', monospace",
           }}
         >
-          On the Ballot
+          On Your Ballot · {RACES.length} races
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: 6,
-          }}
-        >
-          {KEY_RACES.map((r) => (
-            <div
-              key={r.race}
-              style={{
-                padding: "6px 8px",
-                border: "1px solid var(--sb-border-light)",
-                borderRadius: 3,
-                display: "flex",
-                gap: 7,
-                alignItems: "flex-start",
-              }}
-            >
-              <span style={{ fontSize: 13, marginTop: 1, flexShrink: 0 }}>{r.emoji}</span>
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", lineHeight: 1.3 }}>
-                  {r.race}
-                </div>
-                <div style={{ fontSize: 10, color: "var(--sb-muted)", lineHeight: 1.3, marginTop: 1 }}>
-                  {r.note}
-                </div>
-              </div>
-            </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {RACES.map((r) => (
+            <RaceRow key={r.id} race={r} />
           ))}
         </div>
+        <p style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, marginBottom: 0, lineHeight: 1.5 }}>
+          Tap any race to see candidates. US Senate isn't on the 2026 ballot — Padilla next runs in 2028.
+        </p>
       </div>
 
       {/* ── CTA links ── */}
@@ -333,7 +347,7 @@ export default function ElectionsCard() {
           Find Your Polling Place
         </a>
         <span style={{ fontSize: 10, color: "var(--sb-muted)", marginLeft: "auto" }}>
-          SCC Registrar of Voters · sccvote.org
+          SCC Registrar · sccvote.org
         </span>
       </div>
     </div>

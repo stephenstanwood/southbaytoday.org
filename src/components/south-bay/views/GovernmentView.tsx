@@ -101,9 +101,12 @@ export default function GovernmentView({ selectedCities }: Props) {
     }
   }, []);
 
+  // Show only cities we actually have a digest for. Stoa coverage gaps (e.g.
+  // Los Altos, where the API has nothing in the City Council slot) shouldn't
+  // result in an empty turnstile card.
   const orderedCities = useMemo(
-    () => CITY_ORDER.filter((c) => selectedCities.has(c)),
-    [selectedCities],
+    () => CITY_ORDER.filter((c) => selectedCities.has(c) && digests.has(c)),
+    [selectedCities, digests],
   );
 
   return (

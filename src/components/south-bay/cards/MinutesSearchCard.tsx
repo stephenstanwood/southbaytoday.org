@@ -39,21 +39,29 @@ const CITY_ACCENT: Record<string, string> = {
   "los-altos":     "#7c3aed",
 };
 
+// Stoa does literal AND-match on every keyword AND on the topic constraint, so
+// multi-word queries or topics it doesn't recognize return 0 records. Stick to
+// single-word queries; only set `topic` for the four topics Stoa actually
+// indexes (Housing & Zoning, Budget, Infrastructure, Parks & Recreation).
 const QUICK_CHIPS = [
-  { label: "🏠 Housing",   q: "housing zoning development",  topic: "Housing & Zoning" },
-  { label: "💰 Budget",    q: "budget funding spending",      topic: "Budget" },
-  { label: "🚗 Traffic",   q: "traffic roads infrastructure", topic: "Infrastructure" },
-  { label: "🌳 Parks",     q: "parks recreation open space",  topic: "Parks & Recreation" },
-  { label: "🏙️ Downtown", q: "downtown development retail",  topic: "Downtown Development" },
-  { label: "🔒 Safety",    q: "public safety police crime",   topic: "Public Safety" },
+  { label: "🏠 Housing",   q: "housing", topic: "Housing & Zoning"   },
+  { label: "💰 Budget",    q: "budget",  topic: "Budget"             },
+  { label: "🚗 Traffic",   q: "traffic", topic: "Infrastructure"     },
+  { label: "🌳 Parks",     q: "parks",   topic: "Parks & Recreation" },
+  { label: "🏙️ Downtown", q: "downtown" },
+  { label: "🔒 Safety",    q: "safety"   },
 ];
 
-const CONVERSATION_STARTERS = [
-  "What's the city doing about affordable housing?",
-  "Any new parks or trails being planned?",
-  "How is the city spending its budget?",
-  "What road projects are approved?",
-  "Any downtown development in the works?",
+// Display text shown to user vs. the keyword query actually sent to Stoa.
+// Friendly natural-language prompts like "Any new parks or trails being planned?"
+// return 0 records when sent verbatim, so each starter maps to a single-word
+// keyword query that actually matches.
+const CONVERSATION_STARTERS: { label: string; q: string; topic?: string }[] = [
+  { label: "What's the city doing about affordable housing?", q: "affordable", topic: "Housing & Zoning"   },
+  { label: "Any new parks or trails being planned?",          q: "parks",      topic: "Parks & Recreation" },
+  { label: "How is the city spending its budget?",            q: "budget",     topic: "Budget"             },
+  { label: "What road projects are approved?",                q: "traffic",    topic: "Infrastructure"     },
+  { label: "Any downtown development in the works?",          q: "downtown" },
 ];
 
 function formatDate(iso: string): string {
@@ -104,24 +112,27 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
   const cityLabel = "your city";
 
-  const doSearch = async (q: string, topic?: string) => {
-    const trimmed = q.trim();
-    if (trimmed.length < 2 && !topic) return;
+  // `display` is the bubble text shown back to the user; `searchQuery` is the
+  // keyword string actually sent to Stoa. They differ when a conversation
+  // starter or chip translates a natural-language prompt into a keyword query.
+  const doSearch = async (display: string, topic?: string, searchQuery?: string) => {
+    const q = (searchQuery ?? display).trim();
+    if (q.length < 2 && !topic) return;
 
     setLoading(true);
     try {
       const params = new URLSearchParams({ limit: "20" });
       if (cityParam) params.set("city", cityParam);
-      if (trimmed.length >= 2) params.set("q", trimmed);
+      if (q.length >= 2) params.set("q", q);
       if (topic && topic !== "All Topics") params.set("topic", topic);
       const res = await fetch(`https://www.stoa.works/api/council-meetings?${params.toString()}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const records: CouncilRecord[] = data.records ?? [];
       const total: number | null = data.total ?? data.count ?? null;
-      setHistory((prev) => [...prev, { question: q, results: records, total, error: null }]);
+      setHistory((prev) => [...prev, { question: display, results: records, total, error: null }]);
     } catch {
-      setHistory((prev) => [...prev, { question: q, results: null, total: null, error: "Search unavailable — try again" }]);
+      setHistory((prev) => [...prev, { question: display, results: null, total: null, error: "Search unavailable — try again" }]);
     } finally {
       setLoading(false);
       setQuery("");
@@ -134,14 +145,14 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
     if (query.trim().length >= 2 && !loading) doSearch(query);
   };
 
-  const handleStarter = (s: string) => {
-    setQuery(s);
-    doSearch(s);
+  const handleStarter = (s: typeof CONVERSATION_STARTERS[number]) => {
+    setQuery("");
+    doSearch(s.label, s.topic, s.q);
     inputRef.current?.focus();
   };
 
   const handleChip = (chip: typeof QUICK_CHIPS[0]) => {
-    doSearch(chip.label, chip.topic);
+    doSearch(chip.label, chip.topic, chip.q);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -217,7 +228,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
               <div style={{ paddingLeft: 38, display: "flex", flexDirection: "column", gap: 6, marginBottom: 4 }}>
                 {CONVERSATION_STARTERS.map((s) => (
                   <button
-                    key={s}
+                    key={s.label}
                     onClick={() => handleStarter(s)}
                     style={{
                       textAlign: "left",
@@ -241,7 +252,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
                       e.currentTarget.style.background = "#fff";
                     }}
                   >
-                    {s}
+                    {s.label}
                   </button>
                 ))}
               </div>

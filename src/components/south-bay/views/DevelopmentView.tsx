@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import PermitPulseCard from "../cards/PermitPulseCard";
 import {
   DEV_PROJECTS,
   STATUS_CONFIG,
@@ -9,16 +8,23 @@ import {
   type DevProject,
 } from "../../../data/south-bay/development-data";
 
-// Hide far-horizon projects (2030s+, vague "long-term") unless they're already
-// physically under construction. Keeps the page about what's actually happening
-// in the next few years rather than aspirational regional plans.
-function isFarHorizon(p: DevProject): boolean {
-  if (p.status === "under-construction" || p.status === "opening-soon") return false;
+// Keep only projects that are recently opened OR concretely landing in 2026/2027.
+// Far-horizon stuff (BART Phase II "mid-2030s", Diridon 2040s, Moffett Park
+// "phased through 2035") doesn't belong in a "what's actually happening" view.
+function isShortHorizon(p: DevProject): boolean {
   const t = (p.timeline ?? "").toLowerCase();
-  return /\b203\ds?\b|\b204\ds?\b|long[- ]term/.test(t);
+
+  // Hard reject: anything that mentions 2030s+ or "long-term".
+  if (/\b20[3-9]\d\b|long[- ]term/.test(t)) return false;
+
+  // Recently completed (2024 or 2025) is fair game.
+  if (p.status === "completed") return /\b202[45]\b/.test(t);
+
+  // For everything else, require an explicit 2026 or 2027 anchor.
+  return /\b202[67]\b/.test(t);
 }
 
-const NEAR_TERM_PROJECTS = DEV_PROJECTS.filter((p) => !isFarHorizon(p));
+const NEAR_TERM_PROJECTS = DEV_PROJECTS.filter(isShortHorizon);
 
 // ── Category filter ──────────────────────────────────────────────────────────
 
@@ -319,9 +325,6 @@ export default function DevelopmentView() {
           />
         );
       })}
-
-      {/* Permit Pulse */}
-      <PermitPulseCard />
 
       {/* Footer note */}
       <div className="dev-footer-note">
