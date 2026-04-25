@@ -812,15 +812,23 @@ async function main() {
     // variants — one plan per mode is enough.
     await writeHomepageDefaultPlans(schedule, today, yesterdayKidsNames);
 
-    // Auto-commit shared-plans.json so plan pages are live by the time posts publish
+    // Auto-commit schedule + plan JSONs. social-schedule.json is included here
+    // so the uncommitted-changes window can't be wiped by another process doing
+    // `git reset --hard origin/main` (lost a full schedule run on 2026-04-25).
     try {
       const repoRoot = join(__dirname, "..", "..");
-      const dirty = execSync("git diff --name-only -- src/data/south-bay/shared-plans.json src/data/south-bay/default-plans.json", { cwd: repoRoot, encoding: "utf8" }).trim();
+      const TRACKED = "src/data/south-bay/social-schedule.json src/data/south-bay/shared-plans.json src/data/south-bay/default-plans.json";
+      const dirty = execSync(`git diff --name-only -- ${TRACKED}`, { cwd: repoRoot, encoding: "utf8" }).trim();
       if (dirty) {
-        execSync("git add src/data/south-bay/shared-plans.json src/data/south-bay/default-plans.json", { cwd: repoRoot, stdio: "pipe" });
-        execSync('git commit -m "data: update shared + default plans from schedule generator"', { cwd: repoRoot, stdio: "pipe" });
-        execSync("git push", { cwd: repoRoot, stdio: "pipe" });
-        console.log("   📎 shared + default plans committed and pushed");
+        execSync(`git add ${TRACKED}`, { cwd: repoRoot, stdio: "pipe" });
+        execSync('git commit -m "data: update schedule + shared + default plans from schedule generator"', { cwd: repoRoot, stdio: "pipe" });
+        try {
+          execSync("git push", { cwd: repoRoot, stdio: "pipe" });
+        } catch {
+          execSync("git pull --rebase --autostash origin main", { cwd: repoRoot, stdio: "pipe" });
+          execSync("git push", { cwd: repoRoot, stdio: "pipe" });
+        }
+        console.log("   📎 schedule + shared + default plans committed and pushed");
       }
     } catch (e) {
       console.warn("   ⚠️  Failed to auto-push plan JSONs:", e.message);
