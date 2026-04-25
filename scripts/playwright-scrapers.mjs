@@ -1022,93 +1022,75 @@ const BOOKS_INC_SB_STORES = new Map([
 ]);
 
 async function scrapeBooksInc(page) {
-  // Domain moved from booksinc.net to booksinc.com; events at /pages/events
+  // Domain moved from booksinc.net to booksinc.com; events at /pages/events.
+  // Books Inc uses an Elfsight calendar widget. The widget's JSON-LD only
+  // contains date (no time), but the rendered DOM has time as visible text
+  // ("6:30 PM" or "11:15 AM - 12:15 PM"). We parse the rendered text instead.
   await page.goto("https://www.booksinc.com/pages/events", { waitUntil: "networkidle", timeout: 30_000 });
-  await page.waitForTimeout(5000); // Elfsight calendar widget needs extra hydration time
+  await page.waitForTimeout(7000); // Elfsight needs extra hydration time
 
   const raw = await page.evaluate(() => {
     const events = [];
-
-    // Books Inc uses an Elfsight Events Calendar widget that embeds JSON-LD schema.org Event data
-    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
-    for (const s of scripts) {
-      try {
-        const data = JSON.parse(s.textContent);
-        const items = Array.isArray(data) ? data : [data];
-        for (const item of items) {
-          if (item["@type"] === "Event") {
-            events.push({
-              title: item.name,
-              date: item.startDate,
-              endDate: item.endDate,
-              location: item.location?.name || "",
-              link: item.url,
-            });
-          }
-        }
-      } catch { /* ignore */ }
+    // Card pattern: each event renders as a block of lines like:
+    //   APR
+    //   28
+    //   TUE
+    //   AUTHOR EVENT
+    //   EAST BAY EVENTS
+    //   THE INVENTION OF SOLITUDE BOOK CLUB: MURDER BIMBO
+    //   6:30 PM
+    //   Books Inc. Alameda
+    const CARD_RE = /^(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\s*\n\s*(\d{1,2})\s*\n\s*(SUN|MON|TUE|WED|THU|FRI|SAT)\s*\n\s*(BOOK CLUB|AUTHOR EVENT|EVENT|STORYTIME|KIDS EVENT)\s*\n\s*[^\n]+\s*\n\s*([^\n]+)\s*\n\s*(\d{1,2}:\d{2}\s*(?:AM|PM))(\s*-\s*(\d{1,2}:\d{2}\s*(?:AM|PM)))?\s*\n?\s*([^\n]+)?/;
+    const all = document.querySelectorAll("div, article, li");
+    const seen = new Set();
+    for (const el of all) {
+      const txt = (el.innerText || "").trim();
+      if (!txt || txt.length > 600) continue;
+      const m = txt.match(CARD_RE);
+      if (!m) continue;
+      const key = `${m[1]}-${m[2]}|${m[5]}|${m[6]}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      events.push({
+        month: m[1],
+        day: parseInt(m[2], 10),
+        title: m[5].trim(),
+        time: m[6].trim(),
+        endTime: m[8] ? m[8].trim() : null,
+        venue: m[9] ? m[9].trim() : "",
+      });
     }
-
-    // Also check for JSON-LD embedded in div text (Elfsight renders it as text node)
-    if (events.length === 0) {
-      const allText = document.body?.innerText || "";
-      const jsonMatches = allText.match(/\{"@context":"https:\/\/schema\.org","@type":"Event"[^}]+\}/g);
-      if (jsonMatches) {
-        for (const m of jsonMatches) {
-          try {
-            const item = JSON.parse(m);
-            events.push({
-              title: item.name,
-              date: item.startDate,
-              endDate: item.endDate,
-              location: item.location?.name || "",
-              link: item.url,
-            });
-          } catch { /* ignore */ }
-        }
-      }
-    }
-
-    // Fallback: card-based extraction from Elfsight widget
-    if (events.length === 0) {
-      const cards = document.querySelectorAll("[class*='EventCard'], [class*='event-card'], [class*='eapp-events']");
-      for (const card of cards) {
-        const titleEl = card.querySelector("[class*='Title'], [class*='title'], h3, h4");
-        const dateEl = card.querySelector("[class*='Date'], [class*='date'], time");
-        const locEl = card.querySelector("[class*='Location'], [class*='location'], [class*='Venue']");
-        const title = titleEl?.textContent?.trim();
-        const date = dateEl?.getAttribute("datetime") || dateEl?.textContent?.trim();
-        const location = locEl?.textContent?.trim() || "";
-        const link = card.querySelector("a")?.href;
-        if (title && title.length > 3) events.push({ title, date, location, link });
-      }
-    }
-
     return events;
   });
 
   const events = [];
+  const now = new Date();
+  const monthIdx = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 };
   for (const r of raw) {
-    const date = tryParseDate(r.date);
-    if (!date || date < TODAY) continue;
-    const locLower = (r.location || r.title).toLowerCase();
+    const mIdx = monthIdx[r.month];
+    if (mIdx === undefined) continue;
+    let year = now.getFullYear();
+    const candidate = new Date(year, mIdx, r.day);
+    if (candidate < new Date(now.getTime() - 30 * 86400000)) year++;
+    const date = new Date(year, mIdx, r.day);
+    if (date < TODAY) continue;
+
+    const venueLower = (r.venue || r.title).toLowerCase();
     let city = null;
     for (const [kw, cid] of BOOKS_INC_SB_STORES) {
-      if (locLower.includes(kw)) { city = cid; break; }
+      if (venueLower.includes(kw)) { city = cid; break; }
     }
-    if (!city) continue; // not a South Bay store
-    // Extract clock time from ISO datetime ("2026-05-02T19:00:00-07:00" → "7:00 PM")
-    const time = isoTimeToClock(r.date);
-    const endTime = isoTimeToClock(r.endDate);
+    if (!city) continue;
+
     events.push({
       title: r.title,
       date,
-      time,
-      endTime,
-      venue: `Books Inc ${r.location || ""}`.trim(),
+      time: normalizeTime(r.time),
+      endTime: normalizeTime(r.endTime),
+      venue: r.venue || "Books Inc",
       address: "",
       city,
-      url: r.link || "https://booksinc.com/events",
+      url: "https://www.booksinc.com/pages/events",
       source: "Books Inc",
       category: "arts",
       cost: "free",

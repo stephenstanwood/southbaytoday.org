@@ -55,6 +55,7 @@ const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-eve
 const BLACKLIST_PATH = join(__dirname, "..", "src", "data", "south-bay", "social-blacklist.json");
 const PLAYWRIGHT_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
 const INBOUND_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "inbound-events.json");
+const TIME_BACKFILL_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "event-time-backfill-cache.json");
 
 // Load dynamic blacklist from social review pipeline (venues, sources, titles)
 let _blacklist;
@@ -3245,6 +3246,150 @@ async function fetchHicklebeesEvents() {
   }
 }
 
+// ── Time backfill ──────────────────────────────────────────────────────────
+// For events with no `time` but a `url`, fetch the canonical page and try to
+// recover a clock time. Cache results (successes AND failures) so repeat runs
+// don't re-fetch the same URLs.
+
+function loadTimeBackfillCache() {
+  try {
+    if (!existsSync(TIME_BACKFILL_CACHE_PATH)) return {};
+    return JSON.parse(readFileSync(TIME_BACKFILL_CACHE_PATH, "utf8"));
+  } catch { return {}; }
+}
+
+function saveTimeBackfillCache(cache) {
+  try {
+    writeFileSync(TIME_BACKFILL_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+  } catch { /* non-fatal */ }
+}
+
+/** Try to extract a clock time string from arbitrary HTML.
+ *  Strategies (in order):
+ *   1. JSON-LD Event with startDate that includes a time component
+ *   2. <time datetime="..."> tags
+ *   3. Meta tags
+ *   4. Visible text patterns near event-related labels ("Doors at 7 PM", "7:30 PM")
+ *  Returns "H:MM AM/PM" or null.
+ */
+function extractTimeFromHtml(html, eventDate) {
+  if (!html) return null;
+
+  // 1. JSON-LD Event blocks
+  const ldMatches = html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) || [];
+  for (const block of ldMatches) {
+    const inner = block.replace(/<script[^>]*>|<\/script>/gi, "").trim();
+    try {
+      const data = JSON.parse(inner);
+      const items = Array.isArray(data) ? data : (data["@graph"] ? data["@graph"] : [data]);
+      for (const item of items) {
+        if (!item || typeof item !== "object") continue;
+        const t = item["@type"];
+        const isEvent = t === "Event" || (Array.isArray(t) && t.includes("Event"));
+        if (!isEvent) continue;
+        const start = item.startDate;
+        if (typeof start !== "string") continue;
+        // Skip if the JSON-LD date doesn't match the event date (avoids picking up the wrong show in a series)
+        if (eventDate && !start.startsWith(eventDate)) continue;
+        const time = isoTimeToClockLocal(start);
+        if (time) return time;
+      }
+    } catch { /* ignore */ }
+  }
+
+  // 2. <time datetime="..."> elements
+  const timeTags = html.match(/<time[^>]+datetime=["']([^"']+)["'][^>]*>/gi) || [];
+  for (const tag of timeTags) {
+    const m = tag.match(/datetime=["']([^"']+)["']/i);
+    if (!m) continue;
+    const dt = m[1];
+    if (eventDate && !dt.startsWith(eventDate)) continue;
+    const time = isoTimeToClockLocal(dt);
+    if (time) return time;
+  }
+
+  // 3. Meta tags
+  const metaPatterns = [
+    /<meta[^>]+property=["']event:start_time["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+name=["']event_start_time["'][^>]+content=["']([^"']+)["']/i,
+  ];
+  for (const re of metaPatterns) {
+    const m = html.match(re);
+    if (m) {
+      const time = isoTimeToClockLocal(m[1]);
+      if (time) return time;
+    }
+  }
+
+  // 4. Visible text patterns. Strip tags first, look at the start of the body.
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ");
+  // Time patterns prefixed by labels like "doors at", "show", "starts", "@"
+  const labeledMatch = text.match(/\b(?:doors|starts?|begins?|opens?|show(?:time)?|curtain|@)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i);
+  if (labeledMatch) return formatHourClock(labeledMatch[1]);
+  // Fallback: first time mention in the first 2KB of body text
+  const head = text.slice(0, 2000);
+  const generalMatch = head.match(/\b(\d{1,2}:\d{2}\s*(?:am|pm))\b/i) || head.match(/\b(\d{1,2}\s*(?:am|pm))\b/i);
+  if (generalMatch) return formatHourClock(generalMatch[1]);
+
+  return null;
+}
+
+async function backfillEventTimes(events) {
+  const cache = loadTimeBackfillCache();
+  const candidates = events.filter((e) =>
+    !e.time && !e.ongoing && e.url && /^https?:/.test(e.url) &&
+    // Skip canned "events list" pages — they won't have per-event times
+    !/\/events\/?$|\/pages\/events\/?$/.test(e.url)
+  );
+  if (candidates.length === 0) {
+    saveTimeBackfillCache(cache);
+    return;
+  }
+
+  console.log(`\n🕒 Time backfill: ${candidates.length} events with no time + URL`);
+  let cacheHits = 0, fetched = 0, recovered = 0, failed = 0;
+
+  const concurrency = 6;
+  for (let i = 0; i < candidates.length; i += concurrency) {
+    const batch = candidates.slice(i, i + concurrency);
+    await Promise.all(batch.map(async (e) => {
+      const cacheKey = `${e.url}|${e.date}`;
+      if (Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
+        cacheHits++;
+        if (cache[cacheKey]) { e.time = cache[cacheKey]; recovered++; }
+        return;
+      }
+      try {
+        const res = await fetch(e.url, {
+          headers: { "User-Agent": UA },
+          signal: AbortSignal.timeout(10_000),
+          redirect: "follow",
+        });
+        if (!res.ok) { cache[cacheKey] = null; failed++; return; }
+        const html = await res.text();
+        fetched++;
+        const time = extractTimeFromHtml(html, e.date);
+        cache[cacheKey] = time || null;
+        if (time) { e.time = time; recovered++; }
+        else { failed++; }
+      } catch {
+        cache[cacheKey] = null;
+        failed++;
+      }
+    }));
+  }
+
+  saveTimeBackfillCache(cache);
+  console.log(`   cache hits:    ${cacheHits}`);
+  console.log(`   fetched:       ${fetched}`);
+  console.log(`   times found:   ${recovered}`);
+  console.log(`   no time:       ${failed}`);
+}
+
 /** Normalize a time string like "7:30 pm" / "7 PM" / "19:30" to "H:MM AM/PM". */
 function formatHourClock(s) {
   if (!s || typeof s !== "string") return null;
@@ -3932,6 +4077,13 @@ async function main() {
     if (e.time && !isClockTime(e.time)) e.time = null;
     if (e.endTime && !isClockTime(e.endTime)) e.endTime = null;
   });
+
+  // Time backfill: for events that lost their time at the source, fetch the
+  // canonical event URL and try to recover it. Covers SJDA all_day theater
+  // shows (Les Mis etc.), inbound newsletter events where the LLM extractor
+  // couldn't parse a time, and similar "URL has the time but the feed didn't"
+  // cases. Caches both successful times and "no time available" results.
+  await backfillEventTimes(allEvents);
 
   // Filter: must have date and city and title, must be today or future, must be public, not cancelled
   // Also skip zero-duration university calendar markers (e.g. "5:00 PM – 5:00 PM")
