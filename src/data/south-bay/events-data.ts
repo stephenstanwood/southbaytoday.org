@@ -910,6 +910,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     url: "https://www.milb.com/san-jose",
     emoji: "⚾",
     featured: true,
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/40/SanJoseGiantsCap.png",
   },
   {
     id: "bay-fc-games",

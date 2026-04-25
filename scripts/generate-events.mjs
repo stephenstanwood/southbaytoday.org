@@ -2147,10 +2147,7 @@ async function fetchSJGiantsSchedule() {
           url: "https://www.milb.com/san-jose",
           source: "MiLB",
           kidFriendly: true,
-          // Override the OG-scraped image (which is just the team logo on a
-          // baseball) with a stadium photo of San José Municipal Stadium /
-          // Excite Ballpark (Wikimedia Commons, freely licensed).
-          image: "https://upload.wikimedia.org/wikipedia/commons/5/59/San_Jos%C3%A9_Municipal_Stadium_3667_01.JPG",
+          image: "https://upload.wikimedia.org/wikipedia/commons/4/40/SanJoseGiantsCap.png",
         });
       }
     }
