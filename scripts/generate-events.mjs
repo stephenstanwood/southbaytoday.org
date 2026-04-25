@@ -94,7 +94,6 @@ const TITLE_BLOCKLIST = [
   /\bFidelity One on One\b/i, // internal HR appointments
   /\bPay Day\b/i,          // internal HR payroll notices
   /\bResearch Week Braintrust\b/i, // internal student workshop
-  /\bstorytime\b/i,        // museum/library storytimes (require admission, not standalone events)
 ];
 
 function isBlockedEvent(title) {
