@@ -52,6 +52,9 @@ type DismissType = "skip" | "hide";
 
 interface DismissedEntry {
   type: DismissType;
+  /** Card name at dismiss time. Used as a fallback match key so a hide
+   *  survives an ID change (e.g. curated → Google Places re-keying). */
+  name?: string;
   until?: string;
   permanent?: boolean;
 }
@@ -101,7 +104,9 @@ function loadState(): LocalState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultState();
     const parsed = JSON.parse(raw);
-    const now = new Date().toISOString().slice(0, 10);
+    // Use PT date for skip expiry — user's experience is in PT, and skip
+    // entries' `until` was written using PT toLocaleDateString.
+    const now = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
     for (const [id, entry] of Object.entries(parsed.dismissed ?? {})) {
       const d = entry as DismissedEntry;
       if (d.type === "skip" && d.until && d.until < now) delete parsed.dismissed[id];
@@ -136,6 +141,23 @@ function mergeRecent(prev: RecentEntry[], cards: { id: string; name: string }[])
 
 function normalizeLedgerName(name: string | null | undefined): string {
   return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+/** True when a card matches an active dismiss in localStorage state.
+ *  loadState() prunes stale skips, so any entry here is still active. ID
+ *  match is exact; name match is normalized so the "hide" survives an ID
+ *  change (curated → Google Places re-keying after a place upgrade). */
+function isDismissedCard(
+  card: { id: string; name: string },
+  dismissed: Record<string, DismissedEntry>,
+): boolean {
+  if (dismissed[card.id]) return true;
+  const norm = normalizeLedgerName(card.name);
+  if (!norm) return false;
+  for (const entry of Object.values(dismissed)) {
+    if (entry.name && normalizeLedgerName(entry.name) === norm) return true;
+  }
+  return false;
 }
 
 const PLAN_ANCHORS: City[] = CITIES
@@ -187,8 +209,13 @@ function getEffectiveTime(kids: boolean): {
 /** Load a pre-generated plan from default-plans.json for instant display.
  *  Picks a random anchor city so first-visit users see variety, not always Campbell.
  *  Picks the nearest-but-not-future anchor HOUR so users landing at 4 PM don't
- *  see a 9-AM-shaped plan. Returns { cards, anchor } so caller can remember. */
-function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null } {
+ *  see a 9-AM-shaped plan. Returns { cards, anchor, filtered } where `filtered`
+ *  signals that the caller should fire a live fetch to backfill replacements
+ *  for cards the user has dismissed. */
+function loadDefaultPlan(
+  kids: boolean,
+  dismissed: Record<string, DismissedEntry> = {},
+): { cards: DayCard[]; anchor: City | null; filtered: boolean } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
@@ -203,13 +230,22 @@ function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null
       : pickNearestAnchor(anchorHours, eff.currentHour);
     const kidsSuffix = kids ? "kids" : "adults";
 
+    // Helper: drop cards the user has actively dismissed. Sets `filtered`
+    // when something was removed so the caller can decide to refetch.
+    const dropDismissed = (cards: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
+      if (!Object.keys(dismissed).length) return { cards, filtered: false };
+      const kept = cards.filter((c) => !isDismissedCard(c, dismissed));
+      return { cards: kept, filtered: kept.length !== cards.length };
+    };
+
     // Tomorrow mode: prefer the dedicated tomorrow hero key. Falls back to
     // today's hero with events stripped (today-only events would leak).
     if (eff.isTomorrow) {
       const tomorrowKey = `${kidsSuffix}:h${chosenAnchor}:tomorrow`;
       const tomorrowPlan = plans[tomorrowKey];
       if (tomorrowPlan?.cards?.length) {
-        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor() };
+        const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
+        return { cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor(), filtered };
       }
       // Fallback: today's hero with events filtered out. Generator hasn't
       // populated the tomorrow keys yet — show places-only rather than
@@ -217,12 +253,17 @@ function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null
       const todayKey = `${kidsSuffix}:h${chosenAnchor}`;
       const todayPlan = plans[todayKey];
       if (todayPlan?.cards?.length) {
+        const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
+        const { cards, filtered } = dropDismissed(placesOnly);
         return {
-          cards: todayPlan.cards.filter((c: DayCard) => c.source !== "event"),
+          cards,
           anchor: (todayPlan.city as City) || pickRandomAnchor(),
+          // Treat the event-stripped fallback as filtered so the caller fires
+          // a tomorrow-aware live fetch — places-only is incomplete shape.
+          filtered: filtered || placesOnly.length !== todayPlan.cards.length,
         };
       }
-      return { cards: [], anchor: null };
+      return { cards: [], anchor: null, filtered: false };
     }
 
     // New hero schema: one plan per (kids × anchor). Falls back to the
@@ -238,12 +279,12 @@ function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null
       const legacyKey = `${city}:${kidsSuffix}`;
       plan = plans[anchoredKey] || plans[legacyKey];
     }
-    if (!plan?.cards?.length) return { cards: [], anchor: null };
+    if (!plan?.cards?.length) return { cards: [], anchor: null, filtered: false };
 
     // Filter out cards whose timeBlock is in the past — only for today's
     // plans.
     const nowMin = eff.currentHour * 60 + eff.currentMinute;
-    const cards = plan.cards.filter((c: DayCard) => {
+    const futureCards = plan.cards.filter((c: DayCard) => {
       const m = c.timeBlock?.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
       if (!m) return true;
       let hrs = parseInt(m[1]);
@@ -251,9 +292,10 @@ function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null
       if (m[3].toUpperCase() === "AM" && hrs === 12) hrs = 0;
       return hrs * 60 + parseInt(m[2]) >= nowMin - 30;
     });
-    return { cards, anchor: city };
+    const { cards, filtered } = dropDismissed(futureCards);
+    return { cards, anchor: city, filtered };
   } catch {
-    return { cards: [], anchor: null };
+    return { cards: [], anchor: null, filtered: false };
   }
 }
 
@@ -361,9 +403,10 @@ export default function SouthBayTodayView(_props: Props) {
   // Random anchor for initial render so first-visit users see variety.
   // Use state.kids (from localStorage) so returning users see the right
   // mode on first paint — not always adults.
-  const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null } | null>(null);
-  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids);
+  const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null; filtered: boolean } | null>(null);
+  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids, state.dismissed);
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
+  const initialFiltered = initialPlan.current.filtered;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
   const [weather, setWeather] = useState<string | null>(() => {
     if (!hasDefaultPlan || !initialPlan.current?.anchor) return null;
@@ -469,6 +512,9 @@ export default function SouthBayTodayView(_props: Props) {
       daysAgo: Math.max(0, Math.floor((nowMs - e.ts) / (24 * 60 * 60 * 1000))),
     }));
     try {
+      const dismissedNames = Object.values(state.dismissed)
+        .map((d) => d.name)
+        .filter((n): n is string => typeof n === "string" && n.length > 0);
       const res = await fetch("/api/plan-day", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -477,6 +523,7 @@ export default function SouthBayTodayView(_props: Props) {
           lockedIds: allLocked, // keep for backward compat
           lockedCards,
           dismissedIds: Object.keys(state.dismissed),
+          dismissedNames,
           currentHour: eff.currentHour,
           currentMinute: eff.currentMinute,
           planDate: eff.planDate,
@@ -534,6 +581,14 @@ export default function SouthBayTodayView(_props: Props) {
       fetchPlan();
       return;
     }
+    // Returning user with active dismisses that filtered the hero — fire a
+    // fetch to backfill replacements. New users (no dismisses) skip this
+    // and get the full instant-paint experience.
+    if (initialFiltered) {
+      setLoading(true);
+      fetchPlan();
+      return;
+    }
     const generatedAt = (defaultPlansJson as any)?._meta?.generatedAt;
     const ageMs = generatedAt ? Date.now() - new Date(generatedAt).getTime() : Infinity;
     const HARD_STALE_MS = 26 * 60 * 60 * 1000;
@@ -560,7 +615,7 @@ export default function SouthBayTodayView(_props: Props) {
       return end === null ? true : end > nowMinutes;
     });
     if (stillHasTodayCards) return;
-    const tom = loadTomorrowPlan(state.kids);
+    const tom = loadTomorrowPlan(state.kids, state.dismissed);
     if (!tom.cards.length) return;
     setCards(tom.cards);
     setPlanDateISO(getTomorrowISOInPT());
@@ -572,7 +627,9 @@ export default function SouthBayTodayView(_props: Props) {
       ...s,
       recentlyShown: mergeRecent(s.recentlyShown, tom.cards.map((c) => ({ id: c.id, name: c.name }))),
     }));
-  }, [cards, planDateISO, nowMinutes, loading, state.kids]);
+    // If dismissals filtered the cached tomorrow plan, fetch live to backfill.
+    if (tom.filtered) fetchPlanRef.current?.();
+  }, [cards, planDateISO, nowMinutes, loading, state.kids, state.dismissed]);
 
   // Actions
   const handleKidsToggle = () => {
@@ -581,7 +638,7 @@ export default function SouthBayTodayView(_props: Props) {
     // Try the pre-generated plan for the new mode first — that's the whole
     // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
     // to a network shuffle if default-plans.json doesn't have the mode.
-    const preGen = loadDefaultPlan(nextKids);
+    const preGen = loadDefaultPlan(nextKids, state.dismissed);
     if (preGen.cards.length > 0) {
       setCards(preGen.cards);
       lastAnchorRef.current = preGen.anchor;
@@ -604,6 +661,9 @@ export default function SouthBayTodayView(_props: Props) {
           if (w) { setWeather(w); break; }
         }
       } catch {}
+      // Backfill via live fetch if dismisses filtered the cached plan for
+      // this mode (returning user with hides in the new mode).
+      if (preGen.filtered) setTimeout(() => fetchPlanRef.current?.(), 50);
       return;
     }
     // Fallback: hero plan missing for this mode → live fetch.
@@ -639,9 +699,10 @@ export default function SouthBayTodayView(_props: Props) {
     // Keep all OTHER cards by passing them as extra locked IDs (not stored in state)
     const keepIds = cards.filter((c) => c.id !== cardId).map((c) => c.id);
 
+    const cardName = card?.name;
     const entry: DismissedEntry = type === "hide"
-      ? { type: "hide", permanent: true }
-      : { type: "skip", until: new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }) };
+      ? { type: "hide", permanent: true, name: cardName }
+      : { type: "skip", until: new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }), name: cardName };
     setState((s) => ({
       ...s,
       dismissed: { ...s.dismissed, [cardId]: entry },
@@ -1169,7 +1230,10 @@ function getTomorrowISOInPT(): string {
  *  today's plan runs out mid-session so we can flip into the tomorrow
  *  view without a network round-trip. Mirrors loadDefaultPlan's hero
  *  lookup but hard-forces the morning anchor + skips the past filter. */
-function loadTomorrowPlan(kids: boolean): { cards: DayCard[]; anchor: City | null; weather: string | null } {
+function loadTomorrowPlan(
+  kids: boolean,
+  dismissed: Record<string, DismissedEntry> = {},
+): { cards: DayCard[]; anchor: City | null; weather: string | null; filtered: boolean } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
@@ -1186,22 +1250,35 @@ function loadTomorrowPlan(kids: boolean): { cards: DayCard[]; anchor: City | nul
       const legacyKey = `${city}:${kidsSuffix}`;
       plan = plans[anchoredKey] || plans[legacyKey];
     }
+    const dropDismissed = (input: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
+      if (!Object.keys(dismissed).length) return { cards: input, filtered: false };
+      const kept = input.filter((c) => !isDismissedCard(c, dismissed));
+      return { cards: kept, filtered: kept.length !== input.length };
+    };
     // Prefer the dedicated tomorrow hero key. Falls back to today's hero
     // with events stripped if the generator hasn't written tomorrow keys.
     const tomorrowKey = `${kidsSuffix}:h${chosenAnchor}:tomorrow`;
     const tomorrowPlan = plans[tomorrowKey];
     if (tomorrowPlan?.cards?.length) {
+      const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
       return {
-        cards: tomorrowPlan.cards,
+        cards,
         anchor: (tomorrowPlan.city as City) || city,
         weather: tomorrowPlan.weather || null,
+        filtered,
       };
     }
-    if (!plan?.cards?.length) return { cards: [], anchor: null, weather: null };
-    const cards = plan.cards.filter((c: DayCard) => c.source !== "event");
-    return { cards, anchor: city, weather: plan.weather || null };
+    if (!plan?.cards?.length) return { cards: [], anchor: null, weather: null, filtered: false };
+    const placesOnly = plan.cards.filter((c: DayCard) => c.source !== "event");
+    const { cards, filtered } = dropDismissed(placesOnly);
+    return {
+      cards,
+      anchor: city,
+      weather: plan.weather || null,
+      filtered: filtered || placesOnly.length !== plan.cards.length,
+    };
   } catch {
-    return { cards: [], anchor: null, weather: null };
+    return { cards: [], anchor: null, weather: null, filtered: false };
   }
 }
 

@@ -48,6 +48,10 @@ interface PlanRequest {
    *  over lockedIds when both are sent. */
   lockedCards?: Array<{ id: string; timeBlock?: string | null }>;
   dismissedIds?: string[];
+  /** Names persisted alongside dismissedIds, normalized server-side and used
+   *  to filter candidates whose ID may have changed since the user dismissed
+   *  them (curated → Google Places re-keying, etc.). Pairs with dismissedIds. */
+  dismissedNames?: string[];
   currentHour?: number; // 0-23, defaults to now
   currentMinute?: number; // 0-59, used with currentHour to round start time to next :00/:30
   planDate?: string;    // YYYY-MM-DD — plan for a specific date (default: today)
@@ -714,6 +718,7 @@ function buildCandidatePool(
   targetDate?: string,
   blockedNames?: Set<string>,
   startTimeContext?: { startHour: number; startMinute: number; formatted: string },
+  dismissedNames?: Set<string>,
 ): Candidate[] {
   const candidates: Candidate[] = [];
   const cityConfig = CITY_MAP[city];
@@ -724,6 +729,13 @@ function buildCandidatePool(
     if (PERMANENT_NAME_BLOCKLIST.has(n)) return true;
     if (!blockedNames || blockedNames.size === 0) return false;
     return blockedNames.has(n);
+  };
+  // Per-user "Never" hides: filter by normalized name so a hide survives an
+  // ID change between sessions (curated → Google Places re-keying, etc.).
+  const isDismissedByName = (name: string | null | undefined) => {
+    if (!dismissedNames || dismissedNames.size === 0) return false;
+    const n = normalizeName(name);
+    return n ? dismissedNames.has(n) : false;
   };
 
   // --- Events happening today or soon, in/near the city ---
@@ -749,6 +761,7 @@ function buildCandidatePool(
   // if generation missed a pattern.
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
+    if (isDismissedByName(evt.title) || isDismissedByName(evt.venue)) continue;
     if (evt.virtual === true) continue;
     if (isVirtualEvent(evt)) continue;
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;
@@ -892,6 +905,7 @@ function buildCandidatePool(
   const places = (placesData as any).places ?? [];
   for (const p of places) {
     if (dismissedIds.has(`place:${p.id}`)) continue;
+    if (isDismissedByName(p.name)) continue;
     if (isBlocked(p.name)) continue;
 
     // Skip venue-only places — these need a specific event to be useful
@@ -1888,7 +1902,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson("Invalid JSON body", 400);
   }
 
-  const { city, kids = false, lockedIds = [], lockedCards = [], dismissedIds = [], currentHour, currentMinute, planDate, preferences, blockedNames = [], weekContext, recentlyShown = [], noCache = false } = body;
+  const { city, kids = false, lockedIds = [], lockedCards = [], dismissedIds = [], dismissedNames = [], currentHour, currentMinute, planDate, preferences, blockedNames = [], weekContext, recentlyShown = [], noCache = false } = body;
 
   // Merge lockedCards into lockedIds + a time map. lockedCards is the richer
   // format; we accept lockedIds separately for backwards compat with older
@@ -1914,6 +1928,11 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const minute = typeof currentMinute === "number" ? currentMinute : 0;
   const startTime = computeStartTime(hour, minute);
   const dismissedSet = new Set(dismissedIds);
+  const dismissedNameSet = new Set(
+    (Array.isArray(dismissedNames) ? dismissedNames : [])
+      .map((n: string) => normalizeName(n))
+      .filter(Boolean) as string[],
+  );
   const lockedSet = new Set(lockedIds);
 
   // Cache hit for default requests (no locks/dismissals/preferences/blocks).
@@ -1924,7 +1943,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   // recentlyShown bypasses the cache too — a repeated request with the same
   // ledger would serve identical cards; the whole point of the ledger is
   // variety, so we always replan when it's present.
-  if (!noCache && lockedIds.length === 0 && dismissedIds.length === 0 && blockedSet.size === 0 && recentlyShown.length === 0) {
+  if (!noCache && lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0 && recentlyShown.length === 0) {
     const cached = planCache.get(cacheKey);
     if (cached && Date.now() - cached.ts < CACHE_TTL) {
       return okJson(cached.data, { "Cache-Control": "private, no-store" });
@@ -1937,7 +1956,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
 
     // 2. Build candidate pool — pass startTime so past-today events get dropped
-    const allCandidates = buildCandidatePool(city, kids, dismissedSet, lockedSet, planDate, blockedSet, startTime);
+    const allCandidates = buildCandidatePool(city, kids, dismissedSet, lockedSet, planDate, blockedSet, startTime, dismissedNameSet);
 
     // 3. Score candidates. Graduated variety penalty: each entry in the
     // ledger comes with daysAgo so today's picks bite hardest and last
@@ -2135,7 +2154,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     };
 
     // Cache default requests for 5 min
-    if (lockedIds.length === 0 && dismissedIds.length === 0 && blockedSet.size === 0) {
+    if (lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0) {
       planCache.set(cacheKey, { data: responseData, ts: Date.now() });
       // Evict old entries
       if (planCache.size > 100) {
