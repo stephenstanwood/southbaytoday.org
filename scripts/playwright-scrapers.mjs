@@ -1111,6 +1111,65 @@ const BN_STORES = [
 // with article.card-event containing .event-date (month/day/dayofweek),
 // p.event-title > a, ul.pills.badges (category + "In Person"/"Virtual"), and
 // an optional .event-time sibling.
+//
+// POST runs events across the whole Peninsula. We only cover the South Bay,
+// so we (a) drop events whose titles name a non-South-Bay location (San Mateo
+// County coast, EPA, Portola Valley, etc.), (b) drop events in unincorporated
+// SCC outside our 11-city footprint (Morgan Hill, Gilroy), and (c) map known
+// preserve names to the city slug they're actually in. Events whose location
+// can't be inferred fall back to santa-clara-county.
+
+// Title fragments that mean "this event is outside South Bay coverage."
+// Lowercase, matched as substrings.
+const POST_OUT_OF_AREA_TOKENS = [
+  "east palo alto", "ravenswood",
+  "half moon bay", "cowell-purisima", "cowell purisima", "purisima creek",
+  "pescadero", "la honda", "san gregorio", "tunitas", "pigeon point",
+  "woodside", "portola valley", "windy hill", "skyline ridge",
+  "russian ridge", "mindego",
+  "menlo park", "atherton", "redwood city", "san mateo",
+  "pacifica", "san bruno",
+  "morgan hill", "gilroy", "san martin",
+];
+
+// Map preserve / park names to South Bay city slug + canonical venue name.
+// Order matters — longest / most specific keys first so a title like
+// "Stevens Creek Trail" hits the mountain-view rule before the generic
+// "stevens creek" cupertino rule.
+const POST_LOCATION_RULES = [
+  ["stevens creek trail",  "mountain-view", "Stevens Creek Trail"],
+  ["pearson-arastradero",  "palo-alto",     "Pearson-Arastradero Preserve"],
+  ["bear creek redwoods",  "los-gatos",     "Bear Creek Redwoods OSP"],
+  ["lexington reservoir",  "los-gatos",     "Lexington Reservoir"],
+  ["almaden quicksilver",  "san-jose",      "Almaden Quicksilver County Park"],
+  ["rancho san antonio",   "los-altos",     "Rancho San Antonio OSP"],
+  ["saratoga gap",         "saratoga",      "Saratoga Gap OSP"],
+  ["fremont older",        "cupertino",     "Fremont Older OSP"],
+  ["foothills park",       "palo-alto",     "Foothills Nature Preserve"],
+  ["arastradero",          "palo-alto",     "Pearson-Arastradero Preserve"],
+  ["alum rock",            "san-jose",      "Alum Rock Park"],
+  ["coyote creek",         "san-jose",      "Coyote Creek"],
+  ["sierra azul",          "los-gatos",     "Sierra Azul OSP"],
+  ["st. joseph",           "los-gatos",     "St. Joseph's Hill OSP"],
+  ["el sereno",            "saratoga",      "El Sereno OSP"],
+  ["picchetti",            "cupertino",     "Picchetti Ranch OSP"],
+  ["stevens creek",        "cupertino",     "Stevens Creek County Park"],
+  ["shoreline",            "mountain-view", "Shoreline Park"],
+  ["baylands",             "palo-alto",     "Baylands Nature Preserve"],
+  ["hellyer",              "san-jose",      "Hellyer County Park"],
+  ["calero",               "san-jose",      "Calero County Park"],
+];
+
+function inferPostLocation(title) {
+  const t = (title || "").toLowerCase();
+  for (const tok of POST_OUT_OF_AREA_TOKENS) {
+    if (t.includes(tok)) return null; // signal: drop
+  }
+  for (const [name, slug, venue] of POST_LOCATION_RULES) {
+    if (t.includes(name)) return { city: slug, venue };
+  }
+  return { city: "santa-clara-county", venue: null };
+}
 
 async function scrapePOST(page) {
   // Force a realistic desktop UA so Cloudflare serves the real page.
@@ -1180,14 +1239,30 @@ async function scrapePOST(page) {
     if (seen.has(dedup)) continue;
     seen.add(dedup);
 
+    // Virtual webinars don't have a physical location — keep them as
+    // santa-clara-county. Otherwise infer city + canonical venue from title;
+    // a null result means "drop, this event is outside our area."
+    let city, venue, address;
+    if (r.virtual) {
+      city = "santa-clara-county";
+      venue = "Online (POST Webinar)";
+      address = "";
+    } else {
+      const loc = inferPostLocation(r.title);
+      if (loc === null) continue;
+      city = loc.city;
+      venue = loc.venue ?? "Peninsula Open Space Trust";
+      address = loc.venue ? "" : "Various POST preserves + partner locations";
+    }
+
     events.push({
       title: r.title,
       date,
       time: normalizeTime(r.time?.replace(/\./g, "") ?? null),
       endTime: normalizeTime(r.endTime?.replace(/\./g, "") ?? null),
-      venue: r.virtual ? "Online (POST Webinar)" : "Peninsula Open Space Trust",
-      address: r.virtual ? "" : "Various POST preserves + partner locations",
-      city: "santa-clara-county",
+      venue,
+      address,
+      city,
       url: r.link || "https://openspacetrust.org/events/",
       source: "Peninsula Open Space Trust",
       category: r.volunteer ? "volunteer" : "nature",
