@@ -7,11 +7,11 @@
       "Google Places API (New) Text Search",
       "poi-data.ts (curated)"
     ],
-    "lastBackfilledAt": "2026-04-26T05:17:18.397Z",
+    "lastBackfilledAt": "2026-04-26T07:17:49.121Z",
     "lastBackfillSource": "reddit-gaps"
   },
   "stats": {
-    "total": 2516,
+    "total": 2517,
     "curated": 49,
     "googleOnly": 2450,
     "byCity": {
@@ -89692,6 +89692,42 @@
       "kidFriendlyChanged": false,
       "indoorOutdoorChanged": true,
       "source": "https://www.reddit.com/r/SanJose/comments/1sv3m2f/vtas_eastridge_expansion_i_dont_see_why_they/"
+    },
+    {
+      "id": "ChIJ0ZvBZ8I0joAR5-bl8LP0lG0",
+      "name": "Patxi's Pizza",
+      "address": "1875 S Bascom Ave #405, Campbell, CA 95008, USA",
+      "city": "campbell",
+      "lat": 37.288203599999996,
+      "lng": -121.93286719999998,
+      "rating": 4.1,
+      "ratingCount": 633,
+      "priceLevel": "PRICE_LEVEL_MODERATE",
+      "types": [
+        "pizza_restaurant",
+        "pizza_delivery",
+        "meal_takeaway",
+        "meal_delivery",
+        "food_delivery",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "primaryType": "pizza_restaurant",
+      "displayType": "Pizza restaurant",
+      "category": "food",
+      "hours": null,
+      "url": "https://www.patxispizza.com/Location/Campbell",
+      "mapsUrl": "https://maps.google.com/?cid=7896205100365244135&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "photoRef": "places/ChIJ0ZvBZ8I0joAR5-bl8LP0lG0/photos/AU_ZVEFSMpaU5oLqWRH0G3Y6iysOSXt-vSxNi6R1YLVB5Noi7yHDFvzsPoO1SUwTGla3JEDC_HhnbNjiIVNjxPLmFceE_-ME_lZvpEL3xYqfaPqih2CbEUjJNNkVtgooGcPpkaQwD9YjYuoNiwAbiPNvB6WpdvIL-FjIgDJC7LF650fNghbuEOkyZZ9p5_mUjuBYBTKjAQ7Wn2O0_gYvbfN6JgLx0Ec3dRjxfZgQKnbfc-hLoneCGaj0BJEL7Q96nbgChqlBdF6mJAKtcRqZ8uSrip0_a47zYkH4bp1JFdhLBgvQGQ",
+      "curated": false,
+      "discoverySource": "reddit-gaps",
+      "indoorOutdoor": "indoor",
+      "kidFriendlyChanged": false,
+      "indoorOutdoorChanged": true,
+      "source": "https://www.reddit.com/r/mountainview/comments/1su3a0s/mountain_view_council_shelves_bike_lane_plan_that/"
     }
   ]
 }
