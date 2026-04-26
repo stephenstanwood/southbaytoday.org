@@ -1962,6 +1962,24 @@ const server = createServer((req, res) => {
     } catch (err) {
       console.error("[review] failed:", err.message);
     }
+    // Don't banner the user for things the gen pipeline already auto-resolves
+    // (sprawl, hours, <6 cards, no-URL). Only surface true-attention flags
+    // (those that can't be machine-resolved). Stephen's preference is "fix
+    // don't flag" — the swiper should never see a flag for something we
+    // could regen ourselves. Banners persist only for soft "needs-human"
+    // flags (none are tagged that way today; we'll add explicit ones later).
+    const AUTOFIXABLE_PATTERNS = [
+      /too much driving/i,
+      /hours mismatch/i,
+      /spa saturation/i,
+      /only \d+ stops?/i,
+      /starts too late/i,
+      /no URL/i,
+      /generic homepage/i,
+    ];
+    review.flagged = (review.flagged || []).filter(
+      (f) => !AUTOFIXABLE_PATTERNS.some((p) => p.test(f.reason || "")),
+    );
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ ...schedule, _review: review }));
     return;
