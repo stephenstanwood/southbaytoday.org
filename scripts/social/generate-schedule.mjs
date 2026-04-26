@@ -831,8 +831,50 @@ async function main() {
       for (const a of review2.autoFixed) {
         console.log(`   🔧 auto-fix [${a.date} ${a.slotType}] ${a.kind}: ${a.details}`);
       }
-      for (const f of review2.flagged) {
-        console.log(`   ⚠️  still flagged [${f.date} ${f.slotType}] ${f.reason} (keeping — regen didn't resolve)`);
+
+      // ── Pass 3: city-anchor swap retry ────────────────────────────────
+      // Pass 2 used the same anchor city as Pass 1, so any slot that's
+      // STILL flagged (sprawl, <6 stops, hours mismatch) is unlikely to
+      // resolve with another same-city retry — the candidate pool for that
+      // city/date combo is genuinely thin. Swap in the least-used city in
+      // the window and try once more. After this, we accept the result.
+      const stillFlaggedDayPlans = review2.flagged.filter(
+        (f) => f.slotType === "day-plan" && /(too much driving|only \d+ stops?|hours mismatch|starts too late)/i.test(f.reason || ""),
+      );
+      if (stillFlaggedDayPlans.length) {
+        const ALL_CITIES = Object.keys(CITY_NAMES);
+        const cityUsage = new Map(ALL_CITIES.map((c) => [c, 0]));
+        for (const d of Object.values(schedule.days || {})) {
+          const c = d["day-plan"]?.city;
+          if (c && cityUsage.has(c)) cityUsage.set(c, cityUsage.get(c) + 1);
+        }
+        console.log(`\n🔁 Pass 3: ${stillFlaggedDayPlans.length} still-flagged day-plan(s) — swapping anchor city + retry`);
+        for (const f of stillFlaggedDayPlans) {
+          const slot = schedule.days?.[f.date]?.["day-plan"];
+          if (!slot || ["image-approved", "published"].includes(slot.status)) continue;
+          const currentCity = slot.city || "";
+          // Pick the least-used city != currentCity. Tiebreak: alphabetic for determinism.
+          const altCity = [...cityUsage.entries()]
+            .filter(([c]) => c !== currentCity)
+            .sort(([a, ua], [b, ub]) => ua - ub || a.localeCompare(b))[0]?.[0];
+          if (!altCity) continue;
+          console.log(`   ↔︎ ${f.date}: ${currentCity || "(none)"} → ${altCity} (${f.reason})`);
+          delete schedule.days[f.date]["day-plan"];
+          schedule.days[f.date]["day-plan"] = { status: "draft", slotType: "day-plan", city: altCity };
+          cityUsage.set(altCity, (cityUsage.get(altCity) || 0) + 1);
+        }
+        const p3 = await runGenerationPass(schedule, plansData, scored, { passLabel: "anchor-swap", regenMode: "missing-only", yesterdayAdultsNames });
+        console.log(`✅ Pass 3: ${p3.generated} regenerated`);
+
+        // Final review — log only, no reset.
+        const review3 = runQualityReview(schedule, { dates: windowDates, resetFlaggedToDraft: false });
+        for (const f of review3.flagged) {
+          console.log(`   ⚠️  accepted [${f.date} ${f.slotType}] ${f.reason} (3 passes exhausted)`);
+        }
+      } else {
+        for (const f of review2.flagged) {
+          console.log(`   ⚠️  still flagged [${f.date} ${f.slotType}] ${f.reason} (not auto-resolvable)`);
+        }
       }
     }
   }
