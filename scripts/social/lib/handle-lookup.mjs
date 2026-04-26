@@ -1,6 +1,12 @@
 // ---------------------------------------------------------------------------
-// South Bay Today — Social Handle Lookup
-// Matches event items to known social handles for @mentioning
+// South Bay Today — Social Handle Lookup + Tagging
+// Matches event items to known social handles for @mentioning.
+//
+// Strategy: soft-prompt the LLM with mention instructions, then run a
+// deterministic post-processing pass (applyTagSubstitutions) that swaps
+// venue/org names for @handles per-platform. This guarantees tagging
+// happens even when the LLM ignores the prompt — and lets us be more
+// surgical about format ("@handle" in place vs "Name (@handle)" parenthetical).
 // ---------------------------------------------------------------------------
 
 import { readFileSync } from "node:fs";
@@ -16,12 +22,12 @@ function loadHandles() {
   if (_cache) return _cache;
   try {
     const raw = JSON.parse(readFileSync(HANDLES_FILE, "utf8"));
-    // Build a flat lookup: lowercase key → handle object
+    // Build a flat lookup: normalized key → { handles, displayName }
     const lookup = new Map();
     for (const section of ["venues", "orgs"]) {
       if (!raw[section]) continue;
       for (const [name, handles] of Object.entries(raw[section])) {
-        lookup.set(name.toLowerCase(), handles);
+        lookup.set(normalizeText(name), { handles, displayName: name });
       }
     }
     _cache = lookup;
@@ -32,111 +38,238 @@ function loadHandles() {
 }
 
 /**
- * Fuzzy-match a string against known venue/org names.
- * Returns the best match's handle object, or null.
+ * Normalize a name for matching: lowercase, strip accents, drop apostrophes
+ * and other punctuation, collapse whitespace. Used on both DB keys and
+ * user-supplied names so "Kepler's Books" matches DB key "keplers books"
+ * and "San José Museum of Art" matches "san jose museum of art".
+ */
+function normalizeText(s) {
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "") // combining diacritics
+    .replace(/['’‘]/g, "") // straight + curly apostrophes
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Match a string against known venue/org names. Returns the LONGEST DB key
+ * that overlaps (so "san jose jazz" beats "san jose" if both exist).
  */
 function findMatch(text) {
   if (!text) return null;
-  const lower = text.toLowerCase().trim();
+  const norm = normalizeText(text);
+  if (!norm) return null;
+
   const lookup = loadHandles();
 
-  // Exact match
-  if (lookup.has(lower)) return lookup.get(lower);
-
-  // Substring match — venue name contained in text or vice versa
-  for (const [key, handles] of lookup) {
-    if (lower.includes(key) || key.includes(lower)) {
-      return handles;
-    }
+  if (lookup.has(norm)) {
+    return { ...lookup.get(norm), key: norm };
   }
 
-  return null;
+  let best = null;
+  for (const [key, entry] of lookup) {
+    if (norm.includes(key) || key.includes(norm)) {
+      if (!best || key.length > best.key.length) {
+        best = { ...entry, key };
+      }
+    }
+  }
+  return best;
 }
 
 /**
  * Look up social handles for an event item.
  * Checks venue name and title against the handle database.
- *
- * @param {object} item - Event item with venue, title, etc.
- * @returns {{ handles: object|null, matchedName: string|null }}
  */
 export function lookupHandles(item) {
-  // Try venue first (most specific)
   const venueMatch = findMatch(item.venue);
   if (venueMatch) {
-    return { handles: venueMatch, matchedName: item.venue };
+    return { handles: venueMatch.handles, matchedName: item.venue, displayName: venueMatch.displayName };
   }
-
-  // Try title (catches "San Jose Sharks vs ..." etc.)
   const titleMatch = findMatch(item.title);
   if (titleMatch) {
-    return { handles: titleMatch, matchedName: item.title };
+    return { handles: titleMatch.handles, matchedName: item.title, displayName: titleMatch.displayName };
   }
-
-  return { handles: null, matchedName: null };
+  return { handles: null, matchedName: null, displayName: null };
 }
 
 /**
- * Get the @mention string for a specific platform.
- * Returns null if no handle exists for that platform.
- *
- * @param {object} handles - Handle object from lookupHandles
- * @param {string} platform - "x" | "instagram" | "threads" | "bluesky" | "facebook" | "mastodon"
- * @returns {string|null} The @mention string (e.g., "@sjbarracuda")
+ * Format an @mention for a specific platform. Bluesky handles are stored
+ * in full *.bsky.social form; Mastodon handles in user@instance form.
+ * Both already include their qualifier — we just prepend "@".
  */
-export function mentionFor(handles, platform) {
-  if (!handles || !handles[platform]) return null;
-
-  const handle = handles[platform];
-
-  // Bluesky uses full handle format
-  if (platform === "bluesky") {
-    return `@${handle}`;
-  }
-
-  // Mastodon uses @user@instance format (already stored that way)
-  if (platform === "mastodon") {
-    return handle.includes("@") ? `@${handle}` : `@${handle}`;
-  }
-
-  // X, Instagram, Threads, Facebook — just @handle
+export function formatMention(handle, platform) {
+  if (!handle) return null;
   return `@${handle}`;
 }
 
+export function mentionFor(handles, platform) {
+  if (!handles || !handles[platform]) return null;
+  return formatMention(handles[platform], platform);
+}
+
+// ---------------------------------------------------------------------------
+// Deterministic tag substitution
+// ---------------------------------------------------------------------------
+
 /**
- * Build a mentions summary for the copy-gen prompt.
- * Returns a string like "Tag @sjbarracuda on X/Threads/Instagram" or empty string.
+ * Decide whether a handle is "obvious enough" to substitute in place of the
+ * displayed name, vs needing a parenthetical "Name (@handle)" so readers
+ * can still tell what's being referenced.
  *
- * @param {object} item - Event item
- * @returns {string} Mention instructions for the LLM prompt, or ""
+ * Obvious: handle is the name (case/space/apostrophe collapsed) OR the name
+ *   contains the handle as a substring (truncation).
+ *   — "@sapcenter" for "SAP Center" → name fully contains handle → obvious
+ *   — "@sanjoseimprov" for "San Jose Improv" → equal → obvious
+ *   — "@shorelineamph" for "Shoreline Amphitheatre" → name contains handle → obvious
+ *
+ * Non-obvious (parenthetical):
+ *   — "@sjmusart" for "San Jose Museum of Art" → no overlap → "San Jose Museum of Art (@sjmusart)"
+ *   — "@SPSMarket" for "San Pedro Square Market" → no overlap → parenthetical
  */
+function isHandleObvious(handle, displayedName) {
+  if (!handle || !displayedName) return false;
+  // Strip platform-specific suffixes before comparing — readers tune out
+  // ".bsky.social" and "@mastodon.social" boilerplate, so the check should
+  // focus on the user-portion of the handle.
+  const nh = String(handle)
+    .toLowerCase()
+    .replace(/\.bsky\.social$/, "")
+    .replace(/@.+$/, "")
+    .replace(/[^a-z0-9]/g, "");
+  const nn = normalizeText(displayedName).replace(/[^a-z0-9]/g, "");
+  if (!nh || !nn) return false;
+  if (nh === nn) return true;
+  return nn.includes(nh);
+}
+
+/**
+ * Build a regex that matches a name in LLM output, tolerant of:
+ *  — case
+ *  — optional apostrophes ("Keplers" or "Kepler's")
+ *  — accent variations ("San Jose" or "San José")
+ *  — multi-space variation
+ *
+ * Anchored by \b on either side so partial-word matches don't fire.
+ */
+function nameToRegex(name) {
+  if (!name) return null;
+  const VOWEL_VARIANTS = {
+    a: "[aáàâäãå]", e: "[eéèêë]", i: "[iíìîï]", o: "[oóòôöõ]", u: "[uúùûü]", n: "[nñ]", c: "[cç]",
+  };
+  const escaped = String(name)
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/['’‘]/g, "['’‘]?")
+    .replace(/[a-z]/gi, (ch) => VOWEL_VARIANTS[ch.toLowerCase()] || ch)
+    .replace(/\s+/g, "\\s+");
+  return new RegExp(`\\b${escaped}\\b`, "i");
+}
+
+function collectTargets(item) {
+  const targets = [];
+  const seen = new Set();
+  const tryAdd = (name) => {
+    if (!name) return;
+    const m = findMatch(name);
+    if (!m) return;
+    const key = m.key;
+    if (seen.has(key)) return;
+    seen.add(key);
+    // Try the original input first (preserves apostrophes/accents the LLM
+    // is likely to copy verbatim), then the DB key as a fallback for cases
+    // where the LLM paraphrases ("San Jose Sharks face Kraken" instead of
+    // "San Jose Sharks vs Kraken").
+    const candidates = [];
+    if (name) candidates.push(name);
+    if (m.displayName && m.displayName !== name) candidates.push(m.displayName);
+    targets.push({ candidates, handles: m.handles });
+  };
+  tryAdd(item?.venue);
+  tryAdd(item?.title);
+  tryAdd(item?.name);
+  if (Array.isArray(item?.cards)) {
+    for (const card of item.cards) {
+      tryAdd(card?.name);
+      tryAdd(card?.venue);
+    }
+  }
+  return targets;
+}
+
+/**
+ * Mutate a variants object so each platform's text has venue/org names
+ * replaced with @handles where available. Idempotent (skips when the
+ * mention already appears in the text).
+ *
+ * Pass items as:
+ *   - tonight-pick / single: { venue, title, ... }
+ *   - day-plan: { cards: [...] }  (or the full plan object)
+ */
+export function applyTagSubstitutions(variants, item) {
+  if (!variants || !item) return variants;
+  const targets = collectTargets(item);
+  if (targets.length === 0) return variants;
+
+  const platforms = ["x", "threads", "bluesky", "facebook", "instagram", "mastodon"];
+  for (const platform of platforms) {
+    if (!variants[platform]) continue;
+    let text = variants[platform];
+    for (const t of targets) {
+      const handle = t.handles?.[platform];
+      if (!handle) continue;
+      const mention = formatMention(handle, platform);
+      if (!mention) continue;
+      if (text.includes(mention)) continue; // already tagged
+
+      // Try each candidate name (DB displayName, then original input).
+      // First match wins.
+      for (const candidate of t.candidates) {
+        const regex = nameToRegex(candidate);
+        if (!regex) continue;
+        const match = text.match(regex);
+        if (!match) continue;
+        const matched = match[0];
+        const replacement = isHandleObvious(handle, matched)
+          ? mention
+          : `${matched} (${mention})`;
+        text = text.replace(regex, replacement);
+        break;
+      }
+    }
+    variants[platform] = text;
+  }
+  return variants;
+}
+
+// ---------------------------------------------------------------------------
+// Soft prompt (still useful — gives the LLM a head-start; the post-processing
+// pass is the safety net)
+// ---------------------------------------------------------------------------
+
 export function mentionInstructions(item) {
-  const { handles, matchedName } = lookupHandles(item);
+  const { handles } = lookupHandles(item);
   if (!handles) return "";
 
   const platformMentions = [];
-  const platforms = ["x", "threads", "bluesky", "instagram", "facebook"];
-
-  for (const p of platforms) {
+  for (const p of ["x", "threads", "bluesky", "instagram", "facebook"]) {
     const mention = mentionFor(handles, p);
-    if (mention) {
-      platformMentions.push({ platform: p, mention });
-    }
+    if (mention) platformMentions.push({ platform: p, mention });
   }
-
   if (platformMentions.length === 0) return "";
 
-  // Group by mention text (many will share the same handle)
   const byMention = new Map();
   for (const { platform, mention } of platformMentions) {
     if (!byMention.has(mention)) byMention.set(mention, []);
     byMention.get(mention).push(platform);
   }
-
   const lines = [];
   for (const [mention, platforms] of byMention) {
     lines.push(`- ${mention} on ${platforms.join(", ")}`);
   }
-
-  return `\nTAGGING — if it fits naturally, @mention the venue/org in your copy. Use the correct handle for each platform:\n${lines.join("\n")}\nDon't force it — only tag if the mention reads naturally in the sentence. Skip tagging on platforms where no handle is listed.`;
+  return `\nTAGGING — replace the venue/org name with the handle below where it fits naturally. Prefer in-place substitution over parenthetical:\n${lines.join("\n")}\nUse the right handle for each platform; on platforms where no handle is listed, use the bare name. (A post-processing pass will also enforce this — your job is to leave the name in a recognizable form so substitution can find it.)`;
 }
