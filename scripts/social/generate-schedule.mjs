@@ -49,13 +49,54 @@ if (!process.env.ANTHROPIC_API_KEY) {
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
-const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || "10");
+
+// Compute a horizon that always reaches one full week past the next Wednesday
+// from today. So a Saturday run covers Sat→Wed→+7 (12 days). A mid-week
+// hand-run covers from now → next Wed + 7. Override with --days N if needed.
+function computeDefaultDays() {
+  const now = new Date();
+  // PT day-of-week for "now"
+  const todayDow = now.toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" }).toLowerCase().slice(0, 3);
+  const dowIdx = ["sun","mon","tue","wed","thu","fri","sat"].indexOf(todayDow);
+  // Days from today until "next Wednesday" (3 = wed). If today is Wed, "next
+  // Wednesday" is 7 days out (we still want to look forward, not stop today).
+  const daysToNextWed = ((3 - dowIdx) + 7) % 7 || 7;
+  // Inclusive horizon: today through next-Wed + 7 days
+  return daysToNextWed + 7 + 1;
+}
+const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || String(computeDefaultDays()));
 // --hero-only: skip the 10-day social generation entirely and just refresh
 // default-plans.json (today's adults plan pulled from the existing social
 // schedule + a fresh kids plan for the homepage). Intended for the daily
 // 2:30 AM cron that keeps the homepage first-paint fresh between the
 // weekly Saturday social run.
 const heroOnly = args.includes("--hero-only");
+
+// Generic URL hosts that mean "no real event link" — copy generated against
+// these either says "No URL provided" or pastes a useless homepage link.
+// Reject candidates whose only URL is one of these so they never reach the
+// copy generator.
+const GENERIC_URL_HOSTS = new Set([
+  "eventbrite.com", "www.eventbrite.com",
+  "facebook.com", "www.facebook.com", "m.facebook.com",
+  "instagram.com", "www.instagram.com",
+  "twitter.com", "www.twitter.com", "x.com", "www.x.com",
+  "meetup.com", "www.meetup.com",
+  "google.com", "www.google.com",
+  "linktr.ee", "linktree.com",
+]);
+function isUsableEventUrl(u) {
+  if (!u || typeof u !== "string") return false;
+  const trimmed = u.trim();
+  if (!/^https?:\/\//i.test(trimmed)) return false;
+  let parsed;
+  try { parsed = new URL(trimmed); } catch { return false; }
+  const host = parsed.hostname.toLowerCase();
+  // Generic homepage of a known aggregator (path is empty / "/")
+  const path = parsed.pathname.replace(/\/$/, "");
+  if (GENERIC_URL_HOSTS.has(host) && path === "") return false;
+  return true;
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -298,7 +339,10 @@ function pickTonightEvent(candidates, dateStr, recentVenues = new Set(), recentT
 
   const norm = normalizeName;
 
-  // Only events starting at 5 PM or later, not boring government/library stuff
+  // Only events starting at 5 PM or later, not boring government/library stuff,
+  // and MUST have a real, specific URL (not a generic homepage). Without one
+  // the copy generator either says "No URL provided" or pastes a useless
+  // homepage link.
   const evening = dateEvents.filter((c) => {
     const hour = parseHour(c.time);
     if (hour === null) return false;
@@ -306,6 +350,7 @@ function pickTonightEvent(candidates, dateStr, recentVenues = new Set(), recentT
     const title = (c.title || c.name || "").toLowerCase();
     if (BORING_TONIGHT.test(title)) return false;
     if (c.category === "government") return false;
+    if (!isUsableEventUrl(c.url)) return false;
     // Dedup within the week — venue OR title already used
     if (recentVenues.has(norm(c.venue))) return false;
     if (recentTitles.has(norm(c.title || c.name))) return false;

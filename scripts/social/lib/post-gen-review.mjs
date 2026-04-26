@@ -559,6 +559,31 @@ export function runQualityReview(schedule, options = {}) {
       }
     }
 
+    // ── Copy URL integrity (any slot) ──
+    // Catch "No URL provided" / generic-homepage URLs that slip into the copy
+    // text. Both happened in the wild: empty url field → Claude writes "No URL
+    // provided"; eventbrite.com (without path) → useless homepage link in post.
+    const COPY_URL_BAD = /\b(no url provided|no link provided|no website provided)\b/i;
+    const COPY_GENERIC_HOMEPAGE = /https?:\/\/(?:www\.)?(eventbrite|facebook|instagram|twitter|x|meetup|google|linktr|linktree)\.(?:com|ee)\/?(?:["\s]|$)/i;
+    for (const slotType of ["day-plan", "tonight-pick", "wildcard"]) {
+      const slot = day[slotType];
+      if (!slot || ["rejected", "published"].includes(slot.status)) continue;
+      const copy = slot.copy || {};
+      const variants = ["x", "threads", "bluesky", "facebook", "instagram", "mastodon"];
+      for (const v of variants) {
+        const text = copy[v];
+        if (!text) continue;
+        if (COPY_URL_BAD.test(text)) {
+          flagged.push({ date, slotType, hardBlock: true, reason: `copy contains "no URL" placeholder (${v})` });
+          break;
+        }
+        if (COPY_GENERIC_HOMEPAGE.test(text)) {
+          flagged.push({ date, slotType, hardBlock: true, reason: `copy links to generic homepage (${v})` });
+          break;
+        }
+      }
+    }
+
     // ── Tonight pick ──
     const tp = day["tonight-pick"];
     const tpStatus = tp?.status;

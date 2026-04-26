@@ -25,6 +25,28 @@ function loadEnv() {
   }
 }
 
+// Hosts that are aggregator/homepage-only — a URL with empty path here means
+// "no real link", which produces "No URL provided" or a useless homepage in copy.
+const COPY_GENERIC_HOSTS = new Set([
+  "eventbrite.com", "www.eventbrite.com",
+  "facebook.com", "www.facebook.com", "m.facebook.com",
+  "instagram.com", "www.instagram.com",
+  "twitter.com", "www.twitter.com", "x.com", "www.x.com",
+  "meetup.com", "www.meetup.com",
+  "google.com", "www.google.com",
+  "linktr.ee", "linktree.com",
+]);
+export function isUsableSocialUrl(u) {
+  if (!u || typeof u !== "string") return false;
+  const trimmed = u.trim();
+  if (!/^https?:\/\//i.test(trimmed)) return false;
+  let parsed;
+  try { parsed = new URL(trimmed); } catch { return false; }
+  const path = parsed.pathname.replace(/\/$/, "");
+  if (COPY_GENERIC_HOSTS.has(parsed.hostname.toLowerCase()) && path === "") return false;
+  return true;
+}
+
 const SYSTEM_PROMPT = `You are the social voice of South Bay Today, a hyperlocal community tool for the South Bay (San Jose, Palo Alto, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Santa Clara, Los Altos, Milpitas). Always refer to us as "South Bay Today" when using our name.
 
 VOICE:
@@ -520,6 +542,12 @@ export async function generateTonightPickCopy(item) {
 
   const mentions = mentionInstructions(item);
   const postUrl = item.planUrl || item.url;
+  // Defense-in-depth: bail loudly instead of letting Claude write
+  // "No URL provided" or splice in a generic homepage. Caller should pick
+  // a different candidate.
+  if (!isUsableSocialUrl(postUrl)) {
+    throw new Error(`tonight-pick "${item.title || item.name}" has no usable URL (got "${postUrl}") — caller must filter`);
+  }
 
   const prompt = `Write a social post recommending ONE thing to do TONIGHT in the South Bay. This is our midday "tonight pick" — make people excited about their evening.
 
