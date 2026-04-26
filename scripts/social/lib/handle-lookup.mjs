@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, existsSync, renameSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveHandlesFromUrl } from "./resolve-handles.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const HANDLES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "social-handles.json");
@@ -258,6 +259,118 @@ export function applyTagSubstitutions(variants, item) {
     variants[platform] = text;
   }
   return variants;
+}
+
+// ---------------------------------------------------------------------------
+// Auto-resolution — at gen time, scrape URLs we already have to learn
+// handles, persist them to social-handles.json with an _auto + _source
+// audit trail. Subsequent gens reuse the cached result.
+// ---------------------------------------------------------------------------
+
+/**
+ * Add an entry to social-handles.json. Idempotent: skips if a non-_auto
+ * entry already exists at this key (manual curation wins). The entry is
+ * tagged with _auto + _source + _addedAt so it can be audited or scrubbed
+ * later. Invalidates the in-memory cache so the next findMatch sees it.
+ */
+export function addToHandles(section, displayName, handles, meta = {}) {
+  if (!displayName || !handles) return;
+  if (!["venues", "orgs", "performers"].includes(section)) return;
+
+  const key = String(displayName).toLowerCase().trim();
+  if (key.length < 3) return;
+
+  let data;
+  try {
+    const raw = readFileSync(HANDLES_FILE, "utf8");
+    data = JSON.parse(raw);
+  } catch (err) {
+    throw new Error(`social-handles.json failed to parse — refusing to clobber: ${err.message}`);
+  }
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    throw new Error(`social-handles.json parsed to ${typeof data} (not an object)`);
+  }
+  if (!data[section]) data[section] = {};
+
+  const existing = data[section][key];
+  if (existing && !existing._auto) return; // manual entry — leave alone
+
+  const entry = {};
+  for (const platform of ["x", "instagram", "threads", "bluesky", "facebook", "mastodon"]) {
+    entry[platform] = handles[platform] ?? null;
+  }
+  // Drop entirely-empty resolutions — no signal, just clutter.
+  if (Object.values(entry).every((v) => v === null)) return;
+
+  if (meta.source) entry._source = meta.source;
+  entry._auto = true;
+  entry._addedAt = new Date().toISOString().slice(0, 10);
+
+  data[section][key] = entry;
+
+  const tmp = HANDLES_FILE + ".tmp";
+  writeFileSync(tmp, JSON.stringify(data, null, 2) + "\n");
+  renameSync(tmp, HANDLES_FILE);
+
+  _cache = null; // force loadHandles to re-read on next call
+}
+
+/**
+ * For each name in an item that isn't yet in social-handles.json, try to
+ * resolve handles by scraping the associated URL. Persists every successful
+ * resolution to the file. Best-effort — fetch errors are swallowed so a
+ * single bad URL never blocks copy gen.
+ *
+ * Call before applyTagSubstitutions so newly-resolved handles get used in
+ * this run instead of waiting for the next one.
+ */
+export async function resolveItemHandles(item) {
+  if (!item) return;
+  const ops = [];
+  const seen = new Set();
+  const tryAdd = (name, url, section) => {
+    if (!name || !url) return;
+    const key = String(name).toLowerCase().trim();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    if (findMatch(name)) return; // already resolved
+    ops.push({ name, url, section });
+  };
+
+  // Day-plan cards: each card has its own venue URL. Most reliable signal.
+  if (Array.isArray(item.cards)) {
+    for (const card of item.cards) {
+      tryAdd(card?.name, card?.url, "venues");
+    }
+  }
+
+  // Single-item / tonight-pick: title is usually the performer/event name;
+  // event URL often links the performer's social. Venue handles need a
+  // separate lookup (places.json) — defer for now.
+  if (item.title && item.url && (!item.venue || item.title !== item.venue)) {
+    tryAdd(item.title, item.url, "performers");
+  }
+  if (item.venue && item.url) {
+    // If the URL looks like the venue's own site (not a third-party event
+    // listing), it's worth scraping for venue social links.
+    const isThirdPartyListing = /eventbrite|ticketweb|ticketmaster|stubhub|axs\.com|facebook\.com|sjsu\.edu\/calendar/i.test(item.url);
+    if (!isThirdPartyListing) {
+      tryAdd(item.venue, item.url, "venues");
+    }
+  }
+
+  if (ops.length === 0) return;
+
+  for (const op of ops) {
+    try {
+      const result = await resolveHandlesFromUrl(op.url);
+      if (result) {
+        addToHandles(op.section, op.name, result.handles, { source: result.source });
+      }
+    } catch {
+      // best-effort; fall through
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
