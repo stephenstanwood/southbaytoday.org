@@ -7,11 +7,11 @@
       "Google Places API (New) Text Search",
       "poi-data.ts (curated)"
     ],
-    "lastBackfilledAt": "2026-04-26T07:17:49.121Z",
+    "lastBackfilledAt": "2026-04-26T19:18:29.052Z",
     "lastBackfillSource": "reddit-gaps"
   },
   "stats": {
-    "total": 2517,
+    "total": 2518,
     "curated": 49,
     "googleOnly": 2450,
     "byCity": {
@@ -89728,6 +89728,48 @@
       "kidFriendlyChanged": false,
       "indoorOutdoorChanged": true,
       "source": "https://www.reddit.com/r/mountainview/comments/1su3a0s/mountain_view_council_shelves_bike_lane_plan_that/"
+    },
+    {
+      "id": "ChIJ3ybmtJ_Lj4ARpqZ3dA8A6qc",
+      "name": "In-N-Out Burger",
+      "address": "550 Newhall Dr, San Jose, CA 95110, USA",
+      "city": "san-jose",
+      "lat": 37.350272,
+      "lng": -121.92186639999998,
+      "rating": 4.6,
+      "ratingCount": 8875,
+      "priceLevel": "PRICE_LEVEL_INEXPENSIVE",
+      "types": [
+        "hamburger_restaurant",
+        "fast_food_restaurant",
+        "diner",
+        "american_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "primaryType": "hamburger_restaurant",
+      "displayType": "Hamburger restaurant",
+      "category": "food",
+      "hours": {
+        "sun": "10:30-01:00",
+        "mon": "10:30-01:00",
+        "tue": "10:30-01:00",
+        "wed": "10:30-01:00",
+        "thu": "10:30-01:00",
+        "fri": "10:30-01:30",
+        "sat": "10:30-01:30"
+      },
+      "url": "https://locations.in-n-out.com/240",
+      "mapsUrl": "https://maps.google.com/?cid=12099483415262766758&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "photoRef": "places/ChIJ3ybmtJ_Lj4ARpqZ3dA8A6qc/photos/Ab43m-vnmbrSU7hVN_Q7BQhO4ra16lThDQvhF6NQQ4qlWJUZ5KdpmCNncNSqSGrGQUQnL9pgTbQXbPHJPNlSwVIdbPmuIx4IXSoqI1BW1v_U8axZWfYG7TzdEerAwDl3EV_Ul273qoM0hJUTDfhOl4C_vsEW8SqqtFrWSkx4KJoDFEO84ON8SAvp6iOLtFywIFu82QvlXyCK-SPbRbo8g0pqCMaLuCFVq8twR66WQt9YhX5pjRFZLsW--5ZidyRzv8U3eXkYw67hbO25ntr39ktl6ylzmZ7cNX2_MxApTdcOb9mHvHpnB-ccQmrqXS9tOc_ZgkB8DHftUZdOMMEFpwGKGq8OOCUIZZoxjDPyRaB1M69LlokZXZ3KdKhWDs_2N06YtMBQYEW37UHnMT6o6X8fQkMXOOqUpYU92ODaTNnjj60",
+      "curated": false,
+      "discoverySource": "reddit-gaps",
+      "indoorOutdoor": "indoor",
+      "kidFriendlyChanged": false,
+      "indoorOutdoorChanged": true,
+      "source": "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/"
     }
   ]
 }
