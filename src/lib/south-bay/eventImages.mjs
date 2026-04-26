@@ -149,7 +149,10 @@ async function fetchOgImage(url) {
 // OG image quality gate. Reject tiny files, wrong content types, and obvious
 // logo/icon/placeholder filename patterns so a CMS-default OG image doesn't
 // lock out Tier 3 Recraft later. Called right after extractOgImage.
-const BAD_OG_URL = /(?:^|[/_\-.])(?:logo|icon|favicon|default(?:[-_]image)?|placeholder|empty|blank|spacer|sprite|og[-_]default|share[-_]image|social[-_]share)(?:[-_.]|\.|$)/i;
+// Boundary chars include `/` so platform paths like ".../platform/logo/..."
+// (Localist's wordmark CDN) match too — slipped through earlier and crammed
+// the SJSU 224x42 banner into every SJSU event tile.
+const BAD_OG_URL = /(?:^|[/_\-.])(?:logo|icon|favicon|default(?:[-_]image)?|placeholder|empty|blank|spacer|sprite|og[-_]default|share[-_]image|social[-_]share)(?:[/_\-.]|$)/i;
 const OG_MIN_BYTES = 4000;       // < 4KB → almost certainly a logo
 const OG_MAX_BYTES = 10_000_000; // > 10MB → not a sane OG image
 const OG_VALIDATE_TIMEOUT_MS = 5000;

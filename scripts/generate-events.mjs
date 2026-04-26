@@ -973,6 +973,11 @@ async function fetchSjsuEvents() {
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
+      const category = inferCategory(item.title, item.description, "");
+      // SJSU's Localist platform emits a 224x42 wordmark as og:image which
+      // crops to "SAN UNI" on a square tile. Pin a real square asset:
+      // Spartan helmet for athletics, SJSU monogram for everything else.
+      const image = category === "sports" ? "/logos/sjsu-spartan.png" : "/logos/sjsu-monogram.png";
       return {
         id: h("sjsu", item.link || item.title, item.pubDate),
         title: item.title,
@@ -983,11 +988,12 @@ async function fetchSjsuEvents() {
         venue: item.location || extractVenueFromTitle(item.title) || "San Jose State University",
         address: "",
         city: "san-jose",
-        category: inferCategory(item.title, item.description, ""),
+        category,
         cost: "free",
         description: truncate(stripBareUrls(stripHtml(item.description))),
         url: item.link,
         source: "SJSU Events",
+        image,
         kidFriendly: false,
       };
     }).filter(Boolean);
