@@ -571,10 +571,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         <div className="sb-section-line" />
       </div>
 
-      {/* Sticky filter bar — search + cities + categories + kids */}
+      {/* Sticky filter bar — search + categories + cities + kids */}
       <div className="sb-events-sticky-filter">
-        {/* Top row: search + kids */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 8 }}>
+        {/* Row 1: search + kids — search is the primary entry point */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}>
           <div style={{ position: "relative", flex: "1 1 240px", minWidth: 0 }}>
             <span aria-hidden style={{
               position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)",
@@ -586,37 +586,85 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{
-                width: "100%", padding: "8px 12px 8px 32px",
+                width: "100%", padding: "7px 12px 7px 32px",
                 border: "1.5px solid var(--sb-border)", borderRadius: 100,
                 fontFamily: "inherit", fontSize: 13, background: "#fff", color: "var(--sb-ink)",
                 boxSizing: "border-box", outline: "none",
+                transition: "border-color 0.12s, box-shadow 0.12s",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--sb-primary)")}
-              onBlur={(e) => (e.currentTarget.style.borderColor = "var(--sb-border)")}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "var(--sbt-accent, #4F46E5)";
+                e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79, 70, 229, 0.12)";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = "var(--sb-border)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             />
           </div>
 
           <label style={{
             display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-            fontSize: 12, color: showKidsOnly ? "var(--sb-ink)" : "var(--sb-muted)",
+            fontSize: 12, color: showKidsOnly ? "#fff" : "var(--sb-muted)",
             cursor: "pointer", userSelect: "none",
             padding: "5px 12px", borderRadius: 100,
-            border: `1.5px solid ${showKidsOnly ? "var(--sb-primary)" : "var(--sb-border)"}`,
-            background: showKidsOnly ? "#f5f3ff" : "#fff",
-            fontWeight: showKidsOnly ? 600 : 400,
+            border: `1.5px solid ${showKidsOnly ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
+            background: showKidsOnly ? "var(--sbt-accent, #4F46E5)" : "#fff",
+            fontWeight: showKidsOnly ? 600 : 500,
             transition: "all 0.12s",
           }}>
             <input
               type="checkbox" checked={showKidsOnly}
               onChange={(e) => setShowKidsOnly(e.target.checked)}
-              style={{ cursor: "pointer", accentColor: "var(--sb-primary)" }}
+              style={{ cursor: "pointer", accentColor: "var(--sbt-accent, #4F46E5)" }}
             />
             👶 Kids
           </label>
         </div>
 
-        {/* City pills (folded inline) */}
-        <div className="sb-events-cat-row" style={{ marginBottom: 8 }}>
+        {/* Row 2: Category pills — primary filter, count chip is the focal point */}
+        <div className="sb-events-cat-row" style={{ marginBottom: 10 }}>
+          {EVENT_CATEGORIES.map((cat) => {
+            const active = category === cat.id;
+            const count = categoryCounts[cat.id] ?? 0;
+            const showCount = count > 0;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setCategory(cat.id as EventCategory | "all")}
+                style={{
+                  display: "flex", alignItems: "center", gap: 5,
+                  padding: "5px 11px 5px 10px",
+                  border: `1.5px solid ${active ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
+                  borderRadius: 100,
+                  background: active ? "var(--sbt-accent, #4F46E5)" : "#fff",
+                  color: active ? "#fff" : "var(--sb-ink)",
+                  fontSize: 12.5, fontWeight: active ? 600 : 500,
+                  cursor: "pointer", fontFamily: "inherit", transition: "all 0.12s",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span style={{ fontSize: 13, lineHeight: 1 }}>{cat.emoji}</span>
+                <span>{cat.label}</span>
+                {showCount && (
+                  <span style={{
+                    fontSize: 10, fontWeight: 700,
+                    background: active ? "rgba(255,255,255,0.22)" : "#EEF2FF",
+                    color: active ? "#fff" : "var(--sbt-accent, #4F46E5)",
+                    borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                    minWidth: 18, textAlign: "center",
+                  }}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Row 3: City pills — secondary refinement, smaller + more subdued */}
+        <div className="sb-events-city-row">
+          <span className="sb-events-city-label">In</span>
           <button
             onClick={onToggleAllCities}
             className={`sb-city-pill${allCities ? " sb-city-pill--active sb-city-pill--all" : ""}`}
@@ -634,44 +682,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 aria-pressed={active}
               >
                 {c.name}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Category pills */}
-        <div className="sb-events-cat-row">
-          {EVENT_CATEGORIES.map((cat) => {
-            const active = category === cat.id;
-            const count = categoryCounts[cat.id] ?? 0;
-            const showCount = count > 0;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setCategory(cat.id as EventCategory | "all")}
-                style={{
-                  display: "flex", alignItems: "center", gap: 4,
-                  padding: "4px 10px",
-                  border: `1.5px solid ${active ? "var(--sb-primary)" : "var(--sb-border)"}`,
-                  borderRadius: 100, background: active ? "var(--sb-primary)" : "#fff",
-                  color: active ? "#fff" : "var(--sb-muted)",
-                  fontSize: 12, fontWeight: active ? 600 : 400,
-                  cursor: "pointer", fontFamily: "inherit", transition: "all 0.12s",
-                }}
-              >
-                <span>{cat.emoji}</span>
-                <span>{cat.label}</span>
-                {showCount && (
-                  <span style={{
-                    fontSize: 10, fontWeight: 700,
-                    background: active ? "rgba(255,255,255,0.25)" : "var(--sb-border-light, #f0f0f0)",
-                    color: active ? "#fff" : "var(--sb-muted)",
-                    borderRadius: 100, padding: "0 5px", lineHeight: "16px",
-                    minWidth: 16, textAlign: "center",
-                  }}>
-                    {count}
-                  </span>
-                )}
               </button>
             );
           })}
