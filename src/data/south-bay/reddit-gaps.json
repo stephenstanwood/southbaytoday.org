@@ -1,182 +1,53 @@
 {
   "_meta": {
-    "generatedAt": "2026-04-26T11:18:12.427Z",
+    "generatedAt": "2026-04-26T13:16:33.183Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 27,
-    "placesMatched": 13,
-    "placeGaps": 14,
-    "eventsExtracted": 13,
-    "eventsMatched": 1,
-    "eventGaps": 12,
+    "placesExtracted": 13,
+    "placesMatched": 8,
+    "placeGaps": 5,
+    "eventsExtracted": 5,
+    "eventsMatched": 0,
+    "eventGaps": 5,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
       "name": "Taylor Street Navigation Site",
       "city": "San Jose",
+      "kind": "venue",
+      "context": "homeless navigation center near Taylor and 101",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
+        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
+        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
+      ]
+    },
+    {
+      "name": "Family Supportive Housing",
+      "city": "San Jose",
       "kind": "service",
-      "context": "homeless services site near Taylor and 101",
+      "context": "nonprofit helping families transition to permanent housing",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
         "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
         "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Diridon Station",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Caltrain station near The Alameda, transit hub",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Hammer Theater",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Kingdom of Cards theater performance",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "SJSU Music",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Ann Lin Jazz Recital",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "MACLA",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "arts venue hosting (Un)Documents performance",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "VoyagerCraft",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts 5K Run event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Rose Garden Farmers Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Saturday farmers market at 577 Dana St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Santa Teresa Farmers Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Saturday farmers market at 5585 Cottle Rd",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "French Market Carnival",
-      "city": "Saratoga",
-      "kind": "venue",
-      "context": "carnival event at 12850 Saratoga Ave",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Island Taste",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "hosts LaughSJ Comedy event on E Santa Clara St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Splash Bar",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "nightlife venue at 65 Post St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Tanchito's Restaurant",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "hosts RaveVuelta EDM event celebrating Central American culture",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ]
     },
     {
       "name": "Lake Cunningham Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "scenic park with diverse plants and animals for walking",
+      "context": "popular walking destination with diverse wildlife and plants",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/",
         "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
         "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
         "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
@@ -186,170 +57,90 @@
     {
       "name": "Pruneyard",
       "city": "Campbell",
-      "kind": "venue",
-      "context": "shopping center where Dough Zone is opening",
+      "kind": "retail",
+      "context": "shopping center housing Dough Zone and other restaurants",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/",
         "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
         "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
         "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
         "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "Calder's at Sharks Ice San Jose",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "Barracuda Calder Cup playoffs watch party venue",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Ann Lin Jazz Recital",
-      "when": "Saturday April 25, 4:30PM",
-      "city": "San Jose",
-      "context": "free jazz recital at SJSU Music",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "(Un)Documents",
-      "when": "Saturday April 25, 7:30PM",
-      "city": "San Jose",
-      "context": "performance at MACLA arts venue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "SJMA Gala After-Party",
-      "when": "Saturday April 25, 9:30PM",
-      "city": "San Jose",
-      "context": "gala after-party event downtown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Vuori Run",
-      "when": "Saturday April 25, 8AM",
-      "city": "San Jose",
-      "context": "free running event at Santana Row",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "French Market Carnival",
-      "when": "Saturday April 25, 10AM-8PM",
-      "city": "Saratoga",
-      "context": "carnival event with dance party in evening",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Holo Holo Festival",
-      "when": "Saturday April 25, 12PM-10PM",
-      "city": "San Jose",
-      "context": "festival at Discovery Meadow",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Roller Derby",
-      "when": "Saturday April 25, 1PM-8PM",
-      "city": "San Jose",
-      "context": "roller derby event at The Plex",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "LaughSJ Comedy",
-      "when": "Saturday April 25, 7:30PM",
-      "city": "San Jose",
-      "context": "comedy show at Island Taste restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "Goodtime Bar 3rd Anniversary",
-      "when": "Saturday April 25, 6PM",
-      "city": "San Jose",
-      "context": "anniversary celebration with music and drink specials",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
-      "name": "RaveVuelta",
-      "when": "Saturday April 25",
-      "city": "San Jose",
-      "context": "EDM event celebrating Central American culture at Tanchito's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ]
-    },
-    {
       "name": "South Bay Alcohol-Free Women's Hangouts",
       "when": "May & June 2026",
       "city": "San Jose",
-      "context": "regular social meetup events for women",
+      "context": "recurring social events for women seeking sober hangouts",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1svq0i5/what_are_these_white_cars_with_numbers_and_blue/",
+        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
+        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
+        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
         "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sv2l59/favorite_sharks_game_from_the_20252026_season/",
-        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/",
-        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/"
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ]
     },
     {
       "name": "Murphy Association Community Event",
-      "when": "Saturday, April 25th",
+      "when": "Saturday April 25th",
       "city": "Sunnyvale",
-      "context": "community gathering with snacks, free books, activities at Murphy Park",
+      "context": "community gathering with snacks, free books at Murphy Park",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/",
         "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
         "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
         "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
         "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "San Jose Barracuda Calder Cup Playoffs Watch Party",
+      "when": "tonight at 7 PM",
+      "city": "San Jose",
+      "context": "watch party at Calder's venue for Cuda games",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
+      ]
+    },
+    {
+      "name": "Las Palmas Park Community Outreach Meeting",
+      "when": "today at 3:30 PM at Grasy Mound",
+      "city": "Sunnyvale",
+      "context": "council meeting regarding park renovation plans",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
+      ]
+    },
+    {
+      "name": "In-Person D&D Campaign",
+      "when": "date and time to be coordinated",
+      "city": "Mountain View",
+      "context": "beginner-friendly Dungeons & Dragons sessions, $35 per player",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
       ]
     }
   ],
@@ -358,125 +149,27 @@
       "name": "Bill's Cafe",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "family-owned Greek cafe, multiple South Bay locations",
+      "context": "family-owned Greek breakfast cafe with multiple locations",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
         "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
         "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ],
       "matchedName": "Bill's Cafe"
-    },
-    {
-      "name": "Whole Foods",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "grocery store near The Alameda and Diridon station",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Whole Foods Market"
-    },
-    {
-      "name": "Santana Row",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "shopping destination with Vuori Run event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Santana Row"
-    },
-    {
-      "name": "Willow Glen Farmers Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Saturday farmers market at 1425 Lincoln Ave",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Willow Glen Farmers' Market"
-    },
-    {
-      "name": "Berryessa Farmers Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Saturday farmers market at 945 Piedmont Rd",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Berryessa Farmers' Market"
-    },
-    {
-      "name": "Discovery Meadow",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "hosts Holo Holo Festival at 180 Woz Way",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Discovery Meadow"
-    },
-    {
-      "name": "The Plex",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Roller Derby at 800 Embedded Way",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "The Plex"
-    },
-    {
-      "name": "Goodtime Bar",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "celebrating 3rd anniversary with music and specials",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "Goodtime Bar"
     },
     {
       "name": "Uncle John's Pancake House",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast alternative mentioned in community discussion",
+      "context": "breakfast alternative to Bill's Cafe",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
         "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
         "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ],
       "matchedName": "Uncle John's Pancake House"
     },
@@ -484,13 +177,13 @@
       "name": "Holder's Country Inn",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast restaurant mentioned as Bill's Cafe alternative",
+      "context": "breakfast restaurant compared favorably to Bill's Cafe",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
         "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
         "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ],
       "matchedName": "Holder’s Country Inn"
     },
@@ -498,22 +191,37 @@
       "name": "Mission City Grill",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "restaurant mentioned as Bill's Cafe alternative",
+      "context": "restaurant recommended as alternative to Bill's Cafe",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
         "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
         "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
+        "https://www.reddit.com/r/mountainview/comments/1su68vi/us_news_ranks_mountain_view_6th_best_place_to/",
+        "https://www.reddit.com/r/SanJose/comments/1svklhy/south_bay_alcoholfree_womens_hangouts_may_june/"
       ],
       "matchedName": "Holder’s Mission City Grill"
+    },
+    {
+      "name": "Murphy Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "community event location organized by Murphy Association",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/",
+        "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
+        "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ],
+      "matchedName": "Murphy Park"
     },
     {
       "name": "Dough Zone",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "new location opening at Pruneyard shopping center",
+      "context": "new opening at Pruneyard shopping center",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/",
         "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
         "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
         "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
@@ -522,33 +230,31 @@
       "matchedName": "Dough Zone Dumpling House Cupertino"
     },
     {
-      "name": "Murphy Park",
+      "name": "Stanford Shopping Center",
+      "city": "Palo Alto",
+      "kind": "retail",
+      "context": "Bed Bath & Beyond and Container Store opening location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
+      ],
+      "matchedName": "K. MINAMOTO Stanford Shopping Center Store"
+    },
+    {
+      "name": "Las Palmas Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "community event hosted by Murphy Association on April 25th",
+      "context": "regional sports facility with community outreach meeting",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svpwr7/went_to_lake_cunningham_park_havent_been_in_years/",
-        "https://www.reddit.com/r/mountainview/comments/1stom3d/eli5_public_elementary_schools_in_mv/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1svisd7/murphy_association_community_event_at_murphy_park/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1suv8pa/cuda_watch_party_tonight_at_calders_sharks_ice/",
+        "https://www.reddit.com/r/paloalto/comments/1suhogc/bed_bath_and_beyond_will_return_at_stanford/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1svmwtj/reminder_las_palmas_park_councilmember_linda_sell/",
+        "https://www.reddit.com/r/mountainview/comments/1stmwsi/inperson_dd_in_south_bay_area/"
       ],
-      "matchedName": "Murphy Park"
+      "matchedName": "Las Palmas Park"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Kingdom of Cards",
-      "when": "Saturday April 25, 2PM",
-      "city": "San Jose",
-      "context": "theater performance at Hammer Theater",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1svtpic/how_silicon_valley_solves_homelessness/",
-        "https://www.reddit.com/r/SanJose/comments/1svm7jc/thoughts_on_bills_cafe/",
-        "https://www.reddit.com/r/SanJose/comments/1sva134/sj_walkability_moving_from_nyc_sj_for_work/",
-        "https://www.reddit.com/r/bayarea/comments/1svwd90/anyone_else_dying_of_allergies_first_spring_in/",
-        "https://www.reddit.com/r/SanJose/comments/1sv9g06/22_events_in_san_jose_today_apr_25_2026/"
-      ],
-      "matchedName": "SJSU Theatre Presents: Kingdom of Cards at Hammer Theater Center"
-    }
-  ]
+  "eventMatches": []
 }
