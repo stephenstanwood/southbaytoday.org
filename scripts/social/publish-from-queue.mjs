@@ -154,13 +154,19 @@ function rewriteTimeReferences(text, item, ptTime) {
     const hour = ptTime.getHours();
     const eventHour = parseEventHour(item.time);
 
-    // Replace "this afternoon" with "tonight" if it's evening
+    // Replace "this afternoon" with "tonight" if it's evening — preserve case
+    // so "This afternoon" → "Tonight", not "tonight".
     if (hour >= 17 && eventHour && eventHour >= 17) {
-      result = result.replace(/\bthis afternoon\b/gi, "tonight");
+      result = result.replace(/\bthis afternoon\b/gi, (match) =>
+        match[0] === match[0].toUpperCase() ? "Tonight" : "tonight"
+      );
     }
-    // Replace "tonight" with "this afternoon" if it's morning/afternoon event
+    // Replace "tonight" with "this afternoon" if it's morning/afternoon event —
+    // preserve case so "Tonight" → "This afternoon", not "this afternoon".
     if (hour < 17 && eventHour && eventHour < 17) {
-      result = result.replace(/\btonight\b/gi, "this afternoon");
+      result = result.replace(/\btonight\b/gi, (match) =>
+        match[0] === match[0].toUpperCase() ? "This afternoon" : "this afternoon"
+      );
     }
   }
 
@@ -405,7 +411,16 @@ async function main() {
     const rewriteItem = { ...item, date: effectiveDate };
     const rewrittenCopy = {};
     for (const [platform, text] of Object.entries(post.copy || {})) {
-      rewrittenCopy[platform] = rewriteTimeReferences(text, rewriteItem, ptTime);
+      let rewritten = rewriteTimeReferences(text, rewriteItem, ptTime);
+      // Final guard: ensure the first letter is uppercase. Catches any future
+      // case-mangling from rewrites or upstream copy that slipped a lowercase
+      // start past the model. Only touches the first character — body case is
+      // intentional Reddit-voice / quotes / etc.
+      if (rewritten && /^[a-z]/.test(rewritten)) {
+        rewritten = rewritten[0].toUpperCase() + rewritten.slice(1);
+        console.log(`      🔠 ${platform}: capitalized first letter (was lowercase)`);
+      }
+      rewrittenCopy[platform] = rewritten;
       if (rewrittenCopy[platform] !== text) {
         console.log(`      ✏️  ${platform}: time refs rewritten`);
       }
