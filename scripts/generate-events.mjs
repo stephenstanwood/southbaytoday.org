@@ -944,6 +944,25 @@ function isStudentOnlyEvent(item) {
   return false;
 }
 
+/** Pull a venue out of a title like "Workshop at King Library" → "King Library".
+ *  Used when the source feed doesn't populate <location>; without this, two
+ *  unrelated SJSU events fall back to the generic "San Jose State University"
+ *  venue and collide in cross-source dedup. */
+function extractVenueFromTitle(title) {
+  if (!title) return null;
+  // Strip the calendar-artifact date prefix first
+  const stripped = title.replace(
+    /^(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:,\s*\d{4})?\s*:\s*/i,
+    "",
+  );
+  const m = stripped.match(/\s+at\s+([A-Z][^,]+?)$/);
+  if (!m) return null;
+  const venue = m[1].trim();
+  // Reject obviously-non-venue tails (events ending with dates, times, etc.)
+  if (/^\d|^(noon|midnight)\b/i.test(venue)) return null;
+  return venue;
+}
+
 async function fetchSjsuEvents() {
   console.log("  ⏳ SJSU Events...");
   try {
@@ -961,7 +980,7 @@ async function fetchSjsuEvents() {
         displayDate: displayDate(start),
         time: displayTime(start),
         endTime: null,
-        venue: item.location || "San Jose State University",
+        venue: item.location || extractVenueFromTitle(item.title) || "San Jose State University",
         address: "",
         city: "san-jose",
         category: inferCategory(item.title, item.description, ""),
@@ -3338,9 +3357,12 @@ function extractTimeFromHtml(html, eventDate) {
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ");
-  // Time patterns prefixed by labels like "doors at", "show", "starts", "@"
-  const labeledMatch = text.match(/\b(?:doors|starts?|begins?|opens?|show(?:time)?|curtain|@)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i);
-  if (labeledMatch) return formatHourClock(labeledMatch[1]);
+  // Time patterns prefixed by labels like "doors at", "show", "starts", "@".
+  // Two regexes — `@` doesn't sit at a word boundary so it needs its own pattern.
+  const labelMatch = text.match(/\b(?:doors|starts?|begins?|opens?|show(?:time)?|curtain)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i);
+  if (labelMatch) return formatHourClock(labelMatch[1]);
+  const atSignMatch = text.match(/@\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i);
+  if (atSignMatch) return formatHourClock(atSignMatch[1]);
   // Fallback: first time mention in the first 2KB of body text
   const head = text.slice(0, 2000);
   const generalMatch = head.match(/\b(\d{1,2}:\d{2}\s*(?:am|pm))\b/i) || head.match(/\b(\d{1,2}\s*(?:am|pm))\b/i);
@@ -4203,64 +4225,39 @@ async function main() {
     return true;
   });
 
-  // Detect multi-day events and collapse to first occurrence as ongoing.
-  // Three rules:
-  //   1. Same title + same URL (non-null) + no time → exhibit/gallery, 2+ dates suffices
-  //   2. Same title + 3+ distinct dates → recurring event regardless of URL
-  //   3. Same title + same source + same venue + 2+ dates within 5 days → multi-day show/festival (not Ticketmaster)
+  // Detect true exhibits and collapse to first occurrence as ongoing.
+  // Single rule: same title + same URL + no clock time + 2+ dates → gallery
+  // or exhibit. Earlier rules also flagged "same title + 3+ dates" or
+  // "same title + venue + 2 dates within 5 days" as ongoing — those exiled
+  // weekly recurring events (storytimes, ESL classes, multi-night theater
+  // runs) to the Ongoing section even when each occurrence had a clock time.
+  // Stephen 2026-04-25: those should appear in the day's normal feed on the
+  // date they actually run.
   const normTitle = (e) =>
     e.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim().substring(0, 50);
-  const normVenue = (e) =>
-    (e.venue || "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 40);
 
-  const titleDates = {};
   const urlDates = {};
-  const titleSourceVenueDates = {};
   deduped.forEach((e) => {
-    const k = normTitle(e);
-    if (!titleDates[k]) titleDates[k] = new Set();
-    titleDates[k].add(e.date);
-    // Track same-URL + no-time events separately (gallery/exhibit detection)
     if (e.url && !e.time) {
       const uk = `url:${e.url}`;
-      if (!urlDates[uk]) urlDates[uk] = { dates: new Set(), key: k };
+      if (!urlDates[uk]) urlDates[uk] = { dates: new Set(), key: normTitle(e) };
       urlDates[uk].dates.add(e.date);
-    }
-    // Track same title+source+venue for multi-day show detection (Rule 3)
-    if (e.source !== "Ticketmaster" && normVenue(e)) {
-      const tsvk = `${k}|${e.source}|${normVenue(e)}`;
-      if (!titleSourceVenueDates[tsvk]) titleSourceVenueDates[tsvk] = { dates: new Set(), key: k };
-      titleSourceVenueDates[tsvk].dates.add(e.date);
     }
   });
 
-  const multiDayKeys = new Set([
-    // Rule 1: same URL + no time + 2+ dates
-    ...Object.values(urlDates)
+  const exhibitKeys = new Set(
+    Object.values(urlDates)
       .filter((v) => v.dates.size >= 2)
       .map((v) => v.key),
-    // Rule 2: same title + 3+ dates
-    ...Object.entries(titleDates)
-      .filter(([, dates]) => dates.size >= 3)
-      .map(([key]) => key),
-    // Rule 3: same title + same source + same venue + 2+ dates all within 5 days (not Ticketmaster)
-    ...Object.values(titleSourceVenueDates)
-      .filter((v) => {
-        if (v.dates.size < 2) return false;
-        const sorted = [...v.dates].sort();
-        const spanDays = (new Date(sorted[sorted.length - 1]) - new Date(sorted[0])) / (1000 * 60 * 60 * 24);
-        return spanDays <= 5;
-      })
-      .map((v) => v.key),
-  ]);
+  );
 
-  const seenMultiDay = new Set();
+  const seenExhibit = new Set();
   const finalEvents = deduped.filter((e) => {
     const key = normTitle(e);
-    if (multiDayKeys.has(key)) {
-      if (seenMultiDay.has(key)) return false;
-      seenMultiDay.add(key);
-      e.ongoing = true; // flag for UI — show in "Ongoing" section, not day-by-day feed
+    if (exhibitKeys.has(key)) {
+      if (seenExhibit.has(key)) return false;
+      seenExhibit.add(key);
+      e.ongoing = true; // flag for UI — show in "Exhibits" section, not day-by-day feed
     }
     return true;
   });

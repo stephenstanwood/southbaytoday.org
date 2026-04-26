@@ -408,8 +408,19 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   }, [todayIso]);
 
   const allEvents = upcomingData?.events ?? [];
-  const upcomingEvents = useMemo(() => allEvents.filter((e) => !e.ongoing), [allEvents]);
-  const ongoingEvents = useMemo(() => allEvents.filter((e) => e.ongoing), [allEvents]);
+  // Reclassify: an event with `ongoing: true` AND a clock time is a recurring
+  // event (weekly storytime, ESL class, multi-night theater run) that the
+  // multi-day-detection rules in generate-events.mjs over-flagged. Treat it
+  // as a normal event on its date so it shows up in the day view, not exiled
+  // to the Exhibits section. True exhibits have no clock time.
+  const upcomingEvents = useMemo(
+    () => allEvents.filter((e) => !e.ongoing || !!e.time),
+    [allEvents],
+  );
+  const ongoingEvents = useMemo(
+    () => allEvents.filter((e) => e.ongoing && !e.time),
+    [allEvents],
+  );
 
   const allCities = selectedCities.size === CITIES.length;
 
@@ -506,16 +517,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
   }, [datesWithEvents, selectedDate, todayIso, isSearching]);
 
-  // Per-category counts (for badges on category pills) — reflect current view
+  // Per-category counts (for badges on category pills) — count across ALL
+  // upcoming events so users can see which categories have anything at all,
+  // regardless of which day is currently selected. Honors city/kids/search
+  // filters since those reflect the user's intent across the whole feed.
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    const pool = isSearching
-      ? upcomingEvents.filter((e) => e.date >= todayIso)
-      : upcomingEvents.filter((e) => e.date === selectedDate);
-    for (const e of pool) {
+    for (const e of upcomingEvents) {
+      if (e.date < todayIso) continue;
+      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -528,7 +540,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, showKidsOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -553,7 +565,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           Events
           <span style={{ fontSize: 13, fontWeight: 400, color: "var(--sb-muted)", marginLeft: 8 }}>
             {upcomingEvents.length} upcoming
-            {ongoingEvents.length > 0 && ` · ${ongoingEvents.length} ongoing`}
+            {ongoingEvents.length > 0 && ` · ${ongoingEvents.length} on view`}
           </span>
         </span>
         <div className="sb-section-line" />
@@ -836,15 +848,15 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         </div>
       )}
 
-      {/* Ongoing / Exhibits — shown below in both modes when matches exist */}
+      {/* Exhibits — gallery shows that run for many days, no specific clock time */}
       {filteredOngoing.length > 0 && (
         <div style={{ marginTop: 28 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 6, borderBottom: "2px solid var(--sb-border)" }}>
             <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)" }}>
-              Ongoing &amp; Exhibits
+              Exhibits
             </span>
             <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
-              {filteredOngoing.length} showing now
+              {filteredOngoing.length} on view
             </span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>

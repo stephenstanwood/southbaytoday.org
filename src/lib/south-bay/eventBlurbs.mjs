@@ -54,10 +54,43 @@ function norm(s) {
 }
 
 function cacheKey(event) {
-  if (event.url) return `url:${event.url}`;
-  // Fingerprint fallback — stable across date variants of the same recurring
-  // event as long as title + venue are consistent.
+  // Title + venue fingerprint — stable across date variants of the same
+  // recurring event, AND distinct between different events that happen to
+  // share a URL (e.g. all MLS Earthquakes home games shared
+  // sjearthquakes.com/schedule, which used to map every game to whichever
+  // game's blurb got cached first — every team showed the same opponent).
   return `fp:${norm(event.title)}|${norm(event.venue)}`;
+}
+
+/** Migrate legacy `url:<URL>` cache entries.
+ *  Where exactly one current event uses a given URL, copy its blurb to the
+ *  new fingerprint key — preserves work. Where multiple events share the
+ *  URL, drop the cached blurb (it was wrong for all but one of them). */
+function migrateUrlKeys(cache, currentEvents) {
+  const eventsByUrl = new Map();
+  for (const e of currentEvents) {
+    if (!e.url) continue;
+    if (!eventsByUrl.has(e.url)) eventsByUrl.set(e.url, []);
+    eventsByUrl.get(e.url).push(e);
+  }
+  let migrated = 0, dropped = 0;
+  for (const oldKey of Object.keys(cache.byKey)) {
+    if (!oldKey.startsWith("url:")) continue;
+    const url = oldKey.slice(4);
+    const matches = eventsByUrl.get(url) || [];
+    if (matches.length === 1) {
+      const newKey = cacheKey(matches[0]);
+      if (!cache.byKey[newKey]) cache.byKey[newKey] = cache.byKey[oldKey];
+      delete cache.byKey[oldKey];
+      migrated++;
+    } else {
+      delete cache.byKey[oldKey];
+      dropped++;
+    }
+  }
+  if (migrated || dropped) {
+    console.log(`[eventBlurbs] cache migration: ${migrated} migrated, ${dropped} dropped (URL collisions)`);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -93,28 +126,56 @@ function buildUserPrompt(events) {
     return parts.join(" | ");
   });
 
-  return `Write one blurb per event. Return ONLY a JSON array of ${events.length} strings in the same order — no markdown fences, no explanation.
+  // Indexed objects so we can match blurbs to events even if the model returns
+  // them out of order or drops one — we previously trusted positional order
+  // and ended up with cross-event blurb swaps (a flower-drawing class got the
+  // chronic-pain blurb, etc.).
+  return `Write one blurb per event. Return a JSON array where each object has the event's index ("i") and its "blurb". No markdown fences, no commentary.
 
 Events:
 ${lines.join("\n")}
 
-Output format:
-["blurb 1", "blurb 2", ...]`;
+Output format (one object per event, index matches the number above):
+[{"i": 1, "blurb": "..."}, {"i": 2, "blurb": "..."}]`;
 }
 
+/** Parse a blurb response. Returns an array of length `expectedLen` where
+ *  index k holds the blurb for event k (or null if missing/invalid). Robust
+ *  to out-of-order arrays and missing entries. */
 function parseBlurbArray(raw, expectedLen) {
   let cleaned = String(raw || "").trim();
   cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
-  try {
-    const arr = JSON.parse(cleaned);
-    if (!Array.isArray(arr)) return null;
-    if (arr.length !== expectedLen) {
-      console.warn(`[eventBlurbs] batch length mismatch: expected ${expectedLen}, got ${arr.length}`);
+  let arr;
+  try { arr = JSON.parse(cleaned); } catch { return null; }
+  if (!Array.isArray(arr)) return null;
+
+  const out = new Array(expectedLen).fill(null);
+
+  // New shape: array of {i, blurb} objects
+  if (arr.length > 0 && typeof arr[0] === "object" && arr[0] !== null && "blurb" in arr[0]) {
+    for (const item of arr) {
+      if (!item || typeof item !== "object") continue;
+      const idx = Number(item.i);
+      if (!Number.isInteger(idx) || idx < 1 || idx > expectedLen) continue;
+      const b = typeof item.blurb === "string" ? item.blurb.trim() : null;
+      if (b) out[idx - 1] = b;
     }
-    return arr.map((s) => (typeof s === "string" ? s.trim() : null));
-  } catch {
-    return null;
+    const got = out.filter(Boolean).length;
+    if (got !== expectedLen) {
+      console.warn(`[eventBlurbs] batch returned ${got}/${expectedLen} indexed blurbs`);
+    }
+    return out;
   }
+
+  // Legacy shape: array of strings — fall back to positional assignment.
+  for (let i = 0; i < expectedLen; i++) {
+    const v = arr[i];
+    if (typeof v === "string" && v.trim()) out[i] = v.trim();
+  }
+  if (arr.length !== expectedLen) {
+    console.warn(`[eventBlurbs] batch length mismatch: expected ${expectedLen}, got ${arr.length}`);
+  }
+  return out;
 }
 
 async function haikuBatch(client, events) {
@@ -161,6 +222,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
   };
 
   const cache = loadCache();
+  migrateUrlKeys(cache, events);
 
   // --- Pass 1: apply preexisting + cache hits ------------------------------
   const todo = [];
