@@ -321,5 +321,9 @@
       "facebook": "southbaytoday",
       "mastodon": "southbaytoday@mastodon.social"
     }
+  },
+
+  "performers": {
+    "_format": "Individual artists, bands, authors, speakers, comedians. Use lowercase normalized name as key (matches the substring search in handle-lookup against event titles like 'Vienna Teng' or 'Sierra Nevada Concert Experience: Mana')."
   }
 }

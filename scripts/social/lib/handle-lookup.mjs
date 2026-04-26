@@ -23,11 +23,15 @@ function loadHandles() {
   if (_cache) return _cache;
   try {
     const raw = JSON.parse(readFileSync(HANDLES_FILE, "utf8"));
-    // Build a flat lookup: normalized key → { handles, displayName }
+    // Build a flat lookup: normalized key → { handles, displayName }.
+    // Performers live alongside venues/orgs because matching is identical —
+    // a name is a name, regardless of whether it belongs to a building or a
+    // band. Sections only matter for human curation.
     const lookup = new Map();
-    for (const section of ["venues", "orgs"]) {
+    for (const section of ["venues", "orgs", "performers"]) {
       if (!raw[section]) continue;
       for (const [name, handles] of Object.entries(raw[section])) {
+        if (name.startsWith("_")) continue; // schema/comment keys (e.g. _format)
         lookup.set(normalizeText(name), { handles, displayName: name });
       }
     }
@@ -181,13 +185,22 @@ function collectTargets(item) {
     const key = m.key;
     if (seen.has(key)) return;
     seen.add(key);
-    // Try the original input first (preserves apostrophes/accents the LLM
-    // is likely to copy verbatim), then the DB key as a fallback for cases
-    // where the LLM paraphrases ("San Jose Sharks face Kraken" instead of
-    // "San Jose Sharks vs Kraken").
+    // Pick candidate names to look for in LLM output. When input == DB key
+    // (a venue like "Kepler's Books"), use input first to preserve
+    // apostrophes/accents. When input is LONGER than DB key (a title like
+    // "Sierra Nevada Concert Experience: Mana" matching DB key "mana"),
+    // use the DB displayName so we substitute only the entity, not the
+    // surrounding context. Otherwise both — substitution falls through.
+    const inputNorm = normalizeText(name);
     const candidates = [];
-    if (name) candidates.push(name);
-    if (m.displayName && m.displayName !== name) candidates.push(m.displayName);
+    if (inputNorm === m.key) {
+      candidates.push(name);
+      if (m.displayName !== name) candidates.push(m.displayName);
+    } else {
+      // DB key is the operative phrase — substitute only that
+      candidates.push(m.displayName);
+      candidates.push(name);
+    }
     targets.push({ candidates, handles: m.handles });
   };
   tryAdd(item?.venue);
