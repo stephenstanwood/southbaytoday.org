@@ -1250,12 +1250,12 @@ function renderCalendar() {
   const days = scheduleData.days || {};
   const reviewLookup = buildReviewLookup();
 
-  // Generate 10 days starting from today
+  // Walk every scheduled date today-or-later — mirrors the gen horizon
+  // (today through next-Wed+7) without hardcoding a window.
+  const futureDates = Object.keys(days).filter(k => k >= today).sort();
   let html = '';
-  for (let offset = 0; offset < 10; offset++) {
-    const d = new Date(today + 'T12:00:00');
-    d.setDate(d.getDate() + offset);
-    const dateStr = d.toLocaleDateString('en-CA');
+  for (const dateStr of futureDates) {
+    const d = new Date(dateStr + 'T12:00:00');
     const dayName = DAY_NAMES_CAL[d.getDay()];
     const monthDay = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     const isToday = dateStr === today;
