@@ -39,7 +39,7 @@ async function main() {
 
   console.log(`Fetching NASA APOD (${startDate} → ${endDate})…`);
   const res = await fetch(url, {
-    headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; public data)" },
+    headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
     signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${await res.text()}`);

@@ -552,7 +552,7 @@ async function fetchPage(whereClause, orderField, limit = 50) {
   });
   const url = `${API_BASE}?${params}`;
   const res = await fetch(url, {
-    headers: { "Accept": "application/json", "User-Agent": "southbaysignal.org/data-pipeline" },
+    headers: { "Accept": "application/json", "User-Agent": "southbaytoday.org/data-pipeline" },
   });
   if (!res.ok) throw new Error(`SCC API ${res.status}: ${await res.text()}`);
   return res.json();

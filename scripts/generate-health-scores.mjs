@@ -33,7 +33,7 @@ const cutoffDate = cutoff.toISOString().split("T")[0].replace(/-/g, ""); // YYYY
 
 async function fetchJson(url) {
   const res = await fetch(url, {
-    headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; public data)" },
+    headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
     signal: AbortSignal.timeout(20_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);

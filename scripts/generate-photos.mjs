@@ -30,7 +30,7 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-const UA = "SouthBaySignal/1.0 (southbaysignal.org; educational/noncommercial)";
+const UA = "SouthBayToday/1.0 (southbaytoday.org; educational/noncommercial)";
 
 // CC licenses that allow reuse with attribution (excluding NC variants for safety)
 const CC_LICENSES = "4,5,6,9,10"; // CC BY, CC BY-SA, CC BY-ND, CC0, PDM

@@ -63,7 +63,7 @@ async function fetchWithRetry() {
         await new Promise((r) => setTimeout(r, delay));
       }
       const res = await fetch(REDFIN_URL, {
-        headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; public data)" },
+        headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -20,7 +20,7 @@ const PGE_URL =
 
 async function fetchJson(url) {
   const res = await fetch(url, {
-    headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; public data)" },
+    headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
     signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);

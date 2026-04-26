@@ -1,12 +1,12 @@
 #!/bin/bash
 # ---------------------------------------------------------------------------
-# South Bay Signal — Hung Process Watchdog
-# Checks for SBS launchd processes stuck longer than expected.
+# South Bay Today — Hung Process Watchdog
+# Checks for SBT launchd processes stuck longer than expected.
 # Sends a Discord DM when detected so Stephen can screen share and fix.
 #
 # Install as launchd agent on Mac Mini:
-#   cp scripts/watchdog.plist ~/Library/LaunchAgents/org.southbaysignal.watchdog.plist
-#   launchctl load ~/Library/LaunchAgents/org.southbaysignal.watchdog.plist
+#   cp scripts/watchdog.plist ~/Library/LaunchAgents/org.southbaytoday.watchdog.plist
+#   launchctl load ~/Library/LaunchAgents/org.southbaytoday.watchdog.plist
 #
 # Runs every 15 minutes. Suppresses duplicate alerts for 60 minutes.
 # ---------------------------------------------------------------------------

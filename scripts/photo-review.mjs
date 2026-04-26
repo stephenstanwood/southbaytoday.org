@@ -31,7 +31,7 @@ const UNSPLASH_KEY = process.env.UNSPLASH_ACCESS_KEY || null;
 
 if (!FLICKR_KEY) { console.error("❌ FLICKR_API_KEY not set"); process.exit(1); }
 
-const UA = "SouthBaySignal/1.0 (southbaysignal.org; educational/noncommercial)";
+const UA = "SouthBayToday/1.0 (southbaytoday.org; educational/noncommercial)";
 
 // Photos permanently removed from the curated set — never re-add on regeneration
 // Canonical list lives in blocked-photos.mjs (shared with build-curated-photos.mjs)

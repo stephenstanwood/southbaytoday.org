@@ -152,7 +152,7 @@ async function fetchAllPermits() {
   while (true) {
     const url = `${API_BASE}?resource_id=${RESOURCE_ID}&limit=${limit}&offset=${offset}`;
     const res = await fetch(url, {
-      headers: { "User-Agent": "southbaysignal.org/permits-bot (+https://southbaysignal.org)" },
+      headers: { "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)" },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status} from permits API`);
     const body = await res.json();
@@ -347,7 +347,7 @@ const PA_CATEGORY_LABELS = {
 async function fetchPaloAltoPermits(cutoffStr) {
   // 1. Get session + CSRF token
   const page = await fetch(`${PA_PERMIT_VIEW}/`, {
-    headers: { "User-Agent": "southbaysignal.org/permits-bot (+https://southbaysignal.org)" },
+    headers: { "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)" },
   });
   if (!page.ok) throw new Error(`PermitView page HTTP ${page.status}`);
 
@@ -374,7 +374,7 @@ async function fetchPaloAltoPermits(cutoffStr) {
       "X-Requested-With": "XMLHttpRequest",
       Cookie: cookieParts,
       Referer: `${PA_PERMIT_VIEW}/`,
-      "User-Agent": "southbaysignal.org/permits-bot (+https://southbaysignal.org)",
+      "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)",
     },
     body: formData.toString(),
   });

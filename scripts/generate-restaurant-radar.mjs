@@ -229,7 +229,7 @@ async function fetchPaloAltoFoodPermits() {
   let page;
   try {
     page = await fetch(`${PA_PERMIT_VIEW}/`, {
-      headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; permits research)" },
+      headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; permits research)" },
       signal: AbortSignal.timeout(15_000),
     });
   } catch (err) {
@@ -271,7 +271,7 @@ async function fetchPaloAltoFoodPermits() {
         "X-Requested-With": "XMLHttpRequest",
         Cookie: cookieParts,
         Referer: `${PA_PERMIT_VIEW}/`,
-        "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; permits research)",
+        "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; permits research)",
       },
       body: formData.toString(),
       signal: AbortSignal.timeout(20_000),
@@ -346,7 +346,7 @@ async function main() {
   for (const term of FOOD_TERMS) {
     const url = `${API_BASE}?resource_id=${RESOURCE_ID}&q=${encodeURIComponent(term)}&limit=200`;
     const res = await fetch(url, {
-      headers: { "User-Agent": "SouthBaySignal/1.0 (southbaysignal.org; public data)" },
+      headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
       signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) {
