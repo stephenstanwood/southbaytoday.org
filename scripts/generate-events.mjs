@@ -4106,9 +4106,21 @@ async function main() {
     const last = String(t).split(",").pop().trim();
     return TIME_PATTERN.test(last);
   }
+  // Canonical "8:00 PM" form — different scrapers spit out "8PM", "10:30AM",
+  // etc. Standardize so display + sort + comparisons are uniform.
+  function normalizeClockTime(t) {
+    if (!t) return t;
+    const m = String(t).trim().match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]m)$/i);
+    if (!m) return t;
+    const h = parseInt(m[1], 10);
+    const min = m[2] ?? "00";
+    return `${h}:${min} ${m[3].toUpperCase()}`;
+  }
   allEvents.forEach((e) => {
     if (e.time && !isClockTime(e.time)) e.time = null;
     if (e.endTime && !isClockTime(e.endTime)) e.endTime = null;
+    if (e.time) e.time = normalizeClockTime(e.time);
+    if (e.endTime) e.endTime = normalizeClockTime(e.endTime);
   });
 
   // Time backfill: for events that lost their time at the source, fetch the

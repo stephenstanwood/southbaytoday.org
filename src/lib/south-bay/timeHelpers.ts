@@ -33,6 +33,19 @@ export const TOMORROW_LABEL = NEXT_DAYS[0]?.label ?? "Tomorrow";
 
 // ── Time parsing ──
 
+// Normalize varied scraper outputs to canonical "8:00 PM" form. Handles
+// "8PM" → "8:00 PM", "10:30AM" → "10:30 AM", and leaves already-canonical
+// strings alone. Returns the original string for anything we don't recognize.
+export function normalizeClockTime(t: string | null | undefined): string | null {
+  if (!t) return null;
+  const m = String(t).trim().match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]m)$/i);
+  if (!m) return t;
+  const hour = parseInt(m[1], 10);
+  const min = m[2] ?? "00";
+  const period = m[3].toUpperCase();
+  return `${hour}:${min} ${period}`;
+}
+
 export function parseMinutes(timeStr: string, useLast = false): number | null {
   if (!timeStr) return null;
   const parts = timeStr.split(/\s*[,–\-]\s*/);

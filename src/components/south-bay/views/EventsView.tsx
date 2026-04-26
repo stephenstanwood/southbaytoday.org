@@ -72,7 +72,21 @@ interface UpcomingEvent {
 
 // ── Time helpers ───────────────────────────────────────────────────────────
 
-function formatTimeRange(time: string | null, endTime: string | null, isSports = false): string | null {
+// Normalize varied scraper outputs to canonical "8:00 PM" form. Inputs we see
+// in the data: "8PM" → "8:00 PM", "10:30AM" → "10:30 AM", "9:30 AM" → unchanged.
+function normalizeClockTime(t: string | null | undefined): string | null {
+  if (!t) return null;
+  const m = String(t).trim().match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]m)$/i);
+  if (!m) return t;
+  const hour = parseInt(m[1], 10);
+  const min = m[2] ?? "00";
+  const period = m[3].toUpperCase();
+  return `${hour}:${min} ${period}`;
+}
+
+function formatTimeRange(timeIn: string | null, endTimeIn: string | null, isSports = false): string | null {
+  const time = normalizeClockTime(timeIn);
+  const endTime = normalizeClockTime(endTimeIn);
   if (!time) return null;
   if (!endTime || isSports) return time;
   const startPeriod = time.match(/(am|pm)$/i)?.[1]?.toUpperCase();

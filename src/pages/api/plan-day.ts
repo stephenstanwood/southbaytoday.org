@@ -425,12 +425,38 @@ function openRangesToday(hours: Record<string, string> | null | undefined): Arra
   return out;
 }
 
+// Place types where business hours matter — slotting these at specific times
+// without verified hours risks suggesting a bakery before it opens or a bar
+// before noon. Parks and trails are excluded: they're typically dawn-to-dusk
+// and we don't want to drop them just because Google didn't return hours.
+const TIME_SENSITIVE_TYPES = new Set([
+  "restaurant", "cafe", "bakery", "bar", "meal_takeaway", "food", "meal_delivery",
+  "museum", "art_gallery", "movie_theater", "performing_arts_theater",
+  "shopping_mall", "spa", "gym", "bowling_alley", "amusement_park",
+  "aquarium", "zoo", "library", "ice_cream_shop", "coffee_shop",
+]);
+
+function isTimeSensitive(types: string[] | null | undefined): boolean {
+  if (!types) return false;
+  return types.some((t) => TIME_SENSITIVE_TYPES.has(t));
+}
+
 /**
  * Check whether the given [startH, endH] block fits entirely within any of
- * the venue's open ranges today. Unknown hours = default 9 AM–8 PM window.
+ * the venue's open ranges today. For unknown hours, time-sensitive venues
+ * (restaurants, museums, etc.) fail the check — we don't guess hours.
+ * Outdoor/flexible types (parks, trails) get a daylight default.
  */
-function fitsInOpenRange(hours: Record<string, string> | null | undefined, startH: number, endH: number): boolean {
-  if (!hours) return startH >= 9 && endH <= 20; // default 9 AM–8 PM for unknown hours
+function fitsInOpenRange(
+  hours: Record<string, string> | null | undefined,
+  startH: number,
+  endH: number,
+  types?: string[] | null,
+): boolean {
+  if (!hours) {
+    if (isTimeSensitive(types)) return false;
+    return startH >= 6 && endH <= 21; // outdoor/flexible: rough daylight band
+  }
   const ranges = openRangesToday(hours);
   if (ranges.length === 0) return false; // closed today
   for (const [o, c] of ranges) {
@@ -1092,15 +1118,21 @@ async function sequenceWithClaude(
       // Only include places that are actually open. If hours data is present
       // and there's no entry for today, skip entirely (closed today).
       const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
+      const placeTypes = (c as any).types as string[] | null | undefined;
       const fmt = (h: number) => (h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : h === 0 ? "12 AM" : `${h} AM`);
       if (hoursObj) {
         const ranges = openRangesToday(hoursObj);
         if (ranges.length === 0) return null; // closed today — omit from prompt
         parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
+      } else if (isTimeSensitive(placeTypes)) {
+        // Time-sensitive (food, museum, etc.) with no verified hours: drop
+        // from the pool entirely. We won't guess a 9–8 window for a bakery.
+        return null;
       } else {
-        // No hours data — apply sensible default so Claude doesn't schedule
-        // a bakery at 7 PM or a bar at 8 AM
-        parts.push(`hours: ${fmt(9)}–${fmt(20)} (estimated)`);
+        // Outdoor/flexible (parks, trails, plazas): no formal hours, fine to
+        // schedule during daylight. Tell Claude that so it doesn't put a
+        // park at 11 PM.
+        parts.push(`hours: daylight (no formal hours)`);
       }
       return parts.join(" | ");
     })
@@ -2154,6 +2186,11 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     // sequenceWithClaude has its own check, but padded cards bypass it. Without
     // this sweep a padder pick like "Triton Museum at 7:30 AM" (museum opens 11)
     // slips through into the user-visible plan.
+    //
+    // Strict mode for unknown hours: a time-sensitive venue (food, museum, etc.)
+    // without verified hours is rejected. We don't guess a "9–8 estimated"
+    // window — Stephen 2026-04-25: research or don't suggest. Outdoor/flexible
+    // types still pass with a daylight default.
     {
       const candidateById = new Map(diversePool.map((c) => [c.id, c]));
       const before = cards.length;
@@ -2163,13 +2200,16 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         const candidate = candidateById.get(cards[i].id);
         if (!candidate) continue;
         const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
-        if (!hoursObj) continue;
+        const placeTypes = (candidate as any).types as string[] | null | undefined;
         const [startStr, endStr] = cards[i].timeBlock.split(/\s*-\s*/);
         const startH = parseHour(startStr || "");
         const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
         if (startH === null || endH === null) continue;
-        if (!fitsInOpenRange(hoursObj, startH, endH)) {
-          console.log(`[plan-day] final hours sweep dropped ${cards[i].name} — ${cards[i].timeBlock} doesn't fit venue hours`);
+        if (!fitsInOpenRange(hoursObj, startH, endH, placeTypes)) {
+          const reason = !hoursObj
+            ? "no verified hours for time-sensitive venue"
+            : "doesn't fit venue hours";
+          console.log(`[plan-day] final hours sweep dropped ${cards[i].name} — ${cards[i].timeBlock} ${reason}`);
           cards.splice(i, 1);
         }
       }
