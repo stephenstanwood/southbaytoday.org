@@ -14,6 +14,7 @@ import { execFileSync } from "node:child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const POST_DIR = "/tmp/sbs-social";
 
 // Discord DM channel (Stephen's DM channel with the bot)
@@ -51,20 +52,55 @@ const QUEUE_TARGET = 80;
 const MIN_BATCH = 20;      // never generate fewer than this when topping up
 const BUFFER = 5;          // overshoot the target by this much to absorb rejects
 
+// Walk the 10-day schedule once and bucket future slots:
+//   needsReview — still missing copy or image approval (the swiper queue)
+//   approved    — both approved, not yet published (sits waiting for a publish slot)
+function readScheduleBuckets() {
+  let needsReview = 0;
+  let approved = 0;
+  if (!existsSync(SCHEDULE_FILE)) return { needsReview, approved };
+  try {
+    const sched = JSON.parse(readFileSync(SCHEDULE_FILE, "utf8"));
+    const today = new Date().toISOString().slice(0, 10);
+    for (const [date, day] of Object.entries(sched.days || {})) {
+      if (date < today) continue;
+      for (const slot of Object.values(day)) {
+        if (!slot || typeof slot !== "object") continue;
+        if (slot.status === "rejected" || slot.status === "published") continue;
+        const fullyApproved = slot.copyApprovedAt && slot.imageApprovedAt;
+        if (fullyApproved) approved++;
+        else needsReview++;
+      }
+    }
+  } catch {}
+  return { needsReview, approved };
+}
+
 function loadQueue() {
   if (!existsSync(QUEUE_FILE)) return [];
   try {
     const q = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
-    // Only count unpublished items
     return q.filter((p) => !p.published);
   } catch {
     return [];
   }
 }
 
+// "Approved unpublished" = legacy queue items + schedule slots fully approved.
+// publish-from-queue.mjs publishes from both sources (schedule first, then legacy queue).
+function countApprovedUnpublished() {
+  return loadQueue().length + readScheduleBuckets().approved;
+}
+
+// "Drafts to review" = anything still in front of the swiper.
+//   - legacy /tmp/sbs-social/post-*.json from generate-posts.mjs
+//   - schedule slots where copy or image still need approval
 function countPendingDrafts() {
-  if (!existsSync(POST_DIR)) return 0;
-  return readdirSync(POST_DIR).filter((f) => f.startsWith("post-") && f.endsWith(".json")).length;
+  let legacy = 0;
+  if (existsSync(POST_DIR)) {
+    legacy = readdirSync(POST_DIR).filter((f) => f.startsWith("post-") && f.endsWith(".json")).length;
+  }
+  return legacy + readScheduleBuckets().needsReview;
 }
 
 async function sendDiscordDM(message) {
@@ -97,12 +133,12 @@ async function sendDiscordDM(message) {
 }
 
 async function main() {
-  const queue = loadQueue();
+  const approvedUnpublished = countApprovedUnpublished();
   const pendingDrafts = countPendingDrafts();
   const now = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", dateStyle: "short", timeStyle: "short" });
 
-  const reviewable = queue.length + pendingDrafts;
-  console.log(`[${now}] Approved unpublished: ${queue.length} | Drafts to review: ${pendingDrafts} | Total reviewable: ${reviewable} (target ${QUEUE_TARGET})`);
+  const reviewable = approvedUnpublished + pendingDrafts;
+  console.log(`[${now}] Approved unpublished: ${approvedUnpublished} | Drafts to review: ${pendingDrafts} | Total reviewable: ${reviewable} (target ${QUEUE_TARGET})`);
 
   // Always check for SV History milestones (date-sensitive, runs regardless of queue health)
   console.log("Checking for SV History milestones...");
@@ -140,17 +176,17 @@ async function main() {
   }
 
   const newDraftCount = countPendingDrafts();
-  const newQueue = loadQueue();
-  const newReviewable = newQueue.length + newDraftCount;
+  const newApprovedUnpublished = countApprovedUnpublished();
+  const newReviewable = newApprovedUnpublished + newDraftCount;
 
   // Only DM Stephen if approved-unpublished is below the ping threshold.
-  if (newQueue.length >= PING_THRESHOLD) {
-    console.log(`Approved unpublished ${newQueue.length} ≥ ping threshold ${PING_THRESHOLD} — skipping DM.`);
+  if (newApprovedUnpublished >= PING_THRESHOLD) {
+    console.log(`Approved unpublished ${newApprovedUnpublished} ≥ ping threshold ${PING_THRESHOLD} — skipping DM.`);
     return;
   }
 
   const msg = `📬 **South Bay Today — Queue Low**\n` +
-    `Approved unpublished: **${newQueue.length}** (ping at <${PING_THRESHOLD})\n` +
+    `Approved unpublished: **${newApprovedUnpublished}** (ping at <${PING_THRESHOLD})\n` +
     `Drafts to review: **${newDraftCount}**\n` +
     `Total reviewable: **${newReviewable}** (target ${QUEUE_TARGET})\n\n` +
     `Swiper: http://10.0.0.234:3456 (or Tailscale: http://100.117.24.89:3456)`;
