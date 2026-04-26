@@ -7,11 +7,11 @@
       "Google Places API (New) Text Search",
       "poi-data.ts (curated)"
     ],
-    "lastBackfilledAt": "2026-04-26T19:18:29.052Z",
+    "lastBackfilledAt": "2026-04-26T21:18:32.141Z",
     "lastBackfillSource": "reddit-gaps"
   },
   "stats": {
-    "total": 2518,
+    "total": 2519,
     "curated": 49,
     "googleOnly": 2450,
     "byCity": {
@@ -89770,6 +89770,47 @@
       "kidFriendlyChanged": false,
       "indoorOutdoorChanged": true,
       "source": "https://www.reddit.com/r/paloalto/comments/1stfe9f/i_wrote_a_novel_set_in_palo_alto_and_mountain/"
+    },
+    {
+      "id": "ChIJLf8WPqLMj4ARW4I4WIZPQto",
+      "name": "Urban Momo",
+      "address": "100 N Almaden Ave #176, San Jose, CA 95110, USA",
+      "city": "san-jose",
+      "lat": 37.3365058,
+      "lng": -121.89497789999999,
+      "rating": 4.2,
+      "ratingCount": 539,
+      "priceLevel": "PRICE_LEVEL_MODERATE",
+      "types": [
+        "asian_fusion_restaurant",
+        "asian_restaurant",
+        "fusion_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "primaryType": "asian_fusion_restaurant",
+      "displayType": "Asian fusion restaurant",
+      "category": "food",
+      "hours": {
+        "sun": "11:00-21:00",
+        "mon": "11:00-21:00",
+        "tue": "11:00-21:00",
+        "wed": "11:00-21:00",
+        "thu": "11:00-21:00",
+        "fri": "11:00-22:30",
+        "sat": "11:00-22:30"
+      },
+      "url": "https://www.urbanmomos.com/",
+      "mapsUrl": "https://maps.google.com/?cid=15727220287155503707&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "photoRef": "places/ChIJLf8WPqLMj4ARW4I4WIZPQto/photos/Ab43m-uezM6thkt9QLv2C8CME-bcs8JiMaZ6dOJ3tEGNqRAdmWnq5oihNUDQMZf36L9ynfCMyBGqDCvVdaDUGlQvbvg_8puSUEZ5iRgIu4Gru1ypbsRZE5OyV1C0vX--Uy2kqPN0FPhjlAot5EE2sjUdaNeIHbhOYL7DQ0DdZsV-99OXbCg6B4gSTQdlGNh9W8b0CkbZ3PMgT2lz_DBw_hJ3uMGC0x30myloyAVCKjg7hAzh4hUUZJN4VJRMjJj3seTRGRBefXbCHDn5dAHIXOFmCShmtr2dPDmocCwbEgpbswpyZz8ltcQD2DZyIOvXUkXwJOTkLqq9LbF4fFimU-C3ZCqOkpOAyGHsbGLRvu2VStQAFMzs-TU-B5sxf6rvhyuP8t1g1pw4I_IwMZwRfICmR3TZbqrWFvBsrzzsCPnNsj8",
+      "curated": false,
+      "discoverySource": "reddit-gaps",
+      "indoorOutdoor": "indoor",
+      "kidFriendlyChanged": false,
+      "indoorOutdoorChanged": true,
+      "source": "https://www.reddit.com/r/bayarea/comments/1swf6vr/san_pedro_market_in_downtown_san_jose_is_a_good/"
     }
   ]
 }
