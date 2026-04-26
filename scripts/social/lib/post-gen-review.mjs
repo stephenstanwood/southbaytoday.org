@@ -16,6 +16,9 @@
 // more pass.
 // ---------------------------------------------------------------------------
 
+import { readFileSync, existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   IN_AREA_CITIES,
   OUT_OF_AREA_CITIES,
@@ -23,6 +26,71 @@ import {
   isBorderAllowedVenue,
 } from "./content-rules.mjs";
 import { logDecision } from "../../../src/lib/south-bay/decisionLog.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PLACES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
+
+// Lazy-load + cache places.json — used by the hours integrity check.
+let _placesCache = null;
+function loadPlacesById() {
+  if (_placesCache) return _placesCache;
+  const map = new Map();
+  if (!existsSync(PLACES_FILE)) {
+    _placesCache = map;
+    return map;
+  }
+  try {
+    const raw = JSON.parse(readFileSync(PLACES_FILE, "utf8"));
+    const arr = Array.isArray(raw) ? raw : (raw.places || []);
+    for (const p of arr) {
+      if (p?.id) map.set(p.id, p);
+    }
+  } catch {}
+  _placesCache = map;
+  return map;
+}
+
+const SHORT_DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+function dayKeyForDate(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(`${dateStr}T12:00:00`);
+  const idx = d.getDay();
+  return SHORT_DAY_KEYS[idx] || null;
+}
+
+function parseClockHour(t) {
+  if (!t) return null;
+  const m = String(t).trim().match(/^(\d{1,2}):?(\d{2})?\s*(AM|PM)?$/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  const mi = m[2] ? parseInt(m[2], 10) : 0;
+  const ap = m[3]?.toUpperCase();
+  if (ap === "PM" && h !== 12) h += 12;
+  if (ap === "AM" && h === 12) h = 0;
+  return h + mi / 60;
+}
+
+// Returns null if no hours data for the venue (can't audit), true if the
+// timeBlock fits within the venue's open ranges on dayKey, false if not.
+function cardFitsVenueHours(card, dayKey, placesById) {
+  if (!card || !dayKey) return null;
+  const id = String(card.id || "").replace(/^place:/, "");
+  const place = id ? placesById.get(id) : null;
+  if (!place || !place.hours) return null;
+  const range = place.hours[dayKey];
+  if (!range) return false; // closed that day
+  const [sStr, eStr] = String(card.timeBlock || "").split(/\s*-\s*/);
+  const sH = parseClockHour(sStr);
+  const eH = parseClockHour(eStr);
+  if (sH == null || eH == null) return null; // can't audit
+  for (const seg of range.split(",")) {
+    const [o, c] = seg.split("-");
+    const oh = parseClockHour(o);
+    const ch = parseClockHour(c);
+    if (oh != null && ch != null && sH >= oh && eH <= ch) return true;
+  }
+  return false;
+}
 
 const DOW_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const DOW_ALIASES = {
@@ -446,8 +514,27 @@ export function runQualityReview(schedule, options = {}) {
         }
       }
     }
-    // Hard-block checks on day-plan regardless of status (sprawl, virtual, saturated spa).
+    // Hard-block checks on day-plan regardless of status (sprawl, virtual, saturated spa, hours mismatch).
     if (dp && dpIsLive) {
+      // Hours integrity: every card with verified hours must fit on the plan's date.
+      // Catches the "Travieso (sat-only) on Thursday" failure mode that surfaces
+      // whenever the plan-day API or its data source forgets the plan's date.
+      const dpDayKey = dayKeyForDate(date);
+      if (dpDayKey) {
+        const placesById = loadPlacesById();
+        const offenders = [];
+        for (const card of dp.plan?.cards || []) {
+          const fits = cardFitsVenueHours(card, dpDayKey, placesById);
+          if (fits === false) offenders.push(card.name || card.venue || "(unnamed)");
+        }
+        if (offenders.length) {
+          flagged.push({
+            date, slotType: "day-plan", hardBlock: true,
+            reason: `hours mismatch: ${offenders.slice(0, 3).join(", ")}${offenders.length > 3 ? ` +${offenders.length - 3} more` : ""}`,
+          });
+        }
+      }
+
       const cityCount = countDayPlanCities(dp);
       if (cityCount >= 5) {
         flagged.push({ date, slotType: "day-plan", reason: `too much driving (${cityCount} cities)` });
