@@ -149,12 +149,16 @@ function signalFromWork(workType) {
   return "activity";
 }
 
-function labelFromSignal(signal, workType, valuation) {
+function labelFromSignal(signal, workType, valuation, folderName = "") {
   if (signal === "closing") return "Possible Closure";
   if (workType.toLowerCase().includes("finish interior") || workType.toLowerCase().includes("new construction")) {
     return "New Build";
   }
   if (workType.toLowerCase() === "tenant improvement") {
+    // Signage-only TI: foldername ends in "Sign"/"Signs"/"Signage" with no other scope. Calling these
+    // "Renovation" overstates what's happening — they're brand/concept refreshes at most.
+    const fn = folderName.toLowerCase();
+    if (/\bsign(s|age)?\s*$/.test(fn)) return "New Signage";
     if (valuation >= 500_000) return "Major Buildout";
     if (valuation >= 100_000) return "New Buildout";
     return "Renovation";
@@ -395,7 +399,7 @@ async function main() {
       const subtype = (r.SUBTYPEDESCRIPTION ?? r.FOLDERDESC ?? "").trim();
       const valuation = parseInt(r.PERMITVALUATION ?? "0", 10) || 0;
       const signal = signalFromWork(workType);
-      const label = labelFromSignal(signal, workType, valuation);
+      const label = labelFromSignal(signal, workType, valuation, r.FOLDERNAME ?? "");
 
       // Skip very minor work (sub-trades, re-roofs, signage) unless demolition
       const workLower = workType.toLowerCase();
