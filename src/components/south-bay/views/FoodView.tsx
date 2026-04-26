@@ -1,4 +1,5 @@
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
+import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
 
 const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
@@ -149,6 +150,118 @@ function NewAndComingSoon() {
   );
 }
 
+// ── Permit Pulse ─────────────────────────────────────────────────────────────
+
+type RadarSignal = "closing" | "opening" | "activity";
+
+type RadarItem = {
+  id: string;
+  city: string;
+  address: string;
+  name: string | null;
+  description?: string;
+  workType?: string;
+  signal: RadarSignal;
+  label: string;
+  valuation?: number;
+  date: string;
+  blurb?: string | null;
+};
+
+function formatValuation(v: number | undefined): string | null {
+  if (!v || v < 50_000) return null;
+  if (v >= 1_000_000) return `$${(v / 1_000_000).toFixed(1).replace(/\.0$/, "")}M build`;
+  return `$${Math.round(v / 1000)}K build`;
+}
+
+function PermitPulseRow({ item }: { item: RadarItem }) {
+  const isClose = item.signal === "closing";
+  const city = cityFor(item.city);
+  const dateLabel = formatShortDate(item.date);
+  const valLabel = formatValuation(item.valuation);
+  const mapsQuery = encodeURIComponent(
+    [item.name, item.address, city].filter(Boolean).join(" "),
+  );
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+  const icon = isClose ? "⚠" : item.signal === "opening" ? "✦" : "•";
+
+  return (
+    <a
+      href={mapsHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`pulse-row pulse-row-${item.signal}`}
+    >
+      <div className="pulse-icon" aria-hidden="true">{icon}</div>
+      <div className="pulse-body">
+        <div className="pulse-head">
+          <span className="pulse-name">{item.name ?? "Unnamed permit"}</span>
+          <span className={`pulse-pill pulse-pill-${item.signal}`}>{item.label}</span>
+        </div>
+        {item.blurb && <div className="pulse-blurb">{item.blurb}</div>}
+        <div className="pulse-meta">
+          <span className="pulse-addr">{item.address} · {city}</span>
+          {valLabel && <span className="pulse-dot">·</span>}
+          {valLabel && <span>{valLabel}</span>}
+          {dateLabel && <span className="pulse-dot">·</span>}
+          {dateLabel && <span>Permit {dateLabel}</span>}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function PermitPulse() {
+  const data = restaurantRadarJson as {
+    generatedAt: string;
+    items: RadarItem[];
+  };
+  // De-dupe against scc-food-openings (already shown above) by lowercase name.
+  const sccData = sccFoodOpeningsJson as {
+    opened: Array<{ name?: string }>;
+    comingSoon: Array<{ name?: string }>;
+  };
+  const sccNames = new Set<string>([
+    ...(sccData.opened ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
+    ...(sccData.comingSoon ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
+  ]);
+
+  const items = (data.items ?? [])
+    .filter((it) => it.name)
+    .filter((it) => !sccNames.has(it.name!.trim().toLowerCase()));
+
+  if (items.length === 0) return null;
+
+  // Closures first, then openings, then activity. Within each, recent first.
+  const order: Record<RadarSignal, number> = { closing: 0, opening: 1, activity: 2 };
+  items.sort((a, b) => {
+    const oa = order[a.signal] ?? 3;
+    const ob = order[b.signal] ?? 3;
+    if (oa !== ob) return oa - ob;
+    return b.date.localeCompare(a.date);
+  });
+
+  const updated = formatShortDate(data.generatedAt.slice(0, 10));
+
+  return (
+    <section className="food-section">
+      <header className="food-section-head">
+        <h2 className="food-h2">Permit Pulse</h2>
+        <p className="food-sub">
+          Building-permit signals — closures, buildouts, and renovations before they hit health records
+          {updated && <> · Updated {updated}</>}
+        </p>
+      </header>
+      <div className="pulse-list">
+        {items.map((item) => <PermitPulseRow key={item.id} item={item} />)}
+      </div>
+      <p className="food-tile-note">
+        Sourced from San Jose &amp; Palo Alto building permits · Tap a row to find it on Google Maps
+      </p>
+    </section>
+  );
+}
+
 // ── Farmers Markets ─────────────────────────────────────────────────────────
 
 function FarmersMarkets() {
@@ -234,6 +347,7 @@ export default function FoodView() {
   return (
     <>
       <NewAndComingSoon />
+      <PermitPulse />
       <FarmersMarkets />
       <FoodViewStyles />
     </>
@@ -351,6 +465,84 @@ function FoodViewStyles() {
         text-align: right;
       }
 
+      /* Permit pulse — building-permit signals */
+      .pulse-list {
+        display: flex; flex-direction: column;
+        border: 1px solid var(--sb-border-light, #eee);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .pulse-row {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 12px;
+        padding: 12px 14px;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--sb-border-light, #f1f1f1);
+        transition: background 0.15s;
+      }
+      .pulse-row:last-child { border-bottom: none; }
+      .pulse-row:hover { background: #fafafa; }
+      .pulse-row:hover .pulse-name { color: var(--sb-accent, #2563eb); }
+      .pulse-icon {
+        display: flex; align-items: center; justify-content: center;
+        width: 36px; height: 36px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .pulse-row-closing .pulse-icon {
+        background: #fef2f2; color: #b91c1c;
+      }
+      .pulse-row-opening .pulse-icon {
+        background: #f0fdf4; color: #15803d;
+      }
+      .pulse-row-activity .pulse-icon {
+        background: #eff6ff; color: #1d4ed8;
+      }
+      .pulse-body { min-width: 0; flex: 1; }
+      .pulse-head {
+        display: flex; align-items: center; gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 3px;
+      }
+      .pulse-name {
+        font-size: 14px; font-weight: 700;
+        color: var(--sb-ink, #111);
+        line-height: 1.25;
+        transition: color 0.15s;
+      }
+      .pulse-pill {
+        font-size: 9px; font-weight: 800;
+        font-family: 'Space Mono', monospace;
+        letter-spacing: 0.06em;
+        padding: 3px 7px; border-radius: 4px;
+        text-transform: uppercase; line-height: 1;
+        white-space: nowrap;
+      }
+      .pulse-pill-closing { background: #b91c1c; color: #fff; }
+      .pulse-pill-opening { background: #15803d; color: #fff; }
+      .pulse-pill-activity { background: #1d4ed8; color: #fff; }
+      .pulse-blurb {
+        font-size: 12.5px; font-weight: 500;
+        color: var(--sb-ink-soft, #444);
+        line-height: 1.4;
+        margin-bottom: 4px;
+      }
+      .pulse-meta {
+        display: flex; flex-wrap: wrap; gap: 4px;
+        font-size: 11px; font-weight: 500;
+        color: var(--sb-muted, #777);
+      }
+      .pulse-addr {
+        max-width: 100%;
+      }
+      .pulse-dot { color: #ccc; }
+
       /* Farmers markets — weekly schedule */
       .market-week {
         display: flex; flex-direction: column; gap: 14px;
@@ -404,6 +596,9 @@ function FoodViewStyles() {
         .food-tile-name { font-size: 13px; }
         .food-tile-blurb { -webkit-line-clamp: 2; }
         .market-day { grid-template-columns: 56px 1fr; gap: 10px; }
+        .pulse-row { grid-template-columns: 30px 1fr; gap: 10px; padding: 10px 12px; }
+        .pulse-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
+        .pulse-name { font-size: 13px; }
       }
     `}</style>
   );
