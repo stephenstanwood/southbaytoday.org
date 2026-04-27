@@ -645,6 +645,20 @@ function polishDescription(text) {
     });
   }
 
+  // Recover from prior-regen artifacts where p.m./a.m. was already split into
+  // "p. M." (capital M, space after period). The mask below only matches the
+  // intact "p.m." form, so without this step the broken text passes through
+  // unchanged. Case-sensitive: only the uppercase-M regression is targeted.
+  t = t.replace(/(\d)\s*([pa])\. M\./g, "$1 $2.m.");
+  t = t.replace(/(\d)\s*([pa])\. M,/g, "$1 $2.m.,");
+  t = t.replace(/(\s)([pa])\. M\./g, "$1$2.m.");
+  t = t.replace(/(\s)([pa])\. M,/g, "$1$2.m.,");
+
+  // Source-side title-cased acronyms in body text (BiblioCommons title-cases
+  // some acronyms in descriptions, not just titles).
+  t = t.replace(/\bAanhpi\b/g, "AANHPI");
+  t = t.replace(/\bFopal\b/g, "FOPAL");
+
   // Mask abbreviations so their internal periods don't trip the sentence splitter.
   for (const [pat, sub] of ABBR_MASK_PAIRS) t = t.replace(pat, sub);
 
