@@ -29,18 +29,19 @@ export function wmoInfo(code: number): [string, string] {
 
 /**
  * Forecast-tile emoji picker. Leans optimistic: Open-Meteo's daily WMO code
- * often flags the whole day "overcast" because of morning marine layer, even
- * when the afternoon is clear. Prefer mean cloud cover + rain probability;
- * only use the raw code for true weather events (rain, snow, thunderstorms, fog).
+ * often flags the whole day "overcast" or "fog" because of morning marine layer,
+ * even when the afternoon is clear. Prefer mean cloud cover + rain probability;
+ * only use the raw code for true weather events (rain, snow, thunderstorms).
+ * Fog (45/48) intentionally falls through — South Bay marine layer almost
+ * always burns off, so cloud cover gives a more representative all-day call.
  */
 export function forecastEmoji(
   code: number,
   cloudCoverMean: number | null | undefined,
   rainPct: number | null | undefined
 ): [string, string] {
-  // Real weather wins: precipitation, snow, thunderstorms, fog.
+  // Real weather wins: precipitation, snow, thunderstorms.
   if (code >= 51) return wmoInfo(code);
-  if (code === 45 || code === 48) return wmoInfo(code);
   if ((rainPct ?? 0) >= 50) return wmoInfo(code >= 51 ? code : 61);
 
   // Otherwise, sky-state call driven by mean cloud cover.
