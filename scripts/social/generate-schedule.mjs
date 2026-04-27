@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 // ---------------------------------------------------------------------------
 // South Bay Today — 10-Day Schedule Generator
-// Populates the 3-slot daily schedule with draft content:
+// Populates the 3-slot daily schedule with draft content + Recraft image:
 //   07:15 — Day Plan (one /api/plan-day call per day)
 //   11:45 — Tonight Pick (best evening event)
 //   16:30 — Wildcard (SV history, restaurant, or general)
+// Each slot lands with copy + image both ready so the review portal can
+// approve both in one pass instead of stepping copy → image-gen → image.
 //
 // Also writes today's adults + kids plans into default-plans.json so the
 // homepage first-paint reuses the social day-plan instead of recomputing.
@@ -446,6 +448,36 @@ function pickWildcard(candidates, dateStr, recentTitles = new Set()) {
   return null;
 }
 
+/** Generate a Recraft poster/abstract image for a slot and mutate it in place
+ *  to set imageUrl / imageStyle / imagePrompt. Mirrors the review portal's
+ *  approve-copy flow so Saturday batches can land copy + image together,
+ *  letting Stephen review both in one pass instead of stepping through copy
+ *  approval to trigger image gen. Errors are logged and swallowed — the
+ *  review portal can still regen any slot whose image gen failed. */
+async function generateImageForSlot(slot, dateStr, slotType) {
+  const { pickStyle, dayPlanPrompt, buildImagePrompt } = await import("./lib/poster-styles.mjs");
+  const { generateAndUpload } = await import("./lib/recraft.mjs");
+  const pathname = `posters/${dateStr}-${slotType}-${Date.now()}.png`;
+  let prompt;
+  if (slotType === "day-plan" && slot.plan) {
+    const style = await pickStyle();
+    prompt = dayPlanPrompt(slot.plan, dateStr, style.style);
+    console.log(`      🎨 Generating day-plan poster (${style.id})...`);
+    const { url } = await generateAndUpload({ prompt, pathname, colors: style.colors || undefined });
+    slot.imageUrl = url;
+    slot.imageStyle = style.id;
+  } else {
+    const postCopy = slot.copy?.x || "";
+    const category = slot.item?.category || "";
+    prompt = await buildImagePrompt(postCopy, category);
+    console.log(`      🎨 Generating abstract image for ${slotType}...`);
+    const { url } = await generateAndUpload({ prompt, pathname });
+    slot.imageUrl = url;
+    slot.imageStyle = "abstract";
+  }
+  slot.imagePrompt = prompt;
+}
+
 /** Pick from top candidates with weighted randomness — top 5 eligible, weighted by score. */
 function weightedRandomPick(items) {
   items.sort((a, b) => (b.score || 0) - (a.score || 0));
@@ -624,6 +656,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             };
             generated++;
             console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) ✅`);
+            try { await generateImageForSlot(day["day-plan"], dateStr, "day-plan"); }
+            catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
           } catch (err) {
             console.log(`    📋 Day Plan: ${cityName} ❌ ${err.message}`);
           }
@@ -672,6 +706,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             };
             generated++;
             console.log(`    🌙 Tonight: ${tonight.title?.slice(0, 50)} ✅`);
+            try { await generateImageForSlot(day["tonight-pick"], dateStr, "tonight-pick"); }
+            catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
           } catch (err) {
             console.log(`    🌙 Tonight: ❌ ${err.message}`);
           }
@@ -726,6 +762,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             generated++;
             recentWildcardTitles.add((wild.item.title || wild.item.name || "").toLowerCase());
             console.log(`    🎲 Wildcard: [${wild.subtype}] ${(wild.item.title || wild.item.name || "").slice(0, 50)} ✅`);
+            try { await generateImageForSlot(day["wildcard"], dateStr, "wildcard"); }
+            catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
           } catch (err) {
             console.log(`    🎲 Wildcard: ❌ ${err.message}`);
           }
