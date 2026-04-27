@@ -169,7 +169,7 @@ export const GET: APIRoute = async ({ params, url }) => {
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
             <span style="font-size:12px;font-weight:800;color:#000;letter-spacing:-0.2px">${esc(card.timeBlock)}</span>
-            <span style="font-size:9px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px">${esc(card.category)}</span>
+            ${card.source === "event" && card.category === "events" ? "" : `<span style="font-size:9px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px">${esc(card.category)}</span>`}
             ${eventBadge}
           </div>
           <h3 style="font-size:17px;font-weight:900;color:#111;margin:0 0 4px;line-height:1.25">${esc(card.name)}</h3>
