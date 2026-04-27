@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-04-26 — Cycle 109: Strip Redundant Venue Suffix from Event Titles
+
+### Context
+Sunday April 26, 2026 (~7 PM PDT). Automated cycle. Reading event cards on the Today/Events tabs surfaced a long-standing readability issue specific to SJSU: the SJSU Localist RSS feed bakes the venue into every title (`Brass Ensemble at Music Building`, `Distinguished Lecture: ... at King Library`, `Softball - San Jose State vs. New Mexico at San Jose, Calif.`) — and the card already shows the venue separately on its own meta row. Cards were doing double duty, often pushing the actual headline below the fold on mobile.
+
+### What Was Built
+
+**Title cleanup: strip "at &lt;Venue&gt;" when it duplicates the venue field**
+
+New `stripRedundantVenueSuffix(title, venue)` helper in `generate-events.mjs`, run after `cleanTitle()` in the post-processing pass over `allEvents`. Two patterns:
+
+1. *Strict venue match* — title ending with ` at <suffix>` where the suffix (case-insensitive, trimmed of trailing `.,`) equals the `venue` field exactly. Conservative: requires the leftover base title to be ≥10 chars after the strip, so we don't decapitate a thinly-titled event into something cryptic.
+2. *SJSU Athletics location tail* — ` at <City>, Calif.` / ` at <City>, CA.` regex. The athletics RSS appends the campus city to every game title even though the venue is already populated; strip removes the noise.
+
+**Data hot-fix:** Backfilled the same logic onto current `upcoming-events.json` so the cleanup ships immediately rather than waiting for the next regen — 25 events updated, including 13 Music Building recitals, 4 King Library lectures, the softball location tail, and the Hammer/Student Wellness/Campus Village clusters.
+
+### Why This Was the Strongest Move
+This is a per-cycle visible win that hits cards residents actually read. "Brass Ensemble at Music Building" → "Brass Ensemble" cuts 56% of the title length on mobile and lets the `Music Building` venue badge in the meta row do its job. Twenty-five events is a meaningful slice of today's SJSU/Stanford-leaning weekday lineup, and the helper protects against the suffix returning on every nightly regen.
+
+### Next 3 Strongest Ideas
+1. **High School Graduation surface** — May 27 (SJUSD) is two weeks closer than last cycle; still no callout on the homepage. With AP Exams (5/4) imminent, a tiny "Final stretch — AP Exams start Mon" subtitle line on the existing header could land without bringing back the cluttery school card.
+2. **Campbell council data gap** — Stoa still has no Campbell council data past Feb 3. Playwright scrape of campbellca.gov is the unblock.
+3. **Cross-source title-suffix sweep** — same redundancy pattern likely exists on other sources (e.g. SJPL "Fiber Arts Circle at Almaden" + venue=Almaden Library); current strict-equality strip only covers exact matches. A second pass that strips `" at <Branch>"` when the venue is `"<Branch> Library"` would clean up another ~30 SJPL/SCCL titles.
+
+---
+
 ## 2026-04-25 — Cycle 108: Local Acronym Protection + Description Typo Fixes
 
 ### Context

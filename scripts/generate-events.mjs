@@ -553,6 +553,35 @@ function cleanTitle(title) {
   return t;
 }
 
+// Drop a trailing " at <Venue>" from a title when the suffix duplicates the
+// venue field. Also drops SJSU sports' " at <City>, <State-abbr>." location
+// tail, which the SJSU athletics RSS appends to every game title even though
+// the venue field already carries the campus location.
+function stripRedundantVenueSuffix(title, venue) {
+  if (!title) return title;
+  let t = title;
+
+  // Pattern 1: " at <City>, Calif./CA[.]" — SJSU Athletics location tail
+  t = t.replace(
+    /\s+at\s+[A-Z][\w\s.'-]+,\s*(?:Calif\.?|CA)\.?$/i,
+    "",
+  );
+
+  // Pattern 2: " at <Venue>" exactly matching the venue field
+  if (venue && typeof venue === "string") {
+    const m = t.match(/^(.+?)\s+at\s+(.+?)\s*$/);
+    if (m) {
+      const [, base, suffix] = m;
+      const norm = (s) => s.toLowerCase().replace(/[.,]+$/, "").trim();
+      if (norm(suffix) === norm(venue) && base.trim().length >= 10) {
+        t = base.trim();
+      }
+    }
+  }
+
+  return t;
+}
+
 function truncate(text, len = 200) {
   if (!text || text.length <= len) return text || "";
   return text.substring(0, len).replace(/\s+\S*$/, "") + "…";
@@ -4173,6 +4202,14 @@ async function main() {
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events
   allEvents.forEach((e) => { e.title = cleanTitle(e.title); });
+
+  // Strip redundant venue suffix: SJSU's RSS feed appends " at <Venue>" to
+  // many event titles, where <Venue> is also in the venue field. The card
+  // shows venue separately, so the trailing suffix is pure duplication
+  // ("Brass Ensemble at Music Building" + venue=Music Building → "Brass
+  // Ensemble"). Also strips SJSU sports' " at San Jose, Calif." location
+  // tail. Conservative — base title must remain ≥10 chars after strip.
+  allEvents.forEach((e) => { e.title = stripRedundantVenueSuffix(e.title, e.venue); });
 
   // Polish descriptions: drop boilerplate sentences, downcase ALL CAPS, capitalize sentence starts
   allEvents.forEach((e) => {
