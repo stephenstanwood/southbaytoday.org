@@ -1,608 +1,405 @@
 {
   "_meta": {
-    "generatedAt": "2026-04-28T03:16:25.109Z",
+    "generatedAt": "2026-04-28T05:18:27.848Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 39,
-    "placesMatched": 13,
-    "placeGaps": 26,
-    "eventsExtracted": 6,
-    "eventsMatched": 1,
-    "eventGaps": 5,
+    "placesExtracted": 28,
+    "placesMatched": 7,
+    "placeGaps": 21,
+    "eventsExtracted": 1,
+    "eventsMatched": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
+      "name": "Condor Club",
+      "city": "",
+      "kind": "bar",
+      "context": "credit union recommendation mentioned in SF context",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx93ok/i_will_always_try_my_best_to_make_the_bay_area_a/",
+        "https://www.reddit.com/r/bayarea/comments/1sxhj5r/i_redesigned_the_flags_of_14_bay_area_cities/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbi21/apple_park_transformed_cupertino_bringing_wealth/",
+        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
+        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/"
+      ]
+    },
+    {
       "name": "Dunkin Donuts",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "recently opened, mentioned as new to San Jose",
+      "context": "new location in San Jose area",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Valco Mall",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "no longer exists, formerly major shopping destination",
+      "kind": "retail",
+      "context": "closed/no longer exists",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Babyland",
       "city": "San Jose",
-      "kind": "other",
-      "context": "closed, was near Pink Poodle",
+      "kind": "venue",
+      "context": "closed location near Pink Poodle",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Berryessa Flea Market",
       "city": "San Jose",
       "kind": "venue",
-      "context": "being shut down, mentioned as negative change",
+      "context": "flea market being closed down",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Fry's",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "closed electronics retailer",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Sweet Tomatoes",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "closed restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Lee Sandwich",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "less popular now than before",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Tapioca Express",
+      "city": "San Jose",
+      "kind": "cafe",
+      "context": "less popular now than before",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Joann Fabrics",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "closed store",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Hancock Fabrics",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "closed store",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Cambrian Plaza",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "shopping area in Cambrian neighborhood",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Cherrywood Apartments",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "apartment complex in San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Orange Theory",
       "city": "Sunnyvale",
       "kind": "service",
-      "context": "fitness studio, mentioned as workout option",
+      "context": "fitness studio in Sunnyvale area",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Loopkicks Tricking Gym",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "tricking gym for backflips and parkour",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Bay Area Glass Institute",
-      "city": "",
-      "kind": "service",
-      "context": "glassblowing classes available in Bay Area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Maker Nexus",
-      "city": "",
-      "kind": "venue",
-      "context": "maker space with woodworking, 3D printing, metalwork classes",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Bayland",
-      "city": "Mountain View",
+      "city": "Sunnyvale",
       "kind": "park",
-      "context": "flat hiking area, good for easy outdoor activities",
+      "context": "flat hiking trail in Sunnyvale",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Silicon Valley Bike Exchange",
       "city": "Mountain View",
       "kind": "service",
-      "context": "bike repair shop and volunteering opportunity",
+      "context": "bike repair and volunteering organization",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Bay Area Glass Institute",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "glassblowing classes",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Maker Nexus",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "maker classes in woodworking and 3D printing",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Loopkicks Tricking Gym",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "tricking and gymnastics gym",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
       "name": "Sportys",
       "city": "Sunnyvale",
       "kind": "bar",
-      "context": "bar/venue mentioned as after-work activity",
+      "context": "bar in Sunnyvale",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
-      "name": "San Jose Rose Garden",
+      "name": "Sail Internet",
       "city": "San Jose",
-      "kind": "park",
-      "context": "beautiful garden used for weddings, semi-secluded proposal location",
+      "kind": "service",
+      "context": "fiber internet provider downtown SJ",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
+        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
         "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Vasona Park",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "park with paddle boat rentals, good proposal location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Hakone Gardens",
-      "city": "Saratoga",
-      "kind": "park",
-      "context": "Japanese gardens with koi, scenic proposal location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Filoli Estate",
-      "city": "",
-      "kind": "venue",
-      "context": "historic mansion and gardens, scenic photo location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Crystal Springs Reservoir",
-      "city": "",
-      "kind": "park",
-      "context": "scenic nature location for engagement photos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Sierra Vista Open Space Reserve",
-      "city": "",
-      "kind": "park",
-      "context": "spectacular views of South Bay, proposal location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Pulgas Water Temple",
-      "city": "",
-      "kind": "venue",
-      "context": "scenic location good for engagement photos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Sunol Wilderness",
-      "city": "",
-      "kind": "park",
-      "context": "scenic hiking area, good for morning exercise and proposal",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Lick Observatory",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Mt. Hamilton observatory, scenic proposal location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ]
-    },
-    {
-      "name": "Best Buy",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "Pokemon card stock release event with long lines",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "The Bowery at Five Points",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Monday jazz session, 163 W Santa Clara St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "Five Points Cocktail Bar",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Monday live jazz, 163 W Santa Clara St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "MACLA",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "2026 Latinx Art Now exhibition, 510 S 1st St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "ICA San Jose",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "INFRAMUNDO Miguel Novelo exhibition, 560 S 1st St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "Belles South Bay",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "women's pinball league, casual and welcoming",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1swh8hc/do_you_think_theyre_going_to_push_hard_for_the_us/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Monday Jazz Session",
-      "when": "April 27, 8:00 PM – 11:00 PM",
-      "city": "San Jose",
-      "context": "The Bowery at Five Points, free event",
+      "name": "Swing Dance Weekly",
+      "when": "Wednesday nights at 19:00",
+      "city": "Palo Alto",
+      "context": "weekly swing dancing accessible by Caltrain",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "Monday Live Jazz",
-      "when": "April 27, 9:00 PM – 12:00 AM",
-      "city": "San Jose",
-      "context": "Five Points Cocktail Bar, free event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "Aki Kumar Blues Performance",
-      "when": "April 27, 6:00 PM – 9:00 PM",
-      "city": "San Jose",
-      "context": "San Pedro Square Market, free blues show",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "2026 Latinx Art Now! Exhibition",
-      "when": "April 27, 12:00 PM – 5:00 PM",
-      "city": "San Jose",
-      "context": "MACLA, free art exhibition",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "INFRAMUNDO: Miguel Novelo Exhibition",
-      "when": "April 27, 12:00 PM – 5:00 PM",
-      "city": "San Jose",
-      "context": "ICA San Jose, free exhibition",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Apple Park",
+      "city": "Cupertino",
+      "kind": "other",
+      "context": "Apple headquarters transforming Cupertino housing and traffic",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx93ok/i_will_always_try_my_best_to_make_the_bay_area_a/",
+        "https://www.reddit.com/r/bayarea/comments/1sxhj5r/i_redesigned_the_flags_of_14_bay_area_cities/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbi21/apple_park_transformed_cupertino_bringing_wealth/",
+        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
+        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/"
+      ],
+      "matchedName": "Steve Jobs Theater | Apple Park"
+    },
+    {
       "name": "Valley Fair",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "largest mall in Northern California, now charges for parking",
+      "kind": "retail",
+      "context": "largest mall in Northern California",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ],
       "matchedName": "Bowlero Valley Fair"
+    },
+    {
+      "name": "Rancho San Antonio",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "popular hiking destination",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
     },
     {
       "name": "Color Me Mine",
       "city": "Sunnyvale",
       "kind": "venue",
-      "context": "pottery painting studio, locations in Sunnyvale and Palo Alto",
+      "context": "paint pottery studio with locations in Sunnyvale and Palo Alto",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ],
       "matchedName": "Color Me Mine"
     },
     {
-      "name": "Rancho San Antonio",
-      "city": "Mountain View",
-      "kind": "park",
-      "context": "popular hiking destination near Sunnyvale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ],
-      "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
-    },
-    {
-      "name": "The Mountain Winery",
-      "city": "",
+      "name": "Downtown Sunnyvale",
+      "city": "Sunnyvale",
       "kind": "venue",
-      "context": "hilltop destination where friends have proposed",
+      "context": "has food, movie theater, and EDM club with DJs",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
+        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
         "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
       ],
-      "matchedName": "The Mountain Winery"
-    },
-    {
-      "name": "Villa Montalvo",
-      "city": "Saratoga",
-      "kind": "park",
-      "context": "art center with gardens and hiking trails, proposal location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ],
-      "matchedName": "Villa Montalvo"
-    },
-    {
-      "name": "House of Genji Japanese Restaurant",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Japanese restaurant on First Street, recommended dining spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ],
-      "matchedName": "House of Genji"
-    },
-    {
-      "name": "Maple Leaf Donuts",
-      "city": "Campbell",
-      "kind": "bakery",
-      "context": "family-owned donut shop, community favorite",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
-      ],
-      "matchedName": "Maple leaf Donuts"
+      "matchedName": "Downtown Sunnyvale"
     },
     {
       "name": "Dough Zone",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "new restaurant coming to Pruneyard shopping center",
+      "context": "new location opening at Pruneyard",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
+        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
         "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1swh8hc/do_you_think_theyre_going_to_push_hard_for_the_us/"
       ],
       "matchedName": "Dough Zone Dumpling House Cupertino"
     },
     {
-      "name": "Pruneyard Shopping Center",
+      "name": "Maple Leaf Donuts",
       "city": "Campbell",
-      "kind": "venue",
-      "context": "shopping center location for new Dough Zone restaurant",
+      "kind": "bakery",
+      "context": "family-owned donut shop, popular local spot",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1swv2hx/hows_san_jose_these_days/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
-        "https://www.reddit.com/r/bayarea/comments/1swtcw8/less_crowded_places_to_propose_30_minutes_out/",
+        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
         "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1swh8hc/do_you_think_theyre_going_to_push_hard_for_the_us/"
       ],
-      "matchedName": "The Pruneyard Shopping Center"
-    },
-    {
-      "name": "O'Flaherty's Irish Pub",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "karaoke night, 25 N San Pedro St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "O'Flaherty's Irish Pub"
-    },
-    {
-      "name": "San Pedro Square Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "live blues music events, free performances",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "San Pedro Square Market"
-    },
-    {
-      "name": "Guildhouse",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "gaming venue for socializing, 420 S 1st St",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "Guildhouse"
-    },
-    {
-      "name": "REI",
-      "city": "",
-      "kind": "retail",
-      "context": "local hiking meetup information resource",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "REI"
+      "matchedName": "Maple leaf Donuts"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Karaoke Night",
-      "when": "April 27, 9:00 PM – 1:30 AM",
-      "city": "San Jose",
-      "context": "O'Flaherty's Irish Pub, no cover charge",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1suk20n/something_going_on_at_best_buy_in_mv/",
-        "https://www.reddit.com/r/SanJose/comments/1swx5bp/31_events_today_27apr26_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
-        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "Karaoke Night"
-    }
-  ]
+  "eventMatches": []
 }
