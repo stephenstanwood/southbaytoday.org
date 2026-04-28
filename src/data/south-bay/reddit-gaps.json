@@ -1,215 +1,421 @@
 {
   "_meta": {
-    "generatedAt": "2026-04-28T11:14:44.399Z",
+    "generatedAt": "2026-04-28T11:16:45.488Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 15,
-    "placesMatched": 4,
-    "placeGaps": 11,
-    "eventsExtracted": 0,
+    "placesExtracted": 30,
+    "placesMatched": 14,
+    "placeGaps": 16,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Condor Club",
-      "city": "",
-      "kind": "venue",
-      "context": "solidarity economy business mentioned in community mapping",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx93ok/i_will_always_try_my_best_to_make_the_bay_area_a/",
-        "https://www.reddit.com/r/bayarea/comments/1sxhj5r/i_redesigned_the_flags_of_14_bay_area_cities/",
-        "https://www.reddit.com/r/bayarea/comments/1sxbi21/apple_park_transformed_cupertino_bringing_wealth/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/"
-      ]
-    },
-    {
       "name": "Bay Area Glass Institute",
-      "city": "",
-      "kind": "venue",
-      "context": "glassblowing classes in Bay Area",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "glassblowing classes for after-work activities",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Maker Nexus",
-      "city": "",
-      "kind": "venue",
-      "context": "maker classes woodworking 3D printing metal work",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
-        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
-      ]
-    },
-    {
-      "name": "Loopkicks",
       "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "tricking gym for backflips",
+      "kind": "service",
+      "context": "maker classes including woodworking, 3D printing, metalwork",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Bayland",
-      "city": "",
+      "city": "Mountain View",
       "kind": "park",
-      "context": "completely flat hiking location in Bay Area",
+      "context": "flat hiking trail accessible from Sunnyvale",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Silicon Valley Bike Exchange",
       "city": "Mountain View",
       "kind": "service",
-      "context": "bike repair volunteer spot learn fix bikes",
+      "context": "bike repair and maintenance learning for volunteers",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "Loopkicks",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "tricking gym for backflips and acrobatics",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "Pruneyard",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "shopping center with multiple dining options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Sportys",
       "city": "Sunnyvale",
       "kind": "bar",
-      "context": "bar or venue in Sunnyvale",
+      "context": "after-work hangout spot in Sunnyvale",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
-      "name": "Sail Internet",
+      "name": "Teaspoon",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop, mentioned as comparison to TOJO",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Molly",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Sunright",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "TP Tea",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Lacaphe",
+      "city": "",
+      "kind": "cafe",
+      "context": "Vietnamese coffee shop, egg coffee mentioned",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Trung Nguyen Legend",
+      "city": "",
+      "kind": "cafe",
+      "context": "Vietnamese coffee shop, egg coffee mentioned",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Belles South Bay",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "local women's pinball league, casual and welcoming",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ]
+    },
+    {
+      "name": "Mission",
       "city": "San Jose",
       "kind": "service",
-      "context": "fiber internet provider downtown SJ",
+      "context": "offers cooking classes",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
       ]
     },
     {
-      "name": "Sonic",
-      "city": "",
-      "kind": "service",
-      "context": "fiber internet provider multiple mentions",
+      "name": "Volvo Sports",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "adult sports leagues for meeting people",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
-      ]
-    },
-    {
-      "name": "River Dogs of Boulder Creek",
-      "city": "",
-      "kind": "restaurant",
-      "context": "authentic Chicago-style Italian beef recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
-      ]
-    },
-    {
-      "name": "Girasol Pizza",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Chicago-style pizza and beef mentioned",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
       ]
     }
   ],
-  "eventGaps": [],
-  "placeMatches": [
+  "eventGaps": [
     {
-      "name": "Color me Mine",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "craft activity venue in Sunnyvale and Palo Alto",
+      "name": "Swing Dance Weekly",
+      "when": "Wednesday nights at 19:00",
+      "city": "Palo Alto",
+      "context": "weekly swing dancing accessible by Caltrain",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
-      ],
-      "matchedName": "Color Me Mine"
-    },
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    }
+  ],
+  "placeMatches": [
     {
       "name": "Rancho San Antonio",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "hiking park perfect for weekday hikes",
+      "context": "hiking destination near Sunnyvale",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sx7dzi/is_prefab_housing_finally_ready_to_break_through/",
-        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
-        "https://www.reddit.com/r/bayarea/comments/1sx9d4f/these_companies_have_the_biggest_office/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
         "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ],
       "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
     },
     {
-      "name": "Torino panino",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Italian beef sandwich option South Bay",
+      "name": "Color me Mine",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "pottery painting activity in Sunnyvale area",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ],
-      "matchedName": "Torino Panino"
+      "matchedName": "Color Me Mine"
     },
     {
-      "name": "Maple Leaf Donuts",
+      "name": "Dough Zone",
       "city": "Campbell",
-      "kind": "bakery",
-      "context": "family-run donut shop with Vietnamese coffee",
+      "kind": "restaurant",
+      "context": "new restaurant opening at Pruneyard shopping center",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1sxfa34/how_much_do_you_pay_for_the_internet/",
-        "https://www.reddit.com/r/bayarea/comments/1sxaq7q/chicagoans_good_italian_beef_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/Campbell/comments/1swfw1e/found_at_maple_leaf_donuts_today/"
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ],
-      "matchedName": "Maple leaf Donuts"
+      "matchedName": "Dough Zone Dumpling House Cupertino"
+    },
+    {
+      "name": "Big Basin State Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "redwood hiking destination accessible by new bus route",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/bayarea/comments/1sxbykh/most_bay_area_companies_are_required_to_have_a/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1sw00ye/moved_to_sunnyvale_recently_what_do_people/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ],
+      "matchedName": "Big Basin Cafe"
+    },
+    {
+      "name": "TOJO Coffee Tea House",
+      "city": "San Jose",
+      "kind": "cafe",
+      "context": "new location on Winchester, milk tea and pastries",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Tojo Coffee Tea House"
+    },
+    {
+      "name": "Boba Guys",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop, mentioned as comparison to TOJO",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Boba Guys Palo Alto"
+    },
+    {
+      "name": "7 Leaves",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop, mentioned as comparison to TOJO",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "7 Leaves Cafe"
+    },
+    {
+      "name": "Formosa Aroma",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop growing in popularity",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Formosa Aroma 島嶼茶鄉"
+    },
+    {
+      "name": "HeyTea",
+      "city": "",
+      "kind": "cafe",
+      "context": "milk tea shop in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "heytea"
+    },
+    {
+      "name": "Da Vien",
+      "city": "Milpitas",
+      "kind": "cafe",
+      "context": "new Vietnamese coffee location, banana latte",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "DA VIEN COFFEE"
+    },
+    {
+      "name": "Guildhouse",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "gaming venue at 420 S. 1st St downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Guildhouse"
+    },
+    {
+      "name": "REI",
+      "city": "",
+      "kind": "retail",
+      "context": "has information on local hiking meetups",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "REI"
+    },
+    {
+      "name": "Stevens Creek Trail",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "popular after-work hiking trail",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Stevens Creek Trail"
+    },
+    {
+      "name": "Bay Trail",
+      "city": "",
+      "kind": "park",
+      "context": "gravel routes for cycling, walking, and running",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/",
+        "https://www.reddit.com/r/bayarea/comments/1sxeuds/metro_board_sb63/",
+        "https://www.reddit.com/r/SanJose/comments/1sxhg51/making_friends/",
+        "https://www.reddit.com/r/mountainview/comments/1swrzkc/moved_to_sunnyvale_recently_what_do_people/"
+      ],
+      "matchedName": "Sunnyvale Bay Trail"
     }
   ],
   "eventMatches": []
