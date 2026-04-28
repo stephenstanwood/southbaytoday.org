@@ -445,6 +445,13 @@ async function main() {
           if (m) ogImage = m[1];
         }
       } catch { /* skip — og:image is best-effort */ }
+      // Skip the site brand default — posting it makes every event look like
+      // generic SBT marketing instead of the actual event. Better to post
+      // text-only than the wrong image.
+      if (ogImage && /\/images\/og-image\.png(\?|$)/.test(ogImage)) {
+        console.log(`      ⏭️  og:image is site default — skipping image attachment`);
+        ogImage = "";
+      }
       if (ogImage) console.log(`      🖼️  og:image: ${ogImage.slice(0, 80)}...`);
     }
 
