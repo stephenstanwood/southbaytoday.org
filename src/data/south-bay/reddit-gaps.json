@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-04-28T21:43:54.683Z",
+    "generatedAt": "2026-04-28T23:18:01.315Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 59,
-    "placesMatched": 17,
-    "placeGaps": 42,
-    "eventsExtracted": 1,
+    "placesExtracted": 52,
+    "placesMatched": 15,
+    "placeGaps": 37,
+    "eventsExtracted": 0,
     "eventsMatched": 0,
-    "eventGaps": 1,
+    "eventGaps": 0,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,12 +19,12 @@
       "name": "Zachary's",
       "city": "",
       "kind": "restaurant",
-      "context": "deep dish pizza location across East Bay",
+      "context": "deep dish pizza praised multiple times",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -32,12 +32,12 @@
       "name": "Little Star",
       "city": "",
       "kind": "restaurant",
-      "context": "deep dish pizza praised in Bay Area",
+      "context": "deep dish pizza highly recommended",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -45,12 +45,12 @@
       "name": "Cheese Board Pizza",
       "city": "",
       "kind": "restaurant",
-      "context": "California fresh produce pizza in Berkeley",
+      "context": "California fresh produce pizza popular",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -58,12 +58,12 @@
       "name": "June's Pizza",
       "city": "",
       "kind": "restaurant",
-      "context": "highly praised pizza place in Oakland",
+      "context": "pizza place recommended multiple times",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -71,25 +71,12 @@
       "name": "Tony's",
       "city": "",
       "kind": "restaurant",
-      "context": "overall best pizza restaurant in Bay Area",
+      "context": "overall best pizza per commenter",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Golden Boy",
-      "city": "",
-      "kind": "restaurant",
-      "context": "garlic clam pizza in SF North Beach",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -97,64 +84,51 @@
       "name": "Cicero's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "pizza place in South Bay",
+      "context": "South Bay pizza place mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
       "name": "Vesta",
-      "city": "",
+      "city": "Redwood City",
       "kind": "restaurant",
-      "context": "pizza with sausage honey in Redwood City",
+      "context": "pizza with sausage and honey praised",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Rose Pizzeria",
-      "city": "",
-      "kind": "restaurant",
-      "context": "pizza in Berkeley with SF location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
       "name": "Bluebird Pizzeria",
-      "city": "",
+      "city": "San Leandro",
       "kind": "restaurant",
-      "context": "thin crust pizza in San Leandro",
+      "context": "thin crust pizza real quality",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
       "name": "Pazzo",
-      "city": "",
+      "city": "San Carlos",
       "kind": "restaurant",
-      "context": "pizza place in San Carlos",
+      "context": "pizza restaurant in San Carlos area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -162,12 +136,12 @@
       "name": "Joyride",
       "city": "",
       "kind": "restaurant",
-      "context": "Detroit style pizza",
+      "context": "Detroit style pizza recommended",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -177,10 +151,23 @@
       "kind": "restaurant",
       "context": "Napoletana pizza in Oakland",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
+      ]
+    },
+    {
+      "name": "Slice of Homage",
+      "city": "",
+      "kind": "restaurant",
+      "context": "pizza place mentioned in recommendations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -190,10 +177,10 @@
       "kind": "restaurant",
       "context": "pizza place in Oakland",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -203,36 +190,36 @@
       "kind": "restaurant",
       "context": "Indian toppings pizza in Oakland",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
       "name": "Corner Slice",
-      "city": "",
+      "city": "Livermore",
       "kind": "restaurant",
-      "context": "pizza in Livermore",
+      "context": "pizza recommended by multiple commenters",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
-      "name": "Neighborhood Pizza Guy",
-      "city": "Menlo Park",
+      "name": "Mission Pizza",
+      "city": "Fremont",
       "kind": "restaurant",
-      "context": "thin NY CA hybrid pizza with unique ingredients",
+      "context": "pizza place recommended by commenter",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -240,64 +227,25 @@
       "name": "Hihat",
       "city": "",
       "kind": "restaurant",
-      "context": "pizza in SF",
+      "context": "pizza place in SF",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
     {
-      "name": "Mission Pizza",
+      "name": "Condor Club",
       "city": "",
-      "kind": "restaurant",
-      "context": "pizza in Fremont",
+      "kind": "venue",
+      "context": "mentioned in solidarity economy thread",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Arizmendi",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Bay Area style sourdough pizza",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "The Star",
-      "city": "",
-      "kind": "restaurant",
-      "context": "deep dish pizza",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Mama's Boy",
-      "city": "",
-      "kind": "restaurant",
-      "context": "NY style pizza in Oakland",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -305,12 +253,12 @@
       "name": "Teaspoon",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "milk tea shop compared favorably to competitors",
+      "context": "milk tea shop compared to TOJO",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -318,12 +266,12 @@
       "name": "Molly",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "milk tea shop in Vietnam Town area",
+      "context": "milk tea option among many South Bay shops",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -331,12 +279,12 @@
       "name": "Sunright",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "boba tea shop in South Bay",
+      "context": "milk tea shop mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -344,12 +292,12 @@
       "name": "TP Tea",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "milk tea shop in South Bay",
+      "context": "milk tea place in South Bay options",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -357,12 +305,12 @@
       "name": "Tenren Tea",
       "city": "Cupertino",
       "kind": "cafe",
-      "context": "boba tea shop near Cupertino",
+      "context": "boba shop recommended near Cupertino",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -370,12 +318,12 @@
       "name": "Lacaphe",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "Vietnamese iced coffee shop South Bay",
+      "context": "Vietnamese iced coffee shop",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ]
     },
@@ -385,203 +333,177 @@
       "kind": "cafe",
       "context": "Vietnamese egg coffee shop",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Condor Club",
-      "city": "",
-      "kind": "venue",
-      "context": "solidarity economy venue in SF",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ]
-    },
-    {
-      "name": "Wildlife Center of Silicon Valley",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "wildlife rescue and rehabilitation center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
-      ]
-    },
-    {
-      "name": "Peninsula Humane Society & SPCA",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "animal rescue facility at Penitencia Creek Road",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
-      ]
-    },
-    {
-      "name": "Veterinary Emergency Group",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "emergency veterinary care near Lowe's on Ridder Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
-      ]
-    },
-    {
-      "name": "Pruneyard",
-      "city": "Campbell",
-      "kind": "retail",
-      "context": "shopping center hosting new Dough Zone restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
       ]
     },
     {
       "name": "TechCU Arena",
       "city": "San Jose",
       "kind": "venue",
-      "context": "potential venue for PWHL women's hockey team",
+      "context": "potential venue for PWHL team, currently home to Barracuda",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "San Jose Barracuda",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "AHL team that might compete with potential PWHL team",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Spartan Home Services",
       "city": "",
       "kind": "service",
-      "context": "solar installation company with creative financing options",
+      "context": "solar installation company recommended by customer",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "SunWork",
+      "city": "",
+      "kind": "service",
+      "context": "nonprofit solar installation option in Bay Area, 33% less expensive",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Clean Solar",
       "city": "",
       "kind": "service",
-      "context": "small business solar installer recommended by customer",
+      "context": "small local solar installation business recommended by customer",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "East Bay Power",
+      "city": "",
+      "kind": "service",
+      "context": "competitive solar installation company in East Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ]
+    },
+    {
+      "name": "Pruneyard",
+      "city": "Campbell",
+      "kind": "retail",
+      "context": "shopping center where Dough Zone is opening",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ]
     },
     {
       "name": "Paul & Eddy's",
       "city": "Sunnyvale",
       "kind": "bar",
-      "context": "local bar with regulars vibe",
+      "context": "local bar with regular crowd and social vibe",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ]
     },
     {
       "name": "Roosters Comedy Club",
       "city": "Sunnyvale",
       "kind": "venue",
-      "context": "comedy club, years-long patron recommends",
+      "context": "comedy club with long-time regulars and nightly shows",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ]
     },
     {
-      "name": "FibBar McGees",
+      "name": "Fibbar McGees",
       "city": "Sunnyvale",
       "kind": "bar",
-      "context": "downtown pub with dinner specials and friendly crowd",
+      "context": "downtown pub with nightly dinner specials and friendly atmosphere",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ]
     },
     {
       "name": "Movement",
-      "city": "Sunnyvale",
+      "city": "",
       "kind": "venue",
-      "context": "indoor climbing gym, social gathering space",
+      "context": "indoor climbing gym in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ]
     },
     {
       "name": "Many Friends Brewing Company",
       "city": "Saratoga",
       "kind": "bar",
-      "context": "brewery with welcoming atmosphere and owner who retired from software",
+      "context": "brewery with welcoming atmosphere, owner-operated",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ]
     }
   ],
-  "eventGaps": [
-    {
-      "name": "Sunnyvale 250th Anniversary Celebrations",
-      "when": "early summer 2026",
-      "city": "Sunnyvale",
-      "context": "anniversary event coinciding with community center opening",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
-      ]
-    }
-  ],
+  "eventGaps": [],
   "placeMatches": [
     {
       "name": "Seniore's Pizza",
       "city": "",
       "kind": "restaurant",
-      "context": "pizza place praised in best pizza discussion",
+      "context": "pizza place praised by post author",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "Seniore’s Pizza"
@@ -590,12 +512,12 @@
       "name": "A Slice of New York",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "NY style pizza in San Jose and Sunnyvale",
+      "context": "New York style pizza in San Jose or Sunnyvale",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "A Slice of New York"
@@ -604,12 +526,12 @@
       "name": "Square Pie Guys",
       "city": "",
       "kind": "restaurant",
-      "context": "Detroit style pizza",
+      "context": "Detroit style pizza recommended",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "Square Pie Guys"
@@ -618,26 +540,40 @@
       "name": "Round Table",
       "city": "",
       "kind": "restaurant",
-      "context": "pizza place",
+      "context": "pizza chain mentioned in recommendations",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "Round Table Pizza Royalty"
     },
     {
-      "name": "Boba Guys",
+      "name": "TOJO Coffee Tea House",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "boba tea shop in South Bay",
+      "context": "new milk tea cafe opened on Winchester",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
+        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
+      ],
+      "matchedName": "Tojo Coffee Tea House"
+    },
+    {
+      "name": "Boba Guys",
+      "city": "San Jose",
+      "kind": "cafe",
+      "context": "boba shop compared to TOJO",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
+        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "Boba Guys Palo Alto"
@@ -646,40 +582,26 @@
       "name": "7 Leaves",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "milk tea shop South Bay location",
+      "context": "milk tea shop compared to TOJO",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "7 Leaves Cafe"
     },
     {
-      "name": "TOJO Coffee Tea House",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "new milk tea cafe on Winchester Ave",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
-        "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
-        "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
-      ],
-      "matchedName": "Tojo Coffee Tea House"
-    },
-    {
       "name": "Formosa Aroma",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "boba tea shop growing in popularity",
+      "context": "growing milk tea place recommended",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "Formosa Aroma 島嶼茶鄉"
@@ -688,12 +610,12 @@
       "name": "Heytea",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "milk tea shop in Vietnam Town area",
+      "context": "milk tea place in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "heytea"
@@ -702,41 +624,31 @@
       "name": "Da Vien",
       "city": "Milpitas",
       "kind": "cafe",
-      "context": "new coffee shop in Milpitas",
+      "context": "new milk tea place with banana latte",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sxktfz/east_palo_alto_marks_2_years_without_a_homicide/",
         "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/",
         "https://www.reddit.com/r/bayarea/comments/1sxo3lz/mapping_the_bay_area_solidarity_economy/",
         "https://www.reddit.com/r/bayarea/comments/1sxrr14/how_did_you_find_your_social_circle_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1sxpseg/from_the_london_tube_to_caltrain_the_reverse/",
         "https://www.reddit.com/r/SanJose/comments/1sxre9s/tojo_coffee_tea_house_is_now_open_on_winchester/"
       ],
       "matchedName": "DA VIEN COFFEE"
     },
     {
-      "name": "Dough Zone",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "upcoming opening at Pruneyard shopping center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
-      ],
-      "matchedName": "Dough Zone Dumpling House Cupertino"
-    },
-    {
       "name": "SAP Center",
       "city": "San Jose",
       "kind": "venue",
-      "context": "potential venue for PWHL women's hockey team",
+      "context": "potential venue for PWHL team in San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
         "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ],
       "matchedName": "SAP Center"
     },
@@ -744,26 +656,40 @@
       "name": "Big Basin Redwoods State Park",
       "city": "",
       "kind": "park",
-      "context": "new bus schedule for car-free access from San Jose",
+      "context": "hiking destination accessible by new bus route from San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
-        "https://www.reddit.com/r/SanJose/comments/1sy87ga/is_there_a_number_to_call_for_a_sick_maybe/",
-        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/",
-        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/"
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
       ],
       "matchedName": "Big Basin Cafe"
     },
     {
+      "name": "Dough Zone",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "new opening at Pruneyard shopping center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1sydg21/do_you_think_a_pwhl_team_would_do_well_in_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/",
+        "https://www.reddit.com/r/bayarea/comments/1sy2bhw/anyone_have_solar_installed_in_the_last_612_months/",
+        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
+        "https://www.reddit.com/r/Campbell/comments/1svhz5n/dough_zone_signage/"
+      ],
+      "matchedName": "Dough Zone Dumpling House Cupertino"
+    },
+    {
       "name": "Bay Club",
       "city": "Santa Clara",
-      "kind": "venue",
-      "context": "shared membership gym with tennis, pickleball, swim",
+      "kind": "service",
+      "context": "fitness club with social activities, tennis, pickleball",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ],
       "matchedName": "The Goods @Bay Club Santa Clara"
     },
@@ -771,40 +697,14 @@
       "name": "The Duke of Edinburgh",
       "city": "Cupertino",
       "kind": "bar",
-      "context": "relaxed pub near Apple Spaceship with darts",
+      "context": "relaxed pub across from Apple Spaceship with regulars and patio",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1syaj8h/favorite_moments_from_this_season/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/santaclara/comments/1swwdm2/several_7eleven_locations_closing/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/"
       ],
       "matchedName": "Duke of Edinburgh"
-    },
-    {
-      "name": "Sunnyvale Community Center",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "renovation completion expected early summer 2026",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
-      ],
-      "matchedName": "Sunnyvale Community Center"
-    },
-    {
-      "name": "Baylands Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "has barnyard animal program for children with special needs",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1sy7na9/realistic_improvements_to_caltrain/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1swlf73/new_to_town_still_trying_to_find_some_friends/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sx1m0h/any_official_date_on_when_the_sunnyvale_community/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1sy4vwa/barnyard_animal_program_in_sunnyvale_supports/"
-      ],
-      "matchedName": "Sunnyvale Baylands Park"
     }
   ],
   "eventMatches": []
