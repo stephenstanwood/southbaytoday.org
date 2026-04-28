@@ -567,12 +567,22 @@ function stripRedundantVenueSuffix(title, venue) {
     "",
   );
 
-  // Pattern 2: " at <Venue>" exactly matching the venue field
+  // Pattern 2: " at <Venue>" matching the venue field (allows leading "the"
+  // and stray "Branch"/"Library" tokens on either side so SJPL titles like
+  // "Tech Mentor at Edenvale Branch" with venue="Edenvale Library" both
+  // collapse to the branch token "Edenvale" and match.
   if (venue && typeof venue === "string") {
     const m = t.match(/^(.+?)\s+at\s+(.+?)\s*$/);
     if (m) {
       const [, base, suffix] = m;
-      const norm = (s) => s.toLowerCase().replace(/[.,]+$/, "").trim();
+      const norm = (s) =>
+        s
+          .toLowerCase()
+          .replace(/[.,]+$/, "")
+          .replace(/^\s*the\s+/i, "")
+          .replace(/\b(branch|library)\b/gi, " ")
+          .replace(/\s+/g, " ")
+          .trim();
       if (norm(suffix) === norm(venue) && base.trim().length >= 10) {
         t = base.trim();
       }

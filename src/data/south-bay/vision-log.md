@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-04-28 — Cycle 110: SCCL Branch Venues + Cross-Source Title Suffix Cleanup
+
+### Context
+Tuesday April 28, 2026 (~1 PM PDT). Automated cycle. Continuing the title-cleanup thread cycles 108–109 started: cycle 109 stripped suffixes only when the title's `at <X>` matched the venue field exactly. That left two recurring patterns visible to residents:
+
+1. **Santa Clara County Library events** — every one of 130 SCCL cards rendered with the generic system venue `Santa Clara County Library`, while the title carried the actual branch (`Knit-Alongs at Cupertino Library`, `Free Comic Book Day at Saratoga Library`, etc.). The branch info was on the wrong line.
+2. **San Jose Public Library events** — 6 cards where the title ended with `at Almaden` / `at Edenvale Branch` / `at Evergreen Branch Library`, but the venue was `Almaden Library` / `Edenvale Library` / `Evergreen Library`. Same branch, different word, so the strict equality strip from cycle 109 didn't fire.
+
+### What Was Built
+
+**SCCL: per-branch venue at ingest (`generate-events.mjs`)**
+
+Added `SCCL_LOCATION_BRANCH` map keyed on the `branchLocationId` BiblioCommons already returns (CA, CU, LA, WO, LG, MI, SA, SC). `fetchScclEvents` now writes the branch display name (`Milpitas Library`, `Cupertino Library`, …) into `venue` instead of the generic `Santa Clara County Library`. The `source` field is unchanged so source filters still work. Going forward, every SCCL card's meta row shows the actual branch.
+
+**Title strip: relaxed equality (`stripRedundantVenueSuffix`)**
+
+Pattern 2 in `stripRedundantVenueSuffix` now normalizes both sides (drop leading `the`, drop standalone `branch`/`library` tokens) before comparing. So:
+- `Tech Mentor at Edenvale Branch` + venue `Edenvale Library` → `Tech Mentor` (suffix `Edenvale Branch` and venue `Edenvale Library` both collapse to `edenvale`)
+- `ESL Conversation Club at the Cupertino Library` + venue `Cupertino Library` → `ESL Conversation Club`
+- Non-library venues (`at Coastal Manor` + venue `Downtown San Jose Marriott Hotel`, `at the Boardwalk` + venue `Santa Cruz Beach Boardwalk`, `at Bear Creek Redwoods` + venue `Bear Creek Redwoods OSP`) still don't strip — partial matches remain conservative.
+
+**Data hot-fix:** `scripts/backfill-sccl-branches.mjs` rewrote the current `upcoming-events.json` so the change ships now rather than waiting on the next nightly regen. **130 SCCL events** got branch venues, **27 titles** lost their now-redundant suffix (the SCCL set plus the four SJPL cases above).
+
+### Why This Was the Strongest Move
+This is a per-card visual win on every SCCL/SJPL row in the Events list — and SCCL+SJPL together are 239 of 1,209 events (~20% of the feed). Branch-on-venue puts the location detail where residents look for it (the meta row) instead of forcing them to read it twice. SCCL goes from "the library system" to "Cupertino Library", "Milpitas Library", "Saratoga Library" — concrete places they can drive to. Same generator-side cleanup as cycles 108/109 except the leverage scales to the entire SCCL feed instead of a single source.
+
+### Next 3 Strongest Ideas
+1. **Ticketmaster description bleed** — 9 events on the feed have `COM Ticket Resale…` as their `description` (fragments from `TICKETWEB.COM Ticket Resale` falling through `polishDescription`'s case-sensitive TLD masker). The user-visible blurb is already correct (AI-generated), but search results match against `description` so the noise still pollutes results. Fix in `polishDescription`: case-insensitive `KNOWN_TLDS` regex flag, or null out polish output that's <25 chars after sentence-drop.
+2. **Campbell council data gap** — Stoa still has no Campbell data past Feb 3, 2026 (recurring item from cycles 102–109). Playwright scrape of campbellca.gov Agenda Center remains the unblock.
+3. **Subtitle-aware suffix strip** — `Poetry Open Mic at the Cupertino Library - Poetry Month Celebration` survived this cycle's strip because the suffix carries a `- Poetry Month Celebration` subtitle. Splitting on ` - ` before the venue match would catch this and similar SCCL/library subtitled events.
+
+---
+
 ## 2026-04-26 — Cycle 109: Strip Redundant Venue Suffix from Event Titles
 
 ### Context
