@@ -28,3 +28,6 @@ src/data/south-bay/social-url-rejects.json
 
 # Local-only snapshots of approved social schedule / shared plans
 .snapshots/
+
+# Claude Code scheduled task lock (auto-generated, machine-local)
+.claude/scheduled_tasks.lock
