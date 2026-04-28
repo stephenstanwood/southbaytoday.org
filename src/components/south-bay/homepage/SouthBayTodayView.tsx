@@ -12,6 +12,7 @@ import RedditPulseTeaser from "./RedditPulseTeaser";
 import CityHallThisWeek from "./CityHallThisWeek";
 import JustOpened from "./JustOpened";
 import SchoolYearEndgame from "./SchoolYearEndgame";
+import SummerCampsCountdown from "./SummerCampsCountdown";
 import ForecastCard from "../cards/ForecastCard";
 import defaultPlansJson from "../../../data/south-bay/default-plans.json";
 
@@ -940,6 +941,9 @@ export default function SouthBayTodayView(_props: Props) {
 
       {/* School Year Endgame — AP exams, finals, graduation, last day */}
       <SchoolYearEndgame onSeeAll={() => _props.onNavigate("events")} />
+
+      {/* Summer Camps — registration countdown + featured programs */}
+      <SummerCampsCountdown onSeeAll={() => _props.onNavigate("camps")} />
 
       {/* Reddit pulse — what people are saying on regional subs */}
       <RedditPulseTeaser />
