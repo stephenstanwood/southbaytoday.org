@@ -7,11 +7,11 @@
       "Google Places API (New) Text Search",
       "poi-data.ts (curated)"
     ],
-    "lastBackfilledAt": "2026-04-28T21:18:22.890Z",
+    "lastBackfilledAt": "2026-04-29T03:18:45.456Z",
     "lastBackfillSource": "reddit-gaps"
   },
   "stats": {
-    "total": 2557,
+    "total": 2558,
     "curated": 49,
     "googleOnly": 2450,
     "byCity": {
@@ -91329,6 +91329,42 @@
       "kidFriendlyChanged": false,
       "indoorOutdoorChanged": false,
       "source": "https://www.reddit.com/r/bayarea/comments/1sxozz7/new_big_basin_bus_schedule_brings_carfree_san/"
+    },
+    {
+      "id": "ChIJsSNR95S3j4AR6UgI36IIF84",
+      "name": "TP TEA – Sunnyvale",
+      "address": "567b E El Camino Real, Sunnyvale, CA 94087, USA",
+      "city": "sunnyvale",
+      "lat": 37.363467,
+      "lng": -122.0261262,
+      "rating": 4.5,
+      "ratingCount": 124,
+      "priceLevel": "PRICE_LEVEL_INEXPENSIVE",
+      "types": [
+        "tea_house",
+        "point_of_interest",
+        "establishment"
+      ],
+      "primaryType": "tea_house",
+      "displayType": "Tea house",
+      "category": "food",
+      "hours": {
+        "sun": "11:30-21:30",
+        "mon": "11:30-21:30",
+        "tue": "11:30-21:30",
+        "wed": "11:30-21:30",
+        "thu": "11:30-21:30",
+        "fri": "11:30-21:30",
+        "sat": "11:30-21:30"
+      },
+      "url": "https://order.snackpass.co/tpteasunnyvale",
+      "mapsUrl": "https://maps.google.com/?cid=14850347791897086185&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "photoRef": "places/ChIJsSNR95S3j4AR6UgI36IIF84/photos/Ab43m-vDl6AQjBz0hEuztW7HiMj-fth1Dpn3rNpBfcnArgOmnRaSQJB1X2K7QzMrj7a2Zw6DMYzEglSBuGivxsgyM5vItCxQUjh92YOEr4XONj7r7KEiKzZZxy4TM0L0PgLSgQA60a-v-j2ljjwVL8mEU0akd2GEYunuVEZVFD-F0bYIPw87UJ-WGTg_9h6QkLuS5ydJ9LBTJ2k1z3MBtR6qkhuTIgNDot9qnUqW5vgI2Oc7pLIl8un_Wx8XffYxm9PPxUJn-I33mNMz2mLD6kwbXkuRvw6jBBEk7e7l1W0N546rSpBH8-_nlfXQp8bCRh5pR4C9aWGkwovuO7LGGPrOMqbvd5U8w-ccA9C2oke4xECZwM21G0Sn5_lbmlY6PYnMtdn3Wcy7ytFX1RlqGF-90dd0Jsw4nVZjCaZudDVhgFYPwVqN",
+      "curated": false,
+      "discoverySource": "reddit-gaps",
+      "kidFriendlyChanged": false,
+      "indoorOutdoorChanged": false,
+      "source": "https://www.reddit.com/r/bayarea/comments/1sy4ezx/best_pizza_place_in_the_bay_area/"
     }
   ]
 }
