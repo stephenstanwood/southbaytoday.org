@@ -2477,12 +2477,20 @@ async function fetchSJGiantsSchedule() {
         // Use locationName + teamName for the canonical opponent name. The
         // top-level `name` field can return Copa de la Diversión promotional
         // identities ("Ontario Tower Buzzers") for theme-night games, which
-        // mismatches the description and confuses readers.
+        // mismatches the description and confuses readers. For some Copa games
+        // the API returns the promo name in locationName/teamName too — guard
+        // against that by skipping any opponent whose city isn't a real
+        // California League market.
+        const CAL_LEAGUE_LOCATIONS = new Set([
+          "fresno", "inland empire", "lake elsinore", "modesto",
+          "rancho cucamonga", "san jose", "stockton", "visalia",
+        ]);
         const awayLoc = game.teams?.away?.team?.locationName;
         const awayMascot = game.teams?.away?.team?.teamName;
-        const awayTeam = (awayLoc && awayMascot)
-          ? `${awayLoc} ${awayMascot}`
-          : (game.teams?.away?.team?.name || "Opponent");
+        if (!awayLoc || !CAL_LEAGUE_LOCATIONS.has(awayLoc.toLowerCase())) {
+          continue;
+        }
+        const awayTeam = `${awayLoc} ${awayMascot}`;
         const gameDate = dateRec.date;
         const startUtc = game.gameDate ? new Date(game.gameDate) : null;
         events.push({
@@ -4195,9 +4203,17 @@ async function fetchHistorySanJoseEvents() {
 
         // Location from <span class="eventlocation">
         const locMatch = block.match(/<span class="eventlocation">\s*(.*?)\s*<\/span>/i);
-        const location = locMatch ? locMatch[1].replace(/<[^>]+>/g, "").trim() : "History Park";
+        const location = locMatch ? locMatch[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "History Park";
         const venue = location.split("|")[0].trim() || "History Park";
-        const address = location.includes("|") ? location.split("|")[1].trim() : "635 Phelan Ave, San Jose, CA 95112";
+        // History San Jose's "eventlocation" field sometimes carries trailing
+        // editorial copy ("Stay tuned for ticket information!"). When we know
+        // we're at History Park, use its canonical street address; otherwise
+        // strip any sentence after the address line.
+        const HISTORY_PARK_ADDRESS = "635 Phelan Ave, San Jose, CA 95112";
+        const rawAddress = location.includes("|") ? location.split("|")[1].trim() : HISTORY_PARK_ADDRESS;
+        const address = /history park/i.test(venue)
+          ? HISTORY_PARK_ADDRESS
+          : rawAddress.split(/\s+(?=Stay tuned|Tickets|Tickets:|Note:)/i)[0].trim();
 
         events.push({
           id: h("historysj", title, isoDate(start)),
