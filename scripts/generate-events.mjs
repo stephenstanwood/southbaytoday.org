@@ -1100,9 +1100,9 @@ async function fetchStanfordEvents() {
 // Filter out student-internal events from university feeds.
 // These are org meetings, advising sessions, career fairs for enrolled students, etc.
 // Public-facing events (exhibits, performances, athletics, lectures) should pass through.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement)\//i;
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake)\b/i;
-const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake)\b/i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry)\//i;
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\|/i;
+const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
 
 function isStudentOnlyEvent(item) {
   if (STUDENT_ONLY_URL_PATHS.test(item.link || "")) return true;
