@@ -31,3 +31,6 @@ src/data/south-bay/social-url-rejects.json
 
 # Claude Code scheduled task lock (auto-generated, machine-local)
 .claude/scheduled_tasks.lock
+
+# Claude Code worktrees (machine-local, embedded repos)
+.claude/worktrees/
