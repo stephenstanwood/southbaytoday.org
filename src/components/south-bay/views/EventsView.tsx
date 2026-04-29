@@ -477,6 +477,11 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
     ? "" // label already reads as a noun
     : isMultiDay ? "begin " : "";
 
+  // When the same event hits every matched district (e.g. Memorial Day across
+  // all 9 districts) the badge row becomes noisy. Collapse to a single
+  // "all districts" pill in that case.
+  const allMatched = headline.districts.length === matchedDistrictIds.size && headline.districts.length >= 4;
+
   return (
     <div
       style={{
@@ -508,10 +513,9 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
         {dateLabel}
       </span>
       <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-        {headline.districts.map((d) => (
+        {allMatched ? (
           <span
-            key={d.id}
-            title={d.fullName}
+            title={headline.districts.map((d) => d.fullName).join(", ")}
             style={{
               fontFamily: "'Space Mono', monospace",
               fontSize: 10,
@@ -519,14 +523,34 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
               letterSpacing: "0.04em",
               padding: "1px 6px",
               borderRadius: 4,
-              background: d.bg,
-              color: d.color,
-              border: `1px solid ${d.color}33`,
+              background: "#EDE9FE",
+              color: "#5B21B6",
+              border: "1px solid #C4B5FD",
             }}
           >
-            {d.name}
+            All districts
           </span>
-        ))}
+        ) : (
+          headline.districts.map((d) => (
+            <span
+              key={d.id}
+              title={d.fullName}
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                padding: "1px 6px",
+                borderRadius: 4,
+                background: d.bg,
+                color: d.color,
+                border: `1px solid ${d.color}33`,
+              }}
+            >
+              {d.name}
+            </span>
+          ))
+        )}
       </div>
     </div>
   );
