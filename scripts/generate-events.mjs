@@ -819,7 +819,10 @@ function cleanVenue(raw) {
   // becomes "Hobee s" instead of "Hobee's".
   v = v
     .replace(/&apos;|&#39;|&#x27;/gi, "'")
+    .replace(/&rsquo;|&lsquo;|&#8217;|&#8216;|&#x2019;|&#x2018;/gi, "'")
     .replace(/&quot;|&#34;/gi, '"')
+    .replace(/&ldquo;|&rdquo;|&#8220;|&#8221;|&#x201C;|&#x201D;/gi, '"')
+    .replace(/&ndash;|&mdash;|&#8211;|&#8212;|&#x2013;|&#x2014;/gi, "-")
     .replace(/&amp;|&#38;/gi, "&");
   v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").trim();
   // Remove leading "- " dash artifact from CivicPlus iCal
