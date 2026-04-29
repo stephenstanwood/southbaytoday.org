@@ -48,6 +48,11 @@ export interface SBEvent {
   emoji: string;
   featured?: boolean;
   /**
+   * Optional logo/cap image URL. Used for sports affiliates and venues whose
+   * brand mark reads better than a Recraft illustration.
+   */
+  image?: string;
+  /**
    * ISO date string (YYYY-MM-DD). If set, the event is not displayed before this date.
    * Use for venues temporarily closed (renovation, seasonal open, etc.).
    */

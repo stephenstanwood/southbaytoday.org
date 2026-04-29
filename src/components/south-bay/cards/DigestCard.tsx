@@ -3,6 +3,7 @@ interface DigestData {
   cityName: string;
   body: string;
   meetingDate: string;
+  meetingDateIso?: string;
   title: string;
   summary: string;
   keyTopics: string[];

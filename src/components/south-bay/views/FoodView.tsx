@@ -214,6 +214,7 @@ function PermitPulseRow({ item }: { item: RadarItem }) {
 function PermitPulse() {
   const data = restaurantRadarJson as {
     generatedAt: string;
+    windowDays?: number;
     items: RadarItem[];
   };
   // De-dupe against scc-food-openings (already shown above) by lowercase name.
@@ -226,9 +227,19 @@ function PermitPulse() {
     ...(sccData.comingSoon ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
   ]);
 
+  // Render-time staleness guard: if the regen falls behind, drop items older
+  // than the source's stated window so a Feb permit doesn't linger into May.
+  const windowDays = data.windowDays ?? 60;
+  const cutoffMs = Date.now() - windowDays * 86400_000;
+
   const items = (data.items ?? [])
     .filter((it) => it.name)
-    .filter((it) => !sccNames.has(it.name!.trim().toLowerCase()));
+    .filter((it) => !sccNames.has(it.name!.trim().toLowerCase()))
+    .filter((it) => {
+      if (!it.date) return true;
+      const t = new Date(it.date + "T12:00:00").getTime();
+      return Number.isFinite(t) && t >= cutoffMs;
+    });
 
   if (items.length === 0) return null;
 
