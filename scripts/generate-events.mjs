@@ -4711,6 +4711,28 @@ async function main() {
   const blurbed = blurbStats.preexisting + blurbStats.cache_hits + blurbStats.generated;
   console.log(`   Total blurbed: ${blurbed} / ${collapsedEvents.length} (${((blurbed / collapsedEvents.length) * 100).toFixed(0)}%)`);
 
+  // Final guard: remap any non-canonical categories that slipped through from
+  // upstream scrapers (e.g. stale playwright-events.json from before a fix).
+  // EventCategory in src/data/south-bay/events-data.ts is the source of truth.
+  const VALID_EVENT_CATEGORIES = new Set([
+    "market", "family", "music", "arts", "sports",
+    "community", "outdoor", "education", "food",
+  ]);
+  const CATEGORY_REMAP = {
+    nature: "outdoor",
+    volunteer: "community",
+    technology: "education",
+  };
+  let remapped = 0;
+  for (const e of collapsedEvents) {
+    if (!VALID_EVENT_CATEGORIES.has(e.category)) {
+      const next = CATEGORY_REMAP[e.category] ?? "community";
+      e.category = next;
+      remapped++;
+    }
+  }
+  if (remapped > 0) console.log(`\n🛠  Remapped ${remapped} invalid event categories`);
+
   const ongoingCount = collapsedEvents.filter((e) => e.ongoing).length;
 
   const output = {
