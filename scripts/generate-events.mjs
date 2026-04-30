@@ -863,6 +863,29 @@ function cleanVenue(raw) {
   return v.trim();
 }
 
+/**
+ * For civic calendar events whose iCal/RSS feed didn't include a LOCATION,
+ * infer a sensible default venue from the title. Council/commission/board
+ * meetings happen at council chambers; everything else stays null so the
+ * caller can decide. Existing Los Gatos data already uses "Council Chambers"
+ * for these — this matches that convention so backfill blends in cleanly.
+ */
+function inferCivicVenueFromTitle(title) {
+  if (!title) return null;
+  const t = title.toLowerCase();
+  if (
+    /\b(town council|city council|council meeting|council\s+study\s+session|study session|public hearing|zoning\s+administrator|planning commission|civic improvement commission|parks (?:and|&)\s+sustainability commission|parks (?:and|&)\s+recreation commission|arts commission|library commission|board meeting|city manager|special meeting)\b/.test(
+      t,
+    )
+  ) {
+    return "Council Chambers";
+  }
+  if (/\bcommission\b/.test(t) && /\b(meeting|hearing)\b/.test(t)) {
+    return "Council Chambers";
+  }
+  return null;
+}
+
 function inferCity(location, address) {
   const text = `${location} ${address}`.toLowerCase();
   if (text.includes("campbell")) return "campbell";
@@ -1546,7 +1569,7 @@ async function fetchCampbellEvents() {
         displayDate: displayDate(start),
         time: timeStr,
         endTime: null,
-        venue: cleanVenue(item.location || "") || null,
+        venue: cleanVenue(item.location || "") || inferCivicVenueFromTitle(item.title) || null,
         address: "",
         city: "campbell",
         category: inferCategory(item.title, item.description, ""),
@@ -1601,7 +1624,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
           // without a published end time. Treat those as "no end time" rather
           // than a zero-duration event.
           endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
-          venue: cleanedVenue || null,
+          venue: cleanedVenue || inferCivicVenueFromTitle(ev.summary) || null,
           address: "",
           city,
           category: inferCategory(ev.summary, ev.description || "", ""),
@@ -1697,7 +1720,7 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
         displayDate: displayDate(start),
         time: timeStr,
         endTime: null,
-        venue: venueLabel || null,
+        venue: venueLabel || inferCivicVenueFromTitle(item.title) || null,
         address: "",
         city: defaultCity,
         category: inferCategory(item.title, item.description, ""),
