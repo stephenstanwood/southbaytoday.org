@@ -50,6 +50,8 @@ const SKIP_EXACT = new Set([
   "closed session, call to order in council chambers",
   "american disability act", "public comment in person only",
   "public comment", "public hearing",
+  "final adoption of ordinances", "final adoption of ordinances.",
+  "first reading of ordinances", "first reading of ordinances.",
 ]);
 
 // Prefixes that indicate procedural/non-substantive items
@@ -78,6 +80,9 @@ const SKIP_REGEX = [
   // church/temple/congregation — e.g. "Father Hugo Rojas, Our Lady of
   // Guadalupe Church". Drop them; they are not agenda business.
   /^(?:father|reverend|rev\.|pastor|rabbi|imam|bishop|deacon|chaplain|minister|monsignor|sister|brother)\b[^.]*?,\s*(?:[a-z' ]+ )?(?:church|temple|synagogue|mosque|congregation|parish|chapel|cathedral|fellowship|ministr(?:y|ies))\b/i,
+  // San José meta-procedural explainer attached to most agendas — text
+  // describing how items get added/dropped, not actual business.
+  /^items?\s+recommended\s+to\s+be\s+(?:added|dropped|deferred)/i,
 ];
 
 // Strip raw addresses, Brown Act teleconference disclosures, and noise from
