@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-29T23:09:22.752Z",
+      "generatedAt": "2026-04-30T11:08:31.995Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 22 – Apr 29",
+      "dateRange": "Apr 23 – Apr 30",
       "stats": {
-        "total": 343,
-        "notable": 18,
-        "newUnits": 9,
-        "totalValuation": 7964946
+        "total": 331,
+        "notable": 16,
+        "newUnits": 4,
+        "totalValuation": 8384058
       },
       "permits": [
         {
@@ -39,54 +39,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2024-094876-RS",
-          "address": "3154 Tully Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 110754,
-          "units": 1,
-          "issueDate": "2026-04-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-105204-RS",
-          "address": "13099 Pfeifle Av #4",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Not Code Case Detached Garage Conversion to adu Unit 4",
-          "valuation": 108218,
-          "units": 1,
-          "issueDate": "2026-04-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-142682-RS",
-          "address": "3068 Quimby Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu",
-          "valuation": 103483,
-          "units": 1,
-          "issueDate": "2026-04-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-098835-RS",
-          "address": "1780 Wilshire Bl #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage Conversion to adu",
-          "valuation": 90970,
-          "units": 1,
-          "issueDate": "2026-04-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-144120-RS",
           "address": "267 S 12th St #2",
           "category": "residential-new",
@@ -111,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-096661-RS",
-          "address": "1206 Lennon Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached 1-Sty adu",
-          "valuation": 67129,
-          "units": 1,
-          "issueDate": "2026-04-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-114976-CI",
           "address": "2625 Zanker Rd",
           "category": "commercial-large",
@@ -133,33 +73,93 @@
           "units": 0,
           "issueDate": "2026-04-27",
           "subtype": "Office"
+        },
+        {
+          "id": "2026-114128-CI",
+          "address": "2933 The Villages Py",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Bay Hill Dentistry Dental Office",
+          "valuation": 629494,
+          "units": 0,
+          "issueDate": "2026-04-27",
+          "subtype": "Medical/Dental Clinic"
+        },
+        {
+          "id": "2026-113827-CI",
+          "address": "1550 Hamilton Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Additions/Alterations",
+          "description": "(Bp100%) Spec Space ti",
+          "valuation": 604930,
+          "units": 0,
+          "issueDate": "2026-04-27",
+          "subtype": "Retail"
+        },
+        {
+          "id": "2026-115224-CI",
+          "address": "6800 Santa Teresa Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bem 100%) R/R Rooftop Hvac",
+          "valuation": 518268,
+          "units": 0,
+          "issueDate": "2026-04-28",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-114666-CI",
+          "address": "355 River Oaks Py",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Ev Chargers",
+          "valuation": 305412,
+          "units": 0,
+          "issueDate": "2026-04-28",
+          "subtype": "Open Public Parking Garage"
+        },
+        {
+          "id": "2026-114490-CI",
+          "address": "200 S Market St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bem 100%) Chiller and Boiler Replacement",
+          "valuation": 200000,
+          "units": 0,
+          "issueDate": "2026-04-27",
+          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-29T23:09:25.024Z",
+      "generatedAt": "2026-04-30T11:08:34.765Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 22 – Apr 29",
+      "dateRange": "Apr 23 – Apr 30",
       "stats": {
-        "total": 95,
-        "notable": 4,
+        "total": 102,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01061",
-          "address": "2351 Louis Rd",
+          "id": "26BLD-01107",
+          "address": "820 Hamilton Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Convert bedroom space into a bathroom. Fill in window.",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-23",
+          "issueDate": "2026-04-29",
           "subtype": "Permit Issued"
         },
         {
@@ -172,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-27",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01061",
+          "address": "2351 Louis Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Convert bedroom space into a bathroom. Fill in window.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-23",
           "subtype": "Permit Issued"
         },
         {
@@ -196,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00096",
+          "address": "4345 El Camino Real",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review on behalf of the Palo Alto Greens HOA to remove three trees (with low suitability for preservation due to poor condition and lean) from the remainder parcel (Parcel 1A @ 440 Cesano Court) and replace them with five (5) thirty-six-inch box size trees (Gingko Biloba 'Princeton Sentry) and an additional eight (8) twenty-four-inch boxes trees provided offsite via Public Works Urban Forestry's in-lieu program (26TRE-00045). Associated with Summerhill’s redevelopment project at 4345 El Camino Real. Environmental Assessment: Not a Project.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-29",
           "subtype": "Over the Counter Approved"
         }
       ]
