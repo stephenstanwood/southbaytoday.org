@@ -38,6 +38,7 @@
     "playwright-scrape": "node scripts/playwright-scrapers.mjs",
     "health-report": "node scripts/health-report.mjs",
     "generate-scc-food-openings": "node scripts/generate-scc-food-openings.mjs",
+    "generate-freeway-pulse": "node scripts/generate-freeway-pulse.mjs",
     "social:publish": "node scripts/social/publish.mjs",
     "social:generate": "node scripts/social/generate-posts.mjs",
     "social:sv-history": "node scripts/social/generate-sv-history.mjs"

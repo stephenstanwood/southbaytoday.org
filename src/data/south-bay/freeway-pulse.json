@@ -1,0 +1,179 @@
+{
+  "generatedAt": "2026-04-30T02:13:04.326Z",
+  "source": "Caltrans District 4",
+  "sourceUrl": "https://cwwp2.dot.ca.gov/data/d4/cms/cmsStatusD04.json",
+  "signs": [
+    {
+      "route": "US-101",
+      "direction": "North",
+      "near": "Metcalf Road",
+      "city": "Morgan Hill",
+      "lat": 37.22618,
+      "lng": -121.741491,
+      "destinations": [
+        {
+          "to": "I-680",
+          "minutes": 10
+        },
+        {
+          "to": "Milpitas",
+          "minutes": 18
+        },
+        {
+          "to": "Palo Alto",
+          "minutes": 33
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T19:10:39"
+    },
+    {
+      "route": "US-101",
+      "direction": "South",
+      "near": "Lawrence EXPY",
+      "city": "Sunnyvale",
+      "lat": 37.389027,
+      "lng": -121.989558,
+      "destinations": [
+        {
+          "to": "SJ Airport",
+          "minutes": 7
+        },
+        {
+          "to": "Hwy 280",
+          "minutes": 17
+        },
+        {
+          "to": "Hwy 85",
+          "minutes": 22
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T19:11:42"
+    },
+    {
+      "route": "I-880",
+      "direction": "South",
+      "near": "Brokaw RD",
+      "city": "San Jose",
+      "lat": 37.384348,
+      "lng": -121.905145,
+      "destinations": [
+        {
+          "to": "Hwys 880/280",
+          "minutes": 6
+        },
+        {
+          "to": "Los Gatos",
+          "minutes": 13
+        },
+        {
+          "to": "Cupertino",
+          "minutes": 12
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T19:10:38"
+    },
+    {
+      "route": "I-680",
+      "direction": "South",
+      "near": "Scott Creek RD",
+      "city": "Milpitas",
+      "lat": 37.461466,
+      "lng": -121.902118,
+      "destinations": [
+        {
+          "to": "SJ State",
+          "minutes": 11
+        },
+        {
+          "to": "Cupertino",
+          "minutes": 19
+        },
+        {
+          "to": "Hwys 101/85",
+          "minutes": 17
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T19:07:38"
+    },
+    {
+      "route": "SR-85",
+      "direction": "South",
+      "near": "Pollard RD",
+      "city": "Campbell",
+      "lat": 37.265048,
+      "lng": -121.981264,
+      "destinations": [
+        {
+          "to": "Los Gatos",
+          "minutes": 4
+        },
+        {
+          "to": "Santa Cruz",
+          "minutes": 25
+        },
+        {
+          "to": "Morgan Hill",
+          "minutes": 24
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T18:53:39"
+    },
+    {
+      "route": "SR-17",
+      "direction": "North",
+      "near": "Summit RD",
+      "city": "Los Gatos",
+      "lat": 37.144787,
+      "lng": -121.984371,
+      "destinations": [
+        {
+          "to": "Los Gatos",
+          "minutes": 9
+        },
+        {
+          "to": "SJ Airport",
+          "minutes": 16
+        },
+        {
+          "to": "Campbell",
+          "minutes": 13
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T19:10:39"
+    },
+    {
+      "route": "SR-17",
+      "direction": "South",
+      "near": "Santa Cruz AVE",
+      "city": "Los Gatos",
+      "lat": 37.218341,
+      "lng": -121.987602,
+      "destinations": [
+        {
+          "to": "Summit RD",
+          "minutes": 8
+        },
+        {
+          "to": "Scotts Valley",
+          "minutes": 16
+        },
+        {
+          "to": "Santa Cruz",
+          "minutes": 20
+        }
+      ],
+      "alert": null,
+      "updatedAt": "2026-04-29T15:43:38"
+    }
+  ],
+  "stats": {
+    "totalSigns": 7,
+    "alerts": 0
+  }
+}

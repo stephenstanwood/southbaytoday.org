@@ -5,6 +5,7 @@ import {
   type EventCategory,
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
+import FreewayPulseCard from "../cards/FreewayPulseCard";
 
 const CITIES: { id: City; name: string }[] = [
   { id: "san-jose", name: "San Jose" },
@@ -1157,6 +1158,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           </div>
         </div>
       )}
+
+      {/* Freeway Pulse — live travel times so readers can decide whether to head out */}
+      <FreewayPulseCard />
     </>
   );
 }
