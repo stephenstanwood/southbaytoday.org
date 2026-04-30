@@ -57,6 +57,27 @@ const SKIP_STARTS_WITH = [
   "call to order", "roll call", "regular session,", "closed session,",
   "public comment", "subject:  conference with legal counsel",
   "subject:  conference with real property",
+  // Invocation: drop the heading itself ("Invocation (District 5)") and the
+  // clergy speaker line that often follows it (Father/Pastor/Rabbi/...).
+  "invocation",
+];
+
+// Patterns matching purely procedural items that should never count as
+// substantive even when their wording sneaks past the prefix lists.
+const SKIP_REGEX = [
+  // "Approval of [date] City Council meeting minutes" — pure ratification
+  /\bapproval of (?:the )?(?:[a-z\d ,]+ )?(?:meeting )?minutes\b/i,
+  // "Monthly Treasurer's Report / Investment Report" — recurring filings
+  /\bmonthly treasurer'?s\s+(?:investment\s+)?report\b/i,
+  // Section banners like "CONSENT CALENDAR (Items 5-18)" that escape the
+  // all-caps filter because of the parenthetical.
+  /^consent calendar\s*\(/i,
+  /^closed session\s*\(/i,
+  /^public hearings?\s*\(/i,
+  // Clergy invocation speaker lines. These are people's names attached to a
+  // church/temple/congregation — e.g. "Father Hugo Rojas, Our Lady of
+  // Guadalupe Church". Drop them; they are not agenda business.
+  /^(?:father|reverend|rev\.|pastor|rabbi|imam|bishop|deacon|chaplain|minister|monsignor|sister|brother)\b[^.]*?,\s*(?:[a-z' ]+ )?(?:church|temple|synagogue|mosque|congregation|parish|chapel|cathedral|fellowship|ministr(?:y|ies))\b/i,
 ];
 
 // Strip raw addresses, Brown Act teleconference disclosures, and noise from
@@ -84,6 +105,17 @@ function cleanLocation(raw) {
   return s;
 }
 
+// Tidy a Legistar agenda title for display: take the first line, strip the
+// "Subject:" wrapper that Cupertino/Saratoga/etc. prepend to every item, and
+// collapse whitespace.
+function cleanAgendaTitle(rawTitle) {
+  if (!rawTitle) return "";
+  let t = rawTitle.split(/\r?\n/)[0].trim();
+  t = t.replace(/^subject:\s*/i, "").trim();
+  t = t.replace(/\s+/g, " ");
+  return t;
+}
+
 function isSubstantiveItem(rawTitle) {
   if (!rawTitle) return false;
   // Use only the first line (some items have addresses/details appended via \r\n)
@@ -103,6 +135,21 @@ function isSubstantiveItem(rawTitle) {
   // Skip SKIP_STARTS_WITH patterns
   for (const prefix of SKIP_STARTS_WITH) {
     if (lower.startsWith(prefix)) return false;
+  }
+
+  // Some Legistar feeds prefix every item with "Subject:" or "Subject:  ".
+  // Run prefix/regex checks against the unwrapped title too so a procedural
+  // item doesn't sneak through just because it's wrapped in a Subject:.
+  const unwrapped = lower.replace(/^subject:\s*/, "");
+  if (unwrapped !== lower) {
+    if (SKIP_EXACT.has(unwrapped)) return false;
+    for (const prefix of SKIP_PREFIXES) if (unwrapped.startsWith(prefix)) return false;
+    for (const prefix of SKIP_STARTS_WITH) if (unwrapped.startsWith(prefix)) return false;
+  }
+
+  // Skip purely procedural / ratification / section-banner items
+  for (const re of SKIP_REGEX) {
+    if (re.test(t) || re.test(unwrapped)) return false;
   }
 
   // Skip all-caps section headers (e.g. "CONSENT CALENDAR", "PUBLIC PARTICIPATION INFORMATION")
@@ -133,7 +180,7 @@ async function fetchAgendaItems(client, eventId) {
       .filter((item) => isSubstantiveItem(item.EventItemTitle))
       .slice(0, 5)
       .map((item) => ({
-        title: item.EventItemTitle.split(/\r?\n/)[0].trim(),
+        title: cleanAgendaTitle(item.EventItemTitle),
         sequence: item.EventItemAgendaSequence,
       }));
   } catch {
