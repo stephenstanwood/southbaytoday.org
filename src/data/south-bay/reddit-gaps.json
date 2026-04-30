@@ -1,33 +1,20 @@
 {
   "_meta": {
-    "generatedAt": "2026-04-30T19:17:30.236Z",
+    "generatedAt": "2026-04-30T23:16:42.660Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 47,
-    "placesMatched": 20,
+    "placesExtracted": 43,
+    "placesMatched": 16,
     "placeGaps": 27,
-    "eventsExtracted": 4,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 4,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
-    {
-      "name": "House Rabbit Society",
-      "city": "",
-      "kind": "service",
-      "context": "rabbit fostering and adoption organization",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
     {
       "name": "The Tech Museum",
       "city": "San Jose",
@@ -35,138 +22,100 @@
       "context": "technology museum in downtown San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ]
     },
     {
       "name": "Japantown",
       "city": "San Jose",
       "kind": "venue",
-      "context": "neighborhood with shops, restaurants, walkable area",
+      "context": "neighborhood with Japanese culture and dining",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ]
     },
     {
-      "name": "Hearts Delight Roller Derby",
-      "city": "San Jose",
+      "name": "Boswells",
+      "city": "",
       "kind": "venue",
-      "context": "roller derby boot camp for learning to skate",
+      "context": "Bay Area music venue hosting local bands",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ]
     },
     {
-      "name": "Monterey Bay Aquarium",
-      "city": "Monterey",
+      "name": "Toons",
+      "city": "",
       "kind": "venue",
-      "context": "aquarium in Monterey area",
+      "context": "Bay Area music venue hosting local bands",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ]
     },
     {
-      "name": "Pogonip",
+      "name": "The Milk Bar",
       "city": "",
-      "kind": "park",
-      "context": "park with hiking trails near Santa Cruz",
+      "kind": "venue",
+      "context": "Bay Area music venue for local bands",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
-      "name": "Muir Redwoods",
-      "city": "",
-      "kind": "park",
-      "context": "redwood forest hiking location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
-      "name": "Point Reyes",
-      "city": "",
-      "kind": "park",
-      "context": "hiking destination with lighthouse",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
-      "name": "Wilder Ranch",
-      "city": "",
-      "kind": "park",
-      "context": "hiking location in Bay Area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ]
     },
     {
       "name": "Buddhist Tzu Chi Foundation",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosts free Repair Café community events",
+      "context": "hosts monthly free Repair Café events",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
         "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
+        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
+        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
-      "name": "Off The Grid",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "food truck market organizer, previously dominated Bay Area scene",
+      "name": "MV YMCA",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "small teeny pool often crowded with evening hours",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
         "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
+        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
+        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
       "name": "Rinconada",
       "city": "Palo Alto",
-      "kind": "venue",
-      "context": "public pool for lap swimming",
+      "kind": "park",
+      "context": "outdoor lap pool, good for swimming",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
@@ -174,119 +123,38 @@
       "name": "JCC",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "outdoor pool, often not crowded",
+      "context": "outdoor pool often not crowded, closed 4:30-5:30 MWF",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "City Sports Club",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "indoor pool, competitive pricing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
       "name": "Ross Rd YMCA",
       "city": "Palo Alto",
-      "kind": "venue",
-      "context": "indoor pool option",
+      "kind": "service",
+      "context": "local indoor pool option",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
-      "name": "Freshly Baked",
-      "city": "San Jose",
-      "kind": "bakery",
-      "context": "delicious tuna salad sandwich",
+      "name": "City Sports Club",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "indoor pool at reasonable cost",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "Spread",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Angry Tuna sandwich in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "Clover Bakery",
-      "city": "San Jose",
-      "kind": "bakery",
-      "context": "tuna and spicy tuna sandwich, Japanese style",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "San Benito Deli",
-      "city": "",
-      "kind": "deli",
-      "context": "excellent tuna sandwich and fresh bread",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "Rōzmary Kitchen",
-      "city": "",
-      "kind": "restaurant",
-      "context": "tuna salad sandwich option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "Sourdough Eatery",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "good tuna sandwich",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
-      ]
-    },
-    {
-      "name": "California Sourdough",
-      "city": "",
-      "kind": "bakery",
-      "context": "sourdough bread option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
@@ -294,186 +162,282 @@
       "name": "Hibachi At Home",
       "city": "Sunnyvale",
       "kind": "service",
-      "context": "in-home hibachi chef service",
+      "context": "in-home hibachi chef service for entertaining",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
-      "name": "Cooking For Friends",
+      "name": "Cooking for Friends",
       "city": "Sunnyvale",
       "kind": "service",
-      "context": "Richard does paella feast and other dishes",
+      "context": "chef Richard does paella and other dishes at home",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
       "name": "Pichetti Ranch",
-      "city": "Sunnyvale",
+      "city": "Los Gatos",
       "kind": "park",
-      "context": "hiking with winery at end, gentle terrain",
+      "context": "gentle hiking with winery at end",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
       "name": "8 Elements",
-      "city": "",
+      "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "live dosa bar service",
+      "context": "live dosa bar for entertaining guests",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     },
     {
       "name": "Medinas",
-      "city": "",
+      "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "live taco service",
+      "context": "live taco service for entertaining",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
+      ]
+    },
+    {
+      "name": "Briarwood Apartments",
+      "city": "Sunnyvale",
+      "kind": "other",
+      "context": "apartment complex with train noise and thin walls",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Dittmer's",
+      "city": "Los Altos",
+      "kind": "retail",
+      "context": "specialty butcher and sausage shop",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Felipe's",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "affordable produce with organic items and regional dairy",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Draeger's",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery store with meat bar and premade food",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Zanotto's",
+      "city": "",
+      "kind": "retail",
+      "context": "known for soups, sandwiches, and meat selection",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Piazza's",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery store with meat and prepared foods",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Real Produce International Market",
+      "city": "Palo Alto",
+      "kind": "retail",
+      "context": "fresh produce, Middle Eastern groceries, and kebab shop",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "De Martini Orchard",
+      "city": "Los Altos",
+      "kind": "retail",
+      "context": "local orchard and farm stand",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Full Belly Farm",
+      "city": "",
+      "kind": "service",
+      "context": "organic CSA produce box delivery service",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Ava's",
+      "city": "",
+      "kind": "retail",
+      "context": "great produce with local organic frozen meat and seafood",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ]
+    },
+    {
+      "name": "Goodeggs",
+      "city": "",
+      "kind": "service",
+      "context": "grocery delivery with farmers only sourcing and zero waste",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "San Jose Sharks game",
-      "when": "fall at start of season",
-      "city": "San Jose",
-      "context": "make a wish trip opportunity with player meet up",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
-      "name": "Bad Bitch Book Club",
-      "when": "monthly",
-      "city": "San Jose",
-      "kind": "book club with Bay Area chapter",
-      "context": "monthly literary-themed meetups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
-      "name": "Viva Calle",
-      "when": "recurring",
-      "city": "San Jose",
-      "context": "street event where roller skaters gather",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ]
-    },
-    {
       "name": "Free Repair Café",
-      "when": "Sunday, May 3, 11:00 AM – 3:00 PM",
+      "when": "Sunday, May 3, 11:00 AM - 3:00 PM",
       "city": "San Jose",
-      "context": "community event to repair items instead of discarding them",
+      "context": "community volunteer repair event for appliances, electronics, bikes",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
         "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
+        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
+        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
+      ]
+    },
+    {
+      "name": "I-280/Wolfe Road Interchange Improvement Project Groundbreaking",
+      "when": "Tuesday (date not specified)",
+      "city": "Cupertino",
+      "context": "$124 million infrastructure project completion expected late 2029",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
+        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
+        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Winchester Mystery House",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "historic mansion with tours, day and nighttime ghost tours",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ],
-      "matchedName": "Winchester Mystery House"
-    },
-    {
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "lively downtown area with restaurants and bars",
+      "context": "lively area with food and drinks near Sharks games",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "San Pedro Square Market"
     },
     {
-      "name": "Rosicrucian Egyptian Museum",
+      "name": "The Rosicrucian Egyptian Museum",
       "city": "San Jose",
       "kind": "venue",
       "context": "museum in downtown San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Rosicrucian Egyptian Museum"
     },
     {
-      "name": "Japanese American Museum",
+      "name": "The Japanese American Museum",
       "city": "San Jose",
       "kind": "venue",
       "context": "museum in downtown San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Japanese American Museum of San Jose"
     },
     {
-      "name": "San Jose Museum of Art",
+      "name": "The San Jose Museum of Art",
       "city": "San Jose",
       "kind": "venue",
       "context": "art museum in downtown San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "San Jose Museum of Art"
     },
@@ -481,15 +445,29 @@
       "name": "Computer History Museum",
       "city": "Mountain View",
       "kind": "venue",
-      "context": "technology history museum",
+      "context": "technology museum near San Jose",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Computer History Museum"
+    },
+    {
+      "name": "Winchester Mystery House",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "historic house with tours including nighttime ghost tours",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
+      ],
+      "matchedName": "Winchester Mystery House"
     },
     {
       "name": "Japanese Friendship Garden",
@@ -498,10 +476,10 @@
       "context": "garden in San Jose, nice on sunny days",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Japanese Friendship Garden"
     },
@@ -509,13 +487,13 @@
       "name": "Westfield Valley Fair",
       "city": "San Jose",
       "kind": "retail",
-      "context": "large shopping mall with dining options",
+      "context": "large shopping mall with dining and retail options",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Westfield Valley Fair"
     },
@@ -523,137 +501,40 @@
       "name": "Eataly",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Italian food hall with restaurant and groceries",
+      "context": "Italian food hall with restaurant and groceries near Valley Fair",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
+        "https://www.reddit.com/r/bayarea/comments/1sznn9i/whats_your_favorite_bay_area_band_that_almost/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
+        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/"
       ],
       "matchedName": "Eataly"
-    },
-    {
-      "name": "Big Basin State Park",
-      "city": "",
-      "kind": "park",
-      "context": "state park with redwoods and hiking trails",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ],
-      "matchedName": "Big Basin Cafe"
-    },
-    {
-      "name": "Henry Cowell",
-      "city": "",
-      "kind": "park",
-      "context": "park with hiking trails near Santa Cruz",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ],
-      "matchedName": "Henry Cowell Redwoods State Park"
-    },
-    {
-      "name": "Downtown Campbell",
-      "city": "Campbell",
-      "kind": "venue",
-      "context": "walkable downtown area popular with young professionals",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ],
-      "matchedName": "Downtown Campbell"
-    },
-    {
-      "name": "Santana Row",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "upscale shopping and dining area attracting 30+ crowd",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t028wb/in_the_bay_area_raising_kids_comes_with/",
-        "https://www.reddit.com/r/bayarea/comments/1szdly7/foster_a_shelter_rabbit_from_house_rabbit_society/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syem2y/our_city_hall_is_coming_out/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1szcwal/things_to_do_in_the_bay_for_midwesterners/",
-        "https://www.reddit.com/r/SanJose/comments/1szaigi/where_should_i_move_to_as_a_single_woman_in_her/"
-      ],
-      "matchedName": "Santana Row"
-    },
-    {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "San Jose Sharks home arena, train accessible from SF",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
-        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "Whole Foods",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "landmark near Central Expressway for directions",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
-        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
-      ],
-      "matchedName": "Whole Foods Market"
     },
     {
       "name": "Bombero 408",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "taco truck on Monterey Rd with strong marketing",
+      "context": "successful food truck on Monterey Rd",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
         "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
+        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
+        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ],
       "matchedName": "El Bombero 408"
     },
     {
-      "name": "Home Eat",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Chinese takeout restaurant, noted for value and taste",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1syj8lx/bike_cop_lane_splitting_to_check_texting_driving/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1sz6k8q/traveling_from_australia_for_a_game_next_year/",
-        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
-        "https://www.reddit.com/r/SanJose/comments/1t00f8a/one_of_the_best_asian_restaurant_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/"
-      ],
-      "matchedName": "Home Eat"
-    },
-    {
       "name": "Rengstorff Park Aquatics Center",
       "city": "Mountain View",
-      "kind": "venue",
-      "context": "outdoor lap pool with 7-10 lanes, $99 for 25 visits",
+      "kind": "park",
+      "context": "outdoor lap pool with 7-10 lanes, $99/25 visits",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ],
       "matchedName": "Rengstorff Park Aquatics Center"
@@ -661,28 +542,68 @@
     {
       "name": "El Camino YMCA",
       "city": "",
-      "kind": "venue",
-      "context": "generous lap pool hours, area Y network access",
+      "kind": "service",
+      "context": "generous lap pool hours, multi-location Y access",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1szifuu/thinking_of_starting_a_koreanmexican_fusion_truck/",
+        "https://www.reddit.com/r/SanJose/comments/1szmynf/free_repair_café_in_san_jose_this_sunday_may_3/",
         "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
         "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
         "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
       ],
       "matchedName": "El Camino YMCA"
     },
     {
-      "name": "Manresa Bread",
-      "city": "",
-      "kind": "bakery",
-      "context": "bread for tuna sandwiches",
+      "name": "Tasty Noodles & Dumplings",
+      "city": "Milpitas",
+      "kind": "restaurant",
+      "context": "new hand pulled noodle restaurant with grand opening promo",
       "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1syrshl/i280wolfe_road_interchange_improvement_project_in/",
-        "https://www.reddit.com/r/mountainview/comments/1sy859w/best_place_to_swim_laps/",
-        "https://www.reddit.com/r/SanJose/comments/1szemt0/tuna_salad_sandwich/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
       ],
-      "matchedName": "Manresa Bread"
+      "matchedName": "Tasty Noodles & Dumplings"
+    },
+    {
+      "name": "Nijiya Market",
+      "city": "",
+      "kind": "retail",
+      "context": "Japanese groceries and seafood",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ],
+      "matchedName": "Nijiya Market Mountain View Store"
+    },
+    {
+      "name": "Mega Mart",
+      "city": "",
+      "kind": "retail",
+      "context": "Korean groceries and seafood",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ],
+      "matchedName": "MEGA MART"
+    },
+    {
+      "name": "Lunardi's",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery store with quality meat selection",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1szklrh/briarwood_sunnyvale/",
+        "https://www.reddit.com/r/bayarea/comments/1szjctl/new_hand_pulled_noodle_restaurant_in_milpitas/",
+        "https://www.reddit.com/r/mountainview/comments/1szf2kx/anyone_down_for_pickleball_this_weekend_playing/",
+        "https://www.reddit.com/r/mountainview/comments/1syhb5j/local_organic_produce_and_sustainable_meats/"
+      ],
+      "matchedName": "Lunardi's"
     }
   ],
   "eventMatches": []
