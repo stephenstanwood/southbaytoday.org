@@ -1,6 +1,7 @@
 import ForecastCard from "../cards/ForecastCard";
 import AirQualityCard from "../cards/AirQualityCard";
 import SunUvCard from "../cards/SunUvCard";
+import CoastCard from "../cards/CoastCard";
 import QuakeWatchCard from "../cards/QuakeWatchCard";
 import WaterWatchCard from "../cards/WaterWatchCard";
 
@@ -13,6 +14,7 @@ export default function WeatherView() {
     <>
       <ForecastCard homeCity={REGIONAL_ANCHOR} />
       <SunUvCard />
+      <CoastCard />
       <AirQualityCard homeCity={REGIONAL_ANCHOR} />
       <QuakeWatchCard />
       <WaterWatchCard />
