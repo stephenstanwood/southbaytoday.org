@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-30T11:08:31.995Z",
+      "generatedAt": "2026-04-30T19:09:24.228Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-30T11:08:34.765Z",
+      "generatedAt": "2026-04-30T19:09:26.704Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -150,6 +150,18 @@
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01061",
+          "address": "2351 Louis Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Convert bedroom space into a bathroom. Fill in window.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-23",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01107",
           "address": "820 Hamilton Av",
@@ -175,30 +187,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01061",
-          "address": "2351 Louis Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Convert bedroom space into a bathroom. Fill in window.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-23",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00094",
-          "address": "261 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated (edge lit) wall sign for Fireclay Tile. The sign will be constructed of stainless-steel letters (painted black with satin finish) and will be 9 inches tall by 7 feet and 7 inches long. Zoning District: CD-C (GF)(P). Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00095",
           "address": "220 University Av",
           "category": "entitlement",
@@ -220,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-29",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00094",
+          "address": "261 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated (edge lit) wall sign for Fireclay Tile. The sign will be constructed of stainless-steel letters (painted black with satin finish) and will be 9 inches tall by 7 feet and 7 inches long. Zoning District: CD-C (GF)(P). Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
           "subtype": "Over the Counter Approved"
         }
       ]
