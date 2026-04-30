@@ -53,6 +53,13 @@ function getLocationText(e) {
   return [e.address, e.location, e.venue, e.description].filter(Boolean).join(" | ");
 }
 
+// Address-only text for geography checks. Descriptions can mention sponsors,
+// charities, or "supports families in [out-of-area city]" — those references
+// are not the event's location and shouldn't trigger out-of-area findings.
+function getAddressText(e) {
+  return [e.address, e.location, e.venue].filter(Boolean).join(" | ");
+}
+
 function getCity(e) {
   return e.city || e.cityKey || null;
 }
@@ -102,6 +109,7 @@ function classify(event) {
 
   // Out-of-area event tagged as in-area.
   const locLower = loc.toLowerCase();
+  const addrLower = getAddressText(event).toLowerCase();
   const titleLower = title.toLowerCase();
   const venueLower = (event.venue || "").toLowerCase();
   const borderAllowed = BORDER_VENUE_ALLOWLIST.some((needle) =>
@@ -110,7 +118,7 @@ function classify(event) {
   if (!borderAllowed) {
     for (const ooaCity of OUT_OF_AREA_CITIES) {
       const re = new RegExp(`\\b${ooaCity}\\b`, "i");
-      if (re.test(locLower)) {
+      if (re.test(addrLower)) {
         // Tolerate out-of-area city names that appear inside a recognizable
         // address for an in-area city (rare, but possible for street names).
         const tokens = city ? SLUG_TO_CITY_TOKENS[city] : null;

@@ -2792,13 +2792,9 @@ function fetchScccfdEvents() {
       cost: "free", costNote: null,
       url: "https://www.eventbrite.com/e/wildfire-preparedness-workshop-redwood-estates-los-gatos-2026-tickets-1979749409778",
     },
-    {
-      title: "Wildfire Preparedness Workshop",
-      date: "2026-05-02", time: "10:00 AM",
-      venue: "San Martín Lions Club", address: "San Martín", city: "san-jose",
-      cost: "free", costNote: null,
-      url: "https://www.eventbrite.com/e/wildfire-preparedness-workshop-san-martin-2026-tickets-1979750790909",
-    },
+    // San Martín is south of Morgan Hill and outside our 11-city coverage area.
+    // The Eventbrite organizer publishes it, but we drop it at ingest so it
+    // doesn't surface in San Jose's event feed.
     {
       title: "Hands-Only CPR and AED Class",
       date: "2026-05-28", time: "10:00 AM",

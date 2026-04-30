@@ -1,272 +1,21 @@
 {
   "_meta": {
-    "auditedAt": "2026-04-20T00:51:55.196Z"
+    "auditedAt": "2026-04-30T14:11:17.168Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 553,
+    "total": 1251,
     "totals": {
-      "hard": 2,
-      "soft": 16,
+      "hard": 0,
+      "soft": 8,
       "info": 0
     },
     "byReason": {
-      "virtual-not-flagged": 4,
-      "meeting-title": 2,
-      "unknown-slug": 12,
-      "out-of-area": 2
+      "virtual-not-flagged": 3,
+      "meeting-title": 5
     },
-    "hard": [
-      {
-        "id": "sc-picks-57ce0313da0ee163",
-        "title": "Free Friday Night Bands at the Boardwalk",
-        "city": "santa-cruz",
-        "date": "2026-06-19",
-        "location": "400 Beach St, Santa Cruz, CA 95060",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"santa cruz\" with no in-area city token"
-          },
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "sc-picks-5c703756b31fbc28",
-        "title": "Santa Cruz Shakespeare 2026 Summer Season Opens",
-        "city": "santa-cruz",
-        "date": "2026-06-22",
-        "location": "501 Upper Park Rd, Santa Cruz, CA 95065",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"santa cruz\" with no in-area city token"
-          },
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      }
-    ],
+    "hard": [],
     "soft": [
-      {
-        "id": "chm-3c88b0ea800f3e91",
-        "title": "Steve Jobs in Exile",
-        "city": "mountain-view",
-        "date": "2026-04-19",
-        "location": "1401 N Shoreline Blvd, Mountain View",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
-        "id": "chm-d03ed1cf869d7d36",
-        "title": "2026 Fellow Awards Ceremony",
-        "city": "mountain-view",
-        "date": "2026-04-19",
-        "location": "1401 N Shoreline Blvd, Mountain View",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
-        "id": "chm-8824246062ee6f36",
-        "title": "Apple at 50",
-        "city": "mountain-view",
-        "date": "2026-04-19",
-        "location": "1401 N Shoreline Blvd, Mountain View",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
-        "id": "milpitas-391777e236c94bb1",
-        "title": "City Council Meeting",
-        "city": "milpitas",
-        "date": "2026-04-20",
-        "location": "City of Milpitas",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\bcity\\s+council\\s+meeting\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "los-gatos-71349484f361b63c",
-        "title": "Town Council Meeting",
-        "city": "los-gatos",
-        "date": "2026-04-21",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "02ac95841716",
-        "title": "Morgan Hill Earth Day Festival",
-        "city": "santa-clara-county",
-        "date": "2026-04-25",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "fd2a44fbf479",
-        "title": "Volunteer Outdoors in East Palo Alto at Ravenswood Preserve",
-        "city": "santa-clara-county",
-        "date": "2026-04-25",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "8317f1bff122",
-        "title": "Alum Rock Park BioBlitz with Keep Coyote Creek Beautiful",
-        "city": "santa-clara-county",
-        "date": "2026-04-26",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "07777851ff1c",
-        "title": "Hellyer County Park BioBlitz",
-        "city": "santa-clara-county",
-        "date": "2026-05-02",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "414c41292b0b",
-        "title": "Hike at Windy Hill",
-        "city": "santa-clara-county",
-        "date": "2026-05-09",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "sc-picks-f63e006d9f6388b0",
-        "title": "Mother's Day Brunch Train",
-        "city": "santa-cruz",
-        "date": "2026-05-10",
-        "location": "5401 Graham Hill Rd, Felton, CA 95018",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "510953b0f66f",
-        "title": "Coastal Walk at Cowell-Purisima Trail",
-        "city": "santa-clara-county",
-        "date": "2026-05-14",
-        "location": "Various POST preserves + partner locations",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-clara-county\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "sc-picks-ddfe3ead939e4249",
-        "title": "Civil War Memorial Weekend",
-        "city": "santa-cruz",
-        "date": "2026-05-24",
-        "location": "5401 Graham Hill Rd, Felton, CA 95018",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "sc-picks-71841ffb6f773b60",
-        "title": "Father's Day BBQ & Steam Train",
-        "city": "santa-cruz",
-        "date": "2026-06-21",
-        "location": "5401 Graham Hill Rd, Felton, CA 95018",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "sc-picks-7ca866e44de4538f",
-        "title": "4th of July Fireworks Train",
-        "city": "santa-cruz",
-        "date": "2026-07-04",
-        "location": "5401 Graham Hill Rd, Felton, CA 95018",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"santa-cruz\" is not in the 11-city coverage map"
-          }
-        ]
-      },
       {
         "id": "paloalto-69cf2b70491b809c6f24e18a",
         "title": "Short Story Social",
@@ -280,19 +29,192 @@
             "detail": "matched /description mention/ in description"
           }
         ]
+      },
+      {
+        "id": "chm-3c88b0ea800f3e91",
+        "title": "Steve Jobs in Exile",
+        "city": "mountain-view",
+        "date": "2026-04-30",
+        "location": "1401 N Shoreline Blvd, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "chm-8824246062ee6f36",
+        "title": "Apple at 50",
+        "city": "mountain-view",
+        "date": "2026-04-30",
+        "location": "1401 N Shoreline Blvd, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "milpitas-1b47eeb3de008ece",
+        "title": "City Council Meeting",
+        "city": "milpitas",
+        "date": "2026-05-05",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\bcity\\s+council\\s+meeting\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "los-gatos-0adb5195a2b0a7be",
+        "title": "Town Council Meeting",
+        "city": "los-gatos",
+        "date": "2026-05-05",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "los-gatos-b44c86024bfc4f19",
+        "title": "Town Council Meeting",
+        "city": "los-gatos",
+        "date": "2026-05-19",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "los-gatos-19e353151f76f954",
+        "title": "Town Council Meeting",
+        "city": "los-gatos",
+        "date": "2026-06-02",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "los-gatos-56688703f19cf6ff",
+        "title": "Town Council Meeting",
+        "city": "los-gatos",
+        "date": "2026-06-16",
+        "location": "Council Chambers",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
       }
     ]
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 43,
+    "total": 190,
     "totals": {
-      "hard": 0,
-      "soft": 0,
+      "hard": 4,
+      "soft": 1,
       "info": 0
     },
-    "byReason": {},
-    "hard": [],
-    "soft": []
+    "byReason": {
+      "out-of-area": 4,
+      "virtual-not-flagged": 1
+    },
+    "hard": [
+      {
+        "id": "inbound_mo7dx5yr_n62ibb",
+        "title": "Comic Fun Fest",
+        "city": null,
+        "date": "2026-05-02T11:30:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mo7dx6ql_3yl4u3",
+        "title": "Comic Fun Fest",
+        "city": null,
+        "date": "2026-05-02T11:30:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mobnui85_zwxutu",
+        "title": "Blair Ranch VIT",
+        "city": null,
+        "date": "2026-05-17T00:00:00-07:00",
+        "location": "Rancho Cañada del Oro Open Space Preserve, Morgan Hill",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mobnui85_b7k89c",
+        "title": "Fifield-Cahill Ridge Trail Thru-hike",
+        "city": null,
+        "date": "2026-05-09T00:00:00-07:00",
+        "location": "San Mateo County",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"san mateo\" with no in-area city token"
+          }
+        ]
+      }
+    ],
+    "soft": [
+      {
+        "id": "inbound_moc11ris_3ywdxm",
+        "title": "ArtNow 2026 Awards Ceremony",
+        "city": "los-gatos",
+        "date": "2026-05-02T15:00:00-07:00",
+        "location": "New Museum Los Gatos (NUMU), 106 E. Main Street, Los Gatos, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      }
+    ]
   }
 }
