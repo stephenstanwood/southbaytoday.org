@@ -7,11 +7,11 @@
       "Google Places API (New) Text Search",
       "poi-data.ts (curated)"
     ],
-    "lastBackfilledAt": "2026-04-30T09:17:28.640Z",
+    "lastBackfilledAt": "2026-04-30T13:17:45.847Z",
     "lastBackfillSource": "reddit-gaps"
   },
   "stats": {
-    "total": 2567,
+    "total": 2568,
     "curated": 49,
     "googleOnly": 2450,
     "byCity": {
@@ -91725,6 +91725,50 @@
       "kidFriendlyChanged": false,
       "indoorOutdoorChanged": true,
       "source": "https://www.reddit.com/r/SanJoseSharks/comments/1syj7ha/are_the_playoffs_giving_you_the_itch_to_play_come/"
+    },
+    {
+      "id": "ChIJexw11B8yjoAR0QCnB36H8Nc",
+      "name": "Martial Cottle Park",
+      "address": "5283 Snell Ave, San Jose, CA 95136, USA",
+      "city": "san-jose",
+      "lat": 37.2636604,
+      "lng": -121.8314266,
+      "rating": 4.7,
+      "ratingCount": 687,
+      "priceLevel": null,
+      "types": [
+        "park",
+        "cycling_park",
+        "tourist_attraction",
+        "picnic_ground",
+        "sports_activity_location",
+        "farm",
+        "service",
+        "point_of_interest",
+        "establishment"
+      ],
+      "primaryType": "park",
+      "displayType": "Park",
+      "category": "outdoor",
+      "hours": {
+        "sun": "08:00-18:00",
+        "mon": "08:00-18:00",
+        "tue": "08:00-18:00",
+        "wed": "08:00-18:00",
+        "thu": "08:00-18:00",
+        "fri": "08:00-18:00",
+        "sat": "08:00-18:00"
+      },
+      "url": "https://parks.sccgov.org/santa-clara-county-parks/martial-cottle-park",
+      "mapsUrl": "https://maps.google.com/?cid=15560085687929077969&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "photoRef": "places/ChIJexw11B8yjoAR0QCnB36H8Nc/photos/Ab43m-vQGH9oaBW19t0A1_Fg_LrTzICPUPWIqSRTcsFfWVaZMRoFUaS0yZHz2C6eGRQDgHtn5qZhBDgZ9ZD2JEgIyyOUhSduum51pmvOTkKExjqywJPV0yQBTI54d40Q-Ei_m8B1gSKO3e6JAO52psUOQkC_Tlxpstc_UaNXc9EKJ_YjOKucwyHOyAnFdo9keDRsI54rYPqXMpSGiTB-UZZf3WipqN0gyjlJgreRmM-TXCdB6qhrFmzaXVljiRKg0IWGa89mx9-aXmoupVY7awCkIYF7xzJSpOcogrsV8iWGM_D1ImBg269T1sNnAKPgfntbPLjZkY868mq9eAYs0zi1Ju1xhSVNwJSzyr54ValCP8wE3rqz2LYJlQIC-Ox_Bk1kZ36_ql0ugClufJGk5fbo0bsgZPGjwVC2i9V217dsuIHn2ms",
+      "curated": false,
+      "discoverySource": "reddit-gaps",
+      "kidFriendly": true,
+      "indoorOutdoor": "outdoor",
+      "kidFriendlyChanged": true,
+      "indoorOutdoorChanged": true,
+      "source": "https://www.reddit.com/r/Sunnyvale/comments/1syreek/help_with_hosting_the_inlaws/"
     }
   ]
 }
