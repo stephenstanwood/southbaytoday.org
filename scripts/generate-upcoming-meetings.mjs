@@ -59,6 +59,31 @@ const SKIP_STARTS_WITH = [
   "subject:  conference with real property",
 ];
 
+// Strip raw addresses, Brown Act teleconference disclosures, and noise from
+// scraped Legistar EventLocation strings so they render as a short venue label.
+function cleanLocation(raw) {
+  if (!raw) return null;
+  let s = String(raw).trim();
+
+  // Strip Brown Act teleconference compliance disclosures
+  s = s.replace(/[;,]?\s*(and\s+)?Teleconference\s+Location[\s\S]*$/i, "").trim();
+  s = s.replace(/[;,]?\s*Pursuant\s+to\s+Gov\.?\s+Code[\s\S]*$/i, "").trim();
+  s = s.replace(/\s+and\s+via\s+Teleconference\s*$/i, "").trim();
+
+  // Strip leading street addresses ("10300 Torre Avenue, Council Chamber" → "Council Chamber")
+  const streetSuffix = "(?:Avenue|Ave\\.?|Street|St\\.?|Boulevard|Blvd\\.?|Road|Rd\\.?|Drive|Dr\\.?|Way|Lane|Ln\\.?|Court|Ct\\.?|Place|Pl\\.?|Plaza|Parkway|Pkwy\\.?)";
+  const leadingAddr = new RegExp(`^\\d+\\s+\\S[^,]*?${streetSuffix}\\b[^,]*,\\s*`, "i");
+  while (leadingAddr.test(s)) s = s.replace(leadingAddr, "").trim();
+  s = s.replace(new RegExp(`^and\\s+\\d+\\s+\\S[^,]*?${streetSuffix}\\b[^,]*,\\s*`, "i"), "").trim();
+
+  // Trim trailing punctuation
+  s = s.replace(/[,;:]+\s*$/, "").trim();
+
+  if (!s) return null;
+  if (s.length > 80) s = s.slice(0, 77) + "...";
+  return s;
+}
+
 function isSubstantiveItem(rawTitle) {
   if (!rawTitle) return false;
   // Use only the first line (some items have addresses/details appended via \r\n)
@@ -148,7 +173,7 @@ async function fetchNextMeeting(city, client, body) {
       timeZone: "America/Los_Angeles",
     }),
     bodyName: ev.EventBodyName,
-    location: ev.EventLocation || null,
+    location: cleanLocation(ev.EventLocation),
     url: `https://${client}.legistar.com/MeetingDetail.aspx?ID=${ev.EventId}&GUID=${ev.EventGuid}`,
     legistarEventId: ev.EventId,
     agendaItems,
@@ -315,7 +340,7 @@ async function fetchMilpitasMeeting() {
         timeZone: "America/Los_Angeles",
       }),
       bodyName: "City Council",
-      location: "455 E. Calaveras Blvd, Milpitas",
+      location: "Milpitas City Hall",
       url: "https://www.milpitas.gov/129/Agendas-Minutes",
       agendaItems: [],
     };
