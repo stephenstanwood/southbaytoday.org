@@ -5,7 +5,8 @@
     "anchorHours": [
       9
     ],
-    "planCount": 3
+    "planCount": 4,
+    "kidsCarriedForward": true
   },
   "plans": {
     "adults:h9": {
@@ -384,6 +385,100 @@
       "anchorHour": 9,
       "planDate": "2026-05-01",
       "generatedAt": "2026-04-30T09:30:59.237Z"
+    },
+    "kids:h9": {
+      "cards": [
+        {
+          "id": "place:curated:bills-cafe",
+          "name": "Bill's Cafe",
+          "category": "food",
+          "city": "san-jose",
+          "address": "Bill's Cafe, Willow Glen",
+          "timeBlock": "7:30 AM - 9:00 AM",
+          "blurb": "Start the day at this Willow Glen classic — the breakfast burritos and eggs benedict are the move, and the whole family will leave happy.",
+          "why": "It's a proper sit-down breakfast that doesn't feel rushed, perfect for a Wednesday morning.",
+          "url": "https://www.billscafe.com",
+          "mapsUrl": null,
+          "cost": "low",
+          "costNote": "Under $15",
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJIa3HSuMzjoARtIT_rggQSYo/photos/AU_ZVEHuj36qTT99rKQ6BPj7R0cLOUah3GT-FG4NTWkmj8E3Gxf8AhMbSjytgKJOix-geFapinEqeTHlp7DBAA_vbH04p_eFq_kwklx78Kem2okzysQtj3ST6lxm7RkDhibFSXjHDuxkfCvfJjRf-9Dt5e_zvc5KZ5BSAHgL85VE1eAT_r6A4Q4sqSzVWeS3cUMlibvWxG02LLLXizu66-l2X9rwxmD60hV21yDH7u-HAK8DjnT9Pn4yUl9EMmdpX0saEAjMosjcYLLUwNtqlM_0BXA7CCaiJgiKaWCn559UIhMn06VIf-fHvUUtAuncGzZUafrvMzennvdXO0d13DbimOmZ0vGzdIPrObUG4Y53SVqrr9yn6GqZ70HYn7EKJiVnaca4qdaSCmRhNnfxTyu3GcRXhFrjRo_ojZGU4JcxCYmi47o",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-6/20 | cat=food"
+        },
+        {
+          "id": "place:ChIJ24fHtb81joARJByKotZNf3k",
+          "name": "Vasona Lake County Park",
+          "category": "outdoor",
+          "city": "los-gatos",
+          "address": "333 Blossom Hill Rd, Los Gatos, CA 95032, USA",
+          "timeBlock": "2:30 PM - 4:30 PM",
+          "blurb": "Head out to Vasona Lake for a walk around the lake, some open grass time, and the little train the kids will absolutely want to ride.",
+          "why": "It's one of the best family parks in the South Bay and $6 parking is a steal for what you get.",
+          "url": "https://parks.sccgov.org/santa-clara-county-parks/vasona-lake-and-los-gatos-creek-county-parks",
+          "mapsUrl": "https://maps.google.com/?cid=8754801784876833828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": "low",
+          "costNote": "$6 parking",
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJ24fHtb81joARJByKotZNf3k/photos/AU_ZVEETecj2WXxtIbYDjI1O9wnz2wmtBWjRy1HrUiBLTKyjNCsKM5pIGkjlP_spDIL60VkD46K22zM2M_21y-FZkut62KqFOlIeEv_9TiJzwj9B8sOFbZ9uK53jWFSclAbSeynF3ypIDKBGEpA0UBupTY1V5we3xfs6kw_MTh0jdng5jNON7tr5tUUb8tl9FZr5ez70mltk3Y34qcClooFyXGNMm9c-JQvT_Mc3RD2vjN1oDc7bOl0FfCLLZjn0VNwa9Xz8PIhNb1GUNi5R8YsNfl8bh51j_ZZanD7jT4GW0RDunLQYQdQwr-JKGeGi7DFUvx2n2BRo-S2h1SA0bEJWQaCcwOYoKwjNmPooshcP9nvFQHnLJTtnJ-VxO0QUk96bFVDCx3dywD8f3Ip71stcivrD0jB9Nnwmlo-Vds1odnEz_Vtj60aVrIL3YrmZbG8T",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-14/20 | rating=4.7 | cat=outdoor"
+        },
+        {
+          "id": "place:ChIJeQ-ozuLKj4ARMQNfslZXl1c",
+          "name": "Smoking Pig BBQ",
+          "category": "food",
+          "city": "san-jose",
+          "address": "1144 N 4th St, San Jose, CA 95112, USA",
+          "timeBlock": "5:30 PM - 7:00 PM",
+          "blurb": "Get the brisket plate and do not skip the mac and cheese — this is the best BBQ in the South Bay and the portions are serious.",
+          "why": "Smoky, hearty, and casual enough that kids with messy hands fit right in.",
+          "url": "https://www.smokingpigbbq.net/",
+          "mapsUrl": "https://maps.google.com/?cid=6311609432654414641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": "low",
+          "costNote": "Under $20",
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJeQ-ozuLKj4ARMQNfslZXl1c/photos/AU_ZVEGJGn9jRBKaHW4__Qi1-W9zerATtdgWoq90Tcdmg6GwAqSLZznHRrHmi1NMXKNmVzBd8mwqG6ngEseLL2rdOg1aZhD_0Z-qHTv0fFHm6Qm9Nfb8ur8MhUTelIB9QQ47m8aQzdgynnQ13p08duU8MhG81cpAZqeXQrrXAoahkwOf0lvdBnrPa3hPCbsqNw0q00cNU5eeymWPWo288Y8KfTUUXqXPxiALtODdw3H0LWlQdJadVUelbvGrC1kAtjzZMYcaTxsN1MO8Mg1K1QjDRQgsiRNUWoWIbvV621i6Thy5Rx1m8c78_lKHMiiQ9-h6vOBy4J4rKwq61ptqW5FXb09dV81OmitcZ4HzT2Q0MBwufHPNqa4VN2i6YUGogpLEyVr70ezBTB5qVIDOJ-BI4nhXgtWyH0LNLQyU8BOqQvObDwY",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-9/20 | rating=4.3 | cat=food"
+        },
+        {
+          "id": "place:ChIJjfFeuLjMj4ARoKYAJCd06tk",
+          "name": "SJSU Student Union Bowling Center",
+          "category": "entertainment",
+          "city": "san-jose",
+          "address": "211 S 9th St, San Jose, CA 95192, USA",
+          "timeBlock": "7:30 PM - 9:00 PM",
+          "blurb": "Head to the SJSU bowling center to knock out a couple games — it's open to the public and a genuinely fun way to wrap a Wednesday night.",
+          "why": "Bowling is a crowd-pleaser for every age and keeps the energy up without keeping anyone out too late.",
+          "url": "https://www.sjsu.edu/studentunion/student-union/bowling.php",
+          "mapsUrl": "https://maps.google.com/?cid=15702490762237224608&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": null,
+          "costNote": null,
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJjfFeuLjMj4ARoKYAJCd06tk/photos/AU_ZVEH-JGImyEIMwckpfltPZSRS2W0YaNGxafRDx_8R31sRnPmSyYbDRDIV1Yx0wfE4v0aTbGPkPt8Bdz0IpxNREe0Q614wNfapm795LnrszKoZH6bJEIEEM8Ob3pYbO0kpq8gl4fuUn1iuGwTZN_v-dAupCftaLzMiQ31UtPzeMSCaWQeBJhZG2sUlZru3hnJLZPKufA95CYbUvjGIFZdtVz01JMcC53-9o77ncukRuwjxOLqqN22yFViaGYrsd_W4RG_HWnI8mMnCc8cWsgDP9YTq9yKsTnjt1citcveRzGWqQbrXpb4N7Wqb9IMNeeSeVjas-5hojwbv6KUv6dB9rcK2VhuB8mA6VvoVVijrKMr5bx_RNHK4rCTkWIwzSV1AwjQWybUaNhWtKZsqolxX-wJR0w1rDJz-XQr4uOaddj7Jcarp",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-17/20 | rating=4.5 | cat=entertainment"
+        }
+      ],
+      "weather": null,
+      "city": "san-jose",
+      "kids": true,
+      "anchorHour": 9,
+      "generatedAt": "2026-04-29T09:30:47.622Z",
+      "carriedForward": true
     }
   }
 }

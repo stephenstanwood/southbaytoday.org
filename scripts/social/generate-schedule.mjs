@@ -228,9 +228,15 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
       }),
       signal: AbortSignal.timeout(45000),
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.log(`      ⚠️  Plan API ${res.status} ${res.statusText} (city=${city} kids=${kids} date=${dateStr})`);
+      return null;
+    }
     const data = await res.json();
-    if (!data.cards?.length) return null;
+    if (!data.cards?.length) {
+      console.log(`      ⚠️  Plan API returned 0 cards (city=${city} kids=${kids} date=${dateStr} pool=${data.poolSize ?? "?"})`);
+      return null;
+    }
     return data;
   } catch (err) {
     console.log(`      ⚠️  Plan API failed: ${err.message}`);
@@ -1061,10 +1067,27 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     generatedAt: new Date().toISOString(),
   } : null;
 
+  // Carry-forward fallback: if today's or tomorrow's kids fetch returned empty,
+  // reuse the previous run's cards with events stripped (today-only events
+  // would leak). Better than dropping the key entirely — a stale places-only
+  // plan gives the homepage instant paint instead of falling back to a live
+  // /api/plan-day call.
+  const previousPlans = loadDefaultPlans()?.plans || {};
+  const carryForwardKids = (key) => {
+    const prev = previousPlans[key];
+    if (!prev?.cards?.length) return null;
+    const placesOnly = prev.cards.filter((c) => c.source !== "event");
+    if (!placesOnly.length) return null;
+    return { ...prev, cards: placesOnly, carriedForward: true };
+  };
+
+  const finalKidsEntry = kidsEntry || carryForwardKids("kids:h9");
+  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids("kids:h9:tomorrow");
+
   const plans = { "adults:h9": adultsEntry };
-  if (kidsEntry) plans["kids:h9"] = kidsEntry;
+  if (finalKidsEntry) plans["kids:h9"] = finalKidsEntry;
   if (tomorrowAdultsEntry) plans["adults:h9:tomorrow"] = tomorrowAdultsEntry;
-  if (tomorrowKidsEntry) plans["kids:h9:tomorrow"] = tomorrowKidsEntry;
+  if (finalTomorrowKidsEntry) plans["kids:h9:tomorrow"] = finalTomorrowKidsEntry;
 
   const output = {
     _meta: {
@@ -1076,9 +1099,13 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     plans,
   };
   writeFileSync(DEFAULT_PLANS_FILE, JSON.stringify(output, null, 2));
-  const kidsMsg = kidsEntry ? `+ ${kidsEntry.cards.length} kids` : "(no kids plan — fetch failed)";
+  const fmtKids = (entry, fresh) => {
+    if (!entry) return "(no kids plan — fetch failed)";
+    return fresh ? `+ ${entry.cards.length} kids` : `+ ${entry.cards.length} kids (carried forward, places-only)`;
+  };
+  const kidsMsg = fmtKids(finalKidsEntry, !!kidsEntry);
   const tomMsg = tomorrowAdultsEntry
-    ? ` | tomorrow ${tomorrowAdultsEntry.cards.length} adults ${tomorrowKidsEntry ? `+ ${tomorrowKidsEntry.cards.length} kids` : "(kids fetch failed)"}`
+    ? ` | tomorrow ${tomorrowAdultsEntry.cards.length} adults ${fmtKids(finalTomorrowKidsEntry, !!tomorrowKidsEntry)}`
     : "";
   console.log(`   🏠 default-plans.json: ${adultsEntry.cards.length} adults ${kidsMsg}${tomMsg}`);
 }
