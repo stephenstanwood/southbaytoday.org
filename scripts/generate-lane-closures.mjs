@@ -27,13 +27,29 @@ const SOUTH_BAY_ROUTES = new Set([
   "SR-84", "SR-92", "SR-82", "SR-35",
 ]);
 
-// Counties that contain South-Bay-recognizable cities. Alameda is intentionally
-// excluded — Oakland/Hayward closures aren't relevant to the audience.
-const SOUTH_BAY_COUNTIES = new Set(["Santa Clara", "San Mateo"]);
+// Santa Clara County = the South Bay; we accept any SCC city. Alameda is
+// excluded entirely — Oakland/Hayward closures aren't relevant. San Mateo
+// County is partial: only cities adjacent to or sharing a commute artery
+// with SCC qualify, so a South San Francisco or San Carlos closure doesn't
+// dominate the SB-Today feed.
+const SAN_MATEO_ADJACENT = new Set([
+  "Menlo Park",
+  "East Palo Alto",
+  "Atherton",
+  "Portola Valley",
+  "Woodside",
+  "Redwood City",
+]);
 
 // Far-south places we drop even when on a SB route — 101 SB through Gilroy
 // matters for Salinas commuters, not San Jose readers.
 const DROP_NEARBY = new Set(["Gilroy", "San Martin"]);
+
+function isSouthBayLocation(county, place) {
+  if (county === "Santa Clara") return !DROP_NEARBY.has(place);
+  if (county === "San Mateo") return SAN_MATEO_ADJACENT.has(place);
+  return false;
+}
 
 const WINDOW_HOURS = 36;
 
@@ -139,9 +155,8 @@ async function main() {
     const route = beg.beginRoute;
     const county = beg.beginCounty;
     if (!route || !SOUTH_BAY_ROUTES.has(route)) continue;
-    if (!SOUTH_BAY_COUNTIES.has(county)) continue;
     const place = beg.beginNearbyPlace || "";
-    if (DROP_NEARBY.has(place)) continue;
+    if (!isSouthBayLocation(county, place)) continue;
 
     const cl = lcs.closure;
     const ts = cl?.closureTimestamp;
