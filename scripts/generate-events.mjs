@@ -851,6 +851,7 @@ function cleanVenue(raw) {
   v = v.replace(/\s+-\s+\d+(\s+.*)?$/, "");
   // Source-typo fixes (sources occasionally publish misspelled venue names)
   v = v.replace(/\bNursey\b/g, "Nursery");
+  v = v.replace(/\bInfront\b/g, "In Front");
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
   if (/^\d+\s/.test(v)) return "";
   // If the cleaning passes left only digits behind (e.g. "41" or "457" — typically
