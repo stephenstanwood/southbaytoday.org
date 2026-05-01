@@ -7,6 +7,8 @@ import {
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
+import SunUvCard from "../cards/SunUvCard";
+import CoastCard from "../cards/CoastCard";
 
 const CITIES: { id: City; name: string }[] = [
   { id: "san-jose", name: "San Jose" },
@@ -1159,6 +1161,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           </div>
         </div>
       )}
+
+      {/* Sun & UV — sunrise/sunset, daylight, peak UV; helps frame outdoor plans */}
+      <SunUvCard />
+
+      {/* Coast Watch — tides + Pacific water temp for HMB/coastal day trips */}
+      <CoastCard />
 
       {/* Freeway Pulse — live travel times so readers can decide whether to head out */}
       <FreewayPulseCard />
