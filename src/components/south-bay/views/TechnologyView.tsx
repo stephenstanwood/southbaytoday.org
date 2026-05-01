@@ -724,11 +724,22 @@ function RoundBadge({ round }: { round: string }) {
 
 function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
   const d = new Date(company.date + "T12:00:00");
-  const dateLabel = d.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  const daysAgo = Math.floor((Date.now() - d.getTime()) / 86_400_000);
+  const isFresh = daysAgo >= 0 && daysAgo <= 14;
+  const dateLabel =
+    daysAgo >= 0 && daysAgo <= 30
+      ? daysAgo === 0
+        ? "today"
+        : daysAgo === 1
+          ? "yesterday"
+          : daysAgo < 7
+            ? `${daysAgo}d ago`
+            : `${Math.round(daysAgo / 7)}w ago`
+      : d.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
 
   return (
     <a
@@ -764,6 +775,25 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
           >
             {company.name} ↗
           </span>
+          {isFresh && (
+            <span
+              style={{
+                fontSize: 9,
+                fontWeight: 800,
+                fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "#dc2626",
+                padding: "2px 6px",
+                borderRadius: 3,
+                lineHeight: 1.1,
+              }}
+              title={`Closed ${daysAgo === 0 ? "today" : daysAgo === 1 ? "yesterday" : `${daysAgo} days ago`}`}
+            >
+              NEW
+            </span>
+          )}
           <RoundBadge round={company.round} />
           <span
             style={{
