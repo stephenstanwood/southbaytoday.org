@@ -44,6 +44,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
 import { VIRTUAL_EVENT_PATTERNS } from "../src/lib/south-bay/eventFilters.mjs";
+import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
 import { parseDate, parseDatePT, isoDate, todayPT, displayDate, displayTime } from "./lib/dates.mjs";
@@ -4633,6 +4634,21 @@ async function main() {
     if (dupeCount > 0) console.log(`   🔀 dedup: dropped ${dupeCount} cross-source duplicate(s)`);
     collapsedEvents.length = 0;
     collapsedEvents.push(...kept);
+  }
+
+  // Fuzzy fallback dedup — catches near-duplicates the exact-key pass above
+  // misses (organizer prefixes like "LGPNS X" vs "X", venue strings differing
+  // between sources, tour-vs-tours casing, etc.). Requires same date+city,
+  // strong title overlap (subset or jaccard ≥ 0.85), AND either same start
+  // time within 30 min OR overlapping venue tokens (jaccard ≥ 0.4).
+  {
+    const before = collapsedEvents.length;
+    const { kept, droppedCount } = fuzzyDedupEvents(collapsedEvents);
+    if (droppedCount > 0) {
+      console.log(`   🔀 fuzzy-dedup: dropped ${droppedCount} additional near-duplicate(s) (${before} → ${kept.length})`);
+      collapsedEvents.length = 0;
+      collapsedEvents.push(...kept);
+    }
   }
 
   // Shared rules — keep in sync with scripts/social/lib/content-rules.mjs.
