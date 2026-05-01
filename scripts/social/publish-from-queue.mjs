@@ -186,6 +186,51 @@ function rewriteTimeReferences(text, item, ptTime) {
   return result;
 }
 
+// ── Silent-failure alert ───────────────────────────────────────────────────
+// Fires a 🔴 Discord webhook ping when an "always-post" slot (day-plan @ 7:15
+// AM or tonight-pick @ 11:45 AM) produces zero successful posts. Stephen
+// shouldn't have to discover a silent outage days later — this alerts on the
+// first miss. The 4:30 PM wildcard slot is intentionally excluded: it's a
+// queue-driven fallback and "nothing to publish" is a normal outcome there.
+const ALWAYS_POST_SLOT_TYPES = new Set(["day-plan", "tonight-pick"]);
+
+async function sendSilentFailureAlert({ slotType, today, timeStr, queueSize, scheduleSlotStatus, schedulePresent, copyApprovedAt, imageApprovedAt, reason }) {
+  const webhook = process.env.DISCORD_WEBHOOK;
+  if (!webhook) {
+    console.warn("   ⚠️  DISCORD_WEBHOOK not set — silent-failure alert NOT sent");
+    return;
+  }
+  const lines = [
+    `🔴 **Social publisher silent at \`${slotType}\` slot** — ${today} ${timeStr} PT`,
+    `Reason: ${reason}`,
+    `Queue: ${queueSize} unpublished`,
+    `Schedule slot: ${schedulePresent ? `\`${scheduleSlotStatus}\`` : "MISSING"}` +
+      (schedulePresent ? ` (copyApprovedAt: ${copyApprovedAt ? "✓" : "✗"}, imageApprovedAt: ${imageApprovedAt ? "✓" : "✗"})` : ""),
+    ``,
+    `Manual catch-up:`,
+    `\`\`\``,
+    `ssh stephenstanwood@100.117.24.89 'cd ~/Projects/southbaytoday.org && \\`,
+    `  /opt/homebrew/bin/node --env-file=.env.local \\`,
+    `  scripts/social/publish-from-queue.mjs --max 1 --force-slot ${slotType}'`,
+    `\`\`\``,
+  ];
+  try {
+    const res = await fetch(webhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: lines.join("\n") }),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.warn(`   ⚠️  Discord alert HTTP ${res.status}: ${body.slice(0, 200)}`);
+    } else {
+      console.log("   📣 Discord red-alert sent (silent publisher failure)");
+    }
+  } catch (err) {
+    console.warn(`   ⚠️  Discord alert error: ${err.message}`);
+  }
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -692,6 +737,71 @@ async function main() {
     if (totalPublished > 0 && succeededPlatforms.length === 0) {
       console.error("PUBLISH_FAILED: All platforms failed");
       process.exit(1);
+    }
+  }
+
+  // ── Silent-failure alert ────────────────────────────────────────────────
+  // For always-post slots (day-plan @ 7:15 AM, tonight-pick @ 11:45 AM),
+  // fire a 🔴 Discord ping if zero posts hit any platform. Skipped on
+  // --dry-run, skipped for the 4:30 PM wildcard slot (queue-driven, OK
+  // to be empty).
+  if (!dryRun) {
+    try {
+      const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
+      const effectiveSlot = forceSlot && FORCE_SLOT_TIME[forceSlot]
+        ? { type: forceSlot, time: FORCE_SLOT_TIME[forceSlot] }
+        : currentPublishSlot();
+
+      if (effectiveSlot && ALWAYS_POST_SLOT_TYPES.has(effectiveSlot.type)) {
+        // "Successful" = at least one platform on at least one post returned ok.
+        const anyPlatformOk = processedPosts.some((p) => (p.publishedTo || []).some((r) => r.ok));
+        if (!anyPlatformOk) {
+          // Diagnose: read schedule slot status for today + this slot type
+          const schedulePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+          let scheduleSlotStatus = null;
+          let copyApprovedAt = false;
+          let imageApprovedAt = false;
+          let schedulePresent = false;
+          try {
+            const sch = JSON.parse(readFileSync(schedulePath, "utf8"));
+            const slot = sch.days?.[today]?.[effectiveSlot.type];
+            if (slot) {
+              schedulePresent = true;
+              scheduleSlotStatus = slot.status || "(no status)";
+              copyApprovedAt = !!slot.copyApprovedAt;
+              imageApprovedAt = !!slot.imageApprovedAt;
+            }
+          } catch { /* schedule unreadable — fine, we'll report MISSING */ }
+
+          const queueSize = queue.filter((p) => !p.published).length;
+          let reason;
+          if (!schedulePresent) {
+            reason = "schedule has no slot for this date/type";
+          } else if (scheduleSlotStatus === "published") {
+            reason = "schedule slot already marked published — duplicate prevented send";
+          } else if (!copyApprovedAt || !imageApprovedAt) {
+            reason = `schedule slot missing approvals (copy: ${copyApprovedAt ? "✓" : "✗"}, image: ${imageApprovedAt ? "✓" : "✗"})`;
+          } else if (toPublish.length === 0) {
+            reason = "found approved schedule slot but publisher selected 0 posts (filter logic)";
+          } else {
+            reason = "publisher selected post(s) but every platform call failed";
+          }
+
+          await sendSilentFailureAlert({
+            slotType: effectiveSlot.type,
+            today,
+            timeStr,
+            queueSize,
+            scheduleSlotStatus,
+            schedulePresent,
+            copyApprovedAt,
+            imageApprovedAt,
+            reason,
+          });
+        }
+      }
+    } catch (err) {
+      console.warn(`   ⚠️  Silent-failure alert check failed: ${err.message}`);
     }
   }
 }
