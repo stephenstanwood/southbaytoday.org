@@ -198,11 +198,6 @@ async function main() {
   const unpublished = queue.filter((p) => !p.published);
   console.log(`   ${unpublished.length} unpublished in queue`);
 
-  if (unpublished.length === 0) {
-    console.log("   Nothing to publish.");
-    return;
-  }
-
   // Sweep: expire items whose date is fully in the past (before today in PT)
   let expiredCount = 0;
   for (const p of queue) {
@@ -235,11 +230,17 @@ async function main() {
     }
   }
 
-  if (relevant.length === 0) {
-    console.log("   No time-relevant items to publish.");
+  // Persist any expirations to disk before falling through to the schedule path,
+  // so even if there's nothing in the queue we don't lose the sweep work.
+  if (expiredCount > 0 || tooSoon > 0) {
     writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
-    return;
   }
+
+  // NOTE: do NOT early-return when the queue is empty or has no time-relevant
+  // items — the schedule-first path below reads from social-schedule.json
+  // and can still publish today's slot from there. Bailing here was the bug
+  // that caused the publisher to silently skip every slot from 2026-04-29
+  // onward once the queue drained.
 
   // ── Schedule-first path: check the 14-day schedule for approved content
   let publishedFromSchedule = false;
