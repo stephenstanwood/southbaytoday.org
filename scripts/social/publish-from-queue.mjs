@@ -34,6 +34,12 @@ if (!process.env.ANTHROPIC_API_KEY) {
 const args = process.argv.slice(2);
 const maxPosts = parseInt(args.find((a, i) => args[i - 1] === "--max") || "2");
 const dryRun = args.includes("--dry-run") || CONFIG.DRY_RUN;
+// --force-slot day-plan|tonight-pick|wildcard — bypass the ±30min time window
+// and pretend the matching slot is current. Used to manually catch up missed
+// posts (e.g., recovering after a publisher outage).
+const forceSlotIdx = args.indexOf("--force-slot");
+const forceSlot = forceSlotIdx >= 0 ? args[forceSlotIdx + 1] : null;
+const FORCE_SLOT_TIME = { "day-plan": "07:15", "tonight-pick": "11:45", "wildcard": "16:30" };
 
 // ── Time helpers ───────────────────────────────────────────────────────────
 
@@ -246,7 +252,10 @@ async function main() {
   let publishedFromSchedule = false;
   try {
     const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
-    const currentSlot = currentPublishSlot();
+    const currentSlot = forceSlot && FORCE_SLOT_TIME[forceSlot]
+      ? { type: forceSlot, time: FORCE_SLOT_TIME[forceSlot] }
+      : currentPublishSlot();
+    if (forceSlot) console.log(`   🔧 --force-slot=${forceSlot} (bypassing time-window check)`);
     if (currentSlot) {
       const schedulePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
       if (existsSync(schedulePath)) {
@@ -619,7 +628,9 @@ async function main() {
       const schedulePath = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
       const schedule = JSON.parse(readFileSync(schedulePath, "utf8"));
       const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
-      const currentSlot = currentPublishSlot();
+      const currentSlot = forceSlot && FORCE_SLOT_TIME[forceSlot]
+        ? { type: forceSlot, time: FORCE_SLOT_TIME[forceSlot] }
+        : currentPublishSlot();
       if (currentSlot && schedule.days?.[today]?.[currentSlot.type]) {
         schedule.days[today][currentSlot.type].status = "published";
         schedule.days[today][currentSlot.type].publishedAt = new Date().toISOString();
