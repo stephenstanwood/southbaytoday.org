@@ -843,6 +843,31 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
 const ROUNDS_2026 = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01").length;
 const EARLY_STAGES = new Set(["Seed", "Pre-Seed", "Series A", "Series A1"]);
 
+// Parse "$143M" / "$1.5B" / "$200M+" / "~$7M raised" → millions of USD.
+// Returns null for "Undisclosed" or anything we can't read.
+function parseFundingAmount(raw: string): number | null {
+  if (!raw) return null;
+  const m = raw.match(/\$\s*([\d.]+)\s*([MB])/i);
+  if (!m) return null;
+  const val = parseFloat(m[1]);
+  if (!Number.isFinite(val)) return null;
+  return m[2].toUpperCase() === "B" ? val * 1000 : val;
+}
+
+// Format millions as "$7.1B" / "$925M" — used in YTD recap.
+function formatFundingTotal(millions: number): string {
+  if (millions >= 1000) {
+    const b = millions / 1000;
+    return `$${b >= 10 ? b.toFixed(0) : b.toFixed(1)}B`;
+  }
+  return `$${Math.round(millions)}M`;
+}
+
+const RAISED_2026_MILLIONS = RECENTLY_FUNDED
+  .filter((r) => r.date >= "2026-01-01")
+  .reduce((sum, r) => sum + (parseFundingAmount(r.amount) ?? 0), 0);
+const RAISED_2026_LABEL = formatFundingTotal(RAISED_2026_MILLIONS);
+
 // Most-recent N rounds — fed into the live-scrolling "Latest Funding" ticker.
 function getLatestFundedRounds(n = 20): RecentlyFunded[] {
   return [...RECENTLY_FUNDED].sort((a, b) => b.date.localeCompare(a.date)).slice(0, n);
@@ -936,7 +961,7 @@ function RecentlyFundedSection() {
               lineHeight: 1,
             }}
           >
-            $6B+
+            {RAISED_2026_LABEL}
           </div>
           <div
             style={{
