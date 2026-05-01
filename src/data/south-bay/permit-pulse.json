@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-04-30T23:09:25.046Z",
+      "generatedAt": "2026-05-01T11:13:32.739Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 23 – Apr 30",
+      "dateRange": "Apr 24 – May 1",
       "stats": {
-        "total": 331,
-        "notable": 16,
-        "newUnits": 4,
-        "totalValuation": 8384058
+        "total": 332,
+        "notable": 24,
+        "newUnits": 7,
+        "totalValuation": 11989093
       },
       "permits": [
-        {
-          "id": "2023-087858-RS",
-          "address": "1500 Clayton Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr New Detached adu",
-          "valuation": 202908,
-          "units": 1,
-          "issueDate": "2026-04-24",
-          "subtype": "2nd Unit Added"
-        },
         {
           "id": "2024-107652-RS",
           "address": "3023 Moonstar Ct #2",
@@ -36,6 +24,30 @@
           "valuation": 168752,
           "units": 1,
           "issueDate": "2026-04-27",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-140268-RS",
+          "address": "5568 Dartmouth Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached adu",
+          "valuation": 135103,
+          "units": 1,
+          "issueDate": "2026-04-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2024-067775-RS",
+          "address": "3203 Foxboro Pl #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached adu",
+          "valuation": 113894,
+          "units": 1,
+          "issueDate": "2026-04-29",
           "subtype": "2nd Unit Added"
         },
         {
@@ -63,6 +75,42 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-126093-RS",
+          "address": "1708 Goldentree Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached adu",
+          "valuation": 79641,
+          "units": 1,
+          "issueDate": "2026-04-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-133917-RS",
+          "address": "1709 Arroyo De Oro #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Converted to Jadu",
+          "valuation": 70680,
+          "units": 1,
+          "issueDate": "2026-04-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-115199-CI",
+          "address": "988 Rock Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Supermicro (Bem 100%) ti for Equipment Install",
+          "valuation": 2500000,
+          "units": 0,
+          "issueDate": "2026-04-29",
+          "subtype": "Commercial/Industrial"
+        },
+        {
           "id": "2026-114976-CI",
           "address": "2625 Zanker Rd",
           "category": "commercial-large",
@@ -85,66 +133,18 @@
           "units": 0,
           "issueDate": "2026-04-27",
           "subtype": "Medical/Dental Clinic"
-        },
-        {
-          "id": "2026-113827-CI",
-          "address": "1550 Hamilton Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Additions/Alterations",
-          "description": "(Bp100%) Spec Space ti",
-          "valuation": 604930,
-          "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-115224-CI",
-          "address": "6800 Santa Teresa Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bem 100%) R/R Rooftop Hvac",
-          "valuation": 518268,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-114666-CI",
-          "address": "355 River Oaks Py",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Be 100%) Ev Chargers",
-          "valuation": 305412,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Open Public Parking Garage"
-        },
-        {
-          "id": "2026-114490-CI",
-          "address": "200 S Market St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bem 100%) Chiller and Boiler Replacement",
-          "valuation": 200000,
-          "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-04-30T23:09:27.637Z",
+      "generatedAt": "2026-05-01T11:13:35.004Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 23 – Apr 30",
+      "dateRange": "Apr 24 – May 1",
       "stats": {
-        "total": 102,
+        "total": 85,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01061",
-          "address": "2351 Louis Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Convert bedroom space into a bathroom. Fill in window.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-23",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01087",
           "address": "642 Bryson Av",
           "category": "residential-remodel",
@@ -185,18 +173,6 @@
           "units": 0,
           "issueDate": "2026-04-27",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00095",
-          "address": "220 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00094",
@@ -211,6 +187,18 @@
           "subtype": "Over the Counter Approved"
         },
         {
+          "id": "26PLN-00097",
+          "address": "500 Fulton St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-30",
+          "subtype": "Over the Counter Approved"
+        },
+        {
           "id": "26PLN-00096",
           "address": "4345 El Camino Real",
           "category": "entitlement",
@@ -220,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-29",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00095",
+          "address": "220 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
           "subtype": "Over the Counter Approved"
         }
       ]
