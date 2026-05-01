@@ -147,17 +147,18 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "mineta-airport-terminal",
-    name: "Mineta San José Airport Terminal B Modernization",
+    name: "SJC Terminal B South Concourse Improvements",
     city: "San Jose",
     cityId: "san-jose",
     category: "civic",
-    status: "under-construction",
+    status: "proposed",
     description:
-      "Ongoing renovation of Terminal B at Norman Y. Mineta San José International Airport, with new gates, improved passenger flow, and upgraded concessions. The multi-year project is improving the airport experience as SJC continues to add routes and recover ridership after the pandemic. Construction is occurring in phases to keep the terminal operational.",
-    scale: "Terminal renovation + gate expansion",
+      "Proposed expansion of Terminal B at Norman Y. Mineta San José International Airport, adding gates and concourse capacity to the south end. The FAA issued a Finding of No Significant Impact and Record of Decision based on the Final Environmental Assessment (April 2023). A Major Amendment to the SJC Airport Master Plan is moving through the city's planning process in 2026.",
+    scale: "Terminal B south concourse expansion",
     developer: "City of San José",
-    timeline: "Phased completion 2025–2027",
+    timeline: "In planning / environmental review",
     featured: false,
+    sourceNote: "Verify status at flysanjose.com/improvement and sanjoseca.gov planning records.",
   },
 
   {
