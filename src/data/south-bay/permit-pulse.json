@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-02T19:09:45.210Z",
+      "generatedAt": "2026-05-02T23:09:30.534Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-02T19:09:47.585Z",
+      "generatedAt": "2026-05-02T23:09:32.919Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-01",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01107",
           "address": "820 Hamilton Av",
           "category": "residential-remodel",
@@ -187,16 +175,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00096",
-          "address": "4345 El Camino Real",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review on behalf of the Palo Alto Greens HOA to remove three trees (with low suitability for preservation due to poor condition and lean) from the remainder parcel (Parcel 1A @ 440 Cesano Court) and replace them with five (5) thirty-six-inch box size trees (Gingko Biloba 'Princeton Sentry) and an additional eight (8) twenty-four-inch boxes trees provided offsite via Public Works Urban Forestry's in-lieu program (26TRE-00045). Associated with Summerhill’s redevelopment project at 4345 El Camino Real. Environmental Assessment: Not a Project.",
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-29",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-05-01",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00094",
@@ -208,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00096",
+          "address": "4345 El Camino Real",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review on behalf of the Palo Alto Greens HOA to remove three trees (with low suitability for preservation due to poor condition and lean) from the remainder parcel (Parcel 1A @ 440 Cesano Court) and replace them with five (5) thirty-six-inch box size trees (Gingko Biloba 'Princeton Sentry) and an additional eight (8) twenty-four-inch boxes trees provided offsite via Public Works Urban Forestry's in-lieu program (26TRE-00045). Associated with Summerhill’s redevelopment project at 4345 El Camino Real. Environmental Assessment: Not a Project.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-29",
           "subtype": "Over the Counter Approved"
         },
         {
