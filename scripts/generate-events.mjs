@@ -903,6 +903,11 @@ function cleanVenue(raw) {
   // Source-typo fixes (sources occasionally publish misspelled venue names)
   v = v.replace(/\bNursey\b/g, "Nursery");
   v = v.replace(/\bInfront\b/g, "In Front");
+  // SJDA's WP feed occasionally drops the "&" between "Quilts" and "Textiles"
+  // (likely a double-encoded entity that the entity-stripper turned into a space).
+  v = v.replace(/Museum of Quilts\s+Textiles/g, "Museum of Quilts & Textiles");
+  // Truncated library name ("Dr. Martin Luther King" with no ", Jr. Library" tail).
+  v = v.replace(/^Dr\.?\s+Martin\s+Luther\s+King\s*$/i, "Dr. Martin Luther King, Jr. Library");
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
   if (/^\d+\s/.test(v)) return "";
   // If the cleaning passes left only digits behind (e.g. "41" or "457" — typically
@@ -1156,7 +1161,7 @@ async function fetchStanfordEvents() {
         time: isOngoing ? null : displayTime(start),   // no time for ongoing exhibits
         endTime: isOngoing ? null : (end ? displayTime(end) : null),
         ongoing: isOngoing,
-        venue: ev.location_name || "Stanford University",
+        venue: cleanVenue(ev.location_name || "") || "Stanford University",
         address: ev.address || "",
         city: "palo-alto",
         category: inferCategory(ev.title, ev.description_text || "", ""),
@@ -4195,8 +4200,11 @@ function fetchInboundEvents() {
       // along in the address field.
       const location = e.location ?? "";
       let venueName = location.includes(",") ? location.split(",")[0].trim() : location;
-      if (/^\d+(-\d+)?\s+/.test(venueName)) {
-        venueName = venueName.replace(/^\d+(-\d+)?\s+/, "").trim();
+      // Strip leading street number and optional "block of" phrasing — newsletter
+      // sources sometimes write "200 block of Castro Street (near Dana Street)"
+      // which yields a useless "block of Castro Street …" venue otherwise.
+      if (/^\d+(-\d+)?\s+(block\s+of\s+)?/i.test(venueName)) {
+        venueName = venueName.replace(/^\d+(-\d+)?\s+(block\s+of\s+)?/i, "").trim();
       }
       // Drop bare city/state stubs like "Campbell" or "San Jose, CA" — those aren't venues.
       venueName = cleanVenue(venueName) || null;

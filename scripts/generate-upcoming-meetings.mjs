@@ -102,6 +102,15 @@ function cleanLocation(raw) {
   while (leadingAddr.test(s)) s = s.replace(leadingAddr, "").trim();
   s = s.replace(new RegExp(`^and\\s+\\d+\\s+\\S[^,]*?${streetSuffix}\\b[^,]*,\\s*`, "i"), "").trim();
 
+  // Strip trailing street addresses ("Council Chambers, City Hall, 456 W. Olive
+  // Ave., Sunnyvale, CA 94086" → "Council Chambers, City Hall"). The leading-
+  // address strip above doesn't fire when the street number sits in a later
+  // comma chunk.
+  const trailingAddr = new RegExp(`,\\s*\\d+\\s+\\S[^,]*?${streetSuffix}\\.?[\\s\\S]*$`, "i");
+  s = s.replace(trailingAddr, "").trim();
+  // Also strip a trailing ", City, ST zip" tail with no street number.
+  s = s.replace(/,\s*[A-Za-z][A-Za-z\s]+,\s*[A-Z]{2}\s+\d{5}.*$/, "").trim();
+
   // Trim trailing punctuation
   s = s.replace(/[,;:]+\s*$/, "").trim();
 
