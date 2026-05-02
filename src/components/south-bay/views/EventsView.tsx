@@ -181,6 +181,17 @@ function shortDateLabel(iso: string): string {
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 }
 
+// Returns [saturdayIso, sundayIso] for "this weekend" relative to today.
+// Sat: today + tomorrow. Sun: yesterday + today (today only, since past events
+// hide via hasNotStarted). Mon–Fri: upcoming Sat + Sun.
+function thisWeekendDates(todayIso: string): [string, string] {
+  const dow = new Date(todayIso + "T12:00:00").getDay(); // 0=Sun … 6=Sat
+  if (dow === 6) return [todayIso, addDays(todayIso, 1)];
+  if (dow === 0) return [addDays(todayIso, -1), todayIso];
+  const sat = addDays(todayIso, 6 - dow);
+  return [sat, addDays(sat, 1)];
+}
+
 // ── Event Card ─────────────────────────────────────────────────────────────
 
 function eventPhotoUrl(event: UpcomingEvent, w = 160, h = 160): string | null {
@@ -571,6 +582,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // High-value toggle for "what's happening tonight?" — the most common
   // question on a weekend afternoon.
   const [showTonightOnly, setShowTonightOnly] = useState(false);
+  // Weekend = events on this Sat AND Sun, rendered grouped by day. The
+  // companion to Tonight: lets weekday users see the full weekend in one
+  // glance without flipping through date pills.
+  const [showWeekendOnly, setShowWeekendOnly] = useState(false);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -578,6 +593,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
 
   const todayIso = todayPT();
   const tomorrowIso = addDays(todayIso, 1);
+  const [weekendSat, weekendSun] = useMemo(() => thisWeekendDates(todayIso), [todayIso]);
 
   const [selectedDate, setSelectedDate] = useState<string>(todayIso);
 
@@ -647,6 +663,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       const m = parseTimeToMinutes(e.time);
       if (m === null || m < TONIGHT_FROM_MIN) return false;
     }
+    if (showWeekendOnly) {
+      if (e.date !== weekendSat && e.date !== weekendSun) return false;
+    }
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -679,7 +698,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time))) // hide today's events that have started
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -693,7 +712,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -703,6 +722,23 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return Object.entries(groups).sort((a, b) => a[0].localeCompare(b[0]));
   }, [searchResults]);
+
+  // Weekend-mode events — both weekend days, grouped by date for rendering.
+  // Past events for today (if today is Sat/Sun) hide via hasNotStarted.
+  const weekendGroups = useMemo<[string, UpcomingEvent[]][]>(() => {
+    if (!showWeekendOnly || isSearching) return [];
+    const matches = upcomingEvents
+      .filter((e) => e.date === weekendSat || e.date === weekendSun)
+      .filter(matchesFilters)
+      .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time)))
+      .sort(byStartTimeWithinDate);
+    const groups: Record<string, UpcomingEvent[]> = {};
+    for (const e of matches) (groups[e.date] ||= []).push(e);
+    return [weekendSat, weekendSun]
+      .filter((d) => (groups[d]?.length ?? 0) > 0)
+      .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
@@ -715,7 +751,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -749,6 +785,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         const m = parseTimeToMinutes(e.time);
         if (m === null || m < TONIGHT_FROM_MIN) continue;
       }
+      if (showWeekendOnly) {
+        if (e.date !== weekendSat && e.date !== weekendSun) continue;
+      }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -761,7 +800,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -781,6 +820,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         const m = parseTimeToMinutes(e.time);
         if (m === null || m < TONIGHT_FROM_MIN) continue;
       }
+      if (showWeekendOnly) {
+        if (e.date !== weekendSat && e.date !== weekendSun) continue;
+      }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -793,7 +835,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -909,11 +951,36 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               onChange={(e) => {
                 const next = e.target.checked;
                 setShowTonightOnly(next);
-                if (next) setSelectedDate(todayIso);
+                if (next) {
+                  setSelectedDate(todayIso);
+                  setShowWeekendOnly(false);
+                }
               }}
               style={{ cursor: "pointer", accentColor: "#7C3AED" }}
             />
             🌙 Tonight
+          </label>
+
+          <label style={{
+            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
+            fontSize: 12, color: showWeekendOnly ? "#fff" : "var(--sb-muted)",
+            cursor: "pointer", userSelect: "none",
+            padding: "5px 12px", borderRadius: 100,
+            border: `1.5px solid ${showWeekendOnly ? "#EA580C" : "var(--sb-border)"}`,
+            background: showWeekendOnly ? "#EA580C" : "#fff",
+            fontWeight: showWeekendOnly ? 600 : 500,
+            transition: "all 0.12s",
+          }}>
+            <input
+              type="checkbox" checked={showWeekendOnly}
+              onChange={(e) => {
+                const next = e.target.checked;
+                setShowWeekendOnly(next);
+                if (next) setShowTonightOnly(false);
+              }}
+              style={{ cursor: "pointer", accentColor: "#EA580C" }}
+            />
+            🎉 Weekend
           </label>
         </div>
 
@@ -1033,7 +1100,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         </div>
 
         {/* Day navigator — kept inside the sticky filter so event cards never butt against the section divider */}
-        {!isSearching && (
+        {!isSearching && !showWeekendOnly && (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "center",
             gap: 14, marginTop: 8,
@@ -1100,8 +1167,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       {/* Weather banner — surfaces the forecast for the selected day so people
           planning Saturday/Sunday don't only see today's weather. Open-Meteo
           gives 5 days; further-out days drop through. Hidden when filtering
-          by category (would override the user's intent) or in search mode. */}
-      {forecastByDate[selectedDate] && category === "all" && !isSearching && (() => {
+          by category (would override the user's intent), in search mode, or
+          in weekend-grouped mode (covers two days, not one). */}
+      {forecastByDate[selectedDate] && category === "all" && !isSearching && !showWeekendOnly && (() => {
         const { high, rainPct, emoji, desc } = forecastByDate[selectedDate];
         const dayWord = selectedDate === todayIso
           ? "today"
@@ -1175,6 +1243,33 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             {searchResults.length === 0 && " — try clearing filters or broadening your search."}
           </div>
           {searchGroups.map(([date, events]) => (
+            <div key={date} style={{ marginBottom: 24 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                <span style={{
+                  fontSize: 11, fontWeight: 800, fontFamily: "'Space Mono', monospace",
+                  letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sb-ink)",
+                }}>
+                  {shortDateLabel(date)}
+                </span>
+                <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
+                  {events.length} event{events.length === 1 ? "" : "s"}
+                </span>
+                <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {events.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : showWeekendOnly ? (
+        /* Weekend mode — both Sat + Sun grouped together */
+        <div>
+          <div style={{ marginBottom: 14, fontSize: 12, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+            This weekend · {shortDateLabel(weekendSat)} – {shortDateLabel(weekendSun)}
+            {weekendGroups.length === 0 && " — nothing matches your filters."}
+          </div>
+          {weekendGroups.map(([date, events]) => (
             <div key={date} style={{ marginBottom: 24 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                 <span style={{
