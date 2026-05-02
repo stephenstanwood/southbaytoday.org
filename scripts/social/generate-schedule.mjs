@@ -515,6 +515,10 @@ function weightedRandomPick(items) {
 async function runGenerationPass(schedule, plansData, scored, { passLabel = "pass", regenMode = "draft-or-missing", yesterdayAdultsNames = [] } = {}) {
   const shouldFill = (slot) => {
     if (!slot) return true;
+    // Empty-stub drafts (status=draft but no actual content) always need filling.
+    // Pass 3 anchor-swap creates these stubs; missing-only would otherwise skip them.
+    const isEmptyStub = slot.status === "draft" && !slot.plan && !slot.item && !slot.copy;
+    if (isEmptyStub) return true;
     if (regenMode === "missing-only") return false;
     return slot.status === "draft";
   };
