@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-05-02 — Cycle 111: Closed Cycle 110's "Next 3" — Case-Insensitive TLD Masker + Subtitle-Aware Suffix Strip
+
+### Context
+Saturday May 2, 2026 (~1 PM PDT). Automated cycle. Cycle 110 left two concrete follow-ups in its "Next Strongest Ideas" — both were small, mechanical, and self-contained. Closing them in one pass keeps the cycles 108–110 title/description-quality thread moving and removes the last two visible artifacts that thread surfaced.
+
+### What Was Built
+
+**Case-insensitive TLD masker (`polishDescription`)**
+
+The hostname mask in `maskDomainAndDecimalDots` used a case-sensitive regex against a lowercase `KNOWN_TLDS` list. SHOUTY-CASE source text — Ticketmaster's `pleaseNote` field is full of `TICKETWEB.COM Ticket Resale platform...` boilerplate — slipped through the mask, kept its real period, then got chopped at that period by the sentence splitter. After boilerplate-sentence drops removed everything before the period, the leftover `COM Ticket Resale…` (truncated by the 200-char cap) survived as the visible description on 9 Ticketmaster comedy/concert events. Fix: add the `i` flag so `TICKETWEB.COM` masks as cleanly as `sccld.org`. Forward fix only; existing artifacts are unrecoverable since the upstream context was already dropped.
+
+**Subtitle-aware suffix strip (`stripRedundantVenueSuffix`)**
+
+Cycle 110's relaxed-equality strip only handled titles whose suffix was nothing but the venue. `Poetry Open Mic at the Cupertino Library - Poetry Month Celebration` (venue=`Cupertino Library`) survived because the suffix carries a trailing `- Poetry Month Celebration` subtitle. Added a fallback: when the suffix doesn't match outright, try splitting on ` - ` / ` – ` / ` — ` and check whether the part before the dash matches the venue. If yes, drop the venue half and rejoin as `<base> — <subtitle>` so the subtitle survives. Required minimums (base ≥10 chars, subtitle ≥4 chars) keep the strip conservative.
+
+**Data hot-fix:** `scripts/backfill-tld-and-subtitle.mjs` walked `upcoming-events.json` and (a) nulled out 9 TLD-orphan descriptions whose first word is a bare TLD token (`COM`, `ORG`, etc.) — these always result from the chopped-host pattern and are unsalvageable; the AI-generated `blurb` already covers display, so dropping the noisy `description` improves search-match quality without losing user-visible info, (b) reapplied the new subtitle-aware strip to the one Cupertino Library title cycle 110 called out by name. `Poetry Open Mic at the Cupertino Library - Poetry Month Celebration` → `Poetry Open Mic — Poetry Month Celebration`.
+
+### Why This Was the Strongest Move
+Pure debt cleanup: every artifact this cycle removed was named explicitly in cycle 110's "next ideas", which means cycle 110 already paid the cost of finding the bug. The forward fix (one regex flag, one fallback branch) is small enough to ship with the data hot-fix in a single commit. Search-result quality on Ticketmaster comedy/concert events stops being polluted by `COM Ticket Resale…` noise. Keeping the cycle 108–110 thread closed before the next event regen runs means Saturday's nightly won't reintroduce these patterns.
+
+### Next 3 Strongest Ideas
+1. **Campbell council data gap** — Recurring since cycle 102. Stoa has no Campbell data past Feb 3, 2026; Playwright scrape of campbellca.gov Agenda Center remains the unblock. Worth attacking next cycle now that the title/description thread is closed.
+2. **Cross-source camelCase splits in descriptions** — `polishDescription`'s `([a-z])([A-Z])` rule turned `TicketMaster.com` into `Ticket Master.com` in our sanity tests. Most real descriptions don't hit this, but watch for camelCased brand names (`OpenAI`, `MacBook`, `iPhone`) that would visibly break. A KEEP_CAMEL set parallel to `KEEP_UPPER` would be the right shape.
+3. **Description fallback to blurb** — When `description` is empty (now true for the 9 Ticketmaster events this cycle nulled out), the search index loses signal. Falling back the search index to `blurb` when `description` is missing recovers searchability for these events without needing the upstream text to come back clean.
+
+---
+
 ## 2026-04-28 — Cycle 110: SCCL Branch Venues + Cross-Source Title Suffix Cleanup
 
 ### Context

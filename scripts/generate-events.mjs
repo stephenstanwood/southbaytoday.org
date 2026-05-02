@@ -608,6 +608,22 @@ function stripRedundantVenueSuffix(title, venue) {
           .trim();
       if (norm(suffix) === norm(venue) && base.trim().length >= 10) {
         t = base.trim();
+      } else {
+        // Subtitle-aware: "<Title> at <Venue> - <Subtitle>" or with em/en-dash.
+        // Try splitting suffix on the dash and checking whether the venue
+        // half matches. If yes, drop the venue half and rejoin as
+        // "<Title> — <Subtitle>" so the subtitle survives.
+        const dashMatch = suffix.match(/^(.+?)\s+[-–—]\s+(.+?)$/);
+        if (dashMatch) {
+          const [, suffixVenue, subtitle] = dashMatch;
+          if (
+            norm(suffixVenue) === norm(venue) &&
+            base.trim().length >= 10 &&
+            subtitle.trim().length >= 4
+          ) {
+            t = `${base.trim()} — ${subtitle.trim()}`;
+          }
+        }
       }
     }
   }
@@ -714,11 +730,15 @@ function maskDomainAndDecimalDots(text) {
   let t = text;
   // Decimals: "1.5", "24.3", "$1.5M"
   t = t.replace(/(\d)\.(\d)/g, `$1${DOT_PLACEHOLDER}$2`);
-  // Hostnames ending in a known TLD ("sccld.org", "svlg.org"). Multi-pass so
-  // multi-segment hosts ("interland3.donorperfect.net") get every dot.
+  // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
+  // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
+  // gets masked the same as the polite form. Without `i` the dot survives,
+  // sentence-splitter chops at the period, and the leftover ".COM Ticket Resale"
+  // fragment leaks through boilerplate filters into the visible description.
+  // Multi-pass so multi-segment hosts ("interland3.donorperfect.net") get every dot.
   const tldRe = new RegExp(
     `\\b([A-Za-z][\\w-]*)\\.(${KNOWN_TLDS})\\b`,
-    "g",
+    "gi",
   );
   let prev;
   do {
