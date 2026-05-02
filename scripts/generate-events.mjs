@@ -415,6 +415,24 @@ function isAwayGame(title) {
 }
 
 const CANCELLED_PATTERN = /\bcancell?ed\b/i;
+// Cancellation phrases that appear in description/blurb but not the title.
+// Examples seen: Ticketmaster shoves "Unfortunately, the Event Organizer has
+// had to cancel your event…" into `info`/`pleaseNote`; library scrapers
+// sometimes write "this event has been cancelled" in the body. Keep this
+// list tight — we're matching language, not the bare word "cancel" (a
+// "Cancel Culture Book Club" should stay).
+const CANCELLED_BODY_PATTERNS = [
+  /\bevent (?:has been|is|was) cancell?ed\b/i,
+  /\bhas had to cancel (?:your |the |this )?event\b/i,
+  /\bthis (?:show|performance) (?:has been|is) cancell?ed\b/i,
+  /\bcancell?ed[;.]\s+refunds? (?:will be|are being)\s+issued\b/i,
+];
+
+function looksCancelled(description, blurb) {
+  const text = [description, blurb].filter(Boolean).join(" ");
+  if (!text) return false;
+  return CANCELLED_BODY_PATTERNS.some((p) => p.test(text));
+}
 const VIRTUAL_PATTERNS = [
   /\bvirtual\b/i,
   /\bvia zoom\b/i,
@@ -440,6 +458,10 @@ function isPublicEvent(title, source, description, venue) {
   if (isBlockedEvent(title)) return false;
   // Always filter cancelled events regardless of source
   if (CANCELLED_PATTERN.test(title)) return false;
+  // Cancellations announced in the body — the title still says "Zakir Khan
+  // Live" but the description says "Unfortunately, the Event Organizer has
+  // had to cancel your event…". Catch those before they reach a reader.
+  if (looksCancelled(description, null)) return false;
   // Filter virtual/online-only events
   if (isVirtualEvent(title, description, venue)) return false;
   // Global exclusions — not a fit for a local news site
@@ -2075,6 +2097,14 @@ function mapTicketmasterEvent(e) {
   const dateStr = dateInfo?.localDate;
   const timeStr = dateInfo?.localTime; // "20:00:00"
   if (!dateStr) return null;
+
+  // Drop cancelled / postponed at the source. Discovery API exposes the
+  // booking status as `dates.status.code` ∈ {"onsale", "offsale",
+  // "rescheduled", "cancelled", "postponed"}. Postponed events have no real
+  // date — keeping them produces "ghost" listings for a date the show isn't
+  // happening on.
+  const tmStatus = (e.dates?.status?.code || "").toLowerCase();
+  if (tmStatus === "cancelled" || tmStatus === "postponed") return null;
 
   const start = new Date(`${dateStr}T${timeStr || "00:00:00"}-07:00`);
   const venue = e._embedded?.venues?.[0];
