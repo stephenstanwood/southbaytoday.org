@@ -233,7 +233,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "approved",
     description:
-      "Large-scale transit-oriented housing development planned around the Berryessa and Alum Rock BART stations, enabled by San José's Urban Village program. Multiple projects have received approvals for dense residential adjacent to BART, bringing new workforce and market-rate housing to North San José.",
+      "Large-scale transit-oriented housing development planned around the Berryessa/North San José BART station, enabled by San José's Urban Village program. Multiple projects have received approvals for dense residential adjacent to BART, bringing new workforce and market-rate housing to North San José.",
     scale: "Thousands of units across multiple sites",
     developer: "Various",
     timeline: "Active approvals and construction",
