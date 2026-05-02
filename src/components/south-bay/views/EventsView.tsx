@@ -567,6 +567,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const [search, setSearch] = useState("");
   const [showKidsOnly, setShowKidsOnly] = useState(false);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
+  // Tonight = today's events starting 5 PM or later that haven't begun yet.
+  // High-value toggle for "what's happening tonight?" — the most common
+  // question on a weekend afternoon.
+  const [showTonightOnly, setShowTonightOnly] = useState(false);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -629,12 +633,20 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const isSearching = search.trim().length > 0;
   const searchQ = search.trim().toLowerCase();
 
+  const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
+
   // Apply common filters (city, category, kids, search) to a list of events
   const matchesFilters = (e: UpcomingEvent): boolean => {
     if (!allCities && !selectedCities.has(e.city as City)) return false;
     if (category !== "all" && e.category !== category) return false;
     if (showKidsOnly && !e.kidFriendly) return false;
     if (showFreeOnly && e.cost !== "free") return false;
+    if (showTonightOnly) {
+      if (e.date !== todayIso) return false;
+      if (!e.time) return false;
+      const m = parseTimeToMinutes(e.time);
+      if (m === null || m < TONIGHT_FROM_MIN) return false;
+    }
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -667,7 +679,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time))) // hide today's events that have started
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -681,7 +693,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -703,7 +715,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -731,6 +743,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
+      if (showTonightOnly) {
+        if (e.date !== todayIso) continue;
+        if (!e.time) continue;
+        const m = parseTimeToMinutes(e.time);
+        if (m === null || m < TONIGHT_FROM_MIN) continue;
+      }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -743,7 +761,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -757,6 +775,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
+      if (showTonightOnly) {
+        if (e.date !== todayIso) continue;
+        if (!e.time) continue;
+        const m = parseTimeToMinutes(e.time);
+        if (m === null || m < TONIGHT_FROM_MIN) continue;
+      }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -769,7 +793,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -868,6 +892,28 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "#15803D" }}
             />
             💵 Free
+          </label>
+
+          <label style={{
+            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
+            fontSize: 12, color: showTonightOnly ? "#fff" : "var(--sb-muted)",
+            cursor: "pointer", userSelect: "none",
+            padding: "5px 12px", borderRadius: 100,
+            border: `1.5px solid ${showTonightOnly ? "#7C3AED" : "var(--sb-border)"}`,
+            background: showTonightOnly ? "#7C3AED" : "#fff",
+            fontWeight: showTonightOnly ? 600 : 500,
+            transition: "all 0.12s",
+          }}>
+            <input
+              type="checkbox" checked={showTonightOnly}
+              onChange={(e) => {
+                const next = e.target.checked;
+                setShowTonightOnly(next);
+                if (next) setSelectedDate(todayIso);
+              }}
+              style={{ cursor: "pointer", accentColor: "#7C3AED" }}
+            />
+            🌙 Tonight
           </label>
         </div>
 
