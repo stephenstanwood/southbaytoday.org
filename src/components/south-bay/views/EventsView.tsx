@@ -566,6 +566,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const [category, setCategory] = useState<EventCategory | "all">("all");
   const [search, setSearch] = useState("");
   const [showKidsOnly, setShowKidsOnly] = useState(false);
+  const [showFreeOnly, setShowFreeOnly] = useState(false);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -633,6 +634,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     if (!allCities && !selectedCities.has(e.city as City)) return false;
     if (category !== "all" && e.category !== category) return false;
     if (showKidsOnly && !e.kidFriendly) return false;
+    if (showFreeOnly && e.cost !== "free") return false;
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -665,7 +667,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time))) // hide today's events that have started
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -679,7 +681,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -701,7 +703,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -728,6 +730,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
+      if (showFreeOnly && e.cost !== "free") continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -740,7 +743,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -753,6 +756,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
+      if (showFreeOnly && e.cost !== "free") continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -765,7 +769,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -846,6 +850,24 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "var(--sbt-accent, #4F46E5)" }}
             />
             👶 Kids
+          </label>
+
+          <label style={{
+            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
+            fontSize: 12, color: showFreeOnly ? "#fff" : "var(--sb-muted)",
+            cursor: "pointer", userSelect: "none",
+            padding: "5px 12px", borderRadius: 100,
+            border: `1.5px solid ${showFreeOnly ? "#15803D" : "var(--sb-border)"}`,
+            background: showFreeOnly ? "#15803D" : "#fff",
+            fontWeight: showFreeOnly ? 600 : 500,
+            transition: "all 0.12s",
+          }}>
+            <input
+              type="checkbox" checked={showFreeOnly}
+              onChange={(e) => setShowFreeOnly(e.target.checked)}
+              style={{ cursor: "pointer", accentColor: "#15803D" }}
+            />
+            💵 Free
           </label>
         </div>
 
