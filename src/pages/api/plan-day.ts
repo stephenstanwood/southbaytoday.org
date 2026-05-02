@@ -1198,7 +1198,7 @@ ${startH < 10 ? `Full day ahead — target 6–7 cards:
 The plan MUST honor the target card count for the time window. Don't force 6+ cards when only a few hours of day remain — a short realistic plan beats a fake full-day plan.
 
 CRITICAL RULES FOR BALANCE:
-- Items marked "EVENT TODAY" are specific things happening today. Include 1-2 if any exist in the pool, but NEVER make the entire plan just events. A good day is activities + food + maybe an event.
+- Items marked "EVENT TODAY" are specific things happening today. They're the best signal of what's actually happening — prefer including 2-3 when quality options exist in the pool. Cap at 3; never let events crowd out food or make the whole plan a calendar dump.
 - MEALS ARE REQUIRED: A full day plan MUST include food stops. If the plan starts before noon, include a breakfast/brunch/coffee spot. Always include lunch (noon-2pm). If the plan goes past 6pm, include dinner. Pick actual restaurants or cafes from the pool — not just "grab food somewhere."
 - The ideal plan is: activity → food → activity → food → activity. Alternate between doing things and eating.
 
@@ -2079,8 +2079,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     const diversePool: Candidate[] = [];
 
-    // Events: include top 3-4 (not ALL — leave room for places)
-    const MAX_EVENTS = 4;
+    // Events: include top 5-6 (not ALL — leave room for places).
+    // Bumped from 4 → 6 to give Claude a deeper bench now that the event
+    // pool is richer; pairs with the prompt nudge from "1-2" → "2-3".
+    const MAX_EVENTS = 6;
     for (const c of eventCandidates.slice(0, MAX_EVENTS)) {
       diversePool.push(c);
     }
