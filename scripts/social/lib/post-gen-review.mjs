@@ -706,8 +706,10 @@ export function runQualityReview(schedule, options = {}) {
     if (!day) continue;
     const existing = day[f.slotType];
     if (!existing) continue;
-    const shouldDelete = resetFlaggedToDraft || f.hardBlock;
-    if (!shouldDelete) continue;
+    // resetFlaggedToDraft=false means "log only, do not mutate" — don't
+    // delete hard-blocked slots either, otherwise the caller's "accept"
+    // semantics on a final pass silently nukes the slot.
+    if (!resetFlaggedToDraft) continue;
     day._reviewHistory ??= [];
     day._reviewHistory.push({
       slotType: f.slotType,
