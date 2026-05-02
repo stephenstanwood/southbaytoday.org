@@ -843,6 +843,36 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ongoingEvents, selectedCities, category, showKidsOnly, search]);
 
+  // Per-pill counts for Kids/Free/Tonight/Weekend badges. Each count answers
+  // "how many events would I see if I checked this box?" given the current
+  // city/category/search filters — independent of the other pill states so
+  // toggling one pill doesn't make the others' badges go to zero.
+  const pillCounts = useMemo(() => {
+    let kids = 0, free = 0, tonight = 0, weekend = 0;
+    for (const e of upcomingEvents) {
+      if (e.date < todayIso) continue;
+      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!allCities && !selectedCities.has(e.city as City)) continue;
+      if (category !== "all" && e.category !== category) continue;
+      if (isSearching) {
+        if (!e.title.toLowerCase().includes(searchQ) &&
+            !(e.blurb || "").toLowerCase().includes(searchQ) &&
+            !(e.description || "").toLowerCase().includes(searchQ) &&
+            !e.city.toLowerCase().includes(searchQ) &&
+            !e.venue.toLowerCase().includes(searchQ)) continue;
+      }
+      if (e.kidFriendly) kids++;
+      if (e.cost === "free") free++;
+      if (e.date === todayIso && e.time) {
+        const m = parseTimeToMinutes(e.time);
+        if (m !== null && m >= TONIGHT_FROM_MIN) tonight++;
+      }
+      if (e.date === weekendSat || e.date === weekendSun) weekend++;
+    }
+    return { kids, free, tonight, weekend };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
     ? [...datesWithEvents].reverse().find((d) => d < selectedDate) ?? null
@@ -916,6 +946,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "var(--sbt-accent, #4F46E5)" }}
             />
             👶 Kids
+            {pillCounts.kids > 0 && (
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showKidsOnly ? "rgba(255,255,255,0.22)" : "#EEF2FF",
+                color: showKidsOnly ? "#fff" : "var(--sbt-accent, #4F46E5)",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.kids}
+              </span>
+            )}
           </label>
 
           <label style={{
@@ -934,6 +975,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "#15803D" }}
             />
             💵 Free
+            {pillCounts.free > 0 && (
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showFreeOnly ? "rgba(255,255,255,0.22)" : "#F0FDF4",
+                color: showFreeOnly ? "#fff" : "#15803D",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.free}
+              </span>
+            )}
           </label>
 
           <label style={{
@@ -959,6 +1011,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "#7C3AED" }}
             />
             🌙 Tonight
+            {pillCounts.tonight > 0 && (
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showTonightOnly ? "rgba(255,255,255,0.22)" : "#F5F3FF",
+                color: showTonightOnly ? "#fff" : "#7C3AED",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.tonight}
+              </span>
+            )}
           </label>
 
           <label style={{
@@ -981,6 +1044,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               style={{ cursor: "pointer", accentColor: "#EA580C" }}
             />
             🎉 Weekend
+            {pillCounts.weekend > 0 && (
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showWeekendOnly ? "rgba(255,255,255,0.22)" : "#FFF7ED",
+                color: showWeekendOnly ? "#fff" : "#EA580C",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.weekend}
+              </span>
+            )}
           </label>
         </div>
 
