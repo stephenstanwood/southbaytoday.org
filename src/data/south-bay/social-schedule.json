@@ -1613,7 +1613,135 @@
           "prevTitle": "Mountain View",
           "hardBlock": true
         }
-      ]
+      ],
+      "day-plan": {
+        "status": "draft",
+        "slotType": "day-plan",
+        "city": "mountain-view",
+        "cityName": "Mountain View",
+        "planUrl": "https://southbaytoday.org/plan/51d27bf7",
+        "plan": {
+          "cards": [
+            {
+              "id": "place:curated:shoreline-park",
+              "name": "Shoreline Park & Lake",
+              "category": "outdoor",
+              "city": "mountain-view",
+              "address": "Shoreline at Mountain View",
+              "timeBlock": "7:30 AM - 9:00 AM",
+              "blurb": "Walk or bike the lakeside loop, watch the windsurfers set up on the water, and soak in the cool morning air before the day heats up.",
+              "why": "A quick, easy outdoor stretch right in Mountain View makes for a refreshing start before you head into a full day of culture and food.",
+              "url": "https://www.mountainview.gov/depts/cs/shoreline/default.asp",
+              "mapsUrl": null,
+              "cost": "free",
+              "costNote": null,
+              "kidsCostNote": null,
+              "photoRef": "places/ChIJoTYXIyK6j4ARXJNLdHVtPaY/photos/AU_ZVEEg_OU9UjOzDtUivtYVSeqfG8cWi9TnAHV_B8aRnGoVJFMtlpYlVNDJzmo-v-AS7JwE4UbeG0Cfhq0gtKC5iKg4Ja0LHKx4bcoUXFevMC-xYGMnwFFaYR3lqzfmAiPNGwj1ocZcJqo8criyZ7gKo1bBda5CRntN37aSnqpsB3ZLR31ku9OHJp5R_djhvDqF-V_VO4rp6uoxEpICkfXeiaNW6hln261QHtFfHutYzwMuSneQ-BRSPVg5uBo_-Cr7t8Q3x5isbfqMZmYV3AKEhwInA90uObgQF3_Zp5nYwwZDtEXO3QFJMHRIxq7L68mzV0P4SLjkHVIeTdgSiWQhguY45gw923E16ZRe15mCQaGN3VuG7QuxJhMlsk_2ukWVNMlWIz26NnBLvSas6wdvefXEVCGfXBJtwIu0DVtopTpFGMI",
+              "image": null,
+              "venue": null,
+              "source": "place",
+              "locked": false,
+              "rationale": "claude:pad | gap-fill | partial-had-4"
+            },
+            {
+              "id": "place:ChIJGWxtr0nKj4ARGHKbY2HbPUw",
+              "name": "Triton Museum of Art",
+              "category": "museum",
+              "city": "santa-clara",
+              "address": "1505 Warburton Ave, Santa Clara, CA 95050, USA",
+              "timeBlock": "11:00 AM - 1:00 PM",
+              "blurb": "Wander through the galleries and don't skip the sculpture garden out back. The contemporary rotating exhibits are worth slowing down for.",
+              "why": "Free admission and genuinely good art makes this an easy yes on a Friday morning.",
+              "url": "http://www.tritonmuseum.org/",
+              "mapsUrl": "https://maps.google.com/?cid=5493788331791315480&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "cost": "free",
+              "costNote": null,
+              "kidsCostNote": null,
+              "photoRef": "places/ChIJGWxtr0nKj4ARGHKbY2HbPUw/photos/AU_ZVEH9UBIu952O0CToiAUtX7tgsLsgyXE5DWcEmaTwUn4cRHg0sqcoF572pKBLmqNFK8yGiKeIPR1xB8jJS6lt2YhKk906BT2VGG9P9XanXCdzNBhN8Se0-xnVIB7zoZv1wZ1M4tWlSV-b9C9xK28d5DDudHnAZJk3PmW9GQ46PDSXDdjxXxCxLLyIG3uqWQbtfk7ragYVdD1IH0LB24N6MqZYtYk2UWfyept3DK36pEqxRaVzxtIoxPKF6eemjqYHdwbCpUBHKUD7q3gxCR78YN-9xYfoXTd1F6WLfbhzJ9nODAE0crq_Kvqqo-4eEQ8GCWeJNDKrRHGDX6LI_cG_ICDON9cMlpkNLwzH3-mXJHdyyPbQyTTMHCoGDYXyRk2CeKGS7ZgZ5JKiwHl0VoMSPSnx-cauAXqSuGRY8NiXMW8",
+              "image": null,
+              "venue": null,
+              "source": "place",
+              "locked": false,
+              "rationale": "claude:pool-rank-12/21 | rating=4.5 | cat=museum"
+            },
+            {
+              "id": "place:ChIJMZC2UwI1joAReJaK1vHSqcc",
+              "name": "Los Gatos Creek Trail",
+              "category": "outdoor",
+              "city": "campbell",
+              "address": "1250 Dell Ave, Campbell, CA 95008, USA",
+              "timeBlock": "4:00 PM - 5:30 PM",
+              "blurb": "Walk the creekside trail and shake off the wine a little. The path is flat, shaded in spots, and genuinely relaxing at this pace.",
+              "why": "A mellow walk after an afternoon winery is the right move before a big evening.",
+              "url": "https://www.losgatosca.gov/907/Los-Gatos-Creek-Trail",
+              "mapsUrl": "https://maps.google.com/?cid=14387262420740118136&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "cost": "free",
+              "costNote": null,
+              "kidsCostNote": null,
+              "photoRef": "places/ChIJMZC2UwI1joAReJaK1vHSqcc/photos/AU_ZVEHY2ptMPKsPxK3DlqpGx06wy_mdpRbP0-M7-7zKIieApTu3t3qd2wbfh-bnUVoJ-d7EJbjSg2Rdt0jGNxA2tgN_yJVlKqSsApLEK_a-op6LGr1C2MatbuNQj42BB7ysCVRXU-50nRzZ_b0pR5aKYJjNkmaynrkMA2Fl5l_2TNXp8_LzuoR8Kyn__Mt9QuXF2KAVXa1EEQveLTbSVzil8hYDzOAFQ3Z-f3cFOrX8YzHdzBsF1gaP_Sk1dTRi0wLoFXmUFD4qPnjppX4UhiisAm0rXut2BiMKFGJfiK0v9UEGQvYOR-5R99eBBVSmpYFzTS9NY5bwIUHx4grEkeliKlsML8K9OwpN3M1P-LFPI2vHpRcYW3CWNJdu4tZZlMljSTTXkgBiix_a4Qq537y4csrSY3ur0UEzBCzxAhogVQfbD-SM",
+              "image": null,
+              "venue": null,
+              "source": "place",
+              "locked": false,
+              "rationale": "claude:pool-rank-10/21 | rating=4.7 | cat=outdoor"
+            },
+            {
+              "id": "place:ChIJeQ-ozuLKj4ARMQNfslZXl1c",
+              "name": "Smoking Pig BBQ",
+              "category": "food",
+              "city": "san-jose",
+              "address": "1144 N 4th St, San Jose, CA 95112, USA",
+              "timeBlock": "5:30 PM - 7:00 PM",
+              "blurb": "Pull up to the counter and order the brisket plate. Get the mac and cheese on the side. Eat all of it.",
+              "why": "This is some of the best BBQ in the South Bay and a Friday dinner here never disappoints.",
+              "url": "https://www.smokingpigbbq.net/",
+              "mapsUrl": "https://maps.google.com/?cid=6311609432654414641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "cost": "low",
+              "costNote": "Under $20",
+              "kidsCostNote": null,
+              "photoRef": "places/ChIJeQ-ozuLKj4ARMQNfslZXl1c/photos/AU_ZVEGJGn9jRBKaHW4__Qi1-W9zerATtdgWoq90Tcdmg6GwAqSLZznHRrHmi1NMXKNmVzBd8mwqG6ngEseLL2rdOg1aZhD_0Z-qHTv0fFHm6Qm9Nfb8ur8MhUTelIB9QQ47m8aQzdgynnQ13p08duU8MhG81cpAZqeXQrrXAoahkwOf0lvdBnrPa3hPCbsqNw0q00cNU5eeymWPWo288Y8KfTUUXqXPxiALtODdw3H0LWlQdJadVUelbvGrC1kAtjzZMYcaTxsN1MO8Mg1K1QjDRQgsiRNUWoWIbvV621i6Thy5Rx1m8c78_lKHMiiQ9-h6vOBy4J4rKwq61ptqW5FXb09dV81OmitcZ4HzT2Q0MBwufHPNqa4VN2i6YUGogpLEyVr70ezBTB5qVIDOJ-BI4nhXgtWyH0LNLQyU8BOqQvObDwY",
+              "image": null,
+              "venue": null,
+              "source": "place",
+              "locked": false,
+              "rationale": "claude:pool-rank-9/21 | rating=4.3 | cat=food"
+            },
+            {
+              "id": "event:sjda-1829af9e705d97b6",
+              "name": "Candlelight: The Best of Hans Zimmer",
+              "category": "arts",
+              "city": "san-jose",
+              "address": "101 Paseo De San Antonio, San Jose",
+              "timeBlock": "8:30 PM - 10:30 PM",
+              "blurb": "Listen to Hans Zimmer film scores by candlelight orchestra.",
+              "why": "It's a genuinely cool way to end a Friday night and the atmosphere in that room is something else.",
+              "url": "https://sjdowntown.com/event/candlelight-the-best-of-hans-zimmer-2/",
+              "cost": "paid",
+              "costNote": null,
+              "photoRef": "places/ChIJxfWisLvMj4ARLNfwpDgtJyY/photos/AU_ZVEGh6R7SiPnSaQezHRLCkkfxB3Y9anXaO4nkAI43H7eTYa49NoasYYRjuM6nS6rqq_UKNr2RIQ1G0ICOZ4VPiNgiT32alh765XuM3oEMO-0nsUdC11tK2u7UOZuFYlX0YhJyVGmJBqNTJsDAMXtptGXmOjCJuXuwNBoi0EmgmarrJvTrqq0mO1IcTdDBfo9ZHrKuoqAvwo69yODrE9YXnByRgpDOA8putOr-PSjB6EiU_qVHv4m-NbGflzwZex_I0SK51vamHY6vSrSHpKt9ZXq9-N_lBJEedD-tZ3zyzOI-1A",
+              "image": null,
+              "venue": "Hammer Theatre Center",
+              "source": "event",
+              "locked": false,
+              "rationale": "claude:pool-rank-2/21 | event-today | cat=arts"
+            }
+          ],
+          "weather": "55°F, high 70°F"
+        },
+        "copy": {
+          "x": "Friday in the South Bay, planned. Morning loop at @shorelinelake, afternoon at @TritonMuseum, brisket at Smoking Pig BBQ, and Hans Zimmer by candlelight to close it out. https://southbaytoday.org/plan/51d27bf7",
+          "threads": "We planned your Friday. Start with a morning walk at @shorelinelake, wander the galleries at @TritonMuseum, grab the brisket plate at Smoking Pig BBQ in Campbell, then end the night with Hans Zimmer film scores played live by candlelight in San Jose. Five stops, one great day. https://southbaytoday.org/plan/51d27bf7 #SouthBay #MountainView #SanJose",
+          "bluesky": "Your Friday, already figured out. 🌅 Morning at @shorelinelake, art at @TritonMuseum, brisket at Smoking Pig BBQ, and Hans Zimmer by candlelight to close. https://southbaytoday.org/plan/51d27bf7 #SouthBay #MountainView",
+          "facebook": "We put together a full Friday for you across the South Bay — and it's a good one. Start the morning walking the lake loop at Shoreline Park, then spend some time at @TritonMuseum (don't miss the sculpture garden). Stretch your legs on Los Gatos Creek Trail (@losgatosca), fuel up with the brisket plate at Smoking Pig BBQ (@2008) in Campbell, and close the night with Hans Zimmer film scores played by candlelight orchestra in San Jose. https://southbaytoday.org/plan/51d27bf7",
+          "instagram": "Your Friday, already planned. We did the work — you just show up. 🙌\n\nHere's how the day goes:\n\n🌊 Morning walk or bike ride around the lake at @shorelinelake in Mountain View. Cool air, windsurfers on the water, good way to start.\n\n🎨 Mid-morning at @tritonmuseum in Santa Clara. Wander the contemporary galleries and take a few minutes in the sculpture garden out back — it's worth it.\n\n🌿 Late afternoon stroll on Los Gatos Creek Trail (@townoflosgatos). Flat, shaded in spots, easy on the legs.\n\n🍖 Dinner at @smokingpigbbq in Campbell. Order the brisket plate. Get the mac and cheese. Eat all of it.\n\n🕯️ Night cap: Hans Zimmer film scores performed live by a candlelight orchestra in San Jose. Yes, it's as good as it sounds.\n\nFull day plan with all the details at the link: https://southbaytoday.org/plan/51d27bf7\n\n#SouthBay #SouthBayToday #MountainView #SantaClara #Campbell #SanJose #BayAreaFood #BayAreaArts #FridayPlans #BayAreaWeekend #VisitSiliconValley #HansZimmer #BBQ #Shoreline #LocalGuide",
+          "mastodon": "Your Friday, already figured out. 🌅 Morning at @shorelinelake, art at @TritonMuseum, brisket at Smoking Pig BBQ, and Hans Zimmer by candlelight to close. https://southbaytoday.org/plan/51d27bf7 #SouthBay #MountainView"
+        },
+        "imageUrl": null,
+        "imageStyle": null,
+        "copyApprovedAt": null,
+        "imageApprovedAt": null,
+        "generatedAt": "2026-05-02T13:26:03.370Z"
+      }
     },
     "2026-05-09": {
       "tonight-pick": {
@@ -2182,8 +2310,8 @@
     }
   },
   "_meta": {
-    "generatedAt": "2026-05-02T13:11:28.752Z",
-    "generator": "generate-schedule",
+    "generatedAt": "2026-05-02T13:26:03.370Z",
+    "generator": "regen-may8",
     "daysAhead": 10
   }
 }
