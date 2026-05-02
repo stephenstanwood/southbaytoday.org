@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-01T23:09:36.802Z",
+      "generatedAt": "2026-05-02T11:08:36.053Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 24 – May 1",
+      "dateRange": "Apr 25 – May 2",
       "stats": {
-        "total": 332,
-        "notable": 24,
-        "newUnits": 7,
-        "totalValuation": 11989093
+        "total": 454,
+        "notable": 30,
+        "newUnits": 9,
+        "totalValuation": 14513356
       },
       "permits": [
         {
@@ -36,6 +36,30 @@
           "valuation": 135103,
           "units": 1,
           "issueDate": "2026-04-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-134472-RS",
+          "address": "1933 Everglade Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached adu",
+          "valuation": 134765,
+          "units": 1,
+          "issueDate": "2026-04-30",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-137201-RS",
+          "address": "444 Pocatello Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached adu",
+          "valuation": 134596,
+          "units": 1,
+          "issueDate": "2026-04-30",
           "subtype": "2nd Unit Added"
         },
         {
@@ -109,59 +133,23 @@
           "units": 0,
           "issueDate": "2026-04-29",
           "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-114976-CI",
-          "address": "2625 Zanker Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Rooftop Ac Replacement",
-          "valuation": 1030243,
-          "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-114128-CI",
-          "address": "2933 The Villages Py",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Bay Hill Dentistry Dental Office",
-          "valuation": 629494,
-          "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Medical/Dental Clinic"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-01T23:09:39.047Z",
+      "generatedAt": "2026-05-02T11:08:38.597Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 24 – May 1",
+      "dateRange": "Apr 25 – May 2",
       "stats": {
-        "total": 85,
-        "notable": 6,
+        "total": 81,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01107",
-          "address": "820 Hamilton Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-29",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01087",
           "address": "642 Bryson Av",
@@ -175,16 +163,28 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00095",
-          "address": "220 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "id": "26BLD-01107",
+          "address": "820 Hamilton Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-04-29",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-01",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00096",
@@ -196,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-29",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00095",
+          "address": "220 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
           "subtype": "Over the Counter Approved"
         },
         {

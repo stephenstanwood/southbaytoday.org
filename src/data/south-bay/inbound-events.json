@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "pulledAt": "2026-05-01T23:09:55.419Z",
-    "totalInBlob": 529,
-    "freshCount": 353
+    "pulledAt": "2026-05-02T11:08:56.996Z",
+    "totalInBlob": 538,
+    "freshCount": 333
   },
   "events": [
     {
@@ -68,21 +68,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mo2t7mqd_kht438",
-      "receivedAt": "2026-04-17 11:12:38.779837+00",
-      "fromEmail": "stephen@stanwood.dev",
-      "emailSubject": "FW: Chamber Updates - April 16, 2026",
-      "title": "Ribbon Cutting: Fiat Lux",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "Business ribbon cutting event for new local business opening.",
-      "sourceUrl": "mailto:chamber@losgatoschamber.com",
-      "cityKey": "los-gatos",
-      "cityName": "Los Gatos",
-      "status": "new"
-    },
-    {
       "id": "inbound_moc366x9_fs1jqi",
       "receivedAt": "2026-04-23 23:01:41.393783+00",
       "fromEmail": "\"City of Santa Clara\" <news@info.SantaClaraCA.gov>",
@@ -95,21 +80,6 @@
       "sourceUrl": "https://www.eventbrite.com/e/asian-american-stories-award-ceremony-2026-tickets-1985306344720?aff=oddtdtcreator",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mon3or6c_yi0hnh",
-      "receivedAt": "2026-05-01 16:01:30.101674+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Series With Notre Dame Begins Today",
-      "title": "Stanford baseball vs. Notre Dame",
-      "startsAt": "2026-05-01T13:30:00-07:00",
-      "endsAt": null,
-      "location": "Frank Eck Stadium, South Bend, IN",
-      "description": "Stanford Cardinal baseball series against Notre Dame Fighting Irish. Game 1 of 3-game series.",
-      "sourceUrl": "https://gostanford.com/all-sports-schedule?view=calendar",
-      "cityKey": null,
-      "cityName": null,
       "status": "new"
     },
     {
@@ -294,21 +264,6 @@
       "sourceUrlOriginal": "https://bit.ly/SSWSE_2026"
     },
     {
-      "id": "inbound_moc6r622_btuqu3",
-      "receivedAt": "2026-04-24 00:41:17.629234+00",
-      "fromEmail": "chamber@losgatoschamber.ccsend.com",
-      "emailSubject": "Chamber Updates - April 23, 2026",
-      "title": "Ribbon Cutting: Fiat Lux",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "Chamber ribbon cutting to welcome Fiat Lux to Los Gatos.",
-      "sourceUrl": null,
-      "cityKey": "los-gatos",
-      "cityName": "Los Gatos",
-      "status": "new"
-    },
-    {
       "id": "inbound_moc6r622_3qi6rw",
       "receivedAt": "2026-04-24 00:41:17.629234+00",
       "fromEmail": "chamber@losgatoschamber.ccsend.com",
@@ -354,21 +309,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mok9bgh5_30o5cj",
-      "receivedAt": "2026-04-29 16:15:51.106548+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Last Call",
-      "title": "Stanford softball Senior Night vs. Sacramento State",
-      "startsAt": "2026-05-01T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Stanford Softball Stadium, Stanford, CA",
-      "description": "Stanford softball honors seniors in the final regular-season home game against Sacramento State. The team will head to Virginia for the ACC Championship starting May 6.",
-      "sourceUrl": "https://tickets.gostanford.com/",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
       "id": "inbound_mobfz9np_htnukf",
       "receivedAt": "2026-04-23 12:12:28.319335+00",
       "fromEmail": "events@in.southbaytoday.org",
@@ -400,21 +340,6 @@
       "sourceUrlOriginal": "https://bit.ly/SJgeneralplan4review"
     },
     {
-      "id": "inbound_moeuutgd_jrmtaw",
-      "receivedAt": "2026-04-25 21:32:04.290081+00",
-      "fromEmail": "\"Sunnyvale Public Library\" <sunnyvalepubliclibrary@public.govdelivery.com>",
-      "emailSubject": "Sustainability Workshop, Book Repair Clinic, Virtual Author Talks, and More!",
-      "title": "Yarn Lab",
-      "startsAt": "2026-05-01T10:00:00-07:00",
-      "endsAt": "2026-05-01T12:00:00-07:00",
-      "location": "Sunnyvale Public Library, Adult Fiction Room",
-      "description": "Work on knit or crochet projects with other yarn crafters in a relaxed social setting. Bring your own supplies; basic assistance available. No formal instruction.",
-      "sourceUrl": null,
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
       "id": "inbound_moeuutgd_322gv3",
       "receivedAt": "2026-04-25 21:32:04.290081+00",
       "fromEmail": "\"Sunnyvale Public Library\" <sunnyvalepubliclibrary@public.govdelivery.com>",
@@ -442,6 +367,21 @@
       "sourceUrl": "https://sunnyvale.libcal.com/event/16219827",
       "cityKey": null,
       "cityName": null,
+      "status": "new"
+    },
+    {
+      "id": "inbound_monmzuae_d3xz1g",
+      "receivedAt": "2026-05-02 01:02:07.174851+00",
+      "fromEmail": "webrequests@sanjoseca.gov",
+      "emailSubject": "Join Us for Bike to Work Day on May 14",
+      "title": "Bike to Work Day Energizer Station",
+      "startsAt": "2026-05-14T06:30:00-07:00",
+      "endsAt": "2026-05-14T10:30:00-07:00",
+      "location": "Dr. Martin Luther King, Jr. Library, southeast corner of Fourth and San Fernando streets, San Jose, CA",
+      "description": "Free Energizer Station with snacks, bicycling information, tote bags, and free basic bike adjustments by Bicycle Express. Part of the annual Bike to Work Day event organized by Silicon Valley Bicycle Coalition.",
+      "sourceUrl": "https://bikesiliconvalley.org/events/btwd/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
       "status": "new"
     },
     {
@@ -822,21 +762,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mohqmmx3_49433z",
-      "receivedAt": "2026-04-27 21:57:07.93346+00",
-      "fromEmail": "librarians@info.SantaClaraCA.gov",
-      "emailSubject": "CENTRAL: Tech Help Class: 1-on-1 Smartphone Help in May",
-      "title": "1-on-1 Smartphone Help",
-      "startsAt": "2026-05-01T11:00:00-07:00",
-      "endsAt": "2026-05-01T13:00:00-07:00",
-      "location": "Technology Center, Central Park Library, 2635 Homestead Road, Santa Clara, CA",
-      "description": "Get personalized 1-on-1 help from a Technology Consultant with any smartphone-related topic including photo editing, cloud storage, app configuration, and security. Book a 15-minute appointment in a friendly, low-pressure setting.",
-      "sourceUrl": "https://www.sclibrary.org/Home/Components/Calendar/Event/111931/7953?curm=4&cury=2026",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
       "id": "inbound_mohqmmx3_v3q2w1",
       "receivedAt": "2026-04-27 21:57:07.93346+00",
       "fromEmail": "librarians@info.SantaClaraCA.gov",
@@ -987,21 +912,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_momb363f_pa2xbw",
-      "receivedAt": "2026-05-01 02:40:28.844403+00",
-      "fromEmail": "chamber@losgatoschamber.ccsend.com",
-      "emailSubject": "Chamber Updates - April 30, 2026",
-      "title": "Ribbon Cutting: Fiat Lux",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "Ribbon cutting ceremony for Fiat Lux, a new business in Los Gatos.",
-      "sourceUrl": null,
-      "cityKey": "los-gatos",
-      "cityName": "Los Gatos",
-      "status": "new"
-    },
-    {
       "id": "inbound_momb363f_8ltdky",
       "receivedAt": "2026-05-01 02:40:28.844403+00",
       "fromEmail": "chamber@losgatoschamber.ccsend.com",
@@ -1105,6 +1015,86 @@
       "cityKey": "campbell",
       "cityName": "Campbell",
       "status": "new"
+    },
+    {
+      "id": "inbound_monku8jy_gu5d3x",
+      "receivedAt": "2026-05-02 00:01:31.75849+00",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "South First Friday, Cinco De Mayo Fun and More!",
+      "title": "Cinco de Mayo Car Show",
+      "startsAt": "2026-05-02T06:00:00-07:00",
+      "endsAt": "2026-05-02T16:00:00-07:00",
+      "location": "Outside SAP Center, San Jose",
+      "description": "Free celebration featuring custom car builds, live music, food trucks, and refreshments.",
+      "sourceUrl": "https://www.eventbrite.com/e/cinco-de-mayo-car-show-2026-tickets-1985527171218?aff=ebdssbdestsearch",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=d6a17d91be&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_monku8jy_t2nk1z",
+      "receivedAt": "2026-05-02 00:01:31.75849+00",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "South First Friday, Cinco De Mayo Fun and More!",
+      "title": "Cinco de Mayo Salsa Fest",
+      "startsAt": "2026-05-02T13:00:00-07:00",
+      "endsAt": "2026-05-02T20:00:00-07:00",
+      "location": "500 S. First St., San Jose",
+      "description": "Charity salsa festival supporting Opening Doors Silicon Valley's services for low-income seniors, families, and unhoused people.",
+      "sourceUrl": "https://openingdoorssv.org/salsafest2026/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=bc46f5538a&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_monku8jy_qnfwg2",
+      "receivedAt": "2026-05-02 00:01:31.75849+00",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "South First Friday, Cinco De Mayo Fun and More!",
+      "title": "Andruss Block Party",
+      "startsAt": "2026-05-02T15:00:00-07:00",
+      "endsAt": "2026-05-02T21:00:00-07:00",
+      "location": "Circle of Palms, San Jose",
+      "description": "Live music performances from ANDRUSS, SUTRO, Cruz Control X Jay Guerra, APV, TWOGEE, and JHAY for Cinco de Mayo weekend.",
+      "sourceUrl": "https://posh.vip/e/andruss-block-party",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=3f873bb7da&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_monku8jy_axqwef",
+      "receivedAt": "2026-05-02 00:01:31.75849+00",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "South First Friday, Cinco De Mayo Fun and More!",
+      "title": "Zakir Khan Live",
+      "startsAt": "2026-05-02T19:00:00-07:00",
+      "endsAt": null,
+      "location": "San Jose Civic, San Jose",
+      "description": "Renowned Indian comedian and actor performs observational comedy about everyday life and Indian culture. Show in Hindi.",
+      "sourceUrl": "https://www.ticketmaster.com/zakir-khan-live-san-jose-california-05-02-2026/event/1C00633DCDCE5E6B",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=119639804c&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_monku8jy_c5aeiz",
+      "receivedAt": "2026-05-02 00:01:31.75849+00",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "South First Friday, Cinco De Mayo Fun and More!",
+      "title": "Third Annual Cinco de Mayo Festival",
+      "startsAt": "2026-05-03T11:00:00-07:00",
+      "endsAt": "2026-05-03T20:00:00-07:00",
+      "location": "Plaza Park, San Jose",
+      "description": "Celebration of Mexican history with parade, entertainment on main stage, and local vendors.",
+      "sourceUrl": "https://sjcincodemayo.com/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=9bd8ad988c&e=e0f43ae3a8"
     },
     {
       "id": "inbound_moa5v03e_gjafcu",
@@ -1663,66 +1653,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mom3j0k0_4y0ea1",
-      "receivedAt": "2026-04-30 23:09:17.279807+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Cardinal AXEcess: Eyes on the Prize",
-      "title": "Stanford women's beach volleyball vs. Chattanooga — NCAA Championship first round",
-      "startsAt": "2026-05-01T09:00:00-07:00",
-      "endsAt": null,
-      "location": "Gulf Shores, AL",
-      "description": "Top-ranked Stanford opens NCAA Championship play against No. 16 Chattanooga. Broadcast on ESPN2.",
-      "sourceUrl": "https://gostanford.com/all-sports-schedule?view=calendar",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
-      "id": "inbound_mom3j0k0_ogfpzv",
-      "receivedAt": "2026-04-30 23:09:17.279807+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Cardinal AXEcess: Eyes on the Prize",
-      "title": "Stanford men's tennis vs. Penn — NCAA Regional",
-      "startsAt": "2026-05-01T08:00:00-07:00",
-      "endsAt": null,
-      "location": "College Station, TX",
-      "description": "No. 18 Stanford men's tennis faces No. 40 Penn in NCAA Regional action.",
-      "sourceUrl": null,
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
-      "id": "inbound_mom3j0k0_t8bnv2",
-      "receivedAt": "2026-04-30 23:09:17.279807+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Cardinal AXEcess: Eyes on the Prize",
-      "title": "Stanford women's tennis vs. BYU — NCAA Regional",
-      "startsAt": "2026-05-01T10:00:00-07:00",
-      "endsAt": null,
-      "location": "Malibu, CA",
-      "description": "No. 30 Stanford women's tennis squares off against No. 36 BYU in NCAA Regional competition.",
-      "sourceUrl": null,
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
-      "id": "inbound_mom3j0k0_1hba0e",
-      "receivedAt": "2026-04-30 23:09:17.279807+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Cardinal AXEcess: Eyes on the Prize",
-      "title": "Stanford softball senior night vs. Sacramento State",
-      "startsAt": "2026-05-01T18:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "No. 18 Stanford softball wraps up regular season against Sacramento State while honoring senior class. Broadcast on ACCNX.",
-      "sourceUrl": null,
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
       "id": "inbound_mom3j0k0_2ttqls",
       "receivedAt": "2026-04-30 23:09:17.279807+00",
       "fromEmail": "cardinal@mail.gostanford.com",
@@ -2005,21 +1935,6 @@
       "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112225/",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
-      "id": "inbound_modgobc8_1acrra",
-      "receivedAt": "2026-04-24 22:07:28.065516+00",
-      "fromEmail": "\"Sunnyvale Public Library\" <sunnyvalepubliclibrary@public.govdelivery.com>",
-      "emailSubject": "Next week: Kids Graphic Novel Book Club, Day of the Child",
-      "title": "Day of the Child: Performance from Aguacate Music Kids",
-      "startsAt": "2026-05-01T16:00:00-07:00",
-      "endsAt": "2026-05-01T17:00:00-07:00",
-      "location": "Sunnyvale Public Library, Library Program Room",
-      "description": "Celebrate Day of the Child with a lively concert by Aguacate Music Kids. For all ages, no registration required.",
-      "sourceUrl": null,
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
       "status": "new"
     },
     {
@@ -2421,21 +2336,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mok8tpcj_478oq6",
-      "receivedAt": "2026-04-29 16:02:07.252933+00",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "NORTHSIDE: LEGO Club",
-      "title": "Northside LEGO Club",
-      "startsAt": "2026-05-01T16:00:00-07:00",
-      "endsAt": "2026-05-01T17:00:00-07:00",
-      "location": "Northside Branch Library, 695 Moreland Way, Santa Clara, California 95054",
-      "description": "Kids ages 7-12 can unleash their creativity building with LEGO. Drop in and build to your heart's delight.",
-      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112073/",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
       "id": "inbound_mo6n419b_vtvmma",
       "receivedAt": "2026-04-20 03:33:09.327076+00",
       "fromEmail": "events@in.southbaytoday.org",
@@ -2450,21 +2350,6 @@
       "cityName": "Santa Clara",
       "status": "new",
       "sourceUrlOriginal": "https://click.fanmail.sjearthquakes.com/?qs=ABB7InYiOjEsImQiOjQ4NTJ9AAEAAAAAABAg9Sz7m4LoOYHzIyjl7vKuhcvSK8EPGKyIzuAQXlzcBRNxAT_27wg08HrsCyYXAx5kh432Jz48A1014ts7U0shJzkBNAD5Arb54g"
-    },
-    {
-      "id": "inbound_mojhpr21_uhew6l",
-      "receivedAt": "2026-04-29 03:23:12.153929+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "Tuesday, April 28, 2026: Cuesta Water Main Incident – Update #2",
-      "title": "Neighborhood meeting for Cuesta Park water main incident affected residents",
-      "startsAt": "2026-05-01T19:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "The City of Mountain View will hold a neighborhood meeting for residents whose access to drinking water has been impacted by the Cuesta Park area water main incident.",
-      "sourceUrl": "http://www.MountainView.gov/CuestaWaterMain",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
     },
     {
       "id": "inbound_mogcf6m6_b7tkgt",
@@ -2831,21 +2716,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mon1mr8x_q6ey2w",
-      "receivedAt": "2026-05-01 15:03:49.235013+00",
-      "fromEmail": "news@jamsj.org",
-      "emailSubject": "JAMsj May 2026 e-news",
-      "title": "JAMsj Free Admission Day",
-      "startsAt": "2026-05-01T12:00:00-07:00",
-      "endsAt": "2026-05-01T16:00:00-07:00",
-      "location": "Japanese American Museum of San Jose, 535 N 5th St, San Jose, CA",
-      "description": "Free admission to the Japanese American Museum of San Jose for one day.",
-      "sourceUrl": "https://www.jamsj.org/visit",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
-    },
-    {
       "id": "inbound_mon1mr8x_g70noe",
       "receivedAt": "2026-05-01 15:03:49.235013+00",
       "fromEmail": "news@jamsj.org",
@@ -3148,21 +3018,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mon5vou5_6z0cz0",
-      "receivedAt": "2026-05-01 17:02:49.844207+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "May at The MVCPA",
-      "title": "Come from Away",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": "2026-05-10T00:00:00-07:00",
-      "location": "Mountain View Center for the Performing Arts, 500 Castro Street, Mountain View, CA 94041",
-      "description": "A Tony Award-winning musical about 7,000 stranded passengers and the Newfoundland town that welcomed them after September 11, 2001.",
-      "sourceUrl": "https://theatreworks.org/mainstage/come-from-away/",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mon5vou5_8shtco",
       "receivedAt": "2026-05-01 17:02:49.844207+00",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -3314,22 +3169,6 @@
       "sourceUrlOriginal": "https://numulosgatos.us4.list-manage.com/track/click?u=d7fc65fad0599e445e6b43007&id=fc51b5578b&e=fd6532ab4c"
     },
     {
-      "id": "inbound_mom6354i_87tu7n",
-      "receivedAt": "2026-05-01 00:20:52.275196+00",
-      "fromEmail": "info@sjmusart.org",
-      "emailSubject": "The Arts Abound at SJMA: Listen to Live Music, Join a Curator-Led Tour, and Attend a Symposium",
-      "title": "First Friday: #Saturns_Return",
-      "startsAt": "2026-05-01T18:00:00-07:00",
-      "endsAt": "2026-05-01T21:00:00-07:00",
-      "location": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
-      "description": "Live performance featuring animated projection mapping, spatial installation, and original music by Mild Monk and n@p_t1m:3 exploring themes of transformation and cosmic reflection.",
-      "sourceUrl": "https://52102.blackbaudhosting.com/52102/page.aspx?pid=196&tab=2&txobjid=44d0b538-10bd-4f3c-af98-eacfe8c7814a",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://e.wordfly.com/click?sid=Mjc5M18zMTFfNjM2NjNfNjg3Nw&l=9c850b40-e644-f111-a84c-0050569dd3d9"
-    },
-    {
       "id": "inbound_mom6354i_6p3hi2",
       "receivedAt": "2026-05-01 00:20:52.275196+00",
       "fromEmail": "info@sjmusart.org",
@@ -3452,21 +3291,6 @@
       "cityName": "Cupertino",
       "status": "new",
       "sourceUrlOriginal": "https://email-link.parentsquare.com/ls/click?upn=u001.w-2Fv-2FxuFWAzcH-2BzcLTPJcqyC0g8dr5eQdth-2Fwv2t-2Fl0xUG7zU6eSZZwpW-2BKBa9SaIHD7cfba3g0znvoaw2Vq-2B2VkGLWn-2Fq2auI7A45UPwQIfY6XUvVwLq9ulDN4UTq98l2M4x2cbtgup4PKduam647VNQbc7HkT8pDv3T04TfAy1fVCK9P53gAKf-2FyAeIt3XLVtrGXCM-2BjyMD-2BflSRwE04Q-3D-3DEnUq_jff4aemjn9qOrJZFL-2FhPxU4WueN38NtmX14A-2FKLel-2F5EqXjImHPPZjAPbMB3BtWcWN0RAxEh1x8tDO6yXSPejej1P3YA7T8eP5tY4N-2BCa3qCd9SsaWREKByJWsGAHJIiOcDYxYkVPeNd1vPbcZSZxzX9qFeuOgFbA1v-2BVSln3BESwDCBiXAW5fXE0KjcvY2R6xPtkOkdImHAbN3WyRNjC0URLwNjmeT4j1glEUqE-2B0x2eO-2FwsfsvJjSo5ogAqRdKwiZQ6p22XeDoSt-2FCFTVu0g-3D-3D"
-    },
-    {
-      "id": "inbound_mod5xubu_8b67sc",
-      "receivedAt": "2026-04-24 17:06:25.432174+00",
-      "fromEmail": "\"Bay Area Glass Institute\" <studio@bagi.org>",
-      "emailSubject": "Mother's Day Flowers, Studio Classes, and a Chance to Win $100",
-      "title": "Community Night with Penelope Rakov Lee - artist talk and live glassblowing demonstration",
-      "startsAt": "2026-05-01T19:00:00-07:00",
-      "endsAt": null,
-      "location": "Bay Area Glass Institute, 635 Phelan Avenue, San Jose, CA",
-      "description": "Free community event featuring visiting artist Penelope Rakov Lee presenting an artist talk and live glassblowing demonstration.",
-      "sourceUrl": null,
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
     },
     {
       "id": "inbound_mod5xubu_ub7rrz",
@@ -3711,22 +3535,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mo2tsnnk_0tgtpn",
-      "receivedAt": "2026-04-17 11:27:06.944013+00",
-      "fromEmail": "stephen@stanwood.dev",
-      "emailSubject": "FW: Chamber Updates - April 16, 2026",
-      "title": "Ribbon Cutting: Fiat Lux",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "Grand opening celebration for Fiat Lux business in Los Gatos.",
-      "sourceUrl": "https://fiatluxsf.com/",
-      "cityKey": "los-gatos",
-      "cityName": "Los Gatos",
-      "status": "new",
-      "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=001VnvDIRelBF6fujXgMFAiW1hI6AZbGaHgbVLMNLyda8cXtbSg1SPbcWNpk-tk0E48lMFsyBEZwRm8rhS3D7Jgtvwi1i7P1cPIY_Lkw9eFxoIVACIH_A66y6RV4-qQ68EsJLWOFcADS-PIEA4mGD9OBiRNN49Q8A3aQm8CO8fS56QW83g8OEnN60iEPEvyT-y70fDDKzKiLLV-sabrM_KYXcfrBymkSdddV3P7A4VI4AGd85unMrNlrZdlvjQtMIf8phKM80dYRhHuyBIC0ioz8dYGZwa6s_nFHm8upGM1fhuFxOwYLowmKay8UPt3Fiunw3sEqT5woHOpeYdnjV0EBb0TJalqCPln7k_TFrbc9Zu8M6cRT7TDdXJWoUVbZB2Rctka9fOJQIvtJeoe-g9ugYz9OCWTBM_rlUet1F3AV042DRqRhcLK-U5Dmrfppzps&c=8lWSGySOm63BuDz1S50riC72F01676-OTuCEEv2mC7vtgoHzhbdnmA==&ch=E56RWWNRovg6yWre_XznozAmuAEcm_bBvrKasYKifWh91UX5GJ03JA=="
-    },
-    {
       "id": "inbound_mo2tsnnk_u8q0gi",
       "receivedAt": "2026-04-17 11:27:06.944013+00",
       "fromEmail": "stephen@stanwood.dev",
@@ -3755,70 +3563,6 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
-    },
-    {
-      "id": "inbound_mojbazgo_meq2zs",
-      "receivedAt": "2026-04-29 00:23:33.956185+00",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Make Memories at Markets, Music and More!",
-      "title": "South First Fridays #ArtwalkSJ",
-      "startsAt": "2026-05-01T17:00:00-07:00",
-      "endsAt": "2026-05-01T21:00:00-07:00",
-      "location": "South First Street, San Jose",
-      "description": "Free admission art walk featuring new exhibitions, live performances, and creative community venues.",
-      "sourceUrl": "https://www.southfirstfridays.com/",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=e23f1c10f6&e=e0f43ae3a8"
-    },
-    {
-      "id": "inbound_mojbazgo_rt0b6z",
-      "receivedAt": "2026-04-29 00:23:33.956185+00",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Make Memories at Markets, Music and More!",
-      "title": "Jazz Jam Ft. Martín Perna",
-      "startsAt": "2026-05-01T20:00:00-07:00",
-      "endsAt": "2026-05-01T22:00:00-07:00",
-      "location": "SJZ Break Room, San Jose",
-      "description": "Free live jazz music featuring special guest Martín Perna, founder of Grammy Award-nominated Antibalas. All ages welcome.",
-      "sourceUrl": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-martin-perna/",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=a5adb68113&e=e0f43ae3a8"
-    },
-    {
-      "id": "inbound_mojbazgo_oqyyqz",
-      "receivedAt": "2026-04-29 00:23:33.956185+00",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Make Memories at Markets, Music and More!",
-      "title": "Bert Kreischer: Permission to Party",
-      "startsAt": "2026-05-01T19:00:00-07:00",
-      "endsAt": "2026-05-01T21:00:00-07:00",
-      "location": "San Jose Civic, San Jose",
-      "description": "Stand-up comedy from Bert Kreischer, hailed as one of the best storytellers sharing anecdotes about family and fatherhood.",
-      "sourceUrl": "https://www.ticketmaster.com/bert-kreischer-tickets/artist/1933060",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=4663b60ba9&e=e0f43ae3a8"
-    },
-    {
-      "id": "inbound_mojbazgo_eg0mqf",
-      "receivedAt": "2026-04-29 00:23:33.956185+00",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Make Memories at Markets, Music and More!",
-      "title": "Godspell",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": "2026-05-03T23:59:59-07:00",
-      "location": "Montgomery Theater, San Jose",
-      "description": "Stephen Schwartz's musical retelling of Jesus' parables through music, storytelling, and comedy performed by CMT Rising Stars youth cast.",
-      "sourceUrl": "https://www.cmtsj.org/godspell/",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=40c595ba37&e=e0f43ae3a8"
     },
     {
       "id": "inbound_moncxdrm_6fzmss",
@@ -3940,22 +3684,6 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
-    },
-    {
-      "id": "inbound_mo3fi49k_nqy1hb",
-      "receivedAt": "2026-04-17 21:36:48.394837+00",
-      "fromEmail": "events@in.southbaytoday.org",
-      "emailSubject": "You're Invited to a Party, Attend a Music + Poetry Event, and Join a Curator-led Tour",
-      "title": "First Fridays",
-      "startsAt": "2026-05-01T18:00:00-07:00",
-      "endsAt": "2026-05-01T21:00:00-07:00",
-      "location": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
-      "description": "Free evening with open galleries, entertainment, Museum Store with local makers' wares, and late-night cafe bites.",
-      "sourceUrl": "https://52102.blackbaudhosting.com/52102/page.aspx?pid=196&tab=2&txobjid=44d0b538-10bd-4f3c-af98-eacfe8c7814a",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://e.wordfly.com/click?sid=Mjc5M18yNTNfNjM2NjNfNjk2MA&l=361e83a3-a33a-f111-a83f-0050569d9d1d"
     },
     {
       "id": "inbound_mo3fi49k_808oam",
@@ -4141,21 +3869,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_momw77et_0ukbix",
-      "receivedAt": "2026-05-01 12:31:54.611185+00",
-      "fromEmail": "cityofsunnyvale@public.govdelivery.com",
-      "emailSubject": "Activities Newsletter May 2026",
-      "title": "Magical Bridge Storytime Playground",
-      "startsAt": "2026-05-01T11:00:00-07:00",
-      "endsAt": null,
-      "location": "Magical Bridge Playground at Fair Oaks Park, Sunnyvale",
-      "description": "Free outdoor storytime filled with songs and stories for children.",
-      "sourceUrl": "https://www.sunnyvale.ca.gov/recreation-and-community/classes-and-activities",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
       "id": "inbound_momw77et_3uwfqe",
       "receivedAt": "2026-05-01 12:31:54.611185+00",
       "fromEmail": "cityofsunnyvale@public.govdelivery.com",
@@ -4303,21 +4016,6 @@
       "sourceUrl": "https://www.heritagetheatre.org",
       "cityKey": "campbell",
       "cityName": "Campbell",
-      "status": "new"
-    },
-    {
-      "id": "inbound_momi3p86_iid0z2",
-      "receivedAt": "2026-05-01 05:57:20.36206+00",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "Know Before You Go: Night Market",
-      "title": "Celebrate Santa Clara Night Market",
-      "startsAt": "2026-05-01T16:00:00-07:00",
-      "endsAt": "2026-05-01T21:00:00-07:00",
-      "location": "900-1000 Lafayette St., Santa Clara, CA",
-      "description": "Vibrant community celebration featuring food vendors, live music, local art, cultural performances, lucha libre wrestling, and interactive art workshops. Free admission and parking.",
-      "sourceUrl": "https://www.santaclaraca.gov/recreation-community/events/super-bowl-lx-and-fifa-world-cup-2026/celebrate-santa-clara-2026-community-events/night-markets",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
       "status": "new"
     },
     {
@@ -4643,21 +4341,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mon1ju4s_xa98dw",
-      "receivedAt": "2026-05-01 15:01:34.09847+00",
-      "fromEmail": "cityofsunnyvale@public.govdelivery.com",
-      "emailSubject": "Senior Center May 2026 Activities",
-      "title": "Sun Flair Scavenger Hunt",
-      "startsAt": "2026-05-01T00:00:00-07:00",
-      "endsAt": null,
-      "location": "13 Sunnyvale parks",
-      "description": "Find 26 Sun Flair sculptures across Sunnyvale parks. Free and fun way to enjoy spring and summer while learning about public art. Turn in completed sheets by August 31 for a prize.",
-      "sourceUrl": "https://www.sunnyvale.ca.gov/home/showdocument/6454",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
       "id": "inbound_modmwr34_927278",
       "receivedAt": "2026-04-25 01:01:59.663144+00",
       "fromEmail": "\"City of Santa Clara\" <news@info.SantaClaraCA.gov>",
@@ -4846,21 +4529,6 @@
       "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=3CV68kceAWcLxl4MD73fyI2tOPBXc6mmJ9u4l3ixYsCZTLBUNVg"
     },
     {
-      "id": "inbound_mon5tzsh_d06l3t",
-      "receivedAt": "2026-05-01 17:01:39.98105+00",
-      "fromEmail": "cardinal@mail.gostanford.com",
-      "emailSubject": "Season Finale on The Farm",
-      "title": "Stanford Softball Senior Night vs Sacramento State",
-      "startsAt": "2026-05-01T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Stanford Softball Stadium, Stanford, CA",
-      "description": "Final regular season home game featuring Senior Night celebration for Stanford's six seniors from the Class of 2026. Stanford (35-12) faces Sacramento State.",
-      "sourceUrl": "https://tickets.gostanford.com/",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
       "id": "inbound_mom4f0qh_53v6qs",
       "receivedAt": "2026-04-30 23:34:14.805055+00",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -4966,6 +4634,36 @@
       "cityName": "Mountain View",
       "status": "new",
       "virtual": true
+    },
+    {
+      "id": "inbound_monk8tk7_1u9n17",
+      "receivedAt": "2026-05-01 23:45:03.429487+00",
+      "fromEmail": "recreation-campbellca.gov@shared1.ccsend.com",
+      "emailSubject": "Campbell Recreation - Summer Class Registration Begins Next Week!",
+      "title": "Summer class registration begins",
+      "startsAt": "2026-05-05T09:00:00-07:00",
+      "endsAt": null,
+      "location": null,
+      "description": "Registration for summer camps, swim lessons, and pre-school programs opens for Campbell residents. Registration for everyone opens May 6th.",
+      "sourceUrl": "https://www.campbellca.gov/registration",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new"
+    },
+    {
+      "id": "inbound_monk8tk7_iv5g1p",
+      "receivedAt": "2026-05-01 23:45:03.429487+00",
+      "fromEmail": "recreation-campbellca.gov@shared1.ccsend.com",
+      "emailSubject": "Campbell Recreation - Summer Class Registration Begins Next Week!",
+      "title": "Junior lifeguards program",
+      "startsAt": "2026-07-01T00:00:00-07:00",
+      "endsAt": null,
+      "location": null,
+      "description": "Two-week sessions in July for ages 12-14. Registration begins May 5th for residents and May 6th for everyone.",
+      "sourceUrl": "https://www.campbellca.gov/registration",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new"
     },
     {
       "id": "inbound_moj5dlkr_vnowyw",
