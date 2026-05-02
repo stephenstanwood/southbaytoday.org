@@ -484,6 +484,39 @@ async function generateImageForSlot(slot, dateStr, slotType) {
   slot.imagePrompt = prompt;
 }
 
+/** Fires a 🔴 Discord alert if Pass 4 (emergency fill) couldn't fill some
+ *  day-plan slots. By the time we reach here, every other safety net has
+ *  failed, so this should rarely fire. */
+async function sendEmptyDaysAlert(dates) {
+  const webhook = process.env.DISCORD_WEBHOOK;
+  if (!webhook) {
+    console.warn("   ⚠️  DISCORD_WEBHOOK not set — empty-days alert NOT sent");
+    return;
+  }
+  const lines = [
+    `🔴 **Schedule generator: ${dates.length} empty day-plan slot(s)** — emergency fill exhausted`,
+    `Dates: ${dates.join(", ")}`,
+    ``,
+    `Manual catch-up:`,
+    `\`\`\``,
+    `ssh stephenstanwood@100.117.24.89 'cd ~/Projects/southbaytoday.org && \\`,
+    `  /opt/homebrew/bin/node --env-file=.env.local \\`,
+    `  scripts/social/generate-schedule.mjs --days 10'`,
+    `\`\`\``,
+  ];
+  try {
+    const res = await fetch(webhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: lines.join("\n") }),
+    });
+    if (!res.ok) console.warn(`   ⚠️  Discord alert ${res.status}`);
+    else console.log(`   📣 Discord alert sent for ${dates.length} empty day(s)`);
+  } catch (err) {
+    console.warn(`   ⚠️  Discord alert failed: ${err.message}`);
+  }
+}
+
 /** Pick from top candidates with weighted randomness — top 5 eligible, weighted by score. */
 function weightedRandomPick(items) {
   items.sort((a, b) => (b.score || 0) - (a.score || 0));
@@ -923,6 +956,73 @@ async function main() {
         for (const f of review2.flagged) {
           console.log(`   ⚠️  still flagged [${f.date} ${f.slotType}] ${f.reason} (not auto-resolvable)`);
         }
+      }
+    }
+
+    // ── Pass 4: empty-slot safety net ──────────────────────────────────────
+    // After all other passes, scan the window for day-plan slots that ended up
+    // missing or empty (no plan/cards). Those are guaranteed bugs — the user
+    // sees "Untitled" rows in the review portal. Make one more attempt per
+    // empty slot with a city not yet used in the window, accept whatever
+    // comes back, and Discord-alert any that still fail.
+    const emptyDayPlans = windowDates.filter((dateStr) => {
+      const dp = schedule.days?.[dateStr]?.["day-plan"];
+      if (!dp) return true;
+      if (["image-approved", "copy-approved", "published"].includes(dp.status)) return false;
+      return !dp.plan?.cards?.length;
+    });
+    if (emptyDayPlans.length) {
+      console.log(`\n🚨 Pass 4: ${emptyDayPlans.length} empty day-plan slot(s) — emergency fill`);
+      const ALL_CITIES = Object.keys(CITY_NAMES);
+      const cityUsage = new Map(ALL_CITIES.map((c) => [c, 0]));
+      for (const d of Object.values(schedule.days || {})) {
+        const c = d["day-plan"]?.city;
+        if (c && cityUsage.has(c) && d["day-plan"]?.plan?.cards?.length) {
+          cityUsage.set(c, cityUsage.get(c) + 1);
+        }
+      }
+      const stillEmpty = [];
+      for (const dateStr of emptyDayPlans) {
+        const altCity = [...cityUsage.entries()].sort(([a, ua], [b, ub]) => ua - ub || a.localeCompare(b))[0]?.[0];
+        if (!altCity) { stillEmpty.push(dateStr); continue; }
+        const cityName = CITY_NAMES[altCity] || altCity;
+        console.log(`   🚨 ${dateStr}: emergency fill with ${cityName}`);
+        try {
+          const plan = await fetchPlanFromApi(altCity, dateStr);
+          if (!plan?.cards?.length) {
+            console.log(`      ❌ plan-day returned empty for ${altCity}`);
+            stillEmpty.push(dateStr);
+            continue;
+          }
+          await enrichCardPhotos(plan.cards);
+          const planUrl = createSharedPlanUrl(plan, dateStr);
+          const copy = await generateDayPlanCopy(plan, dateStr, planUrl);
+          if (!schedule.days[dateStr]) schedule.days[dateStr] = {};
+          schedule.days[dateStr]["day-plan"] = {
+            status: "draft",
+            slotType: "day-plan",
+            city: altCity,
+            cityName,
+            planUrl,
+            plan: { cards: plan.cards, weather: plan.weather },
+            copy,
+            imageUrl: null,
+            imageStyle: null,
+            copyApprovedAt: null,
+            imageApprovedAt: null,
+            generatedAt: new Date().toISOString(),
+          };
+          cityUsage.set(altCity, (cityUsage.get(altCity) || 0) + 1);
+          console.log(`      ✅ filled with ${cityName} (${plan.cards.length} stops)`);
+          try { await generateImageForSlot(schedule.days[dateStr]["day-plan"], dateStr, "day-plan"); }
+          catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
+        } catch (err) {
+          console.log(`      ❌ emergency fill failed: ${err.message}`);
+          stillEmpty.push(dateStr);
+        }
+      }
+      if (stillEmpty.length) {
+        await sendEmptyDaysAlert(stillEmpty);
       }
     }
   }
