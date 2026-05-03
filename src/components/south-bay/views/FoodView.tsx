@@ -1,6 +1,7 @@
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
+import HealthScoresCard from "../cards/HealthScoresCard";
 
 const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
 const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -359,6 +360,7 @@ export default function FoodView() {
     <>
       <NewAndComingSoon />
       <PermitPulse />
+      <HealthScoresCard />
       <FarmersMarkets />
       <FoodViewStyles />
     </>
