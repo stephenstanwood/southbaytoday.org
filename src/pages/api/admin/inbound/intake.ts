@@ -50,8 +50,9 @@ export const POST: APIRoute = async ({ request }) => {
   const secret = process.env.RESEND_WEBHOOK_SECRET ?? "";
   if (!secret) return jsonError(500, "RESEND_WEBHOOK_SECRET not set");
 
-  const anthropicKey = process.env.ANTHROPIC_API_KEY ?? "";
-  if (!anthropicKey) return jsonError(500, "ANTHROPIC_API_KEY not set");
+  if (!process.env.MINI_CLAUDE_URL || !process.env.MINI_CLAUDE_TOKEN) {
+    return jsonError(500, "MINI_CLAUDE_URL/MINI_CLAUDE_TOKEN not set");
+  }
 
   const resendKey = process.env.RESEND_API_KEY ?? "";
   if (!resendKey) return jsonError(500, "RESEND_API_KEY not set");
@@ -192,7 +193,7 @@ export const POST: APIRoute = async ({ request }) => {
   // 5. Run the extractor
   let extracted;
   try {
-    extracted = await extractEvents(email, { anthropicKey });
+    extracted = await extractEvents(email);
   } catch (err) {
     console.error("[intake] extractor failed:", (err as Error).message);
     await appendLog(log, {

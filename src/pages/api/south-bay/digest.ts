@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import Anthropic from "@anthropic-ai/sdk";
+import { MiniClaude } from "../../../lib/miniClaude";
 import { errJson, okJson } from "../../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../../lib/rateLimit";
 import { CLAUDE_HAIKU, extractText, stripFences } from "../../../lib/models";
@@ -34,9 +34,7 @@ export interface CityDigest {
 const cache = new Map<string, { data: CityDigest; ts: number }>();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-const client = new Anthropic({
-  apiKey: import.meta.env.ANTHROPIC_API_KEY,
-});
+const client = new MiniClaude();
 
 // ── Handlers ──
 
@@ -57,7 +55,7 @@ export const GET: APIRoute = async ({ url, clientAddress }) => {
     return okJson(cached.data);
   }
 
-  if (!import.meta.env.ANTHROPIC_API_KEY) {
+  if (!import.meta.env.MINI_CLAUDE_URL || !import.meta.env.MINI_CLAUDE_TOKEN) {
     return errJson("Service not configured", 503);
   }
 
