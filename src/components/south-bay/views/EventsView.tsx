@@ -6,6 +6,7 @@ import {
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import { holidayOn, nextHolidayWithin } from "../../../lib/south-bay/holidays";
+import { currentHeritageMonths } from "../../../lib/south-bay/heritageMonths";
 import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
 import SunUvCard from "../cards/SunUvCard";
@@ -674,6 +675,66 @@ function HolidayHeadsUpBanner() {
   );
 }
 
+// ── Heritage / observance month banner ─────────────────────────────────────
+// Subtle one-liner acknowledging federally recognized heritage months that
+// matter to large South Bay communities (AANHPI, Hispanic, Jewish, LGBTQ+,
+// Filipino American, Black, Native American, etc.). Renders nothing outside
+// active windows. Multiple observances can co-occur (May = AANHPI + Jewish
+// American Heritage; October has 4 overlapping months) — they stack inline.
+
+function HeritageMonthBanner() {
+  const todayIso = todayPT();
+  const months = useMemo(() => currentHeritageMonths(todayIso), [todayIso]);
+  if (months.length === 0) return null;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 10,
+        rowGap: 4,
+        padding: "4px 12px",
+        marginBottom: 10,
+        fontSize: 11.5,
+        color: "var(--sb-muted)",
+        lineHeight: 1.45,
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+        }}
+      >
+        Observing
+      </span>
+      {months.map((m, i) => (
+        <span
+          key={m.id}
+          title={m.blurb}
+          style={{
+            display: "inline-flex",
+            gap: 5,
+            alignItems: "center",
+            color: m.color,
+          }}
+        >
+          <span aria-hidden style={{ fontSize: 13, lineHeight: 1 }}>{m.emoji}</span>
+          <span style={{ fontWeight: 600 }}>{m.label}</span>
+          {i < months.length - 1 && (
+            <span aria-hidden style={{ marginLeft: 6, opacity: 0.5, color: "var(--sb-muted)" }}>·</span>
+          )}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 // ── Main view ──────────────────────────────────────────────────────────────
 
 export default function EventsView({ selectedCities, onToggleCity, onToggleAllCities }: Props) {
@@ -1029,6 +1090,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
 
       <SchoolHeadsUpBanner selectedCities={selectedCities} />
       <HolidayHeadsUpBanner />
+      <HeritageMonthBanner />
 
       {/* Sticky filter bar — search + categories + cities + kids */}
       <div className="sb-events-sticky-filter">
