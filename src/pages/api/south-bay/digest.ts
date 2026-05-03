@@ -104,7 +104,7 @@ ${content}`;
   try {
     const message = await client.messages.create({
       model: CLAUDE_HAIKU,
-      max_tokens: 1024,
+      max_tokens: 2048,
       messages: [{ role: "user", content: prompt }],
     });
 
