@@ -1,161 +1,114 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-03T19:20:49.714Z",
+    "generatedAt": "2026-05-03T23:16:29.669Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 42,
-    "placesMatched": 18,
-    "placeGaps": 24,
-    "eventsExtracted": 4,
+    "placesExtracted": 12,
+    "placesMatched": 4,
+    "placeGaps": 8,
+    "eventsExtracted": 6,
     "eventsMatched": 1,
-    "eventGaps": 3,
+    "eventGaps": 5,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Pulgas Water Temple",
-      "city": "Palo Alto",
-      "kind": "park",
-      "context": "picnicking on grass with Dolores Park-like vibe",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Stanford Oval",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "large open space for hanging out on weekends",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Emma Prusch Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "clean with lots of green space, easy access",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Prusch Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "large open lawn ideal for picnics with vendors",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Lake Vasona",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "chill place to lay on grass similar to Dolores Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
-      "name": "Willow Street Park",
-      "city": "",
-      "kind": "park",
-      "context": "mentioned as alternative to Dolores Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
-      "name": "Hellyer Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "relaxing park option in South Bay",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
-      "name": "Christmas Hill Park",
-      "city": "Gilroy",
-      "kind": "park",
-      "context": "large fields formerly hosted garlic festival",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
-      "name": "Fowler Park",
-      "city": "",
-      "kind": "park",
-      "context": "mentioned as Dolores Park alternative",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
-      "name": "St James Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "grass space for relaxation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ]
-    },
-    {
       "name": "Pruneyard",
       "city": "Campbell",
       "kind": "venue",
-      "context": "shopping and dining destination with pedestrian space",
+      "context": "shopping center with road opening to cars",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
         "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Lick Observatory",
+      "city": "",
+      "kind": "venue",
+      "context": "observatory on Mount Hamilton near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+      ]
+    },
+    {
+      "name": "Mollie Stones",
+      "city": "Palo Alto",
+      "kind": "retail",
+      "context": "replaced historic Co-Op grocery store",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Fish Market",
+      "city": "Palo Alto",
+      "kind": "restaurant",
+      "context": "closed Palo Alto location, nostalgic closure",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Fry's",
+      "city": "Palo Alto",
+      "kind": "retail",
+      "context": "former electronics store, development site",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Cable Co-Op",
+      "city": "Palo Alto",
+      "kind": "other",
+      "context": "historic community venue, closed",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Lake Chabot",
+      "city": "",
+      "kind": "park",
+      "context": "location of Forever Forward run club meetup",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
       ]
     },
     {
@@ -165,153 +118,9 @@
       "context": "independent bookstore hosting author event May 3",
       "sourceUrls": [
         "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Amazing Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "barbershop recommended for men's haircuts, $25",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Vanna Salon Studio",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "owned by Vanna, men's haircuts $30, low maintenance focus",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "SC Barbers",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "recommended barbershop in Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "A+ Haircuts for Men",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "established barbershop with consistent quality, 12+ years recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Quality Men's Haircuts",
-      "city": "Mountain View",
-      "kind": "service",
-      "context": "barber Doris recommended for men's haircuts",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Lisa's Perfect Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "recommended men's haircut spot in Sunnyvale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Hair Focus",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "recommended barbershop in Sunnyvale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Annie's",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "corner of Wolfe and Reed, excellent men's haircuts",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Lucky Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "barbershop option in Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Bishop's",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "formerly downtown, closed during pandemic, previously recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Dandies",
-      "city": "Mountain View",
-      "kind": "service",
-      "context": "barbershop with $45+ haircuts and limited availability",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
-      ]
-    },
-    {
-      "name": "Alpha Barbershop",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "near Lucky on Mathilda, cheap but reported sanitation issues",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
       ]
     }
   ],
@@ -320,284 +129,99 @@
       "name": "Santa Clara Night Market",
       "when": "May 1-2, 2026",
       "city": "Santa Clara",
-      "context": "community night market with food, vendors, art workshops",
+      "context": "free community night market with food, vendors, art activities",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
         "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
         "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ]
     },
     {
-      "name": "Sunnyvale Community Center Grounds Reopening and Ribbon Cutting Ceremony",
-      "when": "May 21",
-      "city": "Sunnyvale",
-      "context": "ceremony at 10am after $14 million renovation project",
+      "name": "Forever Forward Run Club Meetup",
+      "when": "morning (specific date not provided)",
+      "city": "",
+      "context": "free 5K with Adidas shoe demos",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
         "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
       ]
     },
     {
-      "name": "A Novel Affair Book Cafe Event with Amanda Sung",
-      "when": "Sunday May 3, 6:30 p.m.",
-      "city": "Los Altos",
-      "context": "author event discussing book-to-film adaptation, Asian diaspora stories",
+      "name": "Devil Wears Prada 2 screening",
+      "when": "date not specified",
+      "city": "Campbell",
+      "context": "outdoor movie at Pruneyard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+      ]
+    },
+    {
+      "name": "Community Center Grounds Reopening and Ribbon Cutting Ceremony",
+      "when": "May 21, 10 a.m.",
+      "city": "Sunnyvale",
+      "context": "reopening after $14M renovation with remarks from Mayor",
       "sourceUrls": [
         "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
+      ]
+    },
+    {
+      "name": "Amanda Sung Book Event",
+      "when": "May 3, 6:30 p.m.",
+      "city": "Los Altos",
+      "context": "author announces film adaptation of debut book",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Vasona Lake",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "large open green space for picnicking and lounging",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "Vasona Lake County Park"
-    },
-    {
-      "name": "Montalvo Arts Center",
-      "city": "Saratoga",
-      "kind": "venue",
-      "context": "favorite patches of grass for relaxing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "Montalvo Arts Center"
-    },
-    {
-      "name": "Rosicrucian Egyptian Museum",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "free gardens open to public, good for relaxing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "Rosicrucian Egyptian Museum"
-    },
-    {
-      "name": "John D Morgan Park",
-      "city": "Campbell",
-      "kind": "park",
-      "context": "park with open space for gatherings",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "John D. Morgan Park"
-    },
-    {
-      "name": "Mitchell Park",
-      "city": "Palo Alto",
-      "kind": "park",
-      "context": "spacious park with coffee shop nearby for picnicking",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "Mitchell Park"
-    },
-    {
-      "name": "Pruneyard Shopping Center",
-      "city": "Campbell",
-      "kind": "retail",
-      "context": "shopping center with newly opened pedestrian road",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ],
-      "matchedName": "The Pruneyard Shopping Center"
-    },
-    {
       "name": "Peet's",
       "city": "Campbell",
       "kind": "cafe",
-      "context": "coffee and seating at Pruneyard Shopping Center",
+      "context": "coffee shop at Pruneyard with outdoor seating",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
         "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
         "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
         "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
       ],
       "matchedName": "Peet's Coffee"
     },
     {
-      "name": "Rose Garden",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "popular relaxation spot with roses in bloom",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Rose Garden Branch Library"
-    },
-    {
-      "name": "John D Morgan",
-      "city": "Campbell",
-      "kind": "park",
-      "context": "32 acre well-maintained park with dogs and sports",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "John D. Morgan Playground"
-    },
-    {
-      "name": "House of Bagels",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "bagel shop near SJSU for casual breakfast",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "House of Bagels"
-    },
-    {
-      "name": "William Street Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "walkable grass area near SJSU for relaxation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "William Street Park"
-    },
-    {
-      "name": "Panama Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "has grass volleyball and chill seating",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Panama Park"
-    },
-    {
-      "name": "Oak Meadow Park",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "large park next to Lake Vasona",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Oak Meadow Park"
-    },
-    {
-      "name": "Las Palmas Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "chill outdoor space in Sunnyvale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Las Palmas Park"
-    },
-    {
-      "name": "Rancho San Antonio",
-      "city": "Cupertino",
-      "kind": "park",
-      "context": "plenty of chill outdoor spaces",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
-    },
-    {
       "name": "Valley Fair",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "large shopping center referenced for comparison",
+      "city": "Santa Clara",
+      "kind": "retail",
+      "context": "major shopping mall for comparison",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
         "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
       ],
       "matchedName": "Bowlero Valley Fair"
-    },
-    {
-      "name": "Sunnyvale Community Center",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "reopening May 21 after $14 million renovation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
-      ],
-      "matchedName": "Sunnyvale Community Center"
     },
     {
       "name": "West Valley College",
@@ -606,24 +230,37 @@
       "context": "hosting Youth Town Hall event May 16",
       "sourceUrls": [
         "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
       ],
       "matchedName": "Saratoga Farmers' Market at West Valley College"
+    },
+    {
+      "name": "Sunnyvale Community Center",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "reopening ceremony May 21 after renovation",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
+      ],
+      "matchedName": "Sunnyvale Community Center"
     }
   ],
   "eventMatches": [
     {
       "name": "Youth Town Hall",
-      "when": "May 16, 2026, 10:30 a.m. - 2:00 p.m.",
+      "when": "May 16, 2026, 10:30 a.m. – 2:00 p.m.",
       "city": "Saratoga",
-      "context": "free event for ages 13-20, career exploration and mentorship",
+      "context": "free event for ages 13-20 with career exploration",
       "sourceUrls": [
         "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
       ],
       "matchedName": "Youth Town Hall"
     }
