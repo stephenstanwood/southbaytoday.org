@@ -5,6 +5,7 @@ import {
   type EventCategory,
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
+import { holidayOn, nextHolidayWithin } from "../../../lib/south-bay/holidays";
 import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
 import SunUvCard from "../cards/SunUvCard";
@@ -623,6 +624,56 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
   );
 }
 
+// ── Holiday heads-up banner ────────────────────────────────────────────────
+// Surfaces the soonest civic/cultural holiday within the next 14 days
+// (Mother's Day, Memorial Day, Cinco de Mayo, etc.). Hidden when nothing
+// matches. Mirrors SchoolHeadsUpBanner's visual rhythm.
+
+function HolidayHeadsUpBanner() {
+  const todayIso = todayPT();
+  const tomorrowIso = addDays(todayIso, 1);
+  const horizonIso = addDays(todayIso, 14);
+
+  const next = useMemo(
+    () => nextHolidayWithin(todayIso, horizonIso),
+    [todayIso, horizonIso],
+  );
+  if (!next) return null;
+
+  const dateLabel = schoolDateLabel(next.iso, todayIso, tomorrowIso);
+  const { holiday } = next;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 8,
+        padding: "8px 12px",
+        marginBottom: 10,
+        background: holiday.bg,
+        border: `1px solid ${holiday.color}33`,
+        borderRadius: 8,
+        fontSize: 12.5,
+        color: holiday.color,
+        lineHeight: 1.45,
+      }}
+    >
+      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>{holiday.emoji}</span>
+      <span style={{
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
+        textTransform: "uppercase", opacity: 0.85,
+      }}>
+        Holiday
+      </span>
+      <span style={{ fontWeight: 600 }}>{holiday.label}</span>
+      <span style={{ opacity: 0.85 }}>{dateLabel}</span>
+    </div>
+  );
+}
+
 // ── Main view ──────────────────────────────────────────────────────────────
 
 export default function EventsView({ selectedCities, onToggleCity, onToggleAllCities }: Props) {
@@ -977,6 +1028,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       </div>
 
       <SchoolHeadsUpBanner selectedCities={selectedCities} />
+      <HolidayHeadsUpBanner />
 
       {/* Sticky filter bar — search + categories + cities + kids */}
       <div className="sb-events-sticky-filter">
@@ -1277,12 +1329,15 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               const wkd = d.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
               const dayNum = d.getDate();
               const isToday = iso === todayIso;
+              const holiday = holidayOn(iso);
+              const ariaLabel = `${wkd} ${dayNum}, ${count} event${count === 1 ? "" : "s"}${holiday ? `, ${holiday.label}` : ""}`;
               return (
                 <button
                   key={iso}
                   role="tab"
                   aria-selected={active}
-                  aria-label={`${wkd} ${dayNum}, ${count} event${count === 1 ? "" : "s"}`}
+                  aria-label={ariaLabel}
+                  title={holiday ? holiday.label : undefined}
                   disabled={empty && !active}
                   onClick={() => setSelectedDate(iso)}
                   style={{
@@ -1298,8 +1353,24 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                     fontFamily: "'Space Mono', monospace",
                     display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
                     transition: "all 0.12s",
+                    position: "relative",
                   }}
                 >
+                  {holiday && (
+                    <span
+                      aria-hidden
+                      style={{
+                        position: "absolute",
+                        top: -6,
+                        right: -4,
+                        fontSize: 12,
+                        lineHeight: 1,
+                        filter: empty && !active ? "grayscale(0.4) opacity(0.7)" : "none",
+                      }}
+                    >
+                      {holiday.emoji}
+                    </span>
+                  )}
                   <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", opacity: 0.85 }}>
                     {isToday ? "TODAY" : wkd}
                   </span>
