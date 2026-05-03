@@ -628,9 +628,16 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
 // ── Holiday heads-up banner ────────────────────────────────────────────────
 // Surfaces the soonest civic/cultural holiday within the next 14 days
 // (Mother's Day, Memorial Day, Cinco de Mayo, etc.). Hidden when nothing
-// matches. Mirrors SchoolHeadsUpBanner's visual rhythm.
+// matches. Mirrors SchoolHeadsUpBanner's visual rhythm. When events exist
+// on the holiday's date, renders as a button that jumps the date selector
+// so residents can tap "Mother's Day → 12 events" and immediately see them.
 
-function HolidayHeadsUpBanner() {
+interface HolidayHeadsUpBannerProps {
+  eventCountByDate: Record<string, number>;
+  onJumpToDate: (iso: string) => void;
+}
+
+function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUpBannerProps) {
   const todayIso = todayPT();
   const tomorrowIso = addDays(todayIso, 1);
   const horizonIso = addDays(todayIso, 14);
@@ -643,24 +650,32 @@ function HolidayHeadsUpBanner() {
 
   const dateLabel = schoolDateLabel(next.iso, todayIso, tomorrowIso);
   const { holiday } = next;
+  const count = eventCountByDate[next.iso] ?? 0;
+  const isClickable = count > 0;
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: 8,
-        padding: "8px 12px",
-        marginBottom: 10,
-        background: holiday.bg,
-        border: `1px solid ${holiday.color}33`,
-        borderRadius: 8,
-        fontSize: 12.5,
-        color: holiday.color,
-        lineHeight: 1.45,
-      }}
-    >
+  const innerStyle: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: 8,
+    padding: "8px 12px",
+    marginBottom: 10,
+    background: holiday.bg,
+    border: `1px solid ${holiday.color}33`,
+    borderRadius: 8,
+    fontSize: 12.5,
+    color: holiday.color,
+    lineHeight: 1.45,
+    width: "100%",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    textAlign: "left",
+    cursor: isClickable ? "pointer" : "default",
+    transition: "background 0.12s, border-color 0.12s",
+  };
+
+  const inner = (
+    <>
       <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>{holiday.emoji}</span>
       <span style={{
         fontFamily: "'Space Mono', monospace",
@@ -671,8 +686,47 @@ function HolidayHeadsUpBanner() {
       </span>
       <span style={{ fontWeight: 600 }}>{holiday.label}</span>
       <span style={{ opacity: 0.85 }}>{dateLabel}</span>
-    </div>
+      {isClickable && (
+        <span
+          style={{
+            marginLeft: "auto",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 4,
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            padding: "2px 8px",
+            borderRadius: 100,
+            background: "#ffffff",
+            color: holiday.color,
+            border: `1px solid ${holiday.color}55`,
+          }}
+        >
+          {count} event{count === 1 ? "" : "s"} <span aria-hidden>→</span>
+        </span>
+      )}
+    </>
   );
+
+  if (isClickable) {
+    return (
+      <button
+        type="button"
+        onClick={() => onJumpToDate(next.iso)}
+        aria-label={`Jump to ${holiday.label} (${dateLabel}) — ${count} event${count === 1 ? "" : "s"}`}
+        style={innerStyle}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
+      >
+        {inner}
+      </button>
+    );
+  }
+
+  return <div style={innerStyle}>{inner}</div>;
 }
 
 // ── Heritage / observance month banner ─────────────────────────────────────
@@ -1089,7 +1143,15 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       </div>
 
       <SchoolHeadsUpBanner selectedCities={selectedCities} />
-      <HolidayHeadsUpBanner />
+      <HolidayHeadsUpBanner
+        eventCountByDate={eventCountByDate}
+        onJumpToDate={(iso) => {
+          if (isSearching) setSearch("");
+          if (showWeekendOnly) setShowWeekendOnly(false);
+          if (showTonightOnly) setShowTonightOnly(false);
+          setSelectedDate(iso);
+        }}
+      />
       <HeritageMonthBanner />
 
       {/* Sticky filter bar — search + categories + cities + kids */}
