@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import Anthropic from "@anthropic-ai/sdk";
+import { MiniClaude } from "../../../lib/miniClaude";
 import { errJson, okJson, fetchWithTimeout, toErrMsg, devErrJson } from "../../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText } from "../../../lib/models";
@@ -43,13 +43,13 @@ interface AskResponse {
   totalRecords: number;
 }
 
-const client = new Anthropic({
-  apiKey: import.meta.env.ANTHROPIC_API_KEY,
-});
+const client = new MiniClaude();
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!rateLimit(clientAddress, 15)) return rateLimitResponse();
-  if (!import.meta.env.ANTHROPIC_API_KEY) return errJson("Service not configured", 503);
+  if (!import.meta.env.MINI_CLAUDE_URL || !import.meta.env.MINI_CLAUDE_TOKEN) {
+    return errJson("Service not configured", 503);
+  }
 
   let body: { city?: string; query?: string };
   try {

@@ -1,13 +1,20 @@
 /**
  * Event extractor — single Claude Haiku call per inbound email.
  *
- * Returns an array of concrete events with dates. Uses the Anthropic SDK
- * already in this repo (no new dep). Falls back to an empty array on any
- * parse error — the intake endpoint logs and moves on.
+ * Routes through the Mini Claude proxy (Stephen's Max subscription) instead
+ * of the metered Anthropic API. Falls back to an empty array on any parse
+ * error — the intake endpoint logs and moves on.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { MiniClaude } from "../miniClaude.js";
 import type { InboundEmail } from "./types.js";
+
+type AnthropicTextBlock = { type: "text"; text: string };
+type AnthropicImageBlock = {
+  type: "image";
+  source: { type: "base64"; media_type: string; data: string };
+};
+type AnthropicContentBlock = AnthropicTextBlock | AnthropicImageBlock;
 
 export interface ExtractedEvent {
   title: string;
@@ -110,9 +117,11 @@ If a time is given anywhere (HTML or image), include it in startsAt as "T15:00:0
 
 export async function extractEvents(
   email: InboundEmail,
-  opts: { anthropicKey: string }
+  // anthropicKey is preserved in the signature so callers don't have to change.
+  // The proxy is configured via MINI_CLAUDE_URL / MINI_CLAUDE_TOKEN env vars.
+  _opts?: { anthropicKey?: string }
 ): Promise<ExtractedEvent[]> {
-  const client = new Anthropic({ apiKey: opts.anthropicKey });
+  const client = new MiniClaude();
 
   // Prefer HTML when available — flyer layouts lose their date/time/location
   // adjacency when flattened to plain text.
@@ -137,7 +146,7 @@ ${bodyBlock}`;
   const imageUrls = email.html ? extractFlyerImageUrls(email.html) : [];
   const imageBlocks = await Promise.all(imageUrls.map(fetchImageAsBase64));
 
-  const userBlocks: Anthropic.MessageParam["content"] = [
+  const userBlocks: AnthropicContentBlock[] = [
     { type: "text", text: textBlock },
   ];
   for (const block of imageBlocks) {
@@ -152,7 +161,7 @@ ${bodyBlock}`;
   });
 
   const text = response.content
-    .filter((block): block is Anthropic.TextBlock => block.type === "text")
+    .filter((block) => block.type === "text")
     .map((block) => block.text)
     .join("");
 
