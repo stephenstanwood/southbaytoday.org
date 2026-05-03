@@ -888,18 +888,21 @@ function cleanVenue(raw) {
   v = v.replace(/,\s+\d+\s+(N|S|E|W|N\.|S\.|E\.|W\.|No|So|Ea|We)\.?\s*$/i, "");
   // Strip trailing " - " or lone dash at end
   v = v.replace(/\s*-\s*$/, "");
-  // Strip trailing ", <SouthBayCity>" when no street/state/zip follows.
-  // Example: "West Valley College, Saratoga" → "West Valley College".
-  // The `city` field already carries this info; duplicating it in the venue
-  // is redundant and reads awkwardly in the UI.
-  v = v.replace(
-    /,\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale)\s*$/i,
-    "",
-  );
   // Strip " - <address>" suffix where address starts with a number, e.g.
   // "Council Chambers - 110 E. Main St" or just a partial street number
   // "Saratoga Senior Center - 19655" (CivicPlus often appends only the number).
   v = v.replace(/\s+-\s+\d+(\s+.*)?$/, "");
+  // Strip trailing ", <SouthBayCity>" when no street/state/zip follows.
+  // Example: "West Valley College, Saratoga" → "West Valley College".
+  // The `city` field already carries this info; duplicating it in the venue
+  // is redundant and reads awkwardly in the UI. Runs AFTER the dash-address
+  // strip above because Saratoga's iCal often emits
+  // "West Valley College, Saratoga - 14000 Fruitvale Ave..." — once the
+  // address tail is removed the city suffix becomes the new tail.
+  v = v.replace(
+    /,\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale)\s*$/i,
+    "",
+  );
   // Source-typo fixes (sources occasionally publish misspelled venue names)
   v = v.replace(/\bNursey\b/g, "Nursery");
   v = v.replace(/\bInfront\b/g, "In Front");
