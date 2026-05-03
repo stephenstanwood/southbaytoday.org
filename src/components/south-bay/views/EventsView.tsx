@@ -873,6 +873,34 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
+  // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
+  // but tallied per day so each pill in the strip can show how busy that day is.
+  // Tonight/Weekend toggles are intentionally NOT applied here: the strip is
+  // hidden in those modes anyway, and we want pure city/category/kids/free/
+  // search filtering so the numbers stay consistent with what the user sees
+  // when they tap a date pill.
+  const eventCountByDate = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const e of upcomingEvents) {
+      if (e.date < todayIso) continue;
+      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!allCities && !selectedCities.has(e.city as City)) continue;
+      if (category !== "all" && e.category !== category) continue;
+      if (showKidsOnly && !e.kidFriendly) continue;
+      if (showFreeOnly && e.cost !== "free") continue;
+      if (isSearching) {
+        if (!e.title.toLowerCase().includes(searchQ) &&
+            !(e.blurb || "").toLowerCase().includes(searchQ) &&
+            !(e.description || "").toLowerCase().includes(searchQ) &&
+            !e.city.toLowerCase().includes(searchQ) &&
+            !e.venue.toLowerCase().includes(searchQ)) continue;
+      }
+      counts[e.date] = (counts[e.date] || 0) + 1;
+    }
+    return counts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
+
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
     ? [...datesWithEvents].reverse().find((d) => d < selectedDate) ?? null
@@ -1172,6 +1200,72 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             );
           })}
         </div>
+
+        {/* 7-day date strip — at-a-glance "what's busy this week" so users
+            can pick a day without clicking through prev/next blindly. Hidden
+            in search/weekend/tonight modes since those override day selection. */}
+        {!isSearching && !showWeekendOnly && !showTonightOnly && (
+          <div
+            role="tablist"
+            aria-label="Pick a day"
+            style={{
+              display: "flex", gap: 6,
+              overflowX: "auto", overflowY: "hidden",
+              marginTop: 10,
+              paddingBottom: 4,
+              scrollbarWidth: "thin",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {Array.from({ length: 7 }, (_, i) => addDays(todayIso, i)).map((iso) => {
+              const active = iso === selectedDate;
+              const count = eventCountByDate[iso] ?? 0;
+              const empty = count === 0;
+              const d = new Date(iso + "T12:00:00");
+              const wkd = d.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase();
+              const dayNum = d.getDate();
+              const isToday = iso === todayIso;
+              return (
+                <button
+                  key={iso}
+                  role="tab"
+                  aria-selected={active}
+                  aria-label={`${wkd} ${dayNum}, ${count} event${count === 1 ? "" : "s"}`}
+                  disabled={empty && !active}
+                  onClick={() => setSelectedDate(iso)}
+                  style={{
+                    flex: "0 0 auto",
+                    minWidth: 56,
+                    padding: "6px 4px",
+                    borderRadius: 8,
+                    border: `1.5px solid ${active ? "var(--sb-ink)" : "var(--sb-border)"}`,
+                    background: active ? "var(--sb-ink)" : "#fff",
+                    color: active ? "#fff" : empty ? "var(--sb-light)" : "var(--sb-ink)",
+                    cursor: empty && !active ? "default" : "pointer",
+                    opacity: empty && !active ? 0.55 : 1,
+                    fontFamily: "'Space Mono', monospace",
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+                    transition: "all 0.12s",
+                  }}
+                >
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", opacity: 0.85 }}>
+                    {isToday ? "TODAY" : wkd}
+                  </span>
+                  <span style={{ fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{dayNum}</span>
+                  <span style={{
+                    fontSize: 9, fontWeight: 700,
+                    background: active ? "rgba(255,255,255,0.20)" : empty ? "transparent" : "#EEF2FF",
+                    color: active ? "#fff" : empty ? "var(--sb-light)" : "var(--sbt-accent, #4F46E5)",
+                    padding: "1px 6px", borderRadius: 100, lineHeight: "12px",
+                    minWidth: 18, textAlign: "center",
+                  }}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Day navigator — kept inside the sticky filter so event cards never butt against the section divider */}
         {!isSearching && !showWeekendOnly && (
