@@ -1008,7 +1008,11 @@ function inferCategory(title, desc, type, venue = "") {
   const isSchoolFundraiser = /\b(school|middle school|elementary|fundrais|walk-a-thon|walkathon|girls on the run|charity run|fun run program)\b/.test(t);
   // Government/civic commission and committee meetings are always community events.
   // Must run BEFORE the sports check because "transportation" contains "sport" as substring.
+  // Match either "<body> meeting/hearing/session" or a title that is purely a commission/
+  // committee/board name (e.g. "Parks and Sustainability Commission") — city RSS feeds
+  // often surface these as bare titles with no "meeting" suffix.
   if (/\b(commission|committee|council|board)\s+(meeting|hearing|session)\b/i.test(title) ||
+      /\b(commission|committee|board)\s*$/i.test(title) ||
       /\b(city council|town council|planning commission|city manager|public works)\b/i.test(title)) return "community";
   // Yoga, pilates, and wellness classes are community, not sports — check before sports block
   // (event type fields from sources like SJDA can include "Sports & Activities" even for yoga)
@@ -1037,7 +1041,16 @@ function inferCategory(title, desc, type, venue = "") {
   // skip the outdoor branch so a venue keyword like "Central Park Library" or "Master Gardeners"
   // talk in a library doesn't get mis-tagged outdoor.
   const isIndoorVenue = /\b(library|libraries|aquatic|aquatics)\b/.test(venueLower);
-  if (!isIndoorVenue && (t.includes("hike") || t.includes("hiking") || t.includes("outdoor") || t.includes("garden") || t.includes("nature") || t.includes("trail") || t.includes("park"))) return "outdoor";
+  // Outdoor keywords come ONLY from title/desc/type, never the venue alone — names like
+  // "PayPal Park" (soccer stadium), "History Park" (museum), or "Rose Garden Library"
+  // contain "park"/"garden" but the events themselves aren't outdoor activities.
+  const outdoorHaystack = `${title} ${desc} ${type}`.toLowerCase();
+  const hasOutdoorWord =
+    outdoorHaystack.includes("hike") || outdoorHaystack.includes("hiking") ||
+    outdoorHaystack.includes("outdoor") || outdoorHaystack.includes("garden") ||
+    outdoorHaystack.includes("nature") || outdoorHaystack.includes("trail") ||
+    outdoorHaystack.includes("park");
+  if (!isIndoorVenue && hasOutdoorWord) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary")) return "food";
   return "community";
@@ -1924,7 +1937,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
             : libraryName,
           address: branchAddr,
           city,
-          category: inferCategory(title, stripHtml(desc), ev.type || ""),
+          category: inferCategory(title, stripHtml(desc), ev.type || "", branchName || libraryName),
           cost: "free",
           description: truncate(stripHtml(desc)),
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
@@ -2037,7 +2050,7 @@ async function fetchScclEvents() {
           venue: branchVenue,
           address: "",
           city,
-          category: inferCategory(title, stripHtml(desc), ev.type || ""),
+          category: inferCategory(title, stripHtml(desc), ev.type || "", branchVenue),
           cost: "free",
           description: truncate(stripHtml(desc)),
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
