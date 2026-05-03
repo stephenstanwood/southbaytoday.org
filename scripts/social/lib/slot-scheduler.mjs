@@ -4,7 +4,9 @@
 // event date, quality, and current queue occupancy. Replaces the reactive
 // "score at publish time" model with explicit scheduling.
 //
-// Three primary publish slots (America/Los_Angeles, matches launchd cron):
+// Three primary publish slots (America/Los_Angeles, anchor times below).
+// The launchd plist fires within ±60 min of each anchor, jittered daily
+// by regenerate-publish-plist.mjs to vary post times day-to-day:
 //   07:15  Signature   — flagship "here's what to do today" post, best graphic
 //   11:45  Tonight     — single best thing to do tonight, best graphic
 //   16:30  Wildcard    — restaurant openings, SV history, local data, evergreen
@@ -316,8 +318,12 @@ const TIME_TO_TYPE = { "07:15": "day-plan", "11:45": "tonight-pick", "16:30": "w
 
 /**
  * Find the current publish slot: given `nowHHMM`, return an object
- * { type, time } for the primary slot closest to now (within ±30 min).
+ * { type, time } for the primary slot closest to now (within ±60 min).
  * Returns null if no slot matches.
+ *
+ * Window is ±60min so daily-jittered fire times still resolve to the right
+ * slot type. Anchor gaps (07:15 → 11:45 → 16:30) are 4h15m and 4h45m, so
+ * adjacent slot windows never overlap.
  */
 export function currentPublishSlot(nowHHMM = nowHHMM_PT()) {
   const nowMin = hhmmToMinutes(nowHHMM);
@@ -325,7 +331,7 @@ export function currentPublishSlot(nowHHMM = nowHHMM_PT()) {
   let bestDelta = Infinity;
   for (const slot of PRIMARY_SLOTS) {
     const delta = Math.abs(hhmmToMinutes(slot) - nowMin);
-    if (delta < bestDelta && delta <= 30) {
+    if (delta < bestDelta && delta <= 60) {
       best = slot;
       bestDelta = delta;
     }

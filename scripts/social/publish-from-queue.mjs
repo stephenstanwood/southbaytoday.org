@@ -34,7 +34,7 @@ if (!process.env.ANTHROPIC_API_KEY) {
 const args = process.argv.slice(2);
 const maxPosts = parseInt(args.find((a, i) => args[i - 1] === "--max") || "2");
 const dryRun = args.includes("--dry-run") || CONFIG.DRY_RUN;
-// --force-slot day-plan|tonight-pick|wildcard — bypass the ±30min time window
+// --force-slot day-plan|tonight-pick|wildcard — bypass the ±60min time window
 // and pretend the matching slot is current. Used to manually catch up missed
 // posts (e.g., recovering after a publisher outage).
 const forceSlotIdx = args.indexOf("--force-slot");
@@ -187,10 +187,11 @@ function rewriteTimeReferences(text, item, ptTime) {
 }
 
 // ── Silent-failure alert ───────────────────────────────────────────────────
-// Fires a 🔴 Discord webhook ping when an "always-post" slot (day-plan @ 7:15
-// AM or tonight-pick @ 11:45 AM) produces zero successful posts. Stephen
+// Fires a 🔴 Discord webhook ping when an "always-post" slot (day-plan or
+// tonight-pick — anchored at 07:15 / 11:45 PT, jittered ±60 min daily by
+// regenerate-publish-plist.mjs) produces zero successful posts. Stephen
 // shouldn't have to discover a silent outage days later — this alerts on the
-// first miss. The 4:30 PM wildcard slot is intentionally excluded: it's a
+// first miss. The 16:30 wildcard slot is intentionally excluded: it's a
 // queue-driven fallback and "nothing to publish" is a normal outcome there.
 const ALWAYS_POST_SLOT_TYPES = new Set(["day-plan", "tonight-pick"]);
 
@@ -741,10 +742,10 @@ async function main() {
   }
 
   // ── Silent-failure alert ────────────────────────────────────────────────
-  // For always-post slots (day-plan @ 7:15 AM, tonight-pick @ 11:45 AM),
-  // fire a 🔴 Discord ping if zero posts hit any platform. Skipped on
-  // --dry-run, skipped for the 4:30 PM wildcard slot (queue-driven, OK
-  // to be empty).
+  // For always-post slots (day-plan, tonight-pick — anchors 07:15 / 11:45,
+  // jittered ±60 min daily), fire a 🔴 Discord ping if zero posts hit any
+  // platform. Skipped on --dry-run, skipped for the 16:30 wildcard slot
+  // (queue-driven, OK to be empty).
   if (!dryRun) {
     try {
       const { currentPublishSlot } = await import("./lib/slot-scheduler.mjs");
