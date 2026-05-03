@@ -9,6 +9,7 @@ import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
 import SunUvCard from "../cards/SunUvCard";
 import CoastCard from "../cards/CoastCard";
+import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 
 const CITIES: { id: City; name: string }[] = [
   { id: "san-jose", name: "San Jose" },
@@ -312,12 +313,64 @@ function UpcomingEventCard({ event, showDate }: { event: UpcomingEvent; showDate
           </p>
         )}
 
-        {/* Make it a day */}
-        {event.date && event.city && (
-          <MakeItADayButton eventId={event.id} city={event.city} date={event.date} />
-        )}
+        {/* Action row: Make it a day + Add to calendar */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
+          {event.date && event.city && (
+            <MakeItADayButton eventId={event.id} city={event.city} date={event.date} />
+          )}
+          <AddToCalendarButton event={event} />
+        </div>
       </div>
     </div>
+  );
+}
+
+// ── "Add to calendar" button ───────────────────────────────────────────────
+
+function AddToCalendarButton({ event }: { event: UpcomingEvent }) {
+  const url = buildGoogleCalendarUrl({
+    title: event.title,
+    date: event.date,
+    time: event.time,
+    endTime: event.endTime,
+    ongoing: event.ongoing,
+    venue: event.venue,
+    address: event.address,
+    city: event.city,
+    description: event.description,
+    blurb: event.blurb,
+    url: event.url,
+  });
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "3px 10px",
+        fontSize: 10,
+        fontWeight: 700,
+        fontFamily: "'Space Mono', monospace",
+        letterSpacing: "0.04em",
+        border: "1px solid var(--sb-border-light)",
+        borderRadius: 4,
+        background: "var(--sb-card)",
+        color: "var(--sb-muted)",
+        textDecoration: "none",
+        cursor: "pointer",
+        transition: "all 0.15s",
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#999"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
+      title="Add to Google Calendar"
+    >
+      📅 Add to calendar
+    </a>
   );
 }
 
@@ -373,7 +426,6 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
       onClick={handleClick}
       disabled={state === "loading"}
       style={{
-        marginTop: 6,
         padding: "3px 10px",
         fontSize: 10,
         fontWeight: 700,
