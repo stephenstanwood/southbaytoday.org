@@ -286,12 +286,29 @@ export async function fetchAllCityAgendas(): Promise<AgendaInfo[]> {
     .filter((a): a is AgendaInfo => a !== null);
 }
 
-/** Fetch agenda text content from a URL (HTML scraping path — used for CivicEngage). */
+/** Fetch agenda text content from a URL — handles both HTML and PDF responses. */
 export async function fetchAgendaContent(
   pdfUrl: string,
 ): Promise<string | null> {
   const res = await fetchWithTimeout(pdfUrl, {}, 15_000);
   if (!res.ok) return null;
+
+  const contentType = res.headers.get("content-type") ?? "";
+
+  if (contentType.includes("application/pdf")) {
+    try {
+      const buf = new Uint8Array(await res.arrayBuffer());
+      const { extractText, getDocumentProxy } = await import("unpdf");
+      const doc = await getDocumentProxy(buf);
+      const { text } = await extractText(doc, { mergePages: true });
+      const flat = (Array.isArray(text) ? text.join("\n") : text)
+        .replace(/\s+/g, " ")
+        .trim();
+      return flat ? flat.substring(0, 12_000) : null;
+    } catch {
+      return null;
+    }
+  }
 
   const html = await res.text();
 

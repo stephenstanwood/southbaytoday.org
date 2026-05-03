@@ -130,18 +130,6 @@ ${content}`;
     return okJson(digest);
   } catch (e) {
     console.error(`Digest error for ${city}:`, e);
-    try {
-      const dbgMessage = await client.messages.create({
-        model: CLAUDE_HAIKU,
-        max_tokens: 2048,
-        messages: [{ role: "user", content: prompt }],
-      });
-      const dbgRaw = extractText(dbgMessage.content);
-      console.error(`digest raw [${city}]:`, JSON.stringify(dbgRaw));
-      console.error(`digest fence-stripped [${city}]:`, JSON.stringify(stripFences(dbgRaw)));
-    } catch (dbgErr) {
-      console.error(`digest debug refetch failed [${city}]:`, dbgErr);
-    }
     return errJson("Failed to generate digest", 500);
   }
 };
