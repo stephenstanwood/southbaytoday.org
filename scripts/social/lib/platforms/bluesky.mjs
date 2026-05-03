@@ -280,6 +280,110 @@ export async function deletePost(uri) {
 }
 
 /**
+ * Fetch a Bluesky account's recent original posts (no replies, no reposts).
+ * Used by the engagement watcher.
+ */
+export async function getAuthorFeed(handle, limit = 20) {
+  const session = await createSession();
+  const did = await resolveHandleToDid(handle);
+  if (!did) throw new Error(`Could not resolve handle: ${handle}`);
+
+  const params = new URLSearchParams({
+    actor: did,
+    limit: String(limit),
+    filter: "posts_no_replies",
+  });
+
+  const res = await fetch(`${BSKY_API}/app.bsky.feed.getAuthorFeed?${params}`, {
+    headers: { Authorization: `Bearer ${session.accessJwt}` },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`getAuthorFeed failed (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  return (data.feed || [])
+    .filter((item) => !item.reason) // drop reposts
+    .map((item) => ({
+      uri: item.post.uri,
+      cid: item.post.cid,
+      text: item.post.record?.text || "",
+      createdAt: item.post.record?.createdAt || item.post.indexedAt,
+      author: item.post.author?.handle || "",
+      authorDid: item.post.author?.did || "",
+      replyCount: item.post.replyCount || 0,
+      likeCount: item.post.likeCount || 0,
+      repostCount: item.post.repostCount || 0,
+    }));
+}
+
+/**
+ * Reply to an existing Bluesky post in-thread.
+ * For a reply directly to a top-level post, root defaults to parent.
+ */
+export async function createReply(text, parentUri, parentCid, rootUri = null, rootCid = null) {
+  const session = await createSession();
+  const facets = await detectFacets(text);
+
+  const root = rootUri && rootCid ? { uri: rootUri, cid: rootCid } : { uri: parentUri, cid: parentCid };
+  const parent = { uri: parentUri, cid: parentCid };
+
+  const record = {
+    $type: "app.bsky.feed.post",
+    text,
+    facets,
+    createdAt: new Date().toISOString(),
+    reply: { root, parent },
+  };
+
+  // Optional link card if the reply text contains a URL
+  const urlMatch = text.match(/https?:\/\/[^\s)]+/);
+  if (urlMatch) {
+    let cardUrl = urlMatch[0];
+    let displayUrl = cardUrl;
+    const goMatch = cardUrl.match(/southbaytoday\.org\/go\/(\w+)/);
+    if (goMatch) {
+      try {
+        const { readFileSync } = await import("node:fs");
+        const { join } = await import("node:path");
+        const shortUrls = JSON.parse(readFileSync(join(process.cwd(), "src/data/south-bay/short-urls.json"), "utf8"));
+        const entry = shortUrls[goMatch[1]];
+        const dest = typeof entry === "string" ? entry : entry?.url;
+        if (dest) { displayUrl = cardUrl; cardUrl = dest; }
+      } catch {}
+    }
+    const linkEmbed = await fetchLinkCard(cardUrl);
+    if (linkEmbed) {
+      linkEmbed.external.uri = displayUrl;
+      record.embed = linkEmbed;
+    }
+  }
+
+  const res = await fetch(`${BSKY_API}/com.atproto.repo.createRecord`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.accessJwt}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      repo: session.did,
+      collection: "app.bsky.feed.post",
+      record,
+    }),
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`Bluesky reply failed (${res.status}): ${txt}`);
+  }
+
+  const data = await res.json();
+  return { uri: data.uri, cid: data.cid };
+}
+
+/**
  * Full post flow: upload image (if provided) then post.
  */
 export async function publish(text, imageBuffer = null, imageAlt = "") {

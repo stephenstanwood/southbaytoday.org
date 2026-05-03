@@ -25,6 +25,7 @@ const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
+const ENGAGEMENT_DRAFTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "engagement-drafts.json");
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
@@ -2637,9 +2638,56 @@ const server = createServer((req, res) => {
     return;
   }
 
+  // ── Engagement (Bluesky reply drafts) — link-based approval from Discord ──
+  const engagementMatch = req.url?.match(/^\/engagement\/(approve|reject)\/([a-f0-9]+)$/);
+  if (req.method === "GET" && engagementMatch) {
+    const [, action, id] = engagementMatch;
+    let data;
+    try {
+      data = JSON.parse(readFileSync(ENGAGEMENT_DRAFTS_FILE, "utf8"));
+    } catch {
+      data = { drafts: [] };
+    }
+    const draft = data.drafts.find((d) => d.id === id);
+
+    const respond = (status, title, body, color = "#4f46e5") => {
+      res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
+      res.end(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>body{font-family:system-ui,-apple-system,sans-serif;background:#fafafa;color:#111;margin:0;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center}h1{color:${color};margin:0 0 0.5rem}p{color:#555;margin:0.25rem 0;max-width:32rem}blockquote{border-left:3px solid #ddd;margin:1rem 0;padding:0.5rem 1rem;color:#333;text-align:left;max-width:32rem;background:#fff;border-radius:4px}small{color:#888}</style><h1>${title}</h1>${body}`);
+    };
+
+    if (!draft) {
+      return respond(404, "Not found", `<p>No engagement draft with id <code>${id}</code>.</p>`, "#b91c1c");
+    }
+
+    if (draft.status === "published") {
+      return respond(200, "Already published", `<p>This reply was already posted.</p><p><a href="${draft.publishedUri ? `https://bsky.app/profile/${draft.parentAuthor}/post/${draft.publishedUri.split("/").pop()}` : "#"}">View on Bluesky</a></p>`);
+    }
+
+    if (action === "approve") {
+      if (draft.status === "rejected") {
+        return respond(409, "Already rejected", `<p>This draft was previously rejected and can't be approved.</p>`, "#b91c1c");
+      }
+      draft.status = "approved";
+      draft.approvedAt = new Date().toISOString();
+      writeFileSync(ENGAGEMENT_DRAFTS_FILE, JSON.stringify(data, null, 2));
+      return respond(200, "Approved ✅", `<p>Will publish on the next cycle (within 5 min).</p><blockquote>${escapeHtml(draft.draftText)}</blockquote><p><small>To @${escapeHtml(draft.parentAuthor)}</small></p>`, "#16a34a");
+    }
+
+    if (action === "reject") {
+      draft.status = "rejected";
+      draft.approvedAt = null;
+      writeFileSync(ENGAGEMENT_DRAFTS_FILE, JSON.stringify(data, null, 2));
+      return respond(200, "Rejected ❌", `<p>Draft dropped.</p><blockquote>${escapeHtml(draft.draftText)}</blockquote>`, "#b91c1c");
+    }
+  }
+
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(HTML);
 });
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
 
 server.listen(PORT, () => {
   const posts = loadPendingPosts();
