@@ -1033,7 +1033,11 @@ function inferCategory(title, desc, type, venue = "") {
   if (t.includes("market") || isFairEvent || t.includes("vendor") || isCraftMarket) return "market";
   // Workshops/classes/lectures in the TITLE are educational — check before outdoor to avoid false positives
   if (/\b(workshop|webinar|seminar|lecture|class|tutorial|training|course)\b/.test(titleLower)) return "education";
-  if (t.includes("hike") || t.includes("hiking") || t.includes("outdoor") || t.includes("garden") || t.includes("nature") || t.includes("trail") || t.includes("park")) return "outdoor";
+  // Indoor venues (libraries, aquatic centers, etc.) host gardening/nature talks and rec swims —
+  // skip the outdoor branch so a venue keyword like "Central Park Library" or "Master Gardeners"
+  // talk in a library doesn't get mis-tagged outdoor.
+  const isIndoorVenue = /\b(library|libraries|aquatic|aquatics)\b/.test(venueLower);
+  if (!isIndoorVenue && (t.includes("hike") || t.includes("hiking") || t.includes("outdoor") || t.includes("garden") || t.includes("nature") || t.includes("trail") || t.includes("park"))) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary")) return "food";
   return "community";
