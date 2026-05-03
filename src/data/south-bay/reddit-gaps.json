@@ -1,550 +1,400 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-03T11:21:12.702Z",
+    "generatedAt": "2026-05-03T19:20:49.714Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 49,
+    "placesExtracted": 42,
     "placesMatched": 18,
-    "placeGaps": 31,
-    "eventsExtracted": 2,
-    "eventsMatched": 0,
-    "eventGaps": 2,
+    "placeGaps": 24,
+    "eventsExtracted": 4,
+    "eventsMatched": 1,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Petco Sunnyvale",
-      "city": "Sunnyvale",
-      "kind": "retail",
-      "context": "cat adoption event Saturday 10am-2pm",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ]
-    },
-    {
-      "name": "Greenlees",
-      "city": "San Jose",
-      "kind": "bakery",
-      "context": "100 year old bakery at The Alameda since 1924",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ]
-    },
-    {
-      "name": "Tap Plastics",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "plastic supply store same location since 1980s",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ]
-    },
-    {
-      "name": "Andy's Pet Shop",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "historic pet shop closed, building now has parrot tribute",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ]
-    },
-    {
       "name": "Pulgas Water Temple",
-      "city": "",
+      "city": "Palo Alto",
       "kind": "park",
-      "context": "off 280, picnicking on grass, photo shoot venue",
+      "context": "picnicking on grass with Dolores Park-like vibe",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ]
     },
     {
-      "name": "Discovery Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "park near downtown with outdoor hangout space",
+      "name": "Stanford Oval",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "large open space for hanging out on weekends",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ]
     },
     {
       "name": "Emma Prusch Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "clean park with lots of green space, easy access",
+      "context": "clean with lots of green space, easy access",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Mini Cat Town",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "cat rescue organization mentioned for kitten assistance",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Cat Crew",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "cat rescue organization for kitten foster placement",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Dr. Richard Sellen",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "sjsmiles.com, honest dentist with state-of-art equipment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "One Dental",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "dentist recommended for honest service, no upselling",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Cerulean Dental Spa",
-      "city": "Santa Clara",
-      "kind": "service",
-      "context": "Rivermark location, Dr. Ojha recommended, no upselling",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Dr. Hennessey",
-      "city": "South San Jose",
-      "kind": "service",
-      "context": "near Morgan Hill, honest dentist, sleep apnea specialist",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Hughes Dental Group",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Hamilton and Winchester location, honest dentist",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Los Gatos Dental Group",
-      "city": "Los Gatos",
-      "kind": "service",
-      "context": "latest technology, no upselling, straightforward service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Dr. Jennifer New",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Winchester location, honest dentist with great staff",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Wong Family Dental",
-      "city": "Campbell",
-      "kind": "service",
-      "context": "family dental practice, honest service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Japan Town Dental",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "good dentists, quality service, reliable office staff",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Malonso Family Dental",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Evergreen area, no upselling, late hours and weekend availability",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "W Dental Care",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Dr. Julie, gentle dentist, near Santana Row",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Dr. Azar",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Moorpark Ave, honest dentist, no upselling, affordable",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Greenview Dental Care",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Yvonne and Fred recommended, honest practice",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Sikka Dental",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "Dr. Sikka recommended, wonderful staff",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ]
-    },
-    {
-      "name": "Pruneyard",
-      "city": "Campbell",
-      "kind": "venue",
-      "context": "shopping center with pedestrian footpath area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ]
     },
     {
-      "name": "San Jose YMCA",
+      "name": "Prusch Park",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "has footpath yard with summer sunlight",
+      "kind": "park",
+      "context": "large open lawn ideal for picnics with vendors",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ]
     },
     {
       "name": "Lake Vasona",
       "city": "Los Gatos",
       "kind": "park",
-      "context": "relaxing park with lawn space, alternative to Dolores Park",
+      "context": "chill place to lay on grass similar to Dolores Park",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ]
     },
     {
       "name": "Willow Street Park",
-      "city": "San Jose",
+      "city": "",
       "kind": "park",
-      "context": "lawn area for relaxing and chilling",
+      "context": "mentioned as alternative to Dolores Park",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ]
     },
     {
       "name": "Hellyer Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "relaxing park alternative in South Bay",
+      "context": "relaxing park option in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ]
     },
     {
-      "name": "Japanese Garden",
-      "city": "San Jose",
+      "name": "Christmas Hill Park",
+      "city": "Gilroy",
       "kind": "park",
-      "context": "destination for bike rides from William Street Park area",
+      "context": "large fields formerly hosted garlic festival",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ]
     },
     {
       "name": "Fowler Park",
-      "city": "San Jose",
+      "city": "",
       "kind": "park",
-      "context": "park alternative mentioned for relaxing",
+      "context": "mentioned as Dolores Park alternative",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ]
     },
     {
       "name": "St James Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "gathering and relaxation spot in San Jose",
+      "context": "grass space for relaxation",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ]
+    },
+    {
+      "name": "Pruneyard",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "shopping and dining destination with pedestrian space",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ]
+    },
+    {
+      "name": "A Novel Affair Book Cafe",
+      "city": "Los Altos",
+      "kind": "cafe",
+      "context": "independent bookstore hosting author event May 3",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Amazing Cuts",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "barbershop recommended for men's haircuts, $25",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Vanna Salon Studio",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "owned by Vanna, men's haircuts $30, low maintenance focus",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "SC Barbers",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "recommended barbershop in Sunnyvale area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "A+ Haircuts for Men",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "established barbershop with consistent quality, 12+ years recommended",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Quality Men's Haircuts",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "barber Doris recommended for men's haircuts",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Lisa's Perfect Cuts",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "recommended men's haircut spot in Sunnyvale",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Hair Focus",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "recommended barbershop in Sunnyvale",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Annie's",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "corner of Wolfe and Reed, excellent men's haircuts",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Lucky Cuts",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "barbershop option in Sunnyvale area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Bishop's",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "formerly downtown, closed during pandemic, previously recommended",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Dandies",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "barbershop with $45+ haircuts and limited availability",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ]
+    },
+    {
+      "name": "Alpha Barbershop",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "near Lucky on Mathilda, cheap but reported sanitation issues",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Kitten & Cat Adoption Event",
-      "when": "Saturday 10am-2pm",
-      "city": "Sunnyvale",
-      "context": "Bay Area Cats adoption event at Petco",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ]
-    },
-    {
       "name": "Santa Clara Night Market",
       "when": "May 1-2, 2026",
       "city": "Santa Clara",
-      "context": "free community night market with food, vendors, art workshops downtown",
+      "context": "community night market with food, vendors, art workshops",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
+        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+      ]
+    },
+    {
+      "name": "Sunnyvale Community Center Grounds Reopening and Ribbon Cutting Ceremony",
+      "when": "May 21",
+      "city": "Sunnyvale",
+      "context": "ceremony at 10am after $14 million renovation project",
+      "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ]
+    },
+    {
+      "name": "A Novel Affair Book Cafe Event with Amanda Sung",
+      "when": "Sunday May 3, 6:30 p.m.",
+      "city": "Los Altos",
+      "context": "author event discussing book-to-film adaptation, Asian diaspora stories",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "San Jose Sharks home arena",
+      "name": "Vasona Lake",
+      "city": "Los Gatos",
+      "kind": "park",
+      "context": "large open green space for picnicking and lounging",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "San Pedro Square Market",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "shark silhouettes painted on sidewalks",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ],
-      "matchedName": "San Pedro Square Market"
-    },
-    {
-      "name": "Great America",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "theme park facing closure, 2,000+ signature petition",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
-      "matchedName": "Great America Amphitheater"
-    },
-    {
-      "name": "Uncle John's Pancake House",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "breakfast restaurant at The Alameda",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t1t3ej/kittens_cats_at_petco_sunnyvale_10am_to_2pm/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1vx08/san_jose_appreciation/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t24j71/shark_appreciation_nails/",
-        "https://www.reddit.com/r/bayarea/comments/1t1sby7/kpix_5_news_covered_my_petition_to_save_great/",
-        "https://www.reddit.com/r/bayarea/comments/1t1ve6c/went_to_greenlees_at_the_alameda_a_100_year_old/"
-      ],
-      "matchedName": "Uncle John's Pancake House"
+      "matchedName": "Vasona Lake County Park"
     },
     {
       "name": "Montalvo Arts Center",
       "city": "Saratoga",
       "kind": "venue",
-      "context": "rose garden with open green space for relaxing",
+      "context": "favorite patches of grass for relaxing",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
       "matchedName": "Montalvo Arts Center"
-    },
-    {
-      "name": "Vasona Lake",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "open green space, picnicking, blankets, similar to Dolores Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
-      ],
-      "matchedName": "Vasona Lake County Park"
     },
     {
       "name": "Rosicrucian Egyptian Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "free public gardens, relaxing outdoor space",
+      "context": "free gardens open to public, good for relaxing",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
       "matchedName": "Rosicrucian Egyptian Museum"
     },
@@ -552,17 +402,13 @@
       "name": "John D Morgan Park",
       "city": "Campbell",
       "kind": "park",
-      "context": "open park with green space for picnicking and relaxing",
+      "context": "park with open space for gatherings",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
-        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
       "matchedName": "John D. Morgan Park"
     },
@@ -570,53 +416,88 @@
       "name": "Mitchell Park",
       "city": "Palo Alto",
       "kind": "park",
-      "context": "spacious park with playground, coffee shop nearby at library",
+      "context": "spacious park with coffee shop nearby for picnicking",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
       "matchedName": "Mitchell Park"
     },
     {
-      "name": "Willow Glen Dentistry",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "honest dentist, no upselling, family dentistry clinic",
+      "name": "Pruneyard Shopping Center",
+      "city": "Campbell",
+      "kind": "retail",
+      "context": "shopping center with newly opened pedestrian road",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
         "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/SanJose/comments/1t1pqdo/atrisk_kittens_at_san_jose_shelter_need/",
-        "https://www.reddit.com/r/SanJose/comments/1t1srup/dentist_recs_so_sick_of_the_upselling/",
-        "https://www.reddit.com/r/SanJose/comments/1t1wnp5/i_paint_the_footpath_way_at_our_local_ymca_do_you/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
       ],
-      "matchedName": "Willow Glen"
+      "matchedName": "The Pruneyard Shopping Center"
+    },
+    {
+      "name": "Peet's",
+      "city": "Campbell",
+      "kind": "cafe",
+      "context": "coffee and seating at Pruneyard Shopping Center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t120cb/car_uses_bike_lane_in_front_of_cop_nothing_happens/",
+        "https://www.reddit.com/r/bayarea/comments/1t22f93/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
+        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ],
+      "matchedName": "Peet's Coffee"
     },
     {
       "name": "Rose Garden",
       "city": "San Jose",
       "kind": "park",
-      "context": "popular gathering spot on Naglee, roses in bloom",
+      "context": "popular relaxation spot with roses in bloom",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "Rose Garden Branch Library"
     },
     {
+      "name": "John D Morgan",
+      "city": "Campbell",
+      "kind": "park",
+      "context": "32 acre well-maintained park with dogs and sports",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ],
+      "matchedName": "John D. Morgan Playground"
+    },
+    {
       "name": "House of Bagels",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "bagel and coffee shop near SJSU, starting point for park walk",
+      "kind": "cafe",
+      "context": "bagel shop near SJSU for casual breakfast",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "House of Bagels"
     },
@@ -624,12 +505,13 @@
       "name": "William Street Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "lawn space near SJSU for breakfast and relaxing",
+      "context": "walkable grass area near SJSU for relaxation",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "William Street Park"
     },
@@ -637,12 +519,13 @@
       "name": "Panama Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "grass volleyball and chill gathering spot",
+      "context": "has grass volleyball and chill seating",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "Panama Park"
     },
@@ -650,12 +533,13 @@
       "name": "Oak Meadow Park",
       "city": "Los Gatos",
       "kind": "park",
-      "context": "large fields next to Lake Vasona",
+      "context": "large park next to Lake Vasona",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "Oak Meadow Park"
     },
@@ -663,12 +547,13 @@
       "name": "Las Palmas Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "alternative to Dolores Park with large fields",
+      "context": "chill outdoor space in Sunnyvale",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "Las Palmas Park"
     },
@@ -676,28 +561,71 @@
       "name": "Rancho San Antonio",
       "city": "Cupertino",
       "kind": "park",
-      "context": "chill park with open spaces for relaxing",
+      "context": "plenty of chill outdoor spaces",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
       "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
     },
     {
-      "name": "Peet's Coffee",
-      "city": "Campbell",
-      "kind": "cafe",
-      "context": "cafe at Pruneyard with U-shaped lot",
+      "name": "Valley Fair",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "large shopping center referenced for comparison",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t1854f/sharks_bedroom/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/"
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
       ],
-      "matchedName": "Peet's Coffee"
+      "matchedName": "Bowlero Valley Fair"
+    },
+    {
+      "name": "Sunnyvale Community Center",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "reopening May 21 after $14 million renovation",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t22fri/is_there_a_south_bay_version_of_dolores_park/",
+        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/"
+      ],
+      "matchedName": "Sunnyvale Community Center"
+    },
+    {
+      "name": "West Valley College",
+      "city": "Saratoga",
+      "kind": "venue",
+      "context": "hosting Youth Town Hall event May 16",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ],
+      "matchedName": "Saratoga Farmers' Market at West Valley College"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Youth Town Hall",
+      "when": "May 16, 2026, 10:30 a.m. - 2:00 p.m.",
+      "city": "Saratoga",
+      "context": "free event for ages 13-20, career exploration and mentorship",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/"
+      ],
+      "matchedName": "Youth Town Hall"
+    }
+  ]
 }
