@@ -609,10 +609,17 @@ function scoreCandidates(
     let score = 0;
 
     // --- Source priority ---
-    // Events get a moderate boost, not a dominant one
+    // Events are what makes a day feel "today" — without them every plan
+    // collapses to the same curated places. Score them above plain places
+    // so they reliably surface; capped by the prompt's "3 events max" rule
+    // and the back-to-back/category-balance validators downstream.
     if (c.source === "event") {
-      score += 25;
-      if (c.eventDate === todayStr()) score += 15;
+      score += 35;
+      if (c.eventDate === todayStr()) score += 20;
+      // In kids mode, kid-tagged events (workshops, library classes,
+      // playdates) are exactly the local-guide differentiator — surface
+      // them hard so a Mon afternoon doesn't become "another park".
+      if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
     }
 
     // --- Rating boost ---
@@ -1198,7 +1205,8 @@ ${startH < 10 ? `Full day ahead — target 6–7 cards:
 The plan MUST honor the target card count for the time window. Don't force 6+ cards when only a few hours of day remain — a short realistic plan beats a fake full-day plan.
 
 CRITICAL RULES FOR BALANCE:
-- Items marked "EVENT TODAY" are specific things happening today. They're the best signal of what's actually happening — prefer including 2-3 when quality options exist in the pool. Cap at 3; never let events crowd out food or make the whole plan a calendar dump.
+- Items marked "EVENT TODAY" are specific things happening today. INCLUDE AT LEAST ONE if the pool has any — workshops, classes, library programs, small-town meetups, and one-off shows ARE the local-guide differentiator and the whole reason this isn't just a list of evergreen places. Skipping events to slot in "another park" or "another coffee shop" is a planning failure. Aim for 2-3 events when 2+ quality options exist. Cap at 3.
+- NO 3+ HOUR EMPTY GAPS. If you have a slot from 2 PM to 6 PM and the pool has a 4 PM event, USE IT — don't leave the afternoon dead. A plan with a 4-hour blank stretch is broken.
 - MEALS ARE REQUIRED: A full day plan MUST include food stops. If the plan starts before noon, include a breakfast/brunch/coffee spot. Always include lunch (noon-2pm). If the plan goes past 6pm, include dinner. Pick actual restaurants or cafes from the pool — not just "grab food somewhere."
 - The ideal plan is: activity → food → activity → food → activity. Alternate between doing things and eating.
 
@@ -1216,7 +1224,7 @@ RULES:
 - NEVER pick a "neighborhood" or "downtown area" as a card — always pick a SPECIFIC restaurant, cafe, park, museum, or venue instead. "Grab lunch at Luna Mexican Kitchen" is great; "Go to Downtown Campbell" is useless to a local.
 - NEVER schedule a place after its closing time. If a place says "closes: 4 PM", your time block must END by 4 PM at the latest. A museum that closes at 4:30 PM cannot be a 9 PM activity.
 - Only suggest a venue (theater, amphitheater, stadium) if it appears as an EVENT in the pool with a specific show/game today
-${kids ? "- Kid-friendly is essential. Skip anything adults-only.\n- BUDGET: Kids mode = casual and affordable. Never suggest $$$$ restaurants. Prefer $ and $$ spots.\n- CURFEW: Last activity must END by 9:00 PM. Kids need to be home by 9. Never schedule anything starting after 8:00 PM." : ""}
+${kids ? "- Kid-friendly is essential. Skip anything adults-only.\n- KIDS EVENTS: Workshops, library classes, story times, kid-tagged playdates, and family events are exactly what a parent is looking for. Prioritize these over generic park-then-coffee filler. If the pool has a 4 PM kids workshop, don't drop it for another playground.\n- BUDGET: Kids mode = casual and affordable. Never suggest $$$$ restaurants. Prefer $ and $$ spots.\n- CURFEW: Last activity must END by 9:00 PM. Kids need to be home by 9. Never schedule anything starting after 8:00 PM." : ""}
 - READ THE PRICE DATA: if a place is listed as $$$$ it is NOT "casual." Match your description to the actual price level.
 
 TONE: Write like a friend texting a plan, not a travel brochure or AI assistant.
@@ -1550,6 +1558,47 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
+  // Post-process: detect category↔blurb inconsistency. The previous validator
+  // only catches blurbs that name a different pool candidate. This catches the
+  // harder case where Claude writes a generic-but-wrong-category blurb (e.g.
+  // "Mix and match lunch from a dozen vendors" assigned to Almaden Lake Park).
+  // The blurb mentions no place name, so the name-based check passes — but
+  // the vocabulary clearly belongs to a different kind of venue.
+  //
+  // Patterns are intentionally narrow (food-hall jargon, hike/trail vocab) so
+  // legitimate cross-category mentions ("park bench out front", "café-style
+  // counter") don't trip the filter.
+  {
+    const before = cards.length;
+    const ALIEN_SIGNALS: Record<string, RegExp> = {
+      outdoor: /\b(food hall|dozen vendors?|the menu|order the|tacos,?\s*ramen|ramen,?\s*banh|tasting menu|wine bar|cocktails?|happy hour|the bartender|chef[''']s|prix fixe)\b/i,
+      food: /\b(easy trails?|hike the|hiking|playground|ducks to chase|wildflowers?|open space|swing set|sandbox|lap the loop|ride the train|the carousel)\b/i,
+      museum: /\b(food hall|dozen vendors?|easy trails?|hike|happy hour|tasting menu)\b/i,
+      shopping: /\b(food hall|dozen vendors?|easy trails?|hike|the menu|order the|tasting menu)\b/i,
+      entertainment: /\b(food hall|dozen vendors?|easy trails?|hike)\b/i,
+    };
+    for (let i = cards.length - 1; i >= 0; i--) {
+      if (cards[i].locked) continue;
+      const cat = cards[i].category;
+      const re = ALIEN_SIGNALS[cat];
+      if (!re) continue;
+      const blurb = cards[i].blurb || "";
+      if (!re.test(blurb)) continue;
+      console.log(`[plan-day] dropped category-blurb mismatch: card="${cards[i].name}" (${cat}) blurb="${blurb.slice(0, 100)}"`);
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${cards[i].name} (${cards[i].id})`,
+        reason: `blurb vocabulary signals different category than card (${cat})`,
+        meta: { city, targetDate, blurb: blurb.slice(0, 120), category: cat },
+      });
+      cards.splice(i, 1);
+    }
+    if (cards.length < before) {
+      console.log(`[plan-day] category validator: dropped ${before - cards.length} card(s) with cross-category blurbs`);
+    }
+  }
+
   // Post-process: drop places whose scheduled time block doesn't fit within
   // the venue's actual open hours today. Catches three bugs:
   //   1. Scheduled past closing (e.g. museum at 9 PM that closes 5 PM)
@@ -1833,7 +1882,9 @@ ${startFormatted ? `- Every new stop's timeBlock MUST start at ${startFormatted}
 - Each new stop needs a timeBlock that fits between/around the existing stops without overlapping them.
 - Cluster geographically with the existing cards; don't send the user across the region for a single stop.
 - NEVER pick the same category as an adjacent existing stop.
+- PREFER EVENT TODAY items from the pool over plain places. Workshops, classes, library programs, and small-town events make a plan feel like "today" — pick them when they fit a gap, even ahead of a higher-rated park or café.
 - Blurbs: what to do at that specific place. Why: one casual sentence. No "real event", "only today", "unforgettable". No distance/travel mentions. No star ratings.
+- BLURB MUST DESCRIBE THE PICKED PLACE. If the id is for an outdoor park, the blurb describes the park (trails, the lake, the playground). Never write a food-hall blurb for a park id, or a hiking blurb for a restaurant id — pick the right id for the vibe you want to describe.
 
 OUTPUT FORMAT (JSON array, no markdown fences, exactly ${needed} entries):
 [{ "id": "...", "timeBlock": "HH:MM AM/PM - HH:MM AM/PM", "blurb": "...", "why": "..." }]
