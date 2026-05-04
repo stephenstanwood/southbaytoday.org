@@ -1077,12 +1077,10 @@ function inferCategory(title, desc, type, venue = "") {
   // Outdoor keywords come ONLY from title/desc/type, never the venue alone — names like
   // "PayPal Park" (soccer stadium), "History Park" (museum), or "Rose Garden Library"
   // contain "park"/"garden" but the events themselves aren't outdoor activities.
+  // Use word-boundary anchors so substrings like "spark"/"sparking" don't trigger the
+  // park rule (real bug: "Fandom Swap" desc with "sparking joy" got tagged outdoor).
   const outdoorHaystack = `${title} ${desc} ${type}`.toLowerCase();
-  const hasOutdoorWord =
-    outdoorHaystack.includes("hike") || outdoorHaystack.includes("hiking") ||
-    outdoorHaystack.includes("outdoor") || outdoorHaystack.includes("garden") ||
-    outdoorHaystack.includes("nature") || outdoorHaystack.includes("trail") ||
-    outdoorHaystack.includes("park");
+  const hasOutdoorWord = /\b(hik\w*|outdoor\w*|garden\w*|nature|trail\w*|park\w*)\b/.test(outdoorHaystack);
   if (!isIndoorVenue && hasOutdoorWord) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary")) return "food";
@@ -1955,6 +1953,10 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
         const title = ev.title || ev.definition?.title || "";
         const desc = ev.description || ev.definition?.description || "";
 
+        const displayVenue = branchName
+          ? (branchName.toLowerCase().endsWith("library") ? branchName : `${branchName} Library`)
+          : libraryName;
+
         return {
           id: `${libraryId}-${ev.id}`,
           title,
@@ -1965,12 +1967,12 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           // and drop-in programs — surface that as "no end time" rather than a
           // zero-duration block.
           endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
-          venue: branchName
-            ? (branchName.toLowerCase().endsWith("library") ? branchName : `${branchName} Library`)
-            : libraryName,
+          venue: displayVenue,
           address: branchAddr,
           city,
-          category: inferCategory(title, stripHtml(desc), ev.type || "", branchName || libraryName),
+          // Pass the rendered venue so isIndoorVenue can detect "library" — short
+          // branch names like "Cambrian" (no "Library" suffix) used to slip past it.
+          category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue),
           cost: "free",
           description: truncate(stripHtml(desc)),
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
