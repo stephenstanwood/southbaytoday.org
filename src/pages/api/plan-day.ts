@@ -832,6 +832,21 @@ function buildCandidatePool(
     // lecture in a kids plan is worse than a thin plan.
     if (kids && evt.kidFriendly === false) continue;
 
+    // Defense in depth: an ingest-time mistag can flip kidFriendly to true
+    // for events that are clearly programmed for adults — the SCCL inference
+    // matches "families" in a parent-workshop description and gets fooled.
+    // Catch it at read time so we don't have to wait for the next event regen.
+    if (kids && evt.title && /\b(parents?|caregivers?|adults?\s+only|seniors?|memoir|estate planning|tax\s+(prep|help)|investing|retirement|widow|grief|alzheimer|dementia|book club for adults|esl)\b/i.test(evt.title)) {
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${evt.title} (event:${evt.id})`,
+        reason: `title indicates adult-only programming, ignoring kidFriendly flag`,
+        meta: { city, targetDate: today, kidFriendly: evt.kidFriendly },
+      });
+      continue;
+    }
+
     // Audience-age filter — events tagged at ingest as kids-only should
     // never appear in adult plans, and 21+/drag/tasting events should never
     // appear in kids plans. "all" (default for most events) passes both.
@@ -967,6 +982,11 @@ function buildCandidatePool(
     // Slotting "Main Street Cupertino" as the lunch stop is the failure mode
     // we're catching here.
     if (/^(main\s+street|downtown|the\s+district|uptown)\s+\w+/i.test(p.name || "")) continue;
+
+    // Wellness/spa hard-skip in kids mode. The -60 score penalty mostly
+    // works but a thin Saratoga pool let "ShirSpa" anchor a kids evening
+    // — a spa is not a kids activity at any score, so drop them upstream.
+    if (kids && (p.category || "").toLowerCase() === "wellness") continue;
 
     // Filter to city or nearby
     if (p.city !== city) {
