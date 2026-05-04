@@ -365,7 +365,17 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bgrading\s+option\b/i,
   /\bpeer\s+advising\s+session\b/i,
   /\bapplication\s+workshop\b/i,
-  /\bmandatory\s+(peer\s+)?advising\b/i,
+  // Catch "Mandatory Peer Advising", "Mandatory Group Advising",
+  // "Mandatory Academic Advising", etc. — internal academic admin
+  /\bmandatory\s+(\w+\s+){0,2}advising\b/i,
+  // Catch "Annual mandatory academic advising period" and similar
+  // multi-week registration windows that aren't single events
+  /\bacademic\s+advising\s+period\b/i,
+  /\b(annual\s+)?(mandatory\s+)?advising\s+period\b/i,
+  // Stanford listing of department drop-in advising hours — same admin
+  // category as SJSU/SCU's STUDENT_ONLY_TITLE filter, but Stanford intake
+  // doesn't run that gate, so we add it here too
+  /\bdrop[-\s]?in\s+advising\b/i,
   /\bstudent\s+recognition\s+program\b/i,
   /\brecognition\s+(ceremony|reception|program)\b/i,
   /\bdean'?s\s+(reception|address|brunch)\b/i,
@@ -453,6 +463,25 @@ const GLOBAL_EXCLUSIONS = [
   /\b(?:AA|NA|Al-Anon)\s+meeting\b/i,
 ];
 
+// SJSU / SCU / Stanford sometimes co-sponsor events held in another country
+// (e.g. an AI symposium at Eötvös Loránd University in Budapest). The local
+// university's events feed surfaces them, but they're not attendable from the
+// South Bay. Drop when title/venue/description name a clearly foreign host.
+const OFF_REGION_PATTERNS = [
+  /\b(eötvös|loránd)\b/i,
+  /\b(tsinghua|peking)\s+university\b/i,
+  // Use full university names so "Cambridge Avenue" / "Oxford Street" don't
+  // false-positive against actual local addresses
+  /\b(oxford|cambridge|sorbonne)\s+university\b/i,
+  /\buniversity\s+of\s+(oxford|cambridge|tokyo|kyoto|hong\s+kong|melbourne|sydney|toronto|british\s+columbia)\b/i,
+  /\bin\s+(budapest|hungary|tokyo|kyoto|paris|france|berlin|germany|london|england|madrid|spain|rome|italy|singapore|seoul|beijing|shanghai|mumbai|delhi)\b/i,
+];
+
+function isOffRegionUniversityEvent(title, description, venue) {
+  const fields = [title, description, venue].filter(Boolean).join(' ');
+  return OFF_REGION_PATTERNS.some(p => p.test(fields));
+}
+
 function isPublicEvent(title, source, description, venue) {
   // Title blocklist — applies to ALL sources (not just university feeds)
   if (isBlockedEvent(title)) return false;
@@ -483,6 +512,10 @@ function isPublicEvent(title, source, description, venue) {
     }
     // Filter away athletic events — games played outside the South Bay
     if (isAwayGame(title)) return false;
+    // Filter co-sponsored international events (e.g. SJSU listing a symposium
+    // in Budapest) — venue/description fields catch these even when the title
+    // looks normal
+    if (isOffRegionUniversityEvent(title, description, venue)) return false;
   }
   return true;
 }
