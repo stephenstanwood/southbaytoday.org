@@ -375,6 +375,49 @@ function pickTonightEvent(candidates, dateStr, recentVenues = new Set(), recentT
   return weightedRandomPick(scored);
 }
 
+/** Parse TECH_MILESTONES from tech-companies.ts source and return the first
+ *  milestone block matching (month, day), or null. Mirrors the block-by-block
+ *  parser in generate-sv-history.mjs so we get foundedYear/tagline/etc. */
+function findMilestone(src, month, day) {
+  const startIdx = src.indexOf("export const TECH_MILESTONES");
+  if (startIdx === -1) return null;
+  const nextExport = src.indexOf("\nexport ", startIdx + 1);
+  const section = nextExport !== -1 ? src.slice(startIdx, nextExport) : src.slice(startIdx);
+
+  const blockRe = /\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g;
+  const str = (block, key) => {
+    const m = block.match(new RegExp(`${key}:\\s*["'\`]([\\s\\S]*?)["'\`]\\s*[,}]`));
+    return m ? m[1] : "";
+  };
+  const num = (block, key) => {
+    const m = block.match(new RegExp(`${key}:\\s*(\\d+)`));
+    return m ? parseInt(m[1], 10) : null;
+  };
+  const bool = (block, key) => {
+    const m = block.match(new RegExp(`${key}:\\s*(true|false)`));
+    return m ? m[1] === "true" : false;
+  };
+  let m;
+  while ((m = blockRe.exec(section)) !== null) {
+    const block = m[0];
+    if (num(block, "month") === month && num(block, "day") === day) {
+      const company = str(block, "company");
+      if (!company) continue;
+      return {
+        company,
+        city: str(block, "city"),
+        foundedYear: num(block, "foundedYear") || 0,
+        tagline: str(block, "tagline"),
+        anniversaryNote: str(block, "anniversaryNote"),
+        url: str(block, "url"),
+        chmExhibit: str(block, "chmExhibit"),
+        defunct: bool(block, "defunct"),
+      };
+    }
+  }
+  return null;
+}
+
 /** Find wildcard content for a given date. Avoids repeating recent picks. */
 function pickWildcard(candidates, dateStr, recentTitles = new Set()) {
   // 1. Check for SV history anniversary
@@ -383,35 +426,26 @@ function pickWildcard(candidates, dateStr, recentTitles = new Set()) {
   const day = date.getDate();
 
   try {
-    // Load milestones from tech-companies data
-    const techFile = join(MILESTONES_DIR, "tech-companies.ts");
+    const techFile = join(__dirname, "..", "..", "src", "data", "south-bay", "tech-companies.ts");
     if (existsSync(techFile)) {
-      const content = readFileSync(techFile, "utf8");
-      // Simple regex to find milestones matching this month/day
-      const milestoneRegex = new RegExp(`month:\\s*${month},\\s*day:\\s*${day}`, "g");
-      if (milestoneRegex.test(content)) {
-        // Extract the company name from nearby context
-        const lines = content.split("\n");
-        for (let i = 0; i < lines.length; i++) {
-          if (lines[i].includes(`month: ${month}`) && lines[i].includes(`day: ${day}`)) {
-            // Look backwards for company name
-            for (let j = i; j >= Math.max(0, i - 10); j--) {
-              const companyMatch = lines[j].match(/company:\s*"([^"]+)"/);
-              if (companyMatch) {
-                return {
-                  subtype: "sv-history",
-                  item: {
-                    title: companyMatch[1],
-                    company: companyMatch[1],
-                    foundedYear: 0, // Will be filled by the copy generator
-                    name: companyMatch[1],
-                    month, day,
-                  },
-                };
-              }
-            }
-          }
-        }
+      const milestone = findMilestone(readFileSync(techFile, "utf8"), month, day);
+      if (milestone) {
+        return {
+          subtype: "sv-history",
+          item: {
+            title: milestone.company,
+            name: milestone.company,
+            company: milestone.company,
+            city: milestone.city,
+            foundedYear: milestone.foundedYear,
+            tagline: milestone.tagline,
+            anniversaryNote: milestone.anniversaryNote,
+            url: milestone.url,
+            chmExhibit: milestone.chmExhibit,
+            defunct: milestone.defunct,
+            month, day,
+          },
+        };
       }
     }
   } catch {}
