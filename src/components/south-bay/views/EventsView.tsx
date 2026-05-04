@@ -118,6 +118,19 @@ function hasNotStarted(time: string | null): boolean {
   return mins > NOW_MINUTES;
 }
 
+// "Happening now": started, not yet ended. For events with no endTime, fall
+// back to a 2-hour fuzzy window (a typical performance/talk window).
+const FUZZY_DURATION_MIN = 120;
+function isInProgressNow(time: string | null, endTime: string | null): boolean {
+  if (!time) return false;
+  const start = parseTimeToMinutes(time);
+  if (start === null) return false;
+  if (start > NOW_MINUTES) return false;
+  const end = endTime ? parseTimeToMinutes(endTime) : null;
+  if (end !== null) return NOW_MINUTES < end;
+  return NOW_MINUTES - start <= FUZZY_DURATION_MIN;
+}
+
 function parseTimeToMinutes(t: string): number | null {
   const parts = t.split(/,/);
   const target = parts[parts.length - 1].trim();
@@ -804,6 +817,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // companion to Tonight: lets weekday users see the full weekend in one
   // glance without flipping through date pills.
   const [showWeekendOnly, setShowWeekendOnly] = useState(false);
+  // Live now = today's events that have started but haven't ended yet.
+  // Inverts the default "hide started events" rule so users can see the
+  // exhibit/festival/concert that's already going on right now.
+  const [showLiveNowOnly, setShowLiveNowOnly] = useState(false);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -884,6 +901,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     if (showWeekendOnly) {
       if (e.date !== weekendSat && e.date !== weekendSun) return false;
     }
+    if (showLiveNowOnly) {
+      if (e.date !== todayIso) return false;
+      if (!isInProgressNow(e.time, e.endTime)) return false;
+    }
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -913,10 +934,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return upcomingEvents
       .filter((e) => e.date === selectedDate)
       .filter(matchesFilters)
-      .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time))) // hide today's events that have started
+      // Hide today's events that have started — UNLESS the user has explicitly
+      // asked to see what's happening right now via the Live Now pill.
+      .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -963,13 +986,13 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     const set = new Set<string>();
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!matchesFilters(e)) continue;
       set.add(e.date);
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -993,7 +1016,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1005,6 +1028,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       }
       if (showWeekendOnly) {
         if (e.date !== weekendSat && e.date !== weekendSun) continue;
+      }
+      if (showLiveNowOnly) {
+        if (e.date !== todayIso) continue;
+        if (!isInProgressNow(e.time, e.endTime)) continue;
       }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
@@ -1018,7 +1045,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -1028,7 +1055,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     let total = 0;
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1040,6 +1067,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       }
       if (showWeekendOnly) {
         if (e.date !== weekendSat && e.date !== weekendSun) continue;
+      }
+      if (showLiveNowOnly) {
+        if (e.date !== todayIso) continue;
+        if (!isInProgressNow(e.time, e.endTime)) continue;
       }
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
@@ -1053,7 +1084,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -1066,10 +1097,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // city/category/search filters — independent of the other pill states so
   // toggling one pill doesn't make the others' badges go to zero.
   const pillCounts = useMemo(() => {
-    let kids = 0, free = 0, tonight = 0, weekend = 0;
+    let kids = 0, free = 0, tonight = 0, weekend = 0, live = 0;
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
+      // Live count needs started-but-ongoing events, so don't apply the
+      // standard "hide started events" gate here. We bucket live separately.
+      const startedToday = e.date === todayIso && !hasNotStarted(e.time);
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (isSearching) {
@@ -1079,6 +1112,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             !e.city.toLowerCase().includes(searchQ) &&
             !e.venue.toLowerCase().includes(searchQ)) continue;
       }
+      if (e.date === todayIso && isInProgressNow(e.time, e.endTime)) live++;
+      // Other pills only count not-yet-started events
+      if (startedToday) continue;
       if (e.kidFriendly) kids++;
       if (e.cost === "free") free++;
       if (e.date === todayIso && e.time) {
@@ -1087,7 +1123,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       }
       if (e.date === weekendSat || e.date === weekendSun) weekend++;
     }
-    return { kids, free, tonight, weekend };
+    return { kids, free, tonight, weekend, live };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
@@ -1244,6 +1280,51 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             )}
           </label>
 
+          {pillCounts.live > 0 && (
+            <label style={{
+              display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
+              fontSize: 12, color: showLiveNowOnly ? "#fff" : "var(--sb-muted)",
+              cursor: "pointer", userSelect: "none",
+              padding: "5px 12px", borderRadius: 100,
+              border: `1.5px solid ${showLiveNowOnly ? "#DC2626" : "var(--sb-border)"}`,
+              background: showLiveNowOnly ? "#DC2626" : "#fff",
+              fontWeight: showLiveNowOnly ? 600 : 500,
+              transition: "all 0.12s",
+            }}>
+              <input
+                type="checkbox" checked={showLiveNowOnly}
+                onChange={(e) => {
+                  const next = e.target.checked;
+                  setShowLiveNowOnly(next);
+                  if (next) {
+                    setSelectedDate(todayIso);
+                    setShowTonightOnly(false);
+                    setShowWeekendOnly(false);
+                  }
+                }}
+                style={{ cursor: "pointer", accentColor: "#DC2626" }}
+              />
+              <span aria-hidden style={{
+                display: "inline-block", width: 7, height: 7, borderRadius: "50%",
+                background: showLiveNowOnly ? "#fff" : "#DC2626",
+                boxShadow: showLiveNowOnly
+                  ? "0 0 0 2px rgba(255,255,255,0.35)"
+                  : "0 0 0 2px rgba(220, 38, 38, 0.18)",
+                animation: "sb-live-pulse 1.6s ease-in-out infinite",
+              }} />
+              Live now
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showLiveNowOnly ? "rgba(255,255,255,0.22)" : "#FEF2F2",
+                color: showLiveNowOnly ? "#fff" : "#DC2626",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.live}
+              </span>
+            </label>
+          )}
+
           <label style={{
             display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
             fontSize: 12, color: showTonightOnly ? "#fff" : "var(--sb-muted)",
@@ -1262,6 +1343,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 if (next) {
                   setSelectedDate(todayIso);
                   setShowWeekendOnly(false);
+                  setShowLiveNowOnly(false);
                 }
               }}
               style={{ cursor: "pointer", accentColor: "#7C3AED" }}
@@ -1295,7 +1377,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               onChange={(e) => {
                 const next = e.target.checked;
                 setShowWeekendOnly(next);
-                if (next) setShowTonightOnly(false);
+                if (next) {
+                  setShowTonightOnly(false);
+                  setShowLiveNowOnly(false);
+                }
               }}
               style={{ cursor: "pointer", accentColor: "#EA580C" }}
             />

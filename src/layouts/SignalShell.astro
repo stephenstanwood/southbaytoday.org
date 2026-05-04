@@ -277,6 +277,12 @@ const {
         font-weight: 600;
       }
 
+      /* Live now pulse — used by the Live filter pill in EventsView */
+      @keyframes sb-live-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.45; }
+      }
+
       /* ── Events: sticky search + filter bar ── */
       .sb-events-sticky-filter {
         position: sticky;
