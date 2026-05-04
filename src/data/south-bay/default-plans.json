@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-04T11:19:15.902Z",
+    "generatedAt": "2026-05-04T11:22:16.778Z",
     "generator": "generate-schedule (homepage hero)",
     "anchorHours": [
       9
@@ -136,7 +136,7 @@
       "city": "los-gatos",
       "kids": false,
       "anchorHour": 9,
-      "generatedAt": "2026-05-04T11:19:15.901Z"
+      "generatedAt": "2026-05-04T11:22:16.777Z"
     },
     "kids:h9": {
       "cards": [
@@ -147,8 +147,8 @@
           "city": "los-gatos",
           "address": "Los Gatos Coffee Roasting Co.",
           "timeBlock": "7:30 AM - 8:30 AM",
-          "blurb": "Grab a morning coffee and snag a seat outside while the kids wake up slowly with a pastry and some people-watching on the main drag.",
-          "why": "Best way to ease into a Los Gatos morning.",
+          "blurb": "Grab a morning coffee and let the kids split a pastry while you snag a seat outside and watch Los Gatos wake up.",
+          "why": "Best way to ease into a Monday morning without rushing anyone.",
           "url": "https://www.lgcr.com",
           "mapsUrl": null,
           "cost": "low",
@@ -159,39 +159,81 @@
           "venue": null,
           "source": "place",
           "locked": false,
-          "rationale": "claude:pool-rank-8/22 | cat=food"
+          "rationale": "claude:pool-rank-7/21 | cat=food"
         },
         {
-          "id": "place:ChIJ24fHtb81joARJByKotZNf3k",
-          "name": "Vasona Lake County Park",
+          "id": "place:ChIJMZC2UwI1joAReJaK1vHSqcc",
+          "name": "Los Gatos Creek Trail",
           "category": "outdoor",
-          "city": "los-gatos",
-          "address": "333 Blossom Hill Rd, Los Gatos, CA 95032, USA",
-          "timeBlock": "8:30 AM - 10:30 AM",
-          "blurb": "Walk the lake path, let the kids run the open grass, and keep an eye out for the little train — they'll want a ride if it's running.",
-          "why": "Cool morning air, easy terrain, and genuinely fun for little ones.",
-          "url": "https://parks.sccgov.org/santa-clara-county-parks/vasona-lake-and-los-gatos-creek-county-parks",
-          "mapsUrl": "https://maps.google.com/?cid=8754801784876833828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-          "cost": "low",
-          "costNote": "$6 parking",
+          "city": "campbell",
+          "address": "1250 Dell Ave, Campbell, CA 95008, USA",
+          "timeBlock": "9:00 AM - 11:00 AM",
+          "blurb": "Walk or bike the creek trail with the kids. It's flat, shaded, and runs along the water, so everyone stays happy and nobody complains about hills.",
+          "why": "Cool morning air and a peaceful path make this the perfect way to burn off some energy before lunch.",
+          "url": "https://www.losgatosca.gov/907/Los-Gatos-Creek-Trail",
+          "mapsUrl": "https://maps.google.com/?cid=14387262420740118136&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": "free",
+          "costNote": null,
           "kidsCostNote": null,
-          "photoRef": "places/ChIJ24fHtb81joARJByKotZNf3k/photos/AU_ZVEETecj2WXxtIbYDjI1O9wnz2wmtBWjRy1HrUiBLTKyjNCsKM5pIGkjlP_spDIL60VkD46K22zM2M_21y-FZkut62KqFOlIeEv_9TiJzwj9B8sOFbZ9uK53jWFSclAbSeynF3ypIDKBGEpA0UBupTY1V5we3xfs6kw_MTh0jdng5jNON7tr5tUUb8tl9FZr5ez70mltk3Y34qcClooFyXGNMm9c-JQvT_Mc3RD2vjN1oDc7bOl0FfCLLZjn0VNwa9Xz8PIhNb1GUNi5R8YsNfl8bh51j_ZZanD7jT4GW0RDunLQYQdQwr-JKGeGi7DFUvx2n2BRo-S2h1SA0bEJWQaCcwOYoKwjNmPooshcP9nvFQHnLJTtnJ-VxO0QUk96bFVDCx3dywD8f3Ip71stcivrD0jB9Nnwmlo-Vds1odnEz_Vtj60aVrIL3YrmZbG8T",
+          "photoRef": "places/ChIJMZC2UwI1joAReJaK1vHSqcc/photos/AU_ZVEHY2ptMPKsPxK3DlqpGx06wy_mdpRbP0-M7-7zKIieApTu3t3qd2wbfh-bnUVoJ-d7EJbjSg2Rdt0jGNxA2tgN_yJVlKqSsApLEK_a-op6LGr1C2MatbuNQj42BB7ysCVRXU-50nRzZ_b0pR5aKYJjNkmaynrkMA2Fl5l_2TNXp8_LzuoR8Kyn__Mt9QuXF2KAVXa1EEQveLTbSVzil8hYDzOAFQ3Z-f3cFOrX8YzHdzBsF1gaP_Sk1dTRi0wLoFXmUFD4qPnjppX4UhiisAm0rXut2BiMKFGJfiK0v9UEGQvYOR-5R99eBBVSmpYFzTS9NY5bwIUHx4grEkeliKlsML8K9OwpN3M1P-LFPI2vHpRcYW3CWNJdu4tZZlMljSTTXkgBiix_a4Qq537y4csrSY3ur0UEzBCzxAhogVQfbD-SM",
           "image": null,
           "venue": null,
           "source": "place",
           "locked": false,
-          "rationale": "claude:pool-rank-12/22 | rating=4.7 | cat=outdoor"
+          "rationale": "claude:pool-rank-13/21 | rating=4.7 | cat=outdoor"
         },
         {
-          "id": "event:sccl-694351182c65973d0013387f",
-          "name": "ESL Parent & Caregiver Conversation Club",
+          "id": "place:ChIJzxby-tczjoARqapOY6c8orU",
+          "name": "Golfland San Jose",
+          "category": "entertainment",
+          "city": "san-jose",
+          "address": "976 Blossom Hill Rd, San Jose, CA 95123, USA",
+          "timeBlock": "11:30 AM - 1:00 PM",
+          "blurb": "Mini golf with the whole crew. Grab a round or two and let the kids trash-talk each other on the greens.",
+          "why": "Kids love it and it keeps everyone entertained well past the first hole.",
+          "url": "https://www.golfland.com/",
+          "mapsUrl": "https://maps.google.com/?cid=13088090156715387561&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": null,
+          "costNote": null,
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJzxby-tczjoARqapOY6c8orU/photos/AU_ZVEGZcpLHyFGRoYZOUTf-wxfn1_x_l_JTVyY9duusPZ-VHhstwSVfMjhSzBho8DdW6S_-JqsYZIyO6O6d-uEkilXlTpyaL3XOBQvSdVdE7sD2ipxry3wurYVsCIZ51vwWf2f8VSP_fYy1VlCgWeX1t3Wexo3wOVwcJJgyJ5Pr57mTmNGGfeV5NjH5yZjB5dAQv5oGiJXPjgHlHxHrBdQt1sfGr77puOxmL_RzTLUP3lZ-0hgsb2yrbK0SjiygmX5rhEt2Tna60u2mrTLfMOiZHPW9gidaKNTKATW2QVWlm8qc4sSRYqfpQXRLGBdBWAZeaN5wmAEY8xNpCfIJOkU7IM61GY0VCzdv5UZxJ_3JH5KQVU5-XI3JLEp7D4-k8sNWR5b2ENuBHUkk86JbfKrWVmuS7unFeFEqVm5dHtzBUxtlpg",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-17/21 | rating=4.3 | cat=entertainment"
+        },
+        {
+          "id": "place:ChIJeQ-ozuLKj4ARMQNfslZXl1c",
+          "name": "Smoking Pig BBQ",
+          "category": "food",
+          "city": "san-jose",
+          "address": "1144 N 4th St, San Jose, CA 95112, USA",
+          "timeBlock": "1:00 PM - 2:30 PM",
+          "blurb": "Swing by Smoking Pig for brisket plates and mac and cheese. Order big, share everything, and don't skip the sides.",
+          "why": "It's some of the best BBQ in the South Bay and the portions are seriously generous.",
+          "url": "https://www.smokingpigbbq.net/",
+          "mapsUrl": "https://maps.google.com/?cid=6311609432654414641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": "low",
+          "costNote": "Under $20",
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJeQ-ozuLKj4ARMQNfslZXl1c/photos/AU_ZVEGJGn9jRBKaHW4__Qi1-W9zerATtdgWoq90Tcdmg6GwAqSLZznHRrHmi1NMXKNmVzBd8mwqG6ngEseLL2rdOg1aZhD_0Z-qHTv0fFHm6Qm9Nfb8ur8MhUTelIB9QQ47m8aQzdgynnQ13p08duU8MhG81cpAZqeXQrrXAoahkwOf0lvdBnrPa3hPCbsqNw0q00cNU5eeymWPWo288Y8KfTUUXqXPxiALtODdw3H0LWlQdJadVUelbvGrC1kAtjzZMYcaTxsN1MO8Mg1K1QjDRQgsiRNUWoWIbvV621i6Thy5Rx1m8c78_lKHMiiQ9-h6vOBy4J4rKwq61ptqW5FXb09dV81OmitcZ4HzT2Q0MBwufHPNqa4VN2i6YUGogpLEyVr70ezBTB5qVIDOJ-BI4nhXgtWyH0LNLQyU8BOqQvObDwY",
+          "image": null,
+          "venue": null,
+          "source": "place",
+          "locked": false,
+          "rationale": "claude:pool-rank-8/21 | rating=4.3 | cat=food"
+        },
+        {
+          "id": "event:sccl-69aa1058db89981d9df8bb35",
+          "name": "Making a Superhero Comic Workshop",
           "category": "events",
           "city": "cupertino",
           "address": "",
-          "timeBlock": "10:30 AM - 11:15 AM",
-          "blurb": "Join parents and caregivers for conversations about children, parenting tips, and meaningful family support.",
-          "why": "It's a natural next step after the morning park visit — a low-key, community-minded way to spend the gap before heading to Hicklebee's.",
-          "url": "https://sccl.bibliocommons.com/events/694351182c65973d0013387f",
+          "timeBlock": "4:00 PM - 6:00 PM",
+          "blurb": "Draw superheroes alongside a Marvel Entertainment artist who's illustrated well-known comic book characters.",
+          "why": "A free workshop led by a real comic artist is genuinely hard to beat for a Monday afternoon.",
+          "url": "https://sccl.bibliocommons.com/events/69aa1058db89981d9df8bb35",
           "cost": "free",
           "costNote": null,
           "photoRef": "places/ChIJw0A7R6i1j4ARPMVjDPvu6mM/photos/AU_ZVEHtnE5PViCV0t2rXcApxqKltmqSiWI8LiXiAdScPwVgky7TbuMNdF5J7qoQzhnEaERRQpVTs0SCfga68hdv5prQJG4Fe08ngD5h6OuUErM5wT4Nq0Bf2Hxn0pgCstwZTXuq8z1LTtb-Ys9mxJv3QHc8ih34yinxyHXKlQfq8D9euZT1ZXFwXsyCfiAtGXdWrLH6wp8iwYsdCmTnNlANi4TssImtQgpraL5CZlcyCLGC1vY0avJGFJa8411GuiRPH0LhznIFRf-Bdlu9IGDo2r2P46n6DWcpTxroA568932fIQlMtKQn70qOQbplOqSk6-dQgBbtPTSjKnWOrPZbBqwlWo-1QNDEjy2QUhVEBMwea5INwMzJ-k0Bz-qxYoKv_9E8awc34iMADxiezRI1GYqGZJ_apXpcLD9iPGj5YM-sTBY",
@@ -199,54 +241,56 @@
           "venue": "Cupertino Library",
           "source": "event",
           "locked": false,
-          "rationale": "claude:pad | gap-fill | partial-had-4"
+          "rationale": "claude:pool-rank-1/21 | event-today | cat=events"
         },
         {
-          "id": "place:ChIJ8Y_vR1kzjoARVI4K3HjGQaI",
-          "name": "Hicklebee's Childrens Books",
-          "category": "shopping",
-          "city": "san-jose",
-          "address": "1378 Lincoln Ave, San Jose, CA 95125, USA",
-          "timeBlock": "12:00 PM - 1:00 PM",
-          "blurb": "Swing into Hicklebee's and let the kids pick out a book they actually chose themselves — the staff know children's lit cold and can point you toward something great.",
-          "why": "A legendary San Jose kids bookstore that's worth the trip.",
-          "url": "http://www.hicklebees.com/",
-          "mapsUrl": "https://maps.google.com/?cid=11691844330020572756&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "id": "place:ChIJl7JzuCrLj4AR0xvvwi5TGwQ",
+          "name": "MoDo Hawaii",
+          "category": "food",
+          "city": "santa-clara",
+          "address": "2000 El Camino Real #11, Santa Clara, CA 95050, USA",
+          "timeBlock": "6:30 PM - 7:30 PM",
+          "blurb": "Hawaiian-style mochi donuts in all kinds of flavors. Let the kids pick their own and grab a couple extras because you will finish them in the car.",
+          "why": "It's a sweet, low-key wind-down after a big afternoon and the kids will absolutely lose their minds over the flavors.",
+          "url": "https://www.modohawaii.com/",
+          "mapsUrl": "https://maps.google.com/?cid=295921660826950611&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
           "cost": null,
-          "costNote": null,
+          "costNote": "Under $15/person",
           "kidsCostNote": null,
-          "photoRef": "places/ChIJ8Y_vR1kzjoARVI4K3HjGQaI/photos/AU_ZVEHBzSzR7wPtwbWZBW4hyu6U7MqmRqC7YnXUOctianXANeNYcomq8x-lVFJVUHfbUtxV-kbKBDaKlQS2oyhL1xdWcyV-uhUF7umGhuG5E0bqYGDXlWBl4t37JfRfR04DA0f_Z99jADhKjvPQAt90zVR-46uzRKltCENFiIjo8Ac499FyEetHNrXxjGV4Kjczcj_fPHQViLxBHVoJUMeZZl5KAcXHMWRCk5Re1XuKELbyMp9E9ZuoD4MI0JuXhMudhH0bQcCZlu6tI-Hzb-lxiQoDc6kFlMbJsrf-ksgi9qHwl7JzWGvciUh0WkoFSPKuXla4A5ft3I4Wm0uiTCpGUY9a45qFJ03nsNH2yfySVaHvcJ4QY4UgD6L-8PfPlQMdySDuzs2C1Mp3zKpg5jVcdLu6-PzvJHR0JJm26Ju07b4BGO0",
+          "photoRef": "places/ChIJl7JzuCrLj4AR0xvvwi5TGwQ/photos/AU_ZVEFBPDN_Kw37OHN_DCml2ELDM4uHRBspdgXNITWyN2H6t3OOmXiS8dgg4Oas6Zsb1_NuBioFnDVLbSHPXM_tEpPUn6_nlN_l8uS8xQj2oYjOfrIaaFGT5oa7Xhx2E6o1nOQPs8Lqhw1T1Sm9PVgkAw610SCnzGAQ0CZuqkBvTWKmvaeWwIQJoQ9dxgWSNpuyjq-6IHIVLSWWAtiq6FntJSvQw-lMdR7JIYn6jRqcLvMepeISyIZF-Za-31Hmr9PqOYdZpo1-NMRTUjjH_xyW8rTfrZBg7WsEvg__wXq94AG7YIawqe4TBM4t9Lc9f6pfsM4UOXM0OBhvHIcYLiBJrX-UY-T8ub2PVTbJkuQ-KfrtInD-tX78Cy6ljSaF6_fYOf-ICaZRCXcrQ21fUMKxIIVvB3dxo2rFpAzUtimqbWpmGg",
           "image": null,
           "venue": null,
           "source": "place",
           "locked": false,
-          "rationale": "claude:pool-rank-20/22 | rating=4.8 | cat=shopping"
+          "rationale": "claude:pool-rank-11/21 | rating=4.6 | cat=food"
         },
         {
-          "id": "event:sccl-68c1e54497cf5a912ead5aa5",
-          "name": "Homework Help K-6 grade",
-          "category": "events",
-          "city": "saratoga",
-          "address": "",
-          "timeBlock": "4:00 PM - 5:30 PM",
-          "blurb": "Get free one-on-one homework help from tutors Mondays, Tuesdays, and Thursdays from 4:00 to 5:30 p.m.",
-          "why": "Monday homework on a school week is real, and free tutors are a gift.",
-          "url": "https://sccl.bibliocommons.com/events/68c1e54497cf5a912ead5aa5",
-          "cost": "free",
+          "id": "place:ChIJdwOiUp-1j4ARtFJHJbUFDAg",
+          "name": "Bowlmor Cupertino",
+          "category": "entertainment",
+          "city": "cupertino",
+          "address": "10123 N Wolfe Rd #20, Cupertino, CA 95014, USA",
+          "timeBlock": "7:30 PM - 9:00 PM",
+          "blurb": "End the night with a couple of bowling lanes at Bowlmor. Bumpers, glow lanes, and letting the little ones hurl the ball however they want.",
+          "why": "Bowling is always a crowd-pleaser and it keeps the energy up without requiring anyone to stay out too late.",
+          "url": "https://www.bowlmor.com/location/bowlmor-cupertino/?utm_source=gbp&utm_medium=organic&utm_campaign=yext_listings",
+          "mapsUrl": "https://maps.google.com/?cid=579844727596602036&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "cost": null,
           "costNote": null,
-          "photoRef": "places/ChIJ9cJggsdKjoARoiQXrLqm_dM/photos/AU_ZVEGdumKFtxQusS0-qGrFrTbqeVq4qTJqFDBQdx1TqtAYuA5gDPhgWNEGIQf3B8xpYfq_zfCIXagKaXpJw1iAmutD-rOLgKcZiQ5-aSYN_48Szz3meQbFiJPvyFDwQ7LpUuurEVVXzLIQhR6je-tFwLVyomZ59ddQTRRyZC3FYaIDqEu-zQTeUHDvvC4ayWmkY_ttCxduqlB2jPTOwvHFDLriwH7ELxjieMSvOejW3yRWCy2hcvKc9RMMLIzjpfAdN-jqWWgP51d9td-ZNcsg6MjO5EgVG4WfhhiE2bCAsbabPS_zSKtBNsBHuRU93tKIyqcLwRhcttuYjypydMiYkr0TXxpnw689HjmBLW_INr5RpBY-RAqticQJeS_l6X68BfIacEalmmD7yBDiB81HpBSC3_PepsW5k7_GhdOheeNwaHZiogw-15h76HzrOMul",
+          "kidsCostNote": null,
+          "photoRef": "places/ChIJdwOiUp-1j4ARtFJHJbUFDAg/photos/AU_ZVEEXuElGRVomCeDMxC0vlRGbGifkjVanXAdiIqrR9Y69Drbg94ymWJzk-VPcarakWb89amC-9a2XrGOW8emNt3kucnRkg3xU74Worm2InPRoJNT2XeUBiZQzz81WoWBrKzt-GEwu-wUxxKxuMtSSLWI8nKoI2_oHUaoTZTcI-fJSyuz8aGnjmMLjOJzf-HBmAVnL3UegHBmMLL27B_ISxOX5H1RbnzlW7y-fR_SRmsm9JzaS8Al785VIOVVHwiS59Vnh-DAomj24AvDMTE-IBGUfuAr3uoK4MT7g9tH2ZRfbDSM43tqvs0eYXnWzbN2v6EGL87TZ4M1_AjI6JVceS6hJp3xhoMXS_RFH1k4zMv-HRYIEtPH_aCfpTIWHXrCCYOCkXozTZZjRLCDwbIPGwPve8aSlLHZBu-C1jla9-Mk",
           "image": null,
-          "venue": "Saratoga Library",
-          "source": "event",
+          "venue": null,
+          "source": "place",
           "locked": false,
-          "rationale": "claude:pool-rank-1/22 | event-today | cat=events"
+          "rationale": "claude:pool-rank-16/21 | rating=4.1 | cat=entertainment"
         }
       ],
       "weather": "51°F, high 65°F, 8% chance of rain",
       "city": "los-gatos",
       "kids": true,
       "anchorHour": 9,
-      "generatedAt": "2026-05-04T11:19:15.901Z"
+      "generatedAt": "2026-05-04T11:22:16.777Z"
     },
     "adults:h9:tomorrow": {
       "cards": [
@@ -380,7 +424,7 @@
       "kids": false,
       "anchorHour": 9,
       "planDate": "2026-05-05",
-      "generatedAt": "2026-05-04T11:18:51.641Z"
+      "generatedAt": "2026-05-04T11:21:47.891Z"
     },
     "kids:h9:tomorrow": {
       "cards": [
@@ -448,25 +492,6 @@
           "rationale": "claude:pool-rank-10/19 | rating=4.5 | cat=museum"
         },
         {
-          "id": "event:sjpl-69d2dd91bd9a3c316a51002e",
-          "name": "Mother's Day Craft: Cardmaking",
-          "category": "events",
-          "city": "san-jose",
-          "address": "290 International Circle San Jose",
-          "timeBlock": "4:30 PM - 5:30 PM",
-          "blurb": "Design and create a handmade card celebrating your mother or mother figure with your own personal touch.",
-          "why": "It's a sweet, easy win right before Mother's Day and the kids get to make something they'll actually be proud of.",
-          "url": "https://sjpl.bibliocommons.com/events/69d2dd91bd9a3c316a51002e",
-          "cost": "free",
-          "costNote": null,
-          "photoRef": "places/ChIJw_1wJC4ujoARsEMtIHCY7-U/photos/Ab43m-tXRkwzBUmV6SJSLB-g9KKwCnvpLAMIpzNe6LSSSEiLCwzk21R_W4nz1IjHRoPDQpIFwT4FHqg9TOTI2PzuDy9ry8naJLLc6NrZxOEYObiUL_MNpM-0Q0PLA3pBGVLxIrGL5JPsRS3W6qxadfAjIsNjMj_5XA7ClCg2vWawXtEmsj_9rjLWItI8q-WBEiR-04IqNwiOb8vxZhRDejJh7Si78cqpBT-vWtXVAbtcO-dYA4gmhtXjzDoT1dWbDb3CVgbig2m7j9aNLPY8OS-ZMvt9bJQ-Tyw8KF0F0FVQnJ7WYg",
-          "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/ffe7ebe5fb4c87e35d3f85375b26162b/mothersday_cards.jpg",
-          "venue": "Santa Teresa Library",
-          "source": "event",
-          "locked": false,
-          "rationale": "claude:pool-rank-1/19 | event-today | cat=events"
-        },
-        {
           "id": "place:ChIJpz1CJmkxjoARfCWdurqpMmw",
           "name": "Bamboo Fish",
           "category": "food",
@@ -514,7 +539,8 @@
       "kids": true,
       "anchorHour": 9,
       "planDate": "2026-05-05",
-      "generatedAt": "2026-05-04T11:19:15.901Z"
+      "generatedAt": "2026-05-04T11:19:15.901Z",
+      "carriedForward": true
     }
   }
 }
