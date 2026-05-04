@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-04T11:09:26.819Z",
+      "generatedAt": "2026-05-04T19:09:39.681Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-04T11:09:29.324Z",
+      "generatedAt": "2026-05-04T19:09:41.991Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,27 +151,15 @@
       },
       "permits": [
         {
-          "id": "26BLD-01087",
-          "address": "642 Bryson Av",
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01107",
-          "address": "820 Hamilton Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-29",
+          "issueDate": "2026-05-01",
           "subtype": "Permit Issued"
         },
         {
@@ -187,28 +175,28 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
+          "id": "26BLD-01107",
+          "address": "820 Hamilton Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-01",
+          "issueDate": "2026-04-29",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00097",
-          "address": "500 Fulton St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "id": "26BLD-01087",
+          "address": "642 Bryson Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-30",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-04-27",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00095",
@@ -220,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00097",
+          "address": "500 Fulton St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-30",
           "subtype": "Over the Counter Approved"
         },
         {
