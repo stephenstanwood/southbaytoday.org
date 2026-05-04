@@ -1,6 +1,17 @@
 {
   "flags": [
     {
+      "business_id": "PR0454228",
+      "name": "Milyar Cafe",
+      "city": "Santa Clara",
+      "address": "1098 Monroe St",
+      "date": "2026-05-01",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is closed due to lack of hot running water and a broken hot water heater"
+    },
+    {
       "business_id": "PR0402005",
       "name": "Id Cafe",
       "city": "San Jose",
@@ -12,15 +23,15 @@
       "summary": "Food obtained from approved source"
     },
     {
-      "business_id": "PR0454228",
-      "name": "Milyar Cafe",
-      "city": "Santa Clara",
-      "address": "1098 Monroe St",
-      "date": "2026-05-01",
-      "score": null,
+      "business_id": "PR0428105",
+      "name": "Southindies Vegetarian/vegan/jain Restaurant",
+      "city": "Sunnyvale",
+      "address": "950 W El Camino Real",
+      "date": "2026-04-30",
+      "score": 49,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Facility is closed due to lack of hot running water and a broken hot water heater"
+      "summary": "Facility is hereby closed due to evidence of a vermin infestation"
     },
     {
       "business_id": "PR0420831",
@@ -34,28 +45,6 @@
       "summary": "Due to the lack of hot water the health permit shall hereby be temporarily suspended"
     },
     {
-      "business_id": "PR0302261",
-      "name": "Lados",
-      "city": "Sunnyvale",
-      "address": "115 Plaza Dr",
-      "date": "2026-04-30",
-      "score": 75,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "NOTE: No signature obtained"
-    },
-    {
-      "business_id": "PR0307121",
-      "name": "Lotus Thai Bistro",
-      "city": "Palo Alto",
-      "address": "425 S California Av",
-      "date": "2026-04-30",
-      "score": 58,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Adequate handwash facilities supplied, accessible"
-    },
-    {
       "business_id": "PR0306687",
       "name": "Devil & Angel @ Great Mall",
       "city": "Milpitas",
@@ -65,6 +54,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
+    },
+    {
+      "business_id": "PR0302261",
+      "name": "Lados",
+      "city": "Sunnyvale",
+      "address": "115 Plaza Dr",
+      "date": "2026-04-30",
+      "score": 75,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "NOTE: No signature obtained"
     },
     {
       "business_id": "PR0370090",
@@ -78,15 +78,15 @@
       "summary": "Proper hot and cold holding temperatures"
     },
     {
-      "business_id": "PR0428105",
-      "name": "Southindies Vegetarian/vegan/jain Restaurant",
-      "city": "Sunnyvale",
-      "address": "950 W El Camino Real",
+      "business_id": "PR0307121",
+      "name": "Lotus Thai Bistro",
+      "city": "Palo Alto",
+      "address": "425 S California Av",
       "date": "2026-04-30",
-      "score": 49,
-      "result": "R",
+      "score": 58,
+      "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Facility is hereby closed due to evidence of a vermin infestation"
+      "summary": "Adequate handwash facilities supplied, accessible"
     },
     {
       "business_id": "PR0401744",
@@ -122,17 +122,6 @@
       "summary": "Note: Food safety manager certificate: Austin Le - 10/12/2028"
     },
     {
-      "business_id": "PR0367405",
-      "name": "Nam Giao Restaurant",
-      "city": "San Jose",
-      "address": "2066 Tully Rd",
-      "date": "2026-04-27",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "This is a charged follow up inspection to the routine inspection conducted on 04/01/2026 and the first follow up inspection conducted on 04/20/2026"
-    },
-    {
       "business_id": "PR0377057",
       "name": "Sumiya Bento",
       "city": "Milpitas",
@@ -142,6 +131,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
+    },
+    {
+      "business_id": "PR0367405",
+      "name": "Nam Giao Restaurant",
+      "city": "San Jose",
+      "address": "2066 Tully Rd",
+      "date": "2026-04-27",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "This is a charged follow up inspection to the routine inspection conducted on 04/01/2026 and the first follow up inspection conducted on 04/20/2026"
     },
     {
       "business_id": "PR0330912",
@@ -166,17 +166,6 @@
       "summary": "No rodents, insects, birds, or animals"
     },
     {
-      "business_id": "PR0304119",
-      "name": "Tung Kee Noodle House",
-      "city": "San Jose",
-      "address": "1818 Tully Rd 162b",
-      "date": "2026-04-24",
-      "score": null,
-      "result": "Y",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "This is a second charged follow up inspection to the routine inspection conducted on 04/14/26 and the first follow up conducted on 04/20/2026"
-    },
-    {
       "business_id": "PR0379077",
       "name": "Saigon Kitchen",
       "city": "San Jose",
@@ -186,6 +175,17 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "* Facility is hereby closed due to evidence of a vermin infestation"
+    },
+    {
+      "business_id": "PR0304119",
+      "name": "Tung Kee Noodle House",
+      "city": "San Jose",
+      "address": "1818 Tully Rd 162b",
+      "date": "2026-04-24",
+      "score": null,
+      "result": "Y",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "This is a second charged follow up inspection to the routine inspection conducted on 04/14/26 and the first follow up conducted on 04/20/2026"
     },
     {
       "business_id": "PR0304955",
@@ -199,17 +199,6 @@
       "summary": "Inspection conducted in conjunction to CO0159450"
     },
     {
-      "business_id": "PR0393866",
-      "name": "Local Cafe",
-      "city": "Cupertino",
-      "address": "20956 Homestead Rd # H",
-      "date": "2026-04-22",
-      "score": 61,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Note: Food safety manager certificate: Minghua Hu - 11/25/29"
-    },
-    {
       "business_id": "PR0303604",
       "name": "Siam Station",
       "city": "Cupertino",
@@ -219,6 +208,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Food contact surfaces clean, sanitized"
+    },
+    {
+      "business_id": "PR0456129",
+      "name": "Adamson's French Dip",
+      "city": "San Jose",
+      "address": "969 S Bascom Av",
+      "date": "2026-04-22",
+      "score": 76,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow-up inspection shall be conducted"
     },
     {
       "business_id": "PR0379077",
@@ -232,15 +232,26 @@
       "summary": "Refer to CO0159443"
     },
     {
-      "business_id": "PR0456129",
-      "name": "Adamson's French Dip",
-      "city": "San Jose",
-      "address": "969 S Bascom Av",
+      "business_id": "PR0393866",
+      "name": "Local Cafe",
+      "city": "Cupertino",
+      "address": "20956 Homestead Rd # H",
       "date": "2026-04-22",
-      "score": 76,
+      "score": 61,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection shall be conducted"
+      "summary": "Note: Food safety manager certificate: Minghua Hu - 11/25/29"
+    },
+    {
+      "business_id": "PR0300018",
+      "name": "Round Table Pizza #1342",
+      "city": "Santa Clara",
+      "address": "2615 The Alameda",
+      "date": "2026-04-20",
+      "score": 66,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
       "business_id": "PR0304119",
@@ -265,28 +276,6 @@
       "summary": "On-site for an operator scheduled first follow-up inspection after the facility was closed due to evidence of a cockroach infestation"
     },
     {
-      "business_id": "PR0305016",
-      "name": "Pho Enjoy Ii",
-      "city": "San Jose",
-      "address": "5556 Monterey Rd",
-      "date": "2026-04-20",
-      "score": 84,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Note: Ice machine is not working, per PIC, they are waiting for a part for it"
-    },
-    {
-      "business_id": "PR0300018",
-      "name": "Round Table Pizza #1342",
-      "city": "Santa Clara",
-      "address": "2615 The Alameda",
-      "date": "2026-04-20",
-      "score": 66,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
-    },
-    {
       "business_id": "PR0367405",
       "name": "Nam Giao Restaurant",
       "city": "San Jose",
@@ -296,6 +285,17 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "- On-site for follow-up inspection after facility was closed due to evidence of a vermin infestation"
+    },
+    {
+      "business_id": "PR0305016",
+      "name": "Pho Enjoy Ii",
+      "city": "San Jose",
+      "address": "5556 Monterey Rd",
+      "date": "2026-04-20",
+      "score": 84,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Note: Ice machine is not working, per PIC, they are waiting for a part for it"
     },
     {
       "business_id": "PR0381726",
@@ -320,18 +320,18 @@
       "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
     },
     {
-      "business_id": "PR0306461",
-      "name": "Mountain Mikes Pizza",
-      "city": "Campbell",
-      "address": "3155 S Bascom Av # B",
+      "business_id": "PR0372911",
+      "name": "O'flaherty's",
+      "city": "San Jose",
+      "address": "25 N San Pedro St",
       "date": "2026-04-16",
-      "score": 79,
+      "score": 82,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection will be conducted on 4/22/2026 to verily compliance with all of the cited major violations"
+      "summary": "OWNERSHIP CHANGE INFORMATION"
     }
   ],
-  "generatedAt": "2026-05-04T19:09:08.605Z",
+  "generatedAt": "2026-05-04T23:09:35.394Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

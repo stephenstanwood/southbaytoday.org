@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-04T19:18:53.827Z",
+    "generatedAt": "2026-05-04T23:20:21.404Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
     "placesExtracted": 25,
-    "placesMatched": 3,
-    "placeGaps": 22,
+    "placesMatched": 5,
+    "placeGaps": 20,
     "eventsExtracted": 5,
-    "eventsMatched": 1,
-    "eventGaps": 4,
+    "eventsMatched": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,329 +19,302 @@
       "name": "JTown Pizza",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "reopened with soft opening, known for shishitos and tasting pizzas",
+      "context": "reopened after closure with soft opening",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ox50/what_was_your_favorite_school_milk_flavour/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
         "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+        "https://www.reddit.com/r/bayarea/comments/1t324f0/the_bay_area_on_film/"
       ]
     },
     {
       "name": "Pruneyard",
       "city": "Campbell",
       "kind": "venue",
-      "context": "shopping center with road reopening to vehicle traffic",
+      "context": "shopping center with road now open to cars",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ox50/what_was_your_favorite_school_milk_flavour/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
         "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
+        "https://www.reddit.com/r/bayarea/comments/1t324f0/the_bay_area_on_film/",
         "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
         "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "Mollie Stones",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "grocery store on site of former Co-Op market",
+      "context": "replaced Co-Op grocery store from commenter's childhood",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
         "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "Fry's",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "electronics retailer with community development history",
+      "context": "electronics store with adjacent Cable Co-Op, development site",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
         "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "Thien Huong",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "com tam restaurant on Capitol Expressway",
+      "context": "recommended for fresh com tam on Capitol Expressway",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "Com Tam Thanh",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "com tam restaurant mentioned by multiple users",
+      "context": "Vietnamese com tam restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "Com Tam Dat Thanh",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "com tam restaurant on Tully Rd, highly rated",
+      "context": "highly rated com tam on Tully Rd, described as S-tier",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
-      "name": "Truong Thanh restaurant",
+      "name": "Truong Thanh",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "com tam restaurant that breaks rice fresh",
+      "context": "Vietnamese restaurant known for breaking rice for com tam",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
         "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Dosa Point",
+      "city": "Menlo Park",
+      "kind": "restaurant",
+      "context": "South Indian cuisine restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Madras Cafe",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Indian restaurant in Bay Area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Saffron",
+      "city": "San Carlos",
+      "kind": "restaurant",
+      "context": "Indian restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Kabila Sweets & Indian Restaurant",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Indian restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Indian Tadka",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "Indian restaurant on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Indian Sizzler",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Indian restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Great Indian Cuisine",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Indian restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Idly Express",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "South Indian idly and dosa restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Zareen's",
+      "city": "Palo Alto",
+      "kind": "restaurant",
+      "context": "Pakistani and Indian restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "Chaat Bavan",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Indian restaurant with best menu and comfort",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ]
+    },
+    {
+      "name": "UlavacharU",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Indian restaurant best for dosa and idly",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
       ]
     },
     {
       "name": "A Novel Affair Book Cafe",
       "city": "Los Altos",
       "kind": "cafe",
-      "context": "independent bookstore and cafe, book event May 3",
+      "context": "independent bookstore hosting events, Amanda Sung book discussion",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Amazing Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's haircut $25, Northern Sunnyvale location",
-      "sourceUrls": [
         "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Vanna Salon Studio",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "owner-operated salon, $30 men's haircuts",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "SC Barbers",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's barbershop recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "A+ Haircuts for Men",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "long-standing barbershop with consistent quality",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Quality Men's Haircuts",
-      "city": "Mountain View",
-      "kind": "service",
-      "context": "barber shop, Doris recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Lisa's Perfect Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's haircut service recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Hair Focus",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's haircut service recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Annie's",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's haircuts, corner of Wolfe and Reed",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Lucky Cuts",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "men's haircuts, near Smart and Finale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Dandies",
-      "city": "Mountain View",
-      "kind": "service",
-      "context": "barbershop, barber Preet recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Amanda's Mobile Pet Grooming",
-      "city": "",
-      "kind": "service",
-      "context": "mobile pet grooming, specializes in cats",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Plus Grooming",
-      "city": "",
-      "kind": "service",
-      "context": "cat grooming service, long-standing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Charms Grooming",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "cat grooming on Meridian, 5% first visit discount",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Santa Clara Night Market",
-      "when": "May 1-2, 2026",
-      "city": "Santa Clara",
-      "context": "community night market with food, vendors, art workshops downtown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Devil Wears Prada 2 screening",
-      "when": "",
-      "city": "Campbell",
-      "context": "movie screening at Pruneyard",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
-      ]
-    },
-    {
-      "name": "Sunnyvale Community Center Grounds Reopening and Ribbon Cutting Ceremony",
-      "when": "Thursday May 21, 10 a.m.",
-      "city": "Sunnyvale",
-      "context": "celebration of $14M renovation project completion",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "A Novel Affair Book Cafe Meetup with Amanda Sung Book Event",
+      "name": "A Novel Affair Book Cafe Meetup",
       "when": "Sunday May 3, 6:30 p.m.",
       "city": "Los Altos",
-      "context": "author discussion event, book-to-film adaptation announcement",
+      "context": "community gathering for book lovers at independent bookstore",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+      ]
+    },
+    {
+      "name": "Amanda Sung Book Event",
+      "when": "May 3",
+      "city": "Los Altos",
+      "context": "author discusses debut book adaptation set in Bay Area, $25",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+      ]
+    },
+    {
+      "name": "Sunnyvale Community Center Grounds Reopening Ceremony",
+      "when": "May 21, 10 a.m.",
+      "city": "Sunnyvale",
+      "context": "ribbon cutting ceremony with Mayor Klein, light refreshments provided",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
       ]
     }
   ],
@@ -350,27 +323,54 @@
       "name": "Peet's",
       "city": "Campbell",
       "kind": "cafe",
-      "context": "cafe at Pruneyard with outdoor seating",
+      "context": "location at Pruneyard with outdoor seating",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ox50/what_was_your_favorite_school_milk_flavour/",
         "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
         "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+        "https://www.reddit.com/r/bayarea/comments/1t324f0/the_bay_area_on_film/"
       ],
       "matchedName": "Peet's Coffee"
+    },
+    {
+      "name": "Everest Cuisine",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Indian restaurant on Concourse",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ],
+      "matchedName": "Everest Cuisine-Mountain View"
+    },
+    {
+      "name": "Puranpoli",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Indian restaurant in Bay Area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ],
+      "matchedName": "Puranpoli"
     },
     {
       "name": "West Valley College",
       "city": "Saratoga",
       "kind": "venue",
-      "context": "hosting Youth Town Hall event May 16, 2026",
+      "context": "hosting Youth Town Hall event May 16",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
       ],
       "matchedName": "Saratoga Farmers' Market at West Valley College"
     },
@@ -378,28 +378,41 @@
       "name": "Sunnyvale Community Center",
       "city": "Sunnyvale",
       "kind": "venue",
-      "context": "reopening May 21 after $14M renovation",
+      "context": "reopening May 21 after $14 million renovation project",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
         "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t16dvo/current_best_mens_haircut_spots_in_and_around/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
       ],
       "matchedName": "Sunnyvale Community Center"
     }
   ],
   "eventMatches": [
     {
+      "name": "Devil Wears Prada 2",
+      "when": "",
+      "city": "Campbell",
+      "context": "movie showing at Pruneyard theater",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/"
+      ],
+      "matchedName": "Monthly Monday Movie - The Devil Wears Prada 2"
+    },
+    {
       "name": "Youth Town Hall",
       "when": "May 16, 2026, 10:30 a.m. – 2:00 p.m.",
       "city": "Saratoga",
       "context": "free event for ages 13-20 with career exploration and leaders",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/"
+        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
+        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
       ],
       "matchedName": "Youth Town Hall"
     }
