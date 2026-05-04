@@ -6,7 +6,7 @@ import {
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import { holidayOn, nextHolidayWithin } from "../../../lib/south-bay/holidays";
-import { currentHeritageMonths } from "../../../lib/south-bay/heritageMonths";
+import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
 import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
 import SunUvCard from "../cards/SunUvCard";
@@ -749,7 +749,12 @@ function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUp
 // active windows. Multiple observances can co-occur (May = AANHPI + Jewish
 // American Heritage; October has 4 overlapping months) — they stack inline.
 
-function HeritageMonthBanner() {
+interface HeritageBannerProps {
+  activeId: string | null;
+  onToggle: (id: string | null) => void;
+  countsById: Record<string, number>;
+}
+function HeritageMonthBanner({ activeId, onToggle, countsById }: HeritageBannerProps) {
   const todayIso = todayPT();
   const months = useMemo(() => currentHeritageMonths(todayIso), [todayIso]);
   if (months.length === 0) return null;
@@ -760,8 +765,8 @@ function HeritageMonthBanner() {
         display: "flex",
         alignItems: "center",
         flexWrap: "wrap",
-        gap: 10,
-        rowGap: 4,
+        gap: 6,
+        rowGap: 6,
         padding: "4px 12px",
         marginBottom: 10,
         fontSize: 11.5,
@@ -776,31 +781,60 @@ function HeritageMonthBanner() {
           fontWeight: 700,
           letterSpacing: "0.08em",
           textTransform: "uppercase",
+          marginRight: 4,
         }}
       >
         Observing
       </span>
-      {months.map((m, i) => (
-        <span
-          key={m.id}
-          title={m.blurb}
-          style={{
-            display: "inline-flex",
-            gap: 5,
-            alignItems: "center",
-            color: m.color,
-          }}
-        >
-          <span aria-hidden style={{ fontSize: 13, lineHeight: 1 }}>{m.emoji}</span>
-          <span style={{ fontWeight: 600 }}>{m.label}</span>
-          {i < months.length - 1 && (
-            <span aria-hidden style={{ marginLeft: 6, opacity: 0.5, color: "var(--sb-muted)" }}>·</span>
-          )}
-        </span>
-      ))}
+      {months.map((m) => {
+        const isActive = activeId === m.id;
+        const count = countsById[m.id] ?? 0;
+        const hasEvents = count > 0;
+        return (
+            <button
+              key={m.id}
+              type="button"
+              title={hasEvents ? `${m.blurb} — tap to filter ${count} matching event${count === 1 ? "" : "s"}` : m.blurb}
+              onClick={() => onToggle(isActive ? null : m.id)}
+              disabled={!hasEvents && !isActive}
+              style={{
+                display: "inline-flex",
+                gap: 5,
+                alignItems: "center",
+                padding: "3px 9px",
+                borderRadius: 100,
+                fontSize: 11.5,
+                lineHeight: 1.3,
+                fontFamily: "inherit",
+                color: isActive ? "#fff" : (hasEvents ? m.color : "var(--sb-muted)"),
+                background: isActive ? m.color : (hasEvents ? m.bg : "transparent"),
+                border: `1.5px solid ${isActive ? m.color : (hasEvents ? m.bg : "var(--sb-border)")}`,
+                cursor: hasEvents || isActive ? "pointer" : "default",
+                opacity: hasEvents || isActive ? 1 : 0.55,
+                transition: "all 0.12s",
+              }}
+            >
+              <span aria-hidden style={{ fontSize: 13, lineHeight: 1 }}>{m.emoji}</span>
+              <span style={{ fontWeight: 600 }}>{m.label}</span>
+              {hasEvents && (
+                <span style={{
+                  fontSize: 10, fontWeight: 700,
+                  background: isActive ? "rgba(255,255,255,0.22)" : "#fff",
+                  color: isActive ? "#fff" : m.color,
+                  borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                  minWidth: 18, textAlign: "center",
+                }}>
+                  {count}
+                </span>
+              )}
+            </button>
+        );
+      })}
     </div>
   );
 }
+
+const ACTIVE_HERITAGE_MONTHS_NOW = (iso: string): HeritageMonth[] => currentHeritageMonths(iso);
 
 // ── Main view ──────────────────────────────────────────────────────────────
 
@@ -821,6 +855,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // Inverts the default "hide started events" rule so users can see the
   // exhibit/festival/concert that's already going on right now.
   const [showLiveNowOnly, setShowLiveNowOnly] = useState(false);
+  // Active heritage-month filter (e.g. AANHPI, Pride). Populated by clicking
+  // a chip in the HeritageMonthBanner; null = no filter. Composes with the
+  // other filters via matchesFilters.
+  const [activeHeritageId, setActiveHeritageId] = useState<string | null>(null);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -886,6 +924,22 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
 
   const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
 
+  // Active heritage month object (for keyword matching). Null when no filter
+  // is selected or when the active id no longer corresponds to a current
+  // observance window (defensive — chips only render in-window).
+  const activeHeritage = useMemo(() => {
+    if (!activeHeritageId) return null;
+    return ACTIVE_HERITAGE_MONTHS_NOW(todayIso).find((m) => m.id === activeHeritageId) ?? null;
+  }, [activeHeritageId, todayIso]);
+
+  const heritageHaystack = (e: UpcomingEvent): string =>
+    `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`;
+
+  const matchesActiveHeritage = (e: UpcomingEvent): boolean => {
+    if (!activeHeritage) return true;
+    return matchesHeritage(activeHeritage, heritageHaystack(e));
+  };
+
   // Apply common filters (city, category, kids, search) to a list of events
   const matchesFilters = (e: UpcomingEvent): boolean => {
     if (!allCities && !selectedCities.has(e.city as City)) return false;
@@ -905,6 +959,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (e.date !== todayIso) return false;
       if (!isInProgressNow(e.time, e.endTime)) return false;
     }
+    if (!matchesActiveHeritage(e)) return false;
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -939,7 +994,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -953,7 +1008,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -979,7 +1034,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((d) => (groups[d]?.length ?? 0) > 0)
       .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso]);
+  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, activeHeritage, todayIso]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
@@ -992,7 +1047,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -1033,6 +1088,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
+      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1045,7 +1101,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -1072,6 +1128,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
+      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1084,7 +1141,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -1127,6 +1184,47 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
+  // Per-heritage event counts — answers "if I tapped this chip, how many
+  // events would I see?" given the current city/category/kids/search/etc.
+  // filters. Independent of the active heritage so the chip the user already
+  // toggled stays clickable to un-toggle.
+  const heritageCounts = useMemo(() => {
+    const todayPTIso = todayIso;
+    const months = ACTIVE_HERITAGE_MONTHS_NOW(todayPTIso);
+    const counts: Record<string, number> = {};
+    if (months.length === 0) return counts;
+    for (const e of upcomingEvents) {
+      if (e.date < todayPTIso) continue;
+      if (e.date === todayPTIso && !hasNotStarted(e.time)) continue;
+      if (!allCities && !selectedCities.has(e.city as City)) continue;
+      if (category !== "all" && e.category !== category) continue;
+      if (showKidsOnly && !e.kidFriendly) continue;
+      if (showFreeOnly && e.cost !== "free") continue;
+      if (showTonightOnly) {
+        if (e.date !== todayPTIso) continue;
+        if (!e.time) continue;
+        const m = parseTimeToMinutes(e.time);
+        if (m === null || m < TONIGHT_FROM_MIN) continue;
+      }
+      if (showWeekendOnly) {
+        if (e.date !== weekendSat && e.date !== weekendSun) continue;
+      }
+      if (isSearching) {
+        if (!e.title.toLowerCase().includes(searchQ) &&
+            !(e.blurb || "").toLowerCase().includes(searchQ) &&
+            !(e.description || "").toLowerCase().includes(searchQ) &&
+            !e.city.toLowerCase().includes(searchQ) &&
+            !e.venue.toLowerCase().includes(searchQ)) continue;
+      }
+      const text = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`;
+      for (const m of months) {
+        if (matchesHeritage(m, text)) counts[m.id] = (counts[m.id] || 0) + 1;
+      }
+    }
+    return counts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+
   // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
   // but tallied per day so each pill in the strip can show how busy that day is.
   // Tonight/Weekend toggles are intentionally NOT applied here: the strip is
@@ -1142,6 +1240,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
+      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1153,7 +1252,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, activeHeritage, todayIso, isSearching, searchQ]);
 
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
@@ -1188,7 +1287,11 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           setSelectedDate(iso);
         }}
       />
-      <HeritageMonthBanner />
+      <HeritageMonthBanner
+        activeId={activeHeritageId}
+        onToggle={setActiveHeritageId}
+        countsById={heritageCounts}
+      />
 
       {/* Sticky filter bar — search + categories + cities + kids */}
       <div className="sb-events-sticky-filter">
