@@ -10,7 +10,7 @@ import { getCityName, CITY_MAP } from "../../../lib/south-bay/cities";
 import {
   TODAY_ISO, NEXT_DAYS, NOW_MINUTES, IS_WEEKEND_MODE,
   startMinutes, formatTimeRange, isNotEnded,
-  formatAge,
+  formatAge, formatRelativeDate,
 } from "../../../lib/south-bay/timeHelpers";
 
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
@@ -275,21 +275,36 @@ export default function CityPage({ cityId, cityName }: Props) {
           <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: "0 0 10px", color: "var(--sb-ink)" }}>
             Recent at City Hall
           </h2>
-          {aroundItems.map((item: any, i: number) => (
-            <div key={i} style={{ padding: "10px 0", borderBottom: i < aroundItems.length - 1 ? "1px solid var(--sb-border-light)" : "none" }}>
-              <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 600, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, marginBottom: 3 }}>
-                {item.headline}
+          {aroundItems.map((item: any, i: number) => {
+            const ageLabel = formatRelativeDate(item.date);
+            return (
+              <div key={i} style={{ padding: "10px 0", borderBottom: i < aroundItems.length - 1 ? "1px solid var(--sb-border-light)" : "none" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
+                  <div style={{ fontFamily: "var(--sb-serif)", fontWeight: 600, fontSize: 14, color: "var(--sb-ink)", lineHeight: 1.35, flex: 1 }}>
+                    {item.headline}
+                  </div>
+                  {ageLabel && (
+                    <span style={{
+                      flex: "0 0 auto",
+                      fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
+                      letterSpacing: "0.06em", textTransform: "uppercase",
+                      color: "var(--sb-light)", whiteSpace: "nowrap",
+                    }}>
+                      {ageLabel}
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.5 }}>
+                  {item.summary}
+                  {item.sourceUrl && (
+                    <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600, marginLeft: 4 }}>
+                      Source →
+                    </a>
+                  )}
+                </div>
               </div>
-              <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.5 }}>
-                {item.summary}
-                {item.sourceUrl && (
-                  <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600, marginLeft: 4 }}>
-                    Source →
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

@@ -124,6 +124,30 @@ export function formatAge(isoStr: string | null | undefined): string {
   return `${Math.round(hours / 24)}d ago`;
 }
 
+/** Relative label for a YYYY-MM-DD date (no time component). Compares against
+ *  Pacific-time today so noon local doesn't drift across the date boundary.
+ *  Past: "today" | "yesterday" | "N days ago" | "MMM D" (over 13 days). */
+export function formatRelativeDate(yyyyMmDd: string | null | undefined): string {
+  if (!yyyyMmDd) return "";
+  const today = TODAY_ISO;
+  if (yyyyMmDd === today) return "today";
+  // ISO date arithmetic via Date constructor at noon PT to avoid TZ drift
+  const a = new Date(`${yyyyMmDd}T12:00:00-07:00`);
+  const b = new Date(`${today}T12:00:00-07:00`);
+  const days = Math.round((b.getTime() - a.getTime()) / 86400000);
+  if (days === 1) return "yesterday";
+  if (days > 1 && days <= 13) return `${days} days ago`;
+  if (days < 0) {
+    if (days === -1) return "tomorrow";
+    if (days >= -13) return `in ${-days} days`;
+  }
+  // Older / further out — fall back to "Apr 21" style
+  return a.toLocaleDateString("en-US", {
+    month: "short", day: "numeric",
+    timeZone: "America/Los_Angeles",
+  });
+}
+
 // ── City label ──
 
 export function cityLabel(city: string): string {
