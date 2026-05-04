@@ -626,12 +626,16 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
  *
  * @param {object} item - Content item
  * @param {string} subtype - "sv-history" | "restaurant" | "general"
+ * @param {string} [postDateStr] - YYYY-MM-DD the post will publish on. SV history copy
+ *   needs this so "today" reads correctly when the post lands (vs. generation time).
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
  */
-export async function generateWildcardCopy(item, subtype = "general") {
+export async function generateWildcardCopy(item, subtype = "general", postDateStr = null) {
   // SV History has its own generator
   if (subtype === "sv-history" && item.foundedYear) {
-    const ptTime = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    const ptTime = postDateStr
+      ? new Date(new Date(postDateStr + "T12:00:00").toLocaleString("en-US", { timeZone: "America/Los_Angeles" }))
+      : new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
     const variants = await generateSvHistoryCopy(item, ptTime);
     if (!variants.instagram) variants.instagram = variants.facebook;
     return variants;

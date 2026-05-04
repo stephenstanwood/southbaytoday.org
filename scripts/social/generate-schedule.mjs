@@ -816,7 +816,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
           console.log(`    🎲 Wildcard: [${wild.subtype}] ${wild.item.title?.slice(0, 50) || wild.item.name?.slice(0, 50)} [dry run]`);
         } else {
           try {
-            const copy = await generateWildcardCopy(wild.item, wild.subtype);
+            const copy = await generateWildcardCopy(wild.item, wild.subtype, dateStr);
             day["wildcard"] = {
               status: "draft",
               slotType: "wildcard",
