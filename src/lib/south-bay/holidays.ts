@@ -72,6 +72,24 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => nthWeekday(y, 1, 1, 3), // 3rd Monday of January
   },
   {
+    id: "lunar-new-year",
+    label: "Lunar New Year",
+    emoji: "🧧",
+    // Tết / Chinese New Year — huge in San Jose (Story Rd, Grand Century,
+    // Vietnamese Cultural Garden). Lunisolar calendar → year-by-year override.
+    color: "#b91c1c",
+    bg: "#fef2f2",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-01-29",
+        2026: "2026-02-17",
+        2027: "2027-02-06",
+        2028: "2028-01-26",
+      };
+      return overrides[y] ?? fixedDate(y, 2, 1);
+    },
+  },
+  {
     id: "valentines",
     label: "Valentine's Day",
     emoji: "💝",
@@ -94,6 +112,42 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#15803d",
     bg: "#f0fdf4",
     computeIso: (y) => fixedDate(y, 3, 17),
+  },
+  {
+    id: "holi",
+    label: "Holi",
+    emoji: "🎨",
+    // Festival of Colors — large Indian-American community across Cupertino,
+    // Sunnyvale, Fremont, San Jose. Hindu lunar calendar → annual override.
+    color: "#ec4899",
+    bg: "#fdf2f8",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-03-14",
+        2026: "2026-03-04",
+        2027: "2027-03-22",
+        2028: "2028-03-11",
+      };
+      return overrides[y] ?? fixedDate(y, 3, 15);
+    },
+  },
+  {
+    id: "eid-al-fitr",
+    label: "Eid al-Fitr",
+    emoji: "🌙",
+    // End of Ramadan — observed by Muslim communities across Santa Clara,
+    // Sunnyvale, San Jose. Date depends on moon sighting; use ISNA calculation.
+    color: "#15803d",
+    bg: "#f0fdf4",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-03-30",
+        2026: "2026-03-20",
+        2027: "2027-03-10",
+        2028: "2028-02-27",
+      };
+      return overrides[y] ?? fixedDate(y, 3, 20);
+    },
   },
   {
     id: "earth-day",
@@ -128,6 +182,24 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => lastWeekday(y, 5, 1), // last Monday of May
   },
   {
+    id: "eid-al-adha",
+    label: "Eid al-Adha",
+    emoji: "🌙",
+    // Festival of Sacrifice — observed by Muslim communities across the
+    // South Bay. Islamic lunar calendar → year-by-year override.
+    color: "#15803d",
+    bg: "#f0fdf4",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-06-06",
+        2026: "2026-05-27",
+        2027: "2027-05-17",
+        2028: "2028-05-05",
+      };
+      return overrides[y] ?? fixedDate(y, 6, 1);
+    },
+  },
+  {
     id: "juneteenth",
     label: "Juneteenth",
     emoji: "🕊️",
@@ -160,6 +232,62 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => nthWeekday(y, 9, 1, 1), // 1st Monday of September
   },
   {
+    id: "rosh-hashanah",
+    label: "Rosh Hashanah",
+    emoji: "🍎",
+    // Jewish New Year — Bay Area's Jewish community spans Palo Alto, Los
+    // Altos, Saratoga, Cupertino. Hebrew calendar → year-by-year override.
+    // Begins at sunset of the prior day; we use the first full day.
+    color: "#1e40af",
+    bg: "#eff6ff",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-09-23",
+        2026: "2026-09-12",
+        2027: "2027-10-02",
+        2028: "2028-09-21",
+      };
+      return overrides[y] ?? fixedDate(y, 9, 15);
+    },
+  },
+  {
+    id: "yom-kippur",
+    label: "Yom Kippur",
+    emoji: "🕊️",
+    // Day of Atonement, 10 days after Rosh Hashanah. Observed at synagogues
+    // and JCCs across the South Bay. Hebrew calendar → annual override.
+    color: "#1f2937",
+    bg: "#f3f4f6",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-10-02",
+        2026: "2026-09-21",
+        2027: "2027-10-11",
+        2028: "2028-09-30",
+      };
+      return overrides[y] ?? fixedDate(y, 9, 25);
+    },
+  },
+  {
+    id: "mid-autumn-festival",
+    label: "Mid-Autumn Festival",
+    emoji: "🥮",
+    // Tết Trung Thu / 中秋節 — moon-cake holiday celebrated by Vietnamese and
+    // Chinese communities. Big lantern parades on Story Rd and in Cupertino.
+    // Lunisolar calendar → annual override.
+    color: "#b45309",
+    bg: "#fffbeb",
+    computeIso: (y) => {
+      const overrides: Record<number, string> = {
+        2025: "2025-10-06",
+        2026: "2026-09-25",
+        2027: "2027-09-15",
+        2028: "2028-10-03",
+      };
+      return overrides[y] ?? fixedDate(y, 9, 25);
+    },
+  },
+  {
     id: "indigenous-peoples-day",
     label: "Indigenous Peoples' Day",
     emoji: "🪶",
@@ -174,6 +302,17 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#c2410c",
     bg: "#fff7ed",
     computeIso: (y) => fixedDate(y, 10, 31),
+  },
+  {
+    id: "dia-de-los-muertos",
+    label: "Día de los Muertos",
+    emoji: "💀",
+    // Day of the Dead — celebrated across San Jose's Mexican-American
+    // community (School of Arts and Culture at MHP, downtown SJ procession).
+    // Officially Nov 1–2; we anchor to the main observance day, Nov 2.
+    color: "#c2410c",
+    bg: "#fff7ed",
+    computeIso: (y) => fixedDate(y, 11, 2),
   },
   {
     id: "diwali",
