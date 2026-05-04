@@ -1,126 +1,142 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-03T23:16:29.669Z",
+    "generatedAt": "2026-05-04T11:18:00.607Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 12,
-    "placesMatched": 4,
-    "placeGaps": 8,
-    "eventsExtracted": 6,
-    "eventsMatched": 1,
-    "eventGaps": 5,
+    "placesExtracted": 10,
+    "placesMatched": 0,
+    "placeGaps": 10,
+    "eventsExtracted": 1,
+    "eventsMatched": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Pruneyard",
-      "city": "Campbell",
-      "kind": "venue",
-      "context": "shopping center with road opening to cars",
+      "name": "JTown Pizza",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "reopened after closure, artisanal pizza",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t30r3y/who_remembers_kfog/",
+        "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
         "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+        "https://www.reddit.com/r/bayarea/comments/1t3736j/california_golden_poppies/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
       ]
     },
     {
-      "name": "Lick Observatory",
-      "city": "",
+      "name": "Pruneyard",
+      "city": "Campbell",
       "kind": "venue",
-      "context": "observatory on Mount Hamilton near San Jose",
+      "context": "shopping center with newly opened road to cars",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t30r3y/who_remembers_kfog/",
+        "https://www.reddit.com/r/SanJose/comments/1t30pfe/jtown_pizza_is_back/",
         "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
+        "https://www.reddit.com/r/bayarea/comments/1t3736j/california_golden_poppies/",
+        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/"
       ]
     },
     {
       "name": "Mollie Stones",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "replaced historic Co-Op grocery store",
+      "context": "replaced Co-Op from commenter's childhood",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
-      ]
-    },
-    {
-      "name": "Fish Market",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "closed Palo Alto location, nostalgic closure",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+        "https://www.reddit.com/r/bayarea/comments/1t2otxk/beautiful_weather_today/",
+        "https://www.reddit.com/r/bayarea/comments/1t36err/who_remembers_this/",
+        "https://www.reddit.com/r/bayarea/comments/1t324f0/the_bay_area_on_film/",
+        "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ]
     },
     {
       "name": "Fry's",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "former electronics store, development site",
+      "context": "former electronics store, site of community development debate",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+        "https://www.reddit.com/r/bayarea/comments/1t2otxk/beautiful_weather_today/",
+        "https://www.reddit.com/r/bayarea/comments/1t36err/who_remembers_this/",
+        "https://www.reddit.com/r/bayarea/comments/1t324f0/the_bay_area_on_film/",
+        "https://www.reddit.com/r/SanJose/comments/1t31f80/the_santa_clara_valley_transportation_authority/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ]
     },
     {
-      "name": "Cable Co-Op",
-      "city": "Palo Alto",
-      "kind": "other",
-      "context": "historic community venue, closed",
+      "name": "Thien Huong",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "com tam restaurant, fresh and hot rice",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
       ]
     },
     {
-      "name": "Lake Chabot",
-      "city": "",
-      "kind": "park",
-      "context": "location of Forever Forward run club meetup",
+      "name": "Com Tam Thanh",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "com tam Vietnamese restaurant",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
       ]
     },
     {
-      "name": "A Novel Affair Book Cafe",
-      "city": "Los Altos",
-      "kind": "cafe",
-      "context": "independent bookstore hosting author event May 3",
+      "name": "Com Tam Dat Thanh",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "com tam on Tully Rd, S-tier quality",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
+      ]
+    },
+    {
+      "name": "Truong Thanh",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "com tam restaurant that breaks rice fresh",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
+      ]
+    },
+    {
+      "name": "Jersey Mike's",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "sandwich shop in plaza with CVS on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
+      ]
+    },
+    {
+      "name": "CVS",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "pharmacy closing June 2nd at 1165 W El Camino Real",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
+        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
       ]
     }
   ],
@@ -129,140 +145,15 @@
       "name": "Santa Clara Night Market",
       "when": "May 1-2, 2026",
       "city": "Santa Clara",
-      "context": "free community night market with food, vendors, art activities",
+      "context": "community night market with food, vendors, art workshops",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
-        "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/"
-      ]
-    },
-    {
-      "name": "Forever Forward Run Club Meetup",
-      "when": "morning (specific date not provided)",
-      "city": "",
-      "context": "free 5K with Adidas shoe demos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
-      ]
-    },
-    {
-      "name": "Devil Wears Prada 2 screening",
-      "when": "date not specified",
-      "city": "Campbell",
-      "context": "outdoor movie at Pruneyard",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
-      ]
-    },
-    {
-      "name": "Community Center Grounds Reopening and Ribbon Cutting Ceremony",
-      "when": "May 21, 10 a.m.",
-      "city": "Sunnyvale",
-      "context": "reopening after $14M renovation with remarks from Mayor",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
-      ]
-    },
-    {
-      "name": "Amanda Sung Book Event",
-      "when": "May 3, 6:30 p.m.",
-      "city": "Los Altos",
-      "context": "author announces film adaptation of debut book",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
-      ]
-    }
-  ],
-  "placeMatches": [
-    {
-      "name": "Peet's",
-      "city": "Campbell",
-      "kind": "cafe",
-      "context": "coffee shop at Pruneyard with outdoor seating",
-      "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/",
-        "https://www.reddit.com/r/Campbell/comments/1t0i3y9/pruneyard_road_opening_signs/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1t3cq/the_best_soccer_story_in_america_right_now_is/",
-        "https://www.reddit.com/r/SanJose/comments/1t2bi1n/clouds_forming_over_mount_umunhum/",
+        "https://www.reddit.com/r/bayarea/comments/1t323hu/sidewalk_trees_gardens_rocks/",
+        "https://www.reddit.com/r/SanJose/comments/1t34v6u/who_here_likes_com_tam/",
         "https://www.reddit.com/r/santaclara/comments/1t0bqxr/its_back_the_santa_clara_night_market/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
-      ],
-      "matchedName": "Peet's Coffee"
-    },
-    {
-      "name": "Valley Fair",
-      "city": "Santa Clara",
-      "kind": "retail",
-      "context": "major shopping mall for comparison",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/Campbell/comments/1t09uxc/nbc_news_pruneyard_segment/",
-        "https://www.reddit.com/r/bayarea/comments/1t2rabt/free_to_join_5k_with_forever_forward_run_club/",
-        "https://www.reddit.com/r/Campbell/comments/1t0kcc0/devil_wears_prada2_at_pruneyard_such_a_fun_movie/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/"
-      ],
-      "matchedName": "Bowlero Valley Fair"
-    },
-    {
-      "name": "West Valley College",
-      "city": "Saratoga",
-      "kind": "venue",
-      "context": "hosting Youth Town Hall event May 16",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
-      ],
-      "matchedName": "Saratoga Farmers' Market at West Valley College"
-    },
-    {
-      "name": "Sunnyvale Community Center",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "reopening ceremony May 21 after renovation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
-      ],
-      "matchedName": "Sunnyvale Community Center"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/"
+      ]
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Youth Town Hall",
-      "when": "May 16, 2026, 10:30 a.m. – 2:00 p.m.",
-      "city": "Saratoga",
-      "context": "free event for ages 13-20 with career exploration",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1t0cw4o/calling_all_students/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t181z4/community_center_grounds_reopening_may_21st/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t1aott/parking/"
-      ],
-      "matchedName": "Youth Town Hall"
-    }
-  ]
+  "placeMatches": [],
+  "eventMatches": []
 }
