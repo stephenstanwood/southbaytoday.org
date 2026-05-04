@@ -83,9 +83,17 @@ function titleCase(str) {
   return str.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
 }
 
+function formatEventDate(iso) {
+  if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso ?? "";
+  // Parse as local date (avoid UTC shift) and emit "Mon, May 4"
+  const [y, m, d] = iso.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
 async function generateBriefing(city, events, aroundItems, meetingData) {
   const eventLines = events.slice(0, 5).map((e) =>
-    `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${e.date ? ` (${e.date})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}`
+    `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${e.date ? ` (${formatEventDate(e.date)})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}`
   ).join("\n");
 
   const aroundLines = aroundItems.slice(0, 3).map((a) =>
@@ -109,6 +117,8 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
   const prompt = `You are the editorial voice of South Bay Signal, a hyperlocal news site for Silicon Valley residents.
 
 Write ONE sentence (20-30 words) summarizing what's most interesting or noteworthy happening in ${city.name} this week. Tone: crisp, local, specific — like a smart friend texting you what's going on in your city. Mention actual event names or city hall actions if relevant. No fluff.
+
+Important: only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses.
 
 ${parts.join("\n\n")}
 
