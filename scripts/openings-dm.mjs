@@ -33,7 +33,7 @@ const NOW_FOR_LABEL = process.env.TODAY
   : new Date();
 
 const OPENING_RX =
-  /\b(grand\s+(re)?opening|grand\s+re-opening|ribbon[\s-]*cutting|opening\s+day|now\s+open|opens\s+today|inauguration)\b/i;
+  /\b(grand\s+(re)?opening|grand\s+re-opening|re-?opening|reopens|ribbon[\s-]*cutting|opening\s+day|now\s+open|opens\s+today|inauguration|just\s+opened|newly\s+opened)\b/i;
 
 const KIND_PATTERNS = [
   { rx: /library|sccld/i, kind: "Library", emoji: "📚" },
@@ -131,7 +131,245 @@ function todaysOpeningEvents() {
   });
 }
 
-const items = [...todaysFood(), ...todaysOpeningEvents()];
+// ── Date extraction for free-text opening claims ─────────────────────────────
+// Used by around-town + reddit readers to resolve phrases like "May 9",
+// "Saturday, May 21st", "5/9" to ISO calendar dates.
+const MONTHS = {
+  jan: 0, january: 0, feb: 1, february: 1, mar: 2, march: 2,
+  apr: 3, april: 3, may: 4, jun: 5, june: 5, jul: 6, july: 6,
+  aug: 7, august: 7, sep: 8, sept: 8, september: 8, oct: 9, october: 9,
+  nov: 10, november: 10, dec: 11, december: 11,
+};
+
+function extractOpeningDate(text, sourceISODate) {
+  if (!text) return null;
+  const sourceDate = sourceISODate ? new Date(sourceISODate + "T12:00:00-07:00") : new Date();
+  const sourceY = sourceDate.getFullYear();
+  const sourceM = sourceDate.getMonth();
+  const sourceD = sourceDate.getDate();
+
+  // Pattern 1: "May 9" / "May 9th" / "May 9, 2026"
+  const m1 = text.match(
+    /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s*(\d{4}))?/i
+  );
+  if (m1) {
+    const month = MONTHS[m1[1].toLowerCase().replace(/\.$/, "")];
+    const day = parseInt(m1[2], 10);
+    let year = m1[3] ? parseInt(m1[3], 10) : sourceY;
+    // No explicit year? If the parsed month/day is BEFORE the source, assume next year.
+    if (!m1[3]) {
+      if (month < sourceM || (month === sourceM && day < sourceD)) year = sourceY + 1;
+    }
+    if (!Number.isFinite(day) || day < 1 || day > 31) return null;
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  }
+
+  // Pattern 2: "5/9" or "5/9/2026"
+  const m2 = text.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/);
+  if (m2) {
+    const month = parseInt(m2[1], 10) - 1;
+    const day = parseInt(m2[2], 10);
+    let year = m2[3] ? (m2[3].length === 2 ? 2000 + parseInt(m2[3], 10) : parseInt(m2[3], 10)) : sourceY;
+    if (month < 0 || month > 11 || day < 1 || day > 31) return null;
+    if (!m2[3]) {
+      if (month < sourceM || (month === sourceM && day < sourceD)) year = sourceY + 1;
+    }
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  }
+
+  return null;
+}
+
+// Map free-form South Bay city strings to canonical display names.
+const CITY_NORMALIZE = {
+  "san-jose": "San Jose", "san jose": "San Jose", sj: "San Jose", "san josé": "San Jose",
+  "mountain-view": "Mountain View", "mountain view": "Mountain View", mv: "Mountain View",
+  sunnyvale: "Sunnyvale",
+  "santa-clara": "Santa Clara", "santa clara": "Santa Clara", sc: "Santa Clara",
+  cupertino: "Cupertino",
+  milpitas: "Milpitas",
+  campbell: "Campbell",
+  saratoga: "Saratoga",
+  "los-gatos": "Los Gatos", "los gatos": "Los Gatos",
+  "los-altos": "Los Altos", "los altos": "Los Altos",
+  "palo-alto": "Palo Alto", "palo alto": "Palo Alto",
+};
+
+function todaysAroundTown() {
+  const at = readJson("around-town.json");
+  if (!at?.items) return [];
+  const out = [];
+  for (const it of at.items) {
+    const blob = `${it.headline || ""} ${it.summary || ""}`;
+    if (!OPENING_RX.test(blob)) continue;
+    // Try to extract the actual opening date from the text first; fall back to the
+    // item's own date (covers same-day announcements).
+    const extracted = extractOpeningDate(blob, it.date);
+    const matchDate = extracted || it.date;
+    if (matchDate !== TODAY) continue;
+    const cityKey = (it.cityId || it.cityName || "").toLowerCase();
+    const cityDisplay = CITY_NORMALIZE[cityKey] || it.cityName || "";
+    out.push({
+      kind: "Civic",
+      emoji: "🏛️",
+      name: it.headline,
+      blurb: it.summary ? it.summary.slice(0, 220).replace(/\s+\S*$/, "") + "…" : null,
+      where: cityDisplay,
+      url: it.sourceUrl || it.url || null,
+      time: null,
+      _src: "around-town",
+    });
+  }
+  return out;
+}
+
+function todaysReddit() {
+  const rd = readJson("reddit-pulse.json");
+  if (!rd?.posts) return [];
+  const out = [];
+  for (const p of rd.posts) {
+    const blob = `${p.title || ""} ${p.displayTitle || ""} ${p.summary || ""}`;
+    if (!OPENING_RX.test(blob)) continue;
+    // Reddit posts include a creation timestamp; use it to anchor relative date phrases.
+    let sourceISO = null;
+    if (typeof p.createdUtc === "number") {
+      sourceISO = new Date(p.createdUtc * 1000).toISOString().slice(0, 10);
+    } else if (p.createdAt || p.created) {
+      sourceISO = (p.createdAt || p.created).slice(0, 10);
+    }
+    const extracted = extractOpeningDate(blob, sourceISO);
+    if (!extracted) continue;
+    if (extracted !== TODAY) continue;
+    // Try to pull a city from the subreddit name (e.g. r/Sunnyvale → Sunnyvale).
+    const subKey = (p.sub || "").toLowerCase();
+    const cityDisplay =
+      CITY_NORMALIZE[subKey] ||
+      (subKey === "sanjose" ? "San Jose" :
+       subKey === "paloalto" ? "Palo Alto" :
+       subKey === "losgatos" ? "Los Gatos" :
+       subKey === "losaltos" ? "Los Altos" : "");
+    // permalink may be absolute (https://www.reddit.com/...) or relative (/r/...).
+    const link = p.permalink
+      ? (p.permalink.startsWith("http") ? p.permalink : `https://reddit.com${p.permalink}`)
+      : (p.externalUrl || p.url || null);
+    out.push({
+      kind: "Reddit tip",
+      emoji: "🗣️",
+      name: p.displayTitle || p.title,
+      blurb: p.summary ? p.summary.slice(0, 220) : null,
+      where: cityDisplay || (p.sub ? `r/${p.sub}` : ""),
+      url: link,
+      time: null,
+      _src: "reddit",
+    });
+  }
+  return out;
+}
+
+// ── Chamber of Commerce calendars (GrowthZone-based, scrapable) ─────────────
+// Most South Bay chambers run on GrowthZone, which renders events as
+// `<div class="gz-events-card">` blocks with an `<a>` title and a
+// `<span content="YYYY-MM-DDTHH:mm">` date. Ribbon cuttings are rare on
+// public chamber calendars (most are scheduled privately) but when they
+// surface here, this is often the only source that catches them.
+const CHAMBERS = [
+  { url: "https://web.sjchamber.com/events", city: "San Jose", name: "SJ Chamber" },
+  { url: "https://www.chambermv.org/events", city: "Mountain View", name: "MV Chamber" },
+  { url: "https://paloaltochamber.com/events", city: "Palo Alto", name: "PA Chamber" },
+  { url: "https://www.losgatoschamber.com/events", city: "Los Gatos", name: "LG Chamber" },
+];
+
+function decodeEntities(s) {
+  return (s || "")
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+}
+
+async function fetchChamberEvents(chamber) {
+  try {
+    const res = await fetch(chamber.url, {
+      headers: {
+        "user-agent":
+          "Mozilla/5.0 (compatible; southbaytoday-openings-dm/1.0; +https://southbaytoday.org)",
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return [];
+    const html = await res.text();
+    const cards = html.split("gz-events-card").slice(1);
+    const events = [];
+    for (const c of cards) {
+      const titleHref =
+        c.match(/gz-card-title[^>]*>\s*<a\s+href="([^"]+)"[^>]*>([^<]+)</) ||
+        c.match(/<a[^>]+gz-card-title[^>]*href="([^"]+)"[^>]*>([^<]+)</);
+      const dateMatch = c.match(/<span\s+content="(\d{4}-\d{2}-\d{2})/);
+      if (!titleHref || !dateMatch) continue;
+      events.push({
+        title: decodeEntities(titleHref[2]).trim(),
+        url: titleHref[1],
+        date: dateMatch[1],
+        chamber: chamber.name,
+        city: chamber.city,
+      });
+    }
+    return events;
+  } catch {
+    return [];
+  }
+}
+
+async function todaysChamberEvents() {
+  const all = await Promise.all(CHAMBERS.map(fetchChamberEvents));
+  const flat = all.flat();
+  const out = [];
+  for (const e of flat) {
+    if (e.date !== TODAY) continue;
+    if (!OPENING_RX.test(e.title)) continue;
+    out.push({
+      kind: "Chamber event",
+      emoji: "✂️",
+      name: e.title,
+      blurb: `Listed on ${e.chamber} calendar.`,
+      where: e.city,
+      url: e.url || null,
+      time: null,
+      _src: "chamber",
+    });
+  }
+  return out;
+}
+
+function dedupAcrossSources(items) {
+  const seen = new Map();
+  for (const it of items) {
+    const key = `${(it.where || "").toLowerCase()}::${(it.name || "")
+      .toLowerCase()
+      .replace(/\s+(grand\s+)?(re)?-?opening.*$/i, "")
+      .replace(/\s+ribbon[\s-]?cutting.*$/i, "")
+      .trim()}`;
+    const prior = seen.get(key);
+    if (!prior) {
+      seen.set(key, it);
+    } else {
+      // Prefer item with url, then longer blurb.
+      const priorScore = (prior.url ? 10 : 0) + (prior.blurb?.length || 0);
+      const curScore = (it.url ? 10 : 0) + (it.blurb?.length || 0);
+      if (curScore > priorScore) seen.set(key, it);
+    }
+  }
+  return [...seen.values()];
+}
+
+const items = dedupAcrossSources([
+  ...todaysFood(),
+  ...todaysOpeningEvents(),
+  ...todaysAroundTown(),
+  ...todaysReddit(),
+  ...(await todaysChamberEvents()),
+]);
 
 if (items.length === 0) {
   console.log(`[openings-dm] ${TODAY}: nothing opening — no DM`);
