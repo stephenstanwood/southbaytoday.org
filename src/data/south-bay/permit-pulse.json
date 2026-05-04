@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-03T23:09:35.891Z",
+      "generatedAt": "2026-05-04T11:09:26.819Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 26 – May 3",
+      "dateRange": "Apr 27 – May 4",
       "stats": {
-        "total": 441,
-        "notable": 30,
-        "newUnits": 9,
-        "totalValuation": 14482934
+        "total": 418,
+        "notable": 28,
+        "newUnits": 8,
+        "totalValuation": 11927198
       },
       "permits": [
-        {
-          "id": "2024-107652-RS",
-          "address": "3023 Moonstar Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu",
-          "valuation": 168752,
-          "units": 1,
-          "issueDate": "2026-04-27",
-          "subtype": "2nd Unit Added"
-        },
         {
           "id": "2025-140268-RS",
           "address": "5568 Dartmouth Dr #2",
@@ -63,6 +51,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-138450-RS",
+          "address": "1421 Vallejo Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Adu - 2nd Floor",
+          "valuation": 126310,
+          "units": 2,
+          "issueDate": "2026-05-01",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2024-067775-RS",
           "address": "3203 Foxboro Pl #2",
           "category": "residential-new",
@@ -72,30 +72,6 @@
           "valuation": 113894,
           "units": 1,
           "issueDate": "2026-04-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-144120-RS",
-          "address": "267 S 12th St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 89280,
-          "units": 1,
-          "issueDate": "2026-04-27",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-144372-RS",
-          "address": "2928 Del Loma Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 83023,
-          "units": 1,
-          "issueDate": "2026-04-27",
           "subtype": "2nd Unit Added"
         },
         {
@@ -133,19 +109,43 @@
           "units": 0,
           "issueDate": "2026-04-29",
           "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2026-110776-CI",
+          "address": "1155 Coleman Av #2",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Tiktok (Bem100%) Levels 1-4 ti",
+          "valuation": 537000,
+          "units": 0,
+          "issueDate": "2026-04-30",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-115224-CI",
+          "address": "6800 Santa Teresa Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bem 100%) R/R Rooftop Hvac",
+          "valuation": 518268,
+          "units": 0,
+          "issueDate": "2026-04-28",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-03T23:09:38.193Z",
+      "generatedAt": "2026-05-04T11:09:29.324Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 26 – May 3",
+      "dateRange": "Apr 27 – May 4",
       "stats": {
-        "total": 83,
-        "notable": 7,
+        "total": 87,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-01",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01107",
           "address": "820 Hamilton Av",
           "category": "residential-remodel",
@@ -187,28 +175,28 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00095",
-          "address": "220 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "id": "26BLD-01126",
+          "address": "1133 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-05-03",
+          "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00094",
-          "address": "261 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated (edge lit) wall sign for Fireclay Tile. The sign will be constructed of stainless-steel letters (painted black with satin finish) and will be 9 inches tall by 7 feet and 7 inches long. Zoning District: CD-C (GF)(P). Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-05-01",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00097",
@@ -223,6 +211,18 @@
           "subtype": "Over the Counter Approved"
         },
         {
+          "id": "26PLN-00095",
+          "address": "220 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
           "id": "26PLN-00096",
           "address": "4345 El Camino Real",
           "category": "entitlement",
@@ -232,6 +232,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-29",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00094",
+          "address": "261 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated (edge lit) wall sign for Fireclay Tile. The sign will be constructed of stainless-steel letters (painted black with satin finish) and will be 9 inches tall by 7 feet and 7 inches long. Zoning District: CD-C (GF)(P). Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
           "subtype": "Over the Counter Approved"
         }
       ]
