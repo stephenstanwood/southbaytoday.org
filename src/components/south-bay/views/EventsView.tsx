@@ -208,6 +208,72 @@ function thisWeekendDates(todayIso: string): [string, string] {
   return [sat, addDays(sat, 1)];
 }
 
+// ── Recurring detection ────────────────────────────────────────────────────
+// "Live Music @ San Pedro Square" appears 48× across the dataset; "LEGO
+// Tuesdays! @ Downtown Library" appears 25×, all on Tuesdays. Knowing an
+// event is a weekly fixture changes the decision: "I missed it Saturday"
+// becomes "I'll catch it next week." We detect this purely from the data
+// (no scraper change required) and surface a small "Every Tue" / "Recurring"
+// badge in the meta row.
+
+interface RecurringInfo {
+  /** Display label: "Every Tue", "Mon & Wed", "Most days", or "Recurring". */
+  label: string;
+  /** Distinct upcoming dates in this series. */
+  count: number;
+}
+
+const DOW_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+
+function dowFromIso(iso: string): number | null {
+  const d = new Date(iso + "T12:00:00");
+  const n = d.getDay();
+  return Number.isFinite(n) ? n : null;
+}
+
+function recurringKey(title: string, venue: string | null | undefined): string {
+  return `${(title || "").trim().toLowerCase()}|${(venue || "").trim().toLowerCase()}`;
+}
+
+function computeRecurringMap(events: UpcomingEvent[]): Map<string, RecurringInfo> {
+  const dateSets = new Map<string, Set<string>>();
+  for (const e of events) {
+    if (!e.title || !e.date) continue;
+    if (e.ongoing && !e.time) continue; // exhibits aren't recurring weeklies
+    const key = recurringKey(e.title, e.venue);
+    if (!dateSets.has(key)) dateSets.set(key, new Set());
+    dateSets.get(key)!.add(e.date);
+  }
+  const out = new Map<string, RecurringInfo>();
+  for (const [key, dates] of dateSets) {
+    if (dates.size < 3) continue;
+    const dows = [0, 0, 0, 0, 0, 0, 0];
+    for (const iso of dates) {
+      const d = dowFromIso(iso);
+      if (d !== null) dows[d]++;
+    }
+    const total = dows.reduce((a, b) => a + b, 0);
+    if (total === 0) continue;
+    const ranked = dows
+      .map((c, i) => ({ c, i }))
+      .filter((x) => x.c > 0)
+      .sort((a, b) => b.c - a.c);
+    const top = ranked[0];
+    let label: string;
+    if (top.c / total >= 0.7) {
+      label = `Every ${DOW_SHORT[top.i]}`;
+    } else if (ranked.length >= 2 && (ranked[0].c + ranked[1].c) / total >= 0.85) {
+      label = `${DOW_SHORT[ranked[0].i]} & ${DOW_SHORT[ranked[1].i]}`;
+    } else if (ranked.length >= 4) {
+      label = "Most days";
+    } else {
+      label = "Recurring";
+    }
+    out.set(key, { label, count: dates.size });
+  }
+  return out;
+}
+
 // ── Event Card ─────────────────────────────────────────────────────────────
 
 function eventPhotoUrl(event: UpcomingEvent, w = 160, h = 160): string | null {
@@ -216,7 +282,15 @@ function eventPhotoUrl(event: UpcomingEvent, w = 160, h = 160): string | null {
   return null;
 }
 
-function UpcomingEventCard({ event, showDate }: { event: UpcomingEvent; showDate?: boolean }) {
+function UpcomingEventCard({
+  event,
+  showDate,
+  recurring,
+}: {
+  event: UpcomingEvent;
+  showDate?: boolean;
+  recurring?: RecurringInfo | null;
+}) {
   const badge = costBadge(event.cost);
   const showBadge = !(event.cost === "free" && event.category === "community");
   const accent = CATEGORY_ACCENT[event.category] ?? CATEGORY_ACCENT.community;
@@ -319,6 +393,32 @@ function UpcomingEventCard({ event, showDate }: { event: UpcomingEvent; showDate
           }
           {event.venue && <span style={{ color: "var(--sb-border)" }}>·</span>}
           {event.venue && <span>{cityLabel(event.city)}</span>}
+          {recurring && (
+            <>
+              <span style={{ color: "var(--sb-border)" }}>·</span>
+              <span
+                title={`${recurring.count} upcoming dates in this series`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 3,
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: 9.5,
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  padding: "1px 6px",
+                  borderRadius: 100,
+                  background: "#F5F3FF",
+                  color: "#6D28D9",
+                  border: "1px solid #DDD6FE",
+                }}
+              >
+                <span aria-hidden style={{ fontSize: 9 }}>🔁</span>
+                {recurring.label}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Body — prefer blurb, fall back to description */}
@@ -915,6 +1015,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     () => allEvents.filter((e) => e.ongoing && !e.time),
     [allEvents],
   );
+
+  // Build the recurring-series map once across the full upcoming set so cards
+  // can show "Every Tue" / "Recurring" badges without each one re-walking.
+  const recurringMap = useMemo(() => computeRecurringMap(upcomingEvents), [upcomingEvents]);
+  const recurringFor = (e: UpcomingEvent): RecurringInfo | null =>
+    recurringMap.get(recurringKey(e.title, e.venue)) ?? null;
 
   const allCities = selectedCities.size === CITIES.length;
 
@@ -1860,7 +1966,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {events.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
               </div>
             </div>
           ))}
@@ -1887,7 +1993,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {events.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
               </div>
             </div>
           ))}
@@ -1905,7 +2011,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {dayEvents.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+              {dayEvents.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
             </div>
           )}
         </div>
@@ -1923,7 +2029,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             </span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {filteredOngoing.map((event) => <UpcomingEventCard key={event.id} event={event} />)}
+            {filteredOngoing.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
           </div>
         </div>
       )}
