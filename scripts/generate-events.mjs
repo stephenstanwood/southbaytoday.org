@@ -2088,10 +2088,19 @@ async function fetchScclEvents() {
           description: truncate(stripHtml(desc)),
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
           source: libraryName,
-          kidFriendly: (ev.audiences || []).some((a) => {
-            const name = typeof a === "string" ? a : a?.name || "";
-            return /child|teen|family|baby|toddler/i.test(name);
-          }) || /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show|grade|youth)\b/i.test(title + " " + stripHtml(desc)),
+          kidFriendly: (() => {
+            const haystack = title + " " + stripHtml(desc);
+            // Adult-only override: parent/caregiver workshops, ESL classes,
+            // estate planning, etc. trip the family-keyword regex (their
+            // descriptions mention "families") but are programmed FOR adults.
+            // Title-anchored — descriptions are too noisy.
+            if (/\b(parents?|caregivers?|adults?\s+only|seniors?|memoir|estate planning|tax\s+(prep|help)|investing|retirement|widow|grief|alzheimer|dementia|book club for adults|esl)\b/i.test(title)) return false;
+            if ((ev.audiences || []).some((a) => {
+              const name = typeof a === "string" ? a : a?.name || "";
+              return /child|teen|family|baby|toddler/i.test(name);
+            })) return true;
+            return /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show|grade|youth)\b/i.test(haystack);
+          })(),
         });
       }
     }

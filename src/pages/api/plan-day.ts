@@ -826,6 +826,12 @@ function buildCandidatePool(
       if (startH !== null && startH >= KIDS_CURFEW_HOUR) continue;
     }
 
+    // Hard skip: in kids mode, events flagged kidFriendly:false don't belong
+    // in the candidate pool at all. Score-only penalties (-40) sometimes get
+    // overcome by a today-event boost + thin-pool padding, and an adult art
+    // lecture in a kids plan is worse than a thin plan.
+    if (kids && evt.kidFriendly === false) continue;
+
     // Audience-age filter — events tagged at ingest as kids-only should
     // never appear in adult plans, and 21+/drag/tasting events should never
     // appear in kids plans. "all" (default for most events) passes both.
@@ -954,6 +960,13 @@ function buildCandidatePool(
     // specific restaurants/shops as plan cards, not vague neighborhood names.
     // Score penalty alone wasn't enough because the curated boost (+25) offset it.
     if ((p.category || "").toLowerCase() === "neighborhood") continue;
+
+    // District-name guard: shopping_mall / point_of_interest entries named
+    // "Main Street X" or "Downtown X" are functionally the same as the
+    // neighborhood category — generic district markers, not specific venues.
+    // Slotting "Main Street Cupertino" as the lunch stop is the failure mode
+    // we're catching here.
+    if (/^(main\s+street|downtown|the\s+district|uptown)\s+\w+/i.test(p.name || "")) continue;
 
     // Filter to city or nearby
     if (p.city !== city) {
