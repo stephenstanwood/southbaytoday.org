@@ -1067,7 +1067,15 @@ function inferCategory(title, desc, type, venue = "") {
   const isCraftMarket = /\bcraft\s*(fair|market|show|sale|night|bazaar|booth|vendor)\b/.test(t);
   // "fair" alone is too broad — only match community/arts fairs, not job/health/resource/housing fairs
   const isFairEvent = /\b(craft|art|artisan|maker|vendor|street|holiday|county|state|flea|antique|swap|harvest|spring|summer|fall|winter) fair\b/.test(t);
-  if (t.includes("market") || isFairEvent || t.includes("vendor") || isCraftMarket) return "market";
+  // Title-only market match: a venue or restaurant brand containing "Market" (e.g.
+  // "San Pedro Square Market", "SoFA Market", "Hobee's Pancake Market") shouldn't
+  // override the actual event type. Match real market activities only.
+  const titleMarketActivity = /\b(farmers? market|swap meet|night market|street market|food market|art market|craft market|holiday market|flea market|antique market|maker market|vendor market|artisan market|public market|outdoor market|pop-?up market|christmas market|harvest market)\b/.test(titleLower);
+  const titleEndsInMarketWord = /(?:^|\s)markets?\s*$/.test(titleLower); // "Muse Markets"
+  const titleHasAtMarketVenue = /\bat\s+[\w'’ ]*\bmarkets?\b/i.test(titleLower); // "...at San Pedro Square Market"
+  const titleHasBrandPossessiveMarket = /\b\w+(?:'|’)s\s+[\w ]*\bmarkets?\b/i.test(titleLower); // "Hobee's Pancake Market"
+  const isMarketTitle = (titleMarketActivity || titleEndsInMarketWord) && !titleHasAtMarketVenue && !titleHasBrandPossessiveMarket;
+  if (isMarketTitle || isFairEvent || /\bvendor\b/.test(titleLower) || isCraftMarket) return "market";
   // Workshops/classes/lectures in the TITLE are educational — check before outdoor to avoid false positives
   if (/\b(workshop|webinar|seminar|lecture|class|tutorial|training|course)\b/.test(titleLower)) return "education";
   // Indoor venues (libraries, aquatic centers, etc.) host gardening/nature talks and rec swims —
@@ -1083,7 +1091,7 @@ function inferCategory(title, desc, type, venue = "") {
   const hasOutdoorWord = /\b(hik\w*|outdoor\w*|garden\w*|nature|trail\w*|park\w*)\b/.test(outdoorHaystack);
   if (!isIndoorVenue && hasOutdoorWord) return "outdoor";
   if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
-  if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary")) return "food";
+  if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary") || /\b(pancake|breakfast|brunch|bake sale|food truck|barbecue|bbq|bake-off|chili cook-off)\b/.test(t)) return "food";
   return "community";
 }
 
