@@ -76,6 +76,7 @@ interface UpcomingEvent {
   blurb?: string;
   image?: string | null;
   photoRef?: string | null;
+  firstSeenAt?: string;
 }
 
 // ── Time helpers ───────────────────────────────────────────────────────────
@@ -116,6 +117,18 @@ function hasNotStarted(time: string | null): boolean {
   const mins = parseTimeToMinutes(time);
   if (mins === null) return true;
   return mins > NOW_MINUTES;
+}
+
+// Newly-scraped events get a "JUST ADDED" badge for this many hours after
+// their first sighting (tracked in event-first-seen-cache.json at ingest).
+// Long enough that someone checking once a day will still catch it; short
+// enough that it doesn't become wallpaper.
+const JUST_ADDED_WINDOW_HOURS = 72;
+function isJustAdded(firstSeenAt: string | null | undefined): boolean {
+  if (!firstSeenAt) return false;
+  const ts = new Date(firstSeenAt).getTime();
+  if (!Number.isFinite(ts)) return false;
+  return (Date.now() - ts) <= JUST_ADDED_WINDOW_HOURS * 3600_000;
 }
 
 // "Happening now": started, not yet ended. For events with no endTime, fall
@@ -416,6 +429,18 @@ function UpcomingEventCard({
               }}
             >
               {urgency.label}
+            </span>
+          )}
+          {!urgency && isJustAdded(event.firstSeenAt) && (
+            <span
+              title="Added to South Bay Today in the last 72 hours"
+              style={{
+                fontSize: 9, fontWeight: 800, fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.06em", padding: "1px 5px", borderRadius: 3,
+                background: "#ECFEFF", color: "#0E7490", border: "1px solid #A5F3FC",
+              }}
+            >
+              JUST ADDED
             </span>
           )}
         </div>
@@ -1020,6 +1045,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // Inverts the default "hide started events" rule so users can see the
   // exhibit/festival/concert that's already going on right now.
   const [showLiveNowOnly, setShowLiveNowOnly] = useState(false);
+  // Just added = events whose firstSeenAt is within the last 72 hours.
+  // Gives repeat visitors a way to scan only what's new since their last
+  // visit instead of re-reading the same list.
+  const [showJustAddedOnly, setShowJustAddedOnly] = useState(false);
   // Active heritage-month filter (e.g. AANHPI, Pride). Populated by clicking
   // a chip in the HeritageMonthBanner; null = no filter. Composes with the
   // other filters via matchesFilters.
@@ -1134,6 +1163,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (e.date !== todayIso) return false;
       if (!isInProgressNow(e.time, e.endTime)) return false;
     }
+    if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) return false;
     if (!matchesActiveHeritage(e)) return false;
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
@@ -1169,7 +1199,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -1183,7 +1213,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -1222,7 +1252,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, search]);
 
   // Auto-clamp selected date if it's no longer in datesWithEvents (e.g. user changed filters)
   useEffect(() => {
@@ -1276,7 +1306,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -1316,7 +1346,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -1329,7 +1359,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // city/category/search filters — independent of the other pill states so
   // toggling one pill doesn't make the others' badges go to zero.
   const pillCounts = useMemo(() => {
-    let kids = 0, free = 0, tonight = 0, weekend = 0, live = 0;
+    let kids = 0, free = 0, tonight = 0, weekend = 0, live = 0, justAdded = 0;
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
       // Live count needs started-but-ongoing events, so don't apply the
@@ -1354,8 +1384,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (m !== null && m >= TONIGHT_FROM_MIN) tonight++;
       }
       if (e.date === weekendSat || e.date === weekendSun) weekend++;
+      if (isJustAdded(e.firstSeenAt)) justAdded++;
     }
-    return { kids, free, tonight, weekend, live };
+    return { kids, free, tonight, weekend, live, justAdded };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
@@ -1675,6 +1706,35 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               </span>
             )}
           </label>
+
+          {pillCounts.justAdded > 0 && (
+            <label style={{
+              display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
+              fontSize: 12, color: showJustAddedOnly ? "#fff" : "var(--sb-muted)",
+              cursor: "pointer", userSelect: "none",
+              padding: "5px 12px", borderRadius: 100,
+              border: `1.5px solid ${showJustAddedOnly ? "#0E7490" : "var(--sb-border)"}`,
+              background: showJustAddedOnly ? "#0E7490" : "#fff",
+              fontWeight: showJustAddedOnly ? 600 : 500,
+              transition: "all 0.12s",
+            }}>
+              <input
+                type="checkbox" checked={showJustAddedOnly}
+                onChange={(e) => setShowJustAddedOnly(e.target.checked)}
+                style={{ cursor: "pointer", accentColor: "#0E7490" }}
+              />
+              ✨ Just added
+              <span style={{
+                fontSize: 10, fontWeight: 700,
+                background: showJustAddedOnly ? "rgba(255,255,255,0.22)" : "#ECFEFF",
+                color: showJustAddedOnly ? "#fff" : "#0E7490",
+                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
+                minWidth: 18, textAlign: "center",
+              }}>
+                {pillCounts.justAdded}
+              </span>
+            </label>
+          )}
         </div>
 
         {/* Row 2: Category + city pills — same pill style, cities flow right after categories */}

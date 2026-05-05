@@ -4914,6 +4914,14 @@ async function main() {
   }
   if (remapped > 0) console.log(`\n🛠  Remapped ${remapped} invalid event categories`);
 
+  // Freshness stamp — tag each event with `firstSeenAt` so the UI can show a
+  // "JUST ADDED" pill on items that appeared in the last few days. Keeps a
+  // persistent id → ISO timestamp cache; cold start backdates by 7 days so
+  // the feature doesn't flag every event the first time it ships.
+  const { stampFirstSeen } = await import("../src/lib/south-bay/eventFreshness.mjs");
+  const freshStats = stampFirstSeen(collapsedEvents);
+  console.log(`\n🆕 Freshness: stamped=${freshStats.stamped} fresh=${freshStats.fresh} pruned=${freshStats.pruned}${freshStats.coldStart ? " (cold start — backdated by 7d)" : ""}`);
+
   const ongoingCount = collapsedEvents.filter((e) => e.ongoing).length;
 
   const output = {
