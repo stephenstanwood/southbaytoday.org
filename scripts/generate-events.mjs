@@ -1026,6 +1026,13 @@ function inferCategory(title, desc, type, venue = "") {
   // Farmers markets must be categorized as "market" before music/arts checks —
   // descriptions often mention "live music" incidentally, which would otherwise win.
   if (/\bfarmers?\s+market\b/.test(titleLower)) return "market";
+  // Adult-education classes (ESL, literacy) and meditation/movement classes (Qi Gong,
+  // Falun Dafa, Tai Chi) are routinely miscategorized as "arts" because their
+  // descriptions mention boilerplate like a "Classical Arts Foundation" sponsor or
+  // "language arts" framing. Anchor on the title and short-circuit before the arts
+  // heuristic so a stray "art" in the description can't override the actual subject.
+  if (/\b(esl|literacy|english\s+(class|conversation|tutoring))\b/i.test(titleLower)) return "education";
+  if (/\b(qi\s*gong|qigong|falun\s+dafa|tai\s+chi)\b/i.test(titleLower)) return "community";
   const isArtWord = /\barts?\b|\bartist|\bartwork|\bartistry/.test(t);
   if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (isArtWord && !t.includes("martial art"))) return "arts";
   // Book clubs and discussions are arts/reading events, not formal education
