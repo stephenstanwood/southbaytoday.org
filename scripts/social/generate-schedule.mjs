@@ -404,6 +404,7 @@ function findMilestone(src, month, day) {
       const company = str(block, "company");
       if (!company) continue;
       return {
+        id: str(block, "id"),
         company,
         city: str(block, "city"),
         foundedYear: num(block, "foundedYear") || 0,
@@ -433,6 +434,7 @@ function pickWildcard(candidates, dateStr, recentTitles = new Set()) {
         return {
           subtype: "sv-history",
           item: {
+            id: milestone.id,
             title: milestone.company,
             name: milestone.company,
             company: milestone.company,
@@ -839,16 +841,24 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             generated++;
             recentWildcardTitles.add((wild.item.title || wild.item.name || "").toLowerCase());
             console.log(`    🎲 Wildcard: [${wild.subtype}] ${(wild.item.title || wild.item.name || "").slice(0, 50)} ✅`);
-            try { await generateImageForSlot(day["wildcard"], dateStr, "wildcard"); }
-            catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
-            // SV history posts are pre-approved curated content (anniversary milestones).
-            // Auto-approve copy + image so they publish without review portal action,
-            // but only if image gen succeeded — no auto-publish without an image.
-            if (wild.subtype === "sv-history" && day["wildcard"].imageUrl) {
-              const now = new Date().toISOString();
-              day["wildcard"].copyApprovedAt = now;
-              day["wildcard"].imageApprovedAt = now;
-              console.log(`      ✓ SV history auto-approved (copy + image)`);
+            // SV history wildcards skip Recraft entirely — they get the company logo
+            // (curated via fetch-tech-logos.mjs nightly) which is more recognizable than
+            // any abstract poster. Auto-approve since these are pre-vetted milestones.
+            if (wild.subtype === "sv-history") {
+              const logoId = wild.item.id;
+              if (logoId) {
+                day["wildcard"].imageUrl = `https://southbaytoday.org/logos/${logoId}.png`;
+                day["wildcard"].imageStyle = "logo";
+                const now = new Date().toISOString();
+                day["wildcard"].copyApprovedAt = now;
+                day["wildcard"].imageApprovedAt = now;
+                console.log(`      ✓ SV history auto-approved (logo: ${logoId}.png)`);
+              } else {
+                console.log(`      ⚠️  SV history slot missing id — staying draft`);
+              }
+            } else {
+              try { await generateImageForSlot(day["wildcard"], dateStr, "wildcard"); }
+              catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
             }
           } catch (err) {
             console.log(`    🎲 Wildcard: ❌ ${err.message}`);

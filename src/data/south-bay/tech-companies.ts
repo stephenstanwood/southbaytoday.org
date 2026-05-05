@@ -1719,7 +1719,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 1,
     tagline: "Consumer electronics, software, and services — founded in a Cupertino garage.",
     anniversaryNote: "Apple celebrates its 50th anniversary this month. From a Cupertino garage to a $3 trillion company, it's the most consequential story in Silicon Valley history.",
-    url: "https://apple.com",
+    url: "https://en.wikipedia.org/wiki/History_of_Apple_Inc.",
     chmExhibit: "Apple at 50",
   },
   {
@@ -1731,7 +1731,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 5,
     tagline: "GPU pioneer and AI accelerator giant headquartered in Santa Clara.",
     anniversaryNote: "NVIDIA was founded April 5, 1993 — 33 years ago this week. Jensen Huang's bet on parallel computing went from gaming GPUs to powering the entire AI revolution.",
-    url: "https://nvidia.com",
+    url: "https://en.wikipedia.org/wiki/Nvidia",
   },
   {
     id: "intel",
@@ -1742,7 +1742,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 18,
     tagline: "Semiconductor giant that put Silicon in Silicon Valley, founded 1968.",
     anniversaryNote: "Robert Noyce and Gordon Moore founded Intel on July 18, 1968 — the company that literally named the era.",
-    url: "https://intel.com",
+    url: "https://en.wikipedia.org/wiki/Intel",
   },
   {
     id: "cisco",
@@ -1753,7 +1753,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 10,
     tagline: "Networking and cybersecurity giant headquartered in San Jose.",
     anniversaryNote: "Cisco was founded by Stanford computer scientists in December 1984. Their multi-protocol router helped build the modern internet.",
-    url: "https://cisco.com",
+    url: "https://en.wikipedia.org/wiki/Cisco",
   },
   {
     id: "amd",
@@ -1764,7 +1764,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 1,
     tagline: "Chip maker challenging Intel and NVIDIA across CPUs, GPUs, and AI accelerators.",
     anniversaryNote: "AMD was founded May 1, 1969 by Jerry Sanders. Now one of Santa Clara's most important semiconductor companies.",
-    url: "https://amd.com",
+    url: "https://en.wikipedia.org/wiki/AMD",
   },
   {
     id: "hp",
@@ -1775,7 +1775,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 1,
     tagline: "Silicon Valley's original company, born in a Palo Alto garage in 1939.",
     anniversaryNote: "Hewlett-Packard is often called the original Silicon Valley startup — Bill Hewlett and Dave Packard started it in a rented Palo Alto garage. That garage is now a California Historical Landmark.",
-    url: "https://hp.com",
+    url: "https://en.wikipedia.org/wiki/HP_Garage",
   },
   {
     id: "google",
@@ -1786,7 +1786,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 4,
     tagline: "Search, cloud, and AI giant anchoring Mountain View's economy.",
     anniversaryNote: "Google was incorporated September 4, 1998 — Larry Page and Sergey Brin's Stanford research project became the world's most powerful information company.",
-    url: "https://google.com",
+    url: "https://en.wikipedia.org/wiki/Google",
   },
   {
     id: "yahoo",
@@ -1797,7 +1797,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 2,
     tagline: "Pioneer internet portal founded at Stanford and based in Sunnyvale for decades.",
     anniversaryNote: "Yahoo was incorporated March 2, 1995 by Jerry Yang and David Filo — a generation of South Bay residents built their internet habits around this Sunnyvale company.",
-    url: "https://yahoo.com",
+    url: "https://en.wikipedia.org/wiki/Yahoo!",
   },
   {
     id: "netflix",
@@ -1808,7 +1808,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 29,
     tagline: "Streaming giant headquartered in Los Gatos, transforming home entertainment.",
     anniversaryNote: "Netflix was founded August 29, 1997 in Scotts Valley. Now a Los Gatos company that changed how the world watches TV and film.",
-    url: "https://netflix.com",
+    url: "https://en.wikipedia.org/wiki/Netflix",
   },
   {
     id: "intuit",
@@ -1819,7 +1819,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 1,
     tagline: "Makers of TurboTax and QuickBooks — the financial software backbone of millions of households and small businesses.",
     anniversaryNote: "Intuit was founded in April 1983 by Scott Cook and Tom Proulx in Palo Alto. TurboTax and QuickBooks together reach over 100 million customers — from every South Bay household filing taxes to every small business on Castro Street.",
-    url: "https://intuit.com",
+    url: "https://en.wikipedia.org/wiki/Intuit",
   },
   {
     id: "sun-microsystems",
@@ -1853,7 +1853,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 16,
     tagline: "Database and cloud giant founded in Santa Clara — Oracle's relational database became the backbone of enterprise software worldwide.",
     anniversaryNote: "Oracle was founded June 16, 1977 as Software Development Laboratories in Santa Clara by Larry Ellison, Bob Miner, and Ed Oates. The Oracle database powered nearly every major corporation's data systems for four decades.",
-    url: "https://oracle.com",
+    url: "https://en.wikipedia.org/wiki/Oracle_Corporation",
   },
   {
     id: "ebay",
@@ -1864,7 +1864,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 3,
     tagline: "Pioneer online marketplace launched from a San Jose living room — eBay proved that strangers on the internet could buy and sell anything.",
     anniversaryNote: "eBay was founded September 3, 1995 by Pierre Omidyar from his San Jose home. The first item sold was a broken laser pointer for $14.83. By the dot-com boom it was the internet's town square for commerce.",
-    url: "https://ebay.com",
+    url: "https://en.wikipedia.org/wiki/EBay",
   },
   {
     id: "adobe",
@@ -1875,7 +1875,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 2,
     tagline: "Creative software giant headquartered in San Jose — Photoshop, Acrobat, and Premiere touch nearly every piece of digital content ever made.",
     anniversaryNote: "Adobe was founded December 2, 1982 by John Warnock and Charles Geschke after leaving Xerox PARC. Named after Adobe Creek in Los Altos, the company's PostScript language revolutionized desktop publishing and set the stage for the creative software industry.",
-    url: "https://adobe.com",
+    url: "https://en.wikipedia.org/wiki/Adobe_Inc.",
   },
   {
     id: "netscape",
@@ -1922,7 +1922,7 @@ export const TECH_MILESTONES: TechMilestone[] = [
     day: 5,
     tagline: "The world's professional network — launched from Mountain View and now the default platform for 1 billion careers worldwide.",
     anniversaryNote: "LinkedIn launched publicly on May 5, 2003, from its original offices in Mountain View. Founded by Reid Hoffman and co-founders just months after leaving PayPal, LinkedIn pioneered the idea of putting your resume online and connecting with colleagues — before social networking was a category. In 2016, Microsoft acquired it for $26.2 billion, the largest tech acquisition of that year. LinkedIn's DNA is entirely South Bay: founded, built, and scaled from the Peninsula.",
-    url: "https://linkedin.com",
+    url: "https://en.wikipedia.org/wiki/Timeline_of_LinkedIn",
   },
   {
     id: "java",
