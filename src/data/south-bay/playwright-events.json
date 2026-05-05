@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-04T15:08:09.336Z",
+    "generatedAt": "2026-05-05T15:08:12.926Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 20,
-    "sourceCount": 140,
+    "sourceCount": 141,
     "sources": [
       "Mountain View Public Library (16)",
       "Los Gatos Library (30)",
       "San Jose Jazz (7)",
       "San Jose Museum of Art (8)",
       "Linden Tree Books (8)",
-      "Hicklebee's (1)",
+      "Hicklebee's (2)",
       "History San Jose (46)",
       "Montalvo Arts Center (6)",
       "City Lights Theater (8)",
@@ -293,40 +293,6 @@
       "kidFriendly": false
     },
     {
-      "id": "494cf581d4c1",
-      "title": "Social Stitching",
-      "date": "2026-05-04",
-      "displayDate": "Mon, May 4",
-      "time": "4:30pm",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/15706111",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "5b1276a87740",
-      "title": "Narcan Training at the Library",
-      "date": "2026-05-04",
-      "displayDate": "Mon, May 4",
-      "time": "5:00pm",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/16807602",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "5cec628647b0",
       "title": "Baby Lap-Sit Storytime (Age 0-1)",
       "date": "2026-05-05",
@@ -514,6 +480,23 @@
       "kidFriendly": false
     },
     {
+      "id": "84122b8e0dd0",
+      "title": "ESL Conversation Club",
+      "date": "2026-05-11",
+      "displayDate": "Mon, May 11",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16831223",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "76f9123cb1ca",
       "title": "Monday Morning Book Club",
       "date": "2026-05-11",
@@ -527,6 +510,23 @@
       "cost": "free",
       "description": "",
       "url": "https://losgatosca.libcal.com/event/15781536",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "532ca2b8bcaa",
+      "title": "Social Stitching",
+      "date": "2026-05-11",
+      "displayDate": "Mon, May 11",
+      "time": "4:30pm",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/15706112",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -786,8 +786,8 @@
       "kidFriendly": false
     },
     {
-      "id": "c49dfa6cf9cd",
-      "title": "Book Talk - Parallel Paths: Bringing a Century-Old Honeymoon to Life",
+      "id": "fcad7ed6e764",
+      "title": "Friends of the Library Book Talk - Parallel Paths: Bringing a Century-Old Honeymoon to Life",
       "date": "2026-05-27",
       "displayDate": "Wed, May 27",
       "time": "4:00pm",
@@ -1092,8 +1092,8 @@
       "kidFriendly": true
     },
     {
-      "id": "9a7463461b41",
-      "title": "Book Launch with Joanna Ho",
+      "id": "9b35aeb64b52",
+      "title": "Book Launch with Joanna Hoat Heritage Oaks Park in Los Altos",
       "date": "2026-05-23",
       "displayDate": "Sat, May 23",
       "time": "11am",
@@ -1192,6 +1192,23 @@
       "url": "https://www.lindentreebooks.com/the-abominable-snow-dancer.html",
       "source": "Linden Tree Books",
       "kidFriendly": false
+    },
+    {
+      "id": "3f43d34ba65e",
+      "title": "Hicklebee's End of School Party 2026!",
+      "date": "2026-05-23",
+      "displayDate": "Sat, May 23",
+      "time": null,
+      "endTime": null,
+      "venue": "Hicklebee's",
+      "address": "1378 Lincoln Ave, San Jose, CA 95125",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://hicklebees.com/event/2026-05-23/hicklebees-end-school-party-2026",
+      "source": "Hicklebee's",
+      "kidFriendly": true
     },
     {
       "id": "44ecb3d49451",
