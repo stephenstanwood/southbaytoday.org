@@ -4,7 +4,7 @@
 // Mini-homepage for a single city: today's events, next meeting, briefing,
 // recent civic actions, and links back to the main site.
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { City } from "../../../lib/south-bay/types";
 import { getCityName, CITY_MAP } from "../../../lib/south-bay/cities";
 import {
@@ -12,6 +12,7 @@ import {
   startMinutes, formatTimeRange, isNotEnded,
   formatAge, formatRelativeDate,
 } from "../../../lib/south-bay/timeHelpers";
+import { nextHolidayWithin, type NamedHoliday } from "../../../lib/south-bay/holidays";
 
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../../data/south-bay/digests.json";
@@ -122,6 +123,21 @@ export default function CityPage({ cityId, cityName }: Props) {
   // ── City config ──
   const city = CITY_MAP[cityId as City];
 
+  // ── Holiday banner ── soonest civic/cultural holiday within 14 days. We
+  // count city-specific events on the holiday date so residents see e.g.
+  // "Cinco de Mayo TODAY · 20 events in San José" and can jump straight to
+  // them. Mirrors EventsView's HolidayHeadsUpBanner conceptually.
+  const horizonIso = useMemo(() => {
+    const d = new Date(TODAY_ISO + "T12:00:00");
+    d.setDate(d.getDate() + 14);
+    return d.toLocaleDateString("en-CA");
+  }, []);
+  const nextHoliday = useMemo(() => nextHolidayWithin(TODAY_ISO, horizonIso), [horizonIso]);
+  const cityHolidayEventCount = useMemo(() => {
+    if (!nextHoliday) return 0;
+    return allEvents.filter((e) => e.date === nextHoliday.iso && e.city === cityId && !e.ongoing).length;
+  }, [nextHoliday, allEvents, cityId]);
+
   const TODAY_LABEL = new Date().toLocaleDateString("en-US", {
     weekday: "long", month: "long", day: "numeric",
     timeZone: "America/Los_Angeles",
@@ -151,6 +167,16 @@ export default function CityPage({ cityId, cityName }: Props) {
           )}
         </div>
       </div>
+
+      {/* ═══ HOLIDAY HEADS-UP ═══ */}
+      {nextHoliday && (
+        <CityHolidayBanner
+          holiday={nextHoliday.holiday}
+          iso={nextHoliday.iso}
+          cityName={cityName}
+          eventCount={cityHolidayEventCount}
+        />
+      )}
 
       {/* ═══ YOUR DAY ═══ */}
       <CityDayPlan cityId={cityId as City} cityName={cityName} />
@@ -377,6 +403,94 @@ export default function CityPage({ cityId, cityName }: Props) {
           </a>
         )}
       </div>
+    </div>
+  );
+}
+
+// ── Holiday banner ──
+// Inline acknowledgment of the soonest civic/cultural holiday within 14
+// days. Mirrors the rhythm of the EventsView banner but tuned for a city
+// page: the date label changes between TODAY / TOMORROW / a weekday, and
+// the right-side count is scoped to this city, not the whole region.
+
+function dayPhraseFor(iso: string, todayIso: string): string {
+  if (iso === todayIso) return "today";
+  const todayDate = new Date(todayIso + "T12:00:00");
+  const targetDate = new Date(iso + "T12:00:00");
+  const dayDiff = Math.round((targetDate.getTime() - todayDate.getTime()) / 86400000);
+  if (dayDiff === 1) return "tomorrow";
+  if (dayDiff < 7) {
+    return targetDate.toLocaleDateString("en-US", { weekday: "long" });
+  }
+  return targetDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function CityHolidayBanner({
+  holiday,
+  iso,
+  cityName,
+  eventCount,
+}: {
+  holiday: NamedHoliday;
+  iso: string;
+  cityName: string;
+  eventCount: number;
+}) {
+  const phrase = dayPhraseFor(iso, TODAY_ISO);
+  const isToday = iso === TODAY_ISO;
+  const hasEvents = eventCount > 0;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 8,
+        padding: "10px 14px",
+        marginBottom: 20,
+        background: holiday.bg,
+        border: `1px solid ${holiday.color}33`,
+        borderRadius: 6,
+        fontSize: 13,
+        color: holiday.color,
+        lineHeight: 1.45,
+      }}
+    >
+      <span aria-hidden style={{ fontSize: 16, lineHeight: 1 }}>{holiday.emoji}</span>
+      <span style={{
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
+        textTransform: "uppercase", opacity: 0.85,
+      }}>
+        {isToday ? "Holiday Today" : "Holiday Heads-Up"}
+      </span>
+      <span style={{ fontWeight: 700 }}>{holiday.label}</span>
+      <span style={{ opacity: 0.85 }}>{phrase}</span>
+      {hasEvents && (
+        <a
+          href="/#events"
+          style={{
+            marginLeft: "auto",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 4,
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            padding: "3px 10px",
+            borderRadius: 100,
+            background: "#ffffff",
+            color: holiday.color,
+            border: `1px solid ${holiday.color}55`,
+            textDecoration: "none",
+          }}
+        >
+          {eventCount} event{eventCount === 1 ? "" : "s"} in {cityName} <span aria-hidden>→</span>
+        </a>
+      )}
     </div>
   );
 }
