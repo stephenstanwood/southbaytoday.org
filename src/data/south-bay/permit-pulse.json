@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-04T23:10:06.513Z",
+      "generatedAt": "2026-05-05T11:12:56.083Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 27 – May 4",
+      "dateRange": "Apr 28 – May 5",
       "stats": {
-        "total": 418,
-        "notable": 28,
+        "total": 328,
+        "notable": 21,
         "newUnits": 8,
-        "totalValuation": 11927198
+        "totalValuation": 9313572
       },
       "permits": [
         {
@@ -123,55 +123,43 @@
           "subtype": "Office"
         },
         {
-          "id": "2026-115224-CI",
-          "address": "6800 Santa Teresa Bl",
+          "id": "2026-115519-CI",
+          "address": "1555 Parkmoor Av",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "(Bem 100%) R/R Rooftop Hvac",
-          "valuation": 518268,
+          "description": "Interior Improvement",
+          "valuation": 450000,
           "units": 0,
-          "issueDate": "2026-04-28",
+          "issueDate": "2026-05-01",
           "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-04T23:10:08.904Z",
+      "generatedAt": "2026-05-05T11:12:58.533Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 27 – May 4",
+      "dateRange": "Apr 28 – May 5",
       "stats": {
-        "total": 87,
-        "notable": 8,
+        "total": 105,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01087",
-          "address": "642 Bryson Av",
+          "id": "26BLD-01107",
+          "address": "820 Hamilton Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-27",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-01",
+          "issueDate": "2026-04-29",
           "subtype": "Permit Issued"
         },
         {
@@ -187,40 +175,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01107",
-          "address": "820 Hamilton Av",
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-29",
+          "issueDate": "2026-05-01",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00097",
-          "address": "500 Fulton St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-30",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00095",
-          "address": "220 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00094",
@@ -244,6 +208,30 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-04-29",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00095",
+          "address": "220 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00097",
+          "address": "500 Fulton St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-04-30",
           "subtype": "Over the Counter Approved"
         }
       ]
