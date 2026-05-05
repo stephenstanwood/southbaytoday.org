@@ -841,6 +841,15 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             console.log(`    🎲 Wildcard: [${wild.subtype}] ${(wild.item.title || wild.item.name || "").slice(0, 50)} ✅`);
             try { await generateImageForSlot(day["wildcard"], dateStr, "wildcard"); }
             catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
+            // SV history posts are pre-approved curated content (anniversary milestones).
+            // Auto-approve copy + image so they publish without review portal action,
+            // but only if image gen succeeded — no auto-publish without an image.
+            if (wild.subtype === "sv-history" && day["wildcard"].imageUrl) {
+              const now = new Date().toISOString();
+              day["wildcard"].copyApprovedAt = now;
+              day["wildcard"].imageApprovedAt = now;
+              console.log(`      ✓ SV history auto-approved (copy + image)`);
+            }
           } catch (err) {
             console.log(`    🎲 Wildcard: ❌ ${err.message}`);
           }
