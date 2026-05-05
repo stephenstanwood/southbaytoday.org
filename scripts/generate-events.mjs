@@ -1033,6 +1033,10 @@ function inferCategory(title, desc, type, venue = "") {
   // heuristic so a stray "art" in the description can't override the actual subject.
   if (/\b(esl|literacy|english\s+(class|conversation|tutoring))\b/i.test(titleLower)) return "education";
   if (/\b(qi\s*gong|qigong|falun\s+dafa|tai\s+chi)\b/i.test(titleLower)) return "community";
+  // Meditation / mindfulness / yoga / pilates classes are community wellness, not arts —
+  // anchor on title so a stray "Art of Living" sponsor name (a meditation org) can't
+  // promote the event into the arts bucket via the isArtWord check below.
+  if (/\b(meditation|mindfulness|yoga|pilates)\b/i.test(titleLower)) return "community";
   const isArtWord = /\barts?\b|\bartist|\bartwork|\bartistry/.test(t);
   if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (isArtWord && !t.includes("martial art"))) return "arts";
   // Book clubs and discussions are arts/reading events, not formal education
