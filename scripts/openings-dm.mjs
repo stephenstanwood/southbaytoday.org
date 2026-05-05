@@ -266,18 +266,28 @@ function todaysReddit() {
   return out;
 }
 
-// ── Chamber of Commerce calendars (GrowthZone-based, scrapable) ─────────────
-// Most South Bay chambers run on GrowthZone, which renders events as
-// `<div class="gz-events-card">` blocks with an `<a>` title and a
-// `<span content="YYYY-MM-DDTHH:mm">` date. Ribbon cuttings are rare on
-// public chamber calendars (most are scheduled privately) but when they
-// surface here, this is often the only source that catches them.
-const CHAMBERS = [
+// ── Chamber of Commerce calendars ───────────────────────────────────────────
+// Most South Bay chambers run on one of three platforms; each needs a different
+// parser. Per-chamber try/catch so a single chamber being down doesn't kill the
+// run. Ribbon cuttings on chamber calendars are rare but additive — they catch
+// events that don't surface anywhere else.
+//
+// COVERAGE: 8 of 11 SB cities.
+//   - GrowthZone:  San Jose, Mountain View, Palo Alto, Los Gatos, Los Altos, Campbell
+//   - Membee:      Cupertino
+//   - ChamberMaster widget: Milpitas
+//   - Wix (skipped, JS-rendered): Sunnyvale, Saratoga — covered by other sources
+//   - No chamber events page: Santa Clara
+const GROWTHZONE_CHAMBERS = [
   { url: "https://web.sjchamber.com/events", city: "San Jose", name: "SJ Chamber" },
   { url: "https://www.chambermv.org/events", city: "Mountain View", name: "MV Chamber" },
   { url: "https://paloaltochamber.com/events", city: "Palo Alto", name: "PA Chamber" },
   { url: "https://www.losgatoschamber.com/events", city: "Los Gatos", name: "LG Chamber" },
+  { url: "https://www.losaltoschamber.org/events", city: "Los Altos", name: "LA Chamber" },
+  { url: "https://business.campbellchamber.net/events/", city: "Campbell", name: "Campbell Chamber" },
 ];
+
+const UA = "Mozilla/5.0 (compatible; southbaytoday-openings-dm/1.0; +https://southbaytoday.org)";
 
 function decodeEntities(s) {
   return (s || "")
@@ -288,31 +298,153 @@ function decodeEntities(s) {
     .replace(/&gt;/g, ">");
 }
 
-async function fetchChamberEvents(chamber) {
+function parseTitleHref(c) {
+  // GrowthZone has two HTML shapes for event titles depending on theme:
+  //   1. <h5 class="card-title gz-card-title"><a href="...">Title</a>
+  //   2. <a href="..." class="gz-card-title ...">Title</a>
+  return (
+    c.match(/gz-card-title[^>]*>\s*<a[^>]*href="([^"]+)"[^>]*>([^<]+)</) ||
+    c.match(/<a[^>]+href="([^"]+)"[^>]*class="[^"]*gz-card-title[^"]*"[^>]*>([^<]+)</) ||
+    c.match(/<a[^>]+class="[^"]*gz-card-title[^"]*"[^>]*href="([^"]+)"[^>]*>([^<]+)</)
+  );
+}
+
+async function fetchGrowthZone(chamber) {
   try {
     const res = await fetch(chamber.url, {
-      headers: {
-        "user-agent":
-          "Mozilla/5.0 (compatible; southbaytoday-openings-dm/1.0; +https://southbaytoday.org)",
-      },
+      headers: { "user-agent": UA },
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return [];
     const html = await res.text();
-    const cards = html.split("gz-events-card").slice(1);
     const events = [];
-    for (const c of cards) {
-      const titleHref =
-        c.match(/gz-card-title[^>]*>\s*<a\s+href="([^"]+)"[^>]*>([^<]+)</) ||
-        c.match(/<a[^>]+gz-card-title[^>]*href="([^"]+)"[^>]*>([^<]+)</);
-      const dateMatch = c.match(/<span\s+content="(\d{4}-\d{2}-\d{2})/);
-      if (!titleHref || !dateMatch) continue;
+
+    // Two themes: modern (date in <span content="YYYY-MM-DD">) and legacy
+    // (schema.org/Event microdata with separate gz-start-dt/dy/yr spans, e.g. SJ).
+    if (html.includes('schema.org/Event')) {
+      const blocks = html.split(/itemtype="http:\/\/schema\.org\/Event"/);
+      for (let i = 1; i < blocks.length; i++) {
+        const c = blocks[i];
+        const titleHref = parseTitleHref(c);
+        if (!titleHref) continue;
+        const monthMatch = c.match(/gz-start-dt[^>]*>([A-Za-z]+)/);
+        const dayMatch = c.match(/gz-start-dy[^>]*>(\d+)/);
+        const yearMatch = c.match(/gz-card-yr[^>]*>(\d{4})/) || c.match(/\b(20\d\d)\b/);
+        if (!monthMatch || !dayMatch || !yearMatch) continue;
+        const month = MONTHS[monthMatch[1].toLowerCase().replace(/\.$/, "")];
+        if (month === undefined) continue;
+        const day = parseInt(dayMatch[1], 10);
+        const year = parseInt(yearMatch[1], 10);
+        const iso = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        events.push({
+          title: decodeEntities(titleHref[2]).trim(),
+          url: titleHref[1],
+          date: iso,
+          chamber: chamber.name,
+          city: chamber.city,
+        });
+      }
+    } else {
+      const cards = html.split("gz-events-card").slice(1);
+      for (const c of cards) {
+        const titleHref = parseTitleHref(c);
+        const dateMatch = c.match(/<span\s+content="(\d{4}-\d{2}-\d{2})/);
+        if (!titleHref || !dateMatch) continue;
+        events.push({
+          title: decodeEntities(titleHref[2]).trim(),
+          url: titleHref[1],
+          date: dateMatch[1],
+          chamber: chamber.name,
+          city: chamber.city,
+        });
+      }
+    }
+    return events;
+  } catch {
+    return [];
+  }
+}
+
+// Cupertino runs Membee — the public widget loads an iframe at
+// /feeds/events/event.aspx with title links and "Mon DD, YYYY" dates.
+async function fetchCupertinoMembee() {
+  try {
+    const res = await fetch(
+      "https://widgets.cupertino-chamber.org/feeds/events/event.aspx?cid=233&wid=501",
+      { headers: { "user-agent": UA }, signal: AbortSignal.timeout(8000) }
+    );
+    if (!res.ok) return [];
+    const html = await res.text();
+    const titles = [
+      ...html.matchAll(/<a id="ucEvent_[^"]+_hlName"[^>]+href="([^"]+)"[^>]*>([^<]+)<\/a>/g),
+    ];
+    const dates = [
+      ...html.matchAll(
+        /\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?)\s+(\d{1,2}),?\s+(\d{4})\b/g
+      ),
+    ];
+    const events = [];
+    for (const t of titles) {
+      // Pair each title with the date that immediately precedes it in the HTML.
+      let best = null,
+        bestDist = Infinity;
+      for (const d of dates) {
+        if (d.index < t.index && t.index - d.index < bestDist) {
+          best = d;
+          bestDist = t.index - d.index;
+        }
+      }
+      if (!best) continue;
+      const month = MONTHS[best[1].toLowerCase().replace(/\.$/, "")];
+      const day = parseInt(best[2], 10);
+      const year = parseInt(best[3], 10);
+      const iso = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
       events.push({
-        title: decodeEntities(titleHref[2]).trim(),
-        url: titleHref[1],
-        date: dateMatch[1],
-        chamber: chamber.name,
-        city: chamber.city,
+        title: decodeEntities(t[2]).trim(),
+        url: t[1].replace(/&amp;/g, "&"),
+        date: iso,
+        chamber: "Cupertino Chamber",
+        city: "Cupertino",
+      });
+    }
+    return events;
+  } catch {
+    return [];
+  }
+}
+
+// Milpitas runs ChamberMaster but the listing page requires a session.
+// The chamber's homepage embeds a mini-calendar widget showing the next ~3
+// events with structured EvtLink markup — scrape that instead.
+async function fetchMilpitasMiniCal() {
+  try {
+    const res = await fetch("https://www.milpitaschamber.com", {
+      headers: { "user-agent": UA },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return [];
+    const html = await res.text();
+    const blocks = html.split("mini-calendar").slice(1);
+    const events = [];
+    const today = new Date();
+    for (const b of blocks) {
+      const a = b.match(/EvtLink[^>]*href="([^"]+)"[^>]*>([^<]+)</);
+      const dt = b.match(/EvtDate">([A-Z][a-z]+) (\d+)/);
+      if (!a || !dt) continue;
+      const month = MONTHS[dt[1].toLowerCase()];
+      const day = parseInt(dt[2], 10);
+      let year = today.getFullYear();
+      // Roll forward if the parsed date already passed this year.
+      if (month < today.getMonth() || (month === today.getMonth() && day < today.getDate())) {
+        year += 1;
+      }
+      const iso = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      events.push({
+        title: decodeEntities(a[2]).trim(),
+        url: a[1].replace(/&amp;/g, "&"),
+        date: iso,
+        chamber: "Milpitas Chamber",
+        city: "Milpitas",
       });
     }
     return events;
@@ -322,10 +454,14 @@ async function fetchChamberEvents(chamber) {
 }
 
 async function todaysChamberEvents() {
-  const all = await Promise.all(CHAMBERS.map(fetchChamberEvents));
-  const flat = all.flat();
+  const [growthZone, cupertino, milpitas] = await Promise.all([
+    Promise.all(GROWTHZONE_CHAMBERS.map(fetchGrowthZone)).then((a) => a.flat()),
+    fetchCupertinoMembee(),
+    fetchMilpitasMiniCal(),
+  ]);
+  const all = [...growthZone, ...cupertino, ...milpitas];
   const out = [];
-  for (const e of flat) {
+  for (const e of all) {
     if (e.date !== TODAY) continue;
     if (!OPENING_RX.test(e.title)) continue;
     out.push({
@@ -342,25 +478,57 @@ async function todaysChamberEvents() {
   return out;
 }
 
+// Cross-source dedup. Two items collapse if:
+//   1. They share a city (parsed from `where` — strips venue prefixes).
+//   2. Their names share at least one significant token after stripping
+//      opening boilerplate ("grand opening", "reopening", "library",
+//      "public", etc.).
+// Prefer the entry with a URL, then the longer blurb.
+const DEDUP_NAME_NOISE = /\b(grand|re-?opening|opening|reopens|ribbon|cutting|the|a|an|and|of|at|in|on|for|day|now|today|just|newly|center|grounds|public|library|park|building|community|venue|inauguration)\b/gi;
+
+function nameTokens(name) {
+  return (name || "")
+    .toLowerCase()
+    .replace(DEDUP_NAME_NOISE, " ")
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .split(/\s+/)
+    .filter((t) => t.length > 2);
+}
+
+function cityOf(where) {
+  if (!where) return "";
+  // `where` may be "Venue, City" or just "City". The city is the trailing part.
+  const parts = where.split(",").map((s) => s.trim()).filter(Boolean);
+  return (parts[parts.length - 1] || "").toLowerCase();
+}
+
 function dedupAcrossSources(items) {
-  const seen = new Map();
+  const merged = [];
   for (const it of items) {
-    const key = `${(it.where || "").toLowerCase()}::${(it.name || "")
-      .toLowerCase()
-      .replace(/\s+(grand\s+)?(re)?-?opening.*$/i, "")
-      .replace(/\s+ribbon[\s-]?cutting.*$/i, "")
-      .trim()}`;
-    const prior = seen.get(key);
-    if (!prior) {
-      seen.set(key, it);
+    const itCity = cityOf(it.where);
+    const itTokens = new Set(nameTokens(it.name));
+    let mergedIdx = -1;
+    for (let i = 0; i < merged.length; i++) {
+      const m = merged[i];
+      if (cityOf(m.where) !== itCity) continue;
+      const mTokens = nameTokens(m.name);
+      const overlap = mTokens.filter((t) => itTokens.has(t)).length;
+      // If both have no tokens (boilerplate-only), still match within same city.
+      if (overlap > 0 || (mTokens.length === 0 && itTokens.size === 0)) {
+        mergedIdx = i;
+        break;
+      }
+    }
+    if (mergedIdx === -1) {
+      merged.push(it);
     } else {
-      // Prefer item with url, then longer blurb.
+      const prior = merged[mergedIdx];
       const priorScore = (prior.url ? 10 : 0) + (prior.blurb?.length || 0);
       const curScore = (it.url ? 10 : 0) + (it.blurb?.length || 0);
-      if (curScore > priorScore) seen.set(key, it);
+      if (curScore > priorScore) merged[mergedIdx] = it;
     }
   }
-  return [...seen.values()];
+  return merged;
 }
 
 const items = dedupAcrossSources([
