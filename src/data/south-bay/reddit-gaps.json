@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-05T11:22:45.504Z",
+    "generatedAt": "2026-05-05T19:19:11.216Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
     "placesExtracted": 43,
-    "placesMatched": 9,
-    "placeGaps": 34,
+    "placesMatched": 6,
+    "placeGaps": 37,
     "eventsExtracted": 1,
     "eventsMatched": 0,
     "eventGaps": 1,
@@ -16,107 +16,185 @@
   },
   "placeGaps": [
     {
-      "name": "See's Candies",
-      "city": "Los Gatos",
-      "kind": "retail",
-      "context": "Los Gatos Blvd location closing permanently due to rent increase",
+      "name": "Zanottos",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "closed for 5-10 years, long vacant downtown space",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1t3lncx/driving_in_the_bay_area_is_essential_for_many_its/",
-        "https://www.reddit.com/r/SanJose/comments/1t409if/los_gatos_sees_closing/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/"
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
       ]
     },
     {
-      "name": "Trader Joe's",
-      "city": "Los Gatos",
-      "kind": "retail",
-      "context": "shopping center where See's Candies location is closing",
+      "name": "Techshop",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "moved briefly to old Zanottos location downtown",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1t3lncx/driving_in_the_bay_area_is_essential_for_many_its/",
-        "https://www.reddit.com/r/SanJose/comments/1t409if/los_gatos_sees_closing/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t0z9v8/big_tech_is_trading_its_workforce_for_ai_they_may/"
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
+      ]
+    },
+    {
+      "name": "Campus Burger",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "operating on downtown San Pedro/SOFA corridor",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
+      ]
+    },
+    {
+      "name": "Caravan",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "bar on downtown San Pedro/SOFA corridor",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
+      ]
+    },
+    {
+      "name": "Myth",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "bar on downtown San Pedro/SOFA corridor",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
+      ]
+    },
+    {
+      "name": "Fairmount",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "bar on downtown San Pedro/SOFA corridor",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
+      ]
+    },
+    {
+      "name": "Cesar Chavez Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "downtown park, suggested venue for free concerts",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
       ]
     },
     {
       "name": "Idly Express",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "Southern Indian restaurant, idly and dosa",
+      "context": "South Indian restaurant, idly and dosa",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Zareen's",
       "city": "Palo Alto",
       "kind": "restaurant",
-      "context": "Pakistani and Indian food, consistent quality",
+      "context": "Pakistani and Indian cuisine chain",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Madras Cafe",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Southern Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Dosa Point",
       "city": "Menlo Park",
       "kind": "restaurant",
-      "context": "Southern Indian dosa restaurant",
+      "context": "South Indian dosa restaurant",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Madras Cafe",
+      "city": "",
+      "kind": "restaurant",
+      "context": "South Indian cuisine",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Vik's",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Indian restaurant in Berkeley area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Sherpa House",
       "city": "",
       "kind": "restaurant",
-      "context": "Nepali cuisine",
+      "context": "Nepali cuisine on Taraval",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Mt Everest",
-      "city": "Berkeley",
+      "city": "",
       "kind": "restaurant",
-      "context": "Nepali cuisine",
+      "context": "Nepali cuisine in Berkeley",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -126,36 +204,49 @@
       "context": "Indian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "Vik's",
-      "city": "Berkeley",
+      "name": "Yellow Chilli",
+      "city": "",
       "kind": "restaurant",
-      "context": "Indian food",
+      "context": "Indian restaurant",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Amber",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Higher-end South Asian cuisine",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Curry Up Now",
       "city": "",
       "kind": "restaurant",
-      "context": "Indian cuisine",
+      "context": "Indian fusion fast casual",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -165,10 +256,10 @@
       "context": "Indian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -178,10 +269,10 @@
       "context": "Burmese cuisine, multiple Bay Area locations",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -191,10 +282,23 @@
       "context": "Indo-Nepalese cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Pakwan",
+      "city": "Fremont",
+      "kind": "restaurant",
+      "context": "Pakistani cuisine",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -204,62 +308,36 @@
       "context": "Indian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Monsoon",
       "city": "Half Moon Bay",
       "kind": "restaurant",
-      "context": "Indian cuisine, lunch weekends only",
+      "context": "South Asian cuisine, weekend lunch hours",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Amber",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Higher end Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Bir Kitchen",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Chaat Bavan",
       "city": "",
       "kind": "restaurant",
-      "context": "Indian cuisine comfort food",
+      "context": "South Asian comfort food",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -269,75 +347,75 @@
       "context": "Best dosa and idly",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "Swad",
-      "city": "Lafayette",
+      "name": "Ocean",
+      "city": "",
       "kind": "restaurant",
-      "context": "Indian cuisine",
+      "context": "South Asian cuisine on Geary SF",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "Caravan",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "downtown San Jose bar",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Myth",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "downtown San Jose bar",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Fairmount",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "downtown San Jose bar",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Campus Burger",
-      "city": "San Jose",
+      "name": "Copra",
+      "city": "",
       "kind": "restaurant",
-      "context": "downtown San Jose",
+      "context": "Fancier South Asian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "New Delhi",
+      "city": "",
+      "kind": "restaurant",
+      "context": "South Asian cuisine",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Bir Kitchen",
+      "city": "",
+      "kind": "restaurant",
+      "context": "South Asian cuisine in SF",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ]
+    },
+    {
+      "name": "Vegan n Chicken",
+      "city": "El Sobrante",
+      "kind": "restaurant",
+      "context": "South Asian cuisine",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
@@ -347,123 +425,89 @@
       "context": "grocery store, replaced Co-Op",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Fry's",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "electronics store, historic Palo Alto location",
+      "context": "electronics store, site of Cable Co-Op",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "Techshop",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "makerspace near old Zanottos downtown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ]
-    },
-    {
-      "name": "B.Steak.A.",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "elevated date night experience at Pruneyard",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
       "name": "Naschmarkt",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Austrian cuisine near Pruneyard area",
+      "context": "Austrian cuisine near Pruneyard",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "Zazil",
+      "name": "B.Steak.A.",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican restaurant at Santana Row",
+      "context": "elevated date night experience",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "El Jardin",
+      "name": "Pruneyard",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Mexican restaurant at Santana Row",
+      "kind": "venue",
+      "context": "shopping destination with restaurants",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ]
     },
     {
-      "name": "Paranga",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "restaurant at Santana Row",
+      "name": "Mountain View Transit Center",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "Google Street View imagery discussion of transit hub",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
+        "https://www.reddit.com/r/mountainview/comments/1t43c6a/mountain_view_transit_center_google_maps_street/",
+        "https://www.reddit.com/r/SanJose/comments/1t3su99/cambrian_park_plaza_historical_photography/",
         "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
-      ]
-    },
-    {
-      "name": "Scott's Seafood Saute",
-      "city": "",
-      "kind": "restaurant",
-      "context": "excellent scallops with light presentation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Cinco De Mayo parade",
+      "name": "Cinco De Mayo Parade",
       "when": "2026",
       "city": "San Jose",
-      "context": "annual Cinco de Mayo celebration and parade",
+      "context": "annual celebration parade with vibrant street photography",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/bayarea/comments/1t40aei/folks_who_moved_from_nyc_to_the_bay_area/",
         "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/bayarea/comments/1t44t7j/barts_operating_budget_has_only_increased_about/",
+        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/"
       ]
     }
   ],
@@ -472,13 +516,13 @@
       "name": "Sakoon",
       "city": "",
       "kind": "restaurant",
-      "context": "Higher end Indian cuisine",
+      "context": "Higher-end South Asian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ],
       "matchedName": "Sakoon"
     },
@@ -486,107 +530,70 @@
       "name": "Puranpoli",
       "city": "",
       "kind": "restaurant",
-      "context": "Indian cuisine, most unique",
+      "context": "Unique South Asian cuisine",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
         "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ],
       "matchedName": "Puranpoli"
-    },
-    {
-      "name": "Cesar Chavez",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "downtown park with concert potential",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
-        "https://www.reddit.com/r/SanJose/comments/1t4242g/why_does_sj_not_follow_supply_and_demand/",
-        "https://www.reddit.com/r/SanJose/comments/1t46vi1/cinco_de_mayo_parade_2026/",
-        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
-      ],
-      "matchedName": "Plaza de Cesar Chavez"
-    },
-    {
-      "name": "Orchard City Kitchen",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "upscale fusion cuisine, cocktails, date night spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
-      ],
-      "matchedName": "Orchard City Kitchen"
     },
     {
       "name": "Luna Mexican Kitchen",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican cuisine at Pruneyard, cantina-style patio",
+      "context": "Mexican cuisine, date night option",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ],
       "matchedName": "Luna Mexican Kitchen"
+    },
+    {
+      "name": "Orchard City Kitchen",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "fusion cuisine with cocktails, date night spot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
+      ],
+      "matchedName": "Orchard City Kitchen"
     },
     {
       "name": "Locanda Sorrento",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "authentic Neapolitan-style Italian near Pruneyard",
+      "context": "Neapolitan-style Italian near Pruneyard",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t3wg0z/modern_version_of_californias_gold/",
+        "https://www.reddit.com/r/bayarea/comments/1t3usej/san_francisco_chronicle_wins_pulitzer_prize_for/",
+        "https://www.reddit.com/r/bayarea/comments/1t3ufnf/for_those_who_are_not_of_indian_or_south_asian/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
+        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/"
       ],
       "matchedName": "Locanda Sorrento"
     },
     {
-      "name": "Wild Rose Eatery",
+      "name": "Cambrian Park Plaza",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "mentioned as date night alternative",
+      "kind": "retail",
+      "context": "historical shopping center with carousel sign, redevelopment discussion",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
+        "https://www.reddit.com/r/mountainview/comments/1t43c6a/mountain_view_transit_center_google_maps_street/",
+        "https://www.reddit.com/r/SanJose/comments/1t3su99/cambrian_park_plaza_historical_photography/",
         "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
+        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/"
       ],
-      "matchedName": "Wild Rose Eatery and Bar"
-    },
-    {
-      "name": "Vive Sol",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "regional Mexican cuisine, intimate setting, El Camino",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
-      ],
-      "matchedName": "ViVe Sol"
-    },
-    {
-      "name": "Suspiro",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "restaurant at Santana Row",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t3yv70/luna_mexican_kitchen_or_orchard_city_kitchen/",
-        "https://www.reddit.com/r/siliconvalley/comments/1t18ogf/meta_halts_massive_mixeduse_development_in_menlo/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t231tj/mystery_ai_tenant_quietly_locks_down_entire/",
-        "https://www.reddit.com/r/bayarea/comments/1t3psfe/recommendations_for_extremely_tasty_scallops/"
-      ],
-      "matchedName": "Suspiro"
+      "matchedName": "Cambrian Park Plaza"
     }
   ],
   "eventMatches": []
