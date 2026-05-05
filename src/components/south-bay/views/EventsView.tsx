@@ -131,6 +131,54 @@ function isInProgressNow(time: string | null, endTime: string | null): boolean {
   return NOW_MINUTES - start <= FUZZY_DURATION_MIN;
 }
 
+// Live PT minutes — re-renders the page each minute so "starts in N min"
+// pills stay accurate when a tab is left open.
+function ptMinutesNow(): number {
+  const n = new Date();
+  const nPT = new Date(n.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  return nPT.getHours() * 60 + nPT.getMinutes();
+}
+function useNowMinutes(): number {
+  const [mins, setMins] = useState<number>(() => ptMinutesNow());
+  useEffect(() => {
+    const id = setInterval(() => setMins(ptMinutesNow()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  return mins;
+}
+
+// Urgency pill — only fires for events on today's date.
+// • In progress → "HAPPENING NOW" (red)
+// • Starts in 0–15 min → "STARTS IN N MIN" (orange, urgent)
+// • Starts in 16–60 min → "STARTS IN N MIN" (amber, soon)
+type UrgencyTag = { label: string; bg: string; fg: string; border: string; pulse: boolean };
+function urgencyPill(
+  date: string,
+  time: string | null,
+  endTime: string | null,
+  todayIso: string,
+  nowMins: number,
+): UrgencyTag | null {
+  if (date !== todayIso) return null;
+  if (!time) return null;
+  const start = parseTimeToMinutes(time);
+  if (start === null) return null;
+  const end = endTime ? parseTimeToMinutes(endTime) : null;
+  // In-progress?
+  if (start <= nowMins) {
+    const stillRunning = end !== null ? nowMins < end : (nowMins - start) <= FUZZY_DURATION_MIN;
+    if (!stillRunning) return null;
+    return { label: "HAPPENING NOW", bg: "#FEF2F2", fg: "#B91C1C", border: "#FECACA", pulse: true };
+  }
+  const delta = start - nowMins;
+  if (delta > 60) return null;
+  const label = delta <= 1 ? "STARTING NOW" : `STARTS IN ${delta} MIN`;
+  if (delta <= 15) {
+    return { label, bg: "#FFF7ED", fg: "#C2410C", border: "#FED7AA", pulse: false };
+  }
+  return { label, bg: "#FFFBEB", fg: "#A16207", border: "#FDE68A", pulse: false };
+}
+
 function parseTimeToMinutes(t: string): number | null {
   const parts = t.split(/,/);
   const target = parts[parts.length - 1].trim();
@@ -286,16 +334,21 @@ function UpcomingEventCard({
   event,
   showDate,
   recurring,
+  todayIso,
+  nowMins,
 }: {
   event: UpcomingEvent;
   showDate?: boolean;
   recurring?: RecurringInfo | null;
+  todayIso: string;
+  nowMins: number;
 }) {
   const badge = costBadge(event.cost);
   const showBadge = !(event.cost === "free" && event.category === "community");
   const accent = CATEGORY_ACCENT[event.category] ?? CATEGORY_ACCENT.community;
   const photo = eventPhotoUrl(event, 200, 200);
   const body = (event.blurb && event.blurb.trim()) ? event.blurb : event.description;
+  const urgency = urgencyPill(event.date, event.time, event.endTime, todayIso, nowMins);
 
   return (
     <div
@@ -352,6 +405,18 @@ function UpcomingEventCard({
           )}
           {event.kidFriendly && (
             <span style={{ fontSize: 9, color: "var(--sb-muted)" }}>👶</span>
+          )}
+          {urgency && (
+            <span
+              className={urgency.pulse ? "sb-urgency-pulse" : undefined}
+              style={{
+                fontSize: 9, fontWeight: 800, fontFamily: "'Space Mono', monospace",
+                letterSpacing: "0.06em", padding: "1px 5px", borderRadius: 3,
+                background: urgency.bg, color: urgency.fg, border: `1px solid ${urgency.border}`,
+              }}
+            >
+              {urgency.label}
+            </span>
           )}
         </div>
 
@@ -1021,6 +1086,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const recurringMap = useMemo(() => computeRecurringMap(upcomingEvents), [upcomingEvents]);
   const recurringFor = (e: UpcomingEvent): RecurringInfo | null =>
     recurringMap.get(recurringKey(e.title, e.venue)) ?? null;
+
+  // Live ticker so "Starts in N min" / "Happening now" pills stay accurate
+  // when a tab is left open. Updates every 60s.
+  const nowMins = useNowMinutes();
 
   const allCities = selectedCities.size === CITIES.length;
 
@@ -1966,7 +2035,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
+                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
               </div>
             </div>
           ))}
@@ -1993,7 +2062,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                 <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
+                {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
               </div>
             </div>
           ))}
@@ -2011,7 +2080,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {dayEvents.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
+              {dayEvents.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
             </div>
           )}
         </div>
@@ -2029,7 +2098,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             </span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {filteredOngoing.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} />)}
+            {filteredOngoing.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
           </div>
         </div>
       )}

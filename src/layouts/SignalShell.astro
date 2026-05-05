@@ -522,6 +522,18 @@ const {
         margin: 0 0 8px 0;
       }
 
+      /* ── Live urgency pill (Happening Now / Starts in N min) ── */
+      @keyframes sbUrgencyPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+        50%      { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0); }
+      }
+      .sb-urgency-pulse {
+        animation: sbUrgencyPulse 1.8s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .sb-urgency-pulse { animation: none; }
+      }
+
       /* ── Empty / loading states ── */
       .sb-empty {
         text-align: center;
