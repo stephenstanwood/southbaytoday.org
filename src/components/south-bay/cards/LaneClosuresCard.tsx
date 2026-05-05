@@ -23,12 +23,18 @@ interface Closure {
   end: string;
 }
 
+interface RouteSummary {
+  route: string;
+  count: number;
+}
+
 interface LaneClosures {
   generatedAt: string;
   source: string;
   sourceUrl: string;
   windowHours: number;
   stats: { total: number; full: number; activeNow: number };
+  routeSummary?: RouteSummary[];
   closures: Closure[];
   error?: string;
 }
@@ -154,13 +160,65 @@ function timeAgo(iso: string): string {
   return `${h}h ago`;
 }
 
+function ClosureRow({ c, nowMs }: { c: Closure; nowMs: number }) {
+  const badge = routeBadge(c.route);
+  const startMs = parsePT(c.start);
+  const isActive = startMs <= nowMs && parsePT(c.end) > nowMs;
+  return (
+    <li
+      key={c.id}
+      className={`lane-row${c.isFull ? " lane-row-full" : ""}${isActive ? " lane-row-active" : ""}`}
+    >
+      <span
+        className="lane-shield"
+        style={{ background: badge.bg, color: badge.fg }}
+        aria-label={`Route ${badge.label}`}
+      >
+        {badge.label}
+      </span>
+      <div className="lane-body">
+        <div className="lane-line1">
+          <span className="lane-direction">{c.direction}</span>
+          <span className="lane-loc">{locLabel(c)}</span>
+          {isActive && <span className="lane-active-pill">Active now</span>}
+        </div>
+        <div className="lane-line2">
+          <span className={`lane-type-pill${c.isFull ? " lane-type-full" : ""}`}>
+            {typeLabel(c)}
+          </span>
+          <span className="lane-time">{timeBand(c, nowMs)}</span>
+        </div>
+        <div className="lane-work">{c.work}</div>
+      </div>
+    </li>
+  );
+}
+
 export default function LaneClosuresCard() {
   if (data.error) return null;
   if (!data.closures || data.closures.length === 0) return null;
 
   const nowMs = Date.now();
-  const moreCount = Math.max(0, data.stats.total - data.closures.length);
   const updated = data.generatedAt ? timeAgo(data.generatedAt) : "";
+
+  const active = data.closures.filter((c) => parsePT(c.start) <= nowMs && parsePT(c.end) > nowMs);
+  const upcoming = data.closures.filter((c) => parsePT(c.start) > nowMs);
+  // Anything else (already-ended) we just don't render.
+
+  // Prefer the generator-supplied summary so counts reflect the full filtered
+  // dataset, not just what fit on the card. Fall back to deriving from the
+  // active list (older payloads).
+  const summaryRaw = (data.routeSummary && data.routeSummary.length > 0)
+    ? data.routeSummary
+    : (() => {
+        const m: Record<string, number> = {};
+        for (const c of active) m[c.route] = (m[c.route] ?? 0) + 1;
+        return Object.entries(m)
+          .map(([route, count]) => ({ route, count }))
+          .sort((a, b) => b.count - a.count || a.route.localeCompare(b.route));
+      })();
+
+  const moreUpcoming = Math.max(0, data.stats.total - data.stats.activeNow - upcoming.length);
 
   return (
     <section className="lane-closures">
@@ -182,45 +240,57 @@ export default function LaneClosuresCard() {
         </a>
       </header>
 
-      <ul className="lane-closures-list">
-        {data.closures.map((c) => {
-          const badge = routeBadge(c.route);
-          const startMs = parsePT(c.start);
-          const isActive = startMs <= nowMs && parsePT(c.end) > nowMs;
-          return (
-            <li
-              key={c.id}
-              className={`lane-row${c.isFull ? " lane-row-full" : ""}${isActive ? " lane-row-active" : ""}`}
-            >
-              <span
-                className="lane-shield"
-                style={{ background: badge.bg, color: badge.fg }}
-                aria-label={`Route ${badge.label}`}
-              >
-                {badge.label}
-              </span>
-              <div className="lane-body">
-                <div className="lane-line1">
-                  <span className="lane-direction">{c.direction}</span>
-                  <span className="lane-loc">{locLabel(c)}</span>
-                  {isActive && <span className="lane-active-pill">Active now</span>}
-                </div>
-                <div className="lane-line2">
-                  <span className={`lane-type-pill${c.isFull ? " lane-type-full" : ""}`}>
-                    {typeLabel(c)}
+      {summaryRaw.length > 0 && (
+        <div className="lane-summary" role="group" aria-label="Active closures by freeway">
+          <span className="lane-summary-label">Active now:</span>
+          <ul className="lane-summary-list">
+            {summaryRaw.map((s) => {
+              const b = routeBadge(s.route);
+              return (
+                <li key={s.route} className="lane-summary-chip">
+                  <span
+                    className="lane-summary-shield"
+                    style={{ background: b.bg, color: b.fg }}
+                  >
+                    {b.label}
                   </span>
-                  <span className="lane-time">{timeBand(c, nowMs)}</span>
-                </div>
-                <div className="lane-work">{c.work}</div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+                  <span className="lane-summary-count">
+                    {s.count} <span className="lane-summary-unit">{s.count === 1 ? "closure" : "closures"}</span>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
 
-      {moreCount > 0 && (
+      {active.length > 0 && (
+        <>
+          <h3 className="lane-section-title">
+            <span className="lane-section-dot lane-section-dot-active" /> Active now
+            <span className="lane-section-count">{active.length}</span>
+          </h3>
+          <ul className="lane-closures-list">
+            {active.map((c) => <ClosureRow key={c.id} c={c} nowMs={nowMs} />)}
+          </ul>
+        </>
+      )}
+
+      {upcoming.length > 0 && (
+        <>
+          <h3 className="lane-section-title lane-section-title-spaced">
+            <span className="lane-section-dot lane-section-dot-upcoming" /> Coming up
+            <span className="lane-section-count">{upcoming.length}</span>
+          </h3>
+          <ul className="lane-closures-list">
+            {upcoming.map((c) => <ClosureRow key={c.id} c={c} nowMs={nowMs} />)}
+          </ul>
+        </>
+      )}
+
+      {moreUpcoming > 0 && (
         <p className="lane-closures-more">
-          + {moreCount} more {moreCount === 1 ? "closure" : "closures"} in the next 36 hours.{" "}
+          + {moreUpcoming} more {moreUpcoming === 1 ? "closure" : "closures"} scheduled later in the window.{" "}
           <a href={data.sourceUrl} target="_blank" rel="noopener noreferrer">
             See full list ↗
           </a>
@@ -273,6 +343,101 @@ function LaneClosuresStyles() {
         white-space: nowrap;
       }
       .lane-closures-source:hover { text-decoration: underline; }
+
+      .lane-summary {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        background: #FEF2F2;
+        border: 1.5px solid #FECACA;
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+      }
+      .lane-summary-label {
+        font-size: 11px;
+        font-family: 'Space Mono', monospace;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #991B1B;
+      }
+      .lane-summary-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .lane-summary-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid #FECACA;
+        border-radius: 999px;
+        padding: 3px 10px 3px 4px;
+      }
+      .lane-summary-shield {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        height: 22px;
+        padding: 0 6px;
+        border-radius: 4px;
+        font-family: 'Space Mono', monospace;
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+      }
+      .lane-summary-count {
+        font-size: 12px;
+        font-weight: 700;
+        color: #111;
+      }
+      .lane-summary-unit {
+        font-weight: 500;
+        color: #6b7280;
+      }
+
+      .lane-section-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 800;
+        font-family: 'Space Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #1f2937;
+        margin: 4px 0 10px;
+      }
+      .lane-section-title-spaced { margin-top: 18px; }
+      .lane-section-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      .lane-section-dot-active {
+        background: #DC2626;
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.18);
+      }
+      .lane-section-dot-upcoming {
+        background: #9CA3AF;
+      }
+      .lane-section-count {
+        font-size: 11px;
+        font-weight: 700;
+        color: #6b7280;
+        background: #F3F4F6;
+        border-radius: 999px;
+        padding: 1px 8px;
+        letter-spacing: 0.02em;
+      }
 
       .lane-closures-list {
         list-style: none;

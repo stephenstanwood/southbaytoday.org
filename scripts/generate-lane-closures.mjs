@@ -225,14 +225,28 @@ async function main() {
   });
 
   // Cap to the most useful subset for the card. The full filtered list is
-  // still ~150 entries, but a driver only needs the headline picture.
-  const TOP_N = 12;
-  const trimmed = deduped.slice(0, TOP_N);
+  // still ~150 entries, but the card needs a digestible slice. Show all
+  // currently-active closures (so a driver heading out right now sees the
+  // complete picture) plus the next ~10 overnight/upcoming so an evening
+  // commuter can see "what's hitting tonight."
+  const activeNow = deduped.filter((c) => c.startEpoch <= nowEpoch);
+  const upcoming = deduped.filter((c) => c.startEpoch > nowEpoch);
+  const UPCOMING_CAP = 12;
+  const trimmed = [...activeNow, ...upcoming.slice(0, UPCOMING_CAP)];
+
+  // Per-route active counts power the at-a-glance shield strip on the card.
+  const byRoute = {};
+  for (const c of activeNow) {
+    byRoute[c.route] = (byRoute[c.route] || 0) + 1;
+  }
+  const routeSummary = Object.entries(byRoute)
+    .map(([route, count]) => ({ route, count }))
+    .sort((a, b) => b.count - a.count || a.route.localeCompare(b.route));
 
   const stats = {
     total: deduped.length,
     full: deduped.filter((c) => c.isFull).length,
-    activeNow: deduped.filter((c) => c.startEpoch <= nowEpoch).length,
+    activeNow: activeNow.length,
   };
 
   const payload = {
@@ -241,12 +255,13 @@ async function main() {
     sourceUrl: SOURCE_URL,
     windowHours: WINDOW_HOURS,
     stats,
+    routeSummary,
     closures: trimmed,
   };
 
   writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2));
   console.log(
-    `[lane-closures] ${stats.total} closures (${stats.full} full, ${stats.activeNow} active) → top ${trimmed.length} written`,
+    `[lane-closures] ${stats.total} closures (${stats.full} full, ${stats.activeNow} active) → ${trimmed.length} written (${activeNow.length} active + ${Math.min(upcoming.length, UPCOMING_CAP)} upcoming)`,
   );
 }
 
