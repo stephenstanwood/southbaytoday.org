@@ -73,6 +73,7 @@ interface UpcomingEvent {
   source: string;
   kidFriendly: boolean;
   ongoing?: boolean;
+  virtual?: boolean;
   blurb?: string;
   image?: string | null;
   photoRef?: string | null;
@@ -518,11 +519,12 @@ function UpcomingEventCard({
           </p>
         )}
 
-        {/* Action row: Make it a day + Add to calendar */}
+        {/* Action row: Make it a day + Directions + Add to calendar */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
           {event.date && event.city && (
             <MakeItADayButton eventId={event.id} city={event.city} date={event.date} />
           )}
+          <DirectionsButton event={event} />
           <AddToCalendarButton event={event} />
         </div>
       </div>
@@ -575,6 +577,72 @@ function AddToCalendarButton({ event }: { event: UpcomingEvent }) {
       title="Add to Google Calendar"
     >
       📅 Add to calendar
+    </a>
+  );
+}
+
+// ── "Directions" button ────────────────────────────────────────────────────
+// Most events have venue + city (1286/1304 as of cycle 120). Build a Google
+// Maps search URL from whatever location bits we have. Skipping virtual events
+// and the rare event with no venue/address keeps map results from landing on
+// nonsense. Same compact pill style as Add to calendar so the actions read
+// as a related set.
+
+function buildEventMapsUrl(event: UpcomingEvent): string | null {
+  if (event.virtual) return null;
+  const cityName = event.city ? cityLabel(event.city) : "";
+  // Prefer venue + address + city when available — most specific.
+  // Some scrapers stuff the address into the venue field; if address starts
+  // with venue (or vice versa) drop the venue to avoid "1234 Main St 1234
+  // Main St" duplicates that confuse Maps' search ranking.
+  let parts: string[];
+  if (event.venue && event.address) {
+    const v = event.venue.toLowerCase().trim();
+    const a = event.address.toLowerCase().trim();
+    if (a.startsWith(v) || v.startsWith(a)) {
+      parts = [event.address, cityName, "CA"];
+    } else {
+      parts = [event.venue, event.address, cityName, "CA"];
+    }
+  } else {
+    parts = [event.venue || "", event.address || "", cityName, "CA"];
+  }
+  const filtered = parts.filter((s) => s && s.trim().length > 0);
+  if (filtered.length === 0) return null;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(filtered.join(", "))}`;
+}
+
+function DirectionsButton({ event }: { event: UpcomingEvent }) {
+  const url = buildEventMapsUrl(event);
+  if (!url) return null;
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "3px 10px",
+        fontSize: 10,
+        fontWeight: 700,
+        fontFamily: "'Space Mono', monospace",
+        letterSpacing: "0.04em",
+        border: "1px solid var(--sb-border-light)",
+        borderRadius: 4,
+        background: "var(--sb-card)",
+        color: "var(--sb-muted)",
+        textDecoration: "none",
+        cursor: "pointer",
+        transition: "all 0.15s",
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#999"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
+      title="Open in Google Maps"
+    >
+      📍 Directions
     </a>
   );
 }
