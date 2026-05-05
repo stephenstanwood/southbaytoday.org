@@ -288,6 +288,153 @@ function MiniGameRow({ game }: { game: ParsedGame }) {
   );
 }
 
+// ── Today's Games section ──
+// Aggregates every game starting today across all teams and surfaces
+// them at the top of the scoreboard, sorted live-first → kickoff time.
+// This is the "what's on tonight?" question — answered without forcing
+// a scan through every team card.
+
+function isStartingTodayPT(iso: string): boolean {
+  if (!iso) return false;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return false;
+  const todayPT = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles" });
+  const gamePT = d.toLocaleDateString("en-US", { timeZone: "America/Los_Angeles" });
+  return todayPT === gamePT;
+}
+
+function todaysGamesSorted(allGames: ParsedGame[]): ParsedGame[] {
+  const today = allGames.filter((g) => isStartingTodayPT(g.startTime));
+  return today.sort((a, b) => {
+    // Live games first
+    if (a.status === "in" && b.status !== "in") return -1;
+    if (b.status === "in" && a.status !== "in") return 1;
+    // Then by start time
+    return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+  });
+}
+
+function TodaysGameRow({ game }: { game: ParsedGame }) {
+  const team = SOUTH_BAY_TEAMS.find((t) => t.key === game.southBayTeamKey);
+  if (!team) return null;
+
+  const isLive = game.status === "in";
+  const isFinal = game.status === "post";
+  const sbHome = game.isSouthBayHome;
+  const sbLogo = sbHome ? game.homeLogo : game.awayLogo;
+  const oppLogo = sbHome ? game.awayLogo : game.homeLogo;
+  const oppAbbr =
+    (sbHome ? game.awayAbbr : game.homeAbbr) ||
+    (sbHome ? game.awayTeam : game.homeTeam).split(" ").slice(-1)[0];
+  const sbScore = sbHome ? game.homeScore : game.awayScore;
+  const oppScore = sbHome ? game.awayScore : game.homeScore;
+
+  let resultNode: React.ReactNode;
+  if (isLive) {
+    const hasScore = sbScore != null && oppScore != null;
+    resultNode = (
+      <span style={{ color: "#ef4444", fontWeight: 700, fontSize: 11.5, fontFamily: "'Space Mono', monospace", whiteSpace: "nowrap" }}>
+        ● {hasScore ? `${sbScore}–${oppScore} · ` : ""}{game.statusDetail}
+      </span>
+    );
+  } else if (isFinal) {
+    const won = (sbScore ?? 0) > (oppScore ?? 0);
+    resultNode = (
+      <span style={{ color: won ? "#16a34a" : "#dc2626", fontWeight: 700, fontSize: 11.5, fontFamily: "'Space Mono', monospace", whiteSpace: "nowrap" }}>
+        {won ? "W" : "L"} {sbScore}–{oppScore}
+      </span>
+    );
+  } else {
+    resultNode = (
+      <span style={{ color: "var(--sb-ink)", fontWeight: 600, fontSize: 11.5, fontFamily: "'Space Mono', monospace", whiteSpace: "nowrap" }}>
+        {formatGameTime(game.startTime)}
+      </span>
+    );
+  }
+
+  const broadcast = game.broadcasts && game.broadcasts.length > 0 ? game.broadcasts[0] : null;
+  const leagueLabel = LEAGUE_META[game.league]?.label ?? game.league.toUpperCase();
+
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 10,
+      padding: "8px 10px",
+      background: isLive ? `${team.color}08` : "transparent",
+      borderLeft: `3px solid ${isLive ? "#ef4444" : team.color}`,
+      borderRadius: 4,
+      marginBottom: 4,
+    }}>
+      {sbLogo && (
+        <img src={sbLogo} alt="" width={22} height={22} style={{ objectFit: "contain", flexShrink: 0 }} loading="lazy" />
+      )}
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, fontWeight: 700, color: "var(--sb-ink)" }}>
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {team.shortName} {sbHome ? "vs" : "@"} {oppAbbr}
+          </span>
+          {oppLogo && (
+            <img src={oppLogo} alt="" width={14} height={14} style={{ objectFit: "contain", flexShrink: 0, opacity: 0.85 }} loading="lazy" />
+          )}
+        </div>
+        <div style={{ fontSize: 9.5, fontFamily: "'Space Mono', monospace", color: "var(--sb-muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "flex", gap: 6 }}>
+          <span style={{ color: team.color, fontWeight: 700 }}>{leagueLabel}</span>
+          {broadcast && <span>· {broadcast}</span>}
+        </div>
+      </div>
+      <span>{resultNode}</span>
+    </div>
+  );
+}
+
+function TodaysGamesSection({ allGames }: { allGames: ParsedGame[] }) {
+  const games = todaysGamesSorted(allGames);
+  if (games.length === 0) return null;
+
+  const liveNow = games.filter((g) => g.status === "in").length;
+  const todayLabel = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    timeZone: "America/Los_Angeles",
+  });
+
+  return (
+    <section style={{
+      marginBottom: 24,
+      padding: "14px 16px",
+      background: "var(--sb-card)",
+      border: "1.5px solid var(--sb-border-light)",
+      borderRadius: 10,
+    }}>
+      <header style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
+        <span style={{
+          fontSize: 10, fontWeight: 800, fontFamily: "'Space Mono', monospace",
+          letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--sb-muted)",
+        }}>
+          {todayLabel}
+        </span>
+        <h3 style={{
+          margin: 0, fontSize: 16, fontWeight: 800, color: "var(--sb-ink)",
+          letterSpacing: "-0.01em",
+        }}>
+          {games.length === 1 ? "1 Game Today" : `${games.length} Games Today`}
+        </h3>
+        {liveNow > 0 && (
+          <span style={{
+            marginLeft: "auto",
+            fontSize: 10, fontWeight: 800, fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.06em", textTransform: "uppercase",
+            color: "#ef4444",
+          }}>
+            ● {liveNow} live
+          </span>
+        )}
+      </header>
+      <div>
+        {games.map((g) => <TodaysGameRow key={g.id} game={g} />)}
+      </div>
+    </section>
+  );
+}
+
 // ── Team schedule card ──
 
 function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGame[] }) {
@@ -461,10 +608,13 @@ export default function SportsView() {
   const localTeams = SOUTH_BAY_TEAMS.filter((t) => t.primary && (gamesByTeam.get(t.key)?.length ?? 0) > 0).sort(byLeagueOrder);
   const bayAreaTeams = SOUTH_BAY_TEAMS.filter((t) => !t.primary && (gamesByTeam.get(t.key)?.length ?? 0) > 0).sort(byLeagueOrder);
 
-  const liveCount = [...gamesByTeam.values()].flat().filter((g) => g.status === "in").length;
+  const allGames = [...gamesByTeam.values()].flat();
+  const liveCount = allGames.filter((g) => g.status === "in").length;
 
   return (
     <>
+      <TodaysGamesSection allGames={allGames} />
+
       <div className="sb-section-header">
         <span className="sb-section-title">
           Scoreboard
