@@ -15,6 +15,12 @@ export interface NamedHoliday {
   bg: string;
   /** Returns the YYYY-MM-DD this holiday falls on for the given year. */
   computeIso(year: number): string;
+  /** Keywords (lowercase substrings) that mark an event as themed for this
+   *  holiday. The Events tab uses these to narrow the holiday-date view to
+   *  actual themed picks (brunches, parades, fireworks) instead of every
+   *  event on that date. Omit when the holiday is observed but doesn't have
+   *  a clear textual signal in event copy (e.g. school holidays). */
+  themeKeywords?: string[];
 }
 
 // ── Date helpers (Pacific Time, no UTC drift) ───────────────────────────────
@@ -96,6 +102,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#be185d",
     bg: "#fdf2f8",
     computeIso: (y) => fixedDate(y, 2, 14),
+    themeKeywords: ["valentine", "sweetheart", "love song", "romantic"],
   },
   {
     id: "presidents-day",
@@ -112,6 +119,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#15803d",
     bg: "#f0fdf4",
     computeIso: (y) => fixedDate(y, 3, 17),
+    themeKeywords: ["st. patrick", "st patrick", "patrick's", "irish", "shamrock"],
   },
   {
     id: "holi",
@@ -156,6 +164,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#15803d",
     bg: "#f0fdf4",
     computeIso: (y) => fixedDate(y, 4, 22),
+    themeKeywords: ["earth day", "creek cleanup", "park cleanup", "tree planting", "watershed"],
   },
   {
     id: "cinco-de-mayo",
@@ -164,6 +173,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#b45309",
     bg: "#fffbeb",
     computeIso: (y) => fixedDate(y, 5, 5),
+    themeKeywords: ["cinco de mayo", "mariachi", "ballet folklórico", "ballet folklorico"],
   },
   {
     id: "mothers-day",
@@ -172,6 +182,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#be185d",
     bg: "#fdf2f8",
     computeIso: (y) => nthWeekday(y, 5, 0, 2), // 2nd Sunday of May
+    themeKeywords: ["mother", "moms", "mom's", "mama", "mommy", "toast to mom"],
   },
   {
     id: "memorial-day",
@@ -180,6 +191,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1e40af",
     bg: "#eff6ff",
     computeIso: (y) => lastWeekday(y, 5, 1), // last Monday of May
+    themeKeywords: ["memorial day", "veterans", "wreath-laying", "wreath laying", "fallen", "armed forces"],
   },
   {
     id: "eid-al-adha",
@@ -206,6 +218,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#92400e",
     bg: "#fffbeb",
     computeIso: (y) => fixedDate(y, 6, 19),
+    themeKeywords: ["juneteenth"],
   },
   {
     id: "fathers-day",
@@ -214,6 +227,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1d4ed8",
     bg: "#eff6ff",
     computeIso: (y) => nthWeekday(y, 6, 0, 3), // 3rd Sunday of June
+    themeKeywords: ["father", "dads", "dad's", "papa"],
   },
   {
     id: "independence-day",
@@ -222,6 +236,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#b91c1c",
     bg: "#fef2f2",
     computeIso: (y) => fixedDate(y, 7, 4),
+    themeKeywords: ["fourth of july", "4th of july", "july 4", "independence day", "fireworks", "patriotic"],
   },
   {
     id: "labor-day",
@@ -302,6 +317,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#c2410c",
     bg: "#fff7ed",
     computeIso: (y) => fixedDate(y, 10, 31),
+    themeKeywords: ["halloween", "trick-or-treat", "trick or treat", "haunted", "costume", "pumpkin patch", "spooky"],
   },
   {
     id: "dia-de-los-muertos",
@@ -313,6 +329,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#c2410c",
     bg: "#fff7ed",
     computeIso: (y) => fixedDate(y, 11, 2),
+    themeKeywords: ["día de los muertos", "dia de los muertos", "day of the dead", "ofrenda", "calavera", "muertos"],
   },
   {
     id: "diwali",
@@ -331,6 +348,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
       };
       return overrides[y] ?? fixedDate(y, 11, 1);
     },
+    themeKeywords: ["diwali", "deepavali", "rangoli"],
   },
   {
     id: "veterans-day",
@@ -339,6 +357,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1e40af",
     bg: "#eff6ff",
     computeIso: (y) => fixedDate(y, 11, 11),
+    themeKeywords: ["veterans day", "veterans'", "armed forces", "wreath-laying", "wreath laying"],
   },
   {
     id: "thanksgiving",
@@ -347,6 +366,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#a16207",
     bg: "#fefce8",
     computeIso: (y) => nthWeekday(y, 11, 4, 4), // 4th Thursday of November
+    themeKeywords: ["thanksgiving", "turkey trot", "friendsgiving", "harvest"],
   },
   {
     id: "christmas-eve",
@@ -355,6 +375,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#15803d",
     bg: "#f0fdf4",
     computeIso: (y) => fixedDate(y, 12, 24),
+    themeKeywords: ["christmas eve", "candlelight", "midnight mass", "carol"],
   },
   {
     id: "christmas",
@@ -363,6 +384,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#b91c1c",
     bg: "#fef2f2",
     computeIso: (y) => fixedDate(y, 12, 25),
+    themeKeywords: ["christmas", "santa", "tree lighting", "nutcracker"],
   },
   {
     id: "new-years-eve",
@@ -371,6 +393,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1f2937",
     bg: "#f3f4f6",
     computeIso: (y) => fixedDate(y, 12, 31),
+    themeKeywords: ["new year", "nye", "midnight countdown", "countdown to midnight"],
   },
 ];
 
@@ -384,6 +407,16 @@ export function holidayOn(iso: string): NamedHoliday | null {
     if (h.computeIso(year) === iso) return h;
   }
   return null;
+}
+
+/** Returns true when `haystack` (event title/blurb/description, lowercased
+ *  beforehand by the caller) matches any of the holiday's themeKeywords. */
+export function matchesHolidayTheme(holiday: NamedHoliday, lowerHaystack: string): boolean {
+  if (!holiday.themeKeywords?.length) return false;
+  for (const k of holiday.themeKeywords) {
+    if (lowerHaystack.includes(k.toLowerCase())) return true;
+  }
+  return false;
 }
 
 /** Returns the soonest holiday whose date falls in [todayIso, horizonIso]. */

@@ -25,7 +25,7 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonError(400, "valid email required");
   }
 
-  const audienceId = (config as { audienceId?: string }).audienceId;
+  const audienceId = (config as { audienceId?: string | null }).audienceId;
   if (!audienceId) return jsonError(500, "newsletter audience not configured");
 
   const apiKey = process.env.RESEND_API_KEY;

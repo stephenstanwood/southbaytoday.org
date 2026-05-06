@@ -5,7 +5,12 @@ import {
   type EventCategory,
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
-import { holidayOn, nextHolidayWithin } from "../../../lib/south-bay/holidays";
+import {
+  holidayOn,
+  matchesHolidayTheme,
+  nextHolidayWithin,
+  NAMED_HOLIDAYS,
+} from "../../../lib/south-bay/holidays";
 import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
 import FreewayPulseCard from "../cards/FreewayPulseCard";
 import LaneClosuresCard from "../cards/LaneClosuresCard";
@@ -905,10 +910,15 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
 
 interface HolidayHeadsUpBannerProps {
   eventCountByDate: Record<string, number>;
-  onJumpToDate: (iso: string) => void;
+  themedCountByHolidayId: Record<string, number>;
+  onJumpToDate: (iso: string, themedHolidayId?: string) => void;
 }
 
-function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUpBannerProps) {
+function HolidayHeadsUpBanner({
+  eventCountByDate,
+  themedCountByHolidayId,
+  onJumpToDate,
+}: HolidayHeadsUpBannerProps) {
   const todayIso = todayPT();
   const tomorrowIso = addDays(todayIso, 1);
   const horizonIso = addDays(todayIso, 14);
@@ -921,8 +931,19 @@ function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUp
 
   const dateLabel = schoolDateLabel(next.iso, todayIso, tomorrowIso);
   const { holiday } = next;
-  const count = eventCountByDate[next.iso] ?? 0;
+  const totalCount = eventCountByDate[next.iso] ?? 0;
+  const themedCount = themedCountByHolidayId[holiday.id] ?? 0;
+  // Prefer the themed count when the holiday has theme keywords AND there
+  // are themed picks available — that's what residents actually want when
+  // they tap a "Mother's Day" banner. Fall back to total event count
+  // otherwise so the banner still works for holidays without keywords or
+  // with no themed events in feed yet.
+  const showThemed = themedCount > 0 && !!holiday.themeKeywords?.length;
+  const count = showThemed ? themedCount : totalCount;
   const isClickable = count > 0;
+  const pillLabel = showThemed
+    ? `${themedCount} pick${themedCount === 1 ? "" : "s"}`
+    : `${totalCount} event${totalCount === 1 ? "" : "s"}`;
 
   const innerStyle: React.CSSProperties = {
     display: "flex",
@@ -976,7 +997,7 @@ function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUp
             border: `1px solid ${holiday.color}55`,
           }}
         >
-          {count} event{count === 1 ? "" : "s"} <span aria-hidden>→</span>
+          {pillLabel} <span aria-hidden>→</span>
         </span>
       )}
     </>
@@ -986,8 +1007,8 @@ function HolidayHeadsUpBanner({ eventCountByDate, onJumpToDate }: HolidayHeadsUp
     return (
       <button
         type="button"
-        onClick={() => onJumpToDate(next.iso)}
-        aria-label={`Jump to ${holiday.label} (${dateLabel}) — ${count} event${count === 1 ? "" : "s"}`}
+        onClick={() => onJumpToDate(next.iso, showThemed ? holiday.id : undefined)}
+        aria-label={`Jump to ${holiday.label} (${dateLabel}) — ${pillLabel}`}
         style={innerStyle}
         onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
         onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
@@ -1121,6 +1142,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // a chip in the HeritageMonthBanner; null = no filter. Composes with the
   // other filters via matchesFilters.
   const [activeHeritageId, setActiveHeritageId] = useState<string | null>(null);
+  // Active themed-holiday filter — populated when the user taps the holiday
+  // heads-up banner on a holiday that has theme keywords (e.g. Mother's
+  // Day → narrows that day's view to mom-themed picks instead of every
+  // event on Sunday). Auto-cleared when the user navigates to a different
+  // date so it doesn't sneakily filter unrelated days.
+  const [activeThemedHolidayId, setActiveThemedHolidayId] = useState<string | null>(null);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -1212,6 +1239,26 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return matchesHeritage(activeHeritage, heritageHaystack(e));
   };
 
+  // The holiday object backing the active themed filter, plus its ISO date
+  // for the current year. Recomputed when the active id changes; null when
+  // no filter is set or the id no longer resolves.
+  const themedHoliday = useMemo(() => {
+    if (!activeThemedHolidayId) return null;
+    const h = NAMED_HOLIDAYS.find((x) => x.id === activeThemedHolidayId);
+    if (!h) return null;
+    const iso = h.computeIso(Number(todayIso.slice(0, 4)));
+    return { holiday: h, iso };
+  }, [activeThemedHolidayId, todayIso]);
+
+  const matchesActiveThemedHoliday = (e: UpcomingEvent): boolean => {
+    if (!themedHoliday) return true;
+    // Only narrow the view on the holiday date itself — events on other
+    // dates pass through unaffected.
+    if (e.date !== themedHoliday.iso) return true;
+    const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
+    return matchesHolidayTheme(themedHoliday.holiday, lower);
+  };
+
   // Apply common filters (city, category, kids, search) to a list of events
   const matchesFilters = (e: UpcomingEvent): boolean => {
     if (!allCities && !selectedCities.has(e.city as City)) return false;
@@ -1233,6 +1280,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) return false;
     if (!matchesActiveHeritage(e)) return false;
+    if (!matchesActiveThemedHoliday(e)) return false;
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
           !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1335,6 +1383,16 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       setSelectedDate(nextDate);
     }
   }, [datesWithEvents, selectedDate, todayIso, isSearching]);
+
+  // Auto-clear the themed-holiday filter when the user moves off the holiday
+  // date or starts a search. The filter is intentionally tied to that one
+  // date — silently filtering unrelated days would be surprising.
+  useEffect(() => {
+    if (!themedHoliday) return;
+    if (isSearching || selectedDate !== themedHoliday.iso) {
+      setActiveThemedHolidayId(null);
+    }
+  }, [themedHoliday, selectedDate, isSearching]);
 
   // Per-category counts (for badges on category pills) — count across ALL
   // upcoming events so users can see which categories have anything at all,
@@ -1528,6 +1586,36 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, activeHeritage, todayIso, isSearching, searchQ]);
 
+  // Themed-event counts per upcoming holiday in the next 14 days. Drives the
+  // pill on the holiday heads-up banner ("5 picks →" instead of "28 events
+  // →") so residents know that tapping will jump them to genuinely themed
+  // events, not every random Sunday booking. Honors city/category/kids/free
+  // filters so the count matches what the user will actually see post-jump.
+  const themedCountByHolidayId = useMemo(() => {
+    const horizonIso = addDays(todayIso, 14);
+    const counts: Record<string, number> = {};
+    for (let y = Number(todayIso.slice(0, 4)); y <= Number(horizonIso.slice(0, 4)); y++) {
+      for (const h of NAMED_HOLIDAYS) {
+        if (!h.themeKeywords?.length) continue;
+        const iso = h.computeIso(y);
+        if (iso < todayIso || iso > horizonIso) continue;
+        let n = 0;
+        for (const e of upcomingEvents) {
+          if (e.date !== iso) continue;
+          if (!allCities && !selectedCities.has(e.city as City)) continue;
+          if (category !== "all" && e.category !== category) continue;
+          if (showKidsOnly && !e.kidFriendly) continue;
+          if (showFreeOnly && e.cost !== "free") continue;
+          const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
+          if (!matchesHolidayTheme(h, lower)) continue;
+          n++;
+        }
+        counts[h.id] = n;
+      }
+    }
+    return counts;
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso]);
+
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
     ? [...datesWithEvents].reverse().find((d) => d < selectedDate) ?? null
@@ -1554,11 +1642,13 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       <SchoolHeadsUpBanner selectedCities={selectedCities} />
       <HolidayHeadsUpBanner
         eventCountByDate={eventCountByDate}
-        onJumpToDate={(iso) => {
+        themedCountByHolidayId={themedCountByHolidayId}
+        onJumpToDate={(iso, themedHolidayId) => {
           if (isSearching) setSearch("");
           if (showWeekendOnly) setShowWeekendOnly(false);
           if (showTonightOnly) setShowTonightOnly(false);
           setSelectedDate(iso);
+          setActiveThemedHolidayId(themedHolidayId ?? null);
         }}
       />
       <HeritageMonthBanner
@@ -2198,6 +2288,41 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       ) : (
         /* Single-day view */
         <div>
+          {/* Themed-holiday filter chip — only when active. Lets the user
+              clear the "Mother's Day picks" view back to the full day. */}
+          {themedHoliday && selectedDate === themedHoliday.iso && (
+            <div style={{
+              display: "flex", alignItems: "center", gap: 8,
+              padding: "6px 10px", marginBottom: 10,
+              background: themedHoliday.holiday.bg,
+              border: `1px solid ${themedHoliday.holiday.color}33`,
+              borderRadius: 6, fontSize: 12,
+              color: themedHoliday.holiday.color,
+            }}>
+              <span aria-hidden style={{ fontSize: 13 }}>{themedHoliday.holiday.emoji}</span>
+              <span style={{ fontWeight: 600 }}>
+                Showing {themedHoliday.holiday.label} picks only
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveThemedHolidayId(null)}
+                style={{
+                  marginLeft: "auto",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: 10, fontWeight: 700, letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "2px 8px", borderRadius: 100,
+                  background: "#ffffff",
+                  color: themedHoliday.holiday.color,
+                  border: `1px solid ${themedHoliday.holiday.color}55`,
+                  cursor: "pointer",
+                }}
+              >
+                Show all ×
+              </button>
+            </div>
+          )}
+
           {/* Day events */}
           {dayEvents.length === 0 ? (
             <div className="sb-empty">
