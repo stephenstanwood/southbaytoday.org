@@ -639,7 +639,7 @@ async function processPost(post, xCreds) {
   let title = post.item?.title || "Untitled";
   title = title.replace(/^null\s+/i, "").replace(/\s+null\s+/g, " ").trim() || "Untitled";
 
-  return {
+  const result = {
     key: `${brand}|${postKey(post)}`,
     brand,
     title,
@@ -648,6 +648,11 @@ async function processPost(post, xCreds) {
     cardPath: post.cardPath || null,
     platforms,
   };
+  // HHSS cross-posts to FB; expose the FB permalink so the dashboard can
+  // surface a small deep-link icon next to the IG pill. We deliberately don't
+  // poll FB engagement (Meta App Review wall) — link-only.
+  if (post._fbPermalink) result.fbPermalink = post._fbPermalink;
+  return result;
 }
 
 // ── HHSS: enumerate posts directly from IG account ──────────────────────
@@ -657,39 +662,85 @@ async function processPost(post, xCreds) {
 async function loadHHSSPosts() {
   const igToken = process.env.HHSS_IG_ACCESS_TOKEN;
   const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474";
+  const fbPageId = process.env.HHSS_FB_PAGE_ID;
+  const fbPageToken = process.env.HHSS_FB_PAGE_ACCESS_TOKEN;
 
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
   const out = [];
 
-  if (igToken) {
+  if (!igToken) {
+    console.log("   HHSS/instagram: skipped (no HHSS_IG_ACCESS_TOKEN)");
+    return out;
+  }
+
+  // 1) Fetch FB page feed first so we can attach a cross-post permalink to
+  //    each IG entry. We don't poll FB engagement (Meta App Review wall on
+  //    pages_read_engagement) — this is link-only so the dashboard can deep-
+  //    link to the matching FB post next to the IG pill.
+  let fbPosts = [];
+  if (fbPageId && fbPageToken) {
     try {
-      // IG Business uses graph.facebook.com (not graph.instagram.com) when the
-      // token is a Page Access Token derived through FB.
       const r = await fetch(
-        `${FB_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
+        `${FB_API}/${fbPageId}/posts?fields=id,created_time,permalink_url&limit=50&access_token=${fbPageToken}`
       );
       if (r.ok) {
         const data = await r.json();
-        for (const m of data.data || []) {
-          if (new Date(m.timestamp).getTime() < cutoff) continue;
-          out.push({
-            item: { title: (m.caption || "Untitled").split("\n")[0].slice(0, 90), url: m.permalink || null },
-            publishedAt: m.timestamp,
-            publishedTo: [{ platform: "instagram", ok: true, id: m.id, postId: m.id, shortcode: m.shortcode }],
-            targetUrl: m.permalink || null,
-            _brand: "HHSS",
-            _igToken: igToken,
-          });
-        }
+        fbPosts = (data.data || [])
+          .filter((p) => p.permalink_url && p.created_time)
+          .map((p) => ({ ts: new Date(p.created_time).getTime(), url: p.permalink_url }));
       } else {
         const body = await r.text();
-        console.log(`   HHSS/instagram: media fetch failed (${r.status}) ${body.slice(0, 120)}`);
+        console.log(`   HHSS/facebook (link-only): feed fetch failed (${r.status}) ${body.slice(0, 120)}`);
       }
     } catch (err) {
-      console.log(`   HHSS/instagram: ${err.message}`);
+      console.log(`   HHSS/facebook (link-only): ${err.message}`);
     }
-  } else {
-    console.log("   HHSS/instagram: skipped (no HHSS_IG_ACCESS_TOKEN)");
+  }
+  // Find the FB post whose created_time is within ±5 min of the IG timestamp.
+  // Cross-posts from IG to FB land within seconds in practice; widening to
+  // 5 min covers manual-cross-post lag without false positives.
+  const FB_MATCH_WINDOW_MS = 5 * 60 * 1000;
+  function fbPermalinkFor(igTimestamp) {
+    if (!fbPosts.length) return null;
+    const target = new Date(igTimestamp).getTime();
+    let best = null;
+    let bestDelta = FB_MATCH_WINDOW_MS + 1;
+    for (const p of fbPosts) {
+      const delta = Math.abs(p.ts - target);
+      if (delta < bestDelta) {
+        best = p;
+        bestDelta = delta;
+      }
+    }
+    return bestDelta <= FB_MATCH_WINDOW_MS ? best.url : null;
+  }
+
+  try {
+    // IG Business uses graph.facebook.com (not graph.instagram.com) when the
+    // token is a Page Access Token derived through FB.
+    const r = await fetch(
+      `${FB_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      for (const m of data.data || []) {
+        if (new Date(m.timestamp).getTime() < cutoff) continue;
+        out.push({
+          item: { title: (m.caption || "Untitled").split("\n")[0].slice(0, 90), url: m.permalink || null },
+          publishedAt: m.timestamp,
+          publishedTo: [{ platform: "instagram", ok: true, id: m.id, postId: m.id, shortcode: m.shortcode }],
+          targetUrl: m.permalink || null,
+          _brand: "HHSS",
+          _igToken: igToken,
+          _fbPermalink: fbPermalinkFor(m.timestamp),
+        });
+      }
+    } else {
+      const body = await r.text();
+      console.log(`   HHSS/instagram: media fetch failed (${r.status}) ${body.slice(0, 120)}`);
+    }
+  } catch (err) {
+    console.log(`   HHSS/instagram: ${err.message}`);
   }
 
   return out;
@@ -739,6 +790,7 @@ function priorToSourcePost(entry) {
     targetUrl: entry.targetUrl || null,
     cardPath: entry.cardPath || null,
     _brand: entry.brand || "SBT",
+    _fbPermalink: entry.fbPermalink || null,
   };
 }
 
