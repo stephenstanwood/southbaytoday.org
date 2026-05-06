@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.southbaytoday.collect-engagement</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>--env-file=.env.local</string>
+    <string>scripts/social/collect-engagement.mjs</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+  <key>StartInterval</key>
+  <integer>900</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/sbt-collect-engagement.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/sbt-collect-engagement.log</string>
+</dict>
+</plist>

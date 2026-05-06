@@ -25,6 +25,7 @@ const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
+const ENGAGEMENT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
 const ENGAGEMENT_DRAFTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "engagement-drafts.json");
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
@@ -90,6 +91,24 @@ function saveReplies(replies) {
   const dir = dirname(REPLIES_FILE);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(REPLIES_FILE, JSON.stringify(replies, null, 2) + "\n");
+}
+
+function loadEngagement() {
+  if (!existsSync(ENGAGEMENT_FILE)) return null;
+  try {
+    return JSON.parse(readFileSync(ENGAGEMENT_FILE, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function engagementMtime() {
+  if (!existsSync(ENGAGEMENT_FILE)) return null;
+  try {
+    return statSync(ENGAGEMENT_FILE).mtime.toISOString();
+  } catch {
+    return null;
+  }
 }
 
 // Race guard: track the mtime we last observed so we can detect concurrent writes
@@ -274,6 +293,292 @@ function generateNewBatch() {
     console.log(`✅ ${posts.length} new drafts ready for review`);
   });
 }
+
+// ─── Engagement dashboard (separate page at /engagement) ─────────────────
+const ENGAGEMENT_HTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SBT Engagement</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #faf8f4; color: #1a1a1a; padding: 16px; padding-bottom: 80px; }
+  a { color: #4338ca; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .header { max-width: 1100px; margin: 0 auto 18px; display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .title { font-size: 11px; letter-spacing: 0.18em; color: #777; text-transform: uppercase; }
+  .nav-link { font-size: 12px; color: #4338ca; }
+  .last-updated { margin-left: auto; font-size: 11px; color: #999; }
+  .totals { max-width: 1100px; margin: 0 auto 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .total-card { background: #fff; border: 1px solid #ece8de; border-radius: 8px; padding: 10px 14px; }
+  .total-num { font-size: 22px; font-weight: 600; color: #1a1a1a; line-height: 1; }
+  .total-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-top: 6px; }
+  .controls { max-width: 1100px; margin: 0 auto 16px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12px; }
+  .pill-btn { padding: 4px 11px; border: 1px solid #d8d2c4; border-radius: 999px; background: #fff; color: #555; cursor: pointer; font-size: 12px; transition: all 0.1s; }
+  .pill-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .pill-btn:hover:not(.active) { border-color: #999; }
+  .toggle { display: flex; align-items: center; gap: 6px; color: #555; cursor: pointer; }
+  .refresh-btn { margin-left: auto; padding: 5px 12px; border: 1px solid #d8d2c4; border-radius: 4px; background: #fff; color: #1a1a1a; cursor: pointer; font-size: 12px; }
+  .refresh-btn:hover { background: #f3efe7; }
+  .posts { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+  .empty { text-align: center; padding: 40px 16px; color: #888; }
+  .post-card { background: #fff; border: 1px solid #ece8de; border-radius: 8px; padding: 14px 16px; }
+  .post-card.no-engagement { opacity: 0.55; }
+  .post-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .post-title { font-size: 14px; font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
+  .post-meta { font-size: 11px; color: #888; white-space: nowrap; }
+  .post-meta a { color: #888; }
+  .platform-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .plat-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; background: #f6f2ea; border: 1px solid #ece8de; font-size: 12px; color: #555; cursor: pointer; transition: all 0.1s; }
+  .plat-pill:hover { background: #ede7d8; }
+  .plat-pill.expanded { background: #fff; border-color: #c7d2fe; }
+  .plat-pill.zero { color: #aaa; cursor: default; }
+  .plat-pill.zero:hover { background: #f6f2ea; }
+  .plat-icon { font-size: 13px; }
+  .plat-counts { display: inline-flex; gap: 8px; }
+  .plat-count { color: #1a1a1a; font-weight: 600; }
+  .plat-count .lbl { font-weight: 400; color: #888; margin-left: 2px; font-size: 10px; }
+  .details { display: none; margin-top: 12px; border-top: 1px solid #ece8de; padding-top: 12px; }
+  .details.open { display: block; }
+  .detail-section { margin-top: 10px; }
+  .detail-section:first-child { margin-top: 0; }
+  .detail-header { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+  .actor-list { display: flex; flex-wrap: wrap; gap: 4px; }
+  .actor-chip { font-size: 11px; padding: 2px 8px; background: #f6f2ea; border-radius: 4px; color: #555; }
+  .reply-item, .quote-item { background: #faf8f4; border-left: 2px solid #c7d2fe; padding: 8px 10px; margin-bottom: 6px; border-radius: 0 4px 4px 0; font-size: 12px; }
+  .reply-author { font-weight: 600; color: #1a1a1a; font-size: 11px; }
+  .reply-time { color: #888; font-size: 10px; margin-left: 6px; }
+  .reply-text { color: #333; margin-top: 4px; line-height: 1.4; word-wrap: break-word; }
+  .reply-permalink { font-size: 10px; color: #4338ca; margin-top: 4px; display: inline-block; }
+  .placeholder { font-size: 11px; color: #aaa; font-style: italic; }
+  @media (max-width: 600px) {
+    .header { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .last-updated { margin-left: 0; }
+    .post-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <span class="title">South Bay Today · Engagement</span>
+  <a class="nav-link" href="/">← review</a>
+  <span class="last-updated" id="last-updated"></span>
+</div>
+
+<div class="totals" id="totals"></div>
+
+<div class="controls">
+  <span style="color:#888;">Platform:</span>
+  <button class="pill-btn active" data-platform="all">all</button>
+  <button class="pill-btn" data-platform="bluesky">bluesky</button>
+  <button class="pill-btn" data-platform="x">x</button>
+  <button class="pill-btn" data-platform="threads">threads</button>
+  <button class="pill-btn" data-platform="facebook">facebook</button>
+  <button class="pill-btn" data-platform="instagram">instagram</button>
+  <button class="pill-btn" data-platform="mastodon">mastodon</button>
+  <label class="toggle"><input type="checkbox" id="only-engaged" checked /> only with engagement</label>
+  <button class="refresh-btn" onclick="load()">refresh</button>
+</div>
+
+<div class="posts" id="posts"></div>
+
+<script>
+const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
+const TYPE_ORDER = ['likes', 'reposts', 'quotes', 'replies'];
+const TYPE_LBL = { likes: 'likes', reposts: 'reposts', quotes: 'quotes', replies: 'replies' };
+let DATA = null;
+let activePlatform = 'all';
+let onlyEngaged = true;
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+function timeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - new Date(ts).getTime();
+  if (diff < 0) return 'just now';
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + 'h ago';
+  const d = Math.floor(h / 24);
+  if (d < 14) return d + 'd ago';
+  return new Date(ts).toLocaleDateString();
+}
+
+function totalForPost(post) {
+  let n = 0;
+  for (const p of Object.values(post.platforms || {})) {
+    const c = p.counts || {};
+    n += (c.likes || 0) + (c.reposts || 0) + (c.quotes || 0) + (c.replies || 0);
+  }
+  return n;
+}
+
+function renderTotals() {
+  const t = (DATA && DATA.totals) || { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  const html = TYPE_ORDER.map(k => (
+    '<div class="total-card"><div class="total-num">' + (t[k] || 0).toLocaleString() +
+    '</div><div class="total-label">' + TYPE_LBL[k] + '</div></div>'
+  )).join('');
+  document.getElementById('totals').innerHTML = html;
+}
+
+function renderPlatformPill(plat, p, expanded) {
+  const counts = p.counts || {};
+  const total = (counts.likes||0)+(counts.reposts||0)+(counts.quotes||0)+(counts.replies||0);
+  const zero = total === 0;
+  const cls = 'plat-pill' + (zero ? ' zero' : '') + (expanded ? ' expanded' : '');
+  const segs = TYPE_ORDER.filter(k => (counts[k]||0) > 0).map(k => (
+    '<span class="plat-count">' + counts[k] + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
+  )).join('');
+  const body = zero
+    ? '<span class="plat-counts" style="color:#bbb;">no activity</span>'
+    : '<span class="plat-counts">' + segs + '</span>';
+  return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span>' + body + '</div>';
+}
+
+function renderActors(actors) {
+  if (!actors || !actors.length) return '<div class="placeholder">no actor list (API restriction)</div>';
+  return '<div class="actor-list">' + actors.map(a => {
+    const name = a.displayName ? a.displayName + ' (@' + a.author + ')' : '@' + a.author;
+    if (a.profile) return '<a class="actor-chip" href="' + a.profile + '" target="_blank">' + escapeHtml(name) + '</a>';
+    return '<span class="actor-chip">' + escapeHtml(name) + '</span>';
+  }).join('') + '</div>';
+}
+
+function renderReplies(items, label) {
+  if (!items || !items.length) return '';
+  return '<div class="detail-section"><div class="detail-header">' + label + '</div>' +
+    items.map(r => (
+      '<div class="reply-item"><span class="reply-author">@' + escapeHtml(r.author || 'unknown') + '</span>' +
+      '<span class="reply-time">' + escapeHtml(timeAgo(r.at)) + '</span>' +
+      '<div class="reply-text">' + escapeHtml(r.text) + '</div>' +
+      (r.permalink ? '<a class="reply-permalink" href="' + r.permalink + '" target="_blank">view →</a>' : '') +
+      '</div>'
+    )).join('') + '</div>';
+}
+
+function renderDetails(plat, p) {
+  const sections = [];
+  if ((p.counts?.likes || 0) > 0) {
+    sections.push('<div class="detail-section"><div class="detail-header">' + p.counts.likes + ' likes</div>' + renderActors(p.likes) + '</div>');
+  }
+  if ((p.counts?.reposts || 0) > 0) {
+    sections.push('<div class="detail-section"><div class="detail-header">' + p.counts.reposts + ' reposts</div>' + renderActors(p.reposts) + '</div>');
+  }
+  sections.push(renderReplies(p.quotes, (p.counts?.quotes || 0) + ' quotes'));
+  sections.push(renderReplies(p.replies, (p.counts?.replies || 0) + ' replies'));
+  return sections.filter(Boolean).join('');
+}
+
+function renderPost(post) {
+  const platforms = post.platforms || {};
+  const platKeys = Object.keys(platforms);
+  const total = totalForPost(post);
+
+  if (onlyEngaged && total === 0) return '';
+  if (activePlatform !== 'all') {
+    const c = platforms[activePlatform]?.counts || {};
+    const platTotal = (c.likes||0)+(c.reposts||0)+(c.quotes||0)+(c.replies||0);
+    if (onlyEngaged && platTotal === 0) return '';
+    if (!platforms[activePlatform]) return '';
+  }
+
+  const filteredPlats = activePlatform === 'all' ? platKeys : platKeys.filter(k => k === activePlatform);
+
+  const cardCls = 'post-card' + (total === 0 ? ' no-engagement' : '');
+  const titleHtml = post.targetUrl
+    ? '<a href="' + post.targetUrl + '" target="_blank">' + escapeHtml(post.title) + '</a>'
+    : escapeHtml(post.title);
+
+  const pills = filteredPlats.map(k => renderPlatformPill(k, platforms[k], false)).join('');
+
+  return (
+    '<div class="' + cardCls + '" data-key="' + escapeHtml(post.key) + '">' +
+      '<div class="post-head">' +
+        '<div class="post-title">' + titleHtml + '</div>' +
+        '<div class="post-meta">' + escapeHtml(timeAgo(post.publishedAt)) + '</div>' +
+      '</div>' +
+      '<div class="platform-row">' + pills + '</div>' +
+      '<div class="details" id="details-' + cssId(post.key) + '"></div>' +
+    '</div>'
+  );
+}
+
+function cssId(s) {
+  return String(s).replace(/[^a-zA-Z0-9]/g, '_').slice(0, 80);
+}
+
+function render() {
+  if (!DATA) return;
+  document.getElementById('last-updated').textContent = DATA.lastUpdated
+    ? 'updated ' + timeAgo(DATA.lastUpdated) + ' · ' + (DATA.postCount || 0) + ' posts'
+    : 'no data yet — run scripts/social/collect-engagement.mjs';
+  renderTotals();
+
+  const html = (DATA.posts || []).map(renderPost).filter(Boolean).join('');
+  const list = document.getElementById('posts');
+  list.innerHTML = html || '<div class="empty">No posts match your filters.</div>';
+
+  list.querySelectorAll('.plat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const plat = pill.dataset.plat;
+      const card = pill.closest('.post-card');
+      const detailsEl = card.querySelector('.details');
+      const key = card.dataset.key;
+      const post = DATA.posts.find(p => p.key === key);
+      if (!post || !post.platforms[plat]) return;
+      const counts = post.platforms[plat].counts || {};
+      const total = (counts.likes||0)+(counts.reposts||0)+(counts.quotes||0)+(counts.replies||0);
+      if (total === 0) return;
+      if (detailsEl.classList.contains('open') && pill.classList.contains('expanded')) {
+        detailsEl.classList.remove('open');
+        card.querySelectorAll('.plat-pill').forEach(p => p.classList.remove('expanded'));
+        return;
+      }
+      card.querySelectorAll('.plat-pill').forEach(p => p.classList.remove('expanded'));
+      pill.classList.add('expanded');
+      const plink = post.platforms[plat].permalink;
+      const head = plink ? '<div style="margin-bottom:10px;font-size:11px;"><a href="' + plink + '" target="_blank">view post on ' + plat + ' →</a></div>' : '';
+      detailsEl.innerHTML = head + renderDetails(plat, post.platforms[plat]);
+      detailsEl.classList.add('open');
+    });
+  });
+}
+
+document.querySelectorAll('.pill-btn[data-platform]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill-btn[data-platform]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activePlatform = btn.dataset.platform;
+    render();
+  });
+});
+
+document.getElementById('only-engaged').addEventListener('change', e => {
+  onlyEngaged = e.target.checked;
+  render();
+});
+
+async function load() {
+  try {
+    const res = await fetch('/api/engagement');
+    DATA = await res.json();
+    render();
+  } catch (err) {
+    document.getElementById('posts').innerHTML = '<div class="empty">Failed to load: ' + err.message + '</div>';
+  }
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>`;
 
 const HTML = `<!DOCTYPE html>
 <html>
@@ -768,7 +1073,7 @@ const HTML = `<!DOCTYPE html>
 </style>
 </head>
 <body>
-<h1>South Bay Today</h1>
+<h1>South Bay Today <a href="/engagement" style="float:right;font-size:12px;font-weight:400;color:#4338ca;text-decoration:none;letter-spacing:0.05em;">engagement →</a></h1>
 
 <div class="tab-bar" id="tab-bar">
   <button class="tab-btn active" onclick="switchTab('calendar')" id="tab-calendar">Calendar</button>
@@ -2679,6 +2984,20 @@ const server = createServer((req, res) => {
       writeFileSync(ENGAGEMENT_DRAFTS_FILE, JSON.stringify(data, null, 2));
       return respond(200, "Rejected ❌", `<p>Draft dropped.</p><blockquote>${escapeHtml(draft.draftText)}</blockquote>`, "#b91c1c");
     }
+  }
+
+  // ── Engagement dashboard ─────────────────────────────────────────────────
+  if (req.method === "GET" && req.url === "/api/engagement") {
+    const data = loadEngagement();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(data || { lastUpdated: null, posts: [], totals: { likes: 0, reposts: 0, quotes: 0, replies: 0 }, postCount: 0 }));
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/engagement") {
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(ENGAGEMENT_HTML);
+    return;
   }
 
   res.writeHead(200, { "Content-Type": "text/html" });
