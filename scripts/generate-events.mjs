@@ -2244,7 +2244,7 @@ function mapTicketmasterEvent(e) {
 
   return {
     id: `tm-${e.id}`,
-    title: e.name,
+    title: normalizeTicketmasterTitle(e.name),
     date: dateStr,
     displayDate: displayDate(start),
     time: timeStr ? displayTime(start) : null,
@@ -2260,6 +2260,20 @@ function mapTicketmasterEvent(e) {
     source: "Ticketmaster",
     kidFriendly: /family|kid|child|disney|cirque/i.test(e.name + genre),
   };
+}
+
+// Ticketmaster title-cases ALL-CAPS source strings, leaving artifacts like
+// "Everyone'S A Star" and "Presents: THE Rebel Ragers". Fix the obvious ones
+// without touching titles that are intentionally mostly-uppercase.
+function normalizeTicketmasterTitle(name) {
+  if (!name) return name;
+  const letters = name.replace(/[^A-Za-z]/g, "");
+  if (!letters) return name;
+  const lowerRatio = letters.replace(/[^a-z]/g, "").length / letters.length;
+  if (lowerRatio < 0.2) return name; // mostly-caps title (BLACKPINK, etc.) — leave alone
+  let out = name.replace(/(\w)'S\b/g, (_, p1) => `${p1}'s`);
+  out = out.replace(/\b(THE|AND|OF|OR|AN|IN|ON|FOR|TO|WITH)\b/g, (m) => m[0] + m.slice(1).toLowerCase());
+  return out;
 }
 
 // The TM Discovery API sometimes returns short-form URLs like
