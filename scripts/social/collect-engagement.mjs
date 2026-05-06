@@ -331,8 +331,8 @@ async function fetchThreadsEngagement(mediaId) {
 
 // ── Facebook ─────────────────────────────────────────────────────────────
 
-async function fetchFacebookEngagement(postId) {
-  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+async function fetchFacebookEngagement(postId, tokenOverride) {
+  const token = tokenOverride || process.env.FB_PAGE_ACCESS_TOKEN;
   if (!token) return null;
 
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
@@ -489,8 +489,8 @@ async function fetchXEngagement(tweetId, creds) {
 
 // ── Instagram ────────────────────────────────────────────────────────────
 
-async function fetchInstagramEngagement(mediaId, shortcode) {
-  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+async function fetchInstagramEngagement(mediaId, shortcode, tokenOverride) {
+  const token = tokenOverride || process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) return null;
 
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
@@ -603,6 +603,9 @@ async function fetchMastodonEngagement(statusId) {
 
 async function processPost(post, xCreds) {
   const platforms = {};
+  const brand = post._brand || "SBT";
+  const fbToken = post._fbToken;
+  const igToken = post._igToken;
 
   for (const entry of post.publishedTo || []) {
     if (!entry.ok) continue;
@@ -627,12 +630,11 @@ async function processPost(post, xCreds) {
           break;
         }
         case "facebook": {
-          // FB permalink: split numeric_post_id into pageId_postId pieces if present
           const parts = String(id).split("_");
           permalink = parts.length === 2
             ? `https://www.facebook.com/${parts[0]}/posts/${parts[1]}`
             : `https://www.facebook.com/${id}`;
-          result = await fetchFacebookEngagement(id);
+          result = await fetchFacebookEngagement(id, fbToken);
           break;
         }
         case "x": {
@@ -643,7 +645,7 @@ async function processPost(post, xCreds) {
         }
         case "instagram": {
           permalink = `https://www.instagram.com/p/${entry.shortcode || id}/`;
-          result = await fetchInstagramEngagement(id, entry.shortcode);
+          result = await fetchInstagramEngagement(id, entry.shortcode, igToken);
           break;
         }
         case "mastodon": {
@@ -661,7 +663,7 @@ async function processPost(post, xCreds) {
         };
       }
     } catch (err) {
-      console.log(`   ${entry.platform} ${id}: ${err.message}`);
+      console.log(`   ${brand}/${entry.platform} ${id}: ${err.message}`);
     }
   }
 
@@ -671,7 +673,8 @@ async function processPost(post, xCreds) {
   title = title.replace(/^null\s+/i, "").replace(/\s+null\s+/g, " ").trim() || "Untitled";
 
   return {
-    key: postKey(post),
+    key: `${brand}|${postKey(post)}`,
+    brand,
     title,
     publishedAt: post.publishedAt,
     targetUrl: post.targetUrl || post.item?.url || null,
@@ -680,9 +683,85 @@ async function processPost(post, xCreds) {
   };
 }
 
+// ── HHSS: enumerate posts directly from Page + IG account ───────────────
+// HHSS doesn't go through the SBT publish queue — it's a Buffer-managed
+// nonprofit account. Pull the last 30 days of posts directly from each platform.
+
+async function loadHHSSPosts() {
+  const fbToken = process.env.HHSS_FB_PAGE_ACCESS_TOKEN;
+  const fbPageId = process.env.HHSS_FB_PAGE_ID || "102667674832463"; // from Buffer
+  const igToken = process.env.HHSS_IG_ACCESS_TOKEN;
+  const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474"; // from Buffer
+
+  const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  const out = [];
+
+  // Facebook page posts
+  if (fbToken) {
+    try {
+      const r = await fetch(
+        `${FB_API}/${fbPageId}/posts?fields=id,message,created_time,permalink_url&limit=50&access_token=${fbToken}`
+      );
+      if (r.ok) {
+        const data = await r.json();
+        for (const p of data.data || []) {
+          if (new Date(p.created_time).getTime() < cutoff) continue;
+          out.push({
+            item: { title: (p.message || "Untitled").split("\n")[0].slice(0, 90), url: p.permalink_url || null },
+            publishedAt: p.created_time,
+            publishedTo: [{ platform: "facebook", ok: true, id: p.id, postId: p.id }],
+            targetUrl: p.permalink_url || null,
+            _brand: "HHSS",
+            _fbToken: fbToken,
+          });
+        }
+      } else {
+        console.log(`   HHSS/facebook: page-posts fetch failed (${r.status})`);
+      }
+    } catch (err) {
+      console.log(`   HHSS/facebook: ${err.message}`);
+    }
+  } else {
+    console.log("   HHSS/facebook: skipped (no HHSS_FB_PAGE_ACCESS_TOKEN)");
+  }
+
+  // Instagram media
+  if (igToken) {
+    try {
+      const r = await fetch(
+        `${IG_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
+      );
+      if (r.ok) {
+        const data = await r.json();
+        for (const m of data.data || []) {
+          if (new Date(m.timestamp).getTime() < cutoff) continue;
+          out.push({
+            item: { title: (m.caption || "Untitled").split("\n")[0].slice(0, 90), url: m.permalink || null },
+            publishedAt: m.timestamp,
+            publishedTo: [{ platform: "instagram", ok: true, id: m.id, postId: m.id, shortcode: m.shortcode }],
+            targetUrl: m.permalink || null,
+            _brand: "HHSS",
+            _igToken: igToken,
+          });
+        }
+      } else {
+        console.log(`   HHSS/instagram: media fetch failed (${r.status})`);
+      }
+    } catch (err) {
+      console.log(`   HHSS/instagram: ${err.message}`);
+    }
+  } else {
+    console.log("   HHSS/instagram: skipped (no HHSS_IG_ACCESS_TOKEN)");
+  }
+
+  return out;
+}
+
 async function main() {
-  const posts = loadRecentPublished();
-  console.log(`engagement: ${posts.length} posts in last ${LOOKBACK_DAYS}d`);
+  const sbtPosts = loadRecentPublished().map((p) => ({ ...p, _brand: "SBT" }));
+  const hhssPosts = await loadHHSSPosts();
+  const posts = [...sbtPosts, ...hhssPosts];
+  console.log(`engagement: ${posts.length} posts in last ${LOOKBACK_DAYS}d (SBT=${sbtPosts.length} HHSS=${hhssPosts.length})`);
 
   const xCreds = getXCreds();
   if (!xCreds) console.log("   x: skipped (no X credentials)");

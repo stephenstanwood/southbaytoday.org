@@ -327,6 +327,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .post-card.no-engagement { opacity: 0.55; }
   .post-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
   .post-title { font-size: 14px; font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
+  .brand-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; }
   .post-meta { font-size: 11px; color: #888; white-space: nowrap; }
   .post-meta a { color: #888; }
   .platform-row { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -369,7 +370,11 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <div class="totals" id="totals"></div>
 
 <div class="controls">
-  <span style="color:#888;">Platform:</span>
+  <span style="color:#888;">Brand:</span>
+  <button class="pill-btn active" data-brand="all">all</button>
+  <button class="pill-btn" data-brand="SBT">SBT</button>
+  <button class="pill-btn" data-brand="HHSS">HHSS</button>
+  <span style="color:#888;margin-left:12px;">Platform:</span>
   <button class="pill-btn active" data-platform="all">all</button>
   <button class="pill-btn" data-platform="bluesky">bluesky</button>
   <button class="pill-btn" data-platform="x">x</button>
@@ -387,8 +392,10 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
 const TYPE_ORDER = ['likes', 'reposts', 'quotes', 'replies'];
 const TYPE_LBL = { likes: 'likes', reposts: 'reposts', quotes: 'quotes', replies: 'replies' };
+const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
+let activeBrand = 'all';
 let onlyEngaged = true;
 
 function escapeHtml(s) {
@@ -479,7 +486,9 @@ function renderPost(post) {
   const platforms = post.platforms || {};
   const platKeys = Object.keys(platforms);
   const total = totalForPost(post);
+  const brand = post.brand || 'SBT';
 
+  if (activeBrand !== 'all' && brand !== activeBrand) return '';
   if (onlyEngaged && total === 0) return '';
   if (activePlatform !== 'all') {
     const c = platforms[activePlatform]?.counts || {};
@@ -496,10 +505,13 @@ function renderPost(post) {
     : escapeHtml(post.title);
 
   const pills = filteredPlats.map(k => renderPlatformPill(k, platforms[k], false)).join('');
+  const brandColor = BRAND_COLORS[brand] || '#888';
+  const brandBadge = '<span class="brand-badge" style="background:' + brandColor + ';">' + brand + '</span>';
 
   return (
     '<div class="' + cardCls + '" data-key="' + escapeHtml(post.key) + '">' +
       '<div class="post-head">' +
+        brandBadge +
         '<div class="post-title">' + titleHtml + '</div>' +
         '<div class="post-meta">' + escapeHtml(timeAgo(post.publishedAt)) + '</div>' +
       '</div>' +
@@ -555,6 +567,15 @@ document.querySelectorAll('.pill-btn[data-platform]').forEach(btn => {
     document.querySelectorAll('.pill-btn[data-platform]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activePlatform = btn.dataset.platform;
+    render();
+  });
+});
+
+document.querySelectorAll('.pill-btn[data-brand]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill-btn[data-brand]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeBrand = btn.dataset.brand;
     render();
   });
 });
