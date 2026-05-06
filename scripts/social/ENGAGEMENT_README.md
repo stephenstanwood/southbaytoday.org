@@ -79,13 +79,13 @@ Two new launchd jobs, alongside the existing social ones:
 
 **Watcher — every 30 min:**
 
-`~/Library/LaunchAgents/com.sbt.engagement-watch.plist`:
+`~/Library/LaunchAgents/org.southbaytoday.engagement-watch.plist`:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key>             <string>com.sbt.engagement-watch</string>
+  <key>Label</key>             <string>org.southbaytoday.engagement-watch</string>
   <key>WorkingDirectory</key>  <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
   <key>ProgramArguments</key>
   <array>
@@ -102,13 +102,13 @@ Two new launchd jobs, alongside the existing social ones:
 
 **Publisher — every 5 min:**
 
-`~/Library/LaunchAgents/com.sbt.engagement-publish.plist`:
+`~/Library/LaunchAgents/org.southbaytoday.engagement-publish.plist`:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key>             <string>com.sbt.engagement-publish</string>
+  <key>Label</key>             <string>org.southbaytoday.engagement-publish</string>
   <key>WorkingDirectory</key>  <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
   <key>ProgramArguments</key>
   <array>
@@ -125,16 +125,15 @@ Two new launchd jobs, alongside the existing social ones:
 
 Verify the node path matches your Mini (`which node` to confirm).
 
-Load:
+Load (modern macOS — `load`/`unload` fail with "Input/output error"):
 ```bash
-launchctl load ~/Library/LaunchAgents/com.sbt.engagement-watch.plist
-launchctl load ~/Library/LaunchAgents/com.sbt.engagement-publish.plist
+launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/org.southbaytoday.engagement-watch.plist
+launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/org.southbaytoday.engagement-publish.plist
 ```
 
-Restart copy-review-server too (since it gained the new routes):
+Restart review-server too (since it gained the new routes):
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.sbt.copy-review-server.plist
-launchctl load   ~/Library/LaunchAgents/com.sbt.copy-review-server.plist
+launchctl kickstart -k "gui/$(id -u)/org.southbaytoday.review-server"
 ```
 
 ## Caps & safety
