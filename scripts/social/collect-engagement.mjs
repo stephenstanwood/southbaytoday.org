@@ -695,19 +695,105 @@ async function loadHHSSPosts() {
   return out;
 }
 
+// Load prior engagement file so historical posts persist across runs even
+// when they fall out of the three live sources. Without this the dashboard
+// loses ~everything every morning at 5am, when the daily plist regen
+// (regenerate-publish-plist.mjs → launchctl bootout/bootstrap) re-opens
+// /tmp/sbs-publish.log in truncate mode.
+function loadPriorByKey() {
+  if (!existsSync(OUT_FILE)) return new Map();
+  try {
+    const data = JSON.parse(readFileSync(OUT_FILE, "utf8"));
+    const map = new Map();
+    for (const entry of data.posts || []) {
+      if (entry.key) map.set(entry.key, entry);
+    }
+    return map;
+  } catch {
+    return new Map();
+  }
+}
+
+// Re-shape a stored engagement entry back into the "source post" form so we
+// can re-poll its platform IDs with processPost.
+function priorToSourcePost(entry) {
+  const publishedTo = [];
+  for (const [platform, info] of Object.entries(entry.platforms || {})) {
+    if (!info?.id) continue;
+    const e = { platform, ok: true };
+    if (platform === "bluesky") {
+      e.uri = info.id;
+      e.postId = info.id;
+    } else {
+      e.id = info.id;
+      e.postId = info.id;
+    }
+    if (info.shortcode) e.shortcode = info.shortcode;
+    publishedTo.push(e);
+  }
+  if (!publishedTo.length) return null;
+  return {
+    item: { title: entry.title || "Untitled", url: entry.targetUrl || null },
+    publishedAt: entry.publishedAt,
+    publishedTo,
+    targetUrl: entry.targetUrl || null,
+    cardPath: entry.cardPath || null,
+    _brand: entry.brand || "SBT",
+  };
+}
+
 async function main() {
+  const priorByKey = loadPriorByKey();
+
   const sbtPosts = loadRecentPublished().map((p) => ({ ...p, _brand: "SBT" }));
   const hhssPosts = await loadHHSSPosts();
-  const posts = [...sbtPosts, ...hhssPosts];
-  console.log(`engagement: ${posts.length} posts in last ${LOOKBACK_DAYS}d (SBT=${sbtPosts.length} HHSS=${hhssPosts.length})`);
+
+  // Reconstruct posts that were captured in a prior run but aren't in the
+  // current live sources, and re-poll them. We dedupe by `${brand}|${postKey}`
+  // (the same composite key processPost stores under `result.key`).
+  const liveKeys = new Set(
+    [...sbtPosts, ...hhssPosts].map((p) => `${p._brand}|${postKey(p)}`)
+  );
+  const hhssToken = process.env.HHSS_IG_ACCESS_TOKEN;
+  const historical = [];
+  for (const [key, entry] of priorByKey) {
+    if (liveKeys.has(key)) continue;
+    const sp = priorToSourcePost(entry);
+    if (!sp) continue;
+    if (sp._brand === "HHSS" && hhssToken) sp._igToken = hhssToken;
+    historical.push(sp);
+  }
+
+  const posts = [...sbtPosts, ...hhssPosts, ...historical];
+  console.log(
+    `engagement: ${posts.length} posts (SBT live=${sbtPosts.length} HHSS live=${hhssPosts.length} retained=${historical.length}, lookback=${LOOKBACK_DAYS}d)`
+  );
 
   const xCreds = getXCreds();
   if (!xCreds) console.log("   x: skipped (no X credentials)");
+
+  // Platforms we deliberately don't poll (Meta App Review wall on FB
+  // pages_read_engagement). Don't fall back to prior data for these — keeps
+  // the file clean of stale FB engagement.
+  const SKIP_FALLBACK = new Set(["facebook"]);
 
   const out = [];
   for (let i = 0; i < posts.length; i++) {
     const p = posts[i];
     const result = await processPost(p, xCreds);
+
+    // Backfill any platform whose fetch failed/skipped this run with the
+    // last known engagement data. Otherwise transient errors (X rate-limit,
+    // momentary network hiccup) silently zero out the post and may hide it
+    // from the dashboard since we filter zero-engagement posts.
+    const prior = priorByKey.get(result.key);
+    if (prior) {
+      for (const [platform, prev] of Object.entries(prior.platforms || {})) {
+        if (SKIP_FALLBACK.has(platform)) continue;
+        if (!result.platforms[platform]) result.platforms[platform] = prev;
+      }
+    }
+
     out.push(result);
     if ((i + 1) % 10 === 0) console.log(`   ${i + 1}/${posts.length}…`);
   }
