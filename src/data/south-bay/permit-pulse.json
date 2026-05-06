@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-06T11:09:31.303Z",
+      "generatedAt": "2026-05-06T19:12:58.280Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-06T11:09:33.583Z",
+      "generatedAt": "2026-05-06T19:13:00.718Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -163,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01148",
-          "address": "3020 Higgins Pl",
+          "id": "26BLD-01107",
+          "address": "820 Hamilton Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-05",
+          "issueDate": "2026-04-29",
           "subtype": "Permit Issued"
         },
         {
@@ -211,15 +211,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01107",
-          "address": "820 Hamilton Av",
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-29",
+          "issueDate": "2026-05-05",
           "subtype": "Permit Issued"
         },
         {

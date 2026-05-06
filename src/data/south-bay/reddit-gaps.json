@@ -1,203 +1,428 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-05T23:19:04.888Z",
+    "generatedAt": "2026-05-06T19:22:08.225Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 13
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 13,
-    "placesExtracted": 25,
-    "placesMatched": 5,
-    "placeGaps": 20,
-    "eventsExtracted": 9,
-    "eventsMatched": 3,
-    "eventGaps": 6,
+    "threadsMined": 14,
+    "placesExtracted": 57,
+    "placesMatched": 12,
+    "placeGaps": 45,
+    "eventsExtracted": 0,
+    "eventsMatched": 0,
+    "eventGaps": 0,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "A Novel Affair Book Cafe",
-      "city": "Los Altos",
-      "kind": "cafe",
-      "context": "independent bookshop and cafe owned by Asian woman",
+      "name": "Mountain View Surplus",
+      "city": "Mountain View",
+      "kind": "retail",
+      "context": "closing after decades in business",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/",
-        "https://www.reddit.com/r/santaclara/comments/1t4290g/need_accomodation/",
-        "https://www.reddit.com/r/losgatos/comments/1t2u4na/wanna_visit_los_altos_asian_woman_owned_book_cafe/",
-        "https://www.reddit.com/r/paloalto/comments/1t1c48y/looking_for_summer_housing_near_palo_alto_tesla/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+      ]
+    },
+    {
+      "name": "Blossom True Value Hardware",
+      "city": "Mountain View",
+      "kind": "retail",
+      "context": "closing along with Mountain View Surplus",
+      "sourceUrls": [
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+      ]
+    },
+    {
+      "name": "California Academy of Sciences",
+      "city": "",
+      "kind": "venue",
+      "context": "museum that laid off planetarium team, staff returning anyway",
+      "sourceUrls": [
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+      ]
+    },
+    {
+      "name": "Japantown",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "cute walkable neighborhood with housing options for commuters",
+      "sourceUrls": [
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ]
     },
     {
       "name": "Mollie Stones",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "replaced Co-Op in Palo Alto downtown",
+      "context": "replaced Co-Op from childhood memories",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
+      ]
+    },
+    {
+      "name": "Fish Market",
+      "city": "Palo Alto",
+      "kind": "restaurant",
+      "context": "historic business that closed, mentioned in development discussion",
+      "sourceUrls": [
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ]
     },
     {
       "name": "Fry's",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "electronics store, site of past development debate",
+      "context": "former electronics retailer, development site with community pushback",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ]
     },
     {
-      "name": "Cable Co-Op",
-      "city": "Palo Alto",
-      "kind": "other",
-      "context": "community co-op near Fry's, now closed",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/"
-      ]
-    },
-    {
-      "name": "Dibrova Sausages",
-      "city": "Sunnyvale",
-      "kind": "other",
-      "context": "sausage stand at Sunnyvale farmers market, run by Charlie",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Netos Sausage",
+      "name": "Pizza Chicago",
       "city": "Santa Clara",
-      "kind": "other",
-      "context": "sausage shop in Santa Clara, worked farmers market circuit",
+      "kind": "restaurant",
+      "context": "Chicago-style deep dish with nostalgic Chicago decor",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
-      "name": "El Califas",
+      "name": "Pizz'a Chicago",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Chicago-style deep dish on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "SOH",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Best deep dish, pricey option",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Simply Sabor",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Taqueria in Ava's on Castro, highly recommended",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "La costeña",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Amazing tacos",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Taqueria at La Plaza",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Amazing al pastor on Rengstorff and Central",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Tacos El Noa Noa",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Taco spot moving from original location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Mi tierra",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Amazing with affordable daily deals off Moffet",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Joya market",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Lengua tacos, carnitas and al pastor on California",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Jersey Mike's",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco truck off Mathilda, highly recommended spicy chicharron",
+      "context": "Sandwich shop in plaza with El Camino CVS",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Dohatsuten Ramen & Tapas",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Authentic Nagoya-style ramen on San Antonio, established",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Ramen Hajime",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Best tonkotsu ramen, highly authentic per Japanese reference",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Hironori",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Standard tonkotsu style ramen, creamiest broth",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Hinodeya",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Spicy miso ramen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Ramen Izakaya Yugen",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Ramen on Castro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Hick'ry Pit",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "Beloved BBQ and pie restaurant closed 2020, site being redeveloped",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "The Pruneyard",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "Shopping center across from Hick'ry Pit development site",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Mancini's Sleep World",
+      "city": "Mountain View",
+      "kind": "retail",
+      "context": "Parking lot with taco truck on El Camino near Rengstorff",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Paper Platez",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Food truck in front of sports bar on Old Middlefield, decades-long",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
       "name": "Tacqueria Patzcuaro",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco restaurant, rated excellent",
+      "context": "excellent taco restaurant",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "El Califas",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "best taco truck off Mathilda",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
       "name": "Noa Noa",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco spot, solid recommendation",
+      "context": "solid taco spot",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
       "name": "Cato's Tacos",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco truck parked at old Central Computer lot",
+      "context": "taco truck in Central Computer lot",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Veggie Grill",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "BOGO taco deal on Cinco de Mayo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
       "name": "El Caminito",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco restaurant, rated great",
+      "context": "great taco spot",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
       "name": "Lopez Taqueria",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "taco restaurant, rated great",
+      "context": "great tacos",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Sabor De Mercedes",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "taco truck at UFC gym parking lot, hand-made tortillas",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
@@ -206,183 +431,295 @@
       "kind": "restaurant",
       "context": "taco recommendation",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Sabor De Mercedes",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "taco truck at UFC gym, hand-made tortillas",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Sonora Taqueria",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "excellent quesabirrias",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
       "name": "Cheztakos",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "taco truck near Sunnyvale border, suadero tacos at O'Reilly Auto Parts and Clyde's Liquor",
+      "context": "taco truck with amazing suadero tacos",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
-      "name": "Rivermark",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "neighborhood area, described as sleepy",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Charms Grooming",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "cat groomer on Meridian, reasonable prices for long-haired cats",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Amanda's Mobile Pet Grooming",
-      "city": "Campbell",
-      "kind": "service",
-      "context": "mobile cat groomer, highly recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Plus Grooming",
-      "city": "Los Gatos",
-      "kind": "service",
-      "context": "cat grooming service, recommended for long-haired cats",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    }
-  ],
-  "eventGaps": [
-    {
-      "name": "BTS Concert",
-      "when": "May 19",
-      "city": "Palo Alto",
-      "context": "concert requiring significant parking and traffic management",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/"
-      ]
-    },
-    {
-      "name": "Amanda Sung Book Event",
-      "when": "Sunday May 3 at 6:30pm",
-      "city": "Los Altos",
-      "context": "author discussion on How to Break A Girl film adaptation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t4kwpt/2006_bay_area_map/",
-        "https://www.reddit.com/r/bayarea/comments/1t4n7le/bay_area_layoffs_lead_unemployed_people_on_hiking/",
-        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1t28196/havent_been_to_a_novel_affair_book_cafe_on_in_los/"
-      ]
-    },
-    {
-      "name": "California Avenue Farmers Market",
-      "when": "Sundays",
-      "city": "Palo Alto",
-      "context": "farmers market on Cal Ave with sausage stand",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Boogie on the Bayou",
-      "when": "",
-      "city": "Campbell",
-      "context": "festival in Campbell downtown area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ]
-    },
-    {
-      "name": "Craft Meetup Night",
-      "when": "Tuesdays at 6pm",
+      "name": "Veggie Grill",
       "city": "",
-      "context": "arts and crafts meetup event at Sana'a on Telegraph",
+      "kind": "restaurant",
+      "context": "BOGO tacos deal",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     },
     {
-      "name": "A Novel Affair Book Cafe Meetup",
-      "when": "Sunday May 3 at 6:30pm",
-      "city": "Los Altos",
-      "context": "community gathering to support Asian woman-owned business",
+      "name": "Sensory Sourdough",
+      "city": "Mountain View",
+      "kind": "bakery",
+      "context": "new woman-owned sourdough bread business",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1t4290g/need_accomodation/",
-        "https://www.reddit.com/r/losgatos/comments/1t2u4na/wanna_visit_los_altos_asian_woman_owned_book_cafe/",
-        "https://www.reddit.com/r/paloalto/comments/1t1c48y/looking_for_summer_housing_near_palo_alto_tesla/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "H Mart",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "fresh watermelons off De Anza",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Sprouts",
+      "city": "",
+      "kind": "retail",
+      "context": "watermelon selection",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Rose Garden Farmers Market",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "Saturday farmers market for strawberries",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Oakridge Farmers Market",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "Sunday farmers market for strawberries",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Campbell Farmers Market",
+      "city": "Campbell",
+      "kind": "park",
+      "context": "farmers market with produce and agua fresca",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Fruit Queen",
+      "city": "",
+      "kind": "service",
+      "context": "organic seasonal fruit delivery service",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
+      ]
+    },
+    {
+      "name": "Long Ridge Open Space",
+      "city": "Saratoga",
+      "kind": "park",
+      "context": "Saratoga Gap Trail location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ]
     }
   ],
+  "eventGaps": [],
   "placeMatches": [
     {
-      "name": "Bean Scene",
-      "city": "Sunnyvale",
+      "name": "Baskin Robbins",
+      "city": "Mountain View",
       "kind": "cafe",
-      "context": "coffee shop on Murphy in Downtown Sunnyvale, circa 2006-2010",
+      "context": "remaining business in Mountain View Surplus building",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/siliconvalley/comments/1t3kn30/anthropic_says_software_engineers_will_be/",
+        "https://www.reddit.com/r/SanJose/comments/1t4vmw0/moving_to_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1t3wlhx/mountain_view_surplus_closing/",
+        "https://www.reddit.com/r/bayarea/comments/1t542k6/cal_academy_laid_them_off_theyre_coming_into_work/",
+        "https://www.reddit.com/r/paloalto/comments/1t2oy4g/palo_alto_lost_its_zoning_war_and_now_looks_like/"
       ],
-      "matchedName": "Bean Scene Cafe"
+      "matchedName": "Baskin-Robbins"
+    },
+    {
+      "name": "Patxi's Pizza",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Chicago-style deep dish pizza, permanently closed San Jose location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Patxi's Pizza"
+    },
+    {
+      "name": "Blue Line",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "Chicago-style deep dish pizza, Campbell location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Blue Line Pizza"
+    },
+    {
+      "name": "Square Pie Guys",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Square pie alternative to Chicago-style",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Square Pie Guys"
+    },
+    {
+      "name": "Los Altos Taqueria",
+      "city": "Los Gatos",
+      "kind": "restaurant",
+      "context": "Highly recommended, hosted wedding dinners",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Los Altos Grill"
+    },
+    {
+      "name": "Yugen Ramen",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Downtown, walking distance from Caltrain station",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Yugen Ramen"
+    },
+    {
+      "name": "Ramen Nagi",
+      "city": "Palo Alto",
+      "kind": "restaurant",
+      "context": "Downtown, six minute walk from Caltrain, always busy",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Ramen Nagi"
+    },
+    {
+      "name": "Marufuku Ramen",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "Creamiest broth, closest location in Cupertino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Marufuku Ramen Campbell"
+    },
+    {
+      "name": "Udon Mugizo",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Udon noodle specialist",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1t51xa2/calling_all_the_sj_foodies_chicago_style_pizza/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t33eag/el_camino_cvs_in_plaza_with_jersey_mikes_closing/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ],
+      "matchedName": "Udon Mugizo"
     },
     {
       "name": "Casa Lupe",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "sit-down restaurant, not just tacos",
+      "context": "sit-down restaurant with tacos",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ],
       "matchedName": "Casa Lupe"
     },
@@ -390,87 +727,28 @@
       "name": "Bombero 408",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "dollar taco deal on Cinco de Mayo",
+      "context": "$1 tacos all day",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ],
       "matchedName": "El Bombero 408"
     },
     {
-      "name": "Santana Row",
+      "name": "Lunardi's",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "shopping and dining area in San Jose, more expensive",
+      "kind": "retail",
+      "context": "organic strawberries and local sourcing",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
+        "https://www.reddit.com/r/mountainview/comments/1t4vbk4/new_cottage_bakery_business/",
+        "https://www.reddit.com/r/SanJose/comments/1t54zyt/sweet_water_melon_and_strawberries/",
+        "https://www.reddit.com/r/bayarea/comments/1t5c0ws/saratoga_gap_trail_at_long_ridge_open_space/"
       ],
-      "matchedName": "Santana Row"
-    },
-    {
-      "name": "Sana'a",
-      "city": "",
-      "kind": "venue",
-      "context": "craft meetup venue on Telegraph in Oakland",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ],
-      "matchedName": "Sana'a Cafe"
+      "matchedName": "Lunardi's"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Sunnyvale Farmers Market",
-      "when": "Saturdays and Sundays, circa 2006-2010",
-      "city": "Sunnyvale",
-      "context": "farmers market in Downtown Sunnyvale with sausage vendors",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ],
-      "matchedName": "Sunnyvale Farmers Market"
-    },
-    {
-      "name": "Mountain View Farmers Market",
-      "when": "Sundays",
-      "city": "Mountain View",
-      "context": "farmers market at Caltrain station with sausage stand",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ],
-      "matchedName": "Mountain View Farmers Market"
-    },
-    {
-      "name": "Campbell Farmers Market",
-      "when": "",
-      "city": "Campbell",
-      "context": "farmers market in Campbell downtown area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1t46mi5/ive_been_on_a_quest_to_recreate_a_meal_from_20/",
-        "https://www.reddit.com/r/bayarea/comments/1t4pbw8/any_bay_area_girlies_here_who_love_to_meet_up_and/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t4osdj/tacos_trucks/",
-        "https://www.reddit.com/r/santaclara/comments/1t31r7c/finding_where_to_live_for_new_grad_working_at/",
-        "https://www.reddit.com/r/Campbell/comments/1t1g03q/cat_groomer/"
-      ],
-      "matchedName": "Campbell Farmers Market"
-    }
-  ]
+  "eventMatches": []
 }
