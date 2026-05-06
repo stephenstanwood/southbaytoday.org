@@ -21,10 +21,11 @@ export const CONFIG = {
 // Haiku for cheap bulk work: classifier, fact-check, editorial filter, reply triage.
 export const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
 
-// Sonnet for user-facing copy generation (day-plan social posts, tonight picks,
-// wildcards, restaurant opening blurbs). Haiku produced noticeably blander copy
-// on these and they're the thing Stephen is reviewing — worth the extra cost.
-export const CLAUDE_COPY_MODEL = "claude-sonnet-4-6";
+// Opus for user-facing copy generation (day-plan social posts, tonight picks,
+// wildcards, restaurant opening blurbs, daily-email blurbs). Each daily run
+// produces all platform variants in one call, so the cost delta over Sonnet
+// is negligible (a few cents/day) and the quality is what people see.
+export const CLAUDE_COPY_MODEL = "claude-opus-4-7";
 
 // Scoring weights
 export const SCORE_WEIGHTS = {

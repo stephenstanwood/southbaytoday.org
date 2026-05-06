@@ -364,7 +364,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
   return variants;
 }
 
-const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 300 };
+const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 300, email: 800 };
 
 /** Enforce hard character limits on all platform variants. */
 function enforceHardLimits(variants) {
@@ -489,14 +489,15 @@ ${url.includes('/plan/') ? "- This URL links to a full day plan. Frame the link 
 
 This is NOT a single event — it's a curated day plan with ${plan.cards.length} stops. Frame it as "here's your ${dayName}" or "we planned your ${dayName}". The tone should be: we did the work so you don't have to.
 
-Write five variants:
+Write six variants:
 1. X (max 270 chars including URL) — punchy hook, no hashtags
 2. Threads (max 470 chars including URL + hashtags) — warmer, list a couple highlights. 2-3 hashtags.
 3. Bluesky (max 270 chars including URL + hashtags) — similar to X. 2-3 hashtags.
 4. Facebook (max 500 chars including URL) — conversational, can mention more stops. No hashtags.
 5. Instagram (max 2000 chars including URL + hashtags) — full caption, mention all stops briefly, 8-15 hashtags at end.
+6. Email (max 600 chars, no URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the schedule image and a "See the full plan" button below the text. Conversational, like a friend telling them what's on.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram". No other text.`;
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "email". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -572,14 +573,15 @@ ${mentions}
 
 Frame this as a TONIGHT recommendation. "Tonight in the South Bay..." energy. One great thing, full enthusiasm.
 
-Write five variants:
+Write six variants:
 1. X (max 270 chars including URL) — punchy, no hashtags
 2. Threads (max 470 chars including URL + hashtags) — warmer. 2-3 hashtags.
 3. Bluesky (max 270 chars including URL + hashtags) — 2-3 hashtags.
 4. Facebook (max 500 chars including URL) — conversational. No hashtags.
 5. Instagram (max 2000 chars including URL + hashtags) — full caption, 8-15 hashtags.
+6. Email (max 400 chars, no URL) — 1-3 sentences for the morning newsletter "tonight's pick" slot. Plain place names (no @-handles), no hashtags, no "tap the link" / "see below" CTAs — the email shows an image and a "Get tickets" button below the text. Read like a friend tipping someone off about a great evening plan.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram". No other text.`;
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "email". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
