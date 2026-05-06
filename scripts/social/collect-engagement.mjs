@@ -672,22 +672,24 @@ async function processPost(post, xCreds) {
     }
   }
 
-  // HHSS Meta tokens can't read engagement (app in Dev mode → pages_read_engagement
-  // needs Advanced Access via App Review). Stamp the platform so the dashboard
-  // shows the post + permalink instead of hiding it.
+  // HHSS FB engagement reads are gated by Meta App Review (Advanced Access for
+  // pages_read_engagement). HHSS IG works fine. Only stamp FB as blocked, and
+  // only when we got nothing back; IG counts pass through normally.
   if (brand === "HHSS") {
     for (const entry of post.publishedTo || []) {
       const platName = entry.platform;
-      if (platforms[platName]) {
-        platforms[platName]._engagementBlocked = true;
-      } else {
+      if (!platforms[platName]) {
         platforms[platName] = {
           id: entry.postId || entry.id,
           permalink: post.targetUrl || null,
           counts: { likes: 0, reposts: 0, quotes: 0, replies: 0 },
           likes: [], reposts: [], quotes: [], replies: [],
-          _engagementBlocked: true,
         };
+      }
+      const p = platforms[platName];
+      const total = (p.counts?.likes || 0) + (p.counts?.reposts || 0) + (p.counts?.quotes || 0) + (p.counts?.replies || 0);
+      if (platName === "facebook" && total === 0) {
+        p._engagementBlocked = true; // FB hits the Meta App Review wall
       }
     }
   }
