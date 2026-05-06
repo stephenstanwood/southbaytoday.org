@@ -225,12 +225,11 @@ export async function assembleNewsletterData(date) {
   };
 }
 
-// Ask Claude to rewrite social copy as a newsletter blurb. Falls back to a
-// regex-based scrub if the API is unavailable or returns garbage.
-export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
+// Ask Claude to rewrite social copy as a newsletter blurb.
+async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
   if (!text) return "";
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return scrubSocial(text);
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY missing — add to .env.local");
 
   const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email.";
 
@@ -249,48 +248,24 @@ ${text}
 
 Return ONLY the rewritten blurb, no quotes, no preamble.`;
 
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 600,
-        system: SYSTEM,
-        messages: [{ role: "user", content: prompt }],
-      }),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!res.ok) throw new Error(`anthropic ${res.status}`);
-    const data = await res.json();
-    const out = (data.content?.[0]?.text || "").trim().replace(/^["']|["']$/g, "");
-    return out || scrubSocial(text);
-  } catch (err) {
-    console.error("rewriteForEmail failed, using fallback:", err.message);
-    return scrubSocial(text);
-  }
-}
-
-// Fallback: regex scrub when Claude isn't available.
-function scrubSocial(text) {
-  if (!text) return "";
-  return text
-    .replace(/https?:\/\/\S+/g, "")
-    .replace(/\s*\(@[A-Za-z0-9._-]+\)/g, "")
-    .replace(/@([A-Z][a-z]+(?:[A-Z][a-z]+)+)/g, (_, h) => h.replace(/([a-z])([A-Z])/g, "$1 $2"))
-    .replace(/@([A-Za-z0-9._-]+)/g, "$1")
-    .replace(/(^|\s)#[A-Za-z0-9_]+/g, "")
-    // Drop dangling CTA tails like "Six stops, all mapped:" / "Mapped here:" /
-    // "All linked below:" — they only made sense before a URL.
-    .replace(/[.\s]+[A-Z][^.!?]*?\b(mapped|linked|details|tickets?)\b[^.!?]*[:.]?\s*$/i, ".")
-    .replace(/[\s—:·-]+$/, "")
-    .replace(/\s{2,}/g, " ")
-    .replace(/\s+([,.!?;:])/g, "$1")
-    .trim();
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 600,
+      system: SYSTEM,
+      messages: [{ role: "user", content: prompt }],
+    }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!res.ok) throw new Error(`anthropic ${res.status}: ${await res.text()}`);
+  const data = await res.json();
+  return (data.content?.[0]?.text || "").trim().replace(/^["']|["']$/g, "");
 }
 
 function parseTimeMinutes(timeStr) {
