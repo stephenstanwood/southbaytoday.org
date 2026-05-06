@@ -680,6 +680,11 @@ async function main() {
       if (currentSlot && schedule.days?.[today]?.[currentSlot.type]) {
         schedule.days[today][currentSlot.type].status = "published";
         schedule.days[today][currentSlot.type].publishedAt = new Date().toISOString();
+        // Stash per-platform IDs so the engagement collector can poll them.
+        const justPublished = toPublish.find((p) => p.publishedTo?.some((r) => r.ok));
+        if (justPublished?.publishedTo) {
+          schedule.days[today][currentSlot.type].publishedTo = justPublished.publishedTo;
+        }
         writeFileSync(schedulePath, JSON.stringify(schedule, null, 2) + "\n");
         console.log(`   📅 Schedule marked published: ${today} ${currentSlot.type}`);
       }

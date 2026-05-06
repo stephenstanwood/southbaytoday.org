@@ -21,6 +21,9 @@ import { createHmac, randomBytes } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
+const PUBLISH_LOG = "/tmp/sbt-publish.log";
+const PUBLISH_LOG_ALT = "/tmp/sbs-publish.log";
 const OUT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
 
 const BSKY_API = "https://bsky.social/xrpc";
@@ -34,7 +37,7 @@ const MASTODON_API = `${MASTODON_INSTANCE}/api/v1`;
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const daysArg = args.find((a) => a.startsWith("--days="));
-const LOOKBACK_DAYS = daysArg ? Number(daysArg.split("=")[1]) || 14 : 14;
+const LOOKBACK_DAYS = daysArg ? Number(daysArg.split("=")[1]) || 30 : 30;
 
 // Load .env.local if present (idempotent — launchd already passes --env-file)
 try {
@@ -53,15 +56,106 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // ── Load posts ───────────────────────────────────────────────────────────
 
 function loadRecentPublished() {
-  if (!existsSync(QUEUE_FILE)) return [];
-  const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
-  return queue.filter((p) => {
-    if (!p.published || !p.publishedAt) return false;
-    if (p.publishResult && p.publishResult !== "ok") return false;
-    if (!Array.isArray(p.publishedTo) || !p.publishedTo.length) return false;
-    return new Date(p.publishedAt).getTime() >= cutoff;
-  });
+  const out = [];
+  const seen = new Set();
+
+  // 1) Queue-style entries (older publish path).
+  if (existsSync(QUEUE_FILE)) {
+    const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
+    for (const p of queue) {
+      if (!p.published || !p.publishedAt) continue;
+      if (p.publishResult && p.publishResult !== "ok") continue;
+      if (!Array.isArray(p.publishedTo) || !p.publishedTo.length) continue;
+      if (new Date(p.publishedAt).getTime() < cutoff) continue;
+      const key = postKey(p);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(p);
+    }
+  }
+
+  // 2) Schedule-style entries (current publish path: publish-from-queue mints
+  // a post from the day's slot and stashes publishedTo back on the slot).
+  if (existsSync(SCHEDULE_FILE)) {
+    const schedule = JSON.parse(readFileSync(SCHEDULE_FILE, "utf8"));
+    for (const [date, day] of Object.entries(schedule.days || {})) {
+      for (const [slotType, slot] of Object.entries(day || {})) {
+        if (slotType.startsWith("_")) continue;
+        if (!slot || slot.status !== "published" || !slot.publishedAt) continue;
+        if (!Array.isArray(slot.publishedTo) || !slot.publishedTo.length) continue;
+        if (new Date(slot.publishedAt).getTime() < cutoff) continue;
+        const item = slot.item || { title: slot.cityName ? `${slot.cityName} Day Plan` : slot.slotType };
+        const synthetic = {
+          item,
+          publishedAt: slot.publishedAt,
+          publishedTo: slot.publishedTo,
+          targetUrl: slot.planUrl || item.url || null,
+          generatedAt: slot.generatedAt,
+          approvedAt: slot.copyApprovedAt || slot.imageApprovedAt,
+          _scheduleSource: { date, slotType },
+        };
+        const key = postKey(synthetic);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(synthetic);
+      }
+    }
+  }
+
+  // 3) Tail of the publish log — backfill posts published before the schedule
+  // file started stashing publishedTo. Looks for `PUBLISH_SUMMARY:{...}` lines.
+  for (const logPath of [PUBLISH_LOG, PUBLISH_LOG_ALT]) {
+    if (!existsSync(logPath)) continue;
+    let txt;
+    try {
+      txt = readFileSync(logPath, "utf8");
+    } catch {
+      continue;
+    }
+    const lines = txt.split("\n");
+    let lastTimestamp = null;
+    for (const line of lines) {
+      const dateMatch = line.match(/(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2}\s*(?:AM|PM)?)/i);
+      if (dateMatch) lastTimestamp = `${dateMatch[1]} ${dateMatch[2]}`;
+      if (!line.startsWith("PUBLISH_SUMMARY:")) continue;
+      let parsed;
+      try {
+        parsed = JSON.parse(line.slice("PUBLISH_SUMMARY:".length));
+      } catch {
+        continue;
+      }
+      for (const item of parsed.items || []) {
+        const publishedAt = lastTimestamp ? new Date(lastTimestamp).toISOString() : new Date().toISOString();
+        if (new Date(publishedAt).getTime() < cutoff) continue;
+        const publishedTo = Object.entries(item.postIds || {}).map(([platform, id]) => {
+          const entry = { platform, ok: true };
+          if (platform === "bluesky") {
+            entry.uri = id;
+            entry.postId = id;
+          } else {
+            entry.id = id;
+            entry.postId = id;
+          }
+          return entry;
+        });
+        if (!publishedTo.length) continue;
+        const synthetic = {
+          item: { title: item.title, url: null },
+          publishedAt,
+          publishedTo,
+          targetUrl: null,
+          _logSource: true,
+        };
+        const key = postKey(synthetic);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(synthetic);
+      }
+    }
+  }
+
+  return out;
 }
 
 function postKey(p) {
