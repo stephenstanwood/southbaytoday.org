@@ -20,6 +20,8 @@ import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
 import realEstateJson from "../../../data/south-bay/real-estate.json";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
+import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
+import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 
 // ── Types ──
 
@@ -256,6 +258,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ HOUSING PULSE ═══ */}
       <CityHousingPulse cityId={cityId} cityName={cityName} />
+
+      {/* ═══ FOOD PULSE ═══ */}
+      <CityFoodPulse cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -784,6 +789,218 @@ function CityHousingPulse({ cityId, cityName }: { cityId: string; cityName: stri
         {yoyVolatile && " · 1 yr hidden (volatile)"}
       </div>
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City Food Pulse — recently opened + coming-soon restaurants scoped to this
+// city. Combines Santa Clara County health-permit records (covers most of
+// the South Bay) with San Jose / Palo Alto building permits (where openings
+// surface earlier). Renders nothing for cities with no entries.
+// ---------------------------------------------------------------------------
+
+interface FoodOpening {
+  id: string;
+  name: string;
+  address: string | null;
+  cityId: string | null;
+  cityName?: string;
+  date: string | null;
+  status: "opened" | "coming-soon";
+  blurb?: string | null;
+}
+
+interface FoodRow {
+  id: string;
+  name: string;
+  address: string | null;
+  date: string | null;
+  status: "opened" | "coming-soon";
+  blurb?: string | null;
+}
+
+function CityFoodPulse({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const sccData = sccFoodOpeningsJson as {
+    generatedAt?: string;
+    opened?: FoodOpening[];
+    comingSoon?: FoodOpening[];
+    sourceUrl?: string;
+  };
+
+  const radarData = restaurantRadarJson as {
+    items?: Array<{
+      id: string;
+      city: string;
+      name: string | null;
+      address: string;
+      signal: "opening" | "closing" | "activity";
+      date: string;
+      blurb?: string | null;
+    }>;
+  };
+
+  // De-dupe radar entries against SCC entries (radar = building permit;
+  // SCC = health permit; same place can show up in both).
+  const sccNames = new Set<string>([
+    ...(sccData.opened ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
+    ...(sccData.comingSoon ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
+  ]);
+
+  const opened: FoodRow[] = (sccData.opened ?? [])
+    .filter((i) => i.cityId === cityId && i.name)
+    .map((i) => ({
+      id: i.id,
+      name: i.name,
+      address: i.address,
+      date: i.date,
+      status: "opened" as const,
+      blurb: i.blurb,
+    }));
+
+  const comingSoon: FoodRow[] = (sccData.comingSoon ?? [])
+    .filter((i) => i.cityId === cityId && i.name)
+    .map((i) => ({
+      id: i.id,
+      name: i.name,
+      address: i.address,
+      date: i.date,
+      status: "coming-soon" as const,
+      blurb: i.blurb,
+    }));
+
+  // Folding in radar = opening signals (San Jose has these; coverage of
+  // other cities is sparse for now). Skip anything already in the SCC list.
+  for (const r of radarData.items ?? []) {
+    if (r.city !== cityId || !r.name || r.signal !== "opening") continue;
+    if (sccNames.has(r.name.trim().toLowerCase())) continue;
+    opened.push({
+      id: r.id,
+      name: r.name,
+      address: r.address,
+      date: r.date,
+      status: "opened",
+      blurb: r.blurb,
+    });
+  }
+
+  // Most-recent first; keep at most 4 of each.
+  opened.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+  comingSoon.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+  const openedTop = opened.slice(0, 4);
+  const comingSoonTop = comingSoon.slice(0, 4);
+
+  if (openedTop.length === 0 && comingSoonTop.length === 0) return null;
+
+  const sourceUrl = sccData.sourceUrl;
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🍴 Food Pulse
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          new in {cityName}
+        </span>
+      </div>
+
+      <div style={{
+        border: "1.5px solid var(--sb-border-light)",
+        borderRadius: 8,
+        overflow: "hidden",
+        background: "#fff",
+      }}>
+        {openedTop.map((row, i) => (
+          <FoodPulseRow
+            key={row.id}
+            row={row}
+            cityName={cityName}
+            isLast={i === openedTop.length - 1 && comingSoonTop.length === 0}
+          />
+        ))}
+        {comingSoonTop.map((row, i) => (
+          <FoodPulseRow
+            key={row.id}
+            row={row}
+            cityName={cityName}
+            isLast={i === comingSoonTop.length - 1}
+          />
+        ))}
+      </div>
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
+        {sourceUrl ? (
+          <a href={sourceUrl} target="_blank" rel="noopener noreferrer"
+            style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 2 }}>
+            Santa Clara County health permits
+          </a>
+        ) : (
+          <span>Santa Clara County health permits</span>
+        )}
+        {" · Tap to find on Google Maps"}
+      </div>
+    </div>
+  );
+}
+
+function FoodPulseRow({ row, cityName, isLast }: { row: FoodRow; cityName: string; isLast: boolean }) {
+  const isOpen = row.status === "opened";
+  const dateLabel = row.date
+    ? new Date(row.date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : null;
+  const mapsQuery = encodeURIComponent(
+    [row.name, row.address, cityName].filter(Boolean).join(" "),
+  );
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+  return (
+    <a
+      href={mapsHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "flex", alignItems: "flex-start", gap: 10,
+        padding: "10px 12px",
+        borderBottom: isLast ? "none" : "1px solid var(--sb-border-light)",
+        textDecoration: "none", color: "inherit",
+      }}
+    >
+      <span style={{
+        flex: "0 0 auto",
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 9, fontWeight: 700, letterSpacing: "0.06em",
+        textTransform: "uppercase" as const,
+        padding: "2px 7px", borderRadius: 4,
+        background: isOpen ? "#D1FAE5" : "#FEF3C7",
+        color: isOpen ? "#065F46" : "#92400E",
+        whiteSpace: "nowrap",
+        marginTop: 2,
+      }}>
+        {isOpen ? "New" : "Soon"}
+      </span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{
+          fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14,
+          color: "var(--sb-ink)", lineHeight: 1.3,
+        }}>
+          {row.name}
+        </div>
+        {row.blurb && (
+          <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.4, marginTop: 2 }}>
+            {row.blurb}
+          </div>
+        )}
+        <div style={{ fontSize: 11, color: "var(--sb-light)", marginTop: 3, display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {row.address && <span>{row.address}</span>}
+          {row.address && dateLabel && <span>·</span>}
+          {dateLabel && (
+            <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+              {isOpen ? `Opened ${dateLabel}` : `Permit ${dateLabel}`}
+            </span>
+          )}
+        </div>
+      </div>
+    </a>
   );
 }
 
