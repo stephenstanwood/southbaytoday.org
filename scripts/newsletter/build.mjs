@@ -19,7 +19,7 @@ function flag(name) {
 const date = flag("date") || todayPT();
 const out = flag("out");
 
-const data = assembleNewsletterData(date);
+const data = await assembleNewsletterData(date);
 const { subject, html } = renderEmail(data);
 
 if (out) {

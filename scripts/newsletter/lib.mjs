@@ -78,6 +78,59 @@ export function loadAirQuality() {
   return readJson(ARTIFACTS.airQuality);
 }
 
+// ── Weather (Open-Meteo, no key) ───────────────────────────────────────────
+
+const WMO = {
+  0:  ["☀️", "Clear sky"], 1:  ["🌤", "Mostly clear"], 2:  ["⛅", "Partly cloudy"], 3:  ["☁️", "Overcast"],
+  45: ["🌫️", "Fog"], 48: ["🌫", "Freezing fog"],
+  51: ["🌦", "Light drizzle"], 53: ["🌦", "Drizzle"], 55: ["🌧", "Heavy drizzle"],
+  61: ["🌧", "Light rain"], 63: ["🌧", "Rain"], 65: ["🌧", "Heavy rain"],
+  71: ["🌨", "Light snow"], 73: ["🌨", "Snow"], 75: ["🌨", "Heavy snow"],
+  80: ["🌦", "Rain showers"], 81: ["🌧", "Rain showers"], 82: ["⛈", "Heavy showers"],
+  95: ["⛈", "Thunderstorm"], 96: ["⛈", "Thunderstorm + hail"], 99: ["⛈", "Thunderstorm + hail"],
+};
+
+function forecastEmoji(code, cloudCoverMean, rainPct) {
+  if (code >= 51) return WMO[code] || ["🌡", "Unknown"];
+  if ((rainPct ?? 0) >= 50) return WMO[code >= 51 ? code : 61] || ["🌧", "Rain"];
+  const cc = cloudCoverMean ?? -1;
+  if (cc < 0) {
+    if (code === 0) return ["☀️", "Sunny"];
+    if (code === 1) return ["☀️", "Mostly sunny"];
+    if (code === 2) return ["🌤", "Mostly sunny"];
+    if (code === 3) return ["⛅", "Partly cloudy"];
+    return WMO[code] || ["🌡", "Unknown"];
+  }
+  if (cc < 25) return ["☀️", "Sunny"];
+  if (cc < 55) return ["🌤", "Mostly sunny"];
+  if (cc < 80) return ["⛅", "Partly cloudy"];
+  return ["☁️", "Cloudy"];
+}
+
+export async function fetchWeather() {
+  // Campbell, CA — same anchor the site uses.
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=37.2872&longitude=-121.95"
+    + "&current=temperature_2m,weather_code"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,cloud_cover_mean"
+    + "&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=2";
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const tempNow = Math.round(data.current.temperature_2m);
+    const codeNow = data.current.weather_code;
+    const [emoji] = WMO[codeNow] || ["🌡"];
+    const high = Math.round(data.daily.temperature_2m_max[0]);
+    const low = Math.round(data.daily.temperature_2m_min[0]);
+    const rainPct = data.daily.precipitation_probability_max[0];
+    const cc = data.daily.cloud_cover_mean?.[0];
+    const [, dayDesc] = forecastEmoji(data.daily.weather_code[0], cc, rainPct);
+    return { emoji, tempNow, high, low, rainPct, dayDesc };
+  } catch {
+    return null;
+  }
+}
+
 export function loadMeetings() {
   return readJson(ARTIFACTS.meetings);
 }
@@ -123,7 +176,7 @@ export function loadMilestones() {
 
 // ── Today's content assembler ──────────────────────────────────────────────
 
-export function assembleNewsletterData(date) {
+export async function assembleNewsletterData(date) {
   const schedule = loadSocialSchedule();
   const todaySlots = schedule.days?.[date] || {};
   const dayPlan = todaySlots["day-plan"] || null;
@@ -144,8 +197,6 @@ export function assembleNewsletterData(date) {
     .filter(([, m]) => m?.date === date)
     .map(([city, m]) => ({ city, ...m }));
 
-  const aq = loadAirQuality();
-
   const [, monthStr, dayStr] = date.split("-");
   const milestones = loadMilestones();
   const todayHistory = milestones.filter(
@@ -153,6 +204,7 @@ export function assembleNewsletterData(date) {
   );
 
   const redditPosts = (loadRedditPulse().posts || []).slice(0, 8);
+  const weather = await fetchWeather();
 
   return {
     date,
@@ -161,10 +213,31 @@ export function assembleNewsletterData(date) {
     todayEvents,
     recentlyOpened, comingSoon,
     tonightMeetings,
-    airQuality: aq.southBayAvg || null,
+    weather,
     todayHistory,
     redditPosts,
   };
+}
+
+// Trim social copy down for email — strip URLs, @-handles, #hashtags, and the
+// trailing CTA fragments ("Six stops, all mapped:") that only made sense when
+// followed by a link. Splits @CamelCase handles into spaced words so
+// "@RidgeVineyards" reads as "Ridge Vineyards".
+function socialToEmail(text) {
+  if (!text) return "";
+  return text
+    .replace(/https?:\/\/\S+/g, "")
+    .replace(/\s*\(@[A-Za-z0-9._-]+\)/g, "")
+    .replace(/@([A-Z][a-z]+(?:[A-Z][a-z]+)+)/g, (_, h) => h.replace(/([a-z])([A-Z])/g, "$1 $2"))
+    .replace(/@([A-Za-z0-9._-]+)/g, "$1")
+    .replace(/(^|\s)#[A-Za-z0-9_]+/g, "")
+    // Drop dangling CTA tails like "Six stops, all mapped:" / "Mapped here:" /
+    // "All linked below:" — they only made sense before a URL.
+    .replace(/[.\s]+[A-Z][^.!?]*?\b(mapped|linked|details|tickets?)\b[^.!?]*[:.]?\s*$/i, ".")
+    .replace(/[\s—:·-]+$/, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.!?;:])/g, "$1")
+    .trim();
 }
 
 function parseTimeMinutes(timeStr) {
@@ -220,7 +293,7 @@ export function renderEmail(data) {
   const subject = `South Bay Today — ${data.longDate}`;
   const html = wrapShell(subject, [
     headerBlock(data),
-    aqiStrip(data.airQuality),
+    weatherStrip(data.weather),
     dayPlanBlock(data.dayPlan),
     tonightPickBlock(data.tonightPick),
     eventsBlock(data.todayEvents),
@@ -256,18 +329,17 @@ function headerBlock(data) {
 </div>`;
 }
 
-function aqiStrip(aq) {
-  if (!aq) return "";
+function weatherStrip(w) {
+  if (!w) return "";
+  const rain = w.rainPct >= 30 ? ` · ${w.rainPct}% rain` : "";
   return `<div style="padding:14px 28px;background:${PALETTE.card};font-size:14px;color:${PALETTE.muted};">
-  Air today: <strong style="color:${PALETTE.ink};">${esc(aq.label || "—")}</strong> (AQI ${esc(aq.aqi)}) · ${esc(aq.recommendation || "")}
+  ${esc(w.emoji)} <strong style="color:${PALETTE.ink};">${esc(w.tempNow)}°F</strong> ${esc((w.dayDesc || "").toLowerCase())} · high ${esc(w.high)}°, low ${esc(w.low)}°${rain}
 </div>`;
 }
 
 function dayPlanBlock(plan) {
   if (!plan) return "";
-  const blurb = plan.copy?.facebook || plan.copy?.threads || plan.copy?.bluesky || "";
-  // Strip the URL from the end of the social copy if present — we already render a button.
-  const blurbClean = blurb.replace(/https?:\/\/\S+/g, "").trim();
+  const blurb = socialToEmail(plan.copy?.facebook || plan.copy?.threads || plan.copy?.bluesky || "");
   const img = plan.imageUrl ? `<img src="${esc(plan.imageUrl)}" alt="Today's plan" style="width:100%;display:block;border-radius:8px;">` : "";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">See the full plan →</a>`
@@ -275,20 +347,19 @@ function dayPlanBlock(plan) {
   return `<div style="padding:28px;">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">A plan for your day</div>
   ${img}
-  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurbClean)}</div>
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurb)}</div>
   ${cta}
 </div>`;
 }
 
 function tonightPickBlock(pick) {
   if (!pick) return "";
-  const blurb = pick.copy?.facebook || pick.copy?.threads || pick.copy?.bluesky || "";
-  const blurbClean = blurb.replace(/https?:\/\/\S+/g, "").trim();
+  const blurb = socialToEmail(pick.copy?.facebook || pick.copy?.threads || pick.copy?.bluesky || "");
   const img = pick.imageUrl ? `<img src="${esc(pick.imageUrl)}" alt="Tonight's pick" style="width:100%;display:block;border-radius:8px;">` : "";
   return `<div style="padding:0 28px 28px 28px;border-top:1px solid ${PALETTE.border};padding-top:28px;">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">Tonight's pick</div>
   ${img}
-  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurbClean)}</div>
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurb)}</div>
 </div>`;
 }
 
@@ -317,16 +388,22 @@ function eventsBlock(events) {
 
 function openingsBlock(opened, comingSoon) {
   if (!opened?.length && !comingSoon?.length) return "";
+  const renderItem = (o) => {
+    const cityId = (o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-");
+    const locParts = [o.address, cityName(cityId)].filter(Boolean);
+    const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
+    return `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong>${loc}</div>`;
+  };
   const openedHtml = opened?.length
     ? `<div style="margin-bottom:14px;">
         <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Just opened</div>
-        ${opened.map(o => `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong> <span style="color:${PALETTE.muted};">— ${esc(o.address)}, ${esc(cityName((o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-")))}</span></div>`).join("")}
+        ${opened.map(renderItem).join("")}
       </div>`
     : "";
   const soonHtml = comingSoon?.length
     ? `<div>
         <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Coming soon</div>
-        ${comingSoon.map(o => `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong> <span style="color:${PALETTE.muted};">— ${esc(o.address)}, ${esc(cityName((o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-")))}</span></div>`).join("")}
+        ${comingSoon.map(renderItem).join("")}
       </div>`
     : "";
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
@@ -398,10 +475,11 @@ function conversationBlock(posts) {
 }
 
 function footerBlock() {
-  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};font-size:13px;color:${PALETTE.muted};line-height:1.6;">
-  <p style="margin:0 0 10px 0;">Hit reply to send notes, tips, or complaints — they come straight to me.</p>
-  <p style="margin:0 0 10px 0;">— Stephen</p>
-  <p style="margin:14px 0 0 0;font-size:12px;color:${PALETTE.faint};">South Bay Today · <a href="https://southbaytoday.org" style="color:${PALETTE.faint};">southbaytoday.org</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${PALETTE.faint};">unsubscribe</a></p>
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};font-size:14px;color:${PALETTE.muted};line-height:1.6;">
+  <p style="margin:0 0 10px 0;">Thanks for letting us into your morning ☀️</p>
+  <p style="margin:0 0 10px 0;">If you spot something we missed — a new restaurant, a great event, a story worth telling — just hit reply. We read everything.</p>
+  <p style="margin:14px 0 0 0;color:${PALETTE.ink};">— Stephen 👋</p>
+  <p style="margin:18px 0 0 0;font-size:12px;color:${PALETTE.faint};">South Bay Today · <a href="https://southbaytoday.org" style="color:${PALETTE.faint};">southbaytoday.org</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${PALETTE.faint};">unsubscribe</a></p>
 </div>`;
 }
 
@@ -414,5 +492,5 @@ export function loadConfig() {
   catch { return {}; }
 }
 
-export const FROM_ADDRESS = "Stephen Stanwood <stephen@southbaytoday.org>";
+export const FROM_ADDRESS = "The South Bay Today <stephen@southbaytoday.org>";
 export const REPLY_TO = "stephen@stanwood.dev";
