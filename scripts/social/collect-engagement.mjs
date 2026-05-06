@@ -329,59 +329,6 @@ async function fetchThreadsEngagement(mediaId) {
   };
 }
 
-// ── Facebook ─────────────────────────────────────────────────────────────
-
-async function fetchFacebookEngagement(postId, tokenOverride) {
-  const token = tokenOverride || process.env.FB_PAGE_ACCESS_TOKEN;
-  if (!token) return null;
-
-  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
-  let blocked = false;
-
-  try {
-    const fields = "reactions.summary(total_count),shares,comments.summary(total_count)";
-    const r = await fetch(
-      `${FB_API}/${postId}?fields=${encodeURIComponent(fields)}&access_token=${token}`
-    );
-    if (r.ok) {
-      const data = await r.json();
-      counts.likes = data.reactions?.summary?.total_count ?? 0;
-      counts.reposts = data.shares?.count ?? 0;
-      counts.replies = data.comments?.summary?.total_count ?? 0;
-    } else {
-      // #10 = pages_read_engagement App Review wall. Other errors also
-      // mean we couldn't read engagement, so flag the whole thing.
-      blocked = true;
-    }
-  } catch {
-    blocked = true;
-  }
-
-  const replies = [];
-  if (!blocked) {
-    try {
-      const r = await fetch(
-        `${FB_API}/${postId}/comments?fields=id,message,from,created_time,like_count&access_token=${token}`
-      );
-      if (r.ok) {
-        const data = await r.json();
-        for (const c of data.data || []) {
-          replies.push({
-            author: c.from?.name || "unknown",
-            at: c.created_time || null,
-            text: c.message || "",
-            permalink: `https://www.facebook.com/${c.id}`,
-          });
-        }
-      }
-    } catch {}
-  }
-
-  const result = { counts, likes: [], reposts: [], quotes: [], replies };
-  if (blocked) result._engagementBlocked = true;
-  return result;
-}
-
 // ── X (Twitter) ──────────────────────────────────────────────────────────
 
 function xPercentEncode(str) {
@@ -618,7 +565,6 @@ async function fetchMastodonEngagement(statusId) {
 async function processPost(post, xCreds) {
   const platforms = {};
   const brand = post._brand || "SBT";
-  const fbToken = post._fbToken;
   const igToken = post._igToken;
 
   for (const entry of post.publishedTo || []) {
@@ -644,14 +590,7 @@ async function processPost(post, xCreds) {
           result = await fetchThreadsEngagement(id);
           break;
         }
-        case "facebook": {
-          const parts = String(id).split("_");
-          permalink = parts.length === 2
-            ? `https://www.facebook.com/${parts[0]}/posts/${parts[1]}`
-            : `https://www.facebook.com/${id}`;
-          result = await fetchFacebookEngagement(id, fbToken);
-          break;
-        }
+        case "facebook": break; // FB hidden from dashboard — Meta App Review walls off pages_read_engagement
         case "x": {
           if (!xCreds) break;
           permalink = `https://x.com/southbaytoday/status/${id}`;
@@ -682,22 +621,6 @@ async function processPost(post, xCreds) {
     }
   }
 
-  // For HHSS posts (which we discover via the FB Page enumerate, not via the
-  // SBT publish queue), make sure the platform appears even if engagement
-  // fetching errored out before stamping a record.
-  if (brand === "HHSS") {
-    for (const entry of post.publishedTo || []) {
-      if (!platforms[entry.platform]) {
-        platforms[entry.platform] = {
-          id: entry.postId || entry.id,
-          permalink: post.targetUrl || null,
-          counts: { likes: 0, reposts: 0, quotes: 0, replies: 0 },
-          likes: [], reposts: [], quotes: [], replies: [],
-          _engagementBlocked: true,
-        };
-      }
-    }
-  }
 
   // Upstream publisher bug emits "null Day Plan" / "null Tonight Pick" when
   // cityName is missing — sanitize before storing.
@@ -715,46 +638,16 @@ async function processPost(post, xCreds) {
   };
 }
 
-// ── HHSS: enumerate posts directly from Page + IG account ───────────────
-// HHSS doesn't go through the SBT publish queue — pull posts directly from
-// each platform with HHSS-scoped Meta tokens.
+// ── HHSS: enumerate posts directly from IG account ──────────────────────
+// HHSS doesn't go through the SBT publish queue. FB is hidden from the
+// dashboard, so we only pull IG.
 
 async function loadHHSSPosts() {
-  const fbToken = process.env.HHSS_FB_PAGE_ACCESS_TOKEN;
-  const fbPageId = process.env.HHSS_FB_PAGE_ID || "102667674832463";
   const igToken = process.env.HHSS_IG_ACCESS_TOKEN;
   const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474";
 
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
   const out = [];
-
-  if (fbToken) {
-    try {
-      const r = await fetch(
-        `${FB_API}/${fbPageId}/posts?fields=id,message,created_time,permalink_url&limit=50&access_token=${fbToken}`
-      );
-      if (r.ok) {
-        const data = await r.json();
-        for (const p of data.data || []) {
-          if (new Date(p.created_time).getTime() < cutoff) continue;
-          out.push({
-            item: { title: (p.message || "Untitled").split("\n")[0].slice(0, 90), url: p.permalink_url || null },
-            publishedAt: p.created_time,
-            publishedTo: [{ platform: "facebook", ok: true, id: p.id, postId: p.id }],
-            targetUrl: p.permalink_url || null,
-            _brand: "HHSS",
-            _fbToken: fbToken,
-          });
-        }
-      } else {
-        console.log(`   HHSS/facebook: page-posts fetch failed (${r.status})`);
-      }
-    } catch (err) {
-      console.log(`   HHSS/facebook: ${err.message}`);
-    }
-  } else {
-    console.log("   HHSS/facebook: skipped (no HHSS_FB_PAGE_ACCESS_TOKEN)");
-  }
 
   if (igToken) {
     try {
