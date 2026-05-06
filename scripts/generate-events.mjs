@@ -1043,8 +1043,11 @@ function inferCategory(title, desc, type, venue = "") {
   if (/\bbook\s+(club|discussion|group)\b/.test(t)) return "arts";
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
-  // Nature / wildlife events — check BEFORE sports to avoid false positives
-  if (/\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
+  // Nature / wildlife events — check BEFORE sports to avoid false positives.
+  // Guard against swim-stroke names ("butterfly", "freestyle", etc.) that share
+  // vocabulary with insect/bird watching but describe swimming clinics.
+  const isSwimContext = /\b(swim|stroke|freestyle|breaststroke|backstroke|aquatic)\b/.test(t);
+  if (!isSwimContext && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
   if (/\b(volunteer|volunteering)\b/.test(t) && /\b(farm|garden|trail|park|nature)\b/.test(t)) return "community";
   // School/fundraiser fun runs are community events, not sports
@@ -1061,6 +1064,9 @@ function inferCategory(title, desc, type, venue = "") {
   // Yoga, pilates, and wellness classes are community, not sports — check before sports block
   // (event type fields from sources like SJDA can include "Sports & Activities" even for yoga)
   if (/\b(yoga|pilates|meditation|mindfulness|tai chi)\b/.test(t)) return "community";
+  // Robotics events are STEM education — competitions and demos use words like
+  // "game", "match", "competition" that would otherwise hit the sports branch.
+  if (/\brobotics?\b/.test(titleLower)) return "education";
   // Board games, card games, tabletop games and D&D are community, not sports
   const isBoardGame = /\b(board games?|card games?|tabletop|dungeons.{0,5}dragons|d&d|rpg club|wargame)\b/.test(t);
   // "Games, crafts, and activities" in library/family program descriptions is not sports.
@@ -1071,7 +1077,7 @@ function inferCategory(title, desc, type, venue = "") {
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");
-  if (!isBoardGame && (!isLibraryActivityGames && t.includes("game") || /\bsports?\b/.test(t) || t.includes("athletic") || t.includes("golf") || t.includes("tennis") || t.includes("soccer") || t.includes("basketball") || t.includes("baseball") || t.includes("softball") || t.includes("volleyball") || t.includes("swimming") || t.includes("swim meet") || t.includes("track") || t.includes("cross country") || t.includes("lacrosse") || t.includes("football") || t.includes("gymnastics") || t.includes("wrestling") || t.includes("water polo") || t.includes("polo") || t.includes("hockey") || t.includes("rugby") || /\browing\b/.test(t) || t.includes("crew") || t.includes("diving") || t.includes("fencing") || t.includes("skiing") || t.includes("snowboard") || /\bcycling\b/.test(t) || t.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(t)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(t)) || (!isSchoolFundraiser && /\brace\b/.test(t)))) return "sports";
+  if (!isBoardGame && (!isLibraryActivityGames && t.includes("game") || /\bsports?\b/.test(t) || t.includes("athletic") || t.includes("golf") || t.includes("tennis") || t.includes("soccer") || t.includes("basketball") || t.includes("baseball") || t.includes("softball") || t.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(t) || t.includes("swim meet") || t.includes("freestyle") || t.includes("breaststroke") || t.includes("backstroke") || t.includes("track") || t.includes("cross country") || t.includes("lacrosse") || t.includes("football") || t.includes("gymnastics") || t.includes("wrestling") || t.includes("water polo") || t.includes("polo") || t.includes("hockey") || t.includes("rugby") || /\browing\b/.test(t) || t.includes("crew") || t.includes("diving") || t.includes("fencing") || t.includes("skiing") || t.includes("snowboard") || /\bcycling\b/.test(t) || t.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(t)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(t)) || (!isSchoolFundraiser && /\brace\b/.test(t)))) return "sports";
   // Government/civic events at markets are still community events
   if (/\b(office hours|mayor|city council|council member|supervisor)\b/.test(t) && t.includes("market")) return "community";
   // "craft" alone is too broad — "well-crafted resume", "refine your craft" → require craft market context
