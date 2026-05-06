@@ -382,7 +382,6 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   <button class="pill-btn" data-platform="facebook">facebook</button>
   <button class="pill-btn" data-platform="instagram">instagram</button>
   <button class="pill-btn" data-platform="mastodon">mastodon</button>
-  <label class="toggle"><input type="checkbox" id="only-engaged" checked /> only with engagement</label>
   <button class="refresh-btn" onclick="load()">refresh</button>
 </div>
 
@@ -396,7 +395,6 @@ const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
 let activeBrand = 'all';
-let onlyEngaged = true;
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -437,15 +435,12 @@ function renderTotals() {
 function renderPlatformPill(plat, p, expanded) {
   const counts = p.counts || {};
   const total = (counts.likes||0)+(counts.reposts||0)+(counts.quotes||0)+(counts.replies||0);
-  const zero = total === 0;
-  const cls = 'plat-pill' + (zero ? ' zero' : '') + (expanded ? ' expanded' : '');
+  if (total === 0) return ''; // skip silent platforms entirely
+  const cls = 'plat-pill' + (expanded ? ' expanded' : '');
   const segs = TYPE_ORDER.filter(k => (counts[k]||0) > 0).map(k => (
     '<span class="plat-count">' + counts[k] + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
   )).join('');
-  const body = zero
-    ? '<span class="plat-counts" style="color:#bbb;">no activity</span>'
-    : '<span class="plat-counts">' + segs + '</span>';
-  return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span>' + body + '</div>';
+  return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts">' + segs + '</span></div>';
 }
 
 function renderActors(actors) {
@@ -489,11 +484,11 @@ function renderPost(post) {
   const brand = post.brand || 'SBT';
 
   if (activeBrand !== 'all' && brand !== activeBrand) return '';
-  if (onlyEngaged && total === 0) return '';
+  if (total === 0) return ''; // always hide silent posts
   if (activePlatform !== 'all') {
     const c = platforms[activePlatform]?.counts || {};
     const platTotal = (c.likes||0)+(c.reposts||0)+(c.quotes||0)+(c.replies||0);
-    if (onlyEngaged && platTotal === 0) return '';
+    if (platTotal === 0) return '';
     if (!platforms[activePlatform]) return '';
   }
 
@@ -578,11 +573,6 @@ document.querySelectorAll('.pill-btn[data-brand]').forEach(btn => {
     activeBrand = btn.dataset.brand;
     render();
   });
-});
-
-document.getElementById('only-engaged').addEventListener('change', e => {
-  onlyEngaged = e.target.checked;
-  render();
 });
 
 async function load() {
