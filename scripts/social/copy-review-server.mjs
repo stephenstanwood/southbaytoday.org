@@ -369,7 +369,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <div class="totals" id="totals"></div>
 
 <div class="controls">
-  <span style="color:#888;">Brand:</span>
+  <span style="color:#888;">Organization:</span>
   <button class="pill-btn active" data-brand="all">all</button>
   <button class="pill-btn" data-brand="SBT">SBT</button>
   <button class="pill-btn" data-brand="HHSS">HHSS</button>
