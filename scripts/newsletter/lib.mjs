@@ -204,11 +204,13 @@ export async function assembleNewsletterData(date) {
 
   const redditPosts = (loadRedditPulse().posts || []).slice(0, 8);
 
-  // Run weather + the two Claude rewrites in parallel — about 2-3s total.
+  // Prefer the email variant baked in by the social copy-gen. Fall back to a
+  // live Claude rewrite when the schedule entry was written before the email
+  // variant existed.
   const [weather, dayPlanBlurb, tonightPickBlurb] = await Promise.all([
     fetchWeather(),
-    dayPlan ? rewriteForEmail(dayPlan.copy?.facebook || dayPlan.copy?.threads || dayPlan.copy?.bluesky || "", "plan") : "",
-    tonightPick ? rewriteForEmail(tonightPick.copy?.facebook || tonightPick.copy?.threads || tonightPick.copy?.bluesky || "", "pick") : "",
+    dayPlan ? (dayPlan.copy?.email || rewriteForEmail(dayPlan.copy?.facebook || dayPlan.copy?.threads || "", "plan")) : "",
+    tonightPick ? (tonightPick.copy?.email || rewriteForEmail(tonightPick.copy?.facebook || tonightPick.copy?.threads || "", "pick")) : "",
   ]);
 
   return {
