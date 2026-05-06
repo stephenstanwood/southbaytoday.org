@@ -228,7 +228,7 @@ export async function assembleNewsletterData(date) {
 }
 
 // Ask Claude to rewrite social copy as a newsletter blurb.
-async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
+export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
   if (!text) return "";
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY missing — add to .env.local");
