@@ -612,6 +612,7 @@ async function processPost(post, xCreds) {
     const id = entry.postId || entry.id || entry.uri;
     if (!id) continue;
 
+
     try {
       let result = null;
       let permalink = null;
@@ -684,19 +685,18 @@ async function processPost(post, xCreds) {
 }
 
 // ── HHSS: enumerate posts directly from Page + IG account ───────────────
-// HHSS doesn't go through the SBT publish queue — it's a Buffer-managed
-// nonprofit account. Pull the last 30 days of posts directly from each platform.
+// HHSS doesn't go through the SBT publish queue — pull posts directly from
+// each platform with HHSS-scoped Meta tokens.
 
 async function loadHHSSPosts() {
   const fbToken = process.env.HHSS_FB_PAGE_ACCESS_TOKEN;
-  const fbPageId = process.env.HHSS_FB_PAGE_ID || "102667674832463"; // from Buffer
+  const fbPageId = process.env.HHSS_FB_PAGE_ID || "102667674832463";
   const igToken = process.env.HHSS_IG_ACCESS_TOKEN;
-  const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474"; // from Buffer
+  const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474";
 
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
   const out = [];
 
-  // Facebook page posts
   if (fbToken) {
     try {
       const r = await fetch(
@@ -725,11 +725,12 @@ async function loadHHSSPosts() {
     console.log("   HHSS/facebook: skipped (no HHSS_FB_PAGE_ACCESS_TOKEN)");
   }
 
-  // Instagram media
   if (igToken) {
     try {
+      // IG Business uses graph.facebook.com (not graph.instagram.com) when the
+      // token is a Page Access Token derived through FB.
       const r = await fetch(
-        `${IG_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
+        `${FB_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
       );
       if (r.ok) {
         const data = await r.json();
@@ -745,7 +746,8 @@ async function loadHHSSPosts() {
           });
         }
       } else {
-        console.log(`   HHSS/instagram: media fetch failed (${r.status})`);
+        const body = await r.text();
+        console.log(`   HHSS/instagram: media fetch failed (${r.status}) ${body.slice(0, 120)}`);
       }
     } catch (err) {
       console.log(`   HHSS/instagram: ${err.message}`);
