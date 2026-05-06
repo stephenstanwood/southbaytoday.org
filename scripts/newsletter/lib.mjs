@@ -1,0 +1,375 @@
+// ---------------------------------------------------------------------------
+// South Bay Today — Daily Newsletter
+// Shared helpers: env, Resend API, data loaders, HTML renderer.
+// ---------------------------------------------------------------------------
+
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { loadEnvLocal } from "../lib/env.mjs";
+import { ARTIFACTS, DATA_DIR, REPO_ROOT } from "../lib/paths.mjs";
+
+loadEnvLocal();
+
+// ── Resend ─────────────────────────────────────────────────────────────────
+
+const RESEND_BASE = "https://api.resend.com";
+
+export async function resendFetch(path, init = {}) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error("RESEND_API_KEY missing — add to .env.local");
+  const res = await fetch(`${RESEND_BASE}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      ...(init.headers || {}),
+    },
+  });
+  const text = await res.text();
+  let body = null;
+  try { body = text ? JSON.parse(text) : null; } catch { body = text; }
+  if (!res.ok) {
+    const msg = typeof body === "object" && body?.message ? body.message : text;
+    throw new Error(`Resend ${init.method || "GET"} ${path} → ${res.status}: ${msg}`);
+  }
+  return body;
+}
+
+// ── Date helpers (Pacific Time) ────────────────────────────────────────────
+
+export function todayPT() {
+  // YYYY-MM-DD for "today" in America/Los_Angeles
+  const fmt = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric", month: "2-digit", day: "2-digit",
+  });
+  return fmt.format(new Date());
+}
+
+export function formatLongDate(isoDate) {
+  // "Wednesday, May 6, 2026" — interpret as PT to avoid TZ drift
+  const [y, m, d] = isoDate.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d, 12)); // noon UTC ≈ stable
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    weekday: "long", month: "long", day: "numeric", year: "numeric",
+  }).format(dt);
+}
+
+// ── Data loaders ───────────────────────────────────────────────────────────
+
+function readJson(path) {
+  return JSON.parse(readFileSync(path, "utf8"));
+}
+
+export function loadSocialSchedule() {
+  return readJson(join(DATA_DIR, "social-schedule.json"));
+}
+
+export function loadEvents() {
+  return readJson(ARTIFACTS.events);
+}
+
+export function loadOpenings() {
+  return readJson(ARTIFACTS.foodOpenings);
+}
+
+export function loadAirQuality() {
+  return readJson(ARTIFACTS.airQuality);
+}
+
+export function loadMeetings() {
+  return readJson(ARTIFACTS.meetings);
+}
+
+// Reuses the regex-based parser from generate-sv-history.mjs.
+export function loadMilestones() {
+  const src = readFileSync(join(DATA_DIR, "tech-companies.ts"), "utf8");
+  const startIdx = src.indexOf("export const TECH_MILESTONES");
+  if (startIdx === -1) return [];
+  const nextExport = src.indexOf("\nexport ", startIdx + 1);
+  const section = nextExport !== -1 ? src.slice(startIdx, nextExport) : src.slice(startIdx);
+
+  const milestones = [];
+  const objectPattern = /\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g;
+  let match;
+  while ((match = objectPattern.exec(section)) !== null) {
+    const block = match[0];
+    const getStr = (k) => {
+      const m = block.match(new RegExp(`${k}:\\s*["'\`]([\\s\\S]*?)["'\`]\\s*[,}]`));
+      return m ? m[1] : null;
+    };
+    const getNum = (k) => {
+      const m = block.match(new RegExp(`${k}:\\s*(\\d+)`));
+      return m ? parseInt(m[1]) : null;
+    };
+    const id = getStr("id");
+    const month = getNum("month");
+    const day = getNum("day");
+    if (!id || month === null || day === null) continue;
+    milestones.push({
+      id, company: getStr("company") || id, city: getStr("city") || "",
+      foundedYear: getNum("foundedYear") || 0, month, day,
+      tagline: getStr("tagline") || "", anniversaryNote: getStr("anniversaryNote") || "",
+      url: getStr("url") || "",
+    });
+  }
+  return milestones;
+}
+
+// ── Today's content assembler ──────────────────────────────────────────────
+
+export function assembleNewsletterData(date) {
+  const schedule = loadSocialSchedule();
+  const todaySlots = schedule.days?.[date] || {};
+  const dayPlan = todaySlots["day-plan"] || null;
+  const tonightPick = todaySlots["tonight-pick"] || null;
+
+  const allEvents = loadEvents().events || [];
+  const todayEvents = allEvents
+    .filter((e) => e.date === date && !e.ongoing)
+    .filter((e) => e.time && !/^12:00\s*am/i.test(e.time))
+    .sort((a, b) => parseTimeMinutes(a.time) - parseTimeMinutes(b.time));
+
+  const openings = loadOpenings();
+  const recentlyOpened = (openings.opened || []).filter((o) => isWithinDays(o.date, date, 7));
+  const comingSoon = (openings.comingSoon || []).slice(0, 5);
+
+  const meetings = loadMeetings().meetings || {};
+  const tonightMeetings = Object.entries(meetings)
+    .filter(([, m]) => m?.date === date)
+    .map(([city, m]) => ({ city, ...m }));
+
+  const aq = loadAirQuality();
+
+  const [, monthStr, dayStr] = date.split("-");
+  const milestones = loadMilestones();
+  const todayHistory = milestones.filter(
+    (m) => m.month === parseInt(monthStr) && m.day === parseInt(dayStr)
+  );
+
+  return {
+    date,
+    longDate: formatLongDate(date),
+    dayPlan, tonightPick,
+    todayEvents,
+    recentlyOpened, comingSoon,
+    tonightMeetings,
+    airQuality: aq.southBayAvg || null,
+    todayHistory,
+  };
+}
+
+function parseTimeMinutes(timeStr) {
+  if (!timeStr) return 9999;
+  const m = timeStr.match(/^(\d+)(?::(\d+))?\s*(am|pm)/i);
+  if (!m) return 9999;
+  let h = parseInt(m[1]);
+  const min = m[2] ? parseInt(m[2]) : 0;
+  const ampm = m[3].toLowerCase();
+  if (ampm === "pm" && h !== 12) h += 12;
+  if (ampm === "am" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
+function isWithinDays(dateStr, ref, n) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr).getTime();
+  const r = new Date(ref).getTime();
+  if (Number.isNaN(d) || Number.isNaN(r)) return false;
+  const diffDays = (r - d) / (1000 * 60 * 60 * 24);
+  return diffDays >= 0 && diffDays <= n;
+}
+
+// ── HTML rendering ─────────────────────────────────────────────────────────
+
+const PALETTE = {
+  ink: "#1a1a2e",
+  muted: "#5b6478",
+  faint: "#9099a8",
+  border: "#e4e6ee",
+  bg: "#ffffff",
+  card: "#f7f6fb",
+  blue: "#3b4ef0",
+  purple: "#7c3aed",
+};
+
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+const CITY_LABEL = {
+  "san-jose": "San Jose", "santa-clara": "Santa Clara", "sunnyvale": "Sunnyvale",
+  "mountain-view": "Mountain View", "palo-alto": "Palo Alto", "cupertino": "Cupertino",
+  "campbell": "Campbell", "los-gatos": "Los Gatos", "saratoga": "Saratoga",
+  "los-altos": "Los Altos", "milpitas": "Milpitas", "morgan-hill": "Morgan Hill",
+  "gilroy": "Gilroy", "santa-clara-county": "Santa Clara County",
+};
+const cityName = (id) => CITY_LABEL[id] || (id || "").replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+export function renderEmail(data) {
+  const subject = `South Bay Today — ${data.longDate}`;
+  const html = wrapShell(subject, [
+    headerBlock(data),
+    aqiStrip(data.airQuality),
+    dayPlanBlock(data.dayPlan),
+    tonightPickBlock(data.tonightPick),
+    eventsBlock(data.todayEvents),
+    openingsBlock(data.recentlyOpened, data.comingSoon),
+    meetingsBlock(data.tonightMeetings),
+    historyBlock(data.todayHistory),
+    footerBlock(),
+  ].filter(Boolean).join("\n"));
+  return { subject, html };
+}
+
+function wrapShell(subject, body) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(subject)}</title>
+</head>
+<body style="margin:0;padding:0;background:${PALETTE.card};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:${PALETTE.ink};">
+<div style="max-width:620px;margin:0 auto;background:${PALETTE.bg};">
+${body}
+</div>
+</body>
+</html>`;
+}
+
+function headerBlock(data) {
+  return `<div style="padding:28px 28px 12px 28px;border-bottom:1px solid ${PALETTE.border};">
+  <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;">South Bay Today</div>
+  <div style="font-size:22px;font-weight:700;margin-top:4px;color:${PALETTE.ink};">${esc(data.longDate)}</div>
+</div>`;
+}
+
+function aqiStrip(aq) {
+  if (!aq) return "";
+  return `<div style="padding:14px 28px;background:${PALETTE.card};font-size:14px;color:${PALETTE.muted};">
+  Air today: <strong style="color:${PALETTE.ink};">${esc(aq.label || "—")}</strong> (AQI ${esc(aq.aqi)}) · ${esc(aq.recommendation || "")}
+</div>`;
+}
+
+function dayPlanBlock(plan) {
+  if (!plan) return "";
+  const blurb = plan.copy?.facebook || plan.copy?.threads || plan.copy?.bluesky || "";
+  // Strip the URL from the end of the social copy if present — we already render a button.
+  const blurbClean = blurb.replace(/https?:\/\/\S+/g, "").trim();
+  const img = plan.imageUrl ? `<img src="${esc(plan.imageUrl)}" alt="Today's plan" style="width:100%;display:block;border-radius:8px;">` : "";
+  const cta = plan.planUrl
+    ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">See the full plan →</a>`
+    : "";
+  return `<div style="padding:28px;">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">A plan for your day</div>
+  ${img}
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurbClean)}</div>
+  ${cta}
+</div>`;
+}
+
+function tonightPickBlock(pick) {
+  if (!pick) return "";
+  const blurb = pick.copy?.facebook || pick.copy?.threads || pick.copy?.bluesky || "";
+  const blurbClean = blurb.replace(/https?:\/\/\S+/g, "").trim();
+  const img = pick.imageUrl ? `<img src="${esc(pick.imageUrl)}" alt="Tonight's pick" style="width:100%;display:block;border-radius:8px;">` : "";
+  return `<div style="padding:0 28px 28px 28px;border-top:1px solid ${PALETTE.border};padding-top:28px;">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">Tonight's pick</div>
+  ${img}
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurbClean)}</div>
+</div>`;
+}
+
+function eventsBlock(events) {
+  if (!events?.length) return "";
+  const rows = events.map((e) => {
+    const title = e.url
+      ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
+      : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
+    const meta = [
+      e.time ? esc(e.time) : null,
+      e.venue ? esc(e.venue) : null,
+      e.city ? esc(cityName(e.city)) : null,
+      e.cost === "free" ? "Free" : null,
+    ].filter(Boolean).join(" · ");
+    return `<tr><td style="padding:8px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+      <div>${title}</div>
+      <div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${meta}</div>
+    </td></tr>`;
+  }).join("\n");
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Today's events (${events.length})</div>
+  <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
+</div>`;
+}
+
+function openingsBlock(opened, comingSoon) {
+  if (!opened?.length && !comingSoon?.length) return "";
+  const openedHtml = opened?.length
+    ? `<div style="margin-bottom:14px;">
+        <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Just opened</div>
+        ${opened.map(o => `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong> <span style="color:${PALETTE.muted};">— ${esc(o.address)}, ${esc(cityName((o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-")))}</span></div>`).join("")}
+      </div>`
+    : "";
+  const soonHtml = comingSoon?.length
+    ? `<div>
+        <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Coming soon</div>
+        ${comingSoon.map(o => `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong> <span style="color:${PALETTE.muted};">— ${esc(o.address)}, ${esc(cityName((o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-")))}</span></div>`).join("")}
+      </div>`
+    : "";
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Food openings</div>
+  ${openedHtml}${soonHtml}
+</div>`;
+}
+
+function meetingsBlock(meetings) {
+  if (!meetings?.length) return "";
+  const rows = meetings.map((m) => {
+    const link = m.url ? `<a href="${esc(m.url)}" style="color:${PALETTE.blue};text-decoration:none;">${esc(m.bodyName || "Meeting")}</a>` : esc(m.bodyName || "Meeting");
+    return `<div style="font-size:14px;margin-bottom:6px;"><strong>${esc(cityName(m.city))}</strong> — ${link}${m.location ? ` <span style="color:${PALETTE.muted};">· ${esc(m.location)}</span>` : ""}</div>`;
+  }).join("");
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Civic meetings tonight</div>
+  ${rows}
+</div>`;
+}
+
+function historyBlock(history) {
+  if (!history?.length) return "";
+  const items = history.map((h) => {
+    const link = h.url ? `<a href="${esc(h.url)}" style="color:${PALETTE.blue};text-decoration:none;">${esc(h.company)}</a>` : esc(h.company);
+    return `<div style="margin-bottom:10px;">
+      <div style="font-weight:600;">${link} <span style="color:${PALETTE.muted};font-weight:400;">· ${esc(h.foundedYear)} · ${esc(h.city)}</span></div>
+      <div style="font-size:14px;color:${PALETTE.ink};line-height:1.5;margin-top:2px;">${esc(h.anniversaryNote || h.tagline)}</div>
+    </div>`;
+  }).join("");
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">On this day in Silicon Valley</div>
+  ${items}
+</div>`;
+}
+
+function footerBlock() {
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};font-size:13px;color:${PALETTE.muted};line-height:1.6;">
+  <p style="margin:0 0 10px 0;">Hit reply to send notes, tips, or complaints — they come straight to me.</p>
+  <p style="margin:0 0 10px 0;">— Stephen</p>
+  <p style="margin:14px 0 0 0;font-size:12px;color:${PALETTE.faint};">South Bay Today · <a href="https://southbaytoday.org" style="color:${PALETTE.faint};">southbaytoday.org</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${PALETTE.faint};">unsubscribe</a></p>
+</div>`;
+}
+
+// ── Newsletter config (audience id stored locally) ─────────────────────────
+
+export const CONFIG_PATH = join(DATA_DIR, "newsletter-config.json");
+
+export function loadConfig() {
+  try { return JSON.parse(readFileSync(CONFIG_PATH, "utf8")); }
+  catch { return {}; }
+}
+
+export const FROM_ADDRESS = "Stephen Stanwood <stephen@southbaytoday.org>";
+export const REPLY_TO = "stephen@stanwood.dev";

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Daily newsletter send — 6:00 AM PT, every day.
+
+  Install on the Mini:
+    cp scripts/newsletter/newsletter-send.plist ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
+    launchctl load ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
+
+  Logs: /tmp/sbt-newsletter-send.{out,err}.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.southbaytoday.newsletter-send</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/newsletter/send.mjs</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>6</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/sbt-newsletter-send.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/sbt-newsletter-send.err.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
