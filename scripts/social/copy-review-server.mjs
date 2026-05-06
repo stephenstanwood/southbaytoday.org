@@ -374,6 +374,8 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .reply-text { color: #333; margin-top: 4px; line-height: 1.4; word-wrap: break-word; }
   .reply-permalink { font-size: 10px; color: #4338ca; margin-top: 4px; display: inline-block; }
   .placeholder { font-size: 11px; color: #aaa; font-style: italic; }
+  .fb-cross-link { display: inline-flex; align-items: center; padding: 4px 6px; font-size: 14px; text-decoration: none; opacity: 0.55; transition: opacity 0.1s; line-height: 1; }
+  .fb-cross-link:hover { opacity: 1; }
   @media (max-width: 600px) {
     .header { flex-direction: column; align-items: flex-start; gap: 4px; }
     .last-updated { margin-left: 0; }
@@ -526,7 +528,16 @@ function renderPost(post) {
     ? '<a href="' + post.targetUrl + '" target="_blank">' + escapeHtml(post.title) + '</a>'
     : escapeHtml(post.title);
 
-  const pills = filteredPlats.map(k => renderPlatformPill(k, platforms[k], false)).join('');
+  const pills = filteredPlats.map(k => {
+    const pill = renderPlatformPill(k, platforms[k], false);
+    // HHSS cross-posts to FB. When the IG pill renders (i.e. has reactions),
+    // tack on a small FB deep-link so we can hop to the matching FB post.
+    // No counts — engagement reads are walled off by Meta App Review.
+    if (k === 'instagram' && pill && post.fbPermalink) {
+      return pill + '<a class="fb-cross-link" href="' + post.fbPermalink + '" target="_blank" title="View on Facebook">📘</a>';
+    }
+    return pill;
+  }).join('');
   const brandColor = BRAND_COLORS[brand] || '#888';
   const brandBadge = '<span class="brand-badge" style="background:' + brandColor + ';">' + brand + '</span>';
 
