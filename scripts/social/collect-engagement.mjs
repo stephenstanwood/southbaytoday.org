@@ -492,11 +492,15 @@ async function fetchXEngagement(tweetId, creds) {
 async function fetchInstagramEngagement(mediaId, shortcode, tokenOverride) {
   const token = tokenOverride || process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) return null;
+  // SBT IG token is from the IG-app (graph.instagram.com); HHSS IG token is
+  // FB-Page-derived (graph.facebook.com). The two APIs reject each other's
+  // tokens with "Cannot parse access token", so route accordingly.
+  const apiBase = tokenOverride ? FB_API : IG_API;
 
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
   try {
     const r = await fetch(
-      `${IG_API}/${mediaId}?fields=like_count,comments_count&access_token=${token}`
+      `${apiBase}/${mediaId}?fields=like_count,comments_count&access_token=${token}`
     );
     if (r.ok) {
       const data = await r.json();
@@ -508,7 +512,7 @@ async function fetchInstagramEngagement(mediaId, shortcode, tokenOverride) {
   const replies = [];
   try {
     const r = await fetch(
-      `${IG_API}/${mediaId}/comments?fields=id,text,username,timestamp&access_token=${token}`
+      `${apiBase}/${mediaId}/comments?fields=id,text,username,timestamp&access_token=${token}`
     );
     if (r.ok) {
       const data = await r.json();
