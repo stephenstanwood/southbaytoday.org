@@ -29,7 +29,7 @@ const testTo = flag("test");
 const dryRun = bool("dry-run");
 
 async function main() {
-  const data = assembleNewsletterData(date);
+  const data = await assembleNewsletterData(date);
   const { subject, html } = renderEmail(data);
 
   console.log(`subject: ${subject}`);
