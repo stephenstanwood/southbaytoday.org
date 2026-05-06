@@ -95,11 +95,32 @@ function saveReplies(replies) {
 
 function loadEngagement() {
   if (!existsSync(ENGAGEMENT_FILE)) return null;
+  let data;
   try {
-    return JSON.parse(readFileSync(ENGAGEMENT_FILE, "utf8"));
+    data = JSON.parse(readFileSync(ENGAGEMENT_FILE, "utf8"));
   } catch {
     return null;
   }
+  // Meta App Review walls off `pages_read_engagement` behind Tech Provider +
+  // Business Verification, so we can never get FB engagement reads on either
+  // brand. Strip FB from the dashboard entirely. The collector also skips FB;
+  // this is a defense-in-depth strip in case stale FB entries linger in the
+  // data file.
+  const totals = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  const posts = [];
+  for (const post of data.posts || []) {
+    const platforms = { ...(post.platforms || {}) };
+    delete platforms.facebook;
+    if (!Object.keys(platforms).length) continue;
+    for (const v of Object.values(platforms)) {
+      totals.likes += v.counts?.likes || 0;
+      totals.reposts += v.counts?.reposts || 0;
+      totals.quotes += v.counts?.quotes || 0;
+      totals.replies += v.counts?.replies || 0;
+    }
+    posts.push({ ...post, platforms });
+  }
+  return { ...data, posts, totals, postCount: posts.length };
 }
 
 function engagementMtime() {
@@ -378,7 +399,6 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   <button class="pill-btn" data-platform="bluesky">bluesky</button>
   <button class="pill-btn" data-platform="x">x</button>
   <button class="pill-btn" data-platform="threads">threads</button>
-  <button class="pill-btn" data-platform="facebook">facebook</button>
   <button class="pill-btn" data-platform="instagram">instagram</button>
   <button class="pill-btn" data-platform="mastodon">mastodon</button>
   <button class="refresh-btn" onclick="load()">refresh</button>
