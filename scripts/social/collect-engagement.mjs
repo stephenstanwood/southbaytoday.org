@@ -665,9 +665,14 @@ async function processPost(post, xCreds) {
     }
   }
 
+  // Upstream publisher bug emits "null Day Plan" / "null Tonight Pick" when
+  // cityName is missing — sanitize before storing.
+  let title = post.item?.title || "Untitled";
+  title = title.replace(/^null\s+/i, "").replace(/\s+null\s+/g, " ").trim() || "Untitled";
+
   return {
     key: postKey(post),
-    title: post.item?.title || "Untitled",
+    title,
     publishedAt: post.publishedAt,
     targetUrl: post.targetUrl || post.item?.url || null,
     cardPath: post.cardPath || null,
