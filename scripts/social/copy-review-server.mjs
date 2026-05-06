@@ -362,8 +362,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 </head>
 <body>
 <div class="header">
-  <span class="title">South Bay Today · Engagement</span>
-  <a class="nav-link" href="/">← review</a>
+  <span class="title">Social Media Posts</span>
   <span class="last-updated" id="last-updated"></span>
 </div>
 
@@ -1089,19 +1088,10 @@ const HTML = `<!DOCTYPE html>
 </style>
 </head>
 <body>
-<h1>South Bay Today <a href="/engagement" style="float:right;font-size:12px;font-weight:400;color:#4338ca;text-decoration:none;letter-spacing:0.05em;">engagement →</a></h1>
-
-<div class="tab-bar" id="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('calendar')" id="tab-calendar">Calendar</button>
-  <button class="tab-btn" onclick="switchTab('replies')" id="tab-replies">Replies <span class="tab-count" id="tab-replies-count"></span></button>
-</div>
+<h1>South Bay Today</h1>
 
 <div id="calendar-view">
   <div id="calendar-grid"></div>
-</div>
-
-<div id="replies-view">
-  <div id="replies-list"></div>
 </div>
 
 <script>
@@ -1109,25 +1099,8 @@ let posts = [];
 let current = 0;
 let results = [];
 let queueSize = 0;
-let currentTab = 'calendar';
-let repliesData = [];
 
 const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8' };
-
-function switchTab(tab) {
-  currentTab = tab;
-  document.getElementById('tab-calendar').className = 'tab-btn' + (tab === 'calendar' ? ' active' : '');
-  document.getElementById('tab-replies').className = 'tab-btn' + (tab === 'replies' ? ' active' : '');
-  document.getElementById('calendar-view').style.display = tab === 'calendar' ? '' : 'none';
-  if (tab === 'calendar') loadCalendar();
-  document.getElementById('replies-view').style.display = tab === 'replies' ? '' : 'none';
-  if (tab === 'replies') loadReplies();
-}
-
-function updateTabCounts(draftCount, repliesNewCount) {
-  const rc = document.getElementById('tab-replies-count');
-  if (rc) rc.textContent = repliesNewCount > 0 ? '(' + repliesNewCount + ' new)' : '';
-}
 
 function updateQueueBadge(size) {
   queueSize = size;
