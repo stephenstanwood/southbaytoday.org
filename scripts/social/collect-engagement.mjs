@@ -668,6 +668,26 @@ async function processPost(post, xCreds) {
     }
   }
 
+  // HHSS Meta tokens can't read engagement (app in Dev mode → pages_read_engagement
+  // needs Advanced Access via App Review). Stamp the platform so the dashboard
+  // shows the post + permalink instead of hiding it.
+  if (brand === "HHSS") {
+    for (const entry of post.publishedTo || []) {
+      const platName = entry.platform;
+      if (platforms[platName]) {
+        platforms[platName]._engagementBlocked = true;
+      } else {
+        platforms[platName] = {
+          id: entry.postId || entry.id,
+          permalink: post.targetUrl || null,
+          counts: { likes: 0, reposts: 0, quotes: 0, replies: 0 },
+          likes: [], reposts: [], quotes: [], replies: [],
+          _engagementBlocked: true,
+        };
+      }
+    }
+  }
+
   // Upstream publisher bug emits "null Day Plan" / "null Tonight Pick" when
   // cityName is missing — sanitize before storing.
   let title = post.item?.title || "Untitled";
