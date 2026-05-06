@@ -22,6 +22,7 @@ import realEstateJson from "../../../data/south-bay/real-estate.json";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
+import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
 
 // ── Types ──
 
@@ -261,6 +262,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ FOOD PULSE ═══ */}
       <CityFoodPulse cityId={cityId} cityName={cityName} />
+
+      {/* ═══ ROADWORK ═══ */}
+      <CityRoadwork cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -1227,6 +1231,204 @@ function CitySchoolDays({ cityId, cityName }: { cityId: string; cityName: string
               </div>
             );
           })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Roadwork ──
+// Per-city slice of Caltrans D4 lane closures. Same data feeding the homepage
+// LaneClosuresCard but filtered to this city only — answers "is there work
+// happening on roads near me?" without forcing a scan of the South Bay-wide
+// list. Hidden when no closures touch this city.
+
+type CityClosure = {
+  id: string;
+  route: string;
+  direction: string;
+  city: string;
+  location: string;
+  endLocation: string;
+  lanesText: string;
+  type: string;
+  isFull: boolean;
+  work: string;
+  facility: string;
+  start: string;
+  end: string;
+};
+
+const ROUTE_BADGE: Record<string, { bg: string; fg: string }> = {
+  "101": { bg: "#1E3A8A", fg: "#fff" },
+  "280": { bg: "#0F766E", fg: "#fff" },
+  "680": { bg: "#7E22CE", fg: "#fff" },
+  "880": { bg: "#B45309", fg: "#fff" },
+  "85":  { bg: "#0369A1", fg: "#fff" },
+  "17":  { bg: "#15803D", fg: "#fff" },
+  "87":  { bg: "#475569", fg: "#fff" },
+  "237": { bg: "#9333EA", fg: "#fff" },
+  "84":  { bg: "#1F2937", fg: "#fff" },
+  "82":  { bg: "#374151", fg: "#fff" },
+};
+
+function parseClosurePT(local: string): number {
+  if (!local) return NaN;
+  const iso = local.replace(" ", "T") + ":00-07:00";
+  return new Date(iso).getTime();
+}
+
+function fmtClosureClock(local: string): string {
+  if (!local) return "";
+  const t = local.split(" ")[1] ?? "";
+  const m = t.match(/^(\d{2}):(\d{2})/);
+  if (!m) return "";
+  let hr = parseInt(m[1], 10);
+  const min = m[2];
+  const ampm = hr >= 12 ? "PM" : "AM";
+  if (hr === 0) hr = 12;
+  if (hr > 12) hr -= 12;
+  return min === "00" ? `${hr}${ampm}` : `${hr}:${min}${ampm}`;
+}
+
+function closureTimeBand(c: CityClosure, nowMs: number): string {
+  const startMs = parseClosurePT(c.start);
+  const endMs = parseClosurePT(c.end);
+  if (!Number.isFinite(startMs) || !Number.isFinite(endMs)) return c.start;
+  if (startMs <= nowMs && endMs > nowMs) return `Now until ${fmtClosureClock(c.end)}`;
+
+  const startDay = new Date(startMs).toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" });
+  const endDay = new Date(endMs).toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" });
+  const todayDay = new Date(nowMs).toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" });
+  const startHour = parseInt(new Date(startMs).toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false }), 10);
+  const overnight = startHour >= 16 && startDay !== endDay;
+  const startLabel = fmtClosureClock(c.start);
+  const endLabel = fmtClosureClock(c.end);
+
+  if (startDay === todayDay && overnight) return `Tonight ${startLabel}–${endLabel}`;
+  if (startDay === todayDay) return `Today ${startLabel}–${endLabel}`;
+  if (startDay !== endDay) return `${startDay} ${startLabel}–${endLabel} ${endDay}`;
+  return `${startDay} ${startLabel}–${endLabel}`;
+}
+
+function closureTypeLabel(c: CityClosure): string {
+  if (c.isFull) {
+    if (/On Ramp/i.test(c.facility)) return "On-ramp closed";
+    if (/Off Ramp/i.test(c.facility)) return "Off-ramp closed";
+    if (/Connector/i.test(c.facility)) return "Connector closed";
+    return "Full closure";
+  }
+  if (/Alternating/i.test(c.type)) return `Alternating · ${c.lanesText}`;
+  return c.lanesText;
+}
+
+function closureLocLabel(c: CityClosure): string {
+  const loc = (c.location || "").trim();
+  if (!loc || /^Route \d+$/i.test(loc)) return "freeway segment";
+  return loc;
+}
+
+// Caltrans uses display-cased city names ("San Jose", "Santa Clara"); our
+// cityIds are slugs ("san-jose"). Compare normalized.
+function citySlug(name: string): string {
+  return (name || "").toLowerCase().replace(/[\s']+/g, "-");
+}
+
+function CityRoadwork({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const data = laneClosuresJson as { closures?: CityClosure[]; generatedAt?: string };
+  const all = (data.closures ?? []).filter((c) => citySlug(c.city) === cityId);
+  if (all.length === 0) return null;
+
+  const nowMs = Date.now();
+  const active = all.filter((c) => parseClosurePT(c.start) <= nowMs && parseClosurePT(c.end) > nowMs);
+  const upcoming = all
+    .filter((c) => parseClosurePT(c.start) > nowMs)
+    .sort((a, b) => parseClosurePT(a.start) - parseClosurePT(b.start));
+
+  if (active.length === 0 && upcoming.length === 0) return null;
+
+  const rows: { c: CityClosure; isActive: boolean }[] = [
+    ...active.map((c) => ({ c, isActive: true })),
+    ...upcoming.slice(0, Math.max(0, 5 - active.length)).map((c) => ({ c, isActive: false })),
+  ];
+  const moreCount = Math.max(0, all.length - rows.length);
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🚧 Roadwork in {cityName}
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          {active.length > 0
+            ? `${active.length} active now`
+            : `${all.length} scheduled`}
+        </span>
+      </div>
+
+      <div style={{ border: "1.5px solid var(--sb-border-light)", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+        {rows.map(({ c, isActive }, i) => {
+          const num = c.route.replace(/^\D+-/, "");
+          const badge = ROUTE_BADGE[num] ?? { bg: "#1F2937", fg: "#fff" };
+          return (
+            <div key={c.id} style={{
+              display: "flex", alignItems: "flex-start", gap: 10,
+              padding: "10px 12px",
+              borderBottom: i < rows.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              background: isActive ? "#FEF3C7" : "transparent",
+            }}>
+              <span style={{
+                fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 800,
+                background: badge.bg, color: badge.fg,
+                padding: "3px 7px", borderRadius: 4, minWidth: 32, textAlign: "center",
+                flexShrink: 0,
+              }}>
+                {num}
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, color: "var(--sb-muted)" }}>
+                    {c.direction}
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "var(--sb-ink)", lineHeight: 1.3 }}>
+                    {closureLocLabel(c)}
+                  </span>
+                  {isActive && (
+                    <span style={{
+                      fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                      letterSpacing: "0.06em", textTransform: "uppercase",
+                      padding: "1px 5px", borderRadius: 3,
+                      background: "#B45309", color: "#fff",
+                    }}>
+                      Active now
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 2, display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  <span style={{
+                    fontFamily: "'Space Mono', monospace", fontWeight: 700,
+                    padding: "1px 5px", borderRadius: 3,
+                    background: c.isFull ? "#FEE2E2" : "var(--sb-border-light)",
+                    color: c.isFull ? "#991B1B" : "var(--sb-muted)",
+                  }}>
+                    {closureTypeLabel(c)}
+                  </span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+                    {closureTimeBand(c, nowMs)}
+                  </span>
+                </div>
+                <div style={{ fontSize: 11, color: "var(--sb-light)", marginTop: 2 }}>
+                  {c.work}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {moreCount > 0 && (
+        <div style={{ marginTop: 6, fontSize: 11, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
+          +{moreCount} more scheduled · See <a href="/#transit" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>Transit tab →</a>
         </div>
       )}
     </div>
