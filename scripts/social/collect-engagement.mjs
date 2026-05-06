@@ -336,6 +336,7 @@ async function fetchFacebookEngagement(postId, tokenOverride) {
   if (!token) return null;
 
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  let blocked = false;
 
   try {
     const fields = "reactions.summary(total_count),shares,comments.summary(total_count)";
@@ -347,29 +348,38 @@ async function fetchFacebookEngagement(postId, tokenOverride) {
       counts.likes = data.reactions?.summary?.total_count ?? 0;
       counts.reposts = data.shares?.count ?? 0;
       counts.replies = data.comments?.summary?.total_count ?? 0;
+    } else {
+      // #10 = pages_read_engagement App Review wall. Other errors also
+      // mean we couldn't read engagement, so flag the whole thing.
+      blocked = true;
     }
-  } catch {}
+  } catch {
+    blocked = true;
+  }
 
-  // Comment contents
   const replies = [];
-  try {
-    const r = await fetch(
-      `${FB_API}/${postId}/comments?fields=id,message,from,created_time,like_count&access_token=${token}`
-    );
-    if (r.ok) {
-      const data = await r.json();
-      for (const c of data.data || []) {
-        replies.push({
-          author: c.from?.name || "unknown",
-          at: c.created_time || null,
-          text: c.message || "",
-          permalink: `https://www.facebook.com/${c.id}`,
-        });
+  if (!blocked) {
+    try {
+      const r = await fetch(
+        `${FB_API}/${postId}/comments?fields=id,message,from,created_time,like_count&access_token=${token}`
+      );
+      if (r.ok) {
+        const data = await r.json();
+        for (const c of data.data || []) {
+          replies.push({
+            author: c.from?.name || "unknown",
+            at: c.created_time || null,
+            text: c.message || "",
+            permalink: `https://www.facebook.com/${c.id}`,
+          });
+        }
       }
-    }
-  } catch {}
+    } catch {}
+  }
 
-  return { counts, likes: [], reposts: [], quotes: [], replies };
+  const result = { counts, likes: [], reposts: [], quotes: [], replies };
+  if (blocked) result._engagementBlocked = true;
+  return result;
 }
 
 // ── X (Twitter) ──────────────────────────────────────────────────────────
@@ -672,24 +682,19 @@ async function processPost(post, xCreds) {
     }
   }
 
-  // HHSS FB engagement reads are gated by Meta App Review (Advanced Access for
-  // pages_read_engagement). HHSS IG works fine. Only stamp FB as blocked, and
-  // only when we got nothing back; IG counts pass through normally.
+  // For HHSS posts (which we discover via the FB Page enumerate, not via the
+  // SBT publish queue), make sure the platform appears even if engagement
+  // fetching errored out before stamping a record.
   if (brand === "HHSS") {
     for (const entry of post.publishedTo || []) {
-      const platName = entry.platform;
-      if (!platforms[platName]) {
-        platforms[platName] = {
+      if (!platforms[entry.platform]) {
+        platforms[entry.platform] = {
           id: entry.postId || entry.id,
           permalink: post.targetUrl || null,
           counts: { likes: 0, reposts: 0, quotes: 0, replies: 0 },
           likes: [], reposts: [], quotes: [], replies: [],
+          _engagementBlocked: true,
         };
-      }
-      const p = platforms[platName];
-      const total = (p.counts?.likes || 0) + (p.counts?.reposts || 0) + (p.counts?.quotes || 0) + (p.counts?.replies || 0);
-      if (platName === "facebook" && total === 0) {
-        p._engagementBlocked = true; // FB hits the Meta App Review wall
       }
     }
   }
