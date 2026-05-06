@@ -55,10 +55,31 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ── Load posts ───────────────────────────────────────────────────────────
 
+function platformKeys(publishedTo) {
+  // Dedup by actual platform post IDs — these are stable across schedule/log/queue
+  // sources, unlike postKey which uses timestamp + title (drifts by seconds).
+  return (publishedTo || [])
+    .filter((e) => e.ok)
+    .map((e) => `${e.platform}:${e.uri || e.postId || e.id || ""}`)
+    .filter((k) => k.length > k.indexOf(":") + 1);
+}
+
 function loadRecentPublished() {
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
   const out = [];
   const seen = new Set();
+  const seenPlatformIds = new Set();
+
+  function addIfNew(p) {
+    const pkey = postKey(p);
+    if (seen.has(pkey)) return false;
+    const platIds = platformKeys(p.publishedTo);
+    if (platIds.some((k) => seenPlatformIds.has(k))) return false;
+    seen.add(pkey);
+    platIds.forEach((k) => seenPlatformIds.add(k));
+    out.push(p);
+    return true;
+  }
 
   // 1) Queue-style entries (older publish path).
   if (existsSync(QUEUE_FILE)) {
@@ -68,10 +89,7 @@ function loadRecentPublished() {
       if (p.publishResult && p.publishResult !== "ok") continue;
       if (!Array.isArray(p.publishedTo) || !p.publishedTo.length) continue;
       if (new Date(p.publishedAt).getTime() < cutoff) continue;
-      const key = postKey(p);
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.push(p);
+      addIfNew(p);
     }
   }
 
@@ -95,10 +113,7 @@ function loadRecentPublished() {
           approvedAt: slot.copyApprovedAt || slot.imageApprovedAt,
           _scheduleSource: { date, slotType },
         };
-        const key = postKey(synthetic);
-        if (seen.has(key)) continue;
-        seen.add(key);
-        out.push(synthetic);
+        addIfNew(synthetic);
       }
     }
   }
@@ -147,10 +162,7 @@ function loadRecentPublished() {
           targetUrl: null,
           _logSource: true,
         };
-        const key = postKey(synthetic);
-        if (seen.has(key)) continue;
-        seen.add(key);
-        out.push(synthetic);
+        addIfNew(synthetic);
       }
     }
   }
