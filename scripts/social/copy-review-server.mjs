@@ -435,8 +435,12 @@ function renderTotals() {
 function renderPlatformPill(plat, p, expanded) {
   const counts = p.counts || {};
   const total = (counts.likes||0)+(counts.reposts||0)+(counts.quotes||0)+(counts.replies||0);
-  if (total === 0) return ''; // skip silent platforms entirely
+  if (total === 0 && !p._engagementBlocked) return ''; // skip silent platforms entirely
   const cls = 'plat-pill' + (expanded ? ' expanded' : '');
+  if (p._engagementBlocked) {
+    const link = p.permalink ? '<a href="' + p.permalink + '" target="_blank" style="color:inherit;text-decoration:none;">view →</a>' : 'no metrics';
+    return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts" style="color:#888;font-style:italic;">' + link + '</span></div>';
+  }
   const segs = TYPE_ORDER.filter(k => (counts[k]||0) > 0).map(k => (
     '<span class="plat-count">' + counts[k] + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
   )).join('');
@@ -484,7 +488,8 @@ function renderPost(post) {
   const brand = post.brand || 'SBT';
 
   if (activeBrand !== 'all' && brand !== activeBrand) return '';
-  if (total === 0) return ''; // always hide silent posts
+  const anyBlocked = Object.values(platforms).some(p => p._engagementBlocked);
+  if (total === 0 && !anyBlocked) return ''; // hide silent SBT posts; keep HHSS visible
   if (activePlatform !== 'all') {
     const c = platforms[activePlatform]?.counts || {};
     const platTotal = (c.likes||0)+(c.reposts||0)+(c.quotes||0)+(c.replies||0);
