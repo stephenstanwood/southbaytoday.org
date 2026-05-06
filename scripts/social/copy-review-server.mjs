@@ -388,8 +388,11 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 
 <script>
 const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
-const TYPE_ORDER = ['likes', 'reposts', 'quotes', 'replies'];
-const TYPE_LBL = { likes: 'likes', reposts: 'reposts', quotes: 'quotes', replies: 'replies' };
+// reposts + quotes are both "amplification" — collapsed into shares for display.
+const TYPE_ORDER = ['likes', 'shares', 'replies'];
+const TYPE_LBL = { likes: 'likes', shares: 'shares', replies: 'replies' };
+const sharesOf = (counts) => (counts?.reposts || 0) + (counts?.quotes || 0);
+const displayCount = (counts, k) => k === 'shares' ? sharesOf(counts) : (counts?.[k] || 0);
 const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
@@ -425,7 +428,7 @@ function totalForPost(post) {
 function renderTotals() {
   const t = (DATA && DATA.totals) || { likes: 0, reposts: 0, quotes: 0, replies: 0 };
   const html = TYPE_ORDER.map(k => (
-    '<div class="total-card"><div class="total-num">' + (t[k] || 0).toLocaleString() +
+    '<div class="total-card"><div class="total-num">' + displayCount(t, k).toLocaleString() +
     '</div><div class="total-label">' + TYPE_LBL[k] + '</div></div>'
   )).join('');
   document.getElementById('totals').innerHTML = html;
@@ -440,8 +443,8 @@ function renderPlatformPill(plat, p, expanded) {
     const link = p.permalink ? '<a href="' + p.permalink + '" target="_blank" style="color:inherit;text-decoration:none;">view →</a>' : 'no metrics';
     return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts" style="color:#888;font-style:italic;">' + link + '</span></div>';
   }
-  const segs = TYPE_ORDER.filter(k => (counts[k]||0) > 0).map(k => (
-    '<span class="plat-count">' + counts[k] + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
+  const segs = TYPE_ORDER.filter(k => displayCount(counts, k) > 0).map(k => (
+    '<span class="plat-count">' + displayCount(counts, k) + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
   )).join('');
   return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts">' + segs + '</span></div>';
 }
