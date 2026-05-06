@@ -19,6 +19,7 @@ import digestsJson from "../../../data/south-bay/digests.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
 import realEstateJson from "../../../data/south-bay/real-estate.json";
+import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 
 // ── Types ──
 
@@ -249,6 +250,9 @@ export default function CityPage({ cityId, cityName }: Props) {
           </div>
         </div>
       )}
+
+      {/* ═══ SCHOOL DAYS ═══ */}
+      <CitySchoolDays cityId={cityId} cityName={cityName} />
 
       {/* ═══ HOUSING PULSE ═══ */}
       <CityHousingPulse cityId={cityId} cityName={cityName} />
@@ -779,6 +783,235 @@ function CityHousingPulse({ cityId, cityName }: { cityId: string; cityName: stri
         {" · All Residential"}
         {yoyVolatile && " · 1 yr hidden (volatile)"}
       </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City School Days — district status today + upcoming milestones for the
+// districts that serve this city. With school year ending in early June,
+// parents want a quick "is school open?" + "what's next?" answer scoped to
+// their city, not the whole region.
+// ---------------------------------------------------------------------------
+
+interface SchoolDistrict {
+  id: string;
+  name: string;
+  fullName: string;
+  color: string;
+  bg: string;
+  cities: string[];
+}
+
+interface SchoolEvent {
+  id: string;
+  districtId: string;
+  label: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+}
+
+const CITY_SCHOOL_TYPE_EMOJI: Record<string, string> = {
+  testing: "📝",
+  finals: "📋",
+  graduation: "🎓",
+  lastday: "🎉",
+  break: "🏖️",
+  holiday: "🏖️",
+};
+
+function daysFromToday(iso: string, todayIso: string): number {
+  const today = new Date(todayIso + "T12:00:00").getTime();
+  const target = new Date(iso + "T12:00:00").getTime();
+  return Math.round((target - today) / 86400000);
+}
+
+function whenLabel(iso: string, todayIso: string): string {
+  const days = daysFromToday(iso, todayIso);
+  if (days === 0) return "today";
+  if (days === 1) return "tomorrow";
+  if (days < 7) {
+    return new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
+  }
+  const m = new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return `${m} · ${days}d`;
+}
+
+function CitySchoolDays({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const districts = (schoolCalendarJson as { districts: SchoolDistrict[] }).districts ?? [];
+  const events = (schoolCalendarJson as { events: SchoolEvent[] }).events ?? [];
+
+  const myDistricts = districts.filter((d) => d.cities.includes(cityId));
+  if (myDistricts.length === 0) return null;
+
+  const myDistrictIds = new Set(myDistricts.map((d) => d.id));
+  const districtById: Record<string, SchoolDistrict> = {};
+  for (const d of myDistricts) districtById[d.id] = d;
+
+  // Today's status per district: any event whose date range includes TODAY.
+  // If none, we report "in session" (or "weekend" on Sat/Sun).
+  const todayDate = new Date(TODAY_ISO + "T12:00:00");
+  const isWeekend = todayDate.getDay() === 0 || todayDate.getDay() === 6;
+
+  const districtStatus = myDistricts.map((d) => {
+    const active = events.find(
+      (e) => e.districtId === d.id && e.startDate <= TODAY_ISO && e.endDate >= TODAY_ISO,
+    );
+    return { district: d, active };
+  });
+
+  // Upcoming milestones across matched districts within 60 days. Group by
+  // (date+label) so e.g. "Memorial Day" across all districts collapses to
+  // one line with multiple badges.
+  const horizon = (() => {
+    const d = new Date(TODAY_ISO + "T12:00:00");
+    d.setDate(d.getDate() + 60);
+    return d.toLocaleDateString("en-CA");
+  })();
+
+  const upcomingRaw = events
+    .filter((e) => myDistrictIds.has(e.districtId))
+    .filter((e) => e.startDate > TODAY_ISO && e.startDate <= horizon)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+
+  const groupedMap = new Map<
+    string,
+    { startDate: string; endDate: string; label: string; type: string; districts: SchoolDistrict[] }
+  >();
+  for (const e of upcomingRaw) {
+    const key = `${e.startDate}|${e.label}`;
+    if (!groupedMap.has(key)) {
+      groupedMap.set(key, {
+        startDate: e.startDate,
+        endDate: e.endDate,
+        label: e.label,
+        type: e.type,
+        districts: [],
+      });
+    }
+    const d = districtById[e.districtId];
+    if (d) groupedMap.get(key)!.districts.push(d);
+  }
+  const upcoming = Array.from(groupedMap.values()).slice(0, 4);
+
+  // Suppress component if there's literally nothing to say (no districts have
+  // anything coming up in 60d AND no one's on break right now). Shouldn't
+  // happen during the school year but guards the summer.
+  const anyActive = districtStatus.some((s) => s.active);
+  if (!anyActive && upcoming.length === 0 && !isWeekend) return null;
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🏫 School Days
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          {myDistricts.length} district{myDistricts.length === 1 ? "" : "s"} in {cityName}
+        </span>
+      </div>
+
+      <div style={{
+        border: "1.5px solid var(--sb-border-light)",
+        borderRadius: 8,
+        overflow: "hidden",
+        background: "#fff",
+      }}>
+        {/* Today row(s) — one per district. */}
+        {districtStatus.map((s, i) => {
+          const d = s.district;
+          const active = s.active;
+          let statusText: string;
+          let statusColor: string;
+          if (active) {
+            const verb = active.endDate === active.startDate
+              ? "" // single-day events read better w/o the trailing "thru"
+              : ` thru ${new Date(active.endDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}`;
+            statusText = `${CITY_SCHOOL_TYPE_EMOJI[active.type] ?? "📚"} ${active.label}${verb}`;
+            statusColor = active.type === "break" || active.type === "holiday" ? "#B45309" : "#1E3A8A";
+          } else if (isWeekend) {
+            statusText = "Weekend — no school";
+            statusColor = "var(--sb-muted)";
+          } else {
+            statusText = "✓ In session";
+            statusColor = "#15803D";
+          }
+          return (
+            <div key={d.id} style={{
+              display: "flex", alignItems: "center", gap: 10,
+              padding: "10px 12px",
+              borderBottom: i < districtStatus.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+            }}>
+              <span title={d.fullName} style={{
+                fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
+                letterSpacing: "0.04em",
+                padding: "2px 7px", borderRadius: 4,
+                background: d.bg, color: d.color, border: `1px solid ${d.color}33`,
+                whiteSpace: "nowrap",
+              }}>
+                {d.name}
+              </span>
+              <span style={{ fontSize: 13, color: statusColor, fontWeight: 600, lineHeight: 1.3 }}>
+                {statusText}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Upcoming list. */}
+      {upcoming.length > 0 && (
+        <div style={{ marginTop: 10 }}>
+          <div style={{
+            fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+            letterSpacing: "0.08em", textTransform: "uppercase" as const,
+            color: "var(--sb-light)", marginBottom: 6,
+          }}>
+            Coming up
+          </div>
+          {upcoming.map((u, i) => {
+            const allMyDistricts = u.districts.length === myDistricts.length && myDistricts.length >= 2;
+            return (
+              <div key={i} style={{
+                display: "flex", alignItems: "center", gap: 8, padding: "6px 0",
+                borderBottom: i < upcoming.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              }}>
+                <span style={{ fontSize: 14, width: 20, textAlign: "center" }}>
+                  {CITY_SCHOOL_TYPE_EMOJI[u.type] ?? "📚"}
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--sb-ink)", lineHeight: 1.3 }}>
+                    {u.label}
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 1, display: "flex", gap: 4, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+                      {whenLabel(u.startDate, TODAY_ISO)}
+                    </span>
+                    {allMyDistricts ? (
+                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, background: "var(--sb-border-light)", color: "var(--sb-muted)" }}>
+                        all districts
+                      </span>
+                    ) : (
+                      <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap" }}>
+                        {u.districts.map((d) => (
+                          <span key={d.id} title={d.fullName} style={{
+                            fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                            padding: "1px 5px", borderRadius: 3,
+                            background: d.bg, color: d.color, border: `1px solid ${d.color}33`,
+                          }}>
+                            {d.name}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
