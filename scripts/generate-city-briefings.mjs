@@ -118,7 +118,7 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
 
 Write ONE sentence (20-30 words) summarizing what's most interesting or noteworthy happening in ${city.name} this week. Tone: crisp, local, specific — like a smart friend texting you what's going on in your city. Mention actual event names or city hall actions if relevant. No fluff.
 
-Important: only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses.
+Important: only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another.
 
 ${parts.join("\n\n")}
 
