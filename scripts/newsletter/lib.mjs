@@ -189,8 +189,7 @@ export async function assembleNewsletterData(date) {
     .sort((a, b) => parseTimeMinutes(a.time) - parseTimeMinutes(b.time));
 
   const openings = loadOpenings();
-  const recentlyOpened = (openings.opened || []).filter((o) => isWithinDays(o.date, date, 7));
-  const comingSoon = (openings.comingSoon || []).slice(0, 5);
+  const todaysOpenings = (openings.opened || []).filter((o) => o.date === date);
 
   const meetings = loadMeetings().meetings || {};
   const tonightMeetings = Object.entries(meetings)
@@ -204,14 +203,21 @@ export async function assembleNewsletterData(date) {
   );
 
   const redditPosts = (loadRedditPulse().posts || []).slice(0, 8);
-  const weather = await fetchWeather();
+
+  // Run weather + the two Claude rewrites in parallel — about 2-3s total.
+  const [weather, dayPlanBlurb, tonightPickBlurb] = await Promise.all([
+    fetchWeather(),
+    dayPlan ? rewriteForEmail(dayPlan.copy?.facebook || dayPlan.copy?.threads || dayPlan.copy?.bluesky || "", "plan") : "",
+    tonightPick ? rewriteForEmail(tonightPick.copy?.facebook || tonightPick.copy?.threads || tonightPick.copy?.bluesky || "", "pick") : "",
+  ]);
 
   return {
     date,
     longDate: formatLongDate(date),
-    dayPlan, tonightPick,
+    dayPlan, dayPlanBlurb,
+    tonightPick, tonightPickBlurb,
     todayEvents,
-    recentlyOpened, comingSoon,
+    todaysOpenings,
     tonightMeetings,
     weather,
     todayHistory,
@@ -219,11 +225,58 @@ export async function assembleNewsletterData(date) {
   };
 }
 
-// Trim social copy down for email — strip URLs, @-handles, #hashtags, and the
-// trailing CTA fragments ("Six stops, all mapped:") that only made sense when
-// followed by a link. Splits @CamelCase handles into spaced words so
-// "@RidgeVineyards" reads as "Ridge Vineyards".
-function socialToEmail(text) {
+// Ask Claude to rewrite social copy as a newsletter blurb. Falls back to a
+// regex-based scrub if the API is unavailable or returns garbage.
+export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
+  if (!text) return "";
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return scrubSocial(text);
+
+  const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email.";
+
+  const guidance = kind === "pick"
+    ? "This is the 'tonight's pick' blurb for a single event. 1-3 sentences. Email gets an image + a CTA button below the text, so don't say things like 'tap the link' or 'see below'."
+    : "This is the 'plan for your day' blurb covering 5-8 stops. 2-4 sentences. Email gets an image of the schedule + a 'See the full plan' button below the text, so don't repeat the URL or say 'all linked here'.";
+
+  const prompt = `${guidance}
+
+Strip @-handles, hashtags, and trailing URL-dependent CTAs. Use natural place names ("Ridge Vineyards" not "@RidgeVineyards"). Keep specifics — venue names, times, what people will do. Read like a friend telling them what's on.
+
+Original social copy:
+"""
+${text}
+"""
+
+Return ONLY the rewritten blurb, no quotes, no preamble.`;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 600,
+        system: SYSTEM,
+        messages: [{ role: "user", content: prompt }],
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) throw new Error(`anthropic ${res.status}`);
+    const data = await res.json();
+    const out = (data.content?.[0]?.text || "").trim().replace(/^["']|["']$/g, "");
+    return out || scrubSocial(text);
+  } catch (err) {
+    console.error("rewriteForEmail failed, using fallback:", err.message);
+    return scrubSocial(text);
+  }
+}
+
+// Fallback: regex scrub when Claude isn't available.
+function scrubSocial(text) {
   if (!text) return "";
   return text
     .replace(/https?:\/\/\S+/g, "")
@@ -250,15 +303,6 @@ function parseTimeMinutes(timeStr) {
   if (ampm === "pm" && h !== 12) h += 12;
   if (ampm === "am" && h === 12) h = 0;
   return h * 60 + min;
-}
-
-function isWithinDays(dateStr, ref, n) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr).getTime();
-  const r = new Date(ref).getTime();
-  if (Number.isNaN(d) || Number.isNaN(r)) return false;
-  const diffDays = (r - d) / (1000 * 60 * 60 * 24);
-  return diffDays >= 0 && diffDays <= n;
 }
 
 // ── HTML rendering ─────────────────────────────────────────────────────────
@@ -294,10 +338,10 @@ export function renderEmail(data) {
   const html = wrapShell(subject, [
     headerBlock(data),
     weatherStrip(data.weather),
-    dayPlanBlock(data.dayPlan),
-    tonightPickBlock(data.tonightPick),
+    dayPlanBlock(data.dayPlan, data.dayPlanBlurb),
+    tonightPickBlock(data.tonightPick, data.tonightPickBlurb),
     eventsBlock(data.todayEvents),
-    openingsBlock(data.recentlyOpened, data.comingSoon),
+    openingsBlock(data.todaysOpenings),
     meetingsBlock(data.tonightMeetings),
     historyBlock(data.todayHistory),
     conversationBlock(data.redditPosts),
@@ -337,9 +381,8 @@ function weatherStrip(w) {
 </div>`;
 }
 
-function dayPlanBlock(plan) {
+function dayPlanBlock(plan, blurb) {
   if (!plan) return "";
-  const blurb = socialToEmail(plan.copy?.facebook || plan.copy?.threads || plan.copy?.bluesky || "");
   const img = plan.imageUrl ? `<img src="${esc(plan.imageUrl)}" alt="Today's plan" style="width:100%;display:block;border-radius:8px;">` : "";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">See the full plan →</a>`
@@ -352,14 +395,19 @@ function dayPlanBlock(plan) {
 </div>`;
 }
 
-function tonightPickBlock(pick) {
+function tonightPickBlock(pick, blurb) {
   if (!pick) return "";
-  const blurb = socialToEmail(pick.copy?.facebook || pick.copy?.threads || pick.copy?.bluesky || "");
   const img = pick.imageUrl ? `<img src="${esc(pick.imageUrl)}" alt="Tonight's pick" style="width:100%;display:block;border-radius:8px;">` : "";
+  const ticketUrl = pick.item?.url || null;
+  const ctaLabel = pick.item?.cost === "paid" ? "Get tickets →" : "Event details →";
+  const cta = ticketUrl
+    ? `<a href="${esc(ticketUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">${esc(ctaLabel)}</a>`
+    : "";
   return `<div style="padding:0 28px 28px 28px;border-top:1px solid ${PALETTE.border};padding-top:28px;">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">Tonight's pick</div>
   ${img}
   <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurb)}</div>
+  ${cta}
 </div>`;
 }
 
@@ -381,34 +429,27 @@ function eventsBlock(events) {
     </td></tr>`;
   }).join("\n");
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Today's events (${events.length})</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">All of today's events (${events.length})</div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
 </div>`;
 }
 
-function openingsBlock(opened, comingSoon) {
-  if (!opened?.length && !comingSoon?.length) return "";
-  const renderItem = (o) => {
+function openingsBlock(openedToday) {
+  if (!openedToday?.length) return "";
+  const items = openedToday.map((o) => {
     const cityId = (o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-");
     const locParts = [o.address, cityName(cityId)].filter(Boolean);
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
-    return `<div style="font-size:14px;color:${PALETTE.ink};margin-bottom:4px;"><strong>${esc(o.name)}</strong>${loc}</div>`;
-  };
-  const openedHtml = opened?.length
-    ? `<div style="margin-bottom:14px;">
-        <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Just opened</div>
-        ${opened.map(renderItem).join("")}
-      </div>`
-    : "";
-  const soonHtml = comingSoon?.length
-    ? `<div>
-        <div style="font-weight:600;color:${PALETTE.ink};margin-bottom:6px;">Coming soon</div>
-        ${comingSoon.map(renderItem).join("")}
-      </div>`
-    : "";
+    const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
+    return `<div style="margin-bottom:10px;">
+      <div style="font-size:15px;color:${PALETTE.ink};"><strong>${esc(o.name)}</strong>${loc}</div>
+      ${blurb}
+    </div>`;
+  }).join("");
+  const heading = openedToday.length === 1 ? "New today" : `New today (${openedToday.length})`;
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Food openings</div>
-  ${openedHtml}${soonHtml}
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">${heading}</div>
+  ${items}
 </div>`;
 }
 
@@ -469,7 +510,7 @@ function conversationBlock(posts) {
   }).join("\n");
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">The Conversation</div>
-  <div style="font-size:13px;color:${PALETTE.muted};margin-bottom:14px;">What people are talking about across the South Bay.</div>
+  <div style="font-size:13px;color:${PALETTE.muted};margin-bottom:14px;">What people are talking about across the South Bay (via Reddit).</div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${items}</tbody></table>
 </div>`;
 }
