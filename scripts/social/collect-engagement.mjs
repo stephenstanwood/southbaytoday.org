@@ -1,0 +1,636 @@
+#!/usr/bin/env /opt/homebrew/bin/node
+// ---------------------------------------------------------------------------
+// South Bay Today — Engagement Collector
+// Walks every recently-published post on every platform and records:
+//   • likes / favourites (count + actors where API allows)
+//   • reposts / boosts / shares (count + actors where API allows)
+//   • quotes / quote-tweets (count + actor + text where API allows)
+//   • replies / comments (count + author + text)
+//   • mentions (Bluesky / Mastodon / X)
+//
+// Output: src/data/south-bay/social-engagement.json
+// Powers the unified "Engagement" dashboard at /engagement on the review server.
+//
+// Usage: node scripts/social/collect-engagement.mjs [--dry-run] [--days=14]
+// ---------------------------------------------------------------------------
+
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { createHmac, randomBytes } from "node:crypto";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const OUT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
+
+const BSKY_API = "https://bsky.social/xrpc";
+const THREADS_API = "https://graph.threads.net/v1.0";
+const FB_API = "https://graph.facebook.com/v25.0";
+const X_API = "https://api.twitter.com";
+const IG_API = "https://graph.instagram.com/v25.0";
+const MASTODON_INSTANCE = process.env.MASTODON_INSTANCE || "https://mastodon.social";
+const MASTODON_API = `${MASTODON_INSTANCE}/api/v1`;
+
+const args = process.argv.slice(2);
+const dryRun = args.includes("--dry-run");
+const daysArg = args.find((a) => a.startsWith("--days="));
+const LOOKBACK_DAYS = daysArg ? Number(daysArg.split("=")[1]) || 14 : 14;
+
+// Load .env.local if present (idempotent — launchd already passes --env-file)
+try {
+  const envPath = join(__dirname, "..", "..", ".env.local");
+  const lines = readFileSync(envPath, "utf8").split("\n");
+  for (const line of lines) {
+    const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+    if (m && !process.env[m[1]]) {
+      process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+    }
+  }
+} catch {}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ── Load posts ───────────────────────────────────────────────────────────
+
+function loadRecentPublished() {
+  if (!existsSync(QUEUE_FILE)) return [];
+  const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
+  const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  return queue.filter((p) => {
+    if (!p.published || !p.publishedAt) return false;
+    if (p.publishResult && p.publishResult !== "ok") return false;
+    if (!Array.isArray(p.publishedTo) || !p.publishedTo.length) return false;
+    return new Date(p.publishedAt).getTime() >= cutoff;
+  });
+}
+
+function postKey(p) {
+  // Stable per-post identifier across runs. Prefer approvedAt + title; fall back to publishedAt.
+  const t = p.item?.title || "untitled";
+  const stamp = p.approvedAt || p.publishedAt || p.generatedAt;
+  return `${stamp}|${t}`.slice(0, 240);
+}
+
+// ── Bluesky ──────────────────────────────────────────────────────────────
+
+let _bskySession = null;
+
+async function bskySession() {
+  if (_bskySession) return _bskySession;
+  const handle = process.env.BLUESKY_HANDLE;
+  const password = process.env.BLUESKY_APP_PASSWORD;
+  if (!handle || !password) throw new Error("Missing BLUESKY_HANDLE / BLUESKY_APP_PASSWORD");
+  const res = await fetch(`${BSKY_API}/com.atproto.server.createSession`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ identifier: handle, password }),
+  });
+  if (!res.ok) throw new Error(`Bluesky auth ${res.status}: ${await res.text()}`);
+  _bskySession = await res.json();
+  return _bskySession;
+}
+
+function bskyPermalink(uri) {
+  const parts = uri.split("/");
+  return `https://bsky.app/profile/${parts[2]}/post/${parts[parts.length - 1]}`;
+}
+
+async function bskyPaged(path, params, token, key) {
+  const out = [];
+  let cursor;
+  for (let i = 0; i < 5; i++) {
+    const qs = new URLSearchParams({ ...params, limit: "100", ...(cursor ? { cursor } : {}) });
+    const res = await fetch(`${BSKY_API}/${path}?${qs}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) break;
+    const data = await res.json();
+    if (Array.isArray(data[key])) out.push(...data[key]);
+    cursor = data.cursor;
+    if (!cursor) break;
+    await sleep(150);
+  }
+  return out;
+}
+
+async function fetchBlueskyEngagement(uri) {
+  const session = await bskySession();
+  const token = session.accessJwt;
+
+  // Likes
+  const likesRaw = await bskyPaged("app.bsky.feed.getLikes", { uri }, token, "likes");
+  const likes = likesRaw.map((l) => ({
+    author: l.actor?.handle || "unknown",
+    displayName: l.actor?.displayName || null,
+    at: l.createdAt || l.indexedAt || null,
+    profile: l.actor?.handle ? `https://bsky.app/profile/${l.actor.handle}` : null,
+  }));
+
+  // Reposts
+  const repostsRaw = await bskyPaged("app.bsky.feed.getRepostedBy", { uri }, token, "repostedBy");
+  const reposts = repostsRaw.map((a) => ({
+    author: a.handle || "unknown",
+    displayName: a.displayName || null,
+    profile: a.handle ? `https://bsky.app/profile/${a.handle}` : null,
+  }));
+
+  // Quote posts
+  const quotesRaw = await bskyPaged("app.bsky.feed.getQuotes", { uri }, token, "posts");
+  const quotes = quotesRaw.map((p) => ({
+    author: p.author?.handle || "unknown",
+    displayName: p.author?.displayName || null,
+    at: p.record?.createdAt || p.indexedAt || null,
+    text: p.record?.text || "",
+    permalink: bskyPermalink(p.uri),
+  }));
+
+  // Replies (depth 6 captures nested)
+  const threadRes = await fetch(
+    `${BSKY_API}/app.bsky.feed.getPostThread?uri=${encodeURIComponent(uri)}&depth=6`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  const replies = [];
+  if (threadRes.ok) {
+    const data = await threadRes.json();
+    const walk = (node) => {
+      for (const r of node?.replies || []) {
+        const post = r?.post;
+        if (post) {
+          replies.push({
+            author: post.author?.handle || "unknown",
+            displayName: post.author?.displayName || null,
+            at: post.record?.createdAt || post.indexedAt || null,
+            text: post.record?.text || "",
+            permalink: bskyPermalink(post.uri),
+          });
+        }
+        if (r?.replies?.length) walk(r);
+      }
+    };
+    walk(data.thread);
+  }
+
+  return {
+    counts: { likes: likes.length, reposts: reposts.length, quotes: quotes.length, replies: replies.length },
+    likes,
+    reposts,
+    quotes,
+    replies,
+  };
+}
+
+// ── Threads ──────────────────────────────────────────────────────────────
+
+async function fetchThreadsEngagement(mediaId) {
+  const token = process.env.THREADS_ACCESS_TOKEN;
+  if (!token) return null;
+
+  // Insights (count metrics)
+  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0, views: 0 };
+  try {
+    const insightFields = "likes,replies,reposts,quotes,views";
+    const r = await fetch(
+      `${THREADS_API}/${mediaId}/insights?metric=${insightFields}&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      for (const m of data.data || []) {
+        const v = m.values?.[0]?.value ?? 0;
+        if (m.name === "likes") counts.likes = v;
+        else if (m.name === "replies") counts.replies = v;
+        else if (m.name === "reposts") counts.reposts = v;
+        else if (m.name === "quotes") counts.quotes = v;
+        else if (m.name === "views") counts.views = v;
+      }
+    }
+  } catch {}
+
+  // Reply contents (when permitted)
+  const replies = [];
+  try {
+    const fields = "id,text,username,timestamp,permalink,is_reply_owned_by_me";
+    const r = await fetch(
+      `${THREADS_API}/${mediaId}/replies?fields=${fields}&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      for (const reply of data.data || []) {
+        if (reply.is_reply_owned_by_me) continue;
+        replies.push({
+          author: reply.username || "unknown",
+          at: reply.timestamp || null,
+          text: reply.text || "",
+          permalink: reply.permalink || null,
+        });
+      }
+    }
+  } catch {}
+
+  return {
+    counts,
+    likes: [], // Threads API doesn't expose actors
+    reposts: [],
+    quotes: [],
+    replies,
+  };
+}
+
+// ── Facebook ─────────────────────────────────────────────────────────────
+
+async function fetchFacebookEngagement(postId) {
+  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+  if (!token) return null;
+
+  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+
+  try {
+    const fields = "reactions.summary(total_count),shares,comments.summary(total_count)";
+    const r = await fetch(
+      `${FB_API}/${postId}?fields=${encodeURIComponent(fields)}&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      counts.likes = data.reactions?.summary?.total_count ?? 0;
+      counts.reposts = data.shares?.count ?? 0;
+      counts.replies = data.comments?.summary?.total_count ?? 0;
+    }
+  } catch {}
+
+  // Comment contents
+  const replies = [];
+  try {
+    const r = await fetch(
+      `${FB_API}/${postId}/comments?fields=id,message,from,created_time,like_count&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      for (const c of data.data || []) {
+        replies.push({
+          author: c.from?.name || "unknown",
+          at: c.created_time || null,
+          text: c.message || "",
+          permalink: `https://www.facebook.com/${c.id}`,
+        });
+      }
+    }
+  } catch {}
+
+  return { counts, likes: [], reposts: [], quotes: [], replies };
+}
+
+// ── X (Twitter) ──────────────────────────────────────────────────────────
+
+function xPercentEncode(str) {
+  return encodeURIComponent(str).replace(
+    /[!'()*]/g,
+    (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
+  );
+}
+
+function xMakeOAuthHeader(method, url, queryParams = [], creds) {
+  const oauthParams = [
+    ["oauth_consumer_key", creds.apiKey],
+    ["oauth_nonce", randomBytes(16).toString("hex")],
+    ["oauth_signature_method", "HMAC-SHA1"],
+    ["oauth_timestamp", Math.floor(Date.now() / 1000).toString()],
+    ["oauth_token", creds.accessToken],
+    ["oauth_version", "1.0"],
+  ];
+  const allParams = [...oauthParams, ...queryParams];
+  const sorted = [...allParams].sort((a, b) => a[0].localeCompare(b[0]));
+  const paramStr = sorted.map(([k, v]) => `${xPercentEncode(k)}=${xPercentEncode(v)}`).join("&");
+  const baseString = `${method.toUpperCase()}&${xPercentEncode(url)}&${xPercentEncode(paramStr)}`;
+  const key = `${xPercentEncode(creds.apiSecret)}&${xPercentEncode(creds.accessTokenSecret)}`;
+  const signature = createHmac("sha1", key).update(baseString).digest("base64");
+  oauthParams.push(["oauth_signature", signature]);
+  return (
+    "OAuth " +
+    oauthParams.map(([k, v]) => `${xPercentEncode(k)}="${xPercentEncode(v)}"`).join(", ")
+  );
+}
+
+function getXCreds() {
+  const apiKey = process.env.X_API_KEY;
+  const apiSecret = process.env.X_API_SECRET;
+  const accessToken = process.env.X_ACCESS_TOKEN;
+  const accessTokenSecret = process.env.X_ACCESS_TOKEN_SECRET;
+  if (!apiKey || !apiSecret || !accessToken || !accessTokenSecret) return null;
+  return { apiKey, apiSecret, accessToken, accessTokenSecret };
+}
+
+async function xGet(url, queryParams, creds) {
+  const auth = xMakeOAuthHeader("GET", url, queryParams, creds);
+  const qs = queryParams.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
+  const res = await fetch(qs ? `${url}?${qs}` : url, { headers: { Authorization: auth } });
+  if (!res.ok) {
+    const body = await res.text();
+    const err = new Error(`X ${url} ${res.status}: ${body.slice(0, 200)}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
+async function fetchXEngagement(tweetId, creds) {
+  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0, impressions: 0 };
+  let bookmarks = 0;
+
+  // Counts via public_metrics on the tweet itself (free tier)
+  try {
+    const data = await xGet(
+      `${X_API}/2/tweets/${tweetId}`,
+      [["tweet.fields", "public_metrics,non_public_metrics"]],
+      creds
+    );
+    const pm = data.data?.public_metrics || {};
+    counts.likes = pm.like_count ?? 0;
+    counts.reposts = pm.retweet_count ?? 0;
+    counts.quotes = pm.quote_count ?? 0;
+    counts.replies = pm.reply_count ?? 0;
+    bookmarks = pm.bookmark_count ?? 0;
+    counts.impressions = pm.impression_count ?? data.data?.non_public_metrics?.impression_count ?? 0;
+  } catch (err) {
+    if (err.status === 429 || err.status === 403) {
+      // Rate-limited or paid-tier endpoint — counts unavailable this run.
+    } else {
+      console.log(`   x: tweet ${tweetId} metrics failed: ${err.message}`);
+    }
+  }
+
+  // Quote tweets (free up to a limit; fall back gracefully)
+  const quotes = [];
+  try {
+    const data = await xGet(
+      `${X_API}/2/tweets/${tweetId}/quote_tweets`,
+      [
+        ["max_results", "20"],
+        ["tweet.fields", "created_at,author_id,text"],
+        ["expansions", "author_id"],
+        ["user.fields", "username,name"],
+      ],
+      creds
+    );
+    const userMap = new Map((data.includes?.users || []).map((u) => [u.id, u]));
+    for (const t of data.data || []) {
+      const u = userMap.get(t.author_id);
+      quotes.push({
+        author: u?.username || t.author_id,
+        displayName: u?.name || null,
+        at: t.created_at || null,
+        text: t.text || "",
+        permalink: `https://x.com/${u?.username || "i"}/status/${t.id}`,
+      });
+    }
+  } catch (err) {
+    if (err.status !== 429 && err.status !== 403) {
+      console.log(`   x: quote_tweets ${tweetId} failed: ${err.message}`);
+    }
+  }
+
+  // Replies (search the conversation; uses recent search — free tier limited)
+  // We skip this for now; X's mention-based reply capture lives in monitor-replies.mjs.
+
+  return { counts, bookmarks, likes: [], reposts: [], quotes, replies: [] };
+}
+
+// ── Instagram ────────────────────────────────────────────────────────────
+
+async function fetchInstagramEngagement(mediaId, shortcode) {
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+  if (!token) return null;
+
+  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  try {
+    const r = await fetch(
+      `${IG_API}/${mediaId}?fields=like_count,comments_count&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      counts.likes = data.like_count ?? 0;
+      counts.replies = data.comments_count ?? 0;
+    }
+  } catch {}
+
+  const replies = [];
+  try {
+    const r = await fetch(
+      `${IG_API}/${mediaId}/comments?fields=id,text,username,timestamp&access_token=${token}`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      for (const c of data.data || []) {
+        replies.push({
+          author: c.username || "unknown",
+          at: c.timestamp || null,
+          text: c.text || "",
+          permalink: `https://www.instagram.com/p/${shortcode || mediaId}/`,
+        });
+      }
+    }
+  } catch {}
+
+  return { counts, likes: [], reposts: [], quotes: [], replies };
+}
+
+// ── Mastodon ─────────────────────────────────────────────────────────────
+
+async function mastoPaged(url, headers) {
+  const out = [];
+  let next = url;
+  for (let i = 0; i < 5 && next; i++) {
+    const r = await fetch(next, { headers });
+    if (!r.ok) break;
+    out.push(...(await r.json()));
+    const link = r.headers.get("link") || "";
+    const m = link.match(/<([^>]+)>;\s*rel="next"/);
+    next = m ? m[1] : null;
+    if (next) await sleep(150);
+  }
+  return out;
+}
+
+async function fetchMastodonEngagement(statusId) {
+  const token = process.env.MASTODON_ACCESS_TOKEN;
+  if (!token) return null;
+  const headers = { Authorization: `Bearer ${token}` };
+
+  // Status itself for counts
+  let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  try {
+    const r = await fetch(`${MASTODON_API}/statuses/${statusId}`, { headers });
+    if (r.ok) {
+      const s = await r.json();
+      counts.likes = s.favourites_count ?? 0;
+      counts.reposts = s.reblogs_count ?? 0;
+      counts.replies = s.replies_count ?? 0;
+    }
+  } catch {}
+
+  // Favourited by
+  const likesRaw = await mastoPaged(`${MASTODON_API}/statuses/${statusId}/favourited_by?limit=80`, headers);
+  const likes = likesRaw.map((a) => ({
+    author: a.acct || a.username,
+    displayName: a.display_name || null,
+    profile: a.url || null,
+  }));
+
+  // Reblogged by
+  const reblogsRaw = await mastoPaged(`${MASTODON_API}/statuses/${statusId}/reblogged_by?limit=80`, headers);
+  const reposts = reblogsRaw.map((a) => ({
+    author: a.acct || a.username,
+    displayName: a.display_name || null,
+    profile: a.url || null,
+  }));
+
+  // Replies (descendants)
+  const replies = [];
+  try {
+    const r = await fetch(`${MASTODON_API}/statuses/${statusId}/context`, { headers });
+    if (r.ok) {
+      const ctx = await r.json();
+      const ourAccount = process.env.MASTODON_ACCOUNT_ID;
+      for (const d of ctx.descendants || []) {
+        if (ourAccount && d.account?.id === ourAccount) continue;
+        replies.push({
+          author: d.account?.acct || d.account?.username || "unknown",
+          displayName: d.account?.display_name || null,
+          at: d.created_at || null,
+          text: (d.content || "").replace(/<[^>]+>/g, ""),
+          permalink: d.url || d.uri || null,
+        });
+      }
+    }
+  } catch {}
+
+  return { counts, likes, reposts, quotes: [], replies };
+}
+
+// ── Orchestrator ────────────────────────────────────────────────────────
+
+async function processPost(post, xCreds) {
+  const platforms = {};
+
+  for (const entry of post.publishedTo || []) {
+    if (!entry.ok) continue;
+    const id = entry.postId || entry.id || entry.uri;
+    if (!id) continue;
+
+    try {
+      let result = null;
+      let permalink = null;
+
+      switch (entry.platform) {
+        case "bluesky": {
+          const uri = entry.uri || entry.postId;
+          if (!uri) break;
+          permalink = bskyPermalink(uri);
+          result = await fetchBlueskyEngagement(uri);
+          break;
+        }
+        case "threads": {
+          permalink = `https://www.threads.net/@southbaytoday/post/${id}`;
+          result = await fetchThreadsEngagement(id);
+          break;
+        }
+        case "facebook": {
+          // FB permalink: split numeric_post_id into pageId_postId pieces if present
+          const parts = String(id).split("_");
+          permalink = parts.length === 2
+            ? `https://www.facebook.com/${parts[0]}/posts/${parts[1]}`
+            : `https://www.facebook.com/${id}`;
+          result = await fetchFacebookEngagement(id);
+          break;
+        }
+        case "x": {
+          if (!xCreds) break;
+          permalink = `https://x.com/southbaytoday/status/${id}`;
+          result = await fetchXEngagement(id, xCreds);
+          break;
+        }
+        case "instagram": {
+          permalink = `https://www.instagram.com/p/${entry.shortcode || id}/`;
+          result = await fetchInstagramEngagement(id, entry.shortcode);
+          break;
+        }
+        case "mastodon": {
+          permalink = `${MASTODON_INSTANCE}/@southbaytoday/${id}`;
+          result = await fetchMastodonEngagement(id);
+          break;
+        }
+      }
+
+      if (result) {
+        platforms[entry.platform] = {
+          id,
+          permalink,
+          ...result,
+        };
+      }
+    } catch (err) {
+      console.log(`   ${entry.platform} ${id}: ${err.message}`);
+    }
+  }
+
+  return {
+    key: postKey(post),
+    title: post.item?.title || "Untitled",
+    publishedAt: post.publishedAt,
+    targetUrl: post.targetUrl || post.item?.url || null,
+    cardPath: post.cardPath || null,
+    platforms,
+  };
+}
+
+async function main() {
+  const posts = loadRecentPublished();
+  console.log(`engagement: ${posts.length} posts in last ${LOOKBACK_DAYS}d`);
+
+  const xCreds = getXCreds();
+  if (!xCreds) console.log("   x: skipped (no X credentials)");
+
+  const out = [];
+  for (let i = 0; i < posts.length; i++) {
+    const p = posts[i];
+    const result = await processPost(p, xCreds);
+    out.push(result);
+    if ((i + 1) % 10 === 0) console.log(`   ${i + 1}/${posts.length}…`);
+  }
+
+  // Sort newest published first
+  out.sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
+
+  const totals = out.reduce(
+    (acc, p) => {
+      for (const v of Object.values(p.platforms || {})) {
+        acc.likes += v.counts?.likes || 0;
+        acc.reposts += v.counts?.reposts || 0;
+        acc.quotes += v.counts?.quotes || 0;
+        acc.replies += v.counts?.replies || 0;
+      }
+      return acc;
+    },
+    { likes: 0, reposts: 0, quotes: 0, replies: 0 }
+  );
+
+  const data = {
+    lastUpdated: new Date().toISOString(),
+    lookbackDays: LOOKBACK_DAYS,
+    postCount: out.length,
+    totals,
+    posts: out,
+  };
+
+  if (dryRun) {
+    console.log("\n[dry-run] would write:", JSON.stringify(totals, null, 2));
+  } else {
+    writeFileSync(OUT_FILE, JSON.stringify(data, null, 2) + "\n");
+    console.log(
+      `wrote ${OUT_FILE} — likes=${totals.likes} reposts=${totals.reposts} quotes=${totals.quotes} replies=${totals.replies}`
+    );
+  }
+}
+
+main().catch((err) => {
+  console.error("collect-engagement failed:", err);
+  process.exit(1);
+});
