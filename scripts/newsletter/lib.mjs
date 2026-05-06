@@ -82,6 +82,10 @@ export function loadMeetings() {
   return readJson(ARTIFACTS.meetings);
 }
 
+export function loadRedditPulse() {
+  return readJson(ARTIFACTS.redditPulse);
+}
+
 // Reuses the regex-based parser from generate-sv-history.mjs.
 export function loadMilestones() {
   const src = readFileSync(join(DATA_DIR, "tech-companies.ts"), "utf8");
@@ -148,6 +152,8 @@ export function assembleNewsletterData(date) {
     (m) => m.month === parseInt(monthStr) && m.day === parseInt(dayStr)
   );
 
+  const redditPosts = (loadRedditPulse().posts || []).slice(0, 8);
+
   return {
     date,
     longDate: formatLongDate(date),
@@ -157,6 +163,7 @@ export function assembleNewsletterData(date) {
     tonightMeetings,
     airQuality: aq.southBayAvg || null,
     todayHistory,
+    redditPosts,
   };
 }
 
@@ -220,6 +227,7 @@ export function renderEmail(data) {
     openingsBlock(data.recentlyOpened, data.comingSoon),
     meetingsBlock(data.tonightMeetings),
     historyBlock(data.todayHistory),
+    conversationBlock(data.redditPosts),
     footerBlock(),
   ].filter(Boolean).join("\n"));
   return { subject, html };
@@ -351,6 +359,41 @@ function historyBlock(history) {
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">On this day in Silicon Valley</div>
   ${items}
+</div>`;
+}
+
+function conversationBlock(posts) {
+  if (!posts?.length) return "";
+  const items = posts.map((p) => {
+    const title = p.displayTitle || p.title || "";
+    const sub = p.sub ? `r/${p.sub}` : "";
+    const meta = [
+      sub,
+      p.score ? `↑ ${p.score}` : null,
+      p.numComments ? `💬 ${p.numComments}` : null,
+    ].filter(Boolean).join(" · ");
+    const thumb = p.image
+      ? `<img src="${esc(p.image)}" alt="" width="64" height="64" style="width:64px;height:64px;display:block;border-radius:6px;object-fit:cover;">`
+      : "";
+    const titleHtml = p.permalink
+      ? `<a href="${esc(p.permalink)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;line-height:1.4;">${esc(title)}</a>`
+      : `<span style="color:${PALETTE.ink};font-weight:600;line-height:1.4;">${esc(title)}</span>`;
+    const summary = p.summary
+      ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(p.summary)}</div>`
+      : "";
+    return `<tr>
+      <td width="64" style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">${thumb}</td>
+      <td style="padding:10px 0 10px 12px;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+        <div>${titleHtml}</div>
+        ${summary}
+        <div style="font-size:12px;color:${PALETTE.faint};margin-top:4px;letter-spacing:0.3px;">${esc(meta)}</div>
+      </td>
+    </tr>`;
+  }).join("\n");
+  return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">The Conversation</div>
+  <div style="font-size:13px;color:${PALETTE.muted};margin-bottom:14px;">What people are talking about across the South Bay.</div>
+  <table style="width:100%;border-collapse:collapse;"><tbody>${items}</tbody></table>
 </div>`;
 }
 
