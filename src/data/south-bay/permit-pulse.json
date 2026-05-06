@@ -1,30 +1,30 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-05T23:09:52.599Z",
+      "generatedAt": "2026-05-06T11:09:31.303Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 28 – May 5",
+      "dateRange": "Apr 29 – May 6",
       "stats": {
-        "total": 328,
-        "notable": 21,
-        "newUnits": 8,
-        "totalValuation": 9313572
+        "total": 312,
+        "notable": 17,
+        "newUnits": 265,
+        "totalValuation": 59564297
       },
       "permits": [
         {
-          "id": "2025-140268-RS",
-          "address": "5568 Dartmouth Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
+          "id": "2026-114574-MF",
+          "address": "1 Bernard Dr",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
           "workType": "New Construction",
-          "description": "Attached adu",
-          "valuation": 135103,
-          "units": 1,
-          "issueDate": "2026-04-29",
-          "subtype": "2nd Unit Added"
+          "description": "Berryessa Family Apt (Bemp 100%) New Construction",
+          "valuation": 52395660,
+          "units": 260,
+          "issueDate": "2026-05-04",
+          "subtype": "Apartment"
         },
         {
           "id": "2025-134472-RS",
@@ -63,52 +63,40 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2024-067775-RS",
-          "address": "3203 Foxboro Pl #2",
+          "id": "2025-145919-RS",
+          "address": "4589 Elmhurst Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached adu",
-          "valuation": 113894,
+          "description": "Attached adu",
+          "valuation": 43118,
           "units": 1,
-          "issueDate": "2026-04-29",
+          "issueDate": "2026-05-04",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-126093-RS",
-          "address": "1708 Goldentree Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
+          "id": "2026-114533-CI",
+          "address": "1655 Berryessa Rd",
+          "category": "new-construction",
+          "categoryLabel": "New Construction",
           "workType": "New Construction",
-          "description": "New Attached adu",
-          "valuation": 79641,
-          "units": 1,
-          "issueDate": "2026-04-29",
-          "subtype": "2nd Unit Added"
+          "description": "Berryessa Family Apt(Bemp 100%) New Garage",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-04",
+          "subtype": "Closed Public Parking Garage"
         },
         {
-          "id": "2025-133917-RS",
-          "address": "1709 Arroyo De Oro #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Garage Converted to Jadu",
-          "valuation": 70680,
-          "units": 1,
-          "issueDate": "2026-04-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-115199-CI",
-          "address": "988 Rock Av",
+          "id": "2026-114340-CI",
+          "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Supermicro (Bem 100%) ti for Equipment Install",
-          "valuation": 2500000,
+          "description": "(Bemp100%) Arc'Teryx ti #1623",
+          "valuation": 1725570,
           "units": 0,
-          "issueDate": "2026-04-29",
-          "subtype": "Commercial/Industrial"
+          "issueDate": "2026-05-04",
+          "subtype": "Retail"
         },
         {
           "id": "2026-110776-CI",
@@ -133,23 +121,83 @@
           "units": 0,
           "issueDate": "2026-05-01",
           "subtype": "Office"
+        },
+        {
+          "id": "2026-115553-CI",
+          "address": "1199 Coleman Av #7",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Bytedance (Be100%) 1st Level Turnstiles",
+          "valuation": 220000,
+          "units": 0,
+          "issueDate": "2026-04-30",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-05T23:09:55.694Z",
+      "generatedAt": "2026-05-06T11:09:33.583Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 28 – May 5",
+      "dateRange": "Apr 29 – May 6",
       "stats": {
-        "total": 105,
-        "notable": 7,
+        "total": 103,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01149",
+          "address": "580 Suzanne Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01125",
+          "address": "111 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-01",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01126",
           "address": "1133 Emerson St",
@@ -175,42 +223,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-01",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00094",
-          "address": "261 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated (edge lit) wall sign for Fireclay Tile. The sign will be constructed of stainless-steel letters (painted black with satin finish) and will be 9 inches tall by 7 feet and 7 inches long. Zoning District: CD-C (GF)(P). Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00096",
-          "address": "4345 El Camino Real",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review on behalf of the Palo Alto Greens HOA to remove three trees (with low suitability for preservation due to poor condition and lean) from the remainder parcel (Parcel 1A @ 440 Cesano Court) and replace them with five (5) thirty-six-inch box size trees (Gingko Biloba 'Princeton Sentry) and an additional eight (8) twenty-four-inch boxes trees provided offsite via Public Works Urban Forestry's in-lieu program (26TRE-00045). Associated with Summerhill’s redevelopment project at 4345 El Camino Real. Environmental Assessment: Not a Project.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-04-29",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00097",
           "address": "500 Fulton St",
           "category": "entitlement",
@@ -223,15 +235,15 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00095",
-          "address": "220 University Av",
+          "id": "26PLN-00096",
+          "address": "4345 El Camino Real",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a new 36 inch tall by 115 inch wide LED channel letter sign on raceway to read, \"Zingsters\". The sign will be made with aluminum, painted black, red, and white with white acrylic face to be placed on a black aluminimum backer panel. Zone District: CD-C (Commercial Downtown). Environmental Assessment: Not a Project. For more information contact the project planner at Garrett.Sauls@PaloAlto.gov.",
+          "description": "Request for an Over-the-Counter Architectural Review on behalf of the Palo Alto Greens HOA to remove three trees (with low suitability for preservation due to poor condition and lean) from the remainder parcel (Parcel 1A @ 440 Cesano Court) and replace them with five (5) thirty-six-inch box size trees (Gingko Biloba 'Princeton Sentry) and an additional eight (8) twenty-four-inch boxes trees provided offsite via Public Works Urban Forestry's in-lieu program (26TRE-00045). Associated with Summerhill’s redevelopment project at 4345 El Camino Real. Environmental Assessment: Not a Project.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-28",
+          "issueDate": "2026-04-29",
           "subtype": "Over the Counter Approved"
         }
       ]

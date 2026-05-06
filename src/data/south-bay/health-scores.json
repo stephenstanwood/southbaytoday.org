@@ -1,6 +1,28 @@
 {
   "flags": [
     {
+      "business_id": "PR0306332",
+      "name": "Pho Queen Noodle House",
+      "city": "Sunnyvale",
+      "address": "1133 Tasman Dr",
+      "date": "2026-05-05",
+      "score": 75,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Atnguyen71@yahoo"
+    },
+    {
+      "business_id": "PR0302785",
+      "name": "Emerald Hills Golfland",
+      "city": "San Jose",
+      "address": "976 Blossom Hill Rd",
+      "date": "2026-05-05",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "No rodents, insects, birds, or animals"
+    },
+    {
       "business_id": "PR0330423",
       "name": "Ocean Pearl",
       "city": "Milpitas",
@@ -10,17 +32,6 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
-    },
-    {
-      "business_id": "PR0454228",
-      "name": "Milyar Cafe",
-      "city": "Santa Clara",
-      "address": "1098 Monroe St",
-      "date": "2026-05-01",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is closed due to lack of hot running water and a broken hot water heater"
     },
     {
       "business_id": "PR0402005",
@@ -34,37 +45,15 @@
       "summary": "Food obtained from approved source"
     },
     {
-      "business_id": "PR0370090",
-      "name": "Evc Cafe",
-      "city": "San Jose",
-      "address": "3095 Yerba Buena Rd",
-      "date": "2026-04-30",
-      "score": 70,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0302261",
-      "name": "Lados",
-      "city": "Sunnyvale",
-      "address": "115 Plaza Dr",
-      "date": "2026-04-30",
-      "score": 75,
+      "business_id": "PR0454228",
+      "name": "Milyar Cafe",
+      "city": "Santa Clara",
+      "address": "1098 Monroe St",
+      "date": "2026-05-01",
+      "score": null,
       "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "NOTE: No signature obtained"
-    },
-    {
-      "business_id": "PR0428105",
-      "name": "Southindies Vegetarian/vegan/jain Restaurant",
-      "city": "Sunnyvale",
-      "address": "950 W El Camino Real",
-      "date": "2026-04-30",
-      "score": 49,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is hereby closed due to evidence of a vermin infestation"
+      "summary": "Facility is closed due to lack of hot running water and a broken hot water heater"
     },
     {
       "business_id": "PR0306687",
@@ -78,17 +67,6 @@
       "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
-      "business_id": "PR0307121",
-      "name": "Lotus Thai Bistro",
-      "city": "Palo Alto",
-      "address": "425 S California Av",
-      "date": "2026-04-30",
-      "score": 58,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
-    },
-    {
       "business_id": "PR0420831",
       "name": "Mj Sushi",
       "city": "Palo Alto",
@@ -98,6 +76,50 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "Due to the lack of hot water the health permit shall hereby be temporarily suspended"
+    },
+    {
+      "business_id": "PR0370090",
+      "name": "Evc Cafe",
+      "city": "San Jose",
+      "address": "3095 Yerba Buena Rd",
+      "date": "2026-04-30",
+      "score": 70,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Hands clean, properly washed; gloves used properly"
+    },
+    {
+      "business_id": "PR0428105",
+      "name": "Southindies Vegetarian/vegan/jain Restaurant",
+      "city": "Sunnyvale",
+      "address": "950 W El Camino Real",
+      "date": "2026-04-30",
+      "score": 49,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is hereby closed due to evidence of a vermin infestation"
+    },
+    {
+      "business_id": "PR0302261",
+      "name": "Lados",
+      "city": "Sunnyvale",
+      "address": "115 Plaza Dr",
+      "date": "2026-04-30",
+      "score": 75,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "NOTE: No signature obtained"
+    },
+    {
+      "business_id": "PR0307121",
+      "name": "Lotus Thai Bistro",
+      "city": "Palo Alto",
+      "address": "425 S California Av",
+      "date": "2026-04-30",
+      "score": 58,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0401744",
@@ -111,17 +133,6 @@
       "summary": "Follow-up inspection to routine inspection conducted by Dennis Ly on 4/28/2026"
     },
     {
-      "business_id": "PR0367766",
-      "name": "Golden Bamboo Vegetarian Restaurant",
-      "city": "San Jose",
-      "address": "3245 S White Rd",
-      "date": "2026-04-28",
-      "score": 63,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Note: Food safety manager certificate: Austin Le - 10/12/2028"
-    },
-    {
       "business_id": "PR0401744",
       "name": "02 Valley",
       "city": "Cupertino",
@@ -131,6 +142,17 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "Facility is closed due to being unable to provide adequate hot water"
+    },
+    {
+      "business_id": "PR0367766",
+      "name": "Golden Bamboo Vegetarian Restaurant",
+      "city": "San Jose",
+      "address": "3245 S White Rd",
+      "date": "2026-04-28",
+      "score": 63,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Note: Food safety manager certificate: Austin Le - 10/12/2028"
     },
     {
       "business_id": "PR0377057",
@@ -254,6 +276,17 @@
       "summary": "Note: Food safety manager certificate: Minghua Hu - 11/25/29"
     },
     {
+      "business_id": "PR0306424",
+      "name": "Pier 402/crema Coffee",
+      "city": "San Jose",
+      "address": "238 Race St",
+      "date": "2026-04-20",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "On-site for an operator scheduled first follow-up inspection after the facility was closed due to evidence of a cockroach infestation"
+    },
+    {
       "business_id": "PR0305016",
       "name": "Pho Enjoy Ii",
       "city": "San Jose",
@@ -263,17 +296,6 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "Note: Ice machine is not working, per PIC, they are waiting for a part for it"
-    },
-    {
-      "business_id": "PR0367405",
-      "name": "Nam Giao Restaurant",
-      "city": "San Jose",
-      "address": "2066 Tully Rd",
-      "date": "2026-04-20",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "- On-site for follow-up inspection after facility was closed due to evidence of a vermin infestation"
     },
     {
       "business_id": "PR0304119",
@@ -298,40 +320,18 @@
       "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
-      "business_id": "PR0306424",
-      "name": "Pier 402/crema Coffee",
+      "business_id": "PR0367405",
+      "name": "Nam Giao Restaurant",
       "city": "San Jose",
-      "address": "238 Race St",
+      "address": "2066 Tully Rd",
       "date": "2026-04-20",
       "score": null,
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
-      "summary": "On-site for an operator scheduled first follow-up inspection after the facility was closed due to evidence of a cockroach infestation"
-    },
-    {
-      "business_id": "PR0423728",
-      "name": "Giwa",
-      "city": "Santa Clara",
-      "address": "1494 Halford Av",
-      "date": "2026-04-17",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Provided Checklist for Reopening After Closure Due to Vermin Infestation"
-    },
-    {
-      "business_id": "PR0381726",
-      "name": "Super Taqueria",
-      "city": "San Jose",
-      "address": "480 S 10th St",
-      "date": "2026-04-17",
-      "score": 72,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
+      "summary": "- On-site for follow-up inspection after facility was closed due to evidence of a vermin infestation"
     }
   ],
-  "generatedAt": "2026-05-05T23:09:22.323Z",
+  "generatedAt": "2026-05-06T11:09:00.597Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }
