@@ -18,6 +18,7 @@ import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json
 import digestsJson from "../../../data/south-bay/digests.json";
 import cityBriefingsJson from "../../../data/south-bay/city-briefings.json";
 import aroundTownJson from "../../../data/south-bay/around-town.json";
+import realEstateJson from "../../../data/south-bay/real-estate.json";
 
 // ── Types ──
 
@@ -248,6 +249,9 @@ export default function CityPage({ cityId, cityName }: Props) {
           </div>
         </div>
       )}
+
+      {/* ═══ HOUSING PULSE ═══ */}
+      <CityHousingPulse cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -612,6 +616,169 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
       <a href="/#overview" style={{ display: "inline-block", marginTop: 10, fontSize: 12, fontWeight: 700, color: "var(--sb-accent)", textDecoration: "none" }}>
         Customize your plan →
       </a>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City Housing Pulse — single-row median sale + YoY + days + over-list +
+// rank vs. other South Bay cities. Renders nothing when the city is missing
+// from real-estate.json or its YoY swing is volatile (>40%, matches the
+// homepage RealEstateCard filter).
+// ---------------------------------------------------------------------------
+
+interface ReCityRow {
+  city: string;
+  cityId: string;
+  periodEnd: string;
+  medianSalePrice: number | null;
+  medianSalePriceYoy: number | null;
+  inventory: number | null;
+  medianDaysOnMarket: number | null;
+  avgSaleToList: number | null;
+  soldAboveListPct: number | null;
+}
+
+function formatPriceShort(n: number | null): string {
+  if (n == null) return "—";
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(2)}M`;
+  return `$${(n / 1000).toFixed(0)}K`;
+}
+
+function formatPeriodLabel(iso: string): string {
+  return new Date(iso + "T12:00:00").toLocaleDateString("en-US", {
+    month: "short", year: "numeric",
+  });
+}
+
+function ordinalRank(n: number): string {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function CityHousingPulse({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const data = realEstateJson as { cities: ReCityRow[]; sourceUrl?: string };
+  const allCities = data.cities ?? [];
+  const row = allCities.find((c) => c.cityId === cityId);
+  if (!row || row.medianSalePrice == null) return null;
+
+  // Match homepage RealEstateCard's volatility filter — drop unreliable YoY swings.
+  const yoyVolatile = row.medianSalePriceYoy != null && Math.abs(row.medianSalePriceYoy) > 0.4;
+
+  const validForRank = allCities.filter((c) => c.medianSalePrice != null);
+  const sortedByPrice = [...validForRank].sort(
+    (a, b) => (b.medianSalePrice ?? 0) - (a.medianSalePrice ?? 0),
+  );
+  const priceRankIdx = sortedByPrice.findIndex((c) => c.cityId === cityId);
+  const priceRank = priceRankIdx >= 0 ? priceRankIdx + 1 : null;
+  const totalCities = validForRank.length;
+
+  const yoy = yoyVolatile ? null : row.medianSalePriceYoy;
+  const yoyLabel = yoy != null
+    ? `${yoy >= 0 ? "+" : ""}${(yoy * 100).toFixed(1)}%`
+    : "—";
+  const yoyUp = yoy != null ? yoy >= 0 : null;
+
+  const days = row.medianDaysOnMarket;
+  const overList = row.soldAboveListPct;
+  const overListLabel = overList != null ? `${Math.round(overList * 100)}%` : "—";
+
+  // Hottest city in the region by % over list — flame emoji if this is it.
+  const overListRanked = allCities
+    .filter((c) => c.soldAboveListPct != null)
+    .sort((a, b) => (b.soldAboveListPct ?? 0) - (a.soldAboveListPct ?? 0));
+  const isHottest = overListRanked[0]?.cityId === cityId;
+
+  // Comparative blurb — calibrate to where this city sits on price.
+  let comparison: string | null = null;
+  if (priceRank && totalCities) {
+    if (priceRank === 1) comparison = `Most expensive of ${totalCities} South Bay cities tracked.`;
+    else if (priceRank <= 3) comparison = `${ordinalRank(priceRank)}-priciest of ${totalCities} cities tracked — top tier.`;
+    else if (priceRank >= totalCities - 1) comparison = `Among the more affordable South Bay markets.`;
+    else comparison = `${ordinalRank(priceRank)} of ${totalCities} cities tracked by median price.`;
+  }
+
+  const periodLabel = formatPeriodLabel(row.periodEnd);
+  const sourceUrl = data.sourceUrl;
+
+  const stats: { label: string; value: string; tone?: "up" | "down" | "neutral"; arrow?: string }[] = [
+    { label: "Median sale", value: formatPriceShort(row.medianSalePrice) },
+    { label: "1 yr", value: yoyLabel, tone: yoyUp == null ? "neutral" : yoyUp ? "up" : "down", arrow: yoyUp == null ? undefined : yoyUp ? "▲" : "▼" },
+    { label: "Days on market", value: days != null ? `${days}d` : "—" },
+    { label: "Over list", value: overListLabel },
+  ];
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🏡 Housing Pulse
+          {isHottest && (
+            <span title="Hottest South Bay market by % sold over list" style={{ marginLeft: 8, fontSize: 12 }}>🔥</span>
+          )}
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          {periodLabel}
+        </span>
+      </div>
+
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: 0,
+        border: "1.5px solid var(--sb-border-light)",
+        borderRadius: 8,
+        overflow: "hidden",
+        background: "#fff",
+      }}>
+        {stats.map((s, i) => {
+          const color = s.tone === "up" ? "#15803D" : s.tone === "down" ? "#DC2626" : "var(--sb-ink)";
+          return (
+            <div key={s.label} style={{
+              padding: "10px 12px",
+              borderRight: i < stats.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              minWidth: 0,
+            }}>
+              <div style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 9, fontWeight: 700, letterSpacing: "0.06em",
+                textTransform: "uppercase" as const, color: "var(--sb-light)",
+                marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+              }}>
+                {s.label}
+              </div>
+              <div style={{
+                fontSize: 16, fontWeight: 700, color,
+                fontVariantNumeric: "tabular-nums",
+                display: "flex", alignItems: "baseline", gap: 3,
+              }}>
+                {s.arrow && <span style={{ fontSize: 11 }}>{s.arrow}</span>}
+                <span>{s.value}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {comparison && (
+        <div style={{ marginTop: 8, fontSize: 12, color: "var(--sb-muted)" }}>
+          {comparison}
+        </div>
+      )}
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
+        {sourceUrl ? (
+          <a href={sourceUrl} target="_blank" rel="noopener noreferrer"
+            style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 2 }}>
+            Redfin Data Center
+          </a>
+        ) : (
+          <span>Redfin Data Center</span>
+        )}
+        {" · All Residential"}
+        {yoyVolatile && " · 1 yr hidden (volatile)"}
+      </div>
     </div>
   );
 }
