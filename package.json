@@ -25,6 +25,7 @@
     "generate-tech-briefing": "node scripts/generate-tech-briefing.mjs",
     "generate-apod": "node scripts/generate-apod.mjs",
     "generate-places": "node scripts/generate-places.mjs",
+    "generate-open-now-candidates": "node scripts/generate-open-now-candidates.mjs",
     "audit-places": "node scripts/audit-places.mjs",
     "validate-places": "node scripts/validate-places.mjs",
     "audit-events": "node scripts/audit-events.mjs",

@@ -24,6 +24,7 @@ import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json"
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
+import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
 
 // ── Types ──
 
@@ -263,6 +264,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ FOOD PULSE ═══ */}
       <CityFoodPulse cityId={cityId} cityName={cityName} />
+
+      {/* ═══ OPEN RIGHT NOW ═══ */}
+      <CityOpenNow cityId={cityId} cityName={cityName} />
 
       {/* ═══ ROADWORK ═══ */}
       <CityRoadwork cityId={cityId} cityName={cityName} />
@@ -1565,6 +1569,184 @@ function CityChatter({ cityId, cityName }: { cityId: string; cityName: string })
 
       <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
         Tap any thread to read on Reddit
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City Open Now — top-rated spots open right at this moment in the city.
+// Pool is pre-culled at build time (open-now-candidates.json: 30 places per
+// city, rating ≥ 4.5, ratingCount ≥ 100). Component matches today's weekday
+// hours against the user's current PT time and shows up to 6 currently-open
+// places sorted by rating.
+// ---------------------------------------------------------------------------
+
+interface OpenNowCandidate {
+  id: string;
+  name: string;
+  displayType: string | null;
+  category: string | null;
+  rating: number;
+  ratingCount: number;
+  priceLevel: number | null;
+  hours: Record<string, string | undefined>;
+  mapsUrl: string | null;
+  url: string | null;
+}
+
+const OPEN_DAY_KEYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  food: "🍴",
+  entertainment: "🎭",
+  outdoor: "🌿",
+  shopping: "🛍️",
+  museum: "🏛️",
+  wellness: "💆",
+  arts: "🎨",
+};
+
+function parseHM(s: string): number | null {
+  const m = s.match(/^(\d{2}):(\d{2})$/);
+  if (!m) return null;
+  const h = Number(m[1]);
+  const mm = Number(m[2]);
+  if (h > 23 || mm > 59) return null;
+  return h * 60 + mm;
+}
+
+function fmtClock(mins: number): string {
+  let m = ((mins % (24 * 60)) + 24 * 60) % (24 * 60);
+  let h = Math.floor(m / 60);
+  const min = m % 60;
+  const period = h >= 12 ? "PM" : "AM";
+  h = h % 12;
+  if (h === 0) h = 12;
+  return min === 0 ? `${h} ${period}` : `${h}:${String(min).padStart(2, "0")} ${period}`;
+}
+
+function isOpenNow(
+  hours: Record<string, string | undefined>,
+  nowMinutes: number,
+  dayIdx: number,
+): { open: boolean; closesAt?: number } {
+  const todayKey = OPEN_DAY_KEYS[dayIdx];
+  const today = hours[todayKey];
+  if (today) {
+    const [a, b] = today.split("-");
+    const start = parseHM(a ?? "");
+    const end = parseHM(b ?? "");
+    if (start !== null && end !== null) {
+      if (start <= end) {
+        if (nowMinutes >= start && nowMinutes < end) return { open: true, closesAt: end };
+      } else {
+        if (nowMinutes >= start) return { open: true, closesAt: end + 24 * 60 };
+      }
+    }
+  }
+  // Yesterday's range may spill past midnight into the current early hours.
+  const yKey = OPEN_DAY_KEYS[(dayIdx + 6) % 7];
+  const yest = hours[yKey];
+  if (yest) {
+    const [a, b] = yest.split("-");
+    const start = parseHM(a ?? "");
+    const end = parseHM(b ?? "");
+    if (start !== null && end !== null && start > end && nowMinutes < end) {
+      return { open: true, closesAt: end };
+    }
+  }
+  return { open: false };
+}
+
+function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const allByCity = (openNowCandidatesJson as { cities?: Record<string, OpenNowCandidate[]> }).cities ?? {};
+  const pool = allByCity[cityId] ?? [];
+  if (pool.length === 0) return null;
+
+  const nowPT = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  const nowMinutes = nowPT.getHours() * 60 + nowPT.getMinutes();
+  const dayIdx = nowPT.getDay();
+
+  const openRows = pool
+    .map((p) => ({ p, ...isOpenNow(p.hours, nowMinutes, dayIdx) }))
+    .filter((x) => x.open)
+    .sort((a, b) => {
+      if (b.p.rating !== a.p.rating) return b.p.rating - a.p.rating;
+      return b.p.ratingCount - a.p.ratingCount;
+    })
+    .slice(0, 6);
+
+  if (openRows.length === 0) return null;
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🟢 Open Right Now
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          top spots in {cityName}
+        </span>
+      </div>
+
+      <div style={{ border: "1.5px solid var(--sb-border-light)", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+        {openRows.map(({ p, closesAt }, i) => {
+          const emoji = CATEGORY_EMOJI[p.category ?? ""] ?? "📍";
+          const closesSoon = typeof closesAt === "number" && (closesAt - nowMinutes) <= 60;
+          const href = p.mapsUrl ?? p.url ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([p.name, cityName].join(" "))}`;
+          return (
+            <a
+              key={p.id}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex", alignItems: "flex-start", gap: 10,
+                padding: "10px 12px",
+                borderBottom: i < openRows.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+                textDecoration: "none", color: "inherit",
+              }}
+            >
+              <span style={{
+                flex: "0 0 auto",
+                fontSize: 16,
+                width: 28, height: 28,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                borderRadius: 6,
+                background: "var(--sb-border-light)",
+                marginTop: 1,
+              }}>
+                {emoji}
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14,
+                  color: "var(--sb-ink)", lineHeight: 1.3,
+                }}>
+                  {p.name}
+                </div>
+                <div style={{ fontSize: 11, color: "var(--sb-light)", marginTop: 3, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+                  {p.displayType && <span style={{ textTransform: "uppercase", letterSpacing: "0.04em" }}>{p.displayType}</span>}
+                  <span>·</span>
+                  <span>★ {p.rating.toFixed(1)} ({p.ratingCount})</span>
+                  {typeof closesAt === "number" && (
+                    <>
+                      <span>·</span>
+                      <span style={{ color: closesSoon ? "#B45309" : "var(--sb-muted)" }}>
+                        {closesSoon ? "Closes" : "Until"} {fmtClock(closesAt)}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
+        Tap any spot to find on Google Maps
       </div>
     </div>
   );
