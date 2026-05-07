@@ -23,6 +23,7 @@ import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
+import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 
 // ── Types ──
 
@@ -265,6 +266,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ ROADWORK ═══ */}
       <CityRoadwork cityId={cityId} cityName={cityName} />
+
+      {/* ═══ LOCAL CHATTER ═══ */}
+      <CityChatter cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -1431,6 +1435,137 @@ function CityRoadwork({ cityId, cityName }: { cityId: string; cityName: string }
           +{moreCount} more scheduled · See <a href="/#transit" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>Transit tab →</a>
         </div>
       )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City Chatter — Reddit posts from this city's local subreddit, plus regional
+// posts (r/bayarea, r/AskSF, r/siliconvalley) that name-drop this city.
+// ---------------------------------------------------------------------------
+
+interface ChatterPost {
+  id: string;
+  sub: string;
+  title: string;
+  displayTitle?: string;
+  summary?: string;
+  category?: string;
+  score: number;
+  numComments: number;
+  ageHours: number;
+  permalink: string;
+  externalUrl?: string | null;
+}
+
+// City id → subreddit names that count as "the local sub" for this city.
+// Match is case-insensitive, so we list canonical spellings the data uses.
+const CITY_SUBREDDITS: Record<string, string[]> = {
+  "san-jose":      ["SanJose"],
+  "palo-alto":     ["PaloAlto"],
+  "mountain-view": ["mountainview", "MountainView"],
+  "sunnyvale":     ["Sunnyvale"],
+  "santa-clara":   ["SantaClara"],
+  "cupertino":     ["Cupertino"],
+  "saratoga":      ["Saratoga_CA"],
+  "los-gatos":     ["losgatos"],
+  "milpitas":      ["Milpitas"],
+  "campbell":      ["campbell", "Campbell"],
+};
+
+const REGIONAL_SUBS = new Set(["bayarea", "AskSF", "siliconvalley"]);
+
+function chatterAge(hours: number): string {
+  if (hours < 1) return "now";
+  if (hours < 24) return `${Math.round(hours)}h ago`;
+  const days = Math.round(hours / 24);
+  return days === 1 ? "1d ago" : `${days}d ago`;
+}
+
+function CityChatter({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const posts = ((redditPulseJson as { posts?: ChatterPost[] }).posts ?? []);
+  const localSubs = (CITY_SUBREDDITS[cityId] ?? []).map((s) => s.toLowerCase());
+  const cityNeedle = cityName.toLowerCase();
+
+  const matches = posts.filter((p) => {
+    const subLower = (p.sub || "").toLowerCase();
+    if (localSubs.includes(subLower)) return true;
+    if (REGIONAL_SUBS.has(p.sub)) {
+      const hay = `${p.title || ""} ${p.summary || ""}`.toLowerCase();
+      if (hay.includes(cityNeedle)) return true;
+    }
+    return false;
+  });
+
+  if (matches.length === 0) return null;
+
+  // Local-sub posts first, then regional mentions. Within each group, freshest
+  // first. We cap at 4 so the panel stays a peek, not a feed.
+  const localFirst = matches
+    .map((p) => ({ p, isLocal: localSubs.includes((p.sub || "").toLowerCase()) }))
+    .sort((a, b) => {
+      if (a.isLocal !== b.isLocal) return a.isLocal ? -1 : 1;
+      return a.p.ageHours - b.p.ageHours;
+    })
+    .slice(0, 4);
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          💬 Local Chatter
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          from reddit
+        </span>
+      </div>
+
+      <div style={{ border: "1.5px solid var(--sb-border-light)", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+        {localFirst.map(({ p }, i) => (
+          <a
+            key={p.id}
+            href={p.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex", alignItems: "flex-start", gap: 10,
+              padding: "10px 12px",
+              borderBottom: i < localFirst.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+              textDecoration: "none", color: "inherit",
+            }}
+          >
+            <span style={{
+              flex: "0 0 auto",
+              fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+              letterSpacing: "0.06em", textTransform: "uppercase" as const,
+              padding: "2px 7px", borderRadius: 4,
+              background: "#FEF3C7", color: "#92400E",
+              whiteSpace: "nowrap", marginTop: 2,
+            }}>
+              r/{p.sub}
+            </span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{
+                fontFamily: "var(--sb-serif)", fontWeight: 600, fontSize: 14,
+                color: "var(--sb-ink)", lineHeight: 1.35,
+              }}>
+                {p.displayTitle || p.title}
+              </div>
+              <div style={{ fontSize: 11, color: "var(--sb-light)", marginTop: 3, display: "flex", gap: 6, fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+                <span>↑ {p.score}</span>
+                <span>·</span>
+                <span>💬 {p.numComments}</span>
+                <span>·</span>
+                <span>{chatterAge(p.ageHours)}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
+        Tap any thread to read on Reddit
+      </div>
     </div>
   );
 }
