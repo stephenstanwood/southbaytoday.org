@@ -50,19 +50,29 @@ async function getGridpointForecastUrl(lat: number, lon: number): Promise<string
   return url;
 }
 
-// Map NWS shortForecast text to [emoji, normalized desc]. Order matters — precip wins over sky state.
+// Map NWS shortForecast text to [emoji, normalized desc].
+// Bias optimistic for South Bay marine-layer days: NWS often says "Patchy Fog then Sunny" —
+// the fog burns off by midmorning, so we show the all-day call (sunny) rather than the morning hour.
 function shortForecastInfo(short: string): [string, string] {
   const s = short.toLowerCase();
+  // Real precipitation wins outright.
   if (s.includes("thunderstorm")) return ["⛈", "Thunderstorms"];
   if (s.includes("snow") || s.includes("flurries") || s.includes("sleet")) return ["🌨", "Snow"];
   if (s.includes("heavy rain") || s.includes("heavy showers")) return ["🌧", "Heavy rain"];
   if (s.includes("rain") || s.includes("shower") || s.includes("drizzle")) return ["🌧", "Rain"];
+
+  // Sky state — sunny/clear mentions trump fog & cloud cover ("Patchy Fog then Sunny" → sunny).
+  const hasSunny = s.includes("sunny") || s.includes("clear");
+  if (hasSunny) {
+    if (s.includes("mostly sunny") || s.includes("mostly clear")) return ["🌤", "Mostly sunny"];
+    if (s.includes("partly sunny")) return ["⛅", "Partly cloudy"];
+    return ["☀️", "Sunny"];
+  }
+
   if (s.includes("fog")) return ["🌫️", "Fog"];
-  if (s.includes("mostly sunny")) return ["🌤", "Mostly sunny"];
-  if (s.includes("partly sunny") || s.includes("partly cloudy")) return ["⛅", "Partly cloudy"];
+  if (s.includes("partly cloudy")) return ["⛅", "Partly cloudy"];
   if (s.includes("mostly cloudy")) return ["⛅", "Mostly cloudy"];
   if (s.includes("cloudy") || s.includes("overcast")) return ["☁️", "Cloudy"];
-  if (s.includes("sunny") || s.includes("clear")) return ["☀️", "Sunny"];
   return ["🌡", short];
 }
 
