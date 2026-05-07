@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Venues/orgs we tried to tag but couldn't find in social-handles.json. Auto-populated at gen time. Resolve by adding entries to social-handles.json (this file's entries are then dropped on next run).",
-    "lastUpdated": "2026-05-02"
+    "lastUpdated": "2026-05-07"
   },
   "gaps": {
     "central park library edinger room": {
@@ -251,6 +251,48 @@
         }
       ],
       "lastSeen": "2026-05-02"
+    },
+    "sunnyvale bay trail": {
+      "displayName": "Sunnyvale Bay Trail",
+      "firstSeen": "2026-05-07",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "sunnyvale",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-07"
+    },
+    "shoup park": {
+      "displayName": "Shoup Park",
+      "firstSeen": "2026-05-07",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-altos",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-07"
+    },
+    "summer reading for all ages": {
+      "displayName": "Summer reading for all ages",
+      "firstSeen": "2026-05-07",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "arts",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-07"
     }
   }
 }
