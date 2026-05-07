@@ -942,6 +942,11 @@ function cleanVenue(raw) {
   // SJDA's WP feed occasionally drops the "&" between "Quilts" and "Textiles"
   // (likely a double-encoded entity that the entity-stripper turned into a space).
   v = v.replace(/Museum of Quilts\s+Textiles/g, "Museum of Quilts & Textiles");
+  // Canonicalize SJSU's "Hammer Theater Center" feed and Ticketmaster's
+  // identical variant. The venue's official name uses British "Theatre".
+  v = v.replace(/\bHammer Theater Center\b/g, "Hammer Theatre Center");
+  // ICA San José uses the accented form per icasanjose.org branding.
+  v = v.replace(/\bICA San Jose\b/g, "ICA San José");
   // Truncated library name ("Dr. Martin Luther King" with no ", Jr. Library" tail).
   v = v.replace(/^Dr\.?\s+Martin\s+Luther\s+King\s*$/i, "Dr. Martin Luther King, Jr. Library");
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
