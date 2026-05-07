@@ -25,6 +25,7 @@ import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
+import { TECH_COMPANIES, CATEGORY_LABELS, type TechTrend } from "../../../data/south-bay/tech-companies";
 
 // ── Types ──
 
@@ -273,6 +274,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ LOCAL CHATTER ═══ */}
       <CityChatter cityId={cityId} cityName={cityName} />
+
+      {/* ═══ TECH NEIGHBORS ═══ */}
+      <CityTechNeighbors cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -1747,6 +1751,133 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
 
       <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)" }}>
         Tap any spot to find on Google Maps
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// City Tech Neighbors — tech companies HQ'd in this city. Surfaces the
+// "your tech neighbors" angle: who's local, how big are they, are they
+// hiring/growing/shrinking. Top 6 by SCC employees. Cities with no HQs
+// (Saratoga, Los Gatos most months) silently skip.
+// ---------------------------------------------------------------------------
+
+function trendStyle(trend: TechTrend): { arrow: string; color: string; bg: string; label: string } {
+  if (trend === "up")   return { arrow: "▲", color: "#15803D", bg: "#DCFCE7", label: "Growing" };
+  if (trend === "down") return { arrow: "▼", color: "#B91C1C", bg: "#FEE2E2", label: "Shrinking" };
+  return { arrow: "—", color: "#6B7280", bg: "#F3F4F6", label: "Stable" };
+}
+
+function fmtJobs(k: number): string {
+  if (k >= 1) return `${k}K jobs`;
+  const n = Math.round(k * 1000);
+  return `${n} job${n === 1 ? "" : "s"}`;
+}
+
+function CityTechNeighbors({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const matches = TECH_COMPANIES
+    .filter((c) => c.city === cityName)
+    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
+    .slice(0, 6);
+
+  if (matches.length === 0) return null;
+
+  const totalAll = TECH_COMPANIES.filter((c) => c.city === cityName).length;
+  const totalJobsK = TECH_COMPANIES
+    .filter((c) => c.city === cityName)
+    .reduce((sum, c) => sum + c.sccEmployeesK, 0);
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          💼 Tech Neighbors
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          HQ&apos;d in {cityName}
+        </span>
+      </div>
+
+      <div style={{ border: "1.5px solid var(--sb-border-light)", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+        {matches.map((c, i) => {
+          const t = trendStyle(c.trend);
+          const cat = CATEGORY_LABELS[c.category];
+          const linkHref = c.careersUrl ?? `/tech#${c.id}`;
+          const isExternal = Boolean(c.careersUrl);
+          return (
+            <a
+              key={c.id}
+              href={linkHref}
+              {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              style={{
+                display: "flex", alignItems: "flex-start", gap: 10,
+                padding: "10px 12px",
+                borderBottom: i < matches.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+                textDecoration: "none", color: "inherit",
+              }}
+            >
+              <span style={{
+                flex: "0 0 auto",
+                width: 28, height: 28,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                borderRadius: 6,
+                background: c.color,
+                color: "#fff",
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 11, fontWeight: 800,
+                marginTop: 1,
+              }}>
+                {c.chartName.slice(0, 1).toUpperCase()}
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                  <div style={{
+                    fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14,
+                    color: "var(--sb-ink)", lineHeight: 1.3,
+                  }}>
+                    {c.name}
+                  </div>
+                  {c.ticker && (
+                    <span style={{
+                      fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                      letterSpacing: "0.06em",
+                      color: "var(--sb-light)",
+                    }}>
+                      {c.ticker}
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: 11, color: "var(--sb-light)", marginTop: 3, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "'Space Mono', monospace", fontWeight: 700 }}>
+                  <span style={{ textTransform: "uppercase", letterSpacing: "0.04em" }}>{cat}</span>
+                  <span>·</span>
+                  <span>{fmtJobs(c.sccEmployeesK)}</span>
+                </div>
+              </div>
+              <span style={{
+                flex: "0 0 auto",
+                fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                letterSpacing: "0.06em", textTransform: "uppercase" as const,
+                padding: "3px 7px", borderRadius: 4,
+                background: t.bg, color: t.color,
+                whiteSpace: "nowrap", marginTop: 2,
+              }}>
+                {t.arrow} {t.label}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)", display: "flex", justifyContent: "space-between", gap: 8 }}>
+        <span>
+          {totalAll > matches.length
+            ? `+${totalAll - matches.length} more · ~${Math.round(totalJobsK)}K SCC jobs total`
+            : `~${Math.round(totalJobsK)}K SCC jobs total`}
+        </span>
+        <a href="/tech" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
+          All companies →
+        </a>
       </div>
     </div>
   );
