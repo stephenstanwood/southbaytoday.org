@@ -1009,6 +1009,18 @@ function inferCategory(title, desc, type, venue = "") {
   const venueLower = venue.toLowerCase();
   const isBookstoreVenue = /\b(books?|bookshop|bookstore)\b/.test(venueLower);
   if (isBookstoreVenue) return "arts";
+  // Title-anchored overrides for terms that source-supplied category tags
+  // routinely override (e.g. SJDA tags SoFA Market trivia nights "Music"
+  // because the venue is music-coded; tags Marriott live-music nights
+  // "Family"; "Amphitheater" / "Theatre" venues otherwise route concerts to
+  // arts). Trivia and live music are unambiguous when present in the title.
+  if (/\btrivia\b/.test(titleLower)) return "community";
+  if (/\blive\s+music\b/.test(titleLower)) return "music";
+  // Title-anchored "concert" / "choir" wins over the arts rule below — venues
+  // like "Heritage Theatre" or "Frost Amphitheater" otherwise capture concerts
+  // (Brandi Carlile, Bee Gees tributes, hand bell choir performances) into
+  // arts because of a "theater"/"theatre" / "performance" substring match.
+  if (/\bconcert\b/.test(titleLower) || /\bchoir\b/.test(titleLower)) return "music";
   // "baby" check: only match when it's not a proper name (e.g. "Baby Bash" the rapper)
   const hasBaby = /\bbaby\b/.test(t) && !/\bbaby\s+bash\b/i.test(t);
   if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t)) return "family";
