@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-07T11:08:30.160Z",
+      "generatedAt": "2026-05-07T19:09:49.430Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-07T11:08:32.619Z",
+      "generatedAt": "2026-05-07T19:09:52.245Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,6 +151,18 @@
       },
       "permits": [
         {
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01126",
           "address": "1133 Emerson St",
           "category": "residential-remodel",
@@ -160,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-03",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
           "subtype": "Permit Issued"
         },
         {
@@ -177,30 +201,6 @@
         {
           "id": "26BLD-01149",
           "address": "580 Suzanne Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01148",
-          "address": "3020 Higgins Pl",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01146",
-          "address": "779 Maplewood Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
