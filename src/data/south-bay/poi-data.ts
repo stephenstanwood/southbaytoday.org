@@ -25,6 +25,7 @@ export interface POI {
   photoRef?: string;
   indoorOutdoor: "indoor" | "outdoor" | "both";
   bestSlots: TimeSlotKey[];
+  hours?: Record<string, string>;
 }
 
 export const SOUTH_BAY_POIS: POI[] = [
@@ -489,6 +490,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     indoorOutdoor: "both",
     photoRef: "places/ChIJgxS1DqPMj4ARcXC8uguCrbU/photos/AU_ZVEHNf9cwlW09ObZboDdi2weSQjlv3uj2yGj4z4-vSCYm8wBkgEa8RYWb25fDCe0k3seX1e-ICp9JUxBkvtqivj9J7uW28pF7rzNIPuNetOM3L4NYXrtGbMIpK4ksi-LdbbuOAWoNQg4Igzl0G619za-2s3iEjUq_-S9krfE_Zey5nV-irtsNncjp36Jqu9uyewlEtsjVhxVWFrd6VvlJWJYHKaZWBrp_9gzFdglaR7S1FVgBuOse9QP39Z_UoA3HBsoY7fUMUxWp3M6hpres_yndxfd7ejA7Z6v-qZpjTHcvrakfGuRJjbbh-_sRn4Pl9K1eVXc3nciUzS9vESe48edS3m9UgLOKM6TJ_pcXwQZNdwW1Ho09KrJnLCgzCjvAR4wqCTz0eq-VJEJUfzu8RDREQV8EUoJO7fQZmVRmn_q_Kr6A",
     bestSlots: ["afternoon", "evening"],
+    hours: { sun: "11:00-22:00", mon: "11:00-22:00", tue: "11:00-22:00", wed: "11:00-22:00", thu: "11:00-22:00", fri: "11:00-00:00", sat: "11:00-00:00" },
   },
 
   // ── FOOD / DINING ─────────────────────────────────────────────────────────
@@ -509,6 +511,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://www.lgcr.com",
     indoorOutdoor: "both",
     bestSlots: ["morning"],
+    hours: { sun: "07:00-17:00", mon: "07:00-18:00", tue: "07:00-18:00", wed: "07:00-18:00", thu: "07:00-21:00", fri: "07:00-21:00", sat: "07:00-21:00" },
   },
   {
     id: "chromatic-coffee",
@@ -526,6 +529,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://www.chromaticcoffee.com",
     indoorOutdoor: "indoor",
     bestSlots: ["morning"],
+    hours: { sun: "08:00-17:00", mon: "08:00-15:00", tue: "08:00-15:00", wed: "08:00-15:00", thu: "08:00-15:00", fri: "08:00-17:00", sat: "08:00-17:00" },
   },
   {
     id: "bills-cafe",
@@ -543,6 +547,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://www.billscafe.com",
     indoorOutdoor: "indoor",
     bestSlots: ["morning"],
+    hours: { sun: "07:00-15:00", mon: "07:00-14:00", tue: "07:00-14:00", wed: "07:00-14:00", thu: "07:00-14:00", fri: "07:00-14:00", sat: "07:00-15:00" },
   },
   {
     id: "back-a-yard",
@@ -560,6 +565,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://backayard.net",
     indoorOutdoor: "indoor",
     bestSlots: ["afternoon", "evening"],
+    hours: { sun: "11:00-20:00", mon: "11:00-20:00", tue: "11:00-20:00", wed: "11:00-20:00", thu: "11:00-20:00", fri: "11:00-20:00", sat: "11:00-20:00" },
   },
   {
     id: "orens-hummus",
@@ -578,6 +584,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     indoorOutdoor: "indoor",
     photoRef: "places/ChIJ361H6jm7j4ARk1vmz_dEqwE/photos/AU_ZVEE97FankRlNpzqgasbtF1EbnlBHLG6uGXqu4mC6z1UToMQdogTZpboBL-gHnd1DfdBspJj-fjR4-1sU-G35OFEub-CPgtrKLZ4bITiJfUfRp88jW2AEb3DhRRawSULxGUsUqo8oZg4W5EqiTEMrUvrpHgmvbu1JEA6Tk604dhksjm2mEYLIDGD9g0oPujr7MzkX4sK9hF7aqpAWeK31Fj_C_dIwtMjtBaQWhE0fw6VaalxRSJBaR6VnSiSRE_6YChAQ0-QJARa1j57i-9xZYw-Ix7vMJmq9SP8Yi5AMryZHhlnl0f16b68e43STKRkb3crX9DvheSyNWv6-IDGBfZg7erIWCTEjHlgNxuW5kopQ5w8ym0afztK2xGe7hbjV6qpukd6wrIUAgUK983KuaJw6z1DB7itLNvPfzTrn2J8fRw",
     bestSlots: ["afternoon"],
+    hours: { sun: "11:00-21:00", mon: "11:00-21:00", tue: "11:00-21:00", wed: "11:00-21:00", thu: "11:00-21:00", fri: "11:00-21:00", sat: "11:00-21:00" },
   },
   {
     id: "smoking-pig-bbq",
@@ -596,6 +603,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     indoorOutdoor: "indoor",
     photoRef: "places/ChIJeQ-ozuLKj4ARMQNfslZXl1c/photos/AU_ZVEEdjDBdPGX_DCue9HU_8gF_3id0L4izC4VtcxJXvyUgGVe29ME4nJezISm44jAhlXvZlZUAzcCbpW1ZKcXeFoid1pqwJNTEFOLYKxWWYKcJNxwHKqn7jYufc1SgLug-0gSpdrfGDOru344M58Nu0yD2QvkOwcyork3EK6TRism1ka4wQyc1hyEArRPVP0l8My9JW7k8q802XnFzASlQ4z42j6oUOW8A1XtxVrq8VYMzbTx5rac2qwpRd0TLg90zkll4hTrFhcuDlMzNo12kvfepH1ZZu8NQ5RESlGzEw_g9g7hlXgnNOPqSPyuS07z8OQduwik8Rv7EnqkxD7HU3TTpBh_crzN-CdfdkPpldLc2J3TGsauXXSOSN7F36yazkWp6R0Ov8GfJ0W28jY0JObHa_DzDnRxmfjleu3PPdJ_HLpA",
     bestSlots: ["afternoon", "evening"],
+    hours: { sun: "11:00-20:00", mon: "11:00-20:00", tue: "11:00-20:00", wed: "11:00-20:00", thu: "11:00-20:00", fri: "11:00-21:00", sat: "11:00-21:00" },
   },
   {
     id: "luna-mexican-kitchen",
@@ -613,6 +621,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://www.lunamexicankitchen.com",
     indoorOutdoor: "both",
     bestSlots: ["afternoon", "evening"],
+    hours: { sun: "09:00-21:00", mon: "09:00-21:00", tue: "09:00-21:00", wed: "09:00-21:00", thu: "09:00-21:00", fri: "09:00-22:00", sat: "09:00-22:00" },
   },
   {
     id: "dio-deka",
@@ -631,6 +640,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     indoorOutdoor: "both",
     photoRef: "places/ChIJO3zvn9I1joARJ2I0JIM_FtU/photos/AU_ZVEECVN-DFcf8Rlwq0lqgud84OW_lpPds9L1gsuCw-LsRvu1IqYcu3jbEkin77dB3_lpJl_BaeKLFhqEKNBqaQgcK143GQzfXQshGjocJfXNPx9-ECpgRkpEoKJOZ_1uUjn3HdQtVWwtIW36sb-0P9xFmWhlR0X78LjItwx_VYX8h49UJHZRX9cUKAl58ayg50yu8uNAwFARQjxWSbRzGSxeYTrA0X35BGSnSStzKuFHh_fsZKec3nEAQ5Qa0bbwHKOZ9hh8-KmI2ADV6H9mD3nb1SY1mO4yx0UCwaoIRvAYWWA",
     bestSlots: ["evening"],
+    hours: { sun: "17:00-21:00", wed: "17:00-21:00", thu: "17:00-21:00", fri: "17:00-21:00", sat: "17:00-21:00" },
   },
   {
     id: "dishdash",
@@ -648,6 +658,7 @@ export const SOUTH_BAY_POIS: POI[] = [
     url: "https://www.dishdash.com",
     indoorOutdoor: "indoor",
     bestSlots: ["afternoon", "evening"],
+    hours: { sun: "16:00-21:00", mon: "11:00-21:00", tue: "11:00-21:00", wed: "11:00-21:00", thu: "11:00-21:00", fri: "11:00-21:30", sat: "11:30-21:30" },
   },
 
   // ── SANTA CRUZ PICKS (case-by-case, not full coverage) ─────────────────────

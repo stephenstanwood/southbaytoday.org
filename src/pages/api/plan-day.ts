@@ -423,9 +423,19 @@ const TIME_SENSITIVE_TYPES = new Set([
   "aquarium", "zoo", "library", "ice_cream_shop", "coffee_shop",
 ]);
 
-function isTimeSensitive(types: string[] | null | undefined): boolean {
-  if (!types) return false;
-  return types.some((t) => TIME_SENSITIVE_TYPES.has(t));
+// Categories that are inherently time-sensitive (clock-driven hours), even
+// when Google didn't supply place `types`. Used as a fallback so curated POIs
+// without hours data can't fall through to the daylight-default bucket — the
+// 2026-05-07 DishDash 7:30 AM incident.
+const TIME_SENSITIVE_CATEGORIES = new Set(["food", "arts"]);
+
+function isTimeSensitive(
+  types: string[] | null | undefined,
+  category?: string | null,
+): boolean {
+  if (types && types.some((t) => TIME_SENSITIVE_TYPES.has(t))) return true;
+  if (category && TIME_SENSITIVE_CATEGORIES.has(category)) return true;
+  return false;
 }
 
 /**
@@ -440,9 +450,10 @@ function fitsInOpenRange(
   startH: number,
   endH: number,
   types?: string[] | null,
+  category?: string | null,
 ): boolean {
   if (!hours) {
-    if (isTimeSensitive(types)) return false;
+    if (isTimeSensitive(types, category)) return false;
     return startH >= 6 && endH <= 21; // outdoor/flexible: rough daylight band
   }
   const ranges = openRangesOn(hours, dayKey);
@@ -1198,9 +1209,11 @@ async function sequenceWithClaude(
         const ranges = openRangesOn(hoursObj, planDayKey);
         if (ranges.length === 0) return null; // closed on plan date — omit from prompt
         parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
-      } else if (isTimeSensitive(placeTypes)) {
+      } else if (isTimeSensitive(placeTypes, c.category)) {
         // Time-sensitive (food, museum, etc.) with no verified hours: drop
         // from the pool entirely. We won't guess a 9–8 window for a bakery.
+        // Category fallback catches curated POIs that don't carry Google
+        // `types` (the 2026-05-07 DishDash 7:30 AM bug).
         return null;
       } else {
         // Outdoor/flexible (parks, trails, plazas): no formal hours, fine to
@@ -2350,7 +2363,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         const startH = parseHour(startStr || "");
         const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
         if (startH === null || endH === null) continue;
-        if (!fitsInOpenRange(hoursObj, sweepDayKey, startH, endH, placeTypes)) {
+        if (!fitsInOpenRange(hoursObj, sweepDayKey, startH, endH, placeTypes, candidate.category)) {
           const reason = !hoursObj
             ? "no verified hours for time-sensitive venue"
             : `doesn't fit venue hours on ${sweepDayKey}`;

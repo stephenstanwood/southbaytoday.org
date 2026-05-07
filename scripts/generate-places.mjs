@@ -450,6 +450,22 @@ function loadCuratedPOIs() {
       if (!m) return [];
       return m[1].match(/"([^"]*?)"/g)?.map((s) => s.replace(/"/g, "")) ?? [];
     };
+    // Parse a single-line object literal like `hours: { sun: "...", mon: "..." }`.
+    // Curated POIs without explicit hours fall through to plan-day's open-hours
+    // filter, which can mis-slot food spots into early-morning windows — see
+    // the 2026-05-07 DishDash 7:30 AM incident.
+    const getObject = (key) => {
+      const m = block.match(new RegExp(`${key}:\\s*\\{([^}]*?)\\}`));
+      if (!m) return null;
+      const inner = m[1];
+      const out = {};
+      const pairRe = /(\w+)\s*:\s*"([^"]*?)"/g;
+      let pm;
+      while ((pm = pairRe.exec(inner)) !== null) {
+        out[pm[1]] = pm[2];
+      }
+      return Object.keys(out).length ? out : null;
+    };
 
     const id = get("id");
     if (!id) continue;
@@ -469,6 +485,7 @@ function loadCuratedPOIs() {
       costNote: get("costNote"),
       emoji: get("emoji"),
       url: get("url"),
+      hours: getObject("hours"),
       curated: true,
     });
   }
@@ -592,6 +609,9 @@ async function main() {
         if (poi.cost) place.cost = poi.cost;
         if (poi.costNote) place.costNote = poi.costNote;
         if (poi.emoji) place.emoji = poi.emoji;
+        // Prefer curated hours when present — they're hand-verified and
+        // canonical. Otherwise keep whatever Google returned.
+        if (poi.hours) place.hours = poi.hours;
         matched = true;
         curatedCount++;
         break;
@@ -613,7 +633,7 @@ async function main() {
         types: [],
         primaryType: null,
         category: poi.category || "outdoor",
-        hours: null,
+        hours: poi.hours || null,
         url: poi.url || null,
         mapsUrl: null,
         curated: true,
