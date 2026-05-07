@@ -151,9 +151,10 @@ Return ONLY a JSON array of 5 objects, no other text:
     picks: picks.map(({ eventIndex, why }) => {
       const e = sample[eventIndex - 1];
       if (!e) return null;
-      // Validate any bracketed [Day, Mon D TIME] in the why matches this event.
-      // Claude occasionally pastes a different show's date/time; strip the bracket
-      // rather than ship a contradiction.
+      // Validate any bracketed [Day, Mon D TIME] in the why matches this event,
+      // then strip ALL brackets — the UI shows displayDate/time separately, so
+      // leaving the bracket in produces a duplicate prefix in the rendered card.
+      // Claude occasionally pastes a different show's date/time; warn loudly.
       const bracketRe = /\s*\[[^\]]*\]/g;
       let validatedWhy = why;
       const brackets = why?.match(bracketRe) || [];
@@ -165,9 +166,9 @@ Return ONLY a JSON array of 5 objects, no other text:
         const matchesTime = expectedTime && inner.toLowerCase().includes(expectedTime.toLowerCase());
         if (!matchesDate && !matchesTime) {
           console.warn(`  ⚠️  Stripped non-matching bracket from "${e.title}": ${b.trim()}`);
-          validatedWhy = validatedWhy.replace(b, "");
         }
       }
+      validatedWhy = validatedWhy.replace(bracketRe, "");
       return {
         id: e.id,
         title: e.title,

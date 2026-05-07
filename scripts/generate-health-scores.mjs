@@ -48,12 +48,15 @@ function titleCase(str) {
     .join(" ");
 }
 
-// Extract a short summary from the inspection comment
+// Extract a short summary from the inspection comment.
+// Inspectors sometimes paste contact emails/phone numbers as the first line —
+// reject anything that looks like contact data so we fall back to topViolation.
+const CONTACT_LIKE = /(@|^[\s\d().+-]{7,}$)/;
 function extractSummary(comment) {
   if (!comment) return null;
-  // Take first sentence / line, capped at 160 chars
   const first = comment.split(/[.\n]/)[0].trim();
   if (first.length < 10) return null;
+  if (CONTACT_LIKE.test(first)) return null;
   return first.length <= 160 ? first : first.slice(0, 157) + "…";
 }
 
