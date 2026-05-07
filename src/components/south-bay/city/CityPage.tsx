@@ -26,6 +26,12 @@ import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
 import { TECH_COMPANIES, CATEGORY_LABELS, type TechTrend } from "../../../data/south-bay/tech-companies";
+import {
+  DEV_PROJECTS,
+  STATUS_CONFIG as DEV_STATUS_CONFIG,
+  CATEGORY_LABELS as DEV_CATEGORY_LABELS,
+  type DevStatus,
+} from "../../../data/south-bay/development-data";
 
 // ── Types ──
 
@@ -277,6 +283,9 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* ═══ TECH NEIGHBORS ═══ */}
       <CityTechNeighbors cityId={cityId} cityName={cityName} />
+
+      {/* ═══ MAJOR PROJECTS ═══ */}
+      <CityMajorProjects cityId={cityId} cityName={cityName} />
 
       {/* ═══ CITY BRIEFING ═══ */}
       {briefing?.summary && (
@@ -1877,6 +1886,129 @@ function CityTechNeighbors({ cityId, cityName }: { cityId: string; cityName: str
         </span>
         <a href="/tech" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
           All companies →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ── Major projects panel ──
+// Curated big-picture developments in the city: housing, mixed-use, transit,
+// civic. Active and near-term work surfaces first; completed-only cities still
+// hide the panel because nothing's actually moving on the ground.
+
+const DEV_STATUS_PRIORITY: Record<DevStatus, number> = {
+  "opening-soon": 0,
+  "under-construction": 1,
+  "approved": 2,
+  "proposed": 3,
+  "on-hold": 4,
+  "completed": 5,
+};
+
+const DEV_STATUS_EMOJI: Record<DevStatus, string> = {
+  "opening-soon": "🟢",
+  "under-construction": "🚧",
+  "approved": "✅",
+  "proposed": "📐",
+  "on-hold": "⏸",
+  "completed": "🏁",
+};
+
+function CityMajorProjects({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const projects = DEV_PROJECTS
+    .filter((p) => p.cityId === cityId)
+    .sort((a, b) => {
+      const pa = DEV_STATUS_PRIORITY[a.status] ?? 99;
+      const pb = DEV_STATUS_PRIORITY[b.status] ?? 99;
+      if (pa !== pb) return pa - pb;
+      // Featured projects bubble up within the same status.
+      if (a.featured !== b.featured) return a.featured ? -1 : 1;
+      return 0;
+    });
+
+  if (projects.length === 0) return null;
+
+  // Hide the panel if every project is "completed" — past-only doesn't pass
+  // the "what would a resident notice" bar.
+  const hasActive = projects.some((p) => p.status !== "completed");
+  if (!hasActive) return null;
+
+  const display = projects.slice(0, 4);
+  const extra = projects.length - display.length;
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
+        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 16, margin: 0, color: "var(--sb-ink)" }}>
+          🏗️ Major Projects
+        </h2>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--sb-light)" }}>
+          What&apos;s being built in {cityName}
+        </span>
+      </div>
+
+      <div style={{ border: "1.5px solid var(--sb-border-light)", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
+        {display.map((p, i) => {
+          const statusCfg = DEV_STATUS_CONFIG[p.status];
+          const catLabel = DEV_CATEGORY_LABELS[p.category];
+          const emoji = DEV_STATUS_EMOJI[p.status];
+          return (
+            <div
+              key={p.id}
+              style={{
+                padding: "12px 14px",
+                borderBottom: i < display.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+                display: "flex", flexDirection: "column", gap: 5,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <span style={{
+                  fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                  letterSpacing: "0.06em", textTransform: "uppercase" as const,
+                  padding: "2px 7px", borderRadius: 4,
+                  background: statusCfg.bg, color: statusCfg.color,
+                  whiteSpace: "nowrap",
+                }}>
+                  {emoji} {statusCfg.label}
+                </span>
+                <span style={{
+                  fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
+                  letterSpacing: "0.06em", textTransform: "uppercase" as const,
+                  color: "var(--sb-light)",
+                }}>
+                  {catLabel}
+                </span>
+                {p.featured && (
+                  <span style={{ fontSize: 10, color: "#b45309", fontWeight: 700, marginLeft: "auto" }}>
+                    ★ Signature
+                  </span>
+                )}
+              </div>
+              <div style={{
+                fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14,
+                color: "var(--sb-ink)", lineHeight: 1.3,
+              }}>
+                {p.name}
+              </div>
+              {(p.scale || p.timeline) && (
+                <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.4, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  {p.scale && <span>{p.scale}</span>}
+                  {p.scale && p.timeline && <span style={{ color: "var(--sb-light)" }}>·</span>}
+                  {p.timeline && <span>{p.timeline}</span>}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 6, fontSize: 10, color: "var(--sb-light)", display: "flex", justifyContent: "space-between", gap: 8 }}>
+        <span>
+          {extra > 0 ? `+${extra} more in ${cityName}` : `${display.length} project${display.length === 1 ? "" : "s"} tracked`}
+        </span>
+        <a href="/gov" style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
+          All developments →
         </a>
       </div>
     </div>
