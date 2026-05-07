@@ -1,406 +1,70 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-07T19:19:38.367Z",
+    "generatedAt": "2026-05-07T23:17:45.465Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 47,
-    "placesMatched": 7,
-    "placeGaps": 40,
-    "eventsExtracted": 3,
+    "placesExtracted": 62,
+    "placesMatched": 11,
+    "placeGaps": 51,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Falafel's Drive-In",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "best value combo, banana shakes",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Home Eats",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "large portions, good prices, fast service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Duc Huong",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Vietnamese sandwiches, cheap banh mi",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Jade China",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "high value protein dishes on Berryessa",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Super Taqueria",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "unique SJ experience, consistent, good value",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Hi Five Pizza",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "best pizza and sandwiches in San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "M8trix",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "happy hour specials",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Metro Balderas 1",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "al pastor taco special on Wednesday nights",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "111 Bakery",
-      "city": "San Jose",
-      "kind": "bakery",
-      "context": "cheap banh mi $3.50-$6.50",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Poppy and Claro",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "happy hour $15 beer and pizza",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Mark's Hot Dogs",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "popular hot dog spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Kebab Shop",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "good value Middle Eastern",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Mylapore",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "favorite value restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Falafel Stop",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "falafel, good value",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
       "name": "Muttville",
       "city": "",
-      "kind": "other",
-      "context": "senior dog rescue, cage-free adoption in Mission",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Mancini's Sleep World",
-      "city": "Mountain View",
       "kind": "venue",
-      "context": "taco truck parking lot near Rengstorff",
+      "context": "cage-free senior dog rescue and adoption center",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
         "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Simply Sabor",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "taqueria in Ava's on Castro",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Cheztakos",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "taco truck, highly rated",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "La Costeña",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "amazing tacos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Mamacita's",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "taco truck off California St near Target",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "La Plaza",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "taqueria on Rengstorff and Central",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Taqueria at La Plaza",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "amazing al pastor tacos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "La Familia",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "taco truck at El Camino and Shoreline Shell",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Tacos El Noa Noa",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "moving from original location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Tacos don Valle",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "taco truck in Great Gas parking lot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Mi Tierra",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "affordable daily deals off Moffett",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Paper Platez",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "food truck on Old Middlefield decades",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Joya Market",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "lengua, carnitas, al pastor tacos on California",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
       ]
     },
     {
       "name": "Business Center Costco",
-      "city": "San Mateo",
+      "city": "",
       "kind": "retail",
-      "context": "bulk tomato purchases, 20-25 lb boxes",
+      "context": "bulk tomato sales at 900 Dubuque Ave S 94080",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
         "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Costco",
+      "city": "",
+      "kind": "retail",
+      "context": "bulk tomatoes and Campari tomatoes available",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
       ]
     },
     {
       "name": "Smart and Final",
       "city": "",
       "kind": "retail",
-      "context": "bulk produce options including tomatoes",
+      "context": "bulk produce store for tomatoes",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
         "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
       ]
     },
     {
@@ -409,228 +73,667 @@
       "kind": "retail",
       "context": "cheap bulk produce options",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
         "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "WinCo",
+      "city": "Pittsburg",
+      "kind": "retail",
+      "context": "roma tomatoes on sale at $0.97 per pound",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "El Cerrito farmers market",
+      "city": "",
+      "kind": "venue",
+      "context": "blemished tomatoes available at low prices",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Mancini's Sleep World",
+      "city": "Mountain View",
+      "kind": "other",
+      "context": "taco truck in parking lot near Rengstorff on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Simply Sabor",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "tacos located in Ava's on Castro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Cheztakos",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "taco truck, highly recommended",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "La costeña",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "amazing tacos",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Mamacita's",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "taco truck off California St near Target parking lot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Taqueria at La Plaza",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "al pastor tacos on Rengstorff and Central",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "La Familia",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "tacos at El Camino and Shoreline Shell parking lot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Tacos El Noa Noa",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "taco stand moving from original location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Tacos Don Valle",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "taco truck in Knob Hill/Great Gas gas station parking lot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Mi tierra",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "tacos off Moffett with affordable daily deals",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "San Miguel Taquiera",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "best Quesabirrias in South Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Paper Platez",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "food truck in front of sports bar on Old Middlefield",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Taco stand between Walmart and Target",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "best al pastor tacos on Showers Dr, opens 5-6pm",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Taco truck at Shoreline and Middlefield",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "orange taco truck at gas station",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
+        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
+      ]
+    },
+    {
+      "name": "Don Quijote",
+      "city": "",
+      "kind": "retail",
+      "context": "East Bay location selling Yoshinoya gyudon packets",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "99 Ranch",
+      "city": "",
+      "kind": "retail",
+      "context": "Asian market where gyudon packs are sold on sale",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "Osaka Market",
+      "city": "",
+      "kind": "retail",
+      "context": "Asian market mentioned for Yoshinoya gyudon packs availability",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
       "name": "Hick'ry Pit",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "closed 2020, barbecue restaurant beloved by locals",
+      "context": "Closed barbecue restaurant being redeveloped into apartments",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
       "name": "The Pruneyard",
       "city": "Campbell",
       "kind": "venue",
-      "context": "shopping center across from redevelopment site",
+      "context": "Shopping center across from former Hick'ry Pit development site",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
       "name": "Dohatsuten Ramen & Tapas",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "authentic ramen, Nagoya style, established longtime favorite",
+      "context": "Authentic Nagoya-style ramen on San Antonio, established favorite",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
       "name": "Ramen Hajime",
       "city": "Santa Clara",
       "kind": "restaurant",
-      "context": "highly recommended tonkotsu, praised as best outside Japan",
+      "context": "Highly rated tonkotsu ramen praised by visitors from Japan",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
-      "name": "Hironori",
+      "name": "Hiro Nori",
       "city": "Santa Clara",
       "kind": "restaurant",
-      "context": "good tonkotsu ramen near Great America",
+      "context": "Tonkotsu ramen with creamy broth near Great America",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
-      ]
-    },
-    {
-      "name": "Hinodeya",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "spicy miso ramen",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
-      ]
-    },
-    {
-      "name": "Ramen Izakaya Yugen",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "ramen on Castro street",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
       "name": "Hokkaido Ramen Santouka",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "inside Mitsuwa market, off 280",
+      "context": "Ramen inside Mitsuwa market near Highway 280",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     },
     {
-      "name": "Mitsuwa",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "Japanese market near 280, contains Hokkaido Ramen Santouka",
+      "name": "Hinodeya",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Spicy miso ramen restaurant in South Bay area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "Zona Rosa",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with highly praised guacamole and chips",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "Cardenas Market",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "Mexican market chain making fresh guacamole, salsas, and tamales in-house",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "Arteaga's",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Restaurant known for good guacamole in South Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ]
+    },
+    {
+      "name": "Linda's Taqueria",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "food truck with vegetarian tacos",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Aqui",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Rico Rico Vegano",
+      "city": "",
+      "kind": "restaurant",
+      "context": "restaurant with vegetarian options worth the trip",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Cali Spartan Mexican Kitchen",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with mushroom tacos and orange sauce",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Los Amigos",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with good vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Agave",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Mexican restaurant tried for vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Lopez Taqueria",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Mexican restaurant tried for vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Mission College Child Development Center",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "daycare with long waitlist, teachers age up with children",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Pasitos West",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "preschool near Santa Clara and Cupertino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Happy Days",
+      "city": "Cupertino",
+      "kind": "service",
+      "context": "highly rated daycare and preschool",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Action Day",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "daycare with potty training support and educational focus",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Waha Montessori",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "Chinese-English bilingual Montessori school",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "BuildingKidz Santa Clara",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "structured educational daycare with arts and languages",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Cabrillo Montessori",
+      "city": "",
+      "kind": "service",
+      "context": "Montessori school with 7am to 6pm hours",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Monticello",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "daycare with excellent teachers and kitchen staff",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "ECLA",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "early learning center on Leigh Ave",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ]
+    },
+    {
+      "name": "Tulip Kids",
+      "city": "",
+      "kind": "service",
+      "context": "daycare to avoid based on parent feedback",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Muttville Annual Gala Prom King",
+      "name": "Muttville annual gala Prom King competition",
       "when": "recent",
       "city": "",
-      "context": "dog adoption event with waived fees",
+      "context": "senior dog adoption fundraiser and competition",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
         "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ]
-    },
-    {
-      "name": "Peregrine Falcon Hatchlings Live Cam",
-      "when": "ongoing",
-      "city": "San Jose",
-      "context": "four hatchlings at City Hall webcam",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
       ]
     },
     {
       "name": "BTS Concert",
-      "when": "May 19",
+      "when": "May 19th",
       "city": "Palo Alto",
-      "context": "concert event causing significant traffic planning",
+      "context": "Concert event with parking discussion and volunteer opportunities",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "La Victoria",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "veggie tacos, cultural institution",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ],
-      "matchedName": "La Victoria Taqueria"
-    },
-    {
-      "name": "Back-a-yard",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Caribbean jerk seasoned food",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ],
-      "matchedName": "Back A Yard Caribbean Grill"
-    },
-    {
-      "name": "Siam Station",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Thai food",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
-        "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
-      ],
-      "matchedName": "Siam Station Cupertino"
-    },
-    {
       "name": "Los Altos Taqueria",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "downtown location, highly rated",
+      "context": "tacos in downtown Mountain View",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t5pdrz/do_we_have_a_favorite_sj_must_experience_value/",
-        "https://www.reddit.com/r/bayarea/comments/1t5oyiq/ca_dwellings_per_100k/",
+        "https://www.reddit.com/r/bayarea/comments/1t5ujcp/doordash_battle_bots_about_to_hit_the_streets/",
+        "https://www.reddit.com/r/bayarea/comments/1t5z7h8/looking_for_socializing_help/",
         "https://www.reddit.com/r/bayarea/comments/1t6hpir/14000_older_dogs_saved_meet_slinky_an_8yrold_good/",
-        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/",
-        "https://www.reddit.com/r/SanJose/comments/1t5mvvd/4_little_peregrine_falcon_hatchlings_at_city_hall/"
+        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/mountainview/comments/1t4w8xr/best_place_to_get_tacos/"
       ],
       "matchedName": "Los Altos Grill"
+    },
+    {
+      "name": "Tokyo Central",
+      "city": "",
+      "kind": "retail",
+      "context": "Asian market in Emeryville selling Yoshinoya gyudon packs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ],
+      "matchedName": "Tokyo Central Cupertino"
     },
     {
       "name": "Yugen Ramen",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "tonkotsu ramen near downtown Caltrain station",
+      "context": "Downtown tonkotsu ramen, walking distance from Caltrain station",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ],
       "matchedName": "Yugen Ramen"
     },
@@ -638,27 +741,114 @@
       "name": "Ramen Nagi",
       "city": "Palo Alto",
       "kind": "restaurant",
-      "context": "popular ramen, 6 min walk from Caltrain, often has lines",
+      "context": "Downtown ramen near Caltrain with consistent line, tonkotsu specialty",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ],
       "matchedName": "Ramen Nagi"
+    },
+    {
+      "name": "Udon Mugizo",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Udon noodle specialty restaurant in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ],
+      "matchedName": "Udon Mugizo"
     },
     {
       "name": "Marufuku Ramen",
       "city": "Cupertino",
       "kind": "restaurant",
-      "context": "creamy tonkotsu broth, also in Downtown Redwood City",
+      "context": "Creamy tonkotsu broth ramen, closest location in Cupertino",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t6gc66/cheapest_tomatoes_in_bay_area/",
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
         "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
-        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/"
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
       ],
       "matchedName": "Marufuku Ramen Campbell"
+    },
+    {
+      "name": "Luna Mexican Kitchen",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with excellent guacamole, Campbell and Alameda locations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ],
+      "matchedName": "Luna Mexican Kitchen"
+    },
+    {
+      "name": "Tostadas",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Multiple South Bay locations with quality guacamole",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t6mgot/to_the_person_in_line_at_tokyo_central_who_told/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
+        "https://www.reddit.com/r/mountainview/comments/1t4vp4o/craving_a_good_tonkotsu_ramen/",
+        "https://www.reddit.com/r/paloalto/comments/1t3sd5e/parking_for_bts_concert/",
+        "https://www.reddit.com/r/bayarea/comments/1t5v7o2/best_guacamole_in_south_bay/"
+      ],
+      "matchedName": "TOSTADAS"
+    },
+    {
+      "name": "Casa Lupe",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ],
+      "matchedName": "Casa Lupe"
+    },
+    {
+      "name": "Mayan Kitchen",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with vegan and vegetarian options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ],
+      "matchedName": "Mayan Kitchen"
+    },
+    {
+      "name": "La Fiesta",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Mexican restaurant with enchiladas",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t5isvp/mexican_food_with_great_vegetarian_options/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/",
+        "https://www.reddit.com/r/santaclara/comments/1t53pph/need_daycare_recommendations_for_2yearold/",
+        "https://www.reddit.com/r/SanJose/comments/1t6n7hj/firsttime_buyers_expecting_our_first_child_is/"
+      ],
+      "matchedName": "La Fiesta"
     }
   ],
   "eventMatches": []
