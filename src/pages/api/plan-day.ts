@@ -586,15 +586,54 @@ interface RecentPenaltyInput {
 }
 
 /** Score penalty for a card we've already shown the user. Today's picks
- *  are punished hard enough to push them out of the top-35 pool entirely
- *  (base scores for a curated 4.7 kid-friendly outdoor park top out near
- *  ~85, so -45 drops them below most in-pool competitors even with max
- *  jitter). The penalty fades over a week so the pool eventually forgets. */
+ *  are punished hard enough to push them out of the top-35 pool entirely.
+ *  Penalty fades over two weeks — the longer tail keeps "the same five
+ *  curated spots" from anchoring every day even after the lower curated
+ *  boost (was +25, now +10) makes them less dominant. */
 function recentPenalty(daysAgo: number): number {
-  if (daysAgo <= 0) return 45;
-  if (daysAgo <= 2) return 25;
-  if (daysAgo <= 7) return 10;
+  if (daysAgo <= 0) return 50;
+  if (daysAgo <= 2) return 30;
+  if (daysAgo <= 7) return 18;
+  if (daysAgo <= 14) return 8;
   return 0;
+}
+
+/** Score-weighted random sample of size n from a sorted-by-score array.
+ *  Higher scores are more likely to be picked, but lower-scored candidates
+ *  aren't zero-probability — that's the whole point. The previous logic
+ *  was a deterministic top-N slice, which meant the same ~25 places anchored
+ *  every plan because rank #1-#25 rarely shuffled past minor jitter.
+ *
+ *  Temperature controls flatness: higher = flatter distribution = more
+ *  variety. With score range ~30-80 and temperature=18, the top-scored
+ *  candidate is roughly 16x more likely to be picked than the bottom-scored
+ *  one in the pool — peaked enough that quality wins, flat enough that
+ *  position #2 doesn't always lose to position #1. */
+function weightedSample<T extends { score?: number }>(
+  candidates: T[],
+  n: number,
+  temperature = 18,
+): T[] {
+  if (candidates.length <= n) return candidates.slice();
+  const remaining = candidates.slice();
+  const result: T[] = [];
+  while (result.length < n && remaining.length > 0) {
+    const maxScore = Math.max(...remaining.map((c) => c.score ?? 0));
+    const weights = remaining.map((c) => Math.exp(((c.score ?? 0) - maxScore) / temperature));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let roll = Math.random() * total;
+    let chosen = remaining.length - 1;
+    for (let i = 0; i < weights.length; i++) {
+      roll -= weights[i];
+      if (roll <= 0) {
+        chosen = i;
+        break;
+      }
+    }
+    result.push(remaining[chosen]);
+    remaining.splice(chosen, 1);
+  }
+  return result;
 }
 
 function scoreCandidates(
@@ -631,8 +670,13 @@ function scoreCandidates(
     else if (c.rating && c.rating >= 4.0) score += 3;
     else if ((c as any).curated && (!c.rating || c.rating === 0)) score += 7;
 
-    // --- Curated places are premium ---
-    if ((c as any).curated) score += 25;
+    // --- Curated places get a tiebreaker, not a moat. The previous +25 made
+    //     the same ~49 hand-curated places anchor every plan; +10 still helps
+    //     them surface above unrated noise but lets non-curated 4.5+ rated
+    //     places (rating boost +10) compete on equal footing. Pair this with
+    //     the per-day curated cap and weighted sampling below for the actual
+    //     rotation. ---
+    if ((c as any).curated) score += 10;
 
     // --- Food places get a meal-slot boost ---
     if (c.category === "food") score += 10;
@@ -2163,21 +2207,45 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     const diversePool: Candidate[] = [];
 
-    // Events: include top 5-6 (not ALL — leave room for places).
-    // Bumped from 4 → 6 to give Claude a deeper bench now that the event
-    // pool is richer; pairs with the prompt nudge from "1-2" → "2-3".
+    // --- Per-day curated cap. The underlying scoring still favors curated
+    //     places, and weighted sampling pulls from a wide pool, but without
+    //     this cap a single plan can still end up 4 or 5 curated venues
+    //     (Computer History Museum + DishDash + Los Gatos Creek Trail +
+    //     Smoking Pig + Bill's Cafe was the canonical "every plan looks the
+    //     same" output). Cap at 2 in the candidate pool so Claude has room
+    //     to pick a varied 6-card plan even if it leans on curated for its
+    //     anchors. Events aren't counted here (they're inherently diverse). ---
+    const MAX_CURATED_PLACES = 2;
+    let curatedCount = 0;
+    const tryAddCurated = (c: Candidate): boolean => {
+      const isCurated = (c as any).curated && c.source === "place";
+      if (isCurated) {
+        if (curatedCount >= MAX_CURATED_PLACES) return false;
+        curatedCount++;
+      }
+      diversePool.push(c);
+      return true;
+    };
+
+    // Events: weighted-sample the top 6 (not ALL — leave room for places).
+    // Lower temperature here because top events are usually genuinely the
+    // most relevant (today's concert > a generic ongoing exhibit).
     const MAX_EVENTS = 6;
-    for (const c of eventCandidates.slice(0, MAX_EVENTS)) {
-      diversePool.push(c);
-    }
+    const eventSample = weightedSample(eventCandidates, MAX_EVENTS, 12);
+    for (const c of eventSample) tryAddCurated(c);
 
-    // Food: guarantee at least 4 food options so Claude can pick meals
+    // Food: weighted-sample 5 from the food pool. Higher temperature here
+    // because the food list has hundreds of viable picks and the score gap
+    // between #1 and #50 is mostly noise — we WANT broad rotation here.
     const MIN_FOOD = 4;
-    for (const c of foodCandidates.slice(0, Math.max(MIN_FOOD, 5))) {
-      diversePool.push(c);
-    }
+    const foodSample = weightedSample(foodCandidates, Math.max(MIN_FOOD, 5), 22);
+    for (const c of foodSample) tryAddCurated(c);
 
-    // Fill remaining slots with diverse non-food places
+    // Fill remaining slots with diverse non-food places. Pull a wider weighted
+    // sample first (~80) and then walk it with category caps, so #1-ranked in
+    // each category isn't guaranteed to win. The per-category caps still
+    // prevent the plan from being 5 parks; the weighted sample prevents the
+    // SAME park from being picked every day.
     const catCounts: Record<string, number> = {};
     // Caps use CANONICAL categories (see src/lib/south-bay/categories.mjs).
     // Any event-specific label like "music" gets mapped to "entertainment"
@@ -2192,13 +2260,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       sports: 2,
       events: 3,
     };
-    for (const c of otherPlaces) {
+    const otherSample = weightedSample(otherPlaces, 80, 22);
+    for (const c of otherSample) {
       const count = catCounts[c.category] || 0;
       const maxForCat = CAT_CAPS[c.category] ?? 3;
-      if (count < maxForCat) {
-        diversePool.push(c);
-        catCounts[c.category] = count + 1;
-      }
+      if (count >= maxForCat) continue;
+      if (!tryAddCurated(c)) continue;
+      catCounts[c.category] = count + 1;
       if (diversePool.length >= CANDIDATE_POOL_SIZE) break;
     }
 
