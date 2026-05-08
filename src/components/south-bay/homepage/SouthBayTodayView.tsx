@@ -774,13 +774,6 @@ export default function SouthBayTodayView(_props: Props) {
         <PhotoStrip />
       </div>
 
-      {/* Instruction line */}
-      {visibleCards.length > 0 && (
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, color: "#999", margin: "0 0 10px", textAlign: "right", letterSpacing: 0.2 }}>
-          <span style={{ color: "#22c55e" }}>✓</span> Sounds great &nbsp;·&nbsp; <span style={{ color: "#ca8a04" }}>→</span> Not today &nbsp;·&nbsp; <span style={{ color: "#dc2626" }}>✕</span> Never
-        </p>
-      )}
-
       {/* Empty state — shown on error OR when planner returned zero cards.
           Instead of a dead end, give the user a weather snapshot + a handful
           of always-good options + the Events tab so they have somewhere to
@@ -867,11 +860,6 @@ export default function SouthBayTodayView(_props: Props) {
                     ) : (
                       <div className="sbt-orphan-link">{inner}</div>
                     )}
-                    <div className="tl-group">
-                      <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} className={`tl-btn tl-lock${card.locked ? " tl-lock--active" : ""}`}>✓</button>
-                      <button onClick={() => handleDismiss(card.id, "skip")} title="Not today" className="tl-btn tl-skip">→</button>
-                      <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" className="tl-btn tl-hide">✕</button>
-                    </div>
                   </div>
                 );
               })}
@@ -1030,12 +1018,6 @@ export default function SouthBayTodayView(_props: Props) {
           color: inherit;
           cursor: pointer;
         }
-        .sbt-bucket-actions {
-          flex-direction: row !important;
-          padding: 6px 12px 12px !important;
-          justify-content: flex-end;
-          gap: 6px !important;
-        }
         .sbt-bucket-empty {
           padding: 16px 16px 20px;
           font-family: 'Inter', sans-serif;
@@ -1106,63 +1088,6 @@ export default function SouthBayTodayView(_props: Props) {
         @keyframes fadeSlideOut {
           from { opacity: 1; transform: translateY(0) scale(1); max-height: 120px; }
           to { opacity: 0; transform: translateY(-8px) scale(0.97); max-height: 0; padding: 0; margin: 0; }
-        }
-        /* ── Traffic light buttons ── */
-        .tl-group {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          padding: 10px 12px 10px 0;
-          flex-shrink: 0;
-          align-items: center;
-          justify-content: center;
-        }
-        .tl-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 15px;
-          font-weight: 700;
-          padding: 0;
-          transition: all 0.2s ease;
-          animation: tlPulse 0.6s ease-out 0.5s 3;
-        }
-        .tl-btn:focus-visible {
-          outline: 2px solid #000;
-          outline-offset: 2px;
-        }
-        .tl-lock {
-          border: 1.5px solid #bbf7d0;
-          background: #dcfce7;
-          color: #22c55e;
-        }
-        .tl-lock--active {
-          border: 2px solid #16a34a;
-          background: #22c55e;
-          color: #fff;
-        }
-        .tl-skip {
-          border: 1.5px solid #fde68a;
-          background: #fef9c3;
-          color: #ca8a04;
-        }
-        .tl-hide {
-          border: 1.5px solid #fecaca;
-          background: #fee2e2;
-          color: #dc2626;
-        }
-        .tl-lock:hover { box-shadow: 0 0 12px rgba(34, 197, 94, 0.5); transform: scale(1.12); }
-        .tl-skip:hover { box-shadow: 0 0 12px rgba(202, 138, 4, 0.4); transform: scale(1.12); }
-        .tl-hide:hover { box-shadow: 0 0 12px rgba(220, 38, 38, 0.4); transform: scale(1.12); }
-        .tl-lock--active:hover { box-shadow: 0 0 14px rgba(34, 197, 94, 0.6); }
-        @keyframes tlPulse {
-          0% { box-shadow: 0 0 0 0 rgba(150, 150, 150, 0.3); }
-          70% { box-shadow: 0 0 0 8px rgba(150, 150, 150, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(150, 150, 150, 0); }
         }
         @media (max-width: 640px) {
           .loading-verb {
@@ -1336,11 +1261,6 @@ function BucketSlot({ bucket, card, accent, passed, replaced, onLock, onSkip, on
               <CardInner card={card} emoji={emoji} accent={accent} />
             </div>
           )}
-          <div className="tl-group sbt-bucket-actions">
-            {onLock && <button onClick={onLock} title={card.locked ? "Unlock" : "Lock this"} className={`tl-btn tl-lock${card.locked ? " tl-lock--active" : ""}`}>✓</button>}
-            {onSkip && <button onClick={onSkip} title="Not today" className="tl-btn tl-skip">→</button>}
-            {onHide && <button onClick={onHide} title="Never show this" className="tl-btn tl-hide">✕</button>}
-          </div>
         </>
       ) : (
         <div className="sbt-bucket-empty">No standout pick — go with your usual.</div>

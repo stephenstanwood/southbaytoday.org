@@ -42,6 +42,7 @@ import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
 import eventsData from "../../data/south-bay/upcoming-events.json";
+import placeBlurbCache from "../../data/south-bay/place-blurb-cache.json";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -195,6 +196,21 @@ function lookupVenuePhoto(venue: string | null | undefined): string | null {
   }
   return null;
 }
+
+// Place blurb lookup — pre-generated venue-specific copy per place id.
+// Mix of Google Places editorialSummary (verbatim where available) +
+// data-driven templates (cuisine + city + street + price) for the rest.
+// Built by scripts/generate-place-blurbs.mjs from places.json + the
+// research cache. Empty placeholder during initial deploy; populated by
+// the Mini.
+const PLACE_BLURBS: Map<string, string> = (() => {
+  const m = new Map<string, string>();
+  const blurbs = ((placeBlurbCache as any).blurbs ?? {}) as Record<string, { blurb?: string }>;
+  for (const [id, entry] of Object.entries(blurbs)) {
+    if (entry?.blurb) m.set(id, entry.blurb);
+  }
+  return m;
+})();
 
 // In-memory plan cache: city:kids:date → { data, ts }
 const planCache = new Map<string, { data: any; ts: number }>();
@@ -781,6 +797,7 @@ function buildCandidatePool(
       category: canonicalCategory(p.category || "food"),
       city: p.city,
       address: p.address || "",
+      blurb: PLACE_BLURBS.get(p.id) || null,
       why: p.why || undefined,
       rating: p.rating,
       cost: p.cost || null,
@@ -1292,7 +1309,6 @@ Return ONLY the JSON array. No explanation.`;
   const usedAfterValidation = new Set(cards.map((c) => c.bucket));
   const usedIdsAfter = new Set(cards.map((c) => c.id));
   const emptyBuckets = BUCKET_ORDER.filter((b) => !usedAfterValidation.has(b));
-  const backfilledForBlurbs: Array<{ card: DayCard; candidate: Candidate }> = [];
   if (emptyBuckets.length > 0) {
     for (const bucket of emptyBuckets) {
       const isMeal = MEAL_BUCKETS.has(bucket);
@@ -1319,9 +1335,7 @@ Return ONLY the JSON array. No explanation.`;
         break;
       }
       if (!backfill) continue;
-      // Provisional blurb — Opus rewrite below replaces it before we return.
-      const provisionalBlurb = backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue);
-      const card: DayCard = {
+      cards.push({
         id: backfill.id,
         name: backfill.name,
         category: backfill.category,
@@ -1330,7 +1344,7 @@ Return ONLY the JSON array. No explanation.`;
         bucket,
         eventTime: backfill.eventTime || null,
         timeBlock: BUCKET_LABELS[bucket],
-        blurb: provisionalBlurb,
+        blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
         why: backfill.why || "Solid fill for this slot.",
         url: backfill.url,
         mapsUrl: backfill.mapsUrl,
@@ -1343,15 +1357,8 @@ Return ONLY the JSON array. No explanation.`;
         source: backfill.source,
         locked: false,
         rationale: `backfill | empty-bucket=${bucket}`,
-      };
-      cards.push(card);
+      });
       usedIdsAfter.add(backfill.id);
-      // Only places with no ingest blurb need a Claude-written one — events
-      // already carry venue-specific Haiku blurbs, and any candidate with a
-      // real description doesn't need rewriting.
-      if (backfill.source === "place" && !backfill.blurb) {
-        backfilledForBlurbs.push({ card, candidate: backfill });
-      }
       logDecision({
         script: "plan-day",
         action: "backfilled",
@@ -1359,60 +1366,6 @@ Return ONLY the JSON array. No explanation.`;
         reason: `claude/validators left ${bucket} empty`,
         meta: { city, targetDate, bucket },
       });
-    }
-  }
-
-  // Backfilled places land with FALLBACK_BLURB_POOL strings ("solid local pick
-  // for a meal") because they have no ingest blurb. One Opus call rewrites
-  // them with venue-specific copy. Failure is non-fatal — the provisional
-  // blurb stays.
-  if (backfilledForBlurbs.length > 0) {
-    try {
-      const lines = backfilledForBlurbs.map(({ card, candidate }, i) => {
-        const parts: string[] = [`${i + 1}. [${card.id}] ${card.name}`];
-        parts.push(`bucket: ${card.bucket}`);
-        parts.push(`category: ${candidate.category}`);
-        if (candidate.displayType) parts.push(`type: ${candidate.displayType}`);
-        parts.push(`city: ${candidate.city}`);
-        if (candidate.cost) parts.push(`cost: ${candidate.cost}`);
-        if (candidate.costNote) parts.push(`price: ${candidate.costNote}`);
-        if (candidate.indoorOutdoor) parts.push(`setting: ${candidate.indoorOutdoor}`);
-        if (candidate.kidFriendly === true) parts.push(`kid-friendly`);
-        if (candidate.why) parts.push(`note: ${candidate.why}`);
-        return parts.join(" | ");
-      }).join("\n");
-
-      const blurbPrompt = `You are writing one-sentence blurbs for a South Bay day plan. Each line below is a venue we just slotted into a bucket. Write a single sentence per id describing what makes THIS specific venue worth a stop, using only the data given.
-
-USE the displayType (e.g. "Vietnamese restaurant", "Bouldering gym", "Performing arts theater"), the price tier ($–$$$$), the indoor/outdoor setting, and any "note" line. NEVER invent menu items, hours, or class schedules that aren't in the data.
-
-BANNED filler — never write any of these or anything close to them: "solid local pick", "go-to spot", "easy table", "good food no fuss", "hidden gem", "worth a stop", "popular spot", "great place", "fun spot", "neighborhood favorite", "low-key vibe", "casual spot for a meal".
-
-GOOD examples (use as a model, don't copy verbatim): "Wood-fired Neapolitan pies in a small Campbell storefront, takeout-friendly." / "Bouldering walls and a few top-ropes — bring shoes or rent at the desk." / "Counter-service Vietnamese with banh mi and pho on a strip-mall stretch." / "Indoor playground with toddler-only zones and a snack counter."
-
-NEVER mention star ratings, distance, "near", "nearby", "minutes from".
-
-VENUES:
-${lines}
-
-Return ONLY a JSON array, no markdown fences:
-[{"id": "...", "blurb": "..."}, ...]`;
-
-      const blurbResponse = await client.messages.create({
-        model: CLAUDE_OPUS,
-        max_tokens: 1500,
-        messages: [{ role: "user", content: blurbPrompt }],
-      });
-      const blurbText = stripFences(extractText(blurbResponse.content));
-      const parsed = JSON.parse(blurbText) as Array<{ id: string; blurb: string }>;
-      const blurbMap = new Map(parsed.map((p) => [p.id, p.blurb]));
-      for (const { card } of backfilledForBlurbs) {
-        const next = blurbMap.get(card.id);
-        if (next && next.trim()) card.blurb = next.trim();
-      }
-      console.log(`[plan-day] backfill blurbs: rewrote ${backfilledForBlurbs.length} card(s) via Opus`);
-    } catch (err) {
-      console.warn("[plan-day] backfill blurb rewrite failed, keeping provisional:", err);
     }
   }
 
