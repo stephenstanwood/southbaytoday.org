@@ -83,7 +83,7 @@ export default function NewsletterSignup({
         }}
       >
         <span style={{ fontSize: 12, color: "#666", fontWeight: 600, marginRight: 4 }}>
-          📬 One email a day at 6:00 AM
+          Start your morning with us ☀️
         </span>
         <input
           type="email"
@@ -166,7 +166,7 @@ export default function NewsletterSignup({
           <div className="sbt-nl-inline-eyebrow">Daily at 6:00&nbsp;AM</div>
           <div className="sbt-nl-inline-headline">A fresh plan, every morning.</div>
           <div className="sbt-nl-inline-tagline">
-            A plan for the day + what we found happening today. One email. That's it.
+            Plus everything else we found. One email. That's it.
           </div>
         </div>
         <div className="sbt-nl-inline-form">
