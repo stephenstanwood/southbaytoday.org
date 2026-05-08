@@ -26,8 +26,10 @@ const PLACES = join(__dirname, "..", "src", "data", "south-bay", "places.json");
 const OUT = join(__dirname, "..", "src", "data", "south-bay", "place-research-cache.json");
 
 const TOP_N = Number(process.env.TOP_N || 2400);
-const CONCURRENCY = 8;
+const CONCURRENCY = Number(process.env.CONCURRENCY || 3);
 const TIMEOUT_MS = 8000;
+const PER_REQ_DELAY_MS = Number(process.env.PER_REQ_DELAY_MS || 120);
+const MAX_RETRIES = 5;
 
 const apiKey = process.env.GOOGLE_PLACES_API_KEY;
 if (!apiKey) {
@@ -57,34 +59,52 @@ const cache = { ...existing };
 
 async function fetchOne({ id, name }) {
   if (cache[id]?.editorialSummary !== undefined) return { id, status: "cached" };
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
-    const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(id)}`;
-    const res = await fetch(url, {
-      signal: ctrl.signal,
-      headers: {
-        "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "editorialSummary,primaryTypeDisplayName",
-      },
-    });
-    clearTimeout(t);
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      // 404 / 403 / RPC issues — record as null so we don't keep retrying.
-      cache[id] = { editorialSummary: null, status: `http-${res.status}`, name };
-      return { id, status: `http-${res.status}${body ? `: ${body.slice(0, 80)}` : ""}` };
+  let attempt = 0;
+  while (attempt <= MAX_RETRIES) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+      const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(id)}`;
+      const res = await fetch(url, {
+        signal: ctrl.signal,
+        headers: {
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask": "editorialSummary,primaryTypeDisplayName",
+        },
+      });
+      clearTimeout(t);
+      // 429 → exponential backoff and retry. Places API throttles at ~10 QPS
+      // on the Atmosphere tier; concurrency + delay should stay under, but
+      // bursts still happen.
+      if (res.status === 429) {
+        attempt++;
+        if (attempt > MAX_RETRIES) {
+          cache[id] = { editorialSummary: null, status: "http-429-exhausted", name };
+          return { id, status: "http-429-exhausted" };
+        }
+        const waitMs = Math.min(60000, 1000 * Math.pow(2, attempt) + Math.floor(Math.random() * 500));
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        cache[id] = { editorialSummary: null, status: `http-${res.status}`, name };
+        return { id, status: `http-${res.status}${body ? `: ${body.slice(0, 80)}` : ""}` };
+      }
+      const data = await res.json();
+      cache[id] = {
+        editorialSummary: data.editorialSummary?.text || null,
+        primaryTypeDisplayName: data.primaryTypeDisplayName?.text || null,
+        name,
+      };
+      // Be polite — one small delay per successful call.
+      if (PER_REQ_DELAY_MS > 0) await new Promise((r) => setTimeout(r, PER_REQ_DELAY_MS));
+      return { id, status: data.editorialSummary?.text ? "ok" : "no-summary" };
+    } catch (err) {
+      return { id, status: `error: ${err.message?.slice(0, 80) || err}` };
     }
-    const data = await res.json();
-    cache[id] = {
-      editorialSummary: data.editorialSummary?.text || null,
-      primaryTypeDisplayName: data.primaryTypeDisplayName?.text || null,
-      name,
-    };
-    return { id, status: data.editorialSummary?.text ? "ok" : "no-summary" };
-  } catch (err) {
-    return { id, status: `error: ${err.message?.slice(0, 80) || err}` };
   }
+  return { id, status: "exhausted" };
 }
 
 let done = 0, ok = 0, noSummary = 0, fail = 0;
