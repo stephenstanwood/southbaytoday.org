@@ -7,6 +7,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { City, Tab } from "../../../lib/south-bay/types";
 import { CITIES } from "../../../lib/south-bay/cities";
+import {
+  type Bucket,
+  BUCKET_ORDER,
+  BUCKET_LABELS,
+  BUCKET_PASSED_AFTER_HOUR,
+  isBucket,
+} from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
 // =====================================================================
@@ -34,6 +41,14 @@ interface DayCard {
   category: string;
   city: string;
   address: string;
+  /** Bucket slot — primary user-facing time signal (replaces timeBlock).
+   *  May be missing on legacy plans; renderer falls back to timeBlock. */
+  bucket?: Bucket;
+  /** Real event time, only present for events with a fixed start. Display
+   *  hint, not load-bearing. */
+  eventTime?: string | null;
+  /** Legacy field — for new bucket cards this is just the bucket label
+   *  ("Breakfast"); for old shared plans it's a clock range. */
   timeBlock: string;
   blurb: string;
   why: string;
@@ -196,15 +211,6 @@ function pickRandomAnchor(exclude?: City | null): City {
   return pool[Math.floor(Math.random() * pool.length)]!;
 }
 
-/** Pick the nearest-but-not-future anchor hour from the available set.
- *  e.g. at 3:53 PM → returns 13 (1 PM plan, not the 17:00 one which is future). */
-function pickNearestAnchor(availableAnchors: number[], nowHour: number): number {
-  const past = availableAnchors.filter((h) => h <= nowHour).sort((a, b) => b - a);
-  if (past.length > 0) return past[0];
-  // Before earliest anchor — use the earliest.
-  return availableAnchors.slice().sort((a, b) => a - b)[0];
-}
-
 /** Compute the effective time context for planning. Late at night there's
  *  not enough day left to plan around, so we flip to tomorrow morning:
  *  cutoff is 8 PM for adults, 6 PM for kids. Returns what the API should
@@ -232,12 +238,12 @@ function getEffectiveTime(kids: boolean): {
   return { isTomorrow: false, currentHour: now.getHours(), currentMinute: now.getMinutes(), planDate: undefined };
 }
 
-/** Load a pre-generated plan from default-plans.json for instant display.
- *  Picks a random anchor city so first-visit users see variety, not always Campbell.
- *  Picks the nearest-but-not-future anchor HOUR so users landing at 4 PM don't
- *  see a 9-AM-shaped plan. Returns { cards, anchor, filtered } where `filtered`
- *  signals that the caller should fire a live fetch to backfill replacements
- *  for cards the user has dismissed. */
+/** Load a pre-generated bucket plan from default-plans.json for instant display.
+ *  New schema: `plans.adults` / `plans.kids` for today, `plans["adults:tomorrow"]`
+ *  / `plans["kids:tomorrow"]` for the next-day flip. Buckets don't expire on
+ *  the clock the way old timeBlock cards did, so no time-based filtering — the
+ *  homepage dims past buckets in render. Returns `filtered` if a dismiss
+ *  removed something so the caller can fire a live fetch to backfill. */
 function loadDefaultPlan(
   kids: boolean,
   dismissed: Record<string, DismissedEntry> = {},
@@ -245,81 +251,45 @@ function loadDefaultPlan(
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
-    const anchorHours: number[] = Array.isArray(json._meta?.anchorHours) && json._meta.anchorHours.length
-      ? json._meta.anchorHours
-      : [9]; // legacy default-plans.json without anchor suffix
     const eff = getEffectiveTime(kids);
-    // Tomorrow mode: always use the morning anchor so the preview shows a
-    // fresh day shape, not a stale evening slice.
-    const chosenAnchor = eff.isTomorrow
-      ? (anchorHours.includes(9) ? 9 : anchorHours.slice().sort((a, b) => a - b)[0])
-      : pickNearestAnchor(anchorHours, eff.currentHour);
     const kidsSuffix = kids ? "kids" : "adults";
 
-    // Helper: drop cards the user has actively dismissed. Sets `filtered`
-    // when something was removed so the caller can decide to refetch.
     const dropDismissed = (cards: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
       if (!Object.keys(dismissed).length) return { cards, filtered: false };
       const kept = cards.filter((c) => !isDismissedCard(c, dismissed));
       return { cards: kept, filtered: kept.length !== cards.length };
     };
 
-    // Tomorrow mode: prefer the dedicated tomorrow hero key. Falls back to
-    // today's hero with events stripped (today-only events would leak).
+    // Read either the new schema ("adults") or the legacy ":h9" anchor key
+    // for back-compat during the cutover from old default-plans.json data.
+    const pickPlan = (...keys: string[]) => {
+      for (const k of keys) if (plans[k]?.cards?.length) return plans[k];
+      return null;
+    };
+
     if (eff.isTomorrow) {
-      const tomorrowKey = `${kidsSuffix}:h${chosenAnchor}:tomorrow`;
-      const tomorrowPlan = plans[tomorrowKey];
-      if (tomorrowPlan?.cards?.length) {
+      const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
+      if (tomorrowPlan) {
         const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
         return { cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor(), filtered };
       }
-      // Fallback: today's hero with events filtered out. Generator hasn't
-      // populated the tomorrow keys yet — show places-only rather than
-      // leaking today's events under tomorrow's headline.
-      const todayKey = `${kidsSuffix}:h${chosenAnchor}`;
-      const todayPlan = plans[todayKey];
-      if (todayPlan?.cards?.length) {
+      const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
+      if (todayPlan) {
         const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
         const { cards, filtered } = dropDismissed(placesOnly);
         return {
           cards,
           anchor: (todayPlan.city as City) || pickRandomAnchor(),
-          // Treat the event-stripped fallback as filtered so the caller fires
-          // a tomorrow-aware live fetch — places-only is incomplete shape.
           filtered: filtered || placesOnly.length !== todayPlan.cards.length,
         };
       }
       return { cards: [], anchor: null, filtered: false };
     }
 
-    // New hero schema: one plan per (kids × anchor). Falls back to the
-    // old per-city schema for backward compat during rollout + for any
-    // build where the generator hasn't run yet.
-    const heroKey = `${kidsSuffix}:h${chosenAnchor}`;
-    let plan = plans[heroKey];
-    let city: City = (plan?.city as City) || pickRandomAnchor();
-    if (!plan?.cards?.length) {
-      // Legacy fallback.
-      city = pickRandomAnchor();
-      const anchoredKey = `${city}:${kidsSuffix}:h${chosenAnchor}`;
-      const legacyKey = `${city}:${kidsSuffix}`;
-      plan = plans[anchoredKey] || plans[legacyKey];
-    }
-    if (!plan?.cards?.length) return { cards: [], anchor: null, filtered: false };
-
-    // Filter out cards whose timeBlock is in the past — only for today's
-    // plans.
-    const nowMin = eff.currentHour * 60 + eff.currentMinute;
-    const futureCards = plan.cards.filter((c: DayCard) => {
-      const m = c.timeBlock?.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-      if (!m) return true;
-      let hrs = parseInt(m[1]);
-      if (m[3].toUpperCase() === "PM" && hrs !== 12) hrs += 12;
-      if (m[3].toUpperCase() === "AM" && hrs === 12) hrs = 0;
-      return hrs * 60 + parseInt(m[2]) >= nowMin - 30;
-    });
-    const { cards, filtered } = dropDismissed(futureCards);
-    return { cards, anchor: city, filtered };
+    const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
+    if (!plan) return { cards: [], anchor: null, filtered: false };
+    const { cards, filtered } = dropDismissed(plan.cards);
+    return { cards, anchor: (plan.city as City) || pickRandomAnchor(), filtered };
   } catch {
     return { cards: [], anchor: null, filtered: false };
   }
@@ -435,21 +405,12 @@ export default function SouthBayTodayView(_props: Props) {
   const initialFiltered = initialPlan.current.filtered;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
   const [weather, setWeather] = useState<string | null>(() => {
-    if (!hasDefaultPlan || !initialPlan.current?.anchor) return null;
+    if (!hasDefaultPlan) return null;
     try {
       const json = defaultPlansJson as any;
       const plans = json.plans || {};
-      const anchor = initialPlan.current.anchor;
       const kidsSuffix = state.kids ? "kids" : "adults";
-      // Match whatever key we used for the cards — try every anchored key
-      // for this city first, then the legacy un-anchored key.
-      const anchorHours: number[] = Array.isArray(json._meta?.anchorHours)
-        ? json._meta.anchorHours : [9];
-      for (const h of anchorHours) {
-        const w = plans[`${anchor}:${kidsSuffix}:h${h}`]?.weather;
-        if (w) return w;
-      }
-      return plans[`${anchor}:${kidsSuffix}`]?.weather || null;
+      return plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather || null;
     } catch { return null; }
   });
   const [loading, setLoading] = useState(!hasDefaultPlan);
@@ -519,12 +480,11 @@ export default function SouthBayTodayView(_props: Props) {
       ? [...new Set([...state.locked, ...extraLockedIds])]
       : state.locked;
 
-    // Richer lock info: pair each locked id with the card's current timeBlock
-    // so the server can anchor Claude's plan around it instead of defaulting
-    // to 7 PM. We look up each locked id in the current `cards` state.
+    // Richer lock info: pair each locked id with the card's current bucket
+    // so the server keeps it in the same slot when shuffling.
     const lockedCards = allLocked.map((id) => {
       const card = cards.find((c) => c.id === id);
-      return { id, timeBlock: card?.timeBlock ?? null };
+      return { id, bucket: card?.bucket ?? null, timeBlock: card?.timeBlock ?? null };
     });
 
     const eff = getEffectiveTime(state.kids);
@@ -568,7 +528,7 @@ export default function SouthBayTodayView(_props: Props) {
         throw new Error(data.error || `HTTP ${res.status}`);
       }
       const data: PlanResponse = await res.json();
-      const sorted = [...data.cards].sort((a, b) => parseTimeBlock(a.timeBlock) - parseTimeBlock(b.timeBlock));
+      const sorted = [...data.cards].sort((a, b) => bucketSortIndex(a) - bucketSortIndex(b));
       // Only show green lock icon for user-explicitly-locked cards, not auto-kept ones
       setCards(sorted.map((c) => ({ ...c, locked: state.locked.includes(c.id) })));
       setPlanDateISO(eff.planDate || getTodayISOInPT());
@@ -631,19 +591,18 @@ export default function SouthBayTodayView(_props: Props) {
   // Keep fetchPlanRef current so callers always invoke the latest version
   useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
 
-  // Auto-flip to tomorrow's plan when today's plan is exhausted. Fires
-  // when the last today-card's end time passes OR when the page crosses
-  // midnight PT with a stale today plan still mounted. Reuses the
-  // pre-generated tomorrow hero plan so we don't hit /api/plan-day.
+  // Auto-flip to tomorrow's plan when today is over. Fires when the page
+  // crosses the kids/adults evening cutoff with a stale today plan still
+  // mounted, or when the date itself rolls over past midnight. Reuses the
+  // pre-generated tomorrow plan so we don't hit /api/plan-day.
   useEffect(() => {
     if (loading || cards.length === 0) return;
     const today = getTodayISOInPT();
     if (planDateISO > today) return; // already showing tomorrow
-    const stillHasTodayCards = planDateISO === today && cards.some((c) => {
-      const end = parseEndMinutes(c.timeBlock);
-      return end === null ? true : end > nowMinutes;
-    });
-    if (stillHasTodayCards) return;
+    if (planDateISO === today) {
+      const cutoffMin = (state.kids ? 18 : 22) * 60; // 6 PM kids / 10 PM adults
+      if (nowMinutes < cutoffMin) return; // still mid-day
+    }
     const tom = loadTomorrowPlan(state.kids, state.dismissed);
     if (!tom.cards.length) return;
     setCards(tom.cards);
@@ -678,17 +637,13 @@ export default function SouthBayTodayView(_props: Props) {
       }));
       setReplacedIds(new Set());
       setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
-      // Swap the weather line to match the new mode's anchor.
+      // Swap the weather line to match the new mode.
       try {
         const json = defaultPlansJson as any;
         const plans = json.plans || {};
         const kidsSuffix = nextKids ? "kids" : "adults";
-        const anchorHours: number[] = Array.isArray(json._meta?.anchorHours)
-          ? json._meta.anchorHours : [9];
-        for (const h of anchorHours) {
-          const w = plans[`${preGen.anchor}:${kidsSuffix}:h${h}`]?.weather;
-          if (w) { setWeather(w); break; }
-        }
+        const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
+        if (w) setWeather(w);
       } catch {}
       // Backfill via live fetch if dismisses filtered the cached plan for
       // this mode (returning user with hides in the new mode).
@@ -758,22 +713,30 @@ export default function SouthBayTodayView(_props: Props) {
     ? "What should we do tomorrow?"
     : "What should we do today?";
 
-  // Live card filter. Tomorrow-mode plans show everything (all future).
-  // Today plans filter cards whose end time has already passed. Stale
-  // plans from yesterday (tab left open past midnight) hide everything —
-  // every stop is behind us.
+  // With buckets, all six slots stay visible all day (it's an idea spark,
+  // not a tour). Stale plans from yesterday hide everything; all other
+  // plans show every card. Past buckets get a "passed" dim treatment in
+  // the render layer (BUCKET_PASSED_AFTER_HOUR).
   const todayPT = getTodayISOInPT();
-  let visibleCards: DayCard[];
-  if (planDateISO > todayPT) {
-    visibleCards = cards;
-  } else if (planDateISO < todayPT) {
-    visibleCards = [];
-  } else {
-    visibleCards = cards.filter((c) => {
-      const end = parseEndMinutes(c.timeBlock);
-      return end === null ? true : end > nowMinutes;
-    });
+  const visibleCards: DayCard[] = planDateISO < todayPT ? [] : cards;
+  // Group cards by bucket for the 2×3 grid. Cards without a bucket field
+  // (legacy / shared plans) collapse into the timeline column at the bottom.
+  const cardsByBucket = new Map<Bucket, DayCard>();
+  const orphanCards: DayCard[] = [];
+  for (const c of visibleCards) {
+    if (isBucket(c.bucket)) {
+      if (!cardsByBucket.has(c.bucket)) cardsByBucket.set(c.bucket, c);
+      else orphanCards.push(c);
+    } else {
+      orphanCards.push(c);
+    }
   }
+  const isPastBucket = (b: Bucket): boolean => {
+    if (planDateISO !== todayPT) return false;
+    const cutoffHour = BUCKET_PASSED_AFTER_HOUR[b];
+    return Math.floor(nowMinutes / 60) >= cutoffHour;
+  };
+  const visibleBuckets = BUCKET_ORDER.filter((b) => !(state.kids && b === "evening"));
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
@@ -863,82 +826,57 @@ export default function SouthBayTodayView(_props: Props) {
         </div>
       )}
 
-      {/* ═══ LIST VIEW ═══ */}
+      {/* ═══ BUCKET GRID ═══ */}
       {visibleCards.length > 0 && (
         <div
-          className={loading && !swapLoading ? "sbt-cards sbt-cards--loading" : "sbt-cards"}
-          style={{ display: "flex", flexDirection: "column", gap: 8, margin: "0 -16px" }}
+          className={loading && !swapLoading ? "sbt-buckets sbt-buckets--loading" : "sbt-buckets"}
         >
-          {visibleCards.map((card, i) => {
+          {visibleBuckets.map((bucket, i) => {
+            const card = cardsByBucket.get(bucket);
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
-            const emoji = CATEGORY_EMOJI[card.category] || "📍";
-            const isReplaced = replacedIds.has(card.id);
-            const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
-
-            // In-place swap skeleton — same outer wrapper as a normal card so
-            // dimensions don't jump; just swaps the inner content for SwapVerb.
-            if (isReplaced) {
-              return (
-                <div
-                  key={card.id}
-                  style={{
-                    display: "flex",
-                    gap: 0,
-                    background: "#fff",
-                    borderRadius: 10,
-                    border: "1px solid #e8e8e8",
-                    overflow: "hidden",
-                    position: "relative" as const,
-                  }}
-                >
-                  <div style={{ width: 6, background: accent, flexShrink: 0 }} />
-                  <div style={{ flex: 1, minWidth: 0, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 96 }}>
-                    <SwapVerb />
-                  </div>
-                </div>
-              );
-            }
-
+            const passed = isPastBucket(bucket);
             return (
-              <div
-                key={card.id}
-                style={{
-                  display: "flex",
-                  gap: 0,
-                  background: "#fff",
-                  borderRadius: 10,
-                  border: "1px solid #e8e8e8",
-                  overflow: "hidden",
-                  animation: `fadeSlideIn 0.3s ease-out ${i * 0.05}s both`,
-                  position: "relative" as const,
-                }}
-              >
-                {/* Accent bar */}
-                <div style={{ width: 6, background: accent, flexShrink: 0 }} />
-                {/* Clickable area (whole card except traffic lights) */}
-                {cardUrl ? (
-                  <a
-                    href={cardUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display: "flex", flex: 1, minWidth: 0, textDecoration: "none", color: "inherit", cursor: "pointer" }}
-                  >
-                    <CardInner card={card} emoji={emoji} accent={accent} />
-                  </a>
-                ) : (
-                  <div style={{ display: "flex", flex: 1, minWidth: 0 }}>
-                    <CardInner card={card} emoji={emoji} accent={accent} />
-                  </div>
-                )}
-                {/* Traffic light actions */}
-                <div className="tl-group">
-                  <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} className={`tl-btn tl-lock${card.locked ? " tl-lock--active" : ""}`}>✓</button>
-                  <button onClick={() => handleDismiss(card.id, "skip")} title="Not today" className="tl-btn tl-skip">→</button>
-                  <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" className="tl-btn tl-hide">✕</button>
-                </div>
-              </div>
+              <BucketSlot
+                key={bucket}
+                bucket={bucket}
+                card={card}
+                accent={accent}
+                passed={passed}
+                replaced={card ? replacedIds.has(card.id) : false}
+                onLock={card ? () => handleLock(card.id) : undefined}
+                onSkip={card ? () => handleDismiss(card.id, "skip") : undefined}
+                onHide={card ? () => handleDismiss(card.id, "hide") : undefined}
+                animationDelay={i * 0.05}
+              />
             );
           })}
+          {orphanCards.length > 0 && (
+            <div className="sbt-orphan-list">
+              {orphanCards.map((card, i) => {
+                const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+                const emoji = CATEGORY_EMOJI[card.category] || "📍";
+                const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
+                const inner = (
+                  <CardInner card={card} emoji={emoji} accent={accent} showTimeLabel />
+                );
+                return (
+                  <div key={card.id} className="sbt-orphan-card" style={{ borderColor: accent }}>
+                    <div className="sbt-orphan-accent" style={{ background: accent }} />
+                    {cardUrl ? (
+                      <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-orphan-link">{inner}</a>
+                    ) : (
+                      <div className="sbt-orphan-link">{inner}</div>
+                    )}
+                    <div className="tl-group">
+                      <button onClick={() => handleLock(card.id)} title={card.locked ? "Unlock" : "Lock this"} className={`tl-btn tl-lock${card.locked ? " tl-lock--active" : ""}`}>✓</button>
+                      <button onClick={() => handleDismiss(card.id, "skip")} title="Not today" className="tl-btn tl-skip">→</button>
+                      <button onClick={() => handleDismiss(card.id, "hide")} title="Never show this" className="tl-btn tl-hide">✕</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 
@@ -1015,15 +953,131 @@ export default function SouthBayTodayView(_props: Props) {
         }
 
         /* Cards dim + desaturate during loading so the eye sees "this is
-           about to change" the instant SHUFFLE is clicked. Transition is
-           fast (180ms) so there's no gap between click and feedback. */
-        .sbt-cards {
+           about to change" the instant SHUFFLE is clicked. */
+        .sbt-cards, .sbt-buckets {
           transition: opacity 180ms ease, filter 180ms ease;
         }
-        .sbt-cards--loading {
+        .sbt-cards--loading, .sbt-buckets--loading {
           opacity: 0.45;
           filter: grayscale(0.5) blur(1.5px);
           pointer-events: none;
+        }
+        /* ── Bucket grid ── */
+        .sbt-buckets {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin: 0 -16px;
+        }
+        @media (max-width: 640px) {
+          .sbt-buckets {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin: 0 -8px;
+          }
+        }
+        .sbt-bucket {
+          background: #fff;
+          border-radius: 12px;
+          border: 1px solid #e8e8e8;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          min-height: 140px;
+        }
+        .sbt-bucket--passed {
+          opacity: 0.55;
+          filter: saturate(0.7);
+        }
+        .sbt-bucket--locked {
+          border-color: #16a34a;
+          box-shadow: 0 0 0 1px #bbf7d0 inset;
+        }
+        .sbt-bucket-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px 6px;
+        }
+        .sbt-bucket-accent {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+        .sbt-bucket-label {
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          font-weight: 900;
+          color: #111;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        .sbt-bucket-passed-tag {
+          font-family: 'Space Mono', monospace;
+          font-size: 9px;
+          color: #999;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          margin-left: auto;
+        }
+        .sbt-bucket-link {
+          display: flex;
+          flex: 1;
+          min-width: 0;
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
+        }
+        .sbt-bucket-actions {
+          flex-direction: row !important;
+          padding: 6px 12px 12px !important;
+          justify-content: flex-end;
+          gap: 6px !important;
+        }
+        .sbt-bucket-empty {
+          padding: 16px 16px 20px;
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          color: #999;
+          font-style: italic;
+        }
+        .sbt-bucket-body--swap {
+          padding: 24px 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+        /* ── Orphan list (legacy timeBlock cards) ── */
+        .sbt-orphan-list {
+          grid-column: 1 / -1;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-top: 8px;
+        }
+        .sbt-orphan-card {
+          display: flex;
+          gap: 0;
+          background: #fff;
+          border-radius: 10px;
+          border: 1px solid #e8e8e8;
+          overflow: hidden;
+          position: relative;
+        }
+        .sbt-orphan-accent {
+          width: 6px;
+          flex-shrink: 0;
+        }
+        .sbt-orphan-link {
+          display: flex;
+          flex: 1;
+          min-width: 0;
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
         }
         @keyframes shimmer {
           0% { background-position: 200% 0; }
@@ -1166,7 +1220,7 @@ interface UnsplashPhoto {
   unsplashUrl: string;
 }
 
-function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; accent: string }) {
+function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoji: string; accent: string; showTimeLabel?: boolean }) {
   const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
 
   useEffect(() => {
@@ -1179,8 +1233,6 @@ function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; acce
   }, [card.id, card.category, card.photoRef, card.image]);
 
   const hasPhoto = card.photoRef || card.image || unsplash;
-  // Direct image URL wins over Places photoRef — it's the ingest-time
-  // resolved value (venue-shaped OG, event-specific art, or Recraft fallback).
   const thumbBg = card.image
     ? `url(${card.image}) center/cover no-repeat, #f0f0f0`
     : card.photoRef
@@ -1188,6 +1240,12 @@ function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; acce
       : unsplash
         ? "transparent"
         : "#f5f5f5";
+
+  // Time hint shown beside the category label. For events with a fixed
+  // start, show that. For legacy cards (orphan list), show the timeBlock
+  // clock string. Bucket grid cards leave this off — the slot header
+  // already says which bucket this is.
+  const timeHint = card.eventTime || (showTimeLabel ? card.timeBlock : "");
 
   return (
     <>
@@ -1214,7 +1272,9 @@ function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; acce
       {/* Content */}
       <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{card.timeBlock}</span>
+          {timeHint && (
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
+          )}
           {!(card.source === "event" && card.category === "events") && (
             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
           )}
@@ -1236,32 +1296,73 @@ function CardInner({ card, emoji, accent }: { card: DayCard; emoji: string; acce
   );
 }
 
-/** Parse "2:30 PM - 4:00 PM" → minutes since midnight for sorting */
-function parseTimeBlock(tb: string): number {
-  const m = tb.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-  if (!m) return 0;
+/** Single-bucket cell in the homepage grid. Holds either a card or an empty
+ *  state ("nothing standout for this slot"). Past buckets dim. */
+interface BucketSlotProps {
+  bucket: Bucket;
+  card?: DayCard;
+  accent: string;
+  passed: boolean;
+  replaced: boolean;
+  onLock?: () => void;
+  onSkip?: () => void;
+  onHide?: () => void;
+  animationDelay: number;
+}
+
+function BucketSlot({ bucket, card, accent, passed, replaced, onLock, onSkip, onHide, animationDelay }: BucketSlotProps) {
+  const emoji = card ? CATEGORY_EMOJI[card.category] || "📍" : "";
+  const cardUrl = card ? (card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url)) : null;
+  return (
+    <div
+      className={`sbt-bucket${passed ? " sbt-bucket--passed" : ""}${card?.locked ? " sbt-bucket--locked" : ""}`}
+      style={{ animation: `fadeSlideIn 0.3s ease-out ${animationDelay}s both` }}
+    >
+      <div className="sbt-bucket-header">
+        <span className="sbt-bucket-accent" style={{ background: accent }} />
+        <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
+        {passed && card && <span className="sbt-bucket-passed-tag">passed</span>}
+      </div>
+      {replaced && card ? (
+        <div className="sbt-bucket-body sbt-bucket-body--swap"><SwapVerb /></div>
+      ) : card ? (
+        <>
+          {cardUrl ? (
+            <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
+              <CardInner card={card} emoji={emoji} accent={accent} />
+            </a>
+          ) : (
+            <div className="sbt-bucket-link">
+              <CardInner card={card} emoji={emoji} accent={accent} />
+            </div>
+          )}
+          <div className="tl-group sbt-bucket-actions">
+            {onLock && <button onClick={onLock} title={card.locked ? "Unlock" : "Lock this"} className={`tl-btn tl-lock${card.locked ? " tl-lock--active" : ""}`}>✓</button>}
+            {onSkip && <button onClick={onSkip} title="Not today" className="tl-btn tl-skip">→</button>}
+            {onHide && <button onClick={onHide} title="Never show this" className="tl-btn tl-hide">✕</button>}
+          </div>
+        </>
+      ) : (
+        <div className="sbt-bucket-empty">No standout pick — go with your usual.</div>
+      )}
+    </div>
+  );
+}
+
+/** Sort-key for the API response — bucket order if present, fallback by
+ *  legacy clock-time parse so old shared-plan cards still order. */
+function bucketSortIndex(c: DayCard): number {
+  if (isBucket(c.bucket)) return BUCKET_ORDER.indexOf(c.bucket);
+  // Legacy: parse clock-time for orphan plans.
+  const m = c.timeBlock?.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (!m) return 99;
   let h = parseInt(m[1], 10);
   const min = parseInt(m[2], 10);
   const pm = m[3].toUpperCase() === "PM";
   if (pm && h !== 12) h += 12;
   if (!pm && h === 12) h = 0;
-  return h * 60 + min;
-}
-
-/** Parse the end time from "2:30 PM - 4:00 PM" → 240. Returns null if
- *  the timeBlock has no second half (e.g. "All day", "6 PM"); caller
- *  should keep such cards visible. */
-function parseEndMinutes(tb: string): number | null {
-  if (!tb) return null;
-  const parts = tb.split(/\s*-\s*/);
-  if (parts.length < 2) return null;
-  const m = parts[1].match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-  if (!m) return null;
-  let h = parseInt(m[1], 10);
-  const min = parseInt(m[2], 10);
-  if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
-  if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
-  return h * 60 + min;
+  // Map clock-time to bucket-equivalent position.
+  return 100 + h * 60 + min;
 }
 
 /** Minutes since midnight, in America/Los_Angeles. */
@@ -1289,10 +1390,9 @@ function getTomorrowISOInPT(): string {
   return t.toISOString().slice(0, 10);
 }
 
-/** Load the tomorrow-anchor hero plan from default-plans.json. Used when
- *  today's plan runs out mid-session so we can flip into the tomorrow
- *  view without a network round-trip. Mirrors loadDefaultPlan's hero
- *  lookup but hard-forces the morning anchor + skips the past filter. */
+/** Load the tomorrow plan from default-plans.json. Used when today's plan
+ *  runs out mid-session so we can flip into tomorrow without a network
+ *  round-trip. */
 function loadTomorrowPlan(
   kids: boolean,
   dismissed: Record<string, DismissedEntry> = {},
@@ -1300,43 +1400,34 @@ function loadTomorrowPlan(
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
-    const anchorHours: number[] = Array.isArray(json._meta?.anchorHours) && json._meta.anchorHours.length
-      ? json._meta.anchorHours : [9];
-    const chosenAnchor = anchorHours.includes(9) ? 9 : anchorHours.slice().sort((a, b) => a - b)[0];
     const kidsSuffix = kids ? "kids" : "adults";
-    const heroKey = `${kidsSuffix}:h${chosenAnchor}`;
-    let plan = plans[heroKey];
-    let city: City = (plan?.city as City) || pickRandomAnchor();
-    if (!plan?.cards?.length) {
-      city = pickRandomAnchor();
-      const anchoredKey = `${city}:${kidsSuffix}:h${chosenAnchor}`;
-      const legacyKey = `${city}:${kidsSuffix}`;
-      plan = plans[anchoredKey] || plans[legacyKey];
-    }
     const dropDismissed = (input: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
       if (!Object.keys(dismissed).length) return { cards: input, filtered: false };
       const kept = input.filter((c) => !isDismissedCard(c, dismissed));
       return { cards: kept, filtered: kept.length !== input.length };
     };
-    // Prefer the dedicated tomorrow hero key. Falls back to today's hero
-    // with events stripped if the generator hasn't written tomorrow keys.
-    const tomorrowKey = `${kidsSuffix}:h${chosenAnchor}:tomorrow`;
-    const tomorrowPlan = plans[tomorrowKey];
-    if (tomorrowPlan?.cards?.length) {
+    const pickPlan = (...keys: string[]) => {
+      for (const k of keys) if (plans[k]?.cards?.length) return plans[k];
+      return null;
+    };
+    const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
+    if (tomorrowPlan) {
       const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
       return {
         cards,
-        anchor: (tomorrowPlan.city as City) || city,
+        anchor: (tomorrowPlan.city as City) || pickRandomAnchor(),
         weather: tomorrowPlan.weather || null,
         filtered,
       };
     }
-    if (!plan?.cards?.length) return { cards: [], anchor: null, weather: null, filtered: false };
+    // Fallback: today's plan with events stripped.
+    const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
+    if (!plan) return { cards: [], anchor: null, weather: null, filtered: false };
     const placesOnly = plan.cards.filter((c: DayCard) => c.source !== "event");
     const { cards, filtered } = dropDismissed(placesOnly);
     return {
       cards,
-      anchor: city,
+      anchor: (plan.city as City) || pickRandomAnchor(),
       weather: plan.weather || null,
       filtered: filtered || placesOnly.length !== plan.cards.length,
     };

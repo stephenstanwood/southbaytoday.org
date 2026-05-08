@@ -70,8 +70,19 @@ function parseClockHour(t) {
   return h + mi / 60;
 }
 
-// Returns null if no hours data for the venue (can't audit), true if the
-// timeBlock fits within the venue's open ranges on dayKey, false if not.
+const BUCKET_WINDOWS = {
+  breakfast: [7, 11],
+  morning: [9, 13],
+  lunch: [11, 15],
+  afternoon: [13, 18],
+  dinner: [17, 21],
+  evening: [18, 22],
+};
+
+// Returns null if no hours data (can't audit), true if the venue is open for
+// at least 1h within the card's bucket/timeBlock window, false if not.
+// Bucket cards check against BUCKET_WINDOWS; legacy timeBlock cards parse
+// the clock range.
 function cardFitsVenueHours(card, dayKey, placesById) {
   if (!card || !dayKey) return null;
   const id = String(card.id || "").replace(/^place:/, "");
@@ -79,15 +90,30 @@ function cardFitsVenueHours(card, dayKey, placesById) {
   if (!place || !place.hours) return null;
   const range = place.hours[dayKey];
   if (!range) return false; // closed that day
-  const [sStr, eStr] = String(card.timeBlock || "").split(/\s*-\s*/);
-  const sH = parseClockHour(sStr);
-  const eH = parseClockHour(eStr);
-  if (sH == null || eH == null) return null; // can't audit
+
+  let sH, eH;
+  if (card.bucket && BUCKET_WINDOWS[card.bucket]) {
+    [sH, eH] = BUCKET_WINDOWS[card.bucket];
+  } else {
+    const [sStr, eStr] = String(card.timeBlock || "").split(/\s*-\s*/);
+    sH = parseClockHour(sStr);
+    eH = parseClockHour(eStr);
+    if (sH == null || eH == null) return null; // can't audit
+  }
+
   for (const seg of range.split(",")) {
     const [o, c] = seg.split("-");
     const oh = parseClockHour(o);
     const ch = parseClockHour(c);
-    if (oh != null && ch != null && sH >= oh && eH <= ch) return true;
+    if (oh == null || ch == null) continue;
+    // Bucket window: ≥1h overlap is fine. Legacy: card must fit fully.
+    if (card.bucket) {
+      const overlapStart = Math.max(oh, sH);
+      const overlapEnd = Math.min(ch, eH);
+      if (overlapEnd - overlapStart >= 1) return true;
+    } else {
+      if (sH >= oh && eH <= ch) return true;
+    }
   }
   return false;
 }
@@ -263,16 +289,21 @@ function applyTerminologyFixes(slot) {
   return touched;
 }
 
+const BUCKET_ORDER_LIST = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+
 function sortDayPlanCards(slot) {
   const cards = slot?.plan?.cards;
   if (!Array.isArray(cards) || cards.length < 2) return false;
-  const before = cards.map((c) => c.timeBlock || "").join("|");
-  cards.sort((a, b) => {
-    const aH = parseHour((a.timeBlock || "").split(/\s*-\s*/)[0]) ?? 99;
-    const bH = parseHour((b.timeBlock || "").split(/\s*-\s*/)[0]) ?? 99;
-    return aH - bH;
-  });
-  return cards.map((c) => c.timeBlock || "").join("|") !== before;
+  const sortKey = (c) => {
+    if (c.bucket) {
+      const i = BUCKET_ORDER_LIST.indexOf(c.bucket);
+      return i === -1 ? 99 : i;
+    }
+    return parseHour((c.timeBlock || "").split(/\s*-\s*/)[0]) ?? 99;
+  };
+  const before = cards.map((c) => `${c.bucket || ""}/${c.timeBlock || ""}`).join("|");
+  cards.sort((a, b) => sortKey(a) - sortKey(b));
+  return cards.map((c) => `${c.bucket || ""}/${c.timeBlock || ""}`).join("|") !== before;
 }
 
 function dowMismatch(dateStr, copyText) {
@@ -505,12 +536,22 @@ export function runQualityReview(schedule, options = {}) {
     const dpIsLive = dp && !["rejected", "published"].includes(dpStatus);
     if (dp && dpIsDraft) {
       const cards = dp.plan?.cards || [];
-      if (cards.length < 6) {
-        flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops (need 6+)` });
+      const isBucketPlan = cards.some((c) => c.bucket);
+      if (isBucketPlan) {
+        // Bucket plan: ≥4 of 6 buckets filled (matches planPassesQuality).
+        const filled = new Set(cards.map((c) => c.bucket).filter(Boolean));
+        if (filled.size < 4) {
+          flagged.push({ date, slotType: "day-plan", reason: `only ${filled.size} bucket(s) filled (need 4+)` });
+        }
       } else {
-        const firstHour = parseHour((cards[0].timeBlock || "").split(/\s*-\s*/)[0]);
-        if (firstHour !== null && firstHour > 11) {
-          flagged.push({ date, slotType: "day-plan", reason: `starts too late (${cards[0].timeBlock})` });
+        // Legacy timeline: ≥6 stops, must start by noon.
+        if (cards.length < 6) {
+          flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops (need 6+)` });
+        } else {
+          const firstHour = parseHour((cards[0].timeBlock || "").split(/\s*-\s*/)[0]);
+          if (firstHour !== null && firstHour > 11) {
+            flagged.push({ date, slotType: "day-plan", reason: `starts too late (${cards[0].timeBlock})` });
+          }
         }
       }
     }

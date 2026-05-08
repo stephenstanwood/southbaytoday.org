@@ -5,7 +5,16 @@
 // Every writer to shared-plans.json should run every card through this before
 // persisting, and the renderer re-runs it at read time as belt-and-suspenders.
 // Prevents /plan/XXX 500s when upstream writers drift from the canonical shape.
+//
+// 2026-05-07: cards moved from clock-range timeBlock ("10:30 AM - 12:00 PM")
+// to bucket slots ("breakfast", "morning", etc.). New cards write `bucket`;
+// `timeBlock` is preserved for legacy shared plans so /plan/<id> from before
+// the cutover still renders.
 // ---------------------------------------------------------------------------
+
+const VALID_BUCKETS = new Set([
+  "breakfast", "morning", "lunch", "afternoon", "dinner", "evening",
+]);
 
 function str(v, fallback = "") {
   if (v === undefined || v === null) return fallback;
@@ -17,6 +26,11 @@ function nullableStr(v) {
   if (v === undefined || v === null || v === "") return null;
   if (typeof v === "string") return v;
   return String(v);
+}
+
+function nullableBucket(v) {
+  if (typeof v !== "string") return null;
+  return VALID_BUCKETS.has(v) ? v : null;
 }
 
 /**
@@ -33,6 +47,8 @@ export function canonicalizeCard(raw) {
       city: "",
       address: "",
       timeBlock: "",
+      bucket: null,
+      eventTime: null,
       blurb: "",
       why: "",
       url: "",
@@ -52,6 +68,8 @@ export function canonicalizeCard(raw) {
     city: str(raw.city || raw.neighborhood),
     address: str(raw.address),
     timeBlock: str(raw.timeBlock),
+    bucket: nullableBucket(raw.bucket),
+    eventTime: nullableStr(raw.eventTime),
     blurb: str(raw.blurb),
     why: str(raw.why),
     url: str(raw.url),
@@ -73,12 +91,15 @@ export function canonicalizeCard(raw) {
 }
 
 /**
- * A card is considered renderable if it has at minimum a name and a timeBlock.
- * Without those the /plan/ renderer has nothing visual to show for the slot.
+ * A card is considered renderable if it has a name AND either a bucket
+ * (new format) or a timeBlock (legacy shared plans). Without one or the other
+ * the renderer has no slot to put it in.
  */
 export function isRenderableCard(card) {
   if (!card || typeof card !== "object") return false;
-  return Boolean(str(card.name).trim()) && Boolean(str(card.timeBlock).trim());
+  if (!str(card.name).trim()) return false;
+  if (nullableBucket(card.bucket)) return true;
+  return Boolean(str(card.timeBlock).trim());
 }
 
 /**

@@ -20,7 +20,10 @@ export default defineConfig({
     },
     server: {
       fs: {
-        allow: ['..']
+        // Three levels up so a git worktree at .claude/worktrees/<name> can
+        // resolve node_modules from the main project root. From a normal
+        // checkout this just whitelists the parent dir, which is harmless.
+        allow: ['../../..']
       }
     }
   }

@@ -456,27 +456,54 @@ export async function generateDayPlanCopy(plan, dateStr, planUrl) {
     return parts.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
   }).join(", ");
 
+  // Bucket-style: group stops by bucket label so the post reads as
+  // "Breakfast: X, Morning: Y..." instead of an hour-by-hour schedule.
+  const BUCKET_LABEL = {
+    breakfast: "Breakfast",
+    morning: "Morning",
+    lunch: "Lunch",
+    afternoon: "Afternoon",
+    dinner: "Dinner",
+    evening: "Evening",
+  };
+  const ORDER = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+  const byBucket = new Map();
+  for (const c of plan.cards) {
+    if (c.bucket && !byBucket.has(c.bucket)) byBucket.set(c.bucket, c);
+  }
   let stopsText = "";
   const allMentions = [];
-  for (const card of plan.cards) {
-    const time = card.timeBlock?.split(" - ")[0] || "";
-    stopsText += `- ${time}: ${card.name}\n  ${(card.blurb || "").slice(0, 100)}\n`;
-    // Collect handle mentions for all stops
-    const m = mentionInstructions({ venue: card.name, title: card.name });
-    if (m) allMentions.push(m);
+  if (byBucket.size > 0) {
+    for (const b of ORDER) {
+      const card = byBucket.get(b);
+      if (!card) continue;
+      const label = BUCKET_LABEL[b] || b;
+      stopsText += `- ${label}: ${card.name}\n  ${(card.blurb || "").slice(0, 100)}\n`;
+      const m = mentionInstructions({ venue: card.name, title: card.name });
+      if (m) allMentions.push(m);
+    }
+  } else {
+    // Legacy timeBlock cards.
+    for (const card of plan.cards) {
+      const time = card.timeBlock?.split(" - ")[0] || "";
+      stopsText += `- ${time}: ${card.name}\n  ${(card.blurb || "").slice(0, 100)}\n`;
+      const m = mentionInstructions({ venue: card.name, title: card.name });
+      if (m) allMentions.push(m);
+    }
   }
-  // Include all unique handle matches so the LLM can @mention multiple stops
   const uniqueMentions = [...new Set(allMentions.filter(Boolean))];
   const mentionBlock = uniqueMentions.length > 0 ? uniqueMentions.join("\n") : "";
 
   const url = planUrl || `https://southbaytoday.org`;
+  const slotCount = byBucket.size > 0 ? byBucket.size : plan.cards.length;
+  const slotWord = byBucket.size > 0 ? "ideas" : "stops";
 
-  const prompt = `Write a social post promoting a FULL DAY PLAN for ${dayName} in the South Bay. This is our signature daily post — it should feel like an invitation to an awesome day.
+  const prompt = `Write a social post for South Bay Today's daily DAY-PLAN signature slot for ${dayName}. The plan is six "idea sparks" the reader can pick from — breakfast, morning, lunch, afternoon, dinner, evening. NOT a tick-tock schedule. Frame it as a brainstorm of ideas, not a tour itinerary.
 
 DAY: ${dayName}, ${date.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
 CITIES: ${cityDisplay}
 
-STOPS:
+THE IDEAS (one per bucket):
 ${stopsText}
 
 URL (MUST include this exact URL): ${url}
@@ -485,17 +512,17 @@ ${mentionBlock}
 LINKS:
 - Always use full URLs with https:// — bare domains don't become clickable on Bluesky or Threads
 - The URL in the post must be exactly the one provided above
-${url.includes('/plan/') ? "- This URL links to a full day plan. Frame the link as \"here's a whole day plan\" or \"we built a day around it\" — the plan page shows all stops." : ''}
+${url.includes('/plan/') ? "- This URL links to the full set of ideas. Frame the link as \"here's a day's worth of ideas\" or \"we sketched out a day\" — the plan page shows every bucket." : ''}
 
-This is NOT a single event — it's a curated day plan with ${plan.cards.length} stops. Frame it as "here's your ${dayName}" or "we planned your ${dayName}". The tone should be: we did the work so you don't have to.
+NEVER frame this as a strict schedule ("9 AM: ...", "head to X at 11"). It's a menu of ideas. Use phrasing like "ideas for ${dayName}", "here's a day", "pick what sounds good". Some readers might do all six, some none. Don't promise specific times.
 
-Write six variants:
+This is ${slotCount} ${slotWord}. Write six variants:
 1. X (max 270 chars including URL) — punchy hook, no hashtags
-2. Threads (max 470 chars including URL + hashtags) — warmer, list a couple highlights. 2-3 hashtags.
+2. Threads (max 470 chars including URL + hashtags) — warmer, name 2-3 highlights by bucket. 2-3 hashtags.
 3. Bluesky (max 270 chars including URL + hashtags) — similar to X. 2-3 hashtags.
-4. Facebook (max 500 chars including URL) — conversational, can mention more stops. No hashtags.
-5. Instagram (max 2000 chars including URL + hashtags) — full caption, mention all stops briefly, 8-15 hashtags at end.
-6. Email (max 600 chars, no URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the schedule image and a "See the full plan" button below the text. Conversational, like a friend telling them what's on.
+4. Facebook (max 500 chars including URL) — conversational, can list a few buckets. No hashtags.
+5. Instagram (max 2000 chars including URL + hashtags) — full caption, walk through the ideas by bucket, 8-15 hashtags at end.
+6. Email (max 600 chars, no URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below. Conversational, like a friend tossing out ideas.
 
 Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "email". No other text.`;
 
