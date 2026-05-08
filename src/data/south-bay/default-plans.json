@@ -1,14 +1,11 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-07T14:22:29.653Z",
-    "generator": "regen-2026-05-07-dayplan",
-    "anchorHours": [
-      9
-    ],
+    "generatedAt": "2026-05-08T03:08:02.926Z",
+    "generator": "generate-schedule (homepage hero, bucket schema)",
     "planCount": 4
   },
   "plans": {
-    "adults:h9": {
+    "adults": {
       "cards": [
         {
           "id": "place:ChIJe6-YfVG2j4ARzNMr-5C90KY",
@@ -159,122 +156,36 @@
       "weather": "55°F, high 67°F",
       "city": "sunnyvale",
       "kids": false,
-      "anchorHour": 9,
-      "generatedAt": "2026-05-07T14:22:29.652Z"
+      "generatedAt": "2026-05-08T03:08:02.924Z"
     },
-    "kids:h9": {
+    "kids": {
       "cards": [
         {
-          "id": "place:ChIJm7NJkla3j4AR8vR-HWRxgOo",
-          "name": "Computer History Museum",
-          "category": "museum",
+          "id": "event:chm-7177d22bf6af5efe",
+          "name": "Algorithms of Love",
+          "category": "arts",
           "city": "mountain-view",
-          "address": "1401 N Shoreline Blvd, Mountain View, CA 94043, USA",
-          "timeBlock": "10:00 AM - 12:00 PM",
-          "blurb": "Walk through the exhibits and let the kids go wild trying to figure out how a room-sized computer actually worked. The Revolution exhibit alone is worth the trip.",
-          "why": "It's genuinely fun even for kids who have no idea what a floppy disk is.",
-          "url": "http://www.computerhistory.org/",
-          "mapsUrl": "https://maps.google.com/?cid=16897630476699628786&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-          "cost": "low",
-          "costNote": "$20 adults / $13 kids",
-          "kidsCostNote": null,
+          "address": "1401 N Shoreline Blvd, Mountain View",
+          "timeBlock": "8:30 PM - 9:30 PM",
+          "blurb": "Discover how algorithms power the online dating industry and shape human connection.",
+          "why": "A thought-provoking evening at the Computer History Museum is a great way to wind down a Thursday night.",
+          "url": "https://computerhistory.org/events/algorithms-of-love/",
+          "cost": "paid",
+          "costNote": null,
           "photoRef": "places/ChIJm7NJkla3j4AR8vR-HWRxgOo/photos/AU_ZVEGsYq_tqCK32uuNAX6EpUpOmWn8MUDSevuZFGYQFlfKqoJ3spSl6zC4O3fvKGjt7BoXuel6WhCiESyxtaTg__MnenW7vp1U3NGuihMFJrYNOoivE6Ahs_OFRi2NVDw7zjbvDb9c6ixUS7M9Ta5UQhF7_vt46dyXFCgWpb_TjTXllFI0CaTZjf-FRz4G9oXTnBbSN-L-qlg_1AYz9q1mvU7R5lWBgPpB7U5vpWKEJxOwkGQpzv99_L3Zn4ezB-n6i3jYleDVaGKmi-9Vib6lafhGpyrO2vsDwxcrrsf0Md5ZOg",
           "image": null,
-          "venue": null,
-          "source": "place",
-          "locked": false,
-          "rationale": "claude:pool-rank-11/18 | rating=4.7 | cat=museum"
-        },
-        {
-          "id": "place:curated:dishdash",
-          "name": "DishDash",
-          "category": "food",
-          "city": "sunnyvale",
-          "address": "DishDash, Sunnyvale",
-          "timeBlock": "12:00 PM - 1:30 PM",
-          "blurb": "Grab lunch here and go for the kabobs or lamb shank. The portions are generous and the pita situation is excellent.",
-          "why": "Sunnyvale staple, always packed for a reason, and easy on the wallet.",
-          "url": "https://www.dishdash.com",
-          "mapsUrl": null,
-          "cost": "low",
-          "costNote": "Under $25",
-          "kidsCostNote": null,
-          "photoRef": "places/ChIJS-AArV22j4AR1rJD3ENugCU/photos/AU_ZVEGoiLPFi1O_7MRwERy-N1dYzMRAL9MO0Xy7B-6oGqxHLuRig0dE3mtmDr5SJ87DqJBjGxIWP1ZAco66Vvj-grnnjlqREM_U65rTiZHJBtvndoayJ2WOygIF0ASl8_RdEANaDoDVKIHvVa1xTRifPv6Us_kgszXLicySvX7I2CgRl8gNwkivtE6RXmLoc4Iqu7I0qQVCKcsjPv3gjbC3cS8_fHrNQOn07JxeueVOF0AfOj3U1tVtUZzjnv1Z76Gt4OHgaQjUewrGGxZAgMF4TVLOSmO_MtahbNTDXXq4SNa8wYk0t1w7VTgNKQVqmRKtLi_iMkvl1-7K93xmZja8OU_gFw3o3wmqfZX91OYTygbYAXvLzPBaWBCmyE8k6WcoF2VhxWDJKEWK6SZ6AW5Mh_oe-DRFo5mK3jEe986yTb0YiA",
-          "image": null,
-          "venue": null,
-          "source": "place",
-          "locked": false,
-          "rationale": "claude:pool-rank-7/18 | cat=food"
-        },
-        {
-          "id": "place:ChIJMZC2UwI1joAReJaK1vHSqcc",
-          "name": "Los Gatos Creek Trail",
-          "category": "outdoor",
-          "city": "campbell",
-          "address": "1250 Dell Ave, Campbell, CA 95008, USA",
-          "timeBlock": "2:00 PM - 3:30 PM",
-          "blurb": "Walk the paved creekside path through Los Gatos Creek Trail, a breezy, shaded stretch perfect for stretching your legs between lunch and the afternoon event.",
-          "why": "It bridges the post-lunch lull before Saratoga and keeps you in the southwest South Bay corridor already in play today.",
-          "url": "https://www.losgatosca.gov/907/Los-Gatos-Creek-Trail",
-          "mapsUrl": "https://maps.google.com/?cid=14387262420740118136&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-          "cost": "free",
-          "costNote": null,
-          "kidsCostNote": null,
-          "photoRef": "places/ChIJMZC2UwI1joAReJaK1vHSqcc/photos/AU_ZVEHY2ptMPKsPxK3DlqpGx06wy_mdpRbP0-M7-7zKIieApTu3t3qd2wbfh-bnUVoJ-d7EJbjSg2Rdt0jGNxA2tgN_yJVlKqSsApLEK_a-op6LGr1C2MatbuNQj42BB7ysCVRXU-50nRzZ_b0pR5aKYJjNkmaynrkMA2Fl5l_2TNXp8_LzuoR8Kyn__Mt9QuXF2KAVXa1EEQveLTbSVzil8hYDzOAFQ3Z-f3cFOrX8YzHdzBsF1gaP_Sk1dTRi0wLoFXmUFD4qPnjppX4UhiisAm0rXut2BiMKFGJfiK0v9UEGQvYOR-5R99eBBVSmpYFzTS9NY5bwIUHx4grEkeliKlsML8K9OwpN3M1P-LFPI2vHpRcYW3CWNJdu4tZZlMljSTTXkgBiix_a4Qq537y4csrSY3ur0UEzBCzxAhogVQfbD-SM",
-          "image": null,
-          "venue": null,
-          "source": "place",
-          "locked": false,
-          "rationale": "claude:pad | gap-fill | partial-had-4"
-        },
-        {
-          "id": "event:sccl-68c1e54497cf5a912ead5aa7",
-          "name": "Homework Help K-6 grade",
-          "category": "events",
-          "city": "saratoga",
-          "address": "",
-          "timeBlock": "4:00 PM - 5:30 PM",
-          "blurb": "Get free one-on-one homework help from tutors Mondays, Tuesdays, and Thursdays from 4:00 to 5:30 p.m.",
-          "why": "Getting homework done before dinner is a win for everyone.",
-          "url": "https://sccl.bibliocommons.com/events/68c1e54497cf5a912ead5aa7",
-          "cost": "free",
-          "costNote": null,
-          "photoRef": "places/ChIJ9cJggsdKjoARoiQXrLqm_dM/photos/AU_ZVEGdumKFtxQusS0-qGrFrTbqeVq4qTJqFDBQdx1TqtAYuA5gDPhgWNEGIQf3B8xpYfq_zfCIXagKaXpJw1iAmutD-rOLgKcZiQ5-aSYN_48Szz3meQbFiJPvyFDwQ7LpUuurEVVXzLIQhR6je-tFwLVyomZ59ddQTRRyZC3FYaIDqEu-zQTeUHDvvC4ayWmkY_ttCxduqlB2jPTOwvHFDLriwH7ELxjieMSvOejW3yRWCy2hcvKc9RMMLIzjpfAdN-jqWWgP51d9td-ZNcsg6MjO5EgVG4WfhhiE2bCAsbabPS_zSKtBNsBHuRU93tKIyqcLwRhcttuYjypydMiYkr0TXxpnw689HjmBLW_INr5RpBY-RAqticQJeS_l6X68BfIacEalmmD7yBDiB81HpBSC3_PepsW5k7_GhdOheeNwaHZiogw-15h76HzrOMul",
-          "image": null,
-          "venue": "Saratoga Library",
+          "venue": "Computer History Museum",
           "source": "event",
           "locked": false,
-          "rationale": "claude:pool-rank-1/18 | event-today | cat=events"
-        },
-        {
-          "id": "place:ChIJeQ-ozuLKj4ARMQNfslZXl1c",
-          "name": "Smoking Pig BBQ",
-          "category": "food",
-          "city": "san-jose",
-          "address": "1144 N 4th St, San Jose, CA 95112, USA",
-          "timeBlock": "7:00 PM - 8:30 PM",
-          "blurb": "Finish the day with the brisket plate and mac and cheese. Get there hungry.",
-          "why": "Best BBQ in the South Bay and totally kid-approved.",
-          "url": "https://www.smokingpigbbq.net/",
-          "mapsUrl": "https://maps.google.com/?cid=6311609432654414641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-          "cost": "low",
-          "costNote": "Under $20",
-          "kidsCostNote": null,
-          "photoRef": "places/ChIJeQ-ozuLKj4ARMQNfslZXl1c/photos/AU_ZVEGJGn9jRBKaHW4__Qi1-W9zerATtdgWoq90Tcdmg6GwAqSLZznHRrHmi1NMXKNmVzBd8mwqG6ngEseLL2rdOg1aZhD_0Z-qHTv0fFHm6Qm9Nfb8ur8MhUTelIB9QQ47m8aQzdgynnQ13p08duU8MhG81cpAZqeXQrrXAoahkwOf0lvdBnrPa3hPCbsqNw0q00cNU5eeymWPWo288Y8KfTUUXqXPxiALtODdw3H0LWlQdJadVUelbvGrC1kAtjzZMYcaTxsN1MO8Mg1K1QjDRQgsiRNUWoWIbvV621i6Thy5Rx1m8c78_lKHMiiQ9-h6vOBy4J4rKwq61ptqW5FXb09dV81OmitcZ4HzT2Q0MBwufHPNqa4VN2i6YUGogpLEyVr70ezBTB5qVIDOJ-BI4nhXgtWyH0LNLQyU8BOqQvObDwY",
-          "image": null,
-          "venue": null,
-          "source": "place",
-          "locked": false,
-          "rationale": "claude:pool-rank-6/18 | rating=4.3 | cat=food"
+          "rationale": "claude:pad | gap-fill | partial-had-0"
         }
       ],
-      "weather": null,
+      "weather": "57°F, high 69°F",
       "city": "sunnyvale",
       "kids": true,
-      "anchorHour": 9,
-      "generatedAt": "2026-05-07T09:30:53.338Z"
+      "generatedAt": "2026-05-08T03:08:02.924Z"
     },
-    "adults:h9:tomorrow": {
+    "adults:tomorrow": {
       "cards": [
         {
           "id": "place:curated:shoreline-park",
@@ -383,118 +294,38 @@
       "weather": "55°F, high 70°F",
       "city": "mountain-view",
       "kids": false,
-      "anchorHour": 9,
       "planDate": "2026-05-08",
-      "generatedAt": "2026-05-07T09:30:27.620Z"
+      "generatedAt": "2026-05-08T03:07:50.684Z"
     },
-    "kids:h9:tomorrow": {
+    "kids:tomorrow": {
       "cards": [
         {
-          "id": "place:ChIJZyqpU9i1j4ARG976yjRwzpg",
-          "name": "Oakmont Sandwiches & Coffee",
-          "category": "food",
-          "city": "cupertino",
-          "address": "19998 Homestead Rd Suite C, Cupertino, CA 95014, USA",
-          "timeBlock": "7:30 AM - 9:00 AM",
-          "blurb": "Grab coffee and a sandwich to kick off the morning at this Cupertino spot that opens early and makes a solid breakfast.",
-          "why": "Perfect low-key start before the farmers market opens up the street.",
-          "url": "https://oakmontsandwiches.com/",
-          "mapsUrl": "https://maps.google.com/?cid=11010861511013490203&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "id": "place:ChIJN3clMv3Nj4ARPu7kV61pFp8",
+          "name": "Breakout Studios",
+          "category": "entertainment",
+          "city": "san-jose",
+          "address": "99 N First St Suite 225, San Jose, CA 95113, USA",
+          "timeBlock": "8:30 PM - 10:00 PM",
+          "blurb": "Team up and race against the clock to solve puzzles and escape before time runs out — Breakout Studios has themed rooms that keep the energy high all the way to the end.",
+          "why": "A Friday night escape room is a great way to shake off the week with friends.",
+          "url": "http://breakoutstudios.com/",
+          "mapsUrl": "https://maps.google.com/?cid=11463466094743055934&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
           "cost": null,
-          "costNote": "$15–30/person",
+          "costNote": null,
           "kidsCostNote": null,
-          "photoRef": "places/ChIJZyqpU9i1j4ARG976yjRwzpg/photos/AU_ZVEELDtsyyh6jpoADKED9ZUuMZU4HLOOO3nlUUr2RBovrKEuku7rlI3ybCto0BZegxz0LFkFHKW4Bv0QBGS_S_NSdtb4SK1RVq9ernMMy3pdtZ-MvH83M7xAbk5btkgdU1-Ejf3kOFcmlmL_hNJz0gPpXHiYBziyNYpxjD2CJo40VQ9mSHV-awhDuhgriB3FDkYBwzKlBcYb3WHF3l-vsp39qBvt3NiycEQBI5wIDeJfv2iUgZbRjtT7fADB2lzrmC4HobNKWWtspC_oOM9hsabb76mEcvXt_Jc2JEoLaYgvGkgYZAx6G45Vc5N75u_WdXXBn8Fu3ZorhEqFMnaStIUyWNld4dKF_Y8VD6DliNQfwBvyAC6li_IUc6hqEqNP8Rpj8PKclTN1McgMdIGkmvPCH4v1G62kl0EH1ArzYUgcg7336SBuop4o51EPkEJGl",
+          "photoRef": "places/ChIJN3clMv3Nj4ARPu7kV61pFp8/photos/AU_ZVEHWlS2pkY9wOe9ekP8uNRFvs5TnSdAQtpK5B33-Bw5XR1NbmSDXsiMy4X1AQBlurujutl1iyB_KNioOS87s5P38LDxLRZ7dcFEiKYXb-tT6ny1Tnosi8tZ7F68uPR8WPY6g2hLUSkLhsS-zOjJtoknnPjrtHiIvGzXR5lcdHFu_Z1RTMZH8v9pYm6J3sfu0ik1ilm6-V7Bq9oAkFkrGUje9UKb3CD5YrF_sNt31R8t2Ex-NRjEplg8VpyIrStcc7lZeNT81YKe_2FWoYSoufXywz4VDcaPVIJIYnw5s7WX4rw",
           "image": null,
           "venue": null,
           "source": "place",
           "locked": false,
-          "rationale": "claude:pool-rank-11/22 | rating=4.6 | cat=food"
-        },
-        {
-          "id": "event:farmersmarket-6bc9c65959969a08",
-          "name": "Cupertino Farmers Market",
-          "category": "food",
-          "city": "cupertino",
-          "address": "21275 Stevens Creek Blvd, Cupertino",
-          "timeBlock": "9:00 AM - 1:00 PM",
-          "blurb": "Shop for local produce, artisan goods, and ready-to-eat food weekly.",
-          "why": "A solid pick to break up the day.",
-          "url": "https://cafarmersmkts.com/cupertino-market",
-          "mapsUrl": null,
-          "cost": "free",
-          "costNote": null,
-          "kidsCostNote": null,
-          "photoRef": "places/ChIJi-PFZ0-0j4ARGr_xvCe006U/photos/Ab43m-u7EXVZUmgxR3rd1vlFZIBE8gC7WDN3462OJ78vy5gPXLqMrbqL-hjguJAFZFbHVrEVl30O7T4qw1b-j-3B9wCnP0TX0cXPJZgffExnWo-M_Mq_z0saHrU3Uyl6tAeFQuCYXHItIz7zChT4VKzfATFrtkMUooigWk9vfKkwCpHE6-6OignbqK10_LEh3NBOAMQwx399V6KMtoYf-08lfJMwTvMeLMR-89HMwZz596ZK6-7StnzTBWhBOZuGPjbMhnNtZKp2xWR0O3fjd3OcShlRghqZWt8uRc4CfRlfFHk_CCBeT9C6KfGcyJ9Gn4W38iuR66eJ72pNWIaFikgcuTb5ShSphPcaaux9o___R9aGvUSJWUkzhg1amkWnkVnHLZwG8TLME00PsgMhR-rH4XA3McY4wR7-8ewRwF3iVWMk_Q",
-          "venue": "Oaks Shopping Center",
-          "source": "event",
-          "locked": false
-        },
-        {
-          "id": "place:ChIJGWxtr0nKj4ARGHKbY2HbPUw",
-          "name": "Triton Museum of Art",
-          "category": "museum",
-          "city": "santa-clara",
-          "address": "1505 Warburton Ave, Santa Clara, CA 95050, USA",
-          "timeBlock": "1:30 PM - 3:00 PM",
-          "blurb": "Wander through rotating contemporary exhibitions and a permanent collection spanning sculpture, painting, and works on paper — admission is free and the galleries are calm and unhurried.",
-          "why": "It's a quick hop from Cupertino and fills the afternoon gap with something quiet and visually interesting before heading to Saratoga.",
-          "url": "http://www.tritonmuseum.org/",
-          "mapsUrl": "https://maps.google.com/?cid=5493788331791315480&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-          "cost": "free",
-          "costNote": null,
-          "kidsCostNote": null,
-          "photoRef": "places/ChIJGWxtr0nKj4ARGHKbY2HbPUw/photos/AU_ZVEH9UBIu952O0CToiAUtX7tgsLsgyXE5DWcEmaTwUn4cRHg0sqcoF572pKBLmqNFK8yGiKeIPR1xB8jJS6lt2YhKk906BT2VGG9P9XanXCdzNBhN8Se0-xnVIB7zoZv1wZ1M4tWlSV-b9C9xK28d5DDudHnAZJk3PmW9GQ46PDSXDdjxXxCxLLyIG3uqWQbtfk7ragYVdD1IH0LB24N6MqZYtYk2UWfyept3DK36pEqxRaVzxtIoxPKF6eemjqYHdwbCpUBHKUD7q3gxCR78YN-9xYfoXTd1F6WLfbhzJ9nODAE0crq_Kvqqo-4eEQ8GCWeJNDKrRHGDX6LI_cG_ICDON9cMlpkNLwzH3-mXJHdyyPbQyTTMHCoGDYXyRk2CeKGS7ZgZ5JKiwHl0VoMSPSnx-cauAXqSuGRY8NiXMW8",
-          "image": null,
-          "venue": null,
-          "source": "place",
-          "locked": false,
-          "rationale": "claude:pad | gap-fill | partial-had-4"
-        },
-        {
-          "id": "event:sccl-68d7197f62a8786065c4f6c4",
-          "name": "Furry Reading Buddies for Grades K-5",
-          "category": "events",
-          "city": "saratoga",
-          "address": "",
-          "timeBlock": "3:30 PM - 5:00 PM",
-          "blurb": "Practice reading aloud to a calm therapy dog and build your confidence with a patient listener.",
-          "why": "Kids who are shy about reading absolutely light up for this one.",
-          "url": "https://sccl.bibliocommons.com/events/68d7197f62a8786065c4f6c4",
-          "cost": "free",
-          "costNote": null,
-          "photoRef": "places/ChIJ9cJggsdKjoARoiQXrLqm_dM/photos/AU_ZVEGdumKFtxQusS0-qGrFrTbqeVq4qTJqFDBQdx1TqtAYuA5gDPhgWNEGIQf3B8xpYfq_zfCIXagKaXpJw1iAmutD-rOLgKcZiQ5-aSYN_48Szz3meQbFiJPvyFDwQ7LpUuurEVVXzLIQhR6je-tFwLVyomZ59ddQTRRyZC3FYaIDqEu-zQTeUHDvvC4ayWmkY_ttCxduqlB2jPTOwvHFDLriwH7ELxjieMSvOejW3yRWCy2hcvKc9RMMLIzjpfAdN-jqWWgP51d9td-ZNcsg6MjO5EgVG4WfhhiE2bCAsbabPS_zSKtBNsBHuRU93tKIyqcLwRhcttuYjypydMiYkr0TXxpnw689HjmBLW_INr5RpBY-RAqticQJeS_l6X68BfIacEalmmD7yBDiB81HpBSC3_PepsW5k7_GhdOheeNwaHZiogw-15h76HzrOMul",
-          "image": null,
-          "venue": "Saratoga Library",
-          "source": "event",
-          "locked": false,
-          "rationale": "claude:pool-rank-6/22 | event-today | cat=events"
-        },
-        {
-          "id": "event:inbound-208b9df6bd5589b6",
-          "name": "Sunset Cinema: How to Train Your Dragon",
-          "category": "arts",
-          "city": "santa-clara",
-          "address": "Montague Park, 3595 MacGregor Lane, Santa Clara, CA",
-          "timeBlock": "7:45 PM - 9:15 PM",
-          "blurb": "Bring a blanket and watch How to Train Your Dragon on an outdoor inflatable screen.",
-          "why": "A Friday night movie under the sky is hard to beat for a family.",
-          "url": "https://www.santaclaraca.gov/sunsetcinema",
-          "cost": null,
-          "costNote": null,
-          "photoRef": "places/ChIJfa7yXHjJj4ARYBzJlAeuKy8/photos/AU_ZVEHLtAC6J-Rgy4kYugcuEXCgSoIf0SdELfQeS0qSmQjRFIN7BSpdn6byngnOAigY42kYWwKvXdFWotCvaY_Ra2zJafnboFB-ubaPPFGL6RMC5_63siTTR93CL82UaXFfhL8o9zjJbCbRFOLgJuPW1acye1uFyaOHNFmJH0aPRDFjsxhVi0_OBcSJCJ7srGSK4JQyu6-yR26NXNY2lOtynFF1o_ezCkoduNcSin7YBNxn7UCzDmeVvEodspvI2xLjBkgm1pn_RUpS0fQE0ih0cwAliRQiwM5qeYkCDrvRCd-IzOP9O-4UztL-65bj07a3mB8MgB9JAgVe92-z7aqwVi1AILEvpm-7h-MprBHD-BfscLmRD39QF83NgT-r9GueTdk6hAE_ZNTh8gJJRybNu1wr0_-0y9qcbfKRsa7wVKoEsMQ",
-          "image": null,
-          "venue": "Montague Park",
-          "source": "event",
-          "locked": false,
-          "rationale": "claude:pool-rank-5/22 | event-today | cat=arts"
+          "rationale": "claude:pad | gap-fill | partial-had-0"
         }
       ],
-      "weather": "56°F, high 68°F",
+      "weather": "58°F, high 68°F",
       "city": "mountain-view",
       "kids": true,
-      "anchorHour": 9,
       "planDate": "2026-05-08",
-      "generatedAt": "2026-05-07T09:30:53.338Z"
+      "generatedAt": "2026-05-08T03:08:02.924Z"
     }
   }
 }
