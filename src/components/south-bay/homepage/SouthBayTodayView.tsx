@@ -237,7 +237,10 @@ export default function SouthBayTodayView(_props: Props) {
       return plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather || null;
     } catch { return null; }
   });
-  const [loading, setLoading] = useState(!hasDefaultPlan);
+  // Loading is reserved for explicit Reshuffle clicks. Initial paint always
+  // uses the pre-generated plan (cron generates kids + adults daily); if the
+  // cron failed and there's no cached plan, the empty-state UI handles it.
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
   // Live "now" signal so past cards fall off without a reload. planDateISO
@@ -252,8 +255,6 @@ export default function SouthBayTodayView(_props: Props) {
   const lastAnchorRef = useRef<City | null>(initialPlan.current.anchor);
   // Anchor diversity within a single session.
   const recentAnchorsRef = useRef<City[]>(initialPlan.current.anchor ? [initialPlan.current.anchor] : []);
-  const fetchPlanRef = useRef<(noCache?: boolean) => void>(() => {});
-
   // Display city for forecast + weather label — user's persisted home city,
   // or san-jose (center of south bay) as a neutral default.
   const displayCity: City = REGIONAL_ANCHOR;
@@ -313,32 +314,22 @@ export default function SouthBayTodayView(_props: Props) {
     }
   }, [state.kids]);
 
-  // Freshness policy for the pre-generated plan:
-  //   age ≤ 26h  → show the cached plan, no refresh. The 2 AM nightly regen
-  //                gives a fresh plan every morning; users get instant load
-  //                and no surprise shuffle-after-landing.
-  //   age > 26h  → hard-stale (cron missed its window). Fire an API call
-  //                with loading state because the cached plan is stale
-  //                enough to mislead.
-  //
-  // 26h spans the 2 AM nightly regen + a 2-hour buffer for cron delays.
+  // Cron generates a fresh kids + adults plan every night, so initial paint
+  // never auto-fetches. If a cron miss leaves us with a stale or missing
+  // cached plan, log it so we notice — but don't spin the UI to recover.
+  // The user has Reshuffle for that.
   useEffect(() => {
     if (!hasDefaultPlan) {
-      fetchPlan();
+      console.warn("[sbt] default-plans missing for current mode — cron may have failed");
       return;
     }
     const generatedAt = (defaultPlansJson as any)?._meta?.generatedAt;
     const ageMs = generatedAt ? Date.now() - new Date(generatedAt).getTime() : Infinity;
     const HARD_STALE_MS = 26 * 60 * 60 * 1000;
     if (ageMs > HARD_STALE_MS) {
-      console.warn(`[sbt] default-plans age ${Math.round(ageMs / 3600000)}h exceeds 26h — forcing live fetch`);
-      setLoading(true);
-      fetchPlan();
+      console.warn(`[sbt] default-plans age ${Math.round(ageMs / 3600000)}h exceeds 26h — cron missed its window`);
     }
   }, []);
-
-  // Keep fetchPlanRef current so callers always invoke the latest version
-  useEffect(() => { fetchPlanRef.current = fetchPlan; }, [fetchPlan]);
 
   // Auto-flip to tomorrow's plan when today is over. Fires when the page
   // crosses the kids/adults evening cutoff with a stale today plan still
@@ -369,23 +360,18 @@ export default function SouthBayTodayView(_props: Props) {
     // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
     // to a network shuffle if default-plans.json doesn't have the mode.
     const preGen = loadDefaultPlan(nextKids);
-    if (preGen.cards.length > 0) {
-      setCards(preGen.cards);
-      lastAnchorRef.current = preGen.anchor;
-      recentAnchorsRef.current = preGen.anchor ? [preGen.anchor] : [];
-      setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
-      // Swap the weather line to match the new mode.
-      try {
-        const json = defaultPlansJson as any;
-        const plans = json.plans || {};
-        const kidsSuffix = nextKids ? "kids" : "adults";
-        const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
-        if (w) setWeather(w);
-      } catch {}
-      return;
-    }
-    // Fallback: hero plan missing for this mode → live fetch.
-    setTimeout(() => fetchPlanRef.current?.(), 50);
+    setCards(preGen.cards);
+    lastAnchorRef.current = preGen.anchor;
+    recentAnchorsRef.current = preGen.anchor ? [preGen.anchor] : [];
+    setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
+    // Swap the weather line to match the new mode.
+    try {
+      const json = defaultPlansJson as any;
+      const plans = json.plans || {};
+      const kidsSuffix = nextKids ? "kids" : "adults";
+      const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
+      if (w) setWeather(w);
+    } catch {}
   };
   const handleNewPlan = () => fetchPlan(true);
 
