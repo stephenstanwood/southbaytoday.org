@@ -882,10 +882,12 @@ export default function SouthBayTodayView(_props: Props) {
 
       {/* Newsletter inline strip — same plan, in your inbox tomorrow morning.
           Sits right under the bucket grid so the value prop is contextual:
-          "you just looked at today's plan; want one every day?" */}
+          "you just looked at today's plan; want one every day?". Margin
+          matches .sbt-buckets so left/right edges line up with the cards
+          above. */}
       {visibleCards.length > 0 && (
         <div style={{
-          margin: "24px 0 8px",
+          margin: "16px -16px 8px",
           padding: "16px 18px",
           border: "1px solid #C8C4BC",
           borderRadius: 4,

@@ -232,15 +232,11 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
         )}
       </main>
 
-      {/* Newsletter signup — sitewide, footer-adjacent. Card variant has the
-          full marketing copy. No popup, no modal — just a card the reader
-          scrolls past. */}
-      <div style={{ maxWidth: 720, margin: "32px auto 0", padding: "0 24px" }}>
-        <NewsletterSignup variant="card" />
-      </div>
-
-      {/* Footer */}
+      {/* Footer — minimal newsletter signup baked in above the credit line. */}
       <footer className="sb-footer">
+        <div style={{ marginBottom: 16 }}>
+          <NewsletterSignup variant="minimal" />
+        </div>
         a project of <a href="https://stanwood.dev" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Permanent Marker', cursive", textDecoration: "none", color: "inherit" }}>stanwood.dev</a>
       </footer>
     </>
