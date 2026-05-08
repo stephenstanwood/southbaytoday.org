@@ -142,13 +142,13 @@ export default function NewsletterSignup({
         }}
       >
         <div style={{ fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: "#5b54c9", fontWeight: 800 }}>
-          Daily — by 6&nbsp;AM
+          Daily at 6:00&nbsp;AM
         </div>
         <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a2e", marginTop: 4, lineHeight: 1.2, fontFamily: "'Playfair Display', Georgia, serif" }}>
           A fresh plan every morning.
         </div>
         <div style={{ fontSize: 14, color: "#5b6478", marginTop: 8, marginBottom: 14, lineHeight: 1.5 }}>
-          One email. Tomorrow's day plan, everything we've found happening, openings, civic news. Once a day — that's the whole deal.
+          One email. A plan for the day, everything we've found happening, openings, civic news. Once a day — that's the whole deal.
         </div>
         {renderForm({ inputFontSize: 15, buttonPadding: "10px 22px", buttonFontSize: 14 })}
         {error && <div style={{ fontSize: 13, color: "#c0392b", marginTop: 8 }}>{error}</div>}
@@ -163,10 +163,10 @@ export default function NewsletterSignup({
     <>
       <div className="sbt-nl-inline">
         <div className="sbt-nl-inline-text">
-          <div className="sbt-nl-inline-eyebrow">Daily — by 6&nbsp;AM</div>
+          <div className="sbt-nl-inline-eyebrow">Daily at 6:00&nbsp;AM</div>
           <div className="sbt-nl-inline-headline">A fresh plan, every morning.</div>
           <div className="sbt-nl-inline-tagline">
-            Tomorrow's day plan + what we found happening today. One email. That's it.
+            A plan for the day + what we found happening today. One email. That's it.
           </div>
         </div>
         <div className="sbt-nl-inline-form">
