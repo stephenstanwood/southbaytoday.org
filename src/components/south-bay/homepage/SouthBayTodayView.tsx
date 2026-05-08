@@ -206,6 +206,17 @@ const PLAN_ANCHORS: City[] = CITIES
   .filter((c) => c.id !== "santa-cruz")
   .map((c) => c.id);
 
+const CITY_LABELS: Record<string, string> = Object.fromEntries(
+  CITIES.map((c) => [c.id, c.name]),
+);
+
+/** Convert a city slug to its display name (e.g. "san-jose" → "San Jose").
+ *  Falls back to a title-cased slug for any city not in CITIES. */
+function cityLabel(slug: string | null | undefined): string {
+  if (!slug) return "";
+  return CITY_LABELS[slug] || slug.split("-").map((s) => s[0]?.toUpperCase() + s.slice(1)).join(" ");
+}
+
 /** Pick a random plan anchor, preferring one that isn't the last one used. */
 function pickRandomAnchor(exclude?: City | null): City {
   const pool = exclude ? PLAN_ANCHORS.filter((c) => c !== exclude) : PLAN_ANCHORS;
@@ -1219,6 +1230,12 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
           {!(card.source === "event" && card.category === "events") && (
             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
           )}
+          {card.city && (
+            <>
+              <span style={{ fontSize: 9, color: "#ddd", fontWeight: 700 }}>·</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
+            </>
+          )}
           {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#E63946", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
         </div>
         <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{card.name}</h3>
@@ -1229,9 +1246,6 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
           </div>
         )}
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{card.blurb}</p>
-        {(card.costNote || card.cost) && (
-          <span style={{ display: "inline-block", marginTop: 5, fontSize: 10, fontWeight: 700, color: "#999", fontFamily: "'Inter', sans-serif", background: "#f5f5f5", padding: "2px 8px", borderRadius: 4 }}>{card.costNote || card.cost}</span>
-        )}
       </div>
     </>
   );

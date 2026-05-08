@@ -31,7 +31,7 @@ const CITY_NAMES = {
   "los-altos": "Los Altos", "milpitas": "Milpitas", "santa-cruz": "Santa Cruz",
 };
 
-function extractStreet(address) {
+function extractStreet(address, cityName) {
   if (!address) return null;
   const firstSeg = address.split(",")[0]?.trim();
   if (!firstSeg) return null;
@@ -41,6 +41,9 @@ function extractStreet(address) {
     .trim();
   if (!cleaned || cleaned.length < 3) return null;
   if (/^\d+$/.test(cleaned) || /^P\.?O\.?\s*Box/i.test(cleaned)) return null;
+  // Drop streets named after the city — "Saratoga library on Saratoga Ave"
+  // reads as redundant. The card already shows the city as a chip.
+  if (cityName && new RegExp(`^${cityName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}\\b`, "i").test(cleaned)) return null;
   return cleaned;
 }
 
@@ -215,8 +218,23 @@ function blurbForOutdoor(p, ctx) {
 
 function blurbForMuseum(p, ctx) {
   const { cityName, street } = ctx;
-  const type = lowerType(p.displayType || "museum");
-  return street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`;
+  const dt = (p.displayType || "").toLowerCase();
+  const isLibrary = /library/.test(dt);
+  const isGallery = /gallery|art museum/.test(dt);
+
+  if (isLibrary) {
+    const t = [
+      street ? `Public library on ${street} — open stacks, study tables, and quiet rooms.` : `${cityName}'s public library — open stacks, study tables, and quiet rooms.`,
+      `${cityName} library, two floors of books and a kids' corner.`,
+      `Free public library — easy hour with the kids or a quiet hour with a book.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isGallery) {
+    return street ? `${cityName} gallery on ${street}, low-key drop-in.` : `${cityName} gallery, low-key drop-in.`;
+  }
+  // Real museum
+  return street ? `${cityName} museum on ${street}, plan an hour or two.` : `${cityName} museum, plan an hour or two.`;
 }
 
 function blurbForShopping(p, ctx) {
@@ -255,7 +273,7 @@ let researchHits = 0, templateHits = 0;
 
 for (const p of places) {
   const cityName = CITY_NAMES[p.city] || p.city;
-  const street = extractStreet(p.address);
+  const street = extractStreet(p.address, cityName);
   const ctx = {
     cityName,
     street,
