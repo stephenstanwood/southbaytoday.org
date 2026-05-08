@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-07T23:09:53.771Z",
+      "generatedAt": "2026-05-08T23:09:31.827Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Apr 30 – May 7",
+      "dateRange": "May 1 – May 8",
       "stats": {
-        "total": 316,
-        "notable": 21,
-        "newUnits": 1128,
-        "totalValuation": 258602667
+        "total": 330,
+        "notable": 26,
+        "newUnits": 1130,
+        "totalValuation": 265641705
       },
       "permits": [
         {
@@ -63,6 +63,18 @@
           "subtype": "Apartment"
         },
         {
+          "id": "2025-099873-RS",
+          "address": "326 Battle Dance Dr",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Parcel B New Sfr Sb9",
+          "valuation": 352068,
+          "units": 1,
+          "issueDate": "2026-05-06",
+          "subtype": "Single-Family"
+        },
+        {
           "id": "2025-122641-RS",
           "address": "1363 Suffolk Dr #2",
           "category": "residential-new",
@@ -87,81 +99,57 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-138450-RS",
-          "address": "1421 Vallejo Dr #2",
+          "id": "2024-099377-RS",
+          "address": "1830 Cleveland Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Adu - 2nd Floor",
-          "valuation": 126310,
-          "units": 2,
-          "issueDate": "2026-05-01",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-145919-RS",
-          "address": "4589 Elmhurst Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached adu",
-          "valuation": 43118,
+          "description": "Detached adu",
+          "valuation": 145586,
           "units": 1,
-          "issueDate": "2026-05-04",
+          "issueDate": "2026-05-06",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-114533-CI",
-          "address": "1655 Berryessa Rd",
-          "category": "new-construction",
-          "categoryLabel": "New Construction",
+          "id": "2025-125046-RS",
+          "address": "360 Titleist Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Berryessa Family Apt(Bemp 100%) New Garage",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-04",
-          "subtype": "Closed Public Parking Garage"
+          "description": "New Detached adu",
+          "valuation": 117348,
+          "units": 1,
+          "issueDate": "2026-05-06",
+          "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-115351-CI",
-          "address": "185 Park Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
+          "id": "2024-095386-RS",
+          "address": "288 Turquesa Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Balance to Complete - New Retail/Parking Garage",
-          "valuation": 63800000,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Retail"
+          "description": "(Bepm 100)% Garage Conversion to Jadu",
+          "valuation": 76043,
+          "units": 1,
+          "issueDate": "2026-05-06",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-07T23:09:56.252Z",
+      "generatedAt": "2026-05-08T23:09:34.102Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Apr 30 – May 7",
+      "dateRange": "May 1 – May 8",
       "stats": {
-        "total": 93,
-        "notable": 6,
+        "total": 106,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01148",
-          "address": "3020 Higgins Pl",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01125",
           "address": "111 Emerson St",
@@ -177,6 +165,18 @@
         {
           "id": "26BLD-01149",
           "address": "580 Suzanne Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -211,15 +211,27 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00097",
-          "address": "500 Fulton St",
+          "id": "26BLD-01131",
+          "address": "290 W Charleston Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Minor remodel of home (129SF)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-04",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00104",
+          "address": "3210 Porter Dr",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the existing roof tiles with Class \"A\" asphalt shingles of a similar color. Tar and gravel flat roof to be replaced with a Polyfresko flat roof with a Polyglass underlayment. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "description": "THE PURPOSE OF THIS PROJECT IS TO SUPPLY ADDITIONAL ELECTRICAL POWER TO THE EXISTING BUILDING AT 3210 PORTER DRIVE TO SUPPORT NEW RESEARCH & DEVELOPMENT TENANT IMPROVEMENTS. SCOPE OF WORK INCLUDES INSTALLATION OF NEW ELECTRICAL TRANSFORMERS & SWITCHES AT 3210 PORTER DRIVE, ALONG WITH NEW CONDUIT EXTENDING ALONG PORTER DRIVE TO CONNECT TO THE SUBSTATION ON HANOVER DRIVE. A NEW ENCLOSURE IS PROPOSED TO SCREEN THE TRANSFORMERS, ALONG WITH NEW FENCING AND LANDSCAPE IMPROVEMENTS.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-04-30",
+          "issueDate": "2026-05-07",
           "subtype": "Over the Counter Approved"
         }
       ]
