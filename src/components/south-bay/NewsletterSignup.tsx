@@ -83,7 +83,7 @@ export default function NewsletterSignup({
         }}
       >
         <span style={{ fontSize: 12, color: "#666", fontWeight: 600, marginRight: 4 }}>
-          📬 One email a day
+          📬 One email a day, first thing in the morning
         </span>
         <input
           type="email"

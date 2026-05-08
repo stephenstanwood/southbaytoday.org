@@ -77,37 +77,9 @@ interface PlanResponse {
   invalidLockedIds?: string[];
 }
 
-type DismissType = "skip" | "hide";
-
-interface DismissedEntry {
-  type: DismissType;
-  /** Card name at dismiss time. Used as a fallback match key so a hide
-   *  survives an ID change (e.g. curated → Google Places re-keying). */
-  name?: string;
-  until?: string;
-  permanent?: boolean;
-}
-
 interface LocalState {
   kids: boolean;
-  dismissed: Record<string, DismissedEntry>;
-  locked: string[];
-  viewMode: "list" | "cards";
-  /** Rolling ledger of places/events we've shown the user. Lets the API
-   *  penalize recent repeats for up to 14 days so the same venue doesn't
-   *  anchor every day. Window matches plan-day's recentPenalty bands
-   *  (today/2d/7d/14d). Capped and auto-pruned on load. */
-  recentlyShown: RecentEntry[];
 }
-
-interface RecentEntry {
-  id: string;
-  name: string;
-  ts: number; // epoch ms
-}
-
-const RECENT_MAX = 200;
-const RECENT_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000;
 
 // ---------------------------------------------------------------------------
 // Design tokens
