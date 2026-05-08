@@ -736,7 +736,7 @@ export default function SouthBayTodayView(_props: Props) {
     const cutoffHour = BUCKET_PASSED_AFTER_HOUR[b];
     return Math.floor(nowMinutes / 60) >= cutoffHour;
   };
-  const visibleBuckets = BUCKET_ORDER.filter((b) => !(state.kids && b === "evening"));
+  const visibleBuckets = BUCKET_ORDER;
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>

@@ -934,43 +934,44 @@ async function pickBucketsWithClaude(
     if (parts.length) weekContextSection = `\n\nTHIS-WEEK CONTEXT:\n${parts.join("\n")}`;
   }
 
-  const bucketList = kids
-    ? "breakfast, morning, lunch, afternoon, dinner"
-    : "breakfast, morning, lunch, afternoon, dinner, evening";
-
   const prompt = `You are the day-planning engine for South Bay Today, a local guide for the South Bay region of California. Build a SIX-BUCKET "idea spark" plan, not an hour-by-hour schedule.
 
 Anchor city: ${cityName}. The candidate pool pulls from the whole South Bay — adjacent cities are fine when they cluster.
 
 It's ${todayLabel}. ${weather ? `Weather: ${weather}.` : ""}
-${kids ? "This plan is for a family WITH KIDS. Skip the EVENING bucket entirely — plan ends at dinner. Prioritize kid-friendly venues throughout." : "This plan is for adults WITHOUT KIDS."}
+${kids ? "This plan is for a family WITH KIDS. Every pick must be kid-friendly — no bars, no 21+ events, no late-only spots. Evening for kids is low-key: an early show, a stroll through a lit-up downtown, an ice cream stop, a park visit, a library evening event. Aim for things that wrap by 8 PM." : "This plan is for adults WITHOUT KIDS."}
 ${describePreferences(prefs)}
 ${lockedSection}${weekContextSection}
 
 CANDIDATE POOL:
 ${poolText}
 
-TASK: Pick ONE candidate per bucket from the pool above. The plan is a brainstorm — the user might do all six, some, or none. Each bucket should hold a venue or event the user could realistically slot into that part of the day.
+TASK: Fill all SIX buckets — every plan should have something in every slot. The plan is a brainstorm, not a tour: a user might do all six, some, or none. Each bucket should hold a venue or event the user could realistically slot into that part of the day.
 
-THE BUCKETS (${bucketList}):
+THE BUCKETS (breakfast, morning, lunch, afternoon, dinner, evening):
 - breakfast — coffee shop, bakery, casual breakfast restaurant. Venue should be open ~7–11 AM.
-- morning   — outdoor activity, museum, walk, market, gallery. ~9 AM–1 PM.
+- morning   — outdoor activity, museum, walk, market, gallery, library, playground. ~9 AM–1 PM.
 - lunch     — restaurant or casual food spot. ~11 AM–3 PM.
-- afternoon — outdoor activity, museum, shopping, gallery. ~1–6 PM.
+- afternoon — outdoor activity, museum, shopping, gallery, library, playground. ~1–6 PM.
 - dinner    — restaurant. ~5–9 PM.
-${kids ? "" : "- evening   — bar, show, late-night spot. ~6–10 PM.\n"}
+- evening   — push hard for an EVENT TODAY (concert, show, talk, late-opening exhibit) when the pool has one that fits. Otherwise fall back to a low-key spot: a park, a creekside trail at golden hour, a downtown stroll, a playground, an ice cream shop, a bookstore, a library reading room, a record store. ~6–10 PM (kids: ~6–8 PM).
+
+ALWAYS-FILL RULE — never skip a bucket. If breakfast has no perfect cafe, pick the best food candidate that's open then. If evening has no event, pick a park / playground / library / ice cream / bookstore / waterfront / overlook. A "go take a walk at X park" is a totally legitimate evening idea.
+
+VARIETY RULE — dig for gems. Don't anchor evening on the same park or library day after day. Across all six buckets, lean toward picks the user probably hasn't seen recently. Score-penalized "recently shown" candidates in the pool are deprioritized for a reason — pull from the broader pool when there's something fresh. Mix categories aggressively: if afternoon is outdoor, evening shouldn't also be outdoor unless the evening pick is genuinely a different vibe (golden-hour overlook vs. mid-day hike).
+
 RULES:
-- Pick ONE candidate per bucket. ONLY skip a bucket if the pool has nothing remotely fitting — a thoughtful 5-bucket plan beats a forced 6-bucket plan.
+- Pick ONE candidate per bucket.
 - breakfast / lunch / dinner are FOOD ONLY. Pick a restaurant, café, or bakery — never a park or museum.
 - morning / afternoon / evening are ACTIVITIES (or events). Never a sit-down restaurant.
 - Events with a fixed time (see "fits-bucket" hint) belong in the bucket their time matches. Don't move a 7 PM concert to the afternoon bucket.
-- Include AT LEAST ONE "EVENT TODAY" item if the pool has any — that's the local-guide differentiator.
-- Geographic clustering: aim for the venues to cluster (one or two cities) so a user who DOES want to do all six isn't driving in circles. But don't drop a great pick over a 20-minute drive. This is a soft preference, not a hard rule.
+- Include AT LEAST ONE "EVENT TODAY" item if the pool has any — that's the local-guide differentiator. Evening is the strongest candidate for an event slot.
+- Geographic clustering: aim for the venues to cluster (one or two cities) so a user who DOES want to do all six isn't driving in circles. But don't drop a great pick over a 20-minute drive.
 - Don't pick the same venue twice across buckets.
 - Don't pick an obvious chain ("Starbucks", "Olive Garden") when local options exist.
 - NEVER pick a "neighborhood" or "downtown area" — always a SPECIFIC place.
 - NEVER pick a venue (theater, amphitheater, stadium) unless it appears in the pool as an EVENT TODAY.
-${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS DINNER: Family-friendly venues only — no bars, no late-only spots." : ""}
+${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS EVENING: Library evening programs, family movie nights, downtown strolls, playgrounds, ice cream — no bars, no late-only spots. Pick something that wraps by 8 PM." : ""}
 - READ THE PRICE DATA: if a place is listed as $$$$ it is NOT "casual." Match your description to the actual price level.
 
 TONE — write like a friend texting an idea:
@@ -1027,14 +1028,12 @@ Return ONLY the JSON array. No explanation.`;
     const candidate = candidateMap.get(pick.id);
     if (!candidate) continue;
     if (usedIds.has(candidate.id)) continue;
-    if (kids && pick.bucket === "evening") continue; // safety net
 
     // Force event cards to the bucket their real time matches.
     let bucket: Bucket = pick.bucket;
     if (candidate.source === "event" && candidate.eventTime) {
       const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
       if (evBucket && evBucket !== pick.bucket) {
-        if (kids && evBucket === "evening") continue; // late event in kids mode
         if (usedBuckets.has(evBucket)) continue; // already filled
         logDecision({
           script: "plan-day",
@@ -1119,10 +1118,9 @@ Return ONLY the JSON array. No explanation.`;
       const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
       if (evBucket) bucket = evBucket;
     }
-    if (kids && bucket === "evening") bucket = "afternoon";
     if (usedBuckets.has(bucket)) {
       // Pick the first unused bucket as a fallback slot.
-      const open = BUCKET_ORDER.find((b) => !usedBuckets.has(b) && !(kids && b === "evening"));
+      const open = BUCKET_ORDER.find((b) => !usedBuckets.has(b));
       if (!open) continue;
       bucket = open;
     }
