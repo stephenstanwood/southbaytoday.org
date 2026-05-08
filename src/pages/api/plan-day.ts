@@ -1,20 +1,26 @@
 export const prerender = false;
 
 // ---------------------------------------------------------------------------
-// South Bay Today — Day-Planning Engine
+// South Bay Today — Day-Planning Engine (bucket version)
 // ---------------------------------------------------------------------------
 // POST /api/plan-day
-// Input:  { city, kids, lockedIds, dismissedIds, currentHour }
-// Output: { cards: [...], weather }
+// Input:  { city, kids, lockedCards, dismissedIds, planDate, ... }
+// Output: { cards: [...], weather, ... }
 //
+// Each plan is six "idea sparks" — not an hour-by-hour schedule:
+//   breakfast / lunch / dinner   (food)
+//   morning   / afternoon / evening (activity)
+//
+// Pipeline:
 // 1. Load places + today's events + weather
-// 2. Score & filter a candidate pool (~25 items)
-// 3. Call Claude Sonnet to sequence into a 5-6 card day plan
+// 2. Score & filter a candidate pool (~35 items)
+// 3. Call Claude Sonnet to fill the 6 buckets, one venue per bucket
+// 4. Validate venue hours fit the bucket window; drop kids-mode evening
 // ---------------------------------------------------------------------------
 
 import type { APIRoute } from "astro";
 import Anthropic from "@anthropic-ai/sdk";
-import { errJson, okJson, toErrMsg } from "../../lib/apiHelpers";
+import { errJson, okJson } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
@@ -22,6 +28,16 @@ import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
+import {
+  type Bucket,
+  BUCKET_ORDER,
+  BUCKET_LABELS,
+  BUCKET_TIME_WINDOWS,
+  MEAL_BUCKETS,
+  bucketForEvent,
+  bucketOrderIndex,
+  isBucket,
+} from "../../lib/south-bay/buckets";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
@@ -42,46 +58,37 @@ interface PlanRequest {
   city: City;
   kids: boolean;
   lockedIds?: string[];
-  /** Richer lock info: pairs an id with the current timeBlock so Claude can
-   *  anchor the plan around it (and the force-insert fallback uses the same
-   *  timeBlock instead of defaulting to 7 PM for places). Takes precedence
-   *  over lockedIds when both are sent. */
-  lockedCards?: Array<{ id: string; timeBlock?: string | null }>;
+  /** Richer lock info: pairs an id with the bucket the user locked it into.
+   *  Takes precedence over lockedIds when both are sent. timeBlock kept for
+   *  back-compat with older clients that haven't picked up the bucket schema. */
+  lockedCards?: Array<{ id: string; bucket?: Bucket | null; timeBlock?: string | null }>;
   dismissedIds?: string[];
   /** Names persisted alongside dismissedIds, normalized server-side and used
    *  to filter candidates whose ID may have changed since the user dismissed
-   *  them (curated → Google Places re-keying, etc.). Pairs with dismissedIds. */
+   *  them. Pairs with dismissedIds. */
   dismissedNames?: string[];
-  currentHour?: number; // 0-23, defaults to now
-  currentMinute?: number; // 0-59, used with currentHour to round start time to next :00/:30
-  planDate?: string;    // YYYY-MM-DD — plan for a specific date (default: today)
-  /** Bypass the 5-min in-memory plan cache — SHUFFLE sets this so each
-   *  click gets a freshly generated plan instead of a recent hit. */
+  /** Plan date in YYYY-MM-DD (PT). Default: today. */
+  planDate?: string;
+  /** Bypass the in-memory plan cache — SHUFFLE sets this so each click gets a
+   *  freshly generated plan. */
   noCache?: boolean;
   preferences?: UserPreferences;
-  /** Lowercase POI/event names to hard-exclude from this plan. Used by the
-   *  schedule generator to prevent the same venue anchoring multiple days in
-   *  the same week. */
+  /** Lowercase POI/event names to hard-exclude from this plan. */
   blockedNames?: string[];
-  /** Recently-shown ids/names the client has served. The scorer applies a
-   *  graduated penalty so the same venue doesn't anchor every day: today
-   *  is hardest, last-week fades to a nudge. Strings are treated as today's
-   *  picks; objects carry name + daysAgo so by-name matches (same venue,
-   *  different id record) get penalized too. Managed client-side by the
-   *  homepage ledger (localStorage, ~120 entries, 7-day window). */
+  /** Recently-shown ids/names. Score penalty fades over a two-week window. */
   recentlyShown?: Array<string | { id?: string; name?: string; daysAgo?: number }>;
-  /** City anchors used on recent shuffles — same shape/purpose as
-   *  recentlyShown but for anchor selection diversity. Currently informational
-   *  (client picks the anchor); kept here for future server-side use. */
+  /** Anchors used on recent shuffles — informational, kept for future use. */
   recentAnchors?: string[];
-  /** Week-level context so Claude can diversify across the batch. Optional —
-   *  only populated by generate-schedule.mjs when building a 10-day run. */
+  /** Week-level context so Claude can diversify across a 10-day batch.
+   *  Only populated by generate-schedule.mjs when batching. */
   weekContext?: {
-    /** Anchor cities already used this week (human names, e.g. "Palo Alto"). */
     anchorCities?: string[];
-    /** Per-category saturation counts across the batch so far. */
     categorySaturation?: Record<string, number>;
   };
+  /** LEGACY (unused by bucket pipeline). Older callers may still send
+   *  these — accepted for backwards compat but not interpreted. */
+  currentHour?: number;
+  currentMinute?: number;
 }
 
 interface Candidate {
@@ -91,9 +98,7 @@ interface Candidate {
   city: string;
   address: string;
   description?: string;
-  /** Ingest-time blurb from eventBlurbs.mjs (events only). Preferred source
-   *  for the card's visible blurb — stable across shuffles, Haiku-written
-   *  once per event. Falls through to description → fallbackBlurb() pool. */
+  /** Ingest-time blurb (events only) — preferred source for the card's blurb. */
   blurb?: string | null;
   why?: string;
   rating?: number | null;
@@ -113,8 +118,6 @@ interface Candidate {
   eventDate?: string;
   eventTime?: string | null;
   eventEndTime?: string | null;
-  /** Event duration in minutes. Derived from eventTime/eventEndTime when both
-   *  are parseable. null = unknown (e.g. ongoing exhibits, missing endTime). */
   eventDurationMin?: number | null;
   ongoing?: boolean;
   score: number;
@@ -127,6 +130,14 @@ interface DayCard {
   city: string;
   address: string;
   venue?: string | null;
+  /** Bucket slot for this card — the primary user-facing time signal. */
+  bucket: Bucket;
+  /** Real event time, only present when this card is an event with a fixed
+   *  start (e.g. "7:30 PM"). Used as a small display hint; never required. */
+  eventTime?: string | null;
+  /** Legacy display label kept for back-compat with old shared plans + the
+   *  /plan/<id> renderer. New cards put the bucket label here ("Breakfast")
+   *  so existing renderers that look for `timeBlock` still see something. */
   timeBlock: string;
   blurb: string;
   why: string;
@@ -139,9 +150,6 @@ interface DayCard {
   image?: string | null;
   source: "event" | "place";
   locked: boolean;
-  /** Breadcrumb for debugging — describes why this card ended up in the plan.
-   *  e.g. "claude:pool-rank-12 | score=15.4 | EVENT TODAY"
-   *  Surfaced via /plan/<id>?debug=1 and structured decision log. */
   rationale?: string;
 }
 
@@ -150,32 +158,20 @@ interface DayCard {
 // ---------------------------------------------------------------------------
 
 // santa-cruz is in CITY_MAP for POI/event display but excluded from plan-day
-// (case-by-case picks only, not full coverage with enough POIs to fill a plan)
+// (case-by-case picks only, not enough POIs to fill a plan).
 const VALID_CITIES = new Set(Object.keys(CITY_MAP).filter((c) => c !== "santa-cruz"));
 
-// Permanently-closed / never-recommend places + venues. Keyed by normalizeName()
-// so the match survives apostrophe/quote/ampersand variants. Add an entry here
-// (not in blockedNames) when a place is gone for good — this applies to every
-// plan, not just one shuffle.
 const PERMANENT_NAME_BLOCKLIST = new Set<string>([
   normalizeName("3Below Theaters"), // San Jose — closed
 ].filter(Boolean));
-const MAX_CARDS = 7;
-const CANDIDATE_POOL_SIZE = 35; // expanded region = bigger pool, more variety
 
-// Distance threshold in km for "nearby" places. The anchor city provides
-// flavor/centering, but stops can span neighboring cities — the whole south
-// bay reads as one region. 20km covers SJ ↔ Sunnyvale, Mountain View, Los
-// Altos, Cupertino — all reasonable driving distance. The prompt still
-// enforces geographic clustering so plans don't zigzag.
+const CANDIDATE_POOL_SIZE = 35;
+
+// 20 km covers the working radius (SJ ↔ Sunnyvale, Mountain View, Los Altos).
 const NEARBY_KM = 20;
 
 // Venue photo lookup — maps a normalized venue name to a photoRef from
-// places.json so events inherit photos from their host venue. Computed
-// once at module load (places.json is committed + imported statically).
-// Expect ~40% hit rate on event venues; campus building names (Stanford,
-// SCU sub-buildings) miss and fall through to the Unsplash category
-// fallback in the UI.
+// places.json so events inherit photos from their host venue.
 const VENUE_PHOTO_LOOKUP: Map<string, string> = (() => {
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   const map = new Map<string, string>();
@@ -191,11 +187,8 @@ function lookupVenuePhoto(venue: string | null | undefined): string | null {
   if (!venue) return null;
   const norm = venue.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   if (!norm) return null;
-  // Exact normalized match.
   const exact = VENUE_PHOTO_LOOKUP.get(norm);
   if (exact) return exact;
-  // Substring match — either the venue contains a place name or vice versa.
-  // Only consider place names ≥9 chars to avoid spurious hits on short words.
   for (const [placeName, photoRef] of VENUE_PHOTO_LOOKUP) {
     if (placeName.length < 9) continue;
     if (norm.includes(placeName) || placeName.includes(norm)) return photoRef;
@@ -203,7 +196,7 @@ function lookupVenuePhoto(venue: string | null | undefined): string | null {
   return null;
 }
 
-// In-memory plan cache: city:kids:hour → { data, ts }
+// In-memory plan cache: city:kids:date → { data, ts }
 const planCache = new Map<string, { data: any; ts: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
@@ -227,10 +220,6 @@ function todayStr(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
-// Category-aware fallback blurbs used when an event/place has no description
-// and we're force-inserting or replacing without a Claude-generated blurb.
-// Keep these varied + specific so cards never collapse to "Swing by X and
-// see what's going on" (which reads as filler, not recommendation).
 const FALLBACK_BLURB_POOL: Record<string, string[]> = {
   "event.food": [
     "Food event — grab something to eat and post up.",
@@ -272,7 +261,7 @@ const FALLBACK_BLURB_POOL: Record<string, string[]> = {
     "Low-key wellness drop-in.",
     "Wellness event — easy hour.",
   ],
-  "event.events": [ // community/family/education catchall
+  "event.events": [
     "Community event — free to drop in.",
     "Local gathering — everyone welcome.",
     "Free event, casual drop-in vibe.",
@@ -321,64 +310,17 @@ export function fallbackBlurb(
   const key = `${source}.${cat}`;
   const pool = FALLBACK_BLURB_POOL[key] || FALLBACK_BLURB_POOL[`${source}.events`] || [];
   if (pool.length === 0) {
-    // Last-ditch generic — still better than "swing by X".
     const at = venue && venue !== name ? ` at ${venue}` : "";
     return `Quick stop${at}.`;
   }
-  // Deterministic-but-varied: hash name so the same card gets the same
-  // blurb every render (no flicker on re-fetch) but different cards pick
-  // different templates.
   let h = 0;
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) | 0;
   return pool[Math.abs(h) % pool.length];
 }
 
-// Build a "HH:MM AM/PM - HH:MM AM/PM" timeBlock from an event's start time.
-// Prefers a given endTime; otherwise defaults to start + a category-aware
-// duration (sports run long; everything else gets 90 min). Used by both
-// sequenceWithClaude and padWithClaude to force event cards onto their actual
-// time regardless of what Claude picked.
-export function timeBlockFromEventTime(
-  eventTime: string | null | undefined,
-  eventEndTime?: string | null,
-  fallback = "7:00 PM - 8:30 PM",
-  category?: string | null,
-): string {
-  if (!eventTime) return fallback;
-  const startMatch = eventTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
-  if (!startMatch) return fallback;
-  const startH = parseHour(startMatch[1]);
-  if (startH === null) return startMatch[1];
-
-  // If we have an explicit endTime, use it verbatim.
-  if (eventEndTime) {
-    const endMatch = eventEndTime.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
-    if (endMatch) return `${startMatch[1]} - ${endMatch[1]}`;
-  }
-
-  // Sports games run 2-3 hours; bump the default so cards show a realistic
-  // window. Fetchers should set explicit endTime per sport, but if one slips
-  // through (or a hardcoded entry has none) this is a safer fallback than 90m.
-  const fallbackMin = (category || "").toLowerCase() === "sports" ? 180 : 90;
-  const startMin = parseInt(eventTime.match(/\d{1,2}:(\d{2})/)?.[1] || "0", 10);
-  const totalEndMin = startH * 60 + startMin + fallbackMin;
-  const endH = Math.floor(totalEndMin / 60) % 24;
-  const endMin = totalEndMin % 60;
-  const endAmPm = endH >= 12 ? "PM" : "AM";
-  const endHour12 = endH > 12 ? endH - 12 : endH === 0 ? 12 : endH;
-  return `${startMatch[1]} - ${endHour12}:${String(endMin).padStart(2, "0")} ${endAmPm}`;
-}
-
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 type DayKey = typeof DAY_KEYS[number];
 
-/**
- * Convert a YYYY-MM-DD date string to its short day key in PT.
- * Pass the plan's targetDate, NOT new Date() — generation runs at a different
- * time than the plan is for. Travieso (sat-only) slipping into a Thursday
- * plan was caused by hours helpers using `new Date()` (Saturday at gen time)
- * instead of the plan date (Thursday).
- */
 function dayKeyForDate(targetDate: string | null | undefined): DayKey {
   const d = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
   return d.toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short" })
@@ -386,17 +328,11 @@ function dayKeyForDate(targetDate: string | null | undefined): DayKey {
     .slice(0, 3) as DayKey;
 }
 
-/** Check if a place is open on `dayKey`. null hours = assume open (we lack data). */
 function isOpenOn(hours: Record<string, string> | null | undefined, dayKey: DayKey): boolean {
   if (!hours) return true;
   return dayKey in hours;
 }
 
-/**
- * Return the full list of (open, close) pairs for `dayKey`, in 24h hours.
- * Handles single and split ranges like "11:00-14:00,17:00-22:00".
- * Returns [] if closed that day or hours unknown.
- */
 function openRangesOn(hours: Record<string, string> | null | undefined, dayKey: DayKey): Array<[number, number]> {
   if (!hours) return [];
   const range = hours[dayKey];
@@ -412,10 +348,6 @@ function openRangesOn(hours: Record<string, string> | null | undefined, dayKey: 
   return out;
 }
 
-// Place types where business hours matter — slotting these at specific times
-// without verified hours risks suggesting a bakery before it opens or a bar
-// before noon. Parks and trails are excluded: they're typically dawn-to-dusk
-// and we don't want to drop them just because Google didn't return hours.
 const TIME_SENSITIVE_TYPES = new Set([
   "restaurant", "cafe", "bakery", "bar", "meal_takeaway", "food", "meal_delivery",
   "museum", "art_gallery", "movie_theater", "performing_arts_theater",
@@ -423,10 +355,6 @@ const TIME_SENSITIVE_TYPES = new Set([
   "aquarium", "zoo", "library", "ice_cream_shop", "coffee_shop",
 ]);
 
-// Categories that are inherently time-sensitive (clock-driven hours), even
-// when Google didn't supply place `types`. Used as a fallback so curated POIs
-// without hours data can't fall through to the daylight-default bucket — the
-// 2026-05-07 DishDash 7:30 AM incident.
 const TIME_SENSITIVE_CATEGORIES = new Set(["food", "arts"]);
 
 function isTimeSensitive(
@@ -438,43 +366,33 @@ function isTimeSensitive(
   return false;
 }
 
-/**
- * Check whether the given [startH, endH] block fits entirely within any of
- * the venue's open ranges today. For unknown hours, time-sensitive venues
- * (restaurants, museums, etc.) fail the check — we don't guess hours.
- * Outdoor/flexible types (parks, trails) get a daylight default.
- */
-function fitsInOpenRange(
+/** True if the venue is open for at least 60 minutes within the bucket's
+ *  time window. Time-sensitive venues with unknown hours fail (we don't
+ *  guess); flexible venues (parks, trails) pass with a daylight default. */
+function openDuringBucket(
   hours: Record<string, string> | null | undefined,
   dayKey: DayKey,
-  startH: number,
-  endH: number,
+  bucket: Bucket,
   types?: string[] | null,
   category?: string | null,
 ): boolean {
+  const [winStart, winEnd] = BUCKET_TIME_WINDOWS[bucket];
   if (!hours) {
     if (isTimeSensitive(types, category)) return false;
-    return startH >= 6 && endH <= 21; // outdoor/flexible: rough daylight band
+    // Outdoor/flexible: rough daylight band (6–21).
+    return winStart >= 6 && winEnd <= 22;
   }
   const ranges = openRangesOn(hours, dayKey);
-  if (ranges.length === 0) return false; // closed that day
+  if (ranges.length === 0) return false;
   for (const [o, c] of ranges) {
-    if (startH >= o && endH <= c) return true;
+    const overlapStart = Math.max(o, winStart);
+    const overlapEnd = Math.min(c, winEnd);
+    if (overlapEnd - overlapStart >= 1) return true; // ≥1h overlap
   }
   return false;
 }
 
-function currentPTHour(): number {
-  return new Date().toLocaleString("en-US", {
-    timeZone: "America/Los_Angeles",
-    hour: "numeric",
-    hour12: false,
-  }) as unknown as number;
-}
-
-/** Parse a time string like "9:00 PM" or "21:00" into 24h hour. Returns null if unparseable. */
 export function parseHour(timeStr: string): number | null {
-  // Try "H:MM AM/PM" format
   const ampm = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
   if (ampm) {
     let h = parseInt(ampm[1], 10);
@@ -482,15 +400,11 @@ export function parseHour(timeStr: string): number | null {
     if (ampm[3].toUpperCase() === "AM" && h === 12) h = 0;
     return h;
   }
-  // Try 24h "HH:MM"
   const mil = timeStr.match(/^(\d{1,2}):(\d{2})$/);
   if (mil) return parseInt(mil[1], 10);
   return null;
 }
 
-const KIDS_CURFEW_HOUR = 20; // 8 PM — nothing starting at or after this
-
-/** Convert "9:30 PM" / "21:30" / "9:30" into minutes-since-midnight. */
 function parseClockToMinutes(t: string | null | undefined): number | null {
   if (!t) return null;
   const m = t.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
@@ -500,11 +414,10 @@ function parseClockToMinutes(t: string | null | undefined): number | null {
   const ampm = (m[3] || "").toUpperCase();
   if (ampm === "PM" && h !== 12) h += 12;
   if (ampm === "AM" && h === 12) h = 0;
-  if (!ampm && h < 8) h += 12; // heuristic: 7:30 without AM/PM in evening events → 19:30
+  if (!ampm && h < 8) h += 12;
   return h * 60 + min;
 }
 
-/** Duration in minutes between start and end clock strings, or null if unparseable. */
 function computeDurationMin(start: string | null | undefined, end: string | null | undefined): number | null {
   const a = parseClockToMinutes(start);
   const b = parseClockToMinutes(end);
@@ -513,33 +426,12 @@ function computeDurationMin(start: string | null | undefined, end: string | null
   return d > 0 ? d : null;
 }
 
-/**
- * Round the plan's START time to the next :00 or :30 so users get a clean
- * clock-aligned start with a small buffer. If the current minute is already
- * on :00 or :30, add another 30 minutes. Examples:
- *   10:00 → 10:30  |  10:15 → 10:30  |  10:30 → 11:00  |  10:45 → 11:00
- *   15:53 → 16:00
- * Returns { startHour (0-23), startMinute (0 or 30), formatted (e.g. "4:00 PM") }.
- */
-function computeStartTime(hour: number, minute: number): { startHour: number; startMinute: number; formatted: string } {
-  const total = hour * 60 + minute;
-  let rounded = Math.ceil(total / 30) * 30;
-  if (total % 30 === 0) rounded += 30;
-  const startHour = Math.floor(rounded / 60) % 24;
-  const startMinute = rounded % 60;
-  const ampm = startHour >= 12 ? "PM" : "AM";
-  const h12 = startHour === 0 ? 12 : startHour > 12 ? startHour - 12 : startHour;
-  const formatted = `${h12}:${String(startMinute).padStart(2, "0")} ${ampm}`;
-  return { startHour, startMinute, formatted };
-}
-
 // ---------------------------------------------------------------------------
 // Weather fetch (internal, same-origin)
 // ---------------------------------------------------------------------------
 
 async function fetchWeather(city: City): Promise<{ weather: string | null; forecast: any[] | null }> {
   try {
-    // In serverless, we can't call ourselves — read from Open-Meteo directly
     const cityConfig = CITY_MAP[city];
     if (!cityConfig) return { weather: null, forecast: null };
 
@@ -563,9 +455,6 @@ async function fetchWeather(city: City): Promise<{ weather: string | null; forec
     const rainPct = data.daily.precipitation_probability_max[0] ?? 0;
     const weatherCode = data.current.weather_code as number;
 
-    // Simplified weather classification for scoring. Threshold lowered from
-    // 50% → 40% so a forecast like "40% chance of rain" also tips us toward
-    // indoor picks. Rain + cold is a noticeable quality lever for day plans.
     const isRainy = rainPct >= 40 || [61, 63, 65, 71, 73, 75, 80, 81, 82, 95, 96, 99].includes(weatherCode);
     const isHot = high > 90;
     const isCold = high < 55;
@@ -596,11 +485,6 @@ interface RecentPenaltyInput {
   byName: Map<string, number>;
 }
 
-/** Score penalty for a card we've already shown the user. Today's picks
- *  are punished hard enough to push them out of the top-35 pool entirely.
- *  Penalty fades over two weeks — the longer tail keeps "the same five
- *  curated spots" from anchoring every day even after the lower curated
- *  boost (was +25, now +10) makes them less dominant. */
 function recentPenalty(daysAgo: number): number {
   if (daysAgo <= 0) return 50;
   if (daysAgo <= 2) return 30;
@@ -609,17 +493,6 @@ function recentPenalty(daysAgo: number): number {
   return 0;
 }
 
-/** Score-weighted random sample of size n from a sorted-by-score array.
- *  Higher scores are more likely to be picked, but lower-scored candidates
- *  aren't zero-probability — that's the whole point. The previous logic
- *  was a deterministic top-N slice, which meant the same ~25 places anchored
- *  every plan because rank #1-#25 rarely shuffled past minor jitter.
- *
- *  Temperature controls flatness: higher = flatter distribution = more
- *  variety. With score range ~30-80 and temperature=18, the top-scored
- *  candidate is roughly 16x more likely to be picked than the bottom-scored
- *  one in the pool — peaked enough that quality wins, flat enough that
- *  position #2 doesn't always lose to position #1. */
 function weightedSample<T extends { score?: number }>(
   candidates: T[],
   n: number,
@@ -650,7 +523,6 @@ function weightedSample<T extends { score?: number }>(
 function scoreCandidates(
   candidates: Candidate[],
   weather: WeatherContext | null,
-  hour: number,
   kids: boolean,
   prefs?: UserPreferences,
   recent?: RecentPenaltyInput,
@@ -658,49 +530,23 @@ function scoreCandidates(
   for (const c of candidates) {
     let score = 0;
 
-    // --- Source priority ---
-    // Events are what makes a day feel "today" — without them every plan
-    // collapses to the same curated places. Score them above plain places
-    // so they reliably surface; capped by the prompt's "3 events max" rule
-    // and the back-to-back/category-balance validators downstream.
     if (c.source === "event") {
       score += 35;
       if (c.eventDate === todayStr()) score += 20;
-      // In kids mode, kid-tagged events (workshops, library classes,
-      // playdates) are exactly the local-guide differentiator — surface
-      // them hard so a Mon afternoon doesn't become "another park".
       if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
     }
 
-    // --- Rating boost ---
-    // Softened from +15/+5 → +10/+3. Curated places without a numeric
-    // rating (Rose Garden, Hakone, Shoreline, etc.) used to fall ~15
-    // points behind rated curated picks and systematically lost; they
-    // now get a parity baseline so the rotation actually rotates.
     if (c.rating && c.rating >= 4.5) score += 10;
     else if (c.rating && c.rating >= 4.0) score += 3;
     else if ((c as any).curated && (!c.rating || c.rating === 0)) score += 7;
 
-    // --- Curated places get a tiebreaker, not a moat. The previous +25 made
-    //     the same ~49 hand-curated places anchor every plan; +10 still helps
-    //     them surface above unrated noise but lets non-curated 4.5+ rated
-    //     places (rating boost +10) compete on equal footing. Pair this with
-    //     the per-day curated cap and weighted sampling below for the actual
-    //     rotation. ---
     if ((c as any).curated) score += 10;
 
-    // --- Food places get a meal-slot boost ---
     if (c.category === "food") score += 10;
 
-    // --- Kid-friendliness ---
     if (kids && c.kidFriendly === true) score += 15;
-    if (kids && c.kidFriendly === false) score -= 40; // strong penalty
+    if (kids && c.kidFriendly === false) score -= 40;
 
-    // --- Weather appropriateness ---
-    // Rain + cold are two of the biggest "wish they'd planned better" vectors.
-    // Hard-penalize outdoor picks when it's raining or cold, and give indoor
-    // picks a modest boost in categories that actually work when the weather
-    // is lousy (museums, entertainment, food, shopping).
     const INDOOR_RESCUE_CATS = new Set(["museum", "entertainment", "food", "shopping", "arts"]);
     if (weather) {
       if (weather.isRainy && c.indoorOutdoor === "outdoor") score -= 30;
@@ -712,64 +558,33 @@ function scoreCandidates(
       if (weather.isHot && c.indoorOutdoor === "indoor") score += 10;
     }
 
-    // --- Time slot relevance ---
-    const bestSlots = (c as any).bestSlots as string[] | undefined;
-    if (bestSlots?.length) {
-      const currentSlot = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
-      if (bestSlots.includes(currentSlot)) score += 10;
-    }
-
-    // --- Cost preference (free/low preferred) ---
     if (c.cost === "free") score += 5;
 
-    // --- In kids mode, heavily penalize expensive restaurants ---
     if (kids) {
       const price = (c as any).priceLevel || c.costNote || "";
       if (price === "PRICE_LEVEL_VERY_EXPENSIVE" || price === "$$$$") score -= 50;
       if (price === "PRICE_LEVEL_EXPENSIVE" || price === "$$$") score -= 20;
     }
 
-    // --- Penalize generic neighborhood entries — specific places are always better ---
     if (c.category === "neighborhood") score -= 30;
-
-    // --- Dial down wellness/spa hard — they crowd out more interesting picks.
-    //     -20 wasn't enough; wellness kept winning evening slots. -60 makes it
-    //     a last-resort option only.
     if (c.category === "wellness") score -= 60;
 
-    // --- Duration-aware penalty: a 6-hour festival starting at 4 PM leaves
-    //     only room for ~1 more stop. Demote very long events when we're
-    //     already late in the day so they don't hog the plan. ---
-    if (c.source === "event" && c.eventDurationMin && c.eventDurationMin > 240) {
-      if (hour >= 15) score -= 15; // after 3 PM, long events crowd the plan
-    }
-
-    // --- User preference adjustments (only when enough signal) ---
     if (prefs && prefs.totalInteractions >= 5) {
-      // Category affinity: ±15 based on learned preference
       const catScore = prefs.categoryScores[c.category];
       if (catScore !== undefined) score += catScore * 15;
 
-      // Cost bias: penalize/boost expensive items
       if (prefs.costBias !== 0) {
         const price = (c as any).priceLevel || c.costNote || "";
         const isExpensive = price === "PRICE_LEVEL_VERY_EXPENSIVE" || price === "$$$$" || price === "PRICE_LEVEL_EXPENSIVE" || price === "$$$";
-        if (isExpensive) score += prefs.costBias * 10; // negative bias → penalty
+        if (isExpensive) score += prefs.costBias * 10;
       }
 
-      // Outdoor bias
       if (prefs.outdoorBias !== 0 && c.indoorOutdoor) {
         if (c.indoorOutdoor === "outdoor") score += prefs.outdoorBias * 10;
         else if (c.indoorOutdoor === "indoor") score -= prefs.outdoorBias * 10;
       }
     }
 
-    // --- Recently-shown penalty (graduated). A 7-day ledger persists on
-    //     the client, so the same venue can't anchor every day. Today's
-    //     picks get -25 (hard enough to displace a dominant candidate),
-    //     last-2-days -15, last-week -7. Also matches by normalized
-    //     name so multi-record places (e.g. 6 "Los Gatos Creek Trail"
-    //     entries across cities) all get penalized together. ---
     if (recent) {
       const idPenalty = recent.byId.get(c.id) ?? 0;
       const nameKey = (c.name || "").toLowerCase().replace(/\s+/g, " ").trim();
@@ -777,8 +592,6 @@ function scoreCandidates(
       score -= Math.max(idPenalty, namePenalty);
     }
 
-    // --- Random jitter for variety. Widened from ±10 to ±25 so close
-    //     top-of-pool candidates actually reshuffle between loads. ---
     score += Math.random() * 25;
 
     c.score = score;
@@ -795,10 +608,8 @@ function buildCandidatePool(
   city: City,
   kids: boolean,
   dismissedIds: Set<string>,
-  lockedIds: Set<string>,
   targetDate?: string,
   blockedNames?: Set<string>,
-  startTimeContext?: { startHour: number; startMinute: number; formatted: string },
   dismissedNames?: Set<string>,
 ): Candidate[] {
   const candidates: Candidate[] = [];
@@ -812,17 +623,12 @@ function buildCandidatePool(
     if (!blockedNames || blockedNames.size === 0) return false;
     return blockedNames.has(n);
   };
-  // Per-user "Never" hides: filter by normalized name so a hide survives an
-  // ID change between sessions (curated → Google Places re-keying, etc.).
   const isDismissedByName = (name: string | null | undefined) => {
     if (!dismissedNames || dismissedNames.size === 0) return false;
     const n = normalizeName(name);
     return n ? dismissedNames.has(n) : false;
   };
 
-  // --- Events happening today or soon, in/near the city ---
-  // Defensive title blocklist — upstream generate-events.mjs should catch these,
-  // but enforce again here so any slip-through never lands in a day plan.
   const PLAN_TITLE_BLOCKLIST = [
     /\bpractice\b/i,
     /\brehearsal\b/i,
@@ -837,10 +643,6 @@ function buildCandidatePool(
     /\bstorytime\b/i,
   ];
   const events = (eventsData as any).events ?? [];
-  // Virtual events are never valid day-plan stops. We rely on the upstream
-  // generator to set evt.virtual, but fall back to title/description sniffing
-  // via the SHARED filter module so the plan pool is never contaminated even
-  // if generation missed a pattern.
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
     if (isDismissedByName(evt.title) || isDismissedByName(evt.venue)) continue;
@@ -849,48 +651,28 @@ function buildCandidatePool(
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;
     if (isBlocked(evt.title) || isBlocked(evt.venue)) continue;
 
-    // Only today's events — ongoing exhibitions ok, but skip future single-day events
     const isToday = evt.date === today;
-    const isOngoingExhibition = evt.ongoing && !evt.date; // no specific date = true ongoing
+    const isOngoingExhibition = evt.ongoing && !evt.date;
     const isOngoingPastStart = evt.ongoing && evt.date && evt.date <= today;
     if (!isToday && !isOngoingExhibition && !isOngoingPastStart) continue;
 
-    // Weekly-recurring guard: if an ongoing event has a past start date, it's a
-    // weekly-recurring slot (farmers markets, weekly meetups, etc.) — only
-    // include if today is the same day-of-week. Without this, a Sunday farmers
-    // market shows up in a Wednesday plan. (noon UTC avoids TZ edge cases.)
     if (isOngoingPastStart && !isToday) {
       const origDow = new Date(`${evt.date}T12:00:00Z`).getUTCDay();
       const todayDow = new Date(`${today}T12:00:00Z`).getUTCDay();
       if (origDow !== todayDow) continue;
     }
 
-    // Must be in our city or a nearby city
     const evtCity = evt.city as City;
     if (evtCity !== city) {
-      // Check distance if both have coords
       const evtCityConfig = CITY_MAP[evtCity];
       if (!evtCityConfig || !cityConfig) continue;
       const dist = haversineKm(cityConfig.lat, cityConfig.lon, evtCityConfig.lat, evtCityConfig.lon);
       if (dist > NEARBY_KM) continue;
     }
 
-    // In kids mode, skip events that start at or after curfew
-    if (kids && evt.time) {
-      const startH = parseHour(evt.time.split(/\s*-\s*/)[0]);
-      if (startH !== null && startH >= KIDS_CURFEW_HOUR) continue;
-    }
-
-    // Hard skip: in kids mode, events flagged kidFriendly:false don't belong
-    // in the candidate pool at all. Score-only penalties (-40) sometimes get
-    // overcome by a today-event boost + thin-pool padding, and an adult art
-    // lecture in a kids plan is worse than a thin plan.
+    // Hard skip: kids-mode events flagged kidFriendly:false.
     if (kids && evt.kidFriendly === false) continue;
 
-    // Defense in depth: an ingest-time mistag can flip kidFriendly to true
-    // for events that are clearly programmed for adults — the SCCL inference
-    // matches "families" in a parent-workshop description and gets fooled.
-    // Catch it at read time so we don't have to wait for the next event regen.
     if (kids && evt.title && /\b(parents?|caregivers?|adults?\s+only|seniors?|memoir|estate planning|tax\s+(prep|help)|investing|retirement|widow|grief|alzheimer|dementia|book club for adults|esl)\b/i.test(evt.title)) {
       logDecision({
         script: "plan-day",
@@ -902,10 +684,6 @@ function buildCandidatePool(
       continue;
     }
 
-    // Audience-age filter — events tagged at ingest as kids-only should
-    // never appear in adult plans, and 21+/drag/tasting events should never
-    // appear in kids plans. "all" (default for most events) passes both.
-    // Missing tag also passes — we never had it tagged before 2026-04-22.
     const aa = (evt as any).audienceAge as string | undefined;
     if (aa === "kids" && !kids) {
       logDecision({
@@ -928,31 +706,6 @@ function buildCandidatePool(
       continue;
     }
 
-    // Past-today filter: drop today's timed events whose end is before the
-    // plan's start. e.g. at 5 PM, don't surface a 3 PM library class —
-    // it's already over. Ongoing exhibits (no time, or already passed
-    // start-date) are handled above.
-    if (isToday && evt.time && startTimeContext) {
-      const startH = parseHour(evt.time.split(/\s*-\s*/)[0]);
-      if (startH !== null) {
-        const startM = (evt.time.match(/\d{1,2}:(\d{2})/)?.[1]) || "00";
-        const evtStartMin = startH * 60 + parseInt(startM, 10);
-        const evtDurationMin = computeDurationMin(evt.time, evt.endTime) || 90;
-        const evtEndMin = evtStartMin + evtDurationMin;
-        const planStartMin = startTimeContext.startHour * 60 + startTimeContext.startMinute;
-        if (evtEndMin <= planStartMin) {
-          logDecision({
-            script: "plan-day",
-            action: "dropped",
-            target: `${evt.title} (event:${evt.id})`,
-            reason: `event ended before plan start (evt ${evt.time} +${evtDurationMin}m, plan starts ${startTimeContext.formatted})`,
-            meta: { city, targetDate: today },
-          });
-          continue;
-        }
-      }
-    }
-
     candidates.push({
       id: `event:${evt.id}`,
       name: evt.title,
@@ -966,8 +719,6 @@ function buildCandidatePool(
       costNote: (evt as any).costNote || null,
       kidFriendly: evt.kidFriendly ?? null,
       url: evt.url,
-      // Prefer ingest-time image (OG scrape or Recraft) over venue-match photoRef.
-      // Falls back to live venue lookup for any event that predates the ingest pass.
       photoRef: (evt as any).photoRef || lookupVenuePhoto(evt.venue),
       image: (evt as any).image || null,
       source: "event",
@@ -980,8 +731,7 @@ function buildCandidatePool(
     });
   }
 
-  // --- Places from the pool ---
-  // Venue-only types: only useful if there's an actual event today
+  // --- Places ---
   const VENUE_ONLY_TYPES = new Set([
     "performing_arts_theater", "concert_hall", "amphitheatre",
     "auditorium", "opera_house", "philharmonic_hall",
@@ -989,7 +739,6 @@ function buildCandidatePool(
     "stadium", "arena", "live_music_venue", "comedy_club",
   ]);
 
-  // Places that should never appear in day plans
   const EXCLUDED_TYPES = new Set([
     "preschool", "child_care_agency", "day_care_center",
     "school", "primary_school", "secondary_school", "middle_school",
@@ -1011,39 +760,15 @@ function buildCandidatePool(
     if (isDismissedByName(p.name)) continue;
     if (isBlocked(p.name)) continue;
 
-    // Skip venue-only places — these need a specific event to be useful
     const primaryType = p.primaryType || "";
     const types: string[] = p.types || [];
-    if (VENUE_ONLY_TYPES.has(primaryType) || types.some((t: string) => VENUE_ONLY_TYPES.has(t))) {
-      continue;
-    }
-
-    // Skip places that don't belong in day plans (schools, services, etc.)
-    if (EXCLUDED_TYPES.has(primaryType) || types.some((t: string) => EXCLUDED_TYPES.has(t))) {
-      continue;
-    }
-
-    // Skip places that are closed on the plan's date
+    if (VENUE_ONLY_TYPES.has(primaryType) || types.some((t: string) => VENUE_ONLY_TYPES.has(t))) continue;
+    if (EXCLUDED_TYPES.has(primaryType) || types.some((t: string) => EXCLUDED_TYPES.has(t))) continue;
     if (!isOpenOn(p.hours, planDayKey)) continue;
-
-    // Skip generic "Downtown X" / neighborhood tiles — Stephen has asked for
-    // specific restaurants/shops as plan cards, not vague neighborhood names.
-    // Score penalty alone wasn't enough because the curated boost (+25) offset it.
     if ((p.category || "").toLowerCase() === "neighborhood") continue;
-
-    // District-name guard: shopping_mall / point_of_interest entries named
-    // "Main Street X" or "Downtown X" are functionally the same as the
-    // neighborhood category — generic district markers, not specific venues.
-    // Slotting "Main Street Cupertino" as the lunch stop is the failure mode
-    // we're catching here.
     if (/^(main\s+street|downtown|the\s+district|uptown)\s+\w+/i.test(p.name || "")) continue;
-
-    // Wellness/spa hard-skip in kids mode. The -60 score penalty mostly
-    // works but a thin Saratoga pool let "ShirSpa" anchor a kids evening
-    // — a spa is not a kids activity at any score, so drop them upstream.
     if (kids && (p.category || "").toLowerCase() === "wellness") continue;
 
-    // Filter to city or nearby
     if (p.city !== city) {
       if (!p.lat || !p.lng || !cityConfig) continue;
       const dist = haversineKm(cityConfig.lat, cityConfig.lon, p.lat, p.lng);
@@ -1056,7 +781,6 @@ function buildCandidatePool(
       category: canonicalCategory(p.category || "food"),
       city: p.city,
       address: p.address || "",
-      description: p.curated ? undefined : undefined, // places don't have descriptions
       why: p.why || undefined,
       rating: p.rating,
       cost: p.cost || null,
@@ -1066,10 +790,6 @@ function buildCandidatePool(
       indoorOutdoor: p.indoorOutdoor || null,
       url: p.url,
       mapsUrl: p.mapsUrl,
-      // Fall back to venue-match lookup — places.json has ~38 entries and
-      // occasional dupes where one row is missing photoRef. The lookup
-      // table picks any matching row's photoRef, so "DishDash" (null)
-      // inherits from "Dishdash Middle Eastern Cuisine" (populated).
       photoRef: p.photoRef || lookupVenuePhoto(p.name) || null,
       hours: p.hours,
       displayType: p.displayType || null,
@@ -1094,141 +814,106 @@ function priceLevelLabel(level: string): string | null {
 }
 
 // ---------------------------------------------------------------------------
-// Claude Haiku sequencing
+// Bucket sequencing — Claude picks one candidate per bucket
 // ---------------------------------------------------------------------------
 
-/** Build a short natural-language summary of user preferences for the prompt */
 function describePreferences(prefs?: UserPreferences): string {
   if (!prefs || prefs.totalInteractions < 5) return "";
   const parts: string[] = [];
-
-  // Top liked/disliked categories
   const sorted = Object.entries(prefs.categoryScores).sort((a, b) => b[1] - a[1]);
   const liked = sorted.filter(([, v]) => v > 0.2).slice(0, 2).map(([k]) => k);
   const disliked = sorted.filter(([, v]) => v < -0.2).slice(0, 2).map(([k]) => k);
   if (liked.length) parts.push(`enjoys ${liked.join(" and ")}`);
   if (disliked.length) parts.push(`tends to skip ${disliked.join(" and ")}`);
-
   if (prefs.outdoorBias > 0.3) parts.push("prefers outdoor activities");
   else if (prefs.outdoorBias < -0.3) parts.push("prefers indoor activities");
-
   if (prefs.costBias < -0.3) parts.push("budget-conscious");
   else if (prefs.costBias > 0.3) parts.push("happy to splurge");
-
   return parts.length ? `USER PREFERENCES: This person ${parts.join(", ")}.` : "";
 }
 
-async function sequenceWithClaude(
+/** Format a candidate for the prompt's pool listing. Returns null when the
+ *  candidate has hours data that says "closed today" — we never want Claude
+ *  to consider those. */
+function candidateLine(c: Candidate, dayKey: DayKey, index: number): string | null {
+  const parts = [`${index + 1}. [${c.id}] ${c.name}`];
+  parts.push(`category: ${c.category}`);
+  if (c.displayType) parts.push(`type: ${c.displayType}`);
+  parts.push(`city: ${c.city}`);
+  if (c.address) parts.push(`address: ${c.address}`);
+  if (c.source === "event" && !c.ongoing) parts.push(`EVENT TODAY`);
+  if (c.source === "event" && c.ongoing) parts.push(`ongoing exhibition`);
+  if (c.eventTime) {
+    const timeStr = c.eventEndTime ? `${c.eventTime}–${c.eventEndTime}` : c.eventTime;
+    parts.push(`time: ${timeStr}`);
+    const evBucket = bucketForEvent(c.eventTime, c.category);
+    if (evBucket) parts.push(`fits-bucket: ${evBucket}`);
+  }
+  if (c.rating) parts.push(`rating: ${c.rating}`);
+  if (c.cost) parts.push(`cost: ${c.cost}`);
+  if (c.costNote) parts.push(`price: ${c.costNote}`);
+  if (c.kidFriendly === true) parts.push(`kid-friendly`);
+  if (c.why) parts.push(`note: ${c.why}`);
+  if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
+  if (c.blurb) parts.push(`blurb: ${c.blurb}`);
+
+  const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
+  const placeTypes = (c as any).types as string[] | null | undefined;
+  const fmt = (h: number) => (h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : h === 0 ? "12 AM" : `${h} AM`);
+  if (hoursObj) {
+    const ranges = openRangesOn(hoursObj, dayKey);
+    if (ranges.length === 0) return null; // closed on plan date — omit
+    parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
+  } else if (isTimeSensitive(placeTypes, c.category)) {
+    return null; // time-sensitive with no hours data — drop
+  } else {
+    parts.push(`hours: daylight (no formal hours)`);
+  }
+  return parts.join(" | ");
+}
+
+interface BucketPick {
+  bucket: Bucket;
+  id: string;
+  blurb: string;
+  why: string;
+}
+
+async function pickBucketsWithClaude(
   pool: Candidate[],
-  lockedCandidates: Candidate[],
+  lockedCandidates: Array<{ candidate: Candidate; bucket: Bucket | null }>,
   weather: string | null,
   city: City,
   kids: boolean,
-  hour: number,
-  prefs?: UserPreferences,
-  targetDate?: string,
-  weekContext?: { anchorCities?: string[]; categorySaturation?: Record<string, number> },
-  startTime?: { startHour: number; startMinute: number; formatted: string },
-  lockedTimeMap?: Map<string, string>,
+  prefs: UserPreferences | undefined,
+  targetDate: string | undefined,
+  weekContext: PlanRequest["weekContext"],
+  dayKey: DayKey,
 ): Promise<DayCard[]> {
   const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
   const cityName = getCityName(city);
-  // The DOW/date we put in the prompt MUST be the plan's date, not generation
-  // time. Otherwise the model writes blurbs referencing the wrong day of week
-  // (e.g. "a great Sunday afternoon" on a Monday plan).
   const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
-  const today = planDateObj.toLocaleDateString("en-US", {
+  const todayLabel = planDateObj.toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles",
     weekday: "long",
     month: "long",
     day: "numeric",
   });
 
-  const timeSlot = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
-  // Fallback: if caller didn't pass a computed start time, round the hour
-  // ourselves so the prompt never says "15:00" when it's actually 3:53 PM.
-  const start = startTime ?? computeStartTime(hour, 0);
-  const startH = start.startHour;
-  const planDayKey = dayKeyForDate(targetDate);
-
-  // Format locked items. Avoid the word "LOCKED" in the section header
-  // because the model has echoed it back as a literal timeBlock value.
-  // If the caller supplied a timeBlock for a locked card (e.g. the user
-  // locked it at a specific slot), pass it to Claude so the plan is
-  // anchored to that time rather than Claude re-guessing.
   const lockedSection = lockedCandidates.length > 0
-    ? `\n\nMUST-INCLUDE ITEMS (plan around these — always include every one):\n${lockedCandidates.map((c) => {
-        const pinnedTime = lockedTimeMap?.get(c.id);
-        const timeHint = pinnedTime
-          ? ` — keep at ${pinnedTime}`
-          : c.eventTime ? ` at ${c.eventTime}` : "";
-        return `- ${c.name} (${c.category}, ${c.city})${timeHint}`;
+    ? `\n\nMUST-INCLUDE ITEMS (always include every one in the bucket noted):\n${lockedCandidates.map(({ candidate: c, bucket }) => {
+        const slot = bucket ? ` — bucket: ${bucket}` : "";
+        const evt = c.eventTime ? ` at ${c.eventTime}` : "";
+        return `- ${c.name} (${c.category}, ${c.city})${slot}${evt}`;
       }).join("\n")}`
     : "";
 
-  // Format candidate pool (top items by score)
   const topPool = pool.slice(0, CANDIDATE_POOL_SIZE);
   const poolText = topPool
-    .map((c, i) => {
-      const parts = [`${i + 1}. [${c.id}] ${c.name}`];
-      parts.push(`category: ${c.category}`);
-      if (c.displayType) parts.push(`type: ${c.displayType}`);
-      parts.push(`city: ${c.city}`);
-      if (c.address) parts.push(`address: ${c.address}`);
-      if (c.source === "event" && !c.ongoing) parts.push(`EVENT TODAY`);
-      if (c.source === "event" && c.ongoing) parts.push(`ongoing exhibition (daytime hours only — must end by 5 PM)`);
-      if (c.eventTime) {
-        // Include both start and end (or explicit duration) so Claude can
-        // size the timeBlock realistically. Without this, a 6-hour festival
-        // gets planned like a 1-hour talk and overlaps later cards.
-        const timeStr = c.eventEndTime
-          ? `${c.eventTime}–${c.eventEndTime}`
-          : c.eventTime;
-        parts.push(`time: ${timeStr}`);
-        if (c.eventDurationMin) {
-          const hrs = Math.round(c.eventDurationMin / 60 * 10) / 10;
-          parts.push(`duration: ${hrs}h`);
-        }
-      }
-      if (c.rating) parts.push(`rating: ${c.rating}`);
-      if (c.cost) parts.push(`cost: ${c.cost}`);
-      if (c.costNote) parts.push(`price: ${c.costNote}`);
-      if (c.kidFriendly === true) parts.push(`kid-friendly`);
-      if (c.why) parts.push(`note: ${c.why}`);
-      if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
-      // Pre-written blurb from ingest pass — if this candidate is picked,
-      // we'll overwrite Claude's blurb with this one anyway. Including it
-      // lets Claude know what the event actually is instead of inventing.
-      if (c.blurb) parts.push(`blurb: ${c.blurb}`);
-      // Only include places that are actually open. If hours data is present
-      // and there's no entry for today, skip entirely (closed today).
-      const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
-      const placeTypes = (c as any).types as string[] | null | undefined;
-      const fmt = (h: number) => (h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : h === 0 ? "12 AM" : `${h} AM`);
-      if (hoursObj) {
-        const ranges = openRangesOn(hoursObj, planDayKey);
-        if (ranges.length === 0) return null; // closed on plan date — omit from prompt
-        parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
-      } else if (isTimeSensitive(placeTypes, c.category)) {
-        // Time-sensitive (food, museum, etc.) with no verified hours: drop
-        // from the pool entirely. We won't guess a 9–8 window for a bakery.
-        // Category fallback catches curated POIs that don't carry Google
-        // `types` (the 2026-05-07 DishDash 7:30 AM bug).
-        return null;
-      } else {
-        // Outdoor/flexible (parks, trails, plazas): no formal hours, fine to
-        // schedule during daylight. Tell Claude that so it doesn't put a
-        // park at 11 PM.
-        parts.push(`hours: daylight (no formal hours)`);
-      }
-      return parts.join(" | ");
-    })
+    .map((c, i) => candidateLine(c, dayKey, i))
     .filter((line): line is string => line !== null)
     .join("\n");
 
-  // Week-level context — when the caller (generate-schedule.mjs) is batching
-  // multiple days, give Claude visibility into what's already in the batch so
-  // it can diversify rather than stacking the same venues/categories.
   let weekContextSection = "";
   if (weekContext) {
     const parts: string[] = [];
@@ -1239,106 +924,75 @@ async function sequenceWithClaude(
       const summary = Object.entries(counts)
         .map(([c, n]) => (n > 1 ? `${c} (${n}×)` : c))
         .join(", ");
-      parts.push(`Anchor cities already picked this week: ${summary}. Prefer neighborhoods that complement, not duplicate — but don't force a far-away city just to be different.`);
+      parts.push(`Anchor cities already picked this week: ${summary}. Prefer neighborhoods that complement.`);
     }
     const cats = weekContext.categorySaturation || {};
     const saturated = Object.entries(cats).filter(([, n]) => n >= 2);
     if (saturated.length) {
-      parts.push(`Category saturation so far this week: ${saturated.map(([c, n]) => `${c} ×${n}`).join(", ")}. Lean AWAY from these categories when there's an equally good alternative.`);
+      parts.push(`Category saturation: ${saturated.map(([c, n]) => `${c} ×${n}`).join(", ")}. Lean away when alternatives exist.`);
     }
-    if (parts.length) weekContextSection = `\n\nTHIS-WEEK CONTEXT (use to diversify):\n${parts.join("\n")}`;
+    if (parts.length) weekContextSection = `\n\nTHIS-WEEK CONTEXT:\n${parts.join("\n")}`;
   }
 
-  const prompt = `You are the day-planning engine for South Bay Today, a local guide for the South Bay region of California. Today's plan is anchored around ${cityName}, but the candidate pool pulls from the whole South Bay — stops in adjacent cities (Santa Clara, Campbell, Sunnyvale, Mountain View, Cupertino, Los Gatos, etc.) are totally fine when they cluster geographically.
+  const bucketList = kids
+    ? "breakfast, morning, lunch, afternoon, dinner"
+    : "breakfast, morning, lunch, afternoon, dinner, evening";
 
-It's ${today}, ${timeSlot}. The user is reading this at roughly ${start.formatted} — that's when the plan should START. ${weather ? `Weather: ${weather}.` : ""}
-${kids ? "This plan is for a family WITH KIDS. Prioritize kid-friendly activities." : "This plan is for adults WITHOUT KIDS."}
+  const prompt = `You are the day-planning engine for South Bay Today, a local guide for the South Bay region of California. Build a SIX-BUCKET "idea spark" plan, not an hour-by-hour schedule.
+
+Anchor city: ${cityName}. The candidate pool pulls from the whole South Bay — adjacent cities are fine when they cluster.
+
+It's ${todayLabel}. ${weather ? `Weather: ${weather}.` : ""}
+${kids ? "This plan is for a family WITH KIDS. Skip the EVENING bucket entirely — plan ends at dinner. Prioritize kid-friendly venues throughout." : "This plan is for adults WITHOUT KIDS."}
 ${describePreferences(prefs)}
 ${lockedSection}${weekContextSection}
 
 CANDIDATE POOL:
 ${poolText}
 
-TASK: Build a plan that starts at ${start.formatted} and fills the rest of the day until ~10 PM. The FIRST card's timeBlock MUST start at ${start.formatted} or later — nothing earlier. The user is reading this right now and cannot time-travel. Return a JSON array.
+TASK: Pick ONE candidate per bucket from the pool above. The plan is a brainstorm — the user might do all six, some, or none. Each bucket should hold a venue or event the user could realistically slot into that part of the day.
 
-DO NOT suggest things for "tomorrow."
-
-GEOGRAPHIC CLUSTERING (critical):
-- Anchor the plan around ${cityName}, but feel free to include stops in adjacent South Bay cities if they fit geographically.
-- Don't zigzag across the whole region. If you start in San Jose, don't send someone to Mountain View for lunch and back to SJ for dinner. Pick a cluster and stay in it — one or two neighboring cities max.
-- A tight 15-minute-drive radius is ideal. People can drive a little, but chaos plans that cross 30 miles between stops are broken.
-
-SHAPE — scale the plan to the remaining day, starting at ${start.formatted}:
-${startH < 10 ? `Full day ahead — target 6–7 cards:
-1. Breakfast/coffee (${start.formatted}–10 AM)
-2. Morning activity (10 AM–12 PM)
-3. Lunch (12–2 PM)
-4. Afternoon activity (2–5 PM)
-5. Happy hour / snack (5–6 PM, optional)
-6. Dinner (6–8 PM)
-7. Evening activity (8–10 PM)` : startH < 13 ? `Late morning start — target 5–6 cards. Skip breakfast:
-1. Brunch or early lunch at ${start.formatted}
-2. Afternoon activity (2–5 PM)
-3. Happy hour / snack (5–6 PM, optional)
-4. Dinner (6–8 PM)
-5. Evening activity (8–10 PM)` : startH < 16 ? `Afternoon start — target 4–5 cards. No breakfast, no brunch:
-1. First stop at ${start.formatted} — afternoon activity, late lunch, or café
-2. Another activity or happy hour (5–6 PM)
-3. Dinner (6–8 PM)
-4. Evening activity (8–10 PM)` : startH < 19 ? `Early evening start — target 3–4 cards:
-1. First stop at ${start.formatted} — happy hour, pre-dinner activity, or dinner itself
-2. Dinner (6–8 PM) if not already the first slot
-3. Evening activity (8–10 PM)` : `Evening start — target 2–3 cards:
-1. First stop at ${start.formatted} — dinner, drinks, or an event tonight
-2. Late activity (9–10 PM) — dessert, late bar, show`}
-
-The plan MUST honor the target card count for the time window. Don't force 6+ cards when only a few hours of day remain — a short realistic plan beats a fake full-day plan.
-
-CRITICAL RULES FOR BALANCE:
-- Items marked "EVENT TODAY" are specific things happening today. INCLUDE AT LEAST ONE if the pool has any — workshops, classes, library programs, small-town meetups, and one-off shows ARE the local-guide differentiator and the whole reason this isn't just a list of evergreen places. Skipping events to slot in "another park" or "another coffee shop" is a planning failure. Aim for 2-3 events when 2+ quality options exist. Cap at 3.
-- NO 3+ HOUR EMPTY GAPS. If you have a slot from 2 PM to 6 PM and the pool has a 4 PM event, USE IT — don't leave the afternoon dead. A plan with a 4-hour blank stretch is broken.
-- MEALS ARE REQUIRED: A full day plan MUST include food stops. If the plan starts before noon, include a breakfast/brunch/coffee spot. Always include lunch (noon-2pm). If the plan goes past 6pm, include dinner. Pick actual restaurants or cafes from the pool — not just "grab food somewhere."
-- The ideal plan is: activity → food → activity → food → activity. Alternate between doing things and eating.
-
+THE BUCKETS (${bucketList}):
+- breakfast — coffee shop, bakery, casual breakfast restaurant. Venue should be open ~7–11 AM.
+- morning   — outdoor activity, museum, walk, market, gallery. ~9 AM–1 PM.
+- lunch     — restaurant or casual food spot. ~11 AM–3 PM.
+- afternoon — outdoor activity, museum, shopping, gallery. ~1–6 PM.
+- dinner    — restaurant. ~5–9 PM.
+${kids ? "" : "- evening   — bar, show, late-night spot. ~6–10 PM.\n"}
 RULES:
-- The FIRST card's timeBlock MUST start at ${start.formatted} or later. Never schedule anything before ${start.formatted}.
-- Don't schedule things in the past
-- Events with listed times are anchors — schedule around them
-- If an event has no listed time, pick a reasonable slot for it
-- NEVER put two items of the same category back-to-back. No two parks in a row, no two food stops in a row. The only food-after-food that's OK is lunch + dinner with at least 3 hours between them — eating a sit-down meal and then immediately going to another restaurant is a nonsense plan ("have lunch, then go eat crab" is the kind of thing you must never ship).
-- Max 2 of any single category in the entire plan. A day with 3 parks is a bad day plan.
-- Geographic clustering — don't zigzag across the region
-- Time blocks should be realistic (meals: 1-1.5hr, museums: 2hr, parks: 1-2hr, events: per schedule)
-- Match places to appropriate time slots: cafes/coffee for morning, restaurants for lunch/dinner, parks for daytime, bars for evening
-- NEVER suggest a sit-down restaurant for "morning coffee" — use actual cafes or coffee shops instead
-- NEVER pick a "neighborhood" or "downtown area" as a card — always pick a SPECIFIC restaurant, cafe, park, museum, or venue instead. "Grab lunch at Luna Mexican Kitchen" is great; "Go to Downtown Campbell" is useless to a local.
-- NEVER schedule a place after its closing time. If a place says "closes: 4 PM", your time block must END by 4 PM at the latest. A museum that closes at 4:30 PM cannot be a 9 PM activity.
-- Only suggest a venue (theater, amphitheater, stadium) if it appears as an EVENT in the pool with a specific show/game today
-${kids ? "- Kid-friendly is essential. Skip anything adults-only.\n- KIDS EVENTS: Workshops, library classes, story times, kid-tagged playdates, and family events are exactly what a parent is looking for. Prioritize these over generic park-then-coffee filler. If the pool has a 4 PM kids workshop, don't drop it for another playground.\n- BUDGET: Kids mode = casual and affordable. Never suggest $$$$ restaurants. Prefer $ and $$ spots.\n- CURFEW: Last activity must END by 9:00 PM. Kids need to be home by 9. Never schedule anything starting after 8:00 PM." : ""}
+- Pick ONE candidate per bucket. ONLY skip a bucket if the pool has nothing remotely fitting — a thoughtful 5-bucket plan beats a forced 6-bucket plan.
+- breakfast / lunch / dinner are FOOD ONLY. Pick a restaurant, café, or bakery — never a park or museum.
+- morning / afternoon / evening are ACTIVITIES (or events). Never a sit-down restaurant.
+- Events with a fixed time (see "fits-bucket" hint) belong in the bucket their time matches. Don't move a 7 PM concert to the afternoon bucket.
+- Include AT LEAST ONE "EVENT TODAY" item if the pool has any — that's the local-guide differentiator.
+- Geographic clustering: aim for the venues to cluster (one or two cities) so a user who DOES want to do all six isn't driving in circles. But don't drop a great pick over a 20-minute drive. This is a soft preference, not a hard rule.
+- Don't pick the same venue twice across buckets.
+- Don't pick an obvious chain ("Starbucks", "Olive Garden") when local options exist.
+- NEVER pick a "neighborhood" or "downtown area" — always a SPECIFIC place.
+- NEVER pick a venue (theater, amphitheater, stadium) unless it appears in the pool as an EVENT TODAY.
+${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS DINNER: Family-friendly venues only — no bars, no late-only spots." : ""}
 - READ THE PRICE DATA: if a place is listed as $$$$ it is NOT "casual." Match your description to the actual price level.
 
-TONE: Write like a friend texting a plan, not a travel brochure or AI assistant.
-- "blurb": what to actually DO at THAT SPECIFIC PLACE (order the tri-tip sandwich, hike the upper loop, sit on the patio). The blurb MUST describe the place named by that ID — never describe a different place in the blurb. If you don't know what the place offers, keep the blurb generic for that type (e.g. "Try the local favorite dishes" for a restaurant you don't know).
-- "why": one casual sentence. "Perfect weather for it" or "you won't find better ramen" — NOT "this is a one-time event that makes today unforgettable"
-- NEVER say: "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery", "right now"
-- NEVER mention star ratings, review scores, or rating numbers. No "4.7 stars", "rated 4.5", "highly rated". It's tacky. Just recommend confidently.
-- NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "zero travel time", "short drive", "easy drive". The user doesn't need you to justify logistics.
-- NEVER fabricate details not in the data — don't assume drop-in availability, class schedules, or specific menu items unless the data says so
-- NEVER describe a place as being "in" a city it's not in — check the city field
-- NEVER hedge or qualify — just recommend it confidently
-- Vary your sentence structure. Do NOT use an em dash (—) in every blurb. Mix periods, commas, and short sentences. If you catch yourself reaching for "—", use a period instead.
+TONE — write like a friend texting an idea:
+- "blurb": one sentence about what to actually DO at THIS specific place (order the tri-tip sandwich, hike the upper loop, sit on the patio). The blurb MUST describe the place named by the id you picked — never describe a different place.
+- "why": one short sentence — "perfect weather for it" or "you won't find better ramen". Never "this is a one-time event that makes today unforgettable" — banned.
+- NEVER say: "right now", "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery"
+- NEVER mention star ratings or review scores.
+- NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "short drive".
+- NEVER fabricate details not in the data — no specific menu items unless the data lists them, no class schedules, no opening hours.
+- NEVER describe a place as being "in" a city it's not in.
+- Vary your sentence structure. Don't lean on em dashes (—) — mix periods, commas, short sentences.
 
-OUTPUT FORMAT (JSON array, no markdown fences):
+OUTPUT (JSON array, no markdown fences, one entry per filled bucket):
 [
   {
+    "bucket": "breakfast",
     "id": "place:google-id-or-event:event-id",
-    "timeBlock": "11:30 AM - 1:00 PM",
-    "blurb": "One sentence about what to do here today.",
+    "blurb": "One sentence about what to do here.",
     "why": "One sentence about why this is a great pick."
-  }
+  },
+  ...
 ]
-
-timeBlock MUST be a literal time range like "7:00 PM - 8:30 PM". Never write "LOCKED", "TBD", "all day", or any placeholder word — always a real clock range with AM/PM.
 
 Return ONLY the JSON array. No explanation.`;
 
@@ -1351,58 +1005,61 @@ Return ONLY the JSON array. No explanation.`;
   const text = extractText(response.content);
   const cleaned = stripFences(text);
 
-  let picks: Array<{ id: string; timeBlock: string; blurb: string; why: string }>;
+  let picks: BucketPick[];
   try {
     picks = JSON.parse(cleaned);
   } catch {
     throw new Error(`Failed to parse Claude response: ${cleaned.slice(0, 200)}`);
   }
 
-  // Merge picks with candidate data
-  const allCandidates = [...lockedCandidates, ...topPool];
+  const allCandidates = [...lockedCandidates.map((l) => l.candidate), ...topPool];
   const candidateMap = new Map(allCandidates.map((c) => [c.id, c]));
-
-  // Validate a timeBlock string matches the expected format. Guards against
-  // the model echoing back "LOCKED", "TBD", or other placeholder strings
-  // instead of an actual time range.
-  const isValidTimeBlock = (tb: string | null | undefined): boolean => {
-    if (!tb) return false;
-    return /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(tb);
-  };
-
-  // Map id → pool rank (1-based) for the rationale breadcrumb.
+  const lockedIdSet = new Set(lockedCandidates.map((l) => l.candidate.id));
   const poolRank = new Map(topPool.map((c, i) => [c.id, i + 1]));
 
   const cards: DayCard[] = [];
+  const usedBuckets = new Set<Bucket>();
+  const usedIds = new Set<string>();
+
   for (const pick of picks) {
+    if (!isBucket(pick.bucket)) continue;
+    if (usedBuckets.has(pick.bucket)) continue; // dedup
     const candidate = candidateMap.get(pick.id);
     if (!candidate) continue;
+    if (usedIds.has(candidate.id)) continue;
+    if (kids && pick.bucket === "evening") continue; // safety net
 
-    // Force event cards to use the event's actual start time — Claude has
-    // shown a habit of parking events in convenient slots ("Kids Knitting
-    // 8:30 PM" for an event that was really at 3 PM). Events have a known
-    // real-world time; Claude doesn't get to rewrite it. Only places (no
-    // eventTime) get Claude's chosen timeBlock.
-    let timeBlock: string;
+    // Force event cards to the bucket their real time matches.
+    let bucket: Bucket = pick.bucket;
     if (candidate.source === "event" && candidate.eventTime) {
-      const forced = timeBlockFromEventTime(candidate.eventTime, candidate.eventEndTime, undefined, candidate.category);
-      if (pick.timeBlock && pick.timeBlock !== forced) {
+      const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
+      if (evBucket && evBucket !== pick.bucket) {
+        if (kids && evBucket === "evening") continue; // late event in kids mode
+        if (usedBuckets.has(evBucket)) continue; // already filled
         logDecision({
           script: "plan-day",
           action: "autofixed",
           target: `${candidate.name} (${candidate.id})`,
-          reason: `forced event timeBlock: claude said "${pick.timeBlock}", actual is "${forced}"`,
+          reason: `event time → bucket: claude said "${pick.bucket}", real time ${candidate.eventTime} → "${evBucket}"`,
           meta: { city, targetDate, eventTime: candidate.eventTime },
         });
+        bucket = evBucket;
       }
-      timeBlock = forced;
-    } else {
-      timeBlock = isValidTimeBlock(pick.timeBlock)
-        ? pick.timeBlock
-        : timeBlockFromEventTime(candidate.eventTime, undefined, undefined, candidate.category);
     }
 
-    const isLocked = lockedCandidates.some((l) => l.id === candidate.id);
+    // Meal/activity guard — meal buckets are food-only.
+    if (MEAL_BUCKETS.has(bucket) && candidate.category !== "food" && candidate.source === "place") {
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${candidate.name} (${candidate.id})`,
+        reason: `non-food place in meal bucket "${bucket}"`,
+        meta: { city, targetDate },
+      });
+      continue;
+    }
+
+    const isLocked = lockedIdSet.has(candidate.id);
     const rank = poolRank.get(candidate.id);
     const rationaleParts: string[] = [];
     if (isLocked) rationaleParts.push("locked-by-caller");
@@ -1410,14 +1067,8 @@ Return ONLY the JSON array. No explanation.`;
     else rationaleParts.push("claude:pick");
     if (candidate.source === "event") rationaleParts.push(candidate.ongoing ? "ongoing-exhibit" : "event-today");
     if (candidate.rating) rationaleParts.push(`rating=${candidate.rating}`);
-    if (candidate.category) rationaleParts.push(`cat=${candidate.category}`);
-    const rationale = rationaleParts.join(" | ");
+    if (candidate.category) rationaleParts.push(`bucket=${bucket}`);
 
-    // Blurb precedence for cards: ingest-time blurb (stable across shuffles,
-    // Haiku-written with the real description for context) > Claude's per-run
-    // improvisation > cached description prose > category fallback pool.
-    // Events with ingest blurbs never drift into "Swing by X and see what's
-    // going on" territory.
     const cardBlurb =
       candidate.blurb ||
       pick.blurb ||
@@ -1430,7 +1081,9 @@ Return ONLY the JSON array. No explanation.`;
       category: candidate.category,
       city: candidate.city,
       address: candidate.address,
-      timeBlock,
+      bucket,
+      eventTime: candidate.eventTime || null,
+      timeBlock: BUCKET_LABELS[bucket],
       blurb: cardBlurb,
       why: pick.why,
       url: candidate.url,
@@ -1443,149 +1096,74 @@ Return ONLY the JSON array. No explanation.`;
       venue: candidate.venue || null,
       source: candidate.source,
       locked: isLocked,
-      rationale,
+      rationale: rationaleParts.join(" | "),
     });
+
+    usedBuckets.add(bucket);
+    usedIds.add(candidate.id);
 
     logDecision({
       script: "plan-day",
       action: "picked",
       target: `${candidate.name} (${candidate.id})`,
-      reason: rationale,
-      meta: { city, targetDate, timeBlock, kids },
+      reason: rationaleParts.join(" | "),
+      meta: { city, targetDate, bucket, kids },
     });
   }
 
-  // Post-process: force locked items into the plan if Claude forgot them.
-  // Time precedence: caller-pinned timeBlock > event's scheduled time >
-  // fallback slot. This keeps a place locked at 10:30 AM from drifting
-  // to a default 7 PM slot.
-  for (const locked of lockedCandidates) {
-    if (!cards.some((c) => c.id === locked.id)) {
-      console.log(`[plan-day] forcing locked item: ${locked.name}`);
-      const pinnedTime = lockedTimeMap?.get(locked.id);
-      const timeBlock = pinnedTime || timeBlockFromEventTime(locked.eventTime, undefined, undefined, locked.category);
-      cards.push({
-        id: locked.id,
-        name: locked.name,
-        category: locked.category,
-        city: locked.city,
-        address: locked.address,
-        timeBlock,
-        blurb: locked.blurb || locked.description?.slice(0, 200) || fallbackBlurb(locked.source, locked.category, locked.name, locked.venue),
-        why: locked.why || "This is the one the day is built around.",
-        url: locked.url,
-        mapsUrl: locked.mapsUrl,
-        cost: locked.cost,
-        costNote: kids && locked.kidsCostNote ? locked.kidsCostNote : locked.costNote,
-        kidsCostNote: locked.kidsCostNote,
-        photoRef: (locked as any).photoRef || null,
-        venue: locked.venue || null,
-        source: locked.source,
-        locked: true,
-        rationale: "locked-force-insert | claude-omitted",
-      });
-      logDecision({
-        script: "plan-day",
-        action: "force-inserted",
-        target: `${locked.name} (${locked.id})`,
-        reason: "locked item missing from Claude output",
-        meta: { city, targetDate },
-      });
+  // Force locked items that Claude omitted into the plan.
+  for (const { candidate, bucket: pinned } of lockedCandidates) {
+    if (usedIds.has(candidate.id)) continue;
+    let bucket: Bucket = pinned ?? "afternoon";
+    if (candidate.source === "event" && candidate.eventTime) {
+      const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
+      if (evBucket) bucket = evBucket;
     }
+    if (kids && bucket === "evening") bucket = "afternoon";
+    if (usedBuckets.has(bucket)) {
+      // Pick the first unused bucket as a fallback slot.
+      const open = BUCKET_ORDER.find((b) => !usedBuckets.has(b) && !(kids && b === "evening"));
+      if (!open) continue;
+      bucket = open;
+    }
+
+    cards.push({
+      id: candidate.id,
+      name: candidate.name,
+      category: candidate.category,
+      city: candidate.city,
+      address: candidate.address,
+      bucket,
+      eventTime: candidate.eventTime || null,
+      timeBlock: BUCKET_LABELS[bucket],
+      blurb: candidate.blurb || candidate.description?.slice(0, 200) || fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue),
+      why: candidate.why || "This is the one the day is built around.",
+      url: candidate.url,
+      mapsUrl: candidate.mapsUrl,
+      cost: candidate.cost,
+      costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
+      kidsCostNote: candidate.kidsCostNote,
+      photoRef: (candidate as any).photoRef || null,
+      image: (candidate as any).image || null,
+      venue: candidate.venue || null,
+      source: candidate.source,
+      locked: true,
+      rationale: "locked-force-insert | claude-omitted",
+    });
+    usedBuckets.add(bucket);
+    usedIds.add(candidate.id);
+    logDecision({
+      script: "plan-day",
+      action: "force-inserted",
+      target: `${candidate.name} (${candidate.id})`,
+      reason: "locked item missing from Claude output",
+      meta: { city, targetDate, bucket },
+    });
   }
 
-  // Re-sort chronologically after forcing locked items
-  cards.sort((a, b) => {
-    const aH = parseHour(a.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-    const bH = parseHour(b.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-    return aH - bH;
-  });
-
-  // Post-process: strip any card whose timeBlock starts before the plan's
-  // computed start time. Claude occasionally disregards the prompt and tries
-  // to fill a "full day" shape even when we asked for current-time-through-EOD.
-  if (startTime) {
-    const before = cards.length;
-    const startTotalMin = startTime.startHour * 60 + startTime.startMinute;
-    for (let i = cards.length - 1; i >= 0; i--) {
-      if (cards[i].locked) continue;
-      const tb = cards[i].timeBlock.split(/\s*-\s*/)[0];
-      // Reuse parseHour, but we need minutes too — parse manually
-      const m = tb.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-      if (!m) continue;
-      let h = parseInt(m[1], 10);
-      const min = parseInt(m[2], 10);
-      const pm = m[3].toUpperCase() === "PM";
-      if (pm && h !== 12) h += 12;
-      if (!pm && h === 12) h = 0;
-      if (h * 60 + min < startTotalMin) {
-        logDecision({
-          script: "plan-day",
-          action: "dropped",
-          target: `${cards[i].name} (${cards[i].id})`,
-          reason: `starts at ${tb} — before plan start time ${startTime.formatted}`,
-          meta: { city, targetDate, startHour: startTime.startHour },
-        });
-        cards.splice(i, 1);
-      }
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] past-start filter: dropped ${before - cards.length} card(s) starting before ${startTime.formatted}`);
-    }
-  }
-
-  // Post-process: enforce kids curfew — drop any card starting at or after 8 PM
-  if (kids) {
-    const before = cards.length;
-    for (let i = cards.length - 1; i >= 0; i--) {
-      if (cards[i].locked) continue;
-      const startTime = cards[i].timeBlock.split(/\s*-\s*/)[0];
-      const h = parseHour(startTime);
-      // Malformed timeBlock is treated as a drop-worthy failure in kids mode:
-      // we can't prove it's before curfew, and shipping an unparseable time
-      // to a kids plan is worse than dropping one card.
-      if (h === null) {
-        console.warn(`[plan-day] kids curfew: unparseable timeBlock "${cards[i].timeBlock}" for ${cards[i].name} — dropping`);
-        logDecision({
-          script: "plan-day",
-          action: "dropped",
-          target: `${cards[i].name} (${cards[i].id})`,
-          reason: `kids curfew — unparseable timeBlock "${cards[i].timeBlock}"`,
-          meta: { city, targetDate, kids: true },
-        });
-        cards.splice(i, 1);
-        continue;
-      }
-      if (h >= KIDS_CURFEW_HOUR) {
-        logDecision({
-          script: "plan-day",
-          action: "dropped",
-          target: `${cards[i].name} (${cards[i].id})`,
-          reason: `kids curfew — starts at ${startTime}, cutoff ${KIDS_CURFEW_HOUR}:00`,
-          meta: { city, targetDate, kids: true },
-        });
-        cards.splice(i, 1);
-      }
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] kids curfew: dropped ${before - cards.length} card(s) (past curfew or malformed time)`);
-    }
-  }
-
-  // Post-process: detect blurb↔card mismatches. Sometimes Claude returns a
-  // pick with id of one place but a blurb describing a different place in
-  // the pool. The merge step uses the id to look up the candidate but keeps
-  // the wrong blurb verbatim, producing cards like:
-  //   "The Tech Interactive" + "Spend hours at the Rosicrucian Egyptian Museum"
-  //
-  // New rule: only drop if the blurb clearly describes a DIFFERENT pool
-  // candidate (contains that candidate's distinctive name). Otherwise keep
-  // it — generic-sounding blurbs for locally-vague venues like "Main Street
-  // Cupertino" no longer get yanked because the name had no long unique word.
+  // Drop blurb↔card mismatches (blurb describes a different pool candidate).
   {
     const before = cards.length;
-    // Pre-compute "distinctive tokens" per pool candidate: long words (>=5
-    // chars) from the venue name that aren't city names or generic fillers.
     const CITY_TOKENS = new Set([
       "san", "jose", "san-jose", "los", "gatos", "palo", "alto", "santa",
       "clara", "mountain", "view", "cupertino", "sunnyvale", "milpitas",
@@ -1595,12 +1173,12 @@ Return ONLY the JSON array. No explanation.`;
       "market", "museum", "center", "street", "avenue", "park", "plaza",
       "restaurant", "cafe", "bar", "library", "community",
     ]);
-    const distinctive = (name: string): string[] => {
-      return (name || "")
+    const distinctive = (name: string): string[] =>
+      (name || "")
         .toLowerCase()
         .split(/[^a-z0-9]+/)
         .filter((w) => w.length >= 5 && !CITY_TOKENS.has(w) && !GENERIC_TOKENS.has(w));
-    };
+
     const poolDistinct = new Map<string, string[]>();
     for (const c of pool) poolDistinct.set(c.id, distinctive(c.name));
 
@@ -1610,16 +1188,11 @@ Return ONLY the JSON array. No explanation.`;
       const name = (cards[i].name || "").toLowerCase();
       const blurb = (cards[i].blurb || "").toLowerCase();
       if (!name || !blurb) continue;
-
-      // Accept immediately if full name is substring of blurb.
       if (blurb.includes(name)) continue;
 
-      // Accept if the blurb contains a distinctive token from THIS card's name.
       const ownDistinct = poolDistinct.get(cardId) || distinctive(name);
       if (ownDistinct.some((w) => blurb.includes(w))) continue;
 
-      // Otherwise: check if the blurb clearly describes a DIFFERENT candidate.
-      // Look for a distinctive token from any other pool candidate.
       let mismatchedTo: string | null = null;
       for (const [otherId, tokens] of poolDistinct.entries()) {
         if (otherId === cardId) continue;
@@ -1630,7 +1203,6 @@ Return ONLY the JSON array. No explanation.`;
       }
 
       if (mismatchedTo) {
-        console.log(`[plan-day] dropped blurb mismatch: card="${cards[i].name}" describes ${mismatchedTo} blurb="${cards[i].blurb?.slice(0, 80)}..."`);
         logDecision({
           script: "plan-day",
           action: "dropped",
@@ -1638,26 +1210,17 @@ Return ONLY the JSON array. No explanation.`;
           reason: `blurb describes different pool candidate (${mismatchedTo})`,
           meta: { city, targetDate, blurb: cards[i].blurb?.slice(0, 80) },
         });
+        usedBuckets.delete(cards[i].bucket);
         cards.splice(i, 1);
       }
-      // Else: blurb is generic (no distinctive tokens from any candidate).
-      // Keep it — Claude likely wrote a vague but on-topic description.
     }
     if (cards.length < before) {
       console.log(`[plan-day] blurb validator: dropped ${before - cards.length} mismatched card(s)`);
     }
   }
 
-  // Post-process: detect category↔blurb inconsistency. The previous validator
-  // only catches blurbs that name a different pool candidate. This catches the
-  // harder case where Claude writes a generic-but-wrong-category blurb (e.g.
-  // "Mix and match lunch from a dozen vendors" assigned to Almaden Lake Park).
-  // The blurb mentions no place name, so the name-based check passes — but
-  // the vocabulary clearly belongs to a different kind of venue.
-  //
-  // Patterns are intentionally narrow (food-hall jargon, hike/trail vocab) so
-  // legitimate cross-category mentions ("park bench out front", "café-style
-  // counter") don't trip the filter.
+  // Drop category-blurb mismatches (blurb's vocabulary clearly belongs to a
+  // different category than the card).
   {
     const before = cards.length;
     const ALIEN_SIGNALS: Record<string, RegExp> = {
@@ -1674,7 +1237,6 @@ Return ONLY the JSON array. No explanation.`;
       if (!re) continue;
       const blurb = cards[i].blurb || "";
       if (!re.test(blurb)) continue;
-      console.log(`[plan-day] dropped category-blurb mismatch: card="${cards[i].name}" (${cat}) blurb="${blurb.slice(0, 100)}"`);
       logDecision({
         script: "plan-day",
         action: "dropped",
@@ -1682,6 +1244,7 @@ Return ONLY the JSON array. No explanation.`;
         reason: `blurb vocabulary signals different category than card (${cat})`,
         meta: { city, targetDate, blurb: blurb.slice(0, 120), category: cat },
       });
+      usedBuckets.delete(cards[i].bucket);
       cards.splice(i, 1);
     }
     if (cards.length < before) {
@@ -1689,370 +1252,41 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
-  // Post-process: drop places whose scheduled time block doesn't fit within
-  // the venue's actual open hours today. Catches three bugs:
-  //   1. Scheduled past closing (e.g. museum at 9 PM that closes 5 PM)
-  //   2. Scheduled before opening (e.g. dinner-only restaurant at 2 PM)
-  //   3. Scheduled on a closed day (no hours entry for today)
+  // Hours-fit check: drop place cards whose venue isn't open for at least 1h
+  // within the bucket's window.
   {
     const before = cards.length;
     for (let i = cards.length - 1; i >= 0; i--) {
       if (cards[i].locked) continue;
+      if (cards[i].source === "event") continue; // events keep their announced time
       const candidate = candidateMap.get(cards[i].id);
       if (!candidate) continue;
       const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
-      if (!hoursObj) continue; // unknown hours — keep it
-      const [startStr, endStr] = cards[i].timeBlock.split(/\s*-\s*/);
-      const startH = parseHour(startStr || "");
-      const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
-      if (startH === null || endH === null) continue;
-      if (!fitsInOpenRange(hoursObj, planDayKey, startH, endH)) {
-        console.log(`[plan-day] dropped ${cards[i].name} — ${cards[i].timeBlock} doesn't fit venue hours on ${planDayKey}`);
-        cards.splice(i, 1);
-      }
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] hours check: dropped ${before - cards.length} card(s) outside venue hours`);
-    }
-  }
-
-  // Post-process: eliminate same-category back-to-back runs.
-  //
-  // Food+food within 3 hours is the nightmare case ("have lunch, then go eat
-  // crab"). For any same-category back-to-back pair, try to replace the second
-  // card with a different-category candidate from the pool that fits the time
-  // slot. Special rule for food: lunch + dinner is fine (gap >= 3 hours);
-  // anything tighter is a planning failure and must be replaced.
-  {
-    const usedIds = new Set(cards.map((c) => c.id));
-    const poolById = new Map(topPool.map((c) => [c.id, c]));
-
-    for (let i = 1; i < cards.length; i++) {
-      const prev = cards[i - 1];
-      const cur = cards[i];
-      if (cur.locked || prev.locked) continue;
-      if (cur.category !== prev.category) continue;
-
-      // For food, allow if the two meals are at least 3 hours apart
-      // (lunch + dinner), otherwise treat as same-category back-to-back.
-      if (cur.category === "food") {
-        const prevStart = parseHour(prev.timeBlock.split(/\s*-\s*/)[0] || "") ?? -1;
-        const curStart = parseHour(cur.timeBlock.split(/\s*-\s*/)[0] || "") ?? -1;
-        if (prevStart >= 0 && curStart >= 0 && curStart - prevStart >= 3) continue;
-      }
-
-      // Find a replacement candidate: different from prev's category, not
-      // already in the plan, and (if hours known) open during cur's slot.
-      const [startStr, endStr] = cur.timeBlock.split(/\s*-\s*/);
-      const slotStart = parseHour(startStr || "");
-      const slotEnd = parseHour(endStr || "") ?? (slotStart !== null ? slotStart + 1 : null);
-
-      let replacement: Candidate | null = null;
-      for (const cand of topPool) {
-        if (usedIds.has(cand.id)) continue;
-        if (cand.category === prev.category) continue;
-        if (cand.category === "neighborhood") continue;
-        const hoursObj = (cand as any).hours as Record<string, string> | null | undefined;
-        if (hoursObj && slotStart !== null && slotEnd !== null) {
-          if (!fitsInOpenRange(hoursObj, planDayKey, slotStart, slotEnd)) continue;
-        }
-        // Events with a fixed start/end window must actually be happening
-        // during the slot. A 9 AM–1 PM farmers market doesn't fit a 1:30 PM
-        // gap, even if its category is right.
-        if (cand.source === "event" && cand.eventTime && slotStart !== null && slotEnd !== null) {
-          const evStart = parseHour(cand.eventTime.split(/\s*-\s*/)[0]);
-          if (evStart !== null) {
-            const evEnd = cand.eventEndTime ? parseHour(cand.eventEndTime) : evStart + 1.5;
-            if (evEnd !== null && (evEnd <= slotStart || evStart >= slotEnd)) continue;
-          }
-        }
-        replacement = cand;
-        break;
-      }
-
-      if (!replacement) {
-        // Couldn't find a pool replacement — drop the offending card rather
-        // than ship "lunch then crab". A shorter plan > a dumb plan.
-        console.log(`[plan-day] dropping back-to-back ${cur.category}: ${cur.name} after ${prev.name}`);
-        cards.splice(i, 1);
-        i--;
-        continue;
-      }
-
-      console.log(`[plan-day] replacing back-to-back ${cur.category}: ${cur.name} → ${replacement.name}`);
-      usedIds.delete(cur.id);
-      usedIds.add(replacement.id);
-      // Replacement events keep their real-world time; only places inherit
-      // the original slot. Final sort below restores chronology.
-      const replacementTimeBlock =
-        replacement.source === "event" && replacement.eventTime
-          ? timeBlockFromEventTime(replacement.eventTime, replacement.eventEndTime, undefined, replacement.category)
-          : cur.timeBlock;
-      cards[i] = {
-        id: replacement.id,
-        name: replacement.name,
-        category: replacement.category,
-        city: replacement.city,
-        address: replacement.address,
-        timeBlock: replacementTimeBlock,
-        blurb: replacement.blurb || replacement.description?.slice(0, 160) || fallbackBlurb(replacement.source, replacement.category, replacement.name, replacement.venue),
-        why: replacement.why || "A solid pick to break up the day.",
-        url: replacement.url ?? null,
-        mapsUrl: replacement.mapsUrl ?? null,
-        cost: replacement.cost ?? null,
-        costNote: kids && replacement.kidsCostNote ? replacement.kidsCostNote : (replacement.costNote ?? null),
-        kidsCostNote: replacement.kidsCostNote ?? null,
-        photoRef: (replacement as any).photoRef || null,
-        venue: replacement.venue || null,
-        source: replacement.source,
-        locked: false,
-      };
-      void poolById; // reserved for future lookups
-    }
-  }
-
-  // Defensive: any event card whose timeBlock drifted from the real event
-  // window gets snapped back. The main sequencer + padder force this, but
-  // back-to-back replacement and other paths historically copied a slot
-  // verbatim and orphaned the eventTime. This catches every path.
-  for (const card of cards) {
-    if (card.source !== "event") continue;
-    const candidate = candidateMap.get(card.id);
-    const evTime = (candidate as any)?.eventTime;
-    if (!evTime) continue;
-    const forced = timeBlockFromEventTime(evTime, (candidate as any)?.eventEndTime, undefined, (candidate as any)?.category);
-    if (card.timeBlock !== forced) {
-      logDecision({
-        script: "plan-day",
-        action: "autofixed",
-        target: `${card.name} (${card.id})`,
-        reason: `event timeBlock drifted: "${card.timeBlock}" → "${forced}"`,
-        meta: { city, targetDate, eventTime: evTime },
-      });
-      card.timeBlock = forced;
-    }
-  }
-
-  // Final safety sort — guarantees chronological order regardless of what
-  // post-processing steps above did.
-  cards.sort((a, b) => {
-    const aH = parseHour(a.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-    const bH = parseHour(b.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-    return aH - bH;
-  });
-
-  // Post-process: time-overlap validator. Claude sometimes hands back two
-  // cards whose blocks intersect (e.g. card[i] 2-4 PM, card[i+1] 3-5 PM).
-  // Keep the earlier one, drop the later one. Never drop a locked card —
-  // those stay regardless.
-  {
-    const before = cards.length;
-    const parseRange = (tb: string): [number, number] | null => {
-      const m = tb.match(/(\d{1,2}):(\d{2})\s*(AM|PM)\s*[-–]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-      if (!m) return null;
-      const toMin = (h: string, min: string, ap: string) => {
-        let hn = parseInt(h, 10);
-        const mn = parseInt(min, 10);
-        const pm = ap.toUpperCase() === "PM";
-        if (pm && hn !== 12) hn += 12;
-        if (!pm && hn === 12) hn = 0;
-        return hn * 60 + mn;
-      };
-      return [toMin(m[1], m[2], m[3]), toMin(m[4], m[5], m[6])];
-    };
-
-    for (let i = cards.length - 1; i >= 1; i--) {
-      if (cards[i].locked) continue;
-      const prev = parseRange(cards[i - 1].timeBlock);
-      const cur = parseRange(cards[i].timeBlock);
-      if (!prev || !cur) continue;
-      // prev.end > cur.start means overlap. Allow touching (prev.end == cur.start).
-      if (prev[1] > cur[0]) {
+      const placeTypes = (candidate as any).types as string[] | null | undefined;
+      if (!openDuringBucket(hoursObj, dayKey, cards[i].bucket, placeTypes, candidate.category)) {
+        const reason = !hoursObj
+          ? "no verified hours for time-sensitive venue"
+          : `venue not open during ${cards[i].bucket} window`;
         logDecision({
           script: "plan-day",
           action: "dropped",
           target: `${cards[i].name} (${cards[i].id})`,
-          reason: `time overlap with ${cards[i - 1].name} (${cards[i - 1].timeBlock} vs ${cards[i].timeBlock})`,
-          meta: { city, targetDate, prevEnd: prev[1], curStart: cur[0] },
+          reason,
+          meta: { city, targetDate, bucket: cards[i].bucket },
         });
+        usedBuckets.delete(cards[i].bucket);
         cards.splice(i, 1);
       }
     }
     if (cards.length < before) {
-      console.log(`[plan-day] overlap validator: dropped ${before - cards.length} overlapping card(s)`);
+      console.log(`[plan-day] hours-fit: dropped ${before - cards.length} card(s) outside bucket hours`);
     }
   }
+
+  // Final sort: bucket order so the renderer doesn't have to.
+  cards.sort((a, b) => bucketOrderIndex(a.bucket) - bucketOrderIndex(b.bucket));
 
   return cards;
-}
-
-// ---------------------------------------------------------------------------
-// padWithClaude — second Claude call that fills in missing stops for a
-// thin plan. Used when sequenceWithClaude returns <6 cards. Context-aware:
-// shows Claude the existing cards and asks it to fill the gaps with picks
-// that fit the plan's geographic cluster and timeline.
-// ---------------------------------------------------------------------------
-
-async function padWithClaude(args: {
-  partial: DayCard[];
-  pool: Candidate[];
-  targetTotal: number;
-  city: City;
-  kids: boolean;
-  weather: string | null;
-  targetDate?: string;
-  startHour?: number;
-  startFormatted?: string;
-}): Promise<DayCard[]> {
-  const { partial, pool, targetTotal, city, kids, weather, targetDate, startHour = 0, startFormatted } = args;
-  const needed = targetTotal - partial.length;
-  if (needed <= 0 || pool.length === 0) return [];
-
-  const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
-  const cityName = getCityName(city);
-
-  const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
-  const today = planDateObj.toLocaleDateString("en-US", {
-    timeZone: "America/Los_Angeles",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-
-  // Describe the plan so far — cards the pad must fit around.
-  const existingText = partial
-    .map((c) => `  • ${c.timeBlock} — ${c.name} (${c.category}, ${c.city})`)
-    .join("\n");
-
-  // Identify the time gaps — but only for slots that are still in the future
-  // relative to the plan's startHour. Don't ask for breakfast when it's 4 PM.
-  const startHours = partial
-    .map((c) => parseHour(c.timeBlock.split(/\s*-\s*/)[0]))
-    .filter((h): h is number => h !== null);
-  const earliest = startHours.length ? Math.min(...startHours) : 99;
-  const latest = startHours.length ? Math.max(...startHours) : 0;
-  const gapHints: string[] = [];
-  if (startHour < 10 && earliest > 10) gapHints.push("Plan is missing a breakfast/morning-coffee stop (before 10 AM).");
-  if (startHour < 13 && latest < 13) gapHints.push("Plan is missing lunch (12–2 PM).");
-  if (startHour < 18 && latest < 18 && !kids) gapHints.push("Plan is missing dinner / evening activity (6–9 PM).");
-  if (startHour < 19 && !partial.some((c) => c.category === "food")) gapHints.push("Plan has no food stops at all — add at least one meal that's still in the future.");
-  if (gapHints.length === 0) gapHints.push(`Plan has ${partial.length} stops; extend the timeline forward from the last existing stop, never backward.`);
-
-  // Pool text with ids so the model returns real candidates.
-  const topPool = pool.slice(0, CANDIDATE_POOL_SIZE);
-  const poolText = topPool
-    .map((c, i) => {
-      const parts = [`${i + 1}. [${c.id}] ${c.name}`, `category: ${c.category}`, `city: ${c.city}`];
-      if (c.address) parts.push(`address: ${c.address}`);
-      if (c.eventTime) parts.push(`time: ${c.eventTime}`);
-      if (c.rating) parts.push(`rating: ${c.rating}`);
-      if (c.costNote) parts.push(`price: ${c.costNote}`);
-      if (c.blurb) parts.push(`blurb: ${c.blurb}`);
-      return parts.join(" | ");
-    })
-    .join("\n");
-
-  const prompt = `You are padding an incomplete day plan for South Bay Today. The partial plan already has ${partial.length} stops — your job is to ADD ${needed} more stops that fill the gaps. DO NOT change or repeat the existing stops.
-
-It's ${today}.${startFormatted ? ` The user is reading this at roughly ${startFormatted} — NOTHING can be scheduled before ${startFormatted}.` : ""} Anchor: ${cityName}. ${weather ? `Weather: ${weather}.` : ""}
-
-EXISTING STOPS (already locked in — do not return these):
-${existingText}
-
-GAPS TO FILL:
-${gapHints.map((g) => `- ${g}`).join("\n")}
-
-CANDIDATE POOL (pick ${needed} from here):
-${poolText}
-
-RULES:
-- Return exactly ${needed} new stops, no more.
-- Use ids from the pool. Do not invent ids.
-${startFormatted ? `- Every new stop's timeBlock MUST start at ${startFormatted} or later. Never schedule anything before ${startFormatted}, even if the existing stops leave a "gap" earlier in the day — that gap is the past and cannot be filled.` : ""}
-- Each new stop needs a timeBlock that fits between/around the existing stops without overlapping them.
-- Cluster geographically with the existing cards; don't send the user across the region for a single stop.
-- NEVER pick the same category as an adjacent existing stop.
-- PREFER EVENT TODAY items from the pool over plain places. Workshops, classes, library programs, and small-town events make a plan feel like "today" — pick them when they fit a gap, even ahead of a higher-rated park or café.
-- Blurbs: what to do at that specific place. Why: one casual sentence. No "real event", "only today", "unforgettable". No distance/travel mentions. No star ratings.
-- BLURB MUST DESCRIBE THE PICKED PLACE. If the id is for an outdoor park, the blurb describes the park (trails, the lake, the playground). Never write a food-hall blurb for a park id, or a hiking blurb for a restaurant id — pick the right id for the vibe you want to describe.
-
-OUTPUT FORMAT (JSON array, no markdown fences, exactly ${needed} entries):
-[{ "id": "...", "timeBlock": "HH:MM AM/PM - HH:MM AM/PM", "blurb": "...", "why": "..." }]
-
-Return ONLY the JSON array.`;
-
-  const response = await client.messages.create({
-    model: CLAUDE_SONNET,
-    max_tokens: 1200,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const text = extractText(response.content);
-  const cleaned = stripFences(text);
-
-  let picks: Array<{ id: string; timeBlock: string; blurb: string; why: string }>;
-  try {
-    picks = JSON.parse(cleaned);
-  } catch {
-    console.warn(`[plan-day] padWithClaude: failed to parse response: ${cleaned.slice(0, 200)}`);
-    return [];
-  }
-
-  const candidateMap = new Map(topPool.map((c) => [c.id, c]));
-  const padded: DayCard[] = [];
-  const isValidTimeBlock = (tb: string | null | undefined): boolean => {
-    if (!tb) return false;
-    return /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(tb);
-  };
-
-  for (const pick of picks) {
-    const candidate = candidateMap.get(pick.id);
-    if (!candidate) continue;
-    // Same force-fix as main planner: event cards MUST use the event's real
-    // start time. Padder Claude runs a less careful prompt and is even more
-    // likely to park events in convenient slots.
-    let timeBlock: string;
-    if (candidate.source === "event" && (candidate as any).eventTime) {
-      timeBlock = timeBlockFromEventTime((candidate as any).eventTime, (candidate as any).eventEndTime, undefined, (candidate as any).category);
-    } else {
-      timeBlock = isValidTimeBlock(pick.timeBlock) ? pick.timeBlock : "12:00 PM - 1:00 PM";
-    }
-    const padBlurb =
-      candidate.blurb ||
-      pick.blurb ||
-      candidate.description?.slice(0, 200) ||
-      fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue);
-    padded.push({
-      id: candidate.id,
-      name: candidate.name,
-      category: candidate.category,
-      city: candidate.city,
-      address: candidate.address,
-      timeBlock,
-      blurb: padBlurb,
-      why: pick.why,
-      url: candidate.url,
-      mapsUrl: candidate.mapsUrl,
-      cost: candidate.cost,
-      costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
-      kidsCostNote: candidate.kidsCostNote,
-      photoRef: (candidate as any).photoRef || null,
-      image: (candidate as any).image || null,
-      venue: candidate.venue || null,
-      source: candidate.source,
-      locked: false,
-      rationale: `claude:pad | gap-fill | partial-had-${partial.length}`,
-    });
-    logDecision({
-      script: "plan-day",
-      action: "padded",
-      target: `${candidate.name} (${candidate.id})`,
-      reason: `context-aware pad to reach ${targetTotal} stops`,
-      meta: { city, targetDate, partialCount: partial.length, timeBlock },
-    });
-  }
-
-  return padded;
 }
 
 // ---------------------------------------------------------------------------
@@ -2060,7 +1294,6 @@ Return ONLY the JSON array.`;
 // ---------------------------------------------------------------------------
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
-  // Rate limit: 10 plans per minute per IP
   if (!rateLimit(clientAddress, 30)) return rateLimitResponse();
 
   let body: PlanRequest;
@@ -2070,33 +1303,39 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson("Invalid JSON body", 400);
   }
 
-  const { city, kids = false, lockedIds = [], lockedCards = [], dismissedIds = [], dismissedNames = [], currentHour, currentMinute, planDate, preferences, blockedNames = [], weekContext, recentlyShown = [], noCache = false } = body;
+  const {
+    city,
+    kids = false,
+    lockedIds = [],
+    lockedCards = [],
+    dismissedIds = [],
+    dismissedNames = [],
+    planDate,
+    preferences,
+    blockedNames = [],
+    weekContext,
+    recentlyShown = [],
+    noCache = false,
+  } = body;
 
-  // Merge lockedCards into lockedIds + a time map. lockedCards is the richer
-  // format; we accept lockedIds separately for backwards compat with older
-  // callers (scripts, pre-rebuild clients).
-  const lockedTimeMap = new Map<string, string>();
+  // Merge lockedCards into lockedIds + bucket map.
+  const lockedBucketMap = new Map<string, Bucket | null>();
   for (const lc of lockedCards) {
-    if (lc?.id && !lockedIds.includes(lc.id)) lockedIds.push(lc.id);
-    if (lc?.id && lc.timeBlock) lockedTimeMap.set(lc.id, lc.timeBlock);
+    if (!lc?.id) continue;
+    if (!lockedIds.includes(lc.id)) lockedIds.push(lc.id);
+    if (isBucket(lc.bucket)) lockedBucketMap.set(lc.id, lc.bucket);
+    else lockedBucketMap.set(lc.id, null);
   }
   const blockedSet = new Set(blockedNames.map((n) => normalizeName(n)).filter(Boolean));
 
-  // Validate city
   if (!city || !VALID_CITIES.has(city)) {
     return errJson(`Invalid city. Must be one of: ${[...VALID_CITIES].join(", ")}`, 400);
   }
 
-  // Validate API key
   if (!import.meta.env.ANTHROPIC_API_KEY) {
     return errJson("Server configuration error", 500);
   }
 
-  const hour = typeof currentHour === "number" ? currentHour : Number(currentPTHour());
-  const minute = typeof currentMinute === "number" ? currentMinute : 0;
-  const startTime = computeStartTime(hour, minute);
-  // Normalize legacy `pad:X` prefixes (from old surgery scripts) to the
-  // canonical `place:X` form so they still match candidate-pool IDs.
   const canonicalDismissed = (dismissedIds as string[]).flatMap((id) =>
     id.startsWith("pad:") ? [id, "place:" + id.slice(4)] : [id],
   );
@@ -2108,14 +1347,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   );
   const lockedSet = new Set(lockedIds);
 
-  // Cache hit for default requests (no locks/dismissals/preferences/blocks).
-  // noCache=true forces a fresh plan — used by the SHUFFLE button so the
-  // user always sees a new plan even if they happen to hit the same anchor.
-  const prefsHash = preferences ? Math.round((preferences.outdoorBias || 0) * 10 + (preferences.costBias || 0) * 10) : 0;
-  const cacheKey = `${city}:${kids}:${hour}:${prefsHash}:${planDate || ""}`;
-  // recentlyShown bypasses the cache too — a repeated request with the same
-  // ledger would serve identical cards; the whole point of the ledger is
-  // variety, so we always replan when it's present.
+  const dayKey = dayKeyForDate(planDate);
+
+  // Cache hit for default requests.
+  const prefsHash = preferences
+    ? Math.round((preferences.outdoorBias || 0) * 10 + (preferences.costBias || 0) * 10)
+    : 0;
+  const cacheKey = `${city}:${kids}:${prefsHash}:${planDate || ""}`;
   if (!noCache && lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0 && recentlyShown.length === 0) {
     const cached = planCache.get(cacheKey);
     if (cached && Date.now() - cached.ts < CACHE_TTL) {
@@ -2124,16 +1362,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   try {
-    // 1. Fetch weather
     const weatherData = await fetchWeather(city);
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
 
-    // 2. Build candidate pool — pass startTime so past-today events get dropped
-    const allCandidates = buildCandidatePool(city, kids, dismissedSet, lockedSet, planDate, blockedSet, startTime, dismissedNameSet);
+    const allCandidates = buildCandidatePool(city, kids, dismissedSet, planDate, blockedSet, dismissedNameSet);
 
-    // 3. Score candidates. Graduated variety penalty: each entry in the
-    // ledger comes with daysAgo so today's picks bite hardest and last
-    // week's fade to a nudge. Backward-compatible with legacy string[].
+    // Score with graduated variety penalty.
     const recentById = new Map<string, number>();
     const recentByName = new Map<string, number>();
     for (const entry of recentlyShown) {
@@ -2152,44 +1386,40 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
     const recent: RecentPenaltyInput = { byId: recentById, byName: recentByName };
-    const scored = scoreCandidates(allCandidates, weatherContext, hour, kids, preferences, recent);
+    const scored = scoreCandidates(allCandidates, weatherContext, kids, preferences, recent);
 
-    // 4. Separate locked items. Any id the client sent that's NOT in the
-    // current pool is stale (event cancelled, place archived) — return
-    // them to the client so it can purge state.locked instead of silently
-    // shipping fewer cards every shuffle.
-    const lockedCandidates = scored.filter((c) => lockedSet.has(c.id));
-    const foundLockedIds = new Set(lockedCandidates.map((c) => c.id));
+    // Extract locked candidates (and report any locked ids that are stale).
+    const lockedRaw = scored.filter((c) => lockedSet.has(c.id));
+    const foundLockedIds = new Set(lockedRaw.map((c) => c.id));
     const invalidLockedIds = [...lockedSet].filter((id) => !foundLockedIds.has(id));
     if (invalidLockedIds.length > 0) {
-      console.log(`[plan-day] ${invalidLockedIds.length} invalid lockedId(s) (not in pool): ${invalidLockedIds.join(", ")}`);
+      console.log(`[plan-day] ${invalidLockedIds.length} invalid lockedId(s): ${invalidLockedIds.join(", ")}`);
       for (const id of invalidLockedIds) {
         logDecision({
           script: "plan-day",
           action: "invalid-lock",
           target: id,
-          reason: "locked id not present in candidate pool (cancelled/archived)",
+          reason: "locked id not present in candidate pool",
           meta: { city, targetDate: planDate },
         });
       }
     }
+    const lockedWithBucket = lockedRaw.map((c) => ({
+      candidate: c,
+      bucket: lockedBucketMap.get(c.id) ?? null,
+    }));
     const unlockedPool = scored.filter((c) => !lockedSet.has(c.id));
 
-    // 5. Build diverse pool — balance events, food, and activities
+    // --- Build the diverse pool ---
 
-    // 5a. Dedupe events: collapse near-duplicates at the same physical spot
-    //     (same venue/address AND overlapping time). The user can only attend
-    //     one thing at a time, so showing two competing events at 6:30 PM at
-    //     the same library just confuses the plan. Keep the highest-scored one.
+    // Dedupe events at same venue + time.
     const rawEventCandidates = unlockedPool.filter((c) => c.source === "event");
     const dedupedEvents: Candidate[] = [];
     const eventGroupSeen = new Map<string, Candidate>();
     for (const c of rawEventCandidates) {
-      // Group key: venue+eventTime, or address+eventTime, or city+eventTime
       const loc = (c.venue || c.address || c.city || "").toLowerCase().trim();
       const time = (c.eventTime || "").toLowerCase().trim();
       const groupKey = time ? `${loc}|${time}` : null;
-      // Also collapse exact id duplicates (shouldn't happen but defensive)
       if (eventGroupSeen.has(c.id)) continue;
       eventGroupSeen.set(c.id, c);
       if (!groupKey) {
@@ -2201,36 +1431,19 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         const eTime = (e.eventTime || "").toLowerCase().trim();
         return `${eLoc}|${eTime}` === groupKey;
       });
-      if (!existing) {
-        dedupedEvents.push(c);
-      } else if ((c.score || 0) > (existing.score || 0)) {
-        // Replace lower-scored duplicate
-        const idx = dedupedEvents.indexOf(existing);
-        dedupedEvents[idx] = c;
+      if (!existing) dedupedEvents.push(c);
+      else if ((c.score || 0) > (existing.score || 0)) {
+        dedupedEvents[dedupedEvents.indexOf(existing)] = c;
       }
-      // else: drop c, keep existing
-    }
-    const dropped = rawEventCandidates.length - dedupedEvents.length;
-    if (dropped > 0) {
-      console.log(`[plan-day] deduped ${dropped} overlapping events at same venue/time`);
     }
     const eventCandidates = dedupedEvents;
     const foodCandidates = unlockedPool.filter((c) => c.source === "place" && c.category === "food");
     const otherPlaces = unlockedPool.filter((c) => c.source === "place" && c.category !== "food");
 
     const diversePool: Candidate[] = [];
-
-    // --- Per-day curated cap. The underlying scoring still favors curated
-    //     places, and weighted sampling pulls from a wide pool, but without
-    //     this cap a single plan can still end up 4 or 5 curated venues
-    //     (Computer History Museum + DishDash + Los Gatos Creek Trail +
-    //     Smoking Pig + Bill's Cafe was the canonical "every plan looks the
-    //     same" output). Cap at 2 in the candidate pool so Claude has room
-    //     to pick a varied 6-card plan even if it leans on curated for its
-    //     anchors. Events aren't counted here (they're inherently diverse). ---
     const MAX_CURATED_PLACES = 2;
     let curatedCount = 0;
-    const tryAddCurated = (c: Candidate): boolean => {
+    const tryAdd = (c: Candidate): boolean => {
       const isCurated = (c as any).curated && c.source === "place";
       if (isCurated) {
         if (curatedCount >= MAX_CURATED_PLACES) return false;
@@ -2240,29 +1453,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       return true;
     };
 
-    // Events: weighted-sample the top 6 (not ALL — leave room for places).
-    // Lower temperature here because top events are usually genuinely the
-    // most relevant (today's concert > a generic ongoing exhibit).
-    const MAX_EVENTS = 6;
-    const eventSample = weightedSample(eventCandidates, MAX_EVENTS, 12);
-    for (const c of eventSample) tryAddCurated(c);
+    const eventSample = weightedSample(eventCandidates, 6, 12);
+    for (const c of eventSample) tryAdd(c);
 
-    // Food: weighted-sample 5 from the food pool. Higher temperature here
-    // because the food list has hundreds of viable picks and the score gap
-    // between #1 and #50 is mostly noise — we WANT broad rotation here.
-    const MIN_FOOD = 4;
-    const foodSample = weightedSample(foodCandidates, Math.max(MIN_FOOD, 5), 22);
-    for (const c of foodSample) tryAddCurated(c);
+    // Need enough food picks to populate three meal buckets — bump to 8.
+    const foodSample = weightedSample(foodCandidates, Math.max(8, 8), 22);
+    for (const c of foodSample) tryAdd(c);
 
-    // Fill remaining slots with diverse non-food places. Pull a wider weighted
-    // sample first (~80) and then walk it with category caps, so #1-ranked in
-    // each category isn't guaranteed to win. The per-category caps still
-    // prevent the plan from being 5 parks; the weighted sample prevents the
-    // SAME park from being picked every day.
     const catCounts: Record<string, number> = {};
-    // Caps use CANONICAL categories (see src/lib/south-bay/categories.mjs).
-    // Any event-specific label like "music" gets mapped to "entertainment"
-    // before the pool is built, so a single cap applies consistently.
     const CAT_CAPS: Record<string, number> = {
       outdoor: 3,
       museum: 2,
@@ -2278,103 +1476,22 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       const count = catCounts[c.category] || 0;
       const maxForCat = CAT_CAPS[c.category] ?? 3;
       if (count >= maxForCat) continue;
-      if (!tryAddCurated(c)) continue;
+      if (!tryAdd(c)) continue;
       catCounts[c.category] = count + 1;
       if (diversePool.length >= CANDIDATE_POOL_SIZE) break;
     }
 
-    // 6. Claude sequences the plan
-    let cards = await sequenceWithClaude(
+    const cards = await pickBucketsWithClaude(
       diversePool,
-      lockedCandidates,
+      lockedWithBucket,
       weatherData.weather,
       city,
       kids,
-      hour,
       preferences,
       planDate,
       weekContext,
-      startTime,
-      lockedTimeMap,
+      dayKey,
     );
-
-    // 6b. Context-aware padding (Tier 2.1): if sequenceWithClaude returned a
-    // thin plan, call Claude again with the partial + remaining pool to fill
-    // the gaps with proper blurbs instead of generic padding picks.
-    // Target scales with the remaining day — at 5 PM we don't want 7 cards.
-    const MIN_STOPS =
-      startTime.startHour < 10 ? 6 :
-      startTime.startHour < 13 ? 5 :
-      startTime.startHour < 16 ? 4 :
-      startTime.startHour < 19 ? 3 :
-      2;
-    if (cards.length < MIN_STOPS) {
-      const usedIds = new Set(cards.map((c) => c.id));
-      const remainingPool = diversePool.filter((c) => !usedIds.has(c.id));
-      if (remainingPool.length > 0) {
-        console.log(`[plan-day] thin plan (${cards.length}/${MIN_STOPS}) — calling padWithClaude for ${MIN_STOPS - cards.length} more stops`);
-        try {
-          const padded = await padWithClaude({
-            partial: cards,
-            pool: remainingPool,
-            targetTotal: MIN_STOPS,
-            city,
-            kids,
-            weather: weatherData.weather,
-            targetDate: planDate,
-            startHour: startTime.startHour,
-            startFormatted: startTime.formatted,
-          });
-          if (padded.length > 0) {
-            cards = [...cards, ...padded].sort((a, b) => {
-              const aH = parseHour(a.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-              const bH = parseHour(b.timeBlock.split(/\s*-\s*/)[0]) ?? 99;
-              return aH - bH;
-            });
-            console.log(`[plan-day] padded ${padded.length} card(s) → ${cards.length} total`);
-          }
-        } catch (err) {
-          console.warn(`[plan-day] padWithClaude failed: ${(err as Error).message}`);
-        }
-      }
-    }
-
-    // 6c. Final hours sweep — applies to BOTH sequenced and padded cards.
-    // sequenceWithClaude has its own check, but padded cards bypass it. Without
-    // this sweep a padder pick like "Triton Museum at 7:30 AM" (museum opens 11)
-    // slips through into the user-visible plan.
-    //
-    // Strict mode for unknown hours: a time-sensitive venue (food, museum, etc.)
-    // without verified hours is rejected. We don't guess a "9–8 estimated"
-    // window — Stephen 2026-04-25: research or don't suggest. Outdoor/flexible
-    // types still pass with a daylight default.
-    {
-      const candidateById = new Map(diversePool.map((c) => [c.id, c]));
-      const before = cards.length;
-      const sweepDayKey = dayKeyForDate(planDate);
-      for (let i = cards.length - 1; i >= 0; i--) {
-        if (cards[i].locked) continue;
-        if (cards[i].source === "event") continue; // events keep their announced time
-        const candidate = candidateById.get(cards[i].id);
-        if (!candidate) continue;
-        const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
-        const placeTypes = (candidate as any).types as string[] | null | undefined;
-        const [startStr, endStr] = cards[i].timeBlock.split(/\s*-\s*/);
-        const startH = parseHour(startStr || "");
-        const endH = parseHour(endStr || "") ?? (startH !== null ? startH + 1 : null);
-        if (startH === null || endH === null) continue;
-        if (!fitsInOpenRange(hoursObj, sweepDayKey, startH, endH, placeTypes, candidate.category)) {
-          const reason = !hoursObj
-            ? "no verified hours for time-sensitive venue"
-            : `doesn't fit venue hours on ${sweepDayKey}`;
-          console.log(`[plan-day] final hours sweep dropped ${cards[i].name} — ${cards[i].timeBlock} ${reason}`);
-          cards.splice(i, 1);
-        }
-      }
-      if (cards.length < before) {
-        console.log(`[plan-day] final hours sweep: dropped ${before - cards.length} card(s)`);
-      }
-    }
 
     const responseData = {
       cards,
@@ -2383,16 +1500,11 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       kids,
       generatedAt: new Date().toISOString(),
       poolSize: allCandidates.length,
-      // IDs the client sent in lockedIds/lockedCards that aren't in the
-      // current pool. Client should purge these from its state so they
-      // stop haunting future shuffles.
       invalidLockedIds: invalidLockedIds.length > 0 ? invalidLockedIds : undefined,
     };
 
-    // Cache default requests for 5 min
     if (lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0) {
       planCache.set(cacheKey, { data: responseData, ts: Date.now() });
-      // Evict old entries
       if (planCache.size > 100) {
         const oldest = planCache.keys().next().value!;
         planCache.delete(oldest);
@@ -2401,7 +1513,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     return okJson(responseData, { "Cache-Control": "private, no-store" });
   } catch (err) {
-    console.error("plan-day error:", err);
-    return errJson(`Planning failed: ${toErrMsg(err)}`, 500);
+    console.error("[plan-day] error:", err);
+    return errJson(err instanceof Error ? err.message : "Plan generation failed", 500);
   }
 };

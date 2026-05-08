@@ -121,15 +121,14 @@ function loadDefaultPlans() {
 }
 
 /** Extract card names from the *previous* default-plans.json, split by mode.
- *  Used to feed `recentlyShown` (with daysAgo: 1 → -25 penalty) into today's
- *  plan generation so day-over-day variety actually happens. Without this the
- *  homepage kids plan picked Bill's Cafe + Vasona Lake + Smoking Pig BBQ in a
- *  loop because the nightly generator had no memory of yesterday's picks. */
+ *  Feeds `recentlyShown` (daysAgo: 1 → -25 penalty) into today's plan gen so
+ *  day-over-day variety actually happens. Walks any key that starts with
+ *  "adults" or "kids" (covers today + ":tomorrow" + legacy ":h9" variants). */
 function extractPreviousPlanNames(plansData) {
   const adults = new Set();
   const kids = new Set();
   for (const [key, plan] of Object.entries(plansData?.plans || {})) {
-    const target = key.startsWith("kids:") ? kids : adults;
+    const target = key.startsWith("kids") ? kids : adults;
     for (const c of (plan?.cards || [])) {
       const n = normalizeName(c.name);
       if (n) target.add(n);
@@ -220,7 +219,6 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
       body: JSON.stringify({
         city,
         kids,
-        currentHour: 7, // start with breakfast — enforced by plan-day prompt
         planDate: dateStr,
         blockedNames,
         weekContext,
@@ -244,18 +242,17 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
   }
 }
 
-/** Check whether a plan qualifies — full-day arc + no in-week overlap. */
+/** Check whether a bucket plan qualifies. */
 function planPassesQuality(plan, usedNames) {
   if (!plan?.cards?.length) return { ok: false, reason: "empty" };
   const cards = plan.cards;
-  // Require at least 5 stops
-  if (cards.length < 5) return { ok: false, reason: `only ${cards.length} stops` };
-  // Require a morning stop (starts <= 11 AM)
-  const firstHour = parseHour(cards[0].timeBlock?.split("-")[0]);
-  if (firstHour === null || firstHour > 11) {
-    return { ok: false, reason: `starts too late (${cards[0].timeBlock})` };
-  }
-  // Reject if >= 2 anchor POIs repeat a previously-used name this run
+  const buckets = new Set(cards.map((c) => c.bucket).filter(Boolean));
+  // Need at least 4 of the 6 buckets filled — otherwise it's a thin plan.
+  if (buckets.size < 4) return { ok: false, reason: `only ${buckets.size} bucket(s) filled` };
+  // Need at least one early-day bucket so the plan has somewhere to start.
+  const hasEarly = buckets.has("breakfast") || buckets.has("morning") || buckets.has("lunch");
+  if (!hasEarly) return { ok: false, reason: `no breakfast/morning/lunch bucket` };
+  // Reject if ≥2 venues repeat a previously-used name this run.
   const names = cards.map((c) => normalizeName(c.name)).filter(Boolean);
   const overlap = names.filter((n) => usedNames.has(n));
   if (overlap.length >= 2) {
@@ -297,18 +294,21 @@ function createSharedPlanUrl(plan, dateStr) {
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-/** Pick the best plan for a given date, rotating through cities. */
-function pickPlanForDate(plansData, dateStr) {
+/** Fall-back plan if the API failed entirely. The bucket schema only has one
+ *  plan per (kids × today/tomorrow), so we just return the adults plan from
+ *  yesterday's default-plans.json — better than skipping the day. */
+function pickPlanForDate(plansData, _dateStr) {
   const plans = plansData.plans || {};
-  const planKeys = Object.keys(plans).filter((k) => !k.includes(":kids"));
-  if (planKeys.length === 0) return null;
-
-  // Rotate based on day-of-year so each day gets a different city
-  const dayOfYear = Math.floor(
-    (new Date(dateStr + "T12:00:00") - new Date(dateStr.split("-")[0] + "-01-01T00:00:00")) / 86400000
-  );
-  const key = planKeys[dayOfYear % planKeys.length];
-  return { key, plan: plans[key] };
+  const candidate = plans["adults"] || plans["adults:tomorrow"];
+  if (!candidate?.cards?.length) {
+    // Legacy fallback: any non-kids key (handles ":h9" pre-migration data).
+    for (const [key, plan] of Object.entries(plans)) {
+      if (key.startsWith("kids")) continue;
+      if (plan?.cards?.length) return { key, plan };
+    }
+    return null;
+  }
+  return { key: "adults", plan: candidate };
 }
 
 /** Parse a time string like "7:30 PM", "14:00", "noon" into 24h hour. Returns null if unparseable. */
@@ -973,7 +973,7 @@ async function main() {
       // city/date combo is genuinely thin. Swap in the least-used city in
       // the window and try once more. After this, we accept the result.
       const stillFlaggedDayPlans = review2.flagged.filter(
-        (f) => f.slotType === "day-plan" && /(too much driving|only \d+ stops?|hours mismatch|starts too late)/i.test(f.reason || ""),
+        (f) => f.slotType === "day-plan" && /(too much driving|only \d+ stops?|only \d+ bucket|hours mismatch|starts too late)/i.test(f.reason || ""),
       );
       if (stillFlaggedDayPlans.length) {
         const ALL_CITIES = Object.keys(CITY_NAMES);
@@ -1175,7 +1175,6 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
       weather: tomorrowAdults.plan.weather || null,
       city: tomorrowAdults.city,
       kids: false,
-      anchorHour: 9,
       planDate: tomorrowStr,
       generatedAt: new Date().toISOString(),
     };
@@ -1195,7 +1194,6 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
           weather: tomorrowKidsPlan.weather || null,
           city: tomorrowAdults.city,
           kids: true,
-          anchorHour: 9,
           planDate: tomorrowStr,
           generatedAt: new Date().toISOString(),
         };
@@ -1212,7 +1210,6 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     weather: todayAdults.plan.weather || null,
     city: citySlug,
     kids: false,
-    anchorHour: 9,
     generatedAt: new Date().toISOString(),
   };
   const kidsEntry = kidsPlan ? {
@@ -1220,37 +1217,38 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     weather: kidsPlan.weather || null,
     city: citySlug,
     kids: true,
-    anchorHour: 9,
     generatedAt: new Date().toISOString(),
   } : null;
 
   // Carry-forward fallback: if today's or tomorrow's kids fetch returned empty,
   // reuse the previous run's cards with events stripped (today-only events
-  // would leak). Better than dropping the key entirely — a stale places-only
-  // plan gives the homepage instant paint instead of falling back to a live
-  // /api/plan-day call.
+  // would leak). Better than dropping the key entirely.
   const previousPlans = loadDefaultPlans()?.plans || {};
-  const carryForwardKids = (key) => {
-    const prev = previousPlans[key];
-    if (!prev?.cards?.length) return null;
-    const placesOnly = prev.cards.filter((c) => c.source !== "event");
-    if (!placesOnly.length) return null;
-    return { ...prev, cards: placesOnly, carriedForward: true };
+  const carryForwardKids = (...keys) => {
+    for (const key of keys) {
+      const prev = previousPlans[key];
+      if (!prev?.cards?.length) continue;
+      const placesOnly = prev.cards.filter((c) => c.source !== "event");
+      if (!placesOnly.length) continue;
+      return { ...prev, cards: placesOnly, carriedForward: true };
+    }
+    return null;
   };
 
-  const finalKidsEntry = kidsEntry || carryForwardKids("kids:h9");
-  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids("kids:h9:tomorrow");
+  // Look at both new keys ("kids") and legacy ":h9" keys for forward-compat
+  // during the cutover from old default-plans.json to bucket-shaped data.
+  const finalKidsEntry = kidsEntry || carryForwardKids("kids", "kids:h9");
+  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids("kids:tomorrow", "kids:h9:tomorrow");
 
-  const plans = { "adults:h9": adultsEntry };
-  if (finalKidsEntry) plans["kids:h9"] = finalKidsEntry;
-  if (tomorrowAdultsEntry) plans["adults:h9:tomorrow"] = tomorrowAdultsEntry;
-  if (finalTomorrowKidsEntry) plans["kids:h9:tomorrow"] = finalTomorrowKidsEntry;
+  const plans = { "adults": adultsEntry };
+  if (finalKidsEntry) plans["kids"] = finalKidsEntry;
+  if (tomorrowAdultsEntry) plans["adults:tomorrow"] = tomorrowAdultsEntry;
+  if (finalTomorrowKidsEntry) plans["kids:tomorrow"] = finalTomorrowKidsEntry;
 
   const output = {
     _meta: {
       generatedAt: new Date().toISOString(),
-      generator: "generate-schedule (homepage hero)",
-      anchorHours: [9],
+      generator: "generate-schedule (homepage hero, bucket schema)",
       planCount: Object.keys(plans).length,
     },
     plans,

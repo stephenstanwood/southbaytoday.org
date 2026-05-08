@@ -1,15 +1,17 @@
-// Minimal test harness for plan-day's pure math helpers. Protects the
-// brittle time-parsing + blurb-fallback logic against regressions.
-//
+// Minimal test harness for plan-day's pure helpers + bucket logic.
 // Run: npm run test:plan-day
-//
-// These tests intentionally stay tiny — the goal is tripwires for the
-// functions Stephen already debugged once, not exhaustive coverage.
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { parseHour, timeBlockFromEventTime, fallbackBlurb } from "./plan-day.ts";
+import { parseHour, fallbackBlurb } from "./plan-day.ts";
+import {
+  bucketForHour,
+  bucketForEvent,
+  bucketOrderIndex,
+  isBucket,
+  BUCKET_ORDER,
+} from "../../lib/south-bay/buckets.ts";
 
 test("parseHour: AM/PM", () => {
   assert.equal(parseHour("9:00 AM"), 9);
@@ -30,37 +32,50 @@ test("parseHour: unparseable", () => {
   assert.equal(parseHour(""), null);
 });
 
-test("timeBlockFromEventTime: explicit end", () => {
-  assert.equal(
-    timeBlockFromEventTime("7:00 PM", "9:00 PM"),
-    "7:00 PM - 9:00 PM",
-  );
+test("bucketForHour: activity slots", () => {
+  assert.equal(bucketForHour(8), "morning");
+  assert.equal(bucketForHour(11), "morning");
+  assert.equal(bucketForHour(14), "afternoon");
+  assert.equal(bucketForHour(18), "evening");
+  assert.equal(bucketForHour(22), "evening");
 });
 
-test("timeBlockFromEventTime: no end defaults to +90 min", () => {
-  assert.equal(timeBlockFromEventTime("7:00 PM"), "7:00 PM - 8:30 PM");
-  assert.equal(timeBlockFromEventTime("11:00 AM"), "11:00 AM - 12:30 PM");
+test("bucketForHour: meal slots", () => {
+  assert.equal(bucketForHour(8, "meal"), "breakfast");
+  assert.equal(bucketForHour(12, "meal"), "lunch");
+  assert.equal(bucketForHour(19, "meal"), "dinner");
 });
 
-test("timeBlockFromEventTime: null/invalid falls back", () => {
-  assert.equal(timeBlockFromEventTime(null), "7:00 PM - 8:30 PM");
-  assert.equal(timeBlockFromEventTime("TBD"), "7:00 PM - 8:30 PM");
+test("bucketForEvent: 7 PM food event → dinner", () => {
+  assert.equal(bucketForEvent("7:00 PM", "food"), "dinner");
 });
 
-test("timeBlockFromEventTime: sports default to 3-hour window", () => {
-  assert.equal(
-    timeBlockFromEventTime("7:00 PM", null, undefined, "sports"),
-    "7:00 PM - 10:00 PM",
-  );
-  assert.equal(
-    timeBlockFromEventTime("5:00 PM", null, undefined, "sports"),
-    "5:00 PM - 8:00 PM",
-  );
-  // Explicit endTime still wins, even for sports
-  assert.equal(
-    timeBlockFromEventTime("7:00 PM", "9:30 PM", undefined, "sports"),
-    "7:00 PM - 9:30 PM",
-  );
+test("bucketForEvent: 7 PM concert → evening", () => {
+  assert.equal(bucketForEvent("7:00 PM", "music"), "evening");
+});
+
+test("bucketForEvent: 11 AM workshop → morning", () => {
+  assert.equal(bucketForEvent("11:00 AM", "events"), "morning");
+});
+
+test("bucketForEvent: unparseable time → null", () => {
+  assert.equal(bucketForEvent("TBD", "food"), null);
+  assert.equal(bucketForEvent(null, "food"), null);
+});
+
+test("bucketOrderIndex: canonical order", () => {
+  for (let i = 0; i < BUCKET_ORDER.length; i++) {
+    assert.equal(bucketOrderIndex(BUCKET_ORDER[i]), i);
+  }
+});
+
+test("isBucket: validates", () => {
+  assert.equal(isBucket("breakfast"), true);
+  assert.equal(isBucket("morning"), true);
+  assert.equal(isBucket("evening"), true);
+  assert.equal(isBucket("midnight"), false);
+  assert.equal(isBucket(""), false);
+  assert.equal(isBucket(null), false);
 });
 
 test("fallbackBlurb: deterministic per-name", () => {
@@ -73,7 +88,6 @@ test("fallbackBlurb: different names can differ", () => {
   const names = ["A", "B", "C", "D", "E", "F", "G"].map((n) =>
     fallbackBlurb("event", "music", `Show ${n}`, null),
   );
-  // Pool is small but hash distribution should yield at least 2 distinct.
   assert.ok(new Set(names).size >= 2, "deterministic but varied");
 });
 
@@ -91,6 +105,5 @@ test("fallbackBlurb: place + known category", () => {
 
 test("fallbackBlurb: truly unknown source/category → last ditch", () => {
   const out = fallbackBlurb("place", "__missing__", "Test Place", null);
-  // Falls back to events pool for places, should produce a real blurb.
   assert.ok(out.length > 0);
 });
