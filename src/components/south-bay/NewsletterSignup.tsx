@@ -167,7 +167,7 @@ export default function NewsletterSignup({
       )}
       <form
         onSubmit={onSubmit}
-        style={{ display: "flex", gap: 8, flexWrap: "wrap" }}
+        style={{ display: "flex", gap: 8, flexWrap: "wrap", maxWidth: 420 }}
       >
         <input
           type="email"
@@ -179,6 +179,7 @@ export default function NewsletterSignup({
           disabled={status === "submitting"}
           style={{
             flex: "1 1 220px",
+            minWidth: 0,
             padding: "10px 14px",
             border: "1px solid #c8c4bc",
             borderRadius: 4,
