@@ -562,6 +562,11 @@ function cleanTitle(title) {
     .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
     .replace(/&\w+;/g, "")
+    // Strip trademark/copyright/service-mark symbols. They render as visual
+    // noise on cards and badges; the underlying entities are still legally
+    // recognizable without the glyph.
+    .replace(/[®©™℠℗]/g, "")
+    .replace(/\s{2,}/g, " ")
     // Strip BiblioCommons "External Event:" prefix (Palo Alto Library tags
     // events organized by outside groups — venue + source already convey
     // that, the prefix is just visible noise in display titles).
