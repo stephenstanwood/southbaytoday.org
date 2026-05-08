@@ -1447,22 +1447,21 @@ function parseCivicPlusEventTime(eventTimesStr) {
   return fmt(startTime);
 }
 
-// ── CHM-specific date extraction ──
-// CHM's WordPress feed uses pubDate = article publish date, not event date.
-// Event dates are embedded in the title, e.g. "April 15: Maker Camp" or "Sat, April 12 — Talk".
-function parseChmDate(title, pubDateStr) {
-  const MONTH = "(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)";
-  const m = title.match(new RegExp(`(${MONTH})\\s+(\\d{1,2})(?:,?\\s+(\\d{4}))?`, "i"));
-  if (m) {
-    const year = m[3] || String(new Date().getFullYear());
-    const base = new Date(`${m[1]} ${m[2]}, ${year}`);
-    if (!isNaN(base.getTime())) {
-      // If no explicit year and date is in the past, roll to next year
-      if (!m[3] && base < new Date()) base.setFullYear(base.getFullYear() + 1);
-      return base;
-    }
+// CHM event pages use the canonical template "<h2>{Month} {Day}, {Year}<br />{H}:{MM} {am|pm}</h2>".
+// The RSS feed only carries pubDate (= announcement date) so we have to fetch each item.
+async function fetchChmEventDateTime(url) {
+  try {
+    const html = await fetchText(url, { timeout: 30_000 });
+    const m = html.match(
+      /<h2>\s*((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s*\d{4})\s*<br\s*\/?\s*>\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i,
+    );
+    if (!m) return null;
+    const dt = new Date(`${m[1]} ${m[2]}`);
+    if (isNaN(dt.getTime())) return null;
+    return { date: dt, time: m[2] };
+  } catch {
+    return null;
   }
-  return parseDate(pubDateStr);
 }
 
 async function fetchChmEvents() {
@@ -1470,34 +1469,33 @@ async function fetchChmEvents() {
   try {
     const xml = await fetchText("https://computerhistory.org/events/feed/");
     const items = parseRssItems(xml);
-    const now = new Date();
-    // CHM titles don't embed dates. pubDate = article publish date (not event date).
-    // Their RSS is an exhibit/event announcement feed; items published in the last
-    // 6 months are likely still running. We use today as the event date so they
-    // appear in "happening now" sections and are refreshed on each scrape.
-    const sixMonthsAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
-    const events = items.map((item) => {
-      const pubDt = parseDate(item.pubDate);
-      if (!pubDt || pubDt < sixMonthsAgo) return null; // skip very stale items
+    const today = todayPT();
+    const results = await Promise.all(items.map(async (item) => {
+      if (!item.link) return null;
+      const dt = await fetchChmEventDateTime(item.link);
+      if (!dt) return null;
+      const iso = isoDate(dt.date);
+      if (iso < today) return null; // past event — drop
       return {
-        id: h("chm", item.link || item.title, item.pubDate),
+        id: h("chm", item.link, iso),
         title: item.title,
-        date: isoDate(now), // exhibit running today
-        displayDate: displayDate(now),
-        time: null, // all-day exhibit
+        date: iso,
+        displayDate: displayDate(dt.date),
+        time: dt.time,
         endTime: null,
         venue: "Computer History Museum",
         address: "1401 N Shoreline Blvd, Mountain View",
         city: "mountain-view",
         category: inferCategory(item.title, item.description, "", "Computer History Museum"),
         cost: "paid",
-        ongoing: true, // CHM items are running exhibits, not time-specific events
+        ongoing: false,
         description: truncate(stripHtml(item.description || item.content)),
         url: item.link,
         source: "Computer History Museum",
-        kidFriendly: true,
+        kidFriendly: false,
       };
-    }).filter(Boolean);
+    }));
+    const events = results.filter(Boolean);
     console.log(`  ✅ CHM: ${events.length} events`);
     return events;
   } catch (err) {
