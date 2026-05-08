@@ -495,6 +495,7 @@ export default function SouthBayTodayView(_props: Props) {
             const card = cardsByBucket.get(bucket);
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const passed = isPastBucket(bucket);
+            if (!card) return null;
             return (
               <BucketSlot
                 key={bucket}
@@ -706,13 +707,6 @@ export default function SouthBayTodayView(_props: Props) {
           color: inherit;
           cursor: pointer;
         }
-        .sbt-bucket-empty {
-          padding: 16px 16px 20px;
-          font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          color: #999;
-          font-style: italic;
-        }
         .sbt-bucket-body--swap {
           padding: 24px 16px;
           display: flex;
@@ -912,19 +906,19 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
   );
 }
 
-/** Single-bucket cell in the homepage grid. Holds either a card or an empty
- *  state ("nothing standout for this slot"). Past buckets dim. */
+/** Single-bucket cell in the homepage grid. Past buckets dim. Empty buckets
+ *  are filtered out upstream — never render a placeholder here. */
 interface BucketSlotProps {
   bucket: Bucket;
-  card?: DayCard;
+  card: DayCard;
   accent: string;
   passed: boolean;
   animationDelay: number;
 }
 
 function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlotProps) {
-  const emoji = card ? CATEGORY_EMOJI[card.category] || "📍" : "";
-  const cardUrl = card ? (card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url)) : null;
+  const emoji = CATEGORY_EMOJI[card.category] || "📍";
+  const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
   return (
     <div
       className={`sbt-bucket${passed ? " sbt-bucket--passed" : ""}`}
@@ -933,22 +927,16 @@ function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlot
       <div className="sbt-bucket-header">
         <span className="sbt-bucket-accent" style={{ background: accent }} />
         <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
-        {passed && card && <span className="sbt-bucket-passed-tag">passed</span>}
+        {passed && <span className="sbt-bucket-passed-tag">passed</span>}
       </div>
-      {card ? (
-        <>
-          {cardUrl ? (
-            <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
-              <CardInner card={card} emoji={emoji} accent={accent} />
-            </a>
-          ) : (
-            <div className="sbt-bucket-link">
-              <CardInner card={card} emoji={emoji} accent={accent} />
-            </div>
-          )}
-        </>
+      {cardUrl ? (
+        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
+          <CardInner card={card} emoji={emoji} accent={accent} />
+        </a>
       ) : (
-        <div className="sbt-bucket-empty">No standout pick — go with your usual.</div>
+        <div className="sbt-bucket-link">
+          <CardInner card={card} emoji={emoji} accent={accent} />
+        </div>
       )}
     </div>
   );

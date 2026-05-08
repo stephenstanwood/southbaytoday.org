@@ -1369,6 +1369,99 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
+  // Evergreen fallback: any bucket the pool-backfill couldn't fill goes
+  // straight to placesData. Parks, trails, shops, museums — the South Bay
+  // has thousands of these, and an empty bucket is a worse user experience
+  // than recommending a generic-but-good evergreen ("go for a walk at this
+  // park"). Bypasses the score-bounded pool entirely.
+  const stillEmpty = BUCKET_ORDER.filter((b) => !cards.some((c) => c.bucket === b));
+  if (stillEmpty.length > 0) {
+    const placesAll = ((placesData as any).places ?? []) as any[];
+    const cityConfig = CITY_MAP[city];
+    // Order matters: for activity buckets we prefer outdoor (parks, trails)
+    // over museums over shops over commercial entertainment. Surfaces the
+    // "infinite parks and trails" Stephen wants, not boutique venues.
+    const ACTIVITY_CAT_PRIORITY: Record<string, number> = {
+      outdoor: 4, museum: 3, shopping: 2, entertainment: 1,
+    };
+    const usedIdsFinal = new Set(cards.map((c) => c.id));
+    // Stable per-day seed so the same fallback doesn't repeat across days.
+    const seedStr = `${city}|${targetDate || ""}|${kids ? "k" : "a"}`;
+    let seedNum = 0;
+    for (let i = 0; i < seedStr.length; i++) seedNum = (seedNum * 31 + seedStr.charCodeAt(i)) >>> 0;
+
+    for (const bucket of stillEmpty) {
+      const isMeal = MEAL_BUCKETS.has(bucket);
+      const filterCandidates = (minRatingCount: number) => placesAll.filter((p: any) => {
+        if (!p || !p.id) return false;
+        if (usedIdsFinal.has(`place:${p.id}`)) return false;
+        const cat = (p.category || "").toLowerCase();
+        if (cat === "neighborhood") return false;
+        if (kids && cat === "wellness") return false;
+        if (PERMANENT_NAME_BLOCKLIST.has(normalizeName(p.name) || "")) return false;
+        if (isMeal && cat !== "food") return false;
+        if (!isMeal && (cat === "food" || !(cat in ACTIVITY_CAT_PRIORITY))) return false;
+        // Quality gate — skip 5★ noise from places with 3 reviews.
+        if ((p.ratingCount || 0) < minRatingCount) return false;
+        if (p.city !== city) {
+          if (!p.lat || !p.lng || !cityConfig) return false;
+          const dist = haversineKm(cityConfig.lat, cityConfig.lon, p.lat, p.lng);
+          if (dist > NEARBY_KM) return false;
+        }
+        if (!openDuringBucket(p.hours, dayKey, bucket, p.types || [], cat)) return false;
+        return true;
+      });
+      // Try a strict quality bar first, then loosen.
+      let candidates = filterCandidates(100);
+      if (candidates.length === 0) candidates = filterCandidates(20);
+      if (candidates.length === 0) candidates = filterCandidates(0);
+      if (candidates.length === 0) continue;
+      candidates.sort((a, b) => {
+        if (!isMeal) {
+          const pa = ACTIVITY_CAT_PRIORITY[(a.category || "").toLowerCase()] || 0;
+          const pb = ACTIVITY_CAT_PRIORITY[(b.category || "").toLowerCase()] || 0;
+          if (pa !== pb) return pb - pa;
+        }
+        return (b.rating || 0) - (a.rating || 0);
+      });
+      // Rotate within the top by per-day seed so we don't pin the same pick.
+      const top = candidates.slice(0, 12);
+      const idx = (seedNum + BUCKET_ORDER.indexOf(bucket) * 7) % top.length;
+      const pick = top[idx];
+      cards.push({
+        id: `place:${pick.id}`,
+        name: pick.name,
+        category: canonicalCategory(pick.category || "outdoor"),
+        city: pick.city,
+        address: pick.address || "",
+        bucket,
+        eventTime: null,
+        timeBlock: BUCKET_LABELS[bucket],
+        blurb: PLACE_BLURBS.get(pick.id) || fallbackBlurb("place", pick.category, pick.name, null),
+        why: "Evergreen pick — solid for this slot.",
+        url: pick.url,
+        mapsUrl: pick.mapsUrl,
+        cost: pick.cost,
+        costNote: pick.costNote || (pick.priceLevel ? priceLevelLabel(pick.priceLevel) : null),
+        kidsCostNote: null,
+        photoRef: pick.photoRef || null,
+        image: null,
+        venue: null,
+        source: "place",
+        locked: false,
+        rationale: `evergreen-fallback | empty-bucket=${bucket}`,
+      });
+      usedIdsFinal.add(`place:${pick.id}`);
+      logDecision({
+        script: "plan-day",
+        action: "backfilled-evergreen",
+        target: `${pick.name} (${pick.id})`,
+        reason: `pool-backfill left ${bucket} empty`,
+        meta: { city, targetDate, bucket },
+      });
+    }
+  }
+
   // Final sort: bucket order so the renderer doesn't have to.
   cards.sort((a, b) => bucketOrderIndex(a.bucket) - bucketOrderIndex(b.bucket));
 
