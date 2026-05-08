@@ -532,11 +532,10 @@ export default function SouthBayTodayView(_props: Props) {
         </div>
       )}
 
-      {/* Newsletter inline strip — sits right under the bucket grid. The
-          outer wrapper matches .sbt-buckets margins so it aligns with the
-          left edge of the grid; the inner card is sized to one bucket
-          column on desktop (collapses to full width on mobile where the
-          bucket grid is single-column). */}
+      {/* Newsletter inline strip — sits right under the bucket grid and
+          aligns with the bucket-grid edges. Spans the full grid width with
+          a two-column inner layout (serif headline left, form right) so
+          the extra width carries type, not a giant email field. */}
       {visibleCards.length > 0 && (
         <div className="sbt-newsletter-row">
           <div className="sbt-newsletter-card">
@@ -646,8 +645,8 @@ export default function SouthBayTodayView(_props: Props) {
           margin: 16px -16px 8px;
         }
         .sbt-newsletter-card {
-          width: calc(50% - 5px);
-          padding: 16px 18px;
+          width: 100%;
+          padding: 18px 22px;
           border: 1px solid #C8C4BC;
           border-radius: 4px;
           background: #fff;
@@ -655,7 +654,7 @@ export default function SouthBayTodayView(_props: Props) {
         }
         @media (max-width: 640px) {
           .sbt-newsletter-row { margin: 12px -8px 8px; }
-          .sbt-newsletter-card { width: 100%; }
+          .sbt-newsletter-card { padding: 14px 16px; }
         }
         .sbt-bucket {
           background: #fff;
