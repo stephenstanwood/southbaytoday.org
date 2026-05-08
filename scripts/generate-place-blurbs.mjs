@@ -61,6 +61,20 @@ function lowerType(displayType) {
   return displayType.charAt(0).toLowerCase() + displayType.slice(1);
 }
 
+// Google Places returns priceLevel as enum strings (PRICE_LEVEL_INEXPENSIVE,
+// _MODERATE, _EXPENSIVE, _VERY_EXPENSIVE). Normalize to $/$$/$$$/$$$$.
+function priceTier(priceLevel) {
+  if (!priceLevel) return null;
+  const map = {
+    "PRICE_LEVEL_INEXPENSIVE": "$",
+    "PRICE_LEVEL_MODERATE": "$$",
+    "PRICE_LEVEL_EXPENSIVE": "$$$",
+    "PRICE_LEVEL_VERY_EXPENSIVE": "$$$$",
+    "$": "$", "$$": "$$", "$$$": "$$$", "$$$$": "$$$$",
+  };
+  return map[priceLevel] || null;
+}
+
 // Trim editorial summary if it has marketing fluff or runs too long.
 function cleanEditorial(text) {
   if (!text) return null;
@@ -80,7 +94,8 @@ function cleanEditorial(text) {
 
 // FOOD ----------------------------------------------------------------------
 function blurbForFood(p, ctx) {
-  const { cityName, street, priceLevel, types } = ctx;
+  const { cityName, street, types } = ctx;
+  const priceLevel = priceTier(ctx.priceLevel);
   const type = lowerType(p.displayType || "restaurant");
   const isCoffee = /coffee|cafe|tea house/i.test(p.displayType || "");
   const isBakery = /bakery|patisserie|donut|pastry/i.test(p.displayType || "");
