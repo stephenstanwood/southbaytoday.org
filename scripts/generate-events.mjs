@@ -96,6 +96,7 @@ const TITLE_BLOCKLIST = [
   /\bFidelity One on One\b/i, // internal HR appointments
   /\bPay Day\b/i,          // internal HR payroll notices
   /\bResearch Week Braintrust\b/i, // internal student workshop
+  /\bFlash Sale Fridays\b/i, // Stanford gear hub — requires SUID card
 ];
 
 function isBlockedEvent(title) {
@@ -509,6 +510,10 @@ function isPublicEvent(title, source, description, venue) {
   if (uniSources.includes(source)) {
     for (const pat of INTERNAL_EVENT_PATTERNS) {
       if (pat.test(title)) return false;
+    }
+    // Stanford-internal access requirements (SUID card / SUNet ID) — Stanford-only
+    if (source === "Stanford Events" && description) {
+      if (/\bSUID\b/i.test(description) || /\bSUNet\s*ID\b/i.test(description)) return false;
     }
     // Filter away athletic events — games played outside the South Bay
     if (isAwayGame(title)) return false;
