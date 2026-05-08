@@ -3,6 +3,7 @@ import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES } from "../../lib/south-bay/cities";
 import SouthBayTodayView from "./homepage/SouthBayTodayView";
+import NewsletterSignup from "./NewsletterSignup";
 
 // Non-default tabs are lazy-loaded so a user who only looks at the Today tab
 // doesn't pay for Events/Tech/etc. code + their deps (recharts, etc.)
@@ -230,6 +231,13 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
           </Suspense>
         )}
       </main>
+
+      {/* Newsletter signup — sitewide, footer-adjacent. Card variant has the
+          full marketing copy. No popup, no modal — just a card the reader
+          scrolls past. */}
+      <div style={{ maxWidth: 720, margin: "32px auto 0", padding: "0 24px" }}>
+        <NewsletterSignup variant="card" />
+      </div>
 
       {/* Footer */}
       <footer className="sb-footer">

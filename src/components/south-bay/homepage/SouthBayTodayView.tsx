@@ -16,6 +16,7 @@ import {
 } from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
+import NewsletterSignup from "../NewsletterSignup";
 // =====================================================================
 // HOME-TAB-LOCKED — DO NOT ADD TEASER COMPONENTS HERE
 // The home tab is hand-curated. Adding new teasers, callouts, strips,
@@ -865,6 +866,21 @@ export default function SouthBayTodayView(_props: Props) {
               })}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Newsletter inline strip — same plan, in your inbox tomorrow morning.
+          Sits right under the bucket grid so the value prop is contextual:
+          "you just looked at today's plan; want one every day?" */}
+      {visibleCards.length > 0 && (
+        <div style={{
+          margin: "24px 0 8px",
+          padding: "16px 18px",
+          border: "1px solid #C8C4BC",
+          borderRadius: 4,
+          background: "#fff",
+        }}>
+          <NewsletterSignup variant="inline" />
         </div>
       )}
 

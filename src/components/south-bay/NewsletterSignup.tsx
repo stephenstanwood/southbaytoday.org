@@ -42,17 +42,18 @@ export default function NewsletterSignup({
     return (
       <div
         style={{
-          padding: isCard ? "20px" : "12px 0",
-          background: isCard ? "#f7f6fb" : "transparent",
-          borderRadius: isCard ? 12 : 0,
+          padding: isCard ? "22px 24px" : "10px 0",
+          background: isCard ? "#f3f1f8" : "transparent",
+          borderRadius: isCard ? 4 : 0,
           textAlign: "center",
+          fontFamily: "'Inter', sans-serif",
         }}
       >
-        <div style={{ fontWeight: 600, color: "#1a1a2e", marginBottom: 4 }}>
+        <div style={{ fontWeight: 700, color: "#1a1a2e", marginBottom: 4, fontSize: 16 }}>
           You're in.
         </div>
         <div style={{ fontSize: 14, color: "#5b6478" }}>
-          First email lands tomorrow morning.
+          Tomorrow's plan lands in your inbox by 6&nbsp;AM.
         </div>
       </div>
     );
@@ -61,31 +62,36 @@ export default function NewsletterSignup({
   return (
     <div
       style={{
-        padding: isCard ? "20px" : "0",
-        background: isCard ? "#f7f6fb" : "transparent",
-        borderRadius: isCard ? 12 : 0,
+        padding: isCard ? "22px 24px" : "0",
+        background: isCard ? "#f3f1f8" : "transparent",
+        borderRadius: isCard ? 4 : 0,
+        fontFamily: "'Inter', sans-serif",
       }}
     >
-      {isCard && (
+      {isCard ? (
         <>
           <div
             style={{
               fontSize: 11,
               letterSpacing: 1.6,
               textTransform: "uppercase",
-              color: "#7c3aed",
-              fontWeight: 700,
+              color: "#5b54c9",
+              fontWeight: 800,
             }}
           >
-            Daily newsletter
+            Daily — by 6&nbsp;AM
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a2e", marginTop: 4 }}>
-            South Bay Today, in your inbox
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a2e", marginTop: 4, lineHeight: 1.2, fontFamily: "'Playfair Display', Georgia, serif" }}>
+            A fresh plan every morning.
           </div>
-          <div style={{ fontSize: 14, color: "#5b6478", marginTop: 6, marginBottom: 14 }}>
-            One email every morning: today's plan, tonight's pick, every event we know about, openings, civic meetings, and whatever else is happening.
+          <div style={{ fontSize: 14, color: "#5b6478", marginTop: 8, marginBottom: 14, lineHeight: 1.5 }}>
+            One email. Tomorrow's day plan, every event in town, openings, what's at city hall. Once a day — that's the whole deal.
           </div>
         </>
+      ) : (
+        <div style={{ fontSize: 13, color: "#5b6478", marginBottom: 8, lineHeight: 1.5 }}>
+          <strong style={{ color: "#1a1a2e" }}>Like today's plan?</strong> A fresh one lands in your inbox every morning at 6, plus every event in town. One email, daily.
+        </div>
       )}
       <form
         onSubmit={onSubmit}
@@ -102,33 +108,37 @@ export default function NewsletterSignup({
           style={{
             flex: "1 1 220px",
             padding: "10px 14px",
-            border: "1px solid #d4d7e0",
-            borderRadius: 6,
+            border: "1px solid #c8c4bc",
+            borderRadius: 4,
             fontSize: 15,
             background: "#fff",
             color: "#1a1a2e",
+            fontFamily: "inherit",
           }}
         />
         <button
           type="submit"
           disabled={status === "submitting"}
           style={{
-            padding: "10px 20px",
-            background: "#3b4ef0",
+            padding: "10px 22px",
+            background: "#1a1a2e",
             color: "#fff",
             border: "none",
-            borderRadius: 6,
-            fontSize: 15,
-            fontWeight: 600,
+            borderRadius: 4,
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: 0.4,
+            textTransform: "uppercase",
             cursor: status === "submitting" ? "wait" : "pointer",
             opacity: status === "submitting" ? 0.7 : 1,
+            fontFamily: "inherit",
           }}
         >
           {status === "submitting" ? "…" : "Subscribe"}
         </button>
       </form>
       {error && (
-        <div style={{ fontSize: 13, color: "#dc2626", marginTop: 8 }}>{error}</div>
+        <div style={{ fontSize: 13, color: "#c0392b", marginTop: 8 }}>{error}</div>
       )}
     </div>
   );
