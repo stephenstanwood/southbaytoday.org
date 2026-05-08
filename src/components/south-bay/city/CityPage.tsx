@@ -67,6 +67,40 @@ const CAT_EMOJI: Record<string, string> = {
   market: "🌽", food: "🍜", outdoor: "🌿", sports: "🏟️",
 };
 
+// ── Agenda items helpers ──
+//
+// upcoming-meetings.json already runs SKIP_PREFIXES/SKIP_STARTS_WITH/SKIP_REGEX
+// at scrape time, but we run a second pass on the client so the panel never
+// shows obvious closed-session boilerplate even if a city's filter coverage
+// drifts. Be conservative — only drop items we're certain are non-substantive.
+type AgendaItem = { title: string; sequence: number };
+
+const CLIENT_AGENDA_DROP_RE = [
+  /^conference with (?:legal counsel|real property|labor)/i,
+  /^closed session/i,
+  /^public hearing\b/i,
+  /^approval of (?:the )?(?:[a-z\d ,]+ )?(?:meeting )?minutes\b/i,
+];
+
+function trimAgendaTitle(t: string): string {
+  // Strip "Subject:" wrapper that some cities prepend
+  let s = t.replace(/^subject:\s*/i, "").trim();
+  // Drop trailing California Government Code references
+  s = s.replace(/\s*\((?:california\s+)?government\s+code\s*[^)]*\)\s*$/i, "").trim();
+  // Cap length so the panel doesn't blow up on a paragraph-length item
+  if (s.length > 140) s = s.slice(0, 137) + "…";
+  return s;
+}
+
+function filterAgendaItems(items: AgendaItem[] | undefined): AgendaItem[] {
+  if (!items) return [];
+  return items.filter((it) => {
+    const t = (it.title || "").trim();
+    if (t.length < 12) return false;
+    return !CLIENT_AGENDA_DROP_RE.some((re) => re.test(t));
+  });
+}
+
 // ── Props ──
 
 type Props = {
@@ -196,7 +230,11 @@ export default function CityPage({ cityId, cityName }: Props) {
       <CityDayPlan cityId={cityId as City} cityName={cityName} />
 
       {/* ═══ TONIGHT AT CITY HALL ═══ */}
-      {meetingIsToday && nextMeeting && (
+      {meetingIsToday && nextMeeting && (() => {
+        const items = filterAgendaItems(nextMeeting.agendaItems);
+        const shown = items.slice(0, 4);
+        const more = items.length - shown.length;
+        return (
         <div style={{
           background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)",
           borderRadius: 6, padding: "16px 20px", marginBottom: 20, color: "#e0e7ff",
@@ -211,14 +249,32 @@ export default function CityPage({ cityId, cityName }: Props) {
             {nextMeeting.displayDate}
             {nextMeeting.location && <span> · {nextMeeting.location}</span>}
           </div>
+          {shown.length > 0 && (
+            <ul style={{ margin: "10px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 5 }}>
+              {shown.map((it, i) => (
+                <li key={i} style={{
+                  fontSize: 12, color: "#e0e7ff", lineHeight: 1.4,
+                  paddingLeft: 10, borderLeft: "2px solid #6366f1",
+                }}>
+                  {trimAgendaTitle(it.title)}
+                </li>
+              ))}
+              {more > 0 && (
+                <li style={{ fontSize: 11, color: "#a5b4fc", paddingLeft: 10, fontStyle: "italic" }}>
+                  +{more} more on the agenda
+                </li>
+              )}
+            </ul>
+          )}
           {nextMeeting.url && (
             <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-block", marginTop: 8, fontSize: 12, color: "#818cf8", textDecoration: "none", fontWeight: 600 }}>
+              style={{ display: "inline-block", marginTop: 10, fontSize: 12, color: "#818cf8", textDecoration: "none", fontWeight: 600 }}>
               View agenda →
             </a>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* ═══ TODAY'S EVENTS ═══ */}
       <div style={{ marginBottom: 28 }}>
@@ -298,10 +354,13 @@ export default function CityPage({ cityId, cityName }: Props) {
           </h2>
           {briefing.highlights?.length > 0 && (
             <div style={{ marginBottom: 8 }}>
-              {briefing.highlights.slice(0, 4).map((h: any, i: number) => (
+              {briefing.highlights
+                .filter((h: any) => !CLIENT_AGENDA_DROP_RE.some((re) => re.test(h?.title ?? "")))
+                .slice(0, 4)
+                .map((h: any, i: number) => (
                 <div key={i} style={{ fontSize: 12, color: "#713f12", padding: "3px 0", display: "flex", gap: 6 }}>
                   <span>•</span>
-                  <span>{h.title}{h.when ? ` — ${h.when}` : ""}</span>
+                  <span>{trimAgendaTitle(h.title)}{h.when ? ` — ${h.when}` : ""}</span>
                 </div>
               ))}
             </div>
@@ -313,7 +372,11 @@ export default function CityPage({ cityId, cityName }: Props) {
       )}
 
       {/* ═══ NEXT COUNCIL MEETING ═══ */}
-      {nextMeeting && !meetingIsToday && (
+      {nextMeeting && !meetingIsToday && (() => {
+        const items = filterAgendaItems(nextMeeting.agendaItems);
+        const shown = items.slice(0, 4);
+        const more = items.length - shown.length;
+        return (
         <div style={{
           background: "var(--sb-card)", border: "1px solid var(--sb-border-light)", borderRadius: 6,
           padding: "14px 18px", marginBottom: 28,
@@ -324,14 +387,44 @@ export default function CityPage({ cityId, cityName }: Props) {
           <div style={{ fontWeight: 700, fontSize: 15, color: "var(--sb-ink)" }}>
             {nextMeeting.bodyName} · {nextMeeting.displayDate}
           </div>
-          {nextMeeting.url && (
-            <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 12, color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600, marginTop: 4, display: "inline-block" }}>
-              View agenda →
-            </a>
+          {shown.length > 0 ? (
+            <>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "var(--sb-muted)", margin: "10px 0 6px" }}>
+                On the agenda
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 5 }}>
+                {shown.map((it, i) => (
+                  <li key={i} style={{
+                    fontSize: 12, color: "var(--sb-ink)", lineHeight: 1.4,
+                    paddingLeft: 10, borderLeft: "2px solid var(--sb-border-light)",
+                  }}>
+                    {trimAgendaTitle(it.title)}
+                  </li>
+                ))}
+                {more > 0 && (
+                  <li style={{ fontSize: 11, color: "var(--sb-light)", paddingLeft: 10, fontStyle: "italic" }}>
+                    +{more} more on the agenda
+                  </li>
+                )}
+              </ul>
+              {nextMeeting.url && (
+                <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: 12, color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600, marginTop: 10, display: "inline-block" }}>
+                  View full agenda →
+                </a>
+              )}
+            </>
+          ) : (
+            nextMeeting.url && (
+              <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: 12, color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600, marginTop: 4, display: "inline-block" }}>
+                View agenda →
+              </a>
+            )
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* ═══ RECENT CIVIC ACTIONS ═══ */}
       {aroundItems.length > 0 && (

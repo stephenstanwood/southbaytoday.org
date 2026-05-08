@@ -71,6 +71,10 @@ const SKIP_REGEX = [
   /\bapproval of (?:the )?(?:[a-z\d ,]+ )?(?:meeting )?minutes\b/i,
   // "Monthly Treasurer's Report / Investment Report" — recurring filings
   /\bmonthly treasurer'?s\s+(?:investment\s+)?report\b/i,
+  // Brown Act closed-session boilerplate without a "Subject:" wrapper.
+  // Mountain View posts these as bare titles, e.g.
+  // "Conference with Real Property Negotiator (California Government Code §54956.8)".
+  /^conference with (?:legal counsel|real property|labor)/i,
   // Section banners like "CONSENT CALENDAR (Items 5-18)" that escape the
   // all-caps filter because of the parenthetical.
   /^consent calendar\s*\(/i,
