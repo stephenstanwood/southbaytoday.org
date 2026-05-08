@@ -1281,6 +1281,75 @@ Return ONLY the JSON array. No explanation.`;
     }
   }
 
+  // Backfill: any bucket that ended up empty (Claude skipped it, or a
+  // post-processor dropped its pick) gets the best remaining pool candidate
+  // that matches the bucket's category + hours constraints. The "always-fill"
+  // promise — a thin homepage with two cards is worse than a complete plan
+  // with one or two filler picks.
+  const usedAfterValidation = new Set(cards.map((c) => c.bucket));
+  const usedIdsAfter = new Set(cards.map((c) => c.id));
+  const emptyBuckets = BUCKET_ORDER.filter((b) => !usedAfterValidation.has(b));
+  if (emptyBuckets.length > 0) {
+    for (const bucket of emptyBuckets) {
+      const isMeal = MEAL_BUCKETS.has(bucket);
+      // Iterate the full pool by score (already sorted in plan-day caller).
+      let backfill: Candidate | null = null;
+      for (const c of pool) {
+        if (usedIdsAfter.has(c.id)) continue;
+        // Meal buckets food-only; activity buckets non-food (events of any
+        // category fine since they're explicitly slotted by their time).
+        if (isMeal && c.category !== "food") continue;
+        if (!isMeal && c.source === "place" && c.category === "food") continue;
+        // Events with a fixed time only fit if their bucket matches.
+        if (c.source === "event" && c.eventTime) {
+          const evBucket = bucketForEvent(c.eventTime, c.category);
+          if (evBucket && evBucket !== bucket) continue;
+        }
+        // Hours fit (places only).
+        if (c.source === "place") {
+          const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
+          const placeTypes = (c as any).types as string[] | null | undefined;
+          if (!openDuringBucket(hoursObj, dayKey, bucket, placeTypes, c.category)) continue;
+        }
+        backfill = c;
+        break;
+      }
+      if (!backfill) continue;
+      const card: DayCard = {
+        id: backfill.id,
+        name: backfill.name,
+        category: backfill.category,
+        city: backfill.city,
+        address: backfill.address,
+        bucket,
+        eventTime: backfill.eventTime || null,
+        timeBlock: BUCKET_LABELS[bucket],
+        blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
+        why: backfill.why || "Solid fill for this slot.",
+        url: backfill.url,
+        mapsUrl: backfill.mapsUrl,
+        cost: backfill.cost,
+        costNote: kids && backfill.kidsCostNote ? backfill.kidsCostNote : backfill.costNote,
+        kidsCostNote: backfill.kidsCostNote,
+        photoRef: (backfill as any).photoRef || null,
+        image: (backfill as any).image || null,
+        venue: backfill.venue || null,
+        source: backfill.source,
+        locked: false,
+        rationale: `backfill | empty-bucket=${bucket}`,
+      };
+      cards.push(card);
+      usedIdsAfter.add(backfill.id);
+      logDecision({
+        script: "plan-day",
+        action: "backfilled",
+        target: `${backfill.name} (${backfill.id})`,
+        reason: `claude/validators left ${bucket} empty`,
+        meta: { city, targetDate, bucket },
+      });
+    }
+  }
+
   // Final sort: bucket order so the renderer doesn't have to.
   cards.sort((a, b) => bucketOrderIndex(a.bucket) - bucketOrderIndex(b.bucket));
 
