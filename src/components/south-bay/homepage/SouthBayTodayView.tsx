@@ -880,20 +880,16 @@ export default function SouthBayTodayView(_props: Props) {
         </div>
       )}
 
-      {/* Newsletter inline strip — same plan, in your inbox tomorrow morning.
-          Sits right under the bucket grid so the value prop is contextual:
-          "you just looked at today's plan; want one every day?". Margin
-          matches .sbt-buckets so left/right edges line up with the cards
-          above. */}
+      {/* Newsletter inline strip — sits right under the bucket grid. The
+          outer wrapper matches .sbt-buckets margins so it aligns with the
+          left edge of the grid; the inner card is sized to one bucket
+          column on desktop (collapses to full width on mobile where the
+          bucket grid is single-column). */}
       {visibleCards.length > 0 && (
-        <div style={{
-          margin: "16px -16px 8px",
-          padding: "16px 18px",
-          border: "1px solid #C8C4BC",
-          borderRadius: 4,
-          background: "#fff",
-        }}>
-          <NewsletterSignup variant="inline" />
+        <div className="sbt-newsletter-row">
+          <div className="sbt-newsletter-card">
+            <NewsletterSignup variant="inline" />
+          </div>
         </div>
       )}
 
@@ -992,6 +988,22 @@ export default function SouthBayTodayView(_props: Props) {
             gap: 8px;
             margin: 0 -8px;
           }
+        }
+        /* ── Newsletter row (matches bucket-grid edges) ── */
+        .sbt-newsletter-row {
+          margin: 16px -16px 8px;
+        }
+        .sbt-newsletter-card {
+          width: calc(50% - 5px);
+          padding: 16px 18px;
+          border: 1px solid #C8C4BC;
+          border-radius: 4px;
+          background: #fff;
+          box-sizing: border-box;
+        }
+        @media (max-width: 640px) {
+          .sbt-newsletter-row { margin: 12px -8px 8px; }
+          .sbt-newsletter-card { width: 100%; }
         }
         .sbt-bucket {
           background: #fff;
