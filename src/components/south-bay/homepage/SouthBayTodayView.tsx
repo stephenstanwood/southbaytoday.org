@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------------
 // South Bay Today — Day-Planning Homepage
 // ---------------------------------------------------------------------------
-// "What should we do today?" — list + card views with lock/skip/hide.
+// "What should we do today?" — bucket grid backed by pre-generated default
+// plans (kids + adults) regenerated nightly, with a Reshuffle live-fetch.
 // ---------------------------------------------------------------------------
 
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -61,7 +62,6 @@ interface DayCard {
   image?: string | null;
   venue?: string | null;
   source: "event" | "place";
-  locked: boolean;
 }
 
 interface PlanResponse {
@@ -71,43 +71,11 @@ interface PlanResponse {
   kids: boolean;
   generatedAt: string;
   poolSize: number;
-  /** Locked ids the server couldn't find — event cancelled, place archived.
-   *  Client should purge these from state.locked so they stop haunting
-   *  future shuffles. */
-  invalidLockedIds?: string[];
-}
-
-type DismissType = "skip" | "hide";
-
-interface DismissedEntry {
-  type: DismissType;
-  /** Card name at dismiss time. Used as a fallback match key so a hide
-   *  survives an ID change (e.g. curated → Google Places re-keying). */
-  name?: string;
-  until?: string;
-  permanent?: boolean;
 }
 
 interface LocalState {
   kids: boolean;
-  dismissed: Record<string, DismissedEntry>;
-  locked: string[];
-  viewMode: "list" | "cards";
-  /** Rolling ledger of places/events we've shown the user. Lets the API
-   *  penalize recent repeats for up to 14 days so the same venue doesn't
-   *  anchor every day. Window matches plan-day's recentPenalty bands
-   *  (today/2d/7d/14d). Capped and auto-pruned on load. */
-  recentlyShown: RecentEntry[];
 }
-
-interface RecentEntry {
-  id: string;
-  name: string;
-  ts: number; // epoch ms
-}
-
-const RECENT_MAX = 200;
-const RECENT_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000;
 
 // ---------------------------------------------------------------------------
 // Design tokens
@@ -134,72 +102,12 @@ function loadState(): LocalState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultState();
     const parsed = JSON.parse(raw);
-    // Use PT date for skip expiry — user's experience is in PT, and skip
-    // entries' `until` was written using PT toLocaleDateString.
-    const now = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-    for (const [id, entry] of Object.entries(parsed.dismissed ?? {})) {
-      const d = entry as DismissedEntry;
-      if (d.type === "skip" && d.until && d.until < now) delete parsed.dismissed[id];
-    }
-    const cutoff = Date.now() - RECENT_MAX_AGE_MS;
-    const recent = Array.isArray(parsed.recentlyShown)
-      ? (parsed.recentlyShown as RecentEntry[])
-          .filter((e) => e && typeof e.ts === "number" && e.ts >= cutoff && typeof e.id === "string")
-      : [];
-    return { ...defaultState(), ...parsed, recentlyShown: recent };
+    return { kids: !!parsed.kids };
   } catch { return defaultState(); }
 }
 
 function defaultState(): LocalState {
-  return { kids: false, dismissed: {}, locked: [], viewMode: "list", recentlyShown: [] };
-}
-
-/** Merge new card ids+names into the recent-shown ledger, drop duplicates
- *  so a name's timestamp always reflects the most recent view, and cap the
- *  list. The server reads this to penalize repeats across sessions. */
-function mergeRecent(prev: RecentEntry[], cards: { id: string; name: string }[]): RecentEntry[] {
-  const now = Date.now();
-  const cutoff = now - RECENT_MAX_AGE_MS;
-  const seenIds = new Set(cards.map((c) => c.id));
-  const seenNames = new Set(cards.map((c) => normalizeLedgerName(c.name)));
-  const kept = prev.filter(
-    (e) => e.ts >= cutoff && !seenIds.has(e.id) && !seenNames.has(normalizeLedgerName(e.name)),
-  );
-  const fresh = cards.map((c) => ({ id: c.id, name: c.name, ts: now }));
-  return [...fresh, ...kept].slice(0, RECENT_MAX);
-}
-
-function normalizeLedgerName(name: string | null | undefined): string {
-  return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
-}
-
-/** Normalize an `id:` so historical `pad:X` prefixes (from one-off surgery
- *  scripts) match the canonical `place:X` form used by the live API. */
-function canonicalCardId(id: string): string {
-  return id.startsWith("pad:") ? "place:" + id.slice(4) : id;
-}
-
-/** True when a card matches an active dismiss in localStorage state.
- *  loadState() prunes stale skips, so any entry here is still active. ID
- *  match is exact (with pad:/place: normalized); name match is normalized
- *  so the "hide" survives an ID change (curated → Google Places re-keying
- *  after a place upgrade). */
-function isDismissedCard(
-  card: { id: string; name: string },
-  dismissed: Record<string, DismissedEntry>,
-): boolean {
-  const cid = canonicalCardId(card.id);
-  if (dismissed[card.id] || dismissed[cid]) return true;
-  // Also check whether any stored key matches the canonical form
-  for (const k of Object.keys(dismissed)) {
-    if (canonicalCardId(k) === cid) return true;
-  }
-  const norm = normalizeLedgerName(card.name);
-  if (!norm) return false;
-  for (const entry of Object.values(dismissed)) {
-    if (entry.name && normalizeLedgerName(entry.name) === norm) return true;
-  }
-  return false;
+  return { kids: false };
 }
 
 const PLAN_ANCHORS: City[] = CITIES
@@ -251,26 +159,16 @@ function getEffectiveTime(kids: boolean): {
 }
 
 /** Load a pre-generated bucket plan from default-plans.json for instant display.
- *  New schema: `plans.adults` / `plans.kids` for today, `plans["adults:tomorrow"]`
+ *  Schema: `plans.adults` / `plans.kids` for today, `plans["adults:tomorrow"]`
  *  / `plans["kids:tomorrow"]` for the next-day flip. Buckets don't expire on
  *  the clock the way old timeBlock cards did, so no time-based filtering — the
- *  homepage dims past buckets in render. Returns `filtered` if a dismiss
- *  removed something so the caller can fire a live fetch to backfill. */
-function loadDefaultPlan(
-  kids: boolean,
-  dismissed: Record<string, DismissedEntry> = {},
-): { cards: DayCard[]; anchor: City | null; filtered: boolean } {
+ *  homepage dims past buckets in render. */
+function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
     const eff = getEffectiveTime(kids);
     const kidsSuffix = kids ? "kids" : "adults";
-
-    const dropDismissed = (cards: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
-      if (!Object.keys(dismissed).length) return { cards, filtered: false };
-      const kept = cards.filter((c) => !isDismissedCard(c, dismissed));
-      return { cards: kept, filtered: kept.length !== cards.length };
-    };
 
     // Read either the new schema ("adults") or the legacy ":h9" anchor key
     // for back-compat during the cutover from old default-plans.json data.
@@ -282,110 +180,26 @@ function loadDefaultPlan(
     if (eff.isTomorrow) {
       const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
       if (tomorrowPlan) {
-        const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
-        return { cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor(), filtered };
+        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor() };
       }
       const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
       if (todayPlan) {
         const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
-        const { cards, filtered } = dropDismissed(placesOnly);
-        return {
-          cards,
-          anchor: (todayPlan.city as City) || pickRandomAnchor(),
-          filtered: filtered || placesOnly.length !== todayPlan.cards.length,
-        };
+        return { cards: placesOnly, anchor: (todayPlan.city as City) || pickRandomAnchor() };
       }
-      return { cards: [], anchor: null, filtered: false };
+      return { cards: [], anchor: null };
     }
 
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], anchor: null, filtered: false };
-    const { cards, filtered } = dropDismissed(plan.cards);
-    return { cards, anchor: (plan.city as City) || pickRandomAnchor(), filtered };
+    if (!plan) return { cards: [], anchor: null };
+    return { cards: plan.cards, anchor: (plan.city as City) || pickRandomAnchor() };
   } catch {
-    return { cards: [], anchor: null, filtered: false };
+    return { cards: [], anchor: null };
   }
 }
 
 function saveState(state: LocalState) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
-}
-
-// ---------------------------------------------------------------------------
-// User preference learning (persisted separately so prefs survive state resets)
-// ---------------------------------------------------------------------------
-
-const PREFS_KEY = "sbt-user-prefs";
-const EMA_ALPHA = 0.3; // exponential moving average weight for new signals
-
-interface UserPreferences {
-  categoryScores: Record<string, number>; // positive = likes, negative = dislikes
-  costBias: number;       // -1 (budget) to +1 (splurge)
-  outdoorBias: number;    // -1 (indoor) to +1 (outdoor)
-  totalInteractions: number;
-}
-
-function defaultPrefs(): UserPreferences {
-  return { categoryScores: {}, costBias: 0, outdoorBias: 0, totalInteractions: 0 };
-}
-
-function loadPrefs(): UserPreferences {
-  try {
-    const raw = localStorage.getItem(PREFS_KEY);
-    if (!raw) return defaultPrefs();
-    return { ...defaultPrefs(), ...JSON.parse(raw) };
-  } catch { return defaultPrefs(); }
-}
-
-function savePrefs(prefs: UserPreferences) {
-  try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch {}
-}
-
-/** EMA update: blends new signal into existing value */
-function ema(current: number, signal: number): number {
-  return current * (1 - EMA_ALPHA) + signal * EMA_ALPHA;
-}
-
-/** Update preferences based on a user action on a card */
-function recordInteraction(
-  prefs: UserPreferences,
-  card: DayCard,
-  action: "lock" | "skip" | "hide",
-): UserPreferences {
-  const next = { ...prefs, categoryScores: { ...prefs.categoryScores } };
-  next.totalInteractions++;
-
-  // Category signal: lock = +1, skip = -0.3, hide = -1
-  const catSignal = action === "lock" ? 1 : action === "skip" ? -0.3 : -1;
-  const prev = next.categoryScores[card.category] ?? 0;
-  next.categoryScores[card.category] = ema(prev, catSignal);
-
-  // Cost signal: lock expensive = +, lock cheap = -, skip expensive = -, skip cheap = +
-  const isExpensive = card.costNote && /\$\$|\$3|\$4|\$5|\$6/.test(card.costNote);
-  const isCheap = card.cost === "free" || (card.costNote && /under|\$1|\$[5-9]\b/.test(card.costNote));
-  if (action === "lock") {
-    if (isExpensive) next.costBias = ema(next.costBias, 0.5);
-    else if (isCheap) next.costBias = ema(next.costBias, -0.3);
-  } else if (action === "skip" || action === "hide") {
-    if (isExpensive) next.costBias = ema(next.costBias, -0.3);
-  }
-
-  // Outdoor signal from card category
-  const isOutdoor = card.category === "outdoor" || card.category === "sports";
-  const isIndoor = card.category === "museum" || card.category === "entertainment";
-  if (action === "lock") {
-    if (isOutdoor) next.outdoorBias = ema(next.outdoorBias, 0.5);
-    else if (isIndoor) next.outdoorBias = ema(next.outdoorBias, -0.3);
-  } else if (action === "hide") {
-    if (isOutdoor) next.outdoorBias = ema(next.outdoorBias, -0.5);
-    else if (isIndoor) next.outdoorBias = ema(next.outdoorBias, 0.3);
-  }
-
-  // Clamp biases to [-1, 1]
-  next.costBias = Math.max(-1, Math.min(1, next.costBias));
-  next.outdoorBias = Math.max(-1, Math.min(1, next.outdoorBias));
-
-  return next;
 }
 
 // ---------------------------------------------------------------------------
@@ -408,13 +222,11 @@ const REGIONAL_ANCHOR: City = "san-jose";
 
 export default function SouthBayTodayView(_props: Props) {
   const [state, setState] = useState<LocalState>(() => loadState());
-  // Random anchor for initial render so first-visit users see variety.
-  // Use state.kids (from localStorage) so returning users see the right
+  // Read state.kids (from localStorage) so returning users see the right
   // mode on first paint — not always adults.
-  const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null; filtered: boolean } | null>(null);
-  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids, state.dismissed);
+  const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null } | null>(null);
+  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids);
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
-  const initialFiltered = initialPlan.current.filtered;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
   const [weather, setWeather] = useState<string | null>(() => {
     if (!hasDefaultPlan) return null;
@@ -426,8 +238,6 @@ export default function SouthBayTodayView(_props: Props) {
     } catch { return null; }
   });
   const [loading, setLoading] = useState(!hasDefaultPlan);
-  const [swapLoading, setSwapLoading] = useState(false); // loading triggered by a dismiss
-  const [replacedIds, setReplacedIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
   // Live "now" signal so past cards fall off without a reload. planDateISO
@@ -440,12 +250,9 @@ export default function SouthBayTodayView(_props: Props) {
   });
   const fetchRef = useRef(0);
   const lastAnchorRef = useRef<City | null>(initialPlan.current.anchor);
-  // Anchor diversity within a single session. Card-level variety is
-  // persisted in state.recentlyShown (localStorage, 7-day window) so it
-  // survives reloads and spans sessions.
+  // Anchor diversity within a single session.
   const recentAnchorsRef = useRef<City[]>(initialPlan.current.anchor ? [initialPlan.current.anchor] : []);
-  const fetchPlanRef = useRef<(extraLockedIds?: string[], noCache?: boolean) => void>(() => {});
-  const [prefs, setPrefs] = useState<UserPreferences>(loadPrefs);
+  const fetchPlanRef = useRef<(noCache?: boolean) => void>(() => {});
 
   // Display city for forecast + weather label — user's persisted home city,
   // or san-jose (center of south bay) as a neutral default.
@@ -464,72 +271,27 @@ export default function SouthBayTodayView(_props: Props) {
 
   useEffect(() => { saveState(state); }, [state]);
 
-  // Seed the recent-shown ledger with the default plan's cards on first
-  // paint so even the first shuffle has something to avoid. Runs once.
-  useEffect(() => {
-    const seed = initialPlan.current;
-    if (!seed?.cards.length) return;
-    setState((s) => ({
-      ...s,
-      recentlyShown: mergeRecent(s.recentlyShown, seed.cards.map((c) => ({ id: c.id, name: c.name }))),
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchPlan = useCallback(async (extraLockedIds?: string[], noCache = false) => {
+  const fetchPlan = useCallback(async (noCache = false) => {
     const id = ++fetchRef.current;
     setLoading(true);
     setError(null);
     setTimeDisplay(formatTime());
-    // Pick a fresh random anchor, avoiding the last 3 so SHUFFLE always
-    // visibly shifts the plan to a different part of the south bay. If
-    // pickRandomAnchor only accepts one "avoid", pass the most recent — the
-    // server-side recentlyShown filter covers the rest.
+    // Pick a fresh random anchor, avoiding the last so SHUFFLE always
+    // visibly shifts the plan to a different part of the south bay.
     const anchor = pickRandomAnchor(lastAnchorRef.current);
     lastAnchorRef.current = anchor;
     recentAnchorsRef.current = [anchor, ...recentAnchorsRef.current].slice(0, 3);
-    const allLocked = extraLockedIds
-      ? [...new Set([...state.locked, ...extraLockedIds])]
-      : state.locked;
-
-    // Richer lock info: pair each locked id with the card's current bucket
-    // so the server keeps it in the same slot when shuffling.
-    const lockedCards = allLocked.map((id) => {
-      const card = cards.find((c) => c.id === id);
-      return { id, bucket: card?.bucket ?? null, timeBlock: card?.timeBlock ?? null };
-    });
 
     const eff = getEffectiveTime(state.kids);
-    // Graduated variety signal: server scales the penalty by age, so
-    // today's picks get -25, this-week picks get ~-7. Persisted across
-    // sessions via localStorage (state.recentlyShown).
-    const nowMs = Date.now();
-    const recentPayload = state.recentlyShown.map((e) => ({
-      id: e.id,
-      name: e.name,
-      daysAgo: Math.max(0, Math.floor((nowMs - e.ts) / (24 * 60 * 60 * 1000))),
-    }));
     try {
-      const dismissedNames = Object.values(state.dismissed)
-        .map((d) => d.name)
-        .filter((n): n is string => typeof n === "string" && n.length > 0);
-      // Send canonical IDs so any legacy pad: keys still in state match the
-      // server's place:/event: candidate-pool prefixes.
-      const dismissedIdsCanonical = Object.keys(state.dismissed).map(canonicalCardId);
       const res = await fetch("/api/plan-day", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city: anchor, kids: state.kids,
-          lockedIds: allLocked, // keep for backward compat
-          lockedCards,
-          dismissedIds: dismissedIdsCanonical,
-          dismissedNames,
           currentHour: eff.currentHour,
           currentMinute: eff.currentMinute,
           planDate: eff.planDate,
-          preferences: prefs.totalInteractions >= 5 ? prefs : undefined,
-          recentlyShown: recentPayload,
           recentAnchors: recentAnchorsRef.current,
           noCache,
         }),
@@ -541,32 +303,15 @@ export default function SouthBayTodayView(_props: Props) {
       }
       const data: PlanResponse = await res.json();
       const sorted = [...data.cards].sort((a, b) => bucketSortIndex(a) - bucketSortIndex(b));
-      // Only show green lock icon for user-explicitly-locked cards, not auto-kept ones
-      setCards(sorted.map((c) => ({ ...c, locked: state.locked.includes(c.id) })));
+      setCards(sorted);
       setPlanDateISO(eff.planDate || getTodayISOInPT());
-      setState((s) => ({
-        ...s,
-        recentlyShown: mergeRecent(s.recentlyShown, sorted.map((c) => ({ id: c.id, name: c.name }))),
-      }));
-      setReplacedIds(new Set());
       setWeather(data.weather);
-      // Purge any locked IDs the server couldn't find (event cancelled,
-      // place archived). Otherwise they haunt future shuffles as ghost locks.
-      if (data.invalidLockedIds?.length) {
-        setState((s) => ({
-          ...s,
-          locked: s.locked.filter((id) => !data.invalidLockedIds!.includes(id)),
-        }));
-      }
     } catch (err) {
       if (id === fetchRef.current) setError(err instanceof Error ? err.message : "Failed to plan your day");
     } finally {
-      if (id === fetchRef.current) {
-        setLoading(false);
-        setSwapLoading(false);
-      }
+      if (id === fetchRef.current) setLoading(false);
     }
-  }, [state.kids, state.dismissed, state.locked, cards]);
+  }, [state.kids]);
 
   // Freshness policy for the pre-generated plan:
   //   age ≤ 26h  → show the cached plan, no refresh. The 2 AM nightly regen
@@ -579,14 +324,6 @@ export default function SouthBayTodayView(_props: Props) {
   // 26h spans the 2 AM nightly regen + a 2-hour buffer for cron delays.
   useEffect(() => {
     if (!hasDefaultPlan) {
-      fetchPlan();
-      return;
-    }
-    // Returning user with active dismisses that filtered the hero — fire a
-    // fetch to backfill replacements. New users (no dismisses) skip this
-    // and get the full instant-paint experience.
-    if (initialFiltered) {
-      setLoading(true);
       fetchPlan();
       return;
     }
@@ -615,39 +352,27 @@ export default function SouthBayTodayView(_props: Props) {
       const cutoffMin = (state.kids ? 18 : 22) * 60; // 6 PM kids / 10 PM adults
       if (nowMinutes < cutoffMin) return; // still mid-day
     }
-    const tom = loadTomorrowPlan(state.kids, state.dismissed);
+    const tom = loadTomorrowPlan(state.kids);
     if (!tom.cards.length) return;
     setCards(tom.cards);
     setPlanDateISO(getTomorrowISOInPT());
-    setReplacedIds(new Set());
     lastAnchorRef.current = tom.anchor;
     recentAnchorsRef.current = tom.anchor ? [tom.anchor] : [];
     if (tom.weather) setWeather(tom.weather);
-    setState((s) => ({
-      ...s,
-      recentlyShown: mergeRecent(s.recentlyShown, tom.cards.map((c) => ({ id: c.id, name: c.name }))),
-    }));
-    // If dismissals filtered the cached tomorrow plan, fetch live to backfill.
-    if (tom.filtered) fetchPlanRef.current?.();
-  }, [cards, planDateISO, nowMinutes, loading, state.kids, state.dismissed]);
+  }, [cards, planDateISO, nowMinutes, loading, state.kids]);
 
   // Actions
   const handleKidsToggle = () => {
     const nextKids = !state.kids;
-    setState((s) => ({ ...s, kids: nextKids }));
+    setState({ kids: nextKids });
     // Try the pre-generated plan for the new mode first — that's the whole
     // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
     // to a network shuffle if default-plans.json doesn't have the mode.
-    const preGen = loadDefaultPlan(nextKids, state.dismissed);
+    const preGen = loadDefaultPlan(nextKids);
     if (preGen.cards.length > 0) {
       setCards(preGen.cards);
       lastAnchorRef.current = preGen.anchor;
       recentAnchorsRef.current = preGen.anchor ? [preGen.anchor] : [];
-      setState((s) => ({
-        ...s,
-        recentlyShown: mergeRecent(s.recentlyShown, preGen.cards.map((c) => ({ id: c.id, name: c.name }))),
-      }));
-      setReplacedIds(new Set());
       setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
       // Swap the weather line to match the new mode.
       try {
@@ -657,66 +382,12 @@ export default function SouthBayTodayView(_props: Props) {
         const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
         if (w) setWeather(w);
       } catch {}
-      // Backfill via live fetch if dismisses filtered the cached plan for
-      // this mode (returning user with hides in the new mode).
-      if (preGen.filtered) setTimeout(() => fetchPlanRef.current?.(), 50);
       return;
     }
     // Fallback: hero plan missing for this mode → live fetch.
     setTimeout(() => fetchPlanRef.current?.(), 50);
   };
-  const handleNewPlan = () => fetchPlan(undefined, true);
-  const handleLock = (cardId: string) => {
-    const card = cards.find((c) => c.id === cardId);
-    if (card && !card.locked) {
-      // Only record preference when locking (not unlocking)
-      const updated = recordInteraction(prefs, card, "lock");
-      setPrefs(updated);
-      savePrefs(updated);
-    }
-    setCards((prev) => prev.map((c) => (c.id === cardId ? { ...c, locked: !c.locked } : c)));
-    setState((s) => ({
-      ...s,
-      locked: s.locked.includes(cardId) ? s.locked.filter((id) => id !== cardId) : [...s.locked, cardId],
-    }));
-  };
-  const handleDismiss = (cardId: string, type: DismissType) => {
-    const card = cards.find((c) => c.id === cardId);
-    if (card) {
-      const updated = recordInteraction(prefs, card, type === "skip" ? "skip" : "hide");
-      setPrefs(updated);
-      savePrefs(updated);
-    }
-    // Immediately replace card content with in-place swap skeleton — no fade-out
-    // so the rectangle stays put and just swaps its inner content.
-    setSwapLoading(true);
-    setReplacedIds((prev) => new Set([...prev, cardId]));
-
-    // Keep all OTHER cards by passing them as extra locked IDs (not stored in state)
-    const keepIds = cards.filter((c) => c.id !== cardId).map((c) => c.id);
-
-    const cardName = card?.name;
-    // Skip lasts 3 days: today + 2 → returns next on day 4. PT date math.
-    const skipUntilPT = (() => {
-      const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-      const [y, m, d] = today.split("-").map(Number);
-      const dt = new Date(Date.UTC(y, m - 1, d + 2));
-      return dt.toISOString().slice(0, 10);
-    })();
-    const entry: DismissedEntry = type === "hide"
-      ? { type: "hide", permanent: true, name: cardName }
-      : { type: "skip", until: skipUntilPT, name: cardName };
-    // Store under the canonical id so a later hero with a re-keyed prefix
-    // (pad: → place:) still matches the dismiss.
-    const storeKey = canonicalCardId(cardId);
-    setState((s) => ({
-      ...s,
-      dismissed: { ...s.dismissed, [storeKey]: entry },
-      locked: s.locked.filter((id) => id !== cardId),
-    }));
-    // Refetch with other cards auto-locked so only the dismissed slot changes
-    setTimeout(() => fetchPlanRef.current(keepIds), 100);
-  };
+  const handleNewPlan = () => fetchPlan(true);
 
   // Tomorrow mode: 6pm for kids, 8pm for adults — same cutoff used in
   // Headline follows the plan date — if we've auto-flipped to tomorrow
@@ -773,7 +444,7 @@ export default function SouthBayTodayView(_props: Props) {
             <button aria-pressed={state.kids} onClick={() => { if (!state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 900, padding: "4px 10px", border: "none", borderLeft: "2px solid #000", background: state.kids ? "#000" : "#fff", color: state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s", textTransform: "uppercase", letterSpacing: 1 }}>Kids</button>
           </div>
           {/* New Plan */}
-          <button onClick={handleNewPlan} disabled={loading && !swapLoading} className={(loading && !swapLoading) ? "sbt-shuffle sbt-shuffle--loading" : "sbt-shuffle"}>Reshuffle ↻</button>
+          <button onClick={handleNewPlan} disabled={loading} className={loading ? "sbt-shuffle sbt-shuffle--loading" : "sbt-shuffle"}>Reshuffle ↻</button>
           {/* Share — only when there's a plan worth sharing */}
           {visibleCards.length > 1 && !loading && (
             <ShareButton cards={visibleCards} city={displayCity} kids={state.kids} weather={weather} compact />
@@ -833,9 +504,7 @@ export default function SouthBayTodayView(_props: Props) {
 
       {/* ═══ BUCKET GRID ═══ */}
       {visibleCards.length > 0 && (
-        <div
-          className={loading && !swapLoading ? "sbt-buckets sbt-buckets--loading" : "sbt-buckets"}
-        >
+        <div className={loading ? "sbt-buckets sbt-buckets--loading" : "sbt-buckets"}>
           {visibleBuckets.map((bucket, i) => {
             const card = cardsByBucket.get(bucket);
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
@@ -847,10 +516,6 @@ export default function SouthBayTodayView(_props: Props) {
                 card={card}
                 accent={accent}
                 passed={passed}
-                replaced={card ? replacedIds.has(card.id) : false}
-                onLock={card ? () => handleLock(card.id) : undefined}
-                onSkip={card ? () => handleDismiss(card.id, "skip") : undefined}
-                onHide={card ? () => handleDismiss(card.id, "hide") : undefined}
                 animationDelay={i * 0.05}
               />
             );
@@ -1018,10 +683,6 @@ export default function SouthBayTodayView(_props: Props) {
         .sbt-bucket--passed {
           opacity: 0.55;
           filter: saturate(0.7);
-        }
-        .sbt-bucket--locked {
-          border-color: #16a34a;
-          box-shadow: 0 0 0 1px #bbf7d0 inset;
         }
         .sbt-bucket-header {
           display: flex;
@@ -1272,19 +933,15 @@ interface BucketSlotProps {
   card?: DayCard;
   accent: string;
   passed: boolean;
-  replaced: boolean;
-  onLock?: () => void;
-  onSkip?: () => void;
-  onHide?: () => void;
   animationDelay: number;
 }
 
-function BucketSlot({ bucket, card, accent, passed, replaced, onLock, onSkip, onHide, animationDelay }: BucketSlotProps) {
+function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlotProps) {
   const emoji = card ? CATEGORY_EMOJI[card.category] || "📍" : "";
   const cardUrl = card ? (card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url)) : null;
   return (
     <div
-      className={`sbt-bucket${passed ? " sbt-bucket--passed" : ""}${card?.locked ? " sbt-bucket--locked" : ""}`}
+      className={`sbt-bucket${passed ? " sbt-bucket--passed" : ""}`}
       style={{ animation: `fadeSlideIn 0.3s ease-out ${animationDelay}s both` }}
     >
       <div className="sbt-bucket-header">
@@ -1292,9 +949,7 @@ function BucketSlot({ bucket, card, accent, passed, replaced, onLock, onSkip, on
         <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
         {passed && card && <span className="sbt-bucket-passed-tag">passed</span>}
       </div>
-      {replaced && card ? (
-        <div className="sbt-bucket-body sbt-bucket-body--swap"><SwapVerb /></div>
-      ) : card ? (
+      {card ? (
         <>
           {cardUrl ? (
             <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
@@ -1359,44 +1014,34 @@ function getTomorrowISOInPT(): string {
  *  round-trip. */
 function loadTomorrowPlan(
   kids: boolean,
-  dismissed: Record<string, DismissedEntry> = {},
-): { cards: DayCard[]; anchor: City | null; weather: string | null; filtered: boolean } {
+): { cards: DayCard[]; anchor: City | null; weather: string | null } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
     const kidsSuffix = kids ? "kids" : "adults";
-    const dropDismissed = (input: DayCard[]): { cards: DayCard[]; filtered: boolean } => {
-      if (!Object.keys(dismissed).length) return { cards: input, filtered: false };
-      const kept = input.filter((c) => !isDismissedCard(c, dismissed));
-      return { cards: kept, filtered: kept.length !== input.length };
-    };
     const pickPlan = (...keys: string[]) => {
       for (const k of keys) if (plans[k]?.cards?.length) return plans[k];
       return null;
     };
     const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
     if (tomorrowPlan) {
-      const { cards, filtered } = dropDismissed(tomorrowPlan.cards);
       return {
-        cards,
+        cards: tomorrowPlan.cards,
         anchor: (tomorrowPlan.city as City) || pickRandomAnchor(),
         weather: tomorrowPlan.weather || null,
-        filtered,
       };
     }
     // Fallback: today's plan with events stripped.
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], anchor: null, weather: null, filtered: false };
+    if (!plan) return { cards: [], anchor: null, weather: null };
     const placesOnly = plan.cards.filter((c: DayCard) => c.source !== "event");
-    const { cards, filtered } = dropDismissed(placesOnly);
     return {
-      cards,
+      cards: placesOnly,
       anchor: (plan.city as City) || pickRandomAnchor(),
       weather: plan.weather || null,
-      filtered: filtered || placesOnly.length !== plan.cards.length,
     };
   } catch {
-    return { cards: [], anchor: null, weather: null, filtered: false };
+    return { cards: [], anchor: null, weather: null };
   }
 }
 
@@ -1441,53 +1086,6 @@ function LoadingVerb() {
   return (
     <p className="loading-verb" style={{ fontSize: 28, fontWeight: 900, textAlign: "center", margin: 0, minHeight: 36, background: "linear-gradient(90deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC, #FF6B35)", backgroundSize: "200% 100%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", animation: "rainbow 3s ease infinite", fontFamily: "'Inter', sans-serif", letterSpacing: -0.5, whiteSpace: "nowrap" }}>
       {display}<span style={{ WebkitTextFillColor: "#ccc", animation: "blink 0.8s step-end infinite" }}>|</span>
-    </p>
-  );
-}
-
-const SWAP_PHRASES = [
-  "Looking for something else",
-  "Finding an alternative",
-  "Checking what's around",
-  "Digging up options",
-  "Scouting a replacement",
-  "How about this?",
-];
-
-function SwapVerb() {
-  const [idx, setIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const phrase = SWAP_PHRASES[idx % SWAP_PHRASES.length];
-    const full = `${phrase}...`;
-
-    if (!deleting && charIdx < full.length) {
-      const t = setTimeout(() => setCharIdx((c) => c + 1), 35 + Math.random() * 25);
-      return () => clearTimeout(t);
-    }
-    if (!deleting && charIdx >= full.length) {
-      const t = setTimeout(() => setDeleting(true), 900);
-      return () => clearTimeout(t);
-    }
-    if (deleting && charIdx > 0) {
-      const t = setTimeout(() => setCharIdx((c) => c - 1), 18);
-      return () => clearTimeout(t);
-    }
-    if (deleting && charIdx === 0) {
-      setDeleting(false);
-      setIdx((v) => v + 1);
-    }
-  }, [charIdx, deleting, idx]);
-
-  const phrase = SWAP_PHRASES[idx % SWAP_PHRASES.length];
-  const full = `${phrase}...`;
-  const display = full.slice(0, charIdx);
-
-  return (
-    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 18, fontWeight: 700, color: "#ccc", textAlign: "center", margin: 0, minHeight: 24, width: "100%" }}>
-      {display}<span style={{ opacity: 0.4, animation: "blink 0.8s step-end infinite" }}>|</span>
     </p>
   );
 }
