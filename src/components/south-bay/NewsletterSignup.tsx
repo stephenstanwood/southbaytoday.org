@@ -85,12 +85,12 @@ export default function NewsletterSignup({
             A fresh plan every morning.
           </div>
           <div style={{ fontSize: 14, color: "#5b6478", marginTop: 8, marginBottom: 14, lineHeight: 1.5 }}>
-            One email. Tomorrow's day plan, every event in the South Bay, openings, what's at city hall. Once a day — that's the whole deal.
+            One email. Tomorrow's day plan, everything we've found happening, openings, civic news. Once a day — that's the whole deal.
           </div>
         </>
       ) : (
         <div style={{ fontSize: 13, color: "#5b6478", marginBottom: 8, lineHeight: 1.5 }}>
-          <strong style={{ color: "#1a1a2e" }}>Like today's plan?</strong> A fresh one lands in your inbox every morning at 6, plus every event in the South Bay. One email, daily.
+          <strong style={{ color: "#1a1a2e" }}>Like today's plan?</strong> A fresh one lands in your inbox every morning at 6, plus everything we've found happening today. One email, daily.
         </div>
       )}
       <form
