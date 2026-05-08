@@ -43,7 +43,7 @@ export default function NewsletterSignup({
     if (isMinimal) {
       return (
         <div style={{ fontSize: 12, color: "#1a1a2e", fontFamily: "'Inter', sans-serif", textAlign: "center" }}>
-          📬 You're in — first email tomorrow morning.
+          📬 You're in — first email at 6:00 AM tomorrow.
         </div>
       );
     }
@@ -61,7 +61,7 @@ export default function NewsletterSignup({
           You're in. 📬
         </div>
         <div style={{ fontSize: 14, color: "#5b6478" }}>
-          Tomorrow's plan lands in your inbox by 6&nbsp;AM.
+          A plan for the day lands in your inbox at 6:00&nbsp;AM.
         </div>
       </div>
     );
@@ -83,7 +83,7 @@ export default function NewsletterSignup({
         }}
       >
         <span style={{ fontSize: 12, color: "#666", fontWeight: 600, marginRight: 4 }}>
-          📬 One email a day, first thing in the morning
+          📬 One email a day at 6:00 AM
         </span>
         <input
           type="email"
