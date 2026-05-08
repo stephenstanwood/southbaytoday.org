@@ -22,7 +22,7 @@ import type { APIRoute } from "astro";
 import Anthropic from "@anthropic-ai/sdk";
 import { errJson, okJson } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
-import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
+import { CLAUDE_OPUS, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
@@ -939,7 +939,7 @@ async function pickBucketsWithClaude(
 Anchor city: ${cityName}. The candidate pool pulls from the whole South Bay — adjacent cities are fine when they cluster.
 
 It's ${todayLabel}. ${weather ? `Weather: ${weather}.` : ""}
-${kids ? "This plan is for a family WITH KIDS. Every pick must be kid-friendly — no bars, no 21+ events, no late-only spots. Evening for kids is low-key: an early show, a stroll through a lit-up downtown, an ice cream stop, a park visit, a library evening event. Aim for things that wrap by 8 PM." : "This plan is for adults WITHOUT KIDS."}
+${kids ? "This plan is for a family WITH KIDS. Every pick must be kid-friendly — no bars, no 21+ events, no late-only spots. Picture a family that eats dinner at 5 — evening is just \"what to do for a couple hours after\": an ice cream stop, a downtown stroll, a playground at golden hour, a library evening, a creekside walk. Low-key wind-down, ideally wrapped by 7:30." : "This plan is for adults WITHOUT KIDS."}
 ${describePreferences(prefs)}
 ${lockedSection}${weekContextSection}
 
@@ -954,7 +954,7 @@ THE BUCKETS (breakfast, morning, lunch, afternoon, dinner, evening):
 - lunch     — restaurant or casual food spot. ~11 AM–3 PM.
 - afternoon — outdoor activity, museum, shopping, gallery, library, playground. ~1–6 PM.
 - dinner    — restaurant. ~5–9 PM.
-- evening   — push hard for an EVENT TODAY (concert, show, talk, late-opening exhibit) when the pool has one that fits. Otherwise fall back to a low-key spot: a park, a creekside trail at golden hour, a downtown stroll, a playground, an ice cream shop, a bookstore, a library reading room, a record store. ~6–10 PM (kids: ~6–8 PM).
+- evening   — push hard for an EVENT TODAY (concert, show, talk, late-opening exhibit) when the pool has one that fits. Otherwise fall back to a low-key spot: a park, a creekside trail at golden hour, a downtown stroll, a playground, an ice cream shop, a bookstore, a library reading room, a record store. ~6–10 PM (kids: ~6–7:30 PM, family-eats-at-5 wind-down).
 
 ALWAYS-FILL RULE — never skip a bucket. If breakfast has no perfect cafe, pick the best food candidate that's open then. If evening has no event, pick a park / playground / library / ice cream / bookstore / waterfront / overlook. A "go take a walk at X park" is a totally legitimate evening idea.
 
@@ -971,16 +971,19 @@ RULES:
 - Don't pick an obvious chain ("Starbucks", "Olive Garden") when local options exist.
 - NEVER pick a "neighborhood" or "downtown area" — always a SPECIFIC place.
 - NEVER pick a venue (theater, amphitheater, stadium) unless it appears in the pool as an EVENT TODAY.
-${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS EVENING: Library evening programs, family movie nights, downtown strolls, playgrounds, ice cream — no bars, no late-only spots. Pick something that wraps by 8 PM." : ""}
+${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS EVENING — \"if I eat dinner at 5, what can I do for a couple hours\": picture the family wrapping dinner by 6 and looking for one low-stakes thing before bed. Ice cream walk, a downtown loop, a playground at golden hour, a library evening, a creekside trail, a bookstore browse. NEVER a sit-down activity that runs past 7:30. Mix it up day to day — don't anchor on the same playground or library every time." : ""}
 - READ THE PRICE DATA: if a place is listed as $$$$ it is NOT "casual." Match your description to the actual price level.
 
 TONE — write like a friend texting an idea:
-- "blurb": one sentence about what to actually DO at THIS specific place (order the tri-tip sandwich, hike the upper loop, sit on the patio). The blurb MUST describe the place named by the id you picked — never describe a different place.
+- "blurb": one specific sentence about what makes THIS place worth a stop. Use the data: pull the venue's category/displayType (e.g. "Vietnamese restaurant", "Performing arts theater", "Bouldering gym"), the indoor/outdoor setting, and the price tier ($, $$, $$$, $$$$). When the candidate has a "blurb" or "note" line, mine it for one concrete detail (a signature dish, a defining feature, a vibe descriptor) and weave it in. The blurb MUST describe the place named by the id you picked — never describe a different place.
+- BANNED — these are FILLER and unacceptable: "solid local pick", "go-to spot", "easy table", "good food no fuss", "hidden gem", "worth a stop", "popular spot", "great place", "fun spot", "neighborhood favorite", "low-key vibe", "casual spot for a meal". If you find yourself reaching for any of these, stop and use a real attribute instead.
+- Examples of GOOD specificity: "Wood-fired Neapolitan pies in a small Campbell storefront — takeout-friendly." / "Outdoor bouldering walls and a handful of top-ropes — bring your own shoes or rent at the desk." / "Tiny South First record shop, big jazz and used-vinyl section." / "Persian charcoal kebabs on a sunny patio — get the koobideh." Notice each names what the place IS and one concrete reason to go.
+- Examples of BAD: "Solid local pick for a meal." / "Good food, no fuss." / "Easy outdoor stretch." (these say nothing — never write blurbs like this.)
 - "why": one short sentence — "perfect weather for it" or "you won't find better ramen". Never "this is a one-time event that makes today unforgettable" — banned.
 - NEVER say: "right now", "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery"
 - NEVER mention star ratings or review scores.
 - NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "short drive".
-- NEVER fabricate details not in the data — no specific menu items unless the data lists them, no class schedules, no opening hours.
+- NEVER fabricate details not in the data — if the candidate line doesn't say "tri-tip sandwich", don't claim a tri-tip sandwich. Stick to the displayType, the cost, the setting, and any note/blurb the data provides.
 - NEVER describe a place as being "in" a city it's not in.
 - Vary your sentence structure. Don't lean on em dashes (—) — mix periods, commas, short sentences.
 
@@ -998,7 +1001,7 @@ OUTPUT (JSON array, no markdown fences, one entry per filled bucket):
 Return ONLY the JSON array. No explanation.`;
 
   const response = await client.messages.create({
-    model: CLAUDE_SONNET,
+    model: CLAUDE_OPUS,
     max_tokens: 2500,
     messages: [{ role: "user", content: prompt }],
   });
@@ -1289,6 +1292,7 @@ Return ONLY the JSON array. No explanation.`;
   const usedAfterValidation = new Set(cards.map((c) => c.bucket));
   const usedIdsAfter = new Set(cards.map((c) => c.id));
   const emptyBuckets = BUCKET_ORDER.filter((b) => !usedAfterValidation.has(b));
+  const backfilledForBlurbs: Array<{ card: DayCard; candidate: Candidate }> = [];
   if (emptyBuckets.length > 0) {
     for (const bucket of emptyBuckets) {
       const isMeal = MEAL_BUCKETS.has(bucket);
@@ -1315,6 +1319,8 @@ Return ONLY the JSON array. No explanation.`;
         break;
       }
       if (!backfill) continue;
+      // Provisional blurb — Opus rewrite below replaces it before we return.
+      const provisionalBlurb = backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue);
       const card: DayCard = {
         id: backfill.id,
         name: backfill.name,
@@ -1324,7 +1330,7 @@ Return ONLY the JSON array. No explanation.`;
         bucket,
         eventTime: backfill.eventTime || null,
         timeBlock: BUCKET_LABELS[bucket],
-        blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
+        blurb: provisionalBlurb,
         why: backfill.why || "Solid fill for this slot.",
         url: backfill.url,
         mapsUrl: backfill.mapsUrl,
@@ -1340,6 +1346,12 @@ Return ONLY the JSON array. No explanation.`;
       };
       cards.push(card);
       usedIdsAfter.add(backfill.id);
+      // Only places with no ingest blurb need a Claude-written one — events
+      // already carry venue-specific Haiku blurbs, and any candidate with a
+      // real description doesn't need rewriting.
+      if (backfill.source === "place" && !backfill.blurb) {
+        backfilledForBlurbs.push({ card, candidate: backfill });
+      }
       logDecision({
         script: "plan-day",
         action: "backfilled",
@@ -1347,6 +1359,60 @@ Return ONLY the JSON array. No explanation.`;
         reason: `claude/validators left ${bucket} empty`,
         meta: { city, targetDate, bucket },
       });
+    }
+  }
+
+  // Backfilled places land with FALLBACK_BLURB_POOL strings ("solid local pick
+  // for a meal") because they have no ingest blurb. One Opus call rewrites
+  // them with venue-specific copy. Failure is non-fatal — the provisional
+  // blurb stays.
+  if (backfilledForBlurbs.length > 0) {
+    try {
+      const lines = backfilledForBlurbs.map(({ card, candidate }, i) => {
+        const parts: string[] = [`${i + 1}. [${card.id}] ${card.name}`];
+        parts.push(`bucket: ${card.bucket}`);
+        parts.push(`category: ${candidate.category}`);
+        if (candidate.displayType) parts.push(`type: ${candidate.displayType}`);
+        parts.push(`city: ${candidate.city}`);
+        if (candidate.cost) parts.push(`cost: ${candidate.cost}`);
+        if (candidate.costNote) parts.push(`price: ${candidate.costNote}`);
+        if (candidate.indoorOutdoor) parts.push(`setting: ${candidate.indoorOutdoor}`);
+        if (candidate.kidFriendly === true) parts.push(`kid-friendly`);
+        if (candidate.why) parts.push(`note: ${candidate.why}`);
+        return parts.join(" | ");
+      }).join("\n");
+
+      const blurbPrompt = `You are writing one-sentence blurbs for a South Bay day plan. Each line below is a venue we just slotted into a bucket. Write a single sentence per id describing what makes THIS specific venue worth a stop, using only the data given.
+
+USE the displayType (e.g. "Vietnamese restaurant", "Bouldering gym", "Performing arts theater"), the price tier ($–$$$$), the indoor/outdoor setting, and any "note" line. NEVER invent menu items, hours, or class schedules that aren't in the data.
+
+BANNED filler — never write any of these or anything close to them: "solid local pick", "go-to spot", "easy table", "good food no fuss", "hidden gem", "worth a stop", "popular spot", "great place", "fun spot", "neighborhood favorite", "low-key vibe", "casual spot for a meal".
+
+GOOD examples (use as a model, don't copy verbatim): "Wood-fired Neapolitan pies in a small Campbell storefront, takeout-friendly." / "Bouldering walls and a few top-ropes — bring shoes or rent at the desk." / "Counter-service Vietnamese with banh mi and pho on a strip-mall stretch." / "Indoor playground with toddler-only zones and a snack counter."
+
+NEVER mention star ratings, distance, "near", "nearby", "minutes from".
+
+VENUES:
+${lines}
+
+Return ONLY a JSON array, no markdown fences:
+[{"id": "...", "blurb": "..."}, ...]`;
+
+      const blurbResponse = await client.messages.create({
+        model: CLAUDE_OPUS,
+        max_tokens: 1500,
+        messages: [{ role: "user", content: blurbPrompt }],
+      });
+      const blurbText = stripFences(extractText(blurbResponse.content));
+      const parsed = JSON.parse(blurbText) as Array<{ id: string; blurb: string }>;
+      const blurbMap = new Map(parsed.map((p) => [p.id, p.blurb]));
+      for (const { card } of backfilledForBlurbs) {
+        const next = blurbMap.get(card.id);
+        if (next && next.trim()) card.blurb = next.trim();
+      }
+      console.log(`[plan-day] backfill blurbs: rewrote ${backfilledForBlurbs.length} card(s) via Opus`);
+    } catch (err) {
+      console.warn("[plan-day] backfill blurb rewrite failed, keeping provisional:", err);
     }
   }
 
