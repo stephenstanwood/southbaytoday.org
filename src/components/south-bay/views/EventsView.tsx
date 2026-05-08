@@ -901,6 +901,169 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
   );
 }
 
+// ── School-year endgame panel ──────────────────────────────────────────────
+// Late spring, the question parents have isn't "what's the next holiday" —
+// it's "when does my district's school year end?" Last-day dates differ by
+// up to two weeks across South Bay districts. We render a compact list of
+// last-day + graduation dates in chronological order whenever any matched
+// district has its last day within the next 60 days. Outside that window
+// the panel hides — keeps the events tab uncluttered the rest of the year.
+
+interface SchoolMilestone {
+  date: string;
+  type: "lastday" | "graduation";
+  districts: SchoolDistrict[];
+}
+
+function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> }) {
+  const todayIso = todayPT();
+  const horizonIso = addDays(todayIso, 60);
+
+  const districts = (schoolCalendarJson as { districts: SchoolDistrict[] }).districts;
+  const events = (schoolCalendarJson as { events: SchoolEvent[] }).events;
+
+  const matchedDistrictIds = useMemo(() => {
+    const set = new Set<string>();
+    for (const d of districts) {
+      if (d.cities.some((c) => selectedCities.has(c as City))) set.add(d.id);
+    }
+    return set;
+  }, [districts, selectedCities]);
+
+  const districtById = useMemo(() => {
+    const m: Record<string, SchoolDistrict> = {};
+    for (const d of districts) m[d.id] = d;
+    return m;
+  }, [districts]);
+
+  // Group last-day + graduation events by (date, type), then by chrono date.
+  // Same district often has both lastday and graduation on the same date
+  // (lastday IS the graduation for high schoolers). Keep them on separate
+  // rows so parents can spot graduations distinctly.
+  const milestones = useMemo<SchoolMilestone[]>(() => {
+    const matching = events.filter(
+      (e) =>
+        (e.type === "lastday" || e.type === "graduation") &&
+        e.startDate >= todayIso &&
+        e.startDate <= horizonIso &&
+        matchedDistrictIds.has(e.districtId),
+    );
+    const byKey = new Map<string, SchoolMilestone>();
+    for (const e of matching) {
+      const key = `${e.startDate}|${e.type}`;
+      const existing = byKey.get(key);
+      const district = districtById[e.districtId];
+      if (!district) continue;
+      if (existing) {
+        if (!existing.districts.some((d) => d.id === district.id)) {
+          existing.districts.push(district);
+        }
+      } else {
+        byKey.set(key, {
+          date: e.startDate,
+          type: e.type as "lastday" | "graduation",
+          districts: [district],
+        });
+      }
+    }
+    const list = Array.from(byKey.values());
+    list.sort((a, b) => {
+      if (a.date !== b.date) return a.date.localeCompare(b.date);
+      // graduations before last-days on the same date — diplomas are the
+      // bigger moment, even when both happen the same morning.
+      if (a.type !== b.type) return a.type === "graduation" ? -1 : 1;
+      return 0;
+    });
+    for (const m of list) {
+      m.districts.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return list;
+  }, [events, matchedDistrictIds, districtById, todayIso, horizonIso]);
+
+  if (milestones.length === 0) return null;
+
+  // Header summarises the spread: "May 29 – Jun 11" lets a parent see at a
+  // glance how staggered the local end-of-year is.
+  const firstDate = milestones[0].date;
+  const lastDate = milestones[milestones.length - 1].date;
+  const spread = firstDate === lastDate
+    ? new Date(firstDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : `${new Date(firstDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${new Date(lastDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+
+  return (
+    <div
+      style={{
+        padding: "10px 12px 12px",
+        marginBottom: 10,
+        background: "#FEFCE8",
+        border: "1px solid #FDE68A",
+        borderRadius: 8,
+        fontSize: 12.5,
+        color: "#713F12",
+        lineHeight: 1.45,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>🎒</span>
+        <span style={{
+          fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
+          letterSpacing: "0.08em", textTransform: "uppercase", color: "#A16207",
+        }}>
+          School year ends
+        </span>
+        <span style={{ fontWeight: 700, color: "#713F12" }}>{spread}</span>
+        <span style={{ color: "#A16207", fontSize: 11.5 }}>
+          across {matchedDistrictIds.size} district{matchedDistrictIds.size === 1 ? "" : "s"}
+        </span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        {milestones.map((m) => {
+          const d = new Date(m.date + "T12:00:00");
+          const dateLabel = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+          const typeLabel = m.type === "graduation" ? "Graduation" : "Last day";
+          return (
+            <div
+              key={`${m.date}-${m.type}`}
+              style={{
+                display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap",
+                padding: "4px 0",
+              }}
+            >
+              <span style={{
+                fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700,
+                color: "#713F12", minWidth: 88,
+              }}>
+                {dateLabel}
+              </span>
+              <span style={{
+                fontSize: 11, fontWeight: 600, color: "#A16207",
+                minWidth: 78,
+              }}>
+                {typeLabel}
+              </span>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                {m.districts.map((d) => (
+                  <span
+                    key={d.id}
+                    title={d.fullName}
+                    style={{
+                      fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
+                      letterSpacing: "0.04em", padding: "1px 6px", borderRadius: 4,
+                      background: d.bg, color: d.color, border: `1px solid ${d.color}33`,
+                    }}
+                  >
+                    {d.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Holiday heads-up banner ────────────────────────────────────────────────
 // Surfaces the soonest civic/cultural holiday within the next 14 days
 // (Mother's Day, Memorial Day, Cinco de Mayo, etc.). Hidden when nothing
@@ -1640,6 +1803,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       </div>
 
       <SchoolHeadsUpBanner selectedCities={selectedCities} />
+      <SchoolYearEndgamePanel selectedCities={selectedCities} />
       <HolidayHeadsUpBanner
         eventCountByDate={eventCountByDate}
         themedCountByHolidayId={themedCountByHolidayId}
