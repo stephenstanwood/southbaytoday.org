@@ -1001,7 +1001,11 @@ function inferCity(location, address) {
 }
 
 function inferCategory(title, desc, type, venue = "") {
-  const t = `${title} ${desc} ${type} ${venue}`.toLowerCase();
+  // Some callers pass raw RSS HTML descriptions. Strip tags/entities defensively
+  // so anchor hrefs and class names ("...athletics-page", class="sports-tag")
+  // can't trigger false-positive keyword matches in the rules below.
+  const cleanDesc = stripHtml(desc || "");
+  const t = `${title} ${cleanDesc} ${type} ${venue}`.toLowerCase();
   const titleLower = title.toLowerCase();
   // Bookstores host author talks and book launches — even when the description
   // mentions sports (e.g. a runner discussing a memoir), it's an arts/literary
@@ -1081,6 +1085,12 @@ function inferCategory(title, desc, type, venue = "") {
   // Yoga, pilates, and wellness classes are community, not sports — check before sports block
   // (event type fields from sources like SJDA can include "Sports & Activities" even for yoga)
   if (/\b(yoga|pilates|meditation|mindfulness|tai chi)\b/.test(t)) return "community";
+  // Recreational swim sessions (rec swim, lap swim, open swim, family swim, public swim)
+  // are community/family wellness, not competitive sports. Anchor on the title so a
+  // generic "swim" word in a description can still hit the sports check below.
+  if (/\b(rec(?:reational)?\s+swim|lap\s+swim|open\s+swim|family\s+swim|public\s+swim|adult\s+swim)\b/i.test(titleLower)) {
+    return /\b(family|kid|child|tot)\b/i.test(titleLower) ? "family" : "community";
+  }
   // Robotics events are STEM education — competitions and demos use words like
   // "game", "match", "competition" that would otherwise hit the sports branch.
   if (/\brobotics?\b/.test(titleLower)) return "education";

@@ -280,11 +280,13 @@ async function gatherPermitItems() {
 Permits:
 ${permitText}
 
+IMPORTANT — a permit being issued means construction is *cleared to begin*, NOT that it has started. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches" — those imply a milestone the data does not support. Use language like "permitted", "receives building permit", "cleared to build", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
+
 Return a JSON array. Each item:
 {
   "date": "YYYY-MM-DD",
-  "headline": "short plain-English headline (max 12 words)",
-  "summary": "1-2 sentences. What's being built, where, why it matters."
+  "headline": "short plain-English headline (max 12 words). Use permit-accurate verbs only.",
+  "summary": "1-2 sentences. What's being permitted, where, why it matters. Do not assert construction has started."
 }
 
 Return [] if nothing is genuinely noteworthy.`, 512);
