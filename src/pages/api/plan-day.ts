@@ -101,7 +101,6 @@ interface Candidate {
   description?: string;
   /** Ingest-time blurb (events only) — preferred source for the card's blurb. */
   blurb?: string | null;
-  why?: string;
   rating?: number | null;
   cost?: string | null;
   costNote?: string | null;
@@ -141,7 +140,6 @@ interface DayCard {
    *  so existing renderers that look for `timeBlock` still see something. */
   timeBlock: string;
   blurb: string;
-  why: string;
   url?: string | null;
   mapsUrl?: string | null;
   cost?: string | null;
@@ -798,7 +796,6 @@ function buildCandidatePool(
       city: p.city,
       address: p.address || "",
       blurb: PLACE_BLURBS.get(p.id) || null,
-      why: p.why || undefined,
       rating: p.rating,
       cost: p.cost || null,
       costNote: p.costNote || (p.priceLevel ? priceLevelLabel(p.priceLevel) : null),
@@ -870,7 +867,6 @@ function candidateLine(c: Candidate, dayKey: DayKey, index: number): string | nu
   if (c.cost) parts.push(`cost: ${c.cost}`);
   if (c.costNote) parts.push(`price: ${c.costNote}`);
   if (c.kidFriendly === true) parts.push(`kid-friendly`);
-  if (c.why) parts.push(`note: ${c.why}`);
   if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
   if (c.blurb) parts.push(`blurb: ${c.blurb}`);
 
@@ -893,7 +889,6 @@ interface BucketPick {
   bucket: Bucket;
   id: string;
   blurb: string;
-  why: string;
 }
 
 async function pickBucketsWithClaude(
@@ -996,8 +991,8 @@ TONE — write like a friend texting an idea:
 - BANNED — these are FILLER and unacceptable: "solid local pick", "go-to spot", "easy table", "good food no fuss", "hidden gem", "worth a stop", "popular spot", "great place", "fun spot", "neighborhood favorite", "low-key vibe", "casual spot for a meal". If you find yourself reaching for any of these, stop and use a real attribute instead.
 - Examples of GOOD specificity: "Wood-fired Neapolitan pies in a small Campbell storefront — takeout-friendly." / "Outdoor bouldering walls and a handful of top-ropes — bring your own shoes or rent at the desk." / "Tiny South First record shop, big jazz and used-vinyl section." / "Persian charcoal kebabs on a sunny patio — get the koobideh." Notice each names what the place IS and one concrete reason to go.
 - Examples of BAD: "Solid local pick for a meal." / "Good food, no fuss." / "Easy outdoor stretch." (these say nothing — never write blurbs like this.)
-- "why": one short sentence — "perfect weather for it" or "you won't find better ramen". Never "this is a one-time event that makes today unforgettable" — banned.
 - NEVER say: "right now", "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery"
+- NEVER reference what a user is doing in a different bucket — no "after the X", "before the X", "post-X", "shake off the X". The blurb is about THIS place, not the day's flow.
 - NEVER mention star ratings or review scores.
 - NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "short drive".
 - NEVER fabricate details not in the data — if the candidate line doesn't say "tri-tip sandwich", don't claim a tri-tip sandwich. Stick to the displayType, the cost, the setting, and any note/blurb the data provides.
@@ -1009,8 +1004,7 @@ OUTPUT (JSON array, no markdown fences, one entry per filled bucket):
   {
     "bucket": "breakfast",
     "id": "place:google-id-or-event:event-id",
-    "blurb": "One sentence about what to do here.",
-    "why": "One sentence about why this is a great pick."
+    "blurb": "One sentence about what to do here."
   },
   ...
 ]
@@ -1104,7 +1098,6 @@ Return ONLY the JSON array. No explanation.`;
       eventTime: candidate.eventTime || null,
       timeBlock: BUCKET_LABELS[bucket],
       blurb: cardBlurb,
-      why: pick.why,
       url: candidate.url,
       mapsUrl: candidate.mapsUrl,
       cost: candidate.cost,
@@ -1155,7 +1148,6 @@ Return ONLY the JSON array. No explanation.`;
       eventTime: candidate.eventTime || null,
       timeBlock: BUCKET_LABELS[bucket],
       blurb: candidate.blurb || candidate.description?.slice(0, 200) || fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue),
-      why: candidate.why || "This is the one the day is built around.",
       url: candidate.url,
       mapsUrl: candidate.mapsUrl,
       cost: candidate.cost,
@@ -1345,7 +1337,6 @@ Return ONLY the JSON array. No explanation.`;
         eventTime: backfill.eventTime || null,
         timeBlock: BUCKET_LABELS[bucket],
         blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
-        why: backfill.why || "Solid fill for this slot.",
         url: backfill.url,
         mapsUrl: backfill.mapsUrl,
         cost: backfill.cost,
@@ -1438,7 +1429,6 @@ Return ONLY the JSON array. No explanation.`;
         eventTime: null,
         timeBlock: BUCKET_LABELS[bucket],
         blurb: PLACE_BLURBS.get(pick.id) || fallbackBlurb("place", pick.category, pick.name, null),
-        why: "Evergreen pick — solid for this slot.",
         url: pick.url,
         mapsUrl: pick.mapsUrl,
         cost: pick.cost,

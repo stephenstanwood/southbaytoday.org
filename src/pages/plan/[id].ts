@@ -17,8 +17,15 @@ export const prerender = false;
 import type { APIRoute } from "astro";
 import { canonicalizeSharedPlan } from "../../lib/south-bay/canonicalizeCard.mjs";
 import { BUCKET_ORDER, BUCKET_LABELS } from "../../lib/south-bay/buckets";
+import { CITIES } from "../../lib/south-bay/cities";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+
+const CITY_LABELS: Record<string, string> = Object.fromEntries(CITIES.map((c) => [c.id, c.name]));
+function cityLabel(slug: string | null | undefined): string {
+  if (!slug) return "";
+  return CITY_LABELS[slug] || slug.split("-").map((s) => s[0]?.toUpperCase() + s.slice(1)).join(" ");
+}
 
 function esc(s: unknown): string {
   if (s === undefined || s === null) return "";
@@ -59,18 +66,21 @@ function buildCardInner(card: any, origin: string, accent: string): string {
     ? (card.eventTime ? esc(card.eventTime) : "")
     : esc(card.timeBlock);
   void accent; // accent is rendered by the parent (slot header)
+  const cityName = cityLabel(card.city);
+  const showCategory = !(card.source === "event" && card.category === "events");
+  const showVenue = card.source === "event" && card.venue && card.venue !== card.name;
   return `
     ${photoHtml}
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
         ${timeHint ? `<span style="font-size:12px;font-weight:800;color:#000;letter-spacing:-0.2px">${timeHint}</span>` : ""}
-        ${card.source === "event" && card.category === "events" ? "" : `<span style="font-size:9px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px">${esc(card.category)}</span>`}
+        ${showCategory ? `<span style="font-size:9px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px">${esc(card.category)}</span>` : ""}
+        ${cityName ? `<span style="font-size:9px;color:#ddd;font-weight:700">·</span><span style="font-size:9px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px">${esc(cityName)}</span>` : ""}
         ${eventBadge}
       </div>
       <h3 style="font-size:17px;font-weight:900;color:#111;margin:0 0 4px;line-height:1.25">${esc(card.name)}</h3>
-      ${card.venue ? `<div style="font-size:11px;color:#999;margin-bottom:4px">📍 ${esc(card.venue)}</div>` : ""}
+      ${showVenue ? `<div style="font-size:11px;color:#999;margin-bottom:4px">📍 ${esc(card.venue)}</div>` : ""}
       <p style="font-size:13px;color:#555;margin:0 0 4px;line-height:1.45">${esc(card.blurb)}</p>
-      <p style="font-size:12px;font-weight:600;color:#FF6B35;margin:0;line-height:1.35;font-style:italic">${esc(card.why)}</p>
       ${costBadge}
     </div>`;
 }
