@@ -13,14 +13,18 @@ export function parseDate(str) {
 
 // For sources that return naive datetime strings (no timezone) in Pacific local time.
 // new Date("2026-04-12T12:00") is parsed as UTC in some Node environments,
-// so we append the correct PT offset before parsing.
+// and "2026-04-12 12:00:00" (space format from WP/Tribe APIs) is interpreted
+// as UTC when the host TZ is UTC (e.g. Vercel build, Linux cron). We normalize
+// the separator to T and append the correct PT offset before parsing.
 export function parseDatePT(str) {
   if (!str) return null;
-  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(str) && !/[Z+\-]\d{2}:?\d{2}$/.test(str) && !str.endsWith("Z")) {
-    const month = parseInt(str.slice(5, 7), 10);
+  // Accept both "T" and " " between date and time.
+  const naive = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?)\s*$/.exec(str);
+  if (naive) {
+    const month = parseInt(naive[1].slice(5, 7), 10);
     // PDT (UTC-7): Mar–Nov; PST (UTC-8): Dec–Feb
     const offset = (month >= 3 && month <= 11) ? "-07:00" : "-08:00";
-    str = str + offset;
+    str = `${naive[1]}T${naive[2]}${offset}`;
   }
   const d = new Date(str);
   if (isNaN(d.getTime())) return null;

@@ -4025,6 +4025,9 @@ async function fetchSjdaEvents() {
         const start = parseDatePT(e.start_date);
         if (!start || start < now) continue;
         const end = e.end_date ? parseDatePT(e.end_date) : null;
+        // All-day / multi-day exhibits: skip the synthetic 00:00–23:59
+        // window — there is no real start time to surface.
+        const isAllDay = e.all_day === true || e.all_day === "true";
 
         const rawVenue = typeof e.venue === "object" && e.venue
           ? (e.venue.venue || "").trim()
@@ -4049,8 +4052,8 @@ async function fetchSjdaEvents() {
           title,
           date: isoDate(start),
           displayDate: displayDate(start),
-          time: displayTime(start),
-          endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+          time: isAllDay ? null : displayTime(start),
+          endTime: isAllDay ? null : (end && end.getTime() !== start.getTime() ? displayTime(end) : null),
           venue: venue || "Downtown San Jose",
           address: addr,
           city: "san-jose",
