@@ -390,10 +390,8 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .reply-item.is-old { background: #f9f7f1; border-left-color: #d8d2c4; }
   .reply-item.is-old .reply-author, .reply-item.is-old .reply-text { color: #aaa; }
   /* Default state once a baseline exists: anything that hasn't grown since
-     last visit fades out, so new activity pops by contrast. Hover restores
-     so a card you actually want to inspect comes back to full color. */
+     last visit fades out, so new activity pops by contrast. */
   body.has-baseline .post-card:not(.has-new) { opacity: 0.55; transition: opacity 0.15s; }
-  body.has-baseline .post-card:not(.has-new):hover { opacity: 1; }
   body.has-baseline .plat-pill:not(.has-new) { background: transparent; border-color: #ece8de; }
   body.has-baseline .plat-pill:not(.has-new) .plat-count { color: #b8b3a6; font-weight: 500; }
   body.has-baseline .plat-pill:not(.has-new) .lbl { color: #c8c2b3; }
