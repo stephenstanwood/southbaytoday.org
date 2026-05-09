@@ -14,6 +14,7 @@ import { createHmac, randomBytes } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
+const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
 
 const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
@@ -67,16 +68,61 @@ async function bskyCreateSession() {
 // ── Load recently published posts ────────────────────────────────────────
 
 function loadRecentPublished() {
-  if (!existsSync(QUEUE_FILE)) return [];
-  const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
   const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  const out = [];
+  const seenPlatformIds = new Set();
 
-  return queue.filter((p) => {
-    if (!p.published || !p.publishedAt) return false;
-    if (p.publishResult === "expired") return false;
-    if (!p.publishedTo || !Array.isArray(p.publishedTo)) return false;
-    return new Date(p.publishedAt).getTime() >= cutoff;
-  });
+  function platformIds(publishedTo) {
+    return (publishedTo || [])
+      .filter((e) => e.ok)
+      .map((e) => `${e.platform}:${e.uri || e.postId || e.id || ""}`)
+      .filter((k) => k.length > k.indexOf(":") + 1);
+  }
+  function addIfNew(p) {
+    const ids = platformIds(p.publishedTo);
+    if (ids.some((k) => seenPlatformIds.has(k))) return;
+    ids.forEach((k) => seenPlatformIds.add(k));
+    out.push(p);
+  }
+
+  // 1) Legacy queue file (older publish path).
+  if (existsSync(QUEUE_FILE)) {
+    try {
+      const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
+      for (const p of queue) {
+        if (!p.published || !p.publishedAt) continue;
+        if (p.publishResult === "expired") continue;
+        if (!Array.isArray(p.publishedTo) || !p.publishedTo.length) continue;
+        if (new Date(p.publishedAt).getTime() < cutoff) continue;
+        addIfNew(p);
+      }
+    } catch {}
+  }
+
+  // 2) Schedule file (current publish path: publish-from-queue stashes
+  // publishedTo back onto each day's slot, not the legacy queue).
+  if (existsSync(SCHEDULE_FILE)) {
+    try {
+      const schedule = JSON.parse(readFileSync(SCHEDULE_FILE, "utf8"));
+      for (const day of Object.values(schedule.days || {})) {
+        for (const [slotType, slot] of Object.entries(day || {})) {
+          if (slotType.startsWith("_")) continue;
+          if (!slot || slot.status !== "published" || !slot.publishedAt) continue;
+          if (!Array.isArray(slot.publishedTo) || !slot.publishedTo.length) continue;
+          if (new Date(slot.publishedAt).getTime() < cutoff) continue;
+          const item = slot.item || { title: slot.cityName ? `${slot.cityName} Day Plan` : slot.slotType };
+          addIfNew({
+            item,
+            published: true,
+            publishedAt: slot.publishedAt,
+            publishedTo: slot.publishedTo,
+          });
+        }
+      }
+    } catch {}
+  }
+
+  return out;
 }
 
 // ── Load existing replies ────────────────────────────────────────────────
