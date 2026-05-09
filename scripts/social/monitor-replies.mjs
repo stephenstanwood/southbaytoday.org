@@ -216,6 +216,62 @@ async function fetchBlueskyReplies(published) {
   return allReplies;
 }
 
+// ── Bluesky: fetch quotes ────────────────────────────────────────────────
+
+async function fetchBlueskyQuotes(published) {
+  const session = await bskyCreateSession();
+  const allQuotes = [];
+
+  for (const post of published) {
+    const bskyEntry = post.publishedTo.find((e) => e.platform === "bluesky" && e.ok && e.uri);
+    if (!bskyEntry) continue;
+    const title = post.item?.title || "Untitled";
+
+    try {
+      let cursor;
+      for (let i = 0; i < 3; i++) {
+        const params = new URLSearchParams({ uri: bskyEntry.uri, limit: "100", ...(cursor ? { cursor } : {}) });
+        const res = await fetch(`${BSKY_API}/app.bsky.feed.getQuotes?${params}`, {
+          headers: { Authorization: `Bearer ${session.accessJwt}` },
+        });
+        if (!res.ok) {
+          console.log(`   bluesky quotes fetch failed for "${title}": ${res.status}`);
+          break;
+        }
+        const data = await res.json();
+        for (const qp of data.posts || []) {
+          allQuotes.push({
+            id: `bsky-quote-${qp.uri}`,
+            platform: "bluesky",
+            kind: "quote",
+            postTitle: title,
+            postId: bskyEntry.uri,
+            author: qp.author?.handle || "unknown",
+            text: qp.record?.text || "",
+            timestamp: qp.record?.createdAt || qp.indexedAt || new Date().toISOString(),
+            permalink: bskyPermalink(qp.uri),
+            replyUri: qp.uri,
+            replyCid: qp.cid,
+            classified: null,
+            responded: false,
+            liked: false,
+            action: null,
+            actionNote: null,
+          });
+        }
+        cursor = data.cursor;
+        if (!cursor) break;
+        await sleep(150);
+      }
+    } catch (err) {
+      console.log(`   bluesky quotes error for "${title}": ${err.message}`);
+    }
+    await sleep(200);
+  }
+
+  return allQuotes;
+}
+
 // ── Threads: fetch replies ───────────────────────────────────────────────
 
 async function fetchThreadsReplies(published) {
@@ -479,6 +535,69 @@ async function fetchXMentions(published) {
     console.log(`   x: error fetching mentions: ${err.message}`);
     return [];
   }
+}
+
+async function fetchXQuotes(published) {
+  const creds = getXCredentials();
+  if (!creds) return [];
+
+  const allQuotes = [];
+
+  for (const post of published) {
+    const xEntry = post.publishedTo.find((e) => e.platform === "x" && e.ok && (e.id || e.postId));
+    if (!xEntry) continue;
+    const tweetId = xEntry.id || xEntry.postId;
+    const title = post.item?.title || "Untitled";
+
+    try {
+      const url = `${X_API}/2/tweets/${tweetId}/quote_tweets`;
+      const queryParams = [
+        ["max_results", "20"],
+        ["tweet.fields", "created_at,author_id,text"],
+        ["expansions", "author_id"],
+        ["user.fields", "username,name"],
+      ];
+      const authHeader = xMakeOAuthHeader("GET", url, queryParams, creds);
+      const qs = queryParams.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
+      const res = await fetch(`${url}?${qs}`, { headers: { Authorization: authHeader } });
+      if (!res.ok) {
+        // 429 (rate-limited) and 403 (paid-tier endpoint) are expected on free
+        // tier; skip silently. Other failures still log.
+        if (res.status !== 429 && res.status !== 403) {
+          const body = await res.text();
+          console.log(`   x quotes failed for "${title}" (${res.status}): ${body.slice(0, 120)}`);
+        }
+        continue;
+      }
+      const data = await res.json();
+      const userMap = new Map((data.includes?.users || []).map((u) => [u.id, u]));
+      for (const t of data.data || []) {
+        const u = userMap.get(t.author_id);
+        allQuotes.push({
+          id: `x-quote-${t.id}`,
+          platform: "x",
+          kind: "quote",
+          postTitle: title,
+          postId: tweetId,
+          author: u?.username || t.author_id,
+          text: t.text || "",
+          timestamp: t.created_at || new Date().toISOString(),
+          permalink: `https://x.com/${u?.username || "i"}/status/${t.id}`,
+          tweetId: t.id,
+          classified: null,
+          responded: false,
+          liked: false,
+          action: null,
+          actionNote: null,
+        });
+      }
+    } catch (err) {
+      console.log(`   x quotes error for "${title}": ${err.message}`);
+    }
+    await sleep(300);
+  }
+
+  return allQuotes;
 }
 
 async function xLikeTweet(userId, tweetId, creds) {
@@ -1028,9 +1147,19 @@ async function main() {
   console.log("   mastodon...");
   const mastodonReplies = await fetchMastodonReplies(published);
   console.log(`   mastodon: ${mastodonReplies.length} total replies`);
+  await sleep(500);
 
-  // De-duplicate: only add new replies
-  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies, ...xReplies, ...igReplies, ...mastodonReplies];
+  console.log("   bluesky quotes...");
+  const bskyQuotes = await fetchBlueskyQuotes(published);
+  console.log(`   bluesky quotes: ${bskyQuotes.length} total`);
+  await sleep(500);
+
+  console.log("   x quotes...");
+  const xQuotes = await fetchXQuotes(published);
+  console.log(`   x quotes: ${xQuotes.length} total`);
+
+  // De-duplicate: only add new replies + quotes
+  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies, ...xReplies, ...igReplies, ...mastodonReplies, ...bskyQuotes, ...xQuotes];
   const newReplies = allNew.filter((r) => !existingIds.has(r.id));
 
   console.log(`\n   ${allNew.length} total fetched, ${newReplies.length} new`);
@@ -1073,7 +1202,11 @@ async function main() {
   for (const reply of newReplies) {
     const originalPost = postsByUri.get(reply.postId);
 
-    switch (reply.classified) {
+    // Quotes are informational — no auto-like, no auto-reply. We still hit
+    // the universal Discord DM below and surface in Social Signal.
+    if (reply.kind === "quote") {
+      stats.escalated++;
+    } else switch (reply.classified) {
       case "positive_simple": {
         // Auto-like
         if (reply.platform === "bluesky" && reply.replyUri && reply.replyCid) {
@@ -1307,10 +1440,15 @@ async function main() {
       }
     }
 
-    // Universal Discord DM for ALL replies (skip if already notified above)
+    // Universal Discord DM for ALL replies and quotes (skip if already notified above)
     if (!reply._discordSent && !dryRun) {
-      const actionSummary =
-        reply.classified === "positive_simple"
+      const isQuote = reply.kind === "quote";
+      const noun = isQuote ? "quote" : "reply";
+      const Noun = isQuote ? "Quote" : "Reply";
+
+      const actionSummary = isQuote
+        ? "—"
+        : reply.classified === "positive_simple"
           ? reply.liked ? "Auto-liked ✓" : "Positive (no like API)"
           : reply.classified === "question_simple"
             ? reply.responded ? `Auto-replied: "${(reply.actionNote || "").slice(0, 120)}"` : "Drafted response"
@@ -1318,16 +1456,16 @@ async function main() {
               ? reply.responded ? `Auto-replied: "${(reply.actionNote || "").slice(0, 120)}"` : "Drafted response"
               : "—";
 
-      const emoji =
+      const emoji = isQuote ? "🔁" :
         reply.classified === "positive_simple" ? "💬" :
         reply.classified === "question_simple" ? "❓" :
         reply.classified === "factual_simple" ? "📝" : "💬";
 
       const msg =
-        `${emoji} **New reply on ${reply.platform}**\n` +
+        `${emoji} **New ${noun} on ${reply.platform}**\n` +
         `Post: ${reply.postTitle || "(unknown)"}\n` +
         `Author: @${reply.author}\n` +
-        `Reply: "${reply.text.slice(0, 300)}"\n` +
+        `${Noun}: "${reply.text.slice(0, 300)}"\n` +
         `Classification: ${reply.classified}\n` +
         `Action: ${actionSummary}\n` +
         `${reply.permalink ? `Link: ${reply.permalink}` : ""}`;
