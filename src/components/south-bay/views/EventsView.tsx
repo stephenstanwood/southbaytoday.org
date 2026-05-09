@@ -2014,6 +2014,18 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           setActiveThemedHolidayId(themedHolidayId ?? null);
         }}
       />
+      <HolidayPicksPreview
+        events={upcomingEvents}
+        selectedCities={selectedCities}
+        allCities={allCities}
+        onJumpToDate={(iso, themedHolidayId) => {
+          if (isSearching) setSearch("");
+          if (showWeekendOnly) setShowWeekendOnly(false);
+          if (showTonightOnly) setShowTonightOnly(false);
+          setSelectedDate(iso);
+          setActiveThemedHolidayId(themedHolidayId ?? null);
+        }}
+      />
       <HeritageMonthBanner
         activeId={activeHeritageId}
         onToggle={setActiveHeritageId}
