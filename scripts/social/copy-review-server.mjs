@@ -388,6 +388,19 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .reply-item.is-new { border-left-color: #4f46e5; background: #f5f3ff; }
   .reply-item.is-old { background: #f9f7f1; border-left-color: #d8d2c4; }
   .reply-item.is-old .reply-author, .reply-item.is-old .reply-text { color: #aaa; }
+  /* Default state once a baseline exists: anything that hasn't grown since
+     last visit fades out, so new activity pops by contrast. Hover restores
+     so a card you actually want to inspect comes back to full color. */
+  body.has-baseline .post-card:not(.has-new) { opacity: 0.55; transition: opacity 0.15s; }
+  body.has-baseline .post-card:not(.has-new):hover { opacity: 1; }
+  body.has-baseline .plat-pill:not(.has-new) { background: transparent; border-color: #ece8de; }
+  body.has-baseline .plat-pill:not(.has-new) .plat-count { color: #b8b3a6; font-weight: 500; }
+  body.has-baseline .plat-pill:not(.has-new) .lbl { color: #c8c2b3; }
+  body.has-baseline .plat-pill:not(.has-new) .plat-icon { opacity: 0.5; }
+  body.has-baseline .actor-chip:not(.is-new) { color: #b8b3a6; background: transparent; border: 1px solid #ece8de; }
+  body.has-baseline .reply-item:not(.is-new) { background: transparent; border-left-color: #ece8de; }
+  body.has-baseline .reply-item:not(.is-new) .reply-author,
+  body.has-baseline .reply-item:not(.is-new) .reply-text { color: #b8b3a6; }
   @media (max-width: 600px) {
     .header { flex-direction: column; align-items: flex-start; gap: 4px; }
     .last-updated { margin-left: 0; }
@@ -444,6 +457,9 @@ let lastVisitAt = null;
 try { seenSnapshot = JSON.parse(localStorage.getItem(SEEN_KEY) || 'null'); } catch (e) {}
 try { lastVisitAt = localStorage.getItem(LAST_VISIT_KEY) || null; } catch (e) {}
 let baselineWritten = false;
+// Body class drives the "muted by default" CSS — only applied when we
+// actually have a previous-visit baseline to compare against.
+if (seenSnapshot) document.body.classList.add('has-baseline');
 
 function platTotal(p) {
   const c = (p && p.counts) || {};
