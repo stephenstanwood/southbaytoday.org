@@ -821,33 +821,30 @@ async function load() {
 load();
 setInterval(load, 60000);
 
-// Menu-bar wrapper UX: when the user looks at the page (window focus or
-// tab becomes visible), reset the baseline so the badge clears and
-// future replies count as new from this point forward. Also opportunistically
-// request native notification permission so background polls can fire
-// system-level notifs (Notification API is no-op until permission granted).
+// Menu-bar wrapper UX: keep highlights vibrant while the window is open.
+// We only reset the baseline when the user closes/dismisses the window
+// (blur in menu-bar mode, hidden tab, or page unload). That way new
+// replies stay highlighted the entire reading session — not just for a
+// few seconds after focus — and the next open shows only what arrived
+// since this session ended.
 //
-// Why the 4s delay: marking-seen instantly would wipe both the badge and the
-// "+ N new" highlights the moment the user clicks open the menu bar window —
-// they'd never get to see what was actually new. 4s lets them eyeball the
-// highlighted reply, then everything fades to "all caught up."
-let _markSeenTimer = null;
+// Focus is still where we ask for native notification permission, since
+// permission prompts must be tied to a user gesture.
 async function onUserLookedAtPage() {
   if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
     try { await Notification.requestPermission(); } catch (e) {}
   }
-  if (_markSeenTimer) clearTimeout(_markSeenTimer);
-  _markSeenTimer = setTimeout(markSeen, 4000);
 }
-function cancelMarkSeen() {
-  if (_markSeenTimer) { clearTimeout(_markSeenTimer); _markSeenTimer = null; }
+function onUserClosedPage() {
+  if (DATA) markSeen();
 }
 window.addEventListener('focus', onUserLookedAtPage);
-window.addEventListener('blur', cancelMarkSeen);
+window.addEventListener('blur', onUserClosedPage);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') onUserLookedAtPage();
-  else cancelMarkSeen();
+  else onUserClosedPage();
 });
+window.addEventListener('beforeunload', onUserClosedPage);
 </script>
 </body>
 </html>`;
