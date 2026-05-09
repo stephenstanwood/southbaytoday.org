@@ -112,7 +112,12 @@ const threads = await import(join(REPO_ROOT, "scripts/social/lib/platforms/threa
 
 await tryPublish("x", () => x.publish(COPY.x, pngBuffer));
 await new Promise((r) => setTimeout(r, 800));
-await tryPublish("bluesky", () => bsky.publish(COPY.bluesky, pngBuffer, ALT_TEXT));
+// Bluesky has a 2MB blob limit — PNG of a real photo blows past it. Use JPEG.
+// The publish() wrapper hardcodes image/png, so call uploadImage + createPost directly.
+await tryPublish("bluesky", async () => {
+  const blob = await bsky.uploadImage(jpgBuffer, "image/jpeg");
+  return bsky.createPost(COPY.bluesky, blob, ALT_TEXT);
+});
 await new Promise((r) => setTimeout(r, 800));
 await tryPublish("facebook", () => fb.publish(COPY.facebook, pngBuffer));
 await new Promise((r) => setTimeout(r, 800));
