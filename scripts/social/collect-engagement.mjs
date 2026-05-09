@@ -801,17 +801,26 @@ async function main() {
   const hhssPosts = await loadHHSSPosts();
 
   // Reconstruct posts that were captured in a prior run but aren't in the
-  // current live sources, and re-poll them. We dedupe by `${brand}|${postKey}`
-  // (the same composite key processPost stores under `result.key`).
+  // current live sources, and re-poll them. Dedupe by `${brand}|${postKey}`
+  // AND by overlapping platform IDs — when timestamp precision drifts between
+  // sources (e.g. log-tail minute-aligned vs schedule millisecond) the prior
+  // key can linger as a ghost record pointing at the same Bluesky/X/etc post.
   const liveKeys = new Set(
     [...sbtPosts, ...hhssPosts].map((p) => `${p._brand}|${postKey(p)}`)
   );
+  const seenPlatformIds = new Set();
+  for (const p of [...sbtPosts, ...hhssPosts]) {
+    for (const k of platformKeys(p.publishedTo)) seenPlatformIds.add(k);
+  }
   const hhssToken = process.env.HHSS_IG_ACCESS_TOKEN;
   const historical = [];
   for (const [key, entry] of priorByKey) {
     if (liveKeys.has(key)) continue;
     const sp = priorToSourcePost(entry);
     if (!sp) continue;
+    const platIds = platformKeys(sp.publishedTo);
+    if (platIds.some((k) => seenPlatformIds.has(k))) continue;
+    platIds.forEach((k) => seenPlatformIds.add(k));
     if (sp._brand === "HHSS" && hhssToken) sp._igToken = hhssToken;
     historical.push(sp);
   }
