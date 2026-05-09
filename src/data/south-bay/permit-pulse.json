@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-08T23:09:31.827Z",
+      "generatedAt": "2026-05-09T19:09:25.128Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 1 – May 8",
+      "dateRange": "May 2 – May 9",
       "stats": {
-        "total": 330,
-        "notable": 26,
-        "newUnits": 1130,
-        "totalValuation": 265641705
+        "total": 423,
+        "notable": 34,
+        "newUnits": 1132,
+        "totalValuation": 272634103
       },
       "permits": [
         {
@@ -111,6 +111,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-127669-RS",
+          "address": "1094 Belvedere Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached adu",
+          "valuation": 122590,
+          "units": 1,
+          "issueDate": "2026-05-07",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-125046-RS",
           "address": "360 Titleist Ct #2",
           "category": "residential-new",
@@ -121,59 +133,23 @@
           "units": 1,
           "issueDate": "2026-05-06",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2024-095386-RS",
-          "address": "288 Turquesa Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bepm 100)% Garage Conversion to Jadu",
-          "valuation": 76043,
-          "units": 1,
-          "issueDate": "2026-05-06",
-          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-08T23:09:34.102Z",
+      "generatedAt": "2026-05-09T19:09:27.532Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 1 – May 8",
+      "dateRange": "May 2 – May 9",
       "stats": {
-        "total": 106,
-        "notable": 7,
+        "total": 118,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01125",
-          "address": "111 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-01",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01149",
-          "address": "580 Suzanne Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01148",
           "address": "3020 Higgins Pl",
@@ -187,20 +163,20 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01126",
-          "address": "1133 Emerson St",
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-03",
+          "issueDate": "2026-05-05",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01146",
-          "address": "779 Maplewood Av",
+          "id": "26BLD-01149",
+          "address": "580 Suzanne Ct",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -220,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-04",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01126",
+          "address": "1133 Emerson St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-03",
           "subtype": "Permit Issued"
         },
         {
