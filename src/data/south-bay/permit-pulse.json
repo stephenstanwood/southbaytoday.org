@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-09T19:09:25.128Z",
+      "generatedAt": "2026-05-09T23:09:19.199Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-09T19:09:27.532Z",
+      "generatedAt": "2026-05-09T23:09:21.475Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -163,6 +163,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01131",
+          "address": "290 W Charleston Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Minor remodel of home (129SF)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-04",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01146",
           "address": "779 Maplewood Av",
           "category": "residential-remodel",
@@ -184,18 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01131",
-          "address": "290 W Charleston Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Minor remodel of home (129SF)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-04",
           "subtype": "Permit Issued"
         },
         {

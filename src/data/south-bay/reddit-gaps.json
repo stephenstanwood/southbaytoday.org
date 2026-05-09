@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-09T19:20:21.059Z",
+    "generatedAt": "2026-05-09T23:16:30.762Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 59,
-    "placesMatched": 5,
-    "placeGaps": 54,
-    "eventsExtracted": 2,
+    "placesExtracted": 43,
+    "placesMatched": 4,
+    "placeGaps": 39,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,273 +19,260 @@
       "name": "ESSJ - Tacos A La Parilla",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "casual Mexican sit down and to-go tacos",
+      "context": "casual Mexican sit down/to go tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Las Cazuelas Restaurant",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican restaurant with to-go service",
+      "context": "Mexican restaurant with sit down and to go options",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos El Noa Noa",
       "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Mexican taco food truck",
+      "kind": "other",
+      "context": "Mexican food truck",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "La Costeña",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "casual Mexican sit down and to-go",
+      "context": "casual Mexican sit down/to go",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
-      ]
-    },
-    {
-      "name": "Tacos El Compa",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Mexican taco restaurant recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
-        "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Metro Balderas",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "sit down Mexican restaurant",
+      "context": "Mexican sit down restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Carnitas Michoacan",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican carnitas restaurant",
+      "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Araujo's",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos Los Tres Reyes",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos Santiaguito",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "La Plaza Taco Tuesday",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant with taco Tuesday",
+      "context": "Mexican taco restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "3 Hermanos SoFA Market",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican restaurant in SoFA neighborhood",
+      "context": "Mexican food in SoFA neighborhood",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Carlito's Tijuana",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos El Güero",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos El Lider",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos Montero",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Chencho's Tacos",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Carnitas El Rincon",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican carnitas restaurant",
+      "context": "Mexican carnitas",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Tacos El Costoche",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taco restaurant",
+      "context": "Mexican tacos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "G Spot Food Truck Park",
-      "city": "",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "food truck park with multiple vendors",
+      "context": "food truck park",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Super Taqueria",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "taqueria known for super burritos and super tacos",
+      "context": "taqueria known for super burritos",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
@@ -294,11 +281,11 @@
       "kind": "restaurant",
       "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
@@ -307,89 +294,89 @@
       "kind": "restaurant",
       "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Mariscos Costa Alegre",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "seafood Mexican restaurant",
+      "context": "Mexican seafood restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Taqueria El Abuelo",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican taqueria",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Taqueria Eduardo",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican taqueria",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Cali Spartan",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican restaurant with downtown SJ and Evergreen locations",
+      "context": "Mexican restaurant with downtown and Evergreen locations",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Acopio",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican restaurant with creative menu",
+      "context": "Mexican restaurant with creative menu items",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Taqueria Tlaquepaque",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Mexican taqueria with cold drinks and food",
+      "context": "Mexican taqueria",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
@@ -398,128 +385,89 @@
       "kind": "restaurant",
       "context": "Mexican taqueria",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Nuevos Generacions",
       "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "food truck in Guitar Center parking lot",
+      "kind": "other",
+      "context": "food truck at Guitar Center parking lot",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
+      ]
+    },
+    {
+      "name": "El Burro",
+      "city": "Los Gatos",
+      "kind": "restaurant",
+      "context": "Mexican restaurant in Pruneyard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
+        "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
+        "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Lopez Taqueria",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican taqueria",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Taco Bravo",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican taco restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
-      "name": "St Johns Grill",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "tri-tip sandwich and grilled sandwiches",
+      "name": "Oakland Urban Farming Project",
+      "city": "",
+      "kind": "other",
+      "context": "urban farm and community gardening project",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
-      ]
-    },
-    {
-      "name": "Adamson's",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "tri-tip BBQ sandwich lunch service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
-        "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
-      ]
-    },
-    {
-      "name": "Los Gatos Meats",
-      "city": "Los Gatos",
-      "kind": "restaurant",
-      "context": "tri-tip sandwich",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
-        "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
-      ]
-    },
-    {
-      "name": "Peanuts Deluxe Cafe",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "SJSU hangout undergoing worker-owned business transition",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ]
     },
     {
       "name": "Sunnyvale Library",
       "city": "Sunnyvale",
       "kind": "venue",
-      "context": "hosts free repair cafe for appliances, electronics, bikes",
+      "context": "hosts free repair cafe events for community",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
-      ]
-    },
-    {
-      "name": "Hick'ry Pit",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "closed barbecue restaurant, site planned for redevelopment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
@@ -528,212 +476,93 @@
       "kind": "retail",
       "context": "shopping center across from proposed apartment development",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
-      "name": "Seeking Iguanas",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "closed burrito restaurant known for orange sauce recipe",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
-      ]
-    },
-    {
-      "name": "Safeway San Antonio Road",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "recently installed new alarmed security gates",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Safeway Rengstorff",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "mentioned for security gate comparison",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Safeway Shoreline",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "mentioned for security gate comparison",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Safeway Miramonte",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "mentioned for security gate comparison",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Citti",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist with large bouquets lasting weeks",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Adorable Flowers",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist on Foxworthy Avenue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Bloomsters",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "highest quality florist, multiple locations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Bloomster's Almaden",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist in Almaden with great service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Bloomers Bascom",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist on Bascom Avenue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Jeannettes Flowers",
+      "name": "Hick'ry Pit",
       "city": "Campbell",
-      "kind": "retail",
-      "context": "florist on Winchester Boulevard, high reviews",
+      "kind": "restaurant",
+      "context": "closed barbecue restaurant being redeveloped into apartments",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
-      "name": "Flowers by Ivy",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist on Santa Clara Street",
+      "name": "Monta Loma Elementary",
+      "city": "Mountain View",
+      "kind": "other",
+      "context": "mentioned regarding bike lane safety on Middlefield Road",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
       ]
     },
     {
-      "name": "Urban Flora",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist doing beautiful work, Instagram presence",
+      "name": "Petco Sunnyvale",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "cat adoption event Saturdays 10am-2pm",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t88mt9/petco_sunnyvale_every_saturday_10am_to_2pm/",
         "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
-      "name": "Safeway Tully/Capitol",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "florist section with fresh flowers and bouquets",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Campbell Library Grand Reopening",
-      "when": "Saturday, May 9",
-      "city": "Campbell",
-      "context": "full day of activities, lion dancers, storytime, performances",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
-      ]
-    },
-    {
       "name": "Repair Cafe at Sunnyvale Library",
       "when": "Saturday, May 9, 11 AM – 3 PM",
       "city": "Sunnyvale",
-      "context": "free repairs for appliances, electronics, clothing, bikes",
+      "context": "free community repair event for appliances, electronics, bikes, clothing",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
+        "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/"
+      ]
+    },
+    {
+      "name": "Campbell Library Grand Reopening",
+      "when": "recent weekend",
+      "city": "Campbell",
+      "context": "celebration with lion dancers and community attendance",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/"
+        "https://www.reddit.com/r/bayarea/comments/1t88mt9/petco_sunnyvale_every_saturday_10am_to_2pm/",
+        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/"
+      ]
+    },
+    {
+      "name": "Petco Sunnyvale Cat Adoption",
+      "when": "Every Saturday 10am-2pm",
+      "city": "Sunnyvale",
+      "context": "20+ kittens and adult cats available for adoption",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t88mt9/petco_sunnyvale_every_saturday_10am_to_2pm/",
+        "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/"
       ]
     }
   ],
@@ -742,13 +571,13 @@
       "name": "A Slice of New York (ASONY)",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "pizza restaurant undergoing renovation expansion",
+      "context": "pizza restaurant undergoing renovation with beer license application",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ],
       "matchedName": "A Slice of New York"
     },
@@ -756,59 +585,45 @@
       "name": "La Milpa",
       "city": "Milpitas",
       "kind": "restaurant",
-      "context": "sit down Mexican restaurant",
+      "context": "Mexican sit down restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ],
       "matchedName": "La Milpa"
     },
     {
       "name": "La Cueva",
-      "city": "",
+      "city": "San Jose",
       "kind": "restaurant",
       "context": "Mexican restaurant",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t7swvy/in_regards_to_the_2027_no_gas_water_heater_ruling/",
+        "https://www.reddit.com/r/bayarea/comments/1t7r9iq/ucp_20_today_we_worked_on_an_urban_farm_built_on/",
         "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
         "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/"
       ],
       "matchedName": "La Cueva"
-    },
-    {
-      "name": "Zanotto's Family Market",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "sandwich counter near Rose Garden area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7wosu/a_slice_of_new_york_asony_update_4/",
-        "https://www.reddit.com/r/SanJose/comments/1t7qryi/best_mexican_restaurant_in_south_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t7km72/santa_maria_style_bbq_tritip_sandwich/",
-        "https://www.reddit.com/r/SanJose/comments/1t8bj18/in_case_you_missed_it_ezra_klein_facilitated_a/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
-      ],
-      "matchedName": "Zanotto's Family Market"
     },
     {
       "name": "Campbell Library",
       "city": "Campbell",
       "kind": "venue",
-      "context": "grand reopening Saturday May 9 with activities and renovated space",
+      "context": "grand reopening with lion dancers and water tower slide",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1t7m7ev/peanuts_deluxe_cafe_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t8hr57/my_pro_heatpump_water_post_non_ai_written/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
         "https://www.reddit.com/r/Sunnyvale/comments/1t6fzx4/free_repairs_at_the_sunnyvale_library_saturday/",
         "https://www.reddit.com/r/Campbell/comments/1t5izsm/the_former_home_of_the_hickry_pit_could_be/",
-        "https://www.reddit.com/r/SanJose/comments/1t7i8tx/seeking_iguanas_home_of_the_burritozilla_orange/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/bayarea/comments/1t88mt9/petco_sunnyvale_every_saturday_10am_to_2pm/",
         "https://www.reddit.com/r/bayarea/comments/1t7ojiz/i_made_a_map_showing_all_bay_area_public/",
-        "https://www.reddit.com/r/mountainview/comments/1t5u8c1/safeway_san_antonio_road_have_new_alarmed/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/SanJose/comments/1t7jbz1/best_recommended_florists_in_san_jose/"
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/mountainview/comments/1t5qf0f/20_000_subscribers/"
       ],
       "matchedName": "Campbell Library"
     }
