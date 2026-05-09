@@ -14,6 +14,7 @@ import {
   BUCKET_LABELS,
   BUCKET_PASSED_AFTER_HOUR,
   isBucket,
+  inferBucketFromTimeBlock,
 } from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
@@ -388,13 +389,18 @@ export default function SouthBayTodayView(_props: Props) {
   // the render layer (BUCKET_PASSED_AFTER_HOUR).
   const todayPT = getTodayISOInPT();
   const visibleCards: DayCard[] = planDateISO < todayPT ? [] : cards;
-  // Group cards by bucket for the 2×3 grid. Cards without a bucket field
-  // (legacy / shared plans) collapse into the timeline column at the bottom.
+  // Group cards by bucket for the 2×3 grid. Cards from before the bucket
+  // cutover (2026-05-07) only have a clock-range timeBlock; infer a bucket
+  // from the start time so they render in the grid instead of the legacy
+  // orphan list. Genuinely bucket-less cards still fall through.
   const cardsByBucket = new Map<Bucket, DayCard>();
   const orphanCards: DayCard[] = [];
   for (const c of visibleCards) {
-    if (isBucket(c.bucket)) {
-      if (!cardsByBucket.has(c.bucket)) cardsByBucket.set(c.bucket, c);
+    const bucket: Bucket | null = isBucket(c.bucket)
+      ? c.bucket
+      : inferBucketFromTimeBlock(c.timeBlock, c.category);
+    if (bucket) {
+      if (!cardsByBucket.has(bucket)) cardsByBucket.set(bucket, c);
       else orphanCards.push(c);
     } else {
       orphanCards.push(c);
