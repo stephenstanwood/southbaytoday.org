@@ -321,7 +321,8 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SBT Engagement</title>
+<title>Social Signal</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📡%3C/text%3E%3C/svg%3E">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #faf8f4; color: #1a1a1a; padding: 16px; padding-bottom: 80px; }
@@ -435,6 +436,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <div class="posts" id="posts"></div>
 
 <script>
+const BASE_TITLE = 'Social Signal';
 const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
 // reposts + quotes are both "amplification" — collapsed into shares for display.
 const TYPE_ORDER = ['likes', 'shares', 'replies'];
@@ -487,6 +489,69 @@ function platDelta(postKey, plat, currentTotal) {
 function isItemNew(item) {
   if (!lastVisitAt || !item || !item.at) return false;
   return new Date(item.at).getTime() > new Date(lastVisitAt).getTime();
+}
+
+// Count of replies (not likes/reposts/quotes) that arrived after the baseline.
+// Drives the menu-bar badge count via document.title.
+function countNewReplies() {
+  if (!DATA || !lastVisitAt) return 0;
+  const cutoff = new Date(lastVisitAt).getTime();
+  let n = 0;
+  for (const post of (DATA.posts || [])) {
+    for (const p of Object.values(post.platforms || {})) {
+      for (const r of (p.replies || [])) {
+        if (r.at && new Date(r.at).getTime() > cutoff) n++;
+      }
+    }
+  }
+  return n;
+}
+
+function updateTitle() {
+  const n = countNewReplies();
+  const next = n > 0 ? '(' + n + ') ' + BASE_TITLE : BASE_TITLE;
+  if (document.title !== next) document.title = next;
+}
+
+// Reset baseline so highlights + badge clear. Called when the user actually
+// looks at the page (focus / tab becomes visible).
+function markSeen() {
+  if (!DATA) return;
+  seenSnapshot = snapshotFromData(DATA);
+  lastVisitAt = new Date().toISOString();
+  try {
+    localStorage.setItem(SEEN_KEY, JSON.stringify(seenSnapshot));
+    localStorage.setItem(LAST_VISIT_KEY, lastVisitAt);
+  } catch (e) {}
+  document.body.classList.add('has-baseline');
+  render();
+}
+
+// Per-session set of reply IDs we already fired a native notif for, so the
+// 60s poll loop doesn't re-notify on every refresh.
+const notifiedReplyKeys = new Set();
+function maybeNotifyNewReplies() {
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+  if (!document.hidden && document.hasFocus && document.hasFocus()) return; // looking — skip
+  if (!DATA || !lastVisitAt) return;
+  const cutoff = new Date(lastVisitAt).getTime();
+  for (const post of (DATA.posts || [])) {
+    for (const [plat, p] of Object.entries(post.platforms || {})) {
+      for (const r of (p.replies || [])) {
+        if (!r.at || new Date(r.at).getTime() <= cutoff) continue;
+        const key = r.permalink || (post.key + ':' + plat + ':' + (r.author || '') + ':' + r.at);
+        if (notifiedReplyKeys.has(key)) continue;
+        notifiedReplyKeys.add(key);
+        try {
+          const n = new Notification(plat + ' · @' + (r.author || 'unknown'), {
+            body: (r.text || '').slice(0, 280),
+            tag: key,
+          });
+          if (r.permalink) n.onclick = () => { try { window.focus(); } catch (e) {} window.open(r.permalink, '_blank'); };
+        } catch (e) {}
+      }
+    }
+  }
 }
 
 function isItemOld(item) {
@@ -687,6 +752,9 @@ function render() {
     } catch (e) {}
   }
 
+  updateTitle();
+  maybeNotifyNewReplies();
+
   list.querySelectorAll('.plat-pill').forEach(pill => {
     pill.addEventListener('click', () => {
       const plat = pill.dataset.plat;
@@ -743,6 +811,34 @@ async function load() {
 
 load();
 setInterval(load, 60000);
+
+// Menu-bar wrapper UX: when the user looks at the page (window focus or
+// tab becomes visible), reset the baseline so the badge clears and
+// future replies count as new from this point forward. Also opportunistically
+// request native notification permission so background polls can fire
+// system-level notifs (Notification API is no-op until permission granted).
+//
+// Why the 4s delay: marking-seen instantly would wipe both the badge and the
+// "+ N new" highlights the moment the user clicks open the menu bar window —
+// they'd never get to see what was actually new. 4s lets them eyeball the
+// highlighted reply, then everything fades to "all caught up."
+let _markSeenTimer = null;
+async function onUserLookedAtPage() {
+  if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+    try { await Notification.requestPermission(); } catch (e) {}
+  }
+  if (_markSeenTimer) clearTimeout(_markSeenTimer);
+  _markSeenTimer = setTimeout(markSeen, 4000);
+}
+function cancelMarkSeen() {
+  if (_markSeenTimer) { clearTimeout(_markSeenTimer); _markSeenTimer = null; }
+}
+window.addEventListener('focus', onUserLookedAtPage);
+window.addEventListener('blur', cancelMarkSeen);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') onUserLookedAtPage();
+  else cancelMarkSeen();
+});
 </script>
 </body>
 </html>`;
