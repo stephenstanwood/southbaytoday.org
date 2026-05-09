@@ -86,9 +86,18 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
     };
   }, []);
 
-  const [selectedCities, setSelectedCities] = useState<Set<City>>(
-    () => new Set(CITIES.map((c) => c.id)),
-  );
+  // Default = all cities selected. Honors a `?city=<id>` deep-link param so a
+  // city-page link (e.g. the holiday banner on /city/cupertino) can drop the
+  // resident on /events?city=cupertino with just that city pre-filtered.
+  const [selectedCities, setSelectedCities] = useState<Set<City>>(() => {
+    const allCities = new Set(CITIES.map((c) => c.id));
+    if (typeof window === "undefined") return allCities;
+    const param = new URLSearchParams(window.location.search).get("city");
+    if (param && CITIES.some((c) => c.id === param)) {
+      return new Set([param as City]);
+    }
+    return allCities;
+  });
   // Purge any lingering home-city preference from a previous build. The
   // product is now "explore the whole area" — no anchor city. Keep this
   // as a one-time cleanup so users aren't staring at a stale label.

@@ -221,6 +221,7 @@ export default function CityPage({ cityId, cityName }: Props) {
         <CityHolidayBanner
           holiday={nextHoliday.holiday}
           iso={nextHoliday.iso}
+          cityId={cityId}
           cityName={cityName}
           eventCount={cityHolidayEventCount}
         />
@@ -282,7 +283,7 @@ export default function CityPage({ cityId, cityName }: Props) {
           <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 800, fontSize: 20, margin: 0, color: "var(--sb-ink)" }}>
             {IS_WEEKEND_MODE ? "This Weekend" : "Today"} in {cityName}
           </h2>
-          <a href="/#events" style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", textDecoration: "none", border: "1px solid var(--sb-border)", borderRadius: 100, padding: "4px 12px" }}>
+          <a href={`/events?city=${encodeURIComponent(cityId)}`} style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", textDecoration: "none", border: "1px solid var(--sb-border)", borderRadius: 100, padding: "4px 12px" }}>
             All events →
           </a>
         </div>
@@ -297,7 +298,7 @@ export default function CityPage({ cityId, cityName }: Props) {
               <EventRow key={e.id} event={e} />
             ))}
             {todayEvents.length > 8 && (
-              <a href="/#events" style={{ fontSize: 12, fontWeight: 600, color: "var(--sb-accent)", padding: "8px 0", textDecoration: "none" }}>
+              <a href={`/events?city=${encodeURIComponent(cityId)}&date=${encodeURIComponent(TODAY_ISO)}`} style={{ fontSize: 12, fontWeight: 600, color: "var(--sb-accent)", padding: "8px 0", textDecoration: "none" }}>
                 +{todayEvents.length - 8} more events →
               </a>
             )}
@@ -559,17 +560,25 @@ function dayPhraseFor(iso: string, todayIso: string): string {
 function CityHolidayBanner({
   holiday,
   iso,
+  cityId,
   cityName,
   eventCount,
 }: {
   holiday: NamedHoliday;
   iso: string;
+  cityId: string;
   cityName: string;
   eventCount: number;
 }) {
   const phrase = dayPhraseFor(iso, TODAY_ISO);
   const isToday = iso === TODAY_ISO;
   const hasEvents = eventCount > 0;
+  // Deep-link to /events with the city filter set, the day selector preset to
+  // the holiday's date, and the themed-holiday filter active when the holiday
+  // has theme keywords. Resident lands directly on the events that prompted
+  // them to tap the banner — no second-step filtering needed.
+  const themedParam = holiday.themeKeywords?.length ? `&holiday=${encodeURIComponent(holiday.id)}` : "";
+  const eventsHref = `/events?city=${encodeURIComponent(cityId)}&date=${encodeURIComponent(iso)}${themedParam}`;
 
   return (
     <div
@@ -600,7 +609,7 @@ function CityHolidayBanner({
       <span style={{ opacity: 0.85 }}>{phrase}</span>
       {hasEvents && (
         <a
-          href="/#events"
+          href={eventsHref}
           style={{
             marginLeft: "auto",
             display: "inline-flex",

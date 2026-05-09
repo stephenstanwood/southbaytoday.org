@@ -1310,7 +1310,13 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // Day → narrows that day's view to mom-themed picks instead of every
   // event on Sunday). Auto-cleared when the user navigates to a different
   // date so it doesn't sneakily filter unrelated days.
-  const [activeThemedHolidayId, setActiveThemedHolidayId] = useState<string | null>(null);
+  // Initialised from `?holiday=` deep-link param (e.g. when a city page's
+  // holiday banner sends a resident to /events?city=X&date=Y&holiday=Z).
+  const [activeThemedHolidayId, setActiveThemedHolidayId] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    const h = new URLSearchParams(window.location.search).get("holiday");
+    return h && NAMED_HOLIDAYS.some((x) => x.id === h) ? h : null;
+  });
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
   const [forecastByDate, setForecastByDate] = useState<
     Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
@@ -1320,7 +1326,15 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const tomorrowIso = addDays(todayIso, 1);
   const [weekendSat, weekendSun] = useMemo(() => thisWeekendDates(todayIso), [todayIso]);
 
-  const [selectedDate, setSelectedDate] = useState<string>(todayIso);
+  // Initial day selection — defaults to today, but accepts a `?date=YYYY-MM-DD`
+  // deep-link param (used by city-page holiday banners that want to drop the
+  // resident on a specific holiday's day view).
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    if (typeof window === "undefined") return todayIso;
+    const d = new URLSearchParams(window.location.search).get("date");
+    if (d && /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= todayIso) return d;
+    return todayIso;
+  });
 
   useEffect(() => {
     fetch("/api/south-bay/upcoming-events")
