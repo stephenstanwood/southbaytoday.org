@@ -1111,6 +1111,12 @@ function inferCategory(title, desc, type, venue = "") {
   const isLibraryActivityGames = /\bgames[,;]?\s*(crafts?|activities|bubbles|more)/i.test(t) ||
     /\b(crafts?|activities)\s+(?:and\s+)?games\b/i.test(t) ||
     /\bgames\s+and\s+activities\b/i.test(t);
+  // Carnivals (school carnivals, business carnivals, festival carnivals) are community
+  // events — descriptions often mention "carnival games" which would otherwise hit the
+  // sports branch via t.includes("game"). Music/arts carnivals (e.g. Mötley Crüe's
+  // "Carnival of Sins", Saint-Saëns' "Carnival of the Animals") are caught by the
+  // earlier music/arts checks and never reach this point.
+  if (/\bcarnival\b/.test(titleLower)) return "community";
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");
