@@ -502,6 +502,9 @@ function countNewReplies() {
       for (const r of (p.replies || [])) {
         if (r.at && new Date(r.at).getTime() > cutoff) n++;
       }
+      for (const q of (p.quotes || [])) {
+        if (q.at && new Date(q.at).getTime() > cutoff) n++;
+      }
     }
   }
   return n;
@@ -537,13 +540,18 @@ function maybeNotifyNewReplies() {
   const cutoff = new Date(lastVisitAt).getTime();
   for (const post of (DATA.posts || [])) {
     for (const [plat, p] of Object.entries(post.platforms || {})) {
-      for (const r of (p.replies || [])) {
+      const items = [
+        ...(p.replies || []).map(r => ({ ...r, _kind: 'reply' })),
+        ...(p.quotes || []).map(q => ({ ...q, _kind: 'quote' })),
+      ];
+      for (const r of items) {
         if (!r.at || new Date(r.at).getTime() <= cutoff) continue;
-        const key = r.permalink || (post.key + ':' + plat + ':' + (r.author || '') + ':' + r.at);
+        const key = r.permalink || (post.key + ':' + plat + ':' + r._kind + ':' + (r.author || '') + ':' + r.at);
         if (notifiedReplyKeys.has(key)) continue;
         notifiedReplyKeys.add(key);
         try {
-          const n = new Notification(plat + ' · @' + (r.author || 'unknown'), {
+          const label = r._kind === 'quote' ? plat + ' · quote · @' : plat + ' · @';
+          const n = new Notification(label + (r.author || 'unknown'), {
             body: (r.text || '').slice(0, 280),
             tag: key,
           });
