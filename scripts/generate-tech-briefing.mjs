@@ -168,7 +168,11 @@ async function main() {
 
   const prompt = `You are the editorial voice of South Bay Signal, a hyperlocal news site covering Silicon Valley's South Bay — the cities between San Jose and Palo Alto.
 
-Write a concise "This Week in South Bay Tech" briefing. It should be 2–3 sentences (50–80 words total). Tone: crisp, grounded, local — like a smart colleague summarizing the week's highlights over coffee. Focus on what's newsworthy for residents who work in or care about local tech. Mention company names and cities when relevant. No hype or jargon.
+Write a concise "This Week in South Bay Tech" briefing. It should be 2–3 sentences (50–80 words total). Tone: crisp, grounded, local — like a smart colleague summarizing the past month's highlights over coffee. Focus on what's newsworthy for residents who work in or care about local tech. Mention company names and cities when relevant. No hype or jargon.
+
+CRITICAL — be honest about timing:
+- The funding rounds below span up to 45 days. Do NOT say "this week" or "today" about rounds that are weeks old. Use phrasing like "in the past month", "in April", or just give the company name without a time claim.
+- Only the events list represents "this week" — funding rounds do not.
 
 Recent funding rounds in the South Bay (last 45 days):
 ${fundedLines}
