@@ -11,6 +11,12 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHmac, randomBytes } from "node:crypto";
+import {
+  hasCredentials as hasRedditCredentials,
+  fetchInbox as fetchRedditInbox,
+  permalinkFor as redditPermalinkFor,
+  classifyKind as redditClassifyKind,
+} from "./lib/platforms/reddit.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
@@ -635,6 +641,62 @@ async function fetchInstagramReplies(published) {
   return allReplies;
 }
 
+// ── Reddit: fetch inbox ─────────────────────────────────────────────────
+// Reddit isn't on our publish path, so there are no per-post threads to walk.
+// We just pull the account inbox: comment replies, post replies, username
+// mentions, and PMs from the lookback window.
+
+async function fetchRedditReplies() {
+  if (!hasRedditCredentials()) {
+    console.log("   reddit: skipped (no REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET / REDDIT_USERNAME / REDDIT_PASSWORD)");
+    return [];
+  }
+  const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  let inbox;
+  try {
+    inbox = await fetchRedditInbox({ cutoffMs: cutoff });
+  } catch (err) {
+    console.log(`   reddit: inbox fetch failed: ${err.message}`);
+    return [];
+  }
+
+  const out = [];
+  for (const item of inbox) {
+    const tsMs = (item.created_utc || 0) * 1000;
+    if (tsMs < cutoff) continue;
+    const kind = redditClassifyKind(item);
+    const subreddit = item.subreddit_name_prefixed || (item.subreddit ? `r/${item.subreddit}` : "");
+    let title;
+    if (kind === "message") {
+      title = item.subject ? `PM: ${item.subject}` : "PM";
+    } else if (kind === "username_mention") {
+      title = subreddit ? `${subreddit} (mention) — ${item.link_title || ""}`.trim() : "(mention)";
+    } else {
+      title = subreddit && item.link_title ? `${subreddit}: ${item.link_title}` : item.link_title || subreddit || "(reddit)";
+    }
+
+    out.push({
+      id: `reddit-${item.name}`,
+      platform: "reddit",
+      postTitle: title,
+      postId: item.link_id || item.parent_id || item.name,
+      author: item.author || "unknown",
+      text: item.body || "",
+      timestamp: new Date(tsMs).toISOString(),
+      permalink: redditPermalinkFor(item),
+      redditName: item.name,
+      redditKind: kind,
+      redditSubreddit: subreddit || null,
+      classified: null,
+      responded: false,
+      liked: false,
+      action: null,
+      actionNote: null,
+    });
+  }
+  return out;
+}
+
 // ── Mastodon: fetch replies & mentions ──────────────────────────────────
 
 async function fetchMastodonReplies(published) {
@@ -1028,9 +1090,14 @@ async function main() {
   console.log("   mastodon...");
   const mastodonReplies = await fetchMastodonReplies(published);
   console.log(`   mastodon: ${mastodonReplies.length} total replies`);
+  await sleep(500);
+
+  console.log("   reddit...");
+  const redditReplies = await fetchRedditReplies();
+  console.log(`   reddit: ${redditReplies.length} total inbox items`);
 
   // De-duplicate: only add new replies
-  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies, ...xReplies, ...igReplies, ...mastodonReplies];
+  const allNew = [...bskyReplies, ...threadsReplies, ...fbReplies, ...xReplies, ...igReplies, ...mastodonReplies, ...redditReplies];
   const newReplies = allNew.filter((r) => !existingIds.has(r.id));
 
   console.log(`\n   ${allNew.length} total fetched, ${newReplies.length} new`);
@@ -1135,15 +1202,17 @@ async function main() {
 
       case "factual_simple":
       case "question_simple": {
-        // Generate response
+        // Generate response (skipped for Reddit — human-handled, no auto-draft).
         let responseText = "";
-        try {
-          responseText = await generateResponse(reply, originalPost);
-        } catch (err) {
-          console.log(`   response generation failed: ${err.message}`);
-          reply.action = "needs_human";
-          reply.actionNote = `Response generation failed: ${err.message}`;
-          break;
+        if (reply.platform !== "reddit") {
+          try {
+            responseText = await generateResponse(reply, originalPost);
+          } catch (err) {
+            console.log(`   response generation failed: ${err.message}`);
+            reply.action = "needs_human";
+            reply.actionNote = `Response generation failed: ${err.message}`;
+            break;
+          }
         }
 
         if (reply.platform === "bluesky" && reply.replyUri && reply.replyCid) {
