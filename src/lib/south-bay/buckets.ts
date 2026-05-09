@@ -102,6 +102,21 @@ export function bucketForEvent(
   return bucketForHour(start, kind);
 }
 
+/** Infer a bucket from a legacy clock-range timeBlock like "7:30 AM - 9:00 AM".
+ *  Returns null if the string isn't a clock range (e.g. it's already a bucket
+ *  label like "Breakfast", or empty). Used to render plans approved before
+ *  the bucket cutover (2026-05-07) without a data migration. */
+export function inferBucketFromTimeBlock(
+  timeBlock: string | null | undefined,
+  category: string | null | undefined = null,
+): Bucket | null {
+  if (!timeBlock) return null;
+  const start = parseClockHour(timeBlock.split(/\s*-\s*/)[0]);
+  if (start === null) return null;
+  const kind: "meal" | "activity" = (category || "").toLowerCase() === "food" ? "meal" : "activity";
+  return bucketForHour(start, kind);
+}
+
 /** True if `name` is a valid Bucket. */
 export function isBucket(name: unknown): name is Bucket {
   return typeof name === "string" && BUCKET_ORDER.includes(name as Bucket);

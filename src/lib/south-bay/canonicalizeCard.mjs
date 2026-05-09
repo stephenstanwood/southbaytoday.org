@@ -33,6 +33,35 @@ function nullableBucket(v) {
   return VALID_BUCKETS.has(v) ? v : null;
 }
 
+/** Parse a clock-range start hour ("7:30 AM - 9:00 AM" → 7) for legacy
+ *  timeBlock strings predating the bucket cutover. Returns null on already-
+ *  bucket-shaped labels ("Breakfast") or unparseable input. */
+function parseClockHour(s) {
+  if (!s) return null;
+  const m = String(s).match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+  if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+  return h;
+}
+
+/** Infer bucket from a legacy clock-range timeBlock when the card has no
+ *  bucket field. Mirrors the helper in src/lib/south-bay/buckets.ts. */
+function inferBucket(timeBlock, category) {
+  const start = parseClockHour(String(timeBlock || "").split(/\s*-\s*/)[0]);
+  if (start === null) return null;
+  const isFood = String(category || "").toLowerCase() === "food";
+  if (isFood) {
+    if (start < 11) return "breakfast";
+    if (start < 16) return "lunch";
+    return "dinner";
+  }
+  if (start < 12) return "morning";
+  if (start < 17) return "afternoon";
+  return "evening";
+}
+
 /**
  * Coerce a raw card-ish object into the canonical shape.
  * Unknown extra fields (kidsCostNote, locked, type, neighborhood, featuredPlace,
@@ -68,7 +97,7 @@ export function canonicalizeCard(raw) {
     city: str(raw.city || raw.neighborhood),
     address: str(raw.address),
     timeBlock: str(raw.timeBlock),
-    bucket: nullableBucket(raw.bucket),
+    bucket: nullableBucket(raw.bucket) || inferBucket(raw.timeBlock, raw.category),
     eventTime: nullableStr(raw.eventTime),
     blurb: str(raw.blurb),
     why: str(raw.why),
