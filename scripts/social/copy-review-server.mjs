@@ -376,6 +376,18 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .placeholder { font-size: 11px; color: #aaa; font-style: italic; }
   .fb-cross-link { display: inline-flex; align-items: center; padding: 4px 6px; font-size: 14px; text-decoration: none; opacity: 0.55; transition: opacity 0.1s; line-height: 1; }
   .fb-cross-link:hover { opacity: 1; }
+  /* New-since-last-visit highlighting */
+  .new-summary { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; font-weight: 600; }
+  .new-summary.zero { background: transparent; border-color: transparent; color: #aaa; font-weight: 400; }
+  .post-card.has-new { box-shadow: inset 4px 0 0 0 #4f46e5; }
+  .plat-pill.has-new { background: #eef2ff; border-color: #c7d2fe; }
+  .plat-pill.has-new .plat-count { color: #4338ca; }
+  .new-badge { display: inline-block; font-size: 10px; font-weight: 600; color: #4338ca; background: #fff; border: 1px solid #c7d2fe; padding: 1px 6px; border-radius: 999px; margin-left: 6px; letter-spacing: 0.02em; }
+  .actor-chip.is-new { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+  .actor-chip.is-old { color: #b8b3a6; background: #f6f2ea; }
+  .reply-item.is-new { border-left-color: #4f46e5; background: #f5f3ff; }
+  .reply-item.is-old { background: #f9f7f1; border-left-color: #d8d2c4; }
+  .reply-item.is-old .reply-author, .reply-item.is-old .reply-text { color: #aaa; }
   @media (max-width: 600px) {
     .header { flex-direction: column; align-items: flex-start; gap: 4px; }
     .last-updated { margin-left: 0; }
@@ -386,6 +398,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <body>
 <div class="header">
   <span class="title">Social Media Posts</span>
+  <span class="new-summary zero" id="new-summary"></span>
   <span class="last-updated" id="last-updated"></span>
 </div>
 
@@ -419,6 +432,51 @@ const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
 let activeBrand = 'all';
+
+// "New since last visit" baseline: snapshot of per-post-per-platform counts
+// from the previous visit, plus the timestamp of that visit. Held in memory
+// for the whole session so refreshes don't erase highlights — the new
+// baseline is only persisted once on first render.
+const SEEN_KEY = 'sbt-engagement-seen-v1';
+const LAST_VISIT_KEY = 'sbt-engagement-last-visit-v1';
+let seenSnapshot = null;
+let lastVisitAt = null;
+try { seenSnapshot = JSON.parse(localStorage.getItem(SEEN_KEY) || 'null'); } catch (e) {}
+try { lastVisitAt = localStorage.getItem(LAST_VISIT_KEY) || null; } catch (e) {}
+let baselineWritten = false;
+
+function platTotal(p) {
+  const c = (p && p.counts) || {};
+  return (c.likes||0)+(c.reposts||0)+(c.quotes||0)+(c.replies||0);
+}
+
+function snapshotFromData(data) {
+  const snap = {};
+  for (const post of (data?.posts || [])) {
+    snap[post.key] = {};
+    for (const [k, p] of Object.entries(post.platforms || {})) {
+      snap[post.key][k] = platTotal(p);
+    }
+  }
+  return snap;
+}
+
+function platDelta(postKey, plat, currentTotal) {
+  if (!seenSnapshot) return 0; // first ever visit — don't blast everything as new
+  const prev = seenSnapshot[postKey] && seenSnapshot[postKey][plat];
+  if (prev == null) return currentTotal; // post or platform is new since last visit
+  return Math.max(0, currentTotal - prev);
+}
+
+function isItemNew(item) {
+  if (!lastVisitAt || !item || !item.at) return false;
+  return new Date(item.at).getTime() > new Date(lastVisitAt).getTime();
+}
+
+function isItemOld(item) {
+  if (!lastVisitAt || !item || !item.at) return false;
+  return new Date(item.at).getTime() <= new Date(lastVisitAt).getTime();
+}
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -456,11 +514,12 @@ function renderTotals() {
   document.getElementById('totals').innerHTML = html;
 }
 
-function renderPlatformPill(plat, p, expanded) {
+function renderPlatformPill(plat, p, expanded, postKey) {
   const counts = p.counts || {};
   const total = (counts.likes||0)+(counts.reposts||0)+(counts.quotes||0)+(counts.replies||0);
   if (total === 0 && !p._engagementBlocked) return ''; // skip silent platforms entirely
-  const cls = 'plat-pill' + (expanded ? ' expanded' : '');
+  const delta = postKey ? platDelta(postKey, plat, total) : 0;
+  const cls = 'plat-pill' + (expanded ? ' expanded' : '') + (delta > 0 ? ' has-new' : '');
   if (p._engagementBlocked) {
     const link = p.permalink ? '<a href="' + p.permalink + '" target="_blank" style="color:inherit;text-decoration:none;">view →</a>' : 'no metrics';
     return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts" style="color:#888;font-style:italic;">' + link + '</span></div>';
@@ -468,28 +527,33 @@ function renderPlatformPill(plat, p, expanded) {
   const segs = TYPE_ORDER.filter(k => displayCount(counts, k) > 0).map(k => (
     '<span class="plat-count">' + displayCount(counts, k) + '<span class="lbl">' + TYPE_LBL[k] + '</span></span>'
   )).join('');
-  return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts">' + segs + '</span></div>';
+  const badge = delta > 0 ? '<span class="new-badge">+' + delta + ' new</span>' : '';
+  return '<div class="' + cls + '" data-plat="' + plat + '"><span class="plat-icon">' + (ICONS[plat] || plat) + '</span><span class="plat-counts">' + segs + '</span>' + badge + '</div>';
 }
 
 function renderActors(actors) {
   if (!actors || !actors.length) return '<div class="placeholder">no actor list (API restriction)</div>';
   return '<div class="actor-list">' + actors.map(a => {
+    const cls = 'actor-chip' + (isItemNew(a) ? ' is-new' : (isItemOld(a) ? ' is-old' : ''));
     const name = a.displayName ? a.displayName + ' (@' + a.author + ')' : '@' + a.author;
-    if (a.profile) return '<a class="actor-chip" href="' + a.profile + '" target="_blank">' + escapeHtml(name) + '</a>';
-    return '<span class="actor-chip">' + escapeHtml(name) + '</span>';
+    if (a.profile) return '<a class="' + cls + '" href="' + a.profile + '" target="_blank">' + escapeHtml(name) + '</a>';
+    return '<span class="' + cls + '">' + escapeHtml(name) + '</span>';
   }).join('') + '</div>';
 }
 
 function renderReplies(items, label) {
   if (!items || !items.length) return '';
   return '<div class="detail-section"><div class="detail-header">' + label + '</div>' +
-    items.map(r => (
-      '<div class="reply-item"><span class="reply-author">@' + escapeHtml(r.author || 'unknown') + '</span>' +
-      '<span class="reply-time">' + escapeHtml(timeAgo(r.at)) + '</span>' +
-      '<div class="reply-text">' + escapeHtml(r.text) + '</div>' +
-      (r.permalink ? '<a class="reply-permalink" href="' + r.permalink + '" target="_blank">view →</a>' : '') +
-      '</div>'
-    )).join('') + '</div>';
+    items.map(r => {
+      const cls = 'reply-item' + (isItemNew(r) ? ' is-new' : (isItemOld(r) ? ' is-old' : ''));
+      return (
+        '<div class="' + cls + '"><span class="reply-author">@' + escapeHtml(r.author || 'unknown') + '</span>' +
+        '<span class="reply-time">' + escapeHtml(timeAgo(r.at)) + '</span>' +
+        '<div class="reply-text">' + escapeHtml(r.text) + '</div>' +
+        (r.permalink ? '<a class="reply-permalink" href="' + r.permalink + '" target="_blank">view →</a>' : '') +
+        '</div>'
+      );
+    }).join('') + '</div>';
 }
 
 function renderDetails(plat, p) {
@@ -523,13 +587,17 @@ function renderPost(post) {
 
   const filteredPlats = activePlatform === 'all' ? platKeys : platKeys.filter(k => k === activePlatform);
 
-  const cardCls = 'post-card' + (total === 0 ? ' no-engagement' : '');
+  let postNew = 0;
+  for (const k of platKeys) {
+    postNew += platDelta(post.key, k, platTotal(platforms[k]));
+  }
+  const cardCls = 'post-card' + (total === 0 ? ' no-engagement' : '') + (postNew > 0 ? ' has-new' : '');
   const titleHtml = post.targetUrl
     ? '<a href="' + post.targetUrl + '" target="_blank">' + escapeHtml(post.title) + '</a>'
     : escapeHtml(post.title);
 
   const pills = filteredPlats.map(k => {
-    const pill = renderPlatformPill(k, platforms[k], false);
+    const pill = renderPlatformPill(k, platforms[k], false, post.key);
     // HHSS cross-posts to FB. When the IG pill renders (i.e. has reactions),
     // tack on a small FB deep-link so we can hop to the matching FB post.
     // No counts — engagement reads are walled off by Meta App Review.
@@ -563,11 +631,45 @@ function render() {
   document.getElementById('last-updated').textContent = DATA.lastUpdated
     ? 'updated ' + timeAgo(DATA.lastUpdated) + ' · ' + (DATA.postCount || 0) + ' posts'
     : 'no data yet — run scripts/social/collect-engagement.mjs';
+
+  const summaryEl = document.getElementById('new-summary');
+  if (summaryEl) {
+    if (!seenSnapshot) {
+      summaryEl.textContent = 'first visit — future visits will highlight new activity';
+      summaryEl.classList.add('zero');
+    } else {
+      let totalNew = 0;
+      for (const post of (DATA.posts || [])) {
+        for (const [k, p] of Object.entries(post.platforms || {})) {
+          totalNew += platDelta(post.key, k, platTotal(p));
+        }
+      }
+      if (totalNew === 0) {
+        summaryEl.textContent = 'no new activity since last visit';
+        summaryEl.classList.add('zero');
+      } else {
+        summaryEl.textContent = totalNew + ' new ' + (totalNew === 1 ? 'interaction' : 'interactions') + ' since last visit';
+        summaryEl.classList.remove('zero');
+      }
+    }
+  }
+
   renderTotals();
 
   const html = (DATA.posts || []).map(renderPost).filter(Boolean).join('');
   const list = document.getElementById('posts');
   list.innerHTML = html || '<div class="empty">No posts match your filters.</div>';
+
+  // Persist new baseline once per page load. seenSnapshot/lastVisitAt in
+  // memory keep the OLD values, so highlights stay correct for the whole
+  // session even as data refreshes every 60s.
+  if (!baselineWritten) {
+    baselineWritten = true;
+    try {
+      localStorage.setItem(SEEN_KEY, JSON.stringify(snapshotFromData(DATA)));
+      localStorage.setItem(LAST_VISIT_KEY, new Date().toISOString());
+    } catch (e) {}
+  }
 
   list.querySelectorAll('.plat-pill').forEach(pill => {
     pill.addEventListener('click', () => {
