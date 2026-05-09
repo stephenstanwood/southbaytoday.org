@@ -1184,6 +1184,191 @@ function HolidayHeadsUpBanner({
   return <div style={innerStyle}>{inner}</div>;
 }
 
+// ── Holiday picks preview ──────────────────────────────────────────────────
+// When a themed holiday is within 3 days, surface 2–3 actual themed events
+// directly under the heads-up banner instead of making residents tap "→" to
+// see them. Mother's Day weekend / Cinco de Mayo / Halloween are exactly the
+// moments where the banner alone undersells what's bookable RIGHT NOW. Tap a
+// row → same jump as the banner pill. Hidden when fewer than 2 themed events
+// match (the banner already conveys "1 pick" fine on its own).
+//
+// Time-window: only fires when the holiday is today, tomorrow, or the day
+// after — past that, residents have time to discover events organically and
+// the prominence isn't earned.
+interface HolidayPicksPreviewProps {
+  events: UpcomingEvent[];
+  selectedCities: Set<City>;
+  allCities: boolean;
+  onJumpToDate: (iso: string, themedHolidayId?: string) => void;
+}
+
+function HolidayPicksPreview({
+  events,
+  selectedCities,
+  allCities,
+  onJumpToDate,
+}: HolidayPicksPreviewProps) {
+  const todayIso = todayPT();
+  const horizonIso = addDays(todayIso, 3);
+  const next = useMemo(
+    () => nextHolidayWithin(todayIso, horizonIso),
+    [todayIso, horizonIso],
+  );
+  if (!next) return null;
+  const { holiday, iso } = next;
+  if (!holiday.themeKeywords?.length) return null;
+
+  const themed = useMemo(() => {
+    const out: UpcomingEvent[] = [];
+    for (const e of events) {
+      if (e.date !== iso) continue;
+      if (!allCities && !selectedCities.has(e.city as City)) continue;
+      const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
+      if (!matchesHolidayTheme(holiday, lower)) continue;
+      out.push(e);
+    }
+    // Prefer events with images and a real time, then by title for stability.
+    out.sort((a, b) => {
+      const aHas = (a.image || a.photoRef) ? 1 : 0;
+      const bHas = (b.image || b.photoRef) ? 1 : 0;
+      if (aHas !== bHas) return bHas - aHas;
+      const aTime = a.time ? 1 : 0;
+      const bTime = b.time ? 1 : 0;
+      if (aTime !== bTime) return bTime - aTime;
+      return a.title.localeCompare(b.title);
+    });
+    return out.slice(0, 3);
+  }, [events, iso, holiday, allCities, selectedCities]);
+
+  if (themed.length < 2) return null;
+
+  const dayWord = iso === todayIso
+    ? "Today"
+    : iso === addDays(todayIso, 1)
+      ? "Tomorrow"
+      : new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
+
+  return (
+    <div
+      style={{
+        marginTop: -4,
+        marginBottom: 12,
+        padding: "10px 12px",
+        background: holiday.bg,
+        border: `1px solid ${holiday.color}33`,
+        borderRadius: 8,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 8,
+          marginBottom: 8,
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: holiday.color,
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 12 }}>{holiday.emoji}</span>
+        <span>{holiday.label} · {dayWord} picks</span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {themed.map((e) => {
+          const cityName = CITY_LABELS[e.city] ?? e.city;
+          const time = formatTimeRange(e.time, e.endTime);
+          return (
+            <button
+              key={e.id}
+              type="button"
+              onClick={() => onJumpToDate(iso, holiday.id)}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 10,
+                padding: "8px 10px",
+                background: "#ffffff",
+                border: `1px solid ${holiday.color}22`,
+                borderRadius: 6,
+                cursor: "pointer",
+                textAlign: "left",
+                fontFamily: "inherit",
+                color: "var(--sb-ink)",
+                transition: "border-color 0.12s, transform 0.12s",
+              }}
+              onMouseEnter={(ev) => {
+                ev.currentTarget.style.borderColor = `${holiday.color}66`;
+              }}
+              onMouseLeave={(ev) => {
+                ev.currentTarget.style.borderColor = `${holiday.color}22`;
+              }}
+            >
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontFamily: "var(--sb-serif)",
+                    fontWeight: 700,
+                    fontSize: 13.5,
+                    lineHeight: 1.3,
+                    color: "var(--sb-ink)",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {e.title}
+                </div>
+                <div
+                  style={{
+                    marginTop: 2,
+                    fontSize: 11,
+                    color: "var(--sb-muted)",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 6,
+                    fontFamily: "'Space Mono', monospace",
+                  }}
+                >
+                  {time && <span style={{ color: holiday.color, fontWeight: 700 }}>{time}</span>}
+                  {time && <span aria-hidden>·</span>}
+                  <span style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    maxWidth: 220,
+                  }}>{e.venue}</span>
+                  <span aria-hidden>·</span>
+                  <span>{cityName}</span>
+                  {e.cost === "free" && (
+                    <>
+                      <span aria-hidden>·</span>
+                      <span style={{ fontWeight: 700, color: "#15803D" }}>FREE</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <span
+                aria-hidden
+                style={{
+                  flexShrink: 0,
+                  fontSize: 14,
+                  color: holiday.color,
+                  marginTop: 1,
+                }}
+              >
+                →
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Heritage / observance month banner ─────────────────────────────────────
 // Subtle one-liner acknowledging federally recognized heritage months that
 // matter to large South Bay communities (AANHPI, Hispanic, Jewish, LGBTQ+,
