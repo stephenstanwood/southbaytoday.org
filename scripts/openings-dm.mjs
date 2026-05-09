@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Daily pre-wakeup check (3:30 AM PT, run from Mac Mini): if anything notable
-// is opening today, DM Stephen via the #tasks Discord webhook. Silent on
+// is opening today, DM Stephen directly via the cat-signal bot. Silent on
 // empty days.
 //
 // Sources:
@@ -565,19 +565,30 @@ if (process.env.DRY_RUN) {
   process.exit(0);
 }
 
-const webhook = process.env.DISCORD_WEBHOOK;
-if (!webhook) {
-  console.error("[openings-dm] DISCORD_WEBHOOK not set");
+const botToken = process.env.DISCORD_BOT_TOKEN;
+const dmChannel = process.env.DISCORD_DM_CHANNEL;
+if (!botToken) {
+  console.error("[openings-dm] DISCORD_BOT_TOKEN not set");
+  process.exit(1);
+}
+if (!dmChannel) {
+  console.error("[openings-dm] DISCORD_DM_CHANNEL not set");
   process.exit(1);
 }
 
-const res = await fetch(webhook, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ content: body.slice(0, 1990) }),
-});
+const res = await fetch(
+  `https://discord.com/api/v10/channels/${dmChannel}/messages`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bot ${botToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content: body.slice(0, 1990) }),
+  },
+);
 if (!res.ok) {
-  console.error(`[openings-dm] webhook ${res.status}: ${await res.text()}`);
+  console.error(`[openings-dm] DM ${res.status}: ${await res.text()}`);
   process.exit(1);
 }
-console.log(`[openings-dm] ${TODAY}: posted ${items.length} item(s)`);
+console.log(`[openings-dm] ${TODAY}: DM'd ${items.length} item(s)`);
