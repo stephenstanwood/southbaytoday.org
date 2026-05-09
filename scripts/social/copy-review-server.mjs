@@ -437,7 +437,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 
 <script>
 const BASE_TITLE = 'Social Signal';
-const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
+const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘', reddit: '👽' };
 // reposts + quotes are both "amplification" — collapsed into shares for display.
 const TYPE_ORDER = ['likes', 'shares', 'replies'];
 const TYPE_LBL = { likes: 'likes', shares: 'shares', replies: 'replies' };
@@ -1357,7 +1357,7 @@ let current = 0;
 let results = [];
 let queueSize = 0;
 
-const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8' };
+const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8', instagram: '\\ud83d\\udcf7', mastodon: '\\ud83d\\udc18', reddit: '\\ud83d\\udc7d' };
 
 function updateQueueBadge(size) {
   queueSize = size;
