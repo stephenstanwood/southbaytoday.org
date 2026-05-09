@@ -1070,8 +1070,19 @@ function inferCategory(title, desc, type, venue = "") {
   if (/\b(meditation|mindfulness|yoga|pilates)\b/i.test(titleLower)) return "community";
   const isArtWord = /\barts?\b|\bartist|\bartwork|\bartistry/.test(t);
   if (t.includes("exhibit") || t.includes("gallery") || t.includes("theater") || t.includes("theatre") || t.includes("film") || t.includes("cinema") || t.includes("dance") || t.includes("performance") || t.includes("museum") || (isArtWord && !t.includes("martial art"))) return "arts";
+  // Theater play descriptions — university/community theaters often title shows by the
+  // play name alone ("Exit... Pursued by a Bear") with no overt arts keyword. Detect
+  // the production-credit pattern in the description: "Directed by X", "Written and
+  // directed by", "Playwright", "By [Author] Directed by [Director]", etc.
+  if (/\bdirected\s+by\b/i.test(cleanDesc) || /\bplaywright\b/i.test(cleanDesc) || /\bplay\s+by\b/i.test(cleanDesc)) return "arts";
   // Book clubs and discussions are arts/reading events, not formal education
   if (/\bbook\s+(club|discussion|group)\b/.test(t)) return "arts";
+  // Brunch / breakfast / dinner with optional ambient live music is primarily a food
+  // event, not music. SJDA tags Mother's Day brunches at hotel restaurants as "Music"
+  // because of background entertainment, but the title-anchored meal is the headline.
+  // Skip if title is explicitly a music format (concert, recital, jazz brunch is fine
+  // as music — "jazz" in title is enough to override).
+  if (/\bbrunch\b/.test(titleLower) && !/\b(jazz|concert|recital|symphony|live\s+music)\b/.test(titleLower)) return "food";
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
   // Nature / wildlife events — check BEFORE sports to avoid false positives.
