@@ -554,6 +554,7 @@ function maybeNotifyNewReplies() {
           const n = new Notification(label + (r.author || 'unknown'), {
             body: (r.text || '').slice(0, 280),
             tag: key,
+            requireInteraction: true,
           });
           if (r.permalink) n.onclick = () => { try { window.focus(); } catch (e) {} window.open(r.permalink, '_blank'); };
         } catch (e) {}
