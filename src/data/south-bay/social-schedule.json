@@ -778,7 +778,7 @@
     },
     "2026-05-10": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Seal (Children age 3 and older require a ticket)",
@@ -806,7 +806,48 @@
         "copyApprovedAt": "2026-05-02T13:29:57.943Z",
         "imageApprovedAt": "2026-05-02T13:29:57.943Z",
         "generatedAt": "2026-05-02T10:37:03.625Z",
-        "imagePrompt": "Abstract glitch art illustration with heavy chromatic aberration and RGB channel offsets, scanlines, and digital grain throughout. Dense packed composition in 4:5 portrait ratio. Electric vibrant color palette—magenta, cyan, hot gold, deep purple layered and fractured. Stylized microphone silhouette fragmented and woven into abstract geometric shards and color fields. Flowing hillside curves abstracted into layered angular forms. High saturation, visual movement and energy. No people, no text, no decoration—pure negative space and bold shapes carry the composition. Album art aesthetic, not clip art."
+        "imagePrompt": "Abstract glitch art illustration with heavy chromatic aberration and RGB channel offsets, scanlines, and digital grain throughout. Dense packed composition in 4:5 portrait ratio. Electric vibrant color palette—magenta, cyan, hot gold, deep purple layered and fractured. Stylized microphone silhouette fragmented and woven into abstract geometric shards and color fields. Flowing hillside curves abstracted into layered angular forms. High saturation, visual movement and energy. No people, no text, no decoration—pure negative space and bold shapes carry the composition. Album art aesthetic, not clip art.",
+        "publishedAt": "2026-05-10T17:50:38.441Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2053533030623711563",
+            "id": "2053533030623711563",
+            "text": "Seal is playing Mountain Winery in Saratoga tonight at 7:30. Outdoor hillside venue, one of the great voices of the 90s — this one's worth it. https://t.co/BsJc1fGxFM https://t.co/cFznnLoXSN"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mljd3dgojz2c",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mljd3dgojz2c",
+            "cid": "bafyreierrvtuf3ehv6fcafmukyqhoeajiw5d6h7zx3kp2y7qfaymcyrtxa"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18105595510939175",
+            "id": "18105595510939175"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122110002182849604",
+            "id": "122110002182849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116551544422695642",
+            "id": "116551544422695642",
+            "url": "https://mastodon.social/@southbaytoday/116551544422695642"
+          },
+          {
+            "platform": "instagram",
+            "ok": false,
+            "error": "Instagram publish failed (400): {\"error\":{\"message\":\"Media ID is not available\",\"type\":\"OAuthException\",\"code\":9007,\"error_subcode\":2207027,\"is_transient\":false,\"error_user_title\":\"Cannot Publish\",\"error_user_msg\":\"The media is not ready for publishing, please wait for a moment\",\"fbtrace_id\":\"AY-A4g6p7Rv2_hHqbXFl3de\"}}"
+          }
+        ]
       },
       "_reviewHistory": [
         {
