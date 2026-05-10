@@ -75,7 +75,7 @@ export default function NewsletterSignup({
         <form onSubmit={onSubmit} className="sbt-nl-min">
           <div className="sbt-nl-min-text">
             <div className="sbt-nl-min-headline">Start your day with us! ☀️</div>
-            <div className="sbt-nl-min-tagline">One email with everything we know about. No nonsense.</div>
+            <div className="sbt-nl-min-tagline">One email with everything we know about.</div>
           </div>
           <div className="sbt-nl-min-fields">
             <input
@@ -101,15 +101,14 @@ export default function NewsletterSignup({
         <style>{`
           .sbt-nl-min {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 18px;
-            flex-wrap: wrap;
+            gap: 14px;
             font-family: 'Inter', sans-serif;
-            max-width: 540px;
+            max-width: 480px;
             margin: 0 auto;
           }
-          .sbt-nl-min-text { text-align: left; flex: 0 1 auto; }
+          .sbt-nl-min-text { text-align: center; }
           .sbt-nl-min-headline {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 22px;
