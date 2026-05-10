@@ -10,7 +10,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, unlink
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
-import { execFile, execFileSync } from "node:child_process";
+import { execFile, execFileSync, spawn } from "node:child_process";
 import { processComment } from "./lib/action-commands.mjs";
 
 import crypto from "node:crypto";
@@ -2108,72 +2108,115 @@ function mjSampleStyles(n) {
   return pool.slice(0, n);
 }
 
-function getAnthropicKey() {
-  let apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    try {
-      const lines = readFileSync(ENV_FILE, "utf8").split("\n");
-      for (const line of lines) {
-        const m = line.match(/^ANTHROPIC_API_KEY=(.*)$/);
-        if (m) apiKey = m[1].replace(/^["']|["']$/g, "");
-      }
-    } catch {}
-  }
-  return apiKey;
+const CLAUDE_CLI = process.env.CLAUDE_CLI_PATH || "/opt/homebrew/bin/claude";
+
+// Shell out to Claude Code in print mode — uses Stephen's subscription auth
+// (keychain) rather than the API. Runs with cwd=/tmp so it doesn't load this
+// project's CLAUDE.md.
+async function callClaudeCodeOpus(instructions, timeoutMs = 90_000) {
+  return new Promise((resolve, reject) => {
+    let stdout = "";
+    let stderr = "";
+    let done = false;
+    const finish = (err, val) => { if (done) return; done = true; err ? reject(err) : resolve(val); };
+    const proc = spawn(CLAUDE_CLI, [
+      "-p",
+      "--model", "opus",
+      "--output-format", "text",
+      "--no-session-persistence",
+    ], { cwd: "/tmp", timeout: timeoutMs });
+    proc.stdout.on("data", (d) => { stdout += d.toString(); });
+    proc.stderr.on("data", (d) => { stderr += d.toString(); });
+    proc.on("error", (err) => finish(new Error(`claude CLI spawn failed: ${err.message}`)));
+    proc.on("close", (code, signal) => {
+      if (signal) return finish(new Error(`claude CLI killed by ${signal} (likely timeout)`));
+      if (code !== 0) return finish(new Error(`claude CLI exit ${code}: ${(stderr || stdout).slice(0, 300)}`));
+      finish(null, stdout);
+    });
+    proc.stdin.end(instructions);
+  });
 }
 
 async function distillMjSubject(slot, slotType) {
   const copy = (slot && slot.copy && (slot.copy.x || slot.copy.bluesky || slot.copy.threads || slot.copy.facebook || slot.copy.instagram || slot.copy.mastodon)) || "";
   const cardLine = (slotType === "day-plan" && Array.isArray(slot?.plan?.cards) && slot.plan.cards.length)
-    ? `\nCARDS IN THE PLAN: ${slot.plan.cards.map((c) => c?.name).filter(Boolean).join(", ")}`
+    ? `\nSTOPS IN THE DAY PLAN: ${slot.plan.cards.map((c) => c?.name).filter(Boolean).join(", ")}`
     : "";
-  const apiKey = getAnthropicKey();
-  if (!apiKey) throw new Error("No ANTHROPIC_API_KEY available");
 
-  const prompt = `You are converting a South Bay social media post into a concise, evocative MIDJOURNEY image SUBJECT.
+  const instructions = `You are crafting a Midjourney image-prompt SUBJECT for South Bay Today — a hyperlocal Bay Area community publication. The user has a "Copy MJ" button to upgrade the auto-generated image into something handmade and beautiful via Midjourney.
 
-POST: """${copy}"""${cardLine}
+The post you're working from:
+"""${copy}"""${cardLine}
 
-Return a 6-14 word image subject. RULES:
-- NO proper nouns — strip city names, venue names, instructor names, brands.
-- NO times, dates, or prices.
-- NO editorial commentary ("nice way to...", "easygoing vibe", "low-key", "genuinely").
-- Focus on visual/sensory: mood, objects, light, color words, energy, scale.
-- Think album cover or movie poster, NOT a literal scene.
-- 2-3 visual anchors max. Be evocative, not literal.
+Your output will be wrapped in a permutation of 5 abstract design styles (Bauhaus / Matisse cut-paper / linocut / risograph / art deco / sumi-e / etc.) and submitted to Midjourney. So your subject needs to play nicely with those styles — think gallery-grade still life, atmospheric landscape, and material-rich vignette.
 
-EXAMPLES:
-- "Tonight in Los Altos: 20 min guided meditation at Woodland Library, 7 PM, free" → stillness at dusk, candlelight on still water, slow breath
-- "Jazz trio at Cafe Stritch tonight 7pm $20 cover" → smoky upright bass, brushed cymbals, dim cabaret light
-- "Friday in the South Bay: pancakes in Saratoga, hike Fremont Older, dinner in Campbell" → stacked breakfast plates, golden ridgelines, late dinner glow
-- "New ramen spot now open in Mountain View — Sunday opening" → steaming bowl, glossy noodles, neon storefront at dusk
+═══ PRINCIPLES ═══
 
-Return ONLY the subject phrase. No quotes, no preamble, no trailing period.`;
+1. STRIP every proper noun. No city names, no venue names, no instructor or performer or team or brand names. Strip all times, dates, prices, RSVP details. Strip editorial filler ("nice way to land into the week", "low-key", "easygoing vibe", "genuinely"). What's left is the EXPERIENCE itself.
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 80,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  });
+2. Translate the experience into 3-4 SENSORY ANCHORS. For each anchor, ask: what would I SEE, what's the LIGHT like, what MATERIALS or TEXTURES are in the room, what COLORS dominate, what's the MOOD? Each anchor is a short visual fragment — 3-6 words each.
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Claude API error (${res.status}): ${text.slice(0, 200)}`);
-  }
+3. Each fragment is a self-contained still life or atmospheric vignette. UNUSUAL PAIRINGS beat literal description. "candlelight pooling on rice paper" beats "person meditating". "stadium lights bleeding into pink dusk" beats "people watching baseball."
 
-  const data = await res.json();
-  let subject = (data.content?.[0]?.text || "").trim();
-  // Strip quotes/period/preamble noise just in case.
-  subject = subject.replace(/^["'“‘]+|["'”’]+$/g, "").replace(/\.$/, "").trim();
-  if (!subject) throw new Error("Claude returned empty subject");
+4. BIAS toward still life, materials, light, atmosphere, and landscape. AVOID verbs that imply human figures in motion — the final image excludes people. If the event involves people doing something, describe the OBJECTS and LIGHT around the activity instead.
+
+5. Concrete details that imply mood. Not "warmth" — "amber light pooling on brass". Not "energy" — "dust caught in late-afternoon sunbeams". Not "calm" — "the hush of a book closing in soft amber". The mood emerges from specific things.
+
+6. Match the event's visual REGISTER:
+   - meditation / quiet / library → hush, soft amber light, breath, paper, cloth, dimness
+   - music → instruments, smoke, low warm glow, light-as-sound metaphors
+   - food → glossy textures, steam, plates, knife-edges of color, glassware
+   - sports → kinetic granularity, stadium light, paint stripes, leather grain, foam
+   - art / exhibit → gallery light, sculpture form, framed shadows, polished concrete
+   - hike / outdoor → topography, weather, hour-of-day, distant haze, grass
+   - markets / fairs → tables of color, paper bags, awnings, midday glare
+   - kids / family events → primary colors, simple shapes, warm domestic light
+
+7. Total length: 14-26 words across 3-4 fragments. Tight. Each word earns its place.
+
+═══ EXAMPLES (study the bar) ═══
+
+POST: "Tonight in Los Altos: 20 min guided meditation at Woodland Library, 7 PM, free"
+SUBJECT: candlelight pooling on rice paper, a single dropped magnolia petal, the hush of a book closing in soft amber
+
+POST: "Jazz trio tonight at Cafe Stritch, 7pm, \$20 cover. Easygoing vibe + cocktails"
+SUBJECT: brushed cymbals catching low amber, the curve of an upright bass against deep velvet, smoke unfurling toward a dim doorway
+
+POST: "Friday in the South Bay: bagels in Mountain View, hike the Dish, Cantor Arts Center, ramen dinner"
+SUBJECT: steam rising off a cross-cut bagel, golden grass over coastal hills, marble torso turning in slow gallery light, glossy noodles caught in chopstick tension
+
+POST: "Tonight: SJ Giants vs Fresno Grizzlies at Excite Ballpark, first pitch 7pm"
+SUBJECT: stadium lights bleeding into pink dusk, the white seam of a thrown baseball, foam spilling from a paper cup, peanut shells on poured concrete
+
+POST: "Now open: new ramen spot in Mountain View, Sunday opening special"
+SUBJECT: clouded broth in a hand-thrown bowl, neon kanji washed onto rain-slick pavement, glossy noodles caught in chopstick lift
+
+POST: "Free flower drawing workshop at Los Altos Library — beginners welcome"
+SUBJECT: bare graphite lines branching into a daisy, a tin of colored pencils tipped open, dried botanicals pressed under glass, late-morning library light
+
+POST: "Board game night at Milpitas Library, Friday 6pm, free, all ages"
+SUBJECT: scattered wooden meeples in lamplight, the glossy edge of a card mid-shuffle, dice frozen mid-roll on worn felt
+
+POST: "Saturday symphony at Mountain Winery — outdoor amphitheater, 7:30pm"
+SUBJECT: distant stage glow against eucalyptus silhouettes, brass instruments catching the last orange light, vineyard rows fading into purple haze
+
+POST: "Sunday: pop-up plant market at the corner of Castro and Dana, 10-2"
+SUBJECT: terra-cotta lined up on weathered wood, ferns spilling sideways in midday glare, hand-written tags fluttering, paper bags folded at the edge
+
+═══ OUTPUT FORMAT ═══
+
+Return ONLY the subject phrase. Single line. No quotes, no preamble, no markdown, no "Subject:" prefix, no explanation, no trailing period.`;
+
+  const raw = await callClaudeCodeOpus(instructions);
+  let subject = raw.trim();
+  // Strip any preamble noise Opus might add despite instructions.
+  subject = subject.replace(/^```[\w]*\s*|\s*```\s*$/g, "");
+  subject = subject.split("\n").filter((l) => l.trim()).pop() || "";
+  subject = subject.replace(/^(SUBJECT|Subject|subject)[:：]\s*/u, "");
+  subject = subject.replace(/^["'“‘`]+|["'”’`]+$/g, "");
+  subject = subject.replace(/[.。]$/, "");
+  subject = subject.trim();
+  if (!subject) throw new Error("Opus returned empty subject");
   return subject;
 }
 
