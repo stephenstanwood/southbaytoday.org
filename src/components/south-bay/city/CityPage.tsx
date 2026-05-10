@@ -12,7 +12,7 @@ import {
   startMinutes, formatTimeRange, isNotEnded,
   formatAge, formatRelativeDate,
 } from "../../../lib/south-bay/timeHelpers";
-import { nextHolidayWithin, type NamedHoliday } from "../../../lib/south-bay/holidays";
+import { nextHolidayWithin, matchesHolidayTheme, type NamedHoliday } from "../../../lib/south-bay/holidays";
 
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../../data/south-bay/digests.json";
@@ -50,6 +50,8 @@ type UpcomingEvent = {
   source: string;
   kidFriendly: boolean;
   ongoing?: boolean;
+  blurb?: string | null;
+  description?: string | null;
 };
 
 type ForecastDay = {
@@ -182,9 +184,17 @@ export default function CityPage({ cityId, cityName }: Props) {
     return d.toLocaleDateString("en-CA");
   }, []);
   const nextHoliday = useMemo(() => nextHolidayWithin(TODAY_ISO, horizonIso), [horizonIso]);
-  const cityHolidayEventCount = useMemo(() => {
-    if (!nextHoliday) return 0;
-    return allEvents.filter((e) => e.date === nextHoliday.iso && e.city === cityId && !e.ongoing).length;
+  const cityHolidayCounts = useMemo(() => {
+    if (!nextHoliday) return { total: 0, themed: 0 };
+    const onDay = allEvents.filter((e) => e.date === nextHoliday.iso && e.city === cityId && !e.ongoing);
+    let themed = 0;
+    if (nextHoliday.holiday.themeKeywords?.length) {
+      for (const e of onDay) {
+        const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
+        if (matchesHolidayTheme(nextHoliday.holiday, lower)) themed++;
+      }
+    }
+    return { total: onDay.length, themed };
   }, [nextHoliday, allEvents, cityId]);
 
   const TODAY_LABEL = new Date().toLocaleDateString("en-US", {
@@ -224,7 +234,8 @@ export default function CityPage({ cityId, cityName }: Props) {
           iso={nextHoliday.iso}
           cityId={cityId}
           cityName={cityName}
-          eventCount={cityHolidayEventCount}
+          totalCount={cityHolidayCounts.total}
+          themedCount={cityHolidayCounts.themed}
         />
       )}
 
@@ -721,23 +732,30 @@ function CityHolidayBanner({
   iso,
   cityId,
   cityName,
-  eventCount,
+  totalCount,
+  themedCount,
 }: {
   holiday: NamedHoliday;
   iso: string;
   cityId: string;
   cityName: string;
-  eventCount: number;
+  totalCount: number;
+  themedCount: number;
 }) {
   const phrase = dayPhraseFor(iso, TODAY_ISO);
   const isToday = iso === TODAY_ISO;
-  const hasEvents = eventCount > 0;
-  // Deep-link to /events with the city filter set, the day selector preset to
-  // the holiday's date, and the themed-holiday filter active when the holiday
-  // has theme keywords. Resident lands directly on the events that prompted
-  // them to tap the banner — no second-step filtering needed.
-  const themedParam = holiday.themeKeywords?.length ? `&holiday=${encodeURIComponent(holiday.id)}` : "";
+  // Prefer themed pill+link when the holiday has keywords AND themed picks
+  // exist for this city — that's what residents tapping a "Mother's Day"
+  // banner expect. Fall back to the full event count otherwise so the
+  // banner still works for cities/holidays with no themed matches.
+  const showThemed = themedCount > 0 && !!holiday.themeKeywords?.length;
+  const count = showThemed ? themedCount : totalCount;
+  const hasEvents = count > 0;
+  const themedParam = showThemed ? `&holiday=${encodeURIComponent(holiday.id)}` : "";
   const eventsHref = `/events?city=${encodeURIComponent(cityId)}&date=${encodeURIComponent(iso)}${themedParam}`;
+  const pillLabel = showThemed
+    ? `${themedCount} pick${themedCount === 1 ? "" : "s"} in ${cityName}`
+    : `${totalCount} event${totalCount === 1 ? "" : "s"} in ${cityName}`;
 
   return (
     <div
@@ -787,7 +805,7 @@ function CityHolidayBanner({
             textDecoration: "none",
           }}
         >
-          {eventCount} event{eventCount === 1 ? "" : "s"} in {cityName} <span aria-hidden>→</span>
+          {pillLabel} <span aria-hidden>→</span>
         </a>
       )}
     </div>
