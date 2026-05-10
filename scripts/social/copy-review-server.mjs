@@ -1148,6 +1148,8 @@ const HTML = `<!DOCTYPE html>
   .cal-expanded-actions .btn-approve-copy { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
   .cal-expanded-actions .btn-approve-image { background: #2563eb; color: #fff; border-color: #2563eb; }
   .cal-expanded-actions .btn-regen { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+  .cal-expanded-actions .btn-mj { background: #6d28d9; color: #fff; border-color: #6d28d9; }
+  .cal-expanded-actions .btn-mj.copied { background: #059669; border-color: #059669; }
   .cal-edit-area { margin-top: 12px; }
   .cal-edit-input {
     width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
@@ -1713,6 +1715,10 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   }
   // Image gen / regen for all slot types
   html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Gen Image') + '</button>';
+  // Copy a Midjourney permutation prompt for hand-crafting a better image.
+  if (slot.imageUrl) {
+    html += '<button class="btn-mj" onclick="copyMjPrompt(this, \\'' + dateStr + '\\', \\'' + slotType + '\\'); event.stopPropagation();" title="Copy a Midjourney permutation prompt — paste into /imagine to get 5 stylistic variations in one go">\\ud83c\\udfa8 Copy MJ</button>';
+  }
   // Regen plan button for day-plan slots
   if (slotType === 'day-plan') {
     html += '<button class="btn-regen" onclick="if(confirm(\\'Regenerate plan + copy for this date?\\')) calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-plan\\'); event.stopPropagation();">Regen Plan</button>';
@@ -2021,6 +2027,95 @@ async function calUploadImage(dateStr, slotType) {
   } catch (err) {
     alert('Upload failed: ' + err.message);
   }
+}
+
+// ── Midjourney prompt builder ──────────────────────────────────────────
+// Style pool mirrors scripts/social/lib/poster-styles.mjs ABSTRACT_AESTHETICS,
+// rephrased without internal commas so MJ permutation parsing stays clean.
+// Lean abstract, color-forward, occasional monochrome (linocut, sumi-e,
+// scandinavian, cyanotype). Sample 5 fresh per click.
+const MJ_STYLES = [
+  'Bauhaus geometric primary shapes structured grid',
+  'mid-century modern organic curves muted warm palette atomic-era',
+  'paper cut collage layered flat shapes subtle shadows craft feel',
+  'risograph print grainy texture 2-color overprint zine energy',
+  'minimal line art bold color fills large color fields',
+  'isometric flat illustration architectural spatial depth',
+  'art deco travel poster stepped geometry chrome lines rich teal and gold',
+  'linocut block print carved texture visible grain 2-3 inks indie feel',
+  'sumi-e ink wash rice-paper cream broad black brushstrokes single red seal accent',
+  'Scandinavian minimal generous whitespace muted earth tones thin lines',
+  'chromatic aberration glitch RGB channel offsets scanlines digital grain',
+  'terrazzo pattern cream field scattered small stone chips muted accents',
+  'Matisse cut-paper bold organic shapes clean edges joyful flat color',
+  'editorial magazine wide margins single bold accent color sophisticated restraint',
+  'California redwood and fog-gray landscape abstraction stylized hills golden hour',
+  'abstract expressionism gestural brushwork vivid color blocks',
+  'gouache painterly texture muted vintage palette',
+  'Saul Bass film poster bold silhouettes flat shapes stark contrast',
+  'cyanotype blueprint single-tone deep blue ink wash',
+  'WPA mid-century travel poster stylized geometry limited palette',
+  'constructivist poster diagonal composition red black and cream',
+  'folk art naive style hand-drawn whimsical bright colors',
+];
+
+function mjExtractSubject(slot, slotType) {
+  const copy = (slot && slot.copy && (slot.copy.x || slot.copy.bluesky || slot.copy.threads || slot.copy.facebook || slot.copy.instagram || slot.copy.mastodon)) || '';
+  let subject = copy
+    .replace(/https?:\\/\\/\\S+/g, '')
+    .replace(/[@#][\\w.-]+/g, '')
+    .replace(/[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2700}-\\u{27BF}\\u{1F000}-\\u{1F2FF}]/gu, '')
+    .replace(/[\\u200D\\uFE0F]/g, '')
+    .replace(/southbaytoday\\.org/gi, '')
+    .replace(/\\s+/g, ' ')
+    .trim();
+  if (slotType === 'day-plan' && slot && slot.plan && Array.isArray(slot.plan.cards) && slot.plan.cards.length) {
+    const stops = slot.plan.cards.slice(0, 5).map((c) => c && c.name).filter(Boolean).join(', ');
+    if (stops) subject = (subject ? subject + ' — featuring ' : 'a south bay day featuring ') + stops;
+  }
+  if (subject.length > 240) subject = subject.slice(0, 240).replace(/\\s+\\S*$/, '') + '…';
+  return subject || 'a south bay scene';
+}
+
+function mjSampleStyles(n) {
+  const pool = MJ_STYLES.slice();
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n);
+}
+
+function mjBuildPrompt(slot, slotType) {
+  const subject = mjExtractSubject(slot, slotType);
+  const styles = mjSampleStyles(5);
+  return subject + ', {' + styles.join(', ') + '}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands';
+}
+
+async function copyMjPrompt(btn, dateStr, slotType) {
+  const slot = scheduleData && scheduleData.days && scheduleData.days[dateStr] && scheduleData.days[dateStr][slotType];
+  if (!slot) { alert('No slot found for ' + dateStr + ' / ' + slotType); return; }
+  const prompt = mjBuildPrompt(slot, slotType);
+  try {
+    await navigator.clipboard.writeText(prompt);
+  } catch (err) {
+    // Fallback for non-secure contexts
+    const ta = document.createElement('textarea');
+    ta.value = prompt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch {}
+    document.body.removeChild(ta);
+  }
+  const orig = btn.innerHTML;
+  btn.classList.add('copied');
+  btn.innerHTML = '\\u2713 Copied — paste into /imagine';
+  setTimeout(() => {
+    btn.classList.remove('copied');
+    btn.innerHTML = orig;
+  }, 1800);
 }
 
 init();
