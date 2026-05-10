@@ -2325,14 +2325,29 @@ function mapTicketmasterEvent(e) {
 
 // Ticketmaster title-cases ALL-CAPS source strings, leaving artifacts like
 // "Everyone'S A Star" and "Presents: THE Rebel Ragers". Fix the obvious ones
-// without touching titles that are intentionally mostly-uppercase.
+// without touching titles that are intentionally mostly-uppercase. Also
+// strip Mountain Winery's trailing venue-policy parenthetical ("(Children
+// age 3 and older require a ticket)") that gets appended to every concert
+// title and pollutes the display, e.g. "Seal (Children age 3 and older
+// require a ticket)" → "Seal". The URL slug still includes the policy
+// suffix because Ticketmaster builds it from the raw name, which we don't
+// touch here.
 function normalizeTicketmasterTitle(name) {
   if (!name) return name;
-  const letters = name.replace(/[^A-Za-z]/g, "");
-  if (!letters) return name;
+  let working = name;
+  // Strip trailing parenthetical ticket-policy boilerplate. Conservative:
+  // only matches parens containing "ticket" with an age/children/adult cue,
+  // so informative tags like "(Ages 5–10)" or "(Spanish)" are left alone.
+  working = working.replace(
+    /\s*\((?:children?|kids?|adults?|all ages?|ages?)[^)]*?(?:require|need|must|are required)[^)]*?tickets?[^)]*\)\s*$/i,
+    "",
+  );
+  working = working.trim();
+  const letters = working.replace(/[^A-Za-z]/g, "");
+  if (!letters) return working;
   const lowerRatio = letters.replace(/[^a-z]/g, "").length / letters.length;
-  if (lowerRatio < 0.2) return name; // mostly-caps title (BLACKPINK, etc.) — leave alone
-  let out = name.replace(/(\w)'S\b/g, (_, p1) => `${p1}'s`);
+  if (lowerRatio < 0.2) return working; // mostly-caps title (BLACKPINK, etc.) — leave alone
+  let out = working.replace(/(\w)'S\b/g, (_, p1) => `${p1}'s`);
   out = out.replace(/\b(THE|AND|OF|OR|AN|IN|ON|FOR|TO|WITH)\b/g, (m) => m[0] + m.slice(1).toLowerCase());
   return out;
 }
