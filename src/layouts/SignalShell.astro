@@ -2527,12 +2527,15 @@ const {
       .sb-footer {
         max-width: var(--sb-max-width);
         margin: 0 auto;
-        padding: 32px 24px;
+        padding: 22px 24px 18px;
         text-align: center;
         font-size: 11px;
         color: var(--sb-light);
         border-top: 3px double var(--sb-border);
         letter-spacing: 0.02em;
+      }
+      @media (max-width: 560px) {
+        .sb-footer { padding: 18px 16px 14px; }
       }
       .sb-footer a {
         color: var(--sb-muted);

@@ -243,7 +243,7 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
 
       {/* Footer — minimal newsletter signup baked in above the credit line. */}
       <footer className="sb-footer">
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 12 }}>
           <NewsletterSignup variant="minimal" />
         </div>
         a project of <a href="https://stanwood.dev" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Permanent Marker', cursive", textDecoration: "none", color: "inherit" }}>stanwood.dev</a>

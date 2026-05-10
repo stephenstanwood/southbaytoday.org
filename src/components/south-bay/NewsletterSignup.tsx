@@ -67,67 +67,108 @@ export default function NewsletterSignup({
     );
   }
 
-  // ── Minimal: footer treatment. Just an email field + a button + a tiny
-  //    "one email a day" label. No marketing block, no eyebrow.
+  // ── Minimal: footer treatment. Compact but with a real headline so it
+  //    reads as an offer, not a stray field. Stacks on mobile.
   if (isMinimal) {
     return (
-      <form
-        onSubmit={onSubmit}
-        style={{
-          display: "flex",
-          gap: 6,
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          fontFamily: "'Inter', sans-serif",
-        }}
-      >
-        <span style={{ fontSize: 12, color: "#666", fontWeight: 600, marginRight: 4 }}>
-          Start your morning with us ☀️
-        </span>
-        <input
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={status === "submitting"}
-          style={{
-            padding: "5px 10px",
-            border: "1px solid #c8c4bc",
-            borderRadius: 3,
-            fontSize: 12,
-            background: "#fff",
-            color: "#1a1a2e",
-            fontFamily: "inherit",
-            width: 200,
-          }}
-        />
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          style={{
-            padding: "5px 12px",
-            background: "#1a1a2e",
-            color: "#fff",
-            border: "none",
-            borderRadius: 3,
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: 0.4,
-            textTransform: "uppercase",
-            cursor: status === "submitting" ? "wait" : "pointer",
-            opacity: status === "submitting" ? 0.7 : 1,
-            fontFamily: "inherit",
-          }}
-        >
-          {status === "submitting" ? "…" : "Subscribe"}
-        </button>
-        {error && (
-          <span style={{ fontSize: 11, color: "#c0392b", width: "100%", textAlign: "center" }}>{error}</span>
-        )}
-      </form>
+      <>
+        <form onSubmit={onSubmit} className="sbt-nl-min">
+          <div className="sbt-nl-min-text">
+            <div className="sbt-nl-min-headline">Mornings, sorted.</div>
+            <div className="sbt-nl-min-tagline">One email at 6&nbsp;AM — a plan for the day. Free, no spam.</div>
+          </div>
+          <div className="sbt-nl-min-fields">
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={status === "submitting"}
+              className="sbt-nl-min-input"
+            />
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="sbt-nl-min-button"
+            >
+              {status === "submitting" ? "…" : "Subscribe"}
+            </button>
+          </div>
+          {error && <div className="sbt-nl-min-error">{error}</div>}
+        </form>
+        <style>{`
+          .sbt-nl-min {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-family: 'Inter', sans-serif;
+            max-width: 540px;
+            margin: 0 auto;
+          }
+          .sbt-nl-min-text { text-align: left; flex: 0 1 auto; }
+          .sbt-nl-min-headline {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a2e;
+            line-height: 1.1;
+            letter-spacing: -0.3px;
+          }
+          .sbt-nl-min-tagline {
+            font-size: 12px;
+            color: #5b6478;
+            margin-top: 3px;
+            line-height: 1.35;
+          }
+          .sbt-nl-min-fields {
+            display: flex;
+            gap: 6px;
+            flex: 0 1 auto;
+          }
+          .sbt-nl-min-input {
+            padding: 8px 12px;
+            border: 1px solid #c8c4bc;
+            border-radius: 3px;
+            font-size: 13px;
+            background: #fff;
+            color: #1a1a2e;
+            font-family: inherit;
+            width: 200px;
+          }
+          .sbt-nl-min-button {
+            padding: 8px 14px;
+            background: #1a1a2e;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            cursor: ${status === "submitting" ? "wait" : "pointer"};
+            opacity: ${status === "submitting" ? 0.7 : 1};
+            font-family: inherit;
+            white-space: nowrap;
+          }
+          .sbt-nl-min-error {
+            width: 100%;
+            font-size: 11px;
+            color: #c0392b;
+            text-align: center;
+          }
+          @media (max-width: 560px) {
+            .sbt-nl-min { flex-direction: column; gap: 10px; }
+            .sbt-nl-min-text { text-align: center; }
+            .sbt-nl-min-headline { font-size: 20px; }
+            .sbt-nl-min-fields { width: 100%; max-width: 320px; }
+            .sbt-nl-min-input { flex: 1 1 auto; min-width: 0; width: auto; }
+          }
+        `}</style>
+      </>
     );
   }
 
