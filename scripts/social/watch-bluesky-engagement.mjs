@@ -38,9 +38,6 @@ const args = process.argv.slice(2);
 const maxPerRun = parseInt(args.find((a, i) => args[i - 1] === "--max") || "3");
 const dryRun = args.includes("--dry-run");
 
-// Tailscale-accessible review server (override via REVIEW_PORTAL_URL if needed)
-const REVIEW_HOST = process.env.REVIEW_PORTAL_URL || "http://100.117.24.89:3456";
-
 // Hard caps so we don't spam the queue
 const DAILY_DRAFT_CAP = 5;
 const POST_AGE_HOURS = 24;
@@ -69,39 +66,6 @@ function alreadyDrafted(drafts, postUri) {
 function draftsInLast24h(drafts) {
   const cutoff = Date.now() - 24 * 60 * 60 * 1000;
   return drafts.filter((d) => new Date(d.draftedAt).getTime() > cutoff);
-}
-
-async function postToDiscord(draft, account) {
-  const url = process.env.DISCORD_WEBHOOK;
-  if (!url) {
-    console.log("   (no DISCORD_WEBHOOK set — draft saved but no notification sent)");
-    return;
-  }
-
-  const approveUrl = `${REVIEW_HOST}/engagement/approve/${draft.id}`;
-  const rejectUrl = `${REVIEW_HOST}/engagement/reject/${draft.id}`;
-
-  const embed = {
-    title: `Reply candidate: @${draft.parentAuthor}`,
-    description:
-      `**Original:** ${truncate(draft.parentText, 280)}\n\n` +
-      `**Drafted reply:**\n> ${draft.draftText}\n\n` +
-      `**Why:** ${draft.angle || "—"}`,
-    url: draft.sourcePermalink,
-    color: 0x4f46e5,
-    fields: [
-      { name: "✅ Approve", value: `[tap to publish](${approveUrl})`, inline: true },
-      { name: "❌ Reject", value: `[tap to drop](${rejectUrl})`, inline: true },
-    ],
-    footer: { text: account.label || draft.parentAuthor },
-    timestamp: new Date().toISOString(),
-  };
-
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ embeds: [embed] }),
-  }).catch((err) => console.log(`   discord webhook failed: ${err.message}`));
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────
@@ -197,7 +161,6 @@ async function main() {
 
       draftsData.drafts.push(draft);
       saveDrafts(draftsData);
-      await postToDiscord(draft, account);
       surfaced++;
     }
 
