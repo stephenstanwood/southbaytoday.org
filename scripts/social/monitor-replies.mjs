@@ -1126,19 +1126,6 @@ async function blueskyReply(text, rootUri, rootCid, parentUri, parentCid) {
   return true;
 }
 
-// ── Discord notification ─────────────────────────────────────────────────
-
-async function sendDiscord(message) {
-  const res = await fetch(process.env.DISCORD_WEBHOOK, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: message }),
-  });
-  if (!res.ok) {
-    console.log(`   discord webhook failed: ${res.status}`);
-  }
-}
-
 // ── Main ─────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -1438,7 +1425,8 @@ async function main() {
           }
         }
 
-        // Flag actionable factual corrections for follow-up
+        // Flag actionable factual corrections so the action surfaces in
+        // Social Signal (no Discord push — Stephen reviews in the portal).
         if (reply.classified === "factual_simple") {
           const lowerText = reply.text.toLowerCase();
           if (lowerText.includes("cancel") || lowerText.includes("postpone") || lowerText.includes("reschedule")) {
@@ -1448,74 +1436,15 @@ async function main() {
           } else if (lowerText.includes("wrong") || lowerText.includes("incorrect") || lowerText.includes("typo")) {
             reply.action = "verify_info";
           }
-
-          if (reply.action) {
-            const msg =
-              `🔔 **The South Bay Signal — Action Needed**\n` +
-              `Platform: ${reply.platform}\n` +
-              `Post: ${reply.postTitle}\n` +
-              `Author: @${reply.author}\n` +
-              `Reply: "${reply.text.slice(0, 300)}"\n` +
-              `Action: ${reply.action}\n` +
-              `${reply.permalink ? `Link: ${reply.permalink}` : ""}`;
-            if (!dryRun) { await sendDiscord(msg); reply._discordSent = true; }
-            else console.log(`   would DM: ${reply.action} for "${reply.postTitle}"`);
-          }
         }
         break;
       }
 
       case "needs_human": {
         reply.action = "needs_human";
-        const msg =
-          `👤 **The South Bay Signal — Reply Needs Attention**\n` +
-          `Platform: ${reply.platform}\n` +
-          `Post: ${reply.postTitle}\n` +
-          `Author: @${reply.author}\n` +
-          `Reply: "${reply.text.slice(0, 300)}"\n` +
-          `${reply.permalink ? `Link: ${reply.permalink}` : ""}`;
-        if (!dryRun) {
-          await sendDiscord(msg);
-          reply._discordSent = true;
-          console.log(`   [${reply.platform}] escalated @${reply.author}'s reply to Discord`);
-        } else {
-          console.log(`   [${reply.platform}] would escalate @${reply.author}'s reply`);
-        }
         stats.escalated++;
         break;
       }
-    }
-
-    // Universal Discord DM for ALL replies and quotes (skip if already notified above)
-    if (!reply._discordSent && !dryRun) {
-      const isQuote = reply.kind === "quote";
-      const noun = isQuote ? "quote" : "reply";
-      const Noun = isQuote ? "Quote" : "Reply";
-
-      const actionSummary = isQuote
-        ? "—"
-        : reply.classified === "positive_simple"
-          ? reply.liked ? "Auto-liked ✓" : "Positive (no like API)"
-          : reply.classified === "question_simple"
-            ? reply.responded ? `Auto-replied: "${(reply.actionNote || "").slice(0, 120)}"` : "Drafted response"
-            : reply.classified === "factual_simple"
-              ? reply.responded ? `Auto-replied: "${(reply.actionNote || "").slice(0, 120)}"` : "Drafted response"
-              : "—";
-
-      const emoji = isQuote ? "🔁" :
-        reply.classified === "positive_simple" ? "💬" :
-        reply.classified === "question_simple" ? "❓" :
-        reply.classified === "factual_simple" ? "📝" : "💬";
-
-      const msg =
-        `${emoji} **New ${noun} on ${reply.platform}**\n` +
-        `Post: ${reply.postTitle || "(unknown)"}\n` +
-        `Author: @${reply.author}\n` +
-        `${Noun}: "${reply.text.slice(0, 300)}"\n` +
-        `Classification: ${reply.classified}\n` +
-        `Action: ${actionSummary}\n` +
-        `${reply.permalink ? `Link: ${reply.permalink}` : ""}`;
-      await sendDiscord(msg);
     }
 
     await sleep(200);

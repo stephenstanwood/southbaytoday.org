@@ -36,15 +36,6 @@ function loadDrafts() {
 function saveDrafts(d) {
   writeFileSync(DRAFTS_FILE, JSON.stringify(d, null, 2));
 }
-async function notifyDiscord(text) {
-  const url = process.env.DISCORD_WEBHOOK;
-  if (!url) return;
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: text }),
-  }).catch(() => {});
-}
 
 async function main() {
   const data = loadDrafts();
@@ -67,11 +58,12 @@ async function main() {
       draft.status = "published";
       saveDrafts(data); // save after each so partial failures don't lose state
       console.log(`   ✓ replied to @${draft.parentAuthor}: ${result.uri}`);
-      const preview = draft.draftText.length > 100 ? draft.draftText.slice(0, 100) + "…" : draft.draftText;
-      await notifyDiscord(`✅ Replied to @${draft.parentAuthor}: ${preview}`);
     } catch (err) {
       console.error(`   ✗ failed reply to @${draft.parentAuthor}: ${err.message}`);
-      await notifyDiscord(`🔴 Engagement reply FAILED for @${draft.parentAuthor}: ${err.message}`);
+      draft.status = "failed";
+      draft.failedAt = new Date().toISOString();
+      draft.failureReason = err.message;
+      saveDrafts(data);
     }
   }
 }
