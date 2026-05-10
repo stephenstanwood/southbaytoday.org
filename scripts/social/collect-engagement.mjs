@@ -451,7 +451,7 @@ async function fetchXEngagement(tweetId, creds) {
   }
 
   // Replies (search the conversation; uses recent search — free tier limited)
-  // We skip this for now; X's mention-based reply capture lives in monitor-replies.mjs.
+  // We skip this for now (X's recent-search reply endpoint requires a paid tier).
 
   return { counts, bookmarks, likes: [], reposts: [], quotes, replies: [] };
 }

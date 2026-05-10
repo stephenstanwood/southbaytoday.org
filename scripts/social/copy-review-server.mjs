@@ -24,9 +24,7 @@ const PORT = 3456;
 const POST_DIR = "/tmp/sbs-social";
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
 const REVIEW_HISTORY_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-review-history.json");
-const REPLIES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-replies.json");
 const ENGAGEMENT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
-const ENGAGEMENT_DRAFTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "engagement-drafts.json");
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const GENERATE_SCRIPT = join(__dirname, "generate-posts.mjs");
@@ -76,21 +74,6 @@ function saveQueue(queue) {
   const dir = dirname(QUEUE_FILE);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(QUEUE_FILE, JSON.stringify(queue, null, 2) + "\n");
-}
-
-function loadReplies() {
-  if (!existsSync(REPLIES_FILE)) return [];
-  try {
-    return JSON.parse(readFileSync(REPLIES_FILE, "utf8"));
-  } catch {
-    return [];
-  }
-}
-
-function saveReplies(replies) {
-  const dir = dirname(REPLIES_FILE);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  writeFileSync(REPLIES_FILE, JSON.stringify(replies, null, 2) + "\n");
 }
 
 function loadEngagement() {
@@ -1106,123 +1089,6 @@ const HTML = `<!DOCTYPE html>
   }
   .empty h2 { font-size: 20px; margin-bottom: 8px; color: #1a1a1a; }
 
-  /* Replies tab styles */
-  #replies-view {
-    max-width: 640px;
-    width: 100%;
-    display: none;
-  }
-  .reply-card {
-    background: #fff;
-    border: 1px solid #E5E2DB;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    border-left: 4px solid #ccc;
-  }
-  .reply-card.cls-positive_simple { border-left-color: #2c6b4f; }
-  .reply-card.cls-factual, .reply-card.cls-question { border-left-color: #1d9bf0; }
-  .reply-card.cls-needs_human { border-left-color: #e6a817; }
-  .reply-card-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .reply-platform-icon { font-size: 16px; }
-  .reply-author {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .reply-timestamp {
-    font-size: 12px;
-    color: #aaa;
-    margin-left: auto;
-  }
-  .reply-text {
-    font-size: 15px;
-    line-height: 1.5;
-    margin-bottom: 8px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-  .reply-context {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 10px;
-    padding: 6px 10px;
-    background: #faf9f6;
-    border-radius: 4px;
-  }
-  .reply-context strong { color: #555; }
-  .reply-status {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 10px;
-  }
-  .reply-status .check { color: #2c6b4f; }
-  .reply-status .x-mark { color: #c0392b; }
-  .reply-badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .reply-badge.positive_simple { background: #e8f5e9; color: #2c6b4f; }
-  .reply-badge.factual, .reply-badge.question { background: #e3f2fd; color: #1565c0; }
-  .reply-badge.needs_human { background: #fff3e0; color: #e65100; }
-  .reply-badge.unclassified { background: #f5f5f5; color: #888; }
-  .reply-link {
-    font-size: 12px;
-    color: #1d9bf0;
-    text-decoration: none;
-  }
-  .reply-link:hover { text-decoration: underline; }
-  .reply-action-box {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .reply-action-input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #E5E2DB;
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: inherit;
-    background: #fff;
-  }
-  .reply-action-input::placeholder { color: #bbb; }
-  .reply-action-input:focus { outline: none; border-color: #999; }
-  .reply-action-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    background: #1a1a1a;
-    color: #faf9f6;
-    white-space: nowrap;
-  }
-  .reply-action-btn:hover { background: #333; }
-  .reply-action-btn:disabled { background: #ccc; cursor: default; }
-  .reply-saved-note {
-    margin-top: 8px;
-    padding: 6px 10px;
-    background: #f0efec;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #555;
-  }
-  .reply-saved-note strong { color: #1a1a1a; }
-
   /* Calendar View */
   #calendar-view { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
   .cal-day { margin-bottom: 24px; border: 1px solid #E5E2DB; border-radius: 12px; overflow: hidden; }
@@ -1364,19 +1230,7 @@ function updateQueueBadge(size) {
 }
 
 async function init() {
-  // Load calendar immediately since it's the default tab
   loadCalendar();
-
-  // Fetch reply count for tab badge
-  try {
-    const rRes = await fetch('/api/replies');
-    const rData = await rRes.json();
-    repliesData = Array.isArray(rData) ? rData : [];
-    const newCount = repliesData.filter(r => r.classification && !r.responded && !r.actionNote).length;
-    updateTabCounts(0, newCount);
-  } catch {
-    updateTabCounts(0, 0);
-  }
 }
 
 function urlify(text) {
@@ -1570,119 +1424,9 @@ function vote(v) {
   setTimeout(() => { current++; render(); }, v === 'edit' ? 500 : 300);
 }
 
-// --- Replies ---
-
-async function loadReplies() {
-  try {
-    const res = await fetch('/api/replies');
-    const data = await res.json();
-    repliesData = Array.isArray(data) ? data : [];
-  } catch {
-    repliesData = [];
-  }
-  renderReplies();
-}
-
-function renderReplies() {
-  const container = document.getElementById('replies-list');
-  if (!repliesData || repliesData.length === 0) {
-    container.innerHTML = '<div class="empty"><h2>No replies yet</h2><p>Run <code>node scripts/social/monitor-replies.mjs</code> to fetch replies from your social accounts.</p></div>';
-    return;
-  }
-
-  // Sort newest first
-  const sorted = [...repliesData].sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
-
-  let html = '';
-  for (const reply of sorted) {
-    const cls = reply.classification || 'unclassified';
-    const icon = PLATFORM_ICONS[reply.platform] || '';
-    const liked = reply.liked;
-    const responded = reply.responded;
-
-    html += '<div class="reply-card cls-' + cls + '">';
-
-    // Header
-    html += '<div class="reply-card-header">';
-    html += '<span class="reply-platform-icon">' + icon + '</span>';
-    html += '<span class="reply-author">@' + escapeHtml(reply.authorUsername || 'unknown') + '</span>';
-    html += '<span class="reply-badge ' + cls + '">' + cls.replace('_', ' ') + '</span>';
-    html += '<span class="reply-timestamp">' + timeAgo(reply.timestamp) + '</span>';
-    html += '</div>';
-
-    // Reply text
-    html += '<div class="reply-text">' + escapeHtml(reply.text || '') + '</div>';
-
-    // Original post context
-    if (reply.originalPostTitle) {
-      html += '<div class="reply-context">Re: <strong>' + escapeHtml(reply.originalPostTitle) + '</strong></div>';
-    }
-
-    // Status row
-    html += '<div class="reply-status">';
-    html += liked ? '<span class="check">\\u2714 liked</span>' : '<span class="x-mark">\\u2717 not liked</span>';
-    html += responded ? '<span class="check">\\u2714 responded</span>' : '<span class="x-mark">\\u2717 no response</span>';
-    if (reply.permalink) {
-      html += '<a class="reply-link" href="' + escapeHtml(reply.permalink) + '" target="_blank">View on platform \\u2197</a>';
-    }
-    html += '</div>';
-
-    // Saved action note
-    if (reply.actionNote) {
-      html += '<div class="reply-saved-note"><strong>Action:</strong> ' + escapeHtml(reply.actionNote) + '</div>';
-    }
-
-    // Action input
-    html += '<div class="reply-action-box">';
-    html += '<input class="reply-action-input" id="action-' + escapeHtml(reply.id) + '" placeholder="e.g. respond with: Thanks! ..." value="' + escapeHtml(reply.actionNote || '') + '">';
-    html += '<button class="reply-action-btn" onclick="submitAction(\\'' + escapeHtml(reply.id) + '\\')">Save</button>';
-    html += '</div>';
-
-    html += '</div>';
-  }
-  container.innerHTML = html;
-}
-
-async function submitAction(replyId) {
-  const input = document.getElementById('action-' + replyId);
-  if (!input) return;
-  const note = input.value.trim();
-  const btn = input.nextElementSibling;
-  btn.disabled = true;
-  btn.textContent = '...';
-
-  try {
-    const res = await fetch('/api/reply-action', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: replyId, actionNote: note || null }),
-    });
-    const data = await res.json();
-    if (data.ok) {
-      if (data.actionResult) {
-        btn.textContent = '✅ ' + data.actionResult;
-        btn.style.fontSize = '11px';
-        setTimeout(() => { btn.textContent = 'Save'; btn.style.fontSize = ''; btn.disabled = false; }, 4000);
-      } else {
-        btn.textContent = 'Saved';
-        setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
-      }
-      // Update local data
-      const r = repliesData.find(r => r.id === replyId);
-      if (r) r.actionNote = note || null;
-      // Refresh tab count
-      const newCount = repliesData.filter(r => r.classification && !r.responded && !r.actionNote).length;
-      updateTabCounts(posts.length, newCount);
-    }
-  } catch {
-    btn.textContent = 'Error';
-    setTimeout(() => { btn.textContent = 'Save'; btn.disabled = false; }, 1500);
-  }
-}
-
 document.addEventListener('keydown', (e) => {
-  // Don't intercept keys when in replies tab or in an input
-  if (currentTab !== 'review') return;
+  // Don't intercept keys when in an input
+  if (typeof currentTab !== 'undefined' && currentTab !== 'review') return;
   if (document.activeElement === document.getElementById('comment')) {
     if (e.key === 'Escape') document.getElementById('comment').blur();
     return;
@@ -3122,109 +2866,6 @@ const server = createServer((req, res) => {
       }
     });
     return;
-  }
-
-  if (req.method === "GET" && req.url === "/api/replies") {
-    const replies = loadReplies();
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(replies));
-    return;
-  }
-
-  if (req.method === "POST" && req.url === "/api/reply-action") {
-    let body = "";
-    req.on("data", (c) => (body += c));
-    req.on("end", async () => {
-      try {
-        const { id, actionNote } = JSON.parse(body);
-        if (!id) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ ok: false, error: "Missing reply id" }));
-          return;
-        }
-        const replies = loadReplies();
-        const reply = replies.find((r) => r.id === id);
-        if (!reply) {
-          res.writeHead(404, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ ok: false, error: "Reply not found" }));
-          return;
-        }
-        reply.actionNote = actionNote || null;
-        saveReplies(replies);
-        console.log(`\n📝 Action saved for reply ${id}: "${actionNote || "(cleared)"}"`);
-
-        // Process action commands from the note
-        let actionResult = null;
-        if (actionNote) {
-          const context = {
-            title: reply.postTitle || "",
-            source: "",
-            venue: "",
-            city: "",
-            category: "",
-            url: reply.permalink || "",
-          };
-          try {
-            actionResult = await processComment(actionNote, context);
-          } catch (err) {
-            console.error(`  ⚠ Action processing failed:`, err.message);
-          }
-        }
-
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({
-          ok: true,
-          actionResult: actionResult?.summary || null,
-        }));
-      } catch (e) {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ ok: false, error: e.message }));
-      }
-    });
-    return;
-  }
-
-  // ── Engagement (Bluesky reply drafts) — link-based approval from Discord ──
-  const engagementMatch = req.url?.match(/^\/engagement\/(approve|reject)\/([a-f0-9]+)$/);
-  if (req.method === "GET" && engagementMatch) {
-    const [, action, id] = engagementMatch;
-    let data;
-    try {
-      data = JSON.parse(readFileSync(ENGAGEMENT_DRAFTS_FILE, "utf8"));
-    } catch {
-      data = { drafts: [] };
-    }
-    const draft = data.drafts.find((d) => d.id === id);
-
-    const respond = (status, title, body, color = "#4f46e5") => {
-      res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
-      res.end(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>body{font-family:system-ui,-apple-system,sans-serif;background:#fafafa;color:#111;margin:0;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center}h1{color:${color};margin:0 0 0.5rem}p{color:#555;margin:0.25rem 0;max-width:32rem}blockquote{border-left:3px solid #ddd;margin:1rem 0;padding:0.5rem 1rem;color:#333;text-align:left;max-width:32rem;background:#fff;border-radius:4px}small{color:#888}</style><h1>${title}</h1>${body}`);
-    };
-
-    if (!draft) {
-      return respond(404, "Not found", `<p>No engagement draft with id <code>${id}</code>.</p>`, "#b91c1c");
-    }
-
-    if (draft.status === "published") {
-      return respond(200, "Already published", `<p>This reply was already posted.</p><p><a href="${draft.publishedUri ? `https://bsky.app/profile/${draft.parentAuthor}/post/${draft.publishedUri.split("/").pop()}` : "#"}">View on Bluesky</a></p>`);
-    }
-
-    if (action === "approve") {
-      if (draft.status === "rejected") {
-        return respond(409, "Already rejected", `<p>This draft was previously rejected and can't be approved.</p>`, "#b91c1c");
-      }
-      draft.status = "approved";
-      draft.approvedAt = new Date().toISOString();
-      writeFileSync(ENGAGEMENT_DRAFTS_FILE, JSON.stringify(data, null, 2));
-      return respond(200, "Approved ✅", `<p>Will publish on the next cycle (within 5 min).</p><blockquote>${escapeHtml(draft.draftText)}</blockquote><p><small>To @${escapeHtml(draft.parentAuthor)}</small></p>`, "#16a34a");
-    }
-
-    if (action === "reject") {
-      draft.status = "rejected";
-      draft.approvedAt = null;
-      writeFileSync(ENGAGEMENT_DRAFTS_FILE, JSON.stringify(data, null, 2));
-      return respond(200, "Rejected ❌", `<p>Draft dropped.</p><blockquote>${escapeHtml(draft.draftText)}</blockquote>`, "#b91c1c");
-    }
   }
 
   // ── Engagement dashboard ─────────────────────────────────────────────────
