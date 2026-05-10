@@ -412,7 +412,10 @@ export default function SouthBayTodayView(_props: Props) {
   // collisions (two cards inferring the same bucket, leaving another empty)
   // doesn't render as a 5-of-6 grid with a wide trailing card. Prefer empty
   // buckets whose time window covers the orphan's start hour; fall back to
-  // any empty bucket so we never leave a hole.
+  // any empty bucket so we never leave a hole. Absorbed slots get the card's
+  // actual timeBlock as the slot label instead of the bucket name — calling
+  // a 3 PM workshop "LUNCH" is a lie even if the slot is structurally empty.
+  const absorbedBuckets = new Set<Bucket>();
   if (orphanCards.length > 0) {
     const stillOrphaned: DayCard[] = [];
     for (const o of orphanCards) {
@@ -430,6 +433,7 @@ export default function SouthBayTodayView(_props: Props) {
           });
       const chosen = fit ?? empty[0];
       cardsByBucket.set(chosen, o);
+      absorbedBuckets.add(chosen);
     }
     orphanCards.length = 0;
     orphanCards.push(...stillOrphaned);
@@ -530,6 +534,7 @@ export default function SouthBayTodayView(_props: Props) {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const passed = isPastBucket(bucket);
             if (!card) return null;
+            const overrideLabel = absorbedBuckets.has(bucket) ? (card.timeBlock || null) : null;
             return (
               <BucketSlot
                 key={bucket}
@@ -538,6 +543,7 @@ export default function SouthBayTodayView(_props: Props) {
                 accent={accent}
                 passed={passed}
                 animationDelay={i * 0.05}
+                overrideLabel={overrideLabel}
               />
             );
           })}
@@ -860,7 +866,7 @@ interface UnsplashPhoto {
   unsplashUrl: string;
 }
 
-function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoji: string; accent: string; showTimeLabel?: boolean }) {
+function CardInner({ card, emoji, showTimeLabel = false, suppressTime = false }: { card: DayCard; emoji: string; accent: string; showTimeLabel?: boolean; suppressTime?: boolean }) {
   const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
 
   useEffect(() => {
@@ -881,11 +887,17 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
         ? "transparent"
         : "#f5f5f5";
 
-  // Time hint shown beside the category label. For events with a fixed
-  // start, show that. For legacy cards (orphan list), show the timeBlock
-  // clock string. Bucket grid cards leave this off — the slot header
-  // already says which bucket this is.
-  const timeHint = card.eventTime || (showTimeLabel ? card.timeBlock : "");
+  // Time hint shown beside the category label. Events ALWAYS show a time
+  // (defining property of an event); fall back to timeBlock if eventTime is
+  // missing on legacy cards. Non-event cards opt in via showTimeLabel —
+  // bucket grid leaves this off because the slot header already names the
+  // bucket. `suppressTime` short-circuits everything for absorbed-orphan
+  // slots where the slot header itself shows the time.
+  const timeHint = suppressTime
+    ? ""
+    : card.source === "event"
+      ? (card.eventTime || card.timeBlock || "")
+      : (showTimeLabel ? card.timeBlock : "");
 
   return (
     <>
@@ -947,9 +959,13 @@ interface BucketSlotProps {
   accent: string;
   passed: boolean;
   animationDelay: number;
+  /** When set, replaces the bucket name in the slot header. Used when an
+   *  orphan card was absorbed into an empty bucket slot — the bucket name
+   *  ("LUNCH") would lie about a card whose actual time is, say, 3 PM. */
+  overrideLabel?: string | null;
 }
 
-function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlotProps) {
+function BucketSlot({ bucket, card, accent, passed, animationDelay, overrideLabel }: BucketSlotProps) {
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
   return (
@@ -959,16 +975,16 @@ function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlot
     >
       <div className="sbt-bucket-header">
         <span className="sbt-bucket-accent" style={{ background: accent }} />
-        <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
+        <span className="sbt-bucket-label">{overrideLabel || BUCKET_LABELS[bucket]}</span>
         {passed && <span className="sbt-bucket-passed-tag">passed</span>}
       </div>
       {cardUrl ? (
         <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
-          <CardInner card={card} emoji={emoji} accent={accent} />
+          <CardInner card={card} emoji={emoji} accent={accent} suppressTime={!!overrideLabel} />
         </a>
       ) : (
         <div className="sbt-bucket-link">
-          <CardInner card={card} emoji={emoji} accent={accent} />
+          <CardInner card={card} emoji={emoji} accent={accent} suppressTime={!!overrideLabel} />
         </div>
       )}
     </div>
