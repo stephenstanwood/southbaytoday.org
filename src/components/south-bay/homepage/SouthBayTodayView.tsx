@@ -458,7 +458,6 @@ export default function SouthBayTodayView(_props: Props) {
           <div className="sbt-time-display" style={{ fontFamily: "'Inter', sans-serif", fontSize: 48, fontWeight: 900, letterSpacing: -2, color: "#000", lineHeight: 1 }}>{timeDisplay}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 700, color: "#333", lineHeight: 1.2 }}>{headline}</div>
-            {weather && <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#888", lineHeight: 1.2 }}>🌤 {weather}</div>}
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
