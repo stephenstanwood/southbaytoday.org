@@ -867,6 +867,10 @@ function polishDescription(text) {
   // Normalize 1-2 letter all-caps fragments left over from prior step ("EN" preserved if before all-caps)
   // Only rewrites words wedged between mixed-case neighbors — keeps "EN" in "Rock EN Espanol" lowercased.
   t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => w[0] + w.slice(1).toLowerCase());
+  // Reunite known compound brand names broken by the lowercase+uppercase splitter.
+  // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
+  // copy ("Pay Pal Park") survives polishing intact.
+  t = t.replace(/\bPay Pal\b/g, "PayPal");
 
   // Split into sentences and drop boilerplate
   const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
