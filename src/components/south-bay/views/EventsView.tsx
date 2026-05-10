@@ -5,6 +5,7 @@ import {
   type EventCategory,
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
+import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import {
   holidayOn,
   matchesHolidayTheme,
@@ -1369,6 +1370,267 @@ function HolidayPicksPreview({
   );
 }
 
+// ── Weekend picks strip ────────────────────────────────────────────────────
+// Surfaces the AI-curated weekend picks from weekend-picks.json — regenerated
+// nightly with editorial "why" copy that pulls 3–5 standout events for the
+// current Fri–Sun. Renders only when today falls inside the picks window AND
+// the file isn't stale (older than 8 days), so the strip never advertises
+// yesterday's weekend.
+//
+// Image/photoRef live on the upcoming-events.json entries, not the picks file,
+// so we join on id to grab thumbnails when available. Tapping a card opens the
+// event URL (preferred) or jumps the date selector when the URL is missing.
+
+interface WeekendPick {
+  id: string;
+  title: string;
+  date: string;
+  displayDate: string;
+  time: string | null;
+  endTime?: string | null;
+  city: string;
+  venue: string;
+  cost: string;
+  url: string;
+  category: string;
+  why: string;
+}
+
+interface WeekendPicksStripProps {
+  events: UpcomingEvent[];
+  selectedCities: Set<City>;
+  allCities: boolean;
+  onJumpToDate: (iso: string) => void;
+}
+
+function WeekendPicksStrip({
+  events,
+  selectedCities,
+  allCities,
+  onJumpToDate,
+}: WeekendPicksStripProps) {
+  const todayIso = todayPT();
+  const data = weekendPicksJson as {
+    generatedAt?: string;
+    weekendStart: string;
+    weekendEnd: string;
+    weekendLabel: string;
+    picks: WeekendPick[];
+  };
+
+  // Window guard: only show on the curated weekend's Fri–Sun. Mon–Thu the
+  // picks describe a weekend that's already passed.
+  if (todayIso < data.weekendStart || todayIso > data.weekendEnd) return null;
+
+  // Staleness guard: if the generator hasn't run in over a week, hide rather
+  // than show last week's picks.
+  if (data.generatedAt) {
+    const ageDays = (Date.now() - new Date(data.generatedAt).getTime()) / 86_400_000;
+    if (ageDays > 8) return null;
+  }
+
+  const eventById = useMemo(() => {
+    const m = new Map<string, UpcomingEvent>();
+    for (const e of events) m.set(e.id, e);
+    return m;
+  }, [events]);
+
+  const visible = useMemo(() => {
+    const out: { pick: WeekendPick; event?: UpcomingEvent }[] = [];
+    for (const p of data.picks) {
+      if (p.date < todayIso) continue;
+      if (!allCities && !selectedCities.has(p.city as City)) continue;
+      out.push({ pick: p, event: eventById.get(p.id) });
+    }
+    return out.slice(0, 4);
+  }, [data.picks, eventById, allCities, selectedCities, todayIso]);
+
+  if (visible.length < 2) return null;
+
+  return (
+    <div
+      style={{
+        marginBottom: 12,
+        padding: "10px 12px",
+        background: "#fff7ed",
+        border: "1px solid #fed7aa",
+        borderRadius: 8,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 8,
+          marginBottom: 8,
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: "#c2410c",
+        }}
+      >
+        <span aria-hidden style={{ fontSize: 12 }}>✦</span>
+        <span>Our weekend picks · {data.weekendLabel}</span>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 6,
+        }}
+      >
+        {visible.map(({ pick, event }) => {
+          const cityName = CITY_LABELS[pick.city] ?? pick.city;
+          const photo = event ? eventPhotoUrl(event, 120, 120) : null;
+          const dayShort = new Date(pick.date + "T12:00:00").toLocaleDateString(
+            "en-US",
+            { weekday: "short" },
+          );
+          const dayBadge =
+            pick.date === todayIso
+              ? "Today"
+              : pick.date === addDays(todayIso, 1)
+                ? "Tomorrow"
+                : dayShort;
+          const inner = (
+            <>
+              {photo ? (
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    flexShrink: 0,
+                    borderRadius: 6,
+                    background: `url(${photo}) center/cover no-repeat, #fed7aa`,
+                  }}
+                  aria-hidden
+                />
+              ) : (
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    flexShrink: 0,
+                    borderRadius: 6,
+                    background: "#fed7aa",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 20,
+                    color: "#c2410c",
+                  }}
+                  aria-hidden
+                >
+                  ✦
+                </div>
+              )}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontFamily: "var(--sb-serif)",
+                    fontWeight: 700,
+                    fontSize: 13.5,
+                    lineHeight: 1.25,
+                    color: "var(--sb-ink)",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {pick.title}
+                </div>
+                <div
+                  style={{
+                    marginTop: 2,
+                    fontSize: 10.5,
+                    color: "var(--sb-muted)",
+                    fontFamily: "'Space Mono', monospace",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 6,
+                  }}
+                >
+                  <span style={{ color: "#c2410c", fontWeight: 700 }}>{dayBadge}</span>
+                  <span aria-hidden>·</span>
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      maxWidth: 140,
+                    }}
+                  >
+                    {cityName}
+                  </span>
+                  {pick.cost === "free" && (
+                    <>
+                      <span aria-hidden>·</span>
+                      <span style={{ fontWeight: 700, color: "#15803D" }}>FREE</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          );
+          const sharedStyle = {
+            display: "flex",
+            gap: 10,
+            alignItems: "center",
+            padding: "8px 10px",
+            background: "#ffffff",
+            border: "1px solid #fed7aa",
+            borderRadius: 6,
+            textAlign: "left" as const,
+            textDecoration: "none",
+            cursor: "pointer",
+            color: "inherit",
+            fontFamily: "inherit",
+            transition: "border-color 0.12s",
+          };
+          return pick.url ? (
+            <a
+              key={pick.id}
+              href={pick.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={sharedStyle}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#fb923c";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#fed7aa";
+              }}
+              title={pick.why}
+            >
+              {inner}
+            </a>
+          ) : (
+            <button
+              key={pick.id}
+              type="button"
+              onClick={() => onJumpToDate(pick.date)}
+              style={sharedStyle}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#fb923c";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#fed7aa";
+              }}
+              title={pick.why}
+            >
+              {inner}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ── Heritage / observance month banner ─────────────────────────────────────
 // Subtle one-liner acknowledging federally recognized heritage months that
 // matter to large South Bay communities (AANHPI, Hispanic, Jewish, LGBTQ+,
@@ -2024,6 +2286,18 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           if (showTonightOnly) setShowTonightOnly(false);
           setSelectedDate(iso);
           setActiveThemedHolidayId(themedHolidayId ?? null);
+        }}
+      />
+      <WeekendPicksStrip
+        events={upcomingEvents}
+        selectedCities={selectedCities}
+        allCities={allCities}
+        onJumpToDate={(iso) => {
+          if (isSearching) setSearch("");
+          if (showWeekendOnly) setShowWeekendOnly(false);
+          if (showTonightOnly) setShowTonightOnly(false);
+          setSelectedDate(iso);
+          setActiveThemedHolidayId(null);
         }}
       />
       <HeritageMonthBanner
