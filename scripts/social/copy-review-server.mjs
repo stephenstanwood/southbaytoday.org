@@ -2180,7 +2180,10 @@ Return ONLY the subject phrase. No quotes, no preamble, no trailing period.`;
 async function buildMjPromptForSlot(slot, slotType) {
   const subject = await distillMjSubject(slot, slotType);
   const styles = mjSampleStyles(5);
-  return `${subject}, {${styles.join(", ")}}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands`;
+  // Keep --no SHORT and text-only — MJ batch rejects when --no lists body parts
+  // ("hands", "faces") because the content filter reads negatives too. The
+  // abstract style descriptors implicitly exclude people/photographic imagery.
+  return `${subject}, {${styles.join(", ")}}, abstract composition, no people --ar 4:5 --no text, watermark, signature, logo`;
 }
 
 const server = createServer((req, res) => {
