@@ -25,6 +25,7 @@ import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import laneClosuresJson from "../../../data/south-bay/lane-closures.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
+import airQualityJson from "../../../data/south-bay/air-quality.json";
 import { TECH_COMPANIES, CATEGORY_LABELS, type TechTrend } from "../../../data/south-bay/tech-companies";
 import {
   DEV_PROJECTS,
@@ -226,6 +227,9 @@ export default function CityPage({ cityId, cityName }: Props) {
           eventCount={cityHolidayEventCount}
         />
       )}
+
+      {/* ═══ CONDITIONS ═══ */}
+      <CityConditions cityId={cityId} forecast={forecast} />
 
       {/* ═══ YOUR DAY ═══ */}
       <CityDayPlan cityId={cityId as City} cityName={cityName} />
@@ -535,6 +539,161 @@ export default function CityPage({ cityId, cityName }: Props) {
           </a>
         )}
       </div>
+    </div>
+  );
+}
+
+// ── City Conditions ──
+// 5-day forecast strip (re-uses /api/weather data already fetched in
+// CityPage) + AQI chip pulled from air-quality.json. Glanceable
+// "should-I-go-outside" info — coat, sunscreen, mask, run-or-not — that
+// every other panel on this page assumes you've already decided on.
+
+type AirQualityCityRow = {
+  id: string;
+  name: string;
+  aqi: number;
+  level: string;
+  label: string;
+  color: string;
+  textColor: string;
+  primaryPollutant: string;
+  pm25: number;
+  pm10: number;
+  ozone: number;
+  recommendation: string;
+};
+
+const CONDITIONS_DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function conditionsTempColor(t: number): string {
+  if (t >= 95) return "#C2290A";
+  if (t >= 85) return "#E8531D";
+  if (t >= 75) return "#D97706";
+  if (t >= 65) return "#4D7C0F";
+  if (t >= 55) return "#0284C7";
+  return "#4F46E5";
+}
+
+function CityConditions({
+  cityId,
+  forecast,
+}: {
+  cityId: string;
+  forecast: ForecastDay[] | null;
+}) {
+  const aqiData = ((airQualityJson as any).cities ?? []).find(
+    (c: AirQualityCityRow) => c.id === cityId,
+  ) as AirQualityCityRow | undefined;
+
+  if ((!forecast || forecast.length === 0) && !aqiData) return null;
+
+  // Tone down the eye-searing yellow on Moderate AQI; otherwise use the
+  // category color at low alpha.
+  const aqiBg = aqiData
+    ? aqiData.label === "Good"
+      ? "#D1FAE5"
+      : aqiData.label === "Moderate"
+      ? "#FEF9C3"
+      : aqiData.color + "22"
+    : "transparent";
+  const aqiText = aqiData
+    ? aqiData.label === "Good"
+      ? "#065F46"
+      : aqiData.label === "Moderate"
+      ? "#78350F"
+      : aqiData.textColor
+    : "var(--sb-ink)";
+  const aqiAccent = aqiData
+    ? aqiData.color === "#FFFF00"
+      ? "#F59E0B"
+      : aqiData.color
+    : "var(--sb-border)";
+
+  return (
+    <div style={{ marginBottom: 24 }}>
+      {forecast && forecast.length > 0 && (
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${forecast.length}, 1fr)`,
+          border: "1.5px solid var(--sb-border-light)",
+          borderRadius: 8,
+          overflow: "hidden",
+          background: "#fff",
+          marginBottom: aqiData ? 10 : 0,
+        }}>
+          {forecast.map((day, i) => {
+            const isToday = day.date === TODAY_ISO;
+            const d = new Date(day.date + "T12:00:00");
+            const label = isToday ? "TODAY" : CONDITIONS_DAY_LABELS[d.getDay()].toUpperCase();
+            const showRain = day.rainPct >= 20 || /🌦|🌧|⛈|🌨/.test(day.emoji);
+            const color = conditionsTempColor(day.high);
+            return (
+              <div key={day.date} style={{
+                padding: "10px 4px 8px",
+                textAlign: "center",
+                borderRight: i < forecast.length - 1 ? "1px solid var(--sb-border-light)" : "none",
+                background: isToday ? `${color}10` : "transparent",
+                borderTop: isToday ? `3px solid ${color}` : "3px solid transparent",
+              }}>
+                <div style={{
+                  fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+                  letterSpacing: "0.08em",
+                  color: isToday ? color : "var(--sb-muted)",
+                  marginBottom: 4,
+                }}>{label}</div>
+                <div style={{ fontSize: 20, lineHeight: 1, marginBottom: 4 }}>{day.emoji}</div>
+                <div style={{
+                  fontSize: isToday ? 26 : 22, fontWeight: 800, lineHeight: 1, color,
+                  fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em",
+                  marginBottom: 2,
+                }}>{day.high}°</div>
+                <div style={{ fontSize: 10, color: "var(--sb-muted)", fontVariantNumeric: "tabular-nums" }}>{day.low}°</div>
+                {showRain && (
+                  <div style={{
+                    fontSize: 9, color: "#0284C7", fontWeight: 700,
+                    marginTop: 2, fontVariantNumeric: "tabular-nums",
+                    fontFamily: "'Space Mono', monospace",
+                  }}>💧{day.rainPct}%</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {aqiData && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+          padding: "8px 12px",
+          background: "#FAFAF5",
+          border: "1px solid var(--sb-border-light)",
+          borderLeft: `3px solid ${aqiAccent}`,
+          borderRadius: 4,
+          lineHeight: 1.4,
+        }}>
+          <span style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
+            textTransform: "uppercase", color: "var(--sb-muted)",
+          }}>Air Quality</span>
+          <span style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em",
+            color: aqiText, fontVariantNumeric: "tabular-nums",
+          }}>{aqiData.aqi}</span>
+          <span style={{
+            display: "inline-block",
+            padding: "2px 8px", borderRadius: 2,
+            background: aqiBg, color: aqiText,
+            fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace",
+            letterSpacing: "0.05em", textTransform: "uppercase",
+          }}>{aqiData.label}</span>
+          <span style={{ flex: 1, minWidth: 180, color: "var(--sb-muted)", fontSize: 11 }}>
+            {aqiData.recommendation}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
