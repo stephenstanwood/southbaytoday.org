@@ -855,7 +855,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "One of the South Bay's biggest street festivals over Labor Day weekend. 250+ artists, 50+ wineries, and live music on Castro Street.",
+      "One of the South Bay's biggest street festivals, held the weekend after Labor Day. 250+ artists, 50+ wineries, and live music on Castro Street.",
     url: "https://www.mvartwine.com",
     emoji: "🎨",
     featured: true,
