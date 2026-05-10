@@ -13,8 +13,10 @@ import {
   BUCKET_ORDER,
   BUCKET_LABELS,
   BUCKET_PASSED_AFTER_HOUR,
+  BUCKET_TIME_WINDOWS,
   isBucket,
   inferBucketFromTimeBlock,
+  parseClockHour,
 } from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
@@ -405,6 +407,32 @@ export default function SouthBayTodayView(_props: Props) {
     } else {
       orphanCards.push(c);
     }
+  }
+  // Absorb orphans into empty bucket slots so a frozen pre-cutover plan with
+  // collisions (two cards inferring the same bucket, leaving another empty)
+  // doesn't render as a 5-of-6 grid with a wide trailing card. Prefer empty
+  // buckets whose time window covers the orphan's start hour; fall back to
+  // any empty bucket so we never leave a hole.
+  if (orphanCards.length > 0) {
+    const stillOrphaned: DayCard[] = [];
+    for (const o of orphanCards) {
+      const start = parseClockHour((o.timeBlock || "").split(/\s*-\s*/)[0]);
+      const empty = BUCKET_ORDER.filter((b) => !cardsByBucket.has(b));
+      if (empty.length === 0) {
+        stillOrphaned.push(o);
+        continue;
+      }
+      const fit = start === null
+        ? null
+        : empty.find((b) => {
+            const [lo, hi] = BUCKET_TIME_WINDOWS[b];
+            return start >= lo && start <= hi;
+          });
+      const chosen = fit ?? empty[0];
+      cardsByBucket.set(chosen, o);
+    }
+    orphanCards.length = 0;
+    orphanCards.push(...stillOrphaned);
   }
   const isPastBucket = (b: Bucket): boolean => {
     if (planDateISO !== todayPT) return false;
