@@ -74,8 +74,8 @@ export default function NewsletterSignup({
       <>
         <form onSubmit={onSubmit} className="sbt-nl-min">
           <div className="sbt-nl-min-text">
-            <div className="sbt-nl-min-headline">Mornings, sorted.</div>
-            <div className="sbt-nl-min-tagline">One email at 6&nbsp;AM — a plan for the day. Free, no spam.</div>
+            <div className="sbt-nl-min-headline">Start your day with us! ☀️</div>
+            <div className="sbt-nl-min-tagline">One email with everything we know about. No nonsense.</div>
           </div>
           <div className="sbt-nl-min-fields">
             <input
