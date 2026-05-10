@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-09T23:09:19.199Z",
+      "generatedAt": "2026-05-10T11:10:13.775Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 2 – May 9",
+      "dateRange": "May 3 – May 10",
       "stats": {
-        "total": 423,
+        "total": 417,
         "notable": 34,
         "newUnits": 1132,
-        "totalValuation": 272634103
+        "totalValuation": 272616199
       },
       "permits": [
         {
@@ -137,22 +137,34 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-09T23:09:21.475Z",
+      "generatedAt": "2026-05-10T11:10:16.032Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 2 – May 9",
+      "dateRange": "May 3 – May 10",
       "stats": {
-        "total": 118,
+        "total": 120,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01148",
-          "address": "3020 Higgins Pl",
+          "id": "26BLD-01149",
+          "address": "580 Suzanne Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -175,20 +187,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01146",
-          "address": "779 Maplewood Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01149",
-          "address": "580 Suzanne Ct",
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",

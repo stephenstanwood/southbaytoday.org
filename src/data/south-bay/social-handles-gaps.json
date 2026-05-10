@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Venues/orgs we tried to tag but couldn't find in social-handles.json. Auto-populated at gen time. Resolve by adding entries to social-handles.json (this file's entries are then dropped on next run).",
-    "lastUpdated": "2026-05-07"
+    "lastUpdated": "2026-05-09"
   },
   "gaps": {
     "central park library edinger room": {
@@ -293,6 +293,170 @@
         }
       ],
       "lastSeen": "2026-05-07"
+    },
+    "vista and valley view": {
+      "displayName": "Vista and Valley View",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "pings bistro cupertino": {
+      "displayName": "Ping's Bistro Cupertino",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "cupertino",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "movie screening eternity": {
+      "displayName": "Movie screening: Eternity",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "mountain-view",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "palestinian flag raising and cultural day": {
+      "displayName": "Palestinian Flag Raising and Cultural Day",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "basket bagels bakery": {
+      "displayName": "Basket Bagels & Bakery",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "joes trail at cox and de anza": {
+      "displayName": "Joe's Trail at Cox and de Anza",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "stanford stadium": {
+      "displayName": "Stanford Stadium",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "bts world tour arirang in stanford": {
+      "displayName": "BTS World Tour 'Arirang' IN Stanford",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "heritage oaks park": {
+      "displayName": "Heritage Oaks Park",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-altos",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "schaefer park": {
+      "displayName": "Schaefer Park",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "mountain-view",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "castle rock trail camp": {
+      "displayName": "Castle Rock Trail Camp",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
+    },
+    "the galaxy thai spa": {
+      "displayName": "The Galaxy Thai Spa",
+      "firstSeen": "2026-05-09",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "wellness",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-09"
     }
   }
 }
