@@ -2029,53 +2029,75 @@ async function calUploadImage(dateStr, slotType) {
   }
 }
 
-// ── Midjourney prompt builder ──────────────────────────────────────────
+// ── Midjourney prompt copy ──────────────────────────────────────────────
+// Server distills the post copy into a tight image subject via Claude Haiku
+// and returns the full permutation prompt. Client just copies it.
+async function copyMjPrompt(btn, dateStr, slotType) {
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '\\u2026 distilling';
+  try {
+    const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/mj-prompt', { method: 'POST' });
+    const data = await res.json();
+    if (!data.ok || !data.prompt) throw new Error(data.error || 'no prompt returned');
+    try {
+      await navigator.clipboard.writeText(data.prompt);
+    } catch (clipErr) {
+      const ta = document.createElement('textarea');
+      ta.value = data.prompt;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch {}
+      document.body.removeChild(ta);
+    }
+    btn.classList.add('copied');
+    btn.innerHTML = '\\u2713 Copied — paste into /imagine';
+  } catch (err) {
+    btn.innerHTML = '\\u2715 ' + (err && err.message ? err.message : 'failed');
+  }
+  setTimeout(() => {
+    btn.classList.remove('copied');
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }, 2200);
+}
+
+init();
+</script>
+</body>
+</html>`;
+
+// ─── Midjourney prompt helpers (server-side) ─────────────────────────────
 // Style pool mirrors scripts/social/lib/poster-styles.mjs ABSTRACT_AESTHETICS,
 // rephrased without internal commas so MJ permutation parsing stays clean.
-// Lean abstract, color-forward, occasional monochrome (linocut, sumi-e,
-// scandinavian, cyanotype). Sample 5 fresh per click.
+// Lean abstract + color-forward, occasional monochrome (linocut, sumi-e,
+// scandinavian, cyanotype). 5 fresh styles sampled per click.
 const MJ_STYLES = [
-  'Bauhaus geometric primary shapes structured grid',
-  'mid-century modern organic curves muted warm palette atomic-era',
-  'paper cut collage layered flat shapes subtle shadows craft feel',
-  'risograph print grainy texture 2-color overprint zine energy',
-  'minimal line art bold color fills large color fields',
-  'isometric flat illustration architectural spatial depth',
-  'art deco travel poster stepped geometry chrome lines rich teal and gold',
-  'linocut block print carved texture visible grain 2-3 inks indie feel',
-  'sumi-e ink wash rice-paper cream broad black brushstrokes single red seal accent',
-  'Scandinavian minimal generous whitespace muted earth tones thin lines',
-  'chromatic aberration glitch RGB channel offsets scanlines digital grain',
-  'terrazzo pattern cream field scattered small stone chips muted accents',
-  'Matisse cut-paper bold organic shapes clean edges joyful flat color',
-  'editorial magazine wide margins single bold accent color sophisticated restraint',
-  'California redwood and fog-gray landscape abstraction stylized hills golden hour',
-  'abstract expressionism gestural brushwork vivid color blocks',
-  'gouache painterly texture muted vintage palette',
-  'Saul Bass film poster bold silhouettes flat shapes stark contrast',
-  'cyanotype blueprint single-tone deep blue ink wash',
-  'WPA mid-century travel poster stylized geometry limited palette',
-  'constructivist poster diagonal composition red black and cream',
-  'folk art naive style hand-drawn whimsical bright colors',
+  "Bauhaus geometric primary shapes structured grid",
+  "mid-century modern organic curves muted warm palette atomic-era",
+  "paper cut collage layered flat shapes subtle shadows craft feel",
+  "risograph print grainy texture 2-color overprint zine energy",
+  "minimal line art bold color fills large color fields",
+  "isometric flat illustration architectural spatial depth",
+  "art deco travel poster stepped geometry chrome lines rich teal and gold",
+  "linocut block print carved texture visible grain 2-3 inks indie feel",
+  "sumi-e ink wash rice-paper cream broad black brushstrokes single red seal accent",
+  "Scandinavian minimal generous whitespace muted earth tones thin lines",
+  "chromatic aberration glitch RGB channel offsets scanlines digital grain",
+  "terrazzo pattern cream field scattered small stone chips muted accents",
+  "Matisse cut-paper bold organic shapes clean edges joyful flat color",
+  "editorial magazine wide margins single bold accent color sophisticated restraint",
+  "California redwood and fog-gray landscape abstraction stylized hills golden hour",
+  "abstract expressionism gestural brushwork vivid color blocks",
+  "gouache painterly texture muted vintage palette",
+  "Saul Bass film poster bold silhouettes flat shapes stark contrast",
+  "cyanotype blueprint single-tone deep blue ink wash",
+  "WPA mid-century travel poster stylized geometry limited palette",
+  "constructivist poster diagonal composition red black and cream",
+  "folk art naive style hand-drawn whimsical bright colors",
 ];
-
-function mjExtractSubject(slot, slotType) {
-  const copy = (slot && slot.copy && (slot.copy.x || slot.copy.bluesky || slot.copy.threads || slot.copy.facebook || slot.copy.instagram || slot.copy.mastodon)) || '';
-  let subject = copy
-    .replace(/https?:\\/\\/\\S+/g, '')
-    .replace(/[@#][\\w.-]+/g, '')
-    .replace(/[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2700}-\\u{27BF}\\u{1F000}-\\u{1F2FF}]/gu, '')
-    .replace(/[\\u200D\\uFE0F]/g, '')
-    .replace(/southbaytoday\\.org/gi, '')
-    .replace(/\\s+/g, ' ')
-    .trim();
-  if (slotType === 'day-plan' && slot && slot.plan && Array.isArray(slot.plan.cards) && slot.plan.cards.length) {
-    const stops = slot.plan.cards.slice(0, 5).map((c) => c && c.name).filter(Boolean).join(', ');
-    if (stops) subject = (subject ? subject + ' — featuring ' : 'a south bay day featuring ') + stops;
-  }
-  if (subject.length > 240) subject = subject.slice(0, 240).replace(/\\s+\\S*$/, '') + '…';
-  return subject || 'a south bay scene';
-}
 
 function mjSampleStyles(n) {
   const pool = MJ_STYLES.slice();
@@ -2086,42 +2108,80 @@ function mjSampleStyles(n) {
   return pool.slice(0, n);
 }
 
-function mjBuildPrompt(slot, slotType) {
-  const subject = mjExtractSubject(slot, slotType);
-  const styles = mjSampleStyles(5);
-  return subject + ', {' + styles.join(', ') + '}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands';
-}
-
-async function copyMjPrompt(btn, dateStr, slotType) {
-  const slot = scheduleData && scheduleData.days && scheduleData.days[dateStr] && scheduleData.days[dateStr][slotType];
-  if (!slot) { alert('No slot found for ' + dateStr + ' / ' + slotType); return; }
-  const prompt = mjBuildPrompt(slot, slotType);
-  try {
-    await navigator.clipboard.writeText(prompt);
-  } catch (err) {
-    // Fallback for non-secure contexts
-    const ta = document.createElement('textarea');
-    ta.value = prompt;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch {}
-    document.body.removeChild(ta);
+function getAnthropicKey() {
+  let apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    try {
+      const lines = readFileSync(ENV_FILE, "utf8").split("\n");
+      for (const line of lines) {
+        const m = line.match(/^ANTHROPIC_API_KEY=(.*)$/);
+        if (m) apiKey = m[1].replace(/^["']|["']$/g, "");
+      }
+    } catch {}
   }
-  const orig = btn.innerHTML;
-  btn.classList.add('copied');
-  btn.innerHTML = '\\u2713 Copied — paste into /imagine';
-  setTimeout(() => {
-    btn.classList.remove('copied');
-    btn.innerHTML = orig;
-  }, 1800);
+  return apiKey;
 }
 
-init();
-</script>
-</body>
-</html>`;
+async function distillMjSubject(slot, slotType) {
+  const copy = (slot && slot.copy && (slot.copy.x || slot.copy.bluesky || slot.copy.threads || slot.copy.facebook || slot.copy.instagram || slot.copy.mastodon)) || "";
+  const cardLine = (slotType === "day-plan" && Array.isArray(slot?.plan?.cards) && slot.plan.cards.length)
+    ? `\nCARDS IN THE PLAN: ${slot.plan.cards.map((c) => c?.name).filter(Boolean).join(", ")}`
+    : "";
+  const apiKey = getAnthropicKey();
+  if (!apiKey) throw new Error("No ANTHROPIC_API_KEY available");
+
+  const prompt = `You are converting a South Bay social media post into a concise, evocative MIDJOURNEY image SUBJECT.
+
+POST: """${copy}"""${cardLine}
+
+Return a 6-14 word image subject. RULES:
+- NO proper nouns — strip city names, venue names, instructor names, brands.
+- NO times, dates, or prices.
+- NO editorial commentary ("nice way to...", "easygoing vibe", "low-key", "genuinely").
+- Focus on visual/sensory: mood, objects, light, color words, energy, scale.
+- Think album cover or movie poster, NOT a literal scene.
+- 2-3 visual anchors max. Be evocative, not literal.
+
+EXAMPLES:
+- "Tonight in Los Altos: 20 min guided meditation at Woodland Library, 7 PM, free" → stillness at dusk, candlelight on still water, slow breath
+- "Jazz trio at Cafe Stritch tonight 7pm $20 cover" → smoky upright bass, brushed cymbals, dim cabaret light
+- "Friday in the South Bay: pancakes in Saratoga, hike Fremont Older, dinner in Campbell" → stacked breakfast plates, golden ridgelines, late dinner glow
+- "New ramen spot now open in Mountain View — Sunday opening" → steaming bowl, glossy noodles, neon storefront at dusk
+
+Return ONLY the subject phrase. No quotes, no preamble, no trailing period.`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 80,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Claude API error (${res.status}): ${text.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+  let subject = (data.content?.[0]?.text || "").trim();
+  // Strip quotes/period/preamble noise just in case.
+  subject = subject.replace(/^["'“‘]+|["'”’]+$/g, "").replace(/\.$/, "").trim();
+  if (!subject) throw new Error("Claude returned empty subject");
+  return subject;
+}
+
+async function buildMjPromptForSlot(slot, slotType) {
+  const subject = await distillMjSubject(slot, slotType);
+  const styles = mjSampleStyles(5);
+  return `${subject}, {${styles.join(", ")}}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands`;
+}
 
 const server = createServer((req, res) => {
   if (req.method === "GET" && req.url === "/api/posts") {
@@ -2601,6 +2661,33 @@ const server = createServer((req, res) => {
         res.end(JSON.stringify({ ok: false, error: err.message }));
       }
     });
+    return;
+  }
+
+  // MJ prompt: distill copy → permutation block. Returns the full prompt to the
+  // client; client just copies it to clipboard. Fresh styles per call.
+  const mjPromptMatch = req.url?.match(/^\/api\/schedule\/(\d{4}-\d{2}-\d{2})\/(day-plan|tonight-pick|wildcard)\/mj-prompt$/);
+  if (req.method === "POST" && mjPromptMatch) {
+    const [, date, slotType] = mjPromptMatch;
+    (async () => {
+      try {
+        const schedule = loadSchedule();
+        const slot = schedule.days?.[date]?.[slotType];
+        if (!slot) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Slot not found" }));
+          return;
+        }
+        const prompt = await buildMjPromptForSlot(slot, slotType);
+        console.log(`  🎨 MJ prompt distilled for ${date} ${slotType}`);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: true, prompt }));
+      } catch (err) {
+        console.error(`[mj-prompt] failed: ${err.message}`);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: err.message }));
+      }
+    })();
     return;
   }
 
