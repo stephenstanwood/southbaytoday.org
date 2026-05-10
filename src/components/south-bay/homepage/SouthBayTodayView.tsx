@@ -245,7 +245,6 @@ export default function SouthBayTodayView(_props: Props) {
   // cron failed and there's no cached plan, the empty-state UI handles it.
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [timeDisplay, setTimeDisplay] = useState(() => formatTime());
   // Live "now" signal so past cards fall off without a reload. planDateISO
   // is the target date of the plan in view — when it's today we filter
   // cards whose end time has already passed.
@@ -262,14 +261,10 @@ export default function SouthBayTodayView(_props: Props) {
   // or san-jose (center of south bay) as a neutral default.
   const displayCity: City = REGIONAL_ANCHOR;
 
-  // Keep the clock + nowMinutes live. 30 s is plenty — card end times are
-  // minute-resolution, and re-renders bail when the value hasn't changed.
+  // Keep nowMinutes live so past-bucket dimming refreshes without a reload.
+  // 30 s is plenty — bucket cutoffs are hour-resolution.
   useEffect(() => {
-    const tick = () => {
-      setTimeDisplay(formatTime());
-      setNowMinutes(getNowMinutesPT());
-    };
-    const t = setInterval(tick, 30000);
+    const t = setInterval(() => setNowMinutes(getNowMinutesPT()), 30000);
     return () => clearInterval(t);
   }, []);
 
@@ -279,7 +274,6 @@ export default function SouthBayTodayView(_props: Props) {
     const id = ++fetchRef.current;
     setLoading(true);
     setError(null);
-    setTimeDisplay(formatTime());
     // Pick a fresh random anchor, avoiding the last so SHUFFLE always
     // visibly shifts the plan to a different part of the south bay.
     const anchor = pickRandomAnchor(lastAnchorRef.current);
@@ -452,15 +446,16 @@ export default function SouthBayTodayView(_props: Props) {
         <ForecastCard homeCity={displayCity} />
       </div>
 
-      {/* Header */}
-      <div className="sbt-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 0 10px", gap: 12, flexWrap: "wrap" }}>
-        <div className="sbt-time-row" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div className="sbt-time-display" style={{ fontFamily: "'Inter', sans-serif", fontSize: 48, fontWeight: 900, letterSpacing: -2, color: "#000", lineHeight: 1 }}>{timeDisplay}</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 700, color: "#333", lineHeight: 1.2 }}>{headline}</div>
-          </div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      {/* Headline + actions
+       *  Headline is the focal point — it's the actual reason the user is
+       *  here. Actions row sits directly beneath so the buttons read as
+       *  responses to the question, not a stray toolbar. The 48px clock
+       *  display lived here previously but wasn't earning its space (the
+       *  masthead already carries the date, and the user's device shows
+       *  the time). */}
+      <div className="sbt-headline-row">
+        <h1 className="sbt-question">{headline}</h1>
+        <div className="sbt-actions">
           {/* Kids toggle */}
           <div role="group" aria-label="Audience" style={{ display: "flex", borderRadius: 14, border: "2px solid #000", overflow: "hidden" }}>
             <button aria-pressed={!state.kids} onClick={() => { if (state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 900, padding: "4px 10px", border: "none", background: !state.kids ? "#000" : "#fff", color: !state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s", textTransform: "uppercase", letterSpacing: 1 }}>No Kids</button>
@@ -587,6 +582,29 @@ export default function SouthBayTodayView(_props: Props) {
       <RedditPulseTeaser />
 
       <style>{`
+        /* ── Headline row ── */
+        .sbt-headline-row {
+          padding: 22px 0 14px;
+        }
+        .sbt-question {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 32px;
+          font-weight: 800;
+          color: #1a1a2e;
+          letter-spacing: -0.5px;
+          line-height: 1.15;
+          margin: 0 0 14px;
+        }
+        .sbt-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        @media (max-width: 480px) {
+          .sbt-headline-row { padding: 18px 0 12px; }
+          .sbt-question { font-size: 26px; margin-bottom: 12px; }
+        }
         .sbt-shuffle {
           font-family: 'Inter', sans-serif;
           font-size: 11px;
@@ -1195,14 +1213,5 @@ function ShareButton({ cards, city, kids, weather, compact }: { cards: DayCard[]
       {copied ? "Link copied!" : sharing ? "Creating link..." : "Share this plan ↗"}
     </button>
   );
-}
-
-function formatTime(): string {
-  return new Date().toLocaleTimeString("en-US", {
-    timeZone: "America/Los_Angeles",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
 }
 
