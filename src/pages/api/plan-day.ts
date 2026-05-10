@@ -28,6 +28,7 @@ import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
+import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
 import {
   type Bucket,
   BUCKET_ORDER,
@@ -540,7 +541,17 @@ function scoreCandidates(
   kids: boolean,
   prefs?: UserPreferences,
   recent?: RecentPenaltyInput,
+  targetDate?: string,
 ): Candidate[] {
+  // Holiday-themed event boost — when the plan date lands on a named
+  // holiday (Mother's Day, Cinco de Mayo, July 4th, …), events whose
+  // title/blurb/description/venue mention the holiday's theme keywords
+  // get a +30 score so the planner is more likely to surface a Mother's
+  // Day brunch on Mother's Day instead of a generic restaurant.
+  const planIso = targetDate || todayStr();
+  const holiday = holidayOn(planIso);
+  const holidayHasKeywords = !!(holiday && holiday.themeKeywords?.length);
+
   for (const c of candidates) {
     let score = 0;
 
@@ -548,6 +559,10 @@ function scoreCandidates(
       score += 35;
       if (c.eventDate === todayStr()) score += 20;
       if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
+      if (holidayHasKeywords && c.eventDate === planIso) {
+        const haystack = `${c.name} ${c.blurb ?? ""} ${c.description ?? ""} ${c.venue ?? ""}`.toLowerCase();
+        if (matchesHolidayTheme(holiday!, haystack)) score += 30;
+      }
     }
 
     if (c.rating && c.rating >= 4.5) score += 10;
@@ -1555,7 +1570,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
     const recent: RecentPenaltyInput = { byId: recentById, byName: recentByName };
-    const scored = scoreCandidates(allCandidates, weatherContext, kids, preferences, recent);
+    const scored = scoreCandidates(allCandidates, weatherContext, kids, preferences, recent, planDate);
 
     // Extract locked candidates (and report any locked ids that are stale).
     const lockedRaw = scored.filter((c) => lockedSet.has(c.id));
