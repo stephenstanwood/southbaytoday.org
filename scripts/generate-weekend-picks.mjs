@@ -168,10 +168,15 @@ Return ONLY a JSON array of 5 objects, no other text:
           console.warn(`  ⚠️  Stripped non-matching bracket from "${e.title}": ${b.trim()}`);
         }
       }
+      // If Claude bracketed a venue ("Brahms at [Mountain Winery]." or
+      // "Fest at [Downtown Campbell] brings…"), strip the preposition together
+      // with the bracket. Otherwise the leftover "at." or "at brings" reads broken.
+      validatedWhy = validatedWhy.replace(/\s+(?:at|in|on|near|to)\s+\[[^\]]*\]/gi, "");
       validatedWhy = validatedWhy.replace(bracketRe, "");
-      // Strip dangling prepositions left behind when Claude wrote "at [Venue]—..."
-      // and the bracket got removed above. Patterns: " at—", " in—", " on—", etc.
-      validatedWhy = validatedWhy.replace(/\s+(at|in|on|near|to)\s*([—–-])/gi, "$2");
+      // Legacy belt-and-suspenders: catch any dangling " at—" / " at ." that
+      // somehow slipped past the combined strip above (e.g. preposition glued to
+      // a comma instead of a space before the bracket).
+      validatedWhy = validatedWhy.replace(/\s+(at|in|on|near|to)\s*([—–\-,.;!?])/gi, "$2");
       // Collapse accidental word duplications ("venue venue", "the the").
       validatedWhy = validatedWhy.replace(/\b(\w+)\s+\1\b/gi, "$1");
       return {
