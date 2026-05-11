@@ -2223,11 +2223,10 @@ Return ONLY the subject phrase. Single line. No quotes, no preamble, no markdown
 async function buildMjPromptForSlot(slot, slotType) {
   const subject = await distillMjSubject(slot, slotType);
   const styles = mjSampleStyles(5);
-  // Minimal prompt — MJ web's batch (permutation) feature trips on any extra
-  // modifier appended after the closing brace. Keep the structure: subject,
-  // permutation, ar. Nothing else. Abstract style descriptors inherently
-  // exclude photographic imagery so we don't need explicit negatives.
-  return `${subject}, {${styles.join(", ")}} --ar 4:5`;
+  // 5-way permutation requires Standard plan or higher (Basic caps at 4).
+  // --no covers text/watermark cruft + photographic-human elements we don't
+  // want bleeding through the abstract styles.
+  return `${subject}, {${styles.join(", ")}}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands`;
 }
 
 const server = createServer((req, res) => {
