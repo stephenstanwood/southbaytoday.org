@@ -154,6 +154,8 @@ Your job: identify items that a South Bay resident would genuinely find interest
 
 SKIP: routine approvals, consent calendar, minutes approval, procedural items, public comment with no outcome, generic budget discussions, YouTube/Zoom instructions.
 
+SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator Replacement Project") without enough substance to summarize. If you'd need to speculate or hedge ("though specifics weren't provided", "details unclear", "this could affect..."), the right move is to leave the item out, not to write a vague summary. A resident reading hedge text feels like they're reading filler.
+
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
 Meeting data:
@@ -163,12 +165,31 @@ Return a JSON array (may be empty if nothing is interesting). Each item:
 {
   "date": "YYYY-MM-DD",
   "headline": "short plain-English headline (max 12 words, no jargon). NEVER start a number with $; fiscal years like 2026-27 must be written as 'FY 2026-27', not '$2026-27'.",
-  "summary": "1-2 sentences. What happened, why it matters. Written for a resident. NEVER use relative time words (tonight, today, this week) — use date or day name."
+  "summary": "1-2 sentences. What happened, why it matters. Written for a resident. NEVER use relative time words (tonight, today, this week) — use date or day name. NEVER admit you don't know what happened ('though specifics weren't provided', 'details weren't clear', 'without more details') — if you would have to, return [] instead."
 }
 
 Return [] if nothing is genuinely interesting. Quality over quantity.`;
 
   return claudeJson(prompt);
+}
+
+// Filter out items whose summary admits Claude couldn't tell what happened.
+// These slip through occasionally even when the prompt forbids them — a thin
+// agenda title gets a hedge summary like "though specific details weren't
+// provided" or "this could affect X" without any concrete X. Residents read
+// these as filler. Drop them programmatically as a safety net.
+const HEDGE_PATTERNS = [
+  /\b(?:specifics?|details?|content|substance)\s+(?:was|were|wasn'?t|weren'?t)\s+(?:not\s+)?(?:provided|specified|included|made\s+clear|clear|available)\b/i,
+  /\bthough\s+(?:specific\s+)?(?:details?|specifics?)\b/i,
+  /\bwithout\s+(?:more|further|additional)\s+details?\b/i,
+  /\bagenda\s+(?:didn'?t|did\s+not)\s+(?:provide|specify|include|detail)\b/i,
+  /\b(?:exact|specific)\s+(?:nature|content|terms|impact)\s+(?:remains|is)\s+unclear\b/i,
+  /\bdetails?\s+(?:remain|are)\s+unclear\b/i,
+];
+
+function isHedgeSummary(summary) {
+  const s = String(summary || "");
+  return HEDGE_PATTERNS.some((re) => re.test(s));
 }
 
 async function gatherMeetingItems(meetingType) {
@@ -422,12 +443,26 @@ async function main() {
   const allItems = [...councilItems, ...planningItems, ...permitItems, ...devItems];
   console.log(`\n📊 Totals: ${councilItems.length} council, ${planningItems.length} planning, ${permitItems.length} permit, ${devItems.length} development`);
 
+  // Hedge-summary filter: drop items where Claude wrote vague "specifics weren't
+  // provided / details unclear / could affect..." filler. These slip past even
+  // a strict prompt and look like junk on city pages.
+  const hedgeFiltered = allItems.filter((item) => {
+    if (isHedgeSummary(item.summary)) {
+      console.log(`  🪓 dropped hedge summary [${item.cityName}]: ${item.headline}`);
+      return false;
+    }
+    return true;
+  });
+  if (hedgeFiltered.length < allItems.length) {
+    console.log(`  ${allItems.length - hedgeFiltered.length} hedge items dropped`);
+  }
+
   // Sort by date descending
-  allItems.sort((a, b) => b.date.localeCompare(a.date));
+  hedgeFiltered.sort((a, b) => b.date.localeCompare(a.date));
 
   // Simple dedup: if two items from the same city have very similar headlines, keep the first (higher priority source)
   const seen = new Set();
-  const deduped = allItems.filter((item) => {
+  const deduped = hedgeFiltered.filter((item) => {
     const key = `${item.cityId}-${item.headline.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30)}`;
     if (seen.has(key)) return false;
     seen.add(key);
