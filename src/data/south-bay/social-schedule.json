@@ -106,7 +106,7 @@
               "category": "food",
               "city": "sunnyvale",
               "address": "346 W Maude Ave, Sunnyvale, CA 94086, USA",
-              "timeBlock": "7:30 AM - 8:30 AM",
+              "timeBlock": "Breakfast",
               "blurb": "Bagel Street Cafe is the move for an easy, no-fuss morning. Grab a bagel sandwich and a coffee and ease into the day.",
               "why": "Solid breakfast under $15 and they're already well into their morning by the time you show up.",
               "url": "https://www.bagelstreetcafe.net/",
@@ -119,7 +119,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-8/21 | rating=4.4 | cat=food"
+              "rationale": "claude:pool-rank-8/21 | rating=4.4 | cat=food",
+              "bucket": "breakfast"
             },
             {
               "id": "place:ChIJmxktK5G3j4AR3BkTeKlro_c",
@@ -127,7 +128,7 @@
               "category": "outdoor",
               "city": "sunnyvale",
               "address": "293-327 W Caribbean Dr, Sunnyvale, CA 94089, USA",
-              "timeBlock": "8:45 AM - 10:30 AM",
+              "timeBlock": "Morning",
               "blurb": "The Sunnyvale Bay Trail is a flat, scenic walk along the water with big sky views. Great morning light out here on a cool day like this.",
               "why": "Perfect weather to stretch your legs before the temperature climbs.",
               "url": null,
@@ -140,7 +141,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-14/21 | rating=4.5 | cat=outdoor"
+              "rationale": "claude:pool-rank-14/21 | rating=4.5 | cat=outdoor",
+              "bucket": "morning"
             },
             {
               "id": "place:ChIJ7xuuUja2j4ARW-6_MBecO88",
@@ -148,7 +150,7 @@
               "category": "entertainment",
               "city": "sunnyvale",
               "address": "621 Caliente Dr, Sunnyvale, CA 94085, USA",
-              "timeBlock": "11:00 AM - 12:30 PM",
+              "timeBlock": "Afternoon",
               "blurb": "Rene Rose Filipino Kitchen is a hidden gem in Sunnyvale. Try the local favorites and don't sleep on whatever the daily special is.",
               "why": "Under $15 a head for food this good is a straight-up deal.",
               "url": null,
@@ -161,7 +163,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-20/21 | rating=4.6 | cat=entertainment"
+              "rationale": "claude:pool-rank-20/21 | rating=4.6 | cat=entertainment",
+              "bucket": "afternoon"
             },
             {
               "id": "place:ChIJcaM9ed_Kj4AR4lrnkKiYys4",
@@ -169,7 +172,7 @@
               "category": "shopping",
               "city": "san-jose",
               "address": "378 Santana Row #1125, San Jose, CA 95128, USA",
-              "timeBlock": "1:00 PM - 2:30 PM",
+              "timeBlock": "Lunch",
               "blurb": "Mai Do at Santana Row is a beautiful little stationery and goods shop worth browsing slowly. Pick up a card, a notebook, something nice.",
               "why": "It's the kind of shop that makes you realize you need things you didn't know existed.",
               "url": "https://usa.kinokuniya.com/stores-maido/",
@@ -182,7 +185,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-13/21 | rating=4.5 | cat=shopping"
+              "rationale": "claude:pool-rank-13/21 | rating=4.5 | cat=shopping",
+              "bucket": "lunch"
             },
             {
               "id": "place:ChIJh-I4lxp9mYARP-DaZprpX9g",
@@ -190,7 +194,7 @@
               "category": "outdoor",
               "city": "los-altos",
               "address": "400 University Ave, Los Altos, CA 94022, USA",
-              "timeBlock": "3:00 PM - 4:30 PM",
+              "timeBlock": "Dinner",
               "blurb": "Shoup Park in Los Altos is a lovely tree-lined park with a creek and plenty of shaded spots to wander or just sit. Good afternoon energy here.",
               "why": "A Thursday afternoon here feels genuinely peaceful.",
               "url": "https://www.losaltosca.gov/parksrec/page/shoup-park",
@@ -203,7 +207,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-16/21 | rating=4.7 | cat=outdoor"
+              "rationale": "claude:pool-rank-16/21 | rating=4.7 | cat=outdoor",
+              "bucket": "dinner"
             },
             {
               "id": "place:ChIJo8tZglDLj4ARusPJMg7xxLU",
@@ -232,7 +237,7 @@
               "category": "arts",
               "city": "palo-alto",
               "address": "485 Lasuen Mall, Stanford, CA 94305",
-              "timeBlock": "7:30 PM - 8:30 PM",
+              "timeBlock": "Evening",
               "blurb": "Pick up your next favorite book and beat the summer reading slide at the library.",
               "why": "A solid pick to break up the day.",
               "url": "https://events.stanford.edu/event/summer-reading-for-all-ages",
@@ -243,7 +248,8 @@
               "photoRef": null,
               "venue": "Education (Cubberley Bldg)",
               "source": "event",
-              "locked": false
+              "locked": false,
+              "bucket": "evening"
             }
           ],
           "weather": "55°F, high 67°F"
@@ -381,7 +387,7 @@
               "category": "outdoor",
               "city": "mountain-view",
               "address": "Shoreline at Mountain View",
-              "timeBlock": "7:30 AM - 9:00 AM",
+              "timeBlock": "Morning",
               "blurb": "Walk or bike the lakeside loop, watch the windsurfers set up on the water, and soak in the cool morning air before the day heats up.",
               "why": "A quick, easy outdoor stretch right in Mountain View makes for a refreshing start before you head into a full day of culture and food.",
               "url": "https://www.mountainview.gov/depts/cs/shoreline/default.asp",
@@ -394,7 +400,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pad | gap-fill | partial-had-4"
+              "rationale": "claude:pad | gap-fill | partial-had-4",
+              "bucket": "morning"
             },
             {
               "id": "place:ChIJGWxtr0nKj4ARGHKbY2HbPUw",
@@ -402,7 +409,7 @@
               "category": "museum",
               "city": "santa-clara",
               "address": "1505 Warburton Ave, Santa Clara, CA 95050, USA",
-              "timeBlock": "11:00 AM - 1:00 PM",
+              "timeBlock": "Afternoon",
               "blurb": "Wander through the galleries and don't skip the sculpture garden out back. The contemporary rotating exhibits are worth slowing down for.",
               "why": "Free admission and genuinely good art makes this an easy yes on a Friday morning.",
               "url": "http://www.tritonmuseum.org/",
@@ -415,7 +422,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-12/21 | rating=4.5 | cat=museum"
+              "rationale": "claude:pool-rank-12/21 | rating=4.5 | cat=museum",
+              "bucket": "afternoon"
             },
             {
               "id": "place:ChIJMZC2UwI1joAReJaK1vHSqcc",
@@ -423,7 +431,7 @@
               "category": "outdoor",
               "city": "campbell",
               "address": "1250 Dell Ave, Campbell, CA 95008, USA",
-              "timeBlock": "4:00 PM - 5:30 PM",
+              "timeBlock": "Breakfast",
               "blurb": "Walk the creekside trail and shake off the wine a little. The path is flat, shaded in spots, and genuinely relaxing at this pace.",
               "why": "A mellow walk after an afternoon winery is the right move before a big evening.",
               "url": "https://www.losgatosca.gov/907/Los-Gatos-Creek-Trail",
@@ -436,7 +444,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-10/21 | rating=4.7 | cat=outdoor"
+              "rationale": "claude:pool-rank-10/21 | rating=4.7 | cat=outdoor",
+              "bucket": "breakfast"
             },
             {
               "id": "place:ChIJeQ-ozuLKj4ARMQNfslZXl1c",
@@ -444,7 +453,7 @@
               "category": "food",
               "city": "san-jose",
               "address": "1144 N 4th St, San Jose, CA 95112, USA",
-              "timeBlock": "5:30 PM - 7:00 PM",
+              "timeBlock": "Dinner",
               "blurb": "Pull up to the counter and order the brisket plate. Get the mac and cheese on the side. Eat all of it.",
               "why": "This is some of the best BBQ in the South Bay and a Friday dinner here never disappoints.",
               "url": "https://www.smokingpigbbq.net/",
@@ -457,7 +466,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-9/21 | rating=4.3 | cat=food"
+              "rationale": "claude:pool-rank-9/21 | rating=4.3 | cat=food",
+              "bucket": "dinner"
             },
             {
               "id": "event:sjda-1829af9e705d97b6",
@@ -465,7 +475,7 @@
               "category": "arts",
               "city": "san-jose",
               "address": "101 Paseo De San Antonio, San Jose",
-              "timeBlock": "8:30 PM - 10:30 PM",
+              "timeBlock": "Evening",
               "blurb": "Listen to Hans Zimmer film scores by candlelight orchestra.",
               "why": "It's a genuinely cool way to end a Friday night and the atmosphere in that room is something else.",
               "url": "https://sjdowntown.com/event/candlelight-the-best-of-hans-zimmer-2/",
@@ -476,7 +486,8 @@
               "venue": "Hammer Theatre Center",
               "source": "event",
               "locked": false,
-              "rationale": "claude:pool-rank-2/21 | event-today | cat=arts"
+              "rationale": "claude:pool-rank-2/21 | event-today | cat=arts",
+              "bucket": "evening"
             }
           ],
           "weather": "55°F, high 70°F"
@@ -596,7 +607,7 @@
               "category": "food",
               "city": "mountain-view",
               "address": "1712-D Miramonte Ave, Mountain View, CA 94040, USA",
-              "timeBlock": "7:30 AM - 9:00 AM",
+              "timeBlock": "Breakfast",
               "blurb": "Start the morning at House of Bagels in Mountain View. Grab a fresh bagel with your spread of choice and a coffee while the day warms up.",
               "why": "It's a classic South Bay breakfast move and they're open early.",
               "url": "http://www.houseofbagelsonline.com/",
@@ -609,7 +620,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-7/20 | rating=4.6 | cat=food"
+              "rationale": "claude:pool-rank-7/20 | rating=4.6 | cat=food",
+              "bucket": "breakfast"
             },
             {
               "id": "place:curated:the-dish",
@@ -617,7 +629,7 @@
               "category": "outdoor",
               "city": "palo-alto",
               "address": "Stanford Foothills (Stanford Ave trailhead)",
-              "timeBlock": "9:30 AM - 11:30 AM",
+              "timeBlock": "Morning",
               "blurb": "Hit The Dish Trail from the Stanford Ave trailhead. It's a steady climb with sweeping views of the Bay and foothills — worth pushing to the top before the afternoon crowd shows up.",
               "why": "High 68°F is perfect hiking weather and the views from the ridge are genuinely great.",
               "url": "https://dish.stanford.edu",
@@ -630,7 +642,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-10/20 | cat=outdoor"
+              "rationale": "claude:pool-rank-10/20 | cat=outdoor",
+              "bucket": "morning"
             },
             {
               "id": "place:curated:cantor-arts",
@@ -638,7 +651,7 @@
               "category": "museum",
               "city": "palo-alto",
               "address": "Cantor Arts Center, Stanford University",
-              "timeBlock": "12:00 PM - 1:00 PM",
+              "timeBlock": "Afternoon",
               "blurb": "Walk through Cantor Arts Center on Stanford's campus. The Rodin sculptures in the outdoor garden are a highlight, and the rotating galleries inside are always worth a look.",
               "why": "Free world-class art right on campus, and it's a natural next stop after the hike.",
               "url": "https://museum.stanford.edu",
@@ -651,7 +664,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-11/20 | cat=museum"
+              "rationale": "claude:pool-rank-11/20 | cat=museum",
+              "bucket": "afternoon"
             },
             {
               "id": "place:ChIJ361H6jm7j4ARk1vmz_dEqwE",
@@ -659,7 +673,7 @@
               "category": "food",
               "city": "palo-alto",
               "address": "261 University Ave, Palo Alto, CA 94301, USA",
-              "timeBlock": "1:00 PM - 2:30 PM",
+              "timeBlock": "Lunch",
               "blurb": "Head to Oren's Hummus on University Ave for lunch. Order the hummus plate, add a side or two, and eat well without overthinking it.",
               "why": "It's one of the best lunch values on the Peninsula and you'll leave satisfied.",
               "url": "http://orenshummus.com/",
@@ -672,7 +686,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-5/20 | rating=4.4 | cat=food"
+              "rationale": "claude:pool-rank-5/20 | rating=4.4 | cat=food",
+              "bucket": "lunch"
             },
             {
               "id": "place:ChIJbZQsqpDLj4ARHS2lJFcGpVw",
@@ -680,7 +695,7 @@
               "category": "food",
               "city": "santa-clara",
               "address": "1998 Homestead Rd #113, Santa Clara, CA 95050, USA",
-              "timeBlock": "6:00 PM - 8:00 PM",
+              "timeBlock": "Dinner",
               "blurb": "Drive over to Restaurant Gish in Santa Clara for dinner. The menu skews creative and the kitchen takes it seriously, so try the local favorite dishes and let the evening slow down.",
               "why": "It punches above its weight for a Saturday night dinner.",
               "url": "http://restaurantgish.com/",
@@ -693,7 +708,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-8/20 | rating=4.7 | cat=food"
+              "rationale": "claude:pool-rank-8/20 | rating=4.7 | cat=food",
+              "bucket": "dinner"
             },
             {
               "id": "event:stanford-52446998038102",
@@ -701,7 +717,7 @@
               "category": "arts",
               "city": "palo-alto",
               "address": "475 Via Ortega, Stanford, CA 94305",
-              "timeBlock": "8:30 PM - 10:00 PM",
+              "timeBlock": "Evening",
               "blurb": "Browse submissions celebrating the visual beauty of scientific research from campus departments.",
               "why": "A solid pick to break up the day.",
               "url": "https://events.stanford.edu/event/art-of-science-2026",
@@ -712,7 +728,8 @@
               "photoRef": "places/ChIJHa_v0Sq7j4ARPwR4MaRYvuQ/photos/Ab43m-uTEf3YkvNZYCBumiztH9xe0tfy33m02LU7fjMACwZ-xuwivcVBprj3OylHaP1t34tA-nNt1KZ_dltjjY1UgnpejlbAVnBP3R-bVVg_3-hWbV4NvglG9rFr5koEXI-N5xvc4sKDd4bN7JhUPOiReDUmSrVvvoLMPEw-DHQLhcohBXd0JdnkjQTVa6xnwDCBWYWlgQhKzqLKnnX1pFc62VNOpOPZ2Qj75oVLCEuVW8RzuK8TWyf_h4Vjpbhe6S06mHATrXDRx6yUTohITUSBuMHLShsNhYviG1K2sH4HD7lWPCw1Y9vzpWFX4tkcAvuT8vGAxBTEFhxDoqavFyHEI0i8DvxsGF90OXBXQ6XGET80QekCM7bqW2AWvvazltobnGr1mqyRkcfGEQoM19pCkqj0I22SMdRIq75a5eickQI",
               "venue": "Jen-Hsun Huang Building (School of Engineering)",
               "source": "event",
-              "locked": false
+              "locked": false,
+              "bucket": "evening"
             }
           ],
           "weather": "55°F, high 68°F"
@@ -1129,7 +1146,7 @@
               "category": "food",
               "city": "cupertino",
               "address": "10991 N De Anza Blvd, Cupertino, CA 95014, USA",
-              "timeBlock": "7:30 AM - 8:15 AM",
+              "timeBlock": "Breakfast",
               "blurb": "Kick off the morning with a fresh donut (or three) from Manley's. Classic, no-frills, exactly what you want before the day gets going.",
               "why": "Hard to beat a great donut spot on a cool Monday morning.",
               "url": null,
@@ -1142,7 +1159,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-6/20 | rating=4.5 | cat=food"
+              "rationale": "claude:pool-rank-6/20 | rating=4.5 | cat=food",
+              "bucket": "breakfast"
             },
             {
               "id": "place:curated:rancho-san-antonio",
@@ -1150,7 +1168,7 @@
               "category": "outdoor",
               "city": "los-altos",
               "address": "Rancho San Antonio County Park",
-              "timeBlock": "8:30 AM - 10:30 AM",
+              "timeBlock": "Morning",
               "blurb": "Hit the trails while the morning is still crisp. The upper Wildcat Loop gives you oak-lined ridgeline views without being brutal, and the farm along the lower trail is a nice detour on the way back.",
               "why": "55 degrees and sunny is the best possible weather for this hike.",
               "url": "https://www.openspace.org/preserves/rancho-san-antonio",
@@ -1163,7 +1181,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-10/20 | cat=outdoor"
+              "rationale": "claude:pool-rank-10/20 | cat=outdoor",
+              "bucket": "morning"
             },
             {
               "id": "place:ChIJIz10w-6wj4ARxi32a6iumfw",
@@ -1171,7 +1190,7 @@
               "category": "museum",
               "city": "los-altos",
               "address": "13 S San Antonio Rd, Los Altos, CA 94022, USA",
-              "timeBlock": "11:00 AM - 12:30 PM",
+              "timeBlock": "Afternoon",
               "blurb": "Clean up and browse the Los Altos Library. Pick up something for the week, use a reading nook to decompress after the hike, or just wander the stacks.",
               "why": "A genuinely nice library that's worth spending time in, not just passing through.",
               "url": "https://www.sccld.org/",
@@ -1184,7 +1203,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-16/20 | rating=4.7 | cat=museum"
+              "rationale": "claude:pool-rank-16/20 | rating=4.7 | cat=museum",
+              "bucket": "afternoon"
             },
             {
               "id": "place:ChIJ3zWNRNI1joARmLL2pg6PlwU",
@@ -1192,7 +1212,7 @@
               "category": "food",
               "city": "campbell",
               "address": "397 E Campbell Ave, Campbell, CA 95008, USA",
-              "timeBlock": "12:30 PM - 2:00 PM",
+              "timeBlock": "Lunch",
               "blurb": "Lunch at The Good Salad on Campbell Ave. Fresh, solid options that don't leave you dragging through the afternoon.",
               "why": "It's the kind of lunch spot you actually feel good about after.",
               "url": "https://www.thegoodsalad.com/?utm_source=gbp&utm_medium=referral&utm_campaign=ongoing&utm_content=campbell",
@@ -1205,7 +1225,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-9/20 | rating=4.8 | cat=food"
+              "rationale": "claude:pool-rank-9/20 | rating=4.8 | cat=food",
+              "bucket": "lunch"
             },
             {
               "id": "place:ChIJ_fAAwFLKj4ARA_d9bucZF7E",
@@ -1213,7 +1234,7 @@
               "category": "food",
               "city": "santa-clara",
               "address": "1290 Benton St, Santa Clara, CA 95050, USA",
-              "timeBlock": "5:30 PM - 7:00 PM",
+              "timeBlock": "Dinner",
               "blurb": "Dinner at Mio Vicino, a neighborhood Italian spot in Santa Clara. Go for the pasta and don't skip the bread.",
               "why": "Cozy Italian on a Monday night is always a good call.",
               "url": "http://www.miovicino-santaclara.com/",
@@ -1226,7 +1247,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-7/20 | rating=4.5 | cat=food"
+              "rationale": "claude:pool-rank-7/20 | rating=4.5 | cat=food",
+              "bucket": "dinner"
             },
             {
               "id": "event:sccl-69306df2d875af6300cfe170",
@@ -1234,7 +1256,7 @@
               "category": "events",
               "city": "los-altos",
               "address": "",
-              "timeBlock": "7:00 PM - 7:30 PM",
+              "timeBlock": "Evening",
               "blurb": "Practice guided meditation for 20 minutes, then ask questions with instructor Manisha.",
               "why": "A genuinely nice way to close out a full Monday without any effort.",
               "url": "https://sccl.bibliocommons.com/events/69306df2d875af6300cfe170",
@@ -1245,7 +1267,8 @@
               "venue": "Woodland Library",
               "source": "event",
               "locked": false,
-              "rationale": "claude:pool-rank-1/20 | event-today | cat=events"
+              "rationale": "claude:pool-rank-1/20 | event-today | cat=events",
+              "bucket": "evening"
             }
           ],
           "weather": "55°F, high 70°F"
@@ -1323,7 +1346,7 @@
               "category": "food",
               "city": "san-jose",
               "address": "481 E San Carlos St, San Jose, CA 95112, USA",
-              "timeBlock": "7:30 AM - 8:30 AM",
+              "timeBlock": "Breakfast",
               "blurb": "Start the morning at A.M. Craft with a well-pulled espresso drink and something to eat before the day gets going.",
               "why": "It's a great coffee shop and they're already open.",
               "url": "http://am-craft.mailchimpsites.com/",
@@ -1336,7 +1359,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-11/22 | rating=4.8 | cat=food"
+              "rationale": "claude:pool-rank-11/22 | rating=4.8 | cat=food",
+              "bucket": "breakfast"
             },
             {
               "id": "place:ChIJw3tNkknJj4ARkiCOeKImBTY",
@@ -1344,7 +1368,7 @@
               "category": "outdoor",
               "city": "milpitas",
               "address": "Starlite Dr & Lonetree Ct, Milpitas, CA 95035, USA",
-              "timeBlock": "8:45 AM - 10:00 AM",
+              "timeBlock": "Morning",
               "blurb": "Walk a few laps around Pinewood Park and shake off the morning. The cool overcast weather is perfect for a relaxed stroll.",
               "why": "65 degrees and cloudy is basically ideal park weather.",
               "url": "https://www.milpitas.gov/Facilities/Facility/Details/Pinewood-Park-24",
@@ -1357,7 +1381,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-15/22 | rating=4.5 | cat=outdoor"
+              "rationale": "claude:pool-rank-15/22 | rating=4.5 | cat=outdoor",
+              "bucket": "morning"
             },
             {
               "id": "place:ChIJVfDLcoy3j4ARbhvpA1Uz7Ow",
@@ -1365,7 +1390,7 @@
               "category": "food",
               "city": "sunnyvale",
               "address": "860 Old San Francisco Rd, Sunnyvale, CA 94086, USA",
-              "timeBlock": "10:30 AM - 12:00 PM",
+              "timeBlock": "Lunch",
               "blurb": "Desi Pizza House does Indian-fusion pizza that you really don't see anywhere else. Order something with paneer or the tikka topping and thank yourself later.",
               "why": "It's a genuinely fun and different lunch spot worth the stop.",
               "url": "https://desipizzahouseusa.com/",
@@ -1378,7 +1403,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-9/22 | rating=4.7 | cat=food"
+              "rationale": "claude:pool-rank-9/22 | rating=4.7 | cat=food",
+              "bucket": "lunch"
             },
             {
               "id": "place:ChIJR8HI1brMj4ARBnFq5rlvpx4",
@@ -1386,7 +1412,7 @@
               "category": "museum",
               "city": "san-jose",
               "address": "201 S Market St, San Jose, CA 95113, USA",
-              "timeBlock": "12:30 PM - 2:30 PM",
+              "timeBlock": "Afternoon",
               "blurb": "The Tech Interactive has hands-on exhibits that are surprisingly engaging for adults. Try the design lab, the biotech section, or just catch whatever's running in the IMAX theater.",
               "why": "It's one of those places that's way more fun than it sounds on paper.",
               "url": "https://www.thetech.org/",
@@ -1399,7 +1425,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-19/22 | rating=4.4 | cat=museum"
+              "rationale": "claude:pool-rank-19/22 | rating=4.4 | cat=museum",
+              "bucket": "afternoon"
             },
             {
               "id": "event:sjda-fd49140c64830ade",
@@ -1407,7 +1434,7 @@
               "category": "events",
               "city": "san-jose",
               "address": "170 W. Saint John St., San Jose",
-              "timeBlock": "7:00 PM - 8:00 PM",
+              "timeBlock": "Evening",
               "blurb": "Compete in Jeopardy trivia league at Three Sisters Whiskey Bar.",
               "why": "Trivia at a whiskey bar on a Tuesday is exactly the right call.",
               "url": "https://sjdowntown.com/event/jeopardy-bar-league/2026-05-12/",
@@ -1418,7 +1445,8 @@
               "venue": "Three Sisters Whiskey Bar",
               "source": "event",
               "locked": false,
-              "rationale": "claude:pool-rank-2/22 | event-today | cat=events"
+              "rationale": "claude:pool-rank-2/22 | event-today | cat=events",
+              "bucket": "evening"
             },
             {
               "id": "place:ChIJwWiyw1czjoARAD_BQOX4Lgk",
@@ -1426,7 +1454,7 @@
               "category": "food",
               "city": "san-jose",
               "address": "1100 Lincoln Ave #130, San Jose, CA 95125, USA",
-              "timeBlock": "8:15 PM - 9:15 PM",
+              "timeBlock": "Dinner",
               "blurb": "Cap the night at Willow Glen Creamery with a scoop or two. Small, laid-back spot that's worth it.",
               "why": "A solid sweet ending to the evening.",
               "url": null,
@@ -1439,7 +1467,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-10/22 | rating=4.5 | cat=food"
+              "rationale": "claude:pool-rank-10/22 | rating=4.5 | cat=food",
+              "bucket": "dinner"
             }
           ],
           "weather": "65°F, high 66°F, 9% chance of rain"
@@ -1517,7 +1546,7 @@
               "category": "food",
               "city": "san-jose",
               "address": "Bill's Cafe, Willow Glen",
-              "timeBlock": "7:30 AM - 9:00 AM",
+              "timeBlock": "Breakfast",
               "blurb": "Start the morning right with the eggs benedict or a breakfast burrito at this Willow Glen institution. Settle into a booth and take your time.",
               "why": "It's the kind of breakfast spot that actually makes you want to get out of bed.",
               "url": "https://www.billscafe.com",
@@ -1530,7 +1559,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-7/22 | cat=food"
+              "rationale": "claude:pool-rank-7/22 | cat=food",
+              "bucket": "breakfast"
             },
             {
               "id": "place:curated:municipal-rose-garden",
@@ -1538,7 +1568,7 @@
               "category": "outdoor",
               "city": "san-jose",
               "address": "Municipal Rose Garden",
-              "timeBlock": "9:15 AM - 10:30 AM",
+              "timeBlock": "Morning",
               "blurb": "Walk the paths through thousands of roses at peak spring bloom. Bring a coffee to go and just wander — it earns its reputation this time of year.",
               "why": "Mid-May is about as good as it gets for seeing these roses.",
               "url": "https://www.sanjoseca.gov/your-government/departments-offices/parks-recreation-neighborhood-services/parks/rose-garden",
@@ -1551,7 +1581,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-12/22 | cat=outdoor"
+              "rationale": "claude:pool-rank-12/22 | cat=outdoor",
+              "bucket": "morning"
             },
             {
               "id": "event:farmersmarket-0f5111397b42cf8d",
@@ -1559,7 +1590,7 @@
               "category": "food",
               "city": "san-jose",
               "address": "377 Santana Row, San Jose",
-              "timeBlock": "11:00 AM - 3:00 PM",
+              "timeBlock": "Lunch",
               "blurb": "Shop for local produce, artisan goods, and ready-to-eat food weekly.",
               "why": "Good food, open air, and zero commitment — just show up and graze.",
               "url": "https://www.santanarow.com/events",
@@ -1570,7 +1601,8 @@
               "venue": "Santana Row",
               "source": "event",
               "locked": false,
-              "rationale": "claude:pool-rank-2/22 | event-today | cat=food"
+              "rationale": "claude:pool-rank-2/22 | event-today | cat=food",
+              "bucket": "lunch"
             },
             {
               "id": "place:ChIJm9cohMg1joARokYo2Ju7G_Y",
@@ -1578,7 +1610,7 @@
               "category": "food",
               "city": "los-gatos",
               "address": "21 W Main St, Los Gatos, CA 95030, USA",
-              "timeBlock": "3:00 PM - 5:00 PM",
+              "timeBlock": "Dinner",
               "blurb": "Pull up to Gali Vineyards for a glass on the patio when they open at 3. It's a low-key wine spot in downtown Los Gatos worth lingering at.",
               "why": "A Wednesday afternoon with a glass of wine and nowhere to be is exactly the move.",
               "url": "http://galivineyards.com/",
@@ -1591,7 +1623,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-9/22 | rating=4.8 | cat=food"
+              "rationale": "claude:pool-rank-9/22 | rating=4.8 | cat=food",
+              "bucket": "dinner"
             },
             {
               "id": "place:ChIJZQ5MDmbKj4AR6lFAdgsJeOc",
@@ -1599,7 +1632,7 @@
               "category": "outdoor",
               "city": "santa-clara",
               "address": "909 Kiely Blvd, Santa Clara, CA 95051, USA",
-              "timeBlock": "5:00 PM - 5:30 PM",
+              "timeBlock": "Afternoon",
               "blurb": "Walk it off at Central Park in Santa Clara — a quick stretch of legs before the evening kicks in.",
               "why": "Good reset between wine and dinner without overthinking it.",
               "url": "http://santaclaraca.gov/Home/Components/ServiceDirectory/ServiceDirectory/318/2654",
@@ -1612,7 +1645,8 @@
               "venue": null,
               "source": "place",
               "locked": false,
-              "rationale": "claude:pool-rank-15/22 | rating=4.6 | cat=outdoor"
+              "rationale": "claude:pool-rank-15/22 | rating=4.6 | cat=outdoor",
+              "bucket": "afternoon"
             },
             {
               "id": "event:sjda-e0116fd6776d809b",
@@ -1620,7 +1654,7 @@
               "category": "arts",
               "city": "san-jose",
               "address": "88 S. 4th Street, 7th Floor,, San Jose,",
-              "timeBlock": "6:00 PM - 8:30 PM",
+              "timeBlock": "Evening",
               "blurb": "Network with Asian American Pacific Islander professionals and learn about AI innovations in a workshop.",
               "why": "Free networking event with actual substance behind it — not just small talk and name tags.",
               "url": "https://sjdowntown.com/event/pacific-horizons-aapi-mixer-ai-2-0-workshop-may-13/",
@@ -1631,7 +1665,8 @@
               "venue": "Rotary Summit Center (Operated by Scott’s Seafood)",
               "source": "event",
               "locked": false,
-              "rationale": "claude:pool-rank-1/22 | event-today | cat=arts"
+              "rationale": "claude:pool-rank-1/22 | event-today | cat=arts",
+              "bucket": "evening"
             }
           ],
           "weather": "66°F, high 67°F, 7% chance of rain"
