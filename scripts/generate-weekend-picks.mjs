@@ -169,6 +169,11 @@ Return ONLY a JSON array of 5 objects, no other text:
         }
       }
       validatedWhy = validatedWhy.replace(bracketRe, "");
+      // Strip dangling prepositions left behind when Claude wrote "at [Venue]—..."
+      // and the bracket got removed above. Patterns: " at—", " in—", " on—", etc.
+      validatedWhy = validatedWhy.replace(/\s+(at|in|on|near|to)\s*([—–-])/gi, "$2");
+      // Collapse accidental word duplications ("venue venue", "the the").
+      validatedWhy = validatedWhy.replace(/\b(\w+)\s+\1\b/gi, "$1");
       return {
         id: e.id,
         title: e.title,
