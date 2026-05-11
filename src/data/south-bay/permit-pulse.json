@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-10T23:09:11.982Z",
+      "generatedAt": "2026-05-11T11:08:14.887Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 3 – May 10",
+      "dateRange": "May 4 – May 11",
       "stats": {
-        "total": 417,
-        "notable": 34,
-        "newUnits": 1132,
-        "totalValuation": 272616199
+        "total": 439,
+        "notable": 36,
+        "newUnits": 876,
+        "totalValuation": 232559302
       },
       "permits": [
         {
@@ -39,18 +39,6 @@
           "subtype": "Apartment"
         },
         {
-          "id": "2026-114574-MF",
-          "address": "1 Bernard Dr",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "Berryessa Family Apt (Bemp 100%) New Construction",
-          "valuation": 52395660,
-          "units": 260,
-          "issueDate": "2026-05-04",
-          "subtype": "Apartment"
-        },
-        {
           "id": "2026-113354-MF",
           "address": "1135 E Santa Clara St",
           "category": "multi-family-new",
@@ -73,6 +61,18 @@
           "units": 1,
           "issueDate": "2026-05-06",
           "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-136396-RS",
+          "address": "3588 Behler Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "(Bemp100%) 2-Story Detached adu",
+          "valuation": 169531,
+          "units": 1,
+          "issueDate": "2026-05-08",
+          "subtype": "2nd Unit Added"
         },
         {
           "id": "2025-122641-RS",
@@ -111,6 +111,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-122105-RS",
+          "address": "626 N 15th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached adu 798 Sqft",
+          "valuation": 134934,
+          "units": 1,
+          "issueDate": "2026-05-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-127669-RS",
           "address": "1094 Belvedere Ln #2",
           "category": "residential-new",
@@ -121,31 +133,19 @@
           "units": 1,
           "issueDate": "2026-05-07",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-125046-RS",
-          "address": "360 Titleist Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu",
-          "valuation": 117348,
-          "units": 1,
-          "issueDate": "2026-05-06",
-          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-10T23:09:14.443Z",
+      "generatedAt": "2026-05-11T11:08:17.322Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 3 – May 10",
+      "dateRange": "May 4 – May 11",
       "stats": {
-        "total": 120,
-        "notable": 6,
+        "total": 118,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -163,8 +163,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01146",
-          "address": "779 Maplewood Av",
+          "id": "26BLD-01148",
+          "address": "3020 Higgins Pl",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -187,8 +187,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01148",
-          "address": "3020 Higgins Pl",
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -196,18 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01126",
-          "address": "1133 Emerson St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-03",
           "subtype": "Permit Issued"
         },
         {
