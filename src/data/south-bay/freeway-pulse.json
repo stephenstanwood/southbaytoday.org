@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-05T20:09:06.185Z",
+  "generatedAt": "2026-05-11T14:05:16.883Z",
   "source": "Caltrans District 4",
   "sourceUrl": "https://cwwp2.dot.ca.gov/data/d4/cms/cmsStatusD04.json",
   "signs": [
@@ -13,43 +13,43 @@
       "destinations": [
         {
           "to": "I-680",
-          "minutes": 11
+          "minutes": 17
         },
         {
           "to": "Milpitas",
-          "minutes": 19
+          "minutes": 25
         },
         {
           "to": "Palo Alto",
-          "minutes": 31
+          "minutes": 41
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T13:04:39"
+      "updatedAt": "2026-05-11T07:01:38"
     },
     {
       "route": "US-101",
       "direction": "South",
-      "near": "Embarcadero RD",
-      "city": "Palo Alto",
-      "lat": 37.440985,
-      "lng": -122.114982,
+      "near": "Lawrence EXPY",
+      "city": "Sunnyvale",
+      "lat": 37.389027,
+      "lng": -121.989558,
       "destinations": [
         {
           "to": "SJ Airport",
-          "minutes": 12
+          "minutes": 3
         },
         {
-          "to": "Milpitas",
-          "minutes": 15
+          "to": "Hwy 280",
+          "minutes": 8
         },
         {
-          "to": "Los Gatos",
-          "minutes": 19
+          "to": "Hwy 85",
+          "minutes": 17
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T11:52:38"
+      "updatedAt": "2026-05-11T06:55:38"
     },
     {
       "route": "I-880",
@@ -61,19 +61,19 @@
       "destinations": [
         {
           "to": "Hwys 880/280",
-          "minutes": 6
+          "minutes": 5
         },
         {
           "to": "Los Gatos",
-          "minutes": 12
+          "minutes": 11
         },
         {
           "to": "Cupertino",
-          "minutes": 12
+          "minutes": 11
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T11:25:39"
+      "updatedAt": "2026-05-11T06:31:38"
     },
     {
       "route": "I-680",
@@ -85,11 +85,11 @@
       "destinations": [
         {
           "to": "SJ State",
-          "minutes": 11
+          "minutes": 10
         },
         {
           "to": "Cupertino",
-          "minutes": 19
+          "minutes": 20
         },
         {
           "to": "Hwys 101/85",
@@ -97,7 +97,7 @@
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T12:37:38"
+      "updatedAt": "2026-05-11T06:52:39"
     },
     {
       "route": "SR-85",
@@ -109,11 +109,11 @@
       "destinations": [
         {
           "to": "Los Gatos",
-          "minutes": 5
+          "minutes": 4
         },
         {
           "to": "Santa Cruz",
-          "minutes": 26
+          "minutes": 24
         },
         {
           "to": "Morgan Hill",
@@ -121,7 +121,7 @@
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T12:55:38"
+      "updatedAt": "2026-05-11T06:31:37"
     },
     {
       "route": "SR-17",
@@ -133,19 +133,19 @@
       "destinations": [
         {
           "to": "SJ Airport",
-          "minutes": 10
+          "minutes": 8
         },
         {
           "to": "Milpitas",
-          "minutes": 14
+          "minutes": 13
         },
         {
           "to": "Mountain View",
-          "minutes": 22
+          "minutes": 20
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T10:37:38"
+      "updatedAt": "2026-05-11T06:31:38"
     },
     {
       "route": "SR-17",
@@ -169,7 +169,7 @@
         }
       ],
       "alert": null,
-      "updatedAt": "2026-05-05T09:16:39"
+      "updatedAt": "2026-05-11T06:58:39"
     }
   ],
   "stats": {

@@ -147,11 +147,14 @@ async function main() {
   console.log(`  Hiring trends: ${trends.up} growing, ${trends.flat} stable, ${trends.down} reducing`);
   console.log(`  Tech events this week: ${techEvents.length}`);
 
-  // Only include recent funding (last 45 days)
+  // Only include recent funding (last 45 days), sorted newest first so the
+  // prompt's "lead with the freshest" instruction has the latest rounds at top.
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 45);
   const cutoffStr = cutoff.toISOString().split("T")[0];
-  const recentFunded = funded.filter((f) => f.date >= cutoffStr);
+  const recentFunded = funded
+    .filter((f) => f.date >= cutoffStr)
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   // --- Build prompt ---
   const fundedLines = recentFunded.length
@@ -168,18 +171,19 @@ async function main() {
 
   const prompt = `You are the editorial voice of South Bay Signal, a hyperlocal news site covering Silicon Valley's South Bay — the cities between San Jose and Palo Alto.
 
-Write a concise "This Week in South Bay Tech" briefing. It should be 2–3 sentences (50–80 words total). Tone: crisp, grounded, local — like a smart colleague summarizing the past month's highlights over coffee. Focus on what's newsworthy for residents who work in or care about local tech. Mention company names and cities when relevant. No hype or jargon.
+Write a concise "This Week in South Bay Tech" briefing for the week of ${label}. It should be 2–3 sentences (50–80 words total). Tone: crisp, grounded, local — like a smart colleague summarizing what's happening right now over coffee. Focus on what's newsworthy for residents who work in or care about local tech. Mention company names and cities when relevant. No hype or jargon.
 
-CRITICAL — be honest about timing:
-- The funding rounds below span up to 45 days. Do NOT say "this week" or "today" about rounds that are weeks old. Use phrasing like "in the past month", "in April", or just give the company name without a time claim.
+CRITICAL — structure and timing:
+- LEAD with what's happening this week: the tech events below, or the freshest funding (rounds dated within the last 14 days of today). Do not open the briefing with a backward-looking month recap ("April saw…") when there's fresher news available.
+- The funding rounds below span up to 45 days. Older rounds belong in a supporting sentence at the END, not the lede. Never say "this week" or "today" about rounds that are weeks old — say "earlier this spring", "over the past month", or just give the company name with no time claim.
 - Only the events list represents "this week" — funding rounds do not.
 
-Recent funding rounds in the South Bay (last 45 days):
+Recent funding rounds in the South Bay (last 45 days, newest first):
 ${fundedLines}
 
 Hiring pulse: ${trends.up} South Bay companies actively growing headcount, ${trends.flat} stable, ${trends.down} pulling back.
 
-Tech events in the South Bay this week:
+Tech events in the South Bay this week (${label}):
 ${eventLines}
 
 Reply with ONLY the briefing text — no headline, no quotes, no preamble.`;
