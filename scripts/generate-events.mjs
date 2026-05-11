@@ -145,8 +145,17 @@ const INTERNAL_EVENT_PATTERNS = [
   /\borientation\b/i,
   /\bcommencement\b/i,
   /\bconvocation\b/i,
-  /\bfaculty\s+(meeting|senate|assembly)\b/i,
+  /\b(faculty|fac)\s+(meeting|senate|assembly)\b/i,
   /\bstaff\s+(meeting|development|recognition|affairs)\b/i,
+  // Faculty review / personnel admin software training (SCU Provost)
+  /\bfac(?:ulty)?\s*180\b/i,
+  /\binterfolio\b/i,
+  // Graduate Business Career Services (SCU LSB) — career events for enrolled MBAs
+  /\bgbcs\b/i,
+  // Internal department scholarship/awards banquets — scholarship recipients only
+  /\b(accounting|finance|marketing|management)\s+awards?\s+banquet\b/i,
+  // Events explicitly limited to a university's staff / faculty / employees
+  /\bfor\s+(scu|sjsu|stanford)\s+(staff|faculty|employees)\b/i,
   /\bacademic\s+calendar\b/i,
   /\bconferral\s+of\s+degrees?\b/i,
   /\binstruction\s+begins?\b/i,
@@ -615,6 +624,7 @@ function cleanTitle(title) {
     "SMT", "SUV", "TBA", "TBD", "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK",
     "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
     "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
+    "AARP", "NAACP", "NAMI", "SCORE",
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -882,6 +892,7 @@ function polishDescription(text) {
     "USPS", "USPTO", "WIPO", "USDA", "FBI", "CIA", "NSA", "EPA", "FDA",
     "MIT", "UCSF", "UCSC", "UCLA", "UCSD", "UCSB", "UCD",
     "AAPI", "AAJA", "NAHJ", "NABJ", "GLAAD", "ACLU",
+    "AARP", "NAACP", "NAMI", "SCORE",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
@@ -1350,7 +1361,7 @@ async function fetchStanfordEvents() {
 // Filter out student-internal events from university feeds.
 // These are org meetings, advising sessions, career fairs for enrolled students, etc.
 // Public-facing events (exhibits, performances, athletics, lectures) should pass through.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry)\//i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars)\//i;
 const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\|/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
 
@@ -4409,12 +4420,27 @@ function fetchInboundEvents() {
       // street name instead of a raw address. The full address still rides
       // along in the address field.
       const location = e.location ?? "";
+      const hadLeadingNumber = /^\d+(-\d+)?\s+/.test(location);
       let venueName = location.includes(",") ? location.split(",")[0].trim() : location;
       // Strip leading street number and optional "block of" phrasing — newsletter
       // sources sometimes write "200 block of Castro Street (near Dana Street)"
       // which yields a useless "block of Castro Street …" venue otherwise.
       if (/^\d+(-\d+)?\s+(block\s+of\s+)?/i.test(venueName)) {
         venueName = venueName.replace(/^\d+(-\d+)?\s+(block\s+of\s+)?/i, "").trim();
+      }
+      // If the original location was a bare street address (e.g.
+      // "123 Los Gatos Blvd, Los Gatos, CA") with no venue name, the strip
+      // above leaves only a street name — which is not a venue. Drop it so
+      // the UI falls back to the address. Parenthetical context like
+      // "Castro Street (near Dana Street)" survives because the source
+      // intentionally meant a street-level event.
+      if (
+        hadLeadingNumber &&
+        /^[A-Z][\w'.]*(\s+[A-Z][\w'.]*){0,3}\s+(Blvd|Boulevard|Ave|Avenue|St|Street|Rd|Road|Way|Dr|Drive|Ln|Lane|Ct|Court|Pl|Place|Pkwy|Parkway|Cir|Circle|Hwy|Highway|Ter|Terrace)\.?$/i.test(
+          venueName,
+        )
+      ) {
+        venueName = "";
       }
       // Drop bare city/state stubs like "Campbell" or "San Jose, CA" — those aren't venues.
       venueName = cleanVenue(venueName) || null;
