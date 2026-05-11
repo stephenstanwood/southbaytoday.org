@@ -1,44 +1,83 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-11T16:34:47.741Z",
+    "generatedAt": "2026-05-11T19:18:19.875Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 26,
-    "placesMatched": 5,
-    "placeGaps": 21,
-    "eventsExtracted": 2,
+    "placesExtracted": 36,
+    "placesMatched": 8,
+    "placeGaps": 28,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 2,
-    "autoAppendedOpenings": 0
+    "eventGaps": 4,
+    "autoAppendedOpenings": 1
   },
   "placeGaps": [
+    {
+      "name": "Dolores Park",
+      "city": "",
+      "kind": "park",
+      "context": "location of Wasian meetup on May 9th",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
+      ]
+    },
     {
       "name": "OMCA",
       "city": "",
       "kind": "venue",
-      "context": "live music, food, and activities every Friday",
+      "context": "live music and food events every Friday",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t9ng48/blind_professor_seeks_activity_partners/",
-        "https://www.reddit.com/r/bayarea/comments/1t9c54n/snls_latest_star_ashley_padilla_hails_from_the/",
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
         "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
-        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/"
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
+      ]
+    },
+    {
+      "name": "Infineon Sears Point Raceway",
+      "city": "",
+      "kind": "venue",
+      "context": "hosts electric vehicle events periodically",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
+      ]
+    },
+    {
+      "name": "Second Harvest",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "food distribution organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Unique Men's Haircuts",
       "city": "Mountain View",
       "kind": "service",
-      "context": "barber shop near 99 Ranch Market on Grant",
+      "context": "barbershop near 99 Ranch Market on Grant",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
@@ -47,37 +86,50 @@
       "kind": "service",
       "context": "barber near Safeway on N Shoreline Blvd",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ]
+    },
+    {
+      "name": "Quality Men's Haircuts with Doris",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "recommended men's haircut spot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Leo's Beauty Salon",
       "city": "Mountain View",
       "kind": "service",
-      "context": "recommended men's haircut spot on Leong Dr",
+      "context": "men's haircut salon on Leong Dr",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Bella on Villa",
       "city": "Mountain View",
       "kind": "service",
-      "context": "hair salon with Jenny, owner, near Eureka",
+      "context": "salon near Eureka with stylist Jenny",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
@@ -86,115 +138,128 @@
       "kind": "service",
       "context": "barber Frank at Bailey Plaza on Shoreline",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "J&S Salon",
       "city": "Mountain View",
       "kind": "service",
-      "context": "barber Jimmy on Dana, serves diverse hair types",
+      "context": "salon on Dana with barber Jimmy",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
-      "name": "Aruba at Castro",
+      "name": "Aruba",
       "city": "Mountain View",
       "kind": "service",
-      "context": "salon with barber Jackie",
+      "context": "salon on Castro with barber Jackie",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Mensthetics Modern Hair Design",
       "city": "Mountain View",
       "kind": "service",
-      "context": "modern hair design with Franky",
+      "context": "modern hair design salon with Franky",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Ivana's Salon",
       "city": "Mountain View",
       "kind": "service",
-      "context": "men's haircut and styling with online scheduling",
+      "context": "salon with stylist Ivana, online scheduling",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Supercuts",
       "city": "Mountain View",
       "kind": "service",
-      "context": "long-time customer location on Charleston",
+      "context": "haircut shop on Charleston",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
-      ]
-    },
-    {
-      "name": "Old Time Barbershop",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "barber Mireya's new salon, formerly at Dandies",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Hair by Ringo",
       "city": "Mountain View",
       "kind": "service",
-      "context": "barber downtown Mountain View",
+      "context": "downtown barbershop",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ]
+    },
+    {
+      "name": "Ozzy and Efe",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "barber shop on El Camino, Ozzy ex-Dandies",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "State of Mind Slice House",
       "city": "Palo Alto",
       "kind": "restaurant",
-      "context": "NY style pizza go-to in area",
+      "context": "New York style pizza, worth the drive",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ]
+    },
+    {
+      "name": "ASONY",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "New York style pizza, Sunnyvale location closed",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
@@ -203,120 +268,168 @@
       "kind": "restaurant",
       "context": "authentic NY pizza on Lawrence",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ]
+    },
+    {
+      "name": "Maldonado's",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "pizza on Rengstorff",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
       "name": "Slice of Homage",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "New York style pizza highly rated",
+      "context": "New York style and other pizza styles",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
         "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
       ]
     },
     {
-      "name": "Arteagas Food Truck",
-      "city": "San Jose",
+      "name": "Dandies",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "men's barbershop, quality declined with new staff",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ]
+    },
+    {
+      "name": "Arteagas",
+      "city": "",
       "kind": "other",
       "context": "food truck at SJ Earthquakes stadium with super burrito",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
         "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
+        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ]
     },
     {
-      "name": "Korean BBQ Food Truck",
-      "city": "San Jose",
+      "name": "Korean BBQ food truck",
+      "city": "",
       "kind": "other",
       "context": "food truck at SJ Earthquakes stadium",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
         "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
+        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ]
     },
     {
-      "name": "Baked Potato Food Truck",
-      "city": "San Jose",
+      "name": "Baked potato truck",
+      "city": "",
       "kind": "other",
       "context": "food truck at SJ Earthquakes stadium",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
         "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
+        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ]
     },
     {
       "name": "In-N-Out",
-      "city": "San Jose",
+      "city": "",
       "kind": "restaurant",
-      "context": "location next to SJ Earthquakes stadium",
+      "context": "located next to SJ Earthquakes stadium",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
         "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
+        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ]
     },
     {
       "name": "Polenteria",
       "city": "Los Gatos",
       "kind": "restaurant",
-      "context": "fully gluten-free restaurant with brunch/dinner menu",
+      "context": "fully gluten-free restaurant with brunch and dinner menu",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/",
-        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/",
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
         "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9g3ne/iihf_worlds/"
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Campbell Library Grand Reopening",
-      "when": "recent weekend",
-      "city": "Campbell",
-      "context": "library reopening celebration with lion dancers",
+      "name": "Wasian Meetup",
+      "when": "May 9th",
+      "city": "",
+      "context": "community meetup for mixed-race individuals",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t9ng48/blind_professor_seeks_activity_partners/",
-        "https://www.reddit.com/r/bayarea/comments/1t9c54n/snls_latest_star_ashley_padilla_hails_from_the/",
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
         "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
         "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
       ]
     },
     {
-      "name": "Sunnyvale Electrify your life festival",
-      "when": "Saturday",
-      "city": "Sunnyvale",
-      "context": "electric vehicle test drives and home improvement booths",
+      "name": "Campbell Library Grand Reopening",
+      "when": "May 2026",
+      "city": "Campbell",
+      "context": "reopening celebration with lion dancers and family activities",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
         "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/",
-        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/",
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
         "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9g3ne/iihf_worlds/"
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
+      ]
+    },
+    {
+      "name": "Sunnyvale Electrify Your Life Festival",
+      "when": "Saturday 2026",
+      "city": "Sunnyvale",
+      "context": "EV test drives and home improvement booths",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
+      ]
+    },
+    {
+      "name": "Robot Combat Events",
+      "when": "next weekend",
+      "city": "",
+      "context": "competitive robot combat event for making new friends",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
       ]
     }
   ],
@@ -325,61 +438,103 @@
       "name": "Campbell Library",
       "city": "Campbell",
       "kind": "venue",
-      "context": "grand reopening with lion dancers and new design",
+      "context": "grand reopening with lion dancers performance",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1t9ng48/blind_professor_seeks_activity_partners/",
-        "https://www.reddit.com/r/bayarea/comments/1t9c54n/snls_latest_star_ashley_padilla_hails_from_the/",
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
         "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
         "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/",
         "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
+        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ],
       "matchedName": "Campbell Library"
-    },
-    {
-      "name": "Slice of New York",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "New York style pizza highly recommended",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
-      ],
-      "matchedName": "A Slice of New York"
-    },
-    {
-      "name": "New York Pizza",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "New York style pizza on Grant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9jzwo/age_of_contention/",
-        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/"
-      ],
-      "matchedName": "Rosie's New York Pizza"
     },
     {
       "name": "Palo Alto YMCA",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "hosting EV event with free lunch for first 50",
+      "context": "hosting electric vehicle event with free lunch",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/",
-        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/",
-        "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9g3ne/iihf_worlds/"
+        "https://www.reddit.com/r/bayarea/comments/1t9s8s6/a_wasian_white_asian_mix_meetup_was_organized_on/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1t9ssf4/im_trying_to_make_new_friends_out_here_in_the_bay/",
+        "https://www.reddit.com/r/mountainview/comments/1t7lljk/protected_bike_lanes_coming_to_middlefield_road/",
+        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/"
       ],
       "matchedName": "Palo Alto Cafe"
+    },
+    {
+      "name": "Las Palmas Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "community park facing redesign proposal",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ],
+      "matchedName": "Las Palmas Park"
+    },
+    {
+      "name": "Salvation Army",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "food distribution organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ],
+      "matchedName": "The Salvation Army San Jose Temple Corps Community Center"
+    },
+    {
+      "name": "Slice of New York",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "New York style pizza restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ],
+      "matchedName": "A Slice of New York"
+    },
+    {
+      "name": "Slice House",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "NY style pizza in San Antonio center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ],
+      "matchedName": "Slice House Mountain View by Tony Gemignani"
+    },
+    {
+      "name": "New York Pizza",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "pizza restaurant on Grant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1t7jdrj/sj_spotlight_sunnyvale_residents_opposed_to_park/",
+        "https://www.reddit.com/r/SanJose/comments/1ta8is0/dont_go_hungry/",
+        "https://www.reddit.com/r/mountainview/comments/1t8naue/mens_haircut/",
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1t9g0vz/silicon_valley_dsa_2026_primary_voter_guide/"
+      ],
+      "matchedName": "Rosie's New York Pizza"
     },
     {
       "name": "Sweet Diplomacy",
@@ -387,10 +542,10 @@
       "kind": "bakery",
       "context": "gluten-free bakery and dessert shop",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ta3ss4/sunnyvale_electrify_your_life_festival_empty/",
-        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/",
+        "https://www.reddit.com/r/Campbell/comments/1t6wm00/campbell_library_officially_reopens_this_saturday/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1t8pcv9/going_to_the_game_tonight_quick_questions_for_yall/",
         "https://www.reddit.com/r/bayarea/comments/1t9qv1b/how_a_floating_commute_became_the_bay_areas/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1t9g3ne/iihf_worlds/"
+        "https://www.reddit.com/r/bayarea/comments/1t9kl8w/gluten_free_in_the_bay/"
       ],
       "matchedName": "Sweet Diplomacy Gluten-Free"
     }
