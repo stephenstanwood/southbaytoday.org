@@ -407,26 +407,18 @@ Return ONLY a JSON array of objects, no other text.`;
     console.log(`Backfilled to ${pulse.length} (target ${PULSE_TARGET}).`);
   }
 
-  // Reserve pool — extra eligible posts that survived topic-dedupe but didn't
-  // make the cut. Used in Phase 3b to swap out tiles whose Recraft generation
-  // fails so the homepage never ships a blank/gradient tile.
-  const reservePool = [];
-  for (const p of enriched.sort((a, b) => b.createdUtc - a.createdUtc)) {
-    if (seenIds.has(p.id)) continue;
-    if (p.topic && seenTopics.has(p.topic)) continue;
-    if (!POSITIVE_CATEGORIES.has(p.category)) continue;
-    if (p.relevance < 4 || p.ageHours > 168) continue;
-    reservePool.push(p);
-    seenIds.add(p.id);
-    if (p.topic) seenTopics.add(p.topic);
+  if (pulse.length < PULSE_TARGET) {
+    console.warn(
+      `⚠️  editorial selection short: ${pulse.length}/${PULSE_TARGET} — ` +
+      `even with all backfill tiers exhausted, candidate pool was insufficient. ` +
+      `Subreddit fetch likely thin today.`,
+    );
   }
-  console.log(`Reserve pool: ${reservePool.length} posts available for image-fallback swap.`);
 
-  // ─── PHASE 3b: Generate Recraft images (with fallbacks, no gradients) ─
-  // Image generation acts as a filter, not a soft fallback. For each tile we
-  // try the original prompt; if that fails we try a category-generic prompt;
-  // if THAT fails we drop the post and pull a replacement from the reserve.
-  // The homepage NEVER ships a tile without a real image.
+  // ─── PHASE 3b: Image hydration (every selected post gets an image) ────
+  // Editorial selection above is final. This phase only hydrates an image
+  // for each chosen post — Recraft is just the preferred source, with a
+  // multi-tier fallback so image-gen failures never drop a post.
   let imageCache = {};
   if (existsSync(IMAGE_CACHE_PATH)) {
     try { imageCache = JSON.parse(readFileSync(IMAGE_CACHE_PATH, "utf8")); } catch {}
@@ -497,16 +489,23 @@ Return ONLY a JSON array of objects, no other text.`;
     return null;
   }
 
-  async function generateTile(p) {
+  // Hydrate an image for a post that was already selected editorially.
+  // Sources in priority order — first hit wins, never drops the post:
+  //   1. cache-exact     — same post id was imaged in a prior run
+  //   2. recraft-specific — fresh Recraft with the post-specific prompt
+  //   3. recraft-generic  — fresh Recraft with a category-generic prompt
+  //   4. cache-topic      — cached image with same topic slug (within 21d)
+  //   5. cache-category   — cached image with same category (within 21d)
+  // With ~400 tagged cache entries spread across 5 categories, step 5 is
+  // essentially evergreen — image-gen ceases to be a load-bearing filter.
+  async function hydrateImage(p) {
     const cached = imageCache[p.id];
     if (cached?.url) return { url: cached.url, source: "cache-exact" };
 
     if (p.imagePrompt) {
-      // First attempt: post-specific prompt
       let url = await tryRecraft(p, p.imagePrompt);
       if (url) return { url, source: "recraft-specific" };
 
-      // Second attempt: category-generic fallback prompt
       const generic = GENERIC_FALLBACK_PROMPTS[p.category];
       if (generic) {
         console.warn(`  ↻ retrying r/${p.sub}/${p.id} with generic ${p.category} prompt…`);
@@ -516,8 +515,6 @@ Return ONLY a JSON array of objects, no other text.`;
       }
     }
 
-    // Last resort: pull from cache by topic/category. Better to reuse a
-    // 7-day-old "bagels" tile than to drop a post and short the grid.
     const fallback = findCacheFallback(p);
     if (fallback) {
       console.warn(`  ♻︎ r/${p.sub}/${p.id} reusing cached ${fallback.kind} image`);
@@ -526,23 +523,18 @@ Return ONLY a JSON array of objects, no other text.`;
     return null;
   }
 
-  console.log(`Generating Recraft tiles for ${pulse.length} posts (reserve: ${reservePool.length})…`);
-  const finalPulse = [];
+  console.log(`Hydrating images for ${pulse.length} selected posts…`);
   const imageById = new Map();
-  const candidateQueue = [...pulse, ...reservePool];
-  const initialPoolSize = candidateQueue.length;
-  let droppedCount = 0;
+  let failedHydration = 0;
   const sourceCounts = { "cache-exact": 0, "recraft-specific": 0, "recraft-generic": 0, "cache-topic": 0, "cache-category": 0 };
 
-  for (const p of candidateQueue) {
-    if (finalPulse.length >= PULSE_TARGET) break;
-    const result = await generateTile(p);
+  for (const p of pulse) {
+    const result = await hydrateImage(p);
     if (result) {
       const { url, source } = result;
       sourceCounts[source] = (sourceCounts[source] || 0) + 1;
-      // Only persist fresh Recraft generations to cache (cache-* sources are
-      // already in the cache; re-storing the same URL under a new post id is
-      // harmless but pollutes prune logic).
+      // Persist fresh Recraft generations to cache; cache-* sources are
+      // already in the cache so no re-write needed.
       const isFresh = source === "recraft-specific" || source === "recraft-generic";
       if (isFresh && !imageCache[p.id]) {
         imageCache[p.id] = {
@@ -553,34 +545,39 @@ Return ONLY a JSON array of objects, no other text.`;
           generatedAt: new Date().toISOString(),
         };
       }
-      finalPulse.push(p);
       imageById.set(p.id, url);
-      console.log(`  ✓ tile r/${p.sub}/${p.id} (${finalPulse.length}/${PULSE_TARGET}) [${source}]`);
+      console.log(`  ✓ r/${p.sub}/${p.id} [${source}]`);
     } else {
-      droppedCount++;
-      console.log(`  ⨯ tile r/${p.sub}/${p.id} dropped — no image available`);
+      failedHydration++;
+      console.error(`  ⨯ r/${p.sub}/${p.id} hydration failed — cache empty for this category?`);
     }
-    // Polite spacing between calls regardless of success
-    await sleep(1500);
+    // Polite spacing between Recraft calls. Sources that didn't call Recraft
+    // (cache-exact / cache-topic / cache-category) don't strictly need this
+    // wait, but the per-post cost is small and it keeps things readable.
+    await sleep(500);
   }
   console.log(`Image sources: ${JSON.stringify(sourceCounts)}`);
 
-  // Replace the pulse list with the image-filtered final list. Anything that
-  // didn't get an image is gone — no nulls reach the UI.
-  pulse.length = 0;
-  pulse.push(...finalPulse);
+  // Posts that fail every hydration tier (should never happen with a healthy
+  // cache) are dropped here. UI tolerates shortfall by trimming to multiple of 4.
+  if (failedHydration > 0) {
+    const before = pulse.length;
+    const filtered = pulse.filter((p) => imageById.has(p.id));
+    pulse.length = 0;
+    pulse.push(...filtered);
+    console.warn(`Dropped ${before - pulse.length} posts with no image.`);
+  }
   console.log(`Final pulse: ${pulse.length} posts (target ${PULSE_TARGET}).`);
 
-  // Loud-log + Discord alert when we land below target. The homepage grid
-  // (RedditPulseTeaser) trims to the largest multiple of 4 when short, so a
-  // dip to 10 means showing only 8 tiles. Anything below PULSE_TARGET is a
-  // signal worth investigating — usually a Recraft outage or a degraded
-  // candidate pool. Still write the file so we ship *something*; visibility
-  // beats silent partial output.
+  // Alert when we can't reach target. Two distinct causes:
+  //   - Editorial: <12 candidates survived even with relaxed gates (thin sub feeds)
+  //   - Hydration: cache + Recraft both empty for some category (shouldn't happen)
   if (pulse.length < PULSE_TARGET) {
+    const heavyFallback =
+      (sourceCounts["cache-topic"] + sourceCounts["cache-category"]) > 4;
     console.warn(
       `⚠️  reddit-pulse below target: ${pulse.length}/${PULSE_TARGET} ` +
-      `(pool ${initialPoolSize}, image-gen drops ${droppedCount})`,
+      `(hydration-fails: ${failedHydration}, heavy-fallback: ${heavyFallback})`,
     );
     const webhook = process.env.DISCORD_WEBHOOK;
     if (webhook) {
@@ -590,10 +587,9 @@ Return ONLY a JSON array of objects, no other text.`;
         .join(", ");
       const msg =
         `⚠️ reddit-pulse landed at **${pulse.length}/${PULSE_TARGET}**\n` +
-        `Pool: ${initialPoolSize} candidates · drops: ${droppedCount}\n` +
+        `Hydration failed: ${failedHydration}\n` +
         `Sources: ${sources || "(none)"}\n` +
-        `Grid will trim to ${Math.floor(pulse.length / 4) * 4} tiles. ` +
-        `Check Recraft status if drops > 10.`;
+        `Grid will trim to ${Math.floor(pulse.length / 4) * 4} tiles.`;
       try {
         await fetch(webhook, {
           method: "POST",
