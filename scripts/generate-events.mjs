@@ -586,20 +586,48 @@ function cleanTitle(title) {
       "",
     )
     .trim();
-  // Downcase ALL-CAPS words that aren't known acronyms (4+ letters, e.g. SPECIAL → Special, TOUR → Tour)
-  // 4-letter threshold also catches common stylistic-caps words: LIVE, TOUR, NITE, FEST, JAZZ, etc.
+  // Downcase ALL-CAPS words that aren't known acronyms. Titles that are
+  // mostly mixed-case (lowerRatio ≥ 0.5) get the aggressive 2+ letter rule:
+  // this catches stylized fillers ("KID Cudi" → "Kid Cudi", "ALL Things" →
+  // "All Things", "THE Tainted CUP" → "The Tainted Cup", "IN Stanford" →
+  // "In Stanford"). Titles that are mostly all-caps (BLACKPINK-style brand
+  // marks) fall back to the 4+ rule so two-letter brand fragments stay intact.
   const KEEP_UPPER = new Set([
     "ICYMI", "LGBTQ", "LGBTQIA", "BIPOC", "STEAM", "LEGO",
     // 4-letter acronyms to preserve
     "SJSU", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
+    "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
     // South Bay venues / institutions
     "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
+    // 2–3 letter acronyms that legitimately appear in event titles. Anything
+    // NOT in this list gets title-cased when the surrounding title is mostly
+    // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).
+    "AI", "AR", "VR", "EV", "PM", "AM", "DJ", "TV", "PC", "IT", "HR", "PR", "ER",
+    "SF", "SJ", "LA", "CA", "SC", "US", "UK", "FC", "RB",
+    "GK", "II", "TK", "JR", "SR", "VS",
+    "BBQ", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
+    "FAR", "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
+    "NCAA", "PAC", "POV", "PSA", "SAG", "SAT", "SAP", "SBN", "SCU", "SIG", "SJZ",
+    "SMT", "SUV", "TBA", "TBD", "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK",
+    "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
+    "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
   ]);
-  t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
+  {
+    const letters = t.replace(/[^A-Za-z]/g, "");
+    const lowerCount = letters ? letters.replace(/[^a-z]/g, "").length : 0;
+    const lowerRatio = letters.length ? lowerCount / letters.length : 0;
+    // Use Unicode-aware lookarounds so a run like "MAN" inside "MANÁ" doesn't
+    // get partial-matched and rewritten — \b in JS regex without /u treats
+    // Á as a non-word char, which would otherwise carve "MAN" out of "MANÁ".
+    const re = lowerRatio >= 0.5
+      ? /(?<!\p{Letter})[A-Z]{2,}(?!\p{Letter})/gu
+      : /(?<!\p{Letter})[A-Z]{4,}(?!\p{Letter})/gu;
+    t = t.replace(re, (w) => (KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase()));
+  }
   // Fix pipes without surrounding spaces: "Foo |Bar" → "Foo | Bar"
   t = t.replace(/\s*\|\s*/g, " | ");
   // Strip non-Latin (CJK, etc.) prefix before English content:
@@ -5053,4 +5081,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   });
 }
 
-export { polishDescription };
+export { polishDescription, cleanTitle, stripRedundantVenueSuffix };
