@@ -34,18 +34,23 @@ function formatAge(hours: number): string {
   return days === 1 ? "1d ago" : `${days}d ago`;
 }
 
-// The grid is a fixed 4×3 — render exactly 12 tiles so the bottom row is
-// never short. The generator targets 12 with a backfill pass, but slice
-// defensively in case the data file ever drifts.
+// The grid is a fixed 4-column layout (2-col at mobile). Generator targets 12
+// (4×3), but if it underdelivers we keep the grid clean by trimming to a
+// multiple of 4 so the bottom row is never short. Mobile (2-col) is always
+// happy because every multiple of 4 is also a multiple of 2.
 const PULSE_TILE_COUNT = 12;
+const PULSE_COLS = 4;
 
 export default function RedditPulseTeaser() {
   // Defensive: drop any post without a real image. Generator guarantees images
   // upstream, but if a stale data file slips through we'd rather show fewer
   // tiles than a gradient placeholder.
-  const posts = ((pulseData?.posts ?? []) as PulsePost[])
-    .filter((p) => !!p.image)
-    .slice(0, PULSE_TILE_COUNT);
+  const withImages = ((pulseData?.posts ?? []) as PulsePost[]).filter((p) => !!p.image);
+  const trimCount =
+    withImages.length >= PULSE_TILE_COUNT
+      ? PULSE_TILE_COUNT
+      : Math.floor(withImages.length / PULSE_COLS) * PULSE_COLS;
+  const posts = withImages.slice(0, trimCount);
   if (posts.length === 0) return null;
 
   return (

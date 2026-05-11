@@ -491,6 +491,8 @@ Return ONLY a JSON array of objects, no other text.`;
   const finalPulse = [];
   const imageById = new Map();
   const candidateQueue = [...pulse, ...reservePool];
+  const initialPoolSize = candidateQueue.length;
+  let droppedCount = 0;
 
   for (const p of candidateQueue) {
     if (finalPulse.length >= PULSE_TARGET) break;
@@ -501,6 +503,7 @@ Return ONLY a JSON array of objects, no other text.`;
       imageById.set(p.id, url);
       console.log(`  ✓ tile r/${p.sub}/${p.id} (${finalPulse.length}/${PULSE_TARGET})`);
     } else {
+      droppedCount++;
       console.log(`  ⨯ tile r/${p.sub}/${p.id} dropped — no image available`);
     }
     // Polite spacing between calls regardless of success
@@ -512,6 +515,36 @@ Return ONLY a JSON array of objects, no other text.`;
   pulse.length = 0;
   pulse.push(...finalPulse);
   console.log(`Final pulse: ${pulse.length} posts (target ${PULSE_TARGET}).`);
+
+  // Loud-log + Discord alert when we land below target. The homepage grid
+  // (RedditPulseTeaser) trims to the largest multiple of 4 when short, so a
+  // dip to 10 means showing only 8 tiles. Anything below PULSE_TARGET is a
+  // signal worth investigating — usually a Recraft outage or a degraded
+  // candidate pool. Still write the file so we ship *something*; visibility
+  // beats silent partial output.
+  if (pulse.length < PULSE_TARGET) {
+    console.warn(
+      `⚠️  reddit-pulse below target: ${pulse.length}/${PULSE_TARGET} ` +
+      `(pool ${initialPoolSize}, image-gen drops ${droppedCount})`,
+    );
+    const webhook = process.env.DISCORD_WEBHOOK;
+    if (webhook) {
+      const msg =
+        `⚠️ reddit-pulse landed at **${pulse.length}/${PULSE_TARGET}**\n` +
+        `Pool: ${initialPoolSize} candidates · image-gen drops: ${droppedCount}\n` +
+        `Grid will trim to ${Math.floor(pulse.length / 4) * 4} tiles. ` +
+        `Check Recraft status if drops > 10.`;
+      try {
+        await fetch(webhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: msg }),
+        });
+      } catch (err) {
+        console.error("Discord webhook failed:", err.message);
+      }
+    }
+  }
 
   // Persist image cache (even on partial failure — we want successful URLs saved).
   writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(imageCache, null, 2) + "\n");
