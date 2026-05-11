@@ -607,6 +607,34 @@ async function main() {
       }
     }
 
+    // Fetch the image buffer ONCE up front and share it across the four
+    // buffer-upload platforms (x/bluesky/facebook/mastodon). Previously this
+    // fetch ran inside the per-platform loop, so a single transient blob blip
+    // could silently drop the image on one platform while the others kept it
+    // — the exact failure mode that hit the 2026-05-10 Seal tonight-pick
+    // (bluesky text-only, every other platform fine). One retry on failure,
+    // and LOG loudly when we end up posting without an image.
+    let sharedImgBuf = null;
+    if (ogImage) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          const imgRes = await fetch(ogImage, { signal: AbortSignal.timeout(15000) });
+          if (imgRes.ok) {
+            sharedImgBuf = Buffer.from(await imgRes.arrayBuffer());
+            console.log(`      📥 Image buffer fetched (${(sharedImgBuf.length / 1024).toFixed(0)} KB)`);
+            break;
+          }
+          console.log(`      ⚠️  Image fetch ${imgRes.status} (attempt ${attempt}/2)`);
+        } catch (e) {
+          console.log(`      ⚠️  Image fetch error: ${e.message} (attempt ${attempt}/2)`);
+        }
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 500));
+      }
+      if (!sharedImgBuf) {
+        console.log(`      ⛔ Image buffer unavailable — buffer-upload platforms will post text-only`);
+      }
+    }
+
     // Publish to each platform
     const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram"];
     const publishResults = [];
@@ -626,17 +654,12 @@ async function main() {
             continue;
           }
           result = await client.publish(copy, ogImage);
-        } else if (ogImage && (platform === "x" || platform === "bluesky" || platform === "facebook" || platform === "mastodon")) {
-          // Download image buffer for platforms that upload directly
-          try {
-            const imgRes = await fetch(ogImage, { signal: AbortSignal.timeout(10000) });
-            if (imgRes.ok) {
-              const imgBuf = Buffer.from(await imgRes.arrayBuffer());
-              result = await client.publish(copy, imgBuf);
-            } else {
-              result = await client.publish(copy);
-            }
-          } catch {
+        } else if (platform === "x" || platform === "bluesky" || platform === "facebook" || platform === "mastodon") {
+          // Buffer-upload platforms: reuse the shared image buffer fetched above.
+          if (sharedImgBuf) {
+            result = await client.publish(copy, sharedImgBuf);
+          } else {
+            if (ogImage) console.log(`      ⚠️  ${platform}: posting text-only (no image buffer)`);
             result = await client.publish(copy);
           }
         } else {
