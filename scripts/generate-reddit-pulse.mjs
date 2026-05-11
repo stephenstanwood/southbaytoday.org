@@ -261,7 +261,7 @@ async function main() {
   const candidates = all
     .filter((p) => p.score >= 5 || p.numComments >= 3)
     .sort((a, b) => (b.score * b.weight) - (a.score * a.weight))
-    .slice(0, 200);
+    .slice(0, 300);
 
   console.log(`${candidates.length} candidates passed engagement floor.\n`);
 
@@ -467,22 +467,61 @@ Return ONLY a JSON array of objects, no other text.`;
     return null;
   }
 
+  // Find a cached image suitable as a fallback for post `p`. Strategy:
+  //   1. Same topic, generated within 21d — exact subject match, freshest first
+  //   2. Same category, generated within 21d — random pick for variety
+  // Returns null if no usable match. Existing cache entries from before topic/
+  // category tracking are skipped (no metadata = no safe match).
+  const FALLBACK_AGE_MS = 21 * 86400000;
+  function findCacheFallback(p) {
+    const cutoff = Date.now() - FALLBACK_AGE_MS;
+    const topicMatch = [];
+    const categoryMatch = [];
+    for (const entry of Object.values(imageCache)) {
+      if (!entry?.url) continue;
+      if (new Date(entry.generatedAt).getTime() < cutoff) continue;
+      if (p.topic && entry.topic === p.topic) {
+        topicMatch.push(entry);
+      } else if (p.category && entry.category === p.category) {
+        categoryMatch.push(entry);
+      }
+    }
+    if (topicMatch.length > 0) {
+      topicMatch.sort((a, b) => new Date(b.generatedAt) - new Date(a.generatedAt));
+      return { url: topicMatch[0].url, kind: "topic" };
+    }
+    if (categoryMatch.length > 0) {
+      const pick = categoryMatch[Math.floor(Math.random() * categoryMatch.length)];
+      return { url: pick.url, kind: "category" };
+    }
+    return null;
+  }
+
   async function generateTile(p) {
     const cached = imageCache[p.id];
-    if (cached?.url) return cached.url;
-    if (!p.imagePrompt) return null;
+    if (cached?.url) return { url: cached.url, source: "cache-exact" };
 
-    // First attempt: post-specific prompt
-    let url = await tryRecraft(p, p.imagePrompt);
-    if (url) return url;
+    if (p.imagePrompt) {
+      // First attempt: post-specific prompt
+      let url = await tryRecraft(p, p.imagePrompt);
+      if (url) return { url, source: "recraft-specific" };
 
-    // Second attempt: category-generic fallback
-    const generic = GENERIC_FALLBACK_PROMPTS[p.category];
-    if (generic) {
-      console.warn(`  ↻ retrying r/${p.sub}/${p.id} with generic ${p.category} prompt…`);
-      await sleep(1500);
-      url = await tryRecraft(p, generic);
-      if (url) return url;
+      // Second attempt: category-generic fallback prompt
+      const generic = GENERIC_FALLBACK_PROMPTS[p.category];
+      if (generic) {
+        console.warn(`  ↻ retrying r/${p.sub}/${p.id} with generic ${p.category} prompt…`);
+        await sleep(1500);
+        url = await tryRecraft(p, generic);
+        if (url) return { url, source: "recraft-generic" };
+      }
+    }
+
+    // Last resort: pull from cache by topic/category. Better to reuse a
+    // 7-day-old "bagels" tile than to drop a post and short the grid.
+    const fallback = findCacheFallback(p);
+    if (fallback) {
+      console.warn(`  ♻︎ r/${p.sub}/${p.id} reusing cached ${fallback.kind} image`);
+      return { url: fallback.url, source: `cache-${fallback.kind}` };
     }
     return null;
   }
@@ -493,15 +532,30 @@ Return ONLY a JSON array of objects, no other text.`;
   const candidateQueue = [...pulse, ...reservePool];
   const initialPoolSize = candidateQueue.length;
   let droppedCount = 0;
+  const sourceCounts = { "cache-exact": 0, "recraft-specific": 0, "recraft-generic": 0, "cache-topic": 0, "cache-category": 0 };
 
   for (const p of candidateQueue) {
     if (finalPulse.length >= PULSE_TARGET) break;
-    const url = await generateTile(p);
-    if (url) {
-      imageCache[p.id] = imageCache[p.id] || { url, prompt: p.imagePrompt, generatedAt: new Date().toISOString() };
+    const result = await generateTile(p);
+    if (result) {
+      const { url, source } = result;
+      sourceCounts[source] = (sourceCounts[source] || 0) + 1;
+      // Only persist fresh Recraft generations to cache (cache-* sources are
+      // already in the cache; re-storing the same URL under a new post id is
+      // harmless but pollutes prune logic).
+      const isFresh = source === "recraft-specific" || source === "recraft-generic";
+      if (isFresh && !imageCache[p.id]) {
+        imageCache[p.id] = {
+          url,
+          prompt: p.imagePrompt,
+          topic: p.topic || null,
+          category: p.category || null,
+          generatedAt: new Date().toISOString(),
+        };
+      }
       finalPulse.push(p);
       imageById.set(p.id, url);
-      console.log(`  ✓ tile r/${p.sub}/${p.id} (${finalPulse.length}/${PULSE_TARGET})`);
+      console.log(`  ✓ tile r/${p.sub}/${p.id} (${finalPulse.length}/${PULSE_TARGET}) [${source}]`);
     } else {
       droppedCount++;
       console.log(`  ⨯ tile r/${p.sub}/${p.id} dropped — no image available`);
@@ -509,6 +563,7 @@ Return ONLY a JSON array of objects, no other text.`;
     // Polite spacing between calls regardless of success
     await sleep(1500);
   }
+  console.log(`Image sources: ${JSON.stringify(sourceCounts)}`);
 
   // Replace the pulse list with the image-filtered final list. Anything that
   // didn't get an image is gone — no nulls reach the UI.
@@ -529,9 +584,14 @@ Return ONLY a JSON array of objects, no other text.`;
     );
     const webhook = process.env.DISCORD_WEBHOOK;
     if (webhook) {
+      const sources = Object.entries(sourceCounts)
+        .filter(([, n]) => n > 0)
+        .map(([k, n]) => `${k}=${n}`)
+        .join(", ");
       const msg =
         `⚠️ reddit-pulse landed at **${pulse.length}/${PULSE_TARGET}**\n` +
-        `Pool: ${initialPoolSize} candidates · image-gen drops: ${droppedCount}\n` +
+        `Pool: ${initialPoolSize} candidates · drops: ${droppedCount}\n` +
+        `Sources: ${sources || "(none)"}\n` +
         `Grid will trim to ${Math.floor(pulse.length / 4) * 4} tiles. ` +
         `Check Recraft status if drops > 10.`;
       try {
