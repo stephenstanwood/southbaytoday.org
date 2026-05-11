@@ -2074,35 +2074,121 @@ init();
 // rephrased without internal commas so MJ permutation parsing stays clean.
 // Lean abstract + color-forward, occasional monochrome (linocut, sumi-e,
 // scandinavian, cyanotype). 5 fresh styles sampled per click.
+// 100-style pool, grouped by register for editorial sanity. Rules:
+// - No internal commas (MJ permutation parser splits on them).
+// - No living-artist names (filter risk). Dead artists / movements OK.
+// - No psychedelic/kaleidoscope/tie-dye/melting (Stephen's standing rule).
+// - Each entry should produce a visually distinct register in MJ.
 const MJ_STYLES = [
+  // Print & relief
   "Bauhaus geometric primary shapes structured grid",
-  "mid-century modern organic curves muted warm palette atomic-era",
-  "paper cut collage layered flat shapes subtle shadows craft feel",
+  "linocut block print carved texture visible grain 2-3 inks indie feel",
+  "woodcut bold black lines stark white space german expressionist",
   "risograph print grainy texture 2-color overprint zine energy",
+  "screen print poster halftone dots limited 3-color palette retro",
+  "cyanotype blueprint single-tone deep blue ink wash",
+  "etching crosshatch sepia heavy outline antiquarian feel",
+  "drypoint scratched copperplate dark ink subtle gradient",
+  "mezzotint velvety dark tones gradual fades atmospheric mystery",
+  "lithograph chalk crayon rough drawing muted earth tones",
+  "stencil street art spray paint stark contrast bold silhouette",
+  "monoprint painterly transfer texture single impression spontaneous",
+  // Painting traditions
+  "watercolor translucent wash bleeding edges paper texture wet-on-wet",
+  "gouache painterly texture muted vintage palette",
+  "oil impasto thick textured strokes rich post-impressionist",
+  "tempera flat matte egg-yolk binder medieval icon vivid pigment",
+  "fresco wall painting muted lime-plaster faded pompeii antique",
+  "encaustic wax painting layered translucent dimensional surface",
+  "abstract expressionism gestural brushwork vivid color blocks",
+  "fauvist wild color non-realistic palette emotional intensity",
+  "pointillism dotted color separation optical mixing scientific",
+  "tonalism muted atmosphere soft fog quiet contemplation",
+  "luminism quiet glow detailed landscape transcendent light",
+  "plein air impressionist quick brushwork outdoor light dappled",
+  "ashcan school gritty urban earth tones early 20th century",
+  "sumi-e ink wash rice-paper cream broad black brushstrokes single red seal accent",
+  // Modernist & avant-garde
+  "De Stijl primary rectangles black lines mondrian grid",
+  "Cubist faceted planes multiple viewpoints geometric fragmentation",
+  "Suprematist floating geometric shapes white void minimalist",
+  "Futurist motion lines diagonal energy speed dynamic",
+  "Vorticist sharp angular machine-age british modernism",
+  "constructivist poster diagonal composition red black and cream",
+  "Russian avant-garde rodchenko diagonal red typography revolutionary",
+  "Dada collage typography fragmented absurd",
+  "Surrealist dreamlike juxtaposition unexpected scale collage absurdist humor",
+  "Bauhaus typography poster sans-serif primary blocks geometric",
+  "Czech functionalist restrained typography geometric book cover",
+  "Swiss International Style helvetica grid clean asymmetric",
+  // Mid-century & pop graphic
+  "mid-century modern organic curves muted warm palette atomic-era",
+  "art deco travel poster stepped geometry chrome lines rich teal and gold",
+  "WPA mid-century travel poster stylized geometry limited palette",
+  "Saul Bass film poster bold silhouettes flat shapes stark contrast",
+  "Saul Steinberg single-line drawing whimsy intellectual cartooning",
+  "Milton Glaser bold curved typography flat color 60s poster",
+  "Push Pin Studios flat illustration sophisticated 60s graphic",
+  "Polish poster school surreal expressive 60s illustration",
+  "Cuban screen-print poster bold limited color graphic energy",
+  "Czech film poster surreal hand-drawn melancholic 60s",
+  "Lichtenstein ben-day dots comic panel thick outline pop",
+  "Warhol silkscreen flat color repeated icon pop",
+  // Decorative & ornamental
+  "art nouveau organic curves whiplash lines decorative borders",
+  "arts and crafts honest materials nature-inspired ornament",
+  "Vienna Secession Klimt gold leaf decorative pattern",
+  "stained glass leaded outline jewel-tone color blocks rich saturation",
+  "mosaic tessellated stones byzantine gold leaf saturated",
+  "illuminated manuscript medieval marginalia gold ink decorative",
+  "Persian rug pattern ornate central medallion rich jewel tones",
+  "icon painting byzantine gold leaf stylized halos religious",
+  "Russian lacquer miniature gold detail black background fairy tale",
+  "tarot card baroque ornamental border symmetrical iconography",
+  "Victorian botanical illustration meticulous engraving plant detail",
+  "Edwardian theater poster ornate typography muted gilt",
+  // International & folk traditions
+  "Japanese ukiyo-e woodblock flat color fields delicate ink line",
+  "Hokusai dynamic wave landscape compositional power",
+  "Korean minhwa folk painting flat colors symbolic motifs cheerful",
+  "Chinese gongbi meticulous brush detail traditional symbolic",
+  "Persian miniature delicate detail gold leaf jewel tones manuscript",
+  "Mughal garden painting elaborate detail architecture refined",
+  "Indian Madhubani folk pattern bold outline natural pigments",
+  "Aboriginal Australian dot painting tessellated landscape symbolic",
+  "Andean textile geometric warp weft alpaca palette",
+  "Mexican papel picado cut paper banner festive primary colors",
+  "mola textile applique reverse stitching bold tropical pattern",
+  "Adinkra stamped pattern earth tones west african symbol",
+  "Maori koru spiral curvilinear pattern earth ochre",
+  "Inuit stonecut print bold silhouette arctic palette",
+  "folk art naive style hand-drawn whimsical bright colors",
+  "shibori indigo resist dye organic fold pattern hand-dyed",
+  // Craft & material-forward
+  "paper cut collage layered flat shapes subtle shadows craft feel",
+  "Matisse cut-paper bold organic shapes clean edges joyful flat color",
+  "terrazzo pattern cream field scattered small stone chips muted accents",
+  "kintsugi gold-mended cracks broken pottery imperfect repair",
+  "embroidery thread texture stitched outline tactile fabric",
+  "sashiko indigo blue running stitch repair pattern japanese",
+  "quilt patchwork geometric blocks faded country fabric",
+  "weaving warp-weft texture earth-tone yarn dimensional grid",
+  "block print fabric repeating motif handmade indigo textile",
+  "vintage zine collage torn paper xerox grain DIY punk energy",
+  // Editorial & modern graphic
+  "editorial magazine wide margins single bold accent color sophisticated restraint",
+  "brutalist raw concrete typography unpolished anti-design",
+  "mid-century jazz album cover blue note bold typography rhythm",
   "minimal line art bold color fills large color fields",
   "isometric flat illustration architectural spatial depth",
-  "art deco travel poster stepped geometry chrome lines rich teal and gold",
-  "linocut block print carved texture visible grain 2-3 inks indie feel",
-  "sumi-e ink wash rice-paper cream broad black brushstrokes single red seal accent",
   "Scandinavian minimal generous whitespace muted earth tones thin lines",
-  "chromatic aberration glitch RGB channel offsets scanlines digital grain",
-  "terrazzo pattern cream field scattered small stone chips muted accents",
-  "Matisse cut-paper bold organic shapes clean edges joyful flat color",
-  "editorial magazine wide margins single bold accent color sophisticated restraint",
-  "California redwood and fog-gray landscape abstraction stylized hills golden hour",
-  "abstract expressionism gestural brushwork vivid color blocks",
-  "gouache painterly texture muted vintage palette",
-  "Saul Bass film poster bold silhouettes flat shapes stark contrast",
-  "cyanotype blueprint single-tone deep blue ink wash",
-  "WPA mid-century travel poster stylized geometry limited palette",
-  "constructivist poster diagonal composition red black and cream",
-  "folk art naive style hand-drawn whimsical bright colors",
-  "etching crosshatch sepia heavy outline antiquarian feel",
-  "Japanese ukiyo-e woodblock flat color fields delicate ink line",
-  "stained glass leaded outline jewel-tone color blocks rich saturation",
   "Memphis design squiggles confetti dots 80s bold pastels playful",
-  "vintage zine collage torn paper xerox grain DIY punk energy",
-  "lithograph chalk crayon rough drawing muted earth tones",
+  "chromatic aberration glitch RGB channel offsets scanlines digital grain",
+  // Atmosphere & landscape abstraction
+  "California redwood and fog-gray landscape abstraction stylized hills golden hour",
+  "Hudson River School luminous landscape transcendent vista 19th century",
+  "color field painting large flat saturated planes meditative scale",
+  "Japanese minimalist landscape negative space distant mountains haze",
 ];
 
 function mjSampleStyles(n) {
@@ -2228,10 +2314,11 @@ Return ONLY the subject phrase. Single line. No quotes, no preamble, no markdown
 
 async function buildMjPromptForSlot(slot, slotType) {
   const subject = await distillMjSubject(slot, slotType);
-  const styles = mjSampleStyles(12);
-  // 12-way permutation = 48 images per click (12 styles × 4-image grid). Pro
-  // plan caps at 40 permutations; Standard at 10. Pool is 28 styles so each
-  // click still leaves meaningful variation for the next.
+  const styles = mjSampleStyles(15);
+  // 15-way permutation = 60 images per click (15 styles × 4-image grid). Pro
+  // plan caps at 40 permutations. Pool is 100 styles so each click leaves 85
+  // unsampled — fire the button repeatedly for fresh variety with minimal
+  // overlap between batches.
   return `${subject}, {${styles.join(", ")}}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands`;
 }
 
