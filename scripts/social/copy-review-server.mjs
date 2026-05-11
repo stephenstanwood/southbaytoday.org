@@ -2298,12 +2298,13 @@ Your output will be wrapped in a permutation of 5 abstract design styles (Bauhau
    - music → instruments, smoke, low warm glow, light-as-sound metaphors
    - food → glossy textures, steam, plates, knife-edges of color, glassware
    - sports → kinetic granularity, stadium light, paint stripes, leather grain, foam
-   - art / exhibit → gallery light, sculpture form, framed shadows, polished concrete
    - hike / outdoor → topography, weather, hour-of-day, distant haze, grass
    - markets / fairs → tables of color, paper bags, awnings, midday glare
    - kids / family events → primary colors, simple shapes, warm domestic light
 
-7. Total length: 14-26 words across 3-4 fragments. Tight. Each word earns its place.
+7. ART-CONTENT EVENTS (exhibitions, gallery shows, art classes, art workshops, museum visits, theater, dance, performance, open studios): the subject must render the ART ITSELF — the medium, materials, mark-making, color register, gesture. NEVER render the display setting (gallery walls, framed pieces, museum interiors, plinths, audiences, stages). Translate the art into its essential materials and actions: ink brush curves, watercolor washes, paper-cut petals, palette-knife smears, gold leaf flakes, photographic emulsion, stage light spilling across velvet, calligraphy on cream paper. If the event has a CULTURAL register (AANHPI, Latinx, Black History, etc.), use that culture's visual heritage in materials and color (indigo, persimmon, jade for East Asian; cochineal, marigold, turquoise for Mexican folk; cobalt, ochre, ivory for West African; etc.).
+
+8. Total length: 14-26 words across 3-4 fragments. Tight. Each word earns its place.
 
 ═══ EXAMPLES (study the bar) ═══
 
@@ -2334,6 +2335,15 @@ SUBJECT: distant stage glow against eucalyptus silhouettes, brass instruments ca
 POST: "Sunday: pop-up plant market at the corner of Castro and Dana, 10-2"
 SUBJECT: terra-cotta lined up on weathered wood, ferns spilling sideways in midday glare, hand-written tags fluttering, paper bags folded at the edge
 
+POST: "AAPI Teen Art Exhibition at Saratoga Library, free through May, honoring AANHPI Heritage Month"
+SUBJECT: overlapping watercolor washes in indigo persimmon and jade, a single calligraphy stroke ascending, gold leaf flakes drifting across cream paper, palette-knife dabs of plum and citron
+
+POST: "Open studio night Friday — local painters showing new work + free wine"
+SUBJECT: wet oil dragged across rough canvas, a thumbprint smudge of cadmium red, charcoal lines cutting through underpainting, palette piled with glossy ridges
+
+POST: "Saturday flamenco performance at Mexican Heritage Plaza, 8pm"
+SUBJECT: marigold ruffles caught mid-twirl, fingertip-smudged castanets, deep cochineal velvet folding into shadow, a single staccato heel-strike at the floor's edge
+
 ═══ OUTPUT FORMAT ═══
 
 Return ONLY the subject phrase. Single line. No quotes, no preamble, no markdown, no "Subject:" prefix, no explanation, no trailing period.`;
@@ -2360,7 +2370,7 @@ async function buildMjPromptForSlot(slot, slotType) {
   // with `{style} of <subject>` forces MJ to read the style as the medium.
   // Anti-photo negatives in --no shut down lingering photorealism / gallery
   // wall framing.
-  return `{${styles.join(", ")}} of ${subject}, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, text, words, letters, watermark, signature, logo, people, faces, hands`;
+  return `{${styles.join(", ")}} of ${subject}, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands`;
 }
 
 const server = createServer((req, res) => {
