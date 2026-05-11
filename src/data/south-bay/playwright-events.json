@@ -1,42 +1,25 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-10T15:07:42.856Z",
+    "generatedAt": "2026-05-11T15:07:48.208Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 20,
-    "sourceCount": 133,
+    "sourceCount": 128,
     "sources": [
-      "Mountain View Public Library (15)",
+      "Mountain View Public Library (14)",
       "Los Gatos Library (29)",
       "San Jose Jazz (5)",
       "San Jose Museum of Art (6)",
-      "Linden Tree Books (8)",
+      "Linden Tree Books (7)",
       "Hicklebee's (2)",
-      "History San Jose (44)",
+      "History San Jose (42)",
       "Montalvo Arts Center (6)",
       "City Lights Theater (8)",
       "ICA San José (3)",
-      "Books Inc (2)",
+      "Books Inc (1)",
       "Peninsula Open Space Trust (5)"
     ]
   },
   "events": [
-    {
-      "id": "400470460859",
-      "title": "Make Your Own Felt Portrait",
-      "date": "2026-05-10",
-      "displayDate": "Sun, May 10",
-      "time": "1:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16151163",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "1e0546c555bc",
       "title": "Storytime Around the World",
@@ -956,23 +939,6 @@
       "kidFriendly": false
     },
     {
-      "id": "428236168778",
-      "title": "Illustrator Workshop: Jen de Oliveira",
-      "date": "2026-05-10",
-      "displayDate": "Sun, May 10",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/the-abominable-snow-dancer.html",
-      "source": "Linden Tree Books",
-      "kidFriendly": false
-    },
-    {
       "id": "4b6f4f0747eb",
       "title": "Story Write-athon",
       "date": "2026-05-17",
@@ -1124,40 +1090,6 @@
       "url": "https://hicklebees.com/event/2026-05-30/hicklebees-presents-randy-ribay-hold-storytime-signing",
       "source": "Hicklebee's",
       "kidFriendly": true
-    },
-    {
-      "id": "c3c15c674ab0",
-      "title": "Mother’s Day Spring Tea",
-      "date": "2026-05-10",
-      "displayDate": "Sun, May 10",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://fareharbor.com/embeds/book/historysanjose/items/439497/?full-items=yes&flow=583745",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "c3c15c674ab0",
-      "title": "Mother’s Day Spring Tea",
-      "date": "2026-05-10",
-      "displayDate": "Sun, May 10",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://fareharbor.com/embeds/book/historysanjose/items/439497/?full-items=yes&flow=583745",
-      "source": "History San Jose",
-      "kidFriendly": false
     },
     {
       "id": "2befd92189d2",
@@ -2160,23 +2092,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "5a290ec9df25",
-      "title": "SPECULATIVE FICTION BOOK CLUB: THE TAINTED CUP",
-      "date": "2026-05-10",
-      "displayDate": "Sun, May 10",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Mountain View",
-      "address": "",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
       "kidFriendly": false
     },
     {
