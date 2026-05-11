@@ -6,6 +6,7 @@
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { notifyApiOut } from "../../lib/notify.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RECRAFT_API = "https://external.api.recraft.ai/v1";
@@ -52,6 +53,9 @@ export async function generateRecraftImage({ prompt, size = "4:5", colors, model
 
   if (!res.ok) {
     const text = await res.text();
+    if (/not_enough_credits|insufficient.+credit|credit.+(exhausted|too low)|quota.*exceeded/i.test(text)) {
+      await notifyApiOut("Recraft", text);
+    }
     throw new Error(`Recraft API error (${res.status}): ${text}`);
   }
 
