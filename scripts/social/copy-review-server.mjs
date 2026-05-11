@@ -2097,6 +2097,12 @@ const MJ_STYLES = [
   "WPA mid-century travel poster stylized geometry limited palette",
   "constructivist poster diagonal composition red black and cream",
   "folk art naive style hand-drawn whimsical bright colors",
+  "etching crosshatch sepia heavy outline antiquarian feel",
+  "Japanese ukiyo-e woodblock flat color fields delicate ink line",
+  "stained glass leaded outline jewel-tone color blocks rich saturation",
+  "Memphis design squiggles confetti dots 80s bold pastels playful",
+  "vintage zine collage torn paper xerox grain DIY punk energy",
+  "lithograph chalk crayon rough drawing muted earth tones",
 ];
 
 function mjSampleStyles(n) {
@@ -2222,10 +2228,10 @@ Return ONLY the subject phrase. Single line. No quotes, no preamble, no markdown
 
 async function buildMjPromptForSlot(slot, slotType) {
   const subject = await distillMjSubject(slot, slotType);
-  const styles = mjSampleStyles(5);
-  // 5-way permutation requires Standard plan or higher (Basic caps at 4).
-  // --no covers text/watermark cruft + photographic-human elements we don't
-  // want bleeding through the abstract styles.
+  const styles = mjSampleStyles(12);
+  // 12-way permutation = 48 images per click (12 styles × 4-image grid). Pro
+  // plan caps at 40 permutations; Standard at 10. Pool is 28 styles so each
+  // click still leaves meaningful variation for the next.
   return `${subject}, {${styles.join(", ")}}, abstract composition --ar 4:5 --no text, words, letters, watermark, signature, logo, people, faces, hands`;
 }
 
