@@ -1391,7 +1391,7 @@
     },
     "2026-05-12": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Children's Literature for Adults Bookclub",
@@ -1419,7 +1419,48 @@
         "copyApprovedAt": "2026-05-05T03:14:19.780Z",
         "imageApprovedAt": "2026-05-11T03:12:59.774Z",
         "generatedAt": "2026-05-04T22:17:01.984Z",
-        "imagePrompt": "Mid-century modern abstract illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Dense composition in warm muted palette—warm taupe, soft mustard, burnt sienna, cream—with organic flowing curves and atomic-era geometric accents. Stylized open book spine and flowing reading chair silhouettes fragmented and woven into abstract color fields and biomorphic shapes. Heavy use of curved lines, soft gradients, and layered organic forms. Sparse confetti dots and small stars scattered in margins. Risograph-style texture with slight halftone grain. Quiet, confident, editorial mood. Sophisticated mid-century aesthetic throughout."
+        "imagePrompt": "Mid-century modern abstract illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Dense composition in warm muted palette—warm taupe, soft mustard, burnt sienna, cream—with organic flowing curves and atomic-era geometric accents. Stylized open book spine and flowing reading chair silhouettes fragmented and woven into abstract color fields and biomorphic shapes. Heavy use of curved lines, soft gradients, and layered organic forms. Sparse confetti dots and small stars scattered in margins. Risograph-style texture with slight halftone grain. Quiet, confident, editorial mood. Sophisticated mid-century aesthetic throughout.",
+        "publishedAt": "2026-05-12T18:28:52.959Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2054267379241353225",
+            "id": "2054267379241353225",
+            "text": "Tonight in Cupertino: adults-only book club at the library, diving into a beloved children's classic. Free, 7 PM, and registration required. 📚 https://t.co/rGJJREqK7V https://t.co/5jAdOTgoMx"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mlog56g3lf2x",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mlog56g3lf2x",
+            "cid": "bafyreihzay7xncgnwvnx6lu5u4rtlgy33y3u646iryv2alp5lf7t5wr66y"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18096102599135093",
+            "id": "18096102599135093"
+          },
+          {
+            "platform": "facebook",
+            "ok": false,
+            "error": "Facebook photo post failed (500): {\"error\":{\"code\":1,\"message\":\"Please reduce the amount of data you're asking for, then retry your request\"}}"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116563019001133351",
+            "id": "116563019001133351",
+            "url": "https://mastodon.social/@southbaytoday/116563019001133351"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18116868865774669",
+            "id": "18116868865774669"
+          }
+        ]
       },
       "_reviewHistory": [
         {
