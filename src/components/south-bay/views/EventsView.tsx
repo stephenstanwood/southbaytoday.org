@@ -906,13 +906,14 @@ function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) 
 // Late spring, the question parents have isn't "what's the next holiday" —
 // it's "when does my district's school year end?" Last-day dates differ by
 // up to two weeks across South Bay districts. We render a compact list of
-// last-day + graduation dates in chronological order whenever any matched
-// district has its last day within the next 60 days. Outside that window
-// the panel hides — keeps the events tab uncluttered the rest of the year.
+// finals → graduation → last-day dates in chronological order whenever any
+// matched district has its last day within the next 60 days. Outside that
+// window the panel hides — keeps the events tab uncluttered the rest of
+// the year.
 
 interface SchoolMilestone {
   date: string;
-  type: "lastday" | "graduation";
+  type: "finals" | "lastday" | "graduation";
   districts: SchoolDistrict[];
 }
 
@@ -937,14 +938,16 @@ function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> 
     return m;
   }, [districts]);
 
-  // Group last-day + graduation events by (date, type), then by chrono date.
+  // Group finals + last-day + graduation events by (date, type), then by
+  // chrono date. Finals come weeks before grad/lastday, so they anchor the
+  // top of the endgame list and give high-school parents a real heads-up.
   // Same district often has both lastday and graduation on the same date
   // (lastday IS the graduation for high schoolers). Keep them on separate
   // rows so parents can spot graduations distinctly.
   const milestones = useMemo<SchoolMilestone[]>(() => {
     const matching = events.filter(
       (e) =>
-        (e.type === "lastday" || e.type === "graduation") &&
+        (e.type === "finals" || e.type === "lastday" || e.type === "graduation") &&
         e.startDate >= todayIso &&
         e.startDate <= horizonIso &&
         matchedDistrictIds.has(e.districtId),
@@ -962,22 +965,30 @@ function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> 
       } else {
         byKey.set(key, {
           date: e.startDate,
-          type: e.type as "lastday" | "graduation",
+          type: e.type as "finals" | "lastday" | "graduation",
           districts: [district],
         });
       }
     }
     const list = Array.from(byKey.values());
+    const typeOrder: Record<SchoolMilestone["type"], number> = {
+      finals: 0,
+      graduation: 1,
+      lastday: 2,
+    };
     list.sort((a, b) => {
       if (a.date !== b.date) return a.date.localeCompare(b.date);
-      // graduations before last-days on the same date — diplomas are the
-      // bigger moment, even when both happen the same morning.
-      if (a.type !== b.type) return a.type === "graduation" ? -1 : 1;
-      return 0;
+      // On the same date: finals → graduation → lastday. Diplomas before the
+      // generic "last day" entry since grad is the bigger moment.
+      return typeOrder[a.type] - typeOrder[b.type];
     });
     for (const m of list) {
       m.districts.sort((a, b) => a.name.localeCompare(b.name));
     }
+    // Hide a panel that contains only a finals row in a single district —
+    // not enough to justify the panel until lastday/grad joins it.
+    const hasEndOfYear = list.some((m) => m.type === "lastday" || m.type === "graduation");
+    if (!hasEndOfYear) return [];
     return list;
   }, [events, matchedDistrictIds, districtById, todayIso, horizonIso]);
 
@@ -1010,7 +1021,7 @@ function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> 
           fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
           letterSpacing: "0.08em", textTransform: "uppercase", color: "#A16207",
         }}>
-          School year ends
+          End of school year
         </span>
         <span style={{ fontWeight: 700, color: "#713F12" }}>{spread}</span>
         <span style={{ color: "#A16207", fontSize: 11.5 }}>
@@ -1021,7 +1032,11 @@ function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> 
         {milestones.map((m) => {
           const d = new Date(m.date + "T12:00:00");
           const dateLabel = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-          const typeLabel = m.type === "graduation" ? "Graduation" : "Last day";
+          const typeLabel = m.type === "graduation"
+            ? "Graduation"
+            : m.type === "finals"
+              ? "Finals start"
+              : "Last day";
           return (
             <div
               key={`${m.date}-${m.type}`}

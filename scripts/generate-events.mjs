@@ -589,6 +589,7 @@ const TITLE_FIXES = {
   "Lgpns ": "LGPNS ",
   "Fopal": "FOPAL",     // Friends of Palo Alto Library — biblio API title-cases it
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
+  "Xfyd ": "XFYD ",     // XFYD chess club — all-caps brand name on flyers
 };
 
 function cleanTitle(title) {
@@ -631,6 +632,8 @@ function cleanTitle(title) {
     "SJSU", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
+    // Local youth-program brand names that arrive ALL-CAPS from BiblioCommons
+    "XFYD",
     // South Bay venues / institutions
     "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
