@@ -1,55 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-11T23:09:17.581Z",
+      "generatedAt": "2026-05-12T11:08:36.337Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 4 – May 11",
+      "dateRange": "May 5 – May 12",
       "stats": {
-        "total": 439,
-        "notable": 36,
-        "newUnits": 876,
-        "totalValuation": 232559302
+        "total": 314,
+        "notable": 26,
+        "newUnits": 11,
+        "totalValuation": 30969310
       },
       "permits": [
-        {
-          "id": "2026-109349-MF",
-          "address": "100 El Paseo De Saratoga",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "El Paseo De Saratoga (Bemp 100%) Building 1",
-          "valuation": 63376169,
-          "units": 398,
-          "issueDate": "2026-05-05",
-          "subtype": "Apartment"
-        },
-        {
-          "id": "2026-109362-MF",
-          "address": "200 El Paseo De Saratoga",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "El Paseo De Saratoga (Bemp 100%) Building 2",
-          "valuation": 62330065,
-          "units": 374,
-          "issueDate": "2026-05-05",
-          "subtype": "Apartment"
-        },
-        {
-          "id": "2026-113354-MF",
-          "address": "1135 E Santa Clara St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "New Affordable Apt. Algarve (Tm)",
-          "valuation": 10290014,
-          "units": 91,
-          "issueDate": "2026-05-05",
-          "subtype": "Apartment"
-        },
         {
           "id": "2025-099873-RS",
           "address": "326 Battle Dance Dr",
@@ -72,30 +36,6 @@
           "valuation": 169531,
           "units": 1,
           "issueDate": "2026-05-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-122641-RS",
-          "address": "1363 Suffolk Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached 2 Story adu 1,000 Sqft",
-          "valuation": 169090,
-          "units": 1,
-          "issueDate": "2026-05-05",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2024-119368-RS",
-          "address": "1687 Virginia Pl #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case Legalize Unpermitted Garage Conversion to adu",
-          "valuation": 167906,
-          "units": 1,
-          "issueDate": "2026-05-05",
           "subtype": "2nd Unit Added"
         },
         {
@@ -133,33 +73,93 @@
           "units": 1,
           "issueDate": "2026-05-07",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-095127-RS",
+          "address": "6074 Alcante Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached adu",
+          "valuation": 120223,
+          "units": 1,
+          "issueDate": "2026-05-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-125046-RS",
+          "address": "360 Titleist Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached adu",
+          "valuation": 117348,
+          "units": 1,
+          "issueDate": "2026-05-06",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-095568-RS",
+          "address": "1366 Mastic St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "(Bemp100%) Detached Garage Conversion to adu",
+          "valuation": 108218,
+          "units": 1,
+          "issueDate": "2026-05-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2024-095386-RS",
+          "address": "288 Turquesa Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "(Bepm 100)% Garage Conversion to Jadu",
+          "valuation": 76043,
+          "units": 1,
+          "issueDate": "2026-05-06",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2023-105386-RS",
+          "address": "1691 Bagpipe Wy",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to adu",
+          "valuation": 75414,
+          "units": 1,
+          "issueDate": "2026-05-07",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-11T23:09:19.833Z",
+      "generatedAt": "2026-05-12T11:08:38.713Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 4 – May 11",
+      "dateRange": "May 5 – May 12",
       "stats": {
-        "total": 118,
+        "total": 127,
         "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01131",
-          "address": "290 W Charleston Rd",
+          "id": "26BLD-01146",
+          "address": "779 Maplewood Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Minor remodel of home (129SF)",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-04",
+          "issueDate": "2026-05-05",
           "subtype": "Permit Issued"
         },
         {
@@ -187,18 +187,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01146",
-          "address": "779 Maplewood Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-05",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26PLN-00104",
           "address": "3210 Porter Dr",
           "category": "entitlement",
@@ -208,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-07",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00105",
+          "address": "1600 Sand Hill Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Removal of one heaving black acacia",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-11",
           "subtype": "Over the Counter Approved"
         }
       ]
