@@ -1365,14 +1365,21 @@ async function fetchStanfordEvents() {
 // These are org meetings, advising sessions, career fairs for enrolled students, etc.
 // Public-facing events (exhibits, performances, athletics, lectures) should pass through.
 const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars)\//i;
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\|/i;
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
+// SCU brands students/alumni as "Broncos". Marketing language addressed to
+// "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
+// — join…) reliably signals a campus-internal event even when the title looks
+// generic. Conservative phrases only — bare "Broncos" appears in public sports
+// coverage too.
+const SCU_INTERNAL_DESC = /\b(?:free|open)\s+to\s+(?:all\s+)?broncos\b|\bbronco\s+(?:community|family)\b|\b(?:mba|ms|phd|undergraduate|graduate)\s+(?:and\s+\w+\s+)?students?\s+and\s+alumni\b/i;
 
 function isStudentOnlyEvent(item) {
   if (STUDENT_ONLY_URL_PATHS.test(item.link || "")) return true;
   if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
   const desc = stripHtml(item.description || "");
   if (STUDENT_ONLY_DESC.test(desc)) return true;
+  if (SCU_INTERNAL_DESC.test(desc)) return true;
   return false;
 }
 
