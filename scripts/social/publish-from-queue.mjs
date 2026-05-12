@@ -12,6 +12,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CONFIG } from "./lib/constants.mjs";
 import { rewriteTimeReferences, parseEventHour, DAY_NAMES } from "./lib/time-references.mjs";
+import { ptDateString, ptHour, ptDayOfWeek, ptClockString } from "./lib/pt-clock.mjs";
 
 import { randomBytes } from "node:crypto";
 
@@ -44,8 +45,16 @@ const FORCE_SLOT_TIME = { "day-plan": "07:15", "tonight-pick": "11:45", "wildcar
 
 // ── Time helpers ───────────────────────────────────────────────────────────
 
+// Returns the current instant. PT-zoned date/hour/weekday are derived via
+// scripts/social/lib/pt-clock.mjs (ptDateString / ptHour / ptDayOfWeek) so
+// the publisher works correctly regardless of system TZ and regardless of
+// the time of day — including after PT 5pm when the UTC date is ahead.
+//
+// Legacy code returned `new Date(new Date().toLocaleString(..., {tz: PT}))`
+// here, then read `.toISOString().split("T")[0]` to get the "PT date" — but
+// that pattern actually returns the UTC date and silently broke after 5pm.
 function getPTTime() {
-  return new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  return new Date();
 }
 
 function parseEventDate(dateStr) {
@@ -67,9 +76,9 @@ function getEventDate(post) {
  * Accepts a full post entry (not just item) to check both date sources.
  */
 function isTimeRelevant(post, ptTime) {
-  const today = ptTime.toISOString().split("T")[0];
-  const currentHour = ptTime.getHours();
-  const currentMinute = ptTime.getMinutes();
+  const today = ptDateString(ptTime);
+  const currentHour = ptHour(ptTime);
+  const currentMinute = ptTime.getMinutes(); // minute is TZ-independent
   const currentTotalMinutes = currentHour * 60 + currentMinute;
 
   const eventDate = getEventDate(post);
@@ -148,8 +157,8 @@ async function sendSilentFailureAlert({ slotType, today, timeStr, queueSize, sch
 
 async function main() {
   const ptTime = getPTTime();
-  const today = ptTime.toISOString().split("T")[0];
-  const timeStr = ptTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const today = ptDateString(ptTime);
+  const timeStr = ptClockString(ptTime);
 
   console.log(`\n📤 Publish from queue — ${today} ${timeStr}`);
 
@@ -276,7 +285,7 @@ async function main() {
     const event = new Date(eventDate + "T12:00:00");
     const publish = new Date(today + "T12:00:00");
     const daysUntil = Math.round((event - publish) / 86400000);
-    const publishDow = ptTime.getDay(); // 0=Sun, 6=Sat
+    const publishDow = ptDayOfWeek(ptTime); // 0=Sun, 6=Sat
     const eventDow = event.getDay();
 
     // Already past = should not be here, but just in case
@@ -460,7 +469,7 @@ async function main() {
     // shortening, etc.) or the date fields may have been missed earlier.
     // This is the last line of defense against posting stale events.
     const guardTime = getPTTime();
-    const guardToday = guardTime.toISOString().split("T")[0];
+    const guardToday = ptDateString(guardTime);
     const eventDate = getEventDate(post);
     if (eventDate && eventDate < guardToday) {
       console.log(`      ⛔ PRE-PUBLISH GUARD: event date ${eventDate} is in the past — skipping`);
@@ -470,7 +479,7 @@ async function main() {
       continue;
     }
     // Also check the copy itself for obviously stale day-of-week references
-    const guardDayName = DAY_NAMES[guardTime.getDay()];
+    const guardDayName = DAY_NAMES[ptDayOfWeek(guardTime)];
     const eventDayName = eventDate ? DAY_NAMES[new Date(eventDate + "T12:00:00").getDay()] : null;
     const firstCopy = Object.values(rewrittenCopy)[0] || "";
     if (eventDate && eventDate === guardToday && eventDayName) {
