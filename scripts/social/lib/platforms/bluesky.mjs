@@ -383,13 +383,51 @@ export async function createReply(text, parentUri, parentCid, rootUri = null, ro
   return { uri: data.uri, cid: data.cid };
 }
 
+// Bluesky's blob endpoint hard-caps at 2,000,000 bytes. Use a safety margin so
+// metadata + headers don't push us over after re-encode.
+const BLUESKY_BLOB_MAX = 1_950_000;
+
+/**
+ * Ensure an image buffer fits under Bluesky's 2MB blob cap. PNG screenshots /
+ * photographic Recraft posters routinely come in at 2–3MB and the rest of the
+ * publisher fan-out (X/FB/Mastodon) is fine with that, so we don't want to
+ * downsize globally. Instead: re-encode to JPEG here only when needed, ratcheting
+ * width + quality until we're under the cap. Returns { buffer, mime }.
+ */
+async function fitForBluesky(imageBuffer) {
+  if (imageBuffer.length <= BLUESKY_BLOB_MAX) {
+    return { buffer: imageBuffer, mime: "image/png" };
+  }
+  const { default: sharp } = await import("sharp");
+  const attempts = [
+    { width: 1600, quality: 85 },
+    { width: 1400, quality: 82 },
+    { width: 1200, quality: 80 },
+    { width: 1080, quality: 78 },
+    { width: 1000, quality: 72 },
+  ];
+  for (const { width, quality } of attempts) {
+    const jpg = await sharp(imageBuffer)
+      .rotate()
+      .resize({ width, withoutEnlargement: true })
+      .jpeg({ quality, progressive: true })
+      .toBuffer();
+    if (jpg.length <= BLUESKY_BLOB_MAX) {
+      console.log(`      🦋 bluesky: re-encoded ${(imageBuffer.length / 1024).toFixed(0)}KB PNG → ${(jpg.length / 1024).toFixed(0)}KB JPEG (w=${width}, q=${quality})`);
+      return { buffer: jpg, mime: "image/jpeg" };
+    }
+  }
+  throw new Error(`Bluesky image too large after re-encode (last attempt > ${BLUESKY_BLOB_MAX} bytes)`);
+}
+
 /**
  * Full post flow: upload image (if provided) then post.
  */
 export async function publish(text, imageBuffer = null, imageAlt = "") {
   let blob = null;
   if (imageBuffer) {
-    blob = await uploadImage(imageBuffer);
+    const fitted = await fitForBluesky(imageBuffer);
+    blob = await uploadImage(fitted.buffer, fitted.mime);
   }
   return createPost(text, blob, imageAlt);
 }
