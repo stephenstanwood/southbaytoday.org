@@ -18,6 +18,7 @@ import {
 } from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
+import WeekendAheadCard from "./WeekendAheadCard";
 import NewsletterSignup from "../NewsletterSignup";
 // =====================================================================
 // HOME-TAB-LOCKED — DO NOT ADD TEASER COMPONENTS HERE
@@ -543,6 +544,12 @@ export default function SouthBayTodayView(_props: Props) {
           </div>
         </div>
       )}
+
+      {/* Weekend ahead — curated picks for the upcoming Sat/Sun, visible
+          Tue–Sun. Sits between the day's plan and the regional chatter so a
+          resident scrolling the homepage sees "today" → "this weekend" →
+          "what people are talking about" in that natural order. */}
+      <WeekendAheadCard onNavigate={_props.onNavigate} />
 
       {/* Reddit pulse — what people are saying on regional subs */}
       <RedditPulseTeaser />

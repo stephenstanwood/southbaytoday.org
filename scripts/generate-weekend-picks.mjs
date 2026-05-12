@@ -193,6 +193,11 @@ Return ONLY a JSON array of 5 objects, no other text:
         cost: e.cost,
         url: e.url,
         category: e.category,
+        // Pre-populate photo refs so the homepage WeekendAheadCard doesn't
+        // need to load the full upcoming-events.json (1260+ events) to look
+        // up images.
+        photoRef: e.photoRef ?? null,
+        image: e.image ?? null,
         why: validatedWhy.replace(/\s{2,}/g, " ").trim(),
       };
     }).filter(Boolean),
