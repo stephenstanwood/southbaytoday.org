@@ -524,8 +524,23 @@ function isPublicEvent(title, source, description, venue) {
       if (pat.test(title)) return false;
     }
     // Stanford-internal access requirements (SUID card / SUNet ID) — Stanford-only
-    if (source === "Stanford Events" && description) {
-      if (/\bSUID\b/i.test(description) || /\bSUNet\s*ID\b/i.test(description)) return false;
+    if (source === "Stanford Events") {
+      if (description && (/\bSUID\b/i.test(description) || /\bSUNet\s*ID\b/i.test(description))) return false;
+      // Vaden Student Health Center is Stanford CAPS / student health — every
+      // event there is enrolled-student-only by design (counseling drop-ins,
+      // mental health support groups, etc). Catches "Anxiety Toolbox", "Living
+      // with OCD", "Rooted! Black Graduate Student Support Group" and similar.
+      if (venue && /\bvaden\b/i.test(venue)) return false;
+      // Stanford CAPS-style support groups frequently route through other
+      // venues but are explicit in description: "for [demographic] students",
+      // "MHT clinicians" (Mental Health & Treatment), "Counseling and
+      // Psychological Services". These are Stanford-only by program design.
+      if (description) {
+        if (/\bMHT\s+clinicians?\b/i.test(description)) return false;
+        if (/\bcounseling\s+(?:and|&)\s+psychological\s+services\b/i.test(description)) return false;
+        if (/\bsupport\s+group\s+for\s+(?:black|asian|latin[oax]+|hispanic|queer|lgbtq\+?|trans|first[\s-]?gen(?:eration)?|undocumented|graduate|undergraduate|medical|stanford|international)[\s-]?(?:identified\s+)?(?:stanford\s+)?(?:graduate\s+|undergraduate\s+|medical\s+)?students?\b/i.test(description)) return false;
+        if (/\bgroup\s+for\s+(?:stanford\s+)?(?:graduate\s+|undergraduate\s+|medical\s+)?students?\s+who\s+(?:live|are|identify|experience|have)\b/i.test(description)) return false;
+      }
     }
     // Filter away athletic events — games played outside the South Bay
     if (isAwayGame(title)) return false;
