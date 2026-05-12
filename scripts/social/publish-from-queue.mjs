@@ -11,6 +11,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CONFIG } from "./lib/constants.mjs";
+import { rewriteTimeReferences, parseEventHour, DAY_NAMES } from "./lib/time-references.mjs";
 
 import { randomBytes } from "node:crypto";
 
@@ -50,18 +51,6 @@ function getPTTime() {
 function parseEventDate(dateStr) {
   if (!dateStr) return null;
   return new Date(dateStr + "T12:00:00");
-}
-
-function parseEventHour(timeStr) {
-  if (!timeStr) return null;
-  const lower = timeStr.toLowerCase().trim();
-  const match = lower.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/);
-  if (!match) return null;
-  let hour = parseInt(match[1]);
-  const ampm = match[3];
-  if (ampm === "pm" && hour !== 12) hour += 12;
-  if (ampm === "am" && hour === 12) hour = 0;
-  return hour;
 }
 
 /**
@@ -107,83 +96,6 @@ function isTimeRelevant(post, ptTime) {
   }
 
   return true;
-}
-
-// ── Time reference rewriting ───────────────────────────────────────────────
-
-const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-function getRelativeDayLabel(eventDate, publishDate) {
-  if (!eventDate) return null;
-  const event = new Date(eventDate + "T12:00:00");
-  const publish = new Date(publishDate + "T12:00:00");
-  const diffDays = Math.round((event - publish) / 86400000);
-
-  if (diffDays === 0) return "today";
-  if (diffDays === 1) return "tomorrow";
-  if (diffDays === -1) return null; // yesterday, shouldn't happen
-  if (diffDays >= 2 && diffDays <= 6) return DAY_NAMES[event.getDay()];
-  return null; // more than a week out, leave as-is
-}
-
-/**
- * Rewrite day/time references in copy to match the actual publish date.
- * e.g., if event is on Wednesday and we're posting on Wednesday,
- * replace "Wednesday" with "today" / "Tonight" etc.
- */
-function rewriteTimeReferences(text, item, ptTime) {
-  const publishDate = ptTime.toISOString().split("T")[0];
-  const relativeLabel = getRelativeDayLabel(item.date, publishDate);
-
-  if (!relativeLabel) return text;
-
-  const eventDate = new Date(item.date + "T12:00:00");
-  const eventDayName = DAY_NAMES[eventDate.getDay()];
-
-  let result = text;
-
-  // Replace day name references
-  // "Wednesday" → "today", "Tuesday" → "tomorrow", etc.
-  const dayPattern = new RegExp(`\\b${eventDayName}\\b`, "gi");
-  result = result.replace(dayPattern, (match) => {
-    // Preserve capitalization
-    if (relativeLabel === "today" || relativeLabel === "tomorrow") {
-      return match[0] === match[0].toUpperCase()
-        ? relativeLabel.charAt(0).toUpperCase() + relativeLabel.slice(1)
-        : relativeLabel;
-    }
-    return match; // same day name, no change needed
-  });
-
-  // Handle "this afternoon/evening/morning" references for today
-  if (relativeLabel === "today") {
-    const hour = ptTime.getHours();
-    const eventHour = parseEventHour(item.time);
-
-    // Replace "this afternoon" with "tonight" if it's evening — preserve case
-    // so "This afternoon" → "Tonight", not "tonight".
-    if (hour >= 17 && eventHour && eventHour >= 17) {
-      result = result.replace(/\bthis afternoon\b/gi, (match) =>
-        match[0] === match[0].toUpperCase() ? "Tonight" : "tonight"
-      );
-    }
-    // Replace "tonight" with "this afternoon" if it's morning/afternoon event —
-    // preserve case so "Tonight" → "This afternoon", not "this afternoon".
-    if (hour < 17 && eventHour && eventHour < 17) {
-      result = result.replace(/\btonight\b/gi, (match) =>
-        match[0] === match[0].toUpperCase() ? "This afternoon" : "this afternoon"
-      );
-    }
-  }
-
-  // "Tomorrow" references when event is actually today
-  if (relativeLabel === "today") {
-    result = result.replace(/\btomorrow\b/gi, (match) =>
-      match[0] === match[0].toUpperCase() ? "Today" : "today"
-    );
-  }
-
-  return result;
 }
 
 // ── Silent-failure alert ───────────────────────────────────────────────────
