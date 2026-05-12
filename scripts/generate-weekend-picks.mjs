@@ -124,6 +124,8 @@ When writing the "why", do NOT invent or guess the day-of-week or time-of-day. I
 
 Do NOT invent factual claims not present in the event title or description: composer/author/director attributions, headcounts, edition numbers, founding years, or "first/largest/oldest" superlatives. If a detail isn't in the event text, leave it out.
 
+Each "why" must describe ONLY the event at its own eventIndex. Do NOT borrow venue names, performers, or details from other events in the list — even if they're similar or scheduled at the same time.
+
 Return ONLY a JSON array of 5 objects, no other text:
 [
   {
