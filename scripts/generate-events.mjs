@@ -391,6 +391,12 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bdrop[-\s]?in\s+advising\b/i,
   /\bstudent\s+recognition\s+program\b/i,
   /\brecognition\s+(ceremony|reception|program)\b/i,
+  // Internal volunteer appreciation events (e.g. SCU Osher "Volunteer
+  // Luncheon Reception", SJSU "Annual Volunteer Luncheon"). Public-facing
+  // volunteer events use different framing — "Volunteer Day", "Cleanup",
+  // "Orientation". A "Volunteer Luncheon" is almost always an internal
+  // appreciation event for existing volunteers.
+  /\bvolunteer\s+luncheon\b/i,
   /\bdean'?s\s+(reception|address|brunch)\b/i,
   /\bclub\s+sport\s+practice\b/i,
   /\bclass\s+meeting\s+for\s+/i,
@@ -1379,8 +1385,18 @@ async function fetchStanfordEvents() {
 // Filter out student-internal events from university feeds.
 // These are org meetings, advising sessions, career fairs for enrolled students, etc.
 // Public-facing events (exhibits, performances, athletics, lectures) should pass through.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars)\//i;
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b/i;
+// `executive-education` covers Leavey School of Business paid short-courses
+// for working professionals (e.g. "Corporate Governance for Executives") —
+// these are multi-thousand-dollar enrollment-required programs, not public
+// events. `osher` covers SCU's Osher Lifelong Learning Institute, a
+// paid-membership program for adults 50+ whose listings ("Tech SIG",
+// "Volunteer Luncheon Reception") are members-only.
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher)\//i;
+// `scuaa` = SCU Accounting Association (student club); `bva café` /
+// `bronco ventures accelerator` = SCU's internal startup accelerator program
+// (cohort-only events). Both leaked through cycle 146's broader SCU filter
+// because the title patterns are unique to those internal programs.
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
