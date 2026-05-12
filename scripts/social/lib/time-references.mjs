@@ -13,34 +13,9 @@
 // contexts; idiomatic noun uses of day names are left alone.
 // ---------------------------------------------------------------------------
 
+import { ptDateString, ptHour } from "./pt-clock.mjs";
+
 export const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-// PT-zoned formatters. Used so the rewriter can derive the publish-day date
-// and hour from any Date — even one constructed with an explicit offset like
-// `new Date("2026-05-11T19:00:00-07:00")` — without depending on the system
-// timezone. (publish-from-queue.mjs previously used
-// `getPTTime().toISOString().split("T")[0]` which silently returns the *UTC*
-// date — wrong by one day after PT 4-5pm. That bug now lives only outside
-// this module.)
-const PT_DATE_FORMATTER = new Intl.DateTimeFormat("en-CA", {
-  timeZone: "America/Los_Angeles",
-  year: "numeric", month: "2-digit", day: "2-digit",
-});
-const PT_HOUR_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  timeZone: "America/Los_Angeles",
-  hour: "numeric", hour12: false,
-});
-
-function ptDateString(d) {
-  // en-CA emits ISO-style "YYYY-MM-DD".
-  return PT_DATE_FORMATTER.format(d);
-}
-
-function ptHour(d) {
-  // hour12:false gives "0".."23" — but at midnight some locales emit "24",
-  // so normalize to mod 24.
-  return parseInt(PT_HOUR_FORMATTER.format(d), 10) % 24;
-}
 
 export function parseEventHour(timeStr) {
   if (!timeStr) return null;
