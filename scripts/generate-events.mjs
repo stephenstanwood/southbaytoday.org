@@ -86,6 +86,9 @@ const TITLE_BLOCKLIST = [
   /\bspecial meeting\b/i, // generic "Special Meeting"
   /\bsubcommittee\b/i,    // internal subcommittees
   /\bstudy session\b/i,   // council study sessions
+  /\b(town|city)\s+council\b/i, // "Town Council Meeting", "City Council Budget Hearing", etc. — gov tab content
+  /\bcommittee\s*$/i,     // titles ending in "Committee" (Development Review Committee, Historic Preservation Committee)
+  /\bcommission\s*$/i,    // titles ending in "Commission" (Parks and Sustainability Commission, Civic Improvement Commission)
   /\bclosed\s*(for|—|–|-|:)/i, // closure notices ("Closed for", "Closed: Independence Day", etc.)
   /\bcancelled?\b/i,      // cancelled events
   /\bIndustry Insights with Alumni\b/i, // Stanford affiliates only
