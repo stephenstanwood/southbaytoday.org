@@ -1137,7 +1137,7 @@ function inferCategory(title, desc, type, venue = "") {
   // Guard against swim-stroke names ("butterfly", "freestyle", etc.) that share
   // vocabulary with insect/bird watching but describe swimming clinics.
   const isSwimContext = /\b(swim|stroke|freestyle|breaststroke|backstroke|aquatic)\b/.test(t);
-  if (!isSwimContext && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
+  if (!isSwimContext && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|butterflies|monarchs?|pollinators?|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
   if (/\b(volunteer|volunteering)\b/.test(t) && /\b(farm|garden|trail|park|nature)\b/.test(t)) return "community";
   // School/fundraiser fun runs are community events, not sports
