@@ -363,7 +363,13 @@ test("resetFlaggedToDraft=false leaves soft-flagged slots in place", () => {
   assert.ok(s.days[date]["tonight-pick"], "soft-flagged slot should not be removed when resetFlaggedToDraft=false");
 });
 
-test("hardBlock removes slot even when resetFlaggedToDraft=false (ship-blocker)", () => {
+test("resetFlaggedToDraft=false: hardBlock is reported but slot is NOT mutated", () => {
+  // Regression guard for the May 2026 fix (aed1142). Final review3 pass in
+  // generate-schedule runs with resetFlaggedToDraft=false — accepted slots
+  // were getting silently nuked on lingering hard-blocks (e.g. May 8
+  // Mountain View / Coterie Winery hours mismatch). In log-only mode the
+  // hardBlock surfaces in `flagged` so callers can act, but the schedule
+  // must not be mutated.
   const date = "2026-05-10";
   const s = makeSchedule({
     [date]: {
@@ -373,8 +379,25 @@ test("hardBlock removes slot even when resetFlaggedToDraft=false (ship-blocker)"
       }),
     },
   });
-  runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
-  assert.equal(s.days[date]["tonight-pick"], undefined, "hardBlock should remove slot regardless of reset flag");
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  const hit = flagged.find(f => f.date === date && f.slotType === "tonight-pick");
+  assert.ok(hit?.hardBlock, "hardBlock should surface in flagged[]");
+  assert.ok(s.days[date]["tonight-pick"], "slot must survive log-only pass");
+  assert.equal(s.days[date]._reviewHistory, undefined, "no history written in log-only pass");
+});
+
+test("hardBlock removes slot when resetFlaggedToDraft=true (default)", () => {
+  const date = "2026-05-10";
+  const s = makeSchedule({
+    [date]: {
+      "tonight-pick": makeTonight({
+        status: "approved",
+        title: "Online Author Talk", // virtual → hardBlock
+      }),
+    },
+  });
+  runQualityReview(s, { dates: [date] });
+  assert.equal(s.days[date]["tonight-pick"], undefined, "hardBlock should remove slot in mutating pass");
   assert.ok(s.days[date]._reviewHistory?.length, "should record review history");
   assert.ok(s.days[date]._reviewHistory[0].hardBlock);
 });
