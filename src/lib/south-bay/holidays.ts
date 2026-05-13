@@ -27,6 +27,14 @@ export interface NamedHoliday {
    *  weekend rather than just the calendar holiday. Omit for single-day
    *  observances (defaults to `[0]`). */
   weekendSpan?: number[];
+  /** Federal holiday — when set, the holiday banners render a "what's
+   *  closed" note (libraries, post offices, city offices, banks). When the
+   *  holiday lands Mon–Fri, residents also see a 1-day trash-pickup delay
+   *  note that holds for SCC residential collection (Recology / GreenWaste
+   *  / Garden City / Mission Trail / SJ Recycle Plus). Omit for cultural-
+   *  only holidays (Mother's Day, Cinco de Mayo, Halloween, …) — those
+   *  don't trigger civic closures. */
+  federal?: boolean;
 }
 
 /** Returns the YYYY-MM-DD dates covered by a holiday's weekendSpan (or just
@@ -91,6 +99,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1e3a8a",
     bg: "#eff6ff",
     computeIso: (y) => fixedDate(y, 1, 1),
+    federal: true,
   },
   {
     id: "mlk-day",
@@ -100,6 +109,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#f3f4f6",
     computeIso: (y) => nthWeekday(y, 1, 1, 3), // 3rd Monday of January
     weekendSpan: [-2, -1, 0],
+    federal: true,
   },
   {
     id: "lunar-new-year",
@@ -136,6 +146,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#eff6ff",
     computeIso: (y) => nthWeekday(y, 2, 1, 3), // 3rd Monday of February
     weekendSpan: [-2, -1, 0],
+    federal: true,
   },
   {
     id: "st-patricks",
@@ -218,6 +229,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => lastWeekday(y, 5, 1), // last Monday of May
     themeKeywords: ["memorial day", "veterans", "wreath-laying", "wreath laying", "fallen", "armed forces"],
     weekendSpan: [-2, -1, 0],
+    federal: true,
   },
   {
     id: "eid-al-adha",
@@ -245,6 +257,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#fffbeb",
     computeIso: (y) => fixedDate(y, 6, 19),
     themeKeywords: ["juneteenth"],
+    federal: true,
   },
   {
     id: "fathers-day",
@@ -263,6 +276,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#fef2f2",
     computeIso: (y) => fixedDate(y, 7, 4),
     themeKeywords: ["fourth of july", "4th of july", "july 4", "independence day", "fireworks", "patriotic"],
+    federal: true,
   },
   {
     id: "labor-day",
@@ -272,6 +286,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#f3f4f6",
     computeIso: (y) => nthWeekday(y, 9, 1, 1), // 1st Monday of September
     weekendSpan: [-2, -1, 0],
+    federal: true,
   },
   {
     id: "rosh-hashanah",
@@ -337,6 +352,9 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#fffbeb",
     computeIso: (y) => nthWeekday(y, 10, 1, 2), // 2nd Monday of October
     weekendSpan: [-2, -1, 0],
+    // Federal holiday is officially "Columbus Day" but SCC observes and
+    // posts closures under the Indigenous Peoples' Day label.
+    federal: true,
   },
   {
     id: "halloween",
@@ -386,6 +404,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#eff6ff",
     computeIso: (y) => fixedDate(y, 11, 11),
     themeKeywords: ["veterans day", "veterans'", "armed forces", "wreath-laying", "wreath laying"],
+    federal: true,
   },
   {
     id: "thanksgiving",
@@ -395,6 +414,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#fefce8",
     computeIso: (y) => nthWeekday(y, 11, 4, 4), // 4th Thursday of November
     themeKeywords: ["thanksgiving", "turkey trot", "friendsgiving", "harvest"],
+    federal: true,
   },
   {
     id: "christmas-eve",
@@ -413,6 +433,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#fef2f2",
     computeIso: (y) => fixedDate(y, 12, 25),
     themeKeywords: ["christmas", "santa", "tree lighting", "nutcracker"],
+    federal: true,
   },
   {
     id: "new-years-eve",
@@ -463,4 +484,30 @@ export function nextHolidayWithin(todayIso: string, horizonIso: string): {
     }
   }
   return best;
+}
+
+// ── Federal-holiday closure summary ────────────────────────────────────────
+// Surfaces "what's closed" guidance residents look up every federal holiday.
+// Returns null for non-federal (cultural-only) holidays — banners stay clean.
+// The trash-pickup delay note holds for SCC residential collection when the
+// holiday lands Mon–Fri: Recology, GreenWaste, Garden City Sanitation,
+// Mission Trail Waste Systems, and SJ Recycle Plus all roll service +1 day
+// from the holiday through the rest of the week.
+
+export interface HolidayClosureSummary {
+  closed: string;          // "libraries, post offices, city offices, banks"
+  trashDelayed: boolean;   // true → "Trash pickup runs 1 day late this week"
+}
+
+export function holidayClosureSummary(
+  holiday: NamedHoliday,
+  iso: string,
+): HolidayClosureSummary | null {
+  if (!holiday.federal) return null;
+  const dow = new Date(`${iso}T12:00:00`).getDay(); // 0=Sun..6=Sat
+  const fallsOnWeekday = dow >= 1 && dow <= 5;
+  return {
+    closed: "libraries, post offices, city offices, banks",
+    trashDelayed: fallsOnWeekday,
+  };
 }

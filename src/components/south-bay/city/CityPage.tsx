@@ -12,7 +12,7 @@ import {
   startMinutes, formatTimeRange, isNotEnded,
   formatAge, formatRelativeDate,
 } from "../../../lib/south-bay/timeHelpers";
-import { nextHolidayWithin, matchesHolidayTheme, type NamedHoliday } from "../../../lib/south-bay/holidays";
+import { nextHolidayWithin, matchesHolidayTheme, holidayClosureSummary, type NamedHoliday } from "../../../lib/south-bay/holidays";
 
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../../data/south-bay/digests.json";
@@ -757,7 +757,16 @@ function CityHolidayBanner({
     ? `${themedCount} pick${themedCount === 1 ? "" : "s"} in ${cityName}`
     : `${totalCount} event${totalCount === 1 ? "" : "s"} in ${cityName}`;
 
+  // Federal-holiday closure strip — libraries, post offices, banks, city
+  // halls all close on federal holidays; SCC residential trash also delays
+  // by one day when the holiday lands Mon–Fri.
+  const closures = holidayClosureSummary(holiday, iso);
+  const closureWeekdayLabel = closures
+    ? new Date(`${iso}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" })
+    : null;
+
   return (
+    <div style={{ marginBottom: 20 }}>
     <div
       style={{
         display: "flex",
@@ -765,10 +774,10 @@ function CityHolidayBanner({
         flexWrap: "wrap",
         gap: 8,
         padding: "10px 14px",
-        marginBottom: 20,
         background: holiday.bg,
         border: `1px solid ${holiday.color}33`,
-        borderRadius: 6,
+        borderRadius: closures ? "6px 6px 0 0" : 6,
+        borderBottom: closures ? "none" : `1px solid ${holiday.color}33`,
         fontSize: 13,
         color: holiday.color,
         lineHeight: 1.45,
@@ -808,6 +817,47 @@ function CityHolidayBanner({
           {pillLabel} <span aria-hidden>→</span>
         </a>
       )}
+    </div>
+    {closures && (
+      <div
+        style={{
+          padding: "6px 14px 8px",
+          background: holiday.bg,
+          border: `1px solid ${holiday.color}33`,
+          borderTop: `1px dashed ${holiday.color}55`,
+          borderRadius: "0 0 6px 6px",
+          fontSize: 11.5,
+          color: holiday.color,
+          lineHeight: 1.45,
+          display: "flex",
+          gap: 8,
+          flexWrap: "wrap",
+          alignItems: "baseline",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 9,
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            opacity: 0.7,
+          }}
+        >
+          Closures
+        </span>
+        <span style={{ opacity: 0.95 }}>
+          <strong style={{ fontWeight: 700 }}>Closed{closureWeekdayLabel ? ` ${closureWeekdayLabel}` : ""}:</strong>{" "}
+          {closures.closed}
+        </span>
+        {closures.trashDelayed && (
+          <span style={{ opacity: 0.95 }}>
+            · <strong style={{ fontWeight: 700 }}>Trash:</strong> 1 day late through Friday
+          </span>
+        )}
+      </div>
+    )}
     </div>
   );
 }

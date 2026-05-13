@@ -9,6 +9,7 @@ import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import {
   holidayOn,
   holidaySpanIsos,
+  holidayClosureSummary,
   matchesHolidayTheme,
   nextHolidayWithin,
   NAMED_HOLIDAYS,
@@ -1176,16 +1177,25 @@ function HolidayHeadsUpBanner({
     ? `${themedCount} pick${themedCount === 1 ? "" : "s"}`
     : `${totalCount} event${totalCount === 1 ? "" : "s"}`;
 
+  // Federal-holiday closure note ("Closed Mon: libraries, post offices,
+  // city offices, banks · Trash pickup runs 1 day late this week"). Renders
+  // inline under the banner header so a resident who sees "Memorial Day
+  // Weekend → 5 picks" also sees what's closed without leaving the page.
+  const closures = holidayClosureSummary(holiday, next.iso);
+  const closureWeekdayLabel = closures
+    ? new Date(`${next.iso}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" })
+    : null;
+
   const innerStyle: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
     flexWrap: "wrap",
     gap: 8,
     padding: "8px 12px",
-    marginBottom: 10,
     background: holiday.bg,
     border: `1px solid ${holiday.color}33`,
-    borderRadius: 8,
+    borderRadius: closures ? "8px 8px 0 0" : 8,
+    borderBottom: closures ? "none" : `1px solid ${holiday.color}33`,
     fontSize: 12.5,
     color: holiday.color,
     lineHeight: 1.45,
@@ -1234,22 +1244,73 @@ function HolidayHeadsUpBanner({
     </>
   );
 
-  if (isClickable) {
-    return (
-      <button
-        type="button"
-        onClick={() => onJumpToDate(landingIso, showThemed ? holiday.id : undefined)}
-        aria-label={`Jump to ${displayLabel} (${dateLabel}) — ${pillLabel}`}
-        style={innerStyle}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
-        onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
+  const closureStrip = closures && (
+    <div
+      style={{
+        padding: "6px 12px 8px",
+        marginBottom: 10,
+        background: holiday.bg,
+        border: `1px solid ${holiday.color}33`,
+        borderTop: `1px dashed ${holiday.color}55`,
+        borderRadius: "0 0 8px 8px",
+        fontSize: 11.5,
+        color: holiday.color,
+        lineHeight: 1.45,
+        boxSizing: "border-box",
+        display: "flex",
+        gap: 8,
+        flexWrap: "wrap",
+        alignItems: "baseline",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 9,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          opacity: 0.7,
+        }}
       >
-        {inner}
-      </button>
-    );
-  }
+        Closures
+      </span>
+      <span style={{ opacity: 0.95 }}>
+        <strong style={{ fontWeight: 700 }}>Closed{closureWeekdayLabel ? ` ${closureWeekdayLabel}` : ""}:</strong>{" "}
+        {closures.closed}
+      </span>
+      {closures.trashDelayed && (
+        <span style={{ opacity: 0.95 }}>
+          · <strong style={{ fontWeight: 700 }}>Trash:</strong> 1 day late through Friday
+        </span>
+      )}
+    </div>
+  );
 
-  return <div style={innerStyle}>{inner}</div>;
+  const button = isClickable ? (
+    <button
+      type="button"
+      onClick={() => onJumpToDate(landingIso, showThemed ? holiday.id : undefined)}
+      aria-label={`Jump to ${displayLabel} (${dateLabel}) — ${pillLabel}`}
+      style={innerStyle}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
+    >
+      {inner}
+    </button>
+  ) : (
+    <div style={innerStyle}>{inner}</div>
+  );
+
+  if (!closureStrip) {
+    return <div style={{ marginBottom: 10 }}>{button}</div>;
+  }
+  return (
+    <div>
+      {button}
+      {closureStrip}
+    </div>
+  );
 }
 
 // ── Holiday picks preview ──────────────────────────────────────────────────
