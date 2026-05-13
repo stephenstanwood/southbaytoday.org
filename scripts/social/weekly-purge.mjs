@@ -2,22 +2,30 @@
 // ---------------------------------------------------------------------------
 // South Bay Today — Weekly Social Purge
 // Deletes SBT posts older than --max-age-days, gated on engagement: posts
-// with replies/reposts/quotes (any) OR likes ≥ MIN_LIKES_TO_KEEP are kept.
+// with replies/reposts/quotes (any) OR likes ≥ MIN_LIKES_TO_KEEP on any
+// visible platform are kept.
 //
-// Source of truth: src/data/south-bay/social-engagement.json (refreshed every
-// 3 min by org.southbaytoday.collect-engagement). Posts not in that file
-// (>30d old) are out of reach — by the time the recurring job stabilises,
-// the rolling window means everything we need is in the file.
+// Sources:
+//   - src/data/south-bay/social-engagement.json  (engagement counts; refreshed
+//     every 3 min by org.southbaytoday.collect-engagement)
+//   - src/data/south-bay/social-schedule.json    (current publish path)
+//   - src/data/south-bay/social-approved-queue.json (older publish path)
+//
+// FB has no engagement visibility (pages_read_engagement wall), but its post
+// IDs do appear in schedule/queue — we delete those alongside the rest.
 //
 // Usage: node scripts/social/weekly-purge.mjs [--dry-run] [--max-age-days=7]
 // ---------------------------------------------------------------------------
 
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ENGAGEMENT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
+const DATA_DIR = join(__dirname, "..", "..", "src", "data", "south-bay");
+const ENGAGEMENT_FILE = join(DATA_DIR, "social-engagement.json");
+const SCHEDULE_FILE = join(DATA_DIR, "social-schedule.json");
+const QUEUE_FILE = join(DATA_DIR, "social-approved-queue.json");
 
 // Load env (idempotent when launchd already passes --env-file)
 try {
@@ -36,27 +44,6 @@ const MAX_AGE_DAYS = maxAgeArg ? Number(maxAgeArg.split("=")[1]) || 7 : 7;
 const MIN_LIKES_TO_KEEP = 2;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-function hasEngagement(platformData) {
-  const c = platformData?.counts || {};
-  if ((c.replies || 0) > 0) return true;
-  if ((c.reposts || 0) > 0) return true;
-  if ((c.quotes || 0) > 0) return true;
-  if ((c.likes || 0) >= MIN_LIKES_TO_KEEP) return true;
-  return false;
-}
-
-function summariseCounts(post) {
-  const tot = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
-  for (const v of Object.values(post.platforms || {})) {
-    const c = v?.counts || {};
-    tot.likes += c.likes || 0;
-    tot.reposts += c.reposts || 0;
-    tot.quotes += c.quotes || 0;
-    tot.replies += c.replies || 0;
-  }
-  return tot;
-}
 
 // ── Platform delete helpers ────────────────────────────────────────────────
 
@@ -122,7 +109,6 @@ async function deleteMastodon(id) {
 }
 
 async function deleteX(id) {
-  // X uses OAuth 1.0a — defer to the platform client to avoid duplicating that here.
   const { deletePost } = await import("./lib/platforms/x.mjs");
   await deletePost(id);
 }
@@ -136,74 +122,158 @@ const DELETERS = {
   x: deleteX,
 };
 
+// ── Build canonical post list from schedule + queue ────────────────────────
+
+function loadPublishedGroups() {
+  const groups = []; // { publishedAt, title, entries: [{platform, id, uri}] }
+
+  if (existsSync(SCHEDULE_FILE)) {
+    const sched = JSON.parse(readFileSync(SCHEDULE_FILE, "utf8"));
+    for (const [date, day] of Object.entries(sched.days || {})) {
+      for (const [slotType, slot] of Object.entries(day || {})) {
+        if (slotType.startsWith("_")) continue;
+        if (!slot || slot.status !== "published") continue;
+        if (!Array.isArray(slot.publishedTo) || !slot.publishedTo.length) continue;
+        groups.push({
+          publishedAt: slot.publishedAt,
+          title: slot.item?.title || `${date}/${slotType}`,
+          entries: slot.publishedTo.filter((e) => e.ok),
+        });
+      }
+    }
+  }
+
+  if (existsSync(QUEUE_FILE)) {
+    const queue = JSON.parse(readFileSync(QUEUE_FILE, "utf8"));
+    for (const p of queue) {
+      if (!p.published || !Array.isArray(p.publishedTo) || !p.publishedTo.length) continue;
+      if (p.publishResult && p.publishResult !== "ok") continue;
+      groups.push({
+        publishedAt: p.publishedAt,
+        title: p.item?.title || "(queue)",
+        entries: p.publishedTo.filter((e) => e.ok),
+      });
+    }
+  }
+
+  // Dedupe by overlapping platform IDs (schedule + queue can hold the same post)
+  const seen = new Set();
+  const deduped = [];
+  for (const g of groups) {
+    const keys = g.entries.map((e) => `${e.platform}:${e.uri || e.id || e.postId || ""}`);
+    if (keys.some((k) => seen.has(k))) continue;
+    keys.forEach((k) => seen.add(k));
+    deduped.push(g);
+  }
+  return deduped;
+}
+
+// ── Engagement lookup (by platform post ID) ────────────────────────────────
+
+function loadEngagementMap() {
+  const map = new Map(); // platformId → counts
+  if (!existsSync(ENGAGEMENT_FILE)) return map;
+  const data = JSON.parse(readFileSync(ENGAGEMENT_FILE, "utf8"));
+  for (const post of data.posts || []) {
+    for (const [platform, info] of Object.entries(post.platforms || {})) {
+      if (!info?.id) continue;
+      map.set(`${platform}:${info.id}`, info.counts || {});
+    }
+  }
+  return map;
+}
+
+function groupHasEngagement(group, engagementMap) {
+  for (const e of group.entries) {
+    const id = e.uri || e.id || e.postId;
+    if (!id) continue;
+    const counts = engagementMap.get(`${e.platform}:${id}`);
+    if (!counts) continue; // platform with no engagement visibility (e.g. FB) — skip
+    if ((counts.replies || 0) > 0) return true;
+    if ((counts.reposts || 0) > 0) return true;
+    if ((counts.quotes || 0) > 0) return true;
+    if ((counts.likes || 0) >= MIN_LIKES_TO_KEEP) return true;
+  }
+  return false;
+}
+
+function groupCountsSummary(group, engagementMap) {
+  const tot = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
+  for (const e of group.entries) {
+    const id = e.uri || e.id || e.postId;
+    const c = engagementMap.get(`${e.platform}:${id}`);
+    if (!c) continue;
+    tot.likes += c.likes || 0;
+    tot.reposts += c.reposts || 0;
+    tot.quotes += c.quotes || 0;
+    tot.replies += c.replies || 0;
+  }
+  return tot;
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
-  const data = JSON.parse(readFileSync(ENGAGEMENT_FILE, "utf8"));
   const cutoffMs = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
   const cutoffISO = new Date(cutoffMs).toISOString();
 
   console.log(`Weekly purge — max age ${MAX_AGE_DAYS}d, cutoff ${cutoffISO}${dryRun ? " (DRY RUN)" : ""}`);
-  console.log(`engagement file: ${data.postCount} posts, last updated ${data.lastUpdated}\n`);
+
+  const groups = loadPublishedGroups();
+  const engagementMap = loadEngagementMap();
+  console.log(`loaded ${groups.length} published post groups, ${engagementMap.size} platform engagement entries\n`);
 
   let kept = 0;
-  let deletedPosts = 0;
+  let purged = 0;
   let deletedPlatforms = 0;
   let errored = 0;
 
-  for (const post of data.posts || []) {
-    // Skip non-SBT (defensive — HHSS doesn't appear here under the SBT job, but be explicit)
-    if ((post.brand || "SBT") !== "SBT") continue;
+  for (const group of groups) {
+    const pubMs = new Date(group.publishedAt || 0).getTime();
+    if (!pubMs || pubMs >= cutoffMs) continue;
 
-    const pubMs = new Date(post.publishedAt || 0).getTime();
-    if (!pubMs || pubMs >= cutoffMs) continue; // too new
-
-    // Engagement gate: any platform with engagement → keep the whole post
-    const platforms = post.platforms || {};
-    const keep = Object.values(platforms).some(hasEngagement);
-    if (keep) {
-      const t = summariseCounts(post);
-      console.log(`KEEP  ${post.publishedAt?.slice(0, 10)} ${post.title.slice(0, 60)}`);
+    if (groupHasEngagement(group, engagementMap)) {
+      const t = groupCountsSummary(group, engagementMap);
+      console.log(`KEEP  ${group.publishedAt?.slice(0, 10)} ${group.title.slice(0, 60)}`);
       console.log(`      ↳ likes=${t.likes} reposts=${t.reposts} quotes=${t.quotes} replies=${t.replies}`);
       kept++;
       continue;
     }
 
-    console.log(`PURGE ${post.publishedAt?.slice(0, 10)} ${post.title.slice(0, 60)}`);
-    deletedPosts++;
+    console.log(`PURGE ${group.publishedAt?.slice(0, 10)} ${group.title.slice(0, 60)}`);
+    purged++;
 
-    for (const [platform, info] of Object.entries(platforms)) {
-      const id = info?.id;
+    for (const e of group.entries) {
+      const id = e.uri || e.id || e.postId;
       if (!id) continue;
-      const deleter = DELETERS[platform];
+      const deleter = DELETERS[e.platform];
       if (!deleter) {
-        console.log(`      ↳ ${platform}: no deleter — skipping`);
+        console.log(`      ↳ ${e.platform}: no deleter — skipping`);
         continue;
       }
       if (dryRun) {
-        console.log(`      ↳ ${platform}: would delete ${id}`);
+        console.log(`      ↳ ${e.platform}: would delete ${id}`);
         deletedPlatforms++;
         continue;
       }
       try {
         await deleter(id);
-        console.log(`      ↳ ${platform}: deleted`);
+        console.log(`      ↳ ${e.platform}: deleted`);
         deletedPlatforms++;
       } catch (err) {
-        // Treat "already gone" as success-ish to avoid spammy retries.
         const msg = err.message || String(err);
         if (/404|not found|does not exist/i.test(msg)) {
-          console.log(`      ↳ ${platform}: already gone`);
+          console.log(`      ↳ ${e.platform}: already gone`);
         } else {
-          console.log(`      ↳ ${platform}: ERROR ${msg}`);
+          console.log(`      ↳ ${e.platform}: ERROR ${msg}`);
           errored++;
         }
       }
-      await sleep(400); // gentle on rate limits
+      await sleep(400);
     }
   }
 
-  console.log(`\nSummary: ${deletedPosts} posts purged across ${deletedPlatforms} platform-rows, ${kept} kept, ${errored} errors`);
+  console.log(`\nSummary: ${purged} posts purged across ${deletedPlatforms} platform-rows, ${kept} kept, ${errored} errors`);
   if (dryRun) console.log("(dry run — no changes)");
 }
 
