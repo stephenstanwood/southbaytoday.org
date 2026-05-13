@@ -84,10 +84,7 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
   if (visible.length < 2) return null;
 
   const weekendStarted = todayIso >= data.weekendStart;
-  const heading = weekendStarted ? "This Weekend" : "Weekend Ahead";
-  const sub = weekendStarted
-    ? `Curated picks for ${data.weekendLabel}`
-    : `Saving these for ${data.weekendLabel} — start planning now`;
+  const heading = weekendStarted ? "This Weekend" : "The Weekend Ahead";
 
   return (
     <section
@@ -104,9 +101,6 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
           <h2 style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: -1, color: "#000", lineHeight: 1.05 }}>
             {heading}
           </h2>
-          <p style={{ fontSize: 13, color: "#666", margin: "4px 0 0", fontWeight: 500 }}>
-            {sub}
-          </p>
         </div>
         <button
           type="button"
@@ -174,10 +168,6 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
           );
         })}
       </div>
-
-      <p style={{ marginTop: 12, fontSize: 11, color: "#aaa", textAlign: "right" }}>
-        Hand-picked from this week's events · Tap a tile to open
-      </p>
 
       <style>{`
         .wa-grid {
