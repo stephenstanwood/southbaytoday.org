@@ -198,6 +198,42 @@ async function nukeFacebook() {
   console.log(`  Total: ${deleted}\n`);
 }
 
+// ── Instagram ──
+async function nukeInstagram() {
+  console.log("=== INSTAGRAM ===");
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+  const userId = process.env.INSTAGRAM_USER_ID;
+  if (!token || !userId) { console.log("  No credentials"); return; }
+
+  let deleted = 0;
+  let url = `https://graph.instagram.com/v25.0/${userId}/media?fields=id,caption,timestamp&limit=50&access_token=${token}`;
+
+  while (url) {
+    const res = await fetch(url);
+    if (!res.ok) { console.log("  Fetch failed:", res.status, await res.text()); break; }
+    const data = await res.json();
+
+    for (const post of (data.data || [])) {
+      const createdAt = (post.timestamp || "").slice(0, 10);
+      const text = (post.caption || "").slice(0, 60);
+
+      if (createdAt && createdAt < cutoff) {
+        if (dryRun) {
+          console.log(`  Would delete: ${createdAt} ${text}`);
+        } else {
+          const delRes = await fetch(`https://graph.instagram.com/v25.0/${post.id}?access_token=${token}`, { method: "DELETE" });
+          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          await new Promise(r => setTimeout(r, 500));
+        }
+        deleted++;
+      }
+    }
+
+    url = data.paging?.next || null;
+  }
+  console.log(`  Total: ${deleted}\n`);
+}
+
 // ── Mastodon ──
 async function nukeMastodon() {
   console.log("=== MASTODON ===");
@@ -250,6 +286,7 @@ await nukeBluesky();
 await nukeX();
 await nukeThreads();
 await nukeFacebook();
+await nukeInstagram();
 await nukeMastodon();
 
 console.log("Done");
