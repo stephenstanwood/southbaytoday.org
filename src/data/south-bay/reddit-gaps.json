@@ -1,212 +1,227 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-12T23:18:13.170Z",
+    "generatedAt": "2026-05-13T16:09:59.476Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 20,
-    "placesMatched": 5,
-    "placeGaps": 15,
-    "eventsExtracted": 5,
+    "placesExtracted": 25,
+    "placesMatched": 8,
+    "placeGaps": 17,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Stanford Stadium",
-      "city": "Palo Alto",
+      "name": "Pruneyard",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "BTS concert Saturday May 16",
+      "context": "shopping center with reopened drive-through area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tarnsq/tip_if_youre_planning_to_park_at_sfo_long_term/",
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tb5ctb/trying_to_archive_the_explosion_of_ai_billboards/",
-        "https://www.reddit.com/r/bayarea/comments/1takehc/anyone_want_to_go_to_bts_with_me_saturday_516_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tale7l/where_can_i_sell_breakfast_burritos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+      ]
+    },
+    {
+      "name": "Luna",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "restaurant at Pruneyard, servers complained about reopened drive-through",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+      ]
+    },
+    {
+      "name": "Mendocino",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "business near Peet's at Pruneyard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+      ]
+    },
+    {
+      "name": "Valley Fair Mall",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "parking structure traffic control mentioned",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
+      ]
+    },
+    {
+      "name": "House Rabbit Society",
+      "city": "",
+      "kind": "service",
+      "context": "rabbit fostering organization based in Richmond Bay Area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
       ]
     },
     {
       "name": "State of Mind Slice House",
       "city": "Palo Alto",
       "kind": "restaurant",
-      "context": "New York style pizza, go-to spot",
+      "context": "New York style pizza, worth the drive",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
-      "name": "Giovanni's on Lawrence",
+      "name": "Giovanni's",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "legitimate New York pizza, highly recommended",
+      "context": "legit New York pizza on Lawrence",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
-      ]
-    },
-    {
-      "name": "Slice House at San Antonio Center",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "New York style pizza venue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "Slice of Homage",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "pizza spot with New York style option",
+      "context": "best pizza with New York style option",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
-      "name": "Bass Pro Shops",
+      "name": "Com Tam Thien Huong",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "known for broken rice, Bun Ga Nuong specialty",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+      ]
+    },
+    {
+      "name": "Pho Luc Lac",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "best rib eye fried rice in the area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+      ]
+    },
+    {
+      "name": "Bass Pro",
       "city": "San Jose",
       "kind": "retail",
-      "context": "fishing gear, rods, bait, and expert staff",
+      "context": "fishing gear rental and lessons for kids",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "Sportsmen's Supply",
       "city": "Campbell",
       "kind": "retail",
-      "context": "fishing equipment and crash course instruction",
+      "context": "fishing gear and crash course instruction",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "Coyote Bait & Tackle",
-      "city": "",
+      "city": "San Jose",
       "kind": "retail",
-      "context": "best fishing gear shop around",
+      "context": "best fishing shop around",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
-      ]
-    },
-    {
-      "name": "Lake Vasona County Park",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "fishing location for kids",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "Hagemann Ranch",
       "city": "",
       "kind": "venue",
-      "context": "trout farm fishing with all gear provided",
+      "context": "trout farm fishing with gear provided",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "McAlpine Lake",
       "city": "",
       "kind": "park",
-      "context": "recommended fishing location",
+      "context": "recommended fishing spot for families",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
-      ]
-    },
-    {
-      "name": "Percolation Ponds",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "public fishing spot behind Valley Water building on Almaden Expressway",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
       "name": "Santa Cruz Pier",
-      "city": "Santa Cruz",
-      "kind": "venue",
-      "context": "free fishing without license, good for beginners",
+      "city": "",
+      "kind": "park",
+      "context": "free fishing without license, peak anchovy season",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     },
     {
-      "name": "House Rabbit Society",
-      "city": "Richmond",
-      "kind": "service",
-      "context": "rabbit fostering program, welcomes Bay Area fosters",
+      "name": "Pacifica Pier",
+      "city": "",
+      "kind": "park",
+      "context": "family friendly fishing and crab snaring",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
-      ]
-    },
-    {
-      "name": "Caltrain Station",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "parking lot option near PayPal Park, $5.50",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     }
   ],
@@ -215,86 +230,82 @@
       "name": "Campbell Library Grand Reopening",
       "when": "recent weekend",
       "city": "Campbell",
-      "context": "library reopening with lion dancers performance",
+      "context": "library reopening celebration with lion dancers and large crowds",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tarnsq/tip_if_youre_planning_to_park_at_sfo_long_term/",
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tb5ctb/trying_to_archive_the_explosion_of_ai_billboards/",
-        "https://www.reddit.com/r/bayarea/comments/1takehc/anyone_want_to_go_to_bts_with_me_saturday_516_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tale7l/where_can_i_sell_breakfast_burritos/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
       ]
     },
     {
-      "name": "BTS Concert",
-      "when": "Saturday May 16",
-      "city": "Palo Alto",
-      "context": "concert at Stanford Stadium",
+      "name": "San Jose Sharks Equipment Event",
+      "when": "",
+      "city": "San Jose",
+      "kind": "sale event",
+      "context": "annual year-end game-worn jersey and equipment sale",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tarnsq/tip_if_youre_planning_to_park_at_sfo_long_term/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tb5ctb/trying_to_archive_the_explosion_of_ai_billboards/",
-        "https://www.reddit.com/r/bayarea/comments/1takehc/anyone_want_to_go_to_bts_with_me_saturday_516_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tale7l/where_can_i_sell_breakfast_burritos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
+      ]
+    },
+    {
+      "name": "House Rabbit Society Foster Program",
+      "when": "ongoing",
+      "city": "",
+      "kind": "volunteer opportunity",
+      "context": "2-week rabbit fostering commitment Bay Area wide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
       ]
     },
     {
       "name": "South Bay Fishing in the City",
       "when": "annual event",
       "city": "San Jose",
-      "context": "Santa Clara County fishing event for kids",
+      "context": "kids fishing event, registration closes early in year",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
-      ]
-    },
-    {
-      "name": "San Jose Earthquakes vs Star Wars Promotion",
-      "when": "Saturday",
-      "city": "San Jose",
-      "context": "match with Grogu bobblehead giveaway at PayPal Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
-      ]
-    },
-    {
-      "name": "Stanford Concert",
-      "when": "Tuesday and multiple days",
-      "city": "Palo Alto",
-      "context": "concert with traffic and road closures planned",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Peet's Coffee",
+      "city": "San Jose",
+      "kind": "cafe",
+      "context": "located at Pruneyard shopping center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
+        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+      ],
+      "matchedName": "Peet's Coffee"
+    },
+    {
       "name": "Campbell Library",
       "city": "Campbell",
       "kind": "venue",
-      "context": "grand reopening with lion dancers and water tower slide",
+      "context": "recently reopened with grand reopening celebration and lion dancers",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tarnsq/tip_if_youre_planning_to_park_at_sfo_long_term/",
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
         "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tb5ctb/trying_to_archive_the_explosion_of_ai_billboards/",
-        "https://www.reddit.com/r/bayarea/comments/1takehc/anyone_want_to_go_to_bts_with_me_saturday_516_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tale7l/where_can_i_sell_breakfast_burritos/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
       ],
       "matchedName": "Campbell Library"
     },
@@ -304,25 +315,62 @@
       "kind": "restaurant",
       "context": "best New York style pizza in the area",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ],
       "matchedName": "A Slice of New York"
+    },
+    {
+      "name": "Slice House",
+      "city": "Palo Alto",
+      "kind": "restaurant",
+      "context": "New York style pizza in San Antonio center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+      ],
+      "matchedName": "Slice House Mountain View by Tony Gemignani"
+    },
+    {
+      "name": "Vietnoms",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "specializes in vermicelli bowls with lemongrass chicken",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+      ],
+      "matchedName": "Vietnoms"
+    },
+    {
+      "name": "Vasona County Park",
+      "city": "Los Gatos",
+      "kind": "park",
+      "context": "Lake Vasona, fishing spot for kids",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+      ],
+      "matchedName": "Peppertree Group Area | Vasona County Park"
     },
     {
       "name": "Almaden Lake",
       "city": "San Jose",
       "kind": "park",
-      "context": "fishing location for kids",
+      "context": "fishing spot for families",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ],
       "matchedName": "Almaden Lake Park"
     },
@@ -330,28 +378,14 @@
       "name": "Sandy Wool Lake",
       "city": "Milpitas",
       "kind": "park",
-      "context": "trout fishing, well-stocked for beginners",
+      "context": "trout fishing well-stocked for kids",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1t9gdma/heartening_update_regarding_earthquakes_sale/",
         "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1taoml7/do_you_commute_with_an_ebike_or_electric_scooter/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/"
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
+        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
+        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
       ],
       "matchedName": "Sandy Wool Lake - Gazebo"
-    },
-    {
-      "name": "PayPal Park",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "San Jose Earthquakes home stadium, good for soccer",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1t8hyx0/short_video_of_entering_campbell_library_during/",
-        "https://www.reddit.com/r/SanJose/comments/1tak41h/rescue_dog_chunk_needs_a_special_kind_of_forever/"
-      ],
-      "matchedName": "PayPal Park"
     }
   ],
   "eventMatches": []
