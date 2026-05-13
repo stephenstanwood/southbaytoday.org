@@ -165,8 +165,8 @@ async function nukeThreads() {
 // ── Facebook ──
 async function nukeFacebook() {
   console.log("=== FACEBOOK ===");
-  const token = process.env.FACEBOOK_PAGE_TOKEN;
-  const pageId = process.env.FACEBOOK_PAGE_ID;
+  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+  const pageId = process.env.FB_PAGE_ID;
   if (!token || !pageId) { console.log("  No credentials"); return; }
 
   let deleted = 0;

@@ -97,8 +97,8 @@ async function deleteThreads(id) {
 }
 
 async function deleteFacebook(id) {
-  const token = process.env.FACEBOOK_PAGE_TOKEN;
-  if (!token) throw new Error("Missing FACEBOOK_PAGE_TOKEN");
+  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+  if (!token) throw new Error("Missing FB_PAGE_ACCESS_TOKEN");
   const res = await fetch(`https://graph.facebook.com/v21.0/${id}?access_token=${token}`, { method: "DELETE" });
   if (!res.ok) throw new Error(`facebook ${res.status}`);
 }
