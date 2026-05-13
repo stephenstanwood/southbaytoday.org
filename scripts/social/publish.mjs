@@ -96,7 +96,9 @@ async function main() {
     }
   }
 
-  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram"];
+  // IG removed 2026-05-13 — token type can publish but not delete; pile was growing
+  // unboundedly. Restore once the IG account is FB-Page-connected (HHSS-style).
+  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon"];
   const published = [];
   const results = {};
 
