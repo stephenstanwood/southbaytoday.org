@@ -16,6 +16,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { catSignal } from "./lib/notify.mjs";
 import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
 
 loadEnvLocal();
@@ -37,10 +38,14 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOL\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE/i;
+const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b/i;
+
+// Equipment/maintenance-only permits — not openings, just upgrades to existing places.
+// Anything matching here is a re-inspection of an existing facility, not a new business.
+const EQUIPMENT_ONLY_PATTERNS = /\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
-const CORPORATE_PATTERNS = /\b(GOOGLE|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART)\b/i;
+const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG)\b/i;
 
 // Gas station brands — convenience stores at gas stations aren't restaurant openings
 const GAS_STATION_PATTERNS = /\b(SHELL|CHEVRON|ARCO|MOBIL|EXXON|VALERO|BP|CIRCLE K|76 GAS|TEXACO|SINCLAIR|SUNOCO|MARATHON|PHILLIPS 66|LOVE'S|PILOT)\b/i;
@@ -107,6 +112,11 @@ const SOURCE_ID_SKIP = new Set([
   "SR0884107", // Indoor Food Facility For Cbre — corporate cafeteria at 4353 N First St, not public
   "SR0881676", // Walmart Nsvc B4 Breakrooms — employee break rooms at Walmart, not a public restaurant
   "SR0883046", // Life Time Fitness - Santana Row — gym with internal food facility, not a standalone restaurant
+  // Re-inspections of long-standing chain locations — surfaced because we dropped the elapsed-time filter.
+  // Add to this list when triaging false positives surfaced by the script.
+  "SR0876482", // E-FOGO DE CHAO SJ — existing Santana Row location since ~2018, re-inspection
+  "SR0881648", // E-SWEET GREENS — long-running Sweetgreens at El Paseo de Saratoga
+  "SR0878576", // E-THE MELT (Stanford Shopping Center) — existing chain location, just a recert
 ]);
 
 // Map city names to our city IDs
@@ -231,6 +241,7 @@ function shouldSkip(item) {
 
   if (item.record_id && SOURCE_ID_SKIP.has(item.record_id)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
+  if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
@@ -568,25 +579,17 @@ async function main() {
     100,
   );
 
-  // SCC final_inspection fires for re-inspections too (renovations, ownership
-  // changes, annual recerts) — not just new businesses. Brand-new restaurants
-  // typically clear plan check → final in 3–6 months; anything dragging past
-  // ~150 days is almost always a remodel of an existing business. Dropped a
-  // long-standing Dairy Queen Campbell as "just opened" before this filter.
-  const RENOVATION_THRESHOLD_DAYS = 150;
-  const isLikelyRenovation = (item) => {
-    if (!item.received_date || !item.final_inspection) return false;
-    const elapsed = (new Date(item.final_inspection) - new Date(item.received_date)) / 86400000;
-    return elapsed > RENOVATION_THRESHOLD_DAYS;
-  };
-  const renovationDrops = openedRaw.filter(isLikelyRenovation).length;
-  if (renovationDrops > 0) {
-    console.log(`  Dropped ${renovationDrops} likely-renovation record(s) (>${RENOVATION_THRESHOLD_DAYS}d plan→final)`);
-  }
+  // SCC final_inspection fires for re-inspections (equipment swaps, ownership
+  // changes, annual recerts) of long-standing places, not just new openings.
+  // We catch those via EQUIPMENT_ONLY_PATTERNS + SOURCE_ID_SKIP + CORPORATE_PATTERNS
+  // rather than an elapsed-time heuristic — the old 150d filter dropped real
+  // new builds whose plan check dragged (Dough Zone, Molly Tea SC, T&T Westgate,
+  // Jollibee, Whole Foods Stevens Creek, etc. all took >150d but are legit new).
+  // False positives that slip through (existing chains getting re-inspected) go
+  // into SOURCE_ID_SKIP after Stephen reviews.
 
   const opened = openedRaw
     .filter((item) => !shouldSkip(item))
-    .filter((item) => !isLikelyRenovation(item))
     .map((item) => {
       const name = cleanName(item.business_name);
       if (!name) return null;
@@ -698,6 +701,31 @@ async function main() {
   openedDeduped.slice(0, 8).forEach((i) => console.log(`  [${i.date}] ${i.name} — ${i.address}, ${i.cityName}`));
   console.log("\nComing soon:");
   comingSoonFinal.slice(0, 8).forEach((i) => console.log(`  [${i.date}] ${i.name} — ${i.address}, ${i.cityName}`));
+
+  // Content-freshness alarm: if the newest "opened" entry is >14 days old, DM Stephen.
+  // The file mtime won't catch this — reddit-pulse appends keep bumping generatedAt
+  // even when the SCC source has stopped producing new entries.
+  const FRESHNESS_THRESHOLD_DAYS = 14;
+  const dates = openedWithBlurbs
+    .map((i) => i.date)
+    .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
+    .sort();
+  const newest = dates[dates.length - 1] ?? null;
+  if (newest) {
+    const ageDays = (Date.now() - new Date(newest + "T12:00:00").getTime()) / 86400000;
+    if (ageDays > FRESHNESS_THRESHOLD_DAYS) {
+      const msg =
+        `Newest SCC food opening is **${Math.round(ageDays)} days old** (${newest}). ` +
+        `Either the upstream API stopped returning new SB restaurants, our filter is dropping legit openings, ` +
+        `or a chain is dominating recent inspections. Check scripts/generate-scc-food-openings.mjs run logs.`;
+      console.warn(`⚠️  Freshness alert: ${msg}`);
+      await catSignal({
+        key: "scc-food-openings-stale",
+        title: "SBT food openings — data going stale",
+        body: msg,
+      });
+    }
+  }
 }
 
 main().catch((err) => {
