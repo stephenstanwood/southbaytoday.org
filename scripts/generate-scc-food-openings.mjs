@@ -55,7 +55,14 @@ const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
 
 // Manual blurb overrides keyed by sourceId — these survive AI regeneration
 // Use when AI-generated blurbs are generic or when we have specific local knowledge
+// Sourceid → preferred display name. Use when SCC's spelling/capitalization
+// doesn't match the brand (e.g. "SWEET GREENS" plural → "sweetgreen" actual chain).
+const NAME_OVERRIDES = {
+  "SR0881648": "sweetgreen",
+};
+
 const BLURB_OVERRIDES = {
+  "SR0881648": "Sweetgreen opens at El Paseo de Saratoga — salads, grain bowls, and warm plates. Soft opening May 15–16, official launch May 19.",
   "SR0879467": "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio.",
   "SR0883252": "Popular Yemeni coffee chain expanding to downtown San Jose — cardamom-spiced brews and pastries.",
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
@@ -114,9 +121,9 @@ const SOURCE_ID_SKIP = new Set([
   "SR0883046", // Life Time Fitness - Santana Row — gym with internal food facility, not a standalone restaurant
   // Re-inspections of long-standing chain locations — surfaced because we dropped the elapsed-time filter.
   // Add to this list when triaging false positives surfaced by the script.
-  "SR0876482", // E-FOGO DE CHAO SJ — existing Santana Row location since ~2018, re-inspection
-  "SR0881648", // E-SWEET GREENS — long-running Sweetgreens at El Paseo de Saratoga
-  "SR0878576", // E-THE MELT (Stanford Shopping Center) — existing chain location, just a recert
+  "SR0876482", // E-FOGO DE CHAO SJ — existing Santana Row location since ~2014 (8800+ Yelp reviews), re-inspection
+  "SR0878576", // E-THE MELT (Stanford Shopping Center) — existing chain location, façade/signage update (Palo Alto ARB)
+  // (SR0881648 Sweetgreen El Paseo de Saratoga IS a real new opening — see BLURB_OVERRIDES)
 ]);
 
 // Map city names to our city IDs
@@ -591,8 +598,9 @@ async function main() {
   const opened = openedRaw
     .filter((item) => !shouldSkip(item))
     .map((item) => {
-      const name = cleanName(item.business_name);
-      if (!name) return null;
+      const cleaned = cleanName(item.business_name);
+      if (!cleaned) return null;
+      const name = (item.record_id && NAME_OVERRIDES[item.record_id]) ?? cleaned;
       const city = (item.city ?? "").toUpperCase();
       return {
         id: `opened-${item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-")}`,
@@ -626,8 +634,9 @@ async function main() {
   const comingSoon = comingSoonRaw
     .filter((item) => !shouldSkip(item))
     .map((item) => {
-      const name = cleanName(item.business_name);
-      if (!name) return null;
+      const cleaned = cleanName(item.business_name);
+      if (!cleaned) return null;
+      const name = (item.record_id && NAME_OVERRIDES[item.record_id]) ?? cleaned;
       const city = (item.city ?? "").toUpperCase();
       return {
         id: `soon-${item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-")}`,
