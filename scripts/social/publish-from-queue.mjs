@@ -556,8 +556,12 @@ async function main() {
       }
     }
 
-    // Publish to each platform
-    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram"];
+    // Publish to each platform.
+    // IG removed 2026-05-13: SBT IG token is graph.instagram.com (standalone IG Login),
+    // which can publish but not delete. The pile was accumulating with no API path to
+    // prune it. Drop it from the rotation until the IG account is reconnected via a
+    // FB Page (HHSS-style). See reference_ig_delete_api_limitation in memory.
+    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon"];
     const publishResults = [];
 
     for (const platform of platforms) {
