@@ -108,8 +108,10 @@ function NewAndComingSoon() {
     opened: FoodItem[];
     comingSoon: FoodItem[];
   };
-  const opened = (data.opened ?? []).filter((i) => i.name && i.cityId);
-  const comingSoon = (data.comingSoon ?? []).filter((i) => i.name && i.cityId);
+  const openedAll = (data.opened ?? []).filter((i) => i.name && i.cityId);
+  const comingSoonAll = (data.comingSoon ?? []).filter((i) => i.name && i.cityId);
+  const opened = openedAll.slice(0, Math.floor(openedAll.length / 4) * 4);
+  const comingSoon = comingSoonAll.slice(0, Math.floor(comingSoonAll.length / 4) * 4);
   if (opened.length === 0 && comingSoon.length === 0) return null;
 
   const updated = formatShortDate(data.generatedAt.slice(0, 10));
