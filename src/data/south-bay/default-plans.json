@@ -69,7 +69,8 @@
           "source": "event",
           "locked": false,
           "rationale": "claude:pool-rank-2/22 | event-today | cat=food",
-          "bucket": "lunch"
+          "bucket": "lunch",
+          "eventTime": "11:00 AM"
         },
         {
           "id": "place:ChIJm9cohMg1joARokYo2Ju7G_Y",
@@ -133,7 +134,8 @@
           "source": "event",
           "locked": false,
           "rationale": "claude:pool-rank-1/22 | event-today | cat=arts",
-          "bucket": "evening"
+          "bucket": "evening",
+          "eventTime": "6:00 PM"
         }
       ],
       "weather": "66°F, high 67°F, 7% chance of rain",
