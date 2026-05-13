@@ -74,6 +74,9 @@ function resolveCity(raw) {
 // category stays as a backstop for posts these patterns miss.
 const SOUTH_BAY_HINT_REGEX = /\b(san jose|sj |sjc|sunnyvale|palo alto|mountain view|mtn view|santa clara|cupertino|los gatos|saratoga|campbell|milpitas|los altos|stanford|silicon valley|south bay|willow glen|almaden|cambrian|berryessa|santana row|valley fair)\b/i;
 const SF_MARKER_REGEX = /(\bin sf\b|\bin san francisco\b|\bsf'?s\b|\bsfo\b|\bin the city\b|\bfrom sf\b|\bto sf\b)/i;
+// SF venues/neighborhoods that imply "in SF" without saying so. An event "at
+// the Castro Theater" is in SF; a post about Fisherman's Wharf is SF tourism.
+const SF_LANDMARK_REGEX = /\b(castro theatre|castro theater|golden gate park|golden gate bridge|fisherman'?s wharf|the embarcadero|chase center|oracle park|sf giants|sf 49ers|mission district|the mission\b|tenderloin|haight\b|haight-ashbury|nob hill|ocean beach|the presidio|outer sunset|outer richmond|north beach sf|alamo square)\b/i;
 
 function isLikelyOutOfArea(p) {
   const text = `${p.title || ""} ${p.selftext || ""}`;
@@ -81,6 +84,7 @@ function isLikelyOutOfArea(p) {
   // r/AskSF is SF-by-definition; without an explicit South Bay hint, drop it.
   if ((p.sub || "").toLowerCase() === "asksf") return true;
   if (SF_MARKER_REGEX.test(text)) return true;
+  if (SF_LANDMARK_REGEX.test(text)) return true;
   return false;
 }
 
@@ -378,24 +382,28 @@ Return ONLY a JSON array of objects, no other text.`;
   // safeguard. Sports cap because the same season run shows up across many posts
   // even when topics technically differ.
   const PULSE_TARGET = 12;
-  const PER_SUB_CAP = 3;   // bumped from 2 to support 12 total
-  const SPORTS_CAP = 2;    // bumped from 1 — at 12 total, 2 sports is fine
+  const PER_SUB_CAP = 3;     // bumped from 2 to support 12 total
+  const SPORTS_CAP = 1;      // explicit sports category — at most 1 of 12
+  const SPORTS_SUB_CAP = 2;  // total posts from scope=sports subs (Sharks + Earthquakes)
 
   const seenTopics = new Set();
   const subCounts = new Map();
   const seenIds = new Set();
   let sportsCount = 0;
+  let sportsSubCount = 0;
   const pulse = [];
   for (const p of pulseEligible) {
     if (p.topic && seenTopics.has(p.topic)) continue;
     const n = subCounts.get(p.sub) ?? 0;
     if (n >= PER_SUB_CAP) continue;
     if (p.category === "sports" && sportsCount >= SPORTS_CAP) continue;
+    if (p.scope === "sports" && sportsSubCount >= SPORTS_SUB_CAP) continue;
     pulse.push(p);
     seenIds.add(p.id);
     if (p.topic) seenTopics.add(p.topic);
     subCounts.set(p.sub, n + 1);
     if (p.category === "sports") sportsCount++;
+    if (p.scope === "sports") sportsSubCount++;
     if (pulse.length >= PULSE_TARGET) break;
   }
 
