@@ -23,6 +23,7 @@ try {
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
+const force = args.includes("--force");
 const cutoffIdx = args.indexOf("--cutoff");
 const maxAgeArg = args.find((a) => a.startsWith("--max-age-days="));
 
@@ -34,6 +35,18 @@ function computeCutoff() {
   return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 const cutoff = computeCutoff();
+
+// Guardrail: refuse to run with a cutoff that's today or in the future.
+// Posts are deleted iff createdAt < cutoff (strict <), so cutoff = today
+// deletes everything that isn't today, including this morning's posts —
+// which is almost certainly not what we want. Caller has to pass --force
+// to override. This was added 2026-05-13 after a background process that
+// accidentally ran with the old default (cutoff=today) nuked Mon+Tue.
+const todayPT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+if (!force && cutoff >= todayPT) {
+  console.error(`Refusing to run: cutoff ${cutoff} is today or later — that would delete posts from today (PT). Pass --force to override, or use --max-age-days=N for a safe age-based cutoff.`);
+  process.exit(2);
+}
 
 console.log(`Deleting all posts before ${cutoff}${dryRun ? " (DRY RUN)" : ""}\n`);
 
