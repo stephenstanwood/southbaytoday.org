@@ -2429,31 +2429,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         <div className="sb-section-line" />
       </div>
 
-      <SchoolHeadsUpBanner selectedCities={selectedCities} />
-      <SchoolYearEndgamePanel selectedCities={selectedCities} />
-      <HolidayHeadsUpBanner
-        eventCountByDate={eventCountByDate}
-        themedCountByHolidayId={themedCountByHolidayId}
-        onJumpToDate={(iso, themedHolidayId) => {
-          if (isSearching) setSearch("");
-          if (showWeekendOnly) setShowWeekendOnly(false);
-          if (showTonightOnly) setShowTonightOnly(false);
-          setSelectedDate(iso);
-          setActiveThemedHolidayId(themedHolidayId ?? null);
-        }}
-      />
-      <HolidayPicksPreview
-        events={upcomingEvents}
-        selectedCities={selectedCities}
-        allCities={allCities}
-        onJumpToDate={(iso, themedHolidayId) => {
-          if (isSearching) setSearch("");
-          if (showWeekendOnly) setShowWeekendOnly(false);
-          if (showTonightOnly) setShowTonightOnly(false);
-          setSelectedDate(iso);
-          setActiveThemedHolidayId(themedHolidayId ?? null);
-        }}
-      />
       <WeekendPicksStrip
         events={upcomingEvents}
         selectedCities={selectedCities}
@@ -2466,12 +2441,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           setActiveThemedHolidayId(null);
         }}
       />
-      <HeritageMonthBanner
-        activeId={activeHeritageId}
-        onToggle={setActiveHeritageId}
-        countsById={heritageCounts}
-      />
-
       {/* Sticky filter bar — search + categories + cities + kids */}
       <div className="sb-events-sticky-filter">
         {/* Row 1: search + kids — search is the primary entry point */}
