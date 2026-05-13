@@ -156,6 +156,10 @@ SKIP: routine approvals, consent calendar, minutes approval, procedural items, p
 
 SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator Replacement Project") without enough substance to summarize. If you'd need to speculate or hedge ("though specifics weren't provided", "details unclear", "this could affect..."), the right move is to leave the item out, not to write a vague summary. A resident reading hedge text feels like they're reading filler.
 
+NEVER FABRICATE: do not invent case names, party names, dollar amounts, vote counts, addresses, or any specific fact not present in the agenda data. Closed session line items often list only a citation like "Conf. with Legal Counsel — existing litigation" with no party names — if a name isn't in the source, do not make one up. Skip the item.
+
+DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: if a meeting's date matches today's date and the agenda is forward-looking (e.g. "proposed", "to consider", "study session"), do not write that it was approved or adopted. Use forward-looking language ("to hear", "to consider", "scheduled to review") or skip the item.
+
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
 Meeting data:
