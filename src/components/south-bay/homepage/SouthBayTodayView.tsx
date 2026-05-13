@@ -260,8 +260,9 @@ export default function SouthBayTodayView(_props: Props) {
   // or san-jose (center of south bay) as a neutral default.
   const displayCity: City = REGIONAL_ANCHOR;
 
-  // Keep nowMinutes live so past-bucket dimming refreshes without a reload.
-  // 30 s is plenty — bucket cutoffs are hour-resolution.
+  // Keep nowMinutes live so past buckets drop out of the grid as soon as
+  // their cutoff hits, without a reload. 30 s is plenty — cutoffs are
+  // hour-resolution. Also drives the kids/tomorrow flip.
   useEffect(() => {
     const t = setInterval(() => setNowMinutes(getNowMinutesPT()), 30000);
     return () => clearInterval(t);
@@ -378,10 +379,9 @@ export default function SouthBayTodayView(_props: Props) {
     ? "What should we do tomorrow?"
     : "What should we do today?";
 
-  // With buckets, all six slots stay visible all day (it's an idea spark,
-  // not a tour). Stale plans from yesterday hide everything; all other
-  // plans show every card. Past buckets get a "passed" dim treatment in
-  // the render layer (BUCKET_PASSED_AFTER_HOUR).
+  // With buckets, slots stay visible until their wall-clock cutoff
+  // (BUCKET_PASSED_AFTER_HOUR), then they drop out of the grid entirely.
+  // Stale plans from yesterday hide everything.
   const todayPT = getTodayISOInPT();
   const visibleCards: DayCard[] = planDateISO < todayPT ? [] : cards;
   // Group cards by bucket for the 2×3 grid. Cards from before the bucket
@@ -494,17 +494,15 @@ export default function SouthBayTodayView(_props: Props) {
         <div className={loading ? "sbt-buckets sbt-buckets--loading" : "sbt-buckets"}>
           {visibleBuckets.map((bucket, i) => {
             const card = cardsByBucket.get(bucket);
-            const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
-            const passed = isPastBucket(bucket);
             if (!card) return null;
-            if (passed) return null;
+            if (isPastBucket(bucket)) return null;
+            const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             return (
               <BucketSlot
                 key={bucket}
                 bucket={bucket}
                 card={card}
                 accent={accent}
-                passed={passed}
                 animationDelay={i * 0.05}
               />
             );
@@ -697,10 +695,6 @@ export default function SouthBayTodayView(_props: Props) {
           position: relative;
           min-height: 140px;
         }
-        .sbt-bucket--passed {
-          opacity: 0.55;
-          filter: saturate(0.7);
-        }
         .sbt-bucket-header {
           display: flex;
           align-items: center;
@@ -720,14 +714,6 @@ export default function SouthBayTodayView(_props: Props) {
           color: #111;
           letter-spacing: 1px;
           text-transform: uppercase;
-        }
-        .sbt-bucket-passed-tag {
-          font-family: 'Space Mono', monospace;
-          font-size: 9px;
-          color: #999;
-          letter-spacing: 1.2px;
-          text-transform: uppercase;
-          margin-left: auto;
         }
         .sbt-bucket-link {
           display: flex;
@@ -945,22 +931,20 @@ interface BucketSlotProps {
   bucket: Bucket;
   card: DayCard;
   accent: string;
-  passed: boolean;
   animationDelay: number;
 }
 
-function BucketSlot({ bucket, card, accent, passed, animationDelay }: BucketSlotProps) {
+function BucketSlot({ bucket, card, accent, animationDelay }: BucketSlotProps) {
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
   return (
     <div
-      className={`sbt-bucket${passed ? " sbt-bucket--passed" : ""}`}
+      className="sbt-bucket"
       style={{ animation: `fadeSlideIn 0.3s ease-out ${animationDelay}s both` }}
     >
       <div className="sbt-bucket-header">
         <span className="sbt-bucket-accent" style={{ background: accent }} />
         <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
-        {passed && <span className="sbt-bucket-passed-tag">passed</span>}
       </div>
       {cardUrl ? (
         <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">

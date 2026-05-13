@@ -131,8 +131,8 @@ export function bucketOrderIndex(b: Bucket | string | null | undefined): number 
 }
 
 /** Wall-clock cutoff (PT, 24h) past which a bucket reads as "missed today".
- *  Used by the homepage view to dim past buckets. Cutoffs are conservative —
- *  e.g. lunch is dim only after 3 PM, not at noon. */
+ *  Used by the homepage view to drop past buckets from the grid. Cutoffs are
+ *  conservative — e.g. lunch only drops out after 3 PM, not at noon. */
 export const BUCKET_PASSED_AFTER_HOUR: Record<Bucket, number> = {
   breakfast: 11,
   morning: 13,
