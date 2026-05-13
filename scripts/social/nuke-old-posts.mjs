@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-// Delete ALL posts before a cutoff date from all platforms.
-// Usage: node scripts/social/nuke-old-posts.mjs [--cutoff YYYY-MM-DD] [--dry-run]
-// Default cutoff: today in PT
+// Delete ALL SBT posts older than a cutoff from every platform.
+// Usage: node scripts/social/nuke-old-posts.mjs [--cutoff YYYY-MM-DD | --max-age-days=N] [--dry-run]
+// Default: --max-age-days=7
+//
+// Also wired up as the Monday-morning weekly purge via
+// scripts/social/weekly-purge.plist → org.southbaytoday.weekly-purge.
 
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -21,7 +24,16 @@ try {
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const cutoffIdx = args.indexOf("--cutoff");
-const cutoff = cutoffIdx >= 0 ? args[cutoffIdx + 1] : new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+const maxAgeArg = args.find((a) => a.startsWith("--max-age-days="));
+
+function computeCutoff() {
+  if (cutoffIdx >= 0) return args[cutoffIdx + 1];
+  const days = maxAgeArg ? Number(maxAgeArg.split("=")[1]) || 7 : 7;
+  const d = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+  // YYYY-MM-DD in PT
+  return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+const cutoff = computeCutoff();
 
 console.log(`Deleting all posts before ${cutoff}${dryRun ? " (DRY RUN)" : ""}\n`);
 
