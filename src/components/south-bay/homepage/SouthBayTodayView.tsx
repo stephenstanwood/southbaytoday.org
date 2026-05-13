@@ -869,9 +869,13 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
   // eventTime is missing on legacy cards. Non-event cards opt in via
   // showTimeLabel; bucket-grid place cards leave it off because the slot
   // header (BREAKFAST / MORNING / etc.) already carries the time signal.
-  const timeHint = card.source === "event"
+  // Only render a hint that contains a digit — if eventTime/timeBlock
+  // ended up holding a bucket label (e.g. "Lunch"), the slot header
+  // already says it, so swallow the dupe.
+  const rawTimeHint = card.source === "event"
     ? (card.eventTime || card.timeBlock || "")
     : (showTimeLabel ? card.timeBlock : "");
+  const timeHint = /\d/.test(rawTimeHint) ? rawTimeHint : "";
 
   return (
     <>
