@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T11:15:00.725Z",
+  "generatedAt": "2026-05-13T19:11:42.267Z",
   "weekLabel": "May 13 – May 20",
   "weekStart": "2026-05-13",
   "weekEnd": "2026-05-20",
@@ -7,16 +7,8 @@
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's adopting a civil enforcement restriction policy while Downtown hosts Boogie Music Fest 2026 this Saturday.",
+      "summary": "Campbell's hosting Boogie Music Fest downtown Saturday morning while the city adopts a new policy restricting federal civil enforcement on its property.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Wed, May 13 · 10:30 AM",
-          "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a03c9a8703c336300273a09"
-        },
         {
           "type": "event",
           "title": "Making a Superhero Comic Workshop",
@@ -24,6 +16,14 @@
           "venue": "Campbell Library",
           "category": "arts",
           "url": "https://sccl.bibliocommons.com/events/69aa10058966a226aae10c85"
+        },
+        {
+          "type": "event",
+          "title": "Boogie Music Fest 2026",
+          "when": "Sat, May 16 · 10:00 AM",
+          "venue": "Downtown Campbell",
+          "category": "arts",
+          "url": null
         },
         {
           "type": "cityhall",
@@ -35,21 +35,13 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:45.075Z"
+      "generatedAt": "2026-05-13T19:11:28.645Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino's plotting a 27-unit townhome development with affordable units while the library stacks the week with kids' programs and a pest-control talk.",
+      "summary": "Cupertino's Planning Commission is weighing a 27-townhome development on Bandley Drive as the library ramps up spring programming.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Police Read Along",
-          "when": "Wed, May 13 · 10:30 AM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69409942293fe2540029d62e"
-        },
         {
           "type": "event",
           "title": "Bedtime Storytime",
@@ -59,8 +51,16 @@
           "url": "https://sccl.bibliocommons.com/events/6943539276261f28005fb636"
         },
         {
+          "type": "event",
+          "title": "Baby Storytime",
+          "when": "Thu, May 14 · 10:30 AM",
+          "venue": "Cupertino Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/694353944be11d3d00d8b3a2"
+        },
+        {
           "type": "cityhall",
-          "title": "27-unit townhome project proposed with affordable units",
+          "title": "Planning Commission hears 27-townhome project at 10268 Bandley Drive",
           "when": null,
           "venue": null,
           "category": "government",
@@ -68,12 +68,12 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:46.764Z"
+      "generatedAt": "2026-05-13T19:11:29.862Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos Library stacks the week with three programs Wednesday—from preschool storytimes to a mystery book club—while City Hall tackles overgrown vegetation as a public nuisance.",
+      "summary": "Los Gatos Council declares overgrown brush a public nuisance as the library loads up Wednesday and Thursday with storytime, knitting, and book club programming.",
       "highlights": [
         {
           "type": "event",
@@ -93,7 +93,7 @@
         },
         {
           "type": "cityhall",
-          "title": "City declares overgrown brush and vegetation a public nuisance",
+          "title": "Council declares overgrown brush a public nuisance",
           "when": null,
           "venue": null,
           "category": "government",
@@ -101,12 +101,12 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:48.134Z"
+      "generatedAt": "2026-05-13T19:11:31.160Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's library and cultural venues are packed Wednesday with bilingual storytimes, an ESL club, and live jazz on Castro Street.",
+      "summary": "Mountain View's packed Wednesday features everything from Jim Witzel Quartet's Castro Street concert to three library programs, plus a senior center film screening.",
       "highlights": [
         {
           "type": "event",
@@ -126,21 +126,13 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:49.452Z"
+      "generatedAt": "2026-05-13T19:11:32.514Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga Library's packed week offers baby storytime, homework help, and free tech support for residents seeking community connection.",
+      "summary": "Saratoga Library's packed week kicks off Wednesday with homework help, then swings into craft club and tech support Thursday before wrapping with live music Friday morning.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Baby Storytime (12 months & younger)",
-          "when": "Wed, May 13 · 11:00 AM",
-          "venue": "Saratoga Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/68aa476f4afabc39de51638b"
-        },
         {
           "type": "event",
           "title": "Homework Help K-6 grade",
@@ -148,15 +140,23 @@
           "venue": "Saratoga Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/68c1e5eb9b6a35582f705ab9"
+        },
+        {
+          "type": "event",
+          "title": "Craft Club for Adults",
+          "when": "Thu, May 14 · 1:00 PM",
+          "venue": "Saratoga Library",
+          "category": "community",
+          "url": "https://sccl.bibliocommons.com/events/69f25546129f1274383ba319"
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:50.850Z"
+      "generatedAt": "2026-05-13T19:11:33.818Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale's Senior Center is packed Thursday with safety seminars and cooking demos, while the library's book sale hits Saturday.",
+      "summary": "Sunnyvale's Senior Center hosts back-to-back Thursday workshops on driver safety and perennial foods, while a zoning hearing looms over a contentious El Camino Real auto sales proposal.",
       "highlights": [
         {
           "type": "event",
@@ -173,24 +173,24 @@
           "venue": "Sunnyvale Senior Center",
           "category": "education",
           "url": null
+        },
+        {
+          "type": "cityhall",
+          "title": "Zoning Administrator to hear auto sales proposal on El Camino Real",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?ID=1376162"
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:52.115Z"
+      "generatedAt": "2026-05-13T19:11:35.174Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose's water utility launches a financial assistance pilot program while the city council digs into 2026-2027 budget planning Thursday.",
+      "summary": "San Jose's water department launches a financial assistance pilot for struggling customers while the city kicks off 2026-2027 budget study sessions Thursday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "English Conversation Club",
-          "when": "Wed, May 13 · 10:30 AM",
-          "venue": "Almaden Library",
-          "category": "education",
-          "url": "https://sjpl.bibliocommons.com/events/68758409b7a97e360016845b"
-        },
         {
           "type": "event",
           "title": "Santana Row Farmers Market",
@@ -198,6 +198,14 @@
           "venue": "Santana Row",
           "category": "food",
           "url": "https://www.santanarow.com/events"
+        },
+        {
+          "type": "event",
+          "title": "Marine Spring Seminar at Ocean Health Building at the University of California, Santa Cruz Coastal Biology Campus",
+          "when": "Wed, May 13 · 4:00 PM",
+          "venue": "San Jose State University",
+          "category": "arts",
+          "url": "https://events.sjsu.edu/event/marine-spring-seminar"
         },
         {
           "type": "council",
@@ -209,12 +217,12 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:53.203Z"
+      "generatedAt": "2026-05-13T19:11:36.382Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara University's packed Wednesday lineup spans art installations, klezmer clarinet performances, and biomedical entrepreneurship talks.",
+      "summary": "Santa Clara University hosts three arts events this week, including a theatrical production and a thought-provoking exhibition on absence and passage.",
       "highlights": [
         {
           "type": "event",
@@ -226,20 +234,20 @@
         },
         {
           "type": "event",
-          "title": "Music@Noon – Unveiled: New Works for Klezmer Clarinet",
-          "when": "Wed, May 13 · 12:00 PM",
+          "title": "Leading through Entrepreneurship: Biomedical Device Design",
+          "when": "Wed, May 13 · 5:00 PM",
           "venue": "Santa Clara University",
-          "category": "arts",
-          "url": "https://events.scu.edu/arts-and-sciences/event/372667-musicnoon-unveiled-new-works-for-klezmer-clarinet"
+          "category": "education",
+          "url": "https://events.scu.edu/school-of-engineering/event/452928-leading-through-entrepreneurship-biomedical-device"
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:56.465Z"
+      "generatedAt": "2026-05-13T19:11:37.634Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library stacks the week with family storytimes, an adult origami class Wednesday night, and a Jewish Heritage Month event Thursday featuring grandmother recipes.",
+      "summary": "Los Altos Library kicks off Jewish Heritage Month Thursday while hosting origami crafts and storytimes throughout the week for all ages.",
       "highlights": [
         {
           "type": "event",
@@ -259,21 +267,13 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:57.947Z"
+      "generatedAt": "2026-05-13T19:11:39.244Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto City Council votes this week on a 72-unit affordable housing project at Lytton Avenue amid ongoing development expansion across the city.",
+      "summary": "Palo Alto's City Council weighs a 72-unit affordable housing project this week while Lindy West headlines Kepler's Books Wednesday night.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Learn English: Online Conversation Group",
-          "when": "Wed, May 13 · 11:00 AM",
-          "venue": "Palo Alto City Library",
-          "category": "education",
-          "url": "https://paloalto.bibliocommons.com/events/68faea6a06078d3600744978"
-        },
         {
           "type": "event",
           "title": "Family Craft: Bird's Nest",
@@ -283,8 +283,16 @@
           "url": "https://paloalto.bibliocommons.com/events/693b4e1e6724c63d00e685f5"
         },
         {
+          "type": "event",
+          "title": "Lindy West",
+          "when": "Wed, May 13 · 7:00 PM",
+          "venue": "Kepler's Books",
+          "category": "arts",
+          "url": "https://www.keplers.org/upcoming-events-internal/lindy-west"
+        },
+        {
           "type": "cityhall",
-          "title": "City Council to vote on 72-unit affordable housing at Lytton Avenue",
+          "title": "City Council considers 72-unit affordable housing project on parking lot",
           "when": null,
           "venue": null,
           "category": "government",
@@ -292,12 +300,12 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:14:59.262Z"
+      "generatedAt": "2026-05-13T19:11:40.627Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas Library goes all-in on chess Wednesday with five back-to-back programs from elementary through adult ESL classes.",
+      "summary": "Milpitas Library is chess central this Wednesday with back-to-back classes for kids and adults, plus homework help and free ESL instruction.",
       "highlights": [
         {
           "type": "event",
@@ -317,7 +325,7 @@
         }
       ],
       "weekLabel": "May 13 – May 20",
-      "generatedAt": "2026-05-13T11:15:00.423Z"
+      "generatedAt": "2026-05-13T19:11:41.965Z"
     }
   }
 }

@@ -1674,7 +1674,7 @@
     },
     "2026-05-13": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Open Mic at the San Jose Improv",
@@ -1702,7 +1702,48 @@
         "copyApprovedAt": "2026-05-05T03:14:42.327Z",
         "imageApprovedAt": "2026-05-11T03:17:22.353Z",
         "generatedAt": "2026-05-04T22:18:41.493Z",
-        "imagePrompt": "Mid-century modern abstract illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Warm muted palette—burnt ochre, soft sage, cream, warm taupe—with organic flowing curves suggesting an abstracted microphone silhouette fragmented across composition. Dense layered design with deliberate geometric accents: sharp triangles, circles, small squares placed rhythmically throughout. Atomic-era atomic starburst shapes woven into color fields. Generous breathing room between elements. Restrained, editorial, sophisticated mood. Clean mid-mod linework paired with soft organic blob shapes creating sophisticated visual rhythm."
+        "imagePrompt": "Mid-century modern abstract illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Warm muted palette—burnt ochre, soft sage, cream, warm taupe—with organic flowing curves suggesting an abstracted microphone silhouette fragmented across composition. Dense layered design with deliberate geometric accents: sharp triangles, circles, small squares placed rhythmically throughout. Atomic-era atomic starburst shapes woven into color fields. Generous breathing room between elements. Restrained, editorial, sophisticated mood. Clean mid-mod linework paired with soft organic blob shapes creating sophisticated visual rhythm.",
+        "publishedAt": "2026-05-13T18:50:45.990Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2054635305467281609",
+            "id": "2054635305467281609",
+            "text": "Tonight at @sanjoseimprov: open mic night, 8–9:30 PM. Grab a spot in the audience, watch local voices take the stage, and maybe sign yourself up. Low cost, good energy. https://t.co/kmhgoGHlve https://t.co/UH8SCjq8Hb"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mlqxth27dj2c",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mlqxth27dj2c",
+            "cid": "bafyreibu6d32gbrjox6d3nx4oerxcgyll7pesxralarluq3j7pzijtqfyu"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18588173683013250",
+            "id": "18588173683013250"
+          },
+          {
+            "platform": "facebook",
+            "ok": false,
+            "error": "Facebook photo post failed (500): {\"error\":{\"code\":1,\"message\":\"Please reduce the amount of data you're asking for, then retry your request\"}}"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116568767546932827",
+            "id": "116568767546932827",
+            "url": "https://mastodon.social/@southbaytoday/116568767546932827"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18026078642814272",
+            "id": "18026078642814272"
+          }
+        ]
       },
       "_reviewHistory": [
         {
