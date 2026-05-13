@@ -33,6 +33,7 @@ import { canonicalizePlanCards } from "../../src/lib/south-bay/canonicalizeCard.
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
+const EVENTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "upcoming-events.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const MILESTONES_DIR = join(__dirname, "..", "..", "src", "lib", "south-bay");
 const RESTAURANT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "scc-food-openings.json");
@@ -206,6 +207,33 @@ async function enrichMissingImages(cards) {
     if (c.photoRef || c.image) continue;
     const url = await unsplashForCategory(c.category);
     if (url) c.image = url;
+  }
+}
+
+/** Backfill `eventTime` on event cards that lack it — usually frozen/approved
+ *  slots written before plan-day learned to carry the field. Looks the event
+ *  up in upcoming-events.json by ID (`event:<id>`) and copies its `time`.
+ *  In-place mutation, no-op for non-events or events we can't resolve. */
+let _eventsById = null;
+function loadEventsById() {
+  if (_eventsById) return _eventsById;
+  try {
+    const raw = readFileSync(EVENTS_FILE, "utf8");
+    const events = (JSON.parse(raw).events || []);
+    _eventsById = new Map(events.map((e) => [e.id, e]));
+  } catch {
+    _eventsById = new Map();
+  }
+  return _eventsById;
+}
+function deriveMissingEventTimes(cards) {
+  const byId = loadEventsById();
+  for (const c of cards) {
+    if (c.source !== "event") continue;
+    if (c.eventTime) continue;
+    const id = String(c.id || "").replace(/^event:/, "");
+    const evt = byId.get(id);
+    if (evt?.time) c.eventTime = evt.time;
   }
 }
 
@@ -1139,6 +1167,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
 
   // Enrich the adults plan's cards with Unsplash for any still missing a
   // photoRef, so the homepage renders images on first paint.
+  deriveMissingEventTimes(todayAdults.plan.cards);
   await enrichMissingImages(todayAdults.plan.cards);
 
   // Generate today's kids plan — this is the only extra Claude call option 2
@@ -1152,6 +1181,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     const recentlyShown = yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 1 }));
     kidsPlan = await fetchPlanFromApi(citySlug, todayStr, { kids: true, recentlyShown });
     if (kidsPlan) {
+      deriveMissingEventTimes(kidsPlan.cards);
       await enrichCardPhotos(kidsPlan.cards);
       await enrichMissingImages(kidsPlan.cards);
     }
@@ -1169,6 +1199,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
   let tomorrowAdultsEntry = null;
   let tomorrowKidsEntry = null;
   if (tomorrowAdults?.plan?.cards?.length) {
+    deriveMissingEventTimes(tomorrowAdults.plan.cards);
     await enrichMissingImages(tomorrowAdults.plan.cards);
     tomorrowAdultsEntry = {
       cards: tomorrowAdults.plan.cards,
@@ -1187,6 +1218,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
       ];
       const tomorrowKidsPlan = await fetchPlanFromApi(tomorrowAdults.city, tomorrowStr, { kids: true, recentlyShown });
       if (tomorrowKidsPlan?.cards?.length) {
+        deriveMissingEventTimes(tomorrowKidsPlan.cards);
         await enrichCardPhotos(tomorrowKidsPlan.cards);
         await enrichMissingImages(tomorrowKidsPlan.cards);
         tomorrowKidsEntry = {
