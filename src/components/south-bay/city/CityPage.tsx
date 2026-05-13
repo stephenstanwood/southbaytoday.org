@@ -991,8 +991,7 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
 // ---------------------------------------------------------------------------
 // City Housing Pulse — single-row median sale + YoY + days + over-list +
 // rank vs. other South Bay cities. Renders nothing when the city is missing
-// from real-estate.json or its YoY swing is volatile (>40%, matches the
-// homepage RealEstateCard filter).
+// from real-estate.json or its YoY swing is volatile (>40%).
 // ---------------------------------------------------------------------------
 
 interface ReCityRow {
@@ -1031,7 +1030,7 @@ function CityHousingPulse({ cityId }: { cityId: string }) {
   const row = allCities.find((c) => c.cityId === cityId);
   if (!row || row.medianSalePrice == null) return null;
 
-  // Match homepage RealEstateCard's volatility filter — drop unreliable YoY swings.
+  // Drop unreliable YoY swings (>40%) — small-sample bias from low-inventory months.
   const yoyVolatile = row.medianSalePriceYoy != null && Math.abs(row.medianSalePriceYoy) > 0.4;
 
   const validForRank = allCities.filter((c) => c.medianSalePrice != null);
