@@ -497,6 +497,7 @@ export default function SouthBayTodayView(_props: Props) {
             const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
             const passed = isPastBucket(bucket);
             if (!card) return null;
+            if (passed) return null;
             return (
               <BucketSlot
                 key={bucket}
