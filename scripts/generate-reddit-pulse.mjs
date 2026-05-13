@@ -68,6 +68,22 @@ function resolveCity(raw) {
   return { cityId, cityName: key.toUpperCase() };
 }
 
+// Deterministic out-of-area filter — runs BEFORE Haiku classification so we
+// never spend tokens (or risk a misclassification) on SF/East Bay posts that
+// the curator obviously doesn't want in the feed. Haiku's `out_of_area`
+// category stays as a backstop for posts these patterns miss.
+const SOUTH_BAY_HINT_REGEX = /\b(san jose|sj |sjc|sunnyvale|palo alto|mountain view|mtn view|santa clara|cupertino|los gatos|saratoga|campbell|milpitas|los altos|stanford|silicon valley|south bay|willow glen|almaden|cambrian|berryessa|santana row|valley fair)\b/i;
+const SF_MARKER_REGEX = /(\bin sf\b|\bin san francisco\b|\bsf'?s\b|\bsfo\b|\bin the city\b|\bfrom sf\b|\bto sf\b)/i;
+
+function isLikelyOutOfArea(p) {
+  const text = `${p.title || ""} ${p.selftext || ""}`;
+  if (SOUTH_BAY_HINT_REGEX.test(text)) return false;
+  // r/AskSF is SF-by-definition; without an explicit South Bay hint, drop it.
+  if ((p.sub || "").toLowerCase() === "asksf") return true;
+  if (SF_MARKER_REGEX.test(text)) return true;
+  return false;
+}
+
 // ─── Subreddit list ───────────────────────────────────────────────────
 const SUBS = [
   // South Bay core
@@ -258,7 +274,12 @@ async function main() {
     process.exit(1);
   }
 
-  const candidates = all
+  const preGeoCount = all.length;
+  const geoScoped = all.filter((p) => !isLikelyOutOfArea(p));
+  const droppedOOA = preGeoCount - geoScoped.length;
+  if (droppedOOA > 0) console.log(`Dropped ${droppedOOA} out-of-area posts (SF/AskSF/etc.) pre-classification.`);
+
+  const candidates = geoScoped
     .filter((p) => p.score >= 5 || p.numComments >= 3)
     .sort((a, b) => (b.score * b.weight) - (a.score * a.weight))
     .slice(0, 300);
