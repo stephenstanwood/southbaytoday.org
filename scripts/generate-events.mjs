@@ -4963,6 +4963,13 @@ async function main() {
         .replace(/[\u00a0]/g, " ") // non-breaking space → regular space
         .replace(/\s+/g, " ").trim();
     }
+    // WordPress sources emit &#038; (and &amp;) inside href attrs; the scraper
+    // grabs the raw attr text, so the entity survives into the URL. Decode the
+    // ampersand variants so query-string separators round-trip as `&` when the
+    // URL is copied directly (calendar links, share buttons, raw paste).
+    if (e.url) {
+      e.url = e.url.replace(/&#0*38;/g, "&").replace(/&amp;/g, "&");
+    }
   }
 
   // Cross-source dedup — two sources occasionally surface the same event
