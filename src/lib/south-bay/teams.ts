@@ -2,7 +2,7 @@
 // South Bay Today — team definitions + ESPN fetching
 // ---------------------------------------------------------------------------
 
-import type { SouthBayTeam, LeagueKey, ParsedGame } from "./types";
+import type { SouthBayTeam, LeagueKey } from "./types";
 import { REFRESH_MS, TIMEZONE } from "../sportsCore";
 
 // ── South Bay teams ──

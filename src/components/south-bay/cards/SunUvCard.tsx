@@ -93,12 +93,6 @@ export default function SunUvCard() {
   const upcoming = (days ?? []).filter((d) => d.date !== today?.date).slice(0, 3);
 
   // Day-over-day daylight delta — "is the day getting longer?"
-  const yesterdayDaylight: number | null = (() => {
-    if (!today) return null;
-    const idx = (days ?? []).findIndex((d) => d.date === today.date);
-    if (idx <= 0) return null;
-    return days?.[idx - 1].daylightSec ?? null;
-  })();
   const tomorrowDaylight = upcoming[0]?.daylightSec ?? null;
   const trendSec = today && tomorrowDaylight !== null ? tomorrowDaylight - today.daylightSec : null;
   const trendMin = trendSec !== null ? Math.round(trendSec / 60) : null;
