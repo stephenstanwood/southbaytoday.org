@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-13T16:09:59.476Z",
+    "generatedAt": "2026-05-13T18:17:18.422Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 25,
-    "placesMatched": 8,
-    "placeGaps": 17,
-    "eventsExtracted": 4,
+    "placesExtracted": 13,
+    "placesMatched": 7,
+    "placeGaps": 6,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 4,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,373 +19,190 @@
       "name": "Pruneyard",
       "city": "San Jose",
       "kind": "venue",
-      "context": "shopping center with reopened drive-through area",
+      "context": "shopping plaza with drive-through reopened after 7 years",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
         "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ]
     },
     {
-      "name": "Luna",
+      "name": "Luna's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "restaurant at Pruneyard, servers complained about reopened drive-through",
+      "context": "restaurant at Pruneyard plaza affected by drive-through reopening",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
         "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ]
     },
     {
       "name": "Mendocino",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "business near Peet's at Pruneyard",
+      "context": "restaurant near Peet's at Pruneyard",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
         "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ]
     },
     {
-      "name": "Valley Fair Mall",
-      "city": "Santa Clara",
+      "name": "Oracle",
+      "city": "",
       "kind": "venue",
-      "context": "parking structure traffic control mentioned",
+      "context": "venue for sports games and concerts affecting BART ridership",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
-        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ]
     },
     {
       "name": "House Rabbit Society",
       "city": "",
       "kind": "service",
-      "context": "rabbit fostering organization based in Richmond Bay Area",
+      "context": "rabbit foster program, HRS Hop Shop with 15% foster discount",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/",
         "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
-        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
         "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
+        "https://www.reddit.com/r/mountainview/comments/1tao6p0/do_you_feel_a_little_out_of_place_if_you_dont/"
       ]
     },
     {
-      "name": "State of Mind Slice House",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "New York style pizza, worth the drive",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Giovanni's",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "legit New York pizza on Lawrence",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Slice of Homage",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "best pizza with New York style option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Com Tam Thien Huong",
+      "name": "Valley Fair Mall",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "known for broken rice, Bun Ga Nuong specialty",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Pho Luc Lac",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "best rib eye fried rice in the area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Bass Pro",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "fishing gear rental and lessons for kids",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Sportsmen's Supply",
-      "city": "Campbell",
-      "kind": "retail",
-      "context": "fishing gear and crash course instruction",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Coyote Bait & Tackle",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "best fishing shop around",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Hagemann Ranch",
-      "city": "",
       "kind": "venue",
-      "context": "trout farm fishing with gear provided",
+      "context": "parking structure traffic management mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "McAlpine Lake",
-      "city": "",
-      "kind": "park",
-      "context": "recommended fishing spot for families",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Santa Cruz Pier",
-      "city": "",
-      "kind": "park",
-      "context": "free fishing without license, peak anchovy season",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ]
-    },
-    {
-      "name": "Pacifica Pier",
-      "city": "",
-      "kind": "park",
-      "context": "family friendly fishing and crab snaring",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/",
+        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
+        "https://www.reddit.com/r/mountainview/comments/1tao6p0/do_you_feel_a_little_out_of_place_if_you_dont/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Campbell Library Grand Reopening",
-      "when": "recent weekend",
-      "city": "Campbell",
-      "context": "library reopening celebration with lion dancers and large crowds",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
-      ]
-    },
-    {
       "name": "San Jose Sharks Equipment Event",
-      "when": "",
+      "when": "end of season",
       "city": "San Jose",
-      "kind": "sale event",
-      "context": "annual year-end game-worn jersey and equipment sale",
+      "context": "game-worn jersey and equipment sale for fans",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/",
         "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
-        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
         "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
-      ]
-    },
-    {
-      "name": "House Rabbit Society Foster Program",
-      "when": "ongoing",
-      "city": "",
-      "kind": "volunteer opportunity",
-      "context": "2-week rabbit fostering commitment Bay Area wide",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tbbb99/the_heavily_congested_calif_highway_now/",
-        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tb9rxy/can_you_foster_a_rabbit_for_2_weeks/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/"
-      ]
-    },
-    {
-      "name": "South Bay Fishing in the City",
-      "when": "annual event",
-      "city": "San Jose",
-      "context": "kids fishing event, registration closes early in year",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/mountainview/comments/1tao6p0/do_you_feel_a_little_out_of_place_if_you_dont/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Peet's Coffee",
+      "name": "Peet's",
       "city": "San Jose",
       "kind": "cafe",
-      "context": "located at Pruneyard shopping center",
+      "context": "coffee shop at Pruneyard shopping center",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
         "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ],
       "matchedName": "Peet's Coffee"
     },
     {
-      "name": "Campbell Library",
-      "city": "Campbell",
+      "name": "Santana Row",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "recently reopened with grand reopening celebration and lion dancers",
+      "context": "shopping center mentioned in comparison to Pruneyard layout",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
         "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
-        "https://www.reddit.com/r/Campbell/comments/1t8bllc/library_grand_reopening/",
-        "https://www.reddit.com/r/bayarea/comments/1tbm1tv/update_cat_stuck_in_a_tree_in_los_gatos/"
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
       ],
-      "matchedName": "Campbell Library"
+      "matchedName": "Santana Row"
     },
     {
-      "name": "Slice of New York",
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "shopping center mentioned in comparison to Pruneyard layout",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tbqnpz/kitty_stuck_in_tree_is_home/",
+        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/bayarea/comments/1tbhoiz/50_beagles_rescued_from_wisconsin_lab_arrive_in/",
+        "https://www.reddit.com/r/bayarea/comments/1tbkbkp/the_end_of_bart_inside_the_bay_areas_transit/",
+        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    },
+    {
+      "name": "Com Tam Thien Huong",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "best New York style pizza in the area",
+      "context": "Vietnamese, known for broken rice and vermicelli",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
+        "https://www.reddit.com/r/bayarea/comments/1tc1i1l/i_saw_loads_of_these_fluttering_about_upper/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
       ],
-      "matchedName": "A Slice of New York"
-    },
-    {
-      "name": "Slice House",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "New York style pizza in San Antonio center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ],
-      "matchedName": "Slice House Mountain View by Tony Gemignani"
+      "matchedName": "Com Tam Thien Huong"
     },
     {
       "name": "Vietnoms",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "specializes in vermicelli bowls with lemongrass chicken",
+      "context": "Vietnamese vermicelli bowls specialist",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
+        "https://www.reddit.com/r/bayarea/comments/1tc1i1l/i_saw_loads_of_these_fluttering_about_upper/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
       ],
       "matchedName": "Vietnoms"
     },
     {
-      "name": "Vasona County Park",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "Lake Vasona, fishing spot for kids",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
-      ],
-      "matchedName": "Peppertree Group Area | Vasona County Park"
-    },
-    {
-      "name": "Almaden Lake",
+      "name": "Pho Luc Lac",
       "city": "San Jose",
-      "kind": "park",
-      "context": "fishing spot for families",
+      "kind": "restaurant",
+      "context": "Vietnamese, best rib eye fried rice in area",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
+        "https://www.reddit.com/r/bayarea/comments/1tc1i1l/i_saw_loads_of_these_fluttering_about_upper/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
       ],
-      "matchedName": "Almaden Lake Park"
+      "matchedName": "Pho Luc Lac"
     },
     {
-      "name": "Sandy Wool Lake",
-      "city": "Milpitas",
+      "name": "Upper Stevens Creek County Park",
+      "city": "",
       "kind": "park",
-      "context": "trout fishing well-stocked for kids",
+      "context": "butterfly sighting location in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1t8skqb/best_new_york_style_pizza_around_here/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tb82oe/where_to_bring_kid_fishing/",
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/"
+        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
+        "https://www.reddit.com/r/bayarea/comments/1tc1i1l/i_saw_loads_of_these_fluttering_about_upper/",
+        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
+        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
       ],
-      "matchedName": "Sandy Wool Lake - Gazebo"
+      "matchedName": "Stevens Creek County Park"
     }
   ],
   "eventMatches": []
