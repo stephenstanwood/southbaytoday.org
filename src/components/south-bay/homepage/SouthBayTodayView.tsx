@@ -662,6 +662,11 @@ export default function SouthBayTodayView(_props: Props) {
           gap: 10px;
           margin: 0 -16px;
         }
+        /* Late in the day the grid shrinks to 5/3/1 tiles — let the orphan
+           last tile span both columns instead of sitting half-width alone. */
+        .sbt-buckets > .sbt-bucket:nth-child(odd):last-child {
+          grid-column: 1 / -1;
+        }
         @media (max-width: 640px) {
           .sbt-buckets {
             grid-template-columns: 1fr;
