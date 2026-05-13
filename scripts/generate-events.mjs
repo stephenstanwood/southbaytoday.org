@@ -5030,6 +5030,25 @@ async function main() {
     }
   }
 
+  // Library holiday-closure filter — BiblioCommons occasionally lists
+  // recurring programs (Storytime, Homework Help, Tech Help) on dates when
+  // the branch is closed for a federal holiday. Drop those, but keep
+  // explicitly themed events (e.g. "Celebrate Juneteenth! Storytime").
+  {
+    const { filterClosedLibraryEvents } = await import(
+      "../src/lib/south-bay/libraryClosures.mjs"
+    );
+    const { kept, dropped } = filterClosedLibraryEvents(collapsedEvents);
+    if (dropped.length > 0) {
+      console.log(`   🔒 library-closure: dropped ${dropped.length} event(s) on holiday closure dates`);
+      for (const e of dropped) {
+        console.log(`      - ${e.date} "${e.title}" @ ${e.venue || "?"} (${e.source})`);
+      }
+      collapsedEvents.length = 0;
+      collapsedEvents.push(...kept);
+    }
+  }
+
   // Shared rules — keep in sync with scripts/social/lib/content-rules.mjs.
   const { ACRONYM_FIXES, VIRTUAL_TITLE_SIGNALS, VIRTUAL_ADDRESS_SIGNALS } =
     await import("./social/lib/content-rules.mjs");
