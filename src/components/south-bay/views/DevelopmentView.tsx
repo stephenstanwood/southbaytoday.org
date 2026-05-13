@@ -71,10 +71,9 @@ const CITY_ACCENT: Record<string, string> = {
 
 // ── Project card ─────────────────────────────────────────────────────────────
 
-function ProjectCard({ project, accent, accentBg, featured }: {
+function ProjectCard({ project, accent, featured }: {
   project: DevProject;
   accent: string;
-  accentBg: string;
   featured?: boolean;
 }) {
   const cityAccent = CITY_ACCENT[project.cityId] ?? accent;
@@ -247,7 +246,6 @@ function DevSection({
               key={p.id}
               project={p}
               accent={accentColor}
-              accentBg={accentBg}
               featured={p.featured}
             />
           ))}

@@ -6,9 +6,9 @@
 
 import { useState, useEffect, useMemo } from "react";
 import type { City } from "../../../lib/south-bay/types";
-import { getCityName, CITY_MAP } from "../../../lib/south-bay/cities";
+import { CITY_MAP } from "../../../lib/south-bay/cities";
 import {
-  TODAY_ISO, NEXT_DAYS, NOW_MINUTES, IS_WEEKEND_MODE,
+  TODAY_ISO, NEXT_DAYS, IS_WEEKEND_MODE,
   startMinutes, formatTimeRange, isNotEnded,
   formatAge, formatRelativeDate,
 } from "../../../lib/south-bay/timeHelpers";
@@ -339,7 +339,7 @@ export default function CityPage({ cityId, cityName }: Props) {
       <CitySchoolDays cityId={cityId} cityName={cityName} />
 
       {/* ═══ HOUSING PULSE ═══ */}
-      <CityHousingPulse cityId={cityId} cityName={cityName} />
+      <CityHousingPulse cityId={cityId} />
 
       {/* ═══ FOOD PULSE ═══ */}
       <CityFoodPulse cityId={cityId} cityName={cityName} />
@@ -354,7 +354,7 @@ export default function CityPage({ cityId, cityName }: Props) {
       <CityChatter cityId={cityId} cityName={cityName} />
 
       {/* ═══ TECH NEIGHBORS ═══ */}
-      <CityTechNeighbors cityId={cityId} cityName={cityName} />
+      <CityTechNeighbors cityName={cityName} />
 
       {/* ═══ MAJOR PROJECTS ═══ */}
       <CityMajorProjects cityId={cityId} cityName={cityName} />
@@ -1025,7 +1025,7 @@ function ordinalRank(n: number): string {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-function CityHousingPulse({ cityId, cityName }: { cityId: string; cityName: string }) {
+function CityHousingPulse({ cityId }: { cityId: string }) {
   const data = realEstateJson as { cities: ReCityRow[]; sourceUrl?: string };
   const allCities = data.cities ?? [];
   const row = allCities.find((c) => c.cityId === cityId);
@@ -2118,7 +2118,7 @@ function fmtJobs(k: number): string {
   return `${n} job${n === 1 ? "" : "s"}`;
 }
 
-function CityTechNeighbors({ cityId, cityName }: { cityId: string; cityName: string }) {
+function CityTechNeighbors({ cityName }: { cityName: string }) {
   const matches = TECH_COMPANIES
     .filter((c) => c.city === cityName)
     .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)

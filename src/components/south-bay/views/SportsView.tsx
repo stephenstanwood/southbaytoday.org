@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import type { ParsedGame, LeagueKey } from "../../../lib/south-bay/types";
+import type { ParsedGame } from "../../../lib/south-bay/types";
 import {
   SOUTH_BAY_TEAMS,
   LEAGUE_META,

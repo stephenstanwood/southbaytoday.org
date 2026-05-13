@@ -80,7 +80,6 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
 
   const now = new Date();
   const nowPt = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-  const todayPt = nowPt.toISOString().split("T")[0];
   const start = new Date(nowPt); start.setDate(nowPt.getDate() - daysBack);
   const end   = new Date(nowPt); end.setDate(nowPt.getDate() + daysFwd);
   const startIso = start.toISOString().split("T")[0];

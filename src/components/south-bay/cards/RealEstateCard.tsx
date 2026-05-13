@@ -39,11 +39,6 @@ function formatYoy(n: number | null): { label: string; up: boolean | null } {
   return { label: `${n >= 0 ? "+" : ""}${pct}%`, up: n >= 0 };
 }
 
-function formatPeriod(isoDate: string): string {
-  const d = new Date(isoDate + "T12:00:00");
-  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-}
-
 function sortCities(cities: CityData[], key: SortKey, dir: SortDir): CityData[] {
   return [...cities].sort((a, b) => {
     let diff = 0;
@@ -70,8 +65,6 @@ export default function RealEstateCard({ homeCity = null }: Props) {
 
   const { cities, sourceUrl } = data;
   if (!cities || cities.length === 0) return null;
-
-  const latestPeriod = cities[0]?.periodEnd ? formatPeriod(cities[0].periodEnd) : "";
 
   const filtered = cities.filter(
     (c) => !(c.medianSalePriceYoy != null && Math.abs(c.medianSalePriceYoy) > 0.4),

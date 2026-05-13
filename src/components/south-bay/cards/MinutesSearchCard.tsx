@@ -289,7 +289,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
           {/* Greeting — shown until the first question lands */}
           {!hasHistory && !loading && (
-            <BotBubble city={city}>
+            <BotBubble>
               {city ? (
                 <>
                   Hi! I read every recent <strong>{cityName}</strong> council meeting,
@@ -365,7 +365,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
               </div>
 
               {/* Bot response */}
-              <BotBubble city={turn.city}>
+              <BotBubble>
                 {turn.error ? (
                   <span style={{ color: "var(--sb-accent)" }}>{turn.error}</span>
                 ) : turn.answer === null ? (
@@ -456,7 +456,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
           {/* Loading shimmer (only if no in-flight turn already shows it) */}
           {loading && history[history.length - 1]?.answer !== null && (
-            <BotBubble city={city}>
+            <BotBubble>
               <span style={{ color: "var(--sb-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <span className="sb-spinner" style={{ width: 12, height: 12, borderWidth: 2 }} />
                 Reading {cityName} meetings…
@@ -537,7 +537,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
-function BotBubble({ city, children }: { city: string; children: React.ReactNode }) {
+function BotBubble({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 14 }}>
       <div style={{
