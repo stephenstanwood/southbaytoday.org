@@ -163,39 +163,72 @@ async function nukeThreads() {
 }
 
 // ── Facebook ──
+// FB API blocks /feed listing without pages_read_engagement (Meta App Review),
+// so pull post IDs from our own publish records (schedule + queue) and delete
+// each one we've previously published before the cutoff.
 async function nukeFacebook() {
   console.log("=== FACEBOOK ===");
   const token = process.env.FB_PAGE_ACCESS_TOKEN;
-  const pageId = process.env.FB_PAGE_ID;
-  if (!token || !pageId) { console.log("  No credentials"); return; }
+  if (!token) { console.log("  No credentials"); return; }
 
-  let deleted = 0;
-  let url = `https://graph.facebook.com/v21.0/${pageId}/feed?fields=id,message,created_time&limit=50&access_token=${token}`;
+  const files = [
+    join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json"),
+    join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json"),
+  ];
 
-  while (url) {
-    const res = await fetch(url);
-    if (!res.ok) { console.log("  Fetch failed:", res.status); break; }
-    const data = await res.json();
+  const targets = []; // { id, pubDate }
+  const seen = new Set();
 
-    for (const post of (data.data || [])) {
-      const createdAt = (post.created_time || "").slice(0, 10);
-      const text = (post.message || "").slice(0, 60);
+  for (const f of files) {
+    let data;
+    try { data = JSON.parse(readFileSync(f, "utf8")); } catch { continue; }
 
-      if (createdAt && createdAt < cutoff) {
-        if (dryRun) {
-          console.log(`  Would delete: ${createdAt} ${text}`);
-        } else {
-          const delRes = await fetch(`https://graph.facebook.com/v21.0/${post.id}?access_token=${token}`, { method: "DELETE" });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
-          await new Promise(r => setTimeout(r, 500));
+    // Schedule shape: { days: { date: { slot: { publishedAt, publishedTo: [{platform,id,ok}] } } } }
+    if (data.days) {
+      for (const [_d, day] of Object.entries(data.days)) {
+        for (const [slot, s] of Object.entries(day || {})) {
+          if (slot.startsWith("_")) continue;
+          if (!s?.publishedTo || !s.publishedAt) continue;
+          for (const e of s.publishedTo) {
+            if (e.platform !== "facebook" || !e.ok) continue;
+            const id = e.id || e.postId;
+            if (!id || seen.has(id)) continue;
+            seen.add(id);
+            targets.push({ id, pubDate: (s.publishedAt || "").slice(0, 10) });
+          }
         }
-        deleted++;
       }
     }
 
-    url = data.paging?.next || null;
+    // Queue shape: [{ publishedAt, publishedTo: [{platform,id,ok}] }, ...]
+    if (Array.isArray(data)) {
+      for (const p of data) {
+        if (!Array.isArray(p.publishedTo)) continue;
+        for (const e of p.publishedTo) {
+          if (e.platform !== "facebook" || !e.ok) continue;
+          const id = e.id || e.postId;
+          if (!id || seen.has(id)) continue;
+          seen.add(id);
+          targets.push({ id, pubDate: (p.publishedAt || "").slice(0, 10) });
+        }
+      }
+    }
   }
-  console.log(`  Total: ${deleted}\n`);
+
+  let deleted = 0;
+  for (const t of targets) {
+    if (t.pubDate && t.pubDate >= cutoff) continue;
+    if (dryRun) {
+      console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+    } else {
+      const delRes = await fetch(`https://graph.facebook.com/v21.0/${t.id}?access_token=${token}`, { method: "DELETE" });
+      const body = delRes.ok ? "" : ` (${await delRes.text().then(s => s.slice(0,80))})`;
+      console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${t.pubDate} ${t.id}${body}`);
+      await new Promise(r => setTimeout(r, 500));
+    }
+    deleted++;
+  }
+  console.log(`  Total from records: ${deleted}\n`);
 }
 
 // ── Instagram ──
