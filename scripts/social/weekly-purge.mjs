@@ -98,14 +98,28 @@ async function deleteInstagram(id) {
 }
 
 async function deleteMastodon(id) {
+  // Mastodon caps deletions at ~30 / 30 min. On 429 we honour the
+  // x-ratelimit-reset header (capped at 35min) and retry once.
   const token = process.env.MASTODON_ACCESS_TOKEN;
   const instance = process.env.MASTODON_INSTANCE || "https://mastodon.social";
   if (!token) throw new Error("Missing MASTODON_ACCESS_TOKEN");
-  const res = await fetch(`${instance}/api/v1/statuses/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error(`mastodon ${res.status}`);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const res = await fetch(`${instance}/api/v1/statuses/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) return;
+    if (res.status === 429 && attempt === 0) {
+      const reset = res.headers.get("x-ratelimit-reset");
+      const waitMs = reset
+        ? Math.max(1000, Math.min(35 * 60 * 1000, new Date(reset).getTime() - Date.now() + 5000))
+        : 30 * 60 * 1000;
+      console.log(`      ↳ mastodon: rate limited — sleeping ${Math.round(waitMs / 1000)}s…`);
+      await sleep(waitMs);
+      continue;
+    }
+    throw new Error(`mastodon ${res.status}`);
+  }
 }
 
 async function deleteX(id) {

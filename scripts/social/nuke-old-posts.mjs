@@ -292,13 +292,15 @@ async function nukeInstagram() {
 }
 
 // ── Mastodon ──
+// Mastodon enforces a separate hard cap on deletions: ~30 per 30 minutes.
+// On 429 we read the x-ratelimit-reset header and sleep until it expires
+// (capped at 35min) before continuing. Don't run in CI without a long timeout.
 async function nukeMastodon() {
   console.log("=== MASTODON ===");
   const token = process.env.MASTODON_ACCESS_TOKEN;
   const instance = process.env.MASTODON_INSTANCE || "https://mastodon.social";
   if (!token) { console.log("  No credentials"); return; }
 
-  // Get account ID
   const meRes = await fetch(`${instance}/api/v1/accounts/verify_credentials`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -306,9 +308,10 @@ async function nukeMastodon() {
   const me = await meRes.json();
 
   let deleted = 0;
+  let failed = 0;
   let maxId = undefined;
 
-  while (true) {
+  outer: while (true) {
     const url = `${instance}/api/v1/accounts/${me.id}/statuses?limit=40${maxId ? "&max_id=" + maxId : ""}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     if (!res.ok) break;
@@ -319,24 +322,43 @@ async function nukeMastodon() {
       const createdAt = (status.created_at || "").slice(0, 10);
       const text = (status.content || "").replace(/<[^>]*>/g, "").slice(0, 60);
 
-      if (createdAt && createdAt < cutoff) {
-        if (dryRun) {
-          console.log(`  Would delete: ${createdAt} ${text}`);
-        } else {
-          const delRes = await fetch(`${instance}/api/v1/statuses/${status.id}`, {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
-          await new Promise(r => setTimeout(r, 200));
-        }
+      if (!createdAt || createdAt >= cutoff) continue;
+      if (dryRun) {
+        console.log(`  Would delete: ${createdAt} ${text}`);
         deleted++;
+        continue;
       }
+
+      // Up to 2 attempts: first try, then wait-for-reset and retry once
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const delRes = await fetch(`${instance}/api/v1/statuses/${status.id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (delRes.ok) {
+          console.log(`  Deleted: ${createdAt} ${text}`);
+          deleted++;
+          break;
+        }
+        if (delRes.status === 429 && attempt === 0) {
+          const reset = delRes.headers.get("x-ratelimit-reset");
+          const waitMs = reset
+            ? Math.max(1000, Math.min(35 * 60 * 1000, new Date(reset).getTime() - Date.now() + 5000))
+            : 30 * 60 * 1000;
+          console.log(`  Rate limited — sleeping ${Math.round(waitMs / 1000)}s until ${reset || "default reset"}…`);
+          await new Promise(r => setTimeout(r, waitMs));
+          continue;
+        }
+        console.log(`  Failed: ${createdAt} ${text} (${delRes.status})`);
+        failed++;
+        break;
+      }
+      await new Promise(r => setTimeout(r, 400));
     }
 
     maxId = statuses[statuses.length - 1].id;
   }
-  console.log(`  Total: ${deleted}\n`);
+  console.log(`  Total deleted: ${deleted}, failed: ${failed}\n`);
 }
 
 await nukeBluesky();
