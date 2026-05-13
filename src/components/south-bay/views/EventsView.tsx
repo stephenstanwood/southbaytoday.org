@@ -1284,6 +1284,11 @@ function HolidayHeadsUpBanner({
           · <strong style={{ fontWeight: 700 }}>Trash:</strong> 1 day late through Friday
         </span>
       )}
+      {closures.transit && (
+        <span style={{ opacity: 0.95 }}>
+          · <strong style={{ fontWeight: 700 }}>Transit:</strong> {closures.transit}
+        </span>
+      )}
     </div>
   );
 

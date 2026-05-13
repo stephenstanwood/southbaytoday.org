@@ -35,6 +35,15 @@ export interface NamedHoliday {
    *  only holidays (Mother's Day, Cinco de Mayo, Halloween, …) — those
    *  don't trigger civic closures. */
   federal?: boolean;
+  /** Public-transit advisory shown in the closure strip when the holiday
+   *  meaningfully changes service. Caltrain & VTA shift to Sunday/holiday
+   *  service on the major federal holidays (New Year's, Memorial Day,
+   *  Independence Day, Labor Day, Thanksgiving, Christmas). ACE runs
+   *  weekday-only and doesn't operate on any federal holiday. The smaller
+   *  federal holidays (MLK, Presidents', Indigenous Peoples', Veterans)
+   *  keep regular weekday service on Caltrain & VTA, so we omit the line
+   *  there. Christmas gets a stronger note since Caltrain has no service. */
+  transitNote?: string;
 }
 
 /** Returns the YYYY-MM-DD dates covered by a holiday's weekendSpan (or just
@@ -100,6 +109,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#eff6ff",
     computeIso: (y) => fixedDate(y, 1, 1),
     federal: true,
+    transitNote: "Caltrain & VTA on Sunday schedule · no ACE",
   },
   {
     id: "mlk-day",
@@ -230,6 +240,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     themeKeywords: ["memorial day", "veterans", "wreath-laying", "wreath laying", "fallen", "armed forces"],
     weekendSpan: [-2, -1, 0],
     federal: true,
+    transitNote: "Caltrain & VTA on Sunday schedule · no ACE",
   },
   {
     id: "eid-al-adha",
@@ -258,6 +269,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => fixedDate(y, 6, 19),
     themeKeywords: ["juneteenth"],
     federal: true,
+    transitNote: "Caltrain on Sunday schedule · no ACE",
   },
   {
     id: "fathers-day",
@@ -277,6 +289,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => fixedDate(y, 7, 4),
     themeKeywords: ["fourth of july", "4th of july", "july 4", "independence day", "fireworks", "patriotic"],
     federal: true,
+    transitNote: "Caltrain & VTA on Sunday schedule · no ACE",
   },
   {
     id: "labor-day",
@@ -287,6 +300,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => nthWeekday(y, 9, 1, 1), // 1st Monday of September
     weekendSpan: [-2, -1, 0],
     federal: true,
+    transitNote: "Caltrain & VTA on Sunday schedule · no ACE",
   },
   {
     id: "rosh-hashanah",
@@ -415,6 +429,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => nthWeekday(y, 11, 4, 4), // 4th Thursday of November
     themeKeywords: ["thanksgiving", "turkey trot", "friendsgiving", "harvest"],
     federal: true,
+    transitNote: "Caltrain & VTA on Sunday schedule · no ACE",
   },
   {
     id: "christmas-eve",
@@ -434,6 +449,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     computeIso: (y) => fixedDate(y, 12, 25),
     themeKeywords: ["christmas", "santa", "tree lighting", "nutcracker"],
     federal: true,
+    transitNote: "No Caltrain · VTA on holiday schedule · no ACE",
   },
   {
     id: "new-years-eve",
@@ -497,6 +513,7 @@ export function nextHolidayWithin(todayIso: string, horizonIso: string): {
 export interface HolidayClosureSummary {
   closed: string;          // "libraries, post offices, city offices, banks"
   trashDelayed: boolean;   // true → "Trash pickup runs 1 day late this week"
+  transit: string | null;  // "Caltrain & VTA on Sunday schedule · no ACE"
 }
 
 export function holidayClosureSummary(
@@ -509,5 +526,6 @@ export function holidayClosureSummary(
   return {
     closed: "libraries, post offices, city offices, banks",
     trashDelayed: fallsOnWeekday,
+    transit: holiday.transitNote ?? null,
   };
 }
