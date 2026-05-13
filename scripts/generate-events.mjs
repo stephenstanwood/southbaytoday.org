@@ -1442,7 +1442,7 @@ async function fetchSjsuEvents() {
     const xml = await fetchText("https://events.sjsu.edu/calendar.xml", { timeout: 45_000 }); // large feed ~1.4MB
     const items = parseRssItems(xml);
     let skipped = 0;
-    const events = items.map((item) => {
+    const parsed = items.map((item) => {
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
@@ -1468,9 +1468,42 @@ async function fetchSjsuEvents() {
         source: "SJSU Events",
         image,
         kidFriendly: false,
+        _startMs: start.getTime(),
       };
     }).filter(Boolean);
-    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered)`);
+
+    // SJSU's Localist RSS emits each occurrence of a recurring event as a
+    // separate item — a single exhibit like "Fists of Fury" floods Today
+    // with 9 identical 4 PM entries on consecutive days. Stanford's Localist
+    // API exposes first_date/last_date so its scraper collapses series at
+    // ingest; the RSS feed gives us only per-occurrence rows. Group by event
+    // detail URL and, when the same URL appears on 3+ dates, emit a single
+    // ongoing entry at the earliest future date. 2-occurrence URLs remain
+    // separate sessions (real workshops often run 2 dates).
+    const byUrl = new Map();
+    const collapsibleUrlPattern = /^https?:\/\/events\.sjsu\.edu\/event\//i;
+    for (const e of parsed) {
+      if (!e.url || !collapsibleUrlPattern.test(e.url)) continue;
+      if (!byUrl.has(e.url)) byUrl.set(e.url, []);
+      byUrl.get(e.url).push(e);
+    }
+    const dropIds = new Set();
+    let collapsed = 0;
+    for (const [, occurrences] of byUrl) {
+      if (occurrences.length < 3) continue;
+      occurrences.sort((a, b) => a._startMs - b._startMs);
+      const keep = occurrences[0];
+      keep.time = null;
+      keep.endTime = null;
+      keep.ongoing = true;
+      for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
+      collapsed += occurrences.length - 1;
+    }
+    const events = parsed
+      .filter((e) => !dropIds.has(e.id))
+      .map(({ _startMs, ...e }) => e);
+
+    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""})`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);
