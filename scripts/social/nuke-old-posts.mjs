@@ -87,41 +87,65 @@ async function nukeX() {
   console.log("=== X ===");
   const { deletePost } = await import("./lib/platforms/x.mjs");
 
-  // X API v2 doesn't have a simple "list my tweets" without user ID
-  // Pull from our publish records instead
+  // X API v2 doesn't have a simple "list my tweets" without user ID.
+  // Pull IDs from our own publish records (schedule + queue).
   const files = [
+    join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json"),
     join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json"),
   ];
 
-  let deleted = 0;
+  const targets = []; // { id, pubDate }
+  const seen = new Set();
+
   for (const f of files) {
-    try {
-      const data = JSON.parse(readFileSync(f, "utf8"));
-      const posts = Array.isArray(data) ? data : [];
-      for (const p of posts) {
-        if (!p.publishedTo) continue;
-        for (const result of p.publishedTo) {
-          if (result.platform !== "x" || !result.ok) continue;
-          const postId = result.postId || result.id;
-          if (!postId) continue;
-          const pubDate = (p.publishedAt || "").slice(0, 10);
-          if (pubDate && pubDate < cutoff) {
-            if (dryRun) {
-              console.log(`  Would delete: ${pubDate} ${postId}`);
-            } else {
-              try {
-                await deletePost(postId);
-                console.log(`  Deleted: ${pubDate} ${postId}`);
-              } catch (e) {
-                console.log(`  Failed: ${postId} ${e.message}`);
-              }
-              await new Promise(r => setTimeout(r, 200));
-            }
-            deleted++;
+    let data;
+    try { data = JSON.parse(readFileSync(f, "utf8")); } catch { continue; }
+
+    if (data.days) {
+      for (const [_d, day] of Object.entries(data.days)) {
+        for (const [slot, s] of Object.entries(day || {})) {
+          if (slot.startsWith("_")) continue;
+          if (!s?.publishedTo || !s.publishedAt) continue;
+          for (const e of s.publishedTo) {
+            if (e.platform !== "x" || !e.ok) continue;
+            const id = e.id || e.postId;
+            if (!id || seen.has(id)) continue;
+            seen.add(id);
+            targets.push({ id, pubDate: (s.publishedAt || "").slice(0, 10) });
           }
         }
       }
-    } catch {}
+    }
+
+    if (Array.isArray(data)) {
+      for (const p of data) {
+        if (!Array.isArray(p.publishedTo)) continue;
+        for (const e of p.publishedTo) {
+          if (e.platform !== "x" || !e.ok) continue;
+          const id = e.id || e.postId;
+          if (!id || seen.has(id)) continue;
+          seen.add(id);
+          targets.push({ id, pubDate: (p.publishedAt || "").slice(0, 10) });
+        }
+      }
+    }
+  }
+
+  let deleted = 0;
+  for (const t of targets) {
+    if (t.pubDate && t.pubDate >= cutoff) continue;
+    if (dryRun) {
+      console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+    } else {
+      try {
+        await deletePost(t.id);
+        console.log(`  Deleted: ${t.pubDate} ${t.id}`);
+      } catch (e) {
+        console.log(`  Failed: ${t.id} ${e.message}`);
+      }
+      await new Promise(r => setTimeout(r, 200));
+    }
+    deleted++;
   }
   console.log(`  Total from records: ${deleted}\n`);
 }
