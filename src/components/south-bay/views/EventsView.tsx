@@ -8,6 +8,7 @@ import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import {
   holidayOn,
+  holidaySpanIsos,
   matchesHolidayTheme,
   nextHolidayWithin,
   NAMED_HOLIDAYS,
@@ -769,6 +770,33 @@ function schoolDateLabel(iso: string, todayIso: string, tomorrowIso: string): st
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 }
 
+/** "Sat, May 23 – Mon, May 25" — used on the holiday heads-up banner for
+ *  3-day-weekend holidays so residents see the whole observance window, not
+ *  just the calendar Monday. Falls back to today/tomorrow labels when the
+ *  span starts inside the immediate horizon. */
+function formatWeekendRange(
+  startIso: string,
+  endIso: string,
+  todayIso: string,
+  tomorrowIso: string,
+): string {
+  if (startIso === endIso) return schoolDateLabel(startIso, todayIso, tomorrowIso);
+  const startLabel = startIso === todayIso
+    ? "today"
+    : startIso === tomorrowIso
+      ? "tomorrow"
+      : new Date(startIso + "T12:00:00").toLocaleDateString("en-US", {
+          weekday: "short", month: "short", day: "numeric",
+        });
+  const endDate = new Date(endIso + "T12:00:00");
+  // Drop the repeated "May" on the end side when both ends share a month.
+  const sameMonth = startIso.slice(0, 7) === endIso.slice(0, 7);
+  const endLabel = sameMonth
+    ? endDate.toLocaleDateString("en-US", { weekday: "short", day: "numeric" })
+    : endDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  return `${startLabel} – ${endLabel}`;
+}
+
 function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) {
   const todayIso = todayPT();
   const tomorrowIso = addDays(todayIso, 1);
@@ -1108,9 +1136,33 @@ function HolidayHeadsUpBanner({
   );
   if (!next) return null;
 
-  const dateLabel = schoolDateLabel(next.iso, todayIso, tomorrowIso);
   const { holiday } = next;
-  const totalCount = eventCountByDate[next.iso] ?? 0;
+  // For 3-day-weekend holidays (Memorial, Labor, MLK, Presidents', Indigenous
+  // Peoples'), residents treat the surrounding Sat–Sun as part of the holiday
+  // even though only Monday is the official date. Surface that span on the
+  // banner so a Tue–Sat read "Memorial Day Weekend · Sat May 23 – Mon May 25"
+  // rather than burying the Saturday–Sunday cohort behind a Mon-only label.
+  const spanDays = holiday.weekendSpan && holiday.weekendSpan.length > 1
+    ? holidaySpanIsos(next.iso, holiday.weekendSpan)
+    : [next.iso];
+  const isSpan = spanDays.length > 1;
+  // Earliest span day that hasn't already passed — the natural landing date
+  // for someone clicking the banner mid-weekend.
+  const landingIso = spanDays.find((d) => d >= todayIso) ?? spanDays[spanDays.length - 1];
+  const firstDay = spanDays[0];
+  const lastDay = spanDays[spanDays.length - 1];
+
+  const dateLabel = isSpan
+    ? formatWeekendRange(firstDay, lastDay, todayIso, tomorrowIso)
+    : schoolDateLabel(next.iso, todayIso, tomorrowIso);
+  const displayLabel = isSpan ? `${holiday.label} Weekend` : holiday.label;
+
+  // Sum event/themed counts across every day in the span so the pill reflects
+  // the full weekend, not just the official Monday.
+  const totalCount = spanDays.reduce(
+    (sum, d) => sum + (eventCountByDate[d] ?? 0),
+    0,
+  );
   const themedCount = themedCountByHolidayId[holiday.id] ?? 0;
   // Prefer the themed count when the holiday has theme keywords AND there
   // are themed picks available — that's what residents actually want when
@@ -1155,7 +1207,7 @@ function HolidayHeadsUpBanner({
       }}>
         Holiday
       </span>
-      <span style={{ fontWeight: 600 }}>{holiday.label}</span>
+      <span style={{ fontWeight: 600 }}>{displayLabel}</span>
       <span style={{ opacity: 0.85 }}>{dateLabel}</span>
       {isClickable && (
         <span
@@ -1186,8 +1238,8 @@ function HolidayHeadsUpBanner({
     return (
       <button
         type="button"
-        onClick={() => onJumpToDate(next.iso, showThemed ? holiday.id : undefined)}
-        aria-label={`Jump to ${holiday.label} (${dateLabel}) — ${pillLabel}`}
+        onClick={() => onJumpToDate(landingIso, showThemed ? holiday.id : undefined)}
+        aria-label={`Jump to ${displayLabel} (${dateLabel}) — ${pillLabel}`}
         style={innerStyle}
         onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
         onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
@@ -1225,7 +1277,10 @@ function HolidayPicksPreview({
   onJumpToDate,
 }: HolidayPicksPreviewProps) {
   const todayIso = todayPT();
-  const horizonIso = addDays(todayIso, 3);
+  // For 3-day-weekend holidays, give the preview a wider window so the picks
+  // surface before the Saturday — residents plan a long weekend a few days
+  // out, not the night before.
+  const horizonIso = addDays(todayIso, 7);
   const next = useMemo(
     () => nextHolidayWithin(todayIso, horizonIso),
     [todayIso, horizonIso],
@@ -1234,17 +1289,27 @@ function HolidayPicksPreview({
   const { holiday, iso } = next;
   if (!holiday.themeKeywords?.length) return null;
 
+  const spanIsos = holiday.weekendSpan && holiday.weekendSpan.length > 1
+    ? holidaySpanIsos(iso, holiday.weekendSpan).filter((d) => d >= todayIso)
+    : [iso];
+  // Non-span holidays keep the original 3-day horizon — surfacing
+  // single-day picks a week out is too early and clutters the events tab.
+  if (spanIsos.length === 1 && iso > addDays(todayIso, 3)) return null;
+  const spanSet = new Set(spanIsos);
+
   const themed = useMemo(() => {
     const out: UpcomingEvent[] = [];
     for (const e of events) {
-      if (e.date !== iso) continue;
+      if (!spanSet.has(e.date)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
       if (!matchesHolidayTheme(holiday, lower)) continue;
       out.push(e);
     }
-    // Prefer events with images and a real time, then by title for stability.
+    // Span days first (residents plan chronologically), then images, then
+    // time, then title for stability.
     out.sort((a, b) => {
+      if (a.date !== b.date) return a.date.localeCompare(b.date);
       const aHas = (a.image || a.photoRef) ? 1 : 0;
       const bHas = (b.image || b.photoRef) ? 1 : 0;
       if (aHas !== bHas) return bHas - aHas;
@@ -1254,15 +1319,19 @@ function HolidayPicksPreview({
       return a.title.localeCompare(b.title);
     });
     return out.slice(0, 3);
-  }, [events, iso, holiday, allCities, selectedCities]);
+  }, [events, spanSet, holiday, allCities, selectedCities]);
 
   if (themed.length < 2) return null;
 
-  const dayWord = iso === todayIso
-    ? "Today"
-    : iso === addDays(todayIso, 1)
-      ? "Tomorrow"
-      : new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
+  const isSpan = spanIsos.length > 1;
+  const dayWord = isSpan
+    ? `${holiday.label} Weekend`
+    : iso === todayIso
+      ? "Today"
+      : iso === addDays(todayIso, 1)
+        ? "Tomorrow"
+        : new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
+  const previewHeading = isSpan ? dayWord : `${holiday.label} · ${dayWord} picks`;
 
   return (
     <div
@@ -1290,17 +1359,22 @@ function HolidayPicksPreview({
         }}
       >
         <span aria-hidden style={{ fontSize: 12 }}>{holiday.emoji}</span>
-        <span>{holiday.label} · {dayWord} picks</span>
+        <span>{previewHeading}</span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         {themed.map((e) => {
           const cityName = CITY_LABELS[e.city] ?? e.city;
           const time = formatTimeRange(e.time, e.endTime);
+          const dayBadge = isSpan
+            ? new Date(e.date + "T12:00:00").toLocaleDateString("en-US", {
+                weekday: "short", month: "short", day: "numeric",
+              })
+            : null;
           return (
             <button
               key={e.id}
               type="button"
-              onClick={() => onJumpToDate(iso, holiday.id)}
+              onClick={() => onJumpToDate(e.date, holiday.id)}
               style={{
                 display: "flex",
                 alignItems: "flex-start",
@@ -1348,6 +1422,8 @@ function HolidayPicksPreview({
                     fontFamily: "'Space Mono', monospace",
                   }}
                 >
+                  {dayBadge && <span style={{ color: holiday.color, fontWeight: 700 }}>{dayBadge}</span>}
+                  {dayBadge && <span aria-hidden>·</span>}
                   {time && <span style={{ color: holiday.color, fontWeight: 700 }}>{time}</span>}
                   {time && <span aria-hidden>·</span>}
                   <span style={{
@@ -2238,9 +2314,18 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (!h.themeKeywords?.length) continue;
         const iso = h.computeIso(y);
         if (iso < todayIso || iso > horizonIso) continue;
+        // For 3-day-weekend holidays, count themed events across the whole
+        // span so the heads-up pill reads "12 picks" for the Sat–Sun–Mon
+        // bracket — not just the four Memorial Day Monday observances.
+        const dayWindow = new Set(
+          (h.weekendSpan && h.weekendSpan.length > 1
+            ? holidaySpanIsos(iso, h.weekendSpan)
+            : [iso]
+          ).filter((d) => d >= todayIso),
+        );
         let n = 0;
         for (const e of upcomingEvents) {
-          if (e.date !== iso) continue;
+          if (!dayWindow.has(e.date)) continue;
           if (!allCities && !selectedCities.has(e.city as City)) continue;
           if (category !== "all" && e.category !== category) continue;
           if (showKidsOnly && !e.kidFriendly) continue;

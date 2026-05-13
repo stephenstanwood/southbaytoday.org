@@ -21,6 +21,29 @@ export interface NamedHoliday {
    *  event on that date. Omit when the holiday is observed but doesn't have
    *  a clear textual signal in event copy (e.g. school holidays). */
   themeKeywords?: string[];
+  /** Day offsets (relative to `iso`) for the full observance window — a
+   *  3-day weekend, Thanksgiving's Thursday-through-Sunday stretch, etc.
+   *  Drives the events-tab banner and picks preview to span the whole
+   *  weekend rather than just the calendar holiday. Omit for single-day
+   *  observances (defaults to `[0]`). */
+  weekendSpan?: number[];
+}
+
+/** Returns the YYYY-MM-DD dates covered by a holiday's weekendSpan (or just
+ *  the holiday's own date when no span is defined). Order matches the span,
+ *  so callers can show "Sat → Mon" naturally. */
+export function holidaySpanIsos(
+  iso: string,
+  weekendSpan?: number[],
+): string[] {
+  const offsets = weekendSpan && weekendSpan.length > 0 ? weekendSpan : [0];
+  return offsets.map((offset) => shiftIso(iso, offset));
+}
+
+function shiftIso(iso: string, days: number): string {
+  const d = new Date(`${iso}T12:00:00`);
+  d.setDate(d.getDate() + days);
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 // ── Date helpers (Pacific Time, no UTC drift) ───────────────────────────────
@@ -76,6 +99,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1f2937",
     bg: "#f3f4f6",
     computeIso: (y) => nthWeekday(y, 1, 1, 3), // 3rd Monday of January
+    weekendSpan: [-2, -1, 0],
   },
   {
     id: "lunar-new-year",
@@ -111,6 +135,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1e40af",
     bg: "#eff6ff",
     computeIso: (y) => nthWeekday(y, 2, 1, 3), // 3rd Monday of February
+    weekendSpan: [-2, -1, 0],
   },
   {
     id: "st-patricks",
@@ -192,6 +217,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     bg: "#eff6ff",
     computeIso: (y) => lastWeekday(y, 5, 1), // last Monday of May
     themeKeywords: ["memorial day", "veterans", "wreath-laying", "wreath laying", "fallen", "armed forces"],
+    weekendSpan: [-2, -1, 0],
   },
   {
     id: "eid-al-adha",
@@ -245,6 +271,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#1f2937",
     bg: "#f3f4f6",
     computeIso: (y) => nthWeekday(y, 9, 1, 1), // 1st Monday of September
+    weekendSpan: [-2, -1, 0],
   },
   {
     id: "rosh-hashanah",
@@ -309,6 +336,7 @@ export const NAMED_HOLIDAYS: NamedHoliday[] = [
     color: "#92400e",
     bg: "#fffbeb",
     computeIso: (y) => nthWeekday(y, 10, 1, 2), // 2nd Monday of October
+    weekendSpan: [-2, -1, 0],
   },
   {
     id: "halloween",
