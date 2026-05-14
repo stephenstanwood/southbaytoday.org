@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Venues/orgs we tried to tag but couldn't find in social-handles.json. Auto-populated at gen time. Resolve by adding entries to social-handles.json (this file's entries are then dropped on next run).",
-    "lastUpdated": "2026-05-09"
+    "lastUpdated": "2026-05-14"
   },
   "gaps": {
     "central park library edinger room": {
@@ -457,6 +457,94 @@
         }
       ],
       "lastSeen": "2026-05-09"
+    },
+    "towne 3 cinemas": {
+      "displayName": "Towne 3 Cinemas",
+      "firstSeen": "2026-05-14",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "indie cinema night sing sing 2023": {
+      "displayName": "Indie Cinema Night: Sing Sing (2023)",
+      "firstSeen": "2026-05-14",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "evening walk at vasona lake": {
+      "displayName": "Evening Walk at Vasona Lake",
+      "firstSeen": "2026-05-14",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "single",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "aqui": {
+      "displayName": "Aqui",
+      "firstSeen": "2026-05-14",
+      "occurrences": 4,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "campbell",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "heritage orchard": {
+      "displayName": "Heritage Orchard",
+      "firstSeen": "2026-05-14",
+      "occurrences": 4,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "dio deka": {
+      "displayName": "Dio Deka",
+      "firstSeen": "2026-05-14",
+      "occurrences": 4,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-14"
+    },
+    "cafe stritch": {
+      "displayName": "Cafe Stritch",
+      "firstSeen": "2026-05-14",
+      "occurrences": 4,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-14"
     }
   }
 }
