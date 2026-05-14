@@ -386,6 +386,10 @@ const HARD_LIMITS = {
   // description is search-index body (≤500 per API; their hard cap is 800
   // but 500 reads cleaner on the pin card).
   pinterestTitle: 100, pinterestDescription: 500,
+  // Seed reply — fires ~30s after the parent post on X/Threads to seed
+  // engagement before the URL self-reply lands at 2.5min. One sentence,
+  // editorially useful (must-do pick), never a CTA. Day-plan only for now.
+  seedReply: 280,
 };
 
 /** Enforce hard character limits on string-shaped platform variants. */
@@ -423,6 +427,7 @@ const NO_URL_PLATFORMS = [
   "x", "threads", "facebook", "instagram", "email",
   "bumpX", "bumpThreads", "bumpBluesky",
   "pinterestTitle", "pinterestDescription",
+  "seedReply",
 ];
 
 /**
@@ -620,9 +625,13 @@ ALSO write Pinterest-specific copy. Pinterest is a VISUAL SEARCH ENGINE with a 6
 
 10. pinterestDescription (max 500 chars) — 2-4 sentences expanding the title for Pinterest's search index. Tell the searcher what they'll find. Conversational but search-rich (repeat city names, mention bucket labels — "breakfast," "trail," "dinner"). End with a line break + 4-6 search hashtags (#SanJose #ThingsToDoInSanJose #SouthBay #BayAreaTravel etc). NO URL (Pinterest passes the URL separately).
 
-LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX, pinterestTitle, pinterestDescription.
+ALSO write a seedReply — fires as a +30s reply on X/Threads after the parent goes live, before the link self-reply lands at 2.5min. The point is to add ONE more piece of useful content (and a small algo nudge from author-engagement), not to repeat the parent or sell anything.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "pollX", "pinterestTitle", "pinterestDescription". No other text.`;
+11. seedReply (max 260 chars, NO URL, NO hashtags, NO CTA) — one sentence that picks the standout of the six ideas above and says why in plain language. Examples of the SHAPE we want: "If you only have time for one of these, the afternoon Quicksilver hike is the move — the spring wildflowers are at peak right now." / "Real talk: the dinner pick at Aqui is the one I'd build the rest of the day around — best margaritas in Campbell, period." Editorial voice (a local would say this), no marketing tone, no "check it out", no link, no @-handles.
+
+LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX, pinterestTitle, pinterestDescription, seedReply.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "pollX", "pinterestTitle", "pinterestDescription", "seedReply". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",

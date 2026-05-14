@@ -626,37 +626,51 @@ async function main() {
     const slotType = post.scheduledSlot?.slotType || null;
     const imageAlt = sharedImgBuf ? deriveImageAlt(post) : "";
 
-    // ── Threads carousel prep (day-plan only) ─────────────────────────────
-    // For day-plans we attempt a 2-10 slide carousel (hero + bucket photos).
-    // Threads carousels get higher dwell time → better algo distribution.
-    // Hydration is best-effort: failures fall back to single-image publish.
+    // ── Day-plan multi-image prep (Threads carousel + Bluesky thread) ────
+    // Hydrate bucket-card photos ONCE up front (Places API → Blob cache),
+    // then build both the Threads carousel slide list and the Bluesky
+    // thread reply list from the same hydrated cards. Either can be null —
+    // any failure (incl. <2 hydrated images) cleanly falls back to the
+    // existing single-image publish path on that platform.
     let threadsCarouselSlides = null;
-    if (slotType === "day-plan" && ogImage) {
+    let blueskyThreadReplies = null;
+    if (slotType === "day-plan") {
       try {
         const plan = post._schedulePlan
           || (post.item && post.item.cards ? post.item : null)
           || null;
         const cards = plan?.cards || [];
         if (cards.length > 0) {
-          const { hydrateBucketCardImages, buildCarouselSlides } =
+          const { hydrateBucketCardImages, buildCarouselSlides, buildBlueskyThread } =
             await import("./lib/carousel-images.mjs");
           await hydrateBucketCardImages(cards);
           const cityName = plan?.cityName || post.item?.cityName || "";
-          threadsCarouselSlides = buildCarouselSlides({
-            heroImageUrl: ogImage,
-            heroAlt: imageAlt,
-            cards,
-            cityName,
-          });
-          if (threadsCarouselSlides) {
-            console.log(`      🎠 Threads carousel prepped: ${threadsCarouselSlides.length} slides`);
+
+          if (ogImage) {
+            threadsCarouselSlides = buildCarouselSlides({
+              heroImageUrl: ogImage,
+              heroAlt: imageAlt,
+              cards,
+              cityName,
+            });
+            if (threadsCarouselSlides) {
+              console.log(`      🎠 Threads carousel prepped: ${threadsCarouselSlides.length} slides`);
+            } else {
+              console.log(`      🎠 Threads carousel: <2 hydrated slides — single-image fallback`);
+            }
+          }
+
+          blueskyThreadReplies = buildBlueskyThread({ cards, cityName });
+          if (blueskyThreadReplies) {
+            console.log(`      🦋 Bluesky thread prepped: ${blueskyThreadReplies.length} bucket replies`);
           } else {
-            console.log(`      🎠 Threads carousel: <2 hydrated slides — falling back to single image`);
+            console.log(`      🦋 Bluesky thread: <2 hydrated buckets — single-post only`);
           }
         }
       } catch (err) {
-        console.log(`      ⚠️  Threads carousel prep failed: ${err.message} — single-image fallback`);
+        console.log(`      ⚠️  Day-plan multi-image prep failed: ${err.message} — falling back to single image`);
         threadsCarouselSlides = null;
+        blueskyThreadReplies = null;
       }
     }
 
@@ -670,6 +684,17 @@ async function main() {
     // Threads bodies are link-free; ~2.5 min after publish we post a self-reply
     // with the URL. Algo has already scored the parent by then.
     const pendingSelfReplies = []; // [{ platform, parentId, replyText }]
+
+    // Seed replies (X/Threads day-plans) land at +30s — one editorial
+    // sentence picked by the copy-gen ("seedReply"), no URL. The point is
+    // to feed the algorithm a fresh-author-engagement signal during the
+    // window where it's still scoring the parent, *before* the URL drop.
+    const pendingSeedReplies = []; // [{ platform, parentId, replyText }]
+
+    // Bluesky day-plan thread: one chained reply per bucket card, each
+    // carrying its own image. Fires in parallel with the X/Threads timed
+    // reply passes so the publisher's wall time doesn't add up.
+    let pendingBlueskyThread = null; // { parentUri, parentCid, replies[] }
 
     for (const platform of platforms) {
       // Pinterest is gated by env presence (write tokens) AND content type
@@ -798,6 +823,24 @@ async function main() {
             parentId: result.id,
             replyText: `More info → ${targetUrl}`,
           });
+          // Also queue the seed reply when copy-gen provided one (day-plan).
+          if (slotType === "day-plan" && typeof rewrittenCopy.seedReply === "string" && rewrittenCopy.seedReply.trim()) {
+            pendingSeedReplies.push({
+              platform,
+              parentId: result.id,
+              replyText: rewrittenCopy.seedReply.trim(),
+            });
+          }
+        }
+
+        // Queue the Bluesky bucket-reply thread when the parent landed and
+        // we hydrated 2+ bucket images earlier.
+        if (platform === "bluesky" && blueskyThreadReplies && result?.uri && result?.cid) {
+          pendingBlueskyThread = {
+            parentUri: result.uri,
+            parentCid: result.cid,
+            replies: blueskyThreadReplies,
+          };
         }
       } catch (err) {
         console.log(`      ❌ ${platform}: ${err.message}`);
@@ -807,13 +850,74 @@ async function main() {
       await new Promise((r) => setTimeout(r, 1000));
     }
 
+    // ── Bluesky thread (day-plan, chained bucket replies) ──────────────
+    // Runs as a background promise so the X/Threads sleep timers below
+    // don't stack with the 60-90s the thread needs to fan out. Each reply
+    // chains under the previous (parent = previous reply, root = original
+    // parent post) so the thread reads as a top-to-bottom narrative. We
+    // break the chain on any individual failure rather than orphan a reply
+    // off a dead parent.
+    const blueskyThreadPromise = pendingBlueskyThread && !dryRun
+      ? (async () => {
+          console.log(`      🦋 bluesky thread: publishing ${pendingBlueskyThread.replies.length} bucket replies…`);
+          const root = { uri: pendingBlueskyThread.parentUri, cid: pendingBlueskyThread.parentCid };
+          let prev = root;
+          let ok = 0;
+          for (const r of pendingBlueskyThread.replies) {
+            try {
+              const imgRes = await fetch(r.imageUrl, { signal: AbortSignal.timeout(15000) });
+              if (!imgRes.ok) throw new Error(`image fetch ${imgRes.status}`);
+              const buffer = Buffer.from(await imgRes.arrayBuffer());
+              const lib = await import("./lib/platforms/bluesky.mjs");
+              const reply = await lib.publishReply({
+                parentUri: prev.uri,
+                parentCid: prev.cid,
+                rootUri: root.uri,
+                rootCid: root.cid,
+                text: r.text,
+                imageBuffer: buffer,
+                imageAlt: r.alt,
+              });
+              prev = { uri: reply.uri, cid: reply.cid };
+              ok++;
+            } catch (err) {
+              console.log(`      ⚠️  bluesky thread reply failed: ${err.message} — stopping chain`);
+              break;
+            }
+          }
+          console.log(`      🦋 bluesky thread: ${ok}/${pendingBlueskyThread.replies.length} replies published`);
+        })().catch((err) => console.log(`      ⚠️  bluesky thread error: ${err.message}`))
+      : null;
+
+    // ── Seed-reply pass (X/Threads, +30s) ──────────────────────────────
+    // One editorial sentence picking the day's must-do bucket. Fires
+    // before the URL self-reply so the algorithm sees author engagement
+    // while it's still scoring the parent. Day-plan only for now.
+    const SEED_DELAY_MS = 30_000;
+    if (pendingSeedReplies.length > 0 && !dryRun) {
+      console.log(`      ⏳ Seed reply: waiting ${SEED_DELAY_MS/1000}s on ${pendingSeedReplies.map(r => r.platform).join(", ")}…`);
+      await new Promise((r) => setTimeout(r, SEED_DELAY_MS));
+      await Promise.all(pendingSeedReplies.map(async (pending) => {
+        try {
+          const lib = await import(`./lib/platforms/${pending.platform}.mjs`);
+          const replyFn = pending.platform === "x" ? lib.replyToTweet : lib.replyToThread;
+          const replyRes = await replyFn(pending.parentId, pending.replyText);
+          console.log(`      🌱 ${pending.platform}: seed reply ${replyRes.id}`);
+        } catch (err) {
+          console.log(`      ⚠️  ${pending.platform}: seed reply failed: ${err.message}`);
+        }
+      }));
+    }
+
     // ── Self-reply pass (link-suppression workaround) ──────────────────────
-    // 2.5-min sleep gives the algorithm time to score the parent. We then
-    // post the URL as a reply, isolated from the parent's scoring. Failures
-    // here are non-fatal — the post itself is already live.
+    // Total wait from parent stays ~2.5min. If we already slept for the
+    // seed pass we only wait the remainder here.
     if (pendingSelfReplies.length > 0 && !dryRun) {
-      console.log(`      ⏳ Self-reply: waiting ${SELF_REPLY_DELAY_MS/1000}s before posting link on ${pendingSelfReplies.map(r => r.platform).join(", ")}…`);
-      await new Promise((r) => setTimeout(r, SELF_REPLY_DELAY_MS));
+      const remaining = pendingSeedReplies.length > 0
+        ? SELF_REPLY_DELAY_MS - SEED_DELAY_MS
+        : SELF_REPLY_DELAY_MS;
+      console.log(`      ⏳ Self-reply: waiting ${remaining/1000}s before posting link on ${pendingSelfReplies.map(r => r.platform).join(", ")}…`);
+      await new Promise((r) => setTimeout(r, remaining));
       await Promise.all(pendingSelfReplies.map(async (pending) => {
         try {
           const lib = await import(`./lib/platforms/${pending.platform}.mjs`);
@@ -825,6 +929,11 @@ async function main() {
         }
       }));
     }
+
+    // Wait for the Bluesky thread to finish before letting this post's
+    // iteration complete. Otherwise the publisher could exit while replies
+    // are still firing.
+    if (blueskyThreadPromise) await blueskyThreadPromise;
 
     // ── Evening bump queue (tonight-pick only) ─────────────────────────────
     // The publisher fires a follow-up reply ~30 min before event time on

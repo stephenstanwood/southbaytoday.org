@@ -421,6 +421,69 @@ async function fitForBluesky(imageBuffer) {
 }
 
 /**
+ * Image-aware reply: upload buffer (if provided), then create the reply.
+ * Day-plan threads chain bucket replies under the parent — caller supplies
+ * `parentUri`/`parentCid` for each step and `rootUri`/`rootCid` of the
+ * original parent post so the whole thread roots there.
+ *
+ * Returns `{uri, cid}` of the new reply, same shape as createPost/createReply.
+ */
+export async function publishReply({
+  parentUri,
+  parentCid,
+  rootUri = null,
+  rootCid = null,
+  text,
+  imageBuffer = null,
+  imageAlt = "",
+}) {
+  let blob = null;
+  if (imageBuffer) {
+    const fitted = await fitForBluesky(imageBuffer);
+    blob = await uploadImage(fitted.buffer, fitted.mime);
+  }
+
+  const session = await createSession();
+  const facets = await detectFacets(text);
+  const root = rootUri && rootCid ? { uri: rootUri, cid: rootCid } : { uri: parentUri, cid: parentCid };
+  const parent = { uri: parentUri, cid: parentCid };
+
+  const record = {
+    $type: "app.bsky.feed.post",
+    text,
+    facets,
+    createdAt: new Date().toISOString(),
+    reply: { root, parent },
+  };
+  if (blob) {
+    record.embed = {
+      $type: "app.bsky.embed.images",
+      images: [{ alt: imageAlt || "", image: blob }],
+    };
+  }
+
+  const res = await fetch(`${BSKY_API}/com.atproto.repo.createRecord`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.accessJwt}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      repo: session.did,
+      collection: "app.bsky.feed.post",
+      record,
+    }),
+  });
+
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`Bluesky reply failed (${res.status}): ${txt}`);
+  }
+  const data = await res.json();
+  return { uri: data.uri, cid: data.cid };
+}
+
+/**
  * Full post flow: upload image (if provided) then post.
  */
 export async function publish(text, imageBuffer = null, imageAlt = "") {

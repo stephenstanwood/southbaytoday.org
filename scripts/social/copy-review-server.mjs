@@ -1699,6 +1699,7 @@ function renderExpandedSlot(dateStr, slotType, slot) {
     { key: 'bumpX',                 label: 'Evening bump · X',        limit: 220 },
     { key: 'bumpThreads',           label: 'Evening bump · Threads',  limit: 220 },
     { key: 'bumpBluesky',           label: 'Evening bump · Bluesky',  limit: 220 },
+    { key: 'seedReply',             label: 'Seed reply · X/Threads (+30s)', limit: 280 },
   ];
   if (slot.copy) {
     html += '<div class="cal-expanded-platforms">';

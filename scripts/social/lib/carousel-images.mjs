@@ -143,3 +143,59 @@ export function buildCarouselSlides({ heroImageUrl, heroAlt, cards, cityName }) 
 
   return slides.length >= 2 ? slides : null;
 }
+
+const BUCKET_EMOJI = {
+  breakfast: "☕",
+  morning: "🌞",
+  lunch: "🥪",
+  afternoon: "🌳",
+  dinner: "🍽️",
+  evening: "🌙",
+};
+
+/**
+ * Build the ordered reply list for a Bluesky day-plan thread. Each entry
+ * becomes a chained reply (replyN.parent = replyN-1, replyN.root = original
+ * parent post) so the thread reads top-to-bottom as a narrative.
+ *
+ * Only buckets with hydrated `_carouselImage` end up as replies — text-only
+ * buckets get dropped (a partial visual thread reads worse than a clean
+ * one). Returns null if we have <2 image-ready buckets (caller stays with
+ * single-image parent post).
+ *
+ * @returns {Array<{text: string, imageUrl: string, alt: string}> | null}
+ */
+export function buildBlueskyThread({ cards, cityName }) {
+  if (!Array.isArray(cards)) return null;
+  const replies = [];
+  for (const card of cards) {
+    const url = card._carouselImage;
+    if (!url) continue;
+    const bucket = (card.bucket || "").toLowerCase();
+    if (!bucket) continue;
+    const bucketLabel = bucket.charAt(0).toUpperCase() + bucket.slice(1);
+    const emoji = BUCKET_EMOJI[bucket] || "•";
+    const name = card.name || card.title || "Activity";
+    const city = card.city || cityName || "";
+    const blurb = (card.blurb || card.why || "").trim();
+
+    // Format: "☕ Breakfast: Tico Coffee Roasters, Campbell — short blurb."
+    let text = `${emoji} ${bucketLabel}: ${name}${city ? `, ${city}` : ""}`;
+    if (blurb) {
+      const remaining = 300 - text.length - 3; // " — "
+      if (remaining > 30) {
+        const trimmed = blurb.length > remaining ? blurb.slice(0, remaining - 1).trimEnd() + "…" : blurb;
+        text += ` — ${trimmed}`;
+      }
+    }
+    text = text.slice(0, 300);
+
+    const alt = [bucketLabel, name, city ? `in ${city}` : null]
+      .filter(Boolean)
+      .join(" — ")
+      .slice(0, 400);
+
+    replies.push({ text, imageUrl: url, alt });
+  }
+  return replies.length >= 2 ? replies : null;
+}
