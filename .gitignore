@@ -24,6 +24,12 @@ src/data/south-bay/engagement-drafts.json
 src/data/south-bay/engagement-accounts.json
 src/data/south-bay/social-bump-queue.json
 
+# macOS Finder metadata
+**/.DS_Store
+
+# Local Midjourney brand explorations (not for prod)
+midjourney/
+
 # Dev/build caches
 src/data/south-bay/.dev-status-cache.json
 
