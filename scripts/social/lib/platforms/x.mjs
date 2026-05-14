@@ -139,7 +139,10 @@ export async function postTweet(text, mediaId = null) {
 }
 
 /**
- * Delete a tweet by ID.
+ * Delete a tweet by ID. Returns:
+ *   { deleted: true }                   on 200 OK
+ *   { deleted: false, rateLimited: true, resetEpoch }  on 429 (caller handles backoff)
+ *   throws                              on other failures
  */
 export async function deletePost(tweetId) {
   const creds = getCredentials();
@@ -151,6 +154,12 @@ export async function deletePost(tweetId) {
     headers: { Authorization: authHeader },
   });
 
+  if (res.status === 429) {
+    const resetHeader = res.headers.get("x-rate-limit-reset");
+    const resetEpoch = resetHeader ? Number(resetHeader) : null;
+    return { deleted: false, rateLimited: true, resetEpoch };
+  }
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`X delete failed (${res.status}): ${text}`);
@@ -158,6 +167,75 @@ export async function deletePost(tweetId) {
 
   const data = await res.json();
   return { deleted: data.data?.deleted ?? true };
+}
+
+/**
+ * Returns the authenticated X user's numeric ID.
+ */
+export async function getMyUserId() {
+  const creds = getCredentials();
+  const url = `${API_BASE}/2/users/me`;
+  const authHeader = makeOAuthRequest("GET", url, [], creds);
+
+  const res = await fetch(url, { headers: { Authorization: authHeader } });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`X getMyUserId failed (${res.status}): ${text}`);
+  }
+  const data = await res.json();
+  return data.data.id;
+}
+
+/**
+ * Paginate the authenticated user's tweet timeline. X API v2 caps at
+ * ~3,200 most recent tweets total; we page until exhausted or until the
+ * caller's onPage hook returns false.
+ *
+ * Returns [{ id, text, created_at }].
+ */
+export async function listUserTweets(userId, { maxResults = 100 } = {}) {
+  const creds = getCredentials();
+  const all = [];
+  let paginationToken = null;
+
+  do {
+    const queryParams = [
+      ["max_results", String(maxResults)],
+      ["tweet.fields", "created_at"],
+    ];
+    if (paginationToken) queryParams.push(["pagination_token", paginationToken]);
+
+    const baseUrl = `${API_BASE}/2/users/${userId}/tweets`;
+    // OAuth 1.0a: query params must be in the signature base. Pass them as
+    // bodyParams so makeOAuthRequest includes them when signing, then build
+    // the fetch URL separately.
+    const authHeader = makeOAuthRequest("GET", baseUrl, queryParams, creds);
+    const qs = queryParams
+      .map(([k, v]) => `${percentEncode(k)}=${percentEncode(v)}`)
+      .join("&");
+
+    const res = await fetch(`${baseUrl}?${qs}`, {
+      headers: { Authorization: authHeader },
+    });
+    if (res.status === 429) {
+      const resetHeader = res.headers.get("x-rate-limit-reset");
+      const waitMs = resetHeader
+        ? Math.max(5000, Number(resetHeader) * 1000 - Date.now() + 5000)
+        : 60_000;
+      await new Promise((r) => setTimeout(r, Math.min(waitMs, 15 * 60_000)));
+      continue;
+    }
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`X listUserTweets failed (${res.status}): ${text}`);
+    }
+    const data = await res.json();
+    for (const t of data.data || []) all.push(t);
+    paginationToken = data.meta?.next_token || null;
+    if (paginationToken) await new Promise((r) => setTimeout(r, 300));
+  } while (paginationToken);
+
+  return all;
 }
 
 /**

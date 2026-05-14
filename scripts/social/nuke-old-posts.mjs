@@ -107,6 +107,15 @@ console.log(`Deleting all posts before ${cutoffDisplay}${dryRun ? " (DRY RUN)" :
 
 const BSKY_API = "https://bsky.social/xrpc";
 
+// All timeline-enumerating platforms (Bluesky, Threads, Mastodon, X) use this
+// multi-pass shape: walk the full feed, delete anything before cutoff, then
+// loop and re-walk to catch survivors. Bluesky deserves this in particular
+// because its delete API returns 200 even for already-deleted records, and
+// the engagement collector treats deleted posts as "still alive but zero
+// counts" — so we want strong confirmation that the feed is actually empty
+// of old posts before we stop.
+const MAX_PASSES = 3;
+
 // ── Bluesky ──
 async function nukeBluesky() {
   console.log("=== BLUESKY ===");
@@ -124,118 +133,166 @@ async function nukeBluesky() {
   const did = session.did;
   const token = session.accessJwt;
 
-  let cursor = undefined;
-  let deleted = 0;
-  do {
-    const url = `${BSKY_API}/app.bsky.feed.getAuthorFeed?actor=${did}&limit=50${cursor ? "&cursor=" + cursor : ""}`;
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) break;
-    const data = await res.json();
-    const feed = data.feed || [];
-
-    for (const item of feed) {
-      const post = item.post;
-      const createdAt = post.record?.createdAt || "";
-      const displayDate = createdAt.slice(0, 10);
-      const text = (post.record?.text || "").slice(0, 60);
-
-      if (isBeforeCutoff(createdAt)) {
-        if (dryRun) {
-          console.log(`  Would delete: ${displayDate} ${text}`);
-          deleted++;
-        } else {
-          const rkey = post.uri.split("/").pop();
-          const delRes = await fetch(`${BSKY_API}/com.atproto.repo.deleteRecord`, {
-            method: "POST",
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-            body: JSON.stringify({ repo: did, collection: "app.bsky.feed.post", rkey }),
-          });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
-          if (delRes.ok) { deleted++; platformStats.bluesky.deleted++; deletedIds.bluesky.add(post.uri); }
-          else { platformStats.bluesky.failed++; }
-          await new Promise(r => setTimeout(r, 200));
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    // Walk the entire feed first so we know the full target count before
+    // we start deleting. Lets us bail cleanly if pass 2+ shows zero survivors.
+    const targets = []; // { uri, createdAt, text }
+    let cursor = undefined;
+    do {
+      const url = `${BSKY_API}/app.bsky.feed.getAuthorFeed?actor=${did}&limit=50${cursor ? "&cursor=" + cursor : ""}`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) break;
+      const data = await res.json();
+      const feed = data.feed || [];
+      for (const item of feed) {
+        const post = item.post;
+        const createdAt = post.record?.createdAt || "";
+        if (isBeforeCutoff(createdAt)) {
+          targets.push({ uri: post.uri, createdAt, text: (post.record?.text || "").slice(0, 60) });
         }
       }
+      cursor = data.cursor;
+      if (feed.length === 0) break;
+    } while (cursor);
+
+    if (targets.length === 0) {
+      if (pass === 1) console.log("  Nothing to delete");
+      else console.log(`  Pass ${pass}: clean (feed has 0 old posts)`);
+      break;
     }
 
-    cursor = data.cursor;
-    if (feed.length === 0) break;
-  } while (cursor);
-
-  console.log(`  Total: ${deleted}\n`);
+    console.log(`  Pass ${pass}: ${targets.length} post(s) older than cutoff`);
+    let deletedThisPass = 0;
+    for (const t of targets) {
+      const displayDate = t.createdAt.slice(0, 10);
+      if (dryRun) {
+        console.log(`  Would delete: ${displayDate} ${t.text}`);
+        deletedThisPass++;
+        continue;
+      }
+      const rkey = t.uri.split("/").pop();
+      const delRes = await fetch(`${BSKY_API}/com.atproto.repo.deleteRecord`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ repo: did, collection: "app.bsky.feed.post", rkey }),
+      });
+      console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${t.text}`);
+      if (delRes.ok) { deletedThisPass++; platformStats.bluesky.deleted++; deletedIds.bluesky.add(t.uri); }
+      else { platformStats.bluesky.failed++; }
+      await new Promise(r => setTimeout(r, 200));
+    }
+    console.log(`  Pass ${pass}: ${deletedThisPass} deleted`);
+    if (dryRun) break;
+  }
 }
 
 // ── X (Twitter) ──
+// Enumerates the user's tweet timeline via X API v2 and deletes anything
+// older than the cutoff. This is the only platform where we previously
+// relied on our own publish records — that left orphan tweets visible on
+// x.com because not every published tweet got recorded (or pre-pipeline
+// posts existed). Now we trust X as the source of truth.
+//
+// Repeats up to MAX_PASSES if the first pass leaves anything behind (e.g.
+// after a 429 rate-limit retry burns through our budget). X DELETE is
+// capped at 50/15min per user, so 55+ tweets means we will hit 429 once
+// and need to wait.
 async function nukeX() {
   console.log("=== X ===");
-  const { deletePost } = await import("./lib/platforms/x.mjs");
+  const { deletePost, getMyUserId, listUserTweets } = await import(
+    "./lib/platforms/x.mjs"
+  );
 
-  // X API v2 doesn't have a simple "list my tweets" without user ID.
-  // Pull IDs from our own publish records (schedule + queue).
-  const files = [
-    join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json"),
-    join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json"),
-  ];
-
-  const targets = []; // { id, pubDate }
-  const seen = new Set();
-
-  for (const f of files) {
-    let data;
-    try { data = JSON.parse(readFileSync(f, "utf8")); } catch { continue; }
-
-    if (data.days) {
-      for (const [_d, day] of Object.entries(data.days)) {
-        for (const [slot, s] of Object.entries(day || {})) {
-          if (slot.startsWith("_")) continue;
-          if (!s?.publishedTo || !s.publishedAt) continue;
-          for (const e of s.publishedTo) {
-            if (e.platform !== "x" || !e.ok) continue;
-            const id = e.id || e.postId;
-            if (!id || seen.has(id)) continue;
-            seen.add(id);
-            targets.push({ id, publishedAt: s.publishedAt });
-          }
-        }
-      }
-    }
-
-    if (Array.isArray(data)) {
-      for (const p of data) {
-        if (!Array.isArray(p.publishedTo)) continue;
-        for (const e of p.publishedTo) {
-          if (e.platform !== "x" || !e.ok) continue;
-          const id = e.id || e.postId;
-          if (!id || seen.has(id)) continue;
-          seen.add(id);
-          targets.push({ id, publishedAt: p.publishedAt });
-        }
-      }
-    }
+  let userId;
+  try {
+    userId = await getMyUserId();
+  } catch (e) {
+    console.log(`  Failed to get user ID: ${e.message}`);
+    return;
   }
 
-  let deleted = 0;
-  for (const t of targets) {
-    if (!isBeforeCutoff(t.publishedAt)) continue;
-    const displayDate = (t.publishedAt || "").slice(0, 10);
-    if (dryRun) {
-      console.log(`  Would delete: ${displayDate} ${t.id}`);
-      deleted++;
-    } else {
+  const MAX_PASSES = 3;
+  let totalDeleted = 0;
+
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    let timeline;
+    try {
+      timeline = await listUserTweets(userId);
+    } catch (e) {
+      console.log(`  Pass ${pass}: timeline fetch failed: ${e.message}`);
+      break;
+    }
+    const targets = timeline.filter((t) => isBeforeCutoff(t.created_at));
+    if (targets.length === 0) {
+      if (pass === 1) console.log("  Nothing to delete");
+      else console.log(`  Pass ${pass}: clean (timeline has 0 old tweets)`);
+      break;
+    }
+
+    console.log(`  Pass ${pass}: ${targets.length} tweet(s) older than cutoff`);
+
+    let deletedThisPass = 0;
+    let rateLimitedAt = null;
+    for (const t of targets) {
+      const displayDate = (t.created_at || "").slice(0, 10);
+      const text = (t.text || "").slice(0, 60).replace(/\n/g, " ");
+
+      if (dryRun) {
+        console.log(`  Would delete: ${displayDate} ${t.id} ${text}`);
+        deletedThisPass++;
+        continue;
+      }
+
+      let result;
       try {
-        await deletePost(t.id);
-        console.log(`  Deleted: ${displayDate} ${t.id}`);
-        deleted++;
+        result = await deletePost(t.id);
+      } catch (e) {
+        console.log(`  Failed: ${displayDate} ${t.id} ${e.message}`);
+        platformStats.x.failed++;
+        await new Promise((r) => setTimeout(r, 200));
+        continue;
+      }
+
+      if (result.rateLimited) {
+        rateLimitedAt = result.resetEpoch;
+        const resetIso = result.resetEpoch
+          ? new Date(result.resetEpoch * 1000).toISOString()
+          : "unknown";
+        console.log(`  Rate limited at ${displayDate} ${t.id} — reset ${resetIso}`);
+        // Pause until reset (capped at 16min) and break this pass so the
+        // next listUserTweets refresh picks up any tweets that vanished
+        // mid-loop via the X retry-after window.
+        const waitMs = result.resetEpoch
+          ? Math.max(5000, result.resetEpoch * 1000 - Date.now() + 5000)
+          : 15 * 60_000;
+        await new Promise((r) => setTimeout(r, Math.min(waitMs, 16 * 60_000)));
+        break;
+      }
+
+      if (result.deleted) {
+        console.log(`  Deleted: ${displayDate} ${t.id} ${text}`);
+        deletedThisPass++;
+        totalDeleted++;
         platformStats.x.deleted++;
         deletedIds.x.add(t.id);
-      } catch (e) {
-        console.log(`  Failed: ${t.id} ${e.message}`);
-        platformStats.x.failed++;
+      } else {
+        console.log(`  Skipped (no-op): ${displayDate} ${t.id}`);
       }
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 200));
+    }
+
+    console.log(`  Pass ${pass}: ${deletedThisPass} deleted`);
+    // If we didn't hit a rate limit and we deleted everything we set out
+    // to delete, one more verification pass next iteration will confirm
+    // empty and exit. If we hit a rate limit, the next pass continues.
+    if (!rateLimitedAt && deletedThisPass === targets.length) {
+      // Fall through to one more verification pass; if X has tweets
+      // remaining (eg. cache lag / out-of-band publishes) it'll re-target.
+      continue;
     }
   }
-  console.log(`  Total from records: ${deleted}\n`);
+
+  console.log(`  Total deleted: ${totalDeleted}\n`);
 }
 
 // ── Threads ──
@@ -245,36 +302,45 @@ async function nukeThreads() {
   const userId = process.env.THREADS_USER_ID;
   if (!token || !userId) { console.log("  No credentials"); return; }
 
-  let deleted = 0;
-  let url = `https://graph.threads.net/v1.0/${userId}/threads?fields=id,text,timestamp&limit=50&access_token=${token}`;
-
-  while (url) {
-    const res = await fetch(url);
-    if (!res.ok) { console.log("  Fetch failed:", res.status); break; }
-    const data = await res.json();
-
-    for (const post of (data.data || [])) {
-      const timestamp = post.timestamp || "";
-      const displayDate = timestamp.slice(0, 10);
-      const text = (post.text || "").slice(0, 60);
-
-      if (isBeforeCutoff(timestamp)) {
-        if (dryRun) {
-          console.log(`  Would delete: ${displayDate} ${text}`);
-          deleted++;
-        } else {
-          const delRes = await fetch(`https://graph.threads.net/v1.0/${post.id}?access_token=${token}`, { method: "DELETE" });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
-          if (delRes.ok) { deleted++; platformStats.threads.deleted++; deletedIds.threads.add(post.id); }
-          else { platformStats.threads.failed++; }
-          await new Promise(r => setTimeout(r, 500));
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    const targets = []; // { id, timestamp, text }
+    let url = `https://graph.threads.net/v1.0/${userId}/threads?fields=id,text,timestamp&limit=50&access_token=${token}`;
+    while (url) {
+      const res = await fetch(url);
+      if (!res.ok) { console.log("  Fetch failed:", res.status); break; }
+      const data = await res.json();
+      for (const post of (data.data || [])) {
+        if (isBeforeCutoff(post.timestamp || "")) {
+          targets.push({ id: post.id, timestamp: post.timestamp, text: (post.text || "").slice(0, 60) });
         }
       }
+      url = data.paging?.next || null;
     }
 
-    url = data.paging?.next || null;
+    if (targets.length === 0) {
+      if (pass === 1) console.log("  Nothing to delete");
+      else console.log(`  Pass ${pass}: clean (feed has 0 old posts)`);
+      break;
+    }
+
+    console.log(`  Pass ${pass}: ${targets.length} post(s) older than cutoff`);
+    let deletedThisPass = 0;
+    for (const t of targets) {
+      const displayDate = (t.timestamp || "").slice(0, 10);
+      if (dryRun) {
+        console.log(`  Would delete: ${displayDate} ${t.text}`);
+        deletedThisPass++;
+        continue;
+      }
+      const delRes = await fetch(`https://graph.threads.net/v1.0/${t.id}?access_token=${token}`, { method: "DELETE" });
+      console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${t.text}`);
+      if (delRes.ok) { deletedThisPass++; platformStats.threads.deleted++; deletedIds.threads.add(t.id); }
+      else { platformStats.threads.failed++; }
+      await new Promise(r => setTimeout(r, 500));
+    }
+    console.log(`  Pass ${pass}: ${deletedThisPass} deleted`);
+    if (dryRun) break;
   }
-  console.log(`  Total: ${deleted}\n`);
 }
 
 // ── Facebook ──
@@ -404,40 +470,55 @@ async function nukeMastodon() {
   if (!meRes.ok) { console.log("  Auth failed"); return; }
   const me = await meRes.json();
 
-  let deleted = 0;
-  let failed = 0;
-  let maxId = undefined;
+  for (let pass = 1; pass <= MAX_PASSES; pass++) {
+    const targets = []; // { id, createdAt, text }
+    let maxId = undefined;
+    while (true) {
+      const url = `${instance}/api/v1/accounts/${me.id}/statuses?limit=40${maxId ? "&max_id=" + maxId : ""}`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) break;
+      const statuses = await res.json();
+      if (statuses.length === 0) break;
+      for (const status of statuses) {
+        if (isBeforeCutoff(status.created_at || "")) {
+          targets.push({
+            id: status.id,
+            createdAt: status.created_at,
+            text: (status.content || "").replace(/<[^>]*>/g, "").slice(0, 60),
+          });
+        }
+      }
+      maxId = statuses[statuses.length - 1].id;
+    }
 
-  outer: while (true) {
-    const url = `${instance}/api/v1/accounts/${me.id}/statuses?limit=40${maxId ? "&max_id=" + maxId : ""}`;
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) break;
-    const statuses = await res.json();
-    if (statuses.length === 0) break;
+    if (targets.length === 0) {
+      if (pass === 1) console.log("  Nothing to delete");
+      else console.log(`  Pass ${pass}: clean (timeline has 0 old statuses)`);
+      break;
+    }
 
-    for (const status of statuses) {
-      const createdAt = status.created_at || "";
-      const displayDate = createdAt.slice(0, 10);
-      const text = (status.content || "").replace(/<[^>]*>/g, "").slice(0, 60);
-
-      if (!isBeforeCutoff(createdAt)) continue;
+    console.log(`  Pass ${pass}: ${targets.length} status(es) older than cutoff`);
+    let deletedThisPass = 0;
+    let failedThisPass = 0;
+    for (const t of targets) {
+      const displayDate = (t.createdAt || "").slice(0, 10);
       if (dryRun) {
-        console.log(`  Would delete: ${displayDate} ${text}`);
-        deleted++;
+        console.log(`  Would delete: ${displayDate} ${t.text}`);
+        deletedThisPass++;
         continue;
       }
 
       // Up to 2 attempts: first try, then wait-for-reset and retry once
       for (let attempt = 0; attempt < 2; attempt++) {
-        const delRes = await fetch(`${instance}/api/v1/statuses/${status.id}`, {
+        const delRes = await fetch(`${instance}/api/v1/statuses/${t.id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });
         if (delRes.ok) {
-          console.log(`  Deleted: ${displayDate} ${text}`);
-          deleted++;
+          console.log(`  Deleted: ${displayDate} ${t.text}`);
+          deletedThisPass++;
           platformStats.mastodon.deleted++;
-          deletedIds.mastodon.add(status.id);
+          deletedIds.mastodon.add(t.id);
           break;
         }
         if (delRes.status === 429 && attempt === 0) {
@@ -449,17 +530,16 @@ async function nukeMastodon() {
           await new Promise(r => setTimeout(r, waitMs));
           continue;
         }
-        console.log(`  Failed: ${displayDate} ${text} (${delRes.status})`);
-        failed++;
+        console.log(`  Failed: ${displayDate} ${t.text} (${delRes.status})`);
+        failedThisPass++;
         platformStats.mastodon.failed++;
         break;
       }
       await new Promise(r => setTimeout(r, 400));
     }
-
-    maxId = statuses[statuses.length - 1].id;
+    console.log(`  Pass ${pass}: ${deletedThisPass} deleted, ${failedThisPass} failed`);
+    if (dryRun) break;
   }
-  console.log(`  Total deleted: ${deleted}, failed: ${failed}\n`);
 }
 
 await nukeBluesky();
