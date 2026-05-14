@@ -66,12 +66,11 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
   };
 
   const todayIso = todayPT();
+  const todayDow = new Date(todayIso + "T12:00:00").getDay();
 
-  // Visibility: from 4 days before the weekend through the weekend itself.
-  // For a Sat-Sun pair that's Tue-Sun — Mon is the dead zone right after a
-  // weekend, when picks are typically being regenerated for the next one.
-  const earliestShow = addDays(data.weekendStart, -4);
-  if (todayIso < earliestShow || todayIso > data.weekendEnd) return null;
+  // Hide on Sat/Sun — by then weekend events should be flowing into the
+  // bucket grid plans, and a "Weekend Ahead" tease has nothing to add.
+  if (todayDow === 6 || todayDow === 0) return null;
 
   // Staleness guard — if the generator hasn't run in over a week, hide.
   if (data.generatedAt) {
@@ -79,12 +78,15 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
     if (ageDays > 8) return null;
   }
 
-  // Drop picks whose date has already passed; cap at 4 for grid balance.
-  const visible = data.picks.filter((p) => p.date >= todayIso).slice(0, 4);
+  // Top 2 Sat picks, then top 2 Sun picks — Claude's emission order is the
+  // editorial ranking, so a simple per-day slice is enough.
+  const upcoming = data.picks.filter((p) => p.date >= todayIso);
+  const sats = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 6).slice(0, 2);
+  const suns = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 0).slice(0, 2);
+  const visible = [...sats, ...suns];
   if (visible.length < 2) return null;
 
-  const weekendStarted = todayIso >= data.weekendStart;
-  const heading = weekendStarted ? "This Weekend" : "The Weekend Ahead";
+  const heading = "The Weekend Ahead";
 
   return (
     <section
