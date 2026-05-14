@@ -495,13 +495,17 @@ await nukeMastodon();
 // stale refresh, the next cycle stabilises.
 
 function pruneRecords() {
-  const totalIds = Object.values(deletedIds).reduce((a, s) => a + s.size, 0);
-  if (totalIds === 0) {
-    console.log("Prune skipped — nothing was deleted this run.");
-    return;
-  }
-
-  console.log(`\n=== PRUNE STATE FILES === (${totalIds} platform-ids to clean)`);
+  // We strip on a union of two criteria:
+  //   (a) the entry's platform-id is in deletedIds → we just deleted it
+  //   (b) the parent slot/queue/post's publishedAt is older than cutoffMs →
+  //       it's in the "should have been deleted" window, even if some
+  //       per-platform deletes failed (FB stuck, Mastodon rate-limited, etc.)
+  //
+  // (b) is the bulk path: on the Saturday 3:30am cron with --all-before-now,
+  // every old slot's publishedTo gets cleared regardless of per-platform
+  // delete outcomes. We lose engagement tracking on partial-failure posts
+  // (FB stuck on older app, etc.), but FB engagement isn't surfaced on the
+  // dashboard anyway, so it's a fine trade.
 
   function platformIdsForEntry(e) {
     const id = e.uri || e.id || e.postId;
@@ -517,6 +521,12 @@ function pruneRecords() {
     return false;
   }
 
+  function isOldEnoughToPrune(publishedAt) {
+    if (!publishedAt) return false;
+    const t = new Date(publishedAt).getTime();
+    return Number.isFinite(t) && t < cutoffMs;
+  }
+
   function atomicWrite(path, json) {
     const tmp = path + ".tmp";
     writeFileSync(tmp, JSON.stringify(json, null, 2) + "\n");
@@ -524,6 +534,7 @@ function pruneRecords() {
   }
 
   const DATA_DIR = join(__dirname, "..", "..", "src", "data", "south-bay");
+  console.log("\n=== PRUNE STATE FILES ===");
 
   // 1) Schedule
   const schedFile = join(DATA_DIR, "social-schedule.json");
@@ -535,7 +546,11 @@ function pruneRecords() {
         if (slotType.startsWith("_")) continue;
         if (!Array.isArray(slot?.publishedTo)) continue;
         const before = slot.publishedTo.length;
-        slot.publishedTo = slot.publishedTo.filter((e) => !entryWasDeleted(e));
+        if (isOldEnoughToPrune(slot.publishedAt)) {
+          slot.publishedTo = [];
+        } else {
+          slot.publishedTo = slot.publishedTo.filter((e) => !entryWasDeleted(e));
+        }
         if (slot.publishedTo.length !== before) schedTouched++;
       }
     }
@@ -554,7 +569,11 @@ function pruneRecords() {
       for (const p of queue) {
         if (!Array.isArray(p.publishedTo)) continue;
         const before = p.publishedTo.length;
-        p.publishedTo = p.publishedTo.filter((e) => !entryWasDeleted(e));
+        if (isOldEnoughToPrune(p.publishedAt)) {
+          p.publishedTo = [];
+        } else {
+          p.publishedTo = p.publishedTo.filter((e) => !entryWasDeleted(e));
+        }
         if (p.publishedTo.length !== before) queueTouched++;
       }
       if (queueTouched > 0) atomicWrite(queueFile, queue);
@@ -571,8 +590,13 @@ function pruneRecords() {
   try {
     const eng = JSON.parse(readFileSync(engFile, "utf8"));
     eng.posts = (eng.posts || []).filter((p) => {
+      // Whole-post drop if old enough
+      if (isOldEnoughToPrune(p.publishedAt)) {
+        engDropped++;
+        return false;
+      }
+      // Otherwise, strip per-platform entries we just deleted
       const beforeKeys = Object.keys(p.platforms || {}).length;
-      // Strip platforms whose id matches a deleted one
       p.platforms = Object.fromEntries(
         Object.entries(p.platforms || {}).filter(([plat, info]) => {
           const id = info?.id;
