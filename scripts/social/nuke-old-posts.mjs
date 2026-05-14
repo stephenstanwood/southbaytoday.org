@@ -1,10 +1,22 @@
 #!/usr/bin/env node
 // Delete ALL SBT posts older than a cutoff from every platform.
-// Usage: node scripts/social/nuke-old-posts.mjs [--cutoff YYYY-MM-DD | --max-age-days=N] [--dry-run]
-// Default: --max-age-days=7
 //
-// Also wired up as the Monday-morning weekly purge via
-// scripts/social/weekly-purge.plist → org.southbaytoday.weekly-purge.
+// Cutoff modes (mutually exclusive; default: --max-age-days=7):
+//   --all-before-now        Delete everything published before the moment
+//                           the script starts. Used by the Saturday weekly
+//                           cron to start each week fresh.
+//   --cutoff YYYY-MM-DD     Delete posts with createdAt before midnight UTC
+//                           of this date.
+//   --max-age-days=N        Cutoff = (today PT - N days) at midnight UTC.
+//
+// All comparisons are timestamp-based (ms); we don't string-compare UTC date
+// fragments any more. That misbehaves at the Pacific/UTC date boundary —
+// e.g. a Friday-8pm-PT post has UTC date == Saturday, so cutoff=Saturday
+// would have kept it under the old logic. With --all-before-now and timestamp
+// math, "Friday night" really means "before Saturday morning".
+//
+// Used as the Saturday 3:30am weekly purge via scripts/social/weekly-purge.plist
+// → org.southbaytoday.weekly-purge.
 
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -25,6 +37,7 @@ const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const force = args.includes("--force");
 const notify = args.includes("--notify");
+const allBeforeNow = args.includes("--all-before-now");
 const cutoffIdx = args.indexOf("--cutoff");
 const maxAgeArg = args.find((a) => a.startsWith("--max-age-days="));
 
@@ -38,28 +51,46 @@ const platformStats = {
   mastodon: { deleted: 0, failed: 0 },
 };
 
+// Compute the cutoff as a millisecond timestamp. Display string is for the
+// startup banner + the Discord notification only.
 function computeCutoff() {
-  if (cutoffIdx >= 0) return args[cutoffIdx + 1];
+  if (allBeforeNow) {
+    const ms = Date.now();
+    return { ms, display: new Date(ms).toISOString() };
+  }
+  if (cutoffIdx >= 0) {
+    const dateStr = args[cutoffIdx + 1];
+    const ms = new Date(`${dateStr}T00:00:00.000Z`).getTime();
+    if (!Number.isFinite(ms)) {
+      console.error(`Bad --cutoff value: ${dateStr}. Expected YYYY-MM-DD.`);
+      process.exit(2);
+    }
+    return { ms, display: dateStr };
+  }
   const days = maxAgeArg ? Number(maxAgeArg.split("=")[1]) || 7 : 7;
-  const d = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-  // YYYY-MM-DD in PT
-  return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  // Anchor to today PT (midnight) then walk back N days. The PT anchor keeps
+  // the rolling window human-meaningful regardless of run hour.
+  const todayPtStr = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const ms = new Date(`${todayPtStr}T00:00:00.000Z`).getTime() - days * 24 * 60 * 60 * 1000;
+  return { ms, display: new Date(ms).toISOString().slice(0, 10) };
 }
-const cutoff = computeCutoff();
+const { ms: cutoffMs, display: cutoffDisplay } = computeCutoff();
 
-// Guardrail: refuse to run with a cutoff that's today or in the future.
-// Posts are deleted iff createdAt < cutoff (strict <), so cutoff = today
-// deletes everything that isn't today, including this morning's posts —
-// which is almost certainly not what we want. Caller has to pass --force
-// to override. This was added 2026-05-13 after a background process that
-// accidentally ran with the old default (cutoff=today) nuked Mon+Tue.
-const todayPT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-if (!force && cutoff >= todayPT) {
-  console.error(`Refusing to run: cutoff ${cutoff} is today or later — that would delete posts from today (PT). Pass --force to override, or use --max-age-days=N for a safe age-based cutoff.`);
+// Guardrail: refuse cutoffs in the future (with a small grace for clock skew).
+// --all-before-now sets cutoff exactly == Date.now(), which is fine — it just
+// won't delete a post that gets published mid-run.
+if (!force && cutoffMs > Date.now() + 60_000) {
+  console.error(`Refusing to run: cutoff ${cutoffDisplay} is in the future. Pass --force to override.`);
   process.exit(2);
 }
 
-console.log(`Deleting all posts before ${cutoff}${dryRun ? " (DRY RUN)" : ""}\n`);
+function isBeforeCutoff(iso) {
+  if (!iso) return false;
+  const t = new Date(iso).getTime();
+  return Number.isFinite(t) && t < cutoffMs;
+}
+
+console.log(`Deleting all posts before ${cutoffDisplay}${dryRun ? " (DRY RUN)" : ""}\n`);
 
 const BSKY_API = "https://bsky.social/xrpc";
 
@@ -91,12 +122,13 @@ async function nukeBluesky() {
 
     for (const item of feed) {
       const post = item.post;
-      const createdAt = (post.record?.createdAt || "").slice(0, 10);
+      const createdAt = post.record?.createdAt || "";
+      const displayDate = createdAt.slice(0, 10);
       const text = (post.record?.text || "").slice(0, 60);
 
-      if (createdAt && createdAt < cutoff) {
+      if (isBeforeCutoff(createdAt)) {
         if (dryRun) {
-          console.log(`  Would delete: ${createdAt} ${text}`);
+          console.log(`  Would delete: ${displayDate} ${text}`);
           deleted++;
         } else {
           const rkey = post.uri.split("/").pop();
@@ -105,7 +137,7 @@ async function nukeBluesky() {
             headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
             body: JSON.stringify({ repo: did, collection: "app.bsky.feed.post", rkey }),
           });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
           if (delRes.ok) { deleted++; platformStats.bluesky.deleted++; }
           else { platformStats.bluesky.failed++; }
           await new Promise(r => setTimeout(r, 200));
@@ -149,7 +181,7 @@ async function nukeX() {
             const id = e.id || e.postId;
             if (!id || seen.has(id)) continue;
             seen.add(id);
-            targets.push({ id, pubDate: (s.publishedAt || "").slice(0, 10) });
+            targets.push({ id, publishedAt: s.publishedAt });
           }
         }
       }
@@ -163,7 +195,7 @@ async function nukeX() {
           const id = e.id || e.postId;
           if (!id || seen.has(id)) continue;
           seen.add(id);
-          targets.push({ id, pubDate: (p.publishedAt || "").slice(0, 10) });
+          targets.push({ id, publishedAt: p.publishedAt });
         }
       }
     }
@@ -171,14 +203,15 @@ async function nukeX() {
 
   let deleted = 0;
   for (const t of targets) {
-    if (t.pubDate && t.pubDate >= cutoff) continue;
+    if (!isBeforeCutoff(t.publishedAt)) continue;
+    const displayDate = (t.publishedAt || "").slice(0, 10);
     if (dryRun) {
-      console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+      console.log(`  Would delete: ${displayDate} ${t.id}`);
       deleted++;
     } else {
       try {
         await deletePost(t.id);
-        console.log(`  Deleted: ${t.pubDate} ${t.id}`);
+        console.log(`  Deleted: ${displayDate} ${t.id}`);
         deleted++;
         platformStats.x.deleted++;
       } catch (e) {
@@ -207,16 +240,17 @@ async function nukeThreads() {
     const data = await res.json();
 
     for (const post of (data.data || [])) {
-      const createdAt = (post.timestamp || "").slice(0, 10);
+      const timestamp = post.timestamp || "";
+      const displayDate = timestamp.slice(0, 10);
       const text = (post.text || "").slice(0, 60);
 
-      if (createdAt && createdAt < cutoff) {
+      if (isBeforeCutoff(timestamp)) {
         if (dryRun) {
-          console.log(`  Would delete: ${createdAt} ${text}`);
+          console.log(`  Would delete: ${displayDate} ${text}`);
           deleted++;
         } else {
           const delRes = await fetch(`https://graph.threads.net/v1.0/${post.id}?access_token=${token}`, { method: "DELETE" });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
           if (delRes.ok) { deleted++; platformStats.threads.deleted++; }
           else { platformStats.threads.failed++; }
           await new Promise(r => setTimeout(r, 500));
@@ -261,7 +295,7 @@ async function nukeFacebook() {
             const id = e.id || e.postId;
             if (!id || seen.has(id)) continue;
             seen.add(id);
-            targets.push({ id, pubDate: (s.publishedAt || "").slice(0, 10) });
+            targets.push({ id, publishedAt: s.publishedAt });
           }
         }
       }
@@ -276,7 +310,7 @@ async function nukeFacebook() {
           const id = e.id || e.postId;
           if (!id || seen.has(id)) continue;
           seen.add(id);
-          targets.push({ id, pubDate: (p.publishedAt || "").slice(0, 10) });
+          targets.push({ id, publishedAt: p.publishedAt });
         }
       }
     }
@@ -284,14 +318,15 @@ async function nukeFacebook() {
 
   let deleted = 0;
   for (const t of targets) {
-    if (t.pubDate && t.pubDate >= cutoff) continue;
+    if (!isBeforeCutoff(t.publishedAt)) continue;
+    const displayDate = (t.publishedAt || "").slice(0, 10);
     if (dryRun) {
-      console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+      console.log(`  Would delete: ${displayDate} ${t.id}`);
       deleted++;
     } else {
       const delRes = await fetch(`https://graph.facebook.com/v21.0/${t.id}?access_token=${token}`, { method: "DELETE" });
       const body = delRes.ok ? "" : ` (${await delRes.text().then(s => s.slice(0,80))})`;
-      console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${t.pubDate} ${t.id}${body}`);
+      console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${t.id}${body}`);
       if (delRes.ok) { deleted++; platformStats.facebook.deleted++; }
       else { platformStats.facebook.failed++; }
       await new Promise(r => setTimeout(r, 500));
@@ -316,16 +351,17 @@ async function nukeInstagram() {
     const data = await res.json();
 
     for (const post of (data.data || [])) {
-      const createdAt = (post.timestamp || "").slice(0, 10);
+      const timestamp = post.timestamp || "";
+      const displayDate = timestamp.slice(0, 10);
       const text = (post.caption || "").slice(0, 60);
 
-      if (createdAt && createdAt < cutoff) {
+      if (isBeforeCutoff(timestamp)) {
         if (dryRun) {
-          console.log(`  Would delete: ${createdAt} ${text}`);
+          console.log(`  Would delete: ${displayDate} ${text}`);
           deleted++;
         } else {
           const delRes = await fetch(`https://graph.instagram.com/v25.0/${post.id}?access_token=${token}`, { method: "DELETE" });
-          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
           if (delRes.ok) { deleted++; platformStats.instagram.deleted++; }
           else { platformStats.instagram.failed++; }
           await new Promise(r => setTimeout(r, 500));
@@ -366,12 +402,13 @@ async function nukeMastodon() {
     if (statuses.length === 0) break;
 
     for (const status of statuses) {
-      const createdAt = (status.created_at || "").slice(0, 10);
+      const createdAt = status.created_at || "";
+      const displayDate = createdAt.slice(0, 10);
       const text = (status.content || "").replace(/<[^>]*>/g, "").slice(0, 60);
 
-      if (!createdAt || createdAt >= cutoff) continue;
+      if (!isBeforeCutoff(createdAt)) continue;
       if (dryRun) {
-        console.log(`  Would delete: ${createdAt} ${text}`);
+        console.log(`  Would delete: ${displayDate} ${text}`);
         deleted++;
         continue;
       }
@@ -383,7 +420,7 @@ async function nukeMastodon() {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (delRes.ok) {
-          console.log(`  Deleted: ${createdAt} ${text}`);
+          console.log(`  Deleted: ${displayDate} ${text}`);
           deleted++;
           platformStats.mastodon.deleted++;
           break;
@@ -397,7 +434,7 @@ async function nukeMastodon() {
           await new Promise(r => setTimeout(r, waitMs));
           continue;
         }
-        console.log(`  Failed: ${createdAt} ${text} (${delRes.status})`);
+        console.log(`  Failed: ${displayDate} ${text} (${delRes.status})`);
         failed++;
         platformStats.mastodon.failed++;
         break;
@@ -437,10 +474,10 @@ if (notify && !dryRun) {
     if (fbStuck > 0) manualWork.push(`FB has **${fbStuck}** stuck post${fbStuck === 1 ? "" : "s"} — clean via the FB Page UI`);
     if (igStuck > 0) manualWork.push(`IG has **${igStuck}** post${igStuck === 1 ? "" : "s"} the API can't touch — clean via the IG mobile app`);
     await catSignal({
-      key: `weekly-purge-${cutoff}`,
+      key: `weekly-purge-${cutoffDisplay}`,
       title: "Weekly social purge ran",
       body:
-        `Cutoff: \`${cutoff}\` (posts older than this were targeted)\n\n` +
+        `Cutoff: \`${cutoffDisplay}\` (posts older than this were targeted)\n\n` +
         (lines.length ? lines.join("\n") + "\n\n" : "") +
         (manualWork.length ? "**Needs manual cleanup:**\n" + manualWork.map((m) => `• ${m}`).join("\n") : "Everything cleaned via API. No manual work needed."),
     });
