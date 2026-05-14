@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { CONFIG } from "./lib/constants.mjs";
 import { recordPost } from "./lib/dedup.mjs";
 import { logStep, logPublish, logDryRun, logError, logSuccess, logSkip } from "./lib/logger.mjs";
+import { queueBump } from "./lib/event-bumps.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -242,6 +243,19 @@ async function main() {
       cities: [...new Set(items.map((i) => i.city).filter(Boolean))],
       platforms: published,
     });
+  }
+
+  // Queue an evening "doors-in-30" bump for tonight-pick posts. Bump fires
+  // ~30 min before event time as a reply, catching the after-work audience.
+  // Skipped automatically if the post has no time, the time has passed, or
+  // we didn't get usable parent IDs from X / Threads / Bluesky.
+  if (!dryRun && post.postType === "tonight-pick") {
+    try {
+      const queued = queueBump({ post, results });
+      if (queued) logStep("⏰", `Evening bump queued`);
+    } catch (err) {
+      logError(`Bump queue failed: ${err.message}`);
+    }
   }
 
   const attempted = platforms.filter(

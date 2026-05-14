@@ -377,7 +377,12 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "mast
   return variants;
 }
 
-const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 500, email: 800 };
+const HARD_LIMITS = {
+  x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 500, email: 800,
+  // Evening "doors-in-30" follow-up bumps posted as replies to the parent
+  // tonight-pick. Kept short — the parent has the full pitch + the link.
+  bumpX: 220, bumpThreads: 220, bumpBluesky: 220,
+};
 
 /** Enforce hard character limits on all platform variants. */
 function enforceHardLimits(variants) {
@@ -390,7 +395,9 @@ function enforceHardLimits(variants) {
 
 // Platforms that must NEVER carry a URL in the post body. Bluesky and
 // Mastodon are missing on purpose — they don't suppress links.
-const NO_URL_PLATFORMS = ["x", "threads", "facebook", "instagram", "email"];
+// Bump variants are always no-URL — the parent post already has the link
+// (Bluesky/Mastodon) or a self-reply with the link (X/Threads).
+const NO_URL_PLATFORMS = ["x", "threads", "facebook", "instagram", "email", "bumpX", "bumpThreads", "bumpBluesky"];
 
 /**
  * Defensive scrub: if Claude slips a URL into a no-URL-platform variant,
@@ -648,7 +655,7 @@ ${mentions}
 
 Frame this as a TONIGHT recommendation. "Tonight in the South Bay..." energy. One great thing, full enthusiasm.
 
-Write seven variants — each NATIVE to its platform (don't translate):
+Write seven MAIN variants — each NATIVE to its platform (don't translate):
 
 1. X (max 240 chars, NO URL, no hashtags) — punchy hook. Tag X @handle if provided. Publisher adds a self-reply with the link.
 
@@ -660,13 +667,21 @@ Write seven variants — each NATIVE to its platform (don't translate):
 
 5. Instagram (max 1800 chars, NO URL) — caption, hook first line. Tag IG @handles if provided. 8-12 hashtags after a blank line at end.
 
-6. Mastodon (max 480 chars INCLUDING URL + hashtags) — include URL. 1-2 hashtags.
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different rhythm, slightly more descriptive (Mastodon culture is less marketing-y). Include URL. 1-2 hashtags. Do not return identical or near-identical text to Bluesky.
 
 7. Email (max 400 chars, NO URL) — 1-3 sentences. Plain place names (no @-handles), no hashtags, no "tap the link" CTA tails — the email has an image and a "Get tickets" button below.
 
-LINK RULE — re-read: no URL in X, Threads, Facebook, Instagram, Email.
+ALSO write three SHORT "doors-in-30" follow-up bumps. The publisher will post these as replies to the main post about 30 min before the event starts, catching the after-work "what should I do tonight?" audience. Style: one tight sentence each, present-tense urgency. NO URL (the parent already has it). Tag the same @handles you used in the main post.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email". No other text.`;
+8. bumpX (max 200 chars) — punchy reminder for X. "Doors in 30..." / "Starting soon..." / "Tonight at 8 PM..." style. No hashtags. 1 emoji max.
+
+9. bumpThreads (max 200 chars) — same vibe as bumpX, Threads-flavored. 1 hashtag OK.
+
+10. bumpBluesky (max 200 chars) — same energy. 1-2 hashtags OK.
+
+LINK RULE — re-read: no URL in X, Threads, Facebook, Instagram, Email, or any bump variant.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "bumpX", "bumpThreads", "bumpBluesky". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",

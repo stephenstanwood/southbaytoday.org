@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.southbaytoday.event-bumps</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>scripts/social/process-event-bumps.mjs</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+  <!-- Every 15 minutes. The queue contains pre-generated bump text + parent
+       post IDs from the morning tonight-pick publish; this job fires any
+       whose bumpAt has passed (event time minus 30 min). Silent unless it
+       actually fires something. -->
+  <key>StartInterval</key>
+  <integer>900</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/sbt-event-bumps.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/sbt-event-bumps.log</string>
+</dict>
+</plist>
