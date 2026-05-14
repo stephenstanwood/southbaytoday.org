@@ -988,7 +988,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Recently funded South Bay startups — verified Q4 2025 / Q1 2026
+// Recently funded South Bay startups — verified Q4 2025 – Q2 2026
 // ---------------------------------------------------------------------------
 
 export interface RecentlyFunded {
