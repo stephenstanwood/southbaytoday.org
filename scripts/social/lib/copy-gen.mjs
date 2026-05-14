@@ -382,6 +382,10 @@ const HARD_LIMITS = {
   // Evening "doors-in-30" follow-up bumps posted as replies to the parent
   // tonight-pick. Kept short — the parent has the full pitch + the link.
   bumpX: 220, bumpThreads: 220, bumpBluesky: 220,
+  // Pinterest copy — title is search-keyword-optimized (≤100 per API),
+  // description is search-index body (≤500 per API; their hard cap is 800
+  // but 500 reads cleaner on the pin card).
+  pinterestTitle: 100, pinterestDescription: 500,
 };
 
 /** Enforce hard character limits on string-shaped platform variants. */
@@ -413,7 +417,13 @@ function enforceHardLimits(variants) {
 // Mastodon are missing on purpose — they don't suppress links.
 // Bump variants are always no-URL — the parent post already has the link
 // (Bluesky/Mastodon) or a self-reply with the link (X/Threads).
-const NO_URL_PLATFORMS = ["x", "threads", "facebook", "instagram", "email", "bumpX", "bumpThreads", "bumpBluesky"];
+// Pinterest title/description are no-URL — Pinterest passes the link as a
+// separate field on the pin object.
+const NO_URL_PLATFORMS = [
+  "x", "threads", "facebook", "instagram", "email",
+  "bumpX", "bumpThreads", "bumpBluesky",
+  "pinterestTitle", "pinterestDescription",
+];
 
 /**
  * Defensive scrub: if Claude slips a URL into a no-URL-platform variant,
@@ -604,9 +614,15 @@ ALSO write an X poll variant. The publisher uses this on every ~3rd day-plan pub
 
 8. pollX — an object: { text: string ≤200 chars, options: string[] of exactly 4 entries each ≤25 chars }. The "text" is the poll question — short, punchy, no hashtags, no URL ("Wednesday in San Jose — pick your move?" / "${dayName} energy check?"). The "options" are 4 of the 6 ideas above, condensed to ≤25 chars each. Use short clear labels — pick the bucket label + a single key noun: "Breakfast: Bill's", "Hike: Rancho", "Live music: Cafe Stritch", "Dinner: Aqui". Choose 4 with the most distinct vibes so people actually have a choice.
 
-LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX.
+ALSO write Pinterest-specific copy. Pinterest is a VISUAL SEARCH ENGINE with a 6-month tail per pin — completely different model from feed-based platforms. Write the title like a SEARCH a Pinterest user would type, not like a social post.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "pollX". No other text.`;
+9. pinterestTitle (max 100 chars) — Title Case, search-keyword-optimized. Lead with the search hook. Examples of the SHAPE we want: "Things to Do in San Jose This Weekend", "${dayName} Day Plan in ${cityDisplay || "the South Bay"}", "South Bay Itinerary With Kids", "Where to Go in Cupertino on a ${dayName}". NO @-mentions, NO emoji, NO URL. Use the lead city.
+
+10. pinterestDescription (max 500 chars) — 2-4 sentences expanding the title for Pinterest's search index. Tell the searcher what they'll find. Conversational but search-rich (repeat city names, mention bucket labels — "breakfast," "trail," "dinner"). End with a line break + 4-6 search hashtags (#SanJose #ThingsToDoInSanJose #SouthBay #BayAreaTravel etc). NO URL (Pinterest passes the URL separately).
+
+LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX, pinterestTitle, pinterestDescription.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "pollX", "pinterestTitle", "pinterestDescription". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",

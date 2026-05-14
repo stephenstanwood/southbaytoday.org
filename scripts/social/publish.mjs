@@ -109,6 +109,12 @@ async function main() {
     logStep("📸", `Instagram copy (${post.copy?.instagram?.length || 0} chars):`);
     console.log(`  ${post.copy?.instagram || "(none)"}\n`);
 
+    if (post.copy?.pinterestTitle) {
+      logStep("📌", `Pinterest title (${post.copy.pinterestTitle.length} chars): ${post.copy.pinterestTitle}`);
+      logStep("📌", `Pinterest description (${post.copy.pinterestDescription?.length || 0} chars):`);
+      console.log(`  ${post.copy.pinterestDescription || "(none)"}\n`);
+    }
+
     if (post.targetUrl) {
       logStep("🔗", `X + Threads self-reply (2.5min after publish):`);
       console.log(`  More info → ${post.targetUrl}\n`);
@@ -167,7 +173,7 @@ async function main() {
     logStep("♿", `ALT: ${imageAlt}`);
   }
 
-  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram"];
+  const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram", "pinterest"];
   const published = [];
   const results = {};
 
@@ -187,6 +193,47 @@ async function main() {
     }
     if (platformFilter && !platformFilter.includes(platform)) {
       logSkip(`${platform} not in --platform filter`);
+      continue;
+    }
+
+    // Pinterest takes title + description (object), not a single copy string,
+    // and is only relevant for day-plan posts (search index, 6-month tail —
+    // tonight-pick / wildcard content goes stale too fast for Pinterest).
+    if (platform === "pinterest") {
+      if (!process.env.PINTEREST_ACCESS_TOKEN) {
+        logSkip("pinterest: PINTEREST_ACCESS_TOKEN not set (waiting on trial-access approval)");
+        continue;
+      }
+      if (post.postType !== "day-plan") {
+        logSkip("pinterest: only day-plan posts are pinned");
+        continue;
+      }
+      if (!post.copy?.pinterestTitle || !post.copy?.pinterestDescription) {
+        logSkip("pinterest: missing pinterestTitle or pinterestDescription");
+        continue;
+      }
+      if (!imageBuffer) {
+        logSkip("pinterest: no image buffer (card image required)");
+        continue;
+      }
+      try {
+        const client = await loadPlatform("pinterest");
+        const result = await client.publish({
+          boardName: "South Bay Day Plans",
+          boardDescription: "Daily plans for the South Bay — San Jose, Cupertino, Campbell, Los Gatos, Saratoga, and beyond. New plan every morning.",
+          title: post.copy.pinterestTitle,
+          description: post.copy.pinterestDescription,
+          link: post.targetUrl || CONFIG.SBS_BASE_URL,
+          imageBuffer,
+          altText: imageAlt,
+        });
+        results[platform] = result;
+        logPublish(platform, `Pinned: ${result.id}`);
+        published.push(platform);
+      } catch (err) {
+        logError(`pinterest: ${err.message}`);
+      }
+      await new Promise((r) => setTimeout(r, 1000));
       continue;
     }
 

@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   DRY_RUN: false,
-  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: true },
+  PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: true, pinterest: true },
   // Content slot types for the 3-post-per-day strategy
   SLOT_TYPES: { "day-plan": true, "tonight-pick": true, "wildcard": true },
   // Legacy format flags (kept for backward compat during transition)
