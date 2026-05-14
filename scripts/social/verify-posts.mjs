@@ -141,6 +141,23 @@ async function verifyFacebook(postId) {
   return { exists: false, error: `${res.status}: ${body}` };
 }
 
+async function verifyPinterest(pinId) {
+  const token = process.env.PINTEREST_ACCESS_TOKEN;
+  if (!token) throw new Error("Missing PINTEREST_ACCESS_TOKEN");
+
+  const res = await fetch(`https://api.pinterest.com/v5/pins/${encodeURIComponent(pinId)}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    return { exists: true, id: data.id };
+  }
+  if (res.status === 404) return { exists: false };
+  const body = await res.text();
+  return { exists: false, error: `${res.status}: ${body.slice(0, 200)}` };
+}
+
 // ── Discord notification ──────────────────────────────────────────────────
 
 async function sendDiscordAlert(message) {
@@ -229,6 +246,14 @@ async function main() {
           case "threads":
             console.log("   ⏭️  threads: no read API for testers");
             continue;
+
+          case "pinterest":
+            if (!entry.postId && !entry.id) {
+              console.log("   ⚠️  pinterest: no pin ID recorded");
+              continue;
+            }
+            result = await verifyPinterest(entry.postId || entry.id);
+            break;
 
           default:
             console.log(`   ⏭️  ${entry.platform}: unknown platform`);

@@ -371,7 +371,7 @@ async function main() {
       postIds: Object.fromEntries(
         Object.entries(results).filter(([, r]) => r?.id || r?.uri).map(([p, r]) => [p, r.id || r.uri])
       ),
-      copy: (post.copy?.x || Object.values(post.copy || {})[0] || "").slice(0, 100),
+      copy: (post.copy?.x || Object.values(post.copy || {}).find((v) => typeof v === "string") || "").slice(0, 100),
     }],
   };
   console.log(`\nPUBLISH_SUMMARY:${JSON.stringify(publishSummary)}`);

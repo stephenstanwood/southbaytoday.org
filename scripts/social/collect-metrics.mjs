@@ -159,6 +159,32 @@ async function fetchFacebookMetrics(postId) {
   };
 }
 
+async function fetchPinterestMetrics(pinId) {
+  const token = process.env.PINTEREST_ACCESS_TOKEN;
+  if (!token) throw new Error("Missing PINTEREST_ACCESS_TOKEN");
+
+  const end = new Date();
+  const start = new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const fmt = (d) => d.toISOString().slice(0, 10);
+  const url = `https://api.pinterest.com/v5/pins/${encodeURIComponent(pinId)}/analytics`
+    + `?start_date=${fmt(start)}&end_date=${fmt(end)}`
+    + `&metric_types=IMPRESSION,SAVE,PIN_CLICK,OUTBOUND_CLICK`;
+
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Pinterest metrics failed (${res.status}): ${body.slice(0, 200)}`);
+  }
+  const data = await res.json();
+  const lifetime = data.all?.lifetime_metrics || data.lifetime_metrics || data;
+  return {
+    saves:          Number(lifetime.SAVE          ?? lifetime.save          ?? 0) || 0,
+    pinClicks:      Number(lifetime.PIN_CLICK     ?? lifetime.pin_click     ?? 0) || 0,
+    outboundClicks: Number(lifetime.OUTBOUND_CLICK?? lifetime.outbound_click?? 0) || 0,
+    impressions:    Number(lifetime.IMPRESSION    ?? lifetime.impression    ?? 0) || 0,
+  };
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -227,6 +253,14 @@ async function main() {
           case "threads":
             console.log("   threads: skipped (no read API for testers)");
             continue;
+
+          case "pinterest": {
+            const id = entry.postId || entry.id;
+            if (!id) break;
+            metrics.pinterest = await fetchPinterestMetrics(id);
+            console.log(`   pinterest: ${metrics.pinterest.saves} saves, ${metrics.pinterest.outboundClicks} outbound clicks, ${metrics.pinterest.impressions} impressions`);
+            break;
+          }
         }
       } catch (err) {
         console.log(`   ❌ ${entry.platform}: ${err.message}`);

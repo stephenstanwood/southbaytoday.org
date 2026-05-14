@@ -427,8 +427,21 @@ async function main() {
     // Rewrite time references — use effective date (post-level or item-level)
     const rewriteItem = { ...item, date: effectiveDate };
     const rewrittenCopy = {};
-    for (const [platform, text] of Object.entries(post.copy || {})) {
-      let rewritten = rewriteTimeReferences(text, rewriteItem, ptTime);
+    for (const [platform, value] of Object.entries(post.copy || {})) {
+      // Non-string fields (e.g., pollX = { text, options }) get rewritten
+      // surgically below. Pass strings through the rewriter, pass-through
+      // objects unmodified except for nested text fields.
+      if (typeof value !== "string") {
+        if (value && typeof value === "object" && typeof value.text === "string") {
+          // Object with a `text` field (currently just pollX) — rewrite the
+          // text only; options array is short labels, no time refs to fix.
+          rewrittenCopy[platform] = { ...value, text: rewriteTimeReferences(value.text, rewriteItem, ptTime) };
+        } else {
+          rewrittenCopy[platform] = value;
+        }
+        continue;
+      }
+      let rewritten = rewriteTimeReferences(value, rewriteItem, ptTime);
       // Final guard: ensure the first letter is uppercase. Catches any future
       // case-mangling from rewrites or upstream copy that slipped a lowercase
       // start past the model. Only touches the first character — body case is
@@ -438,7 +451,7 @@ async function main() {
         console.log(`      🔠 ${platform}: capitalized first letter (was lowercase)`);
       }
       rewrittenCopy[platform] = rewritten;
-      if (rewrittenCopy[platform] !== text) {
+      if (rewrittenCopy[platform] !== value) {
         console.log(`      ✏️  ${platform}: time refs rewritten`);
       }
     }
@@ -496,8 +509,13 @@ async function main() {
 
     if (dryRun) {
       console.log(`      🏜️  DRY RUN — would publish:`);
-      for (const [platform, text] of Object.entries(rewrittenCopy)) {
-        console.log(`      [${platform}] ${text.slice(0, 100)}...`);
+      for (const [platform, value] of Object.entries(rewrittenCopy)) {
+        if (typeof value === "string") {
+          console.log(`      [${platform}] ${value.slice(0, 100)}...`);
+        } else if (value && typeof value === "object") {
+          // pollX shape: { text, options }
+          console.log(`      [${platform}] ${JSON.stringify(value).slice(0, 120)}...`);
+        }
       }
       console.log();
       continue;
@@ -521,7 +539,9 @@ async function main() {
     // Also check the copy itself for obviously stale day-of-week references
     const guardDayName = DAY_NAMES[ptDayOfWeek(guardTime)];
     const eventDayName = eventDate ? DAY_NAMES[new Date(eventDate + "T12:00:00").getDay()] : null;
-    const firstCopy = Object.values(rewrittenCopy)[0] || "";
+    // First STRING value — skip object-shaped fields like pollX so the
+    // regex checks below run against actual post text.
+    const firstCopy = Object.values(rewrittenCopy).find((v) => typeof v === "string") || "";
     if (eventDate && eventDate === guardToday && eventDayName) {
       // If copy says "Sunday" but it's Tuesday, something is wrong
       const wrongDayPattern = new RegExp(`\\b${eventDayName}\\b`, "i");
