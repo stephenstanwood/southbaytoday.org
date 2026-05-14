@@ -9,19 +9,22 @@
     <string>/opt/homebrew/bin/node</string>
     <string>--env-file=.env.local</string>
     <string>scripts/social/nuke-old-posts.mjs</string>
-    <string>--max-age-days=7</string>
+    <string>--all-before-now</string>
     <string>--notify</string>
   </array>
   <key>WorkingDirectory</key>
   <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+  <!-- Saturday 3:30am PT — well before Stephen wakes at 4am. Each Saturday
+       wipes the previous week so the profiles look fresh going into the
+       weekend. New posts published Saturday morning (6:15am+) stay. -->
   <key>StartCalendarInterval</key>
   <dict>
     <key>Weekday</key>
-    <integer>1</integer>
+    <integer>6</integer>
     <key>Hour</key>
     <integer>3</integer>
     <key>Minute</key>
-    <integer>0</integer>
+    <integer>30</integer>
   </dict>
   <key>StandardOutPath</key>
   <string>/tmp/sbt-weekly-purge.log</string>
