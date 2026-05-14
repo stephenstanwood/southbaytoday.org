@@ -204,7 +204,7 @@ export default function NewsletterSignup({
       <div className="sbt-nl-inline">
         <div className="sbt-nl-inline-text">
           <div className="sbt-nl-inline-eyebrow">Daily at 6:00&nbsp;AM</div>
-          <div className="sbt-nl-inline-headline">A fresh plan, every morning.</div>
+          <div className="sbt-nl-inline-headline">A fresh plan every morning.</div>
           <div className="sbt-nl-inline-tagline">
             Plus everything else we know about for the day.<br />
             One email. That's it.
