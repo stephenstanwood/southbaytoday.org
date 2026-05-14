@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-13T19:09:54.052Z",
+      "generatedAt": "2026-05-14T11:09:29.372Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 6 – May 13",
+      "dateRange": "May 7 – May 14",
       "stats": {
-        "total": 322,
-        "notable": 23,
-        "newUnits": 8,
-        "totalValuation": 24795890
+        "total": 336,
+        "notable": 18,
+        "newUnits": 7,
+        "totalValuation": 19543029
       },
       "permits": [
         {
@@ -39,18 +39,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-127669-RS",
-          "address": "1094 Belvedere Ln #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Attached adu",
-          "valuation": 122590,
-          "units": 1,
-          "issueDate": "2026-05-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-095127-RS",
           "address": "6074 Alcante Dr #2",
           "category": "residential-new",
@@ -60,6 +48,18 @@
           "valuation": 120223,
           "units": 1,
           "issueDate": "2026-05-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-120934-RS",
+          "address": "3462 Gavota Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to adu",
+          "valuation": 110416,
+          "units": 1,
+          "issueDate": "2026-05-12",
           "subtype": "2nd Unit Added"
         },
         {
@@ -87,18 +87,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2023-105386-RS",
-          "address": "1691 Bagpipe Wy",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to adu",
-          "valuation": 75414,
-          "units": 1,
-          "issueDate": "2026-05-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-127875-RS",
           "address": "6958 Del Rio Dr #2",
           "category": "residential-new",
@@ -123,28 +111,40 @@
           "subtype": "Data Center"
         },
         {
-          "id": "2026-112989-CI",
-          "address": "2016 Berryessa Rd",
+          "id": "2026-117453-CI",
+          "address": "1155 Coleman Av #2",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
-          "workType": "New Construction",
-          "description": "Berryessa Plaza New Retail Bldg",
-          "valuation": 3600000,
+          "workType": "Tenant Improvement",
+          "description": "Tik Tok (Bem100%) 6th Fl Office ti",
+          "valuation": 950000,
           "units": 0,
-          "issueDate": "2026-05-07",
-          "subtype": "Undefined"
+          "issueDate": "2026-05-12",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-117039-CI",
+          "address": "2855 Stevens Creek Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bemp100%) Sisley #1047",
+          "valuation": 425000,
+          "units": 0,
+          "issueDate": "2026-05-08",
+          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-13T19:09:56.584Z",
+      "generatedAt": "2026-05-14T11:09:31.703Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 6 – May 13",
+      "dateRange": "May 7 – May 14",
       "stats": {
-        "total": 120,
+        "total": 125,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00104",
-          "address": "3210 Porter Dr",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "THE PURPOSE OF THIS PROJECT IS TO SUPPLY ADDITIONAL ELECTRICAL POWER TO THE EXISTING BUILDING AT 3210 PORTER DRIVE TO SUPPORT NEW RESEARCH & DEVELOPMENT TENANT IMPROVEMENTS. SCOPE OF WORK INCLUDES INSTALLATION OF NEW ELECTRICAL TRANSFORMERS & SWITCHES AT 3210 PORTER DRIVE, ALONG WITH NEW CONDUIT EXTENDING ALONG PORTER DRIVE TO CONNECT TO THE SUBSTATION ON HANOVER DRIVE. A NEW ENCLOSURE IS PROPOSED TO SCREEN THE TRANSFORMERS, ALONG WITH NEW FENCING AND LANDSCAPE IMPROVEMENTS.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-07",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00108",
           "address": "3440 Ramona St",
           "category": "entitlement",
@@ -184,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-12",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00104",
+          "address": "3210 Porter Dr",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "THE PURPOSE OF THIS PROJECT IS TO SUPPLY ADDITIONAL ELECTRICAL POWER TO THE EXISTING BUILDING AT 3210 PORTER DRIVE TO SUPPORT NEW RESEARCH & DEVELOPMENT TENANT IMPROVEMENTS. SCOPE OF WORK INCLUDES INSTALLATION OF NEW ELECTRICAL TRANSFORMERS & SWITCHES AT 3210 PORTER DRIVE, ALONG WITH NEW CONDUIT EXTENDING ALONG PORTER DRIVE TO CONNECT TO THE SUBSTATION ON HANOVER DRIVE. A NEW ENCLOSURE IS PROPOSED TO SCREEN THE TRANSFORMERS, ALONG WITH NEW FENCING AND LANDSCAPE IMPROVEMENTS.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-07",
           "subtype": "Over the Counter Approved"
         },
         {

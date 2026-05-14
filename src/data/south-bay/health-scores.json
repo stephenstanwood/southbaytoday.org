@@ -1,26 +1,59 @@
 {
   "flags": [
     {
-      "business_id": "PR0300383",
-      "name": "Golden Wang Donkatsu",
-      "city": "Santa Clara",
-      "address": "2910 El Camino Real",
-      "date": "2026-05-12",
-      "score": 61,
+      "business_id": "PR0330961",
+      "name": "Los Tres Hermanos Bakery",
+      "city": "San Jose",
+      "address": "1430 S White Rd",
+      "date": "2026-05-13",
+      "score": 73,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
+      "summary": "Note: Food safety manager certificate: Cipriano Perez - 5/11/2029"
     },
     {
-      "business_id": "PR0330927",
-      "name": "Restorant Antojitos Y Pupuseria Lolita",
-      "city": "San Jose",
-      "address": "414 E William St # A",
-      "date": "2026-05-12",
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
+      "date": "2026-05-13",
+      "score": 71,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is ordered closed due to evidence of a vermin (cockroach) infestation"
+    },
+    {
+      "business_id": "PR0301934",
+      "name": "Little Lou's Bbq",
+      "city": "Campbell",
+      "address": "2455 S Winchester Bl",
+      "date": "2026-05-13",
       "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/08/26 and 05/12/26 for vermin infestation"
+    },
+    {
+      "business_id": "PR0365575",
+      "name": "China Palace",
+      "city": "Milpitas",
+      "address": "688 Barber Ln",
+      "date": "2026-05-13",
+      "score": 47,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
+      "summary": "Two or more major violations were cited during the routine inspection"
+    },
+    {
+      "business_id": "PR0304143",
+      "name": "Yummy Kitchen",
+      "city": "San Jose",
+      "address": "1711 Branham Ln Ste A9",
+      "date": "2026-05-13",
+      "score": 71,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is hereby closed due to evidence of a pest/vermin infestation"
     },
     {
       "business_id": "PR0301786",
@@ -34,6 +67,17 @@
       "summary": "Requested follow-up inspection to routine inspection resulting in a closure due to enclosure violations"
     },
     {
+      "business_id": "PR0300383",
+      "name": "Golden Wang Donkatsu",
+      "city": "Santa Clara",
+      "address": "2910 El Camino Real",
+      "date": "2026-05-12",
+      "score": 61,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
+    },
+    {
       "business_id": "PR0301758",
       "name": "Jesuit Retreat House",
       "city": "Los Altos",
@@ -43,6 +87,17 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
+    },
+    {
+      "business_id": "PR0330927",
+      "name": "Restorant Antojitos Y Pupuseria Lolita",
+      "city": "San Jose",
+      "address": "414 E William St # A",
+      "date": "2026-05-12",
+      "score": null,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0301934",
@@ -64,7 +119,7 @@
       "score": 81,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper cooling methods"
+      "summary": "Proper hot and cold holding temperatures"
     },
     {
       "business_id": "PR0375680",
@@ -122,15 +177,15 @@
       "summary": "Facility is ordered closed due to evidence of a vermin infestation"
     },
     {
-      "business_id": "PR0302357",
-      "name": "Tia Juana",
-      "city": "Sunnyvale",
-      "address": "901 E Duane Av",
+      "business_id": "PR0377015",
+      "name": "Hong Dae Pocha",
+      "city": "Santa Clara",
+      "address": "3450 El Camino Real # 101",
       "date": "2026-05-07",
-      "score": 70,
-      "result": "Y",
+      "score": 48,
+      "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
+      "summary": "Routine inspection conducted in conjunction with CO0159472"
     },
     {
       "business_id": "PR0304050",
@@ -144,17 +199,6 @@
       "summary": "Adequate handwash facilities supplied, accessible"
     },
     {
-      "business_id": "PR0377015",
-      "name": "Hong Dae Pocha",
-      "city": "Santa Clara",
-      "address": "3450 El Camino Real # 101",
-      "date": "2026-05-07",
-      "score": 48,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Routine inspection conducted in conjunction with CO0159472"
-    },
-    {
       "business_id": "PR0305016",
       "name": "Pho Enjoy Ii",
       "city": "San Jose",
@@ -166,15 +210,15 @@
       "summary": "Owner requested follow up inspection"
     },
     {
-      "business_id": "PR0424154",
-      "name": "Naisnow Tea & Bakery",
-      "city": "Cupertino",
-      "address": "19600 Vallco Py # 100",
-      "date": "2026-05-06",
-      "score": null,
+      "business_id": "PR0302357",
+      "name": "Tia Juana",
+      "city": "Sunnyvale",
+      "address": "901 E Duane Av",
+      "date": "2026-05-07",
+      "score": 70,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Limited inspection conducted in conjunction with CO0159565"
+      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0380588",
@@ -186,6 +230,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Adequate handwash facilities supplied, accessible"
+    },
+    {
+      "business_id": "PR0424154",
+      "name": "Naisnow Tea & Bakery",
+      "city": "Cupertino",
+      "address": "19600 Vallco Py # 100",
+      "date": "2026-05-06",
+      "score": null,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Limited inspection conducted in conjunction with CO0159565"
     },
     {
       "business_id": "PR0302785",
@@ -229,7 +284,7 @@
       "score": 61,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper reheating procedures for hot holding"
+      "summary": "Food obtained from approved source"
     },
     {
       "business_id": "PR0454228",
@@ -243,39 +298,6 @@
       "summary": "Facility is closed due to lack of hot running water and a broken hot water heater"
     },
     {
-      "business_id": "PR0306687",
-      "name": "Devil & Angel @ Great Mall",
-      "city": "Milpitas",
-      "address": "447 Great Mall Dr # 172",
-      "date": "2026-04-30",
-      "score": 65,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Two or more major violations were cited during the routine inspection"
-    },
-    {
-      "business_id": "PR0428105",
-      "name": "Southindies Vegetarian/vegan/jain Restaurant",
-      "city": "Sunnyvale",
-      "address": "950 W El Camino Real",
-      "date": "2026-04-30",
-      "score": 49,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is hereby closed due to evidence of a vermin infestation"
-    },
-    {
-      "business_id": "PR0307121",
-      "name": "Lotus Thai Bistro",
-      "city": "Palo Alto",
-      "address": "425 S California Av",
-      "date": "2026-04-30",
-      "score": 58,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
-    },
-    {
       "business_id": "PR0370090",
       "name": "Evc Cafe",
       "city": "San Jose",
@@ -285,17 +307,6 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
-    },
-    {
-      "business_id": "PR0302261",
-      "name": "Lados",
-      "city": "Sunnyvale",
-      "address": "115 Plaza Dr",
-      "date": "2026-04-30",
-      "score": 75,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "NOTE: No signature obtained"
     },
     {
       "business_id": "PR0420831",
@@ -309,29 +320,18 @@
       "summary": "Due to the lack of hot water the health permit shall hereby be temporarily suspended"
     },
     {
-      "business_id": "PR0401744",
-      "name": "02 Valley",
-      "city": "Cupertino",
-      "address": "19058 Stevens Creek Bl",
-      "date": "2026-04-29",
-      "score": null,
+      "business_id": "PR0306687",
+      "name": "Devil & Angel @ Great Mall",
+      "city": "Milpitas",
+      "address": "447 Great Mall Dr # 172",
+      "date": "2026-04-30",
+      "score": 65,
       "result": "Y",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow-up inspection to routine inspection conducted by Dennis Ly on 4/28/2026"
-    },
-    {
-      "business_id": "PR0401744",
-      "name": "02 Valley",
-      "city": "Cupertino",
-      "address": "19058 Stevens Creek Bl",
-      "date": "2026-04-28",
-      "score": 41,
-      "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Facility is closed due to being unable to provide adequate hot water"
+      "summary": "Two or more major violations were cited during the routine inspection"
     }
   ],
-  "generatedAt": "2026-05-13T19:09:13.029Z",
+  "generatedAt": "2026-05-14T11:08:57.892Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

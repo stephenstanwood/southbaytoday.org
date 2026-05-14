@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-13T23:16:55.032Z",
+    "generatedAt": "2026-05-14T11:17:05.157Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 37,
-    "placesMatched": 18,
-    "placeGaps": 19,
+    "placesExtracted": 14,
+    "placesMatched": 6,
+    "placeGaps": 8,
     "eventsExtracted": 4,
     "eventsMatched": 0,
     "eventGaps": 4,
@@ -16,540 +16,240 @@
   },
   "placeGaps": [
     {
-      "name": "Pruneyard",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "shopping plaza with reopened drive-through area near Peet's",
+      "name": "Petco Sunnyvale",
+      "city": "Sunnyvale",
+      "kind": "other",
+      "context": "hosting pop-up cat adoption event this week",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
+        "https://www.reddit.com/r/bayarea/comments/1tceszg/earth_above_bart/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tc6799/shark_city_hockey_reporting_that_pwhl_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
+        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/"
       ]
     },
     {
-      "name": "Luna",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "restaurant at Pruneyard, servers opposing drive-through reopening",
+      "name": "Dolby Labs",
+      "city": "",
+      "kind": "other",
+      "context": "acoustically engineered building to block BART vibrations",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
-      ]
-    },
-    {
-      "name": "Mendocino",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "located at Pruneyard near Peet's parking area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
+        "https://www.reddit.com/r/bayarea/comments/1tceszg/earth_above_bart/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tc6799/shark_city_hockey_reporting_that_pwhl_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
+        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/"
       ]
     },
     {
       "name": "The Roger",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "jazz brunch on weekends, eggs benedict specialty",
+      "context": "Jazz brunch on weekends, eggs benedict",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
-        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tchri9/fan_going_to_switzerland/",
         "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
-      ]
-    },
-    {
-      "name": "Petco Sunnyvale",
-      "city": "Sunnyvale",
-      "kind": "other",
-      "context": "cat adoption pop-up event venue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
-        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
-      ]
-    },
-    {
-      "name": "Bills Cafe",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "affordable brunch option, quick service",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/bayarea/comments/1tcaf5y/eastern_span/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
         "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
       ]
     },
     {
-      "name": "Breakfast Club",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "newer hip brunch spot, popular with wait times",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Jackies Place",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "soul food brunch, upscale pricing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Stacks",
+      "name": "Pruneyard",
       "city": "Campbell",
-      "kind": "restaurant",
-      "context": "takes large group reservations for breakfast",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Holders Country Inn",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch with large group experience",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Rossotti's Alpine Inn",
-      "city": "Los Gatos",
-      "kind": "restaurant",
-      "context": "historic 1852 saloon with outdoor patio",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Palermo",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Italian brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Huckleberry's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "accommodates large groups, private room available",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Eos n Nyx",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Gardens Gate",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Son & Garden",
-      "city": "Menlo Park",
-      "kind": "restaurant",
-      "context": "brunch reservations for groups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Jacks at Westgate",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ]
-    },
-    {
-      "name": "Stanford Stadium",
-      "city": "Palo Alto",
       "kind": "venue",
-      "context": "hosts major events like BTS concert",
+      "context": "shopping center reopened with drive-through near Peet's",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
       ]
     },
     {
-      "name": "Town & Country",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "location for event parking and dropoff",
+      "name": "Jack's in Japantown",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "Earthquakes supporters bar for watching games",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
+      ]
+    },
+    {
+      "name": "oflats",
+      "city": "",
+      "kind": "bar",
+      "context": "used to have drink deals for Earthquakes away games",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
+      ]
+    },
+    {
+      "name": "Hawaiian Drive Inn",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Hawaiian BBQ spot on East Side",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
+      ]
+    },
+    {
+      "name": "Oli oli",
+      "city": "Milpitas",
+      "kind": "restaurant",
+      "context": "Hawaiian BBQ with katsu burger and loco moco",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "San Jose Sharks Equipment Sale",
-      "when": "End of season",
-      "city": "San Jose",
-      "context": "annual game-worn equipment and jersey sale for members",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
-      ]
-    },
-    {
-      "name": "Cat adoption pop-up at Petco Sunnyvale",
-      "when": "Wednesday 6-8:30pm, Thursday 4-8:30pm, Saturday 10am-2pm",
+      "name": "Pop-up adoption event",
+      "when": "Wednesday-Thursday this week, Saturday 10am-2pm",
       "city": "Sunnyvale",
-      "context": "kittens available for adoption via Bay Area Cats",
+      "context": "cat and kitten adoption event at Petco",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
+        "https://www.reddit.com/r/bayarea/comments/1tceszg/earth_above_bart/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tc6799/shark_city_hockey_reporting_that_pwhl_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
         "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/"
       ]
     },
     {
-      "name": "San Jose Earthquakes match with Grogu bobblehead giveaway",
+      "name": "PWHL San Jose expansion announcement",
+      "when": "next week",
+      "city": "San Jose",
+      "context": "professional women's hockey league team announcement",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tceszg/earth_above_bart/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tc6799/shark_city_hockey_reporting_that_pwhl_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
+        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/"
+      ]
+    },
+    {
+      "name": "Stanford concert",
+      "when": "multiple days including Tuesday",
+      "city": "Palo Alto",
+      "context": "event causing traffic and road closures in area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tceszg/earth_above_bart/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tc6799/shark_city_hockey_reporting_that_pwhl_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
+        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/"
+      ]
+    },
+    {
+      "name": "SJ Earthquakes vs Star Wars Grogu Bobblehead Game",
       "when": "Saturday",
       "city": "San Jose",
-      "context": "Star Wars promotion, limited bobbleheads, arrive early",
+      "context": "cross promotion with Star Wars limited bobblehead giveaway",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
-        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tchri9/fan_going_to_switzerland/",
         "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
-      ]
-    },
-    {
-      "name": "BTS Concert",
-      "when": "Sunday",
-      "city": "Palo Alto",
-      "context": "major event at Stanford Stadium",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/bayarea/comments/1tcaf5y/eastern_span/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
         "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Peet's",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "located at Pruneyard shopping center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Peet's Coffee"
-    },
-    {
-      "name": "Com Tam Thien Huong",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Vietnamese restaurant in Vietnam Town, known for broken rice dishes",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
-      ],
-      "matchedName": "Com Tam Thien Huong"
-    },
-    {
-      "name": "Vietnoms",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "vermicelli bowls specialty, including lemongrass chicken bun",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
-      ],
-      "matchedName": "Vietnoms"
-    },
-    {
-      "name": "Pho Luc Lac",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Vietnamese restaurant known for rib eye fried rice",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbj3pr/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/bayarea/comments/1tbnfdb/update_renting_a_house_as_a_single_person_cant/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tbiafv/equipment_event/",
-        "https://www.reddit.com/r/bayarea/comments/1tbi8qg/rail_safety_cost_drops_updated_design_for_grade/",
-        "https://www.reddit.com/r/SanJose/comments/1tbqeg8/vietnamese_food_recommendation/"
-      ],
-      "matchedName": "Pho Luc Lac"
-    },
-    {
       "name": "Dinah's Poolside Restaurant",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "hotel breakfast experience alternative",
+      "context": "hotel breakfast experience",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
-        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tchri9/fan_going_to_switzerland/",
         "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
+        "https://www.reddit.com/r/bayarea/comments/1tcaf5y/eastern_span/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
       ],
       "matchedName": "Dinah's Poolside Restaurant"
+    },
+    {
+      "name": "Sutter Regional Shoreline Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "observation pier with views of Eastern Span bridge",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tchri9/fan_going_to_switzerland/",
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/bayarea/comments/1tcaf5y/eastern_span/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
+      ],
+      "matchedName": "Shoreline Park"
     },
     {
       "name": "PayPal Park",
       "city": "San Jose",
       "kind": "venue",
-      "context": "SJ Earthquakes soccer stadium, good for families",
+      "context": "home of SJ Earthquakes soccer matches",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbofsg/cheapest_way_to_get_around_over_the_summer/",
-        "https://www.reddit.com/r/bayarea/comments/1tc0651/pop_up_adoption_event_weds_thurs_at_petco/",
-        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tchri9/fan_going_to_switzerland/",
         "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
+        "https://www.reddit.com/r/bayarea/comments/1tcaf5y/eastern_span/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
       ],
       "matchedName": "PayPal Park"
-    },
-    {
-      "name": "Orchard City Kitchen",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch spot accommodating large groups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Orchard City Kitchen"
-    },
-    {
-      "name": "The Table",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch in Willow Glen, accepts reservations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "The Table"
-    },
-    {
-      "name": "Uncle John's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "accommodates large groups on Alameda",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Uncle John's Pancake House"
-    },
-    {
-      "name": "Mission City Grill",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "brunch with large group accommodation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Holder’s Mission City Grill"
-    },
-    {
-      "name": "Hobee's",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "brunch with private rooms for groups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Hobee's"
-    },
-    {
-      "name": "Valley Goat",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "upscale brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Valley Goat"
-    },
-    {
-      "name": "Bloom Eatery",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "brunch spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Bloom"
-    },
-    {
-      "name": "El Torito",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Sunday brunch buffet with bottomless mimosas",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "El Torito"
-    },
-    {
-      "name": "Ijava Cafe",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "large space and outdoor seating on Almaden",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "iJAVA Cafe"
-    },
-    {
-      "name": "Pedro's Restaurant & Cantina",
-      "city": "Santa Clara",
-      "kind": "restaurant",
-      "context": "Sunday brunch buffet",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Pedro's Restaurant & Cantina"
-    },
-    {
-      "name": "Bill of Fare",
-      "city": "Saratoga",
-      "kind": "restaurant",
-      "context": "patio seating for large groups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
-      ],
-      "matchedName": "Bill of Fare"
     },
     {
       "name": "Santana Row",
       "city": "San Jose",
       "kind": "venue",
-      "context": "shopping and dining destination",
+      "context": "shopping and dining destination mentioned as alternative",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tbo5kf/brunch_spot_for_large_group/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/santaclara/comments/1tboppj/ok_santa_clara_what_treasures_have_you_found_on/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
       ],
       "matchedName": "Santana Row"
+    },
+    {
+      "name": "Peet's",
+      "city": "Campbell",
+      "kind": "cafe",
+      "context": "coffee shop at Pruneyard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
+      ],
+      "matchedName": "Peet's Coffee"
+    },
+    {
+      "name": "Old Wagon Saloon",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "Earthquakes supporters bar for watching games",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
+        "https://www.reddit.com/r/santaclara/comments/1tal0m8/whats_everyones_favorite_spot_for_hawaiian_bbq/",
+        "https://www.reddit.com/r/bayarea/comments/1tc7yin/caltrain_expands_bikefriendly_perks_across_the/"
+      ],
+      "matchedName": "The Old Wagon Saloon & Grill"
     }
   ],
   "eventMatches": []
