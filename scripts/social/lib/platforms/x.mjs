@@ -179,6 +179,64 @@ export async function postTweet(text, mediaId = null) {
 }
 
 /**
+ * Post a tweet with an attached poll. X v2 allows polls of 2-4 options,
+ * each ≤25 chars, with a duration of 5 min to 7 days.
+ *
+ * Polls boost X reach by ~2-3x (they force a "pick one" commitment from
+ * the timeline) and can coexist with media. Used by the day-plan slot on
+ * every 3rd publish to vary engagement style.
+ *
+ * @param {string} text
+ * @param {string[]} options   2-4 strings, each ≤25 chars.
+ * @param {number} durationMinutes  defaults to 1440 (24h) — long enough
+ *                                  to cycle through the relevant timezones
+ *                                  but short enough that "vote NOW" energy
+ *                                  remains the day-of.
+ * @param {string|null} mediaId  Optional attached image media_id_string.
+ */
+export async function postPoll(text, options, durationMinutes = 1440, mediaId = null) {
+  if (!Array.isArray(options) || options.length < 2 || options.length > 4) {
+    throw new Error(`X poll requires 2-4 options (got ${options?.length ?? 0})`);
+  }
+  for (const o of options) {
+    if (typeof o !== "string" || o.length > 25) {
+      throw new Error(`X poll option must be a string ≤25 chars (got ${JSON.stringify(o)})`);
+    }
+  }
+
+  const creds = getCredentials();
+  const url = `${API_BASE}/2/tweets`;
+
+  const payload = {
+    text,
+    poll: {
+      duration_minutes: Math.max(5, Math.min(10080, durationMinutes)),
+      options,
+    },
+  };
+  if (mediaId) payload.media = { media_ids: [mediaId] };
+
+  const authHeader = makeOAuthRequest("POST", url, [], creds);
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X poll post failed (${res.status}): ${body}`);
+  }
+
+  const data = await res.json();
+  return { id: data.data.id, text: data.data.text };
+}
+
+/**
  * Reply to an existing tweet. Used by the link-suppression workaround: post
  * the main content link-free, then after a 2-3 min delay reply to ourselves
  * with the URL. By that point the algorithm has scored the parent post and
@@ -349,4 +407,21 @@ export async function publish(text, imageBuffer = null, imageAlt = "") {
     mediaId = await uploadMedia(imageBuffer, "image/png", imageAlt);
   }
   return postTweet(text, mediaId);
+}
+
+/**
+ * Full poll post flow: upload image (if provided) then post tweet with poll.
+ *
+ * @param {string} text
+ * @param {string[]} options 2-4 options, each ≤25 chars
+ * @param {Buffer|null} imageBuffer
+ * @param {string} imageAlt
+ * @param {number} durationMinutes
+ */
+export async function publishPoll(text, options, imageBuffer = null, imageAlt = "", durationMinutes = 1440) {
+  let mediaId = null;
+  if (imageBuffer) {
+    mediaId = await uploadMedia(imageBuffer, "image/png", imageAlt);
+  }
+  return postPoll(text, options, durationMinutes, mediaId);
 }

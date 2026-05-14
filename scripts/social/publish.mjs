@@ -47,6 +47,19 @@ async function loadPlatform(name) {
 }
 
 /**
+ * X poll cadence: every 3rd day-plan publish goes out as a poll instead of
+ * regular text. Uses day-of-year mod 3 — deterministic so we always know
+ * which days are poll days for audit / pre-flight checking, but irregular
+ * enough that the X timeline doesn't pattern-match a fixed day-of-week.
+ */
+function isPollDay(date) {
+  const start = new Date(Date.UTC(date.getUTCFullYear(), 0, 0));
+  const diff = date.getTime() - start.getTime();
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return dayOfYear % 3 === 0;
+}
+
+/**
  * Build ALT text for the card image attached to this post. Describes the
  * IMAGE for screen readers — doesn't duplicate the caption.
  *
@@ -99,6 +112,22 @@ async function main() {
     if (post.targetUrl) {
       logStep("🔗", `X + Threads self-reply (2.5min after publish):`);
       console.log(`  More info → ${post.targetUrl}\n`);
+    }
+
+    if (post.copy?.pollX?.text && Array.isArray(post.copy?.pollX?.options)) {
+      const pollDay = isPollDay(new Date());
+      logStep("📊", `X poll variant (${pollDay ? "ACTIVE — today is a poll day" : "skipped — not a poll day"}):`);
+      console.log(`  Q: ${post.copy.pollX.text}`);
+      for (const o of post.copy.pollX.options) console.log(`    ▢ ${o}`);
+      console.log("");
+    }
+
+    if (post.copy?.bumpX || post.copy?.bumpBluesky || post.copy?.bumpThreads) {
+      logStep("⏰", `Evening bump variants (fire ~30min before event time):`);
+      if (post.copy?.bumpX) console.log(`  X: ${post.copy.bumpX}`);
+      if (post.copy?.bumpThreads) console.log(`  Threads: ${post.copy.bumpThreads}`);
+      if (post.copy?.bumpBluesky) console.log(`  Bluesky: ${post.copy.bumpBluesky}`);
+      console.log("");
     }
 
     if (post.cardPath) {
@@ -186,8 +215,27 @@ async function main() {
       } else if (platform === "x" || platform === "bluesky" || platform === "mastodon") {
         // These publishers all accept an imageAlt parameter and set the
         // platform's accessibility metadata when the image is uploaded.
-        const result = await client.publish(copy, imageBuffer, imageAlt);
-        results[platform] = result;
+
+        // X poll variant: on every 3rd day-plan publish, post as a poll
+        // instead of regular text. Polls boost X reach 2-3x by forcing a
+        // "pick one" commitment from followers. Deterministic by date so
+        // it's predictable to us (audit trail) but not predictable to
+        // followers as a fixed day-of-week pattern.
+        if (
+          platform === "x" &&
+          post.postType === "day-plan" &&
+          post.copy?.pollX?.text &&
+          Array.isArray(post.copy?.pollX?.options) &&
+          isPollDay(new Date())
+        ) {
+          const poll = post.copy.pollX;
+          logStep("📊", `X poll mode: "${poll.text}" with ${poll.options.length} options`);
+          const result = await client.publishPoll(poll.text, poll.options, imageBuffer, imageAlt);
+          results[platform] = result;
+        } else {
+          const result = await client.publish(copy, imageBuffer, imageAlt);
+          results[platform] = result;
+        }
       } else {
         const result = await client.publish(copy, imageBuffer);
         results[platform] = result;

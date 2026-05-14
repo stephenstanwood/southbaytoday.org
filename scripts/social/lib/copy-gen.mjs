@@ -384,11 +384,27 @@ const HARD_LIMITS = {
   bumpX: 220, bumpThreads: 220, bumpBluesky: 220,
 };
 
-/** Enforce hard character limits on all platform variants. */
+/** Enforce hard character limits on string-shaped platform variants. */
 function enforceHardLimits(variants) {
   for (const [platform, limit] of Object.entries(HARD_LIMITS)) {
-    if (variants[platform] && variants[platform].length > limit) {
-      variants[platform] = trimToLimit(variants[platform], limit);
+    const v = variants[platform];
+    if (typeof v !== "string") continue;
+    if (v.length > limit) variants[platform] = trimToLimit(v, limit);
+  }
+  // Poll variant: enforce X's poll constraints (text ≤200, 2-4 options, each ≤25).
+  if (variants.pollX && typeof variants.pollX === "object") {
+    if (typeof variants.pollX.text === "string" && variants.pollX.text.length > 200) {
+      variants.pollX.text = variants.pollX.text.slice(0, 200);
+    }
+    if (Array.isArray(variants.pollX.options)) {
+      variants.pollX.options = variants.pollX.options
+        .filter((o) => typeof o === "string" && o.trim())
+        .slice(0, 4)
+        .map((o) => o.slice(0, 25));
+      // X requires at least 2 options — drop the variant if we can't satisfy that.
+      if (variants.pollX.options.length < 2) delete variants.pollX;
+    } else {
+      delete variants.pollX;
     }
   }
 }
@@ -408,7 +424,7 @@ const NO_URL_PLATFORMS = ["x", "threads", "facebook", "instagram", "email", "bum
  */
 function stripUrlsFromNoUrlPlatforms(variants) {
   for (const p of NO_URL_PLATFORMS) {
-    if (!variants[p]) continue;
+    if (!variants[p] || typeof variants[p] !== "string") continue;
     const before = variants[p];
     let cleaned = variants[p].replace(/https?:\/\/\S+/g, "");
     cleaned = cleaned
@@ -420,6 +436,14 @@ function stripUrlsFromNoUrlPlatforms(variants) {
     if (cleaned !== before) {
       variants[p] = cleaned;
       console.warn(`[copy-gen] stripped URL(s) from ${p} copy`);
+    }
+  }
+  // Object-shaped variants (currently just pollX) get bespoke cleanup.
+  if (variants.pollX && typeof variants.pollX === "object") {
+    if (typeof variants.pollX.text === "string") {
+      const before = variants.pollX.text;
+      variants.pollX.text = variants.pollX.text.replace(/https?:\/\/\S+/g, "").replace(/[ \t]{2,}/g, " ").trim();
+      if (variants.pollX.text !== before) console.warn(`[copy-gen] stripped URL(s) from pollX.text`);
     }
   }
 }
@@ -560,7 +584,7 @@ ${mentionBlock}
 
 NEVER frame this as a strict schedule ("9 AM: ...", "head to X at 11"). It's a menu of ideas. Use phrasing like "ideas for ${dayName}", "here's a day", "pick what sounds good". Some readers might do all six, some none. Don't promise specific times.
 
-This is ${slotCount} ${slotWord}. Write seven variants — each NATIVE to its platform (don't translate):
+This is ${slotCount} ${slotWord}. Write seven main variants — each NATIVE to its platform (don't translate):
 
 1. X (max 240 chars, NO URL, no hashtags) — punchy hook, name 1-2 ideas by bucket. Tag X @handles if provided. The publisher adds the link in a self-reply.
 
@@ -576,9 +600,13 @@ This is ${slotCount} ${slotWord}. Write seven variants — each NATIVE to its pl
 
 7. Email (max 600 chars, NO URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below.
 
-LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email.
+ALSO write an X poll variant. The publisher uses this on every ~3rd day-plan publish to drive engagement (polls boost X reach 2-3x and force a pick-one commitment from followers).
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email". No other text.`;
+8. pollX — an object: { text: string ≤200 chars, options: string[] of exactly 4 entries each ≤25 chars }. The "text" is the poll question — short, punchy, no hashtags, no URL ("Wednesday in San Jose — pick your move?" / "${dayName} energy check?"). The "options" are 4 of the 6 ideas above, condensed to ≤25 chars each. Use short clear labels — pick the bucket label + a single key noun: "Breakfast: Bill's", "Hike: Rancho", "Live music: Cafe Stritch", "Dinner: Aqui". Choose 4 with the most distinct vibes so people actually have a choice.
+
+LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email", "pollX". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
