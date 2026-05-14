@@ -37,6 +37,10 @@ function pruneFile(relPath, isEngagement) {
   if (isEngagement) {
     const before = (data.posts || []).length;
     data.posts = (data.posts || []).filter((p) => {
+      // Never touch HHSS — it has its own publish pipeline and we didn't
+      // purge those platforms. Stripping HHSS entries here would lose live
+      // engagement data.
+      if (p.brand && p.brand !== "SBT") return true;
       const t = new Date(p.publishedAt || 0).getTime();
       return Number.isFinite(t) && t >= cutoffMs;
     });

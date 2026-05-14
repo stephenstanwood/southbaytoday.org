@@ -590,6 +590,8 @@ function pruneRecords() {
   try {
     const eng = JSON.parse(readFileSync(engFile, "utf8"));
     eng.posts = (eng.posts || []).filter((p) => {
+      // Never touch HHSS — separate publish pipeline, we didn't purge it.
+      if (p.brand && p.brand !== "SBT") return true;
       // Whole-post drop if old enough
       if (isOldEnoughToPrune(p.publishedAt)) {
         engDropped++;
