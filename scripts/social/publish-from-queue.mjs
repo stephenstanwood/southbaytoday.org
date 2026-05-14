@@ -280,6 +280,11 @@ async function main() {
             copy: daySchedule.copy,
             scheduledSlot: { date: today, slotType: currentSlot.type, time: currentSlot.time },
             _scheduleImageUrl: daySchedule.imageUrl,
+            // For day-plans, also stash the full plan (with bucket cards) so
+            // the Threads carousel path can hydrate per-bucket photos.
+            _schedulePlan: daySchedule.plan
+              ? { ...daySchedule.plan, cityName: daySchedule.cityName }
+              : null,
           };
 
           relevant.length = 0;
@@ -621,6 +626,40 @@ async function main() {
     const slotType = post.scheduledSlot?.slotType || null;
     const imageAlt = sharedImgBuf ? deriveImageAlt(post) : "";
 
+    // ── Threads carousel prep (day-plan only) ─────────────────────────────
+    // For day-plans we attempt a 2-10 slide carousel (hero + bucket photos).
+    // Threads carousels get higher dwell time → better algo distribution.
+    // Hydration is best-effort: failures fall back to single-image publish.
+    let threadsCarouselSlides = null;
+    if (slotType === "day-plan" && ogImage) {
+      try {
+        const plan = post._schedulePlan
+          || (post.item && post.item.cards ? post.item : null)
+          || null;
+        const cards = plan?.cards || [];
+        if (cards.length > 0) {
+          const { hydrateBucketCardImages, buildCarouselSlides } =
+            await import("./lib/carousel-images.mjs");
+          await hydrateBucketCardImages(cards);
+          const cityName = plan?.cityName || post.item?.cityName || "";
+          threadsCarouselSlides = buildCarouselSlides({
+            heroImageUrl: ogImage,
+            heroAlt: imageAlt,
+            cards,
+            cityName,
+          });
+          if (threadsCarouselSlides) {
+            console.log(`      🎠 Threads carousel prepped: ${threadsCarouselSlides.length} slides`);
+          } else {
+            console.log(`      🎠 Threads carousel: <2 hydrated slides — falling back to single image`);
+          }
+        }
+      } catch (err) {
+        console.log(`      ⚠️  Threads carousel prep failed: ${err.message} — single-image fallback`);
+        threadsCarouselSlides = null;
+      }
+    }
+
     // Publish to each platform. Pinterest is appended at the end of the list
     // and handled specially (different publisher signature: title + description
     // + link, no per-platform text copy).
@@ -703,8 +742,20 @@ async function main() {
           const poll = rewrittenCopy.pollX;
           console.log(`      📊 x: poll mode — "${poll.text}" (${poll.options.length} options)`);
           result = await client.publishPoll(poll.text, poll.options, sharedImgBuf, imageAlt);
-        } else if (platform === "threads" && ogImage) {
-          result = await client.publish(copy, ogImage);
+        } else if (platform === "threads") {
+          if (threadsCarouselSlides) {
+            try {
+              console.log(`      🎠 threads: publishing carousel (${threadsCarouselSlides.length} slides)`);
+              result = await client.publishCarousel(copy, threadsCarouselSlides);
+            } catch (carouselErr) {
+              console.log(`      ⚠️  threads carousel failed (${carouselErr.message}) — single-image fallback`);
+              result = ogImage ? await client.publish(copy, ogImage) : await client.publish(copy);
+            }
+          } else if (ogImage) {
+            result = await client.publish(copy, ogImage);
+          } else {
+            result = await client.publish(copy);
+          }
         } else if (platform === "instagram") {
           if (!ogImage) {
             console.log(`      ⏭️  instagram: no public image URL — skipping`);
