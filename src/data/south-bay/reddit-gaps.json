@@ -1,148 +1,252 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-14T19:21:07.749Z",
+    "generatedAt": "2026-05-14T23:16:49.282Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 39,
-    "placesMatched": 12,
-    "placeGaps": 27,
-    "eventsExtracted": 3,
+    "placesExtracted": 43,
+    "placesMatched": 10,
+    "placeGaps": 33,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Hokkaido Ramen Santouka",
+      "name": "Hiro Nori",
       "city": "Santa Clara",
       "kind": "restaurant",
-      "context": "good ramen at reasonable price",
+      "context": "ramen restaurant with mandatory service fees",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
-      "name": "Fugetsu",
+      "name": "Hokkaido Ramen Santouka",
       "city": "",
       "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "context": "good ramen at reasonable price, food court location",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Taco Bravo",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "affordable tacos, $2 on Thursdays",
+      "context": "Mexican tacos $2 on Thursdays, good value",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Fugetsu",
+      "city": "",
+      "kind": "restaurant",
+      "context": "recommended for price to food ratio",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Falafel Drive-In",
       "city": "",
       "kind": "restaurant",
-      "context": "quality food at affordable prices",
+      "context": "affordable quality food",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "In-N-Out",
+      "city": "",
+      "kind": "restaurant",
+      "context": "burgers, quality and price remain affordable",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Home Eats",
+      "city": "",
+      "kind": "restaurant",
+      "context": "recommended restaurant in South Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Hajime Ramen",
       "city": "",
       "kind": "restaurant",
-      "context": "best price for value ramen in South Bay",
+      "context": "tonkotsu ramen $13.50, good value in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Chili's",
+      "city": "",
+      "kind": "restaurant",
+      "context": "3 for me value option",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Urban Grill",
       "city": "",
       "kind": "restaurant",
-      "context": "Indian AYCE lunch buffet value",
+      "context": "Indian ayce lunch buffet $20",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "99 Ranch",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Chinese food, good value",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Evergreen Panda",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Chinese food, good value",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Jade China",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Chinese food, good value",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Hue",
       "city": "",
       "kind": "restaurant",
-      "context": "Vietnamese food, cheap online ordering",
+      "context": "Vietnamese, cheap prices online orders",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
+      ]
+    },
+    {
+      "name": "Naschmarkt",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "Downtown Campbell, Hungarian beef goulash",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
+        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Angry Chickz",
       "city": "",
       "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "context": "recommended restaurant in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Ono Hawaiian BBQ",
       "city": "",
       "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "context": "Hawaiian BBQ, good value",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Indian Sizzler Buffet",
       "city": "",
       "kind": "restaurant",
-      "context": "$25 per person, large variety and portions",
+      "context": "Indian ayce buffet $25pp with good variety",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
@@ -151,250 +255,236 @@
       "kind": "restaurant",
       "context": "great ambiance and food presentation",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Maggiano's",
       "city": "",
       "kind": "restaurant",
-      "context": "generous family meal portions",
+      "context": "generous portions, family meals available",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
-      "name": "Home Eats",
+      "name": "Popeyes",
       "city": "",
       "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "context": "biscuits phenomenal when fresh",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ]
-    },
-    {
-      "name": "Naschmarkt",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "Hungarian beef goulash, good value",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ]
-    },
-    {
-      "name": "Yin Ji Chang Fen",
-      "city": "",
-      "kind": "restaurant",
-      "context": "value-driven Chinese restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ]
-    },
-    {
-      "name": "Hiro Nori",
-      "city": "Santa Clara",
-      "kind": "restaurant",
-      "context": "quality ramen but high prices with mandatory service fees",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ]
-    },
-    {
-      "name": "Signature Flight Services",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "existing private aviation service at airport",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "Almaden",
       "city": "San Jose",
       "kind": "park",
-      "context": "hiking location for weekday hiking group",
+      "context": "hiking location for laid-off workers group",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
       "name": "The Roger",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "eggs benedict and jazz brunch on weekends",
+      "context": "weekend jazz brunch with eggs benedict",
       "sourceUrls": [
         "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
-        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
-        "https://www.reddit.com/r/bayarea/comments/1tcab3u/looking_for_23_day_roadtrip_ideas_for_a_single/",
+        "https://www.reddit.com/r/bayarea/comments/1td7541/college_of_san_mateo_1963_vs_now/",
         "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/"
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
       ]
     },
     {
-      "name": "Ford Tailgate Lot",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "dirt lot tailgating area at PayPal Park",
+      "name": "Golden Garlic",
+      "city": "Milpitas",
+      "kind": "restaurant",
+      "context": "closed Chinese restaurant, formerly served mapo tofu",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
-      "name": "Audi VIP Lot",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "premium parking lot at PayPal Park, ~$50",
+      "name": "Nutrition House",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "Chinese restaurant near Apple spaceship with mapo tofu",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
-      "name": "Caltrain Station Parking",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "cheap parking option, 20 min walk to PayPal Park",
+      "name": "Shang Cafe",
+      "city": "",
+      "kind": "restaurant",
+      "context": "recommended for mapo tofu, vegetarian version preferred",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
-      "name": "Airport Blvd Garage",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "parking garage near PayPal Park, $35",
+      "name": "Chili Garden",
+      "city": "Milpitas",
+      "kind": "restaurant",
+      "context": "mapo tofu alternative in Milpitas Square",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ]
+    },
+    {
+      "name": "Epic Dumpling",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "praised for excellent mapo tofu lunch special",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ]
+    },
+    {
+      "name": "Hunan Impression",
+      "city": "",
+      "kind": "restaurant",
+      "context": "authentic mapo tofu, spicy, slightly pricey",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ]
+    },
+    {
+      "name": "Soong Soong",
+      "city": "",
+      "kind": "restaurant",
+      "context": "mapo tofu lunch set, established restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
       "name": "Pruneyard",
       "city": "Campbell",
       "kind": "venue",
-      "context": "shopping center reopened with drive-through near Peet's",
+      "context": "shopping center reopened with drive through near Peet's",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
       "name": "Stanford Stadium",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "major events venue hosting BTS and Coldplay concerts",
+      "context": "hosts BTS concert and major events",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     },
     {
-      "name": "Roth Way Garage",
-      "city": "Palo Alto",
-      "kind": "service",
-      "context": "parking garage behind Cantor Arts Center, 15 min walk to stadium",
+      "name": "oFlats",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "formerly had drink deals for Earthquakes away games",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
-      ]
-    },
-    {
-      "name": "Town & Country",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "alternative drop-off/pickup location for Stanford Stadium events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Weekday Hiking Group for Laid-off Tech Workers",
-      "when": "Monday, May 18 at 10:30 AM",
+      "name": "Weekday Hiking Group for Laid-Off",
+      "when": "Monday May 18 at 10:30 AM",
       "city": "San Jose",
-      "context": "4.5 mile loop at Almaden for networking during job transitions",
+      "context": "4.5 mile hiking loop for those navigating layoffs",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ]
     },
     {
-      "name": "SJ Earthquakes Home Game with Grogu Giveaway",
+      "name": "San Jose Earthquakes vs (opponent)",
       "when": "Saturday",
       "city": "San Jose",
-      "context": "Star Wars/Grogu bobblehead promotion, nearly sold out",
+      "context": "home game with Star Wars Grogu bobblehead promotion",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/bayarea/comments/1td7541/college_of_san_mateo_1963_vs_now/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
+      ]
+    },
+    {
+      "name": "Stanford Concert",
+      "when": "Tuesday and multiple days",
+      "city": "Palo Alto",
+      "context": "concert with significant traffic and road closures",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/bayarea/comments/1td7541/college_of_san_mateo_1963_vs_now/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
       ]
     },
     {
       "name": "BTS Concert",
       "when": "Sunday",
       "city": "Palo Alto",
-      "context": "major concert at Stanford Stadium, K-pop themed Caltrain service",
+      "context": "major concert event at Stanford Stadium",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ]
     }
   ],
@@ -403,27 +493,27 @@
       "name": "Back a Yard",
       "city": "",
       "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "context": "recommended restaurant in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ],
       "matchedName": "Back A Yard Caribbean Grill"
     },
     {
       "name": "Los Gatos Cafe",
       "city": "Los Gatos",
-      "kind": "restaurant",
-      "context": "worth the price for food quality",
+      "kind": "cafe",
+      "context": "recommended cafe in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ],
       "matchedName": "Los Gatos Creek Trail"
     },
@@ -431,83 +521,27 @@
       "name": "La Fiesta",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "good Mexican food, quality service",
+      "context": "Mexican enchiladas, good quality staff",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tdb877/court_bans_kars4kids_ads_in_california_for/",
         "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
+        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/",
+        "https://www.reddit.com/r/bayarea/comments/1td5p93/ai_money_is_pushing_san_francisco_housing_prices/",
+        "https://www.reddit.com/r/bayarea/comments/1tdcgs8/bay_area_trash_giant_recology_rolls_out_garbage/"
       ],
       "matchedName": "La Fiesta"
-    },
-    {
-      "name": "Highland Noodles",
-      "city": "",
-      "kind": "restaurant",
-      "context": "value-driven Chinese restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ],
-      "matchedName": "Highland Noodles"
-    },
-    {
-      "name": "Koi Palace",
-      "city": "",
-      "kind": "restaurant",
-      "context": "value-driven Chinese dimsum",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ],
-      "matchedName": "Koi Palace - Milpitas"
-    },
-    {
-      "name": "Dough Zone",
-      "city": "",
-      "kind": "restaurant",
-      "context": "value-driven Chinese restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ],
-      "matchedName": "Dough Zone Dumpling House Cupertino"
-    },
-    {
-      "name": "Hero Ranch Kitchen",
-      "city": "",
-      "kind": "restaurant",
-      "context": "fantastic seafood and innovative dishes",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tcejk1/sjc_wants_to_build_a_movie_star_terminal_so_the/",
-        "https://www.reddit.com/r/bayarea/comments/1td1grs/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/bayarea/comments/1tcegls/moving_for_school_district/",
-        "https://www.reddit.com/r/bayarea/comments/1td59nr/why_are_24_hour_fitness_gyms_in_the_bay_trash/",
-        "https://www.reddit.com/r/SanJose/comments/1td33xo/restaurants_that_are_worth_the_price/"
-      ],
-      "matchedName": "The Hero Ranch Kitchen"
     },
     {
       "name": "Dinah's Poolside Restaurant",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "hotel breakfast experience option",
+      "context": "hotel breakfast experience alternative recommendation",
       "sourceUrls": [
         "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
-        "https://www.reddit.com/r/mountainview/comments/1tbdvs1/what_benefits_are_you_gaining_for_paying_a/",
-        "https://www.reddit.com/r/bayarea/comments/1tcab3u/looking_for_23_day_roadtrip_ideas_for_a_single/",
+        "https://www.reddit.com/r/bayarea/comments/1td7541/college_of_san_mateo_1963_vs_now/",
         "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
-        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/"
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
       ],
       "matchedName": "Dinah's Poolside Restaurant"
     },
@@ -515,53 +549,80 @@
       "name": "PayPal Park",
       "city": "San Jose",
       "kind": "venue",
-      "context": "SJ Earthquakes soccer stadium, no bad seats",
+      "context": "San Jose Earthquakes home stadium for soccer matches",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/paloalto/comments/1tbgr10/parent_suing_pausd_over_ai_cheating_accusation_at/",
+        "https://www.reddit.com/r/bayarea/comments/1td7541/college_of_san_mateo_1963_vs_now/",
+        "https://www.reddit.com/r/paloalto/comments/1talv22/know_before_you_go_to_stanford_concert/",
+        "https://www.reddit.com/r/mountainview/comments/1tbh948/the_roger_has_my_favorite_eggs_beni_in_town/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/"
       ],
       "matchedName": "PayPal Park"
-    },
-    {
-      "name": "Peet's",
-      "city": "Campbell",
-      "kind": "cafe",
-      "context": "coffee shop at Pruneyard",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
-        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
-      ],
-      "matchedName": "Peet's Coffee"
     },
     {
       "name": "Santana Row",
       "city": "San Jose",
       "kind": "venue",
-      "context": "shopping and dining destination, alternative to Pruneyard",
+      "context": "shopping and dining destination in San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ],
       "matchedName": "Santana Row"
+    },
+    {
+      "name": "Peet's Coffee",
+      "city": "Campbell",
+      "kind": "cafe",
+      "context": "located at Pruneyard, reopened venue",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ],
+      "matchedName": "Peet's Coffee"
     },
     {
       "name": "Cantor Arts Center",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "Stanford campus landmark near Roth Way Garage",
+      "context": "Stanford campus landmark near stadium parking",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tac61u/going_to_first_game_on_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
         "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
         "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/bayarea/comments/1td6bcq/bts_concert_stanford/"
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
       ],
       "matchedName": "Cantor Arts Center"
+    },
+    {
+      "name": "Jack's",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "San Jose Earthquakes bar in Japantown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ],
+      "matchedName": "Jack's"
+    },
+    {
+      "name": "Old Wagon Saloon",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "San Jose Earthquakes sports bar",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1td664k/best_mapo_tofu/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/",
+        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
+        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/"
+      ],
+      "matchedName": "The Old Wagon Saloon & Grill"
     }
   ],
   "eventMatches": []
