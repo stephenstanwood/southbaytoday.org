@@ -1909,7 +1909,9 @@ async function fetchCampbellEvents() {
         description: truncate(stripCivicPlusMetadata(stripHtml(item.description))),
         url: item.link,
         source: "City of Campbell",
-        kidFriendly: /\b(kid|family|story|youth|grade|ages?\s*\d|children|toddler|baby|preschool)\b/i.test(item.title),
+        // Prefix-only boundary — match compounds like "Storytime", "Babies",
+        // "Grades K-6". Mirrors the canonical regex in playwright-scrapers.mjs.
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(item.title),
       };
     }).filter(Boolean);
     console.log(`  ✅ Campbell: ${events.length} events`);
@@ -1964,7 +1966,9 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
           description: descIsUrl ? "" : stripBareUrls(descText),
           url: eventUrl,
           source: name,
-          kidFriendly: ev.summary.toLowerCase().includes("kid") || ev.summary.toLowerCase().includes("family"),
+          // Prefix-only boundary — match compounds like "Storytime", "Babies",
+          // "Grades K-6". Mirrors the canonical regex in playwright-scrapers.mjs.
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(ev.summary),
         };
       })
       .filter(Boolean);
@@ -2060,7 +2064,9 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
         description: truncate(stripCivicPlusMetadata(stripHtml(item.description))),
         url: item.link,
         source: name,
-        kidFriendly: /\b(kid|family|story|youth|grade|ages?\s*\d|children|toddler|baby|preschool)\b/i.test(titleLower),
+        // Prefix-only boundary — match compounds like "Storytime", "Babies",
+        // "Grades K-6". Mirrors the canonical regex in playwright-scrapers.mjs.
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(titleLower),
       };
     }).filter(Boolean);
     console.log(`  ✅ ${name}: ${events.length} events`);
@@ -2201,10 +2207,12 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           description: truncate(stripHtml(desc)),
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
           source: libraryName,
+          // Prefix-only boundary on the title+desc regex — match compounds like
+          // "Storytime", "Babies", "Grades K-6". Mirrors playwright-scrapers.mjs.
           kidFriendly: (ev.audiences || []).some((a) => {
             const name = typeof a === "string" ? a : a?.name || "";
             return /child|teen|family|baby|toddler/i.test(name);
-          }) || /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show|grade|youth)\b/i.test(title + " " + stripHtml(desc)),
+          }) || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|puppet show|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + stripHtml(desc)),
         };
       })
       .filter(Boolean);
@@ -2325,7 +2333,9 @@ async function fetchScclEvents() {
               const name = typeof a === "string" ? a : a?.name || "";
               return /child|teen|family|baby|toddler/i.test(name);
             })) return true;
-            return /\b(ages?\s+\d|children|kids|family|toddler|baby|preschool|puppet show|grade|youth)\b/i.test(haystack);
+            // Prefix-only boundary — match compounds like "Storytime", "Babies",
+            // "Grades K-6". Mirrors the canonical regex in playwright-scrapers.mjs.
+            return /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|puppet show|ages?\s*\d|grades?\s+[K0-9])/i.test(haystack);
           })(),
         });
       }
@@ -4510,7 +4520,11 @@ function fetchInboundEvents() {
       const category = inferCategory(e.title, e.description ?? "", "", e.location ?? "");
       const titleLower = e.title.toLowerCase();
       const descLower = (e.description ?? "").toLowerCase();
-      const kidFriendly = /\b(kid|family|children|child|story\s?time|youth|teen|easter\s?egg|egg\s?hunt|preschool)\b/i.test(titleLower)
+      // Prefix-only boundary on title — match compounds like "Storytime",
+      // "Babies", "Grades K-6". Mirrors the canonical regex in
+      // playwright-scrapers.mjs; description check stays narrow to avoid
+      // false positives from "family-friendly food trucks", etc.
+      const kidFriendly = /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|easter\s?egg|egg\s?hunt)/i.test(titleLower)
         || /\b(kid|family|children|story\s?time)\b/i.test(descLower);
 
       // Extract venue name from location (first part before the comma).
