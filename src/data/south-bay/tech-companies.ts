@@ -83,7 +83,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "25K at Apple Park + SCC offices; roughly stable since 2023",
     highlights: [
       "Apple Intelligence on-device AI rolling out across iPhone, Mac, and iPad",
-      "M4 chip family in full deployment; Vision Pro second generation rumored",
+      "M5 chip family now spans iPad Pro (Oct 2025) and MacBook Pro (Mar 2026); M5 MacBook Air and Mac mini next",
     ],
     description:
       "Consumer hardware, software, and services. One Apple Park Way, Cupertino.",
@@ -99,13 +99,13 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "chip",
     sccEmployeesK: 14,
     trend: "down",
-    trendNote: "14K in SCC; down sharply after cutting 15K jobs in 2024 restructuring",
+    trendNote: "14K in SCC; another ~15% workforce cut underway in Tan's 2025–26 restructuring",
     highlights: [
-      "CEO Pat Gelsinger resigned December 2024; company charting new course",
-      "Intel Foundry Services struggling to win advanced semiconductor orders from outside customers",
+      "Lip-Bu Tan took over as CEO March 2025; cutting layers of management and ~25K jobs by year-end",
+      "Reported preliminary foundry deals with Apple and Tesla; chip yields still trail TSMC",
     ],
     description:
-      "CPU pioneer navigating a major strategic pivot. Once the defining company of Silicon Valley.",
+      "CPU pioneer mid-restructuring under a new CEO. Once the defining company of Silicon Valley.",
     color: "#0071C5",
     careersUrl: "https://jobs.intel.com",
   },
