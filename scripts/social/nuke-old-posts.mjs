@@ -556,6 +556,14 @@ await nukeFacebook();
 await nukeInstagram();
 await nukeMastodon();
 
+// PINTEREST INTENTIONALLY NOT PURGED:
+// Pinterest is a visual search engine with a ~6-month-tail per pin —
+// pins keep earning impressions for months after publish. Deleting them
+// weekly would throw away the entire reason we're on Pinterest. If a
+// specific pin needs to be removed (typo, dead venue, etc.) use
+// scripts/social/lib/platforms/pinterest.mjs deletePin() by ID, not
+// a bulk purge.
+
 // ── Prune state files so Social Signal (engagement dashboard) reflects reality ──
 //
 // The engagement collector (collect-engagement.mjs) is otherwise too forgiving:

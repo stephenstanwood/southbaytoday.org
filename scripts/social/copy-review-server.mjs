@@ -411,6 +411,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   <button class="pill-btn" data-platform="threads">threads</button>
   <button class="pill-btn" data-platform="instagram">instagram</button>
   <button class="pill-btn" data-platform="mastodon">mastodon</button>
+  <button class="pill-btn" data-platform="pinterest">pinterest</button>
   <button class="refresh-btn" onclick="load()">refresh</button>
 </div>
 
@@ -418,7 +419,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 
 <script>
 const BASE_TITLE = 'Social Signal';
-const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘' };
+const ICONS = { bluesky: '🦋', x: '𝕏', threads: '🧵', facebook: '📘', instagram: '📷', mastodon: '🐘', pinterest: '📌' };
 // reposts + quotes are both "amplification" — collapsed into shares for display.
 const TYPE_ORDER = ['likes', 'shares', 'replies'];
 const TYPE_LBL = { likes: 'likes', shares: 'shares', replies: 'replies' };
@@ -628,6 +629,19 @@ function renderReplies(items, label) {
 }
 
 function renderDetails(plat, p) {
+  // Pinterest's engagement is fundamentally different (saves, pin clicks,
+  // outbound clicks, impressions) — render those instead of the feed-style
+  // likes/reposts/quotes/replies which would all be 0.
+  if (plat === 'pinterest' && p.pinterestMetrics) {
+    const m = p.pinterestMetrics;
+    return '<div class="detail-section"><div class="detail-header">Pinterest analytics</div>' +
+      '<div style="font-size:13px;line-height:1.6;padding:6px 0">' +
+        '<div>📌 <strong>' + (m.saves || 0) + '</strong> saves</div>' +
+        '<div>👆 <strong>' + (m.pinClicks || 0) + '</strong> pin clicks</div>' +
+        '<div>🔗 <strong>' + (m.outboundClicks || 0) + '</strong> outbound clicks <span style="color:#888">(taps to our site)</span></div>' +
+        '<div>👁️ <strong>' + (m.impressions || 0) + '</strong> impressions</div>' +
+      '</div></div>';
+  }
   const sections = [];
   if ((p.counts?.likes || 0) > 0) {
     sections.push('<div class="detail-section"><div class="detail-header">' + p.counts.likes + ' likes</div>' + renderActors(p.likes) + '</div>');
@@ -1220,7 +1234,7 @@ let current = 0;
 let results = [];
 let queueSize = 0;
 
-const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8', instagram: '\\ud83d\\udcf7', mastodon: '\\ud83d\\udc18' };
+const PLATFORM_ICONS = { x: '\\ud835\\udd4f', threads: '\\ud83e\\uddf5', bluesky: '\\ud83e\\udd8b', facebook: '\\ud83d\\udcd8', instagram: '\\ud83d\\udcf7', mastodon: '\\ud83d\\udc18', pinterest: '\\ud83d\\udccc' };
 
 function updateQueueBadge(size) {
   queueSize = size;
@@ -1670,20 +1684,32 @@ function renderExpandedSlot(dateStr, slotType, slot) {
     html += '</div>';
   }
 
-  // Platform copy — full text with char counts
-  const CHAR_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 500 };
+  // Platform copy — full text with char counts.
+  // Whitelist of editable string fields. Object-shaped pollX rendered separately.
+  const RENDERABLE_FIELDS = [
+    { key: 'x',                     label: 'X',                       limit: 280 },
+    { key: 'threads',               label: 'Threads',                 limit: 500 },
+    { key: 'bluesky',               label: 'Bluesky',                 limit: 300 },
+    { key: 'facebook',              label: 'Facebook',                limit: 500 },
+    { key: 'instagram',             label: 'Instagram',               limit: 2200 },
+    { key: 'mastodon',              label: 'Mastodon',                limit: 500 },
+    { key: 'email',                 label: 'Email digest',            limit: 800 },
+    { key: 'pinterestTitle',        label: 'Pinterest · Title',       limit: 100 },
+    { key: 'pinterestDescription',  label: 'Pinterest · Description', limit: 500 },
+    { key: 'bumpX',                 label: 'Evening bump · X',        limit: 220 },
+    { key: 'bumpThreads',           label: 'Evening bump · Threads',  limit: 220 },
+    { key: 'bumpBluesky',           label: 'Evening bump · Bluesky',  limit: 220 },
+  ];
   if (slot.copy) {
     html += '<div class="cal-expanded-platforms">';
-    const platforms = ['x', 'threads', 'bluesky', 'facebook', 'instagram', 'mastodon'];
-    for (const p of platforms) {
-      if (!slot.copy[p]) continue;
+    for (const { key: p, label, limit } of RENDERABLE_FIELDS) {
+      if (typeof slot.copy[p] !== 'string' || !slot.copy[p]) continue;
       const len = slot.copy[p].length;
-      const limit = CHAR_LIMITS[p] || 500;
       const over = len > limit;
       const textareaId = 'cal-copy-' + dateStr + '-' + slotType + '-' + p;
       html += '<div class="cal-expanded-platform" data-platform="' + p + '">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
-          '<strong>' + p.toUpperCase() + '</strong>' +
+          '<strong>' + label + '</strong>' +
           '<span><span class="cal-char-count" id="' + textareaId + '-count" style="font-size:11px;color:' + (over ? '#c0392b;font-weight:700' : '#aaa') + '">' + len + ' / ' + limit + '</span>' +
           '<button class="btn-save-copy" data-pending="0" style="margin-left:8px;padding:3px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:11px;cursor:pointer" onclick="calSaveCopy(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'' + p + '\\'); event.stopPropagation();">Save</button></span>' +
         '</div>' +
@@ -1691,6 +1717,29 @@ function renderExpandedSlot(dateStr, slotType, slot) {
           'style="width:100%;min-height:80px;font-family:inherit;font-size:13px;line-height:1.45;padding:6px 8px;border:1px solid #E5E2DB;border-radius:6px;background:#fafaf7;box-sizing:border-box;resize:vertical;field-sizing:content;overflow:hidden" ' +
           'onclick="event.stopPropagation()" ' +
           'oninput="calUpdateCount(\\'' + textareaId + '\\'); calAutosize(this)">' + escapeHtml(slot.copy[p]) + '</textarea>' +
+      '</div>';
+    }
+    // Poll (object) — read-only preview. Stephen can request a regen if
+    // a specific poll lands wrong; editing the JSON in-place is more friction
+    // than it saves for the volume.
+    if (slot.copy.pollX && typeof slot.copy.pollX === 'object' && slot.copy.pollX.text) {
+      const pollDay = (() => {
+        try {
+          const d = new Date(dateStr + 'T12:00:00Z');
+          const start = new Date(Date.UTC(d.getUTCFullYear(), 0, 0));
+          const doy = Math.floor((d.getTime() - start.getTime()) / 86_400_000);
+          return doy % 3 === 0;
+        } catch { return false; }
+      })();
+      const opts = Array.isArray(slot.copy.pollX.options) ? slot.copy.pollX.options : [];
+      html += '<div class="cal-expanded-platform" data-platform="pollX" style="background:#f5f5f0;padding:8px 10px;border-radius:8px">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
+          '<strong>X · Poll variant ' + (pollDay ? '· <span style="color:#059669">FIRES TODAY</span>' : '<span style="color:#888">(not a poll day)</span>') + '</strong>' +
+        '</div>' +
+        '<div style="font-size:13px;margin-bottom:6px"><em>' + escapeHtml(slot.copy.pollX.text) + '</em></div>' +
+        '<ul style="margin:0;padding-left:20px;font-size:12px;color:#555">' +
+          opts.map(o => '<li>' + escapeHtml(o) + '</li>').join('') +
+        '</ul>' +
       '</div>';
     }
     html += '</div>';

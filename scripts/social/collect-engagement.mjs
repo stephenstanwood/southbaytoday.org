@@ -33,6 +33,7 @@ const X_API = "https://api.twitter.com";
 const IG_API = "https://graph.instagram.com/v25.0";
 const MASTODON_INSTANCE = process.env.MASTODON_INSTANCE || "https://mastodon.social";
 const MASTODON_API = `${MASTODON_INSTANCE}/api/v1`;
+const PINTEREST_API = "https://api.pinterest.com/v5";
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
@@ -574,6 +575,64 @@ async function fetchMastodonEngagement(statusId) {
 
 // ── Orchestrator ────────────────────────────────────────────────────────
 
+/**
+ * Pinterest analytics for a single pin. Pinterest's engagement model is
+ * fundamentally different from feed platforms — saves (durable), pin clicks
+ * (image taps), outbound clicks (the gold metric — taps to our destination),
+ * and impressions (reach). We map saves → counts.likes so the dashboard's
+ * cross-platform "likes" total stays meaningful, and expose the full
+ * Pinterest-specific shape under `pinterestMetrics` for an expanded view.
+ *
+ * Gracefully returns zeros (with a `_engagementBlocked` flag) if the token
+ * is read-only and the analytics endpoint is gated.
+ */
+async function fetchPinterestEngagement(pinId) {
+  const token = process.env.PINTEREST_ACCESS_TOKEN;
+  if (!token) return null;
+
+  // Pinterest analytics endpoint wants a start/end date range. We pull
+  // "last 30 days" — covers our recent-post window and Pinterest's pin
+  // metrics start day-1 anyway.
+  const end = new Date();
+  const start = new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const fmt = (d) => d.toISOString().slice(0, 10);
+
+  const url = `${PINTEREST_API}/pins/${encodeURIComponent(pinId)}/analytics`
+    + `?start_date=${fmt(start)}&end_date=${fmt(end)}`
+    + `&metric_types=IMPRESSION,SAVE,PIN_CLICK,OUTBOUND_CLICK`;
+
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+
+  if (!res.ok) {
+    // 403 = wrong scope (read-only token before write-scope upgrade);
+    // 404 = pin deleted by Stephen. Both are "no data" — return a
+    // structured "blocked" record so the dashboard knows we tried.
+    return {
+      counts: { likes: 0, reposts: 0, quotes: 0, replies: 0 },
+      _engagementBlocked: true,
+      _blockReason: `Pinterest analytics ${res.status}`,
+      pinterestMetrics: { saves: 0, pinClicks: 0, outboundClicks: 0, impressions: 0 },
+    };
+  }
+
+  const data = await res.json();
+  // Pinterest analytics response shape: { all: { lifetime_metrics: {...},
+  // daily_metrics: [...] } } when summary_status=true (the default).
+  const lifetime = data.all?.lifetime_metrics || data.lifetime_metrics || data;
+  const saves         = Number(lifetime.SAVE          ?? lifetime.save          ?? 0) || 0;
+  const pinClicks     = Number(lifetime.PIN_CLICK     ?? lifetime.pin_click     ?? 0) || 0;
+  const outboundClicks= Number(lifetime.OUTBOUND_CLICK?? lifetime.outbound_click?? 0) || 0;
+  const impressions   = Number(lifetime.IMPRESSION    ?? lifetime.impression    ?? 0) || 0;
+
+  return {
+    // Map saves → likes so the dashboard's cross-platform totals stay
+    // numerically meaningful — saves are the most-comparable engagement
+    // signal across platforms.
+    counts: { likes: saves, reposts: 0, quotes: 0, replies: 0 },
+    pinterestMetrics: { saves, pinClicks, outboundClicks, impressions },
+  };
+}
+
 async function processPost(post, xCreds) {
   const platforms = {};
   const brand = post._brand || "SBT";
@@ -617,6 +676,11 @@ async function processPost(post, xCreds) {
         case "mastodon": {
           permalink = `${MASTODON_INSTANCE}/@southbaytoday/${id}`;
           result = await fetchMastodonEngagement(id);
+          break;
+        }
+        case "pinterest": {
+          permalink = `https://www.pinterest.com/pin/${encodeURIComponent(id)}/`;
+          result = await fetchPinterestEngagement(id);
           break;
         }
       }

@@ -13,8 +13,48 @@ import { fileURLToPath } from "node:url";
 import { CONFIG } from "./lib/constants.mjs";
 import { rewriteTimeReferences, parseEventHour, DAY_NAMES } from "./lib/time-references.mjs";
 import { ptDateString, ptHour, ptDayOfWeek, ptClockString } from "./lib/pt-clock.mjs";
+import { queueBump } from "./lib/event-bumps.mjs";
 
 import { randomBytes } from "node:crypto";
+
+// ── Wave 1-3 helpers (mirrored from publish.mjs so the production publisher
+//    has them too — alt text, poll-day detection, image alt derivation) ────
+
+/**
+ * Build ALT text from post metadata. Describes the IMAGE for screen readers
+ * and search ranking (X uses ALT as a signal); does NOT duplicate the caption.
+ */
+function deriveImageAlt(post) {
+  const item = post.item || {};
+  const title = item.title || item.name || "";
+  const venue = item.venue || "";
+  const city = item.cityName || item.city || "";
+
+  // Day-plan: card image is the composite, not a single venue.
+  if (post.scheduledSlot?.slotType === "day-plan") {
+    const cityPart = city ? ` in ${city}` : "";
+    return `South Bay Today day-plan card${cityPart}`;
+  }
+
+  const parts = [];
+  if (title) parts.push(title);
+  if (venue && !title.toLowerCase().includes(venue.toLowerCase())) parts.push(`at ${venue}`);
+  if (city) parts.push(`in ${city}`);
+  return (parts.join(" ") || "South Bay Today").slice(0, 400);
+}
+
+/**
+ * X poll cadence: every 3rd day-plan publishes as a poll instead of regular
+ * text. Day-of-year mod 3 — deterministic for audit but irregular enough
+ * that the timeline doesn't pattern-match a fixed weekday.
+ */
+function isPollDay(date = new Date()) {
+  const start = new Date(Date.UTC(date.getUTCFullYear(), 0, 0));
+  const dayOfYear = Math.floor((date.getTime() - start.getTime()) / 86_400_000);
+  return dayOfYear % 3 === 0;
+}
+
+const SELF_REPLY_DELAY_MS = 150_000; // 2.5 min — long enough that algo has scored the parent
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-approved-queue.json");
@@ -556,18 +596,86 @@ async function main() {
       }
     }
 
-    // Publish to each platform
-    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram"];
+    // Slot type drives feature gating (X polls on day-plan poll-days,
+    // Pinterest on day-plans, evening bumps on tonight-picks).
+    const slotType = post.scheduledSlot?.slotType || null;
+    const imageAlt = sharedImgBuf ? deriveImageAlt(post) : "";
+
+    // Publish to each platform. Pinterest is appended at the end of the list
+    // and handled specially (different publisher signature: title + description
+    // + link, no per-platform text copy).
+    const platforms = ["x", "bluesky", "threads", "facebook", "mastodon", "instagram", "pinterest"];
     const publishResults = [];
 
+    // Track parent IDs for the link-suppression self-reply pattern. X and
+    // Threads bodies are link-free; ~2.5 min after publish we post a self-reply
+    // with the URL. Algo has already scored the parent by then.
+    const pendingSelfReplies = []; // [{ platform, parentId, replyText }]
+
     for (const platform of platforms) {
+      // Pinterest is gated by env presence (write tokens) AND content type
+      // (day-plan only — search-driven, 6-month tail; tonight-pick / wildcard
+      // are too time-specific for Pinterest's index).
+      if (platform === "pinterest") {
+        if (!process.env.PINTEREST_ACCESS_TOKEN) {
+          console.log(`      ⏭️  pinterest: PINTEREST_ACCESS_TOKEN missing (waiting on OAuth)`);
+          continue;
+        }
+        if (slotType !== "day-plan") {
+          continue;
+        }
+        const pTitle = rewrittenCopy.pinterestTitle;
+        const pDesc = rewrittenCopy.pinterestDescription;
+        if (!pTitle || !pDesc) {
+          console.log(`      ⏭️  pinterest: missing pinterestTitle or pinterestDescription`);
+          continue;
+        }
+        if (!sharedImgBuf) {
+          console.log(`      ⏭️  pinterest: no image buffer (card image required)`);
+          continue;
+        }
+        try {
+          const client = await import("./lib/platforms/pinterest.mjs");
+          const result = await client.publish({
+            boardName: "South Bay Day Plans",
+            boardDescription: "Daily plans for the South Bay — San Jose, Cupertino, Campbell, Los Gatos, Saratoga, and beyond. New plan every morning.",
+            title: pTitle,
+            description: pDesc,
+            link: targetUrl,
+            imageBuffer: sharedImgBuf,
+            altText: imageAlt,
+          });
+          console.log(`      📌 pinterest: pinned ${result.id}`);
+          publishResults.push({ platform: "pinterest", ok: true, postId: result.id, ...result });
+        } catch (err) {
+          console.log(`      ❌ pinterest: ${err.message}`);
+          publishResults.push({ platform: "pinterest", ok: false, error: err.message });
+        }
+        await new Promise((r) => setTimeout(r, 1000));
+        continue;
+      }
+
       const copy = rewrittenCopy[platform];
       if (!copy) continue;
 
       try {
         const client = await import(`./lib/platforms/${platform}.mjs`);
         let result;
-        if (platform === "threads" && ogImage) {
+
+        // X poll variant: every 3rd day-plan publish goes out as a poll.
+        // Deterministic by date (day-of-year mod 3); polls boost X reach 2-3x.
+        if (
+          platform === "x" &&
+          slotType === "day-plan" &&
+          rewrittenCopy.pollX?.text &&
+          Array.isArray(rewrittenCopy.pollX?.options) &&
+          rewrittenCopy.pollX.options.length >= 2 &&
+          isPollDay(new Date())
+        ) {
+          const poll = rewrittenCopy.pollX;
+          console.log(`      📊 x: poll mode — "${poll.text}" (${poll.options.length} options)`);
+          result = await client.publishPoll(poll.text, poll.options, sharedImgBuf, imageAlt);
+        } else if (platform === "threads" && ogImage) {
           result = await client.publish(copy, ogImage);
         } else if (platform === "instagram") {
           if (!ogImage) {
@@ -575,8 +683,16 @@ async function main() {
             continue;
           }
           result = await client.publish(copy, ogImage);
-        } else if (platform === "x" || platform === "bluesky" || platform === "facebook" || platform === "mastodon") {
-          // Buffer-upload platforms: reuse the shared image buffer fetched above.
+        } else if (platform === "x" || platform === "bluesky" || platform === "mastodon") {
+          // ALT-text-aware publishers — pass imageAlt so X/Bluesky/Mastodon
+          // set accessibility metadata at upload time.
+          if (sharedImgBuf) {
+            result = await client.publish(copy, sharedImgBuf, imageAlt);
+          } else {
+            if (ogImage) console.log(`      ⚠️  ${platform}: posting text-only (no image buffer)`);
+            result = await client.publish(copy);
+          }
+        } else if (platform === "facebook") {
           if (sharedImgBuf) {
             result = await client.publish(copy, sharedImgBuf);
           } else {
@@ -593,12 +709,66 @@ async function main() {
           postId: result.id || result.uri || null,
           ...result,
         });
+
+        // Queue a self-reply with the link on X / Threads. Bodies are
+        // link-free (algo suppresses outbound links); the reply lands ~2.5min
+        // later, after the parent has been scored.
+        if ((platform === "x" || platform === "threads") && targetUrl && (result.id)) {
+          pendingSelfReplies.push({
+            platform,
+            parentId: result.id,
+            replyText: `More info → ${targetUrl}`,
+          });
+        }
       } catch (err) {
         console.log(`      ❌ ${platform}: ${err.message}`);
         publishResults.push({ platform, ok: false, error: err.message });
       }
 
       await new Promise((r) => setTimeout(r, 1000));
+    }
+
+    // ── Self-reply pass (link-suppression workaround) ──────────────────────
+    // 2.5-min sleep gives the algorithm time to score the parent. We then
+    // post the URL as a reply, isolated from the parent's scoring. Failures
+    // here are non-fatal — the post itself is already live.
+    if (pendingSelfReplies.length > 0 && !dryRun) {
+      console.log(`      ⏳ Self-reply: waiting ${SELF_REPLY_DELAY_MS/1000}s before posting link on ${pendingSelfReplies.map(r => r.platform).join(", ")}…`);
+      await new Promise((r) => setTimeout(r, SELF_REPLY_DELAY_MS));
+      await Promise.all(pendingSelfReplies.map(async (pending) => {
+        try {
+          const lib = await import(`./lib/platforms/${pending.platform}.mjs`);
+          const replyFn = pending.platform === "x" ? lib.replyToTweet : lib.replyToThread;
+          const replyRes = await replyFn(pending.parentId, pending.replyText);
+          console.log(`      🔗 ${pending.platform}: self-reply ${replyRes.id}`);
+        } catch (err) {
+          console.log(`      ⚠️  ${pending.platform}: self-reply failed: ${err.message}`);
+        }
+      }));
+    }
+
+    // ── Evening bump queue (tonight-pick only) ─────────────────────────────
+    // The publisher fires a follow-up reply ~30 min before event time on
+    // X/Threads/Bluesky, catching the after-work audience.
+    if (!dryRun && slotType === "tonight-pick") {
+      try {
+        const results = {};
+        for (const r of publishResults) {
+          if (!r.ok) continue;
+          if (r.platform === "x") results.x = { id: r.postId };
+          else if (r.platform === "threads") results.threads = { id: r.postId };
+          else if (r.platform === "bluesky") results.bluesky = { uri: r.uri || r.postId, cid: r.cid };
+        }
+        const bumpPost = {
+          postType: "tonight-pick",
+          item: post.item,
+          copy: rewrittenCopy,
+        };
+        const queued = queueBump({ post: bumpPost, results });
+        if (queued) console.log(`      ⏰ Evening bump queued (fires ~30min pre-event)`);
+      } catch (err) {
+        console.log(`      ⚠️  Bump queue failed: ${err.message}`);
+      }
     }
 
     // Mark as published in queue with structured results
