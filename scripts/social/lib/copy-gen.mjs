@@ -174,7 +174,7 @@ Write six variants — each NATIVE to its platform. Don't translate; rewrite. Th
 
 5. Instagram (max 1800 chars, NO URL) — caption for a photo post. Hook in the FIRST LINE (it's what shows above "more"). Tag IG @handles if provided. After a blank line at the end, 8-12 hashtags (mix of city + topic + discovery tags like #ThingsToDoInSanJose #SouthBayEvents #BayAreaEvents).
 
-6. Mastodon (max 480 chars INCLUDING URL + hashtags) — similar shape to Bluesky but slightly more breathing room. Include the full URL. 1-2 hashtags.
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different sentence structure, slightly more descriptive (Mastodon culture is less marketing-y than Bluesky). Include the full URL. 1-2 hashtags. Do not return identical or near-identical text to Bluesky.
 
 LINK RULE — re-read: no URL of any kind in X, Threads, Facebook, Instagram. Period. The post is the point.
 
@@ -226,8 +226,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
     throw new Error("Missing platform variant in Claude response");
   }
 
-  // Mastodon reuses Bluesky copy (similar char limits, hashtag-friendly)
-  variants.mastodon = variants.bluesky;
+  // Mastodon falls back to Bluesky copy ONLY if Claude didn't produce one.
+  // The prompt asks for a distinct variant; this is a safety net.
+  if (!variants.mastodon) variants.mastodon = variants.bluesky;
 
   // Instagram fallback — if Claude didn't generate it, derive from Facebook copy + hashtags
   if (!variants.instagram) {
@@ -327,7 +328,7 @@ Write five variants — each NATIVE to its platform (don't translate):
 
 4. Facebook (max 500 chars, NO URL, no hashtags) — community/historical voice.
 
-5. Mastodon (max 480 chars INCLUDING URL + hashtags) — include URL. 1-2 hashtags.
+5. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different rhythm, slightly more descriptive (Mastodon culture is less marketing-y). Include URL. 1-2 hashtags.
 
 LINK RULE — re-read: no URL in X, Threads, Facebook.
 
@@ -564,7 +565,7 @@ This is ${slotCount} ${slotWord}. Write seven variants — each NATIVE to its pl
 
 5. Instagram (max 1800 chars, NO URL) — IG caption. Hook in the first line. Walk through the ideas by bucket. Tag IG @handles if provided. End with 8-12 hashtags after a blank line.
 
-6. Mastodon (max 480 chars INCLUDING URL + hashtags) — similar to Bluesky, slightly more breathing room. Include URL. 1-2 hashtags.
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different rhythm, slightly more descriptive (Mastodon culture is less marketing-y). Include URL. 1-2 hashtags. Do not return identical or near-identical text to Bluesky.
 
 7. Email (max 600 chars, NO URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below.
 

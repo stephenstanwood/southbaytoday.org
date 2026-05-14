@@ -45,6 +45,32 @@ async function loadPlatform(name) {
   return mod;
 }
 
+/**
+ * Build ALT text for the card image attached to this post. Describes the
+ * IMAGE for screen readers — doesn't duplicate the caption.
+ *
+ * Day plan: "South Bay Today day-plan card for [Day] in [Cities]"
+ * Tonight pick / single: "[Title] at [Venue] in [City]"
+ */
+function deriveImageAlt(post) {
+  const item = post.item || post.items?.[0] || {};
+  const title = item.title || item.name || "";
+  const venue = item.venue || "";
+  const city = item.cityName || item.city || "";
+
+  if (post.postType === "day-plan") {
+    // For day plans the lead item is just one of the cards; describe the card image generically.
+    const cityPart = city ? ` in ${city}` : "";
+    return `South Bay Today day-plan card${cityPart}`;
+  }
+
+  const parts = [];
+  if (title) parts.push(title);
+  if (venue && !title.toLowerCase().includes(venue.toLowerCase())) parts.push(`at ${venue}`);
+  if (city) parts.push(`in ${city}`);
+  return parts.join(" ") || "South Bay Today";
+}
+
 async function main() {
   const post = JSON.parse(readFileSync(postFile, "utf8"));
 
@@ -101,6 +127,16 @@ async function main() {
     }
   }
 
+  // Derive ALT text from post metadata. ALT is used by X (accessibility +
+  // ranking + search), Bluesky (feed previews + accessibility), Mastodon
+  // (accessibility, also a soft trust signal in the fediverse).
+  // Length cap is conservative — X allows 1000 chars but most readers will
+  // tap out around 200.
+  const imageAlt = deriveImageAlt(post).slice(0, 400);
+  if (imageBuffer && imageAlt) {
+    logStep("♿", `ALT: ${imageAlt}`);
+  }
+
   const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram"];
   const published = [];
   const results = {};
@@ -145,6 +181,11 @@ async function main() {
           continue;
         }
         const result = await client.publish(copy, post.ogImage);
+        results[platform] = result;
+      } else if (platform === "x" || platform === "bluesky" || platform === "mastodon") {
+        // These publishers all accept an imageAlt parameter and set the
+        // platform's accessibility metadata when the image is uploaded.
+        const result = await client.publish(copy, imageBuffer, imageAlt);
         results[platform] = result;
       } else {
         const result = await client.publish(copy, imageBuffer);

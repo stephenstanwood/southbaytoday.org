@@ -71,10 +71,13 @@ function makeOAuthRequest(method, url, bodyParams = [], creds) {
 }
 
 /**
- * Upload media (image) to Twitter.
+ * Upload media (image) to Twitter. If altText is provided, also sets it via
+ * the media/metadata/create endpoint. X uses ALT text for accessibility AND
+ * surfaces it to assistive tech / appears as a ranking signal — free win.
+ *
  * Returns the media_id_string for attaching to a tweet.
  */
-export async function uploadMedia(imageBuffer, mimeType = "image/png") {
+export async function uploadMedia(imageBuffer, mimeType = "image/png", altText = "") {
   const creds = getCredentials();
   const url = `${UPLOAD_BASE}/1.1/media/upload.json`;
 
@@ -102,7 +105,44 @@ export async function uploadMedia(imageBuffer, mimeType = "image/png") {
   }
 
   const data = await res.json();
-  return data.media_id_string;
+  const mediaId = data.media_id_string;
+
+  if (altText && altText.trim()) {
+    // Best-effort: don't fail the whole publish if alt metadata 4xx's.
+    try {
+      await setMediaAltText(mediaId, altText.trim().slice(0, 1000));
+    } catch (err) {
+      console.warn(`X alt_text set failed (non-fatal): ${err.message}`);
+    }
+  }
+
+  return mediaId;
+}
+
+/**
+ * Attach alt_text to a previously-uploaded media_id via v1.1 metadata endpoint.
+ */
+async function setMediaAltText(mediaId, altText) {
+  const creds = getCredentials();
+  const url = `${UPLOAD_BASE}/1.1/media/metadata/create.json`;
+  const authHeader = makeOAuthRequest("POST", url, [], creds);
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      media_id: mediaId,
+      alt_text: { text: altText },
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X media metadata failed (${res.status}): ${body.slice(0, 200)}`);
+  }
 }
 
 /**
@@ -303,10 +343,10 @@ export async function listUserTweets(userId, { maxResults = 100 } = {}) {
 /**
  * Full post flow: upload image (if provided) then tweet.
  */
-export async function publish(text, imageBuffer = null) {
+export async function publish(text, imageBuffer = null, imageAlt = "") {
   let mediaId = null;
   if (imageBuffer) {
-    mediaId = await uploadMedia(imageBuffer);
+    mediaId = await uploadMedia(imageBuffer, "image/png", imageAlt);
   }
   return postTweet(text, mediaId);
 }
