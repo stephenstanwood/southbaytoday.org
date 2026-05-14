@@ -136,6 +136,9 @@ interface DayCard {
   /** Real event time, only present when this card is an event with a fixed
    *  start (e.g. "7:30 PM"). Used as a small display hint; never required. */
   eventTime?: string | null;
+  /** Real event end time when known. Drives render-time staleness filtering
+   *  in the homepage view (a 6:30 AM event shouldn't linger till 1 PM). */
+  eventEndTime?: string | null;
   /** Legacy display label kept for back-compat with old shared plans + the
    *  /plan/<id> renderer. New cards put the bucket label here ("Breakfast")
    *  so existing renderers that look for `timeBlock` still see something. */
@@ -1111,6 +1114,7 @@ Return ONLY the JSON array. No explanation.`;
       address: candidate.address,
       bucket,
       eventTime: candidate.eventTime || null,
+      eventEndTime: candidate.eventEndTime || null,
       timeBlock: BUCKET_LABELS[bucket],
       blurb: cardBlurb,
       url: candidate.url,
@@ -1161,6 +1165,7 @@ Return ONLY the JSON array. No explanation.`;
       address: candidate.address,
       bucket,
       eventTime: candidate.eventTime || null,
+      eventEndTime: candidate.eventEndTime || null,
       timeBlock: BUCKET_LABELS[bucket],
       blurb: candidate.blurb || candidate.description?.slice(0, 200) || fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue),
       url: candidate.url,
@@ -1350,6 +1355,7 @@ Return ONLY the JSON array. No explanation.`;
         address: backfill.address,
         bucket,
         eventTime: backfill.eventTime || null,
+        eventEndTime: backfill.eventEndTime || null,
         timeBlock: BUCKET_LABELS[bucket],
         blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
         url: backfill.url,

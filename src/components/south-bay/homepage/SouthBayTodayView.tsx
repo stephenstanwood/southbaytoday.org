@@ -51,6 +51,9 @@ interface DayCard {
   /** Real event time, only present for events with a fixed start. Display
    *  hint, not load-bearing. */
   eventTime?: string | null;
+  /** Real event end time when known. Drives render-time staleness filtering
+   *  so a 6:30 AM event doesn't linger in the MORNING slot till 1 PM. */
+  eventEndTime?: string | null;
   /** Legacy field — for new bucket cards this is just the bucket label
    *  ("Breakfast"); for old shared plans it's a clock range. */
   timeBlock: string;
@@ -381,9 +384,13 @@ export default function SouthBayTodayView(_props: Props) {
 
   // With buckets, slots stay visible until their wall-clock cutoff
   // (BUCKET_PASSED_AFTER_HOUR), then they drop out of the grid entirely.
-  // Stale plans from yesterday hide everything.
+  // Stale plans from yesterday hide everything. Individual event cards also
+  // drop once their end time (or a 3-hour default duration) has passed —
+  // a 6:30 AM event shouldn't sit in the Morning slot until 1 PM.
   const todayPT = getTodayISOInPT();
-  const visibleCards: DayCard[] = planDateISO < todayPT ? [] : cards;
+  const visibleCards: DayCard[] = planDateISO < todayPT
+    ? []
+    : cards.filter((c) => !isStaleEventCard(c, nowMinutes, planDateISO, todayPT));
   // Group cards by bucket for the 2×3 grid. Cards from before the bucket
   // cutover (2026-05-07) only have a clock-range timeBlock; infer a bucket
   // from the start time so they render in the grid instead of the legacy
@@ -999,6 +1006,49 @@ function getNowMinutesPT(): number {
 /** YYYY-MM-DD in America/Los_Angeles. */
 function getTodayISOInPT(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+}
+
+/** Parse a clock string like "6:30 AM" or "19:30" into minutes since
+ *  midnight. Returns null on unparseable input. */
+function parseClockMinutes(timeStr: string | null | undefined): number | null {
+  if (!timeStr) return null;
+  const ampm = timeStr.match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
+  if (ampm) {
+    let h = parseInt(ampm[1], 10);
+    const m = ampm[2] ? parseInt(ampm[2], 10) : 0;
+    if (ampm[3].toUpperCase() === "PM" && h !== 12) h += 12;
+    if (ampm[3].toUpperCase() === "AM" && h === 12) h = 0;
+    return h * 60 + m;
+  }
+  const mil = timeStr.match(/^(\d{1,2}):(\d{2})$/);
+  if (mil) return parseInt(mil[1], 10) * 60 + parseInt(mil[2], 10);
+  return null;
+}
+
+/** Default duration assumed for events with no explicit end time. Long
+ *  enough to cover most concerts, classes, and morning programs without
+ *  hiding things prematurely; short enough that a 6:30 AM event is gone
+ *  by 10 AM. */
+const DEFAULT_EVENT_DURATION_MIN = 180;
+const EVENT_STALENESS_GRACE_MIN = 30;
+
+/** True if this is an event card whose end time (real or inferred) is
+ *  far enough in the past that it should drop off the homepage. Place
+ *  cards never go stale; future-day plans never go stale. */
+function isStaleEventCard(
+  card: DayCard,
+  nowMinutes: number,
+  planDateISO: string,
+  todayPT: string,
+): boolean {
+  if (card.source !== "event") return false;
+  if (planDateISO !== todayPT) return false;
+  const startMin = parseClockMinutes(card.eventTime);
+  if (startMin === null) return false;
+  const endMin =
+    parseClockMinutes(card.eventEndTime) ??
+    startMin + DEFAULT_EVENT_DURATION_MIN;
+  return nowMinutes > endMin + EVENT_STALENESS_GRACE_MIN;
 }
 
 /** Tomorrow's YYYY-MM-DD in America/Los_Angeles. */
