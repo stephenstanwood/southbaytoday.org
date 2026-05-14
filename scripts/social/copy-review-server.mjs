@@ -401,8 +401,8 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 
 <div class="controls">
   <span style="color:#888;">Organization:</span>
-  <button class="pill-btn active" data-brand="all">all</button>
-  <button class="pill-btn" data-brand="SBT">SBT</button>
+  <button class="pill-btn" data-brand="all">all</button>
+  <button class="pill-btn active" data-brand="SBT">SBT</button>
   <button class="pill-btn" data-brand="HHSS">HHSS</button>
   <span style="color:#888;margin-left:12px;">Platform:</span>
   <button class="pill-btn active" data-platform="all">all</button>
@@ -427,7 +427,7 @@ const displayCount = (counts, k) => k === 'shares' ? sharesOf(counts) : (counts?
 const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
-let activeBrand = 'all';
+let activeBrand = 'SBT';
 
 // "New since last visit" baseline: snapshot of per-post-per-platform counts
 // from the previous visit, plus the timestamp of that visit. Held in memory
