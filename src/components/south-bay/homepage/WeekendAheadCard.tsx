@@ -56,6 +56,18 @@ function pickPhoto(p: WeekendPick): string | null {
   return null;
 }
 
+function timeToMinutes(t: string | null | undefined): number {
+  if (!t) return 24 * 60;
+  const m = t.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!m) return 24 * 60;
+  let h = parseInt(m[1], 10);
+  const min = parseInt(m[2], 10);
+  const ampm = m[3].toUpperCase();
+  if (ampm === "PM" && h !== 12) h += 12;
+  if (ampm === "AM" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
 export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "events") => void }) {
   const data = weekendPicksJson as {
     generatedAt?: string;
@@ -79,11 +91,15 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
   }
 
   // Top 2 Sat picks, then top 2 Sun picks — Claude's emission order is the
-  // editorial ranking, so a simple per-day slice is enough.
+  // editorial ranking, so a simple per-day slice is enough. Final display
+  // re-sorts chronologically so the 4 tiles read left-to-right by time.
   const upcoming = data.picks.filter((p) => p.date >= todayIso);
   const sats = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 6).slice(0, 2);
   const suns = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 0).slice(0, 2);
-  const visible = [...sats, ...suns];
+  const visible = [...sats, ...suns].sort((a, b) => {
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    return timeToMinutes(a.time) - timeToMinutes(b.time);
+  });
   if (visible.length < 2) return null;
 
   const heading = "The Weekend Ahead";
@@ -152,7 +168,6 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
               <div className="wa-shade" />
               <div className="wa-top">
                 <span className="wa-badge wa-badge-day">{dayBadge}</span>
-                {p.cost === "free" && <span className="wa-badge wa-badge-free">FREE</span>}
               </div>
               <div className="wa-bottom">
                 <div className="wa-title">{p.title}</div>
@@ -223,10 +238,6 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
         .wa-badge-day {
           background: rgba(255,255,255,0.95);
           color: #c2410c;
-        }
-        .wa-badge-free {
-          background: #15803d;
-          color: #fff;
         }
         .wa-bottom {
           position: absolute;
