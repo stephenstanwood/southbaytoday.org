@@ -605,6 +605,12 @@ function cleanTitle(title) {
     // noise on cards and badges; the underlying entities are still legally
     // recognizable without the glyph.
     .replace(/[®©™℠℗]/g, "")
+    // Straighten curly quotes — match polishDescription so titles and bodies
+    // share normalization. Smart-quote forms render fine in some fonts but
+    // break copy-paste, search, and our typography defaults.
+    .replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"')
+    // Strip stray space before terminal punctuation ("Bookmarks ,", "Title !").
+    .replace(/\s+([,.;!?])/g, "$1")
     .replace(/\s{2,}/g, " ")
     // Strip BiblioCommons "External Event:" prefix (Palo Alto Library tags
     // events organized by outside groups — venue + source already convey
@@ -869,6 +875,16 @@ function restoreDomainAndDecimalDots(text) {
 function polishDescription(text) {
   if (!text) return "";
   let t = text;
+
+  // Straighten curly quotes. Source HTML and BiblioCommons feeds serve smart
+  // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
+  // recurring copy-edit commits straightening these are the visible symptom.
+  t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
+
+  // Strip stray space before terminal punctuation ("Birds !", "Social ,",
+  // "Passage ;"). Source feeds wrap and re-flow text leaving these. Restricted
+  // to , ; . ! ? — colons can be valid styled separators ("Topic : Talk").
+  t = t.replace(/\s+([,.;!?])/g, "$1");
 
   // Fix common typos before sentence-level processing.
   for (const [pat, fix] of DESC_TYPO_FIXES) {
