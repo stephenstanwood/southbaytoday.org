@@ -60,28 +60,38 @@ VOICE:
 - No permit/construction jargon ("new build", "finish interior", "TI work")
 
 STRUCTURE:
-- ONE item per post. Full detail. ONE direct link.
-- The link goes to the EVENT/SOURCE (ticketmaster, venue site, agenda PDF), NOT to southbaytoday.org
-- Keep within platform character limits
-- The URL is part of the character count
+- ONE item per post. Full detail. The POST is the point — the content stands alone.
+- Keep within platform character limits.
+
+LINK POLICY (CRITICAL — different per platform):
+- X, Threads, Facebook, Instagram: **NO URL** anywhere in the copy body. None. Not even a shortened domain. Outbound links suppress reach on every one of these platforms. People who want more info will find us — we're in the bio.
+- Bluesky, Mastodon: include the FULL URL with https:// at the end. These platforms don't algorithmically suppress links.
+- Email: NO URL — the newsletter template has its own CTA buttons.
+- On X / Threads, a separate self-reply with the link is added by the publisher AFTER the post. You do not write that reply. Treat the post as if it has no link at all.
+
+PLATFORM-NATIVE VOICE (write each variant like you live on that platform — don't translate one to the others):
+- X: punchy single thought. 1-2 sentences max. Sensory hook or a number up front. Tag the X @handle if provided. No hashtags. The post must read like a complete thought even without a link.
+- Threads: conversational, voice of a friend texting. Allow yourself a paragraph. Tag Threads @handles if provided. 2-3 hashtags at the end (Threads pays attention to topic/hashtag pairs).
+- Bluesky: short and direct. Include the URL at the end. 2-3 hashtags at the end (#SouthBay #SanJose etc — Bluesky discovery uses them). Tag bsky @handles if provided.
+- Facebook: community-board voice. "If you're around [city] tonight..." / "Heads up [neighborhood] folks". Conversational, slightly longer than X. No hashtags. Tag FB @handles if provided.
+- Instagram: visual storytelling. Hook in the first line (that's what shows above "more"). Tag IG @handles if provided. After a line break at the bottom, 8-12 hashtags (mix of city, topic, discovery — #ThingsToDoInSanJose #SouthBayEvents etc).
+- Mastodon: like Bluesky but slightly more substance allowed. URL + 1-2 hashtags.
 
 TRUST MODEL:
 - We do the legwork so people don't have to
 - If we consistently deliver useful info, people seek us out
 - We don't need to mention our site — it's in the bio
+- The post should make someone glad they read it even if they never click anything
 
 THINGS TO NEVER DO:
 - Don't claim things you aren't sure about (don't say "home opener" unless told it is)
 - Don't use permit/construction language
 - Don't combine multiple unrelated items
 - Don't promote events that have already happened
-- Don't link to generic homepages
+- Don't paste URLs into X / Threads / Facebook / Instagram copy under any circumstances (link policy above)
+- Don't link to generic homepages on Bluesky/Mastodon either
 - NEVER say "right now", "happening right now", "right this minute", "as we speak", or any variant. These phrases are banned.
-- NEVER invent specific clock times (e.g. "9 AM", "7 PM") that weren't in the source data.
-
-LINKS:
-- Always use full URLs with https:// — bare domains (e.g. "southbaytoday.org") don't become clickable on Bluesky or Threads
-- The URL in the post must be exactly the one provided in the item data`;
+- NEVER invent specific clock times (e.g. "9 AM", "7 PM") that weren't in the source data.`;
 
 /**
  * Generate copy for a SINGLE item.
@@ -129,9 +139,9 @@ export async function generateSingleItemCopy(item, timeOfDay = "morning") {
   // When a plan URL exists, link to the full day plan instead of the raw event URL
   const postUrl = item.planUrl || item.url;
   const hasPlanLink = !!item.planUrl;
-  const urlNote = hasPlanLink
-    ? `- URL (MUST include this exact URL): ${postUrl}\n- This URL links to a full day plan built around this event. Frame the link as "here's a whole day plan" or "we built a day around it" — don't just say "get tickets". The plan page shows this event plus surrounding activities.`
-    : `- URL (MUST include this exact URL): ${postUrl}`;
+  const urlLineForLinkedPlatforms = hasPlanLink
+    ? `URL FOR BLUESKY/MASTODON ONLY: ${postUrl}\nThis URL links to a full day plan built around this event. On Bluesky/Mastodon, frame the link as "here's a whole day plan" or "we built a day around it" — don't just say "get tickets".`
+    : `URL FOR BLUESKY/MASTODON ONLY: ${postUrl}`;
 
   // Build mention instructions from handle database
   const mentions = mentionInstructions(item);
@@ -149,37 +159,38 @@ ITEM:
 - Category: ${item.category || ""}
 - Summary: ${item.summary ? item.summary.slice(0, 300) : ""}
 - Cost: ${item.cost || ""}
-${urlNote}
-${mentions}
-Write five variants:
-1. X (max 270 chars including URL) — punchy, clean, no hashtags
-2. Threads (max 470 chars including URL + hashtags) — slightly warmer, can breathe more. End with 2-3 relevant hashtags (e.g. #SanJose #LiveMusic #ThingsToDo)
-3. Bluesky (max 270 chars including URL + hashtags) — similar to X, can be slightly looser. End with 2-3 relevant hashtags (e.g. #SouthBay #SanJose #LocalNews). These hashtags are important for Bluesky discovery and Surf.social aggregation.
-4. Facebook (max 500 chars including URL) — conversational, can include a bit more context, similar warmth to Threads, no hashtags
-5. Instagram (max 2000 chars including URL + hashtags) — warmest, most descriptive. This is a caption for a photo post. Include 8-15 relevant hashtags at the end (city, topic, discovery tags like #ThingsToDoInSanJose #SouthBayEvents #BayAreaEvents #SiliconValleyLife). Instagram captions have room to breathe — add a line break before hashtags. @mention the venue/org if a handle is available.
 
-Each variant must include the exact URL provided above.
+${urlLineForLinkedPlatforms}
+${mentions}
+Write six variants — each NATIVE to its platform. Don't translate; rewrite. The 6 should not read like the same sentence repeated 6 ways.
+
+1. X (max 240 chars, NO URL, no hashtags) — single punchy thought, 1-2 sentences. Sensory hook or a number up front. Tag the X @handle if one was provided. The post must stand alone — the link goes in a self-reply added by the publisher.
+
+2. Threads (max 480 chars, NO URL) — conversational paragraph, friend-texting voice. Allow yourself to breathe. Tag Threads @handles if provided. End with 2-3 hashtags (e.g. #SanJose #LiveMusic).
+
+3. Bluesky (max 270 chars INCLUDING URL + hashtags) — short and direct. Include the full URL at the end. Tag bsky @handles if provided. End with 2-3 hashtags (#SouthBay #SanJose etc).
+
+4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. "If you're around [city] tonight..." or "Heads up [neighborhood] folks". Slightly longer and warmer than X. Tag FB @handles if provided.
+
+5. Instagram (max 1800 chars, NO URL) — caption for a photo post. Hook in the FIRST LINE (it's what shows above "more"). Tag IG @handles if provided. After a blank line at the end, 8-12 hashtags (mix of city + topic + discovery tags like #ThingsToDoInSanJose #SouthBayEvents #BayAreaEvents).
+
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — similar shape to Bluesky but slightly more breathing room. Include the full URL. 1-2 hashtags.
+
+LINK RULE — re-read: no URL of any kind in X, Threads, Facebook, Instagram. Period. The post is the point.
 
 TIME ACCURACY (critical):
 - ONLY reference a time of day ("morning", "afternoon", "evening", "9 AM", "tonight") if the Time field above has a specific time. NEVER invent one.
 - If Time is empty, omit time-of-day references entirely. Frame by date only.
-- FOLLOW THE DATE CONTEXT above exactly. A bare weekday name (e.g. "Saturday") refers ONLY to the NEXT occurrence of that weekday — at most 7 days away. If the event is 8+ days away, you MUST qualify it ("next Saturday", "Saturday the 18th", or "April 18"). Saying "Saturday" to mean "Saturday a week from now" is WRONG and forbidden.
+- FOLLOW THE DATE CONTEXT above exactly. A bare weekday name refers ONLY to the NEXT occurrence of that weekday — at most 7 days away. If the event is 8+ days away, qualify it ("next Saturday", "Saturday the 18th", or "April 18").
 - Do NOT say "this week" for events 4+ days out.
 - Never fabricate opening hours, start times, or end times not present in the data.
 
-HASHTAG RULES:
-- Bluesky/Threads: Always include a city hashtag (#SanJose, #Campbell, etc.) + 1-2 topic hashtags. Max 3 total. Place at the very end.
-- Instagram: 8-15 hashtags. Include city, topic, and discovery hashtags. Place after a line break at the end.
-- X/Facebook: no hashtags.
-- Hashtags count toward the character limit.
-
 MENTION RULES:
 - If tagging instructions were provided above, use the correct @handle for each platform variant.
-- @mentions count toward the character limit.
 - Work mentions into the sentence naturally (e.g. "Catch @SJBarracuda tonight at SAP Center").
 - Skip the mention if it doesn't fit naturally or would push over the char limit.
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram" — each a string. No other text.`;
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon" — each a string. No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -243,6 +254,9 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   applyTagSubstitutions(variants, item);
   recordUntaggedItem(item, { slot: "single" });
 
+  stripUrlsFromNoUrlPlatforms(variants);
+  enforceHardLimits(variants);
+
   return variants;
 }
 
@@ -278,13 +292,10 @@ export async function generateSvHistoryCopy(milestone, ptTime) {
     ? `\nComputer History Museum exhibit: "${milestone.chmExhibit}"`
     : "";
 
-  // Calculate explicit char budgets so the model knows exactly how much room it has
+  // Char budgets: URL only appears in Bluesky and Mastodon now.
   const urlLen = milestone.url.length;
   const hashtagEstimate = 45; // ~"#SiliconValley #SantaClara #TechHistory"
-  const xBudget = 280 - urlLen - 2;           // 2 for newline/space before URL
   const bskyBudget = 300 - urlLen - 2 - hashtagEstimate;
-  const threadsBudget = 500 - urlLen - 2 - hashtagEstimate;
-  const fbBudget = 500 - urlLen - 2;
 
   const prompt = `Write an "On This Day in Silicon Valley" social post about this tech milestone. Current date: ${now}.
 
@@ -294,8 +305,9 @@ MILESTONE:
 - Founded/Occurred: ${milestone.month}/${milestone.day}/${milestone.foundedYear}
 - Age: ${age} years (${ordinal(age)} anniversary)
 - Tagline: ${milestone.tagline}
-- Anniversary context: ${milestone.anniversaryNote}
-- URL (MUST include this exact URL): ${milestone.url}${defunctNote}${chmNote}
+- Anniversary context: ${milestone.anniversaryNote}${defunctNote}${chmNote}
+
+URL FOR BLUESKY/MASTODON ONLY: ${milestone.url}
 
 TONE FOR THIS POST TYPE:
 - This is a "Silicon Valley history" post, not a breaking news item
@@ -305,21 +317,21 @@ TONE FOR THIS POST TYPE:
 - If the company still exists locally, nod to its current presence
 - If defunct, frame it as legacy/influence, not loss
 
-CHARACTER BUDGETS — these are HARD LIMITS. The URL is ${urlLen} chars. You must stay under these totals (text + URL + hashtags combined):
-1. X: max 280 chars total. You have ${xBudget} chars for text, then the URL. No hashtags.
-2. Threads: max 500 chars total. You have ~${threadsBudget} chars for text, then URL + 3 hashtags.
-3. Bluesky: max 300 chars total. You have ~${bskyBudget} chars for text, then URL + 3 hashtags.
-4. Facebook: max 500 chars total. You have ${fbBudget} chars for text, then the URL. No hashtags.
+Write five variants — each NATIVE to its platform (don't translate):
 
-CRITICAL: Count your characters carefully. The URL "${milestone.url}" is ${urlLen} characters and MUST be included exactly as-is in every variant. If your text is too long, CUT WORDS rather than exceeding the limit.
+1. X (max 240 chars, NO URL, no hashtags) — punchy anniversary hook. Publisher adds a self-reply with the link.
 
-HASHTAG RULES (for Bluesky and Threads only):
-- Always include #SiliconValley
-- Add a city hashtag: #${milestone.city.replace(/\s+/g, "")}
-- Add 1 topic hashtag: #TechHistory, #OnThisDay, or #SouthBay
-- Max 3 hashtags total. Place them at the very end, space-separated.
+2. Threads (max 480 chars, NO URL) — conversational, give the company its due. 2-3 hashtags at end (#SiliconValley + #${milestone.city.replace(/\s+/g, "")} + 1 topic).
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — each a string. No other text.`;
+3. Bluesky (max 300 chars INCLUDING URL + hashtags, ~${bskyBudget} for text) — include URL. 3 hashtags (#SiliconValley + city + topic).
+
+4. Facebook (max 500 chars, NO URL, no hashtags) — community/historical voice.
+
+5. Mastodon (max 480 chars INCLUDING URL + hashtags) — include URL. 1-2 hashtags.
+
+LINK RULE — re-read: no URL in X, Threads, Facebook.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "mastodon" — each a string. No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -355,22 +367,51 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
     throw new Error("Missing platform variant in Claude response");
   }
 
-  // Mastodon reuses Bluesky copy
-  variants.mastodon = variants.bluesky;
+  // Mastodon reuses Bluesky copy if Claude didn't generate one
+  if (!variants.mastodon) variants.mastodon = variants.bluesky;
 
-  // Enforce hard character limits
+  stripUrlsFromNoUrlPlatforms(variants);
   enforceHardLimits(variants);
 
   return variants;
 }
 
-const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 300, email: 800 };
+const HARD_LIMITS = { x: 280, threads: 500, bluesky: 300, facebook: 500, instagram: 2200, mastodon: 500, email: 800 };
 
 /** Enforce hard character limits on all platform variants. */
 function enforceHardLimits(variants) {
   for (const [platform, limit] of Object.entries(HARD_LIMITS)) {
     if (variants[platform] && variants[platform].length > limit) {
       variants[platform] = trimToLimit(variants[platform], limit);
+    }
+  }
+}
+
+// Platforms that must NEVER carry a URL in the post body. Bluesky and
+// Mastodon are missing on purpose — they don't suppress links.
+const NO_URL_PLATFORMS = ["x", "threads", "facebook", "instagram", "email"];
+
+/**
+ * Defensive scrub: if Claude slips a URL into a no-URL-platform variant,
+ * strip it. The link goes in a publisher-added self-reply on X/Threads;
+ * IG/FB get no link at all (link in bio); Email has its own button.
+ *
+ * Also tidies double-spaces and dangling punctuation that result.
+ */
+function stripUrlsFromNoUrlPlatforms(variants) {
+  for (const p of NO_URL_PLATFORMS) {
+    if (!variants[p]) continue;
+    const before = variants[p];
+    let cleaned = variants[p].replace(/https?:\/\/\S+/g, "");
+    cleaned = cleaned
+      .replace(/\(\s*\)/g, "")               // empty parens left from "(http...)"
+      .replace(/\s+([.!?,;:])/g, "$1")       // " ." → "."
+      .replace(/[ \t]{2,}/g, " ")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+    if (cleaned !== before) {
+      variants[p] = cleaned;
+      console.warn(`[copy-gen] stripped URL(s) from ${p} copy`);
     }
   }
 }
@@ -498,7 +539,7 @@ export async function generateDayPlanCopy(plan, dateStr, planUrl) {
   const slotCount = byBucket.size > 0 ? byBucket.size : plan.cards.length;
   const slotWord = byBucket.size > 0 ? "ideas" : "stops";
 
-  const prompt = `Write a social post for South Bay Today's daily DAY-PLAN signature slot for ${dayName}. The plan is six "idea sparks" the reader can pick from — breakfast, morning, lunch, afternoon, dinner, evening. NOT a tick-tock schedule. Frame it as a brainstorm of ideas, not a tour itinerary.
+  const prompt = `Write a social post for South Bay Today's daily DAY-PLAN signature slot for ${dayName}. The plan is six "idea sparks" the reader can pick from — breakfast, morning, lunch, afternoon, dinner, evening. NOT a tick-tock schedule. Frame it as a brainstorm of ideas.
 
 DAY: ${dayName}, ${date.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
 CITIES: ${cityDisplay}
@@ -506,25 +547,30 @@ CITIES: ${cityDisplay}
 THE IDEAS (one per bucket):
 ${stopsText}
 
-URL (MUST include this exact URL): ${url}
+URL FOR BLUESKY/MASTODON ONLY: ${url}
 ${mentionBlock}
-
-LINKS:
-- Always use full URLs with https:// — bare domains don't become clickable on Bluesky or Threads
-- The URL in the post must be exactly the one provided above
-${url.includes('/plan/') ? "- This URL links to the full set of ideas. Frame the link as \"here's a day's worth of ideas\" or \"we sketched out a day\" — the plan page shows every bucket." : ''}
 
 NEVER frame this as a strict schedule ("9 AM: ...", "head to X at 11"). It's a menu of ideas. Use phrasing like "ideas for ${dayName}", "here's a day", "pick what sounds good". Some readers might do all six, some none. Don't promise specific times.
 
-This is ${slotCount} ${slotWord}. Write six variants:
-1. X (max 270 chars including URL) — punchy hook, no hashtags
-2. Threads (max 470 chars including URL + hashtags) — warmer, name 2-3 highlights by bucket. 2-3 hashtags.
-3. Bluesky (max 270 chars including URL + hashtags) — similar to X. 2-3 hashtags.
-4. Facebook (max 500 chars including URL) — conversational, can list a few buckets. No hashtags.
-5. Instagram (max 2000 chars including URL + hashtags) — full caption, walk through the ideas by bucket, 8-15 hashtags at end.
-6. Email (max 600 chars, no URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below. Conversational, like a friend tossing out ideas.
+This is ${slotCount} ${slotWord}. Write seven variants — each NATIVE to its platform (don't translate):
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "email". No other text.`;
+1. X (max 240 chars, NO URL, no hashtags) — punchy hook, name 1-2 ideas by bucket. Tag X @handles if provided. The publisher adds the link in a self-reply.
+
+2. Threads (max 480 chars, NO URL) — warmer paragraph, name 2-3 highlights by bucket. Tag Threads @handles if provided. 2-3 hashtags at end.
+
+3. Bluesky (max 270 chars INCLUDING URL + hashtags) — short tease, include the URL. 2-3 hashtags. Tag bsky @handles if provided.
+
+4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. Walk through 3-4 ideas. Tag FB @handles if provided.
+
+5. Instagram (max 1800 chars, NO URL) — IG caption. Hook in the first line. Walk through the ideas by bucket. Tag IG @handles if provided. End with 8-12 hashtags after a blank line.
+
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — similar to Bluesky, slightly more breathing room. Include URL. 1-2 hashtags.
+
+7. Email (max 600 chars, NO URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below.
+
+LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -552,14 +598,14 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   if (!jsonMatch) throw new Error("Failed to extract JSON from Claude response");
 
   const variants = JSON.parse(jsonMatch[0]);
-  variants.mastodon = variants.bluesky;
+  if (!variants.mastodon) variants.mastodon = variants.bluesky;
   if (!variants.instagram) variants.instagram = variants.facebook;
 
   await resolveItemHandles(plan);
   applyTagSubstitutions(variants, plan);
   recordUntaggedItem(plan, { slot: "day-plan" });
 
-  // Enforce hard character limits
+  stripUrlsFromNoUrlPlatforms(variants);
   enforceHardLimits(variants);
 
   return variants;
@@ -595,20 +641,31 @@ ITEM:
 - Category: ${item.category || ""}
 - Summary: ${(item.summary || item.blurb || "").slice(0, 300)}
 - Cost: ${item.costNote || item.cost || ""}
-- URL (MUST include): ${postUrl}
+
+URL FOR BLUESKY/MASTODON ONLY: ${postUrl}
 ${mentions}
 
 Frame this as a TONIGHT recommendation. "Tonight in the South Bay..." energy. One great thing, full enthusiasm.
 
-Write six variants:
-1. X (max 270 chars including URL) — punchy, no hashtags
-2. Threads (max 470 chars including URL + hashtags) — warmer. 2-3 hashtags.
-3. Bluesky (max 270 chars including URL + hashtags) — 2-3 hashtags.
-4. Facebook (max 500 chars including URL) — conversational. No hashtags.
-5. Instagram (max 2000 chars including URL + hashtags) — full caption, 8-15 hashtags.
-6. Email (max 400 chars, no URL) — 1-3 sentences for the morning newsletter "tonight's pick" slot. Plain place names (no @-handles), no hashtags, no "tap the link" / "see below" CTAs — the email shows an image and a "Get tickets" button below the text. Read like a friend tipping someone off about a great evening plan.
+Write seven variants — each NATIVE to its platform (don't translate):
 
-Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "email". No other text.`;
+1. X (max 240 chars, NO URL, no hashtags) — punchy hook. Tag X @handle if provided. Publisher adds a self-reply with the link.
+
+2. Threads (max 480 chars, NO URL) — conversational. Tag Threads @handles if provided. 2-3 hashtags.
+
+3. Bluesky (max 270 chars INCLUDING URL + hashtags) — include URL. 2-3 hashtags. Tag bsky @handles if provided.
+
+4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. Tag FB @handles if provided.
+
+5. Instagram (max 1800 chars, NO URL) — caption, hook first line. Tag IG @handles if provided. 8-12 hashtags after a blank line at end.
+
+6. Mastodon (max 480 chars INCLUDING URL + hashtags) — include URL. 1-2 hashtags.
+
+7. Email (max 400 chars, NO URL) — 1-3 sentences. Plain place names (no @-handles), no hashtags, no "tap the link" CTA tails — the email has an image and a "Get tickets" button below.
+
+LINK RULE — re-read: no URL in X, Threads, Facebook, Instagram, Email.
+
+Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email". No other text.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -636,14 +693,14 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   if (!jsonMatch) throw new Error("Failed to extract JSON from Claude response");
 
   const variants = JSON.parse(jsonMatch[0]);
-  variants.mastodon = variants.bluesky;
+  if (!variants.mastodon) variants.mastodon = variants.bluesky;
   if (!variants.instagram) variants.instagram = variants.facebook;
 
   await resolveItemHandles(item);
   applyTagSubstitutions(variants, item);
   recordUntaggedItem(item, { slot: "tonight-pick" });
 
-  // Enforce hard character limits
+  stripUrlsFromNoUrlPlatforms(variants);
   enforceHardLimits(variants);
 
   return variants;

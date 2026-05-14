@@ -69,6 +69,11 @@ async function main() {
     logStep("📸", `Instagram copy (${post.copy?.instagram?.length || 0} chars):`);
     console.log(`  ${post.copy?.instagram || "(none)"}\n`);
 
+    if (post.targetUrl) {
+      logStep("🔗", `X + Threads self-reply (2.5min after publish):`);
+      console.log(`  More info → ${post.targetUrl}\n`);
+    }
+
     if (post.cardPath) {
       logStep("🖼️", `Card: ${post.cardPath}`);
     }
@@ -99,6 +104,14 @@ async function main() {
   const platforms = ["x", "threads", "bluesky", "facebook", "mastodon", "instagram"];
   const published = [];
   const results = {};
+
+  // X and Threads suppress outbound links algorithmically. Strategy: publish
+  // the main post link-free (copy-gen leaves the URL out), then after a 2-3
+  // min delay reply to ourselves with the link. The algorithm has finished
+  // scoring the parent post by then; the reply is scored separately.
+  const SELF_REPLY_PLATFORMS = new Set(["x", "threads"]);
+  const SELF_REPLY_DELAY_MS = 150_000; // 2.5 min — long enough that the parent has been ranked
+  const pendingSelfReplies = []; // [{ platform, parentId, replyText }]
 
   for (const platform of platforms) {
     // Check if platform is enabled
@@ -140,12 +153,44 @@ async function main() {
 
       logPublish(platform, `Published: ${JSON.stringify(results[platform])}`);
       published.push(platform);
+
+      // Queue a delayed self-reply with the link on link-suppressing platforms
+      if (SELF_REPLY_PLATFORMS.has(platform) && post.targetUrl && results[platform]?.id) {
+        pendingSelfReplies.push({
+          platform,
+          parentId: results[platform].id,
+          replyText: `More info → ${post.targetUrl}`,
+        });
+      }
     } catch (err) {
       logError(`${platform}: ${err.message}`);
     }
 
     // Small delay between platforms
     await new Promise((r) => setTimeout(r, 1000));
+  }
+
+  // Self-reply pass: wait for the algorithm to score the parents, then reply
+  // with the link in parallel across platforms.
+  if (pendingSelfReplies.length > 0) {
+    logStep(
+      "⏳",
+      `Waiting ${Math.round(SELF_REPLY_DELAY_MS / 1000)}s before posting link as self-reply (${pendingSelfReplies.map(p => p.platform).join(", ")})…`
+    );
+    await new Promise((r) => setTimeout(r, SELF_REPLY_DELAY_MS));
+
+    await Promise.all(
+      pendingSelfReplies.map(async (pending) => {
+        try {
+          const lib = await loadPlatform(pending.platform);
+          const replyFn = pending.platform === "x" ? lib.replyToTweet : lib.replyToThread;
+          const result = await replyFn(pending.parentId, pending.replyText);
+          logPublish(pending.platform, `Self-reply with link posted: ${JSON.stringify(result)}`);
+        } catch (err) {
+          logError(`${pending.platform} self-reply failed: ${err.message}`);
+        }
+      })
+    );
   }
 
   // Record in history

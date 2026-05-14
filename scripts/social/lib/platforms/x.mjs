@@ -139,6 +139,41 @@ export async function postTweet(text, mediaId = null) {
 }
 
 /**
+ * Reply to an existing tweet. Used by the link-suppression workaround: post
+ * the main content link-free, then after a 2-3 min delay reply to ourselves
+ * with the URL. By that point the algorithm has scored the parent post and
+ * doesn't apply the same outbound-link demotion.
+ */
+export async function replyToTweet(parentTweetId, text) {
+  const creds = getCredentials();
+  const url = `${API_BASE}/2/tweets`;
+
+  const payload = {
+    text,
+    reply: { in_reply_to_tweet_id: parentTweetId },
+  };
+
+  const authHeader = makeOAuthRequest("POST", url, [], creds);
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`X reply failed (${res.status}): ${body}`);
+  }
+
+  const data = await res.json();
+  return { id: data.data.id, text: data.data.text };
+}
+
+/**
  * Delete a tweet by ID. Throws on any non-2xx response (including 429).
  * Callers that need to pace themselves against the DELETE rate limit
  * (~50/15min/user) should use tryDeletePost() instead.

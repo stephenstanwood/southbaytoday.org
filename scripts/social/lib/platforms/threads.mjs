@@ -150,3 +150,37 @@ export async function publish(text, imageUrl = null) {
   await waitForContainer(containerId);
   return publishContainer(containerId);
 }
+
+/**
+ * Reply to an existing thread. Used by the link-suppression workaround:
+ * publish the main thread link-free, then after a delay reply with the URL.
+ * Threads aggressively demotes outbound links in the parent post; replies
+ * are scored separately.
+ */
+export async function replyToThread(parentThreadId, text) {
+  const { accessToken, userId } = getCredentials();
+
+  // Create a TEXT container with reply_to_id
+  const params = new URLSearchParams({
+    media_type: "TEXT",
+    text,
+    reply_to_id: parentThreadId,
+    access_token: accessToken,
+  });
+
+  const containerRes = await fetch(`${GRAPH_API}/${userId}/threads`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
+  });
+
+  if (!containerRes.ok) {
+    const body = await containerRes.text();
+    throw new Error(`Threads reply container failed (${containerRes.status}): ${body}`);
+  }
+  const containerData = await containerRes.json();
+  const containerId = containerData.id;
+
+  await waitForContainer(containerId);
+  return publishContainer(containerId);
+}

@@ -604,13 +604,19 @@ export function runQualityReview(schedule, options = {}) {
     // Catch "No URL provided" / generic-homepage URLs that slip into the copy
     // text. Both happened in the wild: empty url field → Claude writes "No URL
     // provided"; eventbrite.com (without path) → useless homepage link in post.
+    //
+    // Also flag any URL appearing in a no-URL platform (X/Threads/FB/IG/Email).
+    // copy-gen auto-strips these; this soft flag tells us when Claude is
+    // slipping past the prompt so we can tighten it.
     const COPY_URL_BAD = /\b(no url provided|no link provided|no website provided)\b/i;
     const COPY_GENERIC_HOMEPAGE = /https?:\/\/(?:www\.)?(eventbrite|facebook|instagram|twitter|x|meetup|google|linktr|linktree)\.(?:com|ee)\/?(?:["\s]|$)/i;
+    const ANY_URL = /https?:\/\/\S+/;
+    const NO_URL_PLATFORMS = new Set(["x", "threads", "facebook", "instagram", "email"]);
     for (const slotType of ["day-plan", "tonight-pick", "wildcard"]) {
       const slot = day[slotType];
       if (!slot || ["rejected", "published"].includes(slot.status)) continue;
       const copy = slot.copy || {};
-      const variants = ["x", "threads", "bluesky", "facebook", "instagram", "mastodon"];
+      const variants = ["x", "threads", "bluesky", "facebook", "instagram", "mastodon", "email"];
       for (const v of variants) {
         const text = copy[v];
         if (!text) continue;
@@ -621,6 +627,9 @@ export function runQualityReview(schedule, options = {}) {
         if (COPY_GENERIC_HOMEPAGE.test(text)) {
           flagged.push({ date, slotType, hardBlock: true, reason: `copy links to generic homepage (${v})` });
           break;
+        }
+        if (NO_URL_PLATFORMS.has(v) && ANY_URL.test(text)) {
+          flagged.push({ date, slotType, reason: `URL in ${v} copy — should be link-free (publisher adds self-reply on X/Threads)` });
         }
       }
     }
