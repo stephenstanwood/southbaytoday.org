@@ -430,7 +430,12 @@ async function scrapeLibCal(page, config) {
               source: config.name,
               category: inferCategory(r.title),
               cost: "free",
-              kidFriendly: /\b(kids|children|family|story|toddler|teen)\b/i.test(r.title),
+              // Prefix-only boundary so "Storytime" matches "story", "Babies"
+            // matches "baby", "Grades K-6" matches "grade", etc. Library kid-
+            // event titles use a wide variety of compounds: Storytime,
+            // Storyteller, Lap-Sit, Preschool, Youth, plus explicit
+            // "(Ages 0-5)" / "Grades K-6" suffixes — match all of them.
+            kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
             };
           })
           .filter(Boolean);
