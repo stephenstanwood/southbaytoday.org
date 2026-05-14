@@ -199,7 +199,7 @@ async function nukeBluesky() {
 // and need to wait.
 async function nukeX() {
   console.log("=== X ===");
-  const { deletePost, getMyUserId, listUserTweets } = await import(
+  const { tryDeletePost, getMyUserId, listUserTweets } = await import(
     "./lib/platforms/x.mjs"
   );
 
@@ -245,9 +245,16 @@ async function nukeX() {
 
       let result;
       try {
-        result = await deletePost(t.id);
+        result = await tryDeletePost(t.id);
       } catch (e) {
         console.log(`  Failed: ${displayDate} ${t.id} ${e.message}`);
+        platformStats.x.failed++;
+        await new Promise((r) => setTimeout(r, 200));
+        continue;
+      }
+
+      if (result.error) {
+        console.log(`  Failed: ${displayDate} ${t.id} (${result.error.status}) ${result.error.text}`);
         platformStats.x.failed++;
         await new Promise((r) => setTimeout(r, 200));
         continue;

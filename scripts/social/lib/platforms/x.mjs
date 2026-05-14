@@ -139,12 +139,39 @@ export async function postTweet(text, mediaId = null) {
 }
 
 /**
- * Delete a tweet by ID. Returns:
- *   { deleted: true }                   on 200 OK
- *   { deleted: false, rateLimited: true, resetEpoch }  on 429 (caller handles backoff)
- *   throws                              on other failures
+ * Delete a tweet by ID. Throws on any non-2xx response (including 429).
+ * Callers that need to pace themselves against the DELETE rate limit
+ * (~50/15min/user) should use tryDeletePost() instead.
  */
 export async function deletePost(tweetId) {
+  const creds = getCredentials();
+  const url = `${API_BASE}/2/tweets/${tweetId}`;
+  const authHeader = makeOAuthRequest("DELETE", url, [], creds);
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: { Authorization: authHeader },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`X delete failed (${res.status}): ${text}`);
+  }
+
+  const data = await res.json();
+  return { deleted: data.data?.deleted ?? true };
+}
+
+/**
+ * Rate-limit-aware variant of deletePost. Returns:
+ *   { deleted: true }                                  on 200 OK
+ *   { deleted: false, rateLimited: true, resetEpoch }  on 429
+ *   { deleted: false, error: { status, text } }        on other non-2xx
+ *
+ * Never throws. Used by bulk-delete callers (nuke-old-posts.mjs) that
+ * want to inspect 429 instead of getting an Error.
+ */
+export async function tryDeletePost(tweetId) {
   const creds = getCredentials();
   const url = `${API_BASE}/2/tweets/${tweetId}`;
   const authHeader = makeOAuthRequest("DELETE", url, [], creds);
@@ -161,8 +188,8 @@ export async function deletePost(tweetId) {
   }
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`X delete failed (${res.status}): ${text}`);
+    const text = await res.text().catch(() => "");
+    return { deleted: false, error: { status: res.status, text: text.slice(0, 200) } };
   }
 
   const data = await res.json();
