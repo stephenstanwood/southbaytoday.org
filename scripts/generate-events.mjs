@@ -808,6 +808,12 @@ const DESC_TYPO_FIXES = [
   [/\boccured\b/gi, "occurred"],
   [/\brecieve\b/gi, "receive"],
   [/\bsepearate\b/gi, "separate"],
+  // Missing-apostrophe possessives. Source feeds (CHM, a few BiblioCommons
+  // events) drop the apostrophe in body copy; the trailing 's' replacement
+  // hook in polishDescription preserves it.
+  [/\btodays\b/gi, "today's"],
+  [/\btomorrows\b/gi, "tomorrow's"],
+  [/\byesterdays\b/gi, "yesterday's"],
 ];
 
 // Common abbreviations whose internal periods would otherwise be mistaken
