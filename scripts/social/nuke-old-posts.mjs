@@ -642,7 +642,10 @@ function pruneRecords() {
         if (!Array.isArray(slot?.publishedTo)) continue;
         const before = slot.publishedTo.length;
         if (isOldEnoughToPrune(slot.publishedAt)) {
-          slot.publishedTo = [];
+          // Pinterest pins outlive the weekly purge (6-month tail) — keep
+          // their publishedTo entries so the engagement collector can keep
+          // pulling saves/clicks/impressions for months after publish.
+          slot.publishedTo = slot.publishedTo.filter((e) => e.platform === "pinterest");
         } else {
           slot.publishedTo = slot.publishedTo.filter((e) => !entryWasDeleted(e));
         }
@@ -665,7 +668,8 @@ function pruneRecords() {
         if (!Array.isArray(p.publishedTo)) continue;
         const before = p.publishedTo.length;
         if (isOldEnoughToPrune(p.publishedAt)) {
-          p.publishedTo = [];
+          // Preserve Pinterest entries — pins outlive the weekly purge.
+          p.publishedTo = p.publishedTo.filter((e) => e.platform === "pinterest");
         } else {
           p.publishedTo = p.publishedTo.filter((e) => !entryWasDeleted(e));
         }
@@ -687,10 +691,22 @@ function pruneRecords() {
     eng.posts = (eng.posts || []).filter((p) => {
       // Never touch HHSS — separate publish pipeline, we didn't purge it.
       if (p.brand && p.brand !== "SBT") return true;
-      // Whole-post drop if old enough
+      // Whole-post drop if old enough — UNLESS the post has a Pinterest
+      // entry (Pinterest pins outlive the purge by months; we want to keep
+      // collecting saves/clicks/impressions for them).
       if (isOldEnoughToPrune(p.publishedAt)) {
-        engDropped++;
-        return false;
+        const hasPinterest = p.platforms && Object.keys(p.platforms).some(k => k === "pinterest");
+        if (!hasPinterest) {
+          engDropped++;
+          return false;
+        }
+        // Has Pinterest — strip all OTHER platforms (their posts are deleted
+        // and engagement is meaningless) and keep the Pinterest entry only.
+        const beforeKeys = Object.keys(p.platforms || {}).length;
+        p.platforms = { pinterest: p.platforms.pinterest };
+        const afterKeys = Object.keys(p.platforms).length;
+        if (afterKeys !== beforeKeys) engTouched++;
+        return true;
       }
       // Otherwise, strip per-platform entries we just deleted
       const beforeKeys = Object.keys(p.platforms || {}).length;

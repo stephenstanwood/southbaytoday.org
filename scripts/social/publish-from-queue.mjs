@@ -637,8 +637,16 @@ async function main() {
       // (day-plan only — search-driven, 6-month tail; tonight-pick / wildcard
       // are too time-specific for Pinterest's index).
       if (platform === "pinterest") {
+        // Gate on REFRESH_TOKEN, not ACCESS_TOKEN — refresh-token presence
+        // is the marker that OAuth has been completed and we have write
+        // scopes. The read-only test token (Production Limited) sets only
+        // ACCESS_TOKEN and would 403 on every pin attempt.
+        if (!process.env.PINTEREST_REFRESH_TOKEN) {
+          console.log(`      ⏭️  pinterest: PINTEREST_REFRESH_TOKEN missing (run scripts/social/oauth-pinterest.mjs)`);
+          continue;
+        }
         if (!process.env.PINTEREST_ACCESS_TOKEN) {
-          console.log(`      ⏭️  pinterest: PINTEREST_ACCESS_TOKEN missing (waiting on OAuth)`);
+          console.log(`      ⏭️  pinterest: PINTEREST_ACCESS_TOKEN missing`);
           continue;
         }
         if (slotType !== "day-plan") {

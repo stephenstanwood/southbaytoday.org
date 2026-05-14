@@ -200,8 +200,15 @@ async function main() {
     // and is only relevant for day-plan posts (search index, 6-month tail —
     // tonight-pick / wildcard content goes stale too fast for Pinterest).
     if (platform === "pinterest") {
+      // Gate on REFRESH_TOKEN (set only after OAuth completes) so the
+      // read-only Production Limited token doesn't trigger 403s on every
+      // pin attempt before Stephen runs the OAuth helper.
+      if (!process.env.PINTEREST_REFRESH_TOKEN) {
+        logSkip("pinterest: PINTEREST_REFRESH_TOKEN not set (waiting on Stephen's OAuth click)");
+        continue;
+      }
       if (!process.env.PINTEREST_ACCESS_TOKEN) {
-        logSkip("pinterest: PINTEREST_ACCESS_TOKEN not set (waiting on trial-access approval)");
+        logSkip("pinterest: PINTEREST_ACCESS_TOKEN not set");
         continue;
       }
       if (post.postType !== "day-plan") {
