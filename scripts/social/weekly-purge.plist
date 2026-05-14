@@ -10,6 +10,7 @@
     <string>--env-file=.env.local</string>
     <string>scripts/social/nuke-old-posts.mjs</string>
     <string>--max-age-days=7</string>
+    <string>--notify</string>
   </array>
   <key>WorkingDirectory</key>
   <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
