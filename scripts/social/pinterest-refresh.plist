@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.southbaytoday.pinterest-refresh</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>scripts/social/refresh-pinterest-token.mjs</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+  <!-- Weekly Sunday 2:15 AM. Pinterest access tokens expire in 30 days; weekly
+       gives 4+ refresh attempts before any single failure would matter. The
+       script cat-signals Discord on failure (Stephen has to re-auth via the
+       developer portal). Silent on success. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>0</integer>
+    <key>Hour</key>
+    <integer>2</integer>
+    <key>Minute</key>
+    <integer>15</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/sbt-pinterest-refresh.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/sbt-pinterest-refresh.log</string>
+</dict>
+</plist>
