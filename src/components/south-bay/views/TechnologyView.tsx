@@ -879,6 +879,46 @@ function isoDaysAgo(n: number): string {
 }
 const LAST_30_CUTOFF = isoDaysAgo(30);
 const LAST_30_ROUNDS = RECENTLY_FUNDED.filter((r) => r.date >= LAST_30_CUTOFF);
+
+// Top categories among the 2026 Q1–Q2 rounds — feeds the pulse strip recap so
+// the "what's hot" callout never lies about what residents are actually seeing
+// in the funding list below.
+const Q1Q2_FUNDED = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01");
+const Q1Q2_CATEGORY_COUNTS = Q1Q2_FUNDED.reduce<Record<string, number>>(
+  (acc, r) => {
+    acc[r.category] = (acc[r.category] ?? 0) + 1;
+    return acc;
+  },
+  {},
+);
+// Lowercase labels for the prose join below — CATEGORY_LABELS is title-case
+// (used in chips/filters), and "medtech"/"eda" don't appear there at all.
+const PULSE_CATEGORY_PROSE: Record<string, string> = {
+  chip: "chips",
+  cloud: "cloud",
+  software: "software",
+  network: "networking",
+  ecommerce: "e-commerce",
+  fintech: "fintech",
+  security: "security",
+  social: "social",
+  hardware: "hardware",
+  saas: "SaaS",
+  robotics: "robotics",
+  ai: "AI",
+  medtech: "medtech",
+  eda: "EDA",
+};
+const Q1Q2_TOP_CATEGORIES = Object.entries(Q1Q2_CATEGORY_COUNTS)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .slice(0, 5)
+  .map(([cat]) => PULSE_CATEGORY_PROSE[cat] ?? cat);
+const Q1Q2_TOP_CATEGORIES_NOTE = Q1Q2_TOP_CATEGORIES.join(", ");
+const PULSE_RAISED_STAT = {
+  value: RAISED_2026_LABEL,
+  label: "Raised in Q1–Q2 2026",
+  note: `${ROUNDS_2026} South Bay startup rounds · ${Q1Q2_TOP_CATEGORIES_NOTE} led the way`,
+};
 // Top 3 rounds in the last 30 days by dollar amount — drives the recap text
 // in the Recently Funded section instead of hardcoded copy that goes stale.
 const LAST_30_TOP_3 = [...LAST_30_ROUNDS]
@@ -1609,13 +1649,15 @@ export default function TechnologyView() {
 
       {/* ── Pulse strip ── */}
       <div className="tech-pulse">
-        {TECH_PULSE.map((stat) => (
-          <div key={stat.label} className="tech-pulse-item">
-            <div className="tech-pulse-value">{stat.value}</div>
-            <div className="tech-pulse-label">{stat.label}</div>
-            <div className="tech-pulse-note">{stat.note}</div>
-          </div>
-        ))}
+        {[TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]].map(
+          (stat) => (
+            <div key={stat.label} className="tech-pulse-item">
+              <div className="tech-pulse-value">{stat.value}</div>
+              <div className="tech-pulse-label">{stat.label}</div>
+              <div className="tech-pulse-note">{stat.note}</div>
+            </div>
+          ),
+        )}
       </div>
 
       {/* ── Latest Funding ticker ── */}

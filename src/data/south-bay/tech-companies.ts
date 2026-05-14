@@ -1667,7 +1667,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   },
 ];
 
-// Pulse stats for the header strip
+// Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
+// computed at render time in TechnologyView from RECENTLY_FUNDED, so it stays
+// accurate as new rounds land. The remaining three are stable enough to live
+// here as hand-maintained copy.
 export const TECH_PULSE = [
   {
     value: "140K+",
@@ -1678,11 +1681,6 @@ export const TECH_PULSE = [
     value: "Google & Apple",
     label: "Largest SCC employers",
     note: "25K local jobs each at Googleplex & Apple Park",
-  },
-  {
-    value: "$6B+",
-    label: "Raised in Q1–Q2 2026",
-    note: "54 South Bay startup rounds · chips, robotics, EVs, networking, security, AI led the way",
   },
   {
     value: "Chip equipment",
