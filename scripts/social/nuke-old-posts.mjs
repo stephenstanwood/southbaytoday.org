@@ -24,8 +24,19 @@ try {
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const force = args.includes("--force");
+const notify = args.includes("--notify");
 const cutoffIdx = args.indexOf("--cutoff");
 const maxAgeArg = args.find((a) => a.startsWith("--max-age-days="));
+
+// Per-platform tallies for the notify summary
+const platformStats = {
+  bluesky: { deleted: 0, failed: 0 },
+  x: { deleted: 0, failed: 0 },
+  threads: { deleted: 0, failed: 0 },
+  facebook: { deleted: 0, failed: 0 },
+  instagram: { deleted: 0, failed: 0 },
+  mastodon: { deleted: 0, failed: 0 },
+};
 
 function computeCutoff() {
   if (cutoffIdx >= 0) return args[cutoffIdx + 1];
@@ -86,6 +97,7 @@ async function nukeBluesky() {
       if (createdAt && createdAt < cutoff) {
         if (dryRun) {
           console.log(`  Would delete: ${createdAt} ${text}`);
+          deleted++;
         } else {
           const rkey = post.uri.split("/").pop();
           const delRes = await fetch(`${BSKY_API}/com.atproto.repo.deleteRecord`, {
@@ -94,9 +106,10 @@ async function nukeBluesky() {
             body: JSON.stringify({ repo: did, collection: "app.bsky.feed.post", rkey }),
           });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          if (delRes.ok) { deleted++; platformStats.bluesky.deleted++; }
+          else { platformStats.bluesky.failed++; }
           await new Promise(r => setTimeout(r, 200));
         }
-        deleted++;
       }
     }
 
@@ -161,16 +174,19 @@ async function nukeX() {
     if (t.pubDate && t.pubDate >= cutoff) continue;
     if (dryRun) {
       console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+      deleted++;
     } else {
       try {
         await deletePost(t.id);
         console.log(`  Deleted: ${t.pubDate} ${t.id}`);
+        deleted++;
+        platformStats.x.deleted++;
       } catch (e) {
         console.log(`  Failed: ${t.id} ${e.message}`);
+        platformStats.x.failed++;
       }
       await new Promise(r => setTimeout(r, 200));
     }
-    deleted++;
   }
   console.log(`  Total from records: ${deleted}\n`);
 }
@@ -197,12 +213,14 @@ async function nukeThreads() {
       if (createdAt && createdAt < cutoff) {
         if (dryRun) {
           console.log(`  Would delete: ${createdAt} ${text}`);
+          deleted++;
         } else {
           const delRes = await fetch(`https://graph.threads.net/v1.0/${post.id}?access_token=${token}`, { method: "DELETE" });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          if (delRes.ok) { deleted++; platformStats.threads.deleted++; }
+          else { platformStats.threads.failed++; }
           await new Promise(r => setTimeout(r, 500));
         }
-        deleted++;
       }
     }
 
@@ -269,13 +287,15 @@ async function nukeFacebook() {
     if (t.pubDate && t.pubDate >= cutoff) continue;
     if (dryRun) {
       console.log(`  Would delete: ${t.pubDate} ${t.id}`);
+      deleted++;
     } else {
       const delRes = await fetch(`https://graph.facebook.com/v21.0/${t.id}?access_token=${token}`, { method: "DELETE" });
       const body = delRes.ok ? "" : ` (${await delRes.text().then(s => s.slice(0,80))})`;
       console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${t.pubDate} ${t.id}${body}`);
+      if (delRes.ok) { deleted++; platformStats.facebook.deleted++; }
+      else { platformStats.facebook.failed++; }
       await new Promise(r => setTimeout(r, 500));
     }
-    deleted++;
   }
   console.log(`  Total from records: ${deleted}\n`);
 }
@@ -302,12 +322,14 @@ async function nukeInstagram() {
       if (createdAt && createdAt < cutoff) {
         if (dryRun) {
           console.log(`  Would delete: ${createdAt} ${text}`);
+          deleted++;
         } else {
           const delRes = await fetch(`https://graph.instagram.com/v25.0/${post.id}?access_token=${token}`, { method: "DELETE" });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${createdAt} ${text}`);
+          if (delRes.ok) { deleted++; platformStats.instagram.deleted++; }
+          else { platformStats.instagram.failed++; }
           await new Promise(r => setTimeout(r, 500));
         }
-        deleted++;
       }
     }
 
@@ -363,6 +385,7 @@ async function nukeMastodon() {
         if (delRes.ok) {
           console.log(`  Deleted: ${createdAt} ${text}`);
           deleted++;
+          platformStats.mastodon.deleted++;
           break;
         }
         if (delRes.status === 429 && attempt === 0) {
@@ -376,6 +399,7 @@ async function nukeMastodon() {
         }
         console.log(`  Failed: ${createdAt} ${text} (${delRes.status})`);
         failed++;
+        platformStats.mastodon.failed++;
         break;
       }
       await new Promise(r => setTimeout(r, 400));
@@ -394,3 +418,33 @@ await nukeInstagram();
 await nukeMastodon();
 
 console.log("Done");
+
+// Cat-signal DM after a recurring purge so Stephen can clean up the
+// platforms where API delete is partial (FB) or fully blocked (IG).
+// Bypasses the 60-min cooldown via a unique per-run key.
+if (notify && !dryRun) {
+  try {
+    const { catSignal } = await import("../lib/notify.mjs");
+    const lines = [];
+    for (const [plat, s] of Object.entries(platformStats)) {
+      if (!s.deleted && !s.failed) continue;
+      const tag = s.failed > 0 ? "⚠️" : "✅";
+      lines.push(`${tag} **${plat}**: ${s.deleted} deleted${s.failed ? `, ${s.failed} failed` : ""}`);
+    }
+    const igStuck = platformStats.instagram.failed;
+    const fbStuck = platformStats.facebook.failed;
+    const manualWork = [];
+    if (fbStuck > 0) manualWork.push(`FB has **${fbStuck}** stuck post${fbStuck === 1 ? "" : "s"} — clean via the FB Page UI`);
+    if (igStuck > 0) manualWork.push(`IG has **${igStuck}** post${igStuck === 1 ? "" : "s"} the API can't touch — clean via the IG mobile app`);
+    await catSignal({
+      key: `weekly-purge-${cutoff}`,
+      title: "Weekly social purge ran",
+      body:
+        `Cutoff: \`${cutoff}\` (posts older than this were targeted)\n\n` +
+        (lines.length ? lines.join("\n") + "\n\n" : "") +
+        (manualWork.length ? "**Needs manual cleanup:**\n" + manualWork.map((m) => `• ${m}`).join("\n") : "Everything cleaned via API. No manual work needed."),
+    });
+  } catch (err) {
+    console.log(`Notify failed: ${err.message}`);
+  }
+}
