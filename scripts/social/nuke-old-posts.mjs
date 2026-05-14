@@ -18,7 +18,7 @@
 // Used as the Saturday 3:30am weekly purge via scripts/social/weekly-purge.plist
 // → org.southbaytoday.weekly-purge.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -49,6 +49,19 @@ const platformStats = {
   facebook: { deleted: 0, failed: 0 },
   instagram: { deleted: 0, failed: 0 },
   mastodon: { deleted: 0, failed: 0 },
+};
+
+// IDs we've successfully deleted on each platform. Used by pruneRecords()
+// at end of run to update schedule.json + queue.json + engagement.json so
+// the Social Signal dashboard doesn't show zombie entries pointing at
+// just-deleted posts.
+const deletedIds = {
+  bluesky: new Set(),
+  x: new Set(),
+  threads: new Set(),
+  facebook: new Set(),
+  instagram: new Set(),
+  mastodon: new Set(),
 };
 
 // Compute the cutoff as a millisecond timestamp. Display string is for the
@@ -138,7 +151,7 @@ async function nukeBluesky() {
             body: JSON.stringify({ repo: did, collection: "app.bsky.feed.post", rkey }),
           });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
-          if (delRes.ok) { deleted++; platformStats.bluesky.deleted++; }
+          if (delRes.ok) { deleted++; platformStats.bluesky.deleted++; deletedIds.bluesky.add(post.uri); }
           else { platformStats.bluesky.failed++; }
           await new Promise(r => setTimeout(r, 200));
         }
@@ -214,6 +227,7 @@ async function nukeX() {
         console.log(`  Deleted: ${displayDate} ${t.id}`);
         deleted++;
         platformStats.x.deleted++;
+        deletedIds.x.add(t.id);
       } catch (e) {
         console.log(`  Failed: ${t.id} ${e.message}`);
         platformStats.x.failed++;
@@ -251,7 +265,7 @@ async function nukeThreads() {
         } else {
           const delRes = await fetch(`https://graph.threads.net/v1.0/${post.id}?access_token=${token}`, { method: "DELETE" });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
-          if (delRes.ok) { deleted++; platformStats.threads.deleted++; }
+          if (delRes.ok) { deleted++; platformStats.threads.deleted++; deletedIds.threads.add(post.id); }
           else { platformStats.threads.failed++; }
           await new Promise(r => setTimeout(r, 500));
         }
@@ -327,7 +341,7 @@ async function nukeFacebook() {
       const delRes = await fetch(`https://graph.facebook.com/v21.0/${t.id}?access_token=${token}`, { method: "DELETE" });
       const body = delRes.ok ? "" : ` (${await delRes.text().then(s => s.slice(0,80))})`;
       console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${t.id}${body}`);
-      if (delRes.ok) { deleted++; platformStats.facebook.deleted++; }
+      if (delRes.ok) { deleted++; platformStats.facebook.deleted++; deletedIds.facebook.add(t.id); }
       else { platformStats.facebook.failed++; }
       await new Promise(r => setTimeout(r, 500));
     }
@@ -362,7 +376,7 @@ async function nukeInstagram() {
         } else {
           const delRes = await fetch(`https://graph.instagram.com/v25.0/${post.id}?access_token=${token}`, { method: "DELETE" });
           console.log(`  ${delRes.ok ? "Deleted" : "Failed"}: ${displayDate} ${text}`);
-          if (delRes.ok) { deleted++; platformStats.instagram.deleted++; }
+          if (delRes.ok) { deleted++; platformStats.instagram.deleted++; deletedIds.instagram.add(post.id); }
           else { platformStats.instagram.failed++; }
           await new Promise(r => setTimeout(r, 500));
         }
@@ -423,6 +437,7 @@ async function nukeMastodon() {
           console.log(`  Deleted: ${displayDate} ${text}`);
           deleted++;
           platformStats.mastodon.deleted++;
+          deletedIds.mastodon.add(status.id);
           break;
         }
         if (delRes.status === 429 && attempt === 0) {
@@ -453,6 +468,144 @@ await nukeThreads();
 await nukeFacebook();
 await nukeInstagram();
 await nukeMastodon();
+
+// ── Prune state files so Social Signal (engagement dashboard) reflects reality ──
+//
+// The engagement collector (collect-engagement.mjs) is otherwise too forgiving:
+// Bluesky's getLikes/getReposts/etc. return success-with-zero for deleted
+// posts (not a clean 404), so the collector can't tell a post is gone. It
+// keeps historical entries in priorByKey forever and the dashboard fills
+// with zombie posts pointing at deleted URIs.
+//
+// Easier than teaching the collector to detect deletions: have the purge
+// directly clean up the three state files it just invalidated.
+//
+//   1. social-schedule.json   — strip deleted platform entries from each
+//      slot's publishedTo. If the array empties out, collector's existing
+//      `!publishedTo.length` guard hides the slot from future engagement
+//      runs. Slot itself stays for audit / publish-history.
+//   2. social-approved-queue.json — same treatment for the older queue
+//      shape (each entry has its own publishedTo).
+//   3. social-engagement.json — drop platform entries with matching IDs
+//      from every post's `platforms` map. If a post ends up with no
+//      platforms, drop the post entry entirely. Recompute totals.
+//
+// All writes are atomic temp+rename. The collector writes the same files,
+// so we accept a small race on the last few seconds; worst case is one
+// stale refresh, the next cycle stabilises.
+
+function pruneRecords() {
+  const totalIds = Object.values(deletedIds).reduce((a, s) => a + s.size, 0);
+  if (totalIds === 0) {
+    console.log("Prune skipped — nothing was deleted this run.");
+    return;
+  }
+
+  console.log(`\n=== PRUNE STATE FILES === (${totalIds} platform-ids to clean)`);
+
+  function platformIdsForEntry(e) {
+    const id = e.uri || e.id || e.postId;
+    return id ? [id] : [];
+  }
+
+  function entryWasDeleted(e) {
+    const set = deletedIds[e.platform];
+    if (!set || set.size === 0) return false;
+    for (const id of platformIdsForEntry(e)) {
+      if (set.has(id)) return true;
+    }
+    return false;
+  }
+
+  function atomicWrite(path, json) {
+    const tmp = path + ".tmp";
+    writeFileSync(tmp, JSON.stringify(json, null, 2) + "\n");
+    renameSync(tmp, path);
+  }
+
+  const DATA_DIR = join(__dirname, "..", "..", "src", "data", "south-bay");
+
+  // 1) Schedule
+  const schedFile = join(DATA_DIR, "social-schedule.json");
+  let schedTouched = 0;
+  try {
+    const sched = JSON.parse(readFileSync(schedFile, "utf8"));
+    for (const day of Object.values(sched.days || {})) {
+      for (const [slotType, slot] of Object.entries(day || {})) {
+        if (slotType.startsWith("_")) continue;
+        if (!Array.isArray(slot?.publishedTo)) continue;
+        const before = slot.publishedTo.length;
+        slot.publishedTo = slot.publishedTo.filter((e) => !entryWasDeleted(e));
+        if (slot.publishedTo.length !== before) schedTouched++;
+      }
+    }
+    if (schedTouched > 0) atomicWrite(schedFile, sched);
+    console.log(`  schedule: ${schedTouched} slots updated`);
+  } catch (err) {
+    console.log(`  schedule prune failed: ${err.message}`);
+  }
+
+  // 2) Queue
+  const queueFile = join(DATA_DIR, "social-approved-queue.json");
+  let queueTouched = 0;
+  try {
+    const queue = JSON.parse(readFileSync(queueFile, "utf8"));
+    if (Array.isArray(queue)) {
+      for (const p of queue) {
+        if (!Array.isArray(p.publishedTo)) continue;
+        const before = p.publishedTo.length;
+        p.publishedTo = p.publishedTo.filter((e) => !entryWasDeleted(e));
+        if (p.publishedTo.length !== before) queueTouched++;
+      }
+      if (queueTouched > 0) atomicWrite(queueFile, queue);
+    }
+    console.log(`  queue: ${queueTouched} entries updated`);
+  } catch (err) {
+    console.log(`  queue prune failed: ${err.message}`);
+  }
+
+  // 3) Engagement file (Social Signal source of truth)
+  const engFile = join(DATA_DIR, "social-engagement.json");
+  let engTouched = 0;
+  let engDropped = 0;
+  try {
+    const eng = JSON.parse(readFileSync(engFile, "utf8"));
+    eng.posts = (eng.posts || []).filter((p) => {
+      const beforeKeys = Object.keys(p.platforms || {}).length;
+      // Strip platforms whose id matches a deleted one
+      p.platforms = Object.fromEntries(
+        Object.entries(p.platforms || {}).filter(([plat, info]) => {
+          const id = info?.id;
+          return !id || !deletedIds[plat]?.has(id);
+        })
+      );
+      const afterKeys = Object.keys(p.platforms).length;
+      if (afterKeys !== beforeKeys) engTouched++;
+      if (afterKeys === 0) { engDropped++; return false; }
+      return true;
+    });
+    eng.postCount = eng.posts.length;
+    eng.totals = eng.posts.reduce(
+      (acc, p) => {
+        for (const v of Object.values(p.platforms || {})) {
+          acc.likes += v.counts?.likes || 0;
+          acc.reposts += v.counts?.reposts || 0;
+          acc.quotes += v.counts?.quotes || 0;
+          acc.replies += v.counts?.replies || 0;
+        }
+        return acc;
+      },
+      { likes: 0, reposts: 0, quotes: 0, replies: 0 }
+    );
+    eng.lastUpdated = new Date().toISOString();
+    atomicWrite(engFile, eng);
+    console.log(`  engagement: ${engTouched} posts modified, ${engDropped} dropped, ${eng.postCount} remain`);
+  } catch (err) {
+    console.log(`  engagement prune failed: ${err.message}`);
+  }
+}
+
+if (!dryRun) pruneRecords();
 
 console.log("Done");
 
