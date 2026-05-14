@@ -178,7 +178,8 @@ Return JSON with:
 - "summary": 2-3 sentence plain-English overview of what was discussed (no jargon)
 - "keyTopics": array of 3-5 short bullet strings (specific topics, not generic)
 
-Be concrete. Write for someone who wants to know what's happening in their city.`;
+Be concrete. Write for someone who wants to know what's happening in their city.
+Do not include meta-commentary about incomplete or truncated source data (e.g. "vendor name incomplete in agenda", "details not publicly shared", "agenda item unclear"). If a detail isn't in the source, just omit that bullet — pick a different concrete topic instead.`;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
