@@ -2468,6 +2468,18 @@ function mapTicketmasterEvent(e) {
   const genre = classification?.genre?.name || "";
   const segment = classification?.segment?.name || "";
 
+  // Drop parking-pass listings — Ticketmaster sells these as separate "events"
+  // with the same title as the concert (e.g. "BTS World Tour 'Arirang' IN
+  // Stanford") but the description is for parking, not the show. They clutter
+  // the feed and break city briefings ("BTS plays two nights" while the only
+  // entries are parking passes). Detect via Discovery classification or the
+  // `info`/`pleaseNote` text that starts with "Event parking".
+  const classType = (classification?.type?.name || "").toLowerCase();
+  const classSubtype = (classification?.subType?.name || "").toLowerCase();
+  if (classType === "parking" || classSubtype === "parking") return null;
+  const blurbText = `${e.info || ""} ${e.pleaseNote || ""}`.trim();
+  if (/^\s*(event\s+)?parking\b/i.test(blurbText)) return null;
+
   return {
     id: `tm-${e.id}`,
     title: normalizeTicketmasterTitle(e.name),
