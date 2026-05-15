@@ -122,6 +122,13 @@ function isoTimeToClock(iso) {
 /** Category inference from title */
 function inferCategory(title) {
   const t = title.toLowerCase();
+  // Family/kids events first — "Baby Storytime", "Preschool Storytime",
+  // "Kids Knitting" should land in family, not community. Matches the
+  // canonical rule in generate-events.mjs inferCategory.
+  const hasBaby = /\bbaby\b/.test(t) && !/\bbaby\s+bash\b/.test(t);
+  if (t.includes("story time") || t.includes("storytime") || t.includes("toddler") ||
+      hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") ||
+      /\bbedtime\b/.test(t) || /\bpuppet\s+show\b/.test(t)) return "family";
   if (/\b(concert|music|jazz|band|orchestra|symphony|dj)\b/.test(t)) return "arts";
   if (/\b(art|gallery|exhibit|museum|sculpture)\b/.test(t)) return "arts";
   if (/\b(theater|theatre|play|comedy|improv|show|performance)\b/.test(t)) return "arts";
@@ -133,7 +140,7 @@ function inferCategory(title) {
   // market | family | music | arts | sports | community | outdoor | education | food
   if (/\b(tech|hack|code|startup|ai|data|developer)\b/.test(t)) return "education";
   if (/\b(council|city|civic|government|hearing|meeting)\b/.test(t)) return "community";
-  if (/\b(kids|children|family|story.?time|toddler|teen)\b/.test(t)) return "community";
+  if (/\b(family|teen|youth)\b/.test(t)) return "family";
   return "community";
 }
 
