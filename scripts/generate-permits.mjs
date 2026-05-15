@@ -79,7 +79,13 @@ function cleanDescription(raw, workType, subtype) {
   return s
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase())
-    .replace(/\b(Adu|Adu's|Ti|Of|At|And|Or|The|A|In|To|For)\b/g, (m) => m.toLowerCase())
+    // Keep small words lowercase in title-case
+    .replace(/\b(Of|At|And|Or|The|A|In|To|For)\b/g, (m) => m.toLowerCase())
+    // Uppercase permit-acronyms that title-case mangles (ADU = accessory
+    // dwelling unit, TI = tenant improvement, SFR = single family residence,
+    // ADUs as plural).
+    .replace(/\b(Adu|Adus|Ti|Sfr|Hvac)\b/g, (m) => m.toUpperCase())
+    .replace(/\bAdu's\b/g, "ADU's")
     .replace(/^(\w)/, (c) => c.toUpperCase());
 }
 
