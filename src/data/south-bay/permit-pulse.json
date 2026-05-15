@@ -1,53 +1,53 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-14T19:13:26.714Z",
+      "generatedAt": "2026-05-15T11:08:34.069Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 7 – May 14",
+      "dateRange": "May 8 – May 15",
       "stats": {
-        "total": 336,
-        "notable": 18,
-        "newUnits": 7,
-        "totalValuation": 19543029
+        "total": 355,
+        "notable": 20,
+        "newUnits": 202,
+        "totalValuation": 39443153
       },
       "permits": [
         {
-          "id": "2025-136396-RS",
-          "address": "3588 Behler Dr #2",
+          "id": "2026-107706-MF",
+          "address": "825 Berryessa Station Wy",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "Berryessa Tod (Bemp 100%) New Construction",
+          "valuation": 32057828,
+          "units": 195,
+          "issueDate": "2026-05-13",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2024-100654-RS",
+          "address": "10336 Singleton Rd #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "(Bemp100%) 2-Story Detached adu",
-          "valuation": 169531,
+          "description": "Code Case Demo Detached Garage & Construct New Detached adu",
+          "valuation": 143219,
           "units": 1,
-          "issueDate": "2026-05-08",
+          "issueDate": "2026-05-13",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-122105-RS",
-          "address": "626 N 15th St #2",
+          "id": "2025-134551-RS",
+          "address": "249 N 15th St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Detached adu 798 Sqft",
-          "valuation": 134934,
+          "description": "Detached adu",
+          "valuation": 111261,
           "units": 1,
-          "issueDate": "2026-05-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-095127-RS",
-          "address": "6074 Alcante Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached adu",
-          "valuation": 120223,
-          "units": 1,
-          "issueDate": "2026-05-08",
+          "issueDate": "2026-05-13",
           "subtype": "2nd Unit Added"
         },
         {
@@ -63,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-095568-RS",
-          "address": "1366 Mastic St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bemp100%) Detached Garage Conversion to adu",
-          "valuation": 108218,
-          "units": 1,
-          "issueDate": "2026-05-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2024-096844-RS",
           "address": "788 Delmas Av #2",
           "category": "residential-new",
@@ -87,69 +75,93 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-127875-RS",
-          "address": "6958 Del Rio Dr #2",
+          "id": "2025-099448-RS",
+          "address": "2880 W Hedding St",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Conversion Jadu",
-          "valuation": 72201,
+          "description": "Code Case Legalize Unpermitted Garage Conversion to adu",
+          "valuation": 83125,
           "units": 1,
-          "issueDate": "2026-05-08",
+          "issueDate": "2026-05-13",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-116692-CI",
-          "address": "5 Great Oaks Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Bloom Energy Tower 3 Balance-to-Complete - Data Center ti",
-          "valuation": 13000000,
-          "units": 0,
-          "issueDate": "2026-05-08",
-          "subtype": "Data Center"
+          "id": "2025-102430-RS",
+          "address": "3438 Woodside Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Conversion to adu",
+          "valuation": 70511,
+          "units": 1,
+          "issueDate": "2026-05-13",
+          "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-117453-CI",
-          "address": "1155 Coleman Av #2",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Tik Tok (Bem100%) 6th Fl Office ti",
-          "valuation": 950000,
-          "units": 0,
-          "issueDate": "2026-05-12",
-          "subtype": "Office"
+          "id": "2025-103105-RS",
+          "address": "2915 Manda Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Not Code Case New Attached adu",
+          "valuation": 63409,
+          "units": 1,
+          "issueDate": "2026-05-13",
+          "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-117039-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bemp100%) Sisley #1047",
-          "valuation": 425000,
+          "id": "2026-107692-CI",
+          "address": "1565 Mabury Rd",
+          "category": "new-construction",
+          "categoryLabel": "New Construction",
+          "workType": "New Construction",
+          "description": "Berryessa Tod (Bemp 100%) Garage",
+          "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-08",
+          "issueDate": "2026-05-13",
+          "subtype": "Closed Public Parking Garage"
+        },
+        {
+          "id": "2026-108438-CI",
+          "address": "825 Berryessa Station Wy",
+          "category": "new-construction",
+          "categoryLabel": "New Construction",
+          "workType": "New Construction",
+          "description": "Berryessa Tod (Bemp 100%) Business Area",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-13",
           "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-14T19:13:29.090Z",
+      "generatedAt": "2026-05-15T11:08:36.432Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 7 – May 14",
+      "dateRange": "May 8 – May 15",
       "stats": {
-        "total": 125,
+        "total": 129,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01254",
+          "address": "1304 College Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-14",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01231",
           "address": "4151 Abel Av",
@@ -184,18 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-12",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00104",
-          "address": "3210 Porter Dr",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "THE PURPOSE OF THIS PROJECT IS TO SUPPLY ADDITIONAL ELECTRICAL POWER TO THE EXISTING BUILDING AT 3210 PORTER DRIVE TO SUPPORT NEW RESEARCH & DEVELOPMENT TENANT IMPROVEMENTS. SCOPE OF WORK INCLUDES INSTALLATION OF NEW ELECTRICAL TRANSFORMERS & SWITCHES AT 3210 PORTER DRIVE, ALONG WITH NEW CONDUIT EXTENDING ALONG PORTER DRIVE TO CONNECT TO THE SUBSTATION ON HANOVER DRIVE. A NEW ENCLOSURE IS PROPOSED TO SCREEN THE TRANSFORMERS, ALONG WITH NEW FENCING AND LANDSCAPE IMPROVEMENTS.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-07",
           "subtype": "Over the Counter Approved"
         }
       ]
