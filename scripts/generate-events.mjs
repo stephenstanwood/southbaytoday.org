@@ -673,6 +673,21 @@ function cleanTitle(title) {
       : /(?<!\p{Letter})[A-Z]{4,}(?!\p{Letter})/gu;
     t = t.replace(re, (w) => (KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase()));
   }
+  // Title-case fully-lowercase titles. City Lights Theater (cltc.org) styles
+  // play titles in their menu as lowercase ("anthropology"); the textContent
+  // scrape inherits that styling. Don't touch titles with any uppercase letter,
+  // so stylized brand names like "allcove x PACL Book Club" stay intact.
+  if (/[a-z]/.test(t) && !/[A-Z]/.test(t)) {
+    const SMALL_WORDS = new Set([
+      "a","an","the","and","or","but","nor","for","of","in","on","at","to","by",
+      "as","is","it","be","vs","via",
+    ]);
+    t = t.replace(/(\w[\w']*)/g, (word, _g, offset) => {
+      const lower = word.toLowerCase();
+      if (offset > 0 && SMALL_WORDS.has(lower)) return lower;
+      return word[0].toUpperCase() + word.slice(1);
+    });
+  }
   // Fix pipes without surrounding spaces: "Foo |Bar" → "Foo | Bar"
   t = t.replace(/\s*\|\s*/g, " | ");
   // Strip non-Latin (CJK, etc.) prefix before English content:

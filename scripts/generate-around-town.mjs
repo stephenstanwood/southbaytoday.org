@@ -158,6 +158,8 @@ SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator 
 
 NEVER FABRICATE: do not invent case names, party names, dollar amounts, vote counts, addresses, or any specific fact not present in the agenda data. Closed session line items often list only a citation like "Conf. with Legal Counsel — existing litigation" with no party names — if a name isn't in the source, do not make one up. Skip the item.
 
+MATCH THE SOURCE'S FRAMING — DO NOT NARROW: if a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the agenda explicitly uses that word. Do not invent illustrative examples ("for immigration, tax, or other..."). Stick to the source's wording on sensitive framing.
+
 DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: if a meeting's date matches today's date and the agenda is forward-looking (e.g. "proposed", "to consider", "study session"), do not write that it was approved or adopted. Use forward-looking language ("to hear", "to consider", "scheduled to review") or skip the item.
 
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
