@@ -122,6 +122,9 @@ Important rules:
 - Only reference facts that are explicitly present in the data below. Never invent or infer specifics like company names, dollar amounts, project types, ridership counts, square footage, or unit counts that aren't literally written in the data. If a number or proper noun isn't in the data, leave it out.
 - Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
+- No group-count nouns like "trifecta," "trio," "duo," or "quartet" — they imply specific counts and routinely don't match the actual data. Just say "three events" or list the items.
+- No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.
+- Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
 
 ${parts.join("\n\n")}
 

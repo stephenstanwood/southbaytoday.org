@@ -610,7 +610,9 @@ function cleanTitle(title) {
     // break copy-paste, search, and our typography defaults.
     .replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"')
     // Strip stray space before terminal punctuation ("Bookmarks ,", "Title !").
-    .replace(/\s+([,.;!?])/g, "$1")
+    // Includes colon ("Friday Fun : DIY" → "Friday Fun:") — appears in SJPL and
+    // Palo Alto Library titles ("Online Author Talk : Nir Eyal").
+    .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/\s{2,}/g, " ")
     // Strip BiblioCommons "External Event:" prefix (Palo Alto Library tags
     // events organized by outside groups — venue + source already convey
