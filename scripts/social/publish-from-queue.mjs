@@ -756,6 +756,9 @@ async function main() {
 
         // X poll variant: every 3rd day-plan publish goes out as a poll.
         // Deterministic by date (day-of-year mod 3); polls boost X reach 2-3x.
+        // If the poll publish fails (rate limit, API contract change, etc.),
+        // fall back to a regular text+image post so X never silently drops
+        // the slot — same pattern as the Threads carousel fallback below.
         if (
           platform === "x" &&
           slotType === "day-plan" &&
@@ -766,7 +769,14 @@ async function main() {
         ) {
           const poll = rewrittenCopy.pollX;
           console.log(`      📊 x: poll mode — "${poll.text}" (${poll.options.length} options)`);
-          result = await client.publishPoll(poll.text, poll.options, sharedImgBuf, imageAlt);
+          try {
+            result = await client.publishPoll(poll.text, poll.options, sharedImgBuf, imageAlt);
+          } catch (pollErr) {
+            console.log(`      ⚠️  x poll failed (${pollErr.message}) — regular tweet fallback`);
+            result = sharedImgBuf
+              ? await client.publish(copy, sharedImgBuf, imageAlt)
+              : await client.publish(copy);
+          }
         } else if (platform === "threads") {
           if (threadsCarouselSlides) {
             try {
