@@ -87,6 +87,23 @@ const SKIP_REGEX = [
   // San José meta-procedural explainer attached to most agendas — text
   // describing how items get added/dropped, not actual business.
   /^items?\s+recommended\s+to\s+be\s+(?:added|dropped|deferred)/i,
+  // San José boilerplate section header: "Language Access Information:" with
+  // a trailing colon. It announces how to request translation, not business.
+  /^language access information\b/i,
+  // Payment ratification — recurring consent items, not news. Catches:
+  //   "Approve the List(s) of Claims and Bills..." (Sunnyvale)
+  //   "Ratifying Accounts Payable for the periods..." (Cupertino)
+  /^approve the list\(?s?\)? of claims and bills\b/i,
+  /^ratifying accounts payable\b/i,
+  // "Receipt of [Audit|Treasurer's|Quarterly Treasurer's] Report" — quarterly
+  // and annual financial filings the council just acknowledges receipt of.
+  /^receipt of (?:single audit|the treasurer'?s|treasurer'?s|quarterly treasurer'?s)\b/i,
+  // Items annotated "- DEFERRED TO MM/DD/YYYY PER ADMINISTRATION" aren't
+  // happening at the current meeting — drop them from the preview.
+  /\s[-–]\s*deferred\s+to\b[^.]*\bper\s+administration\b/i,
+  // Section-banner items like "Closed Session Agenda", "Land Use Agenda",
+  // "Consent Agenda" — these are navigation headers, not business items.
+  /^(?:closed session|public hearings?|consent|regular|land use|ceremonial|strategic support|special order(?:s)? of business)\s+agenda$/i,
 ];
 
 // Strip raw addresses, Brown Act teleconference disclosures, and noise from
