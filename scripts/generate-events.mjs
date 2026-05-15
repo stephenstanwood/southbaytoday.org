@@ -4787,6 +4787,16 @@ async function main() {
     if (e.description) e.description = polishDescription(e.description);
   });
 
+  // Drop descriptions that just repeat the title — SJSU's Localist RSS feeds
+  // sports events with description == title, which adds noise to plan-day blurbs
+  // and event cards. Compare on a normalized form so casing/whitespace doesn't
+  // hide the duplication.
+  allEvents.forEach((e) => {
+    if (!e.description || !e.title) return;
+    const norm = (s) => String(s).toLowerCase().replace(/\s+/g, " ").trim();
+    if (norm(e.description) === norm(e.title)) e.description = "";
+  });
+
   // Sanitize time field: clear values that aren't a clock time (e.g. "SATURDAY, APRIL 25, 2026"
   // ended up in the time field on a few SJMA / inbound listings). For comma-separated session
   // lists ("12pm, 1pm, 2pm") only the last token needs to parse.
