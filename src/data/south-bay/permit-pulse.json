@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-15T11:08:34.069Z",
+      "generatedAt": "2026-05-15T19:09:51.494Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-15T11:08:36.432Z",
+      "generatedAt": "2026-05-15T19:09:53.743Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -175,18 +175,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00105",
-          "address": "1600 Sand Hill Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Removal of one heaving black acacia",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-11",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00108",
           "address": "3440 Ramona St",
           "category": "entitlement",
@@ -196,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-12",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00105",
+          "address": "1600 Sand Hill Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Removal of one heaving black acacia",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-11",
           "subtype": "Over the Counter Approved"
         }
       ]
