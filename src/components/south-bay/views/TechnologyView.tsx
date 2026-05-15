@@ -1485,15 +1485,34 @@ function ConferenceRow({
   );
 }
 
+const CONFERENCE_GROUP_HEAD_STYLE = {
+  fontSize: 10,
+  fontWeight: 700,
+  fontFamily: "'Space Mono', monospace",
+  letterSpacing: "0.08em",
+  textTransform: "uppercase",
+  marginBottom: 10,
+  paddingBottom: 6,
+  borderBottom: "2px solid var(--sb-border-light)",
+} as const;
+
 function AnnualConferencesSection() {
   const now = new Date();
+  const currentYear = now.getFullYear();
   const withDates = TECH_CONFERENCES.map((conf) => ({
     conf,
     ...getConferenceNextDate(conf, now),
   })).sort((a, b) => a.sortMs - b.sortMs);
 
   const upcoming = withDates.filter((c) => c.isUpcoming);
-  const later = withDates.filter((c) => !c.isUpcoming);
+  const laterThisYear = withDates.filter(
+    (c) => !c.isUpcoming && new Date(c.sortMs).getFullYear() === currentYear,
+  );
+  const nextYear = withDates.filter(
+    (c) => !c.isUpcoming && new Date(c.sortMs).getFullYear() > currentYear,
+  );
+
+  const hasAny = upcoming.length + laterThisYear.length + nextYear.length > 0;
 
   return (
     <div className="tech-section">
@@ -1506,54 +1525,52 @@ function AnnualConferencesSection() {
 
       {upcoming.length > 0 && (
         <>
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              fontFamily: "'Space Mono', monospace",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "#16a34a",
-              marginBottom: 10,
-              paddingBottom: 6,
-              borderBottom: "2px solid var(--sb-border-light)",
-            }}
-          >
-            Coming Up
-          </div>
+          <div style={{ ...CONFERENCE_GROUP_HEAD_STYLE, color: "#16a34a" }}>Coming Up</div>
           {upcoming.map(({ conf, label }) => (
             <ConferenceRow key={conf.id} conf={conf} dateLabel={label} highlight />
           ))}
         </>
       )}
 
-      {later.length > 0 && (
+      {laterThisYear.length > 0 && (
         <>
           <div
             style={{
-              fontSize: 10,
-              fontWeight: 700,
-              fontFamily: "'Space Mono', monospace",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
+              ...CONFERENCE_GROUP_HEAD_STYLE,
               color: "#6b7280",
               marginTop: upcoming.length > 0 ? 16 : 0,
-              marginBottom: 10,
-              paddingBottom: 6,
-              borderBottom: "2px solid var(--sb-border-light)",
             }}
           >
             Later This Year
           </div>
-          {later.map(({ conf, label }) => (
+          {laterThisYear.map(({ conf, label }) => (
             <ConferenceRow key={conf.id} conf={conf} dateLabel={label} highlight={false} />
           ))}
         </>
       )}
 
-      <div style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, fontStyle: "italic" }}>
-        Dates are typical annual timing — confirm on the organizer's website before making plans.
-      </div>
+      {nextYear.length > 0 && (
+        <>
+          <div
+            style={{
+              ...CONFERENCE_GROUP_HEAD_STYLE,
+              color: "#6b7280",
+              marginTop: upcoming.length + laterThisYear.length > 0 ? 16 : 0,
+            }}
+          >
+            Next Year
+          </div>
+          {nextYear.map(({ conf, label }) => (
+            <ConferenceRow key={conf.id} conf={conf} dateLabel={label} highlight={false} />
+          ))}
+        </>
+      )}
+
+      {hasAny && (
+        <div style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, fontStyle: "italic" }}>
+          Dates are typical annual timing — confirm on the organizer's website before making plans.
+        </div>
+      )}
     </div>
   );
 }
