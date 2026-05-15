@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-14T15:08:12.360Z",
+    "generatedAt": "2026-05-15T15:08:15.976Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 20,
-    "sourceCount": 134,
+    "sourceCount": 131,
     "sources": [
-      "Mountain View Public Library (16)",
-      "Los Gatos Library (31)",
+      "Mountain View Public Library (15)",
+      "Los Gatos Library (30)",
       "San Jose Jazz (5)",
       "San Jose Museum of Art (6)",
       "Linden Tree Books (8)",
@@ -16,95 +16,10 @@
       "City Lights Theater (8)",
       "ICA San José (3)",
       "Books Inc (2)",
-      "Peninsula Open Space Trust (5)"
+      "Peninsula Open Space Trust (4)"
     ]
   },
   "events": [
-    {
-      "id": "32c1dded9c36",
-      "title": "Magical Bridge Playground",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "10:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/15921464",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "e6c184f3e312",
-      "title": "Ancient Wisdom and Modern Technologies for Peak Brain Performance with Dr. Patrick K. Porter and Ruchika Sikri",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "11:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16696251",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "f4978da3bf54",
-      "title": "Let's Create",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "3:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/15871486",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "256e140179ca",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "4:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16763136",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "4ce7aeb3b488",
-      "title": "Breastfeeding Before Birth",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "6:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16448153",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "700e16dd837b",
       "title": "Amplify: Bio Bridge Yeast",
@@ -205,7 +120,7 @@
       "description": "",
       "url": "https://mountainview.libcal.com/event/16302962",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "f0fd25f0c078",
@@ -290,91 +205,74 @@
       "description": "",
       "url": "https://mountainview.libcal.com/event/16422245",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
-      "id": "3b11770e0eb7",
-      "title": "Cafecito Book Club",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "10:00am",
+      "id": "8207b0e59621",
+      "title": "ESL Conversation Club",
+      "date": "2026-05-20",
+      "displayDate": "Wed, May 20",
+      "time": "4:00 pm",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/16035608",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "eeec08c76e0a",
-      "title": "Park-It Market",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "10:00am",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/15783333",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/15895373",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "90e661e75c9c",
-      "title": "Wonderful Ones Storytime",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "11:00am",
+      "id": "9a710914f62a",
+      "title": "Friends of the Library Board Meeting",
+      "date": "2026-05-20",
+      "displayDate": "Wed, May 20",
+      "time": "7:00 pm",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16780652",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/15668059",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "30bd68551c36",
-      "title": "Fratello Marionettes (All Ages)",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "4:00pm",
+      "id": "918eed203de2",
+      "title": "Magical Bridge Playground",
+      "date": "2026-05-21",
+      "displayDate": "Thu, May 21",
+      "time": "10:00 am",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16484387",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/15921465",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "8757ab721d07",
-      "title": "Learn to Play Mahjong",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "4:30pm",
+      "id": "c458be85b735",
+      "title": "Community Preservation Lab Scanning Service",
+      "date": "2026-05-21",
+      "displayDate": "Thu, May 21",
+      "time": "4:00 pm",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16585381",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/16765672",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
@@ -409,7 +307,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16365227",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "7f9909fe1f0e",
@@ -460,7 +358,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16780590",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "47140bd73ecd",
@@ -528,7 +426,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/15745979",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "eebb2bc3d241",
@@ -579,7 +477,24 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16660128",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
+    },
+    {
+      "id": "91379d503f67",
+      "title": "Wonderful Ones Storytime",
+      "date": "2026-05-21",
+      "displayDate": "Thu, May 21",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16780653",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
     },
     {
       "id": "75b2dcd9786b",
@@ -616,6 +531,23 @@
       "kidFriendly": false
     },
     {
+      "id": "9475c4f6afc6",
+      "title": "Gardner Health Services Tabling",
+      "date": "2026-05-26",
+      "displayDate": "Tue, May 26",
+      "time": "3:00pm",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16898009",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "674bfb2f463c",
       "title": "Crafty Corner (Ages 3-10)",
       "date": "2026-05-26",
@@ -630,7 +562,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/15695369",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "b59a2a1205a9",
@@ -647,7 +579,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16853405",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "fcad7ed6e764",
@@ -684,6 +616,23 @@
       "kidFriendly": false
     },
     {
+      "id": "d69a42cf3484",
+      "title": "Park-It Market",
+      "date": "2026-05-28",
+      "displayDate": "Thu, May 28",
+      "time": "10:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/15783362",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "aaae5f37bd08",
       "title": "Informed Community Book Club",
       "date": "2026-05-30",
@@ -714,6 +663,23 @@
       "cost": "free",
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16451866",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "2e1be853ecc9",
+      "title": "Summer Reading Sign ups on the Lawn!",
+      "date": "2026-06-01",
+      "displayDate": "Mon, Jun 1",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16899814",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -817,7 +783,7 @@
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16846481",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "7259654bf9bf",
@@ -2227,23 +2193,6 @@
       "cost": "free",
       "description": "",
       "url": "https://openspacetrust.org/event/wild-scenic-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "e88160cb159b",
-      "title": "Trail Building 101 – A Webinar by Santa Cruz Mountains Trail Stewardship",
-      "date": "2026-05-14",
-      "displayDate": "Thu, May 14",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/trail-building-101-a-webinar-by-santa-cruz-mountains-trail-stewardship/",
       "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     },
