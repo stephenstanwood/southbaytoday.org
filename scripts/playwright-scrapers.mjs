@@ -224,7 +224,7 @@ async function scrapeCivicPlusCalendar(page, config) {
       source: config.source,
       category: inferCategory(r.title),
       cost: null,
-      kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
+      kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
     });
   }
   return events;
@@ -550,7 +550,7 @@ async function scrapeSJMuseumOfArt(page) {
         source: "San Jose Museum of Art",
         category: "arts",
         cost: "paid",
-        kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
       };
     })
     .filter(Boolean);
@@ -625,7 +625,7 @@ async function scrapeLindenTree(page) {
         source: "Linden Tree Books",
         category: "arts",
         cost: "free",
-        kidFriendly: /\b(kids|children|story|picture book)\b/i.test(r.title),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|picture\s+book)/i.test(r.title),
       };
     })
     .filter(Boolean);
@@ -751,7 +751,7 @@ async function scrapeHistorySJ(page) {
           source: "History San Jose",
           category: inferCategory(r.title),
           cost: "paid",
-          kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
         });
       }
     } catch {
@@ -828,7 +828,7 @@ async function scrapeMontalvo(page) {
         source: "Montalvo Arts Center",
         category: "arts",
         cost: "paid",
-        kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
       };
     })
     .filter(Boolean);
@@ -1033,7 +1033,7 @@ async function scrapeSCCCFD(page) {
           source: "SC County Fire Dept",
           category: "community",
           cost: "free",
-          kidFriendly: /\b(kids|children|family)\b/i.test(r.title),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
         };
       })
       .filter(Boolean);
@@ -1128,7 +1128,7 @@ async function scrapeBooksInc(page) {
       source: "Books Inc",
       category: "arts",
       cost: "free",
-      kidFriendly: /\b(kids|children|story.?time|family)\b/i.test(r.title),
+      kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
     });
   }
   return events;
@@ -1303,7 +1303,7 @@ async function scrapePOST(page) {
       // "nature" or "volunteer" — UI filters drop those events. Map to valid keys.
       category: r.volunteer ? "community" : "outdoor",
       cost: "free",
-      kidFriendly: /\b(family|kids|children|youth)\b/i.test(r.title),
+      kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
     });
   }
   return events;
@@ -1351,7 +1351,7 @@ async function scrapeBN(page) {
           source: "Barnes & Noble",
           category: "arts",
           cost: "free",
-          kidFriendly: /\b(kids|children|story.?time|family)\b/i.test(r.title),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
         });
       }
     } catch {
@@ -1408,7 +1408,7 @@ async function scrapeHPB(page) {
           source: "Half Price Books",
           category: "arts",
           cost: "free",
-          kidFriendly: /\b(kids|children|story.?time|family)\b/i.test(r.title),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
         });
       }
     } catch {

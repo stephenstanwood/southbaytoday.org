@@ -2425,7 +2425,7 @@ async function fetchEventbriteEvents() {
         description: truncate(stripHtml(e.description?.html || e.summary || "")),
         url: e.url,
         source: "Eventbrite",
-        kidFriendly: /family|kid|child|toddler|baby/i.test((e.name?.text || "") + (e.description?.html || "")),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test((e.name?.text || "") + (e.description?.html || "")),
       };
     }).filter(Boolean);
 
@@ -2496,7 +2496,7 @@ function mapTicketmasterEvent(e) {
     description: truncate(e.info || e.pleaseNote || ""),
     url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",
-    kidFriendly: /family|kid|child|disney|cirque/i.test(e.name + genre),
+    kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
   };
 }
 
@@ -3795,7 +3795,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           description: desc,
           url: fullUrl,
           source,
-          kidFriendly: /\b(kids|children|family|toddler|baby|storytime)\b/i.test(item.title + " " + desc),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(item.title + " " + desc),
         };
       })
       .filter(Boolean);
@@ -4263,7 +4263,7 @@ async function fetchSjdaEvents() {
           description: desc,
           url: e.url || "https://sjdowntown.com/dtsj-events/",
           source: "SJDA",
-          kidFriendly: /\b(kids|children|family|toddler)\b/i.test(title + " " + desc + " " + cats),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + desc + " " + cats),
         });
       }
 
@@ -4395,7 +4395,7 @@ async function fetchSjMuseumOfArtEvents() {
         description: "",
         url,
         source: "San Jose Museum of Art",
-        kidFriendly: /\b(kids|children|family|youth|toddler|baby|preschool|grade|ages?\s*\d)\b/i.test(title),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(title),
       };
       events.push(evt);
 
@@ -4698,7 +4698,7 @@ async function fetchHistorySanJoseEvents() {
           description: "",
           url: eventUrl,
           source: "History San Jose",
-          kidFriendly: /\b(kids|children|family|youth|toddler|baby|preschool|grade|ages?\s*\d)\b/i.test(title),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(title),
         });
       }
       await new Promise((r) => setTimeout(r, 300));
