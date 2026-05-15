@@ -2445,8 +2445,9 @@
         "publishedTo": [
           {
             "platform": "x",
-            "ok": false,
-            "error": "X poll post failed (400): {\"errors\":[{\"parameters\":{\"media\":[\"{media_ids: [2055277279996153856], tagged_user_ids: []\"],\"poll\":[\"{options: [Market: Cupertino,Lunch: Super Duper,Books Inc. browse,ALT! The Party], duration_minutes: 1440}\"]},\"message\":\"You can only provide one of poll or media.\"}],\"title\":\"Invalid Request\",\"detail\":\"One or more parameters to your request was invalid.\",\"type\":\"https://api.twitter.com/2/problems/invalid-request\"}"
+            "ok": true,
+            "postId": "2055322108650229957",
+            "id": "2055322108650229957"
           },
           {
             "platform": "bluesky",
