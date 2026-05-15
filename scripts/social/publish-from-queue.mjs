@@ -857,6 +857,11 @@ async function main() {
     // parent post) so the thread reads as a top-to-bottom narrative. We
     // break the chain on any individual failure rather than orphan a reply
     // off a dead parent.
+    // Track URIs of replies WE post so the engagement collector can exclude
+    // them from reply tallies in Social Signal. Keyed per platform with the
+    // platform-native ID shape (Bluesky: at:// URI, X/Threads: numeric id).
+    const ownReplyIds = { x: [], threads: [], bluesky: [] };
+
     const blueskyThreadPromise = pendingBlueskyThread && !dryRun
       ? (async () => {
           console.log(`      🦋 bluesky thread: publishing ${pendingBlueskyThread.replies.length} bucket replies…`);
@@ -878,6 +883,7 @@ async function main() {
                 imageBuffer: buffer,
                 imageAlt: r.alt,
               });
+              ownReplyIds.bluesky.push(reply.uri);
               prev = { uri: reply.uri, cid: reply.cid };
               ok++;
             } catch (err) {
@@ -902,6 +908,9 @@ async function main() {
           const lib = await import(`./lib/platforms/${pending.platform}.mjs`);
           const replyFn = pending.platform === "x" ? lib.replyToTweet : lib.replyToThread;
           const replyRes = await replyFn(pending.parentId, pending.replyText);
+          if (replyRes?.id && ownReplyIds[pending.platform]) {
+            ownReplyIds[pending.platform].push(replyRes.id);
+          }
           console.log(`      🌱 ${pending.platform}: seed reply ${replyRes.id}`);
         } catch (err) {
           console.log(`      ⚠️  ${pending.platform}: seed reply failed: ${err.message}`);
@@ -923,6 +932,9 @@ async function main() {
           const lib = await import(`./lib/platforms/${pending.platform}.mjs`);
           const replyFn = pending.platform === "x" ? lib.replyToTweet : lib.replyToThread;
           const replyRes = await replyFn(pending.parentId, pending.replyText);
+          if (replyRes?.id && ownReplyIds[pending.platform]) {
+            ownReplyIds[pending.platform].push(replyRes.id);
+          }
           console.log(`      🔗 ${pending.platform}: self-reply ${replyRes.id}`);
         } catch (err) {
           console.log(`      ⚠️  ${pending.platform}: self-reply failed: ${err.message}`);
@@ -934,6 +946,16 @@ async function main() {
     // iteration complete. Otherwise the publisher could exit while replies
     // are still firing.
     if (blueskyThreadPromise) await blueskyThreadPromise;
+
+    // Stash own-reply IDs on the corresponding publishedTo entry so the
+    // engagement collector can exclude them from reply tallies. Each entry
+    // is the platform's parent post; ownReplies holds the IDs we authored
+    // as replies underneath it (URL self-reply, seed reply, Bluesky thread).
+    for (const [platform, ids] of Object.entries(ownReplyIds)) {
+      if (!ids.length) continue;
+      const entry = publishResults.find((r) => r.platform === platform && r.ok);
+      if (entry) entry.ownReplies = ids;
+    }
 
     // ── Evening bump queue (tonight-pick only) ─────────────────────────────
     // The publisher fires a follow-up reply ~30 min before event time on

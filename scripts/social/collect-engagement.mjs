@@ -220,9 +220,11 @@ async function bskyPaged(path, params, token, key) {
   return out;
 }
 
-async function fetchBlueskyEngagement(uri) {
+async function fetchBlueskyEngagement(uri, ownReplies = []) {
   const session = await bskySession();
   const token = session.accessJwt;
+  const ownHandle = (process.env.BLUESKY_HANDLE || "").toLowerCase();
+  const ownUriSet = new Set(ownReplies);
 
   // Likes
   const likesRaw = await bskyPaged("app.bsky.feed.getLikes", { uri }, token, "likes");
@@ -263,13 +265,22 @@ async function fetchBlueskyEngagement(uri) {
       for (const r of node?.replies || []) {
         const post = r?.post;
         if (post) {
-          replies.push({
-            author: post.author?.handle || "unknown",
-            displayName: post.author?.displayName || null,
-            at: post.record?.createdAt || post.indexedAt || null,
-            text: post.record?.text || "",
-            permalink: bskyPermalink(post.uri),
-          });
+          // Exclude our own replies (URL self-reply + bucket-thread replies)
+          // from the engagement tally so Social Signal shows real audience
+          // engagement, not publisher noise. Belt + suspenders: filter by
+          // author handle AND by the tracked URI set from publish-from-queue.
+          const replyAuthor = (post.author?.handle || "").toLowerCase();
+          const isOwn =
+            (ownHandle && replyAuthor === ownHandle) || ownUriSet.has(post.uri);
+          if (!isOwn) {
+            replies.push({
+              author: post.author?.handle || "unknown",
+              displayName: post.author?.displayName || null,
+              at: post.record?.createdAt || post.indexedAt || null,
+              text: post.record?.text || "",
+              permalink: bskyPermalink(post.uri),
+            });
+          }
         }
         if (r?.replies?.length) walk(r);
       }
@@ -314,12 +325,14 @@ async function fetchThreadsEngagement(mediaId) {
 
   // Reply contents (when permitted)
   const replies = [];
+  let repliesFetched = false;
   try {
     const fields = "id,text,username,timestamp,permalink,is_reply_owned_by_me";
     const r = await fetch(
       `${THREADS_API}/${mediaId}/replies?fields=${fields}&access_token=${token}`
     );
     if (r.ok) {
+      repliesFetched = true;
       const data = await r.json();
       for (const reply of data.data || []) {
         if (reply.is_reply_owned_by_me) continue;
@@ -332,6 +345,13 @@ async function fetchThreadsEngagement(mediaId) {
       }
     }
   } catch {}
+
+  // Insights.replies counts EVERY reply including our own URL/seed self-
+  // replies. The replies array filters those out via is_reply_owned_by_me,
+  // so re-derive the count from the filtered array. Only override when the
+  // array fetch actually succeeded — a transient 5xx shouldn't zero the
+  // count we got from insights.
+  if (repliesFetched) counts.replies = replies.length;
 
   return {
     counts,
@@ -395,7 +415,7 @@ async function xGet(url, queryParams, creds) {
   return res.json();
 }
 
-async function fetchXEngagement(tweetId, creds) {
+async function fetchXEngagement(tweetId, creds, ownReplies = []) {
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0, impressions: 0 };
   let bookmarks = 0;
 
@@ -411,6 +431,13 @@ async function fetchXEngagement(tweetId, creds) {
     counts.reposts = pm.retweet_count ?? 0;
     counts.quotes = pm.quote_count ?? 0;
     counts.replies = pm.reply_count ?? 0;
+    // X's free-tier API only returns reply COUNT, not individual replies, so
+    // we can't filter by author. Instead the publisher persists the IDs of
+    // every reply we authored (URL self-reply + seed reply) on the published
+    // entry; subtract that here. Clamp at 0 in case of state drift.
+    if (ownReplies.length && counts.replies > 0) {
+      counts.replies = Math.max(0, counts.replies - ownReplies.length);
+    }
     bookmarks = pm.bookmark_count ?? 0;
     counts.impressions = pm.impression_count ?? data.data?.non_public_metrics?.impression_count ?? 0;
   } catch (err) {
@@ -653,7 +680,7 @@ async function processPost(post, xCreds) {
           const uri = entry.uri || entry.postId;
           if (!uri) break;
           permalink = bskyPermalink(uri);
-          result = await fetchBlueskyEngagement(uri);
+          result = await fetchBlueskyEngagement(uri, entry.ownReplies || []);
           break;
         }
         case "threads": {
@@ -665,7 +692,7 @@ async function processPost(post, xCreds) {
         case "x": {
           if (!xCreds) break;
           permalink = `https://x.com/southbaytoday/status/${id}`;
-          result = await fetchXEngagement(id, xCreds);
+          result = await fetchXEngagement(id, xCreds, entry.ownReplies || []);
           break;
         }
         case "instagram": {
