@@ -73,7 +73,7 @@ PLATFORM-NATIVE VOICE (write each variant like you live on that platform — don
 - X: punchy single thought. 1-2 sentences max. Sensory hook or a number up front. Tag the X @handle if provided. No hashtags. The post must read like a complete thought even without a link.
 - Threads: conversational, voice of a friend texting. Allow yourself a paragraph. Tag Threads @handles if provided. 2-3 hashtags at the end (Threads pays attention to topic/hashtag pairs).
 - Bluesky: short and direct. Include the URL at the end. 2-3 hashtags at the end (#SouthBay #SanJose etc — Bluesky discovery uses them). Tag bsky @handles if provided.
-- Facebook: community-board voice. "If you're around [city] tonight..." / "Heads up [neighborhood] folks". Conversational, slightly longer than X. No hashtags. Tag FB @handles if provided.
+- Facebook: community-board voice. "If you're around [city] tonight..." / "Heads up [neighborhood] folks". Conversational, slightly longer than X. No hashtags. NO @-tags — FB only renders "@PageName" as a clickable mention via structural API tagging that we don't do, so plain venue names only.
 - Instagram: visual storytelling. Hook in the first line (that's what shows above "more"). Tag IG @handles if provided. After a line break at the bottom, 8-12 hashtags (mix of city, topic, discovery — #ThingsToDoInSanJose #SouthBayEvents etc).
 - Mastodon: like Bluesky but slightly more substance allowed. URL + 1-2 hashtags.
 
@@ -170,7 +170,7 @@ Write six variants — each NATIVE to its platform. Don't translate; rewrite. Th
 
 3. Bluesky (max 270 chars INCLUDING URL + hashtags) — short and direct. Include the full URL at the end. Tag bsky @handles if provided. End with 2-3 hashtags (#SouthBay #SanJose etc).
 
-4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. "If you're around [city] tonight..." or "Heads up [neighborhood] folks". Slightly longer and warmer than X. Tag FB @handles if provided.
+4. Facebook (max 500 chars, NO URL, no hashtags, NO @-tags) — community-board voice. "If you're around [city] tonight..." or "Heads up [neighborhood] folks". Slightly longer and warmer than X. Use plain venue names — FB doesn't render text @-mentions as clickable.
 
 5. Instagram (max 1800 chars, NO URL) — caption for a photo post. Hook in the FIRST LINE (it's what shows above "more"). Tag IG @handles if provided. After a blank line at the end, 8-12 hashtags (mix of city + topic + discovery tags like #ThingsToDoInSanJose #SouthBayEvents #BayAreaEvents).
 
@@ -607,7 +607,7 @@ This is ${slotCount} ${slotWord}. Write seven main variants — each NATIVE to i
 
 3. Bluesky (max 270 chars INCLUDING URL + hashtags) — short tease, include the URL. 2-3 hashtags. Tag bsky @handles if provided.
 
-4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. Walk through 3-4 ideas. Tag FB @handles if provided.
+4. Facebook (max 500 chars, NO URL, no hashtags, NO @-tags) — community-board voice. Walk through 3-4 ideas. Plain venue names — FB doesn't render text @-mentions as clickable.
 
 5. Instagram (max 1800 chars, NO URL) — IG caption. Hook in the first line. Walk through the ideas by bucket. Tag IG @handles if provided. End with 8-12 hashtags after a blank line.
 
@@ -716,7 +716,7 @@ Write seven MAIN variants — each NATIVE to its platform (don't translate):
 
 3. Bluesky (max 270 chars INCLUDING URL + hashtags) — include URL. 2-3 hashtags. Tag bsky @handles if provided.
 
-4. Facebook (max 500 chars, NO URL, no hashtags) — community-board voice. Tag FB @handles if provided.
+4. Facebook (max 500 chars, NO URL, no hashtags, NO @-tags) — community-board voice. Plain venue names — FB doesn't render text @-mentions as clickable.
 
 5. Instagram (max 1800 chars, NO URL) — caption, hook first line. Tag IG @handles if provided. 8-12 hashtags after a blank line at end.
 

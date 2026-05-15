@@ -415,13 +415,12 @@ export async function publish(text, imageBuffer = null, imageAlt = "") {
  * @param {string} text
  * @param {string[]} options 2-4 options, each ≤25 chars
  * @param {Buffer|null} imageBuffer
- * @param {string} imageAlt
+ * X's API rejects polls with media attached ("You can only provide one of
+ * poll or media."), so we always post the poll text-only. Callers may still
+ * pass an imageBuffer for API compatibility — we drop it.
+ *
  * @param {number} durationMinutes
  */
-export async function publishPoll(text, options, imageBuffer = null, imageAlt = "", durationMinutes = 1440) {
-  let mediaId = null;
-  if (imageBuffer) {
-    mediaId = await uploadMedia(imageBuffer, "image/png", imageAlt);
-  }
-  return postPoll(text, options, durationMinutes, mediaId);
+export async function publishPoll(text, options, _imageBuffer = null, _imageAlt = "", durationMinutes = 1440) {
+  return postPoll(text, options, durationMinutes, null);
 }

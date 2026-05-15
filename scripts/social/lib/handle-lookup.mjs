@@ -230,7 +230,11 @@ export function applyTagSubstitutions(variants, item) {
   const targets = collectTargets(item);
   if (targets.length === 0) return variants;
 
-  const platforms = ["x", "threads", "bluesky", "facebook", "instagram", "mastodon"];
+  // Facebook is intentionally excluded — its API requires structural page-ID
+  // tagging (the "tags" field on the post object) for an @-mention to render
+  // as a clickable link. Plain "@PageName" text on FB just sits there as
+  // ugly literal text and does nothing. Keep FB venue names plain.
+  const platforms = ["x", "threads", "bluesky", "instagram", "mastodon"];
   for (const platform of platforms) {
     if (!variants[platform]) continue;
     let text = variants[platform];
@@ -279,6 +283,14 @@ export function addToHandles(section, displayName, handles, meta = {}) {
 
   const key = String(displayName).toLowerCase().trim();
   if (key.length < 3) return;
+
+  // Belt-and-suspenders: even if the source URL slipped past
+  // isThirdPartyEventListing, never persist aggregator handles. The mis-tag
+  // damage is far worse than the missed-tag downside (gaps file picks up
+  // the unresolved name for manual review).
+  if (handlesAreAggregator(handles)) {
+    return;
+  }
 
   let data;
   try {
@@ -337,26 +349,28 @@ export async function resolveItemHandles(item) {
     ops.push({ name, url, section });
   };
 
-  // Day-plan cards: each card has its own venue URL. Most reliable signal.
+  // Day-plan cards: each card has its own venue URL. Most reliable signal —
+  // when it's the venue's own site. Skip aggregator/community-calendar URLs
+  // because the scraper grabs the LISTER's social handles (footer/header),
+  // not the venue's. Those mis-tags then leak into every future post.
   if (Array.isArray(item.cards)) {
     for (const card of item.cards) {
-      tryAdd(card?.name, card?.url, "venues");
+      if (!card?.name || !card?.url) continue;
+      if (isThirdPartyEventListing(card.url)) continue;
+      tryAdd(card.name, card.url, "venues");
     }
   }
 
   // Single-item / tonight-pick: title is usually the performer/event name;
-  // event URL often links the performer's social. Venue handles need a
-  // separate lookup (places.json) — defer for now.
+  // event URL often links the performer's social. Skip aggregator URLs for
+  // the same reason as above.
   if (item.title && item.url && (!item.venue || item.title !== item.venue)) {
-    tryAdd(item.title, item.url, "performers");
-  }
-  if (item.venue && item.url) {
-    // If the URL looks like the venue's own site (not a third-party event
-    // listing), it's worth scraping for venue social links.
-    const isThirdPartyListing = /eventbrite|ticketweb|ticketmaster|stubhub|axs\.com|facebook\.com|sjsu\.edu\/calendar/i.test(item.url);
-    if (!isThirdPartyListing) {
-      tryAdd(item.venue, item.url, "venues");
+    if (!isThirdPartyEventListing(item.url)) {
+      tryAdd(item.title, item.url, "performers");
     }
+  }
+  if (item.venue && item.url && !isThirdPartyEventListing(item.url)) {
+    tryAdd(item.venue, item.url, "venues");
   }
 
   if (ops.length === 0) return;
@@ -425,7 +439,32 @@ function sectionToKind(section) {
 }
 
 function isThirdPartyEventListing(url) {
-  return /eventbrite|ticketweb|ticketmaster|stubhub|axs\.com|sjsu\.edu\/calendar|bibliocommons/i.test(String(url || ""));
+  // Aggregators + community calendars where the page's footer/header social
+  // links belong to the LISTER, not the event/performer. Scraping these for
+  // handles produced wrong tags like @ticketweb on a punk-night card and
+  // @sjdowntown on a restaurant. If you add a domain here, also consider
+  // whether existing _auto entries need purging (see purge-aggregator-handles).
+  return /eventbrite|ticketweb|ticketmaster|stubhub|axs\.com|sjsu\.edu\/calendar|bibliocommons|sjdowntown\.com\/event|sanjose\.org\/event|do408\.com|sfgate\.com\/event|funcheap/i.test(
+    String(url || "")
+  );
+}
+
+// Handles that belong to event aggregators / community calendars themselves
+// (NOT to the events listed on them). If a Tier-1 URL scrape returns any of
+// these as a handle, we silently drop the resolution rather than mis-tag a
+// specific event with the lister's social account.
+const AGGREGATOR_HANDLES = new Set([
+  "ticketweb", "eventbrite", "ticketmaster", "stubhub", "axs",
+  "sjdowntown", "sj_downtown", "bibliocommons", "do408", "funcheap",
+  "sanjoseca", // generic city-portal account that often gets attributed
+]);
+
+function handlesAreAggregator(handles) {
+  if (!handles) return false;
+  return Object.values(handles).some((v) => {
+    if (typeof v !== "string") return false;
+    return AGGREGATOR_HANDLES.has(v.toLowerCase());
+  });
 }
 
 // ---------------------------------------------------------------------------
