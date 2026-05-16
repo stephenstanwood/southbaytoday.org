@@ -1492,12 +1492,14 @@ async function fetchStanfordEvents() {
 // events. `osher` covers SCU's Osher Lifelong Learning Institute, a
 // paid-membership program for adults 50+ whose listings ("Tech SIG",
 // "Volunteer Luncheon Reception") are members-only.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher)\//i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
 // `scuaa` = SCU Accounting Association (student club); `bva café` /
 // `bronco ventures accelerator` = SCU's internal startup accelerator program
 // (cohort-only events). Both leaked through cycle 146's broader SCU filter
 // because the title patterns are unique to those internal programs.
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
+// `alumni panel` is consistently a student career-prep event ("hear from
+// alumni at Firm X") — surfaced via SCU Accounting Association feed.
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
