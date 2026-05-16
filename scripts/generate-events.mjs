@@ -614,6 +614,11 @@ function cleanTitle(title) {
     // Palo Alto Library titles ("Online Author Talk : Nir Eyal").
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/\s{2,}/g, " ")
+    // Expand concert-billing "w/" shorthand to "with". Ticketmaster lineup
+    // titles like "Dana Carvey w/ David Spade" or "Kaleo w/ Dawes" arrive as
+    // raw scraper output; requiring a trailing space means "w/o" (without)
+    // and URL fragments stay untouched.
+    .replace(/\bw\/\s+/gi, "with ")
     // Strip BiblioCommons "External Event:" prefix (Palo Alto Library tags
     // events organized by outside groups — venue + source already convey
     // that, the prefix is just visible noise in display titles).
