@@ -754,8 +754,13 @@ function cleanTitle(title) {
       }
     }
   }
-  // Strip trailing time annotations: "Good Friday Liturgy 3 PM" → "Good Friday Liturgy"
-  t = t.replace(/\s+\d{1,2}(?::\d{2})?\s*(?:AM|PM)\s*$/i, "");
+  // Strip trailing time annotations: "Good Friday Liturgy 3 PM" → "Good Friday
+  // Liturgy". Skip when preceded by a preposition that makes the time
+  // semantically load-bearing in the title — Los Gatos Library publishes
+  // "Library Closed from 2pm" and stripping the "2pm" leaves the orphan tail
+  // "Library Closed from". Same hazard for until/till/by/after/before/since/
+  // past, plus "to"/"at" where stripping the time would orphan the preposition.
+  t = t.replace(/(?<!\b(?:from|until|till|til|by|after|before|since|past|to|at)\b)\s+\d{1,2}(?::\d{2})?\s*(?:AM|PM)\s*$/i, "");
   // Strip trailing date/time annotations that East West Bookshop's Squarespace
   // export (and similar sources) appends to titles — examples:
   //   "Seated Sound Bath • Thurs. June 11th •"
