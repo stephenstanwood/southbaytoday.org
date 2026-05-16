@@ -701,6 +701,25 @@ function cleanTitle(title) {
   // Strip non-Latin bilingual suffix after " / ":
   // "Bilingual Family Storytime / 中英雙語故事時間" → "Bilingual Family Storytime"
   t = t.replace(/\s*\/\s*[\s\S]*[\u2E80-\u9FFF\uF900-\uFAFF][\s\S]*$/, "");
+  // Strip bilingual translation suffix joined by hyphen (often no spaces, SJPL
+  // style): "Vietnamese Storytime & Craft-Kể chuyện và làm thủ công…". Triggers
+  // on Latin Extended Additional (U+1E00-U+1EFF, Vietnamese-specific
+  // diacritics) or CJK in the tail, and requires the tail to have noticeably
+  // more non-ASCII than the head so titles where the diacritics live in the
+  // head ("René Liu - Final Call 2026 Live Tour") stay untouched.
+  {
+    const dashMatch = t.match(/^(.+?)\s*[-–—]\s*(.+)$/);
+    if (dashMatch) {
+      const head = dashMatch[1];
+      const tail = dashMatch[2];
+      const nonAscii = /[\u1E00-\u1EFF\u2E80-\u9FFF\uF900-\uFAFF]/g;
+      const tailHits = (tail.match(nonAscii) || []).length;
+      const headHits = (head.match(nonAscii) || []).length;
+      if (tailHits >= 2 && tailHits > headHits && head.trim().length >= 10) {
+        t = head.trim();
+      }
+    }
+  }
   // Strip trailing time annotations: "Good Friday Liturgy 3 PM" → "Good Friday Liturgy"
   t = t.replace(/\s+\d{1,2}(?::\d{2})?\s*(?:AM|PM)\s*$/i, "");
   // Strip trailing date/time annotations that East West Bookshop's Squarespace
@@ -755,8 +774,11 @@ function stripRedundantVenueSuffix(title, venue) {
   // and stray "Branch"/"Library" tokens on either side so SJPL titles like
   // "Tech Mentor at Edenvale Branch" with venue="Edenvale Library" both
   // collapse to the branch token "Edenvale" and match.
+  // Greedy base group + /i flag so we match the LAST " at " (handles titles
+  // like "SJSU Alumni Night at the SJ Giants at Excite Ballpark") and
+  // tolerate capitalized "At" from sources like SJPL.
   if (venue && typeof venue === "string") {
-    const m = t.match(/^(.+?)\s+at\s+(.+?)\s*$/);
+    const m = t.match(/^(.+)\s+at\s+(.+?)\s*$/i);
     if (m) {
       const [, base, suffix] = m;
       const norm = (s) =>
@@ -767,7 +789,7 @@ function stripRedundantVenueSuffix(title, venue) {
           .replace(/\b(branch|library)\b/gi, " ")
           .replace(/\s+/g, " ")
           .trim();
-      if (norm(suffix) === norm(venue) && base.trim().length >= 10) {
+      if (norm(suffix) === norm(venue) && base.trim().length >= 6) {
         t = base.trim();
       } else {
         // Subtitle-aware: "<Title> at <Venue> - <Subtitle>" or with em/en-dash.
@@ -779,7 +801,7 @@ function stripRedundantVenueSuffix(title, venue) {
           const [, suffixVenue, subtitle] = dashMatch;
           if (
             norm(suffixVenue) === norm(venue) &&
-            base.trim().length >= 10 &&
+            base.trim().length >= 6 &&
             subtitle.trim().length >= 4
           ) {
             t = `${base.trim()} — ${subtitle.trim()}`;
