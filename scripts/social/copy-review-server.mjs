@@ -1803,10 +1803,10 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   }
   html += '</div>';
 
-  // Midjourney prompt — pre-generated, click anywhere on the textarea to copy.
-  // Distillation runs in the background as soon as the slot expands (or earlier,
-  // at approve-copy time) so it's sitting there ready when Stephen wants it.
-  if (slot.imageUrl) {
+  // Midjourney prompt — tonight-pick only (evening events). Pre-generated;
+  // click anywhere on the textarea to copy. Distillation runs in the background
+  // as soon as the slot expands so it's sitting there ready when Stephen wants it.
+  if (slot.imageUrl && slotType === 'tonight-pick') {
     const hasMj = typeof slot.mjPrompt === 'string' && slot.mjPrompt.length > 0;
     const mjId = 'mj-' + dateStr + '-' + slotType;
     html += '<div class="mj-prompt-box' + (hasMj ? '' : ' loading') + '" id="' + mjId + '" data-date="' + dateStr + '" data-slot="' + slotType + '">';
