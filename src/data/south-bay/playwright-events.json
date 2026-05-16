@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-15T15:08:15.976Z",
+    "generatedAt": "2026-05-16T15:08:14.650Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 20,
     "sourceCount": 131,
     "sources": [
-      "Mountain View Public Library (15)",
+      "Mountain View Public Library (16)",
       "Los Gatos Library (30)",
-      "San Jose Jazz (5)",
+      "San Jose Jazz (4)",
       "San Jose Museum of Art (6)",
       "Linden Tree Books (8)",
       "Hicklebee's (2)",
@@ -20,23 +20,6 @@
     ]
   },
   "events": [
-    {
-      "id": "700e16dd837b",
-      "title": "Amplify: Bio Bridge Yeast",
-      "date": "2026-05-15",
-      "displayDate": "Fri, May 15",
-      "time": "4:30 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16279655",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "4f3f01102947",
       "title": "Drop-in Bike Clinic",
@@ -276,6 +259,40 @@
       "kidFriendly": false
     },
     {
+      "id": "cae7032294f1",
+      "title": "Breastfeeding Before Birth",
+      "date": "2026-05-21",
+      "displayDate": "Thu, May 21",
+      "time": "6:00 pm",
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://mountainview.libcal.com/event/16448154",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "652fd84a6bc9",
+      "title": "Villa Siena",
+      "date": "2026-05-22",
+      "displayDate": "Fri, May 22",
+      "time": "10:00 am",
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://mountainview.libcal.com/event/15921541",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "201d69b74b36",
       "title": "Girls Who Code",
       "date": "2026-05-16",
@@ -472,7 +489,7 @@
       "venue": "Los Gatos Library",
       "address": "110 E Main St, Los Gatos, CA 95030",
       "city": "los-gatos",
-      "category": "community",
+      "category": "family",
       "cost": "free",
       "description": "",
       "url": "https://losgatosca.libcal.com/event/16660128",
@@ -786,23 +803,6 @@
       "kidFriendly": true
     },
     {
-      "id": "7259654bf9bf",
-      "title": "SJZ Break Room Jazz Jam Ft. Daru Jones",
-      "date": "2026-05-15",
-      "displayDate": "Fri, May 15",
-      "time": "7pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-ft-daru-jones/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
       "id": "a53dc326dfda",
       "title": "The Hang Ft. DaruTronics and Special Guests",
       "date": "2026-05-16",
@@ -1021,7 +1021,7 @@
       "description": "",
       "url": "mailto:ShuHsienHo@gmail.com",
       "source": "Linden Tree Books",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "4c6752d5e11a",
@@ -1055,7 +1055,7 @@
       "description": "",
       "url": "mailto:ShuHsienHo@gmail.com",
       "source": "Linden Tree Books",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "de6e969a6acb",
@@ -1072,7 +1072,7 @@
       "description": "",
       "url": "mailto:ShuHsienHo@gmail.com",
       "source": "Linden Tree Books",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "93dde6254a5e",
@@ -1106,7 +1106,7 @@
       "description": "",
       "url": "mailto:ShuHsienHo@gmail.com",
       "source": "Linden Tree Books",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "3f43d34ba65e",
@@ -1424,7 +1424,7 @@
       "venue": "History Park",
       "address": "635 Phelan Ave., San José\nCost: Free\nNote: No Dogs Allowed, Service Animals ONLY",
       "city": "san-jose",
-      "category": "community",
+      "category": "family",
       "cost": "paid",
       "description": "",
       "url": "https://www.italianfamilyfestasj.org/",
@@ -1441,7 +1441,7 @@
       "venue": "History Park",
       "address": "635 Phelan Ave., San José\nCost: Free\nNote: No Dogs Allowed, Service Animals ONLY",
       "city": "san-jose",
-      "category": "community",
+      "category": "family",
       "cost": "paid",
       "description": "",
       "url": "https://www.italianfamilyfestasj.org/",
@@ -2243,7 +2243,7 @@
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://openspacetrust.org/event/bair-island-volunteer-workday-12/",
+      "url": "https://openspacetrust.org/event/bair-island-volunteer-workday-06132026/",
       "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
