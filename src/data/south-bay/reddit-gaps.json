@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-16T19:18:34.363Z",
+    "generatedAt": "2026-05-16T23:18:28.556Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 18,
-    "placesMatched": 2,
-    "placeGaps": 16,
-    "eventsExtracted": 5,
+    "placesExtracted": 13,
+    "placesMatched": 4,
+    "placeGaps": 9,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,89 +19,50 @@
       "name": "Levi's Stadium",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting World Cup USA games, traffic concerns for attendees",
+      "context": "World Cup USA game venue",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
       ]
     },
     {
       "name": "San Jose Diridon Station",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "transit hub, overnight bus service to LA",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "Lanna Thai",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "near Karate Carl's new location, serves Khao Soi",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "Luckys",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "location where Karate Carl works, plaza near Lanna Thai",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "BOA",
-      "city": "San Jose",
       "kind": "service",
-      "context": "bank across from old Carl's Jr., Karate Carl's new location",
+      "context": "transit hub with overnight bus service to LA",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+      ]
+    },
+    {
+      "name": "Petco Sunnyvale",
+      "city": "Sunnyvale",
+      "kind": "other",
+      "context": "adoption center with kittens and cats available",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
       ]
     },
     {
       "name": "Yoshi's",
       "city": "",
       "kind": "venue",
-      "context": "jazz/blues concert venue hosting Elvin Bishop Trio",
+      "context": "jazz and blues concert venue hosting Elvin Bishop Trio",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
         "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
-        "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
-      ]
-    },
-    {
-      "name": "Petco Sunnyvale",
-      "city": "Sunnyvale",
-      "kind": "retail",
-      "context": "adoption center with kittens available for adoption",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
-        "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
       ]
@@ -110,11 +71,11 @@
       "name": "Felipe's",
       "city": "Mountain View",
       "kind": "retail",
-      "context": "fruit and vegetable stand with reasonably priced produce",
+      "context": "veggie and fruit stand with affordable produce",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
         "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
       ]
@@ -123,163 +84,101 @@
       "name": "Oakmont Market",
       "city": "Mountain View",
       "kind": "retail",
-      "context": "fruit and vegetable stand with reasonably priced produce",
+      "context": "fruit and veggie stand with affordable produce options",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
         "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
-      ]
-    },
-    {
-      "name": "HRS Hop Shop",
-      "city": "",
-      "kind": "retail",
-      "context": "House Rabbit Society store with spring items",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "Hankook Market",
-      "city": "Sunnyvale",
-      "kind": "retail",
-      "context": "Korean market recently renovated with improved layout",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "H Mart",
-      "city": "",
-      "kind": "retail",
-      "context": "Korean market with good vegetables in South Bay",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "Jagalchi",
-      "city": "",
-      "kind": "retail",
-      "context": "Korean market, quality reportedly declined",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "Angus Meat Market",
-      "city": "",
-      "kind": "retail",
-      "context": "meat market recommended for Korean groceries",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "Ranch 99",
-      "city": "",
-      "kind": "retail",
-      "context": "market shopped alongside HMart for Korean items",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
-        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
       ]
     },
     {
       "name": "Campbell Skatepark",
       "city": "Campbell",
       "kind": "venue",
-      "context": "recently reopened skatepark for skateboarding",
+      "context": "grand reopening of skateboarding facility",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
         "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ]
+    },
+    {
+      "name": "Pruneyard",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "shopping center reopened with drive-through area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ]
+    },
+    {
+      "name": "Stanford Hospital",
+      "city": "Palo Alto",
+      "kind": "service",
+      "context": "medical facility for appointments",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "World Cup USA game",
-      "when": "timing unclear from post",
+      "when": "July 2",
       "city": "San Jose",
-      "context": "soccer match at Levi's Stadium, expected game end 7:15pm",
+      "context": "FIFA World Cup match at Levi's Stadium",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "Science Day at Great America",
-      "when": "date mentioned as today in post",
-      "city": "Santa Clara",
-      "context": "school field trip day at theme park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "PWHL expansion team announcement",
-      "when": "Tuesday expected",
-      "city": "San Jose",
-      "context": "new professional women's hockey league team for San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
       ]
     },
     {
       "name": "Elvin Bishop Trio Concert",
-      "when": "Saturday night",
+      "when": "tomorrow night",
       "city": "",
-      "context": "jazz/blues concert at Yoshi's with available tickets",
+      "context": "jazz and blues concert at Yoshi's venue",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
         "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
       ]
     },
     {
-      "name": "House Rabbit Society Spring Open House",
-      "when": "Saturday, May 16th",
-      "city": "",
-      "context": "family-friendly event with rabbits, activities, refreshments",
+      "name": "PWHL Expansion Announcement",
+      "when": "Tuesday",
+      "city": "San Jose",
+      "context": "San Jose announced as final PWHL expansion location",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
         "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ]
+    },
+    {
+      "name": "Pruneyard Reopening",
+      "when": "afternoon at 4 pm",
+      "city": "Campbell",
+      "context": "shopping center drive-through and play area reopen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     }
   ],
@@ -288,33 +187,59 @@
       "name": "Great America",
       "city": "Santa Clara",
       "kind": "venue",
-      "context": "theme park, BTS member Jin visited, potential closure threat",
+      "context": "theme park visited by BTS member Jin",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tejl9h/doable_or_am_i_crazy/",
         "https://www.reddit.com/r/SanJoseSharks/comments/1tefmev/report_san_jose_to_get_pwhl_expansion_team/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
         "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
         "https://www.reddit.com/r/bayarea/comments/1tewjty/more_kittens_than_you_can_count_at_petco/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1tev2ie/low_income_vacancies_san_josecampbell_border/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/"
       ],
       "matchedName": "Great America Amphitheater"
     },
     {
-      "name": "Mega Mart",
-      "city": "East Palo Alto",
-      "kind": "retail",
-      "context": "large Korean supermarket with groceries and prepared foods",
+      "name": "Peet's",
+      "city": "Campbell",
+      "kind": "cafe",
+      "context": "location at Pruneyard shopping center",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
-        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/",
         "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ],
-      "matchedName": "MEGA MART"
+      "matchedName": "Peet's Coffee"
+    },
+    {
+      "name": "Santana Row",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "shopping and dining destination",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ],
+      "matchedName": "Santana Row"
+    },
+    {
+      "name": "SAP Center",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "home of San Jose Sharks hockey team",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tedn7t/san_jose_expected_to_be_officially_announced_as/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tf0ql6/in_need_of_size_5_diapers/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ],
+      "matchedName": "SAP Center"
     }
   ],
   "eventMatches": []
