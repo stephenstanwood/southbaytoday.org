@@ -462,6 +462,31 @@ function looksCancelled(description, blurb) {
   if (!text) return false;
   return CANCELLED_BODY_PATTERNS.some((p) => p.test(text));
 }
+
+// Ticketmaster's `pleaseNote` field is venue policy boilerplate (bag rules,
+// prohibited items, clear-bag requirements), not event-specific info. When
+// `info` is empty the mapper falls through to `pleaseNote` and the resulting
+// "description" is a security blurb like "Attention! - SAP Center enforces a
+// restricted bag policy for all events…", which then poisons the Haiku blurb
+// resolver's input and surfaces in search hits. Detect and drop.
+const VENUE_POLICY_PATTERNS = [
+  /\b(?:restricted |clear[- ])?bag\s+(?:policy|rule|check|size|requirement)/i,
+  /\bbags?\s+(?:larger than|must be|are\s+(?:not\s+)?(?:permitted|allowed))/i,
+  /\b(?:prohibited|allowed)\s+items?\b/i,
+  /\b(?:weapons?|firearms?|outside\s+food|coolers?)\s+(?:are\s+)?(?:strictly\s+)?prohibit/i,
+  /\benforces?\s+a\s+(?:restricted|strict)/i,
+  /\bmetal\s+detect/i,
+];
+
+function looksLikeVenuePolicy(text) {
+  if (!text) return false;
+  // Strip leading "Please Note:" / "Attention!" markers before scoring — they
+  // wrap the actual policy text but don't carry signal themselves.
+  const stripped = text.replace(/^\s*(?:please note[:\-]?\s*|attention[!:\-]?\s*)+/gi, "").trim();
+  if (!stripped) return true;
+  return VENUE_POLICY_PATTERNS.some((p) => p.test(stripped));
+}
+
 const VIRTUAL_PATTERNS = [
   /\bvirtual\b/i,
   /\bvia zoom\b/i,
@@ -2556,6 +2581,18 @@ function mapTicketmasterEvent(e) {
   const blurbText = `${e.info || ""} ${e.pleaseNote || ""}`.trim();
   if (/^\s*(event\s+)?parking\b/i.test(blurbText)) return null;
 
+  // Prefer `info` (real event copy). Fall through to `pleaseNote` only if it
+  // isn't venue-policy boilerplate — at SAP Center and Tech CU Arena the
+  // pleaseNote is bag-policy text that has nothing to do with the show.
+  const rawInfo = (e.info || "").trim();
+  const rawNote = (e.pleaseNote || "").trim();
+  let descCandidate = "";
+  if (rawInfo && !looksLikeVenuePolicy(rawInfo)) {
+    descCandidate = rawInfo;
+  } else if (rawNote && !looksLikeVenuePolicy(rawNote)) {
+    descCandidate = rawNote;
+  }
+
   return {
     id: `tm-${e.id}`,
     title: normalizeTicketmasterTitle(e.name),
@@ -2569,7 +2606,7 @@ function mapTicketmasterEvent(e) {
     category: inferCategory(e.name, genre, segment),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
-    description: truncate(e.info || e.pleaseNote || ""),
+    description: truncate(descCandidate),
     url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",
     kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
