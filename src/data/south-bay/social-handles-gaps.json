@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Venues/orgs we tried to tag but couldn't find in social-handles.json. Auto-populated at gen time. Resolve by adding entries to social-handles.json (this file's entries are then dropped on next run).",
-    "lastUpdated": "2026-05-14"
+    "lastUpdated": "2026-05-16"
   },
   "gaps": {
     "central park library edinger room": {
@@ -545,6 +545,368 @@
         }
       ],
       "lastSeen": "2026-05-14"
+    },
+    "mariposa park": {
+      "displayName": "Mariposa Park",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "mountain-view",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "live irish seisiun": {
+      "displayName": "Live Irish Seisiún",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "entertainment",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "rodin sculpture garden": {
+      "displayName": "Rodin Sculpture Garden",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "museum",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "community equity assessment forum": {
+      "displayName": "Community Equity Assessment Forum",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "martys donuts": {
+      "displayName": "Marty's Donuts",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "sunnyvale",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "community preservation lab scanning service": {
+      "displayName": "Community Preservation Lab Scanning Service",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "mountain-view",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "the zeros johnny the backstabbers": {
+      "displayName": "The Zeros, Johnny, The Backstabbers",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "entertainment",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "art after dark": {
+      "displayName": "Art After Dark",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "orange square": {
+      "displayName": "Orange Square",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "cupertino",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "remembering": {
+      "displayName": "Remembering",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "arts",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "katana sushi sake": {
+      "displayName": "Katana Sushi & Sake",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "sunnyvale",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "live music": {
+      "displayName": "Live Music",
+      "firstSeen": "2026-05-16",
+      "occurrences": 4,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        },
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "entertainment",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "chinese americans fight for civil liberties a legal history of resistance and civil disobedience": {
+      "displayName": "Chinese Americans' Fight for Civil Liberties: A Legal History of Resistance and Civil Disobedience",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "oflahertys irish pub": {
+      "displayName": "O'Flaherty's Irish Pub",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "karaoke night": {
+      "displayName": "Karaoke Night",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "five points cocktail bar": {
+      "displayName": "Five Points Cocktail Bar",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "jazz up your monday night": {
+      "displayName": "Jazz Up Your Monday Night",
+      "firstSeen": "2026-05-16",
+      "occurrences": 2,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        },
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "entertainment",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "we olive wine bar": {
+      "displayName": "We Olive & Wine Bar",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "saratoga historical foundation presents saratoga before 1900": {
+      "displayName": "Saratoga Historical Foundation presents Saratoga before 1900",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "ed r levin county park": {
+      "displayName": "Ed R. Levin County Park",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "milpitas",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "may day crown crafting": {
+      "displayName": "May Day Crown Crafting",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "show me the body provoker ingrown clique dry socket": {
+      "displayName": "Show Me The Body, Provoker, Ingrown, Clique, Dry Socket",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "entertainment",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "button making pop up for teens": {
+      "displayName": "Button Making Pop-up for Teens!",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "south adobe creek loop": {
+      "displayName": "South Adobe Creek Loop",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "aldos cafe": {
+      "displayName": "Aldo's Cafe",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
+    },
+    "jason bonhams led zeppelin evening": {
+      "displayName": "Jason Bonham's Led Zeppelin Evening",
+      "firstSeen": "2026-05-16",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-16"
     }
   }
 }

@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-15T23:17:01.492Z",
+    "generatedAt": "2026-05-16T11:19:27.591Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 40,
-    "placesMatched": 11,
-    "placeGaps": 29,
-    "eventsExtracted": 5,
-    "eventsMatched": 0,
-    "eventGaps": 5,
+    "placesExtracted": 22,
+    "placesMatched": 5,
+    "placeGaps": 17,
+    "eventsExtracted": 3,
+    "eventsMatched": 1,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,52 +19,65 @@
       "name": "Las Gatos Creek",
       "city": "Los Gatos",
       "kind": "park",
-      "context": "creek cleanup volunteer opportunity location",
+      "context": "creek cleanup volunteer location",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
         "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
       ]
     },
     {
-      "name": "South Bay Clean Creeks Coalition",
+      "name": "Shadow Cliff",
       "city": "",
-      "kind": "service",
-      "context": "volunteer organization for creek cleanups",
+      "kind": "park",
+      "context": "park where gopher snake was spotted",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
         "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
       ]
     },
     {
-      "name": "Lanna Thai",
+      "name": "The Lanna Thai",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "serves Khao Soi curry noodle soup",
+      "context": "Thai restaurant with Khao Soi, near Lucky's",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
         "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
       ]
     },
     {
-      "name": "Luckys",
+      "name": "Lucky's",
       "city": "San Jose",
       "kind": "retail",
-      "context": "plaza location near Karate Carl",
+      "context": "store in plaza near Lanna Thai and BOA",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
         "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
+      ]
+    },
+    {
+      "name": "BOA",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "location across from old Carl's Jr., near Hillsdale and Union",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
+        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
       ]
     },
     {
@@ -73,11 +86,63 @@
       "kind": "retail",
       "context": "vinyl record store, owner Gary Saxon passed away",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
-        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
+      ]
+    },
+    {
+      "name": "HMart",
+      "city": "Santa Clara",
+      "kind": "retail",
+      "context": "Korean market with good vegetables",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
+      ]
+    },
+    {
+      "name": "Hangook",
+      "city": "",
+      "kind": "retail",
+      "context": "Korean market, largest space in South Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
+      ]
+    },
+    {
+      "name": "Jagalchi",
+      "city": "",
+      "kind": "retail",
+      "context": "Korean market in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
+      ]
+    },
+    {
+      "name": "Angus Meat Market",
+      "city": "",
+      "kind": "retail",
+      "context": "meat market in South Bay, recommended for Korean meat",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
       ]
     },
     {
@@ -86,11 +151,11 @@
       "kind": "retail",
       "context": "fruit and vegetable stand with affordable produce",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
-        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
       ]
     },
     {
@@ -99,518 +164,189 @@
       "kind": "retail",
       "context": "fruit and vegetable stand with affordable produce",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
-        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
       ]
     },
     {
-      "name": "Fuki Sushi",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "highly regarded upscale sushi restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Sushi Shin",
+      "name": "House Rabbit Society",
       "city": "",
-      "kind": "restaurant",
-      "context": "Michelin Star omakase in Redwood City",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Robin",
-      "city": "",
-      "kind": "restaurant",
-      "context": "upscale fusion omakase in Menlo Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Edomata",
-      "city": "",
-      "kind": "restaurant",
-      "context": "formerly Sushi Sam's, omakase in San Mateo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Iki Omakase",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "upscale omakase restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Sushi Yoshizumi",
-      "city": "",
-      "kind": "restaurant",
-      "context": "most expensive sushi in Bay Area, San Mateo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Daigo",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "overrated sushi restaurant to avoid",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Rantei",
-      "city": "Santa Clara",
-      "kind": "restaurant",
-      "context": "sushi restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Kusakabe",
-      "city": "",
-      "kind": "restaurant",
-      "context": "sushi restaurant in SF",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Ichika",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "sushi restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Trifecta Sushi",
-      "city": "",
-      "kind": "restaurant",
-      "context": "fancy sushi recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Mizu",
-      "city": "",
-      "kind": "restaurant",
-      "context": "sushi restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Rumble Fish",
-      "city": "",
-      "kind": "restaurant",
-      "context": "sushi restaurant in Scotts Valley",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Sushi Katsu",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "best and most expensive sushi in South Bay",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "vansgoodeats",
-      "city": "",
-      "kind": "service",
-      "context": "sushi catering for pickup via Instagram",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "oFlats",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Earthquakes bar with drink deals for jerseys",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Hammer Theater",
-      "city": "San Jose",
       "kind": "venue",
-      "context": "ballet performances including Giselle",
+      "context": "open house with adoptable rabbits and activities",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     },
     {
-      "name": "Pete Be Center",
-      "city": "San Jose",
+      "name": "HRS Hop Shop",
+      "city": "",
+      "kind": "retail",
+      "context": "House Rabbit Society store with spring items",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ]
+    },
+    {
+      "name": "Yoshi's",
+      "city": "",
       "kind": "venue",
-      "context": "concert venue hosting Smash Mouth concert",
+      "context": "jazz and blues concert venue",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     },
     {
-      "name": "Stanford Stadium",
-      "city": "Palo Alto",
+      "name": "Campbell Skatepark",
+      "city": "Campbell",
       "kind": "venue",
-      "context": "major concert venue hosting BTS performance",
+      "context": "recently reopened skateboarding facility",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     },
     {
-      "name": "Phin Cafe",
-      "city": "Cupertino",
-      "kind": "cafe",
-      "context": "WFH location with pillows offered",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
-      ]
-    },
-    {
-      "name": "Apple Visitor Center",
-      "city": "Cupertino",
+      "name": "Pruneyard",
+      "city": "Campbell",
       "kind": "venue",
-      "context": "rooftop patio available on Tantau Ave",
+      "context": "shopping center with drive-through reopened near Peet's",
       "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
-      ]
-    },
-    {
-      "name": "The Bay Club",
-      "city": "Santa Clara",
-      "kind": "service",
-      "context": "fitness facility with rooms for rent",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "National River Cleanup Day 2026",
-      "when": "tomorrow (unspecified exact date)",
-      "city": "San Jose",
-      "context": "20+ creek cleanup sites around the city",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
-        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
-      ]
-    },
-    {
-      "name": "BTS Concert",
-      "when": "Sunday",
-      "city": "Palo Alto",
-      "context": "concert at Stanford Stadium",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/",
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
-      ]
-    },
-    {
-      "name": "Giselle Ballet",
-      "when": "May 17 2:00pm",
-      "city": "San Jose",
-      "context": "ballet performance at Hammer Theater",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Smash Mouth Concert",
-      "when": "",
-      "city": "San Jose",
-      "context": "free concert at Pete Be Center, RSVP required",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ]
-    },
-    {
-      "name": "Weekday Hiking Group for the Laid-off",
-      "when": "Mondays",
+      "name": "House Rabbit Society Spring Open House",
+      "when": "Saturday, May 16th",
       "city": "",
-      "context": "support group meeting at Almaden area",
+      "context": "family-friendly event with rabbits and activities",
       "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
+      ]
+    },
+    {
+      "name": "Elvin Bishop Trio Concert",
+      "when": "tomorrow night",
+      "city": "",
+      "context": "blues concert at Yoshi's venue",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Great America",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "theme park, visited by BTS member Jin",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
+        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
+      ],
+      "matchedName": "Great America Amphitheater"
+    },
+    {
       "name": "Guadalupe River",
       "city": "San Jose",
       "kind": "park",
-      "context": "national river cleanup day site",
+      "context": "National River Cleanup Day site",
       "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
         "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
         "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
-        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/",
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/"
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
       ],
       "matchedName": "Lower Guadalupe River Trail"
     },
     {
-      "name": "Blue Pagoda",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "omakase tasting experience at sushi bar",
+      "name": "Mega Mart",
+      "city": "East Palo Alto",
+      "kind": "retail",
+      "context": "Korean supermarket with prepared foods and sushi",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
+        "https://www.reddit.com/r/SanJose/comments/1tejgk3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1te8rtz/weve_lost_a_local_legend_rip_to_gary_saxon_aka/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/bayarea/comments/1teand9/best_korean_market/"
       ],
-      "matchedName": "Blue Pagoda"
+      "matchedName": "MEGA MART"
     },
     {
-      "name": "Hiroshi",
-      "city": "",
-      "kind": "restaurant",
-      "context": "sushi restaurant in Los Altos",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ],
-      "matchedName": "Hiroshi"
-    },
-    {
-      "name": "Nobu Palo Alto",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "upscale sushi restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ],
-      "matchedName": "Nobu Restaurant Palo Alto"
-    },
-    {
-      "name": "Kaiseki Aoki",
-      "city": "Saratoga",
-      "kind": "restaurant",
-      "context": "Japanese kaiseki dining",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ],
-      "matchedName": "Hashiri Bettei Kaiseki Aoki"
-    },
-    {
-      "name": "Jack's",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Earthquakes bar in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ],
-      "matchedName": "Jack's"
-    },
-    {
-      "name": "Old Wagon Saloon",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Earthquakes watching bar",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tdnbjy/fancy_sushi/",
-        "https://www.reddit.com/r/paloalto/comments/1tbetgd/stanford_stadium_drop_off_for_events/",
-        "https://www.reddit.com/r/SanJose/comments/1tdloba/does_anyone_want_to_watch_ballet_on_sunday/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1taqr98/earthquakes_bar_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1te5i9t/free_smash_mouth_concert_at_pete_be_center_in_dsj/"
-      ],
-      "matchedName": "The Old Wagon Saloon & Grill"
-    },
-    {
-      "name": "Philz",
-      "city": "Cupertino",
+      "name": "Peet's",
+      "city": "Campbell",
       "kind": "cafe",
-      "context": "coffee shop on Main St for remote work",
+      "context": "location at Pruneyard shopping center",
       "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ],
-      "matchedName": "Philz Coffee"
+      "matchedName": "Peet's Coffee"
     },
     {
-      "name": "Bitter + Sweet",
-      "city": "Cupertino",
-      "kind": "cafe",
-      "context": "small cafe with comfortable seating and couches",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
-      ],
-      "matchedName": "Bitter + Sweet"
-    },
-    {
-      "name": "Orange Square",
-      "city": "Cupertino",
+      "name": "Santana Row",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "WFH location on Stevens Creek",
+      "context": "shopping and dining destination",
       "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
+        "https://www.reddit.com/r/bayarea/comments/1te8qqa/come_meet_rabbits_at_house_rabbit_societys_open/",
+        "https://www.reddit.com/r/bayarea/comments/1telugn/37yearold_guy_with_an_extra_ticket_for_yoshis/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/Campbell/comments/1tbj487/pruneyard_this_afternoon_at_4_pm_with_the_drive/"
       ],
-      "matchedName": "Orange Square"
-    },
-    {
-      "name": "Cupertino Library",
-      "city": "Cupertino",
-      "kind": "venue",
-      "context": "public space for working remotely",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Cupertino/comments/1tckqea/wfh_locations/",
-        "https://www.reddit.com/r/mountainview/comments/1tdk4xu/psa_bts_concert_at_stanford_stadium_on_may_16_17/",
-        "https://www.reddit.com/r/mountainview/comments/1td1isy/weekday_hiking_group_for_the_laidoff_monday/",
-        "https://www.reddit.com/r/Cupertino/comments/1td1lv5/weekday_hiking_group_for_the_laidoff_monday/"
-      ],
-      "matchedName": "Cupertino Library"
+      "matchedName": "Santana Row"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "National River Cleanup Day",
+      "when": "tomorrow (date unspecified)",
+      "city": "San Jose",
+      "context": "creek cleanup with 20 sites around the city",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tejbf3/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1te1lfq/which_do_you_prefer_in_to_see_in_our_creeks/",
+        "https://www.reddit.com/r/bayarea/comments/1te5k1o/sutter_santa_clara_launch_new_medical_school/",
+        "https://www.reddit.com/r/bayarea/comments/1teb4tc/what_kind_of_snake_is_this_seen_at_shadow_cliff/",
+        "https://www.reddit.com/r/SanJose/comments/1te79wb/karate_carls_new_location_boa/"
+      ],
+      "matchedName": "National River Cleanup Day"
+    }
+  ]
 }
