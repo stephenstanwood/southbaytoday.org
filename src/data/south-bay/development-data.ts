@@ -312,7 +312,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "transit",
     status: "completed",
     description:
-      "After years of construction, Caltrain completed its electrification project and launched electric train service in late 2024. The new Swiss-made Stadler electric trains replaced diesel locomotives on the Peninsula corridor, cutting travel times, reducing emissions, and significantly increasing capacity.",
+      "After years of construction, Caltrain completed its electrification project and launched electric train service in late 2024. The new Stadler-built electric trains replaced diesel locomotives on the Peninsula corridor, cutting travel times, reducing emissions, and significantly increasing capacity.",
     scale: "51-mile electrified corridor",
     developer: "Peninsula Corridor Joint Powers Board",
     timeline: "Completed 2024",
