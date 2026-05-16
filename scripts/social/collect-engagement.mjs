@@ -424,7 +424,7 @@ async function fetchMyXUserId(creds) {
   return _myXUserIdCache;
 }
 
-// Pulls @southbaytoday's last 100 tweets and indexes any that are replies
+// Pulls @southbaysignal's last 100 tweets and indexes any that are replies
 // by their parent tweet ID. Combined with publish-time ownReplies tracking,
 // this also catches manual replies Stephen makes from x.com — anything our
 // account authored as a reply, regardless of how it got there.
@@ -733,7 +733,7 @@ async function processPost(post, xCreds, ownXReplyMap = null) {
         case "facebook": break; // FB hidden from dashboard — Meta App Review walls off pages_read_engagement
         case "x": {
           if (!xCreds) break;
-          permalink = `https://x.com/southbaytoday/status/${id}`;
+          permalink = `https://x.com/southbaysignal/status/${id}`;
           result = await fetchXEngagement(id, xCreds, entry.ownReplies || [], ownXReplyMap);
           break;
         }
@@ -966,7 +966,7 @@ async function main() {
   const xCreds = getXCreds();
   if (!xCreds) console.log("   x: skipped (no X credentials)");
 
-  // Pre-fetch @southbaytoday's last 100 tweets so fetchXEngagement can
+  // Pre-fetch @southbaysignal's last 100 tweets so fetchXEngagement can
   // subtract any of our own replies (publisher-authored + manual) from
   // reply counts. One call per run, used across every X entry below.
   const ownXReplyMap = xCreds ? await fetchOwnXReplyMap(xCreds) : null;
