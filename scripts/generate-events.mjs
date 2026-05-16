@@ -642,7 +642,7 @@ function cleanTitle(title) {
   const KEEP_UPPER = new Set([
     "ICYMI", "LGBTQ", "LGBTQIA", "BIPOC", "STEAM", "LEGO",
     // 4-letter acronyms to preserve
-    "SJSU", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
+    "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
     // Local youth-program brand names that arrive ALL-CAPS from BiblioCommons
@@ -668,6 +668,10 @@ function cleanTitle(title) {
     // Medical / academic acronyms that legitimately appear in titles. Without
     // these the 2+ rule lowercases "AIDS" → "Aids" and "MFA" → "Mfa".
     "AIDS", "HIV", "PTSD", "ADHD", "MFA", "BFA", "MBA",
+    // Medical credentials that show up after presenter names ("Sandra Karol,
+    // MS, RDMS, RVT") in description copy — and would, if any title carried
+    // them, get downcased the same way.
+    "RDMS", "RVT", "CNM",
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -956,6 +960,14 @@ function polishDescription(text) {
   if (!text) return "";
   let t = text;
 
+  // Drop boilerplate "About this Event:" / "Text from presenter:" prefixes that
+  // BiblioCommons feeds emit at the head of some descriptions. The content
+  // immediately following is the real description; the label adds no info.
+  t = t.replace(
+    /^(?:About this Event|Text from presenter|Event Description|Event Details?|Description)\s*:\s*/i,
+    "",
+  );
+
   // Straighten curly quotes. Source HTML and BiblioCommons feeds serve smart
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
@@ -1005,19 +1017,22 @@ function polishDescription(text) {
   // Same logic as cleanTitle but applied to body text.
   const KEEP_UPPER = new Set([
     "ICYMI", "LGBTQ", "LGBTQIA", "BIPOC", "STEAM", "LEGO",
-    "SJSU", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
+    "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "AAVE", "ADHD", "PTSD",
     // South Bay / arts venues
     "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "VTAA", "VTAS",
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
+    // School districts (mostly title-only, but BiblioCommons body copy
+    // occasionally name-drops them — keep parity with cleanTitle's list).
+    "PAUSD", "SJUSD", "FUHSD", "MVWSD",
     // Misc
     "USPS", "USPTO", "WIPO", "USDA", "FBI", "CIA", "NSA", "EPA", "FDA",
     "MIT", "UCSF", "UCSC", "UCLA", "UCSD", "UCSB", "UCD",
     "AAPI", "AAJA", "NAHJ", "NABJ", "GLAAD", "ACLU",
     "AARP", "NAACP", "NAMI", "SCORE",
     // Medical / academic acronyms (4+ letters only at this body-level rule).
-    "AIDS",
+    "AIDS", "RDMS",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
