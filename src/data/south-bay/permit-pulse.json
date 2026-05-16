@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-15T23:10:09.461Z",
+      "generatedAt": "2026-05-16T19:10:04.647Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 8 – May 15",
+      "dateRange": "May 9 – May 16",
       "stats": {
-        "total": 355,
-        "notable": 20,
-        "newUnits": 202,
-        "totalValuation": 39443153
+        "total": 483,
+        "notable": 27,
+        "newUnits": 203,
+        "totalValuation": 41439787
       },
       "permits": [
         {
@@ -36,6 +36,18 @@
           "valuation": 143219,
           "units": 1,
           "issueDate": "2026-05-13",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-122105-RS",
+          "address": "626 N 15th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU 798 Sqft",
+          "valuation": 134934,
+          "units": 1,
+          "issueDate": "2026-05-14",
           "subtype": "2nd Unit Added"
         },
         {
@@ -121,47 +133,23 @@
           "units": 0,
           "issueDate": "2026-05-13",
           "subtype": "Closed Public Parking Garage"
-        },
-        {
-          "id": "2026-108438-CI",
-          "address": "825 Berryessa Station Wy",
-          "category": "new-construction",
-          "categoryLabel": "New Construction",
-          "workType": "New Construction",
-          "description": "Berryessa Tod (Bemp 100%) Business Area",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-13",
-          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-15T23:10:11.969Z",
+      "generatedAt": "2026-05-16T19:10:06.983Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 8 – May 15",
+      "dateRange": "May 9 – May 16",
       "stats": {
-        "total": 129,
+        "total": 133,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01254",
-          "address": "1304 College Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-14",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01231",
           "address": "4151 Abel Av",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-12",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01254",
+          "address": "1304 College Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-14",
           "subtype": "Permit Issued"
         },
         {
