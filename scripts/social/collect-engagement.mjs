@@ -415,7 +415,47 @@ async function xGet(url, queryParams, creds) {
   return res.json();
 }
 
-async function fetchXEngagement(tweetId, creds, ownReplies = []) {
+let _myXUserIdCache = null;
+
+async function fetchMyXUserId(creds) {
+  if (_myXUserIdCache) return _myXUserIdCache;
+  const data = await xGet(`${X_API}/2/users/me`, [], creds);
+  _myXUserIdCache = data.data?.id || null;
+  return _myXUserIdCache;
+}
+
+// Pulls @southbaytoday's last 100 tweets and indexes any that are replies
+// by their parent tweet ID. Combined with publish-time ownReplies tracking,
+// this also catches manual replies Stephen makes from x.com — anything our
+// account authored as a reply, regardless of how it got there.
+async function fetchOwnXReplyMap(creds) {
+  try {
+    const userId = await fetchMyXUserId(creds);
+    if (!userId) return null;
+    const data = await xGet(
+      `${X_API}/2/users/${userId}/tweets`,
+      [
+        ["max_results", "100"],
+        ["tweet.fields", "referenced_tweets"],
+      ],
+      creds
+    );
+    const map = new Map();
+    for (const t of data.data || []) {
+      const replied = (t.referenced_tweets || []).find((r) => r.type === "replied_to");
+      if (!replied) continue;
+      if (!map.has(replied.id)) map.set(replied.id, new Set());
+      map.get(replied.id).add(t.id);
+    }
+    return map;
+  } catch (err) {
+    if (err.status === 429 || err.status === 403) return null;
+    console.log(`   x: own-reply map fetch failed: ${err.message}`);
+    return null;
+  }
+}
+
+async function fetchXEngagement(tweetId, creds, ownReplies = [], ownReplyMap = null) {
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0, impressions: 0 };
   let bookmarks = 0;
 
@@ -431,12 +471,14 @@ async function fetchXEngagement(tweetId, creds, ownReplies = []) {
     counts.reposts = pm.retweet_count ?? 0;
     counts.quotes = pm.quote_count ?? 0;
     counts.replies = pm.reply_count ?? 0;
-    // X's free-tier API only returns reply COUNT, not individual replies, so
-    // we can't filter by author. Instead the publisher persists the IDs of
-    // every reply we authored (URL self-reply + seed reply) on the published
-    // entry; subtract that here. Clamp at 0 in case of state drift.
-    if (ownReplies.length && counts.replies > 0) {
-      counts.replies = Math.max(0, counts.replies - ownReplies.length);
+    // Exclude our own replies: union the live timeline fetch (catches
+    // manual replies too) with publish-time tracked IDs (covers posts
+    // older than the 100-tweet window). Free tier returns reply COUNT
+    // only, so we subtract rather than filter the visible list.
+    const liveIds = ownReplyMap?.get(tweetId) || new Set();
+    const selfReplyIds = new Set([...ownReplies, ...liveIds]);
+    if (selfReplyIds.size && counts.replies > 0) {
+      counts.replies = Math.max(0, counts.replies - selfReplyIds.size);
     }
     bookmarks = pm.bookmark_count ?? 0;
     counts.impressions = pm.impression_count ?? data.data?.non_public_metrics?.impression_count ?? 0;
@@ -660,7 +702,7 @@ async function fetchPinterestEngagement(pinId) {
   };
 }
 
-async function processPost(post, xCreds) {
+async function processPost(post, xCreds, ownXReplyMap = null) {
   const platforms = {};
   const brand = post._brand || "SBT";
   const igToken = post._igToken;
@@ -692,7 +734,7 @@ async function processPost(post, xCreds) {
         case "x": {
           if (!xCreds) break;
           permalink = `https://x.com/southbaytoday/status/${id}`;
-          result = await fetchXEngagement(id, xCreds, entry.ownReplies || []);
+          result = await fetchXEngagement(id, xCreds, entry.ownReplies || [], ownXReplyMap);
           break;
         }
         case "instagram": {
@@ -924,6 +966,15 @@ async function main() {
   const xCreds = getXCreds();
   if (!xCreds) console.log("   x: skipped (no X credentials)");
 
+  // Pre-fetch @southbaytoday's last 100 tweets so fetchXEngagement can
+  // subtract any of our own replies (publisher-authored + manual) from
+  // reply counts. One call per run, used across every X entry below.
+  const ownXReplyMap = xCreds ? await fetchOwnXReplyMap(xCreds) : null;
+  if (ownXReplyMap) {
+    const total = Array.from(ownXReplyMap.values()).reduce((a, s) => a + s.size, 0);
+    console.log(`   x: own-reply map loaded (${total} replies across ${ownXReplyMap.size} parent tweets)`);
+  }
+
   // Platforms we deliberately don't poll (Meta App Review wall on FB
   // pages_read_engagement). Don't fall back to prior data for these — keeps
   // the file clean of stale FB engagement.
@@ -932,7 +983,7 @@ async function main() {
   const out = [];
   for (let i = 0; i < posts.length; i++) {
     const p = posts[i];
-    const result = await processPost(p, xCreds);
+    const result = await processPost(p, xCreds, ownXReplyMap);
 
     // Backfill any platform whose fetch failed/skipped this run with the
     // last known engagement data. Otherwise transient errors (X rate-limit,
