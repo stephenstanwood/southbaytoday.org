@@ -660,6 +660,9 @@ function cleanTitle(title) {
     "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
     "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
     "AARP", "NAACP", "NAMI", "SCORE",
+    // Medical / academic acronyms that legitimately appear in titles. Without
+    // these the 2+ rule lowercases "AIDS" → "Aids" and "MFA" → "Mfa".
+    "AIDS", "HIV", "PTSD", "ADHD", "MFA", "BFA", "MBA",
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -700,6 +703,33 @@ function cleanTitle(title) {
   t = t.replace(/\s*\/\s*[\s\S]*[\u2E80-\u9FFF\uF900-\uFAFF][\s\S]*$/, "");
   // Strip trailing time annotations: "Good Friday Liturgy 3 PM" → "Good Friday Liturgy"
   t = t.replace(/\s+\d{1,2}(?::\d{2})?\s*(?:AM|PM)\s*$/i, "");
+  // Strip trailing date/time annotations that East West Bookshop's Squarespace
+  // export (and similar sources) appends to titles — examples:
+  //   "Seated Sound Bath • Thurs. June 11th •"
+  //   "Introduction To Crystal Singing Bowls - Friday - 5/29 •"
+  //   "May Full Immersion Sound Bath Saturday, May 30th, | 6:30pm–8:00pm"
+  // The trailing chunk can combine a bullet, dash, day-of-week, month+ordinal,
+  // slash-date, or pipe+time-range. Iterate until no further pieces strip.
+  {
+    let prev;
+    do {
+      prev = t;
+      t = t
+        // "| 6:30pm–8:00pm"
+        .replace(/\s*\|\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)\s*[-–—]\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)\s*$/i, "")
+        // "- 5/29" (slash-date preceded by separator)
+        .replace(/\s*[•\-–—]\s*\d{1,2}\/\d{1,2}\s*$/, "")
+        // "June 11th" (month + day with optional ordinal/comma)
+        .replace(/\s+(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:st|nd|rd|th)?,?\s*$/i, "")
+        // "Saturday," (day-of-week with trailing comma — date-context marker)
+        .replace(/\s+(?:Sun(?:day)?|Mon(?:day)?|Tue(?:s(?:day)?)?|Wed(?:nesday)?|Thu(?:rs(?:day)?)?|Fri(?:day)?|Sat(?:urday)?),\s*$/i, "")
+        // "- Friday" or "• Thurs." (day-of-week preceded by separator)
+        .replace(/\s+[•\-–—]\s+(?:Sun(?:day)?|Mon(?:day)?|Tue(?:s(?:day)?)?|Wed(?:nesday)?|Thu(?:rs(?:day)?)?|Fri(?:day)?|Sat(?:urday)?)\.?,?\s*$/i, "")
+        // Standalone trailing separator left after the above ("Foo •" → "Foo")
+        .replace(/\s*[•\-–—]\s*$/, "")
+        .trim();
+    } while (t !== prev);
+  }
   // Apply known recurring fixes from source data
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
@@ -959,6 +989,8 @@ function polishDescription(text) {
     "MIT", "UCSF", "UCSC", "UCLA", "UCSD", "UCSB", "UCD",
     "AAPI", "AAJA", "NAHJ", "NABJ", "GLAAD", "ACLU",
     "AARP", "NAACP", "NAMI", "SCORE",
+    // Medical / academic acronyms (4+ letters only at this body-level rule).
+    "AIDS",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
