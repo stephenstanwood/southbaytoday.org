@@ -628,7 +628,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "published",
         "slotType": "day-plan",
         "city": "saratoga",
         "cityName": "Saratoga",
@@ -797,10 +797,56 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-16-day-plan-1778928466412.png",
         "imageStyle": "vintage-airbrush",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:14:33.305Z",
+        "imageApprovedAt": "2026-05-16T14:14:33.305Z",
         "generatedAt": "2026-05-16T10:47:46.412Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nSan Jose + Cupertino + Los Gatos + Saratoga\n\nBreakfast — iJAVA Cafe\nUnfussy coffeehouse with many specialty drinks, Wi-Fi & a large menu of breakfas\n\nMorning — Cupertino Library\nFree public library\n\nLunch — We Olive & Wine Bar\nRetail chain offering artisan olive oils, balsamic vinegars & tapenades, plus ta\n\nAfternoon — Saratoga Historical Foundation presents Saratoga before 1900\nHear about early Saratoga history from the Saratoga Historical Foundation.\n\nDinner — Little Wine House\nSan Jose wine bar on W Julian St Bldg 4.\n\nEvening — Petroglyph Ceramic Lounge\nBranch of a chain of walk-in studios offering contemporary, paint-your-own potte\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\n1980s airbrush-illustration aesthetic. Soft gradient color fields (sunset pinks blending into purples, chrome blues), smooth faded edges, subtle grain. Chrome-effect metallic accents. Retro-futurist sans-serif type with slight italic slant. Vibes of an old Atari box, Miami Vice intro, or Trapper Keeper cover.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: centered axis — all content anchored to a vertical center line, symmetrical feel, clean spine running through.\nTypography: one massive headline that dominates the top third of the poster, supporting text much smaller.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: generous breathing room around headlines and between stops.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nSan Jose + Cupertino + Los Gatos + Saratoga\n\nBreakfast — iJAVA Cafe\nUnfussy coffeehouse with many specialty drinks, Wi-Fi & a large menu of breakfas\n\nMorning — Cupertino Library\nFree public library\n\nLunch — We Olive & Wine Bar\nRetail chain offering artisan olive oils, balsamic vinegars & tapenades, plus ta\n\nAfternoon — Saratoga Historical Foundation presents Saratoga before 1900\nHear about early Saratoga history from the Saratoga Historical Foundation.\n\nDinner — Little Wine House\nSan Jose wine bar on W Julian St Bldg 4.\n\nEvening — Petroglyph Ceramic Lounge\nBranch of a chain of walk-in studios offering contemporary, paint-your-own potte\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\n1980s airbrush-illustration aesthetic. Soft gradient color fields (sunset pinks blending into purples, chrome blues), smooth faded edges, subtle grain. Chrome-effect metallic accents. Retro-futurist sans-serif type with slight italic slant. Vibes of an old Atari box, Miami Vice intro, or Trapper Keeper cover.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: centered axis — all content anchored to a vertical center line, symmetrical feel, clean spine running through.\nTypography: one massive headline that dominates the top third of the poster, supporting text much smaller.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: generous breathing room around headlines and between stops.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-16T14:27:46.834Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2055656270032695584",
+            "id": "2055656270032695584",
+            "text": "Saturday in the South Bay, six ideas to mix and match: coffee at iJAVA, a quiet hour at Cupertino Library, olive oil tastings at We Olive, Saratoga history talk, wine at Little Wine House, and paint-your-own pottery to close it out 🎨 https://t.co/rHZv2qDHDr"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mly2jtlfyd2s",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mly2jtlfyd2s",
+            "cid": "bafyreignxjkl7wbk3vauvmcpw3y5623j5cygf754tmptfjbokii2umaugi"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18102669415816081",
+            "id": "18102669415816081"
+          },
+          {
+            "platform": "facebook",
+            "ok": false,
+            "error": "Facebook photo post failed (500): {\"error\":{\"code\":1,\"message\":\"Please reduce the amount of data you're asking for, then retry your request\"}}"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116584720192593993",
+            "id": "116584720192593993",
+            "url": "https://mastodon.social/@southbaytoday/116584720192593993"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18112057624857963",
+            "id": "18112057624857963"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       }
     },
     "2026-05-17": {
@@ -1067,7 +1113,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "sunnyvale",
         "cityName": "Sunnyvale",
@@ -1234,49 +1280,51 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-18-day-plan-1778928545997.png",
         "imageStyle": "novel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.607Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.607Z",
         "generatedAt": "2026-05-16T10:49:05.997Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"MONDAY IN THE SOUTH BAY\"\nSunnyvale + Milpitas + Palo Alto + San Jose\n\nBreakfast — Starbucks Coffee Company\nWelcoming coffeehouse with handcrafted coffee, espresso & tea, plus breakfast, l\n\nMorning — Ed R. Levin County Park\nVast, natural retreat featuring 19 miles of trails, an off-leash dog park, a gol\n\nLunch — Peninsula Creamery - Dairy Store & Grill\nMilkshake & ice cream store with an old-school vibe also serving burgers & other\n\nAfternoon — A Theater for a Symphony Screening and Discussion\nWatch a documentary about Beethoven's Ninth Symphony premiere, then discuss the \n\nDinner — Blossom Chai Cafe\nQuick coffee in Sunnyvale on S Murphy Ave.\n\nEvening — Jazz Up Your Monday Night\nUnwind with live jazz while sipping cocktails on a Monday evening.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArt nouveau poster with flowing organic lines, ornamental borders, elegant serif type, gold and deep green.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
     },
     "2026-05-19": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
-          "title": "Deloitte Alumni Panel Discussion",
-          "city": "santa-clara",
-          "cityName": "Santa Clara",
-          "venue": "Santa Clara University",
+          "title": "My Year With AI",
+          "city": "mountain-view",
+          "cityName": "Mountain View",
+          "venue": "Computer History Museum",
           "date": "2026-05-19",
-          "time": "5:30 PM",
-          "category": "food",
-          "summary": "The Scu Accounting Association will host Deloitte for a panel discussion with Deloitte professionals, including SCU alumni, to help students understand what to expect in accounting at Deloitte /…",
-          "url": "https://events.scu.edu/accounting/event/452045-deloitte-alumni-panel-discussion",
-          "cost": "free"
+          "time": "7:00 PM",
+          "category": "arts",
+          "summary": "An evening conversation about a year of working with AI tools — what changed, what stuck, what was hype.",
+          "url": "https://computerhistory.org/events/my-year-with-ai/",
+          "cost": null,
+          "costNote": null
         },
         "copy": {
-          "x": "Tonight in Santa Clara: @SantaClaraUniv's Accounting Association is hosting a Deloitte panel at 5:30 PM, with SCU alumni sharing what the job is actually like. Free, and a rare honest look behind the curtain. 📊",
-          "threads": "Tonight's a good one for the future-CPAs in the group. @santaclarauniversity's Accounting Association is hosting Deloitte for a panel at 5:30 PM — alumni who've been through it talking honestly about what accounting at Deloitte actually looks like. Free to attend. ✨\n\n#SouthBay #SantaClara #SCU",
-          "bluesky": "Tonight at Santa Clara University: a Deloitte alumni panel hosted by the SCU Accounting Association, 5:30 PM, free. Real talk from people who've walked the path. 📊\n\nhttps://events.scu.edu/accounting/event/452045-deloitte-alumni-panel-discussion\n\n#SouthBay #SantaClara",
-          "facebook": "Heads up, Santa Clara folks — if you're an accounting student (or know one), tonight's panel at Santa Clara University is worth the trip. The SCU Accounting Association is hosting Deloitte for a discussion at 5:30 PM, featuring SCU alumni who now work there. Honest insight into what the job actually looks like, straight from people who've done it. Free to attend. 📊",
-          "instagram": "Tonight: get the real story on what working at Deloitte is actually like. 📊\n\n@santaclarauniversity's Accounting Association is hosting a panel with Deloitte professionals — including SCU alumni — at 5:30 PM tonight. The kind of conversation you can't get from a recruiter pitch: what the work feels like, what to expect, what they wish they'd known.\n\nFree to attend. Bring questions.\n\n#SouthBay #SantaClara #SCU #SantaClaraUniversity #SouthBayEvents #ThingsToDoInSantaClara #Accounting #Deloitte #CollegeLife #BayAreaEvents",
-          "mastodon": "A solid one for accounting students tonight: Santa Clara University's Accounting Association is hosting a Deloitte panel at 5:30 PM. SCU alumni now working at the firm will talk through what the job actually entails — the kind of unvarnished perspective career fairs don't offer. Free.\n\nhttps://events.scu.edu/accounting/event/452045-deloitte-alumni-panel-discussion\n\n#SouthBay",
-          "email": "Tonight at Santa Clara University, the SCU Accounting Association hosts a Deloitte panel at 5:30 PM. Deloitte professionals — including SCU alumni — will share what to expect working in accounting at the firm. Free, and a rare chance to hear honest answers from people who've actually done the job.",
-          "bumpX": "Starting in 30 at @SantaClaraUniv — Deloitte alumni panel, 5:30 PM. Free. 📊",
-          "bumpThreads": "Doors in 30 at @santaclarauniversity — Deloitte panel kicks off at 5:30 PM. Free to walk in. 📊 #SCU",
-          "bumpBluesky": "Starting in 30 at Santa Clara University — Deloitte alumni panel at 5:30 PM, free. 📊 #SouthBay"
+          "x": "Tonight in Mountain View: a real conversation at @ComputerHistory about a year of actually using AI tools — what stuck, what was hype, what quietly changed how people work. 7 PM. 🤖",
+          "threads": "Tonight feels like a good one for the AI-curious. @computerhistory is hosting \"My Year With AI\" at 7 PM — an honest conversation about a year of working with these tools. What stuck. What was hype. What quietly changed the way people do things. Mountain View, worth the drive. 🤖\n\n#SouthBay #MountainView #AI",
+          "bluesky": "Tonight in Mountain View: \"My Year With AI\" at the Computer History Museum, 7 PM. A real conversation about what stuck, what was hype, and what quietly changed. 🤖 https://computerhistory.org/events/my-year-with-ai/ #SouthBay #MountainView",
+          "facebook": "Heads up Mountain View folks — tonight at 7 PM, the Computer History Museum is hosting \"My Year With AI.\" It's an evening conversation about a year of actually working with these tools: what changed, what stuck, what turned out to be hype. If you've spent the last twelve months either evangelizing AI or quietly side-eyeing it, this one's for you. 🤖",
+          "instagram": "Tonight's pick if you've spent the last year wrestling with AI tools 🤖\n\n\"My Year With AI\" lands at @computerhistory in Mountain View at 7 PM — a grounded evening conversation about what actually changed, what stuck around, and what was pure hype. The kind of talk you'll be thinking about on the drive home.\n\n#SouthBayToday #MountainView #ComputerHistoryMuseum #AI #ThingsToDoInTheSouthBay #SouthBayEvents #BayAreaTech #SiliconValley #MountainViewCA #TonightInTheSouthBay",
+          "mastodon": "An honest year-in-review on AI, in the place that's been chronicling computing history all along. The Computer History Museum hosts \"My Year With AI\" tonight at 7 PM in Mountain View — a conversation about what stuck, what was hype, and what quietly reshaped how people work. https://computerhistory.org/events/my-year-with-ai/ #AI",
+          "email": "Tonight in Mountain View: \"My Year With AI\" at the Computer History Museum, 7 PM. An evening conversation about a year of working with these tools — what changed, what stuck, what was hype. Grounded, honest, and probably the kind of talk you'll be replaying on the drive home.",
+          "bumpX": "Doors in 30 at @ComputerHistory — \"My Year With AI\" kicks off at 7 PM in Mountain View. 🤖",
+          "bumpThreads": "Heading out the door soon? @computerhistory starts \"My Year With AI\" at 7 PM in Mountain View. #SouthBay",
+          "bumpBluesky": "Starting soon at the Computer History Museum: \"My Year With AI,\" 7 PM in Mountain View. 🤖 #MountainView"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-19-tonight-pick-1778927491321.png",
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-19-tonight-pick-1778941441584.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:24:16.620Z",
+        "imageApprovedAt": "2026-05-16T14:24:16.620Z",
         "generatedAt": "2026-05-16T10:31:31.321Z",
-        "imagePrompt": "Linocut block print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Abstract composition with stylized ascending bar chart fragmented into warm amber, deep navy, and cream. Sharp geometric triangles and circles scattered throughout for rhythm. Carved texture visible throughout with bold ink layers. Left side densely composed with layered angular shapes suggesting data and insight; right side breathing room. Warm inviting mood despite cool navy palette. Indie printmaking aesthetic with deliberate negative space around compositional focal points."
+        "imagePrompt": "California redwood fog-gray landscape abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Narrow editorial column center-right dense with layered stylized hills in warm gold, dusty sage, charcoal, and fog-white. Thin horizontal color stripes as dividers between sections. Fragmented circuit board and abstracted computer monitor silhouettes woven through composition—bold, collaged, not literal. Left margin wide and negative. Golden hour light bleeding across layered terrain. Playful energy, elements colliding, rich textural chaos balanced against clean margins. Magazine editorial feel.",
+        "regeneratedAt": "2026-05-16T14:24:16.620Z"
       },
       "wildcard": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "wildcard",
         "subtype": "sv-history",
         "item": {
@@ -1297,7 +1345,7 @@
         "imageUrl": "https://southbaytoday.org/logos/apple-retail.png",
         "imageStyle": "logo",
         "copyApprovedAt": "2026-05-16T10:31:58.841Z",
-        "imageApprovedAt": "2026-05-16T10:31:58.841Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.636Z",
         "generatedAt": "2026-05-16T10:31:58.841Z"
       },
       "_reviewHistory": [
@@ -1311,7 +1359,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "mountain-view",
         "cityName": "Mountain View",
@@ -1480,15 +1528,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-19-day-plan-1778928847651.png",
         "imageStyle": "novel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.645Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.645Z",
         "generatedAt": "2026-05-16T10:54:07.651Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"TUESDAY IN THE SOUTH BAY\"\nMountain View + Palo Alto + Los Gatos + Santa Clara + Milpitas + Saratoga\n\nBreakfast — Casa Mia Restaurant (Mountain View)\nSit-down restaurant in Mountain View on Old Middlefield Way, mid-tier prices.\n\nMorning — South Adobe Creek Loop\nHiking spot in the Palo Alto hills\n\nLunch — Aldo's Cafe\nCasual Italian fare including pizzas, pastas & salads featured in a rustic spot \n\nAfternoon — De Saisset Museum\nArt & history of the Bay Area & Santa Clara Valley in a family-founded museum on\n\nDinner — Calcutta Chaat & Bakery\nSit-down Indian restaurant in Milpitas on S Main St, mid-tier prices.\n\nEvening — Jason Bonham's Led Zeppelin Evening\nExperience Led Zeppelin classics played live by Jason Bonham at Mountain Winery.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nMid-century Cuban travel poster aesthetic with bright coral/turquoise/yellow, illustrated silhouettes of classic cars or palm trees, hand-lettered feel.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: no decoration — the layout and typography carry it; pure negative space does the work.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
     },
     "2026-05-20": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Community Equity Assessment Forum",
@@ -1516,8 +1564,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-20-tonight-pick-1778927639858.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.653Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.653Z",
         "generatedAt": "2026-05-16T10:33:59.858Z",
         "imagePrompt": "Linocut block print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Bold carved texture with visible grain throughout. Stylized microphone silhouette fragmented into warm coral, deep indigo, and cream ink layers—abstract geometric shards radiating outward. Speech bubbles and chat symbols broken into angular blocks, layered chaotically. Sparse confetti dots and stars scattered in margins. Rich, energetic composition with generous negative space around main elements. Indie printmaking aesthetic, playful collision of carved marks and bold color fields. Tactile, expressive, museum-quality linocut feel."
       },
@@ -1532,7 +1580,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "palo-alto",
         "cityName": "Palo Alto",
@@ -1699,15 +1747,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-20-day-plan-1778928695352.png",
         "imageStyle": "novel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.662Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.662Z",
         "generatedAt": "2026-05-16T10:51:35.352Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"WEDNESDAY IN THE SOUTH BAY\"\nPalo Alto + Mountain View + Sunnyvale + Los Altos\n\nBreakfast — SWEET55 - Swiss Chocolates & Confections\nPalo Alto food on El Camino Real, $ and casual.\n\nMorning — City of Palo Alto City Hall\nPalo Alto museum on Hamilton Ave, plan an hour or two.\n\nLunch — Hummus Mediterranean Kitchen\nMountain View Mediterranean restaurant on Castro St, $$\n\nAfternoon — Button Making Pop-up for Teens!\nDrop in to make custom buttons using manga, comics, or your own designs in the t\n\nDinner — Valley Goat\nSunnyvale californian restaurant on N Mathilda Ave.\n\nEvening — Interpreting the Partition through Poetry and Art\nExplore how poets and artists interpreted the Partition through combined visual \n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nOrigami / paper fold aesthetic with geometric faceted shapes, subtle shadows, clean modern type.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: electric and vibrant — push saturation, add movement and visual punch.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
     },
     "2026-05-21": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "santa-clara",
         "cityName": "Santa Clara",
@@ -1874,13 +1922,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-21-day-plan-1778927724703.png",
         "imageStyle": "scrapbook",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.670Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.670Z",
         "generatedAt": "2026-05-16T10:35:24.703Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"THURSDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Santa Clara + Mountain View\n\nBreakfast — Marty's Donuts\nFrom-scratch pastries, donuts & specialty treats are the draw at this counter-se\n\nMorning — Communications Hill\nSan Jose trail loop, easy to medium effort.\n\nLunch — Shawarmaji\nSit-down middle Eastern restaurant in Santa Clara on The Alameda, mid-tier price\n\nAfternoon — Community Preservation Lab Scanning Service\nBring old photos and documents to get scanned and digitized by preservation expe\n\nDinner — The Stand - American Classics Redefined\nSit-down restaurant in Santa Clara on Lawrence Expy, mid-tier prices.\n\nEvening — The Zeros, Johnny, The Backstabbers\nSee The Zeros, Johnny, and The Backstabbers perform at The Ritz.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nScrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Art After Dark",
@@ -1908,15 +1956,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-21-tonight-pick-1778927777036.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.678Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.678Z",
         "generatedAt": "2026-05-16T10:36:17.036Z",
         "imagePrompt": "Editorial magazine collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Bold burnt orange as single accent color against cream and charcoal. Left column densely layered with fragmented paintbrush silhouettes, abstracted craft supply shapes, and torn paper collage elements. Right side open negative space with sparse confetti dots and small stars scattered in margins. Mid-century modern geometric precision meets playful chaos—sharp angular forms colliding with loose organic marks. Library shelving suggested through stacked rectangular shapes. High energy, sophisticated restraint."
       }
     },
     "2026-05-22": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "los-altos",
         "cityName": "Los Altos",
@@ -2083,13 +2131,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-22-day-plan-1778928000051.png",
         "imageStyle": "scrapbook",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.684Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.684Z",
         "generatedAt": "2026-05-16T10:40:00.051Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"FRIDAY IN THE SOUTH BAY\"\nSunnyvale + Palo Alto + Santa Clara + Cupertino\n\nBreakfast — Keke's Breakfast Cafe\nLocal chain serving American breakfasts & comfort-food lunches in a modern diner\n\nMorning — Second Hole Second Wave: 2026 MFA Thesis Exhibition\nTour five MFA artists' sculpture, installation, and video work in this graduatin\n\nLunch — Pav Bhaji and More Santa Clara\nSanta Clara Indian restaurant on El Camino Real.\n\nAfternoon — 世界生活館 Amazing Books & Gifts\nCupertino store on S De Anza Blvd\n\nDinner — Orange Square\nCupertino taiwanese restaurant on Stevens Creek Blvd, $$ sit-down.\n\nEvening — Remembering\nExplore five chapters of contemporary art examining memory, subject, and objecth\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nScrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: soft organic blob shapes in the background behind text sections, faintly suggesting landscapes.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Amar Singh Trio",
@@ -2117,15 +2165,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-22-tonight-pick-1778928044778.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.692Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.692Z",
         "generatedAt": "2026-05-16T10:40:44.777Z",
         "imagePrompt": "California redwood fog-gray landscape abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Densely layered stylized hills in warm gold, dusty sage, and charcoal with fragmented saxophone silhouette woven through composition. Upright bass neck suggested as vertical line accent. Abstract brushstroke patterns mimicking snare drum textures scattered throughout. Rich warm amber and copper tones offsetting cool grays. Sparse confetti dots and small stars scattered in margins. Golden hour light bleeding through fog layers. Packed, information-dense composition with minimal negative space. Approachable, inviting mood despite cool palette base."
       }
     },
     "2026-05-23": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "milpitas",
         "cityName": "Milpitas",
@@ -2292,13 +2340,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-23-day-plan-1778928115965.png",
         "imageStyle": "risograph-duotone",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.698Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.698Z",
         "generatedAt": "2026-05-16T10:41:55.965Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Milpitas\n\nBreakfast — Sunnyvale Farmers Market\nShop for local produce, artisan goods, and ready-to-eat food weekly.\n\nMorning — Sierra Vista Open Space Preserve\nNature preserve with hiking/biking/equestrian trails through varied landscapes w\n\nLunch — Katana Sushi & Sake\nSushi & rolls plus sake drinks served in a space with exposed ceiling joists & J\n\nAfternoon — Tien Dao Christian Media Association\nMilpitas bookstore on Cadillac Ct, good for a slow browse.\n\nDinner — House of Genji\nCooked-to-order Japanese teppanyaki prepared tableside, with fried rice & sushi \n\nEvening — Dolphin Hyperspace\nCatch Dolphin Hyperspace's experimental electronic and jazz performance.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nTrue duotone risograph print — only two colors overlapping (fluorescent orange + deep teal, OR hot pink + navy, OR chartreuse + burgundy — pick one palette). Visible halftone dot patterns, slight misregistration, grainy paper texture. Minimal layout, indie-zine feel, chunky display sans-serif.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: vertical stacked blocks, one stop per horizontal band, reading top to bottom.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Live Music",
@@ -2326,13 +2374,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-23-tonight-pick-1778928155990.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.705Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.705Z",
         "generatedAt": "2026-05-16T10:42:35.989Z",
         "imagePrompt": "Terrazzo pattern illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Cream field scattered with muted stone chips—dusty rose, sage, charcoal. Center narrow column featuring abstracted stylized guitar silhouette fragmented into saturated warm gold and burnt orange, overlaid with flowing musical note shapes in deep indigo and coral. Sparse confetti dots and stars scattered in wide margins. Electric, vibrant energy with bold color contrast and movement. Editorial magazine spread aesthetic."
       },
       "wildcard": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "wildcard",
         "subtype": "sv-history",
         "item": {
@@ -2353,13 +2401,13 @@
         "imageUrl": "https://southbaytoday.org/logos/java.png",
         "imageStyle": "logo",
         "copyApprovedAt": "2026-05-16T10:43:00.848Z",
-        "imageApprovedAt": "2026-05-16T10:43:00.848Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.712Z",
         "generatedAt": "2026-05-16T10:43:00.848Z"
       }
     },
     "2026-05-24": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "san-jose",
         "cityName": "San Jose",
@@ -2526,13 +2574,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-24-day-plan-1778928237480.png",
         "imageStyle": "memphis-80s",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.718Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.718Z",
         "generatedAt": "2026-05-16T10:43:57.480Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SUNDAY IN THE SOUTH BAY\"\nCampbell + San Jose + Mountain View\n\nBreakfast — Bloom Bagels\nCampbell bagel shop on E Campbell Ave, $$.\n\nMorning — Ainsley House\nRestored Tudor-style house built in 1925 with original furnishings & extensive E\n\nLunch — Natasha's Treats\nSan Jose bakery on Horizon Ln for pastries and grab-and-go pulls.\n\nAfternoon — Chinese Americans' Fight for Civil Liberties: A Legal History of Resistance and Civil Disobedience\nHear historians discuss Asian Americans' crucial role in the civil rights moveme\n\nDinner — Q Pot Korean BBQ & Hotpot\nAll-you-can-eat restaurant with contemporary decor & classic Korean BBQ & hot po\n\nEvening — Echoes of the Night: Kwok Koo, Piano\nHear pianist Kwok Koo perform masterworks by Schumann, Chopin, Brahms, Debussy, \n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nMemphis design movement aesthetic (1980s). Bright clashing colors: hot pink, electric blue, yellow, black, mint green. Random geometric shapes (triangles, circles, squiggly lines, zigzags) scattered around. Bold black sans-serif headlines on colored blocks. Energetic, chaotic, fun. Like a vintage MTV graphic.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: strict grid — stops in equal-size modules (3×2 or 2×3), clean dividers between cells, modernist.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: thin horizontal color stripes between sections as dividers.\nDensity: intentionally asymmetric — dense on one side, airy on the other.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Karaoke Night",
@@ -2560,15 +2608,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-24-tonight-pick-1778928279014.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.725Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.725Z",
         "generatedAt": "2026-05-16T10:44:39.014Z",
         "imagePrompt": "Bauhaus geometric collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Densely packed composition with fragmented microphone silhouette and abstracted beer glass form woven through intersecting triangles, circles, and rectangular grids in electric lime, deep emerald, rich gold, and vibrant magenta. Sharp geometric accents—small squares and angular shards—scattered rhythmically across frame. High saturation, bold color blocking, structured grid framework with deliberate visual breaks. Mid-century modern energy, packed information density, minimal negative space."
       }
     },
     "2026-05-25": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Jazz Up Your Monday Night",
@@ -2596,8 +2644,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-25-tonight-pick-1778928391059.png",
         "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.731Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.731Z",
         "generatedAt": "2026-05-16T10:46:31.058Z",
         "imagePrompt": "Scandinavian minimal jazz club abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Dense composition layered with fragmented saxophone silhouette and stylized cocktail glass outline woven through muted earth tones—warm taupe, soft sage, dusty terracotta, cream. Thin horizontal color stripes divide sections. Pack frame with intersecting geometric planes, organic curves, and linear marks in charcoal and warm gold. Playful chaos of colliding shapes and patterns—energetic, unpolished, visually dense with minimal whitespace. Bauhaus collage sensibility."
       },
@@ -2612,7 +2660,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "campbell",
         "cityName": "Campbell",
@@ -2777,8 +2825,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-25-day-plan-1778928930796.png",
         "imageStyle": "tropical-botanical",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-16T14:19:36.737Z",
+        "imageApprovedAt": "2026-05-16T14:19:36.737Z",
         "generatedAt": "2026-05-16T10:55:30.796Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"MONDAY IN THE SOUTH BAY\"\nLos Gatos + Saratoga + Campbell + San Jose\n\nBreakfast — Los Gatos Cafe Downtown\nSpecializing in classic breakfast & lunch offerings, including omelets, scramble\n\nMorning — Memorial Day Observance\nPay respects and reflect at the Memorial Arch during this community observance.\n\nLunch — La Jaiba\nCampbell restaurant on E Hamilton Ave.\n\nAfternoon — Memorial Day Ceremony\nHonor veterans at a ceremony with a keynote speech and optional lunch.\n\nDinner — 5 Spot Chivas Grill\nCheap Mexican restaurant in San Jose on S 1st St.\n\nEvening — Live Music\nListen to live musicians perform at San Pedro Square Market.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nTropical botanical poster. Lush illustrated palm leaves, monstera, tropical flowers in borders and corners. Deep emerald green background sections alternating with warm coral/pink. White and cream text. Bold modern sans-serif type. Hawaii travel poster meets festival lineup.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: tight condensed all-caps throughout, with letter-spacing that's almost claustrophobic on headlines.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: generous breathing room around headlines and between stops.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
