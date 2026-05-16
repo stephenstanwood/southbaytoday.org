@@ -1162,8 +1162,39 @@ const HTML = `<!DOCTYPE html>
   .cal-expanded-actions .btn-approve-copy { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
   .cal-expanded-actions .btn-approve-image { background: #2563eb; color: #fff; border-color: #2563eb; }
   .cal-expanded-actions .btn-regen { background: #f59e0b; color: #fff; border-color: #f59e0b; }
-  .cal-expanded-actions .btn-mj { background: #6d28d9; color: #fff; border-color: #6d28d9; }
-  .cal-expanded-actions .btn-mj.copied { background: #059669; border-color: #059669; }
+  .mj-prompt-box {
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid #E5E2DB;
+  }
+  .mj-prompt-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px; font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; color: #6d28d9;
+  }
+  .mj-regen-btn {
+    background: #fff; border: 1px solid #ddd; border-radius: 4px;
+    padding: 2px 8px; font-size: 13px; cursor: pointer; color: #6d28d9;
+    line-height: 1;
+  }
+  .mj-regen-btn:hover { background: #f5f5f5; }
+  .mj-regen-btn:disabled { opacity: 0.5; cursor: wait; }
+  .mj-prompt-text {
+    width: 100%; min-height: 72px; padding: 10px 12px;
+    border-radius: 6px; border: 1px solid #d4d0c5;
+    background: #faf7f2; font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 11px; line-height: 1.55; color: #1a1a1a;
+    cursor: pointer; resize: vertical; box-sizing: border-box;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .mj-prompt-text:hover { background: #f3eee2; border-color: #6d28d9; }
+  .mj-prompt-box.loading .mj-prompt-text {
+    color: #999; font-style: italic; cursor: wait; background: #f5f4ef;
+  }
+  .mj-prompt-box.copied .mj-prompt-text {
+    background: #d1fae5; border-color: #059669; color: #065f46;
+  }
+  .mj-prompt-box.error .mj-prompt-text {
+    background: #fef2f2; border-color: #dc2626; color: #991b1b;
+  }
   .cal-edit-area { margin-top: 12px; }
   .cal-edit-input {
     width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
@@ -1656,6 +1687,7 @@ function renderCalendar() {
   // Autosize all visible copy textareas so full text is visible without scrolling.
   requestAnimationFrame(() => {
     document.querySelectorAll('.cal-copy-textarea').forEach((ta) => calAutosize(ta));
+    hydrateMjPrompts();
   });
 }
 
@@ -1765,15 +1797,26 @@ function renderExpandedSlot(dateStr, slotType, slot) {
   }
   // Image gen / regen for all slot types
   html += '<button class="btn-regen" onclick="calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-image\\'); event.stopPropagation();">' + (slot.imageUrl ? 'Regen Image' : 'Gen Image') + '</button>';
-  // Copy a Midjourney permutation prompt for hand-crafting a better image.
-  if (slot.imageUrl) {
-    html += '<button class="btn-mj" onclick="copyMjPrompt(this, \\'' + dateStr + '\\', \\'' + slotType + '\\'); event.stopPropagation();" title="Copy a Midjourney permutation prompt — paste into /imagine to get 5 stylistic variations in one go">\\ud83c\\udfa8 Copy MJ</button>';
-  }
   // Regen plan button for day-plan slots
   if (slotType === 'day-plan') {
     html += '<button class="btn-regen" onclick="if(confirm(\\'Regenerate plan + copy for this date?\\')) calAction(\\'' + dateStr + '\\', \\'' + slotType + '\\', \\'regen-plan\\'); event.stopPropagation();">Regen Plan</button>';
   }
   html += '</div>';
+
+  // Midjourney prompt — pre-generated, click anywhere on the textarea to copy.
+  // Distillation runs in the background as soon as the slot expands (or earlier,
+  // at approve-copy time) so it's sitting there ready when Stephen wants it.
+  if (slot.imageUrl) {
+    const hasMj = typeof slot.mjPrompt === 'string' && slot.mjPrompt.length > 0;
+    const mjId = 'mj-' + dateStr + '-' + slotType;
+    html += '<div class="mj-prompt-box' + (hasMj ? '' : ' loading') + '" id="' + mjId + '" data-date="' + dateStr + '" data-slot="' + slotType + '">';
+    html += '<div class="mj-prompt-header">';
+    html += '<span>\\ud83c\\udfa8 Midjourney prompt — click to copy</span>';
+    html += '<button class="mj-regen-btn" onclick="regenMjPrompt(\\'' + dateStr + '\\', \\'' + slotType + '\\'); event.stopPropagation();" title="Regenerate with fresh styles">\\u21bb</button>';
+    html += '</div>';
+    html += '<textarea readonly class="mj-prompt-text" onclick="copyMjPromptFromBox(this); event.stopPropagation();" onfocus="event.stopPropagation()">' + escapeHtml(hasMj ? slot.mjPrompt : 'Generating MJ prompt…') + '</textarea>';
+    html += '</div>';
+  }
 
   // Image upload
   html += '<div class="cal-upload-area" style="margin-top:12px;padding-top:12px;border-top:1px solid #E5E2DB">';
@@ -2082,36 +2125,59 @@ async function calUploadImage(dateStr, slotType) {
 // ── Midjourney prompt copy ──────────────────────────────────────────────
 // Server distills the post copy into a tight image subject via Claude Haiku
 // and returns the full permutation prompt. Client just copies it.
-async function copyMjPrompt(btn, dateStr, slotType) {
-  const orig = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '\\u2026 distilling';
+async function copyMjPromptFromBox(ta) {
+  const box = ta.closest('.mj-prompt-box');
+  if (!box || box.classList.contains('loading') || box.classList.contains('error')) return;
+  const text = ta.value;
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    ta.select();
+    try { document.execCommand('copy'); } catch {}
+  }
+  box.classList.add('copied');
+  setTimeout(() => box.classList.remove('copied'), 1400);
+}
+
+async function regenMjPrompt(dateStr, slotType) {
+  const box = document.getElementById('mj-' + dateStr + '-' + slotType);
+  if (!box) return;
+  if (box.classList.contains('loading')) return;
+  const ta = box.querySelector('.mj-prompt-text');
+  const btn = box.querySelector('.mj-regen-btn');
+  box.classList.remove('copied', 'error');
+  box.classList.add('loading');
+  if (btn) btn.disabled = true;
+  if (ta) ta.value = 'Generating MJ prompt…';
   try {
     const res = await fetch('/api/schedule/' + dateStr + '/' + slotType + '/mj-prompt', { method: 'POST' });
     const data = await res.json();
     if (!data.ok || !data.prompt) throw new Error(data.error || 'no prompt returned');
-    try {
-      await navigator.clipboard.writeText(data.prompt);
-    } catch (clipErr) {
-      const ta = document.createElement('textarea');
-      ta.value = data.prompt;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); } catch {}
-      document.body.removeChild(ta);
+    if (ta) ta.value = data.prompt;
+    box.classList.remove('loading');
+    if (scheduleData.days && scheduleData.days[dateStr] && scheduleData.days[dateStr][slotType]) {
+      scheduleData.days[dateStr][slotType].mjPrompt = data.prompt;
     }
-    btn.classList.add('copied');
-    btn.innerHTML = '\\u2713 Copied — paste into /imagine';
   } catch (err) {
-    btn.innerHTML = '\\u2715 ' + (err && err.message ? err.message : 'failed');
+    if (ta) ta.value = 'Error: ' + ((err && err.message) ? err.message : 'gen failed') + ' (click ↻ to retry)';
+    box.classList.remove('loading');
+    box.classList.add('error');
+  } finally {
+    if (btn) btn.disabled = false;
   }
-  setTimeout(() => {
-    btn.classList.remove('copied');
-    btn.innerHTML = orig;
-    btn.disabled = false;
-  }, 2200);
+}
+
+// Fire-and-forget hydration for any expanded slot that doesn't have a cached
+// prompt yet. Called after renderCalendar so freshly visible boxes start
+// generating in the background — no click required.
+function hydrateMjPrompts() {
+  const boxes = document.querySelectorAll('.mj-prompt-box.loading');
+  boxes.forEach((box) => {
+    const date = box.dataset.date;
+    const slotType = box.dataset.slot;
+    if (date && slotType) regenMjPrompt(date, slotType);
+  });
 }
 
 init();
@@ -2919,7 +2985,10 @@ const server = createServer((req, res) => {
           return;
         }
         const prompt = await buildMjPromptForSlot(slot, slotType);
-        console.log(`  🎨 MJ prompt distilled for ${date} ${slotType}`);
+        slot.mjPrompt = prompt;
+        slot.mjPromptAt = new Date().toISOString();
+        saveScheduleFile(schedule);
+        console.log(`  🎨 MJ prompt distilled + cached for ${date} ${slotType}`);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: true, prompt }));
       } catch (err) {
