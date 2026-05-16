@@ -35,10 +35,21 @@ function extractStreet(address, cityName) {
   if (!address) return null;
   const firstSeg = address.split(",")[0]?.trim();
   if (!firstSeg) return null;
-  const cleaned = firstSeg
-    .replace(/^\d+\s*-?\s*\d*\s*/, "")
-    .replace(/\s+(Suite|Ste|Unit|Apt|#)\s*[\w-]+\s*$/i, "")
+  // Strip leading street number (single or hyphenated range), then trailing
+  // unit/building/floor/suite blobs.
+  // The leading-number strip must require a hyphen for the secondary digits —
+  // otherwise "100 1st St" gets eaten as "100 1" → "st St".
+  let cleaned = firstSeg
+    .replace(/^\d+\s*(?:-\s*\d+\s*)?/, "")
+    .replace(/\s+(Suites?|Ste|Unit|Apt|#|Bldg|Building|Floor|Fl|Lvl|Level)\b.*$/i, "")
     .trim();
+  // Trailing unit designator after a street-type token: solo letter
+  // ("Ave A"), letter-dash-number ("Ave C-31"), or solo number ("Blvd 200").
+  // Constrained to known street types so we don't mangle real names.
+  cleaned = cleaned.replace(
+    /(\s+(?:Ave|St|Blvd|Rd|Dr|Ct|Ln|Way|Pl|Pkwy|Hwy|Ter|Cir))\s+(?:[A-Z]\-?\d*|[A-Z]?\d+[A-Z]?)$/i,
+    "$1"
+  ).trim();
   if (!cleaned || cleaned.length < 3) return null;
   if (/^\d+$/.test(cleaned) || /^P\.?O\.?\s*Box/i.test(cleaned)) return null;
   // Drop streets named after the city — "Saratoga library on Saratoga Ave"
@@ -105,6 +116,61 @@ function blurbForFood(p, ctx) {
   const isIceCream = /ice cream|gelato|frozen yogurt|dessert/i.test(p.displayType || "");
   const isQuickBite = /sandwich|deli|bagel|breakfast restaurant/i.test(p.displayType || "");
   const isFastCasual = (types || []).includes("fast_food_restaurant") || (types || []).includes("meal_takeaway");
+  const isWineBar = /\bwine bar\b/i.test(p.displayType || "");
+  const isCocktailBar = /\bcocktail bar\b/i.test(p.displayType || "");
+  const isBrewery = /\bbrewery|taproom\b/i.test(p.displayType || "");
+  const isWinery = /\bwinery|tasting room\b/i.test(p.displayType || "");
+  const isPub = /\bpub|gastropub\b/i.test(p.displayType || "");
+  const isBar = !isWineBar && !isCocktailBar && !isPub && /\bbar\b/i.test(p.displayType || "");
+  const isGenericRestaurant = /^restaurant$/i.test(p.displayType || "");
+
+  if (isWineBar) {
+    const t = [
+      street ? `Wine bar in ${cityName} on ${street} — by-the-glass pours and small plates.` : `${cityName} wine bar — by-the-glass pours and small plates.`,
+      `${cityName} wine bar${street ? ` on ${street}` : ""} for an unhurried glass.`,
+      `Sit-down wine bar in ${cityName}${street ? ` on ${street}` : ""}, bottles and flights.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isCocktailBar) {
+    const t = [
+      street ? `${cityName} cocktail bar on ${street} — built for sitting at the bar.` : `${cityName} cocktail bar.`,
+      `Cocktails in ${cityName}${street ? ` on ${street}` : ""}, mixed with care.`,
+      `${cityName} cocktail spot${street ? ` on ${street}` : ""} — low light, short menu.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isBrewery) {
+    const t = [
+      street ? `${cityName} brewery on ${street} — taps, flights, sometimes a food truck.` : `${cityName} brewery — taps, flights, sometimes a food truck.`,
+      `Drink local in ${cityName}${street ? ` on ${street}` : ""} — brewery with rotating taps.`,
+      `${cityName} taproom${street ? ` on ${street}` : ""}, pour a flight and post up.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isWinery) {
+    const t = [
+      `${cityName} tasting room${street ? ` on ${street}` : ""} — flights and bottle pours, no rush.`,
+      street ? `Winery on ${street} in ${cityName} — short pour or stay for a flight.` : `${cityName} winery — short pour or stay for a flight.`,
+      `Local wine in ${cityName}${street ? ` on ${street}` : ""}, low-key tasting room.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isPub) {
+    const t = [
+      `${cityName} pub${street ? ` on ${street}` : ""} — pints, a bite, easy to linger.`,
+      street ? `Gastropub on ${street} in ${cityName} — beers and a real food menu.` : `${cityName} gastropub — beers and a real food menu.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isBar) {
+    const t = [
+      `Neighborhood bar in ${cityName}${street ? ` on ${street}` : ""} — easy stop for a pint.`,
+      street ? `${cityName} bar on ${street}, casual and unfussy.` : `${cityName} bar, casual and unfussy.`,
+      `${cityName} watering hole${street ? ` on ${street}` : ""}.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
 
   if (isCoffee) {
     const t = [
@@ -169,7 +235,22 @@ function blurbForFood(p, ctx) {
     ];
     return pickTemplate(t, p.id);
   }
-  return street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`;
+  // No priceLevel + no special subtype. Mix three variants so a city full of
+  // "Restaurant" displayType places doesn't read as one identical sentence.
+  if (isGenericRestaurant) {
+    const t = [
+      street ? `${cityName} sit-down spot on ${street}, full menu.` : `${cityName} sit-down spot, full menu.`,
+      street ? `Table-service eatery on ${street} in ${cityName}.` : `Table-service eatery in ${cityName}.`,
+      `${cityName} restaurant${street ? ` on ${street}` : ""} — solid neighborhood pick.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  const t = [
+    street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`,
+    street ? `${cityName} ${type}, sit-down on ${street}.` : `Sit-down ${type} in ${cityName}.`,
+    street ? `${cityName}'s ${type} on ${street}, table service.` : `${cityName}'s ${type}, table service.`,
+  ];
+  return pickTemplate(t, p.id);
 }
 
 // OUTDOOR -------------------------------------------------------------------
@@ -252,18 +333,120 @@ function blurbForShopping(p, ctx) {
 
 function blurbForEntertainment(p, ctx) {
   const { cityName, street } = ctx;
+  const dt = (p.displayType || "").toLowerCase();
   const type = lowerType(p.displayType || "venue");
-  const isClimb = /climbing|bouldering/i.test(p.displayType || "");
-  const isArcade = /arcade|bowling|laser tag|escape/i.test(p.displayType || "");
+  const isClimb = /climbing|bouldering/.test(dt);
+  const isArcade = /arcade|bowling|laser tag|escape|amusement/.test(dt);
+  const isCinema = /movie theater|cinema/.test(dt);
+  const isStage = /performing arts|theater|theatre|opera|concert hall/.test(dt);
+  const isCommunity = /community center|community hall|senior center|recreation center/.test(dt);
+  const isEducational = /educational institution|art studio|art school|tutoring|learning center/.test(dt);
+  const isSports = /sports activity|sports complex|sports club|fitness center|gym\b/.test(dt);
+  const isStore = /\bstore\b/.test(dt);
 
-  if (isClimb) return street ? `${cityName} ${type} on ${street} — bring shoes or rent at the desk.` : `${cityName} ${type}.`;
-  if (isArcade) return street ? `${cityName} ${type} on ${street} — solid rainy-day option.` : `${cityName} ${type}.`;
-  return street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`;
+  if (isClimb) return street ? `${cityName} climbing gym on ${street} — bring shoes or rent at the desk.` : `${cityName} climbing gym.`;
+  if (isArcade) {
+    const t = [
+      street ? `${cityName} ${type} on ${street} — solid rainy-day option.` : `${cityName} ${type} — solid rainy-day option.`,
+      `${cityName} indoor ${type}${street ? ` on ${street}` : ""}, easy with a group.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isCinema) {
+    const t = [
+      `${cityName} cinema${street ? ` on ${street}` : ""} — catch a screening.`,
+      street ? `Movies on ${street} in ${cityName}.` : `Movie theater in ${cityName}.`,
+      `${cityName} movie house${street ? ` on ${street}` : ""}, check the showtimes.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isStage) {
+    const t = [
+      `${cityName} stage${street ? ` on ${street}` : ""} — plays, music, and seasonal runs.`,
+      `Live performance venue in ${cityName}${street ? ` on ${street}` : ""}.`,
+      `${cityName} theater${street ? ` on ${street}` : ""}, check the season calendar.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isCommunity) {
+    const t = [
+      `${cityName} community center${street ? ` on ${street}` : ""} — classes, drop-in hours, public rooms.`,
+      street ? `Community space on ${street} in ${cityName}.` : `${cityName} community space.`,
+      `${cityName} rec hub${street ? ` on ${street}` : ""}, open to the public.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isEducational) {
+    const t = [
+      `${cityName} drop-in studio${street ? ` on ${street}` : ""} — workshops and classes.`,
+      `${cityName} learning space${street ? ` on ${street}` : ""}, sign up or walk in.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isSports) {
+    const t = [
+      street ? `${cityName} sports facility on ${street}.` : `${cityName} sports facility.`,
+      `${cityName} fitness spot${street ? ` on ${street}` : ""} — drop in for a session.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isStore) {
+    return street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`;
+  }
+  const t = [
+    street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`,
+    `${cityName} stop${street ? ` on ${street}` : ""} — worth a look.`,
+  ];
+  return pickTemplate(t, p.id);
 }
 
 function blurbForWellness(p, ctx) {
   const { cityName, street } = ctx;
+  const dt = (p.displayType || "").toLowerCase();
   const type = lowerType(p.displayType || "wellness");
+  const isMassage = /massage/.test(dt);
+  const isSpa = /\bspa\b/.test(dt) && !isMassage;
+  const isYoga = /yoga|pilates|barre/.test(dt);
+  const isSalon = /\b(beauty salon|hair salon|nail salon|salon|nail|barbershop)\b/.test(dt);
+  const isSkin = /skin care|skincare|skin clinic|aesthetic|facial/.test(dt);
+  const isChiro = /chiropract/.test(dt);
+
+  if (isMassage) {
+    const t = [
+      street ? `${cityName} massage studio on ${street} — book ahead or walk in.` : `${cityName} massage studio — book ahead or walk in.`,
+      `${cityName} massage spot${street ? ` on ${street}` : ""} for a quiet hour.`,
+      `Massage in ${cityName}${street ? ` on ${street}` : ""}, full menu of styles.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isSpa) {
+    const t = [
+      `${cityName} day spa${street ? ` on ${street}` : ""} — facials, massage, the works.`,
+      street ? `Spa on ${street} in ${cityName}, full menu of treatments.` : `${cityName} spa, full menu of treatments.`,
+      `${cityName} treatment spa${street ? ` on ${street}` : ""}, book a slot and unwind.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isYoga) {
+    const t = [
+      street ? `${cityName} ${type} on ${street} — drop-in classes most days.` : `${cityName} ${type} — drop-in classes most days.`,
+      `${cityName} ${type}${street ? ` on ${street}` : ""}, schedule online and grab a mat.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isSalon) {
+    const t = [
+      street ? `${cityName} ${type} on ${street}, walk-in or appointment.` : `${cityName} ${type}, walk-in or appointment.`,
+      `${cityName} ${type}${street ? ` on ${street}` : ""} — book a chair.`,
+    ];
+    return pickTemplate(t, p.id);
+  }
+  if (isSkin) {
+    return street ? `${cityName} skincare studio on ${street} — facials and treatments.` : `${cityName} skincare studio — facials and treatments.`;
+  }
+  if (isChiro) {
+    return street ? `${cityName} chiropractor on ${street}.` : `${cityName} chiropractor.`;
+  }
   return street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`;
 }
 
@@ -301,11 +484,23 @@ for (const p of places) {
     case "entertainment": blurb = blurbForEntertainment(p, ctx); break;
     case "wellness": blurb = blurbForWellness(p, ctx); break;
     case "arts": blurb = blurbForMuseum(p, ctx); break;
-    case "neighborhood": blurb = `${cityName} neighborhood${street ? ` along ${street}` : ""}.`; break;
-    default:
-      blurb = street
-        ? `${p.displayType || "Spot"} in ${cityName} on ${street}.`
-        : `${p.displayType || "Spot"} in ${cityName}.`;
+    case "neighborhood": {
+      const t = [
+        `${cityName}'s walkable strip — shops, food, somewhere to sit.`,
+        `Wandering distance of shops and restaurants in ${cityName}${street ? ` along ${street}` : ""}.`,
+        `${cityName}'s downtown — a few blocks worth of stops.`,
+        `Pocket of ${cityName} you can park once and explore on foot.`,
+      ];
+      blurb = pickTemplate(t, p.id);
+      break;
+    }
+    default: {
+      const t = [
+        street ? `${p.displayType || "Spot"} in ${cityName} on ${street}.` : `${p.displayType || "Spot"} in ${cityName}.`,
+        `${cityName} stop${street ? ` on ${street}` : ""} — worth a quick visit.`,
+      ];
+      blurb = pickTemplate(t, p.id);
+    }
   }
   cache[p.id] = { blurb, source: "template", category: p.category };
   templateHits++;
