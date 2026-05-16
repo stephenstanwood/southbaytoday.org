@@ -2985,9 +2985,15 @@ const server = createServer((req, res) => {
           return;
         }
         const prompt = await buildMjPromptForSlot(slot, slotType);
-        slot.mjPrompt = prompt;
-        slot.mjPromptAt = new Date().toISOString();
-        saveScheduleFile(schedule);
+        // Re-load to pick up any concurrent writes from other endpoints,
+        // patch only this slot's mjPrompt fields, then save.
+        const fresh = loadSchedule();
+        const freshSlot = fresh.days?.[date]?.[slotType];
+        if (freshSlot) {
+          freshSlot.mjPrompt = prompt;
+          freshSlot.mjPromptAt = new Date().toISOString();
+          saveScheduleFile(fresh);
+        }
         console.log(`  🎨 MJ prompt distilled + cached for ${date} ${slotType}`);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: true, prompt }));
@@ -3055,6 +3061,28 @@ const server = createServer((req, res) => {
           }
 
           saveScheduleFile(schedule);
+
+          // Kick off MJ prompt distillation in the background for tonight-pick
+          // slots so it's cached by the time Stephen ever expands the slot.
+          // Don't await — the approve-copy response shouldn't wait on Opus.
+          if (slotType === "tonight-pick" && slot.imageUrl) {
+            (async () => {
+              try {
+                const mjPrompt = await buildMjPromptForSlot(slot, slotType);
+                const fresh = loadSchedule();
+                const freshSlot = fresh.days?.[date]?.[slotType];
+                if (freshSlot) {
+                  freshSlot.mjPrompt = mjPrompt;
+                  freshSlot.mjPromptAt = new Date().toISOString();
+                  saveScheduleFile(fresh);
+                  console.log(`  🎨 MJ prompt pre-cached for ${date} ${slotType}`);
+                }
+              } catch (err) {
+                console.error(`  ⚠️  MJ pregen failed for ${date} ${slotType}: ${err.message}`);
+              }
+            })();
+          }
+
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ ok: true, schedule }));
           return;
