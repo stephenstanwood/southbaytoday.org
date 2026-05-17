@@ -40,7 +40,7 @@ const CITIES = [
   { city: "campbell",      stoaCity: "Campbell",      cityName: "Campbell",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://www.campbellca.gov/AgendaCenter/City-Council-10" },
   { city: "saratoga",      stoaCity: "Saratoga",      cityName: "Saratoga",      schedule: "1st and 3rd Wednesday", agendaUrl: "https://saratoga-ca.municodemeetings.com/" },
   { city: "los-altos",     stoaCity: "Los Altos",     cityName: "Los Altos",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://losaltos-ca.municodemeetings.com/" },
-  { city: "los-gatos",     stoaCity: "Los Gatos",     cityName: "Los Gatos",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://losgatos-ca.municodemeetings.com/" },
+  { city: "los-gatos",     stoaCity: "Los Gatos",     cityName: "Los Gatos",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://losgatos-ca.municodemeetings.com/", councilBody: "Town Council" },
   { city: "san-jose",      stoaCity: "San Jose",      cityName: "San José",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",      legistar: "sanjose",      legistarApi: "sanjose" },
   { city: "mountain-view", stoaCity: "Mountain View", cityName: "Mountain View", schedule: "2nd and 4th Tuesday",   agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview", legistarApi: "mountainview" },
   { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale",    legistarApi: "sunnyvaleca" },
@@ -65,9 +65,11 @@ function legistarMeetingUrl(subdomain, date) {
 
 // ── Fetch Stoa data ──
 
-async function fetchStoaMeetingsForCity(stoaCity) {
-  // Try typed query first, then fall back to untyped (some cities lack type tags)
-  for (const typeParam of ["&type=City+Council", ""]) {
+async function fetchStoaMeetingsForCity(stoaCity, councilBody = "City Council") {
+  // Try typed query first, then fall back to untyped (some cities lack type tags).
+  // Los Gatos uses "Town Council"; everyone else "City Council".
+  const typedParam = `&type=${councilBody.replace(/\s+/g, "+")}`;
+  for (const typeParam of [typedParam, ""]) {
     const url = `https://www.stoa.works/api/council-meetings?city=${encodeURIComponent(stoaCity)}${typeParam}&limit=10`;
     const res = await fetch(url, {
       headers: { "User-Agent": "SouthBaySignal/1.0 (stanwood.dev; internal data sharing)" },
@@ -76,11 +78,12 @@ async function fetchStoaMeetingsForCity(stoaCity) {
     if (!res.ok) continue;
     const data = await res.json();
     let records = data.records ?? [];
-    // If untyped, filter to likely City Council records by title
+    // If untyped, filter to likely City/Town Council records by title
     if (!typeParam && records.length > 0) {
       const council = records.filter((r) => {
         const title = (r.title || "").toLowerCase();
-        return title.includes("city council") || title.includes("council meeting") ||
+        return title.includes("city council") || title.includes("town council") ||
+               title.includes("council meeting") ||
                title.includes("please scroll") || title.includes("live translation");
       });
       records = council.length > 0 ? council : records;
@@ -94,7 +97,7 @@ async function fetchStoaMeetings() {
   console.log("Fetching from stoa.works/api/council-meetings (per-city)...");
   const allRecords = [];
   for (const config of CITIES) {
-    const records = await fetchStoaMeetingsForCity(config.stoaCity);
+    const records = await fetchStoaMeetingsForCity(config.stoaCity, config.councilBody);
     allRecords.push(...records);
   }
   console.log(`  Got ${allRecords.length} records total\n`);
@@ -167,7 +170,8 @@ async function summarize(config, meeting) {
     ? `Note: the content above is the opening segment of the meeting transcript. It may only capture roll call and procedural items. Summarize what you can and be honest if the substantive agenda items aren't captured.`
     : "";
 
-  const prompt = `Summarize this ${config.cityName}, CA City Council meeting for residents in plain English.
+  const councilBody = config.councilBody ?? "City Council";
+  const prompt = `Summarize this ${config.cityName}, CA ${councilBody} meeting for residents in plain English.
 
 Meeting date: ${meeting.date}
 ${contentBlock}
@@ -243,7 +247,8 @@ async function main() {
   const byCity = {};
   for (const r of records) {
     if (r.date > today) continue;
-    if (r.meetingType !== "City Council") continue;
+    // Accept "City Council" or "Town Council" — Los Gatos is the only Town in SCC.
+    if (r.meetingType !== "City Council" && r.meetingType !== "Town Council") continue;
     // Stoa mislabels some commission meetings as "City Council" — skip them
     const titleLower = (r.title || "").toLowerCase();
     if (titleLower.includes("commission") && !titleLower.includes("council")) continue;
@@ -311,7 +316,10 @@ async function main() {
 
       // Use meetingType from Stoa (not hardcoded) so mislabeled records are
       // surfaced rather than masked. Falls back to "City Council" if absent.
-      const bodyLabel = meeting.meetingType ?? "City Council";
+      // councilBody (when set) hard-overrides — Los Gatos is officially a Town
+      // and its body is the Town Council, but Stoa records sometimes come back
+      // labeled "City Council".
+      const bodyLabel = config.councilBody ?? meeting.meetingType ?? "City Council";
       digests[config.city] = {
         city: config.city,
         cityName: config.cityName,
