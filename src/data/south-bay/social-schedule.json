@@ -1123,7 +1123,7 @@
         ]
       },
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "BTS World Tour 'Arirang' IN Stanford",
@@ -1156,7 +1156,51 @@
         "generatedAt": "2026-05-09T10:37:48.318Z",
         "imagePrompt": "Mid-century modern atomic illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Stylized curved stadium silhouette fragmented into warm gold, burnt orange, and soft coral organic shapes. Abstract concentric sound waves in muted mustard and cream radiate outward. Thin horizontal divider stripes in dusty sage separate color fields. Right side features abstracted musical form—flowing curved lines suggesting movement and energy. Boomerang and starburst atomic-era shapes scattered throughout. Generous negative space. Bold saturated palette with electric visual punch, clean mid-century curves, zero psychedelic effects.",
         "mjPrompt": "{Saul Steinberg single-line drawing whimsy intellectual cartooning, isometric flat illustration architectural spatial depth, concrete art swiss geometric pure abstraction, Russian avant-garde rodchenko diagonal red typography revolutionary, encaustic wax painting layered translucent dimensional surface, Bauhaus typography poster sans-serif primary blocks geometric, kintsugi gold-mended cracks broken pottery imperfect repair, fresco wall painting muted lime-plaster faded pompeii antique, Sol LeWitt grid systematic wall drawing permutation, minimal line art bold color fills large color fields, mosaic tessellated stones byzantine gold leaf saturated, terrazzo pattern cream field scattered small stone chips muted accents, ashcan school gritty urban earth tones early 20th century, Donald Judd minimalist box geometry industrial, block print fabric repeating motif handmade indigo textile} of low stage lights bleeding into stadium dusk, the brass curl of a traditional horn against deep indigo, silk hanbok ribbons unfurling in warm haze, scattered light catching on a microphone stand, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
-        "mjPromptAt": "2026-05-16T21:01:35.034Z"
+        "mjPromptAt": "2026-05-16T21:01:35.034Z",
+        "publishedAt": "2026-05-17T18:50:06.311Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056084092714901859",
+            "id": "2056084092714901859",
+            "text": "Tonight in the South Bay: BTS World Tour 'Arirang' takes over Stanford Stadium at 7 PM. https://t.co/5dEtBYvD4o",
+            "ownReplies": [
+              "2056084851682615562"
+            ]
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm2zjp544h2x",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm2zjp544h2x",
+            "cid": "bafyreicxwlpinpf4qtpt5wnhyjn5cvcpcr42yl4bkg6rgj5fnhmtpzdcni"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18112744093669593",
+            "id": "18112744093669593"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111212778849604",
+            "id": "122111212778849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116591404436435343",
+            "id": "116591404436435343",
+            "url": "https://mastodon.social/@southbaytoday/116591404436435343"
+          },
+          {
+            "platform": "instagram",
+            "ok": false,
+            "error": "Instagram publish failed (400): {\"error\":{\"message\":\"Media ID is not available\",\"type\":\"OAuthException\",\"code\":9007,\"error_subcode\":2207027,\"is_transient\":false,\"error_user_title\":\"Cannot Publish\",\"error_user_msg\":\"The media is not ready for publishing, please wait for a moment\",\"fbtrace_id\":\"AHE-rRIpCrM7jm_3RbmzuwU\"}}"
+          }
+        ]
       }
     },
     "2026-05-18": {
