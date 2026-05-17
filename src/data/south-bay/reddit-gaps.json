@@ -1,382 +1,291 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-17T19:21:52.370Z",
+    "generatedAt": "2026-05-17T23:17:31.997Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 65,
-    "placesMatched": 27,
-    "placeGaps": 38,
-    "eventsExtracted": 3,
+    "placesExtracted": 53,
+    "placesMatched": 22,
+    "placeGaps": 31,
+    "eventsExtracted": 4,
     "eventsMatched": 1,
-    "eventGaps": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "South Bay Shores",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "water facility at Great America property",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "George F. Haines International Swim Center",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "public swim facility under restoration",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
       "name": "Rajbhog Thali",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "all-you-can-eat Indian lunch rotating regional cuisines",
+      "context": "all-you-can-eat Indian lunch with rotating regional cuisines",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "Ulavacharu",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "South Indian restaurant with weekend buffet",
+      "context": "South Indian restaurant with awesome weekend buffet",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "Rosotti's Alpine Inn",
-      "city": "Portola Valley",
-      "kind": "restaurant",
-      "context": "second oldest operating saloon in California, founded 1852",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "The Cats",
       "city": "Los Gatos",
       "kind": "restaurant",
-      "context": "weekend breakfast buffet with BBQ and Filipino dishes",
+      "context": "weekend breakfast buffet with Texas BBQ and Filipino dishes",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "Taqueria La Cazuela",
-      "city": "East Palo Alto",
-      "kind": "restaurant",
-      "context": "legit Mexican restaurant with classic breakfasts",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "Chalateco",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "Salvadoran/Mexican chain with large menu including breakfast",
+      "context": "Salvadoran/Mexican chain with breakfast options",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
+      ]
+    },
+    {
+      "name": "Olympus Cafe",
+      "city": "Mountain View",
+      "kind": "cafe",
+      "context": "Turkish breakfast items",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "Baji's",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "breakfast/brunch restaurant",
+      "context": "breakfast staple",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "Olympus Cafe",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "Turkish breakfast items",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "Hummus on Castro",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "Mediterranean brunch",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "The Breakfast Club",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "newly opened on Hamilton, breakfast/brunch",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ]
-    },
-    {
-      "name": "Lou's Cafe",
-      "city": "Los Gatos",
-      "kind": "restaurant",
-      "context": "solid breakfast/brunch option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "Munjela Glow",
       "city": "Los Altos",
       "kind": "service",
-      "context": "custom wig specialist",
+      "context": "custom wig services and styling assistance",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
-      "name": "Stevenson Elementary School",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "choice school with high parent engagement model",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Theuerkauf Elementary School",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "neighborhood school experiencing demographic shifts",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Amy Imai Elementary School",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "MVWSD school with similar demographics to Stevenson",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Bubb Elementary School",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "MVWSD school with similar demographics to Stevenson",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Bullis Charter School",
-      "city": "Los Altos",
-      "kind": "venue",
-      "context": "charter school with diversity concerns and ongoing lawsuit",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Smash Sunnyvale",
+      "name": "Sam's",
       "city": "Sunnyvale",
-      "kind": "service",
-      "context": "gym with strong community, good for making friends",
+      "kind": "retail",
+      "context": "wig shop with in-person fitting and selection",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ]
     },
     {
       "name": "Ike's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "sandwich shop known for Dutch crunch bread downtown",
+      "context": "sandwich shop with Dutch crunch bread downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Alice's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "American restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Harry's Hi-Life",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "BBQ restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Papillon",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "French restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Tamarine",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Vietnamese restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Walia",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Ethiopian restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ]
-    },
-    {
-      "name": "Sam's Chowder House",
-      "city": "Half Moon Bay",
-      "kind": "restaurant",
-      "context": "seafood restaurant, recommended day trip destination",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "San Jose Opera",
       "city": "San Jose",
       "kind": "venue",
-      "context": "opera company, local arts and entertainment",
+      "context": "opera performances",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Alice's",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "American cuisine restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Harry's Hi-Life",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "BBQ restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Papillon",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "French cuisine restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Tamarine",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Vietnamese cuisine restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Walia",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Ethiopian cuisine restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Redwood Symphony",
+      "city": "",
+      "kind": "venue",
+      "context": "symphony orchestra",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Smuin Ballet",
+      "city": "",
+      "kind": "venue",
+      "context": "ballet company",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "South Bay Musical Theater",
+      "city": "",
+      "kind": "venue",
+      "context": "musical theater productions",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Milpitas Farmer's Market",
+      "city": "Milpitas",
+      "kind": "venue",
+      "context": "farmers market with Asian produce and seafood",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Campbell Farmers Market",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "farmers market",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "San Mateo Saturday Market",
+      "city": "San Mateo",
+      "kind": "venue",
+      "context": "large farmers market at CSM campus",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
@@ -385,123 +294,125 @@
       "kind": "park",
       "context": "national park 1.5 hours south of San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "Lick Observatory",
-      "city": "San Jose",
+      "city": "",
       "kind": "venue",
-      "context": "observatory overlooking San Jose, local vista",
+      "context": "observatory overlooking San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
-      "name": "Mt. Umunhum",
-      "city": "San Jose",
+      "name": "Mt Umunhum",
+      "city": "",
       "kind": "park",
-      "context": "mountain overlooking San Jose, local vista",
+      "context": "hiking destination overlooking San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "Arastradero Nature Preserve",
-      "city": "Palo Alto",
+      "city": "",
       "kind": "park",
-      "context": "nature preserve, local hiking destination",
+      "context": "nature preserve with hiking",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Huddart Park",
+      "city": "",
+      "kind": "park",
+      "context": "park with hiking trails",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "Stanford Dish",
       "city": "Palo Alto",
       "kind": "park",
-      "context": "hiking trail at Stanford, local recreation",
+      "context": "hiking trail",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "Sam's Chowder House",
+      "city": "Half Moon Bay",
+      "kind": "restaurant",
+      "context": "chowder house",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "Felipe's",
       "city": "Mountain View",
       "kind": "retail",
-      "context": "veggie and fruit stand with affordable produce",
+      "context": "vegetable and fruit stand with affordable produce",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
         "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+        "https://www.reddit.com/r/SanJose/comments/1tg2qyc/anyone_else_being_swarmed_by_butterflies/",
+        "https://www.reddit.com/r/paloalto/comments/1te0wd9/line_for_merch_is_already_300_people_deep_at_6_am/"
       ]
     },
     {
       "name": "Oakmont Market",
       "city": "Mountain View",
       "kind": "retail",
-      "context": "fruit and vegetable stand with competitive pricing",
+      "context": "vegetable and fruit stand with affordable produce",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
         "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+        "https://www.reddit.com/r/SanJose/comments/1tg2qyc/anyone_else_being_swarmed_by_butterflies/",
+        "https://www.reddit.com/r/paloalto/comments/1te0wd9/line_for_merch_is_already_300_people_deep_at_6_am/"
       ]
     },
     {
       "name": "Campbell Skatepark",
       "city": "Campbell",
-      "kind": "park",
-      "context": "recently reopened skateboarding facility",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ]
-    },
-    {
-      "name": "Sunnyvale Library",
-      "city": "Sunnyvale",
       "kind": "venue",
-      "context": "public library in south Sunnyvale",
+      "context": "recently reopened skatepark",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
         "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ]
-    },
-    {
-      "name": "Peery Park Rides",
-      "city": "Sunnyvale",
-      "kind": "service",
-      "context": "transit service with MTC funding",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+        "https://www.reddit.com/r/SanJose/comments/1tg2qyc/anyone_else_being_swarmed_by_butterflies/",
+        "https://www.reddit.com/r/paloalto/comments/1te0wd9/line_for_merch_is_already_300_people_deep_at_6_am/"
       ]
     }
   ],
@@ -510,26 +421,38 @@
       "name": "Coldplay Concert",
       "when": "last year",
       "city": "Palo Alto",
-      "context": "previous concert event at same venue as BTS",
+      "context": "concert heard throughout downtown Palo Alto",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ]
     },
     {
       "name": "Bay to Breakers",
-      "when": "annual",
+      "when": "May",
       "city": "San Francisco",
-      "context": "annual running event in San Francisco",
+      "context": "annual running event",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ]
+    },
+    {
+      "name": "First Concert at Stadium",
+      "when": "weekend after merch line day",
+      "city": "Palo Alto",
+      "context": "major event with 1000+ person merchandise line",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tg2qyc/anyone_else_being_swarmed_by_butterflies/",
+        "https://www.reddit.com/r/paloalto/comments/1te0wd9/line_for_merch_is_already_300_people_deep_at_6_am/"
       ]
     }
   ],
@@ -541,10 +464,10 @@
       "context": "theme park facing potential demolition, preservation efforts",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ],
       "matchedName": "Great America Amphitheater"
     },
@@ -552,13 +475,13 @@
       "name": "Esther's Kitchen & Beer Garden",
       "city": "Los Altos",
       "kind": "restaurant",
-      "context": "German breakfast with bratwurst scrambles",
+      "context": "German twist on western style breakfast, bratwurst scrambles",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ],
       "matchedName": "Esther's Kitchen & Beer Garden"
     },
@@ -566,27 +489,41 @@
       "name": "Bloom",
       "city": "Santa Clara",
       "kind": "restaurant",
-      "context": "breakfast/brunch eatery",
+      "context": "eatery with brunch options",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ],
       "matchedName": "Bloom"
+    },
+    {
+      "name": "Los Gatos Cafe",
+      "city": "Los Gatos",
+      "kind": "cafe",
+      "context": "uptown location with breakfast/brunch offerings",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
+        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
+      ],
+      "matchedName": "Los Gatos Creek Trail"
     },
     {
       "name": "A Good Morning",
       "city": "Los Altos",
       "kind": "restaurant",
-      "context": "breakfast/brunch restaurant",
+      "context": "breakfast/brunch staple",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ],
       "matchedName": "A Good Morning"
     },
@@ -594,97 +531,41 @@
       "name": "Rick's",
       "city": "Los Altos",
       "kind": "restaurant",
-      "context": "breakfast/brunch restaurant",
+      "context": "breakfast staple",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
         "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
+        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/",
+        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/"
       ],
       "matchedName": "Rick's Cafe"
-    },
-    {
-      "name": "Los Gatos Cafe",
-      "city": "Los Gatos",
-      "kind": "restaurant",
-      "context": "breakfast/brunch restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ],
-      "matchedName": "Los Gatos Creek Trail"
-    },
-    {
-      "name": "Hobee's",
-      "city": "",
-      "kind": "restaurant",
-      "context": "breakfast/brunch restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ],
-      "matchedName": "Hobee's"
-    },
-    {
-      "name": "Mission City Grill",
-      "city": "Saratoga",
-      "kind": "restaurant",
-      "context": "same company/menu as Holder's, new location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1tfiumf/about_to_have_brain_surgery_where_are_the_best/",
-        "https://www.reddit.com/r/SanJose/comments/1tfvh0k/enough_with_the_bad_driver_posts/",
-        "https://www.reddit.com/r/bayarea/comments/1tfk2uu/favorite_breakfast_brunch_restaurant_between_the/"
-      ],
-      "matchedName": "Holder’s Mission City Grill"
     },
     {
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "food court venue, local dining recommendation",
+      "context": "food court with multiple dining options",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "San Pedro Square Market"
-    },
-    {
-      "name": "Yuki Sushi",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Japanese sushi restaurant, local dining recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ],
-      "matchedName": "Yuki Sushi Santa Clara"
     },
     {
       "name": "Broadway San Jose",
       "city": "San Jose",
       "kind": "venue",
-      "context": "theater venue, local arts and entertainment",
+      "context": "theater venue for shows",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "Broadway San Jose"
     },
@@ -692,41 +573,27 @@
       "name": "City Lights Theater",
       "city": "San Jose",
       "kind": "venue",
-      "context": "theater venue, local arts and entertainment",
+      "context": "theater venue",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "City Lights Theater Company of San Jose"
-    },
-    {
-      "name": "Palo Alto Players",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "theater group, local arts and entertainment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
-      ],
-      "matchedName": "Palo Alto Players"
     },
     {
       "name": "Tech Interactive",
       "city": "San Jose",
       "kind": "venue",
-      "context": "technology museum, local attraction",
+      "context": "interactive tech museum",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "The Tech Interactive"
     },
@@ -734,13 +601,13 @@
       "name": "San Jose Museum of Art",
       "city": "San Jose",
       "kind": "venue",
-      "context": "art museum, local attraction",
+      "context": "art museum",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "San Jose Museum of Art"
     },
@@ -748,161 +615,154 @@
       "name": "Rosicrucian Egyptian Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "Egyptian museum, local attraction",
+      "context": "Egyptian museum",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "Rosicrucian Egyptian Museum"
+    },
+    {
+      "name": "Yuki Sushi",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Japanese sushi restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Yuki Sushi Santa Clara"
+    },
+    {
+      "name": "Palo Alto Players",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "theater company",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Palo Alto Players"
     },
     {
       "name": "Computer History Museum",
       "city": "Mountain View",
       "kind": "venue",
-      "context": "technology museum, local attraction",
+      "context": "technology history museum",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "Computer History Museum"
     },
     {
-      "name": "Big Basin Redwoods State Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "redwood forest state park, local camping and hiking",
+      "name": "Mountain View Farmers Market",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "Sunday farmers market",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Mountain View Farmers' Market"
+    },
+    {
+      "name": "Palo Alto California Ave Farmers Market",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "Sunday farmers market with produce and hot food",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Palo Alto Cafe"
+    },
+    {
+      "name": "Los Altos Farmers Market",
+      "city": "",
+      "kind": "venue",
+      "context": "Thursday farmers market with baked goods and hot food",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Los Altos Grill"
+    },
+    {
+      "name": "Big Basin Redwoods State Park",
+      "city": "",
+      "kind": "park",
+      "context": "redwood forest with hiking trails",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "Big Basin Cafe"
+    },
+    {
+      "name": "Monte Bello Open Space Preserve",
+      "city": "",
+      "kind": "park",
+      "context": "open space preserve for hiking",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "Monte Bello Open Space Preserve"
+    },
+    {
+      "name": "Mystery Spot",
+      "city": "",
+      "kind": "venue",
+      "context": "tourist attraction",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
+      ],
+      "matchedName": "The Mystery Spot"
     },
     {
       "name": "Castle Rock State Park",
       "city": "",
       "kind": "park",
-      "context": "state park, recommended hiking destination",
+      "context": "location with butterfly swarming activity",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tg2qyc/anyone_else_being_swarmed_by_butterflies/",
+        "https://www.reddit.com/r/paloalto/comments/1te0wd9/line_for_merch_is_already_300_people_deep_at_6_am/"
       ],
       "matchedName": "Castle Rock State Park"
-    },
-    {
-      "name": "Santana Row",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "downtown entertainment and shopping destination",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Santana Row"
-    },
-    {
-      "name": "Valley Fair",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "shopping mall partly in San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Bowlero Valley Fair"
-    },
-    {
-      "name": "De Anza College",
-      "city": "Cupertino",
-      "kind": "other",
-      "context": "major destination for south Sunnyvale transit access",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "De Anza College Pool, Adapted Physical Education"
-    },
-    {
-      "name": "Whole Foods",
-      "city": "Sunnyvale",
-      "kind": "retail",
-      "context": "grocery store serving south Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Whole Foods Market"
-    },
-    {
-      "name": "Washington Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "park in south Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Washington Park"
-    },
-    {
-      "name": "Las Palmas Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "park in south Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Las Palmas Park"
-    },
-    {
-      "name": "Serra Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "park in south Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Serra Park"
-    },
-    {
-      "name": "Memorial Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "park in south Sunnyvale area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1td37hu/why_schools_are_not_buying_locally_sourced_food/",
-        "https://www.reddit.com/r/SanJose/comments/1tfhjiu/will_san_jose_ever_become_a_major_ca_city_with/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
-      ],
-      "matchedName": "Cupertino Memorial Park"
     }
   ],
   "eventMatches": [
@@ -910,13 +770,13 @@
       "name": "BTS Concert",
       "when": "recent",
       "city": "Palo Alto",
-      "context": "concert event audible from residential areas",
+      "context": "concert with noise heard throughout area",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1te0rxm/any_other_mvwsd_parents_frustrated_with_stevenson/",
-        "https://www.reddit.com/r/bayarea/comments/1tf5uva/trying_to_make_female_friends_as_a_female_in_late/",
+        "https://www.reddit.com/r/bayarea/comments/1tfyovw/what_detroit_can_teach_the_bay_area_about_housing/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/SanJose/comments/1tfayww/must_dos_in_cali/",
-        "https://www.reddit.com/r/bayarea/comments/1tfq0vv/psa_its_gosling_season_be_careful_out_there_the/"
+        "https://www.reddit.com/r/bayarea/comments/1tfq8l4/monte_bello_open_space_preserve/",
+        "https://www.reddit.com/r/bayarea/comments/1tfxit8/best_farmers_markets_in_the_bay_area/"
       ],
       "matchedName": "BTS Concert Weekend - Adjusted Facility Hours"
     }
