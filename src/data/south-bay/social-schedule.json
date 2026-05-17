@@ -902,7 +902,7 @@
     },
     "2026-05-17": {
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "cupertino",
         "cityName": "Cupertino",
@@ -1073,7 +1073,54 @@
         "copyApprovedAt": "2026-05-09T13:59:13.522Z",
         "imageApprovedAt": "2026-05-09T13:59:13.522Z",
         "generatedAt": "2026-05-09T10:36:55.766Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SUNDAY IN THE SOUTH BAY\"\nSan Jose + Saratoga + Santa Clara + Sunnyvale\n\nBreakfast — Basket Bagels & Bakery\nSan Jose bagel shop on Union Ave.\n\nMorning — Joe's Trail at Cox and de Anza\nSaratoga hiking area with shaded trails and open-space stretches.\n\nLunch — Tarim Garden Xinjiang Cuisine\nSanta Clara halal restaurant on El Camino Real, $$ sit-down.\n\nAfternoon — Saratoga Community Band: Opera in the Park\nEnjoy opera performed by Saratoga Community Band in an outdoor park setting.\n\nDinner — Ginger Cafe\nCreative Chinese eatery featuring Southeast Asian influences & locally sourced i\n\nEvening — Recycle Bookstore\nClassic used bookstore with an eclectic selection of titles & a labyrinthine lay\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nJapanese sumi-e ink wash aesthetic. Cream/off-white rice paper background. Broad brush strokes in deep black ink, with subtle gray gradients. One small accent color (vermilion red or indigo blue) used sparingly like a seal stamp. Elegant condensed type feels like it belongs in a tea ceremony program. Generous negative space, meditative and calm.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: thin horizontal color stripes between sections as dividers.\nDensity: generous breathing room around headlines and between stops.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SUNDAY IN THE SOUTH BAY\"\nSan Jose + Saratoga + Santa Clara + Sunnyvale\n\nBreakfast — Basket Bagels & Bakery\nSan Jose bagel shop on Union Ave.\n\nMorning — Joe's Trail at Cox and de Anza\nSaratoga hiking area with shaded trails and open-space stretches.\n\nLunch — Tarim Garden Xinjiang Cuisine\nSanta Clara halal restaurant on El Camino Real, $$ sit-down.\n\nAfternoon — Saratoga Community Band: Opera in the Park\nEnjoy opera performed by Saratoga Community Band in an outdoor park setting.\n\nDinner — Ginger Cafe\nCreative Chinese eatery featuring Southeast Asian influences & locally sourced i\n\nEvening — Recycle Bookstore\nClassic used bookstore with an eclectic selection of titles & a labyrinthine lay\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nJapanese sumi-e ink wash aesthetic. Cream/off-white rice paper background. Broad brush strokes in deep black ink, with subtle gray gradients. One small accent color (vermilion red or indigo blue) used sparingly like a seal stamp. Elegant condensed type feels like it belongs in a tea ceremony program. Generous negative space, meditative and calm.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: thin horizontal color stripes between sections as dividers.\nDensity: generous breathing room around headlines and between stops.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-17T13:23:43.762Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056002557563301893",
+            "id": "2056002557563301893",
+            "text": "Sunday ideas, no pressure to do them all 🥯\n\nBagels at Basket on Union Ave, a shaded wander on Joe's Trail, halal Xinjiang at Tarim Garden, opera in the park with Saratoga Community Band, Ginger Cafe for dinner, lose an hour in @RecycleBo… https://t.co/xZ5beVRJkM"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm2hge65dl2c",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm2hge65dl2c",
+            "cid": "bafyreigfafkcnm344gbwwzsfijnm2bxi72g4fxu3zud2tmvajiqctaaoze"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "17996816078937055",
+            "id": "17996816078937055"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111179226849604",
+            "id": "122111179226849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116590130483413506",
+            "id": "116590130483413506",
+            "url": "https://mastodon.social/@southbaytoday/116590130483413506"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18118617667673806",
+            "id": "18118617667673806"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       },
       "tonight-pick": {
         "status": "image-approved",
