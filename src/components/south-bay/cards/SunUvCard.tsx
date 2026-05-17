@@ -175,7 +175,7 @@ export default function SunUvCard() {
               bg="#f0f9ff"
               sublabel={
                 trendMin !== null && trendMin !== 0
-                  ? `${trendMin > 0 ? "+" : ""}${trendMin} min vs tmrw`
+                  ? `tmrw ${trendMin > 0 ? "+" : ""}${trendMin} min`
                   : undefined
               }
             />
