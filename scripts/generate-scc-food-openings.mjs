@@ -42,7 +42,7 @@ const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
-const EQUIPMENT_ONLY_PATTERNS = /\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)/i;
+const EQUIPMENT_ONLY_PATTERNS = /\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT)\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG)\b/i;
@@ -171,7 +171,11 @@ function cleanName(raw) {
 
   // Strip " At [Venue City]" location descriptors — e.g. "Blendid At City Sports Mountain View"
   // These appear when a kiosk is located inside another business
-  s = s.replace(/\s+At\s+.+\b(San Jose|Palo Alto|Mountain View|Sunnyvale|Santa Clara|Cupertino|Milpitas|Campbell|Saratoga|Los Gatos|Los Altos)\b.*$/i, "").trim();
+  s = s.replace(/\s+At\s+.+\b(San Jose|Palo Alto|Mountain View|Sunnyvale|Santa Clara|Cupertino|Milpitas|Campbell|Saratoga|Los Gatos|Los Altos|Almaden|Berryessa|Cambrian|Willow\s+Glen|Evergreen|Alum\s+Rock|Japantown)\b.*$/i, "").trim();
+
+  // Also strip " At [Host Venue]" when the suffix is a known host-business
+  // keyword without a trailing city — covers cases like "Blendid At City Sports"
+  s = s.replace(/\s+At\s+(City\s+Sports|Walmart|Costco|Target|Whole\s+Foods|Safeway|Stanford\s+Mall|Valley\s+Fair|Westfield|Santana\s+Row).*$/i, "").trim();
 
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();
@@ -182,6 +186,12 @@ function cleanName(raw) {
 
   // If name still contains "Tenant Improvement" (wasn't caught above), skip
   if (/tenant improv/i.test(s)) return null;
+
+  // If the "name" is just a street address (digits + street words ending in a
+  // street type), it's a permit-data placeholder — the actual business name
+  // wasn't on the filing. Skip rather than display "14612 Big Basin Wy" as
+  // a restaurant.
+  if (/^\d+\s+[\w.\s]+?\s+(St|Street|Ave|Avenue|Way|Wy|Rd|Road|Blvd|Boulevard|Dr|Drive|Ct|Court|Ln|Lane|Cir|Circle|Pl|Place|Pkwy|Parkway|Hwy|Highway|Ter|Terrace|Sq|Square)\.?$/i.test(s)) return null;
 
   // Title case
   s = s

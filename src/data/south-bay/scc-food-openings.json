@@ -1,8 +1,20 @@
 {
-  "generatedAt": "2026-05-17T11:13:57.932Z",
+  "generatedAt": "2026-05-17T14:16:01.412Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0877651",
+      "name": "The Posh Bagel",
+      "address": "2005 Camden Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-15",
+      "status": "opened",
+      "sourceId": "SR0877651",
+      "blurb": "New York-style bagel shop with traditional and creative sandwiches.",
+      "photoRef": "places/ChIJUw8mEQA1joARJpXAWCYOt2Y/photos/Ab43m-skSyJulAe_xyMnRihwg2X2zU7oxwEZUeaF0HH96YMJ0I3kwqFgOx7mwhwCB3p3NAu8qCwVY9vnhsvYrgIKMM_tfTjIi9QHOevLkvNbSzwpFGgzAqkOj2W_UHKcEanoxM3PXYibkckGvBehE4irWYqEPvK26LlLH3ZCljZjmIREP6uHsJUz6ZdTgmgD6yoJuB9WP7wCRNALcw2rKsZa0sNqeHm4omlomeCuNmVlL6bafhOiDyDdRwGWA2SKkUPXp5eLvRfucyGLQmT_0r9d0uyrwPXR5_4MCvPU48KdOSHJpBd3uUV97zYaEWhId8GJ5sWsXdsxGrWyyy5GXaLpGkRNkYlrUKk2hl1oGdWAjRXJF8pU8sen6Idt3hCGq9K43cEx-HOv2rgd81iUWi7IsvsSsq1XFx21oC6b825mOzc"
+    },
     {
       "id": "opened-SR0883330",
       "name": "Esperancita",
@@ -12,32 +24,8 @@
       "date": "2026-05-13",
       "status": "opened",
       "sourceId": "SR0883330",
-      "blurb": "Mexican restaurant offering traditional cuisine in East San Jose.",
+      "blurb": "Latin American cuisine featuring regional specialties and traditional dishes.",
       "photoRef": "places/ChIJFfapuHbMj4ARlXJ_O9ZaZZM/photos/Ab43m-stQWLkf8prlM-ipAun7ys7foL_wP-Rsul5v9-e_B1FrK1JT28_zIKYpcuydPUdQOMkW51kSNtWFq67EEp7QDDvwDPPW_pLNJGLVc1Xf1H43zWSRXWNlqc9AJzgMGO5tPDUMHDVh61fqoXHjIX2RfaKYnIpm-1CJ4XDEz_7rUhdACeJPI6NM4vHR0qMfi13KAbeZThL0BfUlC_OrFMpLYYQM6KJqbiUf9cYGCu6i3UVd6Yxeg55gLFclGXye9f2gS2rDOnOFkz6qw2bA7qoOoPcIlWwxZQnjcET3ZQvuZRtEanOw9scujTR9eC25sZdB_yXK2QeoPu9zK4KxyhXvN2upz5F7_fjjcEnXmCa2R_tEl7Hq4Wh1Ui8dJgt0wMCN5mJiz6-2xcwKFVaiXqVVlC_CfcX3mDPHdxVjdkOzKjsHg"
-    },
-    {
-      "id": "opened-SR0882225",
-      "name": "14612 Big Basin Wy",
-      "address": "14612 Big Basin Way",
-      "cityId": "saratoga",
-      "cityName": "SARATOGA",
-      "date": "2026-05-13",
-      "status": "opened",
-      "sourceId": "SR0882225",
-      "blurb": "Restaurant location on Big Basin Way in Saratoga.",
-      "photoRef": "places/ChIJ0ZXYZ-BKjoARGFrsFeEddq8/photos/Ab43m-vrHb-zAIZTjwfLVKI8qxCGa6iMe9XzabgGvGSswu3abIEpBrWAUJ_vlbGyoZ9eqg3Sbm1PfN6MP10OZMWtnQHzBZfjTdInVpyPynT4X4lrTvEANpgXEbuJ5-Pg3WSvTIuij_APecY4-XERQQx9A0GwmWdWKtzjG_MX2UzN55YmEY9HN3D7i4dgK8qyse0Iz-xLAkk-X-aNkyKCJr38-RPq4t3H3yUZdV0b1Liz4U9bRBeKdvw4quejJdEdF4uXyRDBb4Vqm4WfltlR4-sfa__-iZgzBiLa6h3XIARLw4eQXVHtPMlVPqTPoiETSXTB9tNFyD-JHNotn7k-PnTJudEsiIJuasyOuPE9W6KCskIpSaKWDgRvq6mFGYeCIVylz98qYdLxtYve7hCtzbsBnkoJTbhA4GD6-gw6eqKXgaA"
-    },
-    {
-      "id": "opened-SR0884247",
-      "name": "Ug Tea",
-      "address": "212 Barber Ct",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
-      "date": "2026-05-12",
-      "status": "opened",
-      "sourceId": "SR0884247",
-      "blurb": "Bubble tea shop serving drinks in Milpitas.",
-      "photoRef": "places/ChIJH3iKkmHJj4AR1A06U8QTTvg/photos/Ab43m-tJtGM2yvXb6m5gF33jeAOBkNysQc1Xbvc0IkXb2wwDY1wwXpVb7tBoPvvyxEMoQ7Oa7-ALgLakZZCqKYJQqfk4xNrT-Bqjcggh6HW2fsXxaBpwF7Xmr0bT7jxaWbq7XirONFKdwwcTUi9N17-wj6Yq6O5kkCWypKxJV-O2H-2Ei3NXot6HTE3QBz5DSqLY8ltSshmcXJ46NnPw7YZ2SnjaOxWqjW4T9juxCtTXu6IlaGIvUeBpHUp0U6fyxIfAraI-PopGSTbjXNMX05XyuZifukdbRb2nuzhTy6YKSwW-9isBvyQPKY7dOWZW29n6Z_FfyMuAI6r3tS3284uqJb1I8wBNwN89rZ6dXqyXnaTxv4ZcG7uLsceOKZg5WlRrN9O4UmHTs5Cv7qqkuY0ydfblpTpiYrvad_A2ig3VCgmOgLg"
     },
     {
       "id": "opened-SR0884330",
@@ -48,8 +36,20 @@
       "date": "2026-05-12",
       "status": "opened",
       "sourceId": "SR0884330",
-      "blurb": "Mediterranean cuisine restaurant in Campbell.",
+      "blurb": "Mediterranean restaurant focusing on Greek and Southern European flavors.",
       "photoRef": "places/ChIJ89_IhoM1joARSW4kuCWZlQs/photos/Ab43m-smpOCyp1t_SS3tpDNhHn7T-0MZSULteAbjRq9wXoylaaLTebpPkwyLT5fdr3kxjvNdFpZYSsj6GYnR079GSLXQQ1g7pMaek_tCyZk2zzViV9OU_2CvJ7CgPewkRPcKYtzbwMwkxr0CcN3IxkRuN3GuaHMrOqfCz2uEq2vtziACbiu7KZhJJFjFqlFaQvzFSbJ0_iBxS3CnJPwbkn8vmaQnkeRjqD9a5KuAALNWUga4NMiPM5k6Anj9WPtkuQlMh5qb0eA-1EIeyG4MoRsxgilntYhKiunpinOhfFXTXhbaavIseLBpswVruaXSDueb5jKPlGZiWLAhblYVfgU2Z0tiyE5p4AWdnGl6UDeNQS4I_8poakCiClgHB0vg40Ghqc3l9ZqGE_cHwnxFsLWsMSIkgSpXll4iByNBQJ3sk7UmO0CquE8IY9afz9ljlNOC"
+    },
+    {
+      "id": "opened-SR0884247",
+      "name": "Ug Tea",
+      "address": "212 Barber Ct",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-05-12",
+      "status": "opened",
+      "sourceId": "SR0884247",
+      "blurb": "Bubble tea shop offering milk teas, fruit drinks, and desserts.",
+      "photoRef": "places/ChIJH3iKkmHJj4AR1A06U8QTTvg/photos/Ab43m-tJtGM2yvXb6m5gF33jeAOBkNysQc1Xbvc0IkXb2wwDY1wwXpVb7tBoPvvyxEMoQ7Oa7-ALgLakZZCqKYJQqfk4xNrT-Bqjcggh6HW2fsXxaBpwF7Xmr0bT7jxaWbq7XirONFKdwwcTUi9N17-wj6Yq6O5kkCWypKxJV-O2H-2Ei3NXot6HTE3QBz5DSqLY8ltSshmcXJ46NnPw7YZ2SnjaOxWqjW4T9juxCtTXu6IlaGIvUeBpHUp0U6fyxIfAraI-PopGSTbjXNMX05XyuZifukdbRb2nuzhTy6YKSwW-9isBvyQPKY7dOWZW29n6Z_FfyMuAI6r3tS3284uqJb1I8wBNwN89rZ6dXqyXnaTxv4ZcG7uLsceOKZg5WlRrN9O4UmHTs5Cv7qqkuY0ydfblpTpiYrvad_A2ig3VCgmOgLg"
     },
     {
       "id": "opened-SR0870828",
@@ -60,7 +60,7 @@
       "date": "2026-05-11",
       "status": "opened",
       "sourceId": "SR0870828",
-      "blurb": "Tea shop offering traditional and specialty tea beverages in San Jose.",
+      "blurb": "Specialty tea cafe serving premium loose leaf and traditional drinks.",
       "photoRef": "places/ChIJk8UyY_vNj4ARb51ieS3J0Ik/photos/Ab43m-vJTcA0v-m0GQMILLXYRL5D6SjxFsKoSUUoJK_zZpUYQfYbiA0PytXg1n4nhEMdcCXpGxRaPJIX2GevStUvJAUTip1WsKRpnaZppUO3W_5p7YMLfGYtII089fKleicB8CvN_w99EVRaa6kpt7Xy5kiOdyrHlY-g9CPJzLR0WraAIFJUtWNSbw7aR7LnJTlvPl2QPJLGWbCiIEY2LpUK0nOi2yzhEFgb_Sk9fIGlPBSeNTdYAm5VE9oTq_lu_T2O0SZ0rkEOX1U4y7f8DzKltHhxPk2YBZRGxxexf_e557qfDA"
     },
     {
@@ -72,8 +72,20 @@
       "date": "2026-05-07",
       "status": "opened",
       "sourceId": "SR0881465",
-      "blurb": "Vietnamese coffee and café drinks in San Jose.",
+      "blurb": "Vietnamese coffee shop featuring traditional and specialty coffee beverages.",
       "photoRef": "places/ChIJzSDbof8zjoARCE2ZVWSe2jQ/photos/Ab43m-vYsUhJE9JgQruFYiEv3f49hHXsbdX8gyVo_8bEhBk4UTm_OuOgxu8Yksvg5iEWE2QNOLJ4dMos4SsffYsiBis1Nh97rrHjBMvLvfSDivRmWehgdMchtF5IDttrS8Dc9Lzzo9YsD7HNa7vzi7XMRGDDDLbR4TIeAH1TQBOGlLg2Yz4gBIuXEUgaFw9Er9-emIT_qLJZYRLvSwUGY4EvCtQemsbtu9EcH3rPWM37ZMHZLI9qpt38bTW_LAB5hqdiJfAov1JVydoCqt8Csk6FbhMLHPfy8KsxMAL-RgQM7uey5qx3R_v8RV6Wyk-wQyw6pYteVQ88_PYdWjPTL4hzfa8CZvC_4iQYUjuciJrtGi_EnkcDVkl0y7sv-xTIRkMyZ6zM_NoJDfVXVf94BhXZinL1JKWns_WQmmWy_l5-jY9bJw"
+    },
+    {
+      "id": "opened-SR0880869",
+      "name": "Kona Island Coffee LLC",
+      "address": "2565 California St.., Ste. 84",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "date": "2026-05-06",
+      "status": "opened",
+      "sourceId": "SR0880869",
+      "blurb": "Hawaiian-inspired coffee roastery and cafe with local and Kona beans.",
+      "photoRef": "places/ChIJcW3PfHKxj4ARRncIvyydjAA/photos/Ab43m-vPIUix7Luyh5eyi8YL7cWtD5i1bs5OLTRSlX2DCW8apWnqBdRyhgnD2hp6357dwi0wyYr6r9zkBnsTaQc_OfxiqLa6weI42XeXxwbCh8BUQxvdjPHCDV7seXWhW1FtID7Oaqo89_jFIlVNgWaB1j0WXdWuvgbOttE6d78i6tp2QRGVIYxyMSmr78cqERmQtPdkksyG-wS300bBEkeLxnJp90IaCPhgxyEA2LfcjDnTpxREYp0tNwIYxJQuUtENVo2AhJJYO3OOsVcl8-S84tP3uxPzdN5XTfHNCfqds_KTF2Nc2g4d3Yx8ALb2GoLsGa9a8qtzyjOaZXSyEhBi7zL-CeE0asriwluOdGZmZRckLRi5_OVWebiUz0BYKB_68mlk-YRwuDmgGKMVFs4NVymOl3PScXyCF_GU1nkAJJDEuYfZQaEjDOUO5wWHV1B1"
     },
     {
       "id": "opened-SR0881648",
@@ -88,18 +100,6 @@
       "photoRef": "places/ChIJw4RuczO3j4ARC7RByZ5K9nI/photos/AU_ZVEEMxDbimVirREdEzV5a9ik6oJHlemGjCTRe1L41T74Qiurvxm2IMcpMWlCXQZ5cWIaWhmQ9DgvJ5ETb0N5y2cjUAloBAUkDKzHLYdz3z-TwIwc7E2QECLIpMHl6afJB54ZnaGDIwjeZou38xzfcnaXNZFmvufqEERsYvCdUaiwkGvL1at6_2hcsvcUgnM1i-22_5tQ0bvjf_l-Dyr42dtHTs9VDFY2_3eKn3Zga-xj6QzzkUGFzTSsa7WNKBFyWiHlHpdKjukiMuhoIC1eEVyq5q2bD9kUI4eqoWtDLvTdIxFiYwjQXk8j_ugP_XAB5AeBXlrSs9dPttwJxwqU3-OLEqG3fVmAijSD4OZcxkPPHX59UWZNBgYjo6egVOgm8IIDimHRlfqZAPE5F6jkWDZr4o61Nf3of2glV0jA88yaDPnva"
     },
     {
-      "id": "opened-SR0880869",
-      "name": "Kona Island Coffee LLC",
-      "address": "2565 California St.., Ste. 84",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "date": "2026-05-06",
-      "status": "opened",
-      "sourceId": "SR0880869",
-      "blurb": "Hawaiian-style coffee shop in Mountain View.",
-      "photoRef": "places/ChIJcW3PfHKxj4ARRncIvyydjAA/photos/Ab43m-vPIUix7Luyh5eyi8YL7cWtD5i1bs5OLTRSlX2DCW8apWnqBdRyhgnD2hp6357dwi0wyYr6r9zkBnsTaQc_OfxiqLa6weI42XeXxwbCh8BUQxvdjPHCDV7seXWhW1FtID7Oaqo89_jFIlVNgWaB1j0WXdWuvgbOttE6d78i6tp2QRGVIYxyMSmr78cqERmQtPdkksyG-wS300bBEkeLxnJp90IaCPhgxyEA2LfcjDnTpxREYp0tNwIYxJQuUtENVo2AhJJYO3OOsVcl8-S84tP3uxPzdN5XTfHNCfqds_KTF2Nc2g4d3Yx8ALb2GoLsGa9a8qtzyjOaZXSyEhBi7zL-CeE0asriwluOdGZmZRckLRi5_OVWebiUz0BYKB_68mlk-YRwuDmgGKMVFs4NVymOl3PScXyCF_GU1nkAJJDEuYfZQaEjDOUO5wWHV1B1"
-    },
-    {
       "id": "opened-SR0884216",
       "name": "Sultan's Kebab Campbell",
       "address": "278 E Campbell Ave",
@@ -108,7 +108,7 @@
       "date": "2026-05-05",
       "status": "opened",
       "sourceId": "SR0884216",
-      "blurb": "Middle Eastern kebab specialist in Campbell.",
+      "blurb": "Turkish kebab restaurant specializing in grilled meats and Mediterranean sides.",
       "photoRef": "places/ChIJ9QEax501joAR64RxISWLlNg/photos/Ab43m-sMPFSdP7fJ_o4ayT8SUlLpB6LB0UGNzOllvHrczTUl2bu5LMGO7AIq1QS9YDhPF1AO5kcVs2dV8rmEzRERT9QXkCr7wOw1Xu_fSO7kPQ9UpR3Aty9hAYE2DXUS2ebzQwYDIFawnnm55FyB_3ERQsbWw8ExpIZHJR-rCXBSWPTmc0hIibSQxoR3u_aa4mRff_WD0j-drlTAus7TL30H-9I6XV-pdIT_GZ6k4iGPeLUztpe7cKtYqou_ZC9U9i7inF5igoMd-9MZrdiuGhQITPMbuz7VkoFmOFlhAl7_5taDxvoT9CjzsBwu26II4rapOWa5UC4L8btO0X_Sxvyl_k-dIdGadaSgjAa5gwWqzVLpPbm_py6YBWoYW5mygVcIZgQ2wbsJIrDaxn2Y1_uJQQZIM80kz8bxEivKhjnVIiHKUBGkFO_b-eDnJupFUtO-"
     },
     {
@@ -120,7 +120,7 @@
       "date": "2026-05-04",
       "status": "opened",
       "sourceId": "SR0881984",
-      "blurb": "Mexican tortilleria and taco shop in Milpitas.",
+      "blurb": "Mexican tortilleria and taqueria making fresh corn tortillas and authentic tacos.",
       "photoRef": "places/ChIJUyhjgVb2kYAReJYFfS2wBUA/photos/Ab43m-vuRAvPhj2CgVelVT2P_VR1Rtc5d00EQ6C5tM9vzpbkV2twERqQWX2--OoeaoskE89fzUIaezmLhxibn8k6XHZAoBywRrPcFD3GSvrrqgOhah0Th5brUo9B2WrTATSGjg25EeJnThZIGDowK9s4Ln3wMorznGBOP8t_ufUyrNEQVxTFLNg3peSPvqmvQfRP9Efodp-QrsUXcPBE8AyJr9SGrdiNeu-c7yG4lYh206aWoGNr94mj2USACUBr2Tll81-4cprwguh2_Rzt4eLhDR9a6hYLRlplpa6k-zde5ZElaME3Nonj0uBZYDzEQ3jN57emxpAtDOUrsVqx3X-zLQQXTxlG91Ivef_TDzLcAbPoycFvEhP4BWNcJNMzHm1JLNzSa2ZXf4-jsz8l5D8W2UpaeshO560gLHeEe4FGfzu0RCaf6ObfH1O2miveauck"
     },
     {
@@ -132,7 +132,7 @@
       "date": "2026-05-04",
       "status": "opened",
       "sourceId": "SR0884042",
-      "blurb": "Asian market and bakery in downtown Milpitas.",
+      "blurb": "Asian bakery offering fresh bread, pastries, and traditional baked goods.",
       "photoRef": "places/ChIJZ0OoCQDPj4ARaYsejmcOKyQ/photos/Ab43m-v-CpKAZDM16j-W5CGd-1JxembfG-Gg5xwfepJra59VD2sDyUvtMU5s7cLiVgV9a9caOFakMXIWpZmPsiW1FmFuVJ-OiRQSITw-qI-tohbi6eVt21beLEVCXtq3lvdr52PS9dTOOcfkG2dZOlEB9k4SO070-g2aUIwa9FoaxYf4ILh6cBNU_o0epU6YCGETyH328hPzRUVvjcNx6B_hNrmoCsCd1BltQltJ508bnWfFBqmLSufniVY-Q_54ZqjjmeC0IKxbc4OIZgVcutN87pmRbn6bGwjUGYNyCV1SZ6AyRB37cCX_4kOVBMTRdDMkEeTKAI8FhnaPgE5orzvXS9fSx0ERzwpGWuAEuoc4-hij5hK25TeDko6N4OntC3yaH0XUwZfo91U3jkoHf3N-40IinZWuGMM7S01COLXPIIiiycaemvvyLzYsdfk-aGLz"
     },
     {
@@ -144,11 +144,35 @@
       "date": "2026-05-01",
       "status": "opened",
       "sourceId": "SR0882673",
-      "blurb": "Thai cuisine restaurant in Milpitas.",
+      "blurb": "Thai restaurant serving traditional curries, noodles, and Southeast Asian dishes.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0882673.png"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0884582",
+      "name": "Selva",
+      "address": "44 S Almaden Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-15",
+      "status": "coming-soon",
+      "sourceId": "SR0884582",
+      "blurb": null,
+      "photoRef": "places/ChIJy1PKdTTNj4ARgBDWl17yDq4/photos/Ab43m-vWfWbSHbZ5rtJYVD3pqkV151ZO98DQwTHadSsWhmngDjXSgvGBciwqvBLcCai-jPlIzpouqHgOoUcRTkscAckKqmjJEUUOLWTnZ_9QnHINsUfKKrMCI-XGPP5uqclAB0Mexl64UsaVtB63cK80hrC5Sy1wcMBDd7fe_BA0tOmW2UhxZ-UzVFjnzYdHTPthoyboxHiMZBiYEN4CeLBbKvmiK7ssg-o7UpGkMWypEIGepIxqlbWhuPgCUXI1gyX5BIrJJaIkYtgT3AYhhfujcROqKvOP7jicU0JmAUo6Tssx8M7nukILBpW5ZnNqXRMyaF4KExMES_gR0al4H5JWPRrjkIuNWxUHzwdto7cQLH-X6CqBdakZuzyTvFKj7gv7xFsuNN_pZNW4W7bqmcQHOYerCWCzsENc7szZql0roBRXT23EQxwV4pWZkFwHtQ"
+    },
+    {
+      "id": "soon-SR0878202",
+      "name": "Round Table Pizza",
+      "address": "3253 Stevens Creek Blvd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-15",
+      "status": "coming-soon",
+      "sourceId": "SR0878202",
+      "blurb": null,
+      "photoRef": "places/ChIJJXDhwY_Kj4ARdH8XZqAGw_s/photos/Ab43m-v-tMibc9TuXmQi4ECvoyWPpUqvk_BFMwrNgAqknRxwcGUkEqVzSVOrZjWh86V-N3favr8DG-fWY4GW-XgP50Lay5JeKTQ4lfChoEguwFQpI1CraEEz2q7RxCBsiiyPAzrwFEz882YLrvX72h5FV0D8BTZRCMlYvXTi6iESOFL4n5wm5iDARdlStD9-Ixb6mpzgZAMyqy3Ogdb1p8WX3KgBFKejAGL_9vnuWSBItr3WVtnih-9KyGzWAskFJ98io6x0xlLTbNOXX899Jf7QA1JKsIRSwkhA0G__sKSCkGGEKw"
+    },
     {
       "id": "soon-SR0884654",
       "name": "Blue Bottle Coffee",
@@ -158,7 +182,7 @@
       "date": "2026-05-13",
       "status": "coming-soon",
       "sourceId": "SR0884654",
-      "blurb": "Specialty coffee roaster opening at Stanford Shopping Center in Palo Alto.",
+      "blurb": null,
       "photoRef": "places/ChIJx4KPuBDLj4ARB8HyETWCyB8/photos/AU_ZVEHF-ToTFwv8-9hYPlayYj27UUH23MaJhdIWijhvFU3HZxYtxXyOy2AnmNKgN2rATucL8QNJ9q30ijgkDqoUse6sH5Z48uPVFGti0yyqdU-sqHw2TPhBI9olVDb-eselZ3eu0LfUfZ-o421UOXXyOfsoetH78jF_GdC3XyD2id-f3JCK_8Ifu84BBqEwfLM_owfSXWppztdj9wUvD1gB8Yg23VVBhVgjJCwwHTnZu_G2m5fTnD2IChAU2A-gNjKENKUSXj23byCO8OIx8QbaNlKjX3pXMfSMASE8hSlcMFSksFV4an2LKYoJLcUtK2RF4iZ03pjEbpGxC9EIXqMU9bsOv96gv2UR7KZAjLdbuZMY4zxRwoXsUgQPNFIZWSoR2gG_-wYiiYUJ7R8xrTQYK34D705zf36rit-F_gYY3vq-gnjS"
     },
     {
@@ -170,7 +194,7 @@
       "date": "2026-05-13",
       "status": "coming-soon",
       "sourceId": "SR0883984",
-      "blurb": "Bubble tea chain opening at Valley Fair mall in Santa Clara.",
+      "blurb": null,
       "photoRef": "places/ChIJbxTR-R7Lj4ARNoQaxYQmG2Y/photos/Ab43m-sbeftsCDLi5Vvwso9YHmFjk_BBXCcxhOwlmjOrMU6a7OXlWrKLdOr-kZ00CJN3XPwRw5C5wec8mdixsG74M0GHjfXUPAgviLGEUmV7jJ09ZcKJeL87jo-5MeSRKZraqKgbxYU2X88iIja2P1kUsaxP1CxoSD1DoWpzvpGLtfZ8d_H5PiKz_OltE6-JUGWix6jvzlMzRdSwDOrfZbJ5NAPXbnYspTyMe-NoRgY1rNDLJ3h7mXzfF-R68VndC1moDsWsO7pXa0EP5tp9fX8WuS1ilX5DjqZhqfhh9XPhtaC1OOtkg0r8fvTXK1VaJ5roPKbX9ipnG_XWMnB-McdnElxecG57JAgJArhjoiAZ_s1orgS2dhWnjgcVnkwrdWy0cWjPKL80I0M5IOK9ZAFCNR2zHnqBiTUJivbxjJTips8"
     },
     {
@@ -182,7 +206,7 @@
       "date": "2026-05-12",
       "status": "coming-soon",
       "sourceId": "SR0878516",
-      "blurb": "Mexican restaurant coming to University Ave in Palo Alto.",
+      "blurb": null,
       "photoRef": "places/ChIJW6cfQgC7j4ARfrKbxmPji5c/photos/Ab43m-tzpMeHT_nXBAYvEYiEXyt64Z-hFJruRaVMmM7aHEkhzzleNjKu3Qswv9CvqnwFuTrj_TdeuiLciQZ8VM1lz93GX7TM436XoOaIV7Ja8D66Rp_9z4MP_cPLhO7PU7Iwi29Ifs9Cx8_UaT49h1mI02YJcj8Dlwg1V1QImw4Du0WBjZXE-1bmOpaWcj-aCgVsz-BLfoG2tuTBueM0SwFwlTCLiCaYZBXrIikS0bthRdL2BSfN2L1RgjczdNrfn_n79EGT-d4mkiJvZazdrVft3ioBLyCAztXyaF4v4dHuCXuCArTHMBAF97-7QmYQrRwNX2vN-WBmfJ5v9G4eoa_podW0k7Xyb4tfiOdV1rIVmjxn-PSzHJJtsP8WYhtKFwmj__TPFHa_MiluM0oJ7L-azXkTNvwnjWseiaj8sWqApv3NK-baQRRZg1thvEDi8A"
     },
     {
@@ -194,7 +218,7 @@
       "date": "2026-05-11",
       "status": "coming-soon",
       "sourceId": "SR0883331",
-      "blurb": "Coffee and casual food spot opening on California Ave in Palo Alto.",
+      "blurb": null,
       "photoRef": "places/ChIJtVNO8OW6j4AR9sfufgwNafQ/photos/Ab43m-sX_gjaxvxoWhCMc0xR5broTMNvG_PNghXlIopjx3daauefoMcy9OVqZDQDZcXpvIa6bidlYWYX2XMQfdEqzeKNurZLE19yTf5UAzsTXUnVl1G7zYsMk_6x82DTEwLB6ItsJ_wxfoAHRJKycFsdmSnTsWxSZ_CwSFzs8-gQRT8GfowdHQSRgOIT39vEzBlgUdqP_mEXIxhIGgGe_XKQj0acwDoTp95SWcl8U05ME97jUWGtZXlDlTw05t5YYQt6PR2BZOyra3el6AgNLvPneKOkK0omHTDBr4PMrJaJ1YeZfw"
     },
     {
@@ -206,19 +230,19 @@
       "date": "2026-05-08",
       "status": "coming-soon",
       "sourceId": "SR0884004",
-      "blurb": "Sandwich restaurant opening on San Fernando St in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJI8A711bNj4ARDHNdBKoF0fs/photos/Ab43m-sJRVzdmlHGsPWK8cgivZSN3et4TOPl6dcTWNsaxG3_zJGxVfV4AvP0oxljNEnBvifc_L1W_YiVjDXiRUXKI8gMQVRSfaCF1osNM1So8vEBFe1WhmN8jOIFDfG5gN-Xjo-DYeyz5CG3sLRAu1fvC0VxSKX_7s64dTeiAJy1IDyRRQkBnFfcyVr3F3MQtqbcv-qu7Smt1sg9eypJXoke5djG2074pAV_Kj97sjWWO_UYUwgtWwBFk_dpduIxZfbpa9-28xyxHwhbSY2ZqTTXpcS_l9D21rvEDJuh0G4Bwejore4h4dnjJ87rzwvKvULfhVbgAjglD3PEZOpMl7W9SO7lHRW8X7V3GeadbX24dkEuvtWiziVm_QmQwCtzrcjQS1Ih0wb6ptg5KOL6HGr8DMH-x8fBn32foay_Zj_v9GBc_h9g"
     },
     {
       "id": "soon-SR0884535",
-      "name": "Blendid At City Sports Almaden",
+      "name": "Blendid",
       "address": "5155 Cherry Ave",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
       "date": "2026-05-07",
       "status": "coming-soon",
       "sourceId": "SR0884535",
-      "blurb": "Smoothie and juice bar opening in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJ-bKWgcQzjoART_2kPflPtaY/photos/Ab43m-tfrZSIH3H48NxlpQtUIXzH0Ap8ezXbjysSxv4WvptCDIo0cT4lxoAP6p0RQf-s3jVx8XkJ7AqCUYiuPrATYPuESTCCHJnByyrB2VW6INEGFNdG5KK7EbTlFUo1FSFk86pcQylSEoE62GmaQcSTFQvGeFcGt7Vc1NHGgv5jk1pzNCMYwxz_M9udYgE0ZIl8_QkQ7wNfRZSvy6pcuTegfCe3AnEc9akqYzYM654SfwLABhVIWYee_OTR9IybFjm8tF1zQY8Ai7wa3cE-qaCd55_hUEP3m96ZA-U_sV9RGvPkIVGCLFw8UMIHknADVRSaKElpEXc2ZHVXRY65TBfpTScLB2F_6cCGW9VLPaPtYAbrK_Gz5T4_cPSsXhgymkR0TdXH4xUNMEgpg--0c7mrQAGDzCknfxXOzqAJSXolE3siSpBU"
     },
     {
@@ -230,20 +254,8 @@
       "date": "2026-05-06",
       "status": "coming-soon",
       "sourceId": "SR0884058",
-      "blurb": "Dessert shop specializing in cakes opening in Santa Clara.",
+      "blurb": null,
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884058.png"
-    },
-    {
-      "id": "soon-SR0884198",
-      "name": "Kokoro Ea And Craft Coffee",
-      "address": "100 N Almaden Ave., #170",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-05-06",
-      "status": "coming-soon",
-      "sourceId": "SR0884198",
-      "blurb": "Craft coffee and food spot coming to downtown San Jose.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884198.png"
     },
     {
       "id": "soon-SR0883776",
@@ -254,8 +266,20 @@
       "date": "2026-05-06",
       "status": "coming-soon",
       "sourceId": "SR0883776",
-      "blurb": "Bubble tea shop opening on University Ave in Palo Alto.",
+      "blurb": null,
       "photoRef": "places/ChIJA-9NXQC7j4ARHw3OIce4aA4/photos/Ab43m-tteBzecbMVt0r8veRwlsaIY6DZJJifGrxlZjqnHT4q7NB_Jetg49BYqHtEJ0HbhpoD7FZqqCHC7g4jOHEf8a_XRaIOTGqKdFXRem4b62fPMsnBQLkM-E1dWPOachxItXeXncyBBIiZOiBQ7z9ip1V6c_k6JBGcJPizTC0R2tKptbAB2RjagJkGRvOJ7puDKTrgxcRPrer5HsGANJ85FfcSbkvsgHr17S1u2oV9-u8VgvZYEcNjx2z79AvY73IT6t5tvAroiEH9t1Ack1FvpKNKInwdiYJeNJb-f-bCnwEI9QC1DnGXR7GRSbqm4ylskL9u70iOWLaO-4XOV723GPdwK_mN2pC9d_sTyLnpKUg58vT8cEag58szSPx4nOGoV9iEKf14OiEEPOKlRMeHTXKC-jsqow92unkpJBwfkwLwWP_8Y6MWtbaW2lIdN_-8"
+    },
+    {
+      "id": "soon-SR0884198",
+      "name": "Kokoro Ea And Craft Coffee",
+      "address": "100 N Almaden Ave., #170",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-06",
+      "status": "coming-soon",
+      "sourceId": "SR0884198",
+      "blurb": null,
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884198.png"
     },
     {
       "id": "soon-SR0883737",
@@ -266,32 +290,8 @@
       "date": "2026-05-06",
       "status": "coming-soon",
       "sourceId": "SR0883737",
-      "blurb": "Seafood restaurant opening on Oakland Rd in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJr_-4ILLOj4ARaQWlX2gm7ZU/photos/Ab43m-td_Ew1J74RlxhIPRZA3Vc2zKw68la7GB7wV8gKD_CvWPwmIQU72RmyCpzNaTUkBdV1iWsIJE2RRxEsvzjrT_pzGuaqU7CyB8B_MOakgGMJTa27SNl8mpz7Vd2NtPx8WxaohIio0Gx0XlzQtMxe-Xu8cn9v9OYORVOHbesgCTbt1yKBU0YUV_h_WJ4ycrMkGf9Sqiz3sNL4FOt1A8Fe4VaNLJda_orG8arPNo5mifBGQ3izd323xJFoOuis7sMvQLp14Gyk-ru5moRW4vuBPElTdJRTUHr938yF9k_7lxLMew"
-    },
-    {
-      "id": "soon-SR0884182",
-      "name": "Joe & The Juice",
-      "address": "269 S Murphy Ave",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "date": "2026-05-05",
-      "status": "coming-soon",
-      "sourceId": "SR0884182",
-      "blurb": "Juice and sandwich chain coming to Sunnyvale.",
-      "photoRef": "places/ChIJRc7frF22j4ARdvxt8ykMw2M/photos/Ab43m-t4aqn5w0ho1uB0Nan8VkhmcEd_x9Za2uNd0JITMqQhoTstHWqPTPlNs17J9qlO2Ukkc6QeUAbEa4e1fhpj6e2vi-K31-14-mgU6kXLGj5UmzdIwnSzKRP_T8RiP9xR7qK2opROyTO2eBH00MWeaJadg05c9Lli6n1XB2WI9m0plNxwAZb9R2m0F9Rk0PnQTZ7whjH8o8F1IrgpjcyeAS1OcQCfqXl934W_KecqXE9tmZaoj4SVU-Q7bl4EqaGSGkFnxboKqfjHrybIQ6xRkrb6BFZ9TcIH0iTM5-IwSzbIc2_5XNE96GFohO1if1s2IjprBtL8FmmjQ7gaiIhyxSHCVVev6a5tjg3YAcA2esUDfGvb0T02Z7jGSGROcrmUc_Ii_COp-_OQp8WIyaNvBweV0zc1k8WfTeWa08Pp5h5lcxs7qclkrP5dcS49bG9q"
-    },
-    {
-      "id": "soon-SR0884057",
-      "name": "Kodania Grocery Store",
-      "address": "1655 S Deanza Blvd",
-      "cityId": "cupertino",
-      "cityName": "CUPERTINO",
-      "date": "2026-05-01",
-      "status": "coming-soon",
-      "sourceId": "SR0884057",
-      "blurb": "Grocery store opening on DeAnza Blvd in Cupertino.",
-      "photoRef": "places/ChIJccAcZxu1j4ARQpxVQrim5zY/photos/Ab43m-s9b0iubJ01545EOACOBZR9ZcFTKvegGi_ebaHes9mw6odSfPDntL6bsdEIVo2S1J-WLv3sipc2Sqv5KlIre_KQQ_dlq4ld9iJHTUeNGzKF5gWiHcm6TNVhXlA8Qzp6UT1VYJPtZWgItnPZoFWEVKrIN0Eoki6aKqb2AQ4bt5r5jDbCM1LzClqwC6V6Kc1T1DLAcoaTCSO_ju_Dn1_lqkpTWdkomx0jGcx8QdGwuUsK034R3V8R8CEl2TfBYMIEapdck0RNWRpGcZbwC3486wY68tJK7rCDaD-F3f_AUxcRkNmcZQFFgpd4dY2gcKIUHJ2jXOm_SkgZUhIyqt4AT7U4-nbC2xYyB_5h-LFUWCI95ZLvJHgifdVxKGKisPgE9gfDGCc3MidHavYCNV3UY6McKE30Nr16A-wQOEwHk1DlWY4g"
     }
   ]
 }
