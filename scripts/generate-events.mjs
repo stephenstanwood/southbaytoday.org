@@ -4236,88 +4236,11 @@ function isoTimeToClockLocal(iso) {
   return min === 0 ? `${h12}:00 ${ampm}` : `${h12}:${String(min).padStart(2, "0")} ${ampm}`;
 }
 
-// Linden Tree Books (Los Altos) — hand-coded HTML, events in <h3> tags
-async function fetchLindenTreeEvents() {
-  console.log("  ⏳ Linden Tree Books...");
-  try {
-    const BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
-    const res = await fetch("https://www.lindentreebooks.com/events-calendar", {
-      headers: { "User-Agent": BROWSER_UA },
-      signal: AbortSignal.timeout(15_000),
-    });
-    if (!res.ok) throw new Error(`${res.status}`);
-    const html = await res.text();
-
-    const events = [];
-    const now = new Date();
-    const currentYear = now.getFullYear();
-
-    // Events are in <h3> tags containing <b> with title + date info
-    // Pattern: "Event Title<br/>Day, Month DD, Time"
-    const h3Blocks = html.split(/<h3[^>]*>/i).slice(1);
-    for (const block of h3Blocks) {
-      const content = block.split(/<\/h3>/i)[0] || "";
-      const cleaned = content.replace(/<[^>]+>/g, "\n").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ");
-      const lines = cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
-      if (lines.length < 2) continue;
-
-      const title = lines[0];
-      if (!title || title.length < 5) continue;
-
-      // Look for a date line: "Saturday, April 19, 2:00pm" or "Sunday, April 20"
-      const monthNames = { January: 0, February: 1, March: 2, April: 3, May: 4, June: 5, July: 6, August: 7, September: 8, October: 9, November: 10, December: 11 };
-      let eventDate = null;
-      let eventTime = null;
-      for (const line of lines.slice(1)) {
-        const dateMatch = line.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})/i);
-        if (dateMatch) {
-          const monthNum = monthNames[dateMatch[1]];
-          const day = parseInt(dateMatch[2]);
-          let year = currentYear;
-          const candidate = new Date(year, monthNum, day);
-          if (candidate < new Date(now.getTime() - 30 * 86400000)) year++;
-          eventDate = new Date(year, monthNum, day, 12, 0);
-
-          // Extract time if present: "2:00pm", "10:30 AM"
-          const timeMatch = line.match(/(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i);
-          if (timeMatch) {
-            eventTime = timeMatch[1].toUpperCase().replace(/\s+/g, " ");
-          }
-          break;
-        }
-      }
-      if (!eventDate || eventDate < now) continue;
-
-      // Look for a link in the original block
-      const linkMatch = block.match(/href="(https?:\/\/[^"]+)"/);
-      const url = linkMatch?.[1] || "https://www.lindentreebooks.com/events-calendar";
-
-      events.push({
-        id: h("lindentree", title, isoDate(eventDate)),
-        title,
-        date: isoDate(eventDate),
-        displayDate: displayDate(eventDate),
-        time: eventTime,
-        endTime: null,
-        venue: "Linden Tree Books",
-        address: "170 State St, Los Altos, CA 94022",
-        city: "los-altos",
-        category: inferCategory(title, "", ""),
-        cost: "free",
-        description: lines.slice(1).join(" ").slice(0, 200),
-        url,
-        source: "Linden Tree Books",
-        kidFriendly: true, // children's bookstore
-      });
-    }
-
-    console.log(`  ✅ Linden Tree Books: ${events.length} events`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  Linden Tree Books: ${err.message}`);
-    return [];
-  }
-}
+// Linden Tree Books (Los Altos) — handled by playwright-scrapers.mjs
+// (`scrapeLindenTree`). The old HTTP-fetch path was kept here for redundancy
+// but always won dedup with a stale 170 State St address (correct is 265) and
+// junk date-string descriptions like "Sunday, June 14 at 10:30am", so it
+// was dropped in favor of the playwright path's clean output.
 
 // ── San Jose Downtown Association (Tribe Events REST API) ──
 // Covers City Lights Theater, San Jose Museum of Art events, SoFA district, First Fridays, etc.
@@ -4885,7 +4808,6 @@ async function main() {
     fetchEastWestBookshopEvents,
     fetchKeplersEvents,
     fetchHicklebeesEvents,
-    fetchLindenTreeEvents,
     fetchSjdaEvents,
     fetchSjMuseumOfArtEvents,
     fetchJamsjEvents,
