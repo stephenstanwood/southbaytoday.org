@@ -96,9 +96,11 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
     `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${e.date ? ` (${formatEventDate(e.date)})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}`
   ).join("\n");
 
-  const aroundLines = aroundItems.slice(0, 3).map((a) =>
-    `- ${a.headline}`
-  ).join("\n");
+  const aroundLines = aroundItems.slice(0, 3).map((a) => {
+    const date = a.date ? ` (${formatEventDate(a.date)})` : "";
+    const summary = a.summary ? `\n   ${a.summary}` : "";
+    return `- ${a.headline}${date}${summary}`;
+  }).join("\n");
 
   const agendaLines = meetingData?.agendaItems?.slice(0, 3).map((a) =>
     `- ${a.title}`
@@ -125,6 +127,8 @@ Important rules:
 - No group-count nouns like "trifecta," "trio," "duo," or "quartet" — they imply specific counts and routinely don't match the actual data. Just say "three events" or list the items.
 - No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.
 - Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
+- Match the verb to the source summary. If a city hall summary says the council "held a public hearing," your verb is "heard" or "reviewed" — not "approved." If the summary says "approved," "adopted," or "filed," use that exact verb. Never upgrade a hearing to an approval.
+- Match tense to the date. City hall items show their date in parentheses; today is ${new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}. Items dated in the past must use past tense. Reserve present or future tense for items whose date is today or later.
 
 ${parts.join("\n\n")}
 
