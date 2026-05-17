@@ -1334,7 +1334,12 @@ function inferCategory(title, desc, type, venue = "") {
   const isBoardGame = /\b(board games?|card games?|tabletop|dungeons.{0,5}dragons|d&d|rpg club|wargame)\b/.test(t);
   // "Games, crafts, and activities" in library/family program descriptions is not sports.
   // Protects against events like "Fabulous Friday: games, crafts, activities" being misclassified.
-  const isLibraryActivityGames = /\bgames[,;]?\s*(crafts?|activities|bubbles|more)/i.test(t) ||
+  // Also: any event hosted at a library — libraries don't host athletic sports, so a stray
+  // "games" / "play games" reference (teen lock-ins, board game nights, etc.) shouldn't
+  // override the program type. Explicit sport names like "soccer"/"basketball" still trigger.
+  const isLibraryVenue = /\b(library|libraries)\b/.test(venueLower);
+  const isLibraryActivityGames = isLibraryVenue ||
+    /\bgames[,;]?\s*(crafts?|activities|bubbles|more)/i.test(t) ||
     /\b(crafts?|activities)\s+(?:and\s+)?games\b/i.test(t) ||
     /\bgames\s+and\s+activities\b/i.test(t);
   // Carnivals (school carnivals, business carnivals, festival carnivals) are community
