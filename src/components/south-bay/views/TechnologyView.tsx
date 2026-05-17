@@ -11,6 +11,7 @@ import {
   RECENTLY_FUNDED,
   TECH_MILESTONES,
   TECH_CONFERENCES,
+  type TechCategory,
   type TechCompany,
   type TechTrend,
   type SccTechSpotlight,
@@ -18,6 +19,20 @@ import {
   type TechMilestone,
   type TechConference,
 } from "../../../data/south-bay/tech-companies";
+
+// RECENTLY_FUNDED widens its category to include "medtech" and "eda" — labels
+// not present in CATEGORY_LABELS would render as raw lowercase keys.
+const EXTRA_CATEGORY_LABELS: Record<string, string> = {
+  medtech: "Medtech",
+  eda: "EDA",
+};
+function labelForCategory(c: string): string {
+  return (
+    (CATEGORY_LABELS as Record<string, string>)[c] ??
+    EXTRA_CATEGORY_LABELS[c] ??
+    c
+  );
+}
 
 // ── Logo resolvers per data type ───────────────────────────────────────────
 // Returns both the cascade domain and an optional pinned high-res URL. The
@@ -819,7 +834,7 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
           <span>{company.city}</span>
           <span style={{ color: "var(--sb-border)" }}>·</span>
           <span>
-            {CATEGORY_LABELS[company.category as keyof typeof CATEGORY_LABELS] ?? company.category}
+            {labelForCategory(company.category)}
           </span>
           <span style={{ color: "var(--sb-border)" }}>·</span>
           <span>{dateLabel}</span>
@@ -1577,29 +1592,48 @@ function AnnualConferencesSection() {
 
 // ── Main view ─────────────────────────────────────────────────────────────
 
-const COMPANY_CATEGORY_FILTERS = [
-  { key: null, label: "All" },
-  { key: "chip", label: "Chip" },
-  { key: "cloud", label: "Cloud" },
-  { key: "security", label: "Security" },
-  { key: "robotics", label: "Robotics" },
-  { key: "hardware", label: "Hardware" },
-  { key: "saas", label: "SaaS" },
-  { key: "network", label: "Network" },
-  { key: "software", label: "Software" },
-] as const;
+// Filters derive from the data, so adding/removing a company can't leave a
+// zero-result chip (e.g. "Robotics", "Cupertino") or hide whole subsets
+// (Meta/LinkedIn social, PayPal fintech, eBay e-commerce, Campbell/Saratoga).
+type FilterChip = { key: string | null; label: string };
 
-const SPOTLIGHT_CITY_FILTERS = [
+const COMPANY_CATEGORY_COUNTS = TECH_COMPANIES.reduce<Record<string, number>>(
+  (acc, c) => {
+    acc[c.category] = (acc[c.category] ?? 0) + 1;
+    return acc;
+  },
+  {},
+);
+const COMPANY_CATEGORY_FILTERS: FilterChip[] = [
   { key: null, label: "All" },
-  { key: "San Jose", label: "San Jose" },
-  { key: "Santa Clara", label: "Santa Clara" },
-  { key: "Mountain View", label: "Mountain View" },
-  { key: "Sunnyvale", label: "Sunnyvale" },
-  { key: "Palo Alto", label: "Palo Alto" },
-  { key: "Milpitas", label: "Milpitas" },
-  { key: "Cupertino", label: "Cupertino" },
-  { key: "Los Gatos", label: "Los Gatos" },
-] as const;
+  ...Object.entries(COMPANY_CATEGORY_COUNTS)
+    .map(([key]) => ({ key, label: CATEGORY_LABELS[key as TechCategory] ?? key }))
+    .sort((a, b) => {
+      const diff =
+        (COMPANY_CATEGORY_COUNTS[b.key] ?? 0) -
+        (COMPANY_CATEGORY_COUNTS[a.key] ?? 0);
+      return diff !== 0 ? diff : a.label.localeCompare(b.label);
+    }),
+];
+
+const SPOTLIGHT_CITY_COUNTS = SCC_SPOTLIGHT.reduce<Record<string, number>>(
+  (acc, c) => {
+    acc[c.city] = (acc[c.city] ?? 0) + 1;
+    return acc;
+  },
+  {},
+);
+const SPOTLIGHT_CITY_FILTERS: FilterChip[] = [
+  { key: null, label: "All" },
+  ...Object.entries(SPOTLIGHT_CITY_COUNTS)
+    .map(([city]) => ({ key: city, label: city }))
+    .sort((a, b) => {
+      const diff =
+        (SPOTLIGHT_CITY_COUNTS[b.key] ?? 0) -
+        (SPOTLIGHT_CITY_COUNTS[a.key] ?? 0);
+      return diff !== 0 ? diff : a.label.localeCompare(b.label);
+    }),
+];
 
 export default function TechnologyView() {
   const [companyCategoryFilter, setCompanyCategoryFilter] = useState<string | null>(null);
