@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-16T23:10:37.001Z",
+      "generatedAt": "2026-05-17T11:11:11.069Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 9 – May 16",
+      "dateRange": "May 10 – May 17",
       "stats": {
-        "total": 483,
+        "total": 476,
         "notable": 27,
         "newUnits": 203,
-        "totalValuation": 41439787
+        "totalValuation": 41419456
       },
       "permits": [
         {
@@ -137,12 +137,12 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-16T23:10:39.373Z",
+      "generatedAt": "2026-05-17T11:11:13.438Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 9 – May 16",
+      "dateRange": "May 10 – May 17",
       "stats": {
         "total": 133,
         "notable": 4,
@@ -150,18 +150,6 @@
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01231",
-          "address": "4151 Abel Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-12",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01254",
           "address": "1304 College Av",
@@ -175,16 +163,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00108",
-          "address": "3440 Ramona St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to remove one Canary Island Pine Tree. (3) Twenty four inch box Coast Live Oak trees will be planted as replacement trees onsite. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "id": "26BLD-01231",
+          "address": "4151 Abel Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-12",
-          "subtype": "Over the Counter Approved"
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00105",
@@ -196,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-11",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00108",
+          "address": "3440 Ramona St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to remove one Canary Island Pine Tree. (3) Twenty four inch box Coast Live Oak trees will be planted as replacement trees onsite. Environmental Assessment: Not a Project. For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-12",
           "subtype": "Over the Counter Approved"
         }
       ]
