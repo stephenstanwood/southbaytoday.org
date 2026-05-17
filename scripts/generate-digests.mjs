@@ -157,6 +157,32 @@ async function fetchLegistarPastMeeting(client) {
 
 // ── Claude summarization ──
 
+// Meta-commentary parentheticals occasionally leak into keyTopics even though
+// the prompt forbids them — Haiku writes "Five-year service agreements
+// authorized with vendors (names partially listed)" or "Closed session
+// convened (details not public)". The qualifier is the model admitting its
+// source data was thin; a resident reading the digest just sees filler in
+// parens. Strip the parenthetical (and the leading whitespace) and keep the
+// substantive part of the topic.
+const META_PARENTHETICAL_PATTERNS = [
+  /\s*\([^)]*\b(?:not\s+(?:made\s+)?public|details?\s+(?:not|un)\w*|specifics?\s+(?:not|un)\w*|partially\s+(?:listed|identified|named|disclosed)|name(?:s)?\s+(?:un)?(?:clear|listed|disclosed|given|withheld)|not\s+(?:yet\s+)?(?:specified|given|named|disclosed|listed|included|provided|shared|detailed)|unspecified|tbd|incomplete|omitted)\b[^)]*\)/i,
+];
+
+function cleanKeyTopic(topic) {
+  let t = String(topic || "");
+  for (const re of META_PARENTHETICAL_PATTERNS) {
+    t = t.replace(re, "");
+  }
+  return t.replace(/\s+/g, " ").trim();
+}
+
+function cleanKeyTopics(topics) {
+  if (!Array.isArray(topics)) return topics;
+  return topics
+    .map(cleanKeyTopic)
+    .filter((t) => t.length > 0);
+}
+
 async function summarize(config, meeting) {
   const isYouTubeTranscript = meeting.source === "youtube-transcript";
   // Strip the VTT metadata prefix that appears in YouTube transcript records
@@ -328,7 +354,7 @@ async function main() {
         meetingDateIso: meeting.date,
         title: `${config.cityName} ${bodyLabel} — ${meetingDateFormatted}`,
         summary: parsed.summary ?? "",
-        keyTopics: parsed.keyTopics ?? meeting.keywords.slice(0, 5),
+        keyTopics: cleanKeyTopics(parsed.keyTopics ?? meeting.keywords.slice(0, 5)),
         schedule: config.schedule,
         sourceUrl: config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl,
         generatedAt: new Date().toISOString(),
