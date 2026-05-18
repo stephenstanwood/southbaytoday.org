@@ -476,6 +476,13 @@ const VENUE_POLICY_PATTERNS = [
   /\b(?:weapons?|firearms?|outside\s+food|coolers?)\s+(?:are\s+)?(?:strictly\s+)?prohibit/i,
   /\benforces?\s+a\s+(?:restricted|strict)/i,
   /\bmetal\s+detect/i,
+  // SJ Improv-style "DO NOT POST PHOTOS / DO NOT USE PHONES / DO NOT PURCHASE
+  // TICKETS FROM..." comedy-venue rule text gets shoved into Ticketmaster's
+  // `info` field. Truncate cuts at the first newline and produces a useless
+  // "DO NOT…" description. The opening "DO NOT" is itself a reliable signal —
+  // a real event blurb wouldn't lead with it.
+  /^\s*(?:please\s+)?do\s+not\b/i,
+  /\byondr\s+pouch/i,
 ];
 
 function looksLikeVenuePolicy(text) {
