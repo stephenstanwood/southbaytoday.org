@@ -519,6 +519,13 @@ const OFF_REGION_PATTERNS = [
   /\b(oxford|cambridge|sorbonne)\s+university\b/i,
   /\buniversity\s+of\s+(oxford|cambridge|tokyo|kyoto|hong\s+kong|melbourne|sydney|toronto|british\s+columbia)\b/i,
   /\bin\s+(budapest|hungary|tokyo|kyoto|paris|france|berlin|germany|london|england|madrid|spain|rome|italy|singapore|seoul|beijing|shanghai|mumbai|delhi)\b/i,
+  // SCU regional alumni chapters host travel-day events at home stadiums in
+  // their own city (e.g. Chicagoland Broncos → Wrigley Field). The SCU events
+  // feed surfaces them with venue="Santa Clara University" — drop by chapter.
+  /\b(chicagoland|nyc|seattle|portland|denver|boston|austin|dallas|houston|phoenix|atlanta|miami)\s+broncos\b/i,
+  // Iconic out-of-region venues — safe to drop on any university feed since
+  // there's no local namesake (Wrigley Field is uniquely Chicago)
+  /\bwrigley\s+field\b/i,
 ];
 
 function isOffRegionUniversityEvent(title, description, venue) {
