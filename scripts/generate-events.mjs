@@ -2182,6 +2182,7 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
     const xml = await fetchText(url);
     const items = parseRssItems(xml);
     const now = new Date();
+    let skippedPlaceholder = 0;
     const events = items.map((item) => {
       if (isBlockedEvent(item.title)) return null;
       const start = parseCivicPlusEventDates(item.eventDates)
@@ -2189,7 +2190,18 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
         || parseDate(item.pubDate);
       if (!start || start < now) return null;
       const timeStr = parseCivicPlusEventTime(item.eventTimes);
-      const venueLabel = cleanVenue(item.location || "");
+      const venueLabel = cleanVenue(item.location || "") || inferCivicVenueFromTitle(item.title) || null;
+      const description = truncate(stripCivicPlusMetadata(stripHtml(item.description)));
+      // CivicPlus city calendars carry bare-title placeholders ("Memorial Day",
+      // "Theatre Event", "Week 3: Prepared to Protect", "Muse Markets") that
+      // surface with no description, no venue, and no address. The blurb
+      // resolver then fabricates a sentence from the title alone — misleading.
+      // Drop them at ingest; ceremonies/markets with real info keep their
+      // venue or description and pass through normally.
+      if (!description && !venueLabel) {
+        skippedPlaceholder++;
+        return null;
+      }
       const titleLower = item.title.toLowerCase();
       return {
         id: h(defaultCity, item.link || item.title, item.eventDates || item.pubDate),
@@ -2198,12 +2210,12 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
         displayDate: displayDate(start),
         time: timeStr,
         endTime: null,
-        venue: venueLabel || inferCivicVenueFromTitle(item.title) || null,
+        venue: venueLabel,
         address: "",
         city: defaultCity,
         category: inferCategory(item.title, item.description, ""),
         cost: "free",
-        description: truncate(stripCivicPlusMetadata(stripHtml(item.description))),
+        description,
         url: item.link,
         source: name,
         // Prefix-only boundary — match compounds like "Storytime", "Babies",
@@ -2211,6 +2223,9 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
         kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(titleLower),
       };
     }).filter(Boolean);
+    if (skippedPlaceholder > 0) {
+      console.log(`     · skipped ${skippedPlaceholder} placeholder entry/ies (no desc + no venue)`);
+    }
     console.log(`  ✅ ${name}: ${events.length} events`);
     return events;
   } catch (err) {
