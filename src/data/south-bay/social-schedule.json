@@ -1205,7 +1205,7 @@
     },
     "2026-05-18": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Monday Meditation & Mindfulness",
@@ -1238,7 +1238,55 @@
         "generatedAt": "2026-05-09T10:39:27.536Z",
         "imagePrompt": "Linocut block print illustration in 4:5 portrait ratio. NO PEOPLE, NO TEXT. Carved texture aesthetic with visible grain throughout. Soft organic blob shapes in warm sage, dusty blue, and cream suggesting abstract meditation landscapes. Center composition features stylized lotus or book spine silhouettes rendered in bold carved lines. Rich two-color ink palette—deep teal and warm ochre—with strategic cream negative space. Restrained, editorial mood with generous breathing room between organic forms. High contrast carved edges, indie printmaking quality. Quiet confidence, sophisticated restraint.",
         "mjPrompt": "{risograph print grainy texture 2-color overprint zine energy, encaustic wax painting layered translucent dimensional surface, pixel art 8-bit grid limited palette retro digital, pointillism dotted color separation optical mixing scientific, mosaic tessellated stones byzantine gold leaf saturated, Donald Judd minimalist box geometry industrial, Albers homage to the square nested color squares perception, woodcut bold black lines stark white space german expressionist, arts and crafts honest materials nature-inspired ornament, Aboriginal Australian dot painting tessellated landscape symbolic, Frank Stella protractor concentric stripes geometric, Japanese minimalist landscape negative space distant mountains haze, lithograph chalk crayon rough drawing muted earth tones, hard-edge painting flat sharp geometric color blocks crisp, Vorticist sharp angular machine-age british modernism} of candlelight pooling on rice paper, a single dropped magnolia petal, the hush of a book closing in soft amber, breath caught in dim lamplight, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
-        "mjPromptAt": "2026-05-16T21:03:44.347Z"
+        "mjPromptAt": "2026-05-16T21:03:44.347Z",
+        "publishedAt": "2026-05-18T18:43:24.627Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056444723846615437",
+            "id": "2056444723846615437",
+            "text": "Tonight in Los Altos: 20 minutes of guided meditation with instructor Manisha at Woodland Library, plus 10 minutes for questions. Free, low-key, and a genuinely nice way to land into the week. 🧘 7 PM start. https://t.co/BRXwicxt5u",
+            "ownReplies": [
+              "2056445516800774209"
+            ]
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm5jm5eh6p2q",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm5jm5eh6p2q",
+            "cid": "bafyreig7acpryl3flq6a76ddzbdzethpnsbeaucoiyr5bybvltmswsdds4"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18099099680119189",
+            "id": "18099099680119189",
+            "ownReplies": [
+              "17889692715498858"
+            ]
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111411732849604",
+            "id": "122111411732849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116597039377167823",
+            "id": "116597039377167823",
+            "url": "https://mastodon.social/@southbaytoday/116597039377167823"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "17946037512179688",
+            "id": "17946037512179688"
+          }
+        ]
       },
       "_reviewHistory": [
         {
@@ -1259,7 +1307,7 @@
         }
       ],
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "sunnyvale",
         "cityName": "Sunnyvale",
@@ -1429,7 +1477,58 @@
         "copyApprovedAt": "2026-05-16T14:19:36.607Z",
         "imageApprovedAt": "2026-05-16T14:19:36.607Z",
         "generatedAt": "2026-05-16T10:49:05.997Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"MONDAY IN THE SOUTH BAY\"\nSunnyvale + Milpitas + Palo Alto + San Jose\n\nBreakfast — Starbucks Coffee Company\nWelcoming coffeehouse with handcrafted coffee, espresso & tea, plus breakfast, l\n\nMorning — Ed R. Levin County Park\nVast, natural retreat featuring 19 miles of trails, an off-leash dog park, a gol\n\nLunch — Peninsula Creamery - Dairy Store & Grill\nMilkshake & ice cream store with an old-school vibe also serving burgers & other\n\nAfternoon — A Theater for a Symphony Screening and Discussion\nWatch a documentary about Beethoven's Ninth Symphony premiere, then discuss the \n\nDinner — Blossom Chai Cafe\nQuick coffee in Sunnyvale on S Murphy Ave.\n\nEvening — Jazz Up Your Monday Night\nUnwind with live jazz while sipping cocktails on a Monday evening.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArt nouveau poster with flowing organic lines, ornamental borders, elegant serif type, gold and deep green.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"MONDAY IN THE SOUTH BAY\"\nSunnyvale + Milpitas + Palo Alto + San Jose\n\nBreakfast — Starbucks Coffee Company\nWelcoming coffeehouse with handcrafted coffee, espresso & tea, plus breakfast, l\n\nMorning — Ed R. Levin County Park\nVast, natural retreat featuring 19 miles of trails, an off-leash dog park, a gol\n\nLunch — Peninsula Creamery - Dairy Store & Grill\nMilkshake & ice cream store with an old-school vibe also serving burgers & other\n\nAfternoon — A Theater for a Symphony Screening and Discussion\nWatch a documentary about Beethoven's Ninth Symphony premiere, then discuss the \n\nDinner — Blossom Chai Cafe\nQuick coffee in Sunnyvale on S Murphy Ave.\n\nEvening — Jazz Up Your Monday Night\nUnwind with live jazz while sipping cocktails on a Monday evening.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArt nouveau poster with flowing organic lines, ornamental borders, elegant serif type, gold and deep green.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-18T14:19:51.698Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056379027720667498",
+            "id": "2056379027720667498",
+            "text": "Monday in the South Bay — which idea wins?"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm52zdhowt2i",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm52zdhowt2i",
+            "cid": "bafyreihmt37ifdu2jbgne2cibzu2awclsju7m2exivsbsr3zdiosvext7y",
+            "ownReplies": [
+              "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm532qa2p72l",
+              "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm532rd44w2s"
+            ]
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "17971137555051811",
+            "id": "17971137555051811"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111388788849604",
+            "id": "122111388788849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116596013250257245",
+            "id": "116596013250257245",
+            "url": "https://mastodon.social/@southbaytoday/116596013250257245"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "17965116719917209",
+            "id": "17965116719917209"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       }
     },
     "2026-05-19": {

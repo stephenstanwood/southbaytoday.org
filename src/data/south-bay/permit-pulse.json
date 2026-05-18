@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-17T23:09:27.450Z",
+      "generatedAt": "2026-05-18T19:09:40.408Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 10 – May 17",
+      "dateRange": "May 11 – May 18",
       "stats": {
-        "total": 476,
-        "notable": 27,
-        "newUnits": 203,
-        "totalValuation": 41419456
+        "total": 452,
+        "notable": 26,
+        "newUnits": 204,
+        "totalValuation": 42512096
       },
       "permits": [
         {
@@ -25,6 +25,30 @@
           "units": 195,
           "issueDate": "2026-05-13",
           "subtype": "Apartment"
+        },
+        {
+          "id": "2025-117693-RS",
+          "address": "512 S 3rd St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case New Detached ADU",
+          "valuation": 169090,
+          "units": 1,
+          "issueDate": "2026-05-15",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-117491-RS",
+          "address": "5139 Sutcliff Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 164186,
+          "units": 1,
+          "issueDate": "2026-05-15",
+          "subtype": "2nd Unit Added"
         },
         {
           "id": "2024-100654-RS",
@@ -75,18 +99,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2024-096844-RS",
-          "address": "788 Delmas Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 100947,
-          "units": 1,
-          "issueDate": "2026-05-11",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-099448-RS",
           "address": "2880 W Hedding St",
           "category": "residential-new",
@@ -121,30 +133,18 @@
           "units": 1,
           "issueDate": "2026-05-13",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-107692-CI",
-          "address": "1565 Mabury Rd",
-          "category": "new-construction",
-          "categoryLabel": "New Construction",
-          "workType": "New Construction",
-          "description": "Berryessa Tod (Bemp 100%) Garage",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-13",
-          "subtype": "Closed Public Parking Garage"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-17T23:09:29.705Z",
+      "generatedAt": "2026-05-18T19:09:42.778Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 10 – May 17",
+      "dateRange": "May 11 – May 18",
       "stats": {
-        "total": 133,
+        "total": 136,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
