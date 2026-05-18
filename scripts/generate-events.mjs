@@ -1203,6 +1203,15 @@ function cleanVenue(raw) {
   v = v.replace(/\bICA San Jose\b/g, "ICA San José");
   // Truncated library name ("Dr. Martin Luther King" with no ", Jr. Library" tail).
   v = v.replace(/^Dr\.?\s+Martin\s+Luther\s+King\s*$/i, "Dr. Martin Luther King, Jr. Library");
+  // SJSU's Localist feed emits the SJSU/SJPL joint library as
+  // "Martin Luther King Junior Library" (no "Dr.", "Junior" spelled out).
+  // Normalize to the canonical "Dr. Martin Luther King, Jr. Library".
+  v = v.replace(/^(?:Dr\.?\s+)?Martin\s+Luther\s+King\s+(?:Jr\.?|Junior)\s+Library$/i, "Dr. Martin Luther King, Jr. Library");
+  // Strip trademark/copyright/service-mark glyphs from venue names. Parity
+  // with cleanTitle — Ticketmaster's feed often emits "Levi's® Stadium",
+  // which then sits next to clean "Levi's Stadium" entries from other feeds
+  // and creates duplicate-looking entries in venue lists.
+  v = v.replace(/[®©™℠℗]/g, "").replace(/\s{2,}/g, " ").trim();
   // SJDA's WP feed publishes "Dr Funk" (no period) for the downtown SJ bar,
   // whose owner-branded name uses "Dr." with the period (dr-funk.com).
   // Normalize so the venue and any blurb generated from the venue field
