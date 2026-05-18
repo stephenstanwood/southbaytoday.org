@@ -1,10 +1,12 @@
 // ---------------------------------------------------------------------------
 // Weekend Ahead — surfaces curated weekend picks on the homepage
 // ---------------------------------------------------------------------------
-// The weekend-picks generator produces 4-6 AI-curated picks for the upcoming
-// Sat/Sun, but they only appear in the Events tab strip on Fri-Sun. That's
+// The weekend-picks generator produces exactly 2 Sat + 2 Sun AI-curated
+// picks, but they only appear in the Events tab strip on Fri-Sun. That's
 // four weekdays of curated content sitting idle while residents are most
-// likely planning. This card surfaces them on the homepage from Tue → Sun.
+// likely planning. This card surfaces them on the homepage Mon → Fri as a
+// 4-tile grid; if the generator couldn't deliver the 2+2 shape, we hide
+// the section entirely rather than show a lopsided row.
 // ---------------------------------------------------------------------------
 
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
@@ -90,17 +92,17 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
     if (ageDays > 8) return null;
   }
 
-  // Top 2 Sat picks, then top 2 Sun picks — Claude's emission order is the
-  // editorial ranking, so a simple per-day slice is enough. Final display
-  // re-sorts chronologically so the 4 tiles read left-to-right by time.
+  // Require exactly 2 Sat + 2 Sun — the generator is structured to deliver
+  // that shape, and the 4-up grid layout reads broken at any other count.
+  // Final display re-sorts chronologically so tiles read left-to-right by time.
   const upcoming = data.picks.filter((p) => p.date >= todayIso);
   const sats = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 6).slice(0, 2);
   const suns = upcoming.filter((p) => new Date(p.date + "T12:00:00").getDay() === 0).slice(0, 2);
+  if (sats.length < 2 || suns.length < 2) return null;
   const visible = [...sats, ...suns].sort((a, b) => {
     if (a.date !== b.date) return a.date < b.date ? -1 : 1;
     return timeToMinutes(a.time) - timeToMinutes(b.time);
   });
-  if (visible.length < 2) return null;
 
   const heading = "The Weekend Ahead";
 
