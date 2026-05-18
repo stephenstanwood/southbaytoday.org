@@ -86,10 +86,12 @@ const TITLE_BLOCKLIST = [
   /\bspecial meeting\b/i, // generic "Special Meeting"
   /\bsubcommittee\b/i,    // internal subcommittees
   /\bstudy session\b/i,   // council study sessions
+  /\btask\s+force\s+(?:monthly\s+)?meeting\b/i, // member-only working sessions (SVLG tax/workforce task forces)
   /\b(town|city)\s+council\b/i, // "Town Council Meeting", "City Council Budget Hearing", etc. — gov tab content
   /\bcommittee\s*$/i,     // titles ending in "Committee" (Development Review Committee, Historic Preservation Committee)
   /\bcommission\s*$/i,    // titles ending in "Commission" (Parks and Sustainability Commission, Civic Improvement Commission)
   /\bclosed\s*(for|—|–|-|:)/i, // closure notices ("Closed for", "Closed: Independence Day", etc.)
+  /^[\w\s]*\bclosed\s*$/i, // bare "<venue> Closed" closures w/ no time-of-day signal — "Museum Closed", "Library Closed" (annual-holiday iCal entries with no actionable info). Partial-day notices like "Library Closed from 2pm" survive because the time keeps them from ending in "closed".
   /\bcancelled?\b/i,      // cancelled events
   /\bIndustry Insights with Alumni\b/i, // Stanford affiliates only
   /\bnetworking mixer\b/i, // internal student/professional mixers
@@ -1999,6 +2001,7 @@ async function fetchSvlgEvents() {
     const xml = await fetchText("https://www.svlg.org/events/feed/");
     const items = parseRssItems(xml);
     const events = items.map((item) => {
+      if (isBlockedEvent(item.title)) return null;
       const start = parseDate(item.pubDate);
       if (!start) return null;
       const city = inferCity(item.title + " " + item.description, "");
