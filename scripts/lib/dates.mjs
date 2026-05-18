@@ -54,11 +54,14 @@ export function displayDate(d) {
 
 export function displayTime(d) {
   if (!d) return null;
-  const h = d.getHours();
-  const m = d.getMinutes();
-  if (h === 0 && m === 0) return null; // midnight = probably no time set
-  return d.toLocaleTimeString("en-US", {
+  // Format in PT first, then check the formatted output for midnight. Using
+  // `d.getHours()` to detect midnight is runtime-TZ dependent — when the cron
+  // runs in UTC, a date that's midnight PT has getHours()==7, slipping past
+  // the guard and emitting a misleading "12:00 AM" badge on the card.
+  const formatted = d.toLocaleTimeString("en-US", {
     hour: "numeric", minute: "2-digit",
     timeZone: PT,
   });
+  if (formatted === "12:00 AM") return null; // midnight = probably no time set
+  return formatted;
 }

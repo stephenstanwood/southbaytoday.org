@@ -1706,7 +1706,7 @@ async function fetchScuEvents() {
     const xml = await fetchText("https://events.scu.edu/live/rss/events");
     const items = parseRssItems(xml);
     let skippedScu = 0;
-    const events = items.map((item) => {
+    const parsed = items.map((item) => {
       if (isStudentOnlyEvent(item)) { skippedScu++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
@@ -1726,9 +1726,41 @@ async function fetchScuEvents() {
         url: item.link,
         source: "Santa Clara University",
         kidFriendly: false,
+        _startMs: start.getTime(),
       };
     }).filter(Boolean);
-    console.log(`  ✅ SCU: ${events.length} events (${skippedScu} student-only filtered)`);
+
+    // SCU's Localist RSS emits each occurrence of a multi-day exhibit as a
+    // separate item with `pubDate = T00:00:00` — displayTime() returns
+    // "12:00 AM" on non-PT runtimes, slipping past the global no-time
+    // exhibit-collapse rule. Mirror the SJSU URL-collapse: group by event
+    // detail URL, and when the same URL appears on 3+ dates, emit a single
+    // ongoing entry at the earliest future date. 2-occurrence URLs stay
+    // separate (real two-day workshops exist).
+    const byUrl = new Map();
+    const collapsibleUrlPattern = /^https?:\/\/events\.scu\.edu\/.+\/event\//i;
+    for (const e of parsed) {
+      if (!e.url || !collapsibleUrlPattern.test(e.url)) continue;
+      if (!byUrl.has(e.url)) byUrl.set(e.url, []);
+      byUrl.get(e.url).push(e);
+    }
+    const dropIds = new Set();
+    let collapsed = 0;
+    for (const [, occurrences] of byUrl) {
+      if (occurrences.length < 3) continue;
+      occurrences.sort((a, b) => a._startMs - b._startMs);
+      const keep = occurrences[0];
+      keep.time = null;
+      keep.endTime = null;
+      keep.ongoing = true;
+      for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
+      collapsed += occurrences.length - 1;
+    }
+    const events = parsed
+      .filter((e) => !dropIds.has(e.id))
+      .map(({ _startMs, ...e }) => e);
+
+    console.log(`  ✅ SCU: ${events.length} events (${skippedScu} student-only filtered${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""})`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SCU: ${err.message}`);
@@ -4602,19 +4634,19 @@ function fetchInboundEvents() {
 
       // Extract a human time string from the ISO timestamp in PT.
       // Treat midnight (00:00 local) as "time unknown" — the extractor writes
-      // T00:00:00 when no time was found in the newsletter.
-      const _ptHour = parseInt(
-        startDate.toLocaleTimeString("en-US", {
-          hour: "2-digit", hour12: false, timeZone: "America/Los_Angeles",
-        })
-      );
-      const _ptMin = startDate.getMinutes();
-      const time = (_ptHour === 0 && _ptMin === 0) ? null : startDate.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-        timeZone: "America/Los_Angeles",
-      });
+      // T00:00:00 when no time was found in the newsletter. Check the
+      // formatted output rather than the parsed hour: older Node Intl
+      // returns "24" for midnight in `hour: "2-digit", hour12: false` mode,
+      // which slips past `_ptHour === 0` and leaks "12:00 AM" cards.
+      const time = (() => {
+        const display = startDate.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: "America/Los_Angeles",
+        });
+        return display === "12:00 AM" ? null : display;
+      })();
 
       // Parse end time from endsAt if provided
       let endTime = null;
