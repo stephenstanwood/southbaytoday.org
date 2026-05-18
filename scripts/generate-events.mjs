@@ -531,8 +531,12 @@ const OFF_REGION_PATTERNS = [
   // feed surfaces them with venue="Santa Clara University" — drop by chapter.
   /\b(chicagoland|nyc|seattle|portland|denver|boston|austin|dallas|houston|phoenix|atlanta|miami)\s+broncos\b/i,
   // Iconic out-of-region venues — safe to drop on any university feed since
-  // there's no local namesake (Wrigley Field is uniquely Chicago)
+  // there's no local namesake (Wrigley Field is uniquely Chicago, Chase Center
+  // is uniquely SF — SJSU's "Night at the Valkyries" event showed up here even
+  // though the game is at Chase Center with a Spark Social SF pre-event).
   /\bwrigley\s+field\b/i,
+  /\bchase\s+center\b/i,
+  /\bspark\s+social\s+sf\b/i,
 ];
 
 function isOffRegionUniversityEvent(title, description, venue) {
