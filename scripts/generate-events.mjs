@@ -710,6 +710,13 @@ function cleanTitle(title) {
     "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
     "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
     "AARP", "NAACP", "NAMI", "SCORE",
+    // Sports leagues / clubs the existing list missed. Sources name-drop these
+    // in mixed-case titles where the 2+ rule downcases them — e.g. "San Jose
+    // Earthquakes vs LAFC - Prime Time" from the City Newsletter became "vs
+    // Lafc". CSU is 3-letter so only at risk under the 2+ rule, but the same
+    // family of bug (Bay FC CSU Night vs. an alumni mailer with more body copy)
+    // can flip it.
+    "LAFC", "NWSL", "WNBA", "PGA", "LPGA", "CSU",
     // Medical / academic acronyms that legitimately appear in titles. Without
     // these the 2+ rule lowercases "AIDS" → "Aids" and "MFA" → "Mfa".
     "AIDS", "HIV", "PTSD", "ADHD", "MFA", "BFA", "MBA",
@@ -1081,6 +1088,10 @@ function polishDescription(text) {
     "MIT", "UCSF", "UCSC", "UCLA", "UCSD", "UCSB", "UCD",
     "AAPI", "AAJA", "NAHJ", "NABJ", "GLAAD", "ACLU",
     "AARP", "NAACP", "NAMI", "SCORE",
+    // Sports leagues / clubs that appear in body copy. 4-letter members of the
+    // same set added to cleanTitle's KEEP_UPPER — body text only runs the 4+
+    // rule so 3-letter PGA/CSU don't need entries here.
+    "LAFC", "NWSL", "WNBA", "LPGA",
     // Medical / academic acronyms (4+ letters only at this body-level rule).
     "AIDS", "RDMS",
   ]);
@@ -1192,6 +1203,11 @@ function cleanVenue(raw) {
   v = v.replace(/\bICA San Jose\b/g, "ICA San José");
   // Truncated library name ("Dr. Martin Luther King" with no ", Jr. Library" tail).
   v = v.replace(/^Dr\.?\s+Martin\s+Luther\s+King\s*$/i, "Dr. Martin Luther King, Jr. Library");
+  // SJDA's WP feed publishes "Dr Funk" (no period) for the downtown SJ bar,
+  // whose owner-branded name uses "Dr." with the period (dr-funk.com).
+  // Normalize so the venue and any blurb generated from the venue field
+  // ("Test your knowledge … at Dr. Funk") read naturally.
+  v = v.replace(/^Dr\s+Funk\b/, "Dr. Funk");
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
   if (/^\d+\s/.test(v)) return "";
   // If the cleaning passes left only digits behind (e.g. "41" or "457" — typically
@@ -2073,6 +2089,7 @@ async function fetchCampbellEvents() {
     );
     const items = parseRssItems(xml);
     const now = new Date();
+    let skippedPlaceholder = 0;
     const events = items.map((item) => {
       // Campbell uses calendarEvent:EventDates ("March 28, 2026" or "April 6, 2026 - April 10, 2026")
       // not calendarEvent:startDate. Fall back to pubDate only if EventDates is missing.
@@ -2082,6 +2099,16 @@ async function fetchCampbellEvents() {
         || parseDate(item.pubDate);
       if (!start || start < now) return null;
       const timeStr = parseCivicPlusEventTime(item.eventTimes);
+      const venueLabel = cleanVenue(item.location || "") || inferCivicVenueFromTitle(item.title) || null;
+      const description = truncate(stripCivicPlusMetadata(stripHtml(item.description)));
+      // Same placeholder filter as fetchCivicPlusRssCity — Campbell's RSS also
+      // emits bare-title entries ("Theatre Event", "Almaden Spirit Athletics
+      // End of Season Showcase") with no description, no venue, no address.
+      // Drop them at ingest so the blurb resolver doesn't fabricate filler.
+      if (!description && !venueLabel) {
+        skippedPlaceholder++;
+        return null;
+      }
       return {
         id: h("campbell", item.link || item.title, item.eventDates || item.pubDate),
         title: item.title,
@@ -2089,12 +2116,12 @@ async function fetchCampbellEvents() {
         displayDate: displayDate(start),
         time: timeStr,
         endTime: null,
-        venue: cleanVenue(item.location || "") || inferCivicVenueFromTitle(item.title) || null,
+        venue: venueLabel,
         address: "",
         city: "campbell",
         category: inferCategory(item.title, item.description, ""),
         cost: "free",
-        description: truncate(stripCivicPlusMetadata(stripHtml(item.description))),
+        description,
         url: item.link,
         source: "City of Campbell",
         // Prefix-only boundary — match compounds like "Storytime", "Babies",
@@ -2102,6 +2129,9 @@ async function fetchCampbellEvents() {
         kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(item.title),
       };
     }).filter(Boolean);
+    if (skippedPlaceholder > 0) {
+      console.log(`     · skipped ${skippedPlaceholder} placeholder entry/ies (no desc + no venue)`);
+    }
     console.log(`  ✅ Campbell: ${events.length} events`);
     return events;
   } catch (err) {
@@ -2120,6 +2150,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
     const now = new Date();
     const thirtyDaysOut = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
 
+    let skippedPlaceholder = 0;
     const events = rawEvents
       .map((ev) => {
         if (isBlockedEvent(ev.summary)) return null;
@@ -2136,6 +2167,16 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
         const urlIsRelativeIcal = rawUrl && rawUrl.startsWith("/common/modules/iCalendar/");
         const eventUrl = descIsUrl ? descText.trim() : (!urlIsRelativeIcal ? rawUrl : null);
         const cleanedVenue = cleanVenue((ev.location || "").replace(/\\,/g, ","));
+        const venueLabel = cleanedVenue || inferCivicVenueFromTitle(ev.summary) || null;
+        const description = descIsUrl ? "" : stripBareUrls(descText);
+        // Same placeholder filter as fetchCivicPlusRssCity — the Los Gatos iCal
+        // feed in particular emits bare-title recurring entries ("Muse Markets")
+        // with no description, no venue, no address. Drop them so the blurb
+        // resolver doesn't fabricate filler from the title alone.
+        if (!description && !venueLabel) {
+          skippedPlaceholder++;
+          return null;
+        }
         return {
           id: h(defaultCity, ev.uid || ev.summary, ev.dtstart),
           title: ev.summary.replace(/\\,/g, ",").replace(/\\n/g, " "),
@@ -2146,12 +2187,12 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
           // without a published end time. Treat those as "no end time" rather
           // than a zero-duration event.
           endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
-          venue: cleanedVenue || inferCivicVenueFromTitle(ev.summary) || null,
+          venue: venueLabel,
           address: "",
           city,
           category: inferCategory(ev.summary, ev.description || "", ""),
           cost: defaultCost,
-          description: descIsUrl ? "" : stripBareUrls(descText),
+          description,
           url: eventUrl,
           source: name,
           // Prefix-only boundary — match compounds like "Storytime", "Babies",
@@ -2161,6 +2202,9 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
       })
       .filter(Boolean);
 
+    if (skippedPlaceholder > 0) {
+      console.log(`     · skipped ${skippedPlaceholder} placeholder entry/ies (no desc + no venue)`);
+    }
     console.log(`  ✅ ${name}: ${events.length} events`);
     return events;
   } catch (err) {
