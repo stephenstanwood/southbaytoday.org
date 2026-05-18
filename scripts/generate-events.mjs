@@ -1318,6 +1318,13 @@ function inferCategory(title, desc, type, venue = "") {
   if (/\bbrunch\b/.test(titleLower) && !/\b(jazz|concert|recital|symphony|live\s+music)\b/.test(titleLower)) return "food";
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
+  // Comedy-club venues (San Jose Improv, Rooster T. Feathers, etc.) host
+  // stand-up almost exclusively — many tour titles are just a performer's
+  // name ("Phil Medina", "Shawn Felipe") with no comedy keyword, which
+  // otherwise falls through to the "community" default. The venue itself
+  // is the unambiguous signal. Runs after the title-anchored music/family
+  // checks above so a hypothetical music night wouldn't be miscategorized.
+  if (/\b(improv|comedy\s+club|rooster\s+t)\b/.test(venueLower)) return "arts";
   // Nature / wildlife events — check BEFORE sports to avoid false positives.
   // Guard against swim-stroke names ("butterfly", "freestyle", etc.) that share
   // vocabulary with insect/bird watching but describe swimming clinics.
