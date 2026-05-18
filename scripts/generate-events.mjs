@@ -1845,6 +1845,38 @@ async function fetchChmEventDateTime(url) {
   }
 }
 
+// CHM RSS descriptions are wrapped in WordPress excerpt boilerplate:
+//   - Leading sold-out notice: "In-person attendance for this event is full.
+//     Please join the waitlist or sign up to see the show virtually.
+//     Unfortunately, we will not be able to admit walk-ins." — eats ~140 of the
+//     200-char description budget when present, leaving a sliver of real content
+//     and causing the Haiku blurb resolver to write "Watch virtually or join the
+//     waitlist…" instead of describing the actual event.
+//   - Trailing WordPress excerpt footer: "[…] The post <title> appeared first on
+//     CHM." — usually clipped by truncate() at 200 chars, but stripping pre-cut
+//     widens the budget for real content on shorter descriptions.
+function stripChmRssBoilerplate(text) {
+  if (!text) return "";
+  let t = text;
+  // Lead boilerplate — three optional sentences in fixed order.
+  t = t.replace(
+    /^\s*In-person attendance for this event is full\.\s*/i,
+    "",
+  );
+  t = t.replace(
+    /^\s*Please join the waitlist or sign up to see the show virtually\.\s*/i,
+    "",
+  );
+  t = t.replace(
+    /^\s*Unfortunately, we will not be able to admit walk-ins\.\s*/i,
+    "",
+  );
+  // Trailing WordPress footer: "[…] The post <anything> appeared first on CHM."
+  t = t.replace(/\s*\[…\]\s*The post .*? appeared first on CHM\.?\s*$/i, "");
+  t = t.replace(/\s*The post .*? appeared first on CHM\.?\s*$/i, "");
+  return t.trim();
+}
+
 async function fetchChmEvents() {
   console.log("  ⏳ Computer History Museum...");
   try {
@@ -1857,6 +1889,7 @@ async function fetchChmEvents() {
       if (!dt) return null;
       const iso = isoDate(dt.date);
       if (iso < today) return null; // past event — drop
+      const rawDesc = stripHtml(item.description || item.content);
       return {
         id: h("chm", item.link, iso),
         title: item.title,
@@ -1870,7 +1903,7 @@ async function fetchChmEvents() {
         category: inferCategory(item.title, item.description, "", "Computer History Museum"),
         cost: "paid",
         ongoing: false,
-        description: truncate(stripHtml(item.description || item.content)),
+        description: truncate(stripChmRssBoilerplate(rawDesc)),
         url: item.link,
         source: "Computer History Museum",
         kidFriendly: false,
