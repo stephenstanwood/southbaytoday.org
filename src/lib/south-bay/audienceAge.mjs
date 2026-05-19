@@ -41,8 +41,10 @@ const KIDS_SIGNALS = [
 // Strong adult-only signals: explicit age gates, adult-theme events.
 // Bar/brewery venue alone does NOT trigger this.
 const ADULT_SIGNALS = [
-  /\b21\s*\+\b/,
-  /\b18\s*\+\b/,
+  // No trailing \b after \+ — "+" is non-word and is always followed by non-word
+  // (space/punct/EOL) in real copy, so \b\+\b would silently miss every "21+".
+  /\b21\s*\+/,
+  /\b18\s*\+/,
   /\b21\s*(?:and|&)\s*over\b/i,
   /\b18\s*(?:and|&)\s*over\b/i,
   /\badults?\s+only\b/i,
