@@ -1533,7 +1533,7 @@
     },
     "2026-05-19": {
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "My Year With AI",
@@ -1568,7 +1568,55 @@
         "imagePrompt": "California redwood fog-gray landscape abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Narrow editorial column center-right dense with layered stylized hills in warm gold, dusty sage, charcoal, and fog-white. Thin horizontal color stripes as dividers between sections. Fragmented circuit board and abstracted computer monitor silhouettes woven through composition—bold, collaged, not literal. Left margin wide and negative. Golden hour light bleeding across layered terrain. Playful energy, elements colliding, rich textural chaos balanced against clean margins. Magazine editorial feel.",
         "regeneratedAt": "2026-05-16T14:24:16.620Z",
         "mjPrompt": "{tarot card baroque ornamental border symmetrical iconography, dazzle camouflage geometric bold black white shapes, sacred geometry mandala precise compass shapes meditative, constructivist poster diagonal composition red black and cream, Russian avant-garde rodchenko diagonal red typography revolutionary, Swiss International Style helvetica grid clean asymmetric, Bauhaus geometric primary shapes structured grid, Scandinavian minimal generous whitespace muted earth tones thin lines, Indian Madhubani folk pattern bold outline natural pigments, woodcut bold black lines stark white space german expressionist, Polish poster school surreal expressive 60s illustration, hard-edge painting flat sharp geometric color blocks crisp, Chinese gongbi meticulous brush detail traditional symbolic, Mexican papel picado cut paper banner festive primary colors, luminism quiet glow detailed landscape transcendent light} of dim auditorium light pooling on empty seat backs, the cool blue glow of a paused screen, scattered notebooks open to half-finished thoughts, a coffee cup gone cold beside a tangle of cables, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
-        "mjPromptAt": "2026-05-16T21:03:49.399Z"
+        "mjPromptAt": "2026-05-16T21:03:49.399Z",
+        "publishedAt": "2026-05-19T18:39:22.250Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056806099689624051",
+            "id": "2056806099689624051",
+            "text": "Tonight in Mountain View: a real conversation at @ComputerHistory about a year of actually using AI tools — what stuck, what was hype, what quietly changed how people work. 7 PM. 🤖 https://t.co/26CrLgZh0w",
+            "ownReplies": [
+              "2056806897530163341"
+            ]
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm7ztu6w362s",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm7ztu6w362s",
+            "cid": "bafyreig3qrmvh2bvyoryk6jwzl3eladrhhud5he3fjy45dti4nduqhwxty"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18040415363630513",
+            "id": "18040415363630513",
+            "ownReplies": [
+              "17898515595446833"
+            ]
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111585936849604",
+            "id": "122111585936849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116602685984549798",
+            "id": "116602685984549798",
+            "url": "https://mastodon.social/@southbaytoday/116602685984549798"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "17939610213232577",
+            "id": "17939610213232577"
+          }
+        ]
       },
       "wildcard": {
         "status": "image-approved",
