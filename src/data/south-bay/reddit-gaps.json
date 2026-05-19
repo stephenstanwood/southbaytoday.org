@@ -1,206 +1,147 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-19T19:17:11.804Z",
+    "generatedAt": "2026-05-19T23:17:00.771Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 20,
-    "placesMatched": 7,
-    "placeGaps": 13,
-    "eventsExtracted": 2,
+    "placesExtracted": 12,
+    "placesMatched": 5,
+    "placeGaps": 7,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 2,
-    "autoAppendedOpenings": 1
+    "eventGaps": 3,
+    "autoAppendedOpenings": 0
   },
   "placeGaps": [
-    {
-      "name": "Levi's Stadium",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "hosts major concerts like Taylor Swift",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tho9p4/pwhl_officially_announces_san_jose_team/",
-        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1thrcai/professional_womens_hockey_league_expands_to_san/"
-      ]
-    },
-    {
-      "name": "Stan's",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "beloved local donut shop, Randy's opening nearby",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
-    {
-      "name": "Randy's Donuts",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "new location opening in Santa Clara donut district",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
-    {
-      "name": "Grace Presbyterian of Silicon Valley",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "church with young adult community near VA office",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
-    {
-      "name": "Gilroy Gardens",
-      "city": "Gilroy",
-      "kind": "venue",
-      "context": "amusement park accessible via Great America Gold pass",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
     {
       "name": "Happy Hollow Park and Zoo",
       "city": "San Jose",
       "kind": "venue",
-      "context": "zoo with membership offering discounts at other venues",
+      "context": "yearly membership pass worth it, good for toddlers",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ]
     },
     {
       "name": "Rosicrucian Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "museum near SJ Rose Garden area, toddler-friendly",
+      "context": "near SJ Rose Garden area, good for kindergarten age",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ]
     },
     {
-      "name": "Vasona",
+      "name": "Vasona Park",
       "city": "Los Gatos",
       "kind": "park",
-      "context": "park recommended for young children",
+      "context": "recommended for toddlers, no pass needed",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
+      ]
+    },
+    {
+      "name": "Gilroy Gardens",
+      "city": "Gilroy",
+      "kind": "venue",
+      "context": "accessible with Great America Gold pass",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ]
     },
     {
       "name": "Monterey Bay Aquarium",
-      "city": "Monterey",
+      "city": "",
       "kind": "venue",
-      "context": "annual pass worth considering for frequent visitors",
+      "context": "yearly pass only worth it with frequent visits",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ]
     },
     {
-      "name": "Oakland Zoo",
-      "city": "Oakland",
-      "kind": "venue",
-      "context": "membership popular with South Bay families, 50% off with Happy Hollow",
+      "name": "Stan's Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "established local donut shop, competitor to Randy's",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thsyzi/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thw1vf/pwhl_san_jose_merch_available_on_the_official/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ]
     },
     {
-      "name": "CuriOdyssey",
-      "city": "San Mateo",
-      "kind": "venue",
-      "context": "50% discount available with Happy Hollow membership",
+      "name": "Randy's Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "new location opening in Santa Clara, iconic LA donut chain",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
-    {
-      "name": "Bloom & Vine",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "new Beijing duck restaurant coming to Castro Street",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
-      ]
-    },
-    {
-      "name": "Golfland Sunnyvale",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "old school mini golf without alcohol option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thsyzi/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thw1vf/pwhl_san_jose_merch_available_on_the_official/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "BTS concert",
-      "when": "recent",
-      "city": "Palo Alto",
-      "context": "concert audible from residential areas downtown",
+      "name": "PWHL San Jose Team Launch",
+      "when": "2026-27 season",
+      "city": "San Jose",
+      "context": "Professional Women's Hockey League expansion team announcement",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJoseSharks/comments/1tho9p4/pwhl_officially_announces_san_jose_team/",
-        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1thrcai/professional_womens_hockey_league_expands_to_san/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
+        "https://www.reddit.com/r/SanJose/comments/1thrcai/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thby7i/clearly_the_pwhl_san_jose_team_should_be_the_san/"
       ]
     },
     {
-      "name": "PWHL San Jose team launch",
+      "name": "BTS Concert",
+      "when": "multiple days mentioned",
+      "city": "Palo Alto",
+      "context": "concert at venue audible from homes nearby",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
+      ]
+    },
+    {
+      "name": "PWHL San Jose",
       "when": "2026-27 season",
       "city": "San Jose",
-      "context": "professional women's hockey league expansion to Bay Area",
+      "context": "new professional women's hockey league team expansion",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tho9p4/pwhl_officially_announces_san_jose_team/",
-        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1thrcai/professional_womens_hockey_league_expands_to_san/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thsyzi/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thw1vf/pwhl_san_jose_merch_available_on_the_official/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ]
     }
   ],
@@ -211,93 +152,68 @@
       "kind": "park",
       "context": "pickleball courts subject to new play hour restrictions",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJoseSharks/comments/1tho9p4/pwhl_officially_announces_san_jose_team/",
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
         "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/SanJose/comments/1thrcai/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thby7i/clearly_the_pwhl_san_jose_team_should_be_the_san/"
       ],
       "matchedName": "Cupertino Memorial Park"
-    },
-    {
-      "name": "Safeway",
-      "city": "Santa Clara",
-      "kind": "retail",
-      "context": "donut shop nearby Stan's and Randy's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
-      ],
-      "matchedName": "Safeway"
-    },
-    {
-      "name": "Daily Donuts",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "alternative donut shop on Scott and Warburton",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thtcts/cupertino_proposes_new_pickleball_play_hours_in/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/"
-      ],
-      "matchedName": "Daily Donuts & Sandwich Bagels"
-    },
-    {
-      "name": "Great America",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "theme park with Gold pass membership option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
-      ],
-      "matchedName": "Great America Amphitheater"
     },
     {
       "name": "Children's Discovery Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "indoor/outdoor activities museum for toddlers",
+      "context": "indoor and outdoor activities, toddler-friendly",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ],
       "matchedName": "Children's Discovery Museum"
+    },
+    {
+      "name": "Great America",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "Gold pass $89 includes parking and Six Flags parks",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
+      ],
+      "matchedName": "Great America Amphitheater"
     },
     {
       "name": "Palo Alto Junior Museum and Zoo",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "zoo with membership option for South Bay families",
+      "context": "membership available, science and zoo combined",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1thw5ku/bart_achieves_highest_quarterly_passenger_ontime/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1th9gsf/pwhl_name_ideas_ive_gathered_for_the_new_san_jose/",
         "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/"
       ],
       "matchedName": "Palo Alto Junior Museum and Zoo"
     },
     {
-      "name": "Urban Putt",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "bar with mini golf, better alternative to closed Tipsy Putt",
+      "name": "Daily Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "local donut shop on Scott and Warburton, accepts cards",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thvcs0/what_yearly_passes_are_really_worth_it/",
-        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1th0med/join_us_should_bay_area_school_districts_copy/"
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thsyzi/professional_womens_hockey_league_expands_to_san/",
+        "https://www.reddit.com/r/SanJoseSharks/comments/1thw1vf/pwhl_san_jose_merch_available_on_the_official/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ],
-      "matchedName": "Urban Putt San Jose"
+      "matchedName": "Daily Donuts & Sandwich Bagels"
     }
   ],
   "eventMatches": []
