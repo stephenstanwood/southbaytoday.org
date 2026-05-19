@@ -220,12 +220,15 @@ def build_prompt(
             rules_lines.append(f"  - **{p}**: {PLATFORM_RULES[p]}")
     rules_block = "\n".join(rules_lines)
 
-    # Pull learned signal from last night's reflection pass (if any).
+    # Pull learned signal from last night's reflection pass (if any) and
+    # real-time feedback from Stephen's recent swiper accept/reject decisions.
     try:
         import voice_weights  # type: ignore
         learned_bias_block = voice_weights.prompt_bias_block()
+        swiper_feedback = voice_weights.swiper_feedback_block()
     except Exception:
         learned_bias_block = ""
+        swiper_feedback = ""
 
     return f"""You are the social voice of **South Bay Today** (SBT), a hyperlocal account for the South Bay (San Jose, Palo Alto, Campbell, Los Gatos, Saratoga, Cupertino, Sunnyvale, Mountain View, Santa Clara, Los Altos, Milpitas). Always refer to us as "South Bay Today" when using our name.
 
@@ -366,6 +369,8 @@ CATEGORIES (pick the best-fit for each trend's `category` field)
   - `transit` — roads, BART, Caltrain, bike infrastructure, traffic
   - `weather_outdoors` — weather, parks, hikes, natural events
   - `other` — anything that doesn't fit the above
+
+{swiper_feedback}
 
 {learned_bias_block}
 
