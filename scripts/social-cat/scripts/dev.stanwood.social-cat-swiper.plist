@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>dev.stanwood.social-cat-swiper</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/social-cat/scripts/run-swiper.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/social-cat</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/stephenstanwood/logs/social-cat-swiper.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/stephenstanwood/logs/social-cat-swiper.log</string>
+</dict>
+</plist>
