@@ -630,6 +630,7 @@ const TITLE_FIXES = {
   "Svlg ": "SVLG ",
   "Sjz ": "SJZ ",
   "Bayfc": "Bay FC",
+  "Crossfit": "CrossFit",  // Ticketmaster's CrossFit Games event titles arrive title-cased
   "Rock EN ": "Rock en ",
   "Latinaje EN ": "Latinaje en ",
   // Source-side title-cased acronyms (regex won't catch — input wasn't ALL-CAPS)
@@ -1140,6 +1141,11 @@ function polishDescription(text) {
   // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
   // copy ("Pay Pal Park") survives polishing intact.
   t = t.replace(/\bPay Pal\b/g, "PayPal");
+  // Ticketmaster CrossFit Games + Sierra Nevada VIP lounge feeds leak the
+  // sponsor "NetApp" and brand "CrossFit" as two-word splits ("Net App Celly
+  // Lounge", "Cross Fit Games"). Both are single-word brand marks.
+  t = t.replace(/\bNet App\b/g, "NetApp");
+  t = t.replace(/\bCross Fit\b/g, "CrossFit");
 
   // Split into sentences and drop boilerplate
   const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
