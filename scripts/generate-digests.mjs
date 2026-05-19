@@ -183,6 +183,28 @@ function cleanKeyTopics(topics) {
     .filter((t) => t.length > 0);
 }
 
+// Haiku occasionally truncates two-word city names — most often "Mountain View"
+// becomes "Mountain" ("the Mountain City Council held a special session…").
+// Stephen has caught and hand-fixed this verbatim at least once (commit 15558a1).
+// Keyed per-city so we only patch the digest belonging to that city — avoids
+// touching incidental "Mountain" mentions in other cities' summaries.
+const CITY_NAME_FIXES = {
+  "Mountain View": [
+    [/\bMountain (?=City|Town|Council)/g, "Mountain View "],
+  ],
+};
+
+function enforceCityName(cityName, text) {
+  if (typeof text !== "string") return text;
+  const patterns = CITY_NAME_FIXES[cityName];
+  if (!patterns) return text;
+  let out = text;
+  for (const [re, replacement] of patterns) {
+    out = out.replace(re, replacement);
+  }
+  return out;
+}
+
 async function summarize(config, meeting) {
   const isYouTubeTranscript = meeting.source === "youtube-transcript";
   // Strip the VTT metadata prefix that appears in YouTube transcript records
@@ -353,8 +375,9 @@ async function main() {
         meetingDate: meetingDateFormatted,
         meetingDateIso: meeting.date,
         title: `${config.cityName} ${bodyLabel} — ${meetingDateFormatted}`,
-        summary: parsed.summary ?? "",
-        keyTopics: cleanKeyTopics(parsed.keyTopics ?? meeting.keywords.slice(0, 5)),
+        summary: enforceCityName(config.cityName, parsed.summary ?? ""),
+        keyTopics: cleanKeyTopics(parsed.keyTopics ?? meeting.keywords.slice(0, 5))
+          .map((t) => enforceCityName(config.cityName, t)),
         schedule: config.schedule,
         sourceUrl: config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl,
         generatedAt: new Date().toISOString(),
