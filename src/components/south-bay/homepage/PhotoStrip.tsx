@@ -64,6 +64,27 @@ export default memo(function PhotoStrip() {
         {strip.map(p => tile(p, "-a"))}
         {strip.map(p => tile(p, "-b"))}
       </div>
+      <style>{`
+        @keyframes photo-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .photo-strip-track {
+          display: flex;
+          gap: 3px;
+          width: max-content;
+          animation: photo-scroll 90s linear infinite;
+        }
+        .photo-strip-track:hover { animation-play-state: paused; }
+        .ps-caption {
+          position: absolute; bottom: 0; left: 0; right: 0;
+          background: linear-gradient(transparent, rgba(0,0,0,0.7));
+          padding: 20px 8px 6px;
+          opacity: 0;
+          transition: opacity 0.15s;
+        }
+        .photo-strip-track a:hover .ps-caption { opacity: 1; }
+      `}</style>
     </div>
   );
 });

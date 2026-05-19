@@ -47,19 +47,13 @@ const description = `What's happening in ${cityName} today: events, city council
         margin: 0;
         padding: 0;
       }
-      .city-container {
-        max-width: var(--sb-max-width);
-        margin: 0 auto;
-        padding: 24px 32px 60px;
-      }
+      /* CityPage manages its own internal width — the Masthead spans full
+         width and the content has an 800px max-width matching the homepage. */
       @media (max-width: 640px) {
-        .city-container { padding: 16px 16px 40px; }
         .city-events-grid { grid-template-columns: 1fr !important; }
       }
     </style>
   </Fragment>
 
-  <div class="city-container">
-    <CityPage cityId={cityId} cityName={cityName} client:only="react" />
-  </div>
+  <CityPage cityId={cityId} cityName={cityName} client:only="react" />
 </BaseLayout>
