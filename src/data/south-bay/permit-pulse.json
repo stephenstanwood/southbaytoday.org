@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-18T23:09:39.262Z",
+      "generatedAt": "2026-05-19T11:10:39.298Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 11 – May 18",
+      "dateRange": "May 12 – May 19",
       "stats": {
-        "total": 452,
-        "notable": 26,
-        "newUnits": 204,
-        "totalValuation": 42512096
+        "total": 352,
+        "notable": 23,
+        "newUnits": 203,
+        "totalValuation": 40812165
       },
       "permits": [
         {
@@ -87,18 +87,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-120934-RS",
-          "address": "3462 Gavota Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 110416,
-          "units": 1,
-          "issueDate": "2026-05-12",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-099448-RS",
           "address": "2880 W Hedding St",
           "category": "residential-new",
@@ -133,19 +121,31 @@
           "units": 1,
           "issueDate": "2026-05-13",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-107692-CI",
+          "address": "1565 Mabury Rd",
+          "category": "new-construction",
+          "categoryLabel": "New Construction",
+          "workType": "New Construction",
+          "description": "Berryessa Tod (Bemp 100%) Garage",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-13",
+          "subtype": "Closed Public Parking Garage"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-18T23:09:41.649Z",
+      "generatedAt": "2026-05-19T11:10:41.590Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 11 – May 18",
+      "dateRange": "May 12 – May 19",
       "stats": {
-        "total": 136,
-        "notable": 4,
+        "total": 123,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -173,18 +173,6 @@
           "units": 0,
           "issueDate": "2026-05-12",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00105",
-          "address": "1600 Sand Hill Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Removal of one heaving black acacia",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-11",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00108",

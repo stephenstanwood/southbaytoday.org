@@ -1,70 +1,44 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-18T23:17:44.185Z",
+    "generatedAt": "2026-05-19T11:19:05.179Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
     "placesExtracted": 37,
-    "placesMatched": 15,
-    "placeGaps": 22,
-    "eventsExtracted": 12,
+    "placesMatched": 9,
+    "placeGaps": 28,
+    "eventsExtracted": 7,
     "eventsMatched": 1,
-    "eventGaps": 11,
-    "autoAppendedOpenings": 1
+    "eventGaps": 6,
+    "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
       "name": "Node Foundation",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "robot art exhibit by Beeple on University Ave",
+      "context": "hosting Beeple robot art exhibit on University Ave",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "Sweet Tomatoes",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "closed salad bar chain, formerly on Coleman/College Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
-      ]
-    },
-    {
-      "name": "Fresh Choice",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "closed salad bar chain, operated at Great Mall",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
-        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
-        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ]
     },
     {
       "name": "South Bay Shores",
       "city": "Santa Clara",
-      "kind": "venue",
-      "context": "water park at Great America, proposed for preservation",
+      "kind": "park",
+      "context": "water park facility within Great America property",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ]
     },
     {
@@ -74,370 +48,394 @@
       "context": "public swim facility undergoing restoration",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ]
     },
     {
-      "name": "Kumako",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "ramen restaurant in Japantown with popular owners",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Gordon Biersch",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "hosts Japantown night market Thursdays and farmers market Sundays",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "10th Street Distillery",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "walking distance from Japantown, fun local venue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Roy's",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "friendly locals crowd in Japantown, day and night hangout",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "The Get Down",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "local dance studio with classes and community for adults",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "7 Bamboo",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "Japantown night hangout spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Nijiya",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "Japanese grocery store in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "St James Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "hosts free Levitt concert series near Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Voyager Coffee",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "near San Pedro Square where local run club gathers",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Levi's Stadium",
+      "name": "Levi's",
       "city": "Santa Clara",
-      "kind": "venue",
-      "context": "hosts major concerts like Taylor Swift performances",
+      "kind": "retail",
+      "context": "landmark near proposed Great America redevelopment area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
+        "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
+        "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ]
     },
     {
-      "name": "Chiramonte's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "deli with housemade Italian food near Japantown",
+      "name": "Stan's Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "iconic local donut shop, competing with Randy's Donuts",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
         "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Betsuin",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Buddhist temple, pillar of Japantown community",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ]
     },
     {
       "name": "Randy's Donuts",
       "city": "Santa Clara",
       "kind": "bakery",
-      "context": "new location opening with signage installation",
+      "context": "new location opening in Santa Clara donut district",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ]
     },
     {
-      "name": "Stan's",
+      "name": "Grace Presbyterian of Silicon Valley",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "church community for young professionals in area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+      ]
+    },
+    {
+      "name": "Sunnyvale Library",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "community resource in south Sunnyvale accessibility discussion",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+      ]
+    },
+    {
+      "name": "Levi's Stadium",
       "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "established local donut shop, competing with Randy's",
+      "kind": "venue",
+      "context": "concert venue mentioned for Taylor Swift and major events",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "Splash",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "lesbian bar and venue for Hey Girl events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ]
-    },
-    {
-      "name": "The Savoy",
-      "city": "Santa Clara",
-      "kind": "bar",
-      "context": "former lesbian bar, unknown current status",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ]
     },
     {
       "name": "Campbell Skatepark",
       "city": "Campbell",
-      "kind": "park",
-      "context": "recently reopened, historic skateboarding destination",
+      "kind": "venue",
+      "context": "recently reopened, historic skateboarding location",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Second Harvest",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "food bank and volunteering organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "The Day Worker Centre",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "volunteer opportunity in Mountain View",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Hope's Corner",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "volunteer organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "League of Women Voters",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "volunteer organization for all genders",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Canopy",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "tree planting volunteer events at parks",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Mountain View Chamber of Commerce",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "hosts events and volunteer coordination",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Grassroots Ecology",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "volunteer opportunities",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Midpeninsula Open Space District",
+      "city": "",
+      "kind": "service",
+      "context": "outdoor volunteer opportunities",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "St. Athanasius Church",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "food distribution volunteer site",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Mountain View Performing Arts Center",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "ushering volunteer opportunities at theater",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Taste of Mountain View",
+      "city": "Mountain View",
+      "kind": "event",
+      "context": "upcoming volunteer opportunity",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Tech Festival",
+      "city": "Mountain View",
+      "kind": "event",
+      "context": "chamber event seeking volunteers",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Maker Market",
+      "city": "Mountain View",
+      "kind": "event",
+      "context": "monthly event by chamber",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Mini Cat Town",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "volunteer cat care opportunities",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Sunday Assembly",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "secular community with service activities",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Mentor Tutor Connection",
+      "city": "",
+      "kind": "service",
+      "context": "mentoring and tutoring volunteer organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Golfland Sunnyvale",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "old school mini golf",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Tipsy Putt",
+      "city": "Sunnyvale",
+      "kind": "bar",
+      "context": "closed mini golf bar, no longer operating",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "Robot art exhibit by Beeple",
-      "when": "weekends only",
+      "when": "ongoing",
       "city": "Palo Alto",
-      "context": "lidar-enabled robots creating art prints at Node Foundation",
+      "context": "interactive art installation with lidar-equipped robots at Node Foundation",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ]
     },
     {
-      "name": "Alyssa Liu: Stars on Ice",
-      "when": "May 17, 2026",
-      "city": "San Jose",
-      "context": "figure skating performance at SAP Center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Obon Festival",
-      "when": "",
-      "city": "San Jose",
-      "context": "annual Japanese festival in Japantown with food vendors and live music",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Nikkei Matsuri",
-      "when": "",
-      "city": "San Jose",
-      "context": "annual Japanese festival in Japantown with food vendors and entertainment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Japantown Night Market",
-      "when": "Thursdays (warmer months)",
-      "city": "San Jose",
-      "context": "weekly food truck event and vendor market",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Japantown Farmers Market",
-      "when": "Sundays (warmer months)",
-      "city": "San Jose",
-      "context": "weekly farmers market at Gordon Biersch",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Viva Calle",
-      "when": "June",
-      "city": "San Jose",
-      "context": "open streets event for bicyclists and skaters with hub in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Levitt Concerts",
-      "when": "upcoming",
-      "city": "San Jose",
-      "context": "free concert series at St James Park near Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Christmas in the Park",
-      "when": "winter",
-      "city": "San Jose",
-      "context": "holiday event near Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "San Jose Earthquakes Game",
-      "when": "Saturday",
-      "city": "San Jose",
-      "context": "upcoming Earthquakes match at home",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ]
-    },
-    {
-      "name": "Sapphic Sundaze",
-      "when": "5/24",
+      "name": "BTS Concert",
+      "when": "recent",
       "city": "Palo Alto",
-      "context": "new drag show, first time outside San Jose",
+      "context": "concert with noise audible across Palo Alto and Mountain View",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+      ]
+    },
+    {
+      "name": "Coldplay Concert",
+      "when": "last year",
+      "city": "Palo Alto",
+      "context": "previous concert with notable noise across Palo Alto area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+      ]
+    },
+    {
+      "name": "Randy's Donuts Grand Opening",
+      "when": "upcoming",
+      "city": "Santa Clara",
+      "context": "new Santa Clara location opening with sign installation underway",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
+      ]
+    },
+    {
+      "name": "Mountain View Volunteering Fair",
+      "when": "couple weeks ago",
+      "city": "Mountain View",
+      "context": "volunteering opportunities showcase",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ]
+    },
+    {
+      "name": "Oktoberfest",
+      "when": "recurring",
+      "city": "Mountain View",
+      "context": "chamber-hosted volunteer event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
       ]
     }
   ],
@@ -446,137 +444,27 @@
       "name": "Great America",
       "city": "Santa Clara",
       "kind": "venue",
-      "context": "theme park facing potential demolition, preservation efforts",
+      "context": "theme park facing potential demolition, preservation campaign",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tgqmen/robot_art_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/bayarea/comments/1tgbmvi/sweet_tomatos/",
         "https://www.reddit.com/r/santaclara/comments/1tf1xdc/preserve_great_america/",
         "https://www.reddit.com/r/bayarea/comments/1th0fsa/should_bay_area_school_districts_copy_lausd_and/",
-        "https://www.reddit.com/r/santaclara/comments/1tej6r2/even_jin_from_bts_visited_great_america/"
+        "https://www.reddit.com/r/bayarea/comments/1th967h/terrible_allergies_dryness/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
       ],
       "matchedName": "Great America Amphitheater"
-    },
-    {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosted Alyssa Liu Stars on Ice performance May 17 2026",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "Japanese American Museum of San Jose",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "introduces community to Japanese-American history in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Japanese American Museum of San Jose"
-    },
-    {
-      "name": "Empire Seven",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "arts district venue with pop-ups and classes in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Empire Seven Studios"
-    },
-    {
-      "name": "Higher Fire",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "local arts district shop in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Higher Fire Studios"
-    },
-    {
-      "name": "Omogari",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Korean food restaurant near Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Omogari"
-    },
-    {
-      "name": "Trials",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "local ambiance with regulars and consistent bartenders in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Trials Pub"
-    },
-    {
-      "name": "Backesto Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "has tennis courts near Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
-      ],
-      "matchedName": "Backesto Park"
-    },
-    {
-      "name": "Hobee's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "hosts Hey Girl LGBTQ+ events, new location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
-      ],
-      "matchedName": "Hobee's"
     },
     {
       "name": "De Anza College",
       "city": "Cupertino",
       "kind": "venue",
-      "context": "major destination in south Sunnyvale transit discussion",
+      "context": "destination for Sunnyvale residents via proposed bus route",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "De Anza College Pool, Adapted Physical Education"
     },
@@ -584,12 +472,13 @@
       "name": "Whole Foods",
       "city": "Sunnyvale",
       "kind": "retail",
-      "context": "major destination in south Sunnyvale transit discussion",
+      "context": "grocery destination in south Sunnyvale transit discussion",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "Whole Foods Market"
     },
@@ -597,12 +486,13 @@
       "name": "Washington Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "mentioned in transit accessibility discussion",
+      "context": "park in south Sunnyvale needing better transit access",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "Washington Park"
     },
@@ -610,12 +500,13 @@
       "name": "Las Palmas Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "mentioned in transit accessibility discussion",
+      "context": "park in south Sunnyvale needing better transit access",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "Las Palmas Park"
     },
@@ -623,12 +514,13 @@
       "name": "Serra Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "mentioned in transit accessibility discussion",
+      "context": "park in south Sunnyvale needing better transit access",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "Serra Park"
     },
@@ -636,30 +528,56 @@
       "name": "Memorial Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "mentioned in transit accessibility discussion",
+      "context": "park in south Sunnyvale needing better transit access",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/SanJose/comments/1tgbdz5/are_there_any_lesbian_bars_in_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/",
-        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/"
+        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1th3imw/renting_vs_buying_at_40_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tfg423/a_hollenbeck_bus_route_would_improve_south/"
       ],
       "matchedName": "Cupertino Memorial Park"
+    },
+    {
+      "name": "Friends of the Mountain View Library",
+      "city": "Mountain View",
+      "kind": "service",
+      "context": "volunteer organization",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ],
+      "matchedName": "Friends of the Mountain View Library"
+    },
+    {
+      "name": "Urban Putt",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "mini golf and bar alternative to Tipsy Putt",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
+      ],
+      "matchedName": "Urban Putt San Jose"
     }
   ],
   "eventMatches": [
     {
-      "name": "BTS Concert",
-      "when": "",
-      "city": "Palo Alto",
-      "context": "concert at unspecified Palo Alto venue audible from homes",
+      "name": "Art & Wine",
+      "when": "recurring",
+      "city": "Mountain View",
+      "context": "chamber-hosted volunteer event",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tgancv/alyssa_liu_stars_on_ice_may_17_2026_thats_what_im/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tdlou0/stand_with_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tgd8yz/how_do_you_fully_enjoy_life_in_japantown/",
-        "https://www.reddit.com/r/SanJoseSharks/comments/1tfydh7/top_10_greatest_sharks_games/"
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
+        "https://www.reddit.com/r/Campbell/comments/1te5t1u/skateboarding_in_the_80s_in_campbell_ca/",
+        "https://www.reddit.com/r/mountainview/comments/1tg6qsk/mountain_view_volunteering/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tgly87/tipsy_putt_worth_going_to_or_just_hype/"
       ],
-      "matchedName": "BTS Concert Weekend - Adjusted Facility Hours"
+      "matchedName": "Sunnyvale Art & Wine Festival"
     }
   ]
 }
