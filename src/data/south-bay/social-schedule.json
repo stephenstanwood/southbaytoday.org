@@ -1606,7 +1606,7 @@
         }
       ],
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "mountain-view",
         "cityName": "Mountain View",
@@ -1778,7 +1778,54 @@
         "copyApprovedAt": "2026-05-16T14:19:36.645Z",
         "imageApprovedAt": "2026-05-16T14:19:36.645Z",
         "generatedAt": "2026-05-16T10:54:07.651Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"TUESDAY IN THE SOUTH BAY\"\nMountain View + Palo Alto + Los Gatos + Santa Clara + Milpitas + Saratoga\n\nBreakfast — Casa Mia Restaurant (Mountain View)\nSit-down restaurant in Mountain View on Old Middlefield Way, mid-tier prices.\n\nMorning — South Adobe Creek Loop\nHiking spot in the Palo Alto hills\n\nLunch — Aldo's Cafe\nCasual Italian fare including pizzas, pastas & salads featured in a rustic spot \n\nAfternoon — De Saisset Museum\nArt & history of the Bay Area & Santa Clara Valley in a family-founded museum on\n\nDinner — Calcutta Chaat & Bakery\nSit-down Indian restaurant in Milpitas on S Main St, mid-tier prices.\n\nEvening — Jason Bonham's Led Zeppelin Evening\nExperience Led Zeppelin classics played live by Jason Bonham at Mountain Winery.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nMid-century Cuban travel poster aesthetic with bright coral/turquoise/yellow, illustrated silhouettes of classic cars or palm trees, hand-lettered feel.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: no decoration — the layout and typography carry it; pure negative space does the work.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"TUESDAY IN THE SOUTH BAY\"\nMountain View + Palo Alto + Los Gatos + Santa Clara + Milpitas + Saratoga\n\nBreakfast — Casa Mia Restaurant (Mountain View)\nSit-down restaurant in Mountain View on Old Middlefield Way, mid-tier prices.\n\nMorning — South Adobe Creek Loop\nHiking spot in the Palo Alto hills\n\nLunch — Aldo's Cafe\nCasual Italian fare including pizzas, pastas & salads featured in a rustic spot \n\nAfternoon — De Saisset Museum\nArt & history of the Bay Area & Santa Clara Valley in a family-founded museum on\n\nDinner — Calcutta Chaat & Bakery\nSit-down Indian restaurant in Milpitas on S Main St, mid-tier prices.\n\nEvening — Jason Bonham's Led Zeppelin Evening\nExperience Led Zeppelin classics played live by Jason Bonham at Mountain Winery.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nMid-century Cuban travel poster aesthetic with bright coral/turquoise/yellow, illustrated silhouettes of classic cars or palm trees, hand-lettered feel.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: no decoration — the layout and typography carry it; pure negative space does the work.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-19T14:35:40.506Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2056745446945755407",
+            "id": "2056745446945755407",
+            "text": "Six ideas for Tuesday: breakfast at Casa Mia in Mountain View, a morning loop on South Adobe Creek, and Jason Bonham doing Led Zeppelin at Mountain Winery to close it out. Pick what sounds good 🎸 https://t.co/7JjmLulCTk"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm7mevme6g2u",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mm7mevme6g2u",
+            "cid": "bafyreidec2ifqkgvdqhn6otqs2ndfoxzn5bjsscrjyg7mnnwrardrjst64"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18078665699640717",
+            "id": "18078665699640717"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111557508849604",
+            "id": "122111557508849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116601738108240045",
+            "id": "116601738108240045",
+            "url": "https://mastodon.social/@southbaytoday/116601738108240045"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18017410781683720",
+            "id": "18017410781683720"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       }
     },
     "2026-05-20": {
