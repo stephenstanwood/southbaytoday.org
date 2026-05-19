@@ -273,7 +273,15 @@ What we DO post:
 
 If you can't find {TOP_TRENDS} items that pass both rules, return fewer. Empty > forced.
 
-**RULE 3 — Include the source URL when the post references the piece.** Default for trend riffs is no link, but it gets OVERRIDDEN when the draft is commenting on a specific external piece (article / op-ed / study / blog post / thread). Trigger phrases: "there's a piece circulating about...", "a new study finds...", "this op-ed argues...", "I read that...", "X's post about Y..." — if your draft teases or comments on a specific external source, you MUST include that source's URL at the end of the post on ALL platforms (yes, even X/Threads — better to take a small reach hit than to leave readers stranded). When the draft is direct commentary on the underlying event/news WITHOUT pointing at a specific piece (e.g. "Google I/O is at Shoreline this week"), keep it URL-less per the default. The source URL is the last field of each Pool A line (after the `→`).
+**RULE 3 — If you talk directly about a piece, link to it.** It's weird to talk about something specific without linking — readers can't find what you're describing. This OVERRIDES the default no-URL rule whenever the draft is about a specific external piece (article / op-ed / study / blog post / thread / tweet / video / artifact-on-the-internet). Triggers — any of these means INCLUDE the URL:
+  - You quote, paraphrase, or summarize the piece ("the piece argues...", "the study found...", "the author writes...")
+  - You tease without naming the piece ("there's a piece circulating about...", "I read that...")
+  - You name a specific writer/publication and their argument ("Maggie Appleton's essay on...", "the Atlantic's piece about...")
+  - You're describing something with a stable URL the reader could click through to (a specific blog post, repo, demo, video, viral thread)
+
+When you're NOT talking about a specific piece — you're commenting on the underlying event/news/cultural moment directly ("Google I/O is at Shoreline this week", "Caltrain electrification opens tomorrow") — keep it URL-less per the default.
+
+When the rule fires: URL goes at the END of the post, on ALL platforms (yes, even X/Threads where links suppress reach — sourcing beats reach for these posts). The source URL is the last field of each Pool A line (after the `→`).
 
 ================================================================
 TWO POOLS OF SOURCE MATERIAL
