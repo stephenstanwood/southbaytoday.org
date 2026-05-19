@@ -599,6 +599,15 @@ function isPublicEvent(title, source, description, venue) {
         if (/\bgroup\s+for\s+(?:stanford\s+)?(?:graduate\s+|undergraduate\s+|medical\s+)?students?\s+who\s+(?:live|are|identify|experience|have)\b/i.test(description)) return false;
       }
     }
+    // SCU internal-staff addresses — "Colleagues, join us …" / "Dear colleagues,
+    // please …" open the description when the event is a staff/faculty briefing
+    // (e.g. HSI Advisory group strategic-recommendations meetings on the SCU
+    // calendar). Public events don't address readers as "colleagues" in their
+    // opening line. Title alone doesn't carry the signal — the existing SCU
+    // patterns above only test against title.
+    if (source === "Santa Clara University" && description) {
+      if (/^\s*(?:dear\s+)?colleagues[,!]?\s+(?:join|please|kindly)\b/i.test(description)) return false;
+    }
     // Filter away athletic events — games played outside the South Bay
     if (isAwayGame(title)) return false;
     // Filter co-sponsored international events (e.g. SJSU listing a symposium
@@ -2254,7 +2263,15 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
         const start = parseIcalDate(ev.dtstart);
         if (!start || start < now || start > thirtyDaysOut) return null;
         const end = parseIcalDate(ev.dtend);
-        const city = inferCity(ev.location, "") || defaultCity;
+        // City-of-X calendars list branded programs ("Let's Hike Saratoga",
+        // "Mayor's Office Hours at the Saratoga Farmers' Market") whose
+        // trailheads or venues straddle a neighboring city — e.g. Fremont
+        // Older Open Space Preserve geocodes to Cupertino but the hike is a
+        // Saratoga city program. When the event title explicitly names the
+        // host city, trust the host calendar instead of the inferCity geocode.
+        const hostCityWords = defaultCity.replace(/-/g, " ");
+        const titleNamesHost = new RegExp(`\\b${hostCityWords}\\b`, "i").test(ev.summary || "");
+        const city = titleNamesHost ? defaultCity : (inferCity(ev.location, "") || defaultCity);
         const rawDesc = (ev.description || "").replace(/\\n/g, "\n").replace(/\\,/g, ",");
         const descText = truncate(stripHtml(rawDesc));
         // If the DESCRIPTION field is just a URL, use it as the event URL instead.
