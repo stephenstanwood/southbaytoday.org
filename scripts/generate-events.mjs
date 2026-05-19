@@ -151,7 +151,7 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bcommencement\b/i,
   /\bconvocation\b/i,
   /\b(faculty|fac)\s+(meeting|senate|assembly)\b/i,
-  /\bstaff\s+(meeting|development|recognition|affairs)\b/i,
+  /\bstaff\s+(meeting|development|recognition|affairs|senate)\b/i,
   // Faculty review / personnel admin software training (SCU Provost)
   /\bfac(?:ulty)?\s*180\b/i,
   /\binterfolio\b/i,
@@ -321,6 +321,12 @@ const INTERNAL_EVENT_PATTERNS = [
   /\blucidchart\b/i,
   /\biclicker\b/i,
   /\bpoll\s+everywhere\b/i,
+  // SCU's LiveWhale calendar CMS — internal staff training for posting events
+  // to the University Calendar, not a public event itself
+  /\blivewhale\b/i,
+  // SCU Wave HPC cluster training — research-computing workshops gated to
+  // enrolled students/faculty with cluster access
+  /\bwave\s+hpc\b/i,
   /\bpodcasting\s+with\s+ai\b/i,
   /\bpopular\s+tips\s+and\s+tricks\b/i,
   /\bget\s+your\s+students\s+to\b/i,
@@ -704,6 +710,7 @@ function cleanTitle(title) {
     "SF", "SJ", "LA", "CA", "SC", "US", "UK", "FC", "RB",
     "GK", "II", "TK", "JR", "SR", "VS",
     "BBQ", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
+    "HPC",
     "FAR", "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
     "NCAA", "PAC", "POV", "PSA", "SAG", "SAT", "SAP", "SBN", "SCU", "SIG", "SJZ",
     "SMT", "SUV", "TBA", "TBD", "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK",
@@ -901,6 +908,11 @@ function stripCivicPlusMetadata(text) {
 function stripBareUrls(text) {
   return text
     .replace(/https?:\/\/\S+/g, "")
+    // Protocol-relative or hostless URL fragments. The Los Altos History Museum
+    // iCal feed embeds DonorPerfect donate links as `//interland3.donorperfect.net/…`
+    // which survive the http(s) strip and leave a meaningless fragment in
+    // description. Anchor on `//host/` shape to avoid touching `//` inside prose.
+    .replace(/(?:^|\s)\/\/[a-z0-9.-]+\.[a-z]{2,}\/\S*/gi, "")
     .replace(/\bView on site\b\s*\|?\s*/gi, "")
     .replace(/\bEmail this event\b\s*/gi, "")
     .replace(/^\*This event \w+ (organized|hosted) by [^.]+\.?\s*/i, "")
@@ -2219,15 +2231,19 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
         const city = inferCity(ev.location, "") || defaultCity;
         const rawDesc = (ev.description || "").replace(/\\n/g, "\n").replace(/\\,/g, ",");
         const descText = truncate(stripHtml(rawDesc));
-        // If the DESCRIPTION field is just a URL, use it as the event URL instead
-        const descIsUrl = /^https?:\/\/\S+$/.test(descText.trim());
+        // If the DESCRIPTION field is just a URL, use it as the event URL instead.
+        // Also catch protocol-relative fragments (`//host/path`) which the
+        // Los Altos History Museum feed emits as DonorPerfect donate links.
+        const descTrimmed = descText.trim();
+        const descIsUrl = /^https?:\/\/\S+$/.test(descTrimmed);
+        const descIsProtocolRelative = /^\/\/[a-z0-9.-]+\.[a-z]{2,}\/\S*$/i.test(descTrimmed);
         // Relative iCal feed URLs (e.g. /common/modules/iCalendar/...) are not useful links
         const rawUrl = ev.url || null;
         const urlIsRelativeIcal = rawUrl && rawUrl.startsWith("/common/modules/iCalendar/");
-        const eventUrl = descIsUrl ? descText.trim() : (!urlIsRelativeIcal ? rawUrl : null);
+        const eventUrl = descIsUrl ? descTrimmed : (!urlIsRelativeIcal ? rawUrl : null);
         const cleanedVenue = cleanVenue((ev.location || "").replace(/\\,/g, ","));
         const venueLabel = cleanedVenue || inferCivicVenueFromTitle(ev.summary) || null;
-        const description = descIsUrl ? "" : stripBareUrls(descText);
+        const description = (descIsUrl || descIsProtocolRelative) ? "" : stripBareUrls(descText);
         // Same placeholder filter as fetchCivicPlusRssCity — the Los Gatos iCal
         // feed in particular emits bare-title recurring entries ("Muse Markets")
         // with no description, no venue, no address. Drop them so the blurb
