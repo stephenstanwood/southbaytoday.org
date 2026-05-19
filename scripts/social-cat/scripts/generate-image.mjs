@@ -45,9 +45,15 @@ async function main() {
   try {
     const { generateAndUpload } = await import(`${SBT_ROOT}/scripts/social/lib/recraft.mjs`);
     const pathname = `social-cat/${slug}.png`;
+    // Hard no-text suffix. Recraft renders any letterforms as garbled glyphs
+    // ("TEST PEP" for "TEST PREP"), so we forbid them at the wrapper layer in
+    // addition to the drafter rule. This is for editorial illustrations only —
+    // do NOT reuse this wrapper for the day-plan poster pipeline (which WANTS
+    // text rendered).
+    const safePrompt = prompt + " IMPORTANT: no text, no lettering, no signage, no readable letters or numbers anywhere in the image. All signs, screens, books, billboards, storefronts, and any other surfaces must be blank or show abstract shapes instead of writing.";
     // generateAndUpload signature: { prompt, pathname, colors?, model? }
     // We don't pass colors so Recraft picks; default model is recraftv4.
-    const { url, buffer } = await generateAndUpload({ prompt, pathname });
+    const { url, buffer } = await generateAndUpload({ prompt: safePrompt, pathname });
 
     mkdirSync(IMAGES_DIR, { recursive: true });
     const localPath = join(IMAGES_DIR, `${slug}.png`);

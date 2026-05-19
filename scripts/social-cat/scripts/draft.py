@@ -428,7 +428,11 @@ Recraft prompt style (when you include one):
 - Specify aesthetic: "friendly editorial illustration", "warm flat-color illustration", "soft hand-drawn newspaper-illustration style", "absurdist illustration with subtle South Bay cues"
 - Describe the SCENE specifically (composition, characters, mood, palette hints)
 - Anchor in South Bay visual texture when relevant (palms, stucco, tech-campus tilt-up buildings, foothills, suburban quiet, El Camino strip-mall geometry, golden-hour fog)
-- DO NOT include text-in-image instructions (Recraft is bad at clean typography — the joke needs to live in the social post copy, not the image)
+- NO TEXT, NO LETTERING, NO SIGNAGE anywhere in the scene. Recraft renders text as garbled glyphs ("TEST PEP" instead of "TEST PREP"). This rule is absolute:
+    * Do NOT describe storefronts with signs, business names, billboards, banners, menu boards, posters, marquees, license plates, book/magazine covers, T-shirt graphics, phone screens with readable UI, whiteboards with writing, chalkboards, or any surface where letters would naturally appear.
+    * "Generic lettering" / "no recognizable brand names" is NOT a workaround — Recraft still tries to render letters and botches them.
+    * If a scene NEEDS storefronts or a sign-bearing element, describe it WITHOUT the text: "a strip mall storefront with a blank awning", "a window with abstract geometric shapes instead of signage", "the building viewed from an angle that hides any signs", "a storefront cropped just below the sign line".
+    * Pick scenes that don't naturally contain text. Parks, foothills, fog, palm trees, interiors, hands holding objects, abstract compositions, characters mid-action — all great. Strip-mall facades, bookstores, classrooms, computer screens with UI — all dangerous.
 - DO NOT request photo-realism (illustration only — keeps it from looking like AI slop)
 - DO NOT depict identifiable real people (legal + creepy)
 """
