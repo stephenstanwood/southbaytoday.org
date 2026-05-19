@@ -1237,6 +1237,15 @@ function cleanVenue(raw) {
   v = v.replace(/[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*$/, "");
   // Strip trailing ", <truncated dir>" e.g. "Los Altos History Museum, 51 So." (truncated address)
   v = v.replace(/,\s+\d+\s+(N|S|E|W|N\.|S\.|E\.|W\.|No|So|Ea|We)\.?\s*$/i, "");
+  // Strip trailing bare number after a street/trail suffix: "Balzer Field and
+  // LG Creek Trail 41" → "Balzer Field and LG Creek Trail". Happens when the
+  // street/zip tail upstream got truncated, leaving an orphan house number.
+  // Guarded by a street-suffix word so legitimate "Building 80" / "Room 317"
+  // / "Hall 5" style venue names aren't chopped.
+  v = v.replace(
+    /\b(Trail|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln|Way|Court|Ct|Place|Pl|Highway|Hwy|Parkway|Pkwy|Circle|Cir|Terrace|Ter)\.?\s+\d{1,5}\s*$/i,
+    (_m, suffix) => suffix,
+  );
   // Strip trailing " - " or lone dash at end
   v = v.replace(/\s*-\s*$/, "");
   // Strip " - <address>" suffix where address starts with a number, e.g.
