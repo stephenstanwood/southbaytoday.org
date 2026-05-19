@@ -12,11 +12,19 @@ import {
   startMinutes, formatTimeRange, isNotEnded,
   formatAge,
 } from "../../../lib/south-bay/timeHelpers";
+import {
+  type Bucket, BUCKET_ORDER, BUCKET_LABELS,
+  isBucket, inferBucketFromTimeBlock,
+} from "../../../lib/south-bay/buckets";
 
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../../data/south-bay/digests.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
+
+import Masthead from "../Masthead";
+import ForecastCard from "../cards/ForecastCard";
+import PhotoStrip from "../homepage/PhotoStrip";
 
 // ── Types ──
 
@@ -122,69 +130,84 @@ export default function CityPage({ cityId, cityName }: Props) {
   // ── City config ──
   const city = CITY_MAP[cityId as City];
 
-  const TODAY_LABEL = new Date().toLocaleDateString("en-US", {
-    weekday: "long", month: "long", day: "numeric",
-    timeZone: "America/Los_Angeles",
-  });
-
   return (
-    <div>
-      {/* ═══ HEADER ═══ */}
-      <div style={{ marginBottom: 24 }}>
-        <a href="/" style={{ fontSize: 11, color: "var(--sb-muted)", textDecoration: "none", fontFamily: "'Space Mono', monospace", letterSpacing: "0.06em" }}>
-          ← SOUTH BAY TODAY
-        </a>
-        <h1 style={{
-          fontFamily: "var(--sb-serif)", fontWeight: 900, fontSize: 42,
-          color: "var(--sb-ink)", margin: "8px 0 4px", lineHeight: 1.05,
-          letterSpacing: "-0.02em",
-        }}>
-          {cityName}
-        </h1>
-        <div style={{ fontSize: 13, color: "var(--sb-muted)" }}>
-          {TODAY_LABEL}
-          {weather && <span> · {weather}</span>}
-          {eventsGenAt && (
-            <span style={{ marginLeft: 8, fontSize: 11, color: "var(--sb-light)" }}>
-              · Updated {formatAge(eventsGenAt)}
-            </span>
+    <>
+      {/* Site-wide masthead + tab nav — same chrome as the main homepage so
+          city pages feel like a scoped variant rather than a one-off
+          sub-page. Activetab is null because city pages aren't a tab. */}
+      <Masthead activeTab={null} />
+
+      {/* City content — mirrors the homepage container width (800px) so the
+          bucket grid + forecast strip land at homepage proportions. */}
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
+        {/* Sub-header strip: city name + "this is a city page" breadcrumb. */}
+        <div style={{ padding: "16px 0 4px", textAlign: "center" }}>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--sb-light)", marginBottom: 4 }}>
+            Your city
+          </div>
+          <h1 style={{
+            fontFamily: "var(--sb-serif)", fontWeight: 900, fontSize: 42,
+            color: "var(--sb-ink)", margin: "0 0 4px", lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+          }}>
+            {cityName}
+          </h1>
+          {weather && (
+            <div style={{ fontSize: 13, color: "var(--sb-muted)" }}>
+              {weather}
+              {eventsGenAt && (
+                <span style={{ marginLeft: 8, fontSize: 11, color: "var(--sb-light)" }}>
+                  · Updated {formatAge(eventsGenAt)}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* 5-day forecast strip — same component the homepage uses. */}
+        <div style={{ marginTop: 12, marginBottom: 0 }}>
+          <ForecastCard homeCity={cityId as City} />
+        </div>
+
+        {/* Photo scroll — same curated Flickr marquee as the homepage. */}
+        <div style={{ margin: "14px -16px 18px" }}>
+          <PhotoStrip />
+        </div>
+
+        {/* ═══ YOUR DAY ═══ */}
+        <CityDayPlan cityId={cityId as City} cityName={cityName} />
+
+        {/* ═══ EVENTS (Today / Tomorrow / This Weekend) ═══ */}
+        <CityEventsBlock events={allEvents} cityId={cityId} cityName={cityName} />
+
+        {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
+        <CityRedditTiles cityId={cityId} cityName={cityName} />
+
+        {/* ═══ OPEN RIGHT NOW — randomized "oh yeah, THAT place" panel ═══ */}
+        <CityOpenNow cityId={cityId} cityName={cityName} />
+
+        {/* ═══ AT CITY HALL — pinned to the bottom; next meeting + last digest
+            side-by-side. */}
+        <CityHallPanel
+          nextMeeting={nextMeeting}
+          meetingIsToday={meetingIsToday}
+          digest={digest}
+          digestAge={digestAge}
+        />
+
+        {/* ═══ FOOTER ═══ */}
+        <div style={{ borderTop: "2px solid var(--sb-ink)", paddingTop: 16, marginTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+          <a href="/" style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", textDecoration: "none" }}>
+            ← South Bay Today
+          </a>
+          {city?.website && (
+            <a href={city.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: "var(--sb-muted)", textDecoration: "none" }}>
+              {cityName} official site →
+            </a>
           )}
         </div>
       </div>
-
-      {/* ═══ YOUR DAY ═══ */}
-      <CityDayPlan cityId={cityId as City} cityName={cityName} />
-
-      {/* ═══ EVENTS (Today / Tomorrow / This Weekend) ═══ */}
-      <CityEventsBlock events={allEvents} cityId={cityId} cityName={cityName} />
-
-      {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
-      <CityRedditTiles cityId={cityId} cityName={cityName} />
-
-      {/* ═══ OPEN RIGHT NOW — randomized "oh yeah, THAT place" panel ═══ */}
-      <CityOpenNow cityId={cityId} cityName={cityName} />
-
-      {/* ═══ AT CITY HALL — pinned to the bottom; next meeting + last digest
-          side-by-side. */}
-      <CityHallPanel
-        nextMeeting={nextMeeting}
-        meetingIsToday={meetingIsToday}
-        digest={digest}
-        digestAge={digestAge}
-      />
-
-      {/* ═══ FOOTER ═══ */}
-      <div style={{ borderTop: "2px solid var(--sb-ink)", paddingTop: 16, marginTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-        <a href="/" style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", textDecoration: "none" }}>
-          ← South Bay Today
-        </a>
-        {city?.website && (
-          <a href={city.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: "var(--sb-muted)", textDecoration: "none" }}>
-            {cityName} official site →
-          </a>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -231,10 +254,13 @@ function EventRow({ event }: { event: UpcomingEvent }) {
 // City Day Plan — compact plan-day integration for city pages
 // ---------------------------------------------------------------------------
 
-const PLAN_ACCENTS = ["#FF6B35", "#E63946", "#06D6A0", "#7B2FBE", "#1A5AFF", "#FF3CAC"];
-const PLAN_EMOJI: Record<string, string> = {
+// Accent colors + category emoji — mirror the homepage SouthBayTodayView so a
+// resident's day plan looks the same across surfaces.
+const ACCENT_COLORS = ["#FF6B35", "#E63946", "#06D6A0", "#7B2FBE", "#1A5AFF", "#FF3CAC"];
+const CATEGORY_EMOJI: Record<string, string> = {
   food: "🍽️", outdoor: "🌿", museum: "🏛️", entertainment: "🎭",
-  wellness: "💆", shopping: "🛍️", arts: "🎨", events: "📅", sports: "⚾",
+  wellness: "💆", shopping: "🛍️", arts: "🎨", events: "📅",
+  sports: "⚾", neighborhood: "🏘️",
 };
 
 type DayCard = {
@@ -244,6 +270,10 @@ type DayCard = {
   image?: string | null;
   url?: string | null; mapsUrl?: string | null;
   cost?: string | null; costNote?: string | null;
+  bucket?: string;
+  eventTime?: string | null;
+  city?: string | null;
+  venue?: string | null;
   source: "event" | "place";
 };
 
@@ -311,48 +341,129 @@ function PlanLoadingVerb() {
   );
 }
 
-// Card thumbnail with a fallback chain: card.image → photoRef proxy → Unsplash
-// → emoji. We use an <img> + onError so we can detect upstream failures (e.g.
-// expired Google Places photoRefs return 404 and a CSS background would just
-// silently show the accent color). Unsplash is fetched async because it's a
-// JSON endpoint, not an image proxy.
-function PlanCardThumb({ card, accent, emoji }: { card: DayCard; accent: string; emoji: string }) {
-  const [unsplashUrl, setUnsplashUrl] = useState<string | null>(null);
+// Friendly city slug → display label. Used by the bucket card inner content
+// so an "EVENT" pill renders the city as "Los Gatos" not "los-gatos".
+function cityLabel(slug: string | null | undefined): string {
+  if (!slug) return "";
+  const city = CITY_MAP[slug as City];
+  if (city) return city.name;
+  return slug.split("-").map((s) => s[0]?.toUpperCase() + s.slice(1)).join(" ");
+}
+
+// ---------------------------------------------------------------------------
+// Bucket-grid plan card UI — mirrors the homepage SouthBayTodayView. CardInner
+// is the thumbnail + content block; BucketSlot is the 2-col grid cell that
+// wraps it with a label header. Visual format intentionally identical so a
+// resident moving from the homepage to a city page sees the same plan shape.
+// ---------------------------------------------------------------------------
+
+interface UnsplashPhoto {
+  url: string;
+  photographer: string;
+  photographerUrl: string;
+  unsplashUrl: string;
+}
+
+function CardInner({ card }: { card: DayCard }) {
+  const emoji = CATEGORY_EMOJI[card.category] || "📍";
+  const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
   const [tier, setTier] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
     fetch(`/api/unsplash-photo?query=${encodeURIComponent(card.category)}`)
       .then((r) => r.ok ? r.json() : null)
-      .then((d) => { if (!cancelled && d?.url) setUnsplashUrl(d.url); })
+      .then((d: UnsplashPhoto | null) => { if (!cancelled && d?.url) setUnsplash(d); })
       .catch(() => {});
     return () => { cancelled = true; };
   }, [card.category]);
 
-  const sources: string[] = [];
-  if (card.image) sources.push(card.image);
-  if (card.photoRef) sources.push(`/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=120&h=120`);
-  if (unsplashUrl) sources.push(unsplashUrl);
+  // Sources tried in order. <img onError> advances to the next tier so we can
+  // detect 404s (expired Places photoRefs are common) — a CSS background-image
+  // would silently render the fallback color. Final tier is the emoji.
+  const sources: Array<{ url: string; isUnsplash: boolean }> = [];
+  if (card.image) sources.push({ url: card.image, isUnsplash: false });
+  if (card.photoRef) sources.push({ url: `/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200`, isUnsplash: false });
+  if (unsplash) sources.push({ url: unsplash.url, isUnsplash: true });
+  const current = tier < sources.length ? sources[tier] : null;
+  const showEmoji = !current;
 
-  const src = tier < sources.length ? sources[tier] : null;
-  const showEmoji = !src;
+  const rawTimeHint = card.source === "event" ? (card.eventTime || card.timeBlock || "") : "";
+  const timeHint = /\d/.test(rawTimeHint) ? rawTimeHint : "";
 
   return (
-    <div style={{
-      width: 48, height: 48, borderRadius: 8, overflow: "hidden", flexShrink: 0,
-      background: `${accent}15`,
-      display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
-    }}>
-      {src && (
-        <img
-          key={src}
-          src={src}
-          alt=""
-          onError={() => setTier((t) => t + 1)}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+    <>
+      <div style={{ flexShrink: 0, margin: "10px 0 10px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+        <div style={{
+          width: 80, height: 80, borderRadius: 8, overflow: "hidden",
+          background: "#f5f5f5",
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
+        }}>
+          {current && (
+            <img
+              key={current.url}
+              src={current.url}
+              alt={card.name}
+              onError={() => setTier((t) => t + 1)}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          )}
+          {showEmoji && <span aria-hidden>{emoji}</span>}
+        </div>
+        {current?.isUnsplash && unsplash && (
+          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#bbb", textAlign: "center" }}>
+            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>{unsplash.photographer}</a>
+            {" · "}
+            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>Unsplash</a>
+          </div>
+        )}
+      </div>
+      <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+          {timeHint && (
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
+          )}
+          {!(card.source === "event" && card.category === "events") && (
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
+          )}
+          {card.city && (
+            <>
+              <span style={{ fontSize: 9, color: "#ddd", fontWeight: 700 }}>·</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
+            </>
+          )}
+          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#E63946", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
+        </div>
+        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{card.name}</h3>
+        {card.source === "event" && card.venue && (
+          <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#999" }}>{card.venue}</span>
+          </div>
+        )}
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{card.blurb}</p>
+      </div>
+    </>
+  );
+}
+
+function BucketSlot({ bucket, card, accent, animationDelay }: { bucket: Bucket; card: DayCard; accent: string; animationDelay: number }) {
+  const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
+  return (
+    <div className="sbt-bucket" style={{ animation: `cityFadeSlideIn 0.3s ease-out ${animationDelay}s both` }}>
+      <div className="sbt-bucket-header">
+        <span className="sbt-bucket-accent" style={{ background: accent }} />
+        <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
+      </div>
+      {cardUrl ? (
+        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
+          <CardInner card={card} />
+        </a>
+      ) : (
+        <div className="sbt-bucket-link">
+          <CardInner card={card} />
+        </div>
       )}
-      {showEmoji && <span aria-hidden>{emoji}</span>}
     </div>
   );
 }
@@ -373,13 +484,40 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
       .finally(() => setLoading(false));
   }, [cityId]);
 
+  // Group cards by bucket. Same logic as the homepage: prefer card.bucket,
+  // fall back to inferring from clock-range timeBlock for legacy plans.
+  const cardsByBucket = new Map<Bucket, DayCard>();
+  const orphanCards: DayCard[] = [];
+  for (const c of cards) {
+    const bucket: Bucket | null = isBucket(c.bucket)
+      ? (c.bucket as Bucket)
+      : inferBucketFromTimeBlock(c.timeBlock, c.category);
+    if (bucket) {
+      if (!cardsByBucket.has(bucket)) cardsByBucket.set(bucket, c);
+      else orphanCards.push(c);
+    } else {
+      orphanCards.push(c);
+    }
+  }
+
   if (loading) {
     return (
-      <div style={{ marginBottom: 24 }}>
-        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--sb-muted)", marginBottom: 10 }}>
-          Your day in {cityName}
+      <div style={{ marginBottom: 28 }}>
+        <h1 className="city-plan-headline">What should we do in {cityName} today?</h1>
+        <div style={{ padding: "8px 0 20px", margin: "0 -16px" }}>
+          <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cityCardAppear 0.4s ease-out 0.1s forwards" }}>
+            <div style={{ width: 20, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", backgroundSize: "100% 200%", animation: "cityPlanRainbow 3s ease infinite", flexShrink: 0 }} />
+            <div style={{ flex: 1, padding: "28px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <PlanLoadingVerb />
+            </div>
+          </div>
         </div>
-        <PlanLoadingVerb />
+        <style>{`
+          @keyframes cityCardAppear {
+            from { opacity: 0; transform: translateY(16px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+          }
+        `}</style>
       </div>
     );
   }
@@ -387,29 +525,97 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
   if (!cards.length) return null;
 
   return (
-    <div style={{ marginBottom: 24 }}>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "var(--sb-muted)", marginBottom: 10 }}>
-        Your day in {cityName}
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        {cards.map((card, i) => {
-          const accent = PLAN_ACCENTS[i % PLAN_ACCENTS.length];
-          const emoji = PLAN_EMOJI[card.category] || "📍";
+    <div style={{ marginBottom: 28 }}>
+      <h1 className="city-plan-headline">What should we do in {cityName} today?</h1>
+      <div className="sbt-buckets">
+        {BUCKET_ORDER.map((bucket, i) => {
+          const card = cardsByBucket.get(bucket);
+          if (!card) return null;
+          const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
           return (
-            <div key={card.id} style={{ display: "flex", gap: 10, padding: "10px 12px", borderRadius: 8, background: `${accent}08`, border: `1px solid ${accent}18` }}>
-              <PlanCardThumb card={card} accent={accent} emoji={emoji} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 1 }}>
-                  <span style={{ fontSize: 10, fontWeight: 800, color: "var(--sb-ink)" }}>{card.timeBlock}</span>
-                  <span style={{ fontSize: 8, fontWeight: 700, color: accent, textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 800, color: "var(--sb-ink)", lineHeight: 1.2, marginBottom: 2 }}>{card.name}</div>
-                <div style={{ fontSize: 12, color: "var(--sb-muted)", lineHeight: 1.35 }}>{card.blurb}</div>
-              </div>
-            </div>
+            <BucketSlot
+              key={bucket}
+              bucket={bucket}
+              card={card}
+              accent={accent}
+              animationDelay={i * 0.05}
+            />
           );
         })}
       </div>
+
+      <style>{`
+        .city-plan-headline {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 32px;
+          font-weight: 800;
+          color: #1a1a2e;
+          letter-spacing: -0.5px;
+          line-height: 1.15;
+          margin: 0 0 14px;
+        }
+        @media (max-width: 480px) {
+          .city-plan-headline { font-size: 26px; }
+        }
+        .sbt-buckets {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin: 0 -16px;
+        }
+        .sbt-buckets > .sbt-bucket:nth-child(odd):last-child {
+          grid-column: 1 / -1;
+        }
+        @media (max-width: 640px) {
+          .sbt-buckets {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin: 0 -8px;
+          }
+        }
+        .sbt-bucket {
+          background: #fff;
+          border-radius: 12px;
+          border: 1px solid #e8e8e8;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          min-height: 140px;
+        }
+        .sbt-bucket-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 14px 6px;
+        }
+        .sbt-bucket-accent {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+        .sbt-bucket-label {
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          font-weight: 900;
+          color: #111;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        .sbt-bucket-link {
+          display: flex;
+          flex: 1;
+          min-width: 0;
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
+        }
+        @keyframes cityFadeSlideIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
