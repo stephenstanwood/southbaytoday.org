@@ -699,6 +699,11 @@ function cleanTitle(title) {
     "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
     // Local youth-program brand names that arrive ALL-CAPS from BiblioCommons
     "XFYD",
+    // Library/program acronyms that arrive ALL-CAPS in source titles but the
+    // 2+ regex would downcase ("TLAB Relaunch" → "Tlab Relaunch", "(HICAP)"
+    // → "(Hicap)"). TLAB = Teen Library Advisory Board (Palo Alto Library);
+    // HICAP = Health Insurance Counseling & Advocacy Program (CA state).
+    "TLAB", "HICAP",
     // South Bay venues / institutions
     "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
@@ -718,6 +723,13 @@ function cleanTitle(title) {
     "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
     "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
     "AARP", "NAACP", "NAMI", "SCORE",
+    // Federally-recognized institutional designations + Jesuit institution
+    // abbreviations that surface in SCU calendar titles. Without these the 2+
+    // rule downcases "(HSI) Initiative" → "(Hsi)" and "JST-SCU Lay Sending"
+    // → "Jst-SCU". HSI = Hispanic-Serving Institution (ED.gov designation);
+    // JST = Jesuit School of Theology (the merged SCU theology program is
+    // styled JST-SCU on SCU's calendar).
+    "HSI", "JST",
     // Sports leagues / clubs the existing list missed. Sources name-drop these
     // in mixed-case titles where the 2+ rule downcases them — e.g. "San Jose
     // Earthquakes vs LAFC - Prime Time" from the City Newsletter became "vs
@@ -1113,6 +1125,10 @@ function polishDescription(text) {
     // "Africana, Asian American, Chicano, Native American (AAACNA) Studies
     // Center" → "(Aaacna)".
     "AANHPI", "AAACNA",
+    // Library/program acronyms that may appear in body copy alongside their
+    // title parentheticals. Mirrored from cleanTitle's KEEP_UPPER so body
+    // text doesn't drift out of sync with the title.
+    "TLAB", "HICAP",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
@@ -1135,6 +1151,10 @@ function polishDescription(text) {
     "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW", "BTS", "EDM",
     "RNB", "NPR", "PBS", "PGA", "CSU", "HIV", "MFA", "BFA", "MBA", "RVT",
     "CNM", "UFC", "MMA", "WWE", "AEW",
+    // Mirrored from cleanTitle KEEP_UPPER — 3-letter institutional designations
+    // that can appear inside body copy and would be downcased by the wedge rule
+    // if surrounded by mixed-case neighbors ("Catholic JST programs offer…").
+    "HSI", "JST",
   ]);
   t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => KEEP_UPPER_SHORT.has(w) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.
