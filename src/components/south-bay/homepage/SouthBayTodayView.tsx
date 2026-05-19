@@ -560,6 +560,21 @@ export default function SouthBayTodayView(_props: Props) {
       {/* Reddit pulse — what people are saying on regional subs */}
       <RedditPulseTeaser />
 
+      {/* Browse-by-city navigation. Not a teaser — a navigation row that links
+          to per-city pages (/city/[slug]) for residents who want their own
+          town's day plan, events, and chatter. Inline JSX, no new local
+          import, so the home-locked guardrail stays satisfied. */}
+      <nav aria-label="Browse by city" className="sbt-city-directory">
+        <span className="sbt-city-directory-label">Or browse by city</span>
+        <div className="sbt-city-directory-pills">
+          {CITIES.filter((c) => c.id !== "santa-cruz").map((c) => (
+            <a key={c.id} href={`/city/${c.id}`} className="sbt-city-pill">
+              {c.name}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <style>{`
         /* ── Headline row ── */
         .sbt-headline-row {
@@ -834,6 +849,49 @@ export default function SouthBayTodayView(_props: Props) {
           .sbt-forecast-low {
             font-size: 9px !important;
           }
+        }
+
+        /* ── City directory (browse-by-city nav row) ── */
+        .sbt-city-directory {
+          margin-top: 32px;
+          padding-top: 24px;
+          border-top: 1px solid #eee;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          font-family: 'Inter', sans-serif;
+        }
+        .sbt-city-directory-label {
+          font-family: 'Space Mono', monospace;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #666;
+        }
+        .sbt-city-directory-pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .sbt-city-pill {
+          display: inline-block;
+          padding: 5px 12px;
+          border-radius: 999px;
+          border: 1.5px solid #d4d4d4;
+          background: #fff;
+          color: #1a1a2e;
+          font-size: 12px;
+          font-weight: 600;
+          text-decoration: none;
+          line-height: 1.2;
+          transition: background 0.15s ease-out, border-color 0.15s ease-out, transform 0.15s ease-out;
+        }
+        .sbt-city-pill:hover {
+          background: #1e3a8a;
+          color: #fff;
+          border-color: #1e3a8a;
+          transform: translateY(-1px);
         }
       `}</style>
     </div>
