@@ -4,8 +4,9 @@
     {
       "name": "sbs-dev",
       "runtimeExecutable": "/bin/zsh",
-      "runtimeArgs": ["-l", "-c", "npm run dev"],
-      "port": 4321
+      "runtimeArgs": ["-l", "-c", "npm run dev -- --port $PORT"],
+      "port": 4321,
+      "autoPort": true
     }
   ]
 }

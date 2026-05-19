@@ -569,7 +569,10 @@ export default function SouthBayTodayView(_props: Props) {
         <div className="sbt-city-directory-pills">
           {CITIES.filter((c) => c.id !== "santa-cruz").map((c) => (
             <a key={c.id} href={`/city/${c.id}`} className="sbt-city-pill">
-              {c.name}
+              <span className="sbt-city-pill-monogram" aria-hidden="true">
+                {cityMonogram(c.name)}
+              </span>
+              <span className="sbt-city-pill-name">{c.name}</span>
             </a>
           ))}
         </div>
@@ -851,14 +854,18 @@ export default function SouthBayTodayView(_props: Props) {
           }
         }
 
-        /* ── City directory (browse-by-city nav row) ── */
+        /* ── City directory (browse-by-city nav row) ──
+           Stamp / passport-chip aesthetic: monogram badge on the left,
+           Playfair city name on the right, bold 2px black border with
+           offset shadow. Hover lifts the chip and fills it with the
+           brand blue→purple gradient (same gradient as .sbt-shuffle). */
         .sbt-city-directory {
-          margin-top: 32px;
-          padding-top: 24px;
+          margin-top: 36px;
+          padding-top: 28px;
           border-top: 1px solid #eee;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 14px;
           font-family: 'Inter', sans-serif;
         }
         .sbt-city-directory-label {
@@ -872,26 +879,62 @@ export default function SouthBayTodayView(_props: Props) {
         .sbt-city-directory-pills {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
+          gap: 10px;
         }
         .sbt-city-pill {
-          display: inline-block;
-          padding: 5px 12px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px 6px 6px;
           border-radius: 999px;
-          border: 1.5px solid #d4d4d4;
+          border: 2px solid #000;
           background: #fff;
           color: #1a1a2e;
-          font-size: 12px;
-          font-weight: 600;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: -0.2px;
           text-decoration: none;
-          line-height: 1.2;
-          transition: background 0.15s ease-out, border-color 0.15s ease-out, transform 0.15s ease-out;
+          line-height: 1;
+          box-shadow: 2px 2px 0 #000;
+          transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out, color 0.15s ease-out;
+        }
+        .sbt-city-pill-monogram {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 24px;
+          height: 24px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
+          color: #fff;
+          font-family: 'Space Mono', monospace;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          flex-shrink: 0;
         }
         .sbt-city-pill:hover {
-          background: #1e3a8a;
+          transform: translate(-2px, -2px);
+          box-shadow: 4px 4px 0 #000;
+          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
           color: #fff;
-          border-color: #1e3a8a;
-          transform: translateY(-1px);
+        }
+        .sbt-city-pill:hover .sbt-city-pill-monogram {
+          background: #fff;
+          color: #1E3A8A;
+        }
+        @media (max-width: 480px) {
+          .sbt-city-pill {
+            font-size: 14px;
+            padding: 5px 12px 5px 5px;
+            box-shadow: 1.5px 1.5px 0 #000;
+          }
+          .sbt-city-pill-monogram {
+            width: 20px;
+            height: 20px;
+            font-size: 9px;
+          }
         }
       `}</style>
     </div>
@@ -901,6 +944,15 @@ export default function SouthBayTodayView(_props: Props) {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// 2-letter monogram for the city-pill badges. Multi-word cities use the
+// initials of the first two words; single-word cities use the first two
+// letters of the name (uppercased).
+function cityMonogram(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
 
 // ---------------------------------------------------------------------------
 // CardInner — shared inner layout for list cards
