@@ -174,40 +174,42 @@ def build_prompt(
     platforms_str = ", ".join(PLATFORMS)
 
     # Platform-specific rules — must match SBT's canonical copy-gen.mjs spec.
-    # Differences from the event-driven autopilot: for trend riffs there's no
-    # SBT URL to embed, so Bluesky/Mastodon posts go URL-less too.
+    # Default for trend riffs is no URL (mirrors the event-autopilot spec).
+    # EXCEPTION: see RULE 3 — if the draft references a specific piece, include
+    # the source URL on all platforms, taking the reach hit so the post isn't
+    # an unsourced tease.
     PLATFORM_RULES = {
         "twitter": (
-            "max 240 chars · NO URL · NO hashtags · punchy 1-2 sentences · "
-            "sensory hook or number up front · must stand alone as a "
-            "complete thought without a link"
+            "max 240 chars (260 if including a source URL per RULE 3) · "
+            "no hashtags · punchy 1-2 sentences · sensory hook or number "
+            "up front · stand-alone complete thought"
         ),
         "threads": (
-            "max 480 chars · NO URL · 2-3 hashtags at the end "
+            "max 480 chars · 2-3 hashtags at the end "
             "(#SouthBay #SanJose etc) · conversational friend-texting voice · "
             "allow yourself a paragraph"
         ),
         "bluesky": (
-            "max 270 chars · NO URL (this is a trend riff, not a link-out) · "
-            "NO hashtags (per SBT veto list — hashtags hurt reach on Bluesky) · "
+            "max 270 chars (300 if including a source URL per RULE 3) · "
+            "no hashtags (per SBT veto list — hashtags hurt reach on Bluesky) · "
             "short and direct · warm friend-tone"
         ),
         "facebook": (
-            "max 500 chars · NO URL · NO hashtags · NO @-tags (FB doesn't "
-            "render plain @-tags as clickable) · community-board voice · "
+            "max 500 chars · no hashtags · no @-tags (FB doesn't render "
+            "plain @-tags as clickable) · community-board voice · "
             "\"If you're around [city]...\" / \"Heads up [neighborhood] "
             "folks\" · plain venue names only"
         ),
         "instagram": (
-            "max 1800 chars · NO URL · hook in the FIRST LINE (it's what "
-            "shows above \"more\") · after a blank line at the end, 8-12 "
-            "hashtags (mix of city + topic + discovery: #ThingsToDoInSanJose "
+            "max 1800 chars · hook in the FIRST LINE (it's what shows above "
+            "\"more\") · after a blank line at the end, 8-12 hashtags "
+            "(mix of city + topic + discovery: #ThingsToDoInSanJose "
             "#SouthBayEvents #BayAreaEvents etc)"
         ),
         "mastodon": (
-            "max 480 chars · NO URL · 1-2 hashtags · "
-            "more descriptive than Bluesky (Mastodon culture is less "
-            "marketing-y) · write DISTINCT prose from your Bluesky variant"
+            "max 480 chars · 1-2 hashtags · more descriptive than Bluesky "
+            "(Mastodon culture is less marketing-y) · write DISTINCT prose "
+            "from your Bluesky variant"
         ),
     }
     rules_lines = []
@@ -270,6 +272,8 @@ What we DO post:
 - Reframe over skip when possible: if a story is technically negative but the local takeaway is a community win, lean into the win.
 
 If you can't find {TOP_TRENDS} items that pass both rules, return fewer. Empty > forced.
+
+**RULE 3 — Include the source URL when the post references the piece.** Default for trend riffs is no link, but it gets OVERRIDDEN when the draft is commenting on a specific external piece (article / op-ed / study / blog post / thread). Trigger phrases: "there's a piece circulating about...", "a new study finds...", "this op-ed argues...", "I read that...", "X's post about Y..." — if your draft teases or comments on a specific external source, you MUST include that source's URL at the end of the post on ALL platforms (yes, even X/Threads — better to take a small reach hit than to leave readers stranded). When the draft is direct commentary on the underlying event/news WITHOUT pointing at a specific piece (e.g. "Google I/O is at Shoreline this week"), keep it URL-less per the default. The source URL is the last field of each Pool A line (after the `→`).
 
 ================================================================
 TWO POOLS OF SOURCE MATERIAL
