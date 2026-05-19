@@ -419,7 +419,7 @@ function render() {
   const deck = document.getElementById("deck");
   deck.innerHTML = "";
   if (!queue.length) {
-    deck.innerHTML = `<div class="empty"><h2>🐈 caught up</h2><p>nothing to swipe — new batch every 3h</p></div>`;
+    deck.innerHTML = `<div class="empty"><h2>🐈 caught up</h2><p>nothing to swipe — new batch every 2h</p></div>`;
     document.getElementById("rejectBtn").disabled = true;
     document.getElementById("approveBtn").disabled = true;
     current = null;
