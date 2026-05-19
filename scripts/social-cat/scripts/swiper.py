@@ -352,6 +352,29 @@ INDEX_HTML = r"""<!DOCTYPE html>
     padding: 1px 5px; font-size: 11px; margin: 0 2px;
     font-family: ui-monospace, "SF Mono", monospace;
   }
+  .image-and-variants .variants { margin-top: 0; }
+  @media (min-width: 900px) {
+    header, .deck, .actions { max-width: 1080px; }
+    .image-and-variants.has-image {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 22px;
+      align-items: start;
+      margin: 4px 0 8px;
+    }
+    .image-and-variants.has-image .image {
+      margin: 0;
+      position: sticky;
+      top: 16px;
+      align-self: start;
+    }
+    .image-and-variants.has-image .image img {
+      max-height: calc(100vh - 120px);
+    }
+    .image-and-variants.has-image .variants {
+      margin: 0;
+    }
+  }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #181715; --fg: #f0ece5; --muted: #888; --line: #2a2826; }
     .card { background: #211f1c; box-shadow: none; }
@@ -464,14 +487,17 @@ function render() {
     ? `${variantsCount} reply` : `${variantsCount} platform${variantsCount === 1 ? "" : "s"}`;
   const topic = esc(current.topic || (current.kind === "reply" ? "Bluesky reply" : "trend"));
 
+  const imageAndVariantsCls = current.image_url ? "image-and-variants has-image" : "image-and-variants";
   card.innerHTML = `
     <div class="kind">${current.kind === "reply" ? "Reply" : "Trend"} · ${kindLabel}</div>
     <div class="topic">${topic}</div>
     ${why}
     ${replyHtml}
-    ${imageHtml}
-    <div class="variants">
-      ${(current.drafts || []).map(variantHtml).join("")}
+    <div class="${imageAndVariantsCls}">
+      ${imageHtml}
+      <div class="variants">
+        ${(current.drafts || []).map(variantHtml).join("")}
+      </div>
     </div>
     ${srcLinks ? `<div class="meta">${srcLinks}</div>` : ""}
   `;
