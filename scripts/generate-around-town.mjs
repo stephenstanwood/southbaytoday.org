@@ -15,6 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -76,7 +77,12 @@ async function claudeJson(prompt, maxTokens = 1024) {
 }
 
 function makeId(cityId, date, headline) {
-  return `${cityId}-${date}-${Buffer.from(headline).toString("base64").slice(0, 8)}`;
+  // sha1 of the headline keeps the suffix stable across runs while avoiding
+  // the collisions the old base64-slice produced for headlines that share a
+  // long common prefix ("Council to update ..." → identical 8-char prefix,
+  // same ID for two distinct items on the same city+date).
+  const hash = createHash("sha1").update(headline).digest("hex").slice(0, 8);
+  return `${cityId}-${date}-${hash}`;
 }
 
 /** For Legistar cities, construct a calendar URL filtered to a specific meeting date. */
