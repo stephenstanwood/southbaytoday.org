@@ -173,7 +173,7 @@ function CompanyCard({ company }: { company: TechCompany }) {
         <div className="tech-card-id">
           <div className="tech-card-name-row">
             <span className="tech-card-name">{company.name}</span>
-            {company.ticker && company.ticker !== "MSFT" && company.ticker !== "HPE" && (
+            {company.ticker && (
               <span className="tech-card-ticker">{company.ticker}</span>
             )}
           </div>
