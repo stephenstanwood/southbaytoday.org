@@ -185,6 +185,10 @@ def build_groups(drafts: list[dict]) -> list[dict]:
                 "drafts": [],
                 # newest record's drafted_at — used for sort below
                 "drafted_at": d.get("drafted_at") or "",
+                # Image is shared across all platform variants in a trend group.
+                # First record with an image_path wins; absent for replies.
+                "image_url": d.get("image_url") or "",
+                "image_prompt": d.get("image_prompt") or "",
             }
             order.append(key)
         bucket = by_key[key]
@@ -293,6 +297,12 @@ INDEX_HTML = r"""<!DOCTYPE html>
   }
   .reply-target .handle { color: var(--accent); font-weight: 600; margin-bottom: 4px; }
   .reply-target .snippet { color: #555; font-style: italic; }
+  .card .image { margin: 8px 0 14px; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line); background: #f0ece2;
+  }
+  .card .image img { display: block; width: 100%; height: auto;
+    max-height: 360px; object-fit: cover;
+  }
   .variants { display: flex; flex-direction: column; gap: 10px;
     margin: 4px 0 8px;
   }
@@ -443,6 +453,12 @@ function render() {
   const why = current.why_trending
     ? `<div class="why">${esc(current.why_trending)}</div>` : "";
 
+  // Optional Recraft-generated image for trend posts. Lives on Vercel Blob;
+  // empty url string = no image (replies and one-liner trends).
+  const imageHtml = current.image_url
+    ? `<div class="image"><img src="${esc(current.image_url)}" alt="${esc(current.image_prompt || "")}" loading="lazy"></div>`
+    : "";
+
   const variantsCount = (current.drafts || []).length;
   const kindLabel = current.kind === "reply"
     ? `${variantsCount} reply` : `${variantsCount} platform${variantsCount === 1 ? "" : "s"}`;
@@ -453,6 +469,7 @@ function render() {
     <div class="topic">${topic}</div>
     ${why}
     ${replyHtml}
+    ${imageHtml}
     <div class="variants">
       ${(current.drafts || []).map(variantHtml).join("")}
     </div>

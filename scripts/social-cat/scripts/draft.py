@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 TRENDS_PATH = DATA_DIR / "trends_raw.jsonl"
 DRAFTS_PATH = DATA_DIR / "drafts.jsonl"
+IMAGE_GEN_SCRIPT = Path(__file__).resolve().parent / "generate-image.mjs"
+NODE_BIN = os.environ.get("NODE_BIN", "/opt/homebrew/bin/node")
 
 # Tunable defaults — override via env.
 # Instagram dropped: it requires an image to post and social-cat has no
@@ -379,6 +381,7 @@ STRICT JSON only, no prose around it, no markdown fences, no commentary.
       "category": "tech",
       "why_trending": "1 sentence: what's happening AND where the local hook is",
       "source_indexes": [3, 14, 22],
+      "image_prompt": "OPTIONAL — see VISUAL section below. Omit the key entirely if the post is a deadpan one-liner that doesn't benefit from imagery.",
       "platforms": {{
         "twitter": "...",
         "threads": "...",
@@ -399,6 +402,30 @@ STRICT JSON only, no prose around it, no markdown fences, no commentary.
 
 Only include keys in `platforms` for platforms in this run's enabled list: {platforms_str}. Skip the others.
 If Pool A has no items that pass both rules, return `"trends": []`. If Pool B has no good reply candidates, return `"bluesky_replies": []`. Empty is fine — better than forced.
+
+================================================================
+VISUAL (`image_prompt`) — pair an original illustration with the post when it adds something
+================================================================
+SBT has a Recraft V4 image-gen pipeline. For trend drafts where a visual JOKE / observation / illustration would make the post stronger, include an `image_prompt` field. We generate one image per trend (shared across all platform variants) and attach it to Bluesky / Mastodon / FB / IG / Threads.
+
+When to include `image_prompt`:
+- The post is observational about a SCENE you can illustrate (palm trees + tech-campus parking lot, a strip-mall Michelin star storefront, fog rolling in over Highway 17, a Caltrain station at golden hour)
+- There's a sight gag that adds to the joke
+- The trend itself is visual (a viral image, a meme moment, an absurd local scene)
+
+When to OMIT `image_prompt` entirely:
+- The post is a pure one-liner that lives on the wording (a Caltrain-on-time deadpan one-liner needs no image)
+- The joke is about typography / wordplay / a phrase — illustrating it would dilute
+- The topic is sensitive (memorial, tragedy, hard news) — visuals would feel off-brand
+
+Recraft prompt style (when you include one):
+- ~50-150 words
+- Specify aesthetic: "friendly editorial illustration", "warm flat-color illustration", "soft hand-drawn newspaper-illustration style", "absurdist illustration with subtle South Bay cues"
+- Describe the SCENE specifically (composition, characters, mood, palette hints)
+- Anchor in South Bay visual texture when relevant (palms, stucco, tech-campus tilt-up buildings, foothills, suburban quiet, El Camino strip-mall geometry, golden-hour fog)
+- DO NOT include text-in-image instructions (Recraft is bad at clean typography — the joke needs to live in the social post copy, not the image)
+- DO NOT request photo-realism (illustration only — keeps it from looking like AI slop)
+- DO NOT depict identifiable real people (legal + creepy)
 """
 
 
@@ -412,6 +439,46 @@ def extract_json(text: str) -> dict:
     if start < 0 or end < 0:
         raise ValueError(f"No JSON object found. First 300 chars: {text[:300]}")
     return json.loads(text[start:end + 1])
+
+
+def slugify(s: str, max_len: int = 50) -> str:
+    """Filename-safe slug for image paths. Lowercase, alphanumeric + dashes."""
+    out = re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-")
+    return out[:max_len] or "untitled"
+
+
+def generate_image(prompt: str, slug: str) -> dict | None:
+    """Shell out to generate-image.mjs. Returns {'path': ..., 'url': ...} on
+    success, None on failure (logged but non-fatal — drafts post without
+    image)."""
+    if not IMAGE_GEN_SCRIPT.exists():
+        print(f"[draft] WARN: {IMAGE_GEN_SCRIPT} missing — skipping image", file=sys.stderr)
+        return None
+    payload = json.dumps({"prompt": prompt, "slug": slug})
+    try:
+        proc = subprocess.run(
+            [NODE_BIN, str(IMAGE_GEN_SCRIPT)],
+            input=payload,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+    except subprocess.TimeoutExpired:
+        print(f"[draft] image-gen timeout for slug={slug}", file=sys.stderr)
+        return None
+    if proc.returncode != 0:
+        print(f"[draft] image-gen failed for slug={slug}: {proc.stderr[:300]}", file=sys.stderr)
+        return None
+    try:
+        last = proc.stdout.strip().splitlines()[-1]
+        result = json.loads(last)
+    except (ValueError, IndexError) as e:
+        print(f"[draft] image-gen bad json for slug={slug}: {e} stdout={proc.stdout[:300]!r}", file=sys.stderr)
+        return None
+    if not result.get("ok"):
+        print(f"[draft] image-gen returned not-ok for slug={slug}: {result.get('error')}", file=sys.stderr)
+        return None
+    return {"path": result.get("path"), "url": result.get("url")}
 
 
 def main():
@@ -436,7 +503,11 @@ def main():
     print(f"[draft] got {len(parsed.get('trends', []))} trends back")
 
     now = datetime.now(timezone.utc).isoformat()
+    # Compact timestamp for slugs — minute-level avoids collisions across
+    # parallel trends in the same cycle.
+    now_slug_ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M")
     drafts_written = 0
+    images_generated = 0
     with DRAFTS_PATH.open("a", encoding="utf-8") as f:
         # Standalone drafts from cultural-moment pool (Pool A)
         for trend in parsed.get("trends", []):
@@ -455,6 +526,19 @@ def main():
                     for d in trend["drafts"]
                     if d.get("type", "standalone") == "standalone"
                 }
+
+            # Optional image — generated once per trend, shared across all
+            # platform variants. Non-fatal on failure (post still ships text-only).
+            image_prompt = (trend.get("image_prompt") or "").strip()
+            image_info = None
+            if image_prompt:
+                slug = f"trend-{now_slug_ts}-{slugify(topic)}"
+                print(f"[draft] generating image for slug={slug} (prompt={len(image_prompt)} chars)")
+                image_info = generate_image(image_prompt, slug)
+                if image_info:
+                    images_generated += 1
+                    print(f"[draft]   ✓ {image_info['path']}")
+
             for platform, text in platforms_dict.items():
                 if not text:
                     continue
@@ -474,6 +558,10 @@ def main():
                     "reply_to": None,
                     "status": "queued",
                 }
+                if image_info:
+                    record["image_prompt"] = image_prompt
+                    record["image_path"] = image_info["path"]
+                    record["image_url"] = image_info["url"]
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
                 drafts_written += 1
 
@@ -509,7 +597,7 @@ def main():
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
             drafts_written += 1
 
-    print(f"[draft] wrote {drafts_written} drafts to {DRAFTS_PATH}")
+    print(f"[draft] wrote {drafts_written} drafts to {DRAFTS_PATH} ({images_generated} with images)")
 
 
 if __name__ == "__main__":
