@@ -24,6 +24,7 @@ const QUEUE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "soci
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const PUBLISH_LOG = "/tmp/sbt-publish.log";
 const PUBLISH_LOG_ALT = "/tmp/sbs-publish.log";
+const SOCIAL_CAT_LOG = join(__dirname, "..", "social-cat", "data", "post_log.jsonl");
 const OUT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
 
 const BSKY_API = "https://bsky.social/xrpc";
@@ -165,6 +166,62 @@ function loadRecentPublished() {
         };
         addIfNew(synthetic);
       }
+    }
+  }
+
+  // 4) social-cat post_log.jsonl — trend posts + Bluesky replies from the
+  // swiper pipeline (scripts/social-cat/*). One platform per line. Reuse the
+  // per-platform engagement fetchers by normalizing to processPost's shape.
+  if (existsSync(SOCIAL_CAT_LOG)) {
+    let txt;
+    try {
+      txt = readFileSync(SOCIAL_CAT_LOG, "utf8");
+    } catch {
+      txt = "";
+    }
+    for (const line of txt.split("\n")) {
+      const raw = line.trim();
+      if (!raw) continue;
+      let rec;
+      try { rec = JSON.parse(raw); } catch { continue; }
+      if (!rec.ts || !rec.platform || !rec.uri) continue;
+      if (new Date(rec.ts).getTime() < cutoff) continue;
+
+      // Normalize platform name (social-cat says "twitter"; processPost says "x").
+      const platform = rec.platform === "twitter" ? "x" : rec.platform;
+
+      // Extract the platform's native post ID from the URI.
+      // - bluesky: at:// URI — pass through
+      // - mastodon: full URL — strip to numeric status ID
+      // - x/threads/facebook: numeric ID already
+      let id = rec.uri;
+      if (platform === "mastodon") {
+        const m = rec.uri.match(/\/(\d+)(?:\/?$)/);
+        if (m) id = m[1];
+      }
+
+      const publishedTo = [{ platform, ok: true, postId: id, id }];
+      if (platform === "bluesky") publishedTo[0].uri = id;
+
+      const isReply = rec.type === "reply";
+      const title = isReply
+        ? `Reply to @${rec.reply_to_handle || "unknown"}`
+        : (rec.topic || rec.text?.slice(0, 80) || "Trend post");
+
+      // For replies, link to the post being replied to (Bluesky permalink).
+      let targetUrl = null;
+      if (isReply && rec.reply_to_uri && rec.reply_to_uri.startsWith("at://")) {
+        targetUrl = bskyPermalink(rec.reply_to_uri);
+      }
+
+      addIfNew({
+        item: { title, url: null },
+        publishedAt: rec.ts,
+        publishedTo,
+        targetUrl,
+        _socialCat: true,
+        _socialCatType: isReply ? "reply" : "trend",
+      });
     }
   }
 
@@ -785,6 +842,10 @@ async function processPost(post, xCreds, ownXReplyMap = null) {
   // surface a small deep-link icon next to the IG pill. We deliberately don't
   // poll FB engagement (Meta App Review wall) — link-only.
   if (post._fbPermalink) result.fbPermalink = post._fbPermalink;
+  // social-cat (swiper) posts get a sub-badge in the dashboard so they
+  // visually separate from SBT-scheduled posts (which derive from events,
+  // restaurants, day plans). Keeps brand="SBT" — same accounts, different origin.
+  if (post._socialCat) result.sourceTag = post._socialCatType || "swiper";
   return result;
 }
 

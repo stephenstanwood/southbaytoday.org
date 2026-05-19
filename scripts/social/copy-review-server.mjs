@@ -333,6 +333,10 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .post-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
   .post-title { font-size: 14px; font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
   .brand-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; }
+  .source-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; border: 1px solid; }
+  .source-badge.source-trend { color: #6d28d9; border-color: #c4b5fd; background: #f5f3ff; }
+  .source-badge.source-reply { color: #0e7490; border-color: #a5f3fc; background: #ecfeff; }
+  .source-badge.source-swiper { color: #6b7280; border-color: #d1d5db; background: #f9fafb; }
   .post-meta { font-size: 11px; color: #888; white-space: nowrap; }
   .post-meta a { color: #888; }
   .platform-row { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -693,11 +697,17 @@ function renderPost(post) {
   }).join('');
   const brandColor = BRAND_COLORS[brand] || '#888';
   const brandBadge = '<span class="brand-badge" style="background:' + brandColor + ';">' + brand + '</span>';
+  // social-cat (swiper) posts get a secondary chip so they're visually distinct
+  // from event/day-plan posts. Same brand (same accounts) — different origin.
+  const sourceBadge = post.sourceTag
+    ? '<span class="source-badge source-' + escapeHtml(post.sourceTag) + '">' + escapeHtml(post.sourceTag) + '</span>'
+    : '';
 
   return (
     '<div class="' + cardCls + '" data-key="' + escapeHtml(post.key) + '">' +
       '<div class="post-head">' +
         brandBadge +
+        sourceBadge +
         '<div class="post-title">' + titleHtml + '</div>' +
         '<div class="post-meta">' + escapeHtml(timeAgo(post.publishedAt)) + '</div>' +
       '</div>' +
