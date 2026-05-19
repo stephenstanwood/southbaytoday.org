@@ -1091,9 +1091,15 @@ function polishDescription(text) {
     // Sports leagues / clubs that appear in body copy. 4-letter members of the
     // same set added to cleanTitle's KEEP_UPPER — body text only runs the 4+
     // rule so 3-letter PGA/CSU don't need entries here.
-    "LAFC", "NWSL", "WNBA", "LPGA",
+    "LAFC", "NWSL", "WNBA", "LPGA", "NCAA",
     // Medical / academic acronyms (4+ letters only at this body-level rule).
     "AIDS", "RDMS",
+    // Heritage-month and library-system acronyms that appear in BiblioCommons
+    // (SCCL) and Localist (SJSU) description copy. Without them the 4+ rule
+    // downcases "AANHPI Heritage Month" → "Aanhpi" and the SJSU library's
+    // "Africana, Asian American, Chicano, Native American (AAACNA) Studies
+    // Center" → "(Aaacna)".
+    "AANHPI", "AAACNA",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
@@ -1106,7 +1112,18 @@ function polishDescription(text) {
   t = t.replace(/([a-z])([A-Z])/g, "$1 $2");
   // Normalize 1-2 letter all-caps fragments left over from prior step ("EN" preserved if before all-caps)
   // Only rewrites words wedged between mixed-case neighbors — keeps "EN" in "Rock EN Espanol" lowercased.
-  t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => w[0] + w.slice(1).toLowerCase());
+  // KEEP_UPPER_SHORT protects 3-letter acronyms ("The ESL Conversation Club")
+  // which the wedge rule would otherwise downcase to "The Esl Conversation Club".
+  const KEEP_UPPER_SHORT = new Set([
+    "ESL", "ELL", "BBQ", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY",
+    "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
+    "PAC", "POV", "PSA", "SAT", "SAP", "SCU", "SJZ", "SUV", "TBA", "TBD",
+    "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK", "FDA", "CDC", "ICE",
+    "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW", "BTS", "EDM",
+    "RNB", "NPR", "PBS", "PGA", "CSU", "HIV", "MFA", "BFA", "MBA", "RVT",
+    "CNM", "UFC", "MMA", "WWE", "AEW",
+  ]);
+  t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => KEEP_UPPER_SHORT.has(w) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.
   // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
   // copy ("Pay Pal Park") survives polishing intact.
