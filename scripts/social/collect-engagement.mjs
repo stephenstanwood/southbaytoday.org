@@ -29,7 +29,6 @@ const OUT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social
 
 const BSKY_API = "https://bsky.social/xrpc";
 const THREADS_API = "https://graph.threads.net/v1.0";
-const FB_API = "https://graph.facebook.com/v25.0";
 const X_API = "https://api.twitter.com";
 const IG_API = "https://graph.instagram.com/v25.0";
 const MASTODON_INSTANCE = process.env.MASTODON_INSTANCE || "https://mastodon.social";
@@ -585,18 +584,14 @@ async function fetchXEngagement(tweetId, creds, ownReplies = [], ownReplyMap = n
 
 // ── Instagram ────────────────────────────────────────────────────────────
 
-async function fetchInstagramEngagement(mediaId, shortcode, tokenOverride) {
-  const token = tokenOverride || process.env.INSTAGRAM_ACCESS_TOKEN;
+async function fetchInstagramEngagement(mediaId, shortcode) {
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) return null;
-  // SBT IG token is from the IG-app (graph.instagram.com); HHSS IG token is
-  // FB-Page-derived (graph.facebook.com). The two APIs reject each other's
-  // tokens with "Cannot parse access token", so route accordingly.
-  const apiBase = tokenOverride ? FB_API : IG_API;
 
   let counts = { likes: 0, reposts: 0, quotes: 0, replies: 0 };
   try {
     const r = await fetch(
-      `${apiBase}/${mediaId}?fields=like_count,comments_count&access_token=${token}`
+      `${IG_API}/${mediaId}?fields=like_count,comments_count&access_token=${token}`
     );
     if (r.ok) {
       const data = await r.json();
@@ -608,7 +603,7 @@ async function fetchInstagramEngagement(mediaId, shortcode, tokenOverride) {
   const replies = [];
   try {
     const r = await fetch(
-      `${apiBase}/${mediaId}/comments?fields=id,text,username,timestamp&access_token=${token}`
+      `${IG_API}/${mediaId}/comments?fields=id,text,username,timestamp&access_token=${token}`
     );
     if (r.ok) {
       const data = await r.json();
@@ -762,7 +757,6 @@ async function fetchPinterestEngagement(pinId) {
 async function processPost(post, xCreds, ownXReplyMap = null) {
   const platforms = {};
   const brand = post._brand || "SBT";
-  const igToken = post._igToken;
 
   for (const entry of post.publishedTo || []) {
     if (!entry.ok) continue;
@@ -796,7 +790,7 @@ async function processPost(post, xCreds, ownXReplyMap = null) {
         }
         case "instagram": {
           permalink = `https://www.instagram.com/p/${entry.shortcode || id}/`;
-          result = await fetchInstagramEngagement(id, entry.shortcode, igToken);
+          result = await fetchInstagramEngagement(id, entry.shortcode);
           break;
         }
         case "mastodon": {
@@ -838,106 +832,11 @@ async function processPost(post, xCreds, ownXReplyMap = null) {
     cardPath: post.cardPath || null,
     platforms,
   };
-  // HHSS cross-posts to FB; expose the FB permalink so the dashboard can
-  // surface a small deep-link icon next to the IG pill. We deliberately don't
-  // poll FB engagement (Meta App Review wall) — link-only.
-  if (post._fbPermalink) result.fbPermalink = post._fbPermalink;
   // social-cat (swiper) posts get a sub-badge in the dashboard so they
   // visually separate from SBT-scheduled posts (which derive from events,
   // restaurants, day plans). Keeps brand="SBT" — same accounts, different origin.
   if (post._socialCat) result.sourceTag = post._socialCatType || "swiper";
   return result;
-}
-
-// ── HHSS: enumerate posts directly from IG account ──────────────────────
-// HHSS doesn't go through the SBT publish queue. FB is hidden from the
-// dashboard, so we only pull IG.
-
-async function loadHHSSPosts() {
-  const igToken = process.env.HHSS_IG_ACCESS_TOKEN;
-  const igUserId = process.env.HHSS_IG_USER_ID || "17841437664741474";
-  const fbPageId = process.env.HHSS_FB_PAGE_ID;
-  const fbPageToken = process.env.HHSS_FB_PAGE_ACCESS_TOKEN;
-
-  const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
-  const out = [];
-
-  if (!igToken) {
-    console.log("   HHSS/instagram: skipped (no HHSS_IG_ACCESS_TOKEN)");
-    return out;
-  }
-
-  // 1) Fetch FB page feed first so we can attach a cross-post permalink to
-  //    each IG entry. We don't poll FB engagement (Meta App Review wall on
-  //    pages_read_engagement) — this is link-only so the dashboard can deep-
-  //    link to the matching FB post next to the IG pill.
-  let fbPosts = [];
-  if (fbPageId && fbPageToken) {
-    try {
-      const r = await fetch(
-        `${FB_API}/${fbPageId}/posts?fields=id,created_time,permalink_url&limit=50&access_token=${fbPageToken}`
-      );
-      if (r.ok) {
-        const data = await r.json();
-        fbPosts = (data.data || [])
-          .filter((p) => p.permalink_url && p.created_time)
-          .map((p) => ({ ts: new Date(p.created_time).getTime(), url: p.permalink_url }));
-      } else {
-        const body = await r.text();
-        console.log(`   HHSS/facebook (link-only): feed fetch failed (${r.status}) ${body.slice(0, 120)}`);
-      }
-    } catch (err) {
-      console.log(`   HHSS/facebook (link-only): ${err.message}`);
-    }
-  }
-  // Find the FB post whose created_time is within ±5 min of the IG timestamp.
-  // Cross-posts from IG to FB land within seconds in practice; widening to
-  // 5 min covers manual-cross-post lag without false positives.
-  const FB_MATCH_WINDOW_MS = 5 * 60 * 1000;
-  function fbPermalinkFor(igTimestamp) {
-    if (!fbPosts.length) return null;
-    const target = new Date(igTimestamp).getTime();
-    let best = null;
-    let bestDelta = FB_MATCH_WINDOW_MS + 1;
-    for (const p of fbPosts) {
-      const delta = Math.abs(p.ts - target);
-      if (delta < bestDelta) {
-        best = p;
-        bestDelta = delta;
-      }
-    }
-    return bestDelta <= FB_MATCH_WINDOW_MS ? best.url : null;
-  }
-
-  try {
-    // IG Business uses graph.facebook.com (not graph.instagram.com) when the
-    // token is a Page Access Token derived through FB.
-    const r = await fetch(
-      `${FB_API}/${igUserId}/media?fields=id,caption,timestamp,permalink,shortcode&limit=50&access_token=${igToken}`
-    );
-    if (r.ok) {
-      const data = await r.json();
-      for (const m of data.data || []) {
-        if (new Date(m.timestamp).getTime() < cutoff) continue;
-        out.push({
-          item: { title: (m.caption || "Untitled").split("\n")[0].slice(0, 90), url: m.permalink || null },
-          publishedAt: m.timestamp,
-          publishedTo: [{ platform: "instagram", ok: true, id: m.id, postId: m.id, shortcode: m.shortcode }],
-          targetUrl: m.permalink || null,
-          _brand: "HHSS",
-          _igToken: igToken,
-          _fbPermalink: fbPermalinkFor(m.timestamp),
-        });
-      }
-    } else {
-      const body = await r.text();
-      console.log(`   HHSS/instagram: media fetch failed (${r.status}) ${body.slice(0, 120)}`);
-    }
-  } catch (err) {
-    console.log(`   HHSS/instagram: ${err.message}`);
-  }
-
-  return out;
 }
 
 // Load prior engagement file so historical posts persist across runs even
@@ -984,7 +883,6 @@ function priorToSourcePost(entry) {
     targetUrl: entry.targetUrl || null,
     cardPath: entry.cardPath || null,
     _brand: entry.brand || "SBT",
-    _fbPermalink: entry.fbPermalink || null,
   };
 }
 
@@ -992,36 +890,34 @@ async function main() {
   const priorByKey = loadPriorByKey();
 
   const sbtPosts = loadRecentPublished().map((p) => ({ ...p, _brand: "SBT" }));
-  const hhssPosts = await loadHHSSPosts();
 
   // Reconstruct posts that were captured in a prior run but aren't in the
   // current live sources, and re-poll them. Dedupe by `${brand}|${postKey}`
   // AND by overlapping platform IDs — when timestamp precision drifts between
   // sources (e.g. log-tail minute-aligned vs schedule millisecond) the prior
   // key can linger as a ghost record pointing at the same Bluesky/X/etc post.
-  const liveKeys = new Set(
-    [...sbtPosts, ...hhssPosts].map((p) => `${p._brand}|${postKey(p)}`)
-  );
+  const liveKeys = new Set(sbtPosts.map((p) => `${p._brand}|${postKey(p)}`));
   const seenPlatformIds = new Set();
-  for (const p of [...sbtPosts, ...hhssPosts]) {
+  for (const p of sbtPosts) {
     for (const k of platformKeys(p.publishedTo)) seenPlatformIds.add(k);
   }
-  const hhssToken = process.env.HHSS_IG_ACCESS_TOKEN;
   const historical = [];
   for (const [key, entry] of priorByKey) {
     if (liveKeys.has(key)) continue;
+    // Drop any leftover HHSS entries (moved to Buffer 2026-05-19) so the
+    // engagement file self-cleans on next run.
+    if (entry.brand && entry.brand !== "SBT") continue;
     const sp = priorToSourcePost(entry);
     if (!sp) continue;
     const platIds = platformKeys(sp.publishedTo);
     if (platIds.some((k) => seenPlatformIds.has(k))) continue;
     platIds.forEach((k) => seenPlatformIds.add(k));
-    if (sp._brand === "HHSS" && hhssToken) sp._igToken = hhssToken;
     historical.push(sp);
   }
 
-  const posts = [...sbtPosts, ...hhssPosts, ...historical];
+  const posts = [...sbtPosts, ...historical];
   console.log(
-    `engagement: ${posts.length} posts (SBT live=${sbtPosts.length} HHSS live=${hhssPosts.length} retained=${historical.length}, lookback=${LOOKBACK_DAYS}d)`
+    `engagement: ${posts.length} posts (live=${sbtPosts.length} retained=${historical.length}, lookback=${LOOKBACK_DAYS}d)`
   );
 
   const xCreds = getXCreds();
