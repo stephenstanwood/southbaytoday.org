@@ -20,26 +20,45 @@
 // time, puppet shows, "kids [activity]" patterns. Note: "kids" alone is NOT
 // enough — "Family Day: Kids Welcome" should stay "all".
 //
-// Age digits are bounded to 0–17 via (?:\d|1[0-7]) — otherwise "ages 50+" or
-// "ages 55+" (senior events) and "ages 18-65" (adult forums) would silently
-// trigger the kids tag, leaking senior programming into kids plans.
+// Age digits are bounded by three ranges, each pinning a different leakage class:
+//   - KIDS_AGE (0-17): kid territory. Used for the bare "ages 5" and the lower
+//     bound of "ages X-Y" — anything ≥18 is not a kid.
+//   - KIDS_AGE_RANGE_UPPER (0-18): allows the upper bound of "ages 13-18" to
+//     match (HS senior caps at 18). Tighter than 17 would untag legitimate teen
+//     programs whose range stops at 18; wider would let "ages 5-25" leak in.
+//   - KIDS_AGE_OPEN (0-12): the open-ended forms "ages X+" and "ages X and up"
+//     have no upper bound, so "ages 13+" / "ages 13 and up" are ambiguous — an
+//     open mic that says "all levels and ages 13+" welcomes adults. Capping at
+//     12 confines the open form to true kid-program copy ("ages 5+ welcome").
+//
+// Before these bounds, "ages 50+" (senior events) and "ages 18-65" (adult
+// forums) silently triggered kids; "ages 13+" on an open mic falsely tagged it
+// kids; and "ages 12 to 25" (young-adult book clubs) matched on the lower bound
+// alone because the upper escaped the range pattern.
 const KIDS_AGE = "(?:\\d|1[0-7])";
+const KIDS_AGE_RANGE_UPPER = "(?:\\d|1[0-8])";
+const KIDS_AGE_OPEN = "(?:\\d|1[0-2])";
 const KIDS_SIGNALS = [
   /\btoddlers?\b/i,
   /\bpreschool(?:er)?s?\b/i,
   /\bstory ?times?\b/i,
   /\bbedtime stor(?:y|ies)\b/i,
   /\bpuppet\s+shows?\b/i,
-  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s*[-–]\\s*${KIDS_AGE}\\b`, "i"),        // "ages 2-5"
-  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s*(?:and|&|\\+)\\s*(?:up|under)\\b`, "i"), // "ages 5 and up"
-  new RegExp(`\\bages?\\s+${KIDS_AGE}\\+?\\b`, "i"),                     // "ages 5+"
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s*[-–]\\s*${KIDS_AGE_RANGE_UPPER}\\b`, "i"),       // "ages 2-5", "ages 13-18"
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s+to\\s+${KIDS_AGE_RANGE_UPPER}\\b`, "i"),         // "ages 12 to 17"
+  new RegExp(`\\bages?\\s+${KIDS_AGE_OPEN}\\s*(?:and|&)\\s*(?:up|under|older)\\b`, "i"), // "ages 5 and up" (≤12)
+  new RegExp(`\\bages?\\s+${KIDS_AGE_OPEN}\\+`, "i"),                                    // "ages 5+" (≤12)
+  // Bare "ages 5" — only fires when not part of a range or open-ended form
+  // already handled above; otherwise it would match the lower bound of
+  // "ages 12 to 25" and tag young-adult book clubs as kids.
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\b(?!\\s*[-–]|\\s+to\\s+\\d|\\s*\\+|\\s*(?:and|&)\\s*(?:up|under|older))`, "i"),
   /\bkid'?s?\s+(?:knitting|craft|art|yoga|cooking|science|club|camp|hour|music|dance|story|story time|book club)\b/i,
   /\bkids'?\s+only\b/i,
   /\bchildren's\s+(?:story|hour|craft|music|book club|program)\b/i,
   /\bkindergart(?:en|ner)s?\b/i,
   /\bgrades?\s+(?:k|pre-k|\d)\b/i,
   /\belementary(?:-school| school)?\b/i,
-  /\btween\s+(?:night|club|hangout|meetup|program)\b/i,
+  /\b(?:teen|tween)s?\s+(?:night|club|hangout|meetup|program|lounge)\b/i,
   /\btots?\b(?:\s+(?:club|hour|story|storytime|time))/i,  // "tots" alone could be false positive
 ];
 

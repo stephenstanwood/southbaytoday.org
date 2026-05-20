@@ -82,5 +82,60 @@ test("senior age phrases do NOT classify as kids", () => {
   // Kid ages still classify as kids
   assert.equal(classifyAudienceAge(ev("Kids Yoga", "Ages 5+ welcome.")), "kids");
   assert.equal(classifyAudienceAge(ev("Tween Hangout", "Ages 10-13.")), "kids");
+  // "Teen Lounge ages 13 and up" — "ages 13 and up" no longer fires the open
+  // pattern (capped at 12), but the new teen-lounge signal catches the title.
   assert.equal(classifyAudienceAge(ev("Teen Lounge", "Ages 13 and up.")), "kids");
+});
+
+test("open-ended teen+ phrases stay 'all' when no kid context", () => {
+  // "ages 13+" / "ages 13 and up" are semantically open-ended and often
+  // describe events where adults are welcome too — capping the open-ended
+  // forms at age 12 keeps these out of the kids pool.
+  //
+  // Real misfire: SCC Library "Open Mic" with "all levels and ages 13+"
+  // tagged kids because /\bages?\s+\d+\+?\b/ matched "ages 13+", which
+  // filtered the event out of every adult plan.
+  assert.equal(
+    classifyAudienceAge(
+      ev("Open Mic", "Share your musical talents in a safe, inviting community of players of all levels and ages 13+."),
+    ),
+    "all",
+  );
+  assert.equal(
+    classifyAudienceAge(ev("Community Open Mic", "All skill levels welcome, ages 14 and up.")),
+    "all",
+  );
+  // True teen-only programs still classify via the teen-program signal
+  // (lounge/club/hangout/meetup/program), not the age phrase alone.
+  assert.equal(classifyAudienceAge(ev("Teen Hangout", "Open to teens.")), "kids");
+});
+
+test("'ages 12 to 25' young-adult ranges do NOT classify as kids", () => {
+  // Real misfire: "allcove x PACL Book Club" "open to young people ages 12
+  // to 25" tagged kids because the bare "ages 12" regex matched the lower
+  // bound while the upper bound (25) escaped the range pattern.
+  //
+  // Anti-range lookahead on the bare "ages X" regex now refuses to fire
+  // when the age is followed by a range separator (- or "to"), so the
+  // young-adult upper bound isn't ignored.
+  assert.equal(
+    classifyAudienceAge(
+      ev("allcove x PACL Book Club", "This program is open to young people ages 12 to 25. Read any Jane Austen novel."),
+    ),
+    "all",
+  );
+  assert.equal(
+    classifyAudienceAge(ev("Pottery for Beginners", "Open to ages 10 to 30.")),
+    "all",
+  );
+  // Pure kid ranges still classify (upper bound ≤18 — the new range cap)
+  assert.equal(
+    classifyAudienceAge(ev("Teen Leadership Group", "For teens ages 13 to 18.")),
+    "kids",
+  );
+  // Kid range with hyphen separator
+  assert.equal(
+    classifyAudienceAge(ev("Story Club", "For kids ages 6-10.")),
+    "kids",
+  );
 });
