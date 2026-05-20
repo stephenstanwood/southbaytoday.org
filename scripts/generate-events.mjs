@@ -1740,6 +1740,17 @@ async function fetchSjsuEvents() {
       // crops to "SAN UNI" on a square tile. Pin a real square asset:
       // Spartan helmet for athletics, SJSU monogram for everything else.
       const image = category === "sports" ? "/logos/sjsu-spartan.png" : "/logos/sjsu-monogram.png";
+      const venue = item.location || extractVenueFromTitle(item.title) || "San Jose State University";
+      // SJSU's Localist feed has no price field, so we default to free —
+      // accurate for campus lectures, library events, exhibits. Two
+      // exceptions: every athletics entry, and the "Alumni Night at the
+      // <pro team>" promotions SJSU runs at PayPal Park, Excite Ballpark,
+      // and the Mountain West Championship. Those are commercial-ticket
+      // events and the FREE badge is wrong. Match on category OR the
+      // commercial-venue signature — "food" / "community" categorization
+      // bleeds when the description plays up the alumni dinner.
+      const COMMERCIAL_TICKET_VENUE = /\b(paypal park|excite ballpark|levi'?s stadium|sap center|cefcu stadium|spartan stadium|provident credit union event center|shoreline amphitheatre|mountain winery|mountain west championship)\b/i;
+      const cost = category === "sports" || COMMERCIAL_TICKET_VENUE.test(venue) ? "paid" : "free";
       return {
         id: h("sjsu", item.link || item.title, item.pubDate),
         title: item.title,
@@ -1747,11 +1758,11 @@ async function fetchSjsuEvents() {
         displayDate: displayDate(start),
         time: displayTime(start),
         endTime: null,
-        venue: item.location || extractVenueFromTitle(item.title) || "San Jose State University",
+        venue,
         address: "",
         city: "san-jose",
         category,
-        cost: "free",
+        cost,
         description: truncate(stripBareUrls(stripHtml(item.description))),
         url: item.link,
         source: "SJSU Events",
