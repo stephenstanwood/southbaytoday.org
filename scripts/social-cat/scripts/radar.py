@@ -210,6 +210,47 @@ LOCAL_TERMS = [
 # about auto-TAGGING competitors in standalones, not replying to anyone.)
 SELF_HANDLES = {"southbaytoday.bsky.social"}
 
+# Terms in LOCAL_TERMS that ALSO name places outside our 11-city South Bay.
+# Posts matched on these need an extra negative-geo screen — Boston, LA's
+# beach cities, Long Island, and San Diego all use "south bay" too and have
+# polluted the reply pool before (e.g. @fanexpoboston posting about AMC
+# South Bay in Dorchester triggered a draft pretending it was our AMC).
+AMBIGUOUS_TERMS = {"south bay"}
+
+# Substrings that strongly indicate a post is about a DIFFERENT region.
+# Lowercased. Multi-word phrases only — bare tokens like "ny" / "ma" / "la"
+# false-positive on words like "anymore" / "drama" / "later", so keep those
+# out. Checked against author handle + displayName + post text.
+NEGATIVE_GEO_SIGNALS = (
+    # Boston (AMC South Bay theater + South Bay Center mall in Dorchester)
+    "boston", "dorchester", "massachusetts", "brookline",
+    "amc south bay", "south bay center",
+    # NY metro / Long Island
+    "long island", "suffolk county", "nassau county",
+    "new york city", "brooklyn",
+    # LA South Bay (the beach cities cluster)
+    "south bay galleria", "torrance", "redondo beach",
+    "hermosa beach", "manhattan beach, ca", "el segundo",
+    # San Diego South Bay
+    "chula vista", "imperial beach",
+)
+
+
+def wrong_region_signal(
+    matched_term: str, handle: str, display_name: str, text: str
+) -> str | None:
+    """Return the matched substring if matched_term is ambiguous AND the
+    post's handle/displayName/text clearly belongs to a different region.
+    Returns None when no negative signal found (or matched_term is unambiguous).
+    """
+    if matched_term not in AMBIGUOUS_TERMS:
+        return None
+    haystack = " ".join((handle or "", display_name or "", text or "")).lower()
+    for sig in NEGATIVE_GEO_SIGNALS:
+        if sig in haystack:
+            return sig
+    return None
+
 
 _BSKY_BASE = "https://bsky.social/xrpc"
 
@@ -281,8 +322,19 @@ def fetch_bluesky_local(terms: list[str], per_term: int = 8) -> list[dict]:
             record = post.get("record", {}) or {}
             author = post.get("author", {}) or {}
             handle = author.get("handle", "")
+            display_name = author.get("displayName", "") or ""
+            text = record.get("text", "") or ""
             # Skip our own handle (don't reply to ourselves).
             if handle.lower() in SELF_HANDLES:
+                continue
+            # Skip clearly-wrong-region matches when the term is ambiguous
+            # ("south bay" hits Boston/LA/Long Island/SD too).
+            bad = wrong_region_signal(term, handle, display_name, text)
+            if bad:
+                print(
+                    f"  bluesky({term}): skip @{handle} — wrong-region '{bad}'",
+                    file=sys.stderr,
+                )
                 continue
             seen_uris.add(uri)
             did = author.get("did", "")
@@ -298,9 +350,9 @@ def fetch_bluesky_local(terms: list[str], per_term: int = 8) -> list[dict]:
                 "cid": post.get("cid"),
                 "author_handle": handle,
                 "author_did": did,
-                "author_name": author.get("displayName"),
-                "title": (record.get("text") or "")[:200],
-                "text": record.get("text"),
+                "author_name": display_name or None,
+                "title": text[:200],
+                "text": text,
                 "url": web_url,
                 "external_url": web_url,
                 "likes": post.get("likeCount", 0),

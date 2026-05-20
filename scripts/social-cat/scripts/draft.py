@@ -344,6 +344,7 @@ SKIP these reply targets (don't draft anything for them):
 - **Furry / fursuit / kink-adjacent content** — not SBT's scene
 - Posts that read as inside-baseball for a niche community SBT doesn't cover
 - Anything where the warmest possible reply would still feel like a brand crashing a personal thread
+- **Wrong-region "south bay" matches.** "South Bay" also names Boston's Dorchester neighborhood (AMC South Bay, South Bay Center mall), LA's beach cities (Torrance, Redondo Beach, Hermosa Beach, Manhattan Beach, El Segundo), San Diego (Chula Vista / Imperial Beach), and parts of Long Island. If the post's handle (e.g. `*boston*`, `*nyc*`, `*la*`, `southbay-la`), display name, venue, or surrounding context puts it OUTSIDE the 11-city Santa Clara County South Bay, SKIP — don't pretend it's ours. When in doubt, skip. Better to miss a reply than send "AMC South Bay is great" to a Boston theater.
 
 Aim for 5-10 quality reply drafts (quality > quota). Empty replies array is fine if pool is thin.
 
