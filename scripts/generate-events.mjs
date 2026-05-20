@@ -1428,8 +1428,11 @@ function inferCategory(title, desc, type, venue = "") {
   // Nature / wildlife events — check BEFORE sports to avoid false positives.
   // Guard against swim-stroke names ("butterfly", "freestyle", etc.) that share
   // vocabulary with insect/bird watching but describe swimming clinics.
+  // Also guard against library venues — wildlife presentations at libraries are
+  // indoor educational talks, not outdoor activities.
   const isSwimContext = /\b(swim|stroke|freestyle|breaststroke|backstroke|aquatic)\b/.test(t);
-  if (!isSwimContext && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|butterflies|monarchs?|pollinators?|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
+  const isLibraryVenueEarly = /\b(library|libraries)\b/.test(venueLower);
+  if (!isSwimContext && !isLibraryVenueEarly && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|butterflies|monarchs?|pollinators?|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
   if (/\b(volunteer|volunteering)\b/.test(t) && /\b(farm|garden|trail|park|nature)\b/.test(t)) return "community";
   // School/fundraiser fun runs are community events, not sports
@@ -1476,10 +1479,15 @@ function inferCategory(title, desc, type, venue = "") {
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");
+  // For library venues, restrict the sports detector to the TITLE (not desc + type
+  // + venue). Library events about gardening or insects pick up "sports" tags from
+  // BiblioCommons type fields ("Activity / Sports") or descriptions that mention
+  // physical activities incidentally, even when the actual program is a lecture.
+  const sportsHaystack = isLibraryVenue ? titleLower : t;
   // Use word-boundary regex (not substring includes) for short sports tokens that
   // collide with common words/proper nouns: "game" → "Burlingame", "polo" →
   // "metropolitan", "track" → "soundtrack"/"racetrack", "crew" → "screw"/"crewneck".
-  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(t) || /\bsports?\b/.test(t) || /\bathletics?\b/.test(t) || t.includes("golf") || t.includes("tennis") || t.includes("soccer") || t.includes("basketball") || t.includes("baseball") || t.includes("softball") || t.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(t) || t.includes("swim meet") || t.includes("freestyle") || t.includes("breaststroke") || t.includes("backstroke") || /\btracks?\b/.test(t) || t.includes("cross country") || t.includes("lacrosse") || t.includes("football") || t.includes("gymnastics") || t.includes("wrestling") || t.includes("water polo") || /\bpolo\b/.test(t) || t.includes("hockey") || t.includes("rugby") || /\browing\b/.test(t) || /\bcrew\b/.test(t) || /\bdiving\b/.test(t) || t.includes("fencing") || t.includes("skiing") || t.includes("snowboard") || /\bcycling\b/.test(t) || t.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(t)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(t)) || (!isSchoolFundraiser && /\brace\b/.test(t)))) return "sports";
+  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(sportsHaystack) || /\bsports?\b/.test(sportsHaystack) || /\bathletics?\b/.test(sportsHaystack) || sportsHaystack.includes("golf") || sportsHaystack.includes("tennis") || sportsHaystack.includes("soccer") || sportsHaystack.includes("basketball") || sportsHaystack.includes("baseball") || sportsHaystack.includes("softball") || sportsHaystack.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(sportsHaystack) || sportsHaystack.includes("swim meet") || sportsHaystack.includes("freestyle") || sportsHaystack.includes("breaststroke") || sportsHaystack.includes("backstroke") || /\btracks?\b/.test(sportsHaystack) || sportsHaystack.includes("cross country") || sportsHaystack.includes("lacrosse") || sportsHaystack.includes("football") || sportsHaystack.includes("gymnastics") || sportsHaystack.includes("wrestling") || sportsHaystack.includes("water polo") || /\bpolo\b/.test(sportsHaystack) || sportsHaystack.includes("hockey") || sportsHaystack.includes("rugby") || /\browing\b/.test(sportsHaystack) || /\bcrew\b/.test(sportsHaystack) || /\bdiving\b/.test(sportsHaystack) || sportsHaystack.includes("fencing") || sportsHaystack.includes("skiing") || sportsHaystack.includes("snowboard") || /\bcycling\b/.test(sportsHaystack) || sportsHaystack.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\brace\b/.test(sportsHaystack)))) return "sports";
   // Government/civic events at markets are still community events
   if (/\b(office hours|mayor|city council|council member|supervisor)\b/.test(t) && t.includes("market")) return "community";
   // "craft" alone is too broad — "well-crafted resume", "refine your craft" → require craft market context
