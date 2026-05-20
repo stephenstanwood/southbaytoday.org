@@ -4430,11 +4430,21 @@ function extractTimeFromHtml(html, eventDate) {
 
 async function backfillEventTimes(events) {
   const cache = loadTimeBackfillCache();
-  const candidates = events.filter((e) =>
-    !e.time && !e.ongoing && e.url && /^https?:/.test(e.url) &&
+  const candidates = events.filter((e) => {
+    if (e.time || e.ongoing || !e.url || !/^https?:/.test(e.url)) return false;
     // Skip canned "events list" pages — they won't have per-event times
-    !/\/events\/?$|\/pages\/events\/?$/.test(e.url)
-  );
+    if (/\/events\/?$|\/pages\/events\/?$/.test(e.url)) return false;
+    // Skip domain-root URLs — the extractor's last-resort "first time in
+    // body text" fallback grabs gallery hours / random homepage numbers and
+    // pins them to whatever event happens to point at the homepage.
+    // Reproduced on Montalvo: homepage shows "8:30 AM" gallery hours and
+    // every Montalvo event with a bare URL inherited it.
+    try {
+      const path = new URL(e.url).pathname.replace(/\/+$/, "");
+      if (path === "") return false;
+    } catch { return false; }
+    return true;
+  });
   if (candidates.length === 0) {
     saveTimeBackfillCache(cache);
     return;
@@ -4855,17 +4865,22 @@ function fetchInboundEvents() {
         return display === "12:00 AM" ? null : display;
       })();
 
-      // Parse end time from endsAt if provided
+      // Parse end time from endsAt if provided. Mirror the start-time
+      // midnight handling — newsletter extractors write T00:00:00 when no
+      // time was found, and "12:00 AM" as an end time is meaningless next to
+      // a real start time. Also drop endTime when it equals the start time
+      // (same source value with no actual end-of-event signal).
       let endTime = null;
       if (e.endsAt) {
         const endDate = new Date(e.endsAt);
         if (!isNaN(endDate.getTime())) {
-          endTime = endDate.toLocaleTimeString("en-US", {
+          const display = endDate.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
             timeZone: "America/Los_Angeles",
           });
+          if (display !== "12:00 AM" && display !== time) endTime = display;
         }
       }
 
