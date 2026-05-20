@@ -873,17 +873,17 @@ function stripRedundantVenueSuffix(title, venue) {
   // like "SJSU Alumni Night at the SJ Giants at Excite Ballpark") and
   // tolerate capitalized "At" from sources like SJPL.
   if (venue && typeof venue === "string") {
+    const norm = (s) =>
+      s
+        .toLowerCase()
+        .replace(/[.,]+$/, "")
+        .replace(/^\s*the\s+/i, "")
+        .replace(/\b(branch|library)\b/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
     const m = t.match(/^(.+)\s+at\s+(.+?)\s*$/i);
     if (m) {
       const [, base, suffix] = m;
-      const norm = (s) =>
-        s
-          .toLowerCase()
-          .replace(/[.,]+$/, "")
-          .replace(/^\s*the\s+/i, "")
-          .replace(/\b(branch|library)\b/gi, " ")
-          .replace(/\s+/g, " ")
-          .trim();
       if (norm(suffix) === norm(venue) && base.trim().length >= 6) {
         t = base.trim();
       } else {
@@ -902,6 +902,21 @@ function stripRedundantVenueSuffix(title, venue) {
             t = `${base.trim()} — ${subtitle.trim()}`;
           }
         }
+      }
+    }
+
+    // Pattern 3: " | <Venue>" matching the venue field. Stanford Localist
+    // emits some recurring events with the venue appended via pipe ("Spotlight
+    // Tours Thursdays | Anderson Collection") even though the venue field
+    // already carries it. Conservative: only strip when the pipe-suffix
+    // matches the venue, so subtitles like "Archive Room: Ester Hernandez |
+    // Selections from Special Collections at Stanford Libraries" (legitimate
+    // pipe-separated subtitle, not a venue) survive.
+    const pipeMatch = t.match(/^(.+?)\s*\|\s*(.+?)\s*$/);
+    if (pipeMatch) {
+      const [, base, suffix] = pipeMatch;
+      if (norm(suffix) === norm(venue) && base.trim().length >= 6) {
+        t = base.trim();
       }
     }
   }
@@ -2924,6 +2939,13 @@ function normalizeTicketmasterTitle(name) {
     /\s*\((?:children?|kids?|adults?|all ages?|ages?)[^)]*?(?:require|need|must|are required)[^)]*?tickets?[^)]*\)\s*$/i,
     "",
   );
+  // Normalize "Group X-" → "Group X -" when Ticketmaster omits the space
+  // before the hyphen separating the group label from the matchup, e.g.
+  // "World Cup: Match 8 Group B- Qatar vs Switzerland". The rest of the
+  // World Cup feed uses " - " consistently, so the missing-space form is a
+  // typo at the source. Narrow scope (only after "Group <letter>") so we
+  // don't reflow legitimate hyphenated words.
+  working = working.replace(/\b(Group\s+[A-Z])-\s+/g, "$1 - ");
   working = working.trim();
   const letters = working.replace(/[^A-Za-z]/g, "");
   if (!letters) return working;
