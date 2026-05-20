@@ -65,8 +65,29 @@ function platformKeys(publishedTo) {
     .filter((k) => k.length > k.indexOf(":") + 1);
 }
 
+// Hard floor: today PT midnight in UTC ms. The midnight nuke-old-posts run
+// deletes everything published before this moment from every platform, so any
+// post older than this is either gone (engagement APIs return 0/404) or a
+// Bluesky-style "success with zero" zombie. Apply alongside LOOKBACK_DAYS so
+// the dashboard resets every midnight instead of accreting stale entries.
+function todayPtMidnightMs() {
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  // PT is UTC-8 (PST) or UTC-7 (PDT). Resolve by formatting "today 00:00 PT"
+  // through Intl then re-parsing as UTC offset — cheapest correct path.
+  const fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    timeZoneName: "longOffset",
+    year: "numeric", month: "2-digit", day: "2-digit",
+  });
+  const parts = fmt.formatToParts(new Date(`${today}T12:00:00Z`));
+  const offsetPart = parts.find((p) => p.type === "timeZoneName")?.value || "GMT-08:00";
+  const offset = offsetPart.replace("GMT", "") || "-08:00";
+  return new Date(`${today}T00:00:00${offset}`).getTime();
+}
+
 function loadRecentPublished() {
-  const cutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  const lookbackCutoff = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000;
+  const cutoff = Math.max(lookbackCutoff, todayPtMidnightMs());
   const out = [];
   const seen = new Set();
   const seenPlatformIds = new Set();
@@ -901,12 +922,17 @@ async function main() {
   for (const p of sbtPosts) {
     for (const k of platformKeys(p.publishedTo)) seenPlatformIds.add(k);
   }
+  const midnightCutoff = todayPtMidnightMs();
   const historical = [];
   for (const [key, entry] of priorByKey) {
     if (liveKeys.has(key)) continue;
     // Drop any leftover HHSS entries (moved to Buffer 2026-05-19) so the
     // engagement file self-cleans on next run.
     if (entry.brand && entry.brand !== "SBT") continue;
+    // Drop prior entries from before today PT midnight — the midnight purge
+    // deletes those posts from every platform, so any engagement they appear
+    // to have is a Bluesky "success with zero" zombie.
+    if (entry.publishedAt && new Date(entry.publishedAt).getTime() < midnightCutoff) continue;
     const sp = priorToSourcePost(entry);
     if (!sp) continue;
     const platIds = platformKeys(sp.publishedTo);
