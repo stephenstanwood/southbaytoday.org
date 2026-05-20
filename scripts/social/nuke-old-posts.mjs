@@ -18,7 +18,7 @@
 // Used as the midnight nightly purge via scripts/social/nightly-purge.plist
 // → org.southbaytoday.nightly-purge. Every day is a new day.
 
-import { readFileSync, writeFileSync, renameSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync, appendFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,6 +38,10 @@ const dryRun = args.includes("--dry-run");
 const force = args.includes("--force");
 const notify = args.includes("--notify");
 const allBeforeNow = args.includes("--all-before-now");
+// --snapshot-only: write the pre-delete engagement snapshot, skip deletes
+// and state-file prune. Use for ad-hoc backfill (e.g. before pulling in a
+// new reflect.py) without touching platforms.
+const snapshotOnly = args.includes("--snapshot-only");
 const cutoffIdx = args.indexOf("--cutoff");
 const maxAgeArg = args.find((a) => a.startsWith("--max-age-days="));
 
@@ -104,6 +108,83 @@ function isBeforeCutoff(iso) {
 }
 
 console.log(`Deleting all posts before ${cutoffDisplay}${dryRun ? " (DRY RUN)" : ""}\n`);
+
+// ── Snapshot engagement BEFORE deletion ───────────────────────────────────
+//
+// collect-engagement.mjs writes social-engagement.json every 3 minutes with
+// per-platform counts (Bluesky/X/Threads/FB/IG/Mastodon/Pinterest). pruneRecords()
+// at the end of this run will strip old entries from that file — and once the
+// posts are deleted, the per-platform engagement APIs return empty / 404, so
+// future runs can't recover those counts either.
+//
+// The fix: before doing anything destructive, copy every soon-to-be-pruned
+// post entry into an append-only JSONL log. social-cat's reflect.py reads it
+// to score posts that have since been deleted, and any future historical
+// analysis can read the same file.
+//
+// Cross-platform: each line carries the full `platforms` map (id + counts +
+// actor lists) from social-engagement.json. Reflect.py uses it for all 6
+// platforms; the bluesky-only filter in reflect.py is dropped in tandem.
+//
+// Append-only with no dedup at write time — readers dedup by keeping the
+// LATEST snapshotAt per post key. Cheap, robust to double-runs.
+function snapshotEngagement() {
+  console.log("=== SNAPSHOT ENGAGEMENT ===");
+  const engFile = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement.json");
+  const histFile = join(__dirname, "..", "..", "src", "data", "south-bay", "social-engagement-history.jsonl");
+
+  let eng;
+  try {
+    eng = JSON.parse(readFileSync(engFile, "utf8"));
+  } catch (err) {
+    console.log(`  read social-engagement.json failed: ${err.message}`);
+    return;
+  }
+
+  const snapshotAt = new Date().toISOString();
+  const lines = [];
+  let skippedNoPlat = 0;
+  let skippedFuture = 0;
+  for (const p of eng.posts || []) {
+    if (!p.publishedAt) continue;
+    if (!isBeforeCutoff(p.publishedAt)) { skippedFuture++; continue; }
+    if (!p.platforms || Object.keys(p.platforms).length === 0) { skippedNoPlat++; continue; }
+    lines.push(JSON.stringify({
+      snapshotAt,
+      key: p.key,
+      brand: p.brand,
+      title: p.title,
+      publishedAt: p.publishedAt,
+      targetUrl: p.targetUrl,
+      sourceTag: p.sourceTag,
+      platforms: p.platforms,
+    }));
+  }
+
+  if (lines.length === 0) {
+    console.log(`  nothing to snapshot (${skippedFuture} too new, ${skippedNoPlat} no-platforms)`);
+    return;
+  }
+
+  if (dryRun) {
+    console.log(`  would snapshot ${lines.length} posts → ${histFile}`);
+    return;
+  }
+
+  try {
+    appendFileSync(histFile, lines.join("\n") + "\n");
+    console.log(`  snapshotted ${lines.length} posts to social-engagement-history.jsonl`);
+  } catch (err) {
+    console.log(`  append failed: ${err.message}`);
+  }
+}
+
+snapshotEngagement();
+
+if (snapshotOnly) {
+  console.log("\n--snapshot-only: skipping all deletes and state-file prune");
+  process.exit(0);
+}
 
 const BSKY_API = "https://bsky.social/xrpc";
 

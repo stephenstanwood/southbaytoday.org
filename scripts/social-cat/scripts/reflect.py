@@ -3,18 +3,25 @@ what got engagement, and write `data/voice_weights.json` so the next
 cycle of trend-picking + reply-pool biases (within bounds) toward
 what landed.
 
-Runs once a night at 02:30 PT (before Stephen wakes). Best-effort:
-Bluesky API failures are non-fatal; the file is just rewritten with
-whatever sample we got. The read-side (voice_weights.py) defaults to
-1.0× multipliers when the file is missing or partial.
+Runs once a night at 03:00 PT (after the 00:00 PT nightly purge has
+snapshotted final per-post engagement to social-engagement-history.jsonl).
+Best-effort: API failures are non-fatal; the file is just rewritten
+with whatever sample we got. The read-side (voice_weights.py) defaults
+to 1.0× multipliers when the file is missing or partial.
 
-V1 scope:
-- Only scores Bluesky posts. Twitter/Threads/FB/Mastodon engagement
-  reads require per-platform API plumbing — added in V2.
-- Learns two axes:
-    * per-category multiplier (which kinds of trend land)
-    * warm reply handles (Bluesky accounts that engaged back when SBT
-      replied — bias the reply pool toward them next cycle)
+Engagement sources (cross-platform — Bluesky, X, Threads, FB, IG, Mastodon):
+- src/data/south-bay/social-engagement-history.jsonl — append-only log
+  written by nuke-old-posts.mjs RIGHT BEFORE it deletes a day's posts.
+  Authoritative for deleted posts. Dedup-by-latest at read time.
+- Bluesky public getPosts — live fallback for posts not yet snapshotted
+  (e.g. published today, still on the platform). Other platforms can't
+  be live-queried without auth; rely on the snapshot.
+
+Learns:
+  * per-category multiplier (which kinds of trend land)
+  * per-type breakdown (trend vs reply, etc.)
+  * warm reply handles (accounts that engaged back when SBT replied —
+    bias the reply pool toward them next cycle)
 
 Voice guardrails (non-negotiable bounds, not heuristics):
 - Per-category multiplier clamped to [0.5, 1.5]. No category drops out;
@@ -36,7 +43,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 POST_LOG = ROOT / "data" / "post_log.jsonl"
-ENGAGEMENT_SNAPSHOT = ROOT / "data" / "post_engagement.jsonl"
+# Cross-platform pre-purge engagement snapshot — written by SBT's
+# scripts/social/nuke-old-posts.mjs at midnight before deletes.
+ENGAGEMENT_HISTORY = ROOT.parent.parent / "src" / "data" / "south-bay" / "social-engagement-history.jsonl"
 WEIGHTS_PATH = ROOT / "data" / "voice_weights.json"
 
 PUBLIC_BSKY = "https://public.api.bsky.app/xrpc"
@@ -77,13 +86,16 @@ def _http_get(url: str) -> dict:
         return json.load(r)
 
 
-def _fetch_live(uris: list[str], chunk: int = 10) -> dict[str, dict]:
+def _fetch_live_bsky(uris: list[str], chunk: int = 10) -> dict[tuple[str, str], dict]:
     """Public getPosts for posts still on Bluesky. Falls back to one-at-a-time
-    when a batch fails (typically because one URI was deleted)."""
-    out: dict[str, dict] = {}
+    when a batch fails (typically because one URI was deleted).
+
+    Returns ("bluesky", uri) → counts so the live lookup composes cleanly with
+    cross-platform snapshot data."""
+    out: dict[tuple[str, str], dict] = {}
 
     def _record(p: dict):
-        out[p["uri"]] = {
+        out[("bluesky", p["uri"])] = {
             "like_count": p.get("likeCount", 0),
             "reply_count": p.get("replyCount", 0),
             "repost_count": p.get("repostCount", 0),
@@ -111,14 +123,33 @@ def _fetch_live(uris: list[str], chunk: int = 10) -> dict[str, dict]:
     return out
 
 
-def _load_snapshots() -> dict[str, dict]:
-    """Engagement counts captured before deletion (if/when we add a TTL).
-    Authoritative for posts no longer on the platform. Currently empty
-    because social-cat doesn't delete; harmless to read either way."""
-    out: dict[str, dict] = {}
-    if not ENGAGEMENT_SNAPSHOT.exists():
+# Map social-engagement.json field names to reflect.py's internal *_count
+# names. `views` is dropped — engagement_score only weighs the action metrics.
+def _normalize_counts(raw: dict) -> dict:
+    return {
+        "like_count": raw.get("likes", 0),
+        "reply_count": raw.get("replies", 0),
+        "repost_count": raw.get("reposts", 0),
+        "quote_count": raw.get("quotes", 0),
+    }
+
+
+def _load_snapshots() -> dict[tuple[str, str], dict]:
+    """Read the cross-platform pre-purge snapshot written by SBT's
+    scripts/social/nuke-old-posts.mjs. Append-only JSONL: one post per line,
+    each with a `platforms` map of platform → {id, counts: {likes/replies/
+    reposts/quotes/views}, …}.
+
+    Returns (platform, post_id) → counts (reflect.py's internal *_count
+    naming). When the same post key appears multiple times (re-purge, etc.),
+    we keep the LATEST snapshot — that's the freshest engagement read."""
+    out: dict[tuple[str, str], dict] = {}
+    if not ENGAGEMENT_HISTORY.exists():
         return out
-    for line in ENGAGEMENT_SNAPSHOT.read_text().splitlines():
+    # Track latest snapshotAt per (platform, id) so re-runs don't lose
+    # accumulated engagement to an earlier, lower-count snapshot.
+    seen_at: dict[tuple[str, str], str] = {}
+    for line in ENGAGEMENT_HISTORY.read_text().splitlines():
         line = line.strip()
         if not line:
             continue
@@ -126,15 +157,19 @@ def _load_snapshots() -> dict[str, dict]:
             e = json.loads(line)
         except Exception:
             continue
-        uri = e.get("uri")
-        if not uri:
-            continue
-        out[uri] = {
-            "like_count": e.get("like_count", 0),
-            "reply_count": e.get("reply_count", 0),
-            "repost_count": e.get("repost_count", 0),
-            "quote_count": e.get("quote_count", 0),
-        }
+        snapshot_at = e.get("snapshotAt", "")
+        platforms = e.get("platforms") or {}
+        for plat, info in platforms.items():
+            post_id = info.get("id")
+            counts = info.get("counts")
+            if not post_id or not counts:
+                continue
+            key = (plat, post_id)
+            prior = seen_at.get(key)
+            if prior is not None and snapshot_at <= prior:
+                continue
+            seen_at[key] = snapshot_at
+            out[key] = _normalize_counts(counts)
     return out
 
 
@@ -162,20 +197,44 @@ def _load_log_window(days: int) -> list[dict]:
             continue
         if not entry.get("uri"):
             continue
-        if entry.get("platform") != "bluesky":
-            continue  # V1: only Bluesky engagement reads
+        if not entry.get("platform"):
+            continue
         out.append(entry)
     return out
 
 
+def _post_id_for_lookup(entry: dict) -> str:
+    """Map a post_log entry's `uri` to the post_id used in the engagement
+    snapshot. Most platforms publish a URL or numeric ID in post_log; the
+    snapshot stores the platform's native id. They match for Bluesky
+    (at:// URI) and X/Threads/FB (numeric). Mastodon logs a full URL —
+    strip to numeric status id, matching collect-engagement.mjs."""
+    uri = entry.get("uri") or ""
+    platform = entry.get("platform", "")
+    if platform == "twitter":
+        platform = "x"
+    if platform == "mastodon":
+        m = uri.rsplit("/", 1)
+        if m and m[-1].isdigit():
+            return m[-1]
+    return uri
+
+
 # ---- weight computation --------------------------------------------------
 
-def _category_multipliers(entries: list[dict], counts: dict[str, dict]) -> dict[str, dict]:
+def _counts_for(entry: dict, counts: dict[tuple[str, str], dict]) -> dict:
+    plat = entry.get("platform") or ""
+    if plat == "twitter":
+        plat = "x"
+    return counts.get((plat, _post_id_for_lookup(entry)), {})
+
+
+def _category_multipliers(entries: list[dict], counts: dict[tuple[str, str], dict]) -> dict[str, dict]:
     """Per-category multiplier = avg(score) / global_avg, clamped."""
     by_cat: dict[str, list[float]] = defaultdict(list)
     for e in entries:
         cat = e.get("category") or "other"
-        score = engagement_score(counts.get(e["uri"], {}))
+        score = engagement_score(_counts_for(e, counts))
         by_cat[cat].append(score)
 
     all_scores = [s for ss in by_cat.values() for s in ss]
@@ -202,10 +261,10 @@ def _category_multipliers(entries: list[dict], counts: dict[str, dict]) -> dict[
     return out
 
 
-def _type_breakdown(entries: list[dict], counts: dict[str, dict]) -> dict[str, dict]:
+def _type_breakdown(entries: list[dict], counts: dict[tuple[str, str], dict]) -> dict[str, dict]:
     by_type: dict[str, list[float]] = defaultdict(list)
     for e in entries:
-        by_type[e.get("type", "unknown")].append(engagement_score(counts.get(e["uri"], {})))
+        by_type[e.get("type", "unknown")].append(engagement_score(_counts_for(e, counts)))
     out: dict[str, dict] = {}
     for t, scores in by_type.items():
         avg = sum(scores) / len(scores) if scores else 0
@@ -213,25 +272,43 @@ def _type_breakdown(entries: list[dict], counts: dict[str, dict]) -> dict[str, d
     return out
 
 
-def _warm_reply_handles(entries: list[dict], counts: dict[str, dict], limit: int = 12) -> list[dict]:
-    """Bluesky handles SBT replied to where the target actually engaged
-    back (reply, like, repost). These are accounts more likely to keep
-    engaging — bias the reply pool toward them next cycle.
+def _platform_breakdown(entries: list[dict], counts: dict[tuple[str, str], dict]) -> dict[str, dict]:
+    """Mean engagement score per platform — visibility into which platforms
+    actually move for SBT. Not used by draft.py yet, but exposed in voice_weights
+    so consumers (or a future drafter mode) can read it."""
+    by_plat: dict[str, list[float]] = defaultdict(list)
+    for e in entries:
+        plat = e.get("platform", "unknown")
+        if plat == "twitter":
+            plat = "x"
+        by_plat[plat].append(engagement_score(_counts_for(e, counts)))
+    out: dict[str, dict] = {}
+    for p, scores in by_plat.items():
+        avg = sum(scores) / len(scores) if scores else 0
+        out[p] = {"avg_score": round(avg, 2), "posts": len(scores)}
+    return out
+
+
+def _warm_reply_handles(entries: list[dict], counts: dict[tuple[str, str], dict], limit: int = 12) -> list[dict]:
+    """Handles SBT replied to where the target actually engaged back (reply,
+    like, repost). Bluesky-only — that's the platform where social-cat's
+    drafter biases the reply pool. The reply_to_handle field is logged at
+    publish time by publisher.py.
     """
     warm: list[dict] = []
     for e in entries:
         if e.get("type") != "reply":
             continue
+        if e.get("platform") != "bluesky":
+            continue
         # The reply_to_uri encodes the parent: at://did/app.bsky.feed.post/rkey
         parent_uri = e.get("reply_to_uri") or ""
         if not parent_uri.startswith("at://"):
             continue
-        # The handle isn't in the AT URI directly — log it during publish.
-        # If reply_to_handle was logged, use it; otherwise skip warmth.
         handle = e.get("reply_to_handle")
         if not handle:
             continue
-        c = counts.get(e["uri"], {})
+        c = _counts_for(e, counts)
         score = engagement_score(c)
         # "real engagement" = the target replied back, or > a few likes
         if c.get("reply_count", 0) >= 1 or score >= 2:
@@ -251,9 +328,9 @@ def _warm_reply_handles(entries: list[dict], counts: dict[str, dict], limit: int
     return deduped[:limit]
 
 
-def _summary(cat_mults: dict[str, dict], type_break: dict[str, dict], warm: list[dict], sample: int) -> str:
+def _summary(cat_mults: dict[str, dict], type_break: dict[str, dict], plat_break: dict[str, dict], warm: list[dict], sample: int) -> str:
     if sample < MIN_SAMPLE:
-        return f"sample too small ({sample} bluesky posts) — running with neutral 1.0× weights"
+        return f"sample too small ({sample} posts) — running with neutral 1.0× weights"
     leaders = sorted(cat_mults.items(), key=lambda x: x[1]["multiplier"], reverse=True)
     top = [f"{name} ({d['multiplier']}×, n={d['posts']})"
            for name, d in leaders[:3] if d["multiplier"] > 1.0]
@@ -263,6 +340,10 @@ def _summary(cat_mults: dict[str, dict], type_break: dict[str, dict], warm: list
         f"{t}:{d['avg_score']}"
         for t, d in sorted(type_break.items(), key=lambda x: x[1]["avg_score"], reverse=True)
     )
+    plat_line = " · ".join(
+        f"{p}:{d['avg_score']}(n={d['posts']})"
+        for p, d in sorted(plat_break.items(), key=lambda x: x[1]["avg_score"], reverse=True)
+    )
     warm_line = ", ".join(f"@{w['handle']}" for w in warm[:5]) if warm else "—"
     parts = []
     if top:
@@ -270,6 +351,7 @@ def _summary(cat_mults: dict[str, dict], type_break: dict[str, dict], warm: list
     if bottom:
         parts.append("down: " + ", ".join(bottom))
     parts.append("avg by type: " + type_line)
+    parts.append("avg by platform: " + plat_line)
     parts.append("warm handles: " + warm_line)
     return " | ".join(parts)
 
@@ -279,7 +361,7 @@ def _summary(cat_mults: dict[str, dict], type_break: dict[str, dict], warm: list
 def run() -> int:
     entries = _load_log_window(LOOKBACK_DAYS)
     if not entries:
-        print("[reflect] no bluesky post-log entries in window — nothing to reflect on")
+        print("[reflect] no post-log entries in window — nothing to reflect on")
         # Still write an empty weights file so the read-side has a clean state
         WEIGHTS_PATH.parent.mkdir(parents=True, exist_ok=True)
         WEIGHTS_PATH.write_text(json.dumps({
@@ -288,25 +370,36 @@ def run() -> int:
             "sample_size": 0,
             "category": {},
             "type": {},
+            "platform": {},
             "warm_handles": [],
             "summary": "no posts in window",
         }, indent=2))
         return 0
 
-    uris = list({e["uri"] for e in entries})
-    print(f"[reflect] reflecting on {len(uris)} bluesky posts over {LOOKBACK_DAYS}d")
+    print(f"[reflect] reflecting on {len(entries)} post-log entries over {LOOKBACK_DAYS}d "
+          f"(platforms: {sorted({e.get('platform','?') for e in entries})})")
 
+    # Snapshot is authoritative for ALL platforms (written before purge).
+    # Live Bluesky fetch backfills posts published today that haven't hit
+    # the next snapshot yet — other platforms can't be live-queried without
+    # auth, so they're snapshot-only.
     snapshots = _load_snapshots()
-    needs_live = [u for u in uris if u not in snapshots]
-    live = _fetch_live(needs_live) if needs_live else {}
-    counts = {**snapshots, **live}
-    print(f"[reflect] counts: {len(snapshots)} snapshot + {len(live)} live = {len(counts)}/{len(uris)}")
+    bsky_uris_needing_live = [
+        e["uri"] for e in entries
+        if e.get("platform") == "bluesky"
+        and ("bluesky", e["uri"]) not in snapshots
+    ]
+    live = _fetch_live_bsky(list(set(bsky_uris_needing_live))) if bsky_uris_needing_live else {}
+    counts: dict[tuple[str, str], dict] = {**snapshots, **live}
+    print(f"[reflect] counts: {len(snapshots)} snapshot + {len(live)} live bsky = {len(counts)} keys")
 
-    qualifying = [e for e in entries if e["uri"] in counts]
+    qualifying = [e for e in entries if _counts_for(e, counts)]
+    print(f"[reflect] qualifying entries with counts: {len(qualifying)}/{len(entries)}")
     cat_mults = _category_multipliers(qualifying, counts)
     type_break = _type_breakdown(qualifying, counts)
+    plat_break = _platform_breakdown(qualifying, counts)
     warm = _warm_reply_handles(qualifying, counts)
-    summary = _summary(cat_mults, type_break, warm, len(qualifying))
+    summary = _summary(cat_mults, type_break, plat_break, warm, len(qualifying))
 
     output = {
         "updated_ts": datetime.now(timezone.utc).isoformat(),
@@ -314,6 +407,7 @@ def run() -> int:
         "sample_size": len(qualifying),
         "category": cat_mults,
         "type": type_break,
+        "platform": plat_break,
         "warm_handles": warm,
         "summary": summary,
     }
