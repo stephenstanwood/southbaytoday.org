@@ -332,7 +332,6 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .post-card.no-engagement { opacity: 0.55; }
   .post-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
   .post-title { font-size: 14px; font-weight: 600; color: #1a1a1a; flex: 1; min-width: 0; }
-  .brand-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; }
   .source-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; border: 1px solid; }
   .source-badge.source-trend { color: #6d28d9; border-color: #c4b5fd; background: #f5f3ff; }
   .source-badge.source-reply { color: #0e7490; border-color: #a5f3fc; background: #ecfeff; }
@@ -362,8 +361,6 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   .reply-text { color: #333; margin-top: 4px; line-height: 1.4; word-wrap: break-word; }
   .reply-permalink { font-size: 10px; color: #4338ca; margin-top: 4px; display: inline-block; }
   .placeholder { font-size: 11px; color: #aaa; font-style: italic; }
-  .fb-cross-link { display: inline-flex; align-items: center; padding: 4px 6px; font-size: 14px; text-decoration: none; opacity: 0.55; transition: opacity 0.1s; line-height: 1; }
-  .fb-cross-link:hover { opacity: 1; }
   /* New-since-last-visit highlighting */
   .new-summary { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; font-weight: 600; }
   .new-summary.zero { background: transparent; border-color: transparent; color: #aaa; font-weight: 400; }
@@ -404,11 +401,7 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
 <div class="totals" id="totals"></div>
 
 <div class="controls">
-  <span style="color:#888;">Organization:</span>
-  <button class="pill-btn" data-brand="all">all</button>
-  <button class="pill-btn active" data-brand="SBT">SBT</button>
-  <button class="pill-btn" data-brand="HHSS">HHSS</button>
-  <span style="color:#888;margin-left:12px;">Platform:</span>
+  <span style="color:#888;">Platform:</span>
   <button class="pill-btn active" data-platform="all">all</button>
   <button class="pill-btn" data-platform="bluesky">bluesky</button>
   <button class="pill-btn" data-platform="x">x</button>
@@ -429,10 +422,8 @@ const TYPE_ORDER = ['likes', 'shares', 'replies'];
 const TYPE_LBL = { likes: 'likes', shares: 'shares', replies: 'replies' };
 const sharesOf = (counts) => (counts?.reposts || 0) + (counts?.quotes || 0);
 const displayCount = (counts, k) => k === 'shares' ? sharesOf(counts) : (counts?.[k] || 0);
-const BRAND_COLORS = { SBT: '#4338ca', HHSS: '#16a34a' };
 let DATA = null;
 let activePlatform = 'all';
-let activeBrand = 'SBT';
 
 // "New since last visit" baseline: snapshot of per-post-per-platform counts
 // from the previous visit, plus the timestamp of that visit. Held in memory
@@ -662,11 +653,9 @@ function renderPost(post) {
   const platforms = post.platforms || {};
   const platKeys = Object.keys(platforms);
   const total = totalForPost(post);
-  const brand = post.brand || 'SBT';
 
-  if (activeBrand !== 'all' && brand !== activeBrand) return '';
   const anyBlocked = Object.values(platforms).some(p => p._engagementBlocked);
-  if (total === 0 && !anyBlocked) return ''; // hide silent SBT posts; keep HHSS visible
+  if (total === 0 && !anyBlocked) return '';
   if (activePlatform !== 'all') {
     const c = platforms[activePlatform]?.counts || {};
     const platTotal = (c.likes||0)+(c.reposts||0)+(c.quotes||0)+(c.replies||0);
@@ -685,20 +674,9 @@ function renderPost(post) {
     ? '<a href="' + post.targetUrl + '" target="_blank">' + escapeHtml(post.title) + '</a>'
     : escapeHtml(post.title);
 
-  const pills = filteredPlats.map(k => {
-    const pill = renderPlatformPill(k, platforms[k], false, post.key);
-    // HHSS cross-posts to FB. When the IG pill renders (i.e. has reactions),
-    // tack on a small FB deep-link so we can hop to the matching FB post.
-    // No counts — engagement reads are walled off by Meta App Review.
-    if (k === 'instagram' && pill && post.fbPermalink) {
-      return pill + '<a class="fb-cross-link" href="' + post.fbPermalink + '" target="_blank" title="View on Facebook">📘</a>';
-    }
-    return pill;
-  }).join('');
-  const brandColor = BRAND_COLORS[brand] || '#888';
-  const brandBadge = '<span class="brand-badge" style="background:' + brandColor + ';">' + brand + '</span>';
+  const pills = filteredPlats.map(k => renderPlatformPill(k, platforms[k], false, post.key)).join('');
   // social-cat (swiper) posts get a secondary chip so they're visually distinct
-  // from event/day-plan posts. Same brand (same accounts) — different origin.
+  // from event/day-plan posts. Same accounts — different origin.
   const sourceBadge = post.sourceTag
     ? '<span class="source-badge source-' + escapeHtml(post.sourceTag) + '">' + escapeHtml(post.sourceTag) + '</span>'
     : '';
@@ -706,7 +684,6 @@ function renderPost(post) {
   return (
     '<div class="' + cardCls + '" data-key="' + escapeHtml(post.key) + '">' +
       '<div class="post-head">' +
-        brandBadge +
         sourceBadge +
         '<div class="post-title">' + titleHtml + '</div>' +
         '<div class="post-meta">' + escapeHtml(timeAgo(post.publishedAt)) + '</div>' +
@@ -800,15 +777,6 @@ document.querySelectorAll('.pill-btn[data-platform]').forEach(btn => {
     document.querySelectorAll('.pill-btn[data-platform]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activePlatform = btn.dataset.platform;
-    render();
-  });
-});
-
-document.querySelectorAll('.pill-btn[data-brand]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.pill-btn[data-brand]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeBrand = btn.dataset.brand;
     render();
   });
 });
