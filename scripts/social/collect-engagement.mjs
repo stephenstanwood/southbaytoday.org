@@ -840,10 +840,10 @@ async function processPost(post, xCreds, ownXReplyMap = null) {
 }
 
 // Load prior engagement file so historical posts persist across runs even
-// when they fall out of the three live sources. Without this the dashboard
-// loses ~everything every morning at 5am, when the daily plist regen
-// (regenerate-publish-plist.mjs → launchctl bootout/bootstrap) re-opens
-// /tmp/sbs-publish.log in truncate mode.
+// when they fall out of the three live sources. The publish log gets pruned
+// of pre-cutoff PUBLISH_SUMMARY blocks by the midnight nuke-old-posts run,
+// so without this any post older than today's cutoff would vanish from the
+// dashboard the moment its log block is dropped.
 function loadPriorByKey() {
   if (!existsSync(OUT_FILE)) return new Map();
   try {

@@ -408,7 +408,6 @@ const ENGAGEMENT_HTML = `<!DOCTYPE html>
   <button class="pill-btn" data-platform="threads">threads</button>
   <button class="pill-btn" data-platform="instagram">instagram</button>
   <button class="pill-btn" data-platform="mastodon">mastodon</button>
-  <button class="pill-btn" data-platform="pinterest">pinterest</button>
   <button class="refresh-btn" onclick="load()">refresh</button>
 </div>
 

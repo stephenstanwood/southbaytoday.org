@@ -819,6 +819,46 @@ function pruneRecords() {
   } catch (err) {
     console.log(`  engagement prune failed: ${err.message}`);
   }
+
+  // 4) Publish log — collect-engagement.mjs tails /tmp/sbs-publish.log for
+  // PUBLISH_SUMMARY lines and re-polls every post ID it finds. After this
+  // purge those IDs are dead on the platforms but the API still returns
+  // success-with-zero, so they'd come back as zombie 0-count posts on the
+  // Social Signal dashboard. Drop SUMMARY blocks whose preceding fire
+  // timestamp is before cutoff so the log only resurrects today's posts.
+  //
+  // The publish log is opened in append mode by launchd's StandardOutPath,
+  // so a write-replace from outside the publisher process is safe between
+  // publisher fires (next fire is 7:15am at the earliest; this runs at 0:00).
+  for (const logPath of ["/tmp/sbs-publish.log", "/tmp/sbt-publish.log"]) {
+    try {
+      const txt = readFileSync(logPath, "utf8");
+      const lines = txt.split("\n");
+      const out = [];
+      let dropping = false; // we're inside an old block
+      let summariesDropped = 0;
+      let summariesKept = 0;
+      for (const line of lines) {
+        // Block boundary: "📤 Publish from queue — YYYY-MM-DD H:MM AM/PM"
+        const fireMatch = line.match(/^📤 Publish from queue — (\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2}\s*(?:AM|PM)?)/i);
+        if (fireMatch) {
+          const ts = new Date(`${fireMatch[1]} ${fireMatch[2]}`).getTime();
+          dropping = Number.isFinite(ts) && ts < cutoffMs;
+        }
+        if (line.startsWith("PUBLISH_SUMMARY:")) {
+          if (dropping) { summariesDropped++; continue; }
+          summariesKept++;
+        }
+        if (dropping) continue;
+        out.push(line);
+      }
+      writeFileSync(logPath + ".tmp", out.join("\n"));
+      renameSync(logPath + ".tmp", logPath);
+      console.log(`  ${logPath}: ${summariesDropped} stale summaries dropped, ${summariesKept} kept`);
+    } catch (err) {
+      if (err.code !== "ENOENT") console.log(`  ${logPath} prune failed: ${err.message}`);
+    }
+  }
 }
 
 if (!dryRun) pruneRecords();
