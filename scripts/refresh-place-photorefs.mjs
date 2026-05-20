@@ -10,7 +10,7 @@
 // bursts hit rate limits and produce silent skips.
 
 import { execSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadEnvLocal } from "./lib/env.mjs";
@@ -20,9 +20,6 @@ loadEnvLocal();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, "..", "src", "data", "south-bay");
 const PLACES = join(DATA, "places.json");
-const DEFAULT_PLANS = join(DATA, "default-plans.json");
-const RESEARCH = join(DATA, "place-research-cache.json");
-const EVENTS = join(DATA, "upcoming-events.json");
 
 const FORCE = process.argv.includes("--force");
 const CONCURRENCY = 2;
@@ -112,69 +109,56 @@ data._meta.lastPhotoRefRefresh = new Date().toISOString();
 writeFileSync(PLACES, JSON.stringify(data, null, 2));
 console.log("places.json written");
 
-// Propagate fresh refs to default-plans.json (card.id format `place:<ID>`,
-// event cards carry the photoRef directly as `places/<ID>/photos/...`).
-const dp = JSON.parse(readFileSync(DEFAULT_PLANS, "utf8"));
-let dpUpd = 0;
-for (const planKey of Object.keys(dp.plans || {})) {
-  for (const c of dp.plans[planKey].cards || []) {
-    let placeId = null;
-    if (c.id?.startsWith("place:")) placeId = c.id.slice(6);
-    else if (c.photoRef?.startsWith("places/")) {
-      placeId = c.photoRef.match(/^places\/([^/]+)\//)?.[1] || null;
-    }
-    if (placeId && idToNew.has(placeId) && c.photoRef !== idToNew.get(placeId)) {
-      c.photoRef = idToNew.get(placeId);
-      dpUpd++;
+// Propagate fresh refs to every JSON file in src/data/south-bay/ that
+// carries a photoRef somewhere in its tree. Walks recursively so new files
+// added to the pipeline get covered automatically — that's how weekend-picks
+// silently slipped through the first run.
+function walkAndSwap(node, stats) {
+  if (Array.isArray(node)) {
+    for (const item of node) walkAndSwap(item, stats);
+    return;
+  }
+  if (!node || typeof node !== "object") return;
+  if (typeof node.photoRef === "string" && node.photoRef.startsWith("places/")) {
+    const m = node.photoRef.match(/^places\/([^/]+)\//);
+    if (m && idToNew.has(m[1])) {
+      const fresh = idToNew.get(m[1]);
+      if (node.photoRef !== fresh) {
+        node.photoRef = fresh;
+        stats.count++;
+      }
     }
   }
+  for (const k of Object.keys(node)) walkAndSwap(node[k], stats);
 }
-writeFileSync(DEFAULT_PLANS, JSON.stringify(dp, null, 2));
-console.log(`default-plans.json: ${dpUpd} updated`);
 
-// Events copy a venue photoRef at ingest — keep them in sync.
-const events = JSON.parse(readFileSync(EVENTS, "utf8"));
-const evArr = Array.isArray(events) ? events : events.events || [];
-let evUpd = 0;
-for (const e of evArr) {
-  if (e.photoRef?.startsWith("places/")) {
-    const m = e.photoRef.match(/^places\/([^/]+)\//);
-    if (m && idToNew.has(m[1]) && e.photoRef !== idToNew.get(m[1])) {
-      e.photoRef = idToNew.get(m[1]);
-      evUpd++;
-    }
-  }
-}
-writeFileSync(EVENTS, JSON.stringify(events, null, 2));
-console.log(`upcoming-events.json: ${evUpd} updated`);
+const dataFiles = readdirSync(DATA)
+  .filter((f) => f.endsWith(".json"))
+  .map((f) => join(DATA, f))
+  .filter((f) => f !== PLACES);
 
-const research = JSON.parse(readFileSync(RESEARCH, "utf8"));
-let rUpd = 0;
-if (Array.isArray(research)) {
-  for (const r of research) {
-    if (r.id && idToNew.has(r.id) && r.photoRef !== idToNew.get(r.id)) {
-      r.photoRef = idToNew.get(r.id);
-      rUpd++;
-    }
+const propagated = [];
+for (const file of dataFiles) {
+  let json;
+  try {
+    json = JSON.parse(readFileSync(file, "utf8"));
+  } catch {
+    continue;
   }
-} else if (research && typeof research === "object") {
-  for (const id of Object.keys(research)) {
-    if (idToNew.has(id) && research[id]?.photoRef !== idToNew.get(id)) {
-      research[id].photoRef = idToNew.get(id);
-      rUpd++;
-    }
+  const stats = { count: 0 };
+  walkAndSwap(json, stats);
+  if (stats.count > 0) {
+    writeFileSync(file, JSON.stringify(json, null, 2));
+    propagated.push({ file, count: stats.count });
+    console.log(`${file.split("/").pop()}: ${stats.count} updated`);
   }
 }
-writeFileSync(RESEARCH, JSON.stringify(research, null, 2));
-console.log(`place-research-cache.json: ${rUpd} updated`);
 
 if (process.argv.includes("--commit")) {
   const repoRoot = join(__dirname, "..");
   try {
-    execSync(
-      `git add ${PLACES} ${DEFAULT_PLANS} ${RESEARCH} ${EVENTS}`,
-      { cwd: repoRoot, stdio: "pipe" },
-    );
+    const changedFiles = [PLACES, ...propagated.map((p) => p.file)].join(" ");
+    execSync(`git add ${changedFiles}`, { cwd: repoRoot, stdio: "pipe" });
     execSync(
       'git commit -m "data: monthly photoRef refresh"',
       { cwd: repoRoot, stdio: "pipe" },

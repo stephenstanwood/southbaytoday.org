@@ -107,8 +107,14 @@ const SUBS = [
   { name: "AskSF",         weight: 0.4, scope: "bay-area" },
   { name: "bayareafood",   weight: 0.7, scope: "bay-area" },
   // Sports
-  { name: "SanJoseSharks",  weight: 0.7, scope: "sports" },
-  { name: "sjearthquakes",  weight: 0.7, scope: "sports" },
+  // Sports subs are skipped during the team's offseason — empty rinks /
+  // empty pitches generate trade rumors and "what should we do" filler that
+  // doesn't read as fun local content. Months are inclusive PT, 1-indexed.
+  // Sharks: NHL regular season Oct–Apr (we don't bother extending into
+  // playoff months — Sharks haven't made it in years).
+  // Earthquakes: MLS season late Feb–early Nov.
+  { name: "SanJoseSharks",  weight: 0.7, scope: "sports", seasonMonths: [10, 11, 12, 1, 2, 3, 4] },
+  { name: "sjearthquakes",  weight: 0.7, scope: "sports", seasonMonths: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────
@@ -249,8 +255,12 @@ async function main() {
   console.log(`Fetching ${SUBS.length} subreddits…\n`);
 
   // ─── PHASE 1: Fetch posts from every sub ────────────────────────────
+  const ptMonth = Number(new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", month: "numeric" }));
+  const activeSubs = SUBS.filter((s) => !s.seasonMonths || s.seasonMonths.includes(ptMonth));
+  const skipped = SUBS.filter((s) => s.seasonMonths && !s.seasonMonths.includes(ptMonth));
+  if (skipped.length) console.log(`Skipping offseason subs: ${skipped.map((s) => `r/${s.name}`).join(", ")}\n`);
   const all = [];
-  for (const sub of SUBS) {
+  for (const sub of activeSubs) {
     const topDay = await fetchRedditListing(sub.name, "top", "t=day&limit=25");
     await sleep(REQUEST_DELAY_MS);
     const newer = await fetchRedditListing(sub.name, "new", "limit=15");
