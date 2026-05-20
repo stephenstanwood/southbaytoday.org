@@ -19,15 +19,20 @@
 // Strong kids-only signals: explicit age ranges, preschool/toddler, story
 // time, puppet shows, "kids [activity]" patterns. Note: "kids" alone is NOT
 // enough — "Family Day: Kids Welcome" should stay "all".
+//
+// Age digits are bounded to 0–17 via (?:\d|1[0-7]) — otherwise "ages 50+" or
+// "ages 55+" (senior events) and "ages 18-65" (adult forums) would silently
+// trigger the kids tag, leaking senior programming into kids plans.
+const KIDS_AGE = "(?:\\d|1[0-7])";
 const KIDS_SIGNALS = [
   /\btoddlers?\b/i,
   /\bpreschool(?:er)?s?\b/i,
   /\bstory ?times?\b/i,
   /\bbedtime stor(?:y|ies)\b/i,
   /\bpuppet\s+shows?\b/i,
-  /\bages?\s+\d{1,2}\s*[-–]\s*\d{1,2}\b/i,        // "ages 2-5"
-  /\bages?\s+\d{1,2}\s*(?:and|&|\+)\s*(?:up|under)\b/i, // "ages 5 and up"
-  /\bages?\s+\d{1,2}\+?\b/i,                     // "ages 5+"
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s*[-–]\\s*${KIDS_AGE}\\b`, "i"),        // "ages 2-5"
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\s*(?:and|&|\\+)\\s*(?:up|under)\\b`, "i"), // "ages 5 and up"
+  new RegExp(`\\bages?\\s+${KIDS_AGE}\\+?\\b`, "i"),                     // "ages 5+"
   /\bkid'?s?\s+(?:knitting|craft|art|yoga|cooking|science|club|camp|hour|music|dance|story|story time|book club)\b/i,
   /\bkids'?\s+only\b/i,
   /\bchildren's\s+(?:story|hour|craft|music|book club|program)\b/i,
@@ -70,10 +75,20 @@ const ADULT_SIGNALS = [
  *   - "adult" — adults-only (21+, drag, wine tasting)
  *   - "all"   — mixed / family-friendly / no strong signal (default)
  */
+// Phrases that mention kid ages but describe a service for the parents'
+// kids, NOT the event audience — e.g. adult community forums advertise
+// "childcare available for ages 4+". Stripped before kids classification so
+// they don't trigger the "ages X+" signal.
+const NON_AUDIENCE_AGE_PHRASES = [
+  /\bchildcare\s+(?:available|provided|offered|on[-\s]site)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
+  /\bbabysit(?:ting|ter)\s+(?:available|provided)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
+];
+
 export function classifyAudienceAge(event) {
   const title = String(event.title || "");
   const desc = String(event.description || "").slice(0, 400);
-  const hay = `${title}\n${desc}`;
+  let hay = `${title}\n${desc}`;
+  for (const r of NON_AUDIENCE_AGE_PHRASES) hay = hay.replace(r, "");
 
   const isKids = KIDS_SIGNALS.some((r) => r.test(hay));
   const isAdult = ADULT_SIGNALS.some((r) => r.test(hay));

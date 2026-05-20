@@ -40,3 +40,47 @@ test("ambiguous / default cases stay 'all'", () => {
   assert.equal(classifyAudienceAge(ev("Saturday at the Park", "Family friendly afternoon.")), "all");
   assert.equal(classifyAudienceAge(ev("Live Music at the Brewery", "Beer garden open, food trucks.")), "all");
 });
+
+test("childcare-for-ages phrase does not classify the parent event as kids", () => {
+  // "Community Equity Assessment Forum" leaked into kids plans because the
+  // description mentioned "childcare available for ages 4+" — the forum is
+  // for adults, the childcare is a service for their kids. Strip the phrase.
+  assert.equal(
+    classifyAudienceAge(
+      ev("Community Equity Assessment Forum", "Share feedback on city programs. Light refreshments provided; childcare available for ages 4+."),
+    ),
+    "all",
+  );
+  assert.equal(
+    classifyAudienceAge(ev("Town Hall", "Childcare provided for ages 3+ during the meeting.")),
+    "all",
+  );
+  // Real kids event still classifies as kids
+  assert.equal(
+    classifyAudienceAge(ev("Storytime", "Ages 4+ welcome to listen and read along.")),
+    "kids",
+  );
+});
+
+test("senior age phrases do NOT classify as kids", () => {
+  // Before the digit-bound fix, /\bages?\s+\d{1,2}\+?\b/ matched "ages 50+",
+  // "ages 55+", and "ages 65+" — silently tagging senior programs as kids.
+  // Caught real misfires: "Rodent Prevention 101" (ages 55+), "Next Gen
+  // Seniors - Google Search Skills" (ages 50+), "Trees and Wellness" (ages 55+).
+  assert.equal(
+    classifyAudienceAge(ev("Rodent Prevention 101", "Workshop for ages 55+ on rodent prevention.")),
+    "all",
+  );
+  assert.equal(
+    classifyAudienceAge(ev("Senior Tech Help", "Free for ages 50+; pre-registration required.")),
+    "all",
+  );
+  assert.equal(
+    classifyAudienceAge(ev("Community Forum", "Open to ages 18-65.")),
+    "all",
+  );
+  // Kid ages still classify as kids
+  assert.equal(classifyAudienceAge(ev("Kids Yoga", "Ages 5+ welcome.")), "kids");
+  assert.equal(classifyAudienceAge(ev("Tween Hangout", "Ages 10-13.")), "kids");
+  assert.equal(classifyAudienceAge(ev("Teen Lounge", "Ages 13 and up.")), "kids");
+});
