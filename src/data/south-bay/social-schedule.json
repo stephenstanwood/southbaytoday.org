@@ -1432,7 +1432,7 @@
         }
       ],
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "palo-alto",
         "cityName": "Palo Alto",
@@ -1602,7 +1602,54 @@
         "copyApprovedAt": "2026-05-16T14:19:36.662Z",
         "imageApprovedAt": "2026-05-16T14:19:36.662Z",
         "generatedAt": "2026-05-16T10:51:35.352Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"WEDNESDAY IN THE SOUTH BAY\"\nPalo Alto + Mountain View + Sunnyvale + Los Altos\n\nBreakfast — SWEET55 - Swiss Chocolates & Confections\nPalo Alto food on El Camino Real, $ and casual.\n\nMorning — City of Palo Alto City Hall\nPalo Alto museum on Hamilton Ave, plan an hour or two.\n\nLunch — Hummus Mediterranean Kitchen\nMountain View Mediterranean restaurant on Castro St, $$\n\nAfternoon — Button Making Pop-up for Teens!\nDrop in to make custom buttons using manga, comics, or your own designs in the t\n\nDinner — Valley Goat\nSunnyvale californian restaurant on N Mathilda Ave.\n\nEvening — Interpreting the Partition through Poetry and Art\nExplore how poets and artists interpreted the Partition through combined visual \n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nOrigami / paper fold aesthetic with geometric faceted shapes, subtle shadows, clean modern type.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: electric and vibrant — push saturation, add movement and visual punch.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"WEDNESDAY IN THE SOUTH BAY\"\nPalo Alto + Mountain View + Sunnyvale + Los Altos\n\nBreakfast — SWEET55 - Swiss Chocolates & Confections\nPalo Alto food on El Camino Real, $ and casual.\n\nMorning — City of Palo Alto City Hall\nPalo Alto museum on Hamilton Ave, plan an hour or two.\n\nLunch — Hummus Mediterranean Kitchen\nMountain View Mediterranean restaurant on Castro St, $$\n\nAfternoon — Button Making Pop-up for Teens!\nDrop in to make custom buttons using manga, comics, or your own designs in the t\n\nDinner — Valley Goat\nSunnyvale californian restaurant on N Mathilda Ave.\n\nEvening — Interpreting the Partition through Poetry and Art\nExplore how poets and artists interpreted the Partition through combined visual \n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nOrigami / paper fold aesthetic with geometric faceted shapes, subtle shadows, clean modern type.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: electric and vibrant — push saturation, add movement and visual punch.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-20T14:31:45.027Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2057106838232121720",
+            "id": "2057106838232121720",
+            "text": "Six ideas for Wednesday on the Peninsula: chocolate-shop breakfast in Palo Alto, hummus on Castro Street for lunch, and dinner at Valley Goat in Sunnyvale. Pick what sounds good. 🍫 https://t.co/92wJeeXuqT"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmc4mqkogi24",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmc4mqkogi24",
+            "cid": "bafyreifq5nvqzgdu7ox5mzrcgkxob7zjl5h2qgvwtrklmnv2mvqsnrcznm"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18363375514229691",
+            "id": "18363375514229691"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111729822849604",
+            "id": "122111729822849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116607384993042938",
+            "id": "116607384993042938",
+            "url": "https://mastodon.social/@southbaytoday/116607384993042938"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "17955866450964834",
+            "id": "17955866450964834"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       }
     },
     "2026-05-21": {
