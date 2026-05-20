@@ -1416,6 +1416,12 @@ function inferCategory(title, desc, type, venue = "") {
   // Skip if title is explicitly a music format (concert, recital, jazz brunch is fine
   // as music — "jazz" in title is enough to override).
   if (/\bbrunch\b/.test(titleLower) && !/\b(jazz|concert|recital|symphony|live\s+music)\b/.test(titleLower)) return "food";
+  // Genre tour titles ("Usher & Chris Brown - The R&B Tour", hip-hop bills) come in
+  // from the City Newsletter feed with no Ticketmaster classification to lean on,
+  // so the bare "music" keyword check above misses them. R&B and hip-hop are
+  // unambiguous music genre markers — anchor on word boundary so "rapture",
+  // "hop" by itself, and stray ampersands don't false-positive.
+  if (/\br\s*&\s*b\b|\bhip[-\s]?hop\b/i.test(t)) return "music";
   if (t.includes("concert") || t.includes("music") || t.includes("jazz") || t.includes("symphony") || t.includes("band") || t.includes("orchestra") || t.includes("choir")) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
   // Comedy-club venues (San Jose Improv, Rooster T. Feathers, etc.) host
@@ -2878,7 +2884,7 @@ function mapTicketmasterEvent(e) {
     venue: venueName,
     address: venue?.address?.line1 || "",
     city,
-    category: inferCategory(e.name, genre, segment),
+    category: inferCategory(e.name, genre, segment, venueName),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
     description: truncate(descCandidate),
