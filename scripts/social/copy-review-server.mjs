@@ -129,6 +129,20 @@ function loadSchedule() {
   }
 }
 
+// Serialize all in-process load → mutate → save sequences against
+// social-schedule.json. Without this, a long-running handler (e.g.
+// regen-image awaiting Recraft for 30 sec) holds a stale snapshot, and
+// a quick handler that lands during the await (e.g. upload-image) gets
+// its changes overwritten when the slow handler finally saves. Wiped
+// 4 of Stephen's MJ uploads (5/20-5/23) on 2026-05-16.
+let _scheduleLock = Promise.resolve();
+function withScheduleLock(fn) {
+  const next = _scheduleLock.then(fn, fn);
+  // Keep the chain alive even if fn rejects, so the next caller still runs.
+  _scheduleLock = next.then(() => {}, () => {});
+  return next;
+}
+
 function saveScheduleFile(schedule) {
   // If the file changed on disk since we loaded it, some external script (surgery,
   // cron, manual edit) wrote to it in parallel. Blind-writing our in-memory copy
@@ -2723,6 +2737,7 @@ const server = createServer((req, res) => {
     req.on("data", (c) => chunks.push(c));
     req.on("end", async () => {
       try {
+        await withScheduleLock(async () => {
         const schedule = loadSchedule();
         const slot = schedule.days?.[date]?.[slotType];
         if (!slot) {
@@ -2795,6 +2810,7 @@ const server = createServer((req, res) => {
         saveScheduleFile(schedule);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: true, schedule }));
+        });
       } catch (e) {
         console.error(`  ⚠️  Upload failed: ${e.message}`);
         res.writeHead(500, { "Content-Type": "application/json" });
@@ -2846,6 +2862,7 @@ const server = createServer((req, res) => {
     req.on("data", (c) => (body += c));
     req.on("end", async () => {
       try {
+        await withScheduleLock(async () => {
         const { cardIndex, newCardId } = JSON.parse(body || "{}");
         if (typeof cardIndex !== "number" || !newCardId) {
           res.writeHead(400, { "Content-Type": "application/json" });
@@ -2938,6 +2955,7 @@ const server = createServer((req, res) => {
         saveScheduleFile(schedule);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: true, schedule }));
+        });
       } catch (err) {
         console.error(`[swap-card] failed: ${err.message}`);
         res.writeHead(500, { "Content-Type": "application/json" });
@@ -2990,6 +3008,7 @@ const server = createServer((req, res) => {
     req.on("data", (c) => (body += c));
     req.on("end", async () => {
       try {
+        await withScheduleLock(async () => {
         const schedule = loadSchedule();
         const slot = schedule.days?.[date]?.[slotType];
         if (!slot) {
@@ -3356,6 +3375,7 @@ const server = createServer((req, res) => {
 
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: false, error: "Unknown action" }));
+        });
       } catch (e) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ ok: false, error: e.message }));
