@@ -1420,8 +1420,7 @@
         "imagePrompt": "Linocut block print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Bold carved texture with visible grain throughout. Stylized microphone silhouette fragmented into warm coral, deep indigo, and cream ink layers—abstract geometric shards radiating outward. Speech bubbles and chat symbols broken into angular blocks, layered chaotically. Sparse confetti dots and stars scattered in margins. Rich, energetic composition with generous negative space around main elements. Indie printmaking aesthetic, playful collision of carved marks and bold color fields. Tactile, expressive, museum-quality linocut feel.",
         "mjPrompt": "{California redwood and fog-gray landscape abstraction stylized hills golden hour, Saul Bass film poster bold silhouettes flat shapes stark contrast, color field painting large flat saturated planes meditative scale, Inuit stonecut print bold silhouette arctic palette, Memphis design squiggles confetti dots 80s bold pastels playful, linocut block print carved texture visible grain 2-3 inks indie feel, Donald Judd minimalist box geometry industrial, screen print poster halftone dots limited 3-color palette retro, Vienna Secession Klimt gold leaf decorative pattern, Agnes Martin gentle horizontal grid soft graphite quiet, Hudson River School luminous landscape transcendent vista 19th century, art deco travel poster stepped geometry chrome lines rich teal and gold, Saul Steinberg single-line drawing whimsy intellectual cartooning, block print fabric repeating motif handmade indigo textile, dazzle camouflage geometric bold black white shapes} of folded paper chairs in a half-circle, late-evening municipal light on linoleum, a glass pitcher beading with condensation, crayon scribbles drying on butcher paper, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
         "mjPromptAt": "2026-05-16T21:03:54.308Z",
-        "publishedAt": "2026-05-20T19:01:18.603Z",
-        "publishedTo": [
+        "publishedTo_deleted": [
           {
             "platform": "x",
             "ok": true,
@@ -1430,14 +1429,18 @@
             "text": "Tonight in Sunnyvale: the city wants to hear from you. Community Equity Assessment Forum at City Hall, 6:30 PM. Share what's working, what's not, how services could feel more welcoming. Light snacks, childcare for ages 4+. 🗣️ https://t.co/hYbMTL5xcU",
             "ownReplies": [
               "2057174801857585357"
-            ]
+            ],
+            "deleted": true,
+            "deletedAt": "2026-05-20T22:06:42.163Z"
           },
           {
             "platform": "bluesky",
             "ok": true,
             "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmclk54pdj2h",
             "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmclk54pdj2h",
-            "cid": "bafyreibkjkuunjzjhlcxhoifzra2fr4imem4wchrhw7wb27c5htryjywhy"
+            "cid": "bafyreibkjkuunjzjhlcxhoifzra2fr4imem4wchrhw7wb27c5htryjywhy",
+            "deleted": true,
+            "deletedAt": "2026-05-20T22:06:43.438Z"
           },
           {
             "platform": "threads",
@@ -1446,26 +1449,84 @@
             "id": "18117791662742001",
             "ownReplies": [
               "17927152251303458"
-            ]
+            ],
+            "deleted": true,
+            "deletedAt": "2026-05-20T22:06:48.500Z"
           },
           {
             "platform": "facebook",
             "ok": true,
             "postId": "122111752730849604",
-            "id": "122111752730849604"
+            "id": "122111752730849604",
+            "deleted": true,
+            "deletedAt": "2026-05-20T22:06:53.026Z"
           },
           {
             "platform": "mastodon",
             "ok": true,
             "postId": "116608434678318343",
             "id": "116608434678318343",
-            "url": "https://mastodon.social/@southbaytoday/116608434678318343"
+            "url": "https://mastodon.social/@southbaytoday/116608434678318343",
+            "deleted": true,
+            "deletedAt": "2026-05-20T22:06:54.311Z"
           },
           {
             "platform": "instagram",
             "ok": true,
             "postId": "18086837603074832",
-            "id": "18086837603074832"
+            "id": "18086837603074832",
+            "deleteError": "Instagram delete failed (400): {\"error\":{\"message\":\"Unsupported delete request. Object with ID '18086837603074832' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"IGApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"A8uEuSgpdTOV05xt1xNIWu8\"}}"
+          }
+        ],
+        "publishedAt_deleted": "2026-05-20T19:01:18.603Z",
+        "repostReason": "wiped Recraft microphone; reposting with MJ upload (race-condition fix earlier today)",
+        "repostInitiatedAt": "2026-05-20T22:06:56.056Z",
+        "publishedAt": "2026-05-20T22:10:24.293Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2057221605697499379",
+            "id": "2057221605697499379",
+            "text": "Tonight in Sunnyvale: the city wants to hear from you. Community Equity Assessment Forum at City Hall, 6:30 PM. Share what's working, what's not, how services could feel more welcoming. Light snacks, childcare for ages 4+. 🗣️ https://t.co/VW64czIH99",
+            "ownReplies": [
+              "2057222391395418490"
+            ]
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmcw47tnet2c",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmcw47tnet2c",
+            "cid": "bafyreiaojflrbxw42vjqy5fuodrbkbbhuviphzpq24as5owp4zvd42xnky"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18091211639369767",
+            "id": "18091211639369767",
+            "ownReplies": [
+              "18088640498168925"
+            ]
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111763638849604",
+            "id": "122111763638849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116609177987843099",
+            "id": "116609177987843099",
+            "url": "https://mastodon.social/@southbaytoday/116609177987843099"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "17992704572978227",
+            "id": "17992704572978227"
           }
         ]
       },

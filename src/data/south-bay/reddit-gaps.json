@@ -1,56 +1,125 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-20T19:20:41.639Z",
+    "generatedAt": "2026-05-20T23:17:29.749Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 20,
-    "placesMatched": 2,
-    "placeGaps": 18,
-    "eventsExtracted": 3,
+    "placesExtracted": 25,
+    "placesMatched": 1,
+    "placeGaps": 24,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
-    "autoAppendedOpenings": 0
+    "eventGaps": 2,
+    "autoAppendedOpenings": 1
   },
   "placeGaps": [
     {
       "name": "Denny's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Bascom Ave location, late-night dining spot",
+      "context": "Bascom Ave location, lost wallet returned by honest customer",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thxi65/thank_you_peng_pals_for_helping_me_out_while_i/",
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
+      ]
+    },
+    {
+      "name": "Vicinity",
+      "city": "Los Gatos",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
         "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
       ]
     },
     {
-      "name": "River of Life church",
-      "city": "Santa Clara",
-      "kind": "other",
-      "context": "landmark near 101 north, mentioned with food truck story",
+      "name": "Kitchen Istanbul",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thxi65/thank_you_peng_pals_for_helping_me_out_while_i/",
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
         "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
       ]
     },
     {
-      "name": "Stanford Stadium",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "hosted BTS concerts, Bay to Breakers race nearby",
+      "name": "Maria Isabel",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thxi65/thank_you_peng_pals_for_helping_me_out_while_i/",
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
+      ]
+    },
+    {
+      "name": "Minnie Bell's Soul Movement",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
+      ]
+    },
+    {
+      "name": "Via Aurelia",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
+      ]
+    },
+    {
+      "name": "Joodooboo",
+      "city": "Oakland",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
+      ]
+    },
+    {
+      "name": "Popoca",
+      "city": "Oakland",
+      "kind": "restaurant",
+      "context": "added to Michelin California guide",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
+        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
         "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
       ]
     },
@@ -58,7 +127,7 @@
       "name": "Taishoken",
       "city": "",
       "kind": "restaurant",
-      "context": "tsukemen ramen shop, still operating",
+      "context": "tsukemen ramen shop, currently operating",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -71,7 +140,7 @@
       "name": "Tsujita",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "tsukemen ramen restaurant",
+      "context": "serves tsukemen dipping ramen",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -84,7 +153,7 @@
       "name": "Shugetsu",
       "city": "Fremont",
       "kind": "restaurant",
-      "context": "authentic tsukemen, moved from San Mateo",
+      "context": "tsukemen specialist, moved from San Mateo",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -97,7 +166,7 @@
       "name": "Wadaya",
       "city": "Fremont",
       "kind": "restaurant",
-      "context": "mazemen ramen restaurant",
+      "context": "mazemen ramen, similar to tsukemen",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -110,7 +179,7 @@
       "name": "Hinodeya",
       "city": "San Francisco",
       "kind": "restaurant",
-      "context": "tsukemen special ramen",
+      "context": "tsukemen ramen special, limited availability",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -123,7 +192,7 @@
       "name": "Izakaya Ginji",
       "city": "San Mateo",
       "kind": "restaurant",
-      "context": "tsukemen sometimes available, limited",
+      "context": "serves tsukemen off-menu or limited",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -136,20 +205,7 @@
       "name": "Tsukira",
       "city": "Foster City",
       "kind": "restaurant",
-      "context": "tsukemen ramen restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/bayarea/comments/1ticf3v/best_tsukemen_dipping_ramen_in_the_area/",
-        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
-        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/"
-      ]
-    },
-    {
-      "name": "Bodo Lucky",
-      "city": "Fremont",
-      "kind": "restaurant",
-      "context": "tsukemen broth with lime taste, Warm Springs location",
+      "context": "tsukemen ramen shop",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -162,7 +218,7 @@
       "name": "Yokohama",
       "city": "Daly City",
       "kind": "restaurant",
-      "context": "tsukemen ramen near movie theater",
+      "context": "near movie theater, serves tsukemen",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -172,10 +228,10 @@
       ]
     },
     {
-      "name": "denya Ramen",
-      "city": "San Francisco",
+      "name": "Bodo Lucky",
+      "city": "Warm Springs",
       "kind": "restaurant",
-      "context": "recently opened ramen on Polk",
+      "context": "tsukemen broth with lime taste",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -188,7 +244,33 @@
       "name": "Ramen Taka",
       "city": "Santa Clara",
       "kind": "restaurant",
-      "context": "tsukemen ramen restaurant",
+      "context": "serves tsukemen dipping ramen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1ticf3v/best_tsukemen_dipping_ramen_in_the_area/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/"
+      ]
+    },
+    {
+      "name": "Denya Ramen",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "recently opened on Polk Street",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
+        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
+        "https://www.reddit.com/r/bayarea/comments/1ticf3v/best_tsukemen_dipping_ramen_in_the_area/",
+        "https://www.reddit.com/r/paloalto/comments/1tfdl2j/bts_concert_noise/",
+        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/"
+      ]
+    },
+    {
+      "name": "Uzumakiya",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "serves dipping ramen tsukemen",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -201,83 +283,70 @@
       "name": "Rogers",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "new adjacent location opened on Middlefield",
+      "context": "new location opened on Middlefield Road",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
       ]
     },
     {
-      "name": "Stan's",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "established donut shop, competition from Randy's",
+      "name": "Costeñas",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "mentioned as nearby business in Mountain View",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
       ]
     },
     {
       "name": "Randy's Donuts",
       "city": "Santa Clara",
       "kind": "bakery",
-      "context": "new location opening, competing with Stan's",
+      "context": "new opening announced, major local donut shop rivalry",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
       ]
     },
     {
-      "name": "Grace Presbyterian of Silicon Valley",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "church with community for young adults",
+      "name": "Stan's",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "established beloved donut shop, community rallying around it",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "Bay to Breakers",
-      "when": "annual race",
+      "when": "during BTS Stanford Stadium shows",
       "city": "",
-      "context": "8-mile Bay Area race, BTS member Suga participated",
+      "context": "annual 7.45 mile race, BTS member Suga participated",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thxi65/thank_you_peng_pals_for_helping_me_out_while_i/",
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
-        "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
-        "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
-      ]
-    },
-    {
-      "name": "San Jose Sol",
-      "when": "",
-      "city": "San Jose",
-      "context": "new women's hockey team coming to San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1thxi65/thank_you_peng_pals_for_helping_me_out_while_i/",
         "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
-        "https://www.reddit.com/r/bayarea/comments/1tinzx9/suga_from_bts_ran_in_bay_to_breakers/",
         "https://www.reddit.com/r/bayarea/comments/1ti66ws/thousands_of_ucp_volunteers_helped_transform_east/",
+        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
         "https://www.reddit.com/r/SanJose/comments/1ti4dji/new_team_lets_goooooooo/"
       ]
     },
     {
       "name": "BTS Concert",
-      "when": "Multiple days including day 3",
+      "when": "multiple days",
       "city": "Palo Alto",
-      "context": "concert at Palo Alto venue, audible from nearby areas",
+      "context": "concert at Stanford, audible from homes",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1ti5j7r/city_and_45_min_commute_or_palo_alto_area_and/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
@@ -292,27 +361,14 @@
       "name": "Daily Donuts",
       "city": "Santa Clara",
       "kind": "bakery",
-      "context": "alternative donut spot on Scott and Warburton",
+      "context": "alternative donut shop on Scott and Warburton",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/"
       ],
       "matchedName": "Daily Donuts & Sandwich Bagels"
-    },
-    {
-      "name": "Safeway",
-      "city": "Santa Clara",
-      "kind": "retail",
-      "context": "sells donuts in donut district area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1ti35yc/peets_coffee_varies_significantly_in_flavor_and/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/"
-      ],
-      "matchedName": "Safeway"
     }
   ],
   "eventMatches": []
