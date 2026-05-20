@@ -109,6 +109,24 @@ const CATEGORIES = [
 ];
 
 // ---------------------------------------------------------------------------
+// Primary types that should NEVER enter the day-plan pool. Search queries
+// like "museum gallery" sometimes return city halls and post offices; without
+// an explicit skip, the `|| cat.ourCat` fallback below silently categorizes
+// them as whatever the search asked for ("Palo Alto museum on Hamilton Ave"
+// for City Hall). Filter at search-result level so the bad data never lands
+// in places.json in the first place.
+// ---------------------------------------------------------------------------
+
+const SKIP_PRIMARY_TYPES = new Set([
+  "city_hall",
+  "courthouse",
+  "embassy",
+  "government_office",
+  "local_government_office",
+  "post_office",
+]);
+
+// ---------------------------------------------------------------------------
 // Google type → our category mapping (for primaryType fallback)
 // ---------------------------------------------------------------------------
 
@@ -543,6 +561,7 @@ async function main() {
 
           // Map category
           const primaryType = place.primaryType || "";
+          if (SKIP_PRIMARY_TYPES.has(primaryType)) continue;
           const category = TYPE_TO_CATEGORY[primaryType] || cat.ourCat;
           const displayType = place.primaryTypeDisplayName?.text || null;
 
