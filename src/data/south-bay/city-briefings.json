@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-20T11:10:25.513Z",
+  "generatedAt": "2026-05-20T19:14:31.183Z",
   "weekLabel": "May 20 – May 27",
   "weekStart": "2026-05-20",
   "weekEnd": "2026-05-27",
@@ -7,16 +7,8 @@
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell Library hosts three storytimes this week, including Music & Movement on Tuesday, while Downtown hosts its farmers market Sunday morning.",
+      "summary": "Campbell Library hosts two storytimes Tuesday—one for music and movement at 10:30 a.m., another bedtime-themed session at 6:30 p.m.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Wed, May 20 · 10:30 AM",
-          "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a03c9a8703c336300273a0a"
-        },
         {
           "type": "event",
           "title": "San Francisco God's Image 23rd Annual Concert",
@@ -24,24 +16,24 @@
           "venue": null,
           "category": "music",
           "url": "https://www.campbellca.gov/Calendar.aspx?EID=3956"
+        },
+        {
+          "type": "event",
+          "title": "Campbell Farmers Market",
+          "when": "Sun, May 24 · 9:00 AM",
+          "venue": "Downtown Campbell",
+          "category": "food",
+          "url": "https://www.downtowncampbell.com/farmers-market"
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:11.611Z"
+      "generatedAt": "2026-05-20T19:14:17.617Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino Library hosts five events this week—book discussions, storytelling, and crafts—while City Council updates the Health and Safety Element of the General Plan through 2040.",
+      "summary": "Cupertino Library hosts five events this week, from Pacific Islander storytelling to qigong classes, while City Council continues interviews to fill Teen and Public Safety Commission vacancies.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Adult Book Discussion: Hard by a Great Forest",
-          "when": "Wed, May 20 · 11:00 AM",
-          "venue": "Cupertino Library",
-          "category": "arts",
-          "url": "https://sccl.bibliocommons.com/events/69bc7d6f8d5e2d093366794f"
-        },
         {
           "type": "event",
           "title": "Voices of Pasifika: Story Talk and Craft",
@@ -49,6 +41,14 @@
           "venue": "Cupertino Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/69f3bb5d762d19c7d510f255"
+        },
+        {
+          "type": "event",
+          "title": "Bedtime Storytime",
+          "when": "Wed, May 20 · 7:00 PM",
+          "venue": "Cupertino Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6943539276261f28005fb637"
         },
         {
           "type": "council",
@@ -60,12 +60,12 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:13.197Z"
+      "generatedAt": "2026-05-20T19:14:19.339Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos Library hosts kittens from Silicon Valley Animal Control Authority and four programs for kids today, from storytime to floral drawing.",
+      "summary": "Los Gatos Library packs Wednesday with five events, from preschool storytime to youth floral drawing, plus kittens courtesy of Silicon Valley Animal Control Authority.",
       "highlights": [
         {
           "type": "event",
@@ -85,12 +85,12 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:14.386Z"
+      "generatedAt": "2026-05-20T19:14:20.651Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View hosts five community events today, from senior programming and family storytime to an ESL conversation club and outdoor performance series.",
+      "summary": "Mountain View's packed Wednesday brings a film screening at the Senior Center, storytimes and an ESL conversation club at the library, plus live performance at Magical Bridge Playground.",
       "highlights": [
         {
           "type": "event",
@@ -110,37 +110,37 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:15.520Z"
+      "generatedAt": "2026-05-20T19:14:21.924Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga Library stacks its Wednesday with Baby Storytime, Homework Help, and Lego Club, while Montalvo Arts Center hosts back-to-back tea events.",
+      "summary": "Saratoga Library hosts back-to-back family programs today—Homework Help and Lego Club—while Montalvo Arts Center presents Tea for Three this evening.",
       "highlights": [
         {
           "type": "event",
-          "title": "Member Reception (Tea)",
-          "when": "Wed, May 20 · 10:00 AM",
-          "venue": "Montalvo Arts Center",
-          "category": "arts",
-          "url": "https://my.montalvoarts.org/3043/3048"
+          "title": "Homework Help K-6 grade",
+          "when": "Wed, May 20 · 3:00 PM",
+          "venue": "Saratoga Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/68c1e5eb9b6a35582f705aba"
         },
         {
           "type": "event",
-          "title": "Tea for Three",
-          "when": "Wed, May 20 · 11:00 AM",
-          "venue": "Montalvo Arts Center",
-          "category": "arts",
-          "url": "https://my.montalvoarts.org/overview/3025"
+          "title": "Lego Club",
+          "when": "Wed, May 20 · 4:00 PM",
+          "venue": "Saratoga Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/69b44813ad384e40edb41b8f"
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:17.094Z"
+      "generatedAt": "2026-05-20T19:14:23.182Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale's Community Center Grounds reopen Thursday morning, while the city reviews its water shortage plan amid drought pressures.",
+      "summary": "Sunnyvale's Community Center Grounds reopen Thursday with a ribbon cutting, while the city reviews its water management strategy and spring grants for neighborhood projects.",
       "highlights": [
         {
           "type": "event",
@@ -160,7 +160,7 @@
         },
         {
           "type": "cityhall",
-          "title": "Sunnyvale updates water shortage plan amid drought concerns",
+          "title": "City reviews draft Urban Water Master Plan and drought contingency measures",
           "when": null,
           "venue": null,
           "category": "government",
@@ -168,21 +168,13 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:18.434Z"
+      "generatedAt": "2026-05-20T19:14:24.582Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose's City Council approved a permanent Seeds of Peace Monument by artist Mario Chiodo for Guadalupe River Park, adding public art to the downtown waterfront.",
+      "summary": "San Jose's Guadalupe River Park gets a permanent public art installation this week as the city approves the Seeds of Peace Monument.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "ELL Morning Conversation Club",
-          "when": "Wed, May 20 · 10:00 AM",
-          "venue": "Santa Teresa Library",
-          "category": "education",
-          "url": "https://sjpl.bibliocommons.com/events/690e9c60886bb73600b9c7f6"
-        },
         {
           "type": "event",
           "title": "Natalie and James Thompson Gallery: Click on My Mouth: Language and Technology",
@@ -192,8 +184,16 @@
           "url": "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-click-on-my-mouth-language-and-technology"
         },
         {
+          "type": "event",
+          "title": "Santana Row Farmers Market",
+          "when": "Wed, May 20 · 11:00 AM",
+          "venue": "Santana Row",
+          "category": "food",
+          "url": "https://www.santanarow.com/events"
+        },
+        {
           "type": "cityhall",
-          "title": "City Council approves Seeds of Peace Monument at Guadalupe River Park",
+          "title": "Agreement approved for Seeds of Peace Monument at Guadalupe River Park",
           "when": null,
           "venue": null,
           "category": "government",
@@ -201,12 +201,12 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:19.533Z"
+      "generatedAt": "2026-05-20T19:14:25.795Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara University hosts five events today—art, music, veteran networking, and student presentations—spanning morning through evening.",
+      "summary": "Santa Clara University hosts five events today spanning art, music, and community conversation—from a morning exhibition through an evening jazz festival.",
       "highlights": [
         {
           "type": "event",
@@ -218,20 +218,20 @@
         },
         {
           "type": "event",
-          "title": "Veteran Alumni & Students: Joby Aviation Visit",
-          "when": "Wed, May 20 · 10:30 AM",
+          "title": "Faculty Lunch Time Conversation with Teaching Professor Robin Tremblay-McGaw",
+          "when": "Wed, May 20 · 12:00 PM",
           "venue": "Santa Clara University",
-          "category": "community",
-          "url": "https://events.scu.edu/alumni-association/event/452624-veteran-alumni-students-joby-aviation-visit"
+          "category": "arts",
+          "url": "https://events.scu.edu/de-saisset/event/371079-faculty-lunch-time-conversation-with-teaching-profess"
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:20.966Z"
+      "generatedAt": "2026-05-20T19:14:27.121Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library and History Museum host five events this week, from baby storytimes to a book club and an exhibition on Partition through poetry and art.",
+      "summary": "Los Altos Library and History Museum host five events this week, from baby storytimes to a book club and an evening program on Partition history through poetry and art.",
       "highlights": [
         {
           "type": "event",
@@ -251,21 +251,13 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:22.767Z"
+      "generatedAt": "2026-05-20T19:14:28.424Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto libraries host crafts and book clubs this week while the city develops residential electrification principles and weighs zoning changes for accessory dwelling units.",
+      "summary": "Kepler's Books hosts back-to-back author events tonight and tomorrow, while three libraries offer free crafts for kids this week.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Learn English: Online Conversation Group",
-          "when": "Wed, May 20 · 11:00 AM",
-          "venue": "Palo Alto City Library",
-          "category": "education",
-          "url": "https://paloalto.bibliocommons.com/events/68faea6a06078d3600744979"
-        },
         {
           "type": "event",
           "title": "Button Making Pop-up for Teens!",
@@ -275,30 +267,30 @@
           "url": "https://paloalto.bibliocommons.com/events/69d81a408ddc1caf5f1be7ba"
         },
         {
+          "type": "event",
+          "title": "Karen Nelson with Pam Houston",
+          "when": "Wed, May 20 · 7:00 PM",
+          "venue": "Kepler's Books",
+          "category": "arts",
+          "url": "https://www.keplers.org/upcoming-events-internal/karen-nelson"
+        },
+        {
           "type": "cityhall",
-          "title": "City to develop principles for residential electrification programs",
+          "title": "Council to amend rules on accessory and junior dwelling units",
           "when": null,
           "venue": null,
           "category": "government",
-          "url": "https://paloalto.legistar.com/Calendar.aspx?From=5%2F15%2F2026&To=5%2F15%2F2026"
+          "url": "https://paloalto.legistar.com/Calendar.aspx?From=5%2F13%2F2026&To=5%2F13%2F2026"
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:24.163Z"
+      "generatedAt": "2026-05-20T19:14:29.806Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas City Council appointed a permanent city manager Tuesday, marking a significant leadership decision for the city's executive administration.",
+      "summary": "Milpitas City Council appointed a permanent City Manager to oversee day-to-day operations and policy implementation.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Lil' Athletes for Ages 18 Months - 4 Years",
-          "when": "Wed, May 20 · 11:00 AM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/696930b5707481383706c3fe"
-        },
         {
           "type": "event",
           "title": "XFYD Chess Class for Grades 1-5",
@@ -308,8 +300,16 @@
           "url": "https://sccl.bibliocommons.com/events/69165797dff9d93e00cff0ae"
         },
         {
+          "type": "event",
+          "title": "Homework Help for Grades K-6",
+          "when": "Wed, May 20 · 4:00 PM",
+          "venue": "Milpitas Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/693778116f926136000a00f8"
+        },
+        {
           "type": "cityhall",
-          "title": "City Council Appoints New Permanent City Manager",
+          "title": "City Council Appoints Permanent City Manager",
           "when": null,
           "venue": null,
           "category": "government",
@@ -317,7 +317,7 @@
         }
       ],
       "weekLabel": "May 20 – May 27",
-      "generatedAt": "2026-05-20T11:10:25.211Z"
+      "generatedAt": "2026-05-20T19:14:30.880Z"
     }
   }
 }
