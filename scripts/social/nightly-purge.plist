@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>org.southbaytoday.weekly-purge</string>
+  <string>org.southbaytoday.nightly-purge</string>
   <key>ProgramArguments</key>
   <array>
     <string>/opt/homebrew/bin/node</string>
@@ -14,21 +14,18 @@
   </array>
   <key>WorkingDirectory</key>
   <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
-  <!-- Saturday 3:30am PT — well before Stephen wakes at 4am. Each Saturday
-       wipes the previous week so the profiles look fresh going into the
-       weekend. New posts published Saturday morning (6:15am+) stay. -->
+  <!-- Midnight PT every night. Every day is a new day (south bay today!) —
+       the profiles get a clean slate before the 6:15am morning post goes out. -->
   <key>StartCalendarInterval</key>
   <dict>
-    <key>Weekday</key>
-    <integer>6</integer>
     <key>Hour</key>
-    <integer>3</integer>
+    <integer>0</integer>
     <key>Minute</key>
-    <integer>30</integer>
+    <integer>0</integer>
   </dict>
   <key>StandardOutPath</key>
-  <string>/tmp/sbt-weekly-purge.log</string>
+  <string>/tmp/sbt-nightly-purge.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/sbt-weekly-purge.log</string>
+  <string>/tmp/sbt-nightly-purge.log</string>
 </dict>
 </plist>

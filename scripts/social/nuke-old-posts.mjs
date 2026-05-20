@@ -15,8 +15,8 @@
 // would have kept it under the old logic. With --all-before-now and timestamp
 // math, "Friday night" really means "before Saturday morning".
 //
-// Used as the Saturday 3:30am weekly purge via scripts/social/weekly-purge.plist
-// → org.southbaytoday.weekly-purge.
+// Used as the midnight nightly purge via scripts/social/nightly-purge.plist
+// → org.southbaytoday.nightly-purge. Every day is a new day.
 
 import { readFileSync, writeFileSync, renameSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -642,7 +642,7 @@ function pruneRecords() {
         if (!Array.isArray(slot?.publishedTo)) continue;
         const before = slot.publishedTo.length;
         if (isOldEnoughToPrune(slot.publishedAt)) {
-          // Pinterest pins outlive the weekly purge (6-month tail) — keep
+          // Pinterest pins outlive the nightly purge (6-month tail) — keep
           // their publishedTo entries so the engagement collector can keep
           // pulling saves/clicks/impressions for months after publish.
           slot.publishedTo = slot.publishedTo.filter((e) => e.platform === "pinterest");
@@ -668,7 +668,7 @@ function pruneRecords() {
         if (!Array.isArray(p.publishedTo)) continue;
         const before = p.publishedTo.length;
         if (isOldEnoughToPrune(p.publishedAt)) {
-          // Preserve Pinterest entries — pins outlive the weekly purge.
+          // Preserve Pinterest entries — pins outlive the nightly purge.
           p.publishedTo = p.publishedTo.filter((e) => e.platform === "pinterest");
         } else {
           p.publishedTo = p.publishedTo.filter((e) => !entryWasDeleted(e));
@@ -764,8 +764,8 @@ if (notify && !dryRun) {
     if (fbStuck > 0) manualWork.push(`FB has **${fbStuck}** stuck post${fbStuck === 1 ? "" : "s"} — clean via the FB Page UI`);
     if (igStuck > 0) manualWork.push(`IG has **${igStuck}** post${igStuck === 1 ? "" : "s"} the API can't touch — clean via the IG mobile app`);
     await catSignal({
-      key: `weekly-purge-${cutoffDisplay}`,
-      title: "Weekly social purge ran",
+      key: `nightly-purge-${cutoffDisplay}`,
+      title: "Nightly social purge ran",
       body:
         `Cutoff: \`${cutoffDisplay}\` (posts older than this were targeted)\n\n` +
         (lines.length ? lines.join("\n") + "\n\n" : "") +

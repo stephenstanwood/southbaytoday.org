@@ -120,7 +120,7 @@ export async function createPin({ boardId, title, description, link, imageBuffer
 }
 
 /**
- * Delete a pin by ID. Used by the weekly purge for symmetry — though
+ * Delete a pin by ID. Used by the nightly purge for symmetry — though
  * Pinterest's 6-month-tail content model means we probably want to KEEP old
  * pins, not delete them. Wire into purge cautiously.
  */
