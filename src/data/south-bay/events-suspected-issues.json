@@ -1,24 +1,23 @@
 {
   "_meta": {
-    "auditedAt": "2026-04-30T14:11:17.168Z"
+    "auditedAt": "2026-05-20T02:04:50.640Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1251,
+    "total": 1202,
     "totals": {
       "hard": 0,
-      "soft": 8,
+      "soft": 1,
       "info": 0
     },
     "byReason": {
-      "virtual-not-flagged": 3,
-      "meeting-title": 5
+      "virtual-not-flagged": 1
     },
     "hard": [],
     "soft": [
       {
         "id": "paloalto-69cf2b70491b809c6f24e18a",
-        "title": "Short Story Social",
+        "title": "Short Story Social: \"Dominion\" by Lauren Acampora",
         "city": "palo-alto",
         "date": "2026-09-24",
         "location": "Palo Alto City Library",
@@ -29,189 +28,49 @@
             "detail": "matched /description mention/ in description"
           }
         ]
-      },
-      {
-        "id": "chm-3c88b0ea800f3e91",
-        "title": "Steve Jobs in Exile",
-        "city": "mountain-view",
-        "date": "2026-04-30",
-        "location": "1401 N Shoreline Blvd, Mountain View",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
-        "id": "chm-8824246062ee6f36",
-        "title": "Apple at 50",
-        "city": "mountain-view",
-        "date": "2026-04-30",
-        "location": "1401 N Shoreline Blvd, Mountain View",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
-        "id": "milpitas-1b47eeb3de008ece",
-        "title": "City Council Meeting",
-        "city": "milpitas",
-        "date": "2026-05-05",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\bcity\\s+council\\s+meeting\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "los-gatos-0adb5195a2b0a7be",
-        "title": "Town Council Meeting",
-        "city": "los-gatos",
-        "date": "2026-05-05",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "los-gatos-b44c86024bfc4f19",
-        "title": "Town Council Meeting",
-        "city": "los-gatos",
-        "date": "2026-05-19",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "los-gatos-19e353151f76f954",
-        "title": "Town Council Meeting",
-        "city": "los-gatos",
-        "date": "2026-06-02",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
-          }
-        ]
-      },
-      {
-        "id": "los-gatos-56688703f19cf6ff",
-        "title": "Town Council Meeting",
-        "city": "los-gatos",
-        "date": "2026-06-16",
-        "location": "Council Chambers",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
-          }
-        ]
       }
     ]
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 190,
+    "total": 141,
     "totals": {
-      "hard": 4,
+      "hard": 1,
       "soft": 1,
       "info": 0
     },
     "byReason": {
-      "out-of-area": 4,
-      "virtual-not-flagged": 1
+      "meeting-title": 1,
+      "out-of-area": 1
     },
     "hard": [
       {
-        "id": "inbound_mo7dx5yr_n62ibb",
-        "title": "Comic Fun Fest",
+        "id": "inbound_molsi3ka_ew6mi8",
+        "title": "Jan M. Flynn author event for Griffin Speaker",
         "city": null,
-        "date": "2026-05-02T11:30:00-07:00",
-        "location": "Gilroy Library",
+        "date": "2026-05-21T00:00:00-07:00",
+        "location": "Books Inc. Laurel Village, San Francisco",
         "findings": [
           {
             "severity": "hard",
             "reason": "out-of-area",
-            "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mo7dx6ql_3yl4u3",
-        "title": "Comic Fun Fest",
-        "city": null,
-        "date": "2026-05-02T11:30:00-07:00",
-        "location": "Gilroy Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mobnui85_zwxutu",
-        "title": "Blair Ranch VIT",
-        "city": null,
-        "date": "2026-05-17T00:00:00-07:00",
-        "location": "Rancho Cañada del Oro Open Space Preserve, Morgan Hill",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"morgan hill\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mobnui85_b7k89c",
-        "title": "Fifield-Cahill Ridge Trail Thru-hike",
-        "city": null,
-        "date": "2026-05-09T00:00:00-07:00",
-        "location": "San Mateo County",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"san mateo\" with no in-area city token"
+            "detail": "location mentions \"san francisco\" with no in-area city token"
           }
         ]
       }
     ],
     "soft": [
       {
-        "id": "inbound_moc11ris_3ywdxm",
-        "title": "ArtNow 2026 Awards Ceremony",
+        "id": "inbound_mon1brj6_dezijy",
+        "title": "Town Council Budget Hearing",
         "city": "los-gatos",
-        "date": "2026-05-02T15:00:00-07:00",
-        "location": "New Museum Los Gatos (NUMU), 106 E. Main Street, Los Gatos, CA",
+        "date": "2026-05-19T19:00:00-07:00",
+        "location": "",
         "findings": [
           {
             "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
           }
         ]
       }

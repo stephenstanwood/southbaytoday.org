@@ -2556,6 +2556,11 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
 
         const title = ev.title || ev.definition?.title || "";
         const desc = ev.description || ev.definition?.description || "";
+        // BiblioCommons marks online-only library events with definition.isVirtual.
+        // Title-pattern fallbacks ("Online …", "Virtual …") miss titles like
+        // "Short Story Social" and "Learn English: Online Conversation Group"
+        // (where "Online" isn't at the start). Trust the authoritative flag.
+        const isVirtual = ev.definition?.isVirtual === true;
 
         const displayVenue = branchName
           ? (branchName.toLowerCase().endsWith("library") ? branchName : `${branchName} Library`)
@@ -2574,6 +2579,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           venue: displayVenue,
           address: branchAddr,
           city,
+          ...(isVirtual ? { virtual: true } : {}),
           // Pass the rendered venue so isIndoorVenue can detect "library" — short
           // branch names like "Cambrian" (no "Library" suffix) used to slip past it.
           category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue),
@@ -2680,6 +2686,10 @@ async function fetchScclEvents() {
         const title = ev.title || ev.definition?.title || "";
         const desc = ev.description || ev.definition?.description || "";
         const branchVenue = SCCL_LOCATION_BRANCH[locationCode] || libraryName;
+        // See fetchBiblioEvents: BiblioCommons' definition.isVirtual is the
+        // canonical online-only marker. SCCL doesn't typically use it (no
+        // hits in current data), but mirror the handling so it stays in sync.
+        const isVirtual = ev.definition?.isVirtual === true;
 
         allEvents.push({
           id: `${libraryId}-${ev.id}`,
@@ -2691,6 +2701,7 @@ async function fetchScclEvents() {
           venue: branchVenue,
           address: "",
           city,
+          ...(isVirtual ? { virtual: true } : {}),
           category: inferCategory(title, stripHtml(desc), ev.type || "", branchVenue),
           cost: "free",
           description: truncate(stripHtml(desc)),
