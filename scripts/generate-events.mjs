@@ -651,6 +651,10 @@ const TITLE_FIXES = {
   "Fopal": "FOPAL",     // Friends of Palo Alto Library — biblio API title-cases it
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
   "Xfyd ": "XFYD ",     // XFYD chess club — all-caps brand name on flyers
+  // "US" the pronoun vs. "US" the country abbreviation: KEEP_UPPER preserves
+  // "US" so country uses ("In US") stay capitalized, but a few source titles
+  // capitalize the pronoun ("Makes US"). Override the specific pronoun cases.
+  "Makes US": "Makes Us",
 };
 
 function cleanTitle(title) {
@@ -693,6 +697,11 @@ function cleanTitle(title) {
       /^(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:,\s*\d{4})?\s*:\s*/i,
       "",
     )
+    // Normalize possessive 'S → 's after a word. Sources that title-case
+    // every word ("Vera Wong'S Unsolicited Advice") leave the possessive S
+    // capitalized. Run before the case-balancing rules so they see the fixed
+    // form ("Wong's" reads as mixed-case, not as a 1-letter all-caps run).
+    .replace(/(\w)'S\b/g, "$1's")
     .trim();
   // Downcase ALL-CAPS words that aren't known acronyms. Titles that are
   // mostly mixed-case (lowerRatio ≥ 0.5) get the aggressive 2+ letter rule:
@@ -766,6 +775,19 @@ function cleanTitle(title) {
       : /(?<!\p{Letter})[A-Z]{4,}(?!\p{Letter})/gu;
     t = t.replace(re, (w) => (KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase()));
   }
+  // Downcase capitalized small words mid-title — Ticketmaster and Shoreline
+  // feeds title-case every word ("Valley Of Heart's Delight", "Eleanor The
+  // Great", "Born To Define"). Standard title-case style lowercases articles,
+  // short prepositions, and conjunctions when they're not the first word of a
+  // segment. The lookbehind requires a Latin letter immediately before the
+  // whitespace, which keeps small words at the start of the title and right
+  // after `:` / `&` / `-` / `–` untouched ("A New Hope", "Mike & The Mechanics",
+  // "Stanford – And Beyond"). The lookahead requires the following word to be
+  // capitalized too, so only the "every word is Title-Cased" antipattern fires.
+  t = t.replace(
+    /(?<=[A-Za-z])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
+    (_, sp, w) => sp + w.toLowerCase(),
+  );
   // Title-case fully-lowercase titles. City Lights Theater (cltc.org) styles
   // play titles in their menu as lowercase ("anthropology"); the textContent
   // scrape inherits that styling. Don't touch titles with any uppercase letter,
