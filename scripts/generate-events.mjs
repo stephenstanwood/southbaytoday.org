@@ -2622,16 +2622,32 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           ? (branchName.toLowerCase().endsWith("library") ? branchName : `${branchName} Library`)
           : libraryName;
 
+        // Month-long exhibits arrive from BiblioCommons as start = open day @
+        // arbitrary clock, end = close day @ same clock (e.g. Oil Painting
+        // Exhibit: May 31 5:00 PM → Jun 30 5:00 PM). Underlying timestamps
+        // differ so the getTime-based dedupe below doesn't fire, but both
+        // sides format to "5:00 PM" and the card renders a deceptive
+        // one-minute event. When end is on a different calendar day AND the
+        // clock-time display matches start, the API endpoints aren't real
+        // event times — treat as ongoing and null both clocks.
+        const dayMs = 24 * 60 * 60 * 1000;
+        const spansMultipleDays = end && (end.getTime() - start.getTime()) >= dayMs;
+        const sameClockDisplay = end && displayTime(start) === displayTime(end);
+        const isOngoingExhibit = spansMultipleDays && sameClockDisplay;
+
         return {
           id: `${libraryId}-${ev.id}`,
           title,
           date: isoDate(start),
           displayDate: displayDate(start),
-          time: displayTime(start),
+          time: isOngoingExhibit ? null : displayTime(start),
           // BiblioCommons sometimes returns end == start for ongoing exhibits
           // and drop-in programs — surface that as "no end time" rather than a
           // zero-duration block.
-          endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+          endTime: isOngoingExhibit
+            ? null
+            : (end && end.getTime() !== start.getTime() ? displayTime(end) : null),
+          ...(isOngoingExhibit ? { ongoing: true } : {}),
           venue: displayVenue,
           address: branchAddr,
           city,
