@@ -688,6 +688,12 @@ function cleanTitle(title) {
     // events organized by outside groups — venue + source already convey
     // that, the prefix is just visible noise in display titles).
     .replace(/^External Event:\s*/i, "")
+    // Strip wrapping double-quotes when the entire title is quoted (Ticketmaster
+    // sometimes emits show titles as `"The Hayley Williams Show"`). Only fires
+    // when the quotes are paired with no internal quotes, so titles with an
+    // internal quoted phrase like `Kiki Yeung "Sweet and Sour Chicks"` keep
+    // their inner quotes.
+    .replace(/^"([^"]+)"$/, "$1")
     // Strip BiblioCommons asterisk-wrapped format markers like "*In Person*",
     // "*Virtual*", "*Online*" (San Jose Public Library prefixes some titles
     // with these — format is shown elsewhere via venue/url).
