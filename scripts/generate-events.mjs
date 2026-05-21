@@ -1508,7 +1508,12 @@ function inferCategory(title, desc, type, venue = "") {
   // Use word-boundary regex (not substring includes) for short sports tokens that
   // collide with common words/proper nouns: "game" → "Burlingame", "polo" →
   // "metropolitan", "track" → "soundtrack"/"racetrack", "crew" → "screw"/"crewneck".
-  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(sportsHaystack) || /\bsports?\b/.test(sportsHaystack) || /\bathletics?\b/.test(sportsHaystack) || sportsHaystack.includes("golf") || sportsHaystack.includes("tennis") || sportsHaystack.includes("soccer") || sportsHaystack.includes("basketball") || sportsHaystack.includes("baseball") || sportsHaystack.includes("softball") || sportsHaystack.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(sportsHaystack) || sportsHaystack.includes("swim meet") || sportsHaystack.includes("freestyle") || sportsHaystack.includes("breaststroke") || sportsHaystack.includes("backstroke") || /\btracks?\b/.test(sportsHaystack) || sportsHaystack.includes("cross country") || sportsHaystack.includes("lacrosse") || sportsHaystack.includes("football") || sportsHaystack.includes("gymnastics") || sportsHaystack.includes("wrestling") || sportsHaystack.includes("water polo") || /\bpolo\b/.test(sportsHaystack) || sportsHaystack.includes("hockey") || sportsHaystack.includes("rugby") || /\browing\b/.test(sportsHaystack) || /\bcrew\b/.test(sportsHaystack) || /\bdiving\b/.test(sportsHaystack) || sportsHaystack.includes("fencing") || sportsHaystack.includes("skiing") || sportsHaystack.includes("snowboard") || /\bcycling\b/.test(sportsHaystack) || sportsHaystack.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\brace\b/.test(sportsHaystack)))) return "sports";
+  // "track" by itself is too idiomatic ("stay on track", "track record", "fast-track")
+  // and was mis-routing SJSU's SHRM Test Prep description ("...stay on track with a…")
+  // into the sports bucket. Require sports context — "track and field", "track meet",
+  // "track team", or a track-modifier compound — before treating "track" as athletics.
+  const isTrackSport = /\btrack\s+(?:and|&)\s+field\b|\btrack\s+(?:meet|event|race|season|team|coach|practice|tryouts?|workout|relay)\b|\b(?:relay|cinder|running|all[-\s]weather|spartan)\s+track\b/.test(sportsHaystack);
+  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(sportsHaystack) || /\bsports?\b/.test(sportsHaystack) || /\bathletics?\b/.test(sportsHaystack) || sportsHaystack.includes("golf") || sportsHaystack.includes("tennis") || sportsHaystack.includes("soccer") || sportsHaystack.includes("basketball") || sportsHaystack.includes("baseball") || sportsHaystack.includes("softball") || sportsHaystack.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(sportsHaystack) || sportsHaystack.includes("swim meet") || sportsHaystack.includes("freestyle") || sportsHaystack.includes("breaststroke") || sportsHaystack.includes("backstroke") || isTrackSport || sportsHaystack.includes("cross country") || sportsHaystack.includes("lacrosse") || sportsHaystack.includes("football") || sportsHaystack.includes("gymnastics") || sportsHaystack.includes("wrestling") || sportsHaystack.includes("water polo") || /\bpolo\b/.test(sportsHaystack) || sportsHaystack.includes("hockey") || sportsHaystack.includes("rugby") || /\browing\b/.test(sportsHaystack) || /\bcrew\b/.test(sportsHaystack) || /\bdiving\b/.test(sportsHaystack) || sportsHaystack.includes("fencing") || sportsHaystack.includes("skiing") || sportsHaystack.includes("snowboard") || /\bcycling\b/.test(sportsHaystack) || sportsHaystack.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\brace\b/.test(sportsHaystack)))) return "sports";
   // Government/civic events at markets are still community events
   if (/\b(office hours|mayor|city council|council member|supervisor)\b/.test(t) && t.includes("market")) return "community";
   // "craft" alone is too broad — "well-crafted resume", "refine your craft" → require craft market context
@@ -1740,6 +1745,15 @@ function extractVenueFromTitle(title) {
   return venue;
 }
 
+// SJSU's Localist feed title-cases all words including acronyms, so
+// "SHRM Test Prep Course" arrives as "Shrm Test Prep Course". Restore the
+// uppercase for the few professional-cert acronyms we've actually seen in
+// the feed so the displayed title and description match the real program.
+function restoreSjsuAcronyms(text) {
+  if (!text) return text;
+  return text.replace(/\bShrm\b/g, "SHRM");
+}
+
 async function fetchSjsuEvents() {
   console.log("  ⏳ SJSU Events...");
   try {
@@ -1750,6 +1764,8 @@ async function fetchSjsuEvents() {
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
+      item.title = restoreSjsuAcronyms(item.title);
+      item.description = restoreSjsuAcronyms(item.description);
       const category = inferCategory(item.title, item.description, "");
       // SJSU's Localist platform emits a 224x42 wordmark as og:image which
       // crops to "SAN UNI" on a square tile. Pin a real square asset:
