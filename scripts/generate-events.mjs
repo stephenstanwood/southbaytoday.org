@@ -1017,6 +1017,14 @@ const BOILERPLATE_SENTENCE_PATTERNS = [
   /\bvisit (our|the) website\b/i,
   /\bsee (our|the) website\b/i,
   /\bfor more (info|information|details)\b.*\bvisit\b/i,
+  // Truncation artifact: SJ Improv Ticketmaster `info` field opens with a
+  // ticket-delivery-delay preamble that DOES NOT match `^do not`, so the raw
+  // looksLikeVenuePolicy gate accepts it. truncate(text,200) then cuts inside
+  // the next "DO NOT PURCHASE TICKETS..." sentence and leaves "DO NOT…" alone.
+  // The earlier sentences in this list catch the delivery-delay prefix; this
+  // catches the short trailing remnant so descriptions clear to "" and the
+  // blurb (from event-blurb-cache) takes over on the card.
+  /^\s*do\s+not\b.*…\s*$/i,
 ];
 
 /**
