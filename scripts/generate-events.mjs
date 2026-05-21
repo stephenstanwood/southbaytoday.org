@@ -1478,9 +1478,14 @@ function inferCategory(title, desc, type, venue = "") {
   if (!isSwimContext && !isLibraryVenueEarly && /\b(wildlife|bird watching|birdwatching|birding|egret|heron|pelican|raptor|owl|hawk|falcon|butterfly|butterflies|monarchs?|pollinators?|dragonfly|wildflower|tide pool|tidepool|nature walk|nature tour)\b/.test(t)) return "outdoor";
   // Volunteering (farm, park, trail) is community, not sports — check before sports rules
   if (/\b(volunteer|volunteering)\b/.test(t) && /\b(farm|garden|trail|park|nature)\b/.test(t)) return "community";
-  // School/fundraiser fun runs are community events, not sports
-  // Also covers programs like "Girls on the Run" which use "run" or "5K" but are community/empowerment programs
-  const isSchoolFundraiser = /\b(school|middle school|elementary|fundrais|walk-a-thon|walkathon|girls on the run|charity run|fun run program)\b/.test(t);
+  // Public road/trail races (5K, 10K, half marathon, marathon, triathlon, fun
+  // runs) are participatory community events — entrants register, run, go home.
+  // Spectator pro/college sports never use these distance/race tokens and come
+  // from dedicated scrapers (PayPal Park, SAP Center, Excite Ballpark), so this
+  // is safe to flip from sports → community without affecting league games.
+  // Catches the recurring "Jolly 10K" miscategorization on the Town of Los
+  // Gatos calendar that the previous (school-fundraiser-only) carve-out missed.
+  if (/\b(5k|10k|half marathon|marathon|triathlon|fun run|road run|trail run|color run)\b/.test(t)) return "community";
   // Government/civic commission and committee meetings are always community events.
   // Must run BEFORE the sports check because "transportation" contains "sport" as substring.
   // Match either "<body> meeting/hearing/session" or a title that is purely a commission/
@@ -1535,7 +1540,7 @@ function inferCategory(title, desc, type, venue = "") {
   // into the sports bucket. Require sports context — "track and field", "track meet",
   // "track team", or a track-modifier compound — before treating "track" as athletics.
   const isTrackSport = /\btrack\s+(?:and|&)\s+field\b|\btrack\s+(?:meet|event|race|season|team|coach|practice|tryouts?|workout|relay)\b|\b(?:relay|cinder|running|all[-\s]weather|spartan)\s+track\b/.test(sportsHaystack);
-  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(sportsHaystack) || /\bsports?\b/.test(sportsHaystack) || /\bathletics?\b/.test(sportsHaystack) || sportsHaystack.includes("golf") || sportsHaystack.includes("tennis") || sportsHaystack.includes("soccer") || sportsHaystack.includes("basketball") || sportsHaystack.includes("baseball") || sportsHaystack.includes("softball") || sportsHaystack.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(sportsHaystack) || sportsHaystack.includes("swim meet") || sportsHaystack.includes("freestyle") || sportsHaystack.includes("breaststroke") || sportsHaystack.includes("backstroke") || isTrackSport || sportsHaystack.includes("cross country") || sportsHaystack.includes("lacrosse") || sportsHaystack.includes("football") || sportsHaystack.includes("gymnastics") || sportsHaystack.includes("wrestling") || sportsHaystack.includes("water polo") || /\bpolo\b/.test(sportsHaystack) || sportsHaystack.includes("hockey") || sportsHaystack.includes("rugby") || /\browing\b/.test(sportsHaystack) || /\bcrew\b/.test(sportsHaystack) || /\bdiving\b/.test(sportsHaystack) || sportsHaystack.includes("fencing") || sportsHaystack.includes("skiing") || sportsHaystack.includes("snowboard") || /\bcycling\b/.test(sportsHaystack) || sportsHaystack.includes("equestrian") || titleHasVs || (!isSchoolFundraiser && /\b(fun run|road run|trail run|color run)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\b(5k|10k|half marathon|marathon|triathlon)\b/.test(sportsHaystack)) || (!isSchoolFundraiser && /\brace\b/.test(sportsHaystack)))) return "sports";
+  if (!isBoardGame && (!isLibraryActivityGames && /\bgames?\b/.test(sportsHaystack) || /\bsports?\b/.test(sportsHaystack) || /\bathletics?\b/.test(sportsHaystack) || sportsHaystack.includes("golf") || sportsHaystack.includes("tennis") || sportsHaystack.includes("soccer") || sportsHaystack.includes("basketball") || sportsHaystack.includes("baseball") || sportsHaystack.includes("softball") || sportsHaystack.includes("volleyball") || /\bswim(s|ming|mer|mers)?\b/.test(sportsHaystack) || sportsHaystack.includes("swim meet") || sportsHaystack.includes("freestyle") || sportsHaystack.includes("breaststroke") || sportsHaystack.includes("backstroke") || isTrackSport || sportsHaystack.includes("cross country") || sportsHaystack.includes("lacrosse") || sportsHaystack.includes("football") || sportsHaystack.includes("gymnastics") || sportsHaystack.includes("wrestling") || sportsHaystack.includes("water polo") || /\bpolo\b/.test(sportsHaystack) || sportsHaystack.includes("hockey") || sportsHaystack.includes("rugby") || /\browing\b/.test(sportsHaystack) || /\bcrew\b/.test(sportsHaystack) || /\bdiving\b/.test(sportsHaystack) || sportsHaystack.includes("fencing") || sportsHaystack.includes("skiing") || sportsHaystack.includes("snowboard") || /\bcycling\b/.test(sportsHaystack) || sportsHaystack.includes("equestrian") || titleHasVs)) return "sports";
   // Government/civic events at markets are still community events
   if (/\b(office hours|mayor|city council|council member|supervisor)\b/.test(t) && t.includes("market")) return "community";
   // "craft" alone is too broad — "well-crafted resume", "refine your craft" → require craft market context
@@ -2382,6 +2387,11 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
           skippedPlaceholder++;
           return null;
         }
+        // Races (5K/10K/marathon/triathlon/etc.) on civic iCal feeds almost
+        // always have an entry fee — the iCal default of "free" is misleading
+        // when there's no description or URL to verify cost. Null it out so the
+        // card omits the cost badge instead of asserting free.
+        const isRace = /\b(5k|10k|half marathon|marathon|triathlon|fun run|road run|trail run|color run)\b/i.test(ev.summary || "");
         return {
           id: h(defaultCity, ev.uid || ev.summary, ev.dtstart),
           title: ev.summary.replace(/\\,/g, ",").replace(/\\n/g, " "),
@@ -2396,7 +2406,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
           address: "",
           city,
           category: inferCategory(ev.summary, ev.description || "", ""),
-          cost: defaultCost,
+          cost: isRace ? null : defaultCost,
           description,
           url: eventUrl,
           source: name,
