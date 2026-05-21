@@ -788,6 +788,26 @@ function cleanTitle(title) {
     /(?<=[A-Za-z])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
     (_, sp, w) => sp + w.toLowerCase(),
   );
+  // Companion pass: same downcase when the small word sits in front of a
+  // lowercase determiner / possessive / demonstrative. Catches the History SJ
+  // "Cars In the Park" pattern where the source already lowercased "the" but
+  // left "In" capitalized — the strict-lookahead pass above skips it because
+  // the following word isn't capital, even though every reader expects
+  // standard title case to lowercase the preposition here.
+  t = t.replace(
+    /(?<=[A-Za-z])(\s+)(Of|To|By|In|On|For|At|With|From|And|Or|As)(?=\s+(?:the|a|an|our|my|your|his|her|their|its|this|that|these|those)\b)/g,
+    (_, sp, w) => sp + w.toLowerCase(),
+  );
+  // Normalize "--" → en-dash. Stanford Localist feeds emit raw double-hyphens
+  // as subtitle separators ("Literature of the Middle East--Book Display");
+  // standard typography wants a single en-dash with spaces. Only fires when
+  // surrounded by alphanumerics so URLs, ranges, and CLI fragments stay put.
+  t = t.replace(/(\w)\s*--\s*(\w)/g, "$1 – $2");
+  // Collapse repeated terminal punctuation. SJDA's WP feed leaks "!!"
+  // ("Pete's Soundhouse is officially Live!!") and BiblioCommons feeds
+  // occasionally splash "?!?!" style chains. Keep "!?" as a deliberate
+  // interrobang; everything else flattens to a single mark.
+  t = t.replace(/!{2,}/g, "!").replace(/\?{2,}/g, "?");
   // Title-case fully-lowercase titles. City Lights Theater (cltc.org) styles
   // play titles in their menu as lowercase ("anthropology"); the textContent
   // scrape inherits that styling. Don't touch titles with any uppercase letter,
@@ -1105,6 +1125,11 @@ function polishDescription(text) {
   // "Passage ;"). Source feeds wrap and re-flow text leaving these. Restricted
   // to , ; . ! ? — colons can be valid styled separators ("Topic : Talk").
   t = t.replace(/\s+([,.;!?])/g, "$1");
+
+  // Collapse repeated terminal punctuation in body copy ("Be a Mini Maker!!!!"
+  // from a SJPL BiblioCommons description). Mirror of cleanTitle's collapse so
+  // titles and bodies normalize the same way.
+  t = t.replace(/!{2,}/g, "!").replace(/\?{2,}/g, "?");
 
   // Fix common typos before sentence-level processing.
   for (const [pat, fix] of DESC_TYPO_FIXES) {
