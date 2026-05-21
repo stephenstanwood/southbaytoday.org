@@ -100,22 +100,27 @@ def discord_get(path: str):
 
 
 def discord_delete_webhook_msg(message_id: str) -> bool:
+    """DELETE the webhook message; retries on 5xx/429/network errors."""
     if not SOCIAL_WEBHOOK:
         return False
-    req = urllib.request.Request(
-        f"{SOCIAL_WEBHOOK}/messages/{message_id}",
-        headers={"User-Agent": UA},
-        method="DELETE",
-    )
-    try:
-        urllib.request.urlopen(req, timeout=15).read()
-        return True
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
+    url = f"{SOCIAL_WEBHOOK}/messages/{message_id}"
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": UA}, method="DELETE",
+            )
+            urllib.request.urlopen(req, timeout=15).read()
             return True
-        return False
-    except Exception:
-        return False
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return True
+            if e.code >= 500 or e.code == 429:
+                time.sleep(0.5 * (2 ** attempt))
+                continue
+            return False
+        except Exception:
+            time.sleep(0.5 * (2 ** attempt))
+    return False
 
 
 def fetch_message_reactions(message_id: str) -> dict:
@@ -155,7 +160,11 @@ import urllib.parse  # used in stephen_reacted_with
 
 
 def transition(message_id: str, new_status: str) -> dict | None:
-    """Atomic move of one draft out of 'posted' state. Idempotent."""
+    """Atomic move of one draft out of 'posted' state. Idempotent.
+
+    Discord delete failures get parked under discord_delete_pending=True
+    for sweep_pending_deletes() to retry on the next tick.
+    """
     with _drafts_lock:
         drafts = load_drafts()
         target = None
@@ -170,8 +179,46 @@ def transition(message_id: str, new_status: str) -> dict | None:
         target["status"] = new_status
         target["decided_at"] = datetime.now(timezone.utc).isoformat()
         save_drafts(drafts)
-    discord_delete_webhook_msg(message_id)
+    if not discord_delete_webhook_msg(message_id):
+        with _drafts_lock:
+            drafts = load_drafts()
+            for d in drafts:
+                if d.get("message_id") == message_id:
+                    d["discord_delete_pending"] = True
+                    break
+            save_drafts(drafts)
     return target
+
+
+def sweep_pending_deletes():
+    """Retry Discord webhook deletes for drafts where a prior attempt failed.
+
+    Picks up drafts where status != 'posted' but discord_delete_pending is
+    still set (swiper or earlier listener tick couldn't delete the message).
+    On success, clears the flag.
+    """
+    drafts = load_drafts()
+    pending = [
+        d for d in drafts
+        if d.get("discord_delete_pending") and d.get("message_id")
+    ]
+    if not pending:
+        return
+    print(f"[listener] sweeping {len(pending)} pending discord deletes")
+    succeeded: list[str] = []
+    for d in pending:
+        if discord_delete_webhook_msg(d["message_id"]):
+            succeeded.append(d["message_id"])
+        time.sleep(0.15)
+    if succeeded:
+        with _drafts_lock:
+            drafts2 = load_drafts()
+            s = set(succeeded)
+            for d in drafts2:
+                if d.get("message_id") in s:
+                    d.pop("discord_delete_pending", None)
+            save_drafts(drafts2)
+    print(f"[listener] sweep cleared {len(succeeded)}/{len(pending)} orphans")
 
 
 def main():
@@ -179,6 +226,8 @@ def main():
     if not BOT_TOKEN:
         print("[listener] DISCORD_BOT_TOKEN not set — aborting", file=sys.stderr)
         return 1
+
+    sweep_pending_deletes()
 
     drafts = load_drafts()
     posted = [d for d in drafts if d.get("status") == "posted" and d.get("message_id")]

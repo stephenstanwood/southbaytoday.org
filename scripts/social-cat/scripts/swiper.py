@@ -27,6 +27,7 @@ import os
 import socketserver
 import sys
 import threading
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -97,27 +98,38 @@ def save_drafts(drafts: list[dict]):
 
 
 def discord_delete(message_id: str) -> bool:
-    """DELETE the Discord webhook message. Returns True on 2xx or 404."""
+    """DELETE the Discord webhook message. Returns True on 2xx or 404.
+
+    Retries up to 3 times on 5xx / 429 / network errors with exponential
+    backoff (0.5s, 1s, 2s). The listener's sweep_pending_deletes() picks up
+    anything that still fails.
+    """
     if not SOCIAL_WEBHOOK or not message_id:
         return False
     url = f"{SOCIAL_WEBHOOK}/messages/{message_id}"
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": DISCORD_UA},
-        method="DELETE",
-    )
-    try:
-        urllib.request.urlopen(req, timeout=15).read()
-        return True
-    except urllib.error.HTTPError as e:
-        # 404 = already deleted, count as success
-        if e.code == 404:
+    last_err = None
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": DISCORD_UA},
+                method="DELETE",
+            )
+            urllib.request.urlopen(req, timeout=15).read()
             return True
-        print(f"discord_delete {message_id} → HTTP {e.code}", file=sys.stderr)
-        return False
-    except Exception as e:
-        print(f"discord_delete {message_id} → {e}", file=sys.stderr)
-        return False
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return True
+            last_err = f"HTTP {e.code}"
+            if e.code >= 500 or e.code == 429:
+                time.sleep(0.5 * (2 ** attempt))
+                continue
+            break
+        except Exception as e:
+            last_err = str(e)
+            time.sleep(0.5 * (2 ** attempt))
+    print(f"discord_delete {message_id} → {last_err}", file=sys.stderr)
+    return False
 
 
 def transition(message_id: str, new_status: str) -> dict | None:
@@ -128,7 +140,11 @@ def transition(message_id: str, new_status: str) -> dict | None:
 
 def _transition_many(message_ids: list[str], new_status: str) -> dict[str, dict]:
     """Batch transition — atomic on drafts.jsonl, then network deletes
-    outside the lock. Returns map of message_id → updated draft."""
+    outside the lock. Returns map of message_id → updated draft.
+
+    Discord deletes that fail (after inline retry) are marked with
+    discord_delete_pending=True so the listener sweep can retry them.
+    """
     result: dict[str, dict] = {}
     to_delete: list[str] = []
     target_ids = set(message_ids)
@@ -147,8 +163,18 @@ def _transition_many(message_ids: list[str], new_status: str) -> dict[str, dict]
             result[d["message_id"]] = d
         if changed:
             save_drafts(drafts)
+    failed: list[str] = []
     for mid in to_delete:
-        discord_delete(mid)
+        if not discord_delete(mid):
+            failed.append(mid)
+    if failed:
+        with _drafts_lock:
+            drafts = load_drafts()
+            failed_set = set(failed)
+            for d in drafts:
+                if d.get("message_id") in failed_set:
+                    d["discord_delete_pending"] = True
+            save_drafts(drafts)
     return result
 
 
