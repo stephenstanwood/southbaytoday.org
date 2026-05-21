@@ -1,100 +1,43 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-21T11:15:02.818Z",
+    "generatedAt": "2026-05-21T19:18:33.238Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 10,
-    "placesMatched": 2,
+    "placesExtracted": 11,
+    "placesMatched": 3,
     "placeGaps": 8,
     "eventsExtracted": 0,
     "eventsMatched": 0,
     "eventGaps": 0,
-    "autoAppendedOpenings": 1
+    "autoAppendedOpenings": 0
   },
   "placeGaps": [
-    {
-      "name": "Denny's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Bascom Ave location, late-night dining",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
-        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
-        "https://www.reddit.com/r/SanJose/comments/1tiyh2j/santa_claras_da_tried_to_punish_stanford/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/",
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
-      ]
-    },
-    {
-      "name": "River of Life church",
-      "city": "Santa Clara",
-      "kind": "other",
-      "context": "landmark near converted hotel studio apartments",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
-        "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
-        "https://www.reddit.com/r/SanJose/comments/1tiyh2j/santa_claras_da_tried_to_punish_stanford/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/"
-      ]
-    },
     {
       "name": "Vicinity",
       "city": "Los Gatos",
       "kind": "restaurant",
-      "context": "Michelin Guide addition 2024",
+      "context": "added to Michelin California guide",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tijgsh/4am_at_dennys/",
         "https://www.reddit.com/r/bayarea/comments/1tiw13b/michelin_adds_7_bay_area_restaurants_to_its/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tiy8ly/just_heard_about_meta_layoffs_bay_area_employees/",
         "https://www.reddit.com/r/SanJose/comments/1tiyh2j/santa_claras_da_tried_to_punish_stanford/",
         "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/",
-        "https://www.reddit.com/r/SanJose/comments/1timjls/san_jose_cyclists_may_soon_have_to_share_bike/"
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/"
       ]
     },
     {
-      "name": "Rogers",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "new adjacent location opened on Middlefield",
+      "name": "Denny's",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "Bascom Ave location, wallet returned by honest customer",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
-      ]
-    },
-    {
-      "name": "Stan's",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "iconic donut shop, competing with new Randy's location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
-      ]
-    },
-    {
-      "name": "Randy's Donuts",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "new location opening, competing with Stan's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ]
     },
@@ -102,24 +45,76 @@
       "name": "Campbell Post Office",
       "city": "Campbell",
       "kind": "service",
-      "context": "location on Hamilton where someone returned lost wallet",
+      "context": "Hamilton Ave, wallet found and returned by kind soul",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ]
+    },
+    {
+      "name": "Rogers",
+      "city": "Mountain View",
+      "kind": "bakery",
+      "context": "new adjacent location opened on Middlefield Road",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ]
+    },
+    {
+      "name": "99 Ranch",
+      "city": "Milpitas",
+      "kind": "retail",
+      "context": "hot food section changed to per-pound pricing structure",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ]
+    },
+    {
+      "name": "Stan's",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "iconic donut shop, competing with incoming Randy's location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ]
+    },
+    {
+      "name": "Randy's Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "new location opening, establishing donut district in Santa Clara",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ]
     },
     {
       "name": "Grace Presbyterian of Silicon Valley",
-      "city": "Palo Alto",
+      "city": "Sunnyvale",
       "kind": "venue",
-      "context": "church with active young adult community",
+      "context": "church with community for young professionals",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
         "https://www.reddit.com/r/paloalto/comments/1tgqmp3/moving_to_palo_alto_thoughts/",
         "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/mountainview/comments/1th0mte/join_us_should_bay_area_school_districts_copy/",
         "https://www.reddit.com/r/SanJose/comments/1tj1yyb/arguably_the_most_adoptable_dog_in_san_jose/"
       ]
     }
@@ -127,32 +122,46 @@
   "eventGaps": [],
   "placeMatches": [
     {
-      "name": "Daily Donuts",
-      "city": "Santa Clara",
-      "kind": "bakery",
-      "context": "alternative donut shop on Scott and Warburton",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
-      ],
-      "matchedName": "Daily Donuts & Sandwich Bagels"
-    },
-    {
       "name": "Great Mall",
-      "city": "Milpitas",
-      "kind": "retail",
-      "context": "shopping center where wallet was found and returned",
+      "city": "",
+      "kind": "venue",
+      "context": "parking lot, wallet returned with all cash intact",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tj5k04/theres_a_nancy_pelosi_caltrain/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
         "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
       ],
       "matchedName": "Great Mall"
+    },
+    {
+      "name": "Alum Rock Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "wallet lost and returned with cash by park visitors",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ],
+      "matchedName": "Alum Rock Park"
+    },
+    {
+      "name": "Daily Donuts",
+      "city": "Santa Clara",
+      "kind": "bakery",
+      "context": "Scott and Warburton location, accepts cards, offers food options",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/bayarea/comments/1tj0koh/psa_99_ranch_hot_food_change/",
+        "https://www.reddit.com/r/Campbell/comments/1thvdvn/campbell_ca_gas_appliance_ban/",
+        "https://www.reddit.com/r/santaclara/comments/1tgb46q/its_happening_randys_donuts_sign_has_rolled_in/"
+      ],
+      "matchedName": "Daily Donuts & Sandwich Bagels"
     }
   ],
   "eventMatches": []

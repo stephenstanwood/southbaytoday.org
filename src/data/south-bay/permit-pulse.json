@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-21T11:08:03.697Z",
+      "generatedAt": "2026-05-21T19:09:49.459Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-21T11:08:06.106Z",
+      "generatedAt": "2026-05-21T19:09:52.118Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -150,18 +150,6 @@
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01308",
-          "address": "766 Bryant St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-19",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01254",
           "address": "1304 College Av",
@@ -184,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-20",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01308",
+          "address": "766 Bryant St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-19",
           "subtype": "Permit Issued"
         },
         {

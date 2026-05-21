@@ -1763,7 +1763,7 @@
     },
     "2026-05-21": {
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "santa-clara",
         "cityName": "Santa Clara",
@@ -1933,7 +1933,54 @@
         "copyApprovedAt": "2026-05-16T14:19:36.670Z",
         "imageApprovedAt": "2026-05-16T14:19:36.670Z",
         "generatedAt": "2026-05-16T10:35:24.703Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"THURSDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Santa Clara + Mountain View\n\nBreakfast — Marty's Donuts\nFrom-scratch pastries, donuts & specialty treats are the draw at this counter-se\n\nMorning — Communications Hill\nSan Jose trail loop, easy to medium effort.\n\nLunch — Shawarmaji\nSit-down middle Eastern restaurant in Santa Clara on The Alameda, mid-tier price\n\nAfternoon — Community Preservation Lab Scanning Service\nBring old photos and documents to get scanned and digitized by preservation expe\n\nDinner — The Stand - American Classics Redefined\nSit-down restaurant in Santa Clara on Lawrence Expy, mid-tier prices.\n\nEvening — The Zeros, Johnny, The Backstabbers\nSee The Zeros, Johnny, and The Backstabbers perform at The Ritz.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nScrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"THURSDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Santa Clara + Mountain View\n\nBreakfast — Marty's Donuts\nFrom-scratch pastries, donuts & specialty treats are the draw at this counter-se\n\nMorning — Communications Hill\nSan Jose trail loop, easy to medium effort.\n\nLunch — Shawarmaji\nSit-down middle Eastern restaurant in Santa Clara on The Alameda, mid-tier price\n\nAfternoon — Community Preservation Lab Scanning Service\nBring old photos and documents to get scanned and digitized by preservation expe\n\nDinner — The Stand - American Classics Redefined\nSit-down restaurant in Santa Clara on Lawrence Expy, mid-tier prices.\n\nEvening — The Zeros, Johnny, The Backstabbers\nSee The Zeros, Johnny, and The Backstabbers perform at The Ritz.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nScrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: dramatic mix of a bold serif for headlines and a clean sans-serif for details, big scale differences.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-21T14:09:45.845Z",
+        "publishedTo": [
+          {
+            "platform": "x",
+            "ok": true,
+            "postId": "2057463683866124716",
+            "id": "2057463683866124716",
+            "text": "Thursday in the South Bay — pick your move:"
+          },
+          {
+            "platform": "bluesky",
+            "ok": true,
+            "postId": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmeluc5sft2q",
+            "uri": "at://did:plc:x4f3xqmbhekcjeze33exlxjo/app.bsky.feed.post/3mmeluc5sft2q",
+            "cid": "bafyreiayjca5bex6bit3r3nzifcpbi4xocu5tpnc3eojsbdpmc2lohwlvi"
+          },
+          {
+            "platform": "threads",
+            "ok": true,
+            "postId": "18089625803199501",
+            "id": "18089625803199501"
+          },
+          {
+            "platform": "facebook",
+            "ok": true,
+            "postId": "122111912540849604",
+            "id": "122111912540849604"
+          },
+          {
+            "platform": "mastodon",
+            "ok": true,
+            "postId": "116612960807327947",
+            "id": "116612960807327947",
+            "url": "https://mastodon.social/@southbaytoday/116612960807327947"
+          },
+          {
+            "platform": "instagram",
+            "ok": true,
+            "postId": "18095520932239371",
+            "id": "18095520932239371"
+          },
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       },
       "tonight-pick": {
         "status": "image-approved",
