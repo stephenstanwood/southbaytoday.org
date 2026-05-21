@@ -108,9 +108,44 @@ Strict rules:
 - NEVER say: "real event", "only today", "one-time", "unforgettable", "anchor event", "right now".
 - NEVER mention distance, travel time, "near", "nearby", "close to", "minutes from".
 - NEVER mention star ratings or review scores.
+- NEVER include a specific date or month — the card displays those separately. No "June 14th", "May 21", "Saturday, June 14", "two May sessions", "today", "tomorrow", "tonight", etc. Recurring weekly patterns are fine ("Friday mornings", "every Tuesday"); specific calendar dates are not.
 - Do not hedge ("might", "perhaps"). Recommend confidently.
 - Do not use em dashes in every sentence — vary sentence structure.
 - No hype. No exclamation points.`;
+
+// Date/day/month references that the card already shows separately. Narrow
+// patterns only — recurring-event copy like "Friday mornings" or "this
+// month's book pick" is informative for repeats, and band/event proper
+// nouns ("Taking Back Sunday", "Start Today") shouldn't trip the filter.
+// We additionally suppress matches whose text appears in the event's title
+// or venue (band-name and event-name leaks).
+const BLURB_LEAK_PATTERNS = [
+  // Relative-day anchors — almost always wrong on a future-dated event.
+  /\b(today|tomorrow|yesterday|tonight)\b/i,
+  // Month + day-number: "Saturday, June 14th".
+  /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t|tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+\d{1,2}(?:st|nd|rd|th)?\b/i,
+  // Day-of-week + month: "Saturday, June 14th" caught by both rules — belt
+  // and suspenders for cases where the year inserts itself between them.
+  /\b(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday),?\s+(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t|tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/i,
+  // "across two May sessions" / "in May sessions" — month name as a temporal
+  // adjective for sessions/programs. "May" alone is ambiguous (modal verb),
+  // so require the program-noun context.
+  /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t|tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+(?:session|sessions|class|classes|workshop|workshops|meeting|meetings|event|events)\b/i,
+];
+
+function blurbLeaksDateContext(blurb, event) {
+  if (!blurb) return false;
+  // Suppress hits that appear in the event's title or venue — band names
+  // ("Start Today"), event names ("Museums on Us Weekend"), etc.
+  const ctx = `${event?.title || ""} ${event?.venue || ""}`.toLowerCase();
+  for (const re of BLURB_LEAK_PATTERNS) {
+    const m = blurb.match(re);
+    if (!m) continue;
+    if (ctx.includes(m[0].toLowerCase())) continue;
+    return true;
+  }
+  return false;
+}
 
 function buildUserPrompt(events) {
   const lines = events.map((e, i) => {
@@ -224,6 +259,29 @@ export async function resolveEventBlurbs(events, opts = {}) {
   const cache = loadCache();
   migrateUrlKeys(cache, events);
 
+  // Sweep stale entries whose blurb leaks date/day/month context. The card
+  // shows the date separately, so these are always wrong — drop and let the
+  // regen below produce a clean replacement. Cache keys are
+  // `fp:<title>|<venue>`, so we reconstruct just enough event context for
+  // the proper-noun suppression (band names, event names).
+  let leakDropped = 0;
+  for (const k of Object.keys(cache.byKey)) {
+    const blurb = cache.byKey[k]?.blurb;
+    if (!blurb) continue;
+    let title = "", venue = "";
+    if (k.startsWith("fp:")) {
+      const rest = k.slice(3);
+      const pipe = rest.lastIndexOf("|");
+      if (pipe >= 0) { title = rest.slice(0, pipe); venue = rest.slice(pipe + 1); }
+      else { title = rest; }
+    }
+    if (blurbLeaksDateContext(blurb, { title, venue })) {
+      delete cache.byKey[k];
+      leakDropped++;
+    }
+  }
+  if (leakDropped) console.log(`[eventBlurbs] swept ${leakDropped} date-leak blurb(s) from cache`);
+
   // --- Pass 1: apply preexisting + cache hits ------------------------------
   const todo = [];
   for (const e of events) {
@@ -265,6 +323,11 @@ export async function resolveEventBlurbs(events, opts = {}) {
       for (let i = 0; i < batch.length; i++) {
         const blurb = blurbs[i];
         if (blurb && blurb.length > 0) {
+          if (blurbLeaksDateContext(blurb, batch[i].event)) {
+            console.warn(`[eventBlurbs] dropped (date leak): "${blurb}" for ${batch[i].event.title}`);
+            stats.failed++;
+            continue;
+          }
           batch[i].event.blurb = blurb;
           cache.byKey[batch[i].key] = { blurb, generatedAt: new Date().toISOString() };
           stats.generated++;
