@@ -103,13 +103,23 @@ const NON_AUDIENCE_AGE_PHRASES = [
   /\bbabysit(?:ting|ter)\s+(?:available|provided)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
 ];
 
+// Title-only kid signals — "X for Kids/Children" pattern where the title
+// ENDS with the kid audience tag. Title-restricted because descriptions
+// commonly say "great for kids and adults" or "programs for kids in need"
+// which shouldn't flip a mixed-audience event to kids-only.
+const KIDS_TITLE_SIGNALS = [
+  /\bfor\s+(?:school[-\s]age\s+)?(?:kids?|children|toddlers|preschoolers)\b\s*(?:[!.\)]+\s*)?$/i,
+];
+
 export function classifyAudienceAge(event) {
   const title = String(event.title || "");
   const desc = String(event.description || "").slice(0, 400);
   let hay = `${title}\n${desc}`;
   for (const r of NON_AUDIENCE_AGE_PHRASES) hay = hay.replace(r, "");
 
-  const isKids = KIDS_SIGNALS.some((r) => r.test(hay));
+  const isKids =
+    KIDS_SIGNALS.some((r) => r.test(hay)) ||
+    KIDS_TITLE_SIGNALS.some((r) => r.test(title));
   const isAdult = ADULT_SIGNALS.some((r) => r.test(hay));
 
   // If both patterns hit (rare — e.g. "family wine walk" or "kids welcome at

@@ -110,6 +110,35 @@ test("open-ended teen+ phrases stay 'all' when no kid context", () => {
   assert.equal(classifyAudienceAge(ev("Teen Hangout", "Open to teens.")), "kids");
 });
 
+test("'X for Kids' titles classify as kids (end-of-title anchor)", () => {
+  // Real misfires: "Knitting Club for Kids", "Origami for School Age Kids",
+  // "Zumba Class for Kids", "Voices of Pasifika: Ukulele for Kids" all
+  // tagged "all" because the existing KIDS_SIGNALS regex matches "Kids
+  // Knitting" / "Kids Club" but not the trailing-audience form. Title-only
+  // pattern catches the trailing form without false-positiving on
+  // descriptions like "great for kids and adults".
+  assert.equal(classifyAudienceAge(ev("Knitting Club for Kids", "")), "kids");
+  assert.equal(classifyAudienceAge(ev("Zumba Class for Kids", "")), "kids");
+  assert.equal(classifyAudienceAge(ev("Origami for School Age Kids", "")), "kids");
+  assert.equal(classifyAudienceAge(ev("Voices of Pasifika: Ukulele for Kids", "")), "kids");
+  assert.equal(classifyAudienceAge(ev("Storytime for Toddlers", "")), "kids");
+  assert.equal(classifyAudienceAge(ev("Craft Hour for Preschoolers!", "")), "kids");
+
+  // Description-only "for kids" stays "all" — mixed-audience copy shouldn't
+  // hard-flip to kids-only.
+  assert.equal(
+    classifyAudienceAge(ev("Summer Concert Series", "Family event — great for kids and adults alike.")),
+    "all",
+  );
+  // "For Kids in Need" donation/charity title isn't actually a kid program.
+  // The trailing-audience anchor requires "kids" at the end (allowing a few
+  // closing punctuation chars), so "for Kids in Need" doesn't match.
+  assert.equal(
+    classifyAudienceAge(ev("Coat Drive for Kids in Need", "Volunteer to sort donations.")),
+    "all",
+  );
+});
+
 test("'ages 12 to 25' young-adult ranges do NOT classify as kids", () => {
   // Real misfire: "allcove x PACL Book Club" "open to young people ages 12
   // to 25" tagged kids because the bare "ages 12" regex matched the lower
