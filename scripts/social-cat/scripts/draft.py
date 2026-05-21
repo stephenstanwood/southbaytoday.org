@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,17 +36,30 @@ PLATFORMS = os.environ.get(
 TOP_TRENDS = int(os.environ.get("SOCIAL_TOP_TRENDS", "4"))
 
 
-def call_claude(prompt: str, model: str = "sonnet", timeout: int = 600) -> str:
-    """Call local claude CLI, return raw stdout."""
+def call_claude(prompt: str, model: str = "sonnet", timeout: int = 900, attempts: int = 2) -> str:
+    """Call local claude CLI, return raw stdout. Retries on timeout — Max-tier
+    Sonnet routinely takes 5-10 min for ~50k-char prompts, occasionally crossing
+    the per-attempt cap."""
     cmd = ["claude", "--print", "--tools", "", "--model", model]
-    result = subprocess.run(
-        cmd, input=prompt, capture_output=True, text=True, timeout=timeout
-    )
-    if result.returncode != 0:
-        raise RuntimeError(
-            f"claude exited {result.returncode}: {result.stderr[:500]}"
-        )
-    return result.stdout
+    last_err: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        t0 = time.monotonic()
+        try:
+            result = subprocess.run(
+                cmd, input=prompt, capture_output=True, text=True, timeout=timeout
+            )
+            elapsed = time.monotonic() - t0
+            if result.returncode != 0:
+                raise RuntimeError(
+                    f"claude exited {result.returncode} after {elapsed:.1f}s: {result.stderr[:500]}"
+                )
+            print(f"[draft] claude returned in {elapsed:.1f}s (attempt {attempt})", file=sys.stderr)
+            return result.stdout
+        except subprocess.TimeoutExpired as e:
+            elapsed = time.monotonic() - t0
+            print(f"[draft] claude timeout after {elapsed:.1f}s (attempt {attempt}/{attempts})", file=sys.stderr)
+            last_err = e
+    raise RuntimeError(f"claude timed out {attempts}x at {timeout}s each") from last_err
 
 
 def load_trends() -> list[dict]:
