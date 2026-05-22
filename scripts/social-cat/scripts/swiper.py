@@ -464,7 +464,14 @@ INDEX_HTML = r"""<!DOCTYPE html>
   .eng-foot a { color: var(--accent); text-decoration: none; }
   /* ── Fortune cat tile ───────────────────────────────────────────── */
   .fortune { text-align: center; padding: 30px 20px 24px; }
-  .fortune .cat { font-size: 48px; line-height: 1; margin-bottom: 14px; }
+  .fortune .cat { width: 160px; height: 160px; margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fortune .cat .cat-photo { width: 160px; height: 160px; border-radius: 50%;
+    object-fit: cover; display: block; background: var(--line);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10), 0 0 0 1px var(--line);
+  }
+  .fortune .cat .cat-emoji { font-size: 64px; line-height: 1; }
   .fortune .label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
     color: var(--muted); font-weight: 700; margin-bottom: 10px;
   }
@@ -517,6 +524,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
     .eng-pill { background: #1e1b3a; border-color: #3730a3; color: #c7d2fe; }
     .eng-item { background: #1e1b3a; border-left-color: #6366f1; }
     .eng-item .text { color: #d4d4d8; }
+    .fortune .cat .cat-photo { box-shadow: 0 4px 18px rgba(0,0,0,0.45), 0 0 0 1px #3a3835; }
   }
 </style>
 </head>
@@ -599,6 +607,51 @@ const CAT_LINES = [
   "Inbox: zero. Heart: full. Battery: 14%.",
 ];
 const CAT_EMOJI = ["🐈", "🐈‍⬛", "🐱", "😸", "😹", "😺", "😻", "🙀", "😼", "😽"];
+
+// TheCatAPI returns random cute-cat photos. Public/keyless tier is fine —
+// we batch 10 per fetch and refill only when the queue runs low, so this
+// stays well under any rate limit. Emoji fallback covers offline / API down.
+const CAT_API_URL = "https://api.thecatapi.com/v1/images/search?limit=10&size=med&mime_types=jpg,png";
+let catPhotos = [];
+let catPhotoIdx = 0;
+let catFetchInFlight = false;
+
+async function refillCatPhotos() {
+  if (catFetchInFlight) return;
+  catFetchInFlight = true;
+  const wasEmpty = catPhotos.length === 0;
+  try {
+    const r = await fetch(CAT_API_URL);
+    if (!r.ok) return;
+    const data = await r.json();
+    if (Array.isArray(data)) {
+      for (const it of data) {
+        if (it && typeof it.url === "string") catPhotos.push(it.url);
+      }
+    }
+    // First batch arrived while we were showing the emoji fallback —
+    // re-render the fortune tile so the real cat shows up.
+    if (wasEmpty && catPhotos.length && phase === "fortune") render();
+  } catch (e) { /* fallback handles it */ }
+  finally { catFetchInFlight = false; }
+}
+
+function currentCatPhoto() {
+  if (!catPhotos.length) return null;
+  return catPhotos[catPhotoIdx % catPhotos.length];
+}
+
+function advanceCatPhoto() {
+  catPhotoIdx++;
+  // Refill when we're within 3 of the end so "another" stays fresh.
+  const remaining = catPhotos.length - (catPhotoIdx % catPhotos.length) - 1;
+  if (remaining < 3) refillCatPhotos();
+  // Preload the next photo so the swap feels instant.
+  const next = catPhotos[(catPhotoIdx + 1) % catPhotos.length];
+  if (next) { const pre = new Image(); pre.src = next; }
+}
+
+refillCatPhotos();
 
 let draftQueue = [];          // array of group objects from /api/pending
 let engagement = null;        // raw payload from /api/engagement
@@ -904,20 +957,33 @@ function renderFortune(deck) {
   const card = document.createElement("div");
   card.className = "card";
   card.id = "card";
+  const photo = currentCatPhoto();
+  const catVisual = photo
+    ? `<img class="cat-photo" src="${esc(photo)}" alt="" referrerpolicy="no-referrer">`
+    : `<div class="cat-emoji">${fortunePick.emoji}</div>`;
   card.innerHTML = `
     <div class="fortune">
-      <div class="cat">${fortunePick.emoji}</div>
+      <div class="cat">${catVisual}</div>
       <div class="label">caught up</div>
       <div class="line">${esc(fortunePick.line)}</div>
       <button class="tap" id="fortuneTap" type="button">🎲 another</button>
     </div>
   `;
   deck.appendChild(card);
+  // Photo failed to load → swap that one image to the emoji fallback.
+  const photoEl = card.querySelector(".cat-photo");
+  if (photoEl) {
+    photoEl.addEventListener("error", () => {
+      const wrap = card.querySelector(".cat");
+      if (wrap) wrap.innerHTML = `<div class="cat-emoji">${esc(fortunePick.emoji)}</div>`;
+    });
+  }
   // Tap button re-rolls without leaving the fortune phase (no dismiss).
   const tapBtn = card.querySelector("#fortuneTap");
   if (tapBtn) tapBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     fortunePick = pickFortune();
+    advanceCatPhoto();
     render();
   });
   bindGestures(card, "fortune");
@@ -1017,6 +1083,7 @@ function action(kind, direction) {
   } else {
     // fortune: re-roll
     fortunePick = pickFortune();
+    advanceCatPhoto();
     render();
   }
 }
@@ -1031,6 +1098,7 @@ function dismissEngagement(direction) {
   } catch (e) {}
   setTimeout(() => {
     fortunePick = pickFortune();
+    advanceCatPhoto();
     engagementMeta = null;
     render();
     busy = false;
