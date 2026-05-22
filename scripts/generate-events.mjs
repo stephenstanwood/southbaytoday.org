@@ -2115,9 +2115,14 @@ function stripChmRssBoilerplate(text) {
     /^\s*Unfortunately, we will not be able to admit walk-ins\.\s*/i,
     "",
   );
-  // Trailing WordPress footer: "[…] The post <anything> appeared first on CHM."
-  t = t.replace(/\s*\[…\]\s*The post .*? appeared first on CHM\.?\s*$/i, "");
-  t = t.replace(/\s*The post .*? appeared first on CHM\.?\s*$/i, "");
+  // Trailing WordPress footer: "[<a>&hellip;</a>] The post <a>title</a> appeared first on <a>CHM</a>."
+  // stripHtml replaces inline anchor tags with single spaces, so the bracketed
+  // ellipsis arrives as "[ … ]" (not "[…]"), the title is bracketed by spaces from
+  // its own anchors, and the closing tag before the period turns "CHM." into "CHM ."
+  // Allow optional whitespace inside the brackets and around the period so the
+  // anchor regex still matches after stripHtml has run.
+  t = t.replace(/\s*\[\s*…\s*\]\s*The post\b.*?\bappeared first on\s+CHM\s*\.?\s*$/i, "");
+  t = t.replace(/\s*The post\b.*?\bappeared first on\s+CHM\s*\.?\s*$/i, "");
   return t.trim();
 }
 
