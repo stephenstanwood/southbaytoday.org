@@ -1,15 +1,59 @@
 {
   "flags": [
     {
-      "business_id": "PR0304940",
-      "name": "Ume Tea",
-      "city": "San Jose",
-      "address": "2067 Camden Av",
-      "date": "2026-05-20",
-      "score": 72,
+      "business_id": "PR0304807",
+      "name": "Erik's Deli Cafe Campbell",
+      "city": "Campbell",
+      "address": "1777 S Bascom Av",
+      "date": "2026-05-21",
+      "score": 75,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection shall be conducted"
+      "summary": "Hot and cold water available"
+    },
+    {
+      "business_id": "PR0340066",
+      "name": "Pacific Catch Restaurant",
+      "city": "Campbell",
+      "address": "1875 S Bascom Av 550",
+      "date": "2026-05-21",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/20/26 for vermin infestation"
+    },
+    {
+      "business_id": "PR0424670",
+      "name": "Papas And Eggs",
+      "city": "Mountain View",
+      "address": "2070 Old Middlefield Wy",
+      "date": "2026-05-21",
+      "score": 75,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow-up inspection will be conducted on 5/25/2026  to verily compliance with all of the cited major violations"
+    },
+    {
+      "business_id": "PR0378046",
+      "name": "Epic Dumpling",
+      "city": "Sunnyvale",
+      "address": "673 Grape Av",
+      "date": "2026-05-21",
+      "score": 63,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0301401",
+      "name": "Casa Lupe",
+      "city": "Campbell",
+      "address": "2169 S Winchester Bl",
+      "date": "2026-05-20",
+      "score": 71,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow up inspection will be conducted by 05/22/26 to verify compliance"
     },
     {
       "business_id": "PR0340066",
@@ -34,26 +78,37 @@
       "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
-      "business_id": "PR0301401",
-      "name": "Casa Lupe",
-      "city": "Campbell",
-      "address": "2169 S Winchester Bl",
+      "business_id": "PR0304940",
+      "name": "Ume Tea",
+      "city": "San Jose",
+      "address": "2067 Camden Av",
       "date": "2026-05-20",
-      "score": 71,
+      "score": 72,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "A follow up inspection will be conducted by 05/22/26 to verify compliance"
+      "summary": "A follow-up inspection shall be conducted"
     },
     {
-      "business_id": "PR0330565",
-      "name": "Siam Station Milpitas",
-      "city": "Milpitas",
-      "address": "210 Barber Ct",
-      "date": "2026-05-19",
-      "score": 64,
+      "business_id": "PR0306138",
+      "name": "Dumpling Hours",
+      "city": "Palo Alto",
+      "address": "530 Bryant St",
+      "date": "2026-05-20",
+      "score": 58,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Two or more major violations were cited during the routine inspection"
+      "summary": "Food contact surfaces clean, sanitized"
+    },
+    {
+      "business_id": "PR0304681",
+      "name": "Duc Huong",
+      "city": "San Jose",
+      "address": "2345 Mckee Rd",
+      "date": "2026-05-19",
+      "score": 53,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "No food safety manager certificate found on file"
     },
     {
       "business_id": "PR0300248",
@@ -67,15 +122,15 @@
       "summary": "this facility is hereby order closed due to rodent dropping contamination"
     },
     {
-      "business_id": "PR0304681",
-      "name": "Duc Huong",
-      "city": "San Jose",
-      "address": "2345 Mckee Rd",
+      "business_id": "PR0330565",
+      "name": "Siam Station Milpitas",
+      "city": "Milpitas",
+      "address": "210 Barber Ct",
       "date": "2026-05-19",
-      "score": 53,
+      "score": 64,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "No food safety manager certificate found on file"
+      "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
       "business_id": "PR0304423",
@@ -100,15 +155,15 @@
       "summary": "Facility is closed due to the following major violation: Rodent activity"
     },
     {
-      "business_id": "PR0409577",
-      "name": "Crawfish La",
-      "city": "San Jose",
-      "address": "2857 Senter Rd # N",
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
       "date": "2026-05-15",
-      "score": 66,
+      "score": null,
       "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "THIS FACILITY IS NOW CLOSED DUE TO HAVING NO HOT WATER (120F MINIMUM AT THE 3 COMPARTMENT SINK),"
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/13/26 for vermin infestation"
     },
     {
       "business_id": "PR0304143",
@@ -122,15 +177,15 @@
       "summary": "Note: This is a follow-up inspection to the routine inspection conducted on 05/13/2026 by Helen Dinh"
     },
     {
-      "business_id": "PR0304423",
-      "name": "Tgi's Sushi",
-      "city": "Campbell",
-      "address": "100 W Hamilton Av C",
+      "business_id": "PR0409577",
+      "name": "Crawfish La",
+      "city": "San Jose",
+      "address": "2857 Senter Rd # N",
       "date": "2026-05-15",
-      "score": null,
+      "score": 66,
       "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow up inspection regarding facility closure on 05/13/26 for vermin infestation"
+      "type": "ROUTINE INSPECTION",
+      "summary": "THIS FACILITY IS NOW CLOSED DUE TO HAVING NO HOT WATER (120F MINIMUM AT THE 3 COMPARTMENT SINK),"
     },
     {
       "business_id": "PR0307903",
@@ -141,7 +196,7 @@
       "score": 62,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
+      "summary": "Proper cooling methods"
     },
     {
       "business_id": "PR0301934",
@@ -155,17 +210,6 @@
       "summary": "Follow up inspection regarding facility closure on 05/08/26, 05/12/26, and 05/13/26 for vermin infestation"
     },
     {
-      "business_id": "PR0304423",
-      "name": "Tgi's Sushi",
-      "city": "Campbell",
-      "address": "100 W Hamilton Av C",
-      "date": "2026-05-13",
-      "score": 71,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is ordered closed due to evidence of a vermin (cockroach) infestation"
-    },
-    {
       "business_id": "PR0365575",
       "name": "China Palace",
       "city": "Milpitas",
@@ -175,17 +219,6 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
-    },
-    {
-      "business_id": "PR0306607",
-      "name": "Cajun Crackin",
-      "city": "Milpitas",
-      "address": "275 Ranch Dr",
-      "date": "2026-05-13",
-      "score": 50,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Food contact surfaces clean, sanitized"
     },
     {
       "business_id": "PR0301934",
@@ -210,6 +243,28 @@
       "summary": "Note: Food safety manager certificate: Cipriano Perez - 5/11/2029"
     },
     {
+      "business_id": "PR0306607",
+      "name": "Cajun Crackin",
+      "city": "Milpitas",
+      "address": "275 Ranch Dr",
+      "date": "2026-05-13",
+      "score": 50,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Food contact surfaces clean, sanitized"
+    },
+    {
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
+      "date": "2026-05-13",
+      "score": 71,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Facility is ordered closed due to evidence of a vermin (cockroach) infestation"
+    },
+    {
       "business_id": "PR0304143",
       "name": "Yummy Kitchen",
       "city": "San Jose",
@@ -221,26 +276,15 @@
       "summary": "Facility is hereby closed due to evidence of a pest/vermin infestation"
     },
     {
-      "business_id": "PR0301758",
-      "name": "Jesuit Retreat House",
-      "city": "Los Altos",
-      "address": "300 Manresa Wy",
-      "date": "2026-05-12",
-      "score": 78,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
-    },
-    {
-      "business_id": "PR0330927",
-      "name": "Restorant Antojitos Y Pupuseria Lolita",
-      "city": "San Jose",
-      "address": "414 E William St # A",
+      "business_id": "PR0301786",
+      "name": "The Laurel At Mountain View",
+      "city": "Mountain View",
+      "address": "1981 Montecito Av",
       "date": "2026-05-12",
       "score": null,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Requested follow-up inspection to routine inspection resulting in a closure due to enclosure violations"
     },
     {
       "business_id": "PR0301934",
@@ -265,73 +309,29 @@
       "summary": "A follow-up inspection to verify compliance of major violations will be conducted within five business days"
     },
     {
-      "business_id": "PR0450301",
-      "name": "Tacos Mil Delicias",
-      "city": "San Jose",
-      "address": "82-96 E Santa Clara St # K110",
+      "business_id": "PR0301758",
+      "name": "Jesuit Retreat House",
+      "city": "Los Altos",
+      "address": "300 Manresa Wy",
       "date": "2026-05-12",
-      "score": 81,
-      "result": "Y",
+      "score": 78,
+      "result": "R",
       "type": "ROUTINE INSPECTION",
-      "summary": "Proper cooling methods"
+      "summary": "This facility shall remain closed until all major violations have been verified corrected by this department"
     },
     {
-      "business_id": "PR0301786",
-      "name": "The Laurel At Mountain View",
-      "city": "Mountain View",
-      "address": "1981 Montecito Av",
+      "business_id": "PR0330927",
+      "name": "Restorant Antojitos Y Pupuseria Lolita",
+      "city": "San Jose",
+      "address": "414 E William St # A",
       "date": "2026-05-12",
       "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Requested follow-up inspection to routine inspection resulting in a closure due to enclosure violations"
-    },
-    {
-      "business_id": "PR0375680",
-      "name": "Chandni Chowk",
-      "city": "Santa Clara",
-      "address": "3775 Lafayette St",
-      "date": "2026-05-11",
-      "score": 71,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection will be conducted on 5/14/2026 to verily compliance with all of the cited major violations"
-    },
-    {
-      "business_id": "PR0302973",
-      "name": "It's Lunch Time",
-      "city": "Santa Clara",
-      "address": "3205 Edward Av",
-      "date": "2026-05-08",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "This facility has exceeded its required compliance date for the submission of all required items for plan review submission for the unapproved installation o…"
-    },
-    {
-      "business_id": "PR0365358",
-      "name": "Lunch With Tony - Front Kitchen",
-      "city": "San Jose",
-      "address": "201 S Market St",
-      "date": "2026-05-08",
-      "score": 69,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Food contact surfaces clean, sanitized"
-    },
-    {
-      "business_id": "PR0301934",
-      "name": "Little Lou's Bbq",
-      "city": "Campbell",
-      "address": "2455 S Winchester Bl",
-      "date": "2026-05-08",
-      "score": 80,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Facility is ordered closed due to evidence of a vermin infestation"
     }
   ],
-  "generatedAt": "2026-05-21T23:09:04.458Z",
+  "generatedAt": "2026-05-22T11:09:50.391Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }

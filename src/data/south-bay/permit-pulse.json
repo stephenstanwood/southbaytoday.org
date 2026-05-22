@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-21T23:09:35.502Z",
+      "generatedAt": "2026-05-22T11:10:23.685Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 14 – May 21",
+      "dateRange": "May 15 – May 22",
       "stats": {
-        "total": 326,
+        "total": 361,
         "notable": 26,
-        "newUnits": 10,
-        "totalValuation": 17947295
+        "newUnits": 12,
+        "totalValuation": 17332946
       },
       "permits": [
         {
@@ -25,30 +25,6 @@
           "units": 2,
           "issueDate": "2026-05-19",
           "subtype": "Duplex"
-        },
-        {
-          "id": "2025-117693-RS",
-          "address": "512 S 3rd St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case New Detached ADU",
-          "valuation": 169090,
-          "units": 1,
-          "issueDate": "2026-05-15",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-117491-RS",
-          "address": "5139 Sutcliff Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 164186,
-          "units": 1,
-          "issueDate": "2026-05-15",
-          "subtype": "2nd Unit Added"
         },
         {
           "id": "2025-115105-RS",
@@ -87,6 +63,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2026-113954-RS",
+          "address": "267 Washington St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Detach Garage Conversion to ADU",
+          "valuation": 109875,
+          "units": 1,
+          "issueDate": "2026-05-20",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-142289-RS",
           "address": "1422 Vinci Park Wy #3",
           "category": "residential-new",
@@ -96,6 +84,42 @@
           "valuation": 80318,
           "units": 1,
           "issueDate": "2026-05-19",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-139755-RS",
+          "address": "2543 Loomis Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Coversion to Jadu",
+          "valuation": 74569,
+          "units": 1,
+          "issueDate": "2026-05-20",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-104137-RS",
+          "address": "1407 Bouret Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached ADU",
+          "valuation": 72709,
+          "units": 1,
+          "issueDate": "2026-05-20",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-129104-RS",
+          "address": "2029 Kilchoan Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case Garage Conversion to ADU",
+          "valuation": 70849,
+          "units": 1,
+          "issueDate": "2026-05-20",
           "subtype": "2nd Unit Added"
         },
         {
@@ -109,59 +133,23 @@
           "units": 1,
           "issueDate": "2026-05-18",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-136536-RS",
-          "address": "73 Avenida Espana #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Studio Detached ADU",
-          "valuation": 50389,
-          "units": 1,
-          "issueDate": "2026-05-19",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-118403-CI",
-          "address": "160 Rio Robles",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Analog Devices (Bemp100%) Office TI",
-          "valuation": 2250000,
-          "units": 0,
-          "issueDate": "2026-05-15",
-          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-21T23:09:37.861Z",
+      "generatedAt": "2026-05-22T11:10:26.060Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 14 – May 21",
+      "dateRange": "May 15 – May 22",
       "stats": {
-        "total": 119,
-        "notable": 5,
+        "total": 116,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01317",
-          "address": "3705 Starr King Cir",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-20",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01308",
           "address": "766 Bryant St",
@@ -175,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01254",
-          "address": "1304 College Av",
+          "id": "26BLD-01317",
+          "address": "3705 Starr King Cir",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-14",
+          "issueDate": "2026-05-20",
           "subtype": "Permit Issued"
         },
         {
