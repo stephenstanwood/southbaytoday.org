@@ -7,6 +7,13 @@
       "runtimeArgs": ["-l", "-c", "npm run dev -- --port $PORT"],
       "port": 4321,
       "autoPort": true
+    },
+    {
+      "name": "social-cat-swiper",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-l", "-c", "SWIPER_PORT=$PORT python3 scripts/social-cat/scripts/swiper.py"],
+      "port": 18765,
+      "autoPort": true
     }
   ]
 }

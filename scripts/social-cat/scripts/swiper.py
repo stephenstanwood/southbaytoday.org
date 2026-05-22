@@ -53,6 +53,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 DRAFTS_PATH = DATA_DIR / "drafts.jsonl"
 
+# Engagement file lives in the SBT repo root: scripts/social-cat/ → ../.. → repo
+ENGAGEMENT_PATH = ROOT.parent.parent / "src" / "data" / "south-bay" / "social-engagement.json"
+
 PORT = int(os.environ.get("SWIPER_PORT", "8765"))
 SOCIAL_WEBHOOK = os.environ.get("SOCIAL_WEBHOOK", "")
 DISCORD_UA = "social-cat-swiper/0.1 (DiscordBot)"
@@ -74,6 +77,41 @@ def load_env():
         v = v.strip().strip("'\"")
         if k and k not in os.environ:
             os.environ[k] = v
+
+
+def load_engagement() -> dict:
+    """Read social-engagement.json and mirror copy-review-server's FB-strip.
+
+    Meta App Review walls off pages_read_engagement, so FB counts are always 0
+    and just add visual noise. The Node engagement page strips them on read;
+    we mirror that here so the swiper card matches /engagement exactly.
+    """
+    if not ENGAGEMENT_PATH.exists():
+        return {"lastUpdated": None, "posts": [], "totals": {}, "postCount": 0}
+    try:
+        data = json.loads(ENGAGEMENT_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {"lastUpdated": None, "posts": [], "totals": {}, "postCount": 0}
+    totals = {"likes": 0, "reposts": 0, "quotes": 0, "replies": 0}
+    posts = []
+    for post in (data.get("posts") or []):
+        platforms = {k: v for k, v in (post.get("platforms") or {}).items()
+                     if k != "facebook"}
+        if not platforms:
+            continue
+        for v in platforms.values():
+            c = v.get("counts") or {}
+            totals["likes"] += c.get("likes", 0) or 0
+            totals["reposts"] += c.get("reposts", 0) or 0
+            totals["quotes"] += c.get("quotes", 0) or 0
+            totals["replies"] += c.get("replies", 0) or 0
+        posts.append({**post, "platforms": platforms})
+    return {
+        **data,
+        "posts": posts,
+        "totals": totals,
+        "postCount": len(posts),
+    }
 
 
 def load_drafts() -> list[dict]:
@@ -374,6 +412,72 @@ INDEX_HTML = r"""<!DOCTYPE html>
   .keymap { font-size: 11px; color: var(--muted); text-align: center;
     padding: 0 0 12px;
   }
+  /* ── Engagement card ─────────────────────────────────────────────── */
+  .eng-summary { font-size: 13px; color: #4338ca; background: #eef2ff;
+    border: 1px solid #c7d2fe; border-radius: 8px; padding: 8px 12px;
+    margin-bottom: 14px; font-weight: 600;
+  }
+  .eng-post { border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px 14px; background: #FDFCFA; margin-bottom: 10px;
+  }
+  .eng-post:last-child { margin-bottom: 0; }
+  .eng-post-head { display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .eng-post-title { font-size: 14px; font-weight: 600; flex: 1; min-width: 0;
+    color: var(--fg); line-height: 1.3;
+  }
+  .eng-post-title a { color: inherit; text-decoration: none; }
+  .eng-post-title a:hover { text-decoration: underline; }
+  .eng-post-meta { font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .eng-plat-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .eng-pill { display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: 999px;
+    background: #eef2ff; border: 1px solid #c7d2fe;
+    font-size: 11px; color: #4338ca; font-weight: 600;
+    text-decoration: none;
+  }
+  a.eng-pill:hover { background: #e0e7ff; }
+  .eng-pill .icon { font-size: 12px; }
+  .eng-pill .plus { font-weight: 700; }
+  .eng-items { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .eng-item { background: #f5f3ff; border-left: 2px solid #4f46e5;
+    padding: 7px 10px; border-radius: 0 4px 4px 0; font-size: 12px;
+  }
+  .eng-item-head { display: flex; gap: 6px; align-items: baseline;
+    font-size: 11px;
+  }
+  .eng-item-head .author { font-weight: 600; color: var(--fg); }
+  .eng-item-head .kind { letter-spacing: 1.5px; text-transform: uppercase;
+    font-size: 9px; color: var(--accent); font-weight: 700;
+  }
+  .eng-item-head .when { color: var(--muted); margin-left: auto; font-size: 10px; }
+  .eng-item .text { color: #333; margin-top: 4px; line-height: 1.4;
+    word-wrap: break-word; white-space: pre-wrap;
+  }
+  .eng-item .link { font-size: 10px; color: #4338ca; margin-top: 4px;
+    display: inline-block;
+  }
+  .eng-foot { font-size: 11px; color: var(--muted); margin-top: 12px;
+    text-align: center; padding-top: 10px; border-top: 1px solid var(--line);
+  }
+  .eng-foot a { color: var(--accent); text-decoration: none; }
+  /* ── Fortune cat tile ───────────────────────────────────────────── */
+  .fortune { text-align: center; padding: 30px 20px 24px; }
+  .fortune .cat { font-size: 48px; line-height: 1; margin-bottom: 14px; }
+  .fortune .label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); font-weight: 700; margin-bottom: 10px;
+  }
+  .fortune .line { font-size: 17px; line-height: 1.45; color: var(--fg);
+    max-width: 420px; margin: 0 auto 18px;
+  }
+  .fortune .tap { font-size: 11px; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 5px 12px; display: inline-block; cursor: pointer;
+    background: transparent; font-family: inherit;
+    transition: background 0.1s;
+  }
+  .fortune .tap:hover { background: var(--line); }
   kbd { background: #eee; border: 1px solid #ddd; border-radius: 3px;
     padding: 1px 5px; font-size: 11px; margin: 0 2px;
     font-family: ui-monospace, "SF Mono", monospace;
@@ -408,6 +512,11 @@ INDEX_HTML = r"""<!DOCTYPE html>
     .reply-target .snippet { color: #999; }
     .variant { background: #1c1b18; }
     kbd { background: #2a2826; border-color: #3a3835; color: #ccc; }
+    .eng-summary { background: #1e1b3a; border-color: #3730a3; color: #c7d2fe; }
+    .eng-post { background: #1c1b18; }
+    .eng-pill { background: #1e1b3a; border-color: #3730a3; color: #c7d2fe; }
+    .eng-item { background: #1e1b3a; border-left-color: #6366f1; }
+    .eng-item .text { color: #d4d4d8; }
   }
 </style>
 </head>
@@ -417,37 +526,221 @@ INDEX_HTML = r"""<!DOCTYPE html>
     <span class="count" id="count">—</span>
   </header>
   <div class="deck" id="deck"></div>
-  <div class="keymap">← drop · → approve · <kbd>J</kbd>/<kbd>K</kbd> also work</div>
-  <div class="actions">
+  <div class="keymap" id="keymap">← drop · → approve · <kbd>J</kbd>/<kbd>K</kbd> also work</div>
+  <div class="actions" id="actions">
     <button class="btn-reject" id="rejectBtn" disabled>✕ Drop</button>
     <button class="btn-approve" id="approveBtn" disabled>✓ Approve</button>
   </div>
 
 <script>
 const PLATFORM_EMOJI = {
-  twitter: "🐦", x: "🐦", bluesky: "🦋", threads: "🧵",
-  instagram: "📸", mastodon: "🐘", facebook: "📘",
+  twitter: "🐦", x: "𝕏", bluesky: "🦋", threads: "🧵",
+  instagram: "📷", mastodon: "🐘", facebook: "📘", pinterest: "📌",
 };
-const esc = (s) => (s || "").replace(/[<&]/g, c => ({"<":"&lt;","&":"&amp;"}[c]));
+const esc = (s) => String(s == null ? "" : s).replace(/[<&"']/g, c => ({"<":"&lt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c]));
+const ENGAGEMENT_DASHBOARD_URL = `${location.protocol}//${location.hostname}:3456/engagement`;
+const LS_BASELINE = "sbt-swiper-eng-baseline-v1";
+const LS_DISMISSED = "sbt-swiper-eng-dismissed-at-v1";
 
-let queue = [];   // array of group objects from /api/pending
-let current = null;
+// Pool of cat-fact + fortune-cookie lines for the terminal "nothing new" tile.
+// Keep the list long so swipes/taps feel like a different message each time.
+const CAT_LINES = [
+  // Cat facts
+  "A group of cats is a clowder.",
+  "A cat's purr vibrates between 25–150 Hz — the frequency at which bone tissue regrows.",
+  "Cats sleep 13–16 hours a day. Aspirational.",
+  "The loudest purr ever recorded was 67.8 dB.",
+  "A cat has 32 muscles in each ear.",
+  "Each cat's nose print is unique, like a human fingerprint.",
+  "Cats can rotate their ears 180 degrees.",
+  "The first cat in space was Félicette, in 1963.",
+  "A cat's whiskers are about as wide as its body.",
+  "Cats can't taste sweetness.",
+  "Domestic cats share 95.6% of their DNA with tigers.",
+  "Cats walk like camels — both right legs, then both left.",
+  "A cat's heart beats nearly twice as fast as a human's.",
+  "Cats spend roughly 30% of their waking hours grooming.",
+  "Adult cats only meow at humans — barely at each other.",
+  // South Bay quips
+  "The 101 will always be like this.",
+  "Somewhere, a Caltrain horn is sounding.",
+  "El Camino has more lanes than it needs and not enough left turns.",
+  "The fog is on its way.",
+  "Lawrence Expressway is technically a road.",
+  "Levi's is a stadium most weeks of the year.",
+  "Mountain View knows what it did.",
+  "Cupertino smells like rosemary in May.",
+  "Saratoga has its own microclimate, ask its trees.",
+  "Mt. Umunhum sees you.",
+  "It is taco Tuesday somewhere in San José.",
+  "Coyote Creek Trail at sunset > anything you've ever scrolled.",
+  "Almaden Quicksilver knows your secrets.",
+  "The Winchester House has more questions than answers.",
+  "Capitola is having a beautiful afternoon.",
+  // Absurd fortunes
+  "A pigeon you have never met thinks fondly of you.",
+  "The bug fix you're avoiding is, in fact, the side quest.",
+  "Your future self thanks you for committing that thing.",
+  "Pop quiz: is it cold-brew o'clock yet.",
+  "Somewhere, a printer is working on the first try.",
+  "The semicolon was always optional.",
+  "Tabs vs spaces is a generational trauma.",
+  "There are no shortcuts, but there are aliases.",
+  "Refactor when the moon is full. Or don't. Mostly don't.",
+  "If you'd written it in Rust, it would still segfault.",
+  "Stand up. Right now. You earned it.",
+  "Drink water. Even though you don't want to.",
+  // Vibes
+  "Caught up. Probably.",
+  "All clear. The cats have it from here.",
+  "Quiet on set. The South Bay sleeps.",
+  "Cat is on patrol. You can rest.",
+  "Pure signal. No notifications.",
+  "Inbox: zero. Heart: full. Battery: 14%.",
+];
+const CAT_EMOJI = ["🐈", "🐈‍⬛", "🐱", "😸", "😹", "😺", "😻", "🙀", "😼", "😽"];
+
+let draftQueue = [];          // array of group objects from /api/pending
+let engagement = null;        // raw payload from /api/engagement
+let phase = "drafts";         // "drafts" | "engagement" | "fortune"
+let current = null;           // current draft group (only when phase === "drafts")
+let engagementMeta = null;    // { posts, newCount } when phase === "engagement"
 let busy = false;
+let fortunePick = pickFortune();
+
+function pickFortune() {
+  const line = CAT_LINES[Math.floor(Math.random() * CAT_LINES.length)];
+  const emoji = CAT_EMOJI[Math.floor(Math.random() * CAT_EMOJI.length)];
+  return { line, emoji };
+}
+
+function hourFloorMs(t) {
+  const d = (t instanceof Date) ? new Date(t.getTime()) : new Date(t);
+  d.setMinutes(0, 0, 0);
+  return d.getTime();
+}
+
+function loadBaseline() {
+  try { return JSON.parse(localStorage.getItem(LS_BASELINE) || "null"); } catch (e) { return null; }
+}
+function loadDismissedAt() {
+  try { return localStorage.getItem(LS_DISMISSED) || null; } catch (e) { return null; }
+}
+function platTotal(p) {
+  const c = (p && p.counts) || {};
+  return (c.likes||0) + (c.reposts||0) + (c.quotes||0) + (c.replies||0);
+}
+function snapshotFromEngagement(eng) {
+  const snap = {};
+  for (const post of (eng?.posts || [])) {
+    snap[post.key] = {};
+    for (const [k, p] of Object.entries(post.platforms || {})) {
+      snap[post.key][k] = {
+        likes: p?.counts?.likes || 0,
+        reposts: p?.counts?.reposts || 0,
+        quotes: p?.counts?.quotes || 0,
+        replies: p?.counts?.replies || 0,
+      };
+    }
+  }
+  return snap;
+}
+
+// Walk current engagement vs baseline (or "all new" when no baseline) and
+// surface only posts/platforms with positive deltas. Reply + quote text
+// items are filtered to those whose timestamp is after lastDismissedAt
+// (or all of them on first visit).
+function computeEngagementMeta() {
+  if (!engagement || !(engagement.posts || []).length) {
+    return { posts: [], newCount: 0 };
+  }
+  const baseline = loadBaseline();
+  const dismissedAt = loadDismissedAt();
+  const dismissedMs = dismissedAt ? new Date(dismissedAt).getTime() : 0;
+  const posts = [];
+  let newCount = 0;
+  for (const post of (engagement.posts || [])) {
+    const prev = (baseline && baseline[post.key]) || null;
+    const plats = [];
+    for (const [k, p] of Object.entries(post.platforms || {})) {
+      const counts = p?.counts || {};
+      const cur = {
+        likes: counts.likes || 0,
+        reposts: counts.reposts || 0,
+        quotes: counts.quotes || 0,
+        replies: counts.replies || 0,
+      };
+      const prevPlat = prev && prev[k] ? prev[k] : null;
+      // No baseline at all (first visit) → everything is new.
+      // Otherwise compute deltas vs the saved snapshot.
+      const deltas = prevPlat
+        ? {
+            likes: Math.max(0, cur.likes - (prevPlat.likes || 0)),
+            reposts: Math.max(0, cur.reposts - (prevPlat.reposts || 0)),
+            quotes: Math.max(0, cur.quotes - (prevPlat.quotes || 0)),
+            replies: Math.max(0, cur.replies - (prevPlat.replies || 0)),
+          }
+        : { ...cur };
+      const totalDelta = deltas.likes + deltas.reposts + deltas.quotes + deltas.replies;
+      const newReplies = (p.replies || []).filter(r =>
+        r && r.at && (!dismissedMs || new Date(r.at).getTime() > dismissedMs)
+      );
+      const newQuotes = (p.quotes || []).filter(q =>
+        q && q.at && (!dismissedMs || new Date(q.at).getTime() > dismissedMs)
+      );
+      if (totalDelta === 0 && newReplies.length === 0 && newQuotes.length === 0) continue;
+      plats.push({
+        platform: k,
+        permalink: p.permalink || "",
+        deltas,
+        totalDelta,
+        newReplies,
+        newQuotes,
+      });
+    }
+    if (!plats.length) continue;
+    const postTotal = plats.reduce((n, pl) => n + pl.totalDelta, 0);
+    newCount += postTotal;
+    posts.push({ post, platforms: plats });
+  }
+  return { posts, newCount };
+}
+
+function shouldShowEngagement() {
+  const dismissedAt = loadDismissedAt();
+  if (dismissedAt) {
+    const nowFloor = hourFloorMs(new Date());
+    const dismissedFloor = hourFloorMs(dismissedAt);
+    if (nowFloor <= dismissedFloor) return null;  // still inside the dismissed hour
+  }
+  const meta = computeEngagementMeta();
+  return meta.newCount > 0 ? meta : null;
+}
 
 async function fetchPending() {
-  const r = await fetch("/api/pending");
-  if (!r.ok) return [];
-  return r.json();
+  try {
+    const r = await fetch("/api/pending");
+    return r.ok ? r.json() : [];
+  } catch (e) { return []; }
+}
+async function fetchEngagement() {
+  try {
+    const r = await fetch("/api/engagement");
+    return r.ok ? r.json() : null;
+  } catch (e) { return null; }
 }
 
 function renderCount() {
   const el = document.getElementById("count");
-  if (!queue.length) {
+  if (phase === "drafts" && draftQueue.length) {
+    const variantCount = draftQueue.reduce((n, g) => n + (g.drafts || []).length, 0);
+    el.textContent = `${draftQueue.length} topic${draftQueue.length === 1 ? "" : "s"} · ${variantCount} variant${variantCount === 1 ? "" : "s"}`;
+  } else if (phase === "engagement") {
+    const n = engagementMeta?.newCount || 0;
+    el.textContent = `${n} new interaction${n === 1 ? "" : "s"}`;
+  } else {
     el.textContent = "all caught up";
-    return;
   }
-  const variantCount = queue.reduce((n, g) => n + (g.drafts || []).length, 0);
-  el.textContent = `${queue.length} topic${queue.length === 1 ? "" : "s"} · ${variantCount} variant${variantCount === 1 ? "" : "s"}`;
 }
 
 function variantHtml(d) {
@@ -464,18 +757,8 @@ function variantHtml(d) {
     </div>`;
 }
 
-function render() {
-  const deck = document.getElementById("deck");
-  deck.innerHTML = "";
-  if (!queue.length) {
-    deck.innerHTML = `<div class="empty"><h2>🐈 caught up</h2><p>nothing to swipe — new batch every hour</p></div>`;
-    document.getElementById("rejectBtn").disabled = true;
-    document.getElementById("approveBtn").disabled = true;
-    current = null;
-    renderCount();
-    return;
-  }
-  current = queue[0];
+function renderDraft(deck) {
+  current = draftQueue[0];
   const card = document.createElement("div");
   card.className = "card";
   card.id = "card";
@@ -488,7 +771,7 @@ function render() {
     const snippet = esc(rt.text_snippet);
     replyHtml = `
       <div class="reply-target">
-        <div class="handle">${url ? `<a href="${url}" target="_blank" rel="noopener">↳ replying to ${handle}</a>` : `↳ replying to ${handle}`}</div>
+        <div class="handle">${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">↳ replying to ${esc(handle)}</a>` : `↳ replying to ${esc(handle)}`}</div>
         <div class="snippet">${snippet}</div>
       </div>`;
   }
@@ -496,14 +779,12 @@ function render() {
   const srcLinks = (current.sources || [])
     .filter(s => s.url)
     .slice(0, 4)
-    .map(s => `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.source)}</a>`)
+    .map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.source)}</a>`)
     .join(" · ");
 
   const why = current.why_trending
     ? `<div class="why">${esc(current.why_trending)}</div>` : "";
 
-  // Optional Recraft-generated image for trend posts. Lives on Vercel Blob;
-  // empty url string = no image (replies and one-liner trends).
   const imageHtml = current.image_url
     ? `<div class="image"><img src="${esc(current.image_url)}" alt="${esc(current.image_prompt || "")}" loading="lazy"></div>`
     : "";
@@ -528,16 +809,181 @@ function render() {
     ${srcLinks ? `<div class="meta">${srcLinks}</div>` : ""}
   `;
   deck.appendChild(card);
-  document.getElementById("rejectBtn").disabled = false;
-  document.getElementById("approveBtn").disabled = false;
-  renderCount();
-  bindGestures(card);
+  bindGestures(card, "draft");
 }
 
-function bindGestures(card) {
+function timeAgo(ts) {
+  if (!ts) return "";
+  const diff = Date.now() - new Date(ts).getTime();
+  if (diff < 0) return "just now";
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return "just now";
+  if (m < 60) return m + "m ago";
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + "h ago";
+  const d = Math.floor(h / 24);
+  if (d < 14) return d + "d ago";
+  return new Date(ts).toLocaleDateString();
+}
+
+function engPillHtml(plat, p) {
+  const icon = PLATFORM_EMOJI[plat] || "📝";
+  const segs = [];
+  if (p.deltas.likes > 0) segs.push(`<span class="plus">+${p.deltas.likes}</span> likes`);
+  if (p.deltas.reposts > 0) segs.push(`<span class="plus">+${p.deltas.reposts}</span> reposts`);
+  if (p.deltas.quotes > 0) segs.push(`<span class="plus">+${p.deltas.quotes}</span> quotes`);
+  if (p.deltas.replies > 0) segs.push(`<span class="plus">+${p.deltas.replies}</span> replies`);
+  const inner = segs.join(" · ") || `<span class="plus">new</span>`;
+  const body = `<span class="icon">${icon}</span>${inner}`;
+  return p.permalink
+    ? `<a class="eng-pill" href="${esc(p.permalink)}" target="_blank" rel="noopener">${body}</a>`
+    : `<span class="eng-pill">${body}</span>`;
+}
+
+function engItemHtml(item, kind) {
+  const author = "@" + esc(item.author || "unknown");
+  const text = esc(item.text || "");
+  const link = item.permalink
+    ? `<a class="link" href="${esc(item.permalink)}" target="_blank" rel="noopener">view →</a>`
+    : "";
+  return `
+    <div class="eng-item">
+      <div class="eng-item-head">
+        <span class="kind">${kind}</span>
+        <span class="author">${author}</span>
+        <span class="when">${esc(timeAgo(item.at))}</span>
+      </div>
+      <div class="text">${text}</div>
+      ${link}
+    </div>`;
+}
+
+function renderEngagement(deck) {
+  const meta = engagementMeta;
+  const card = document.createElement("div");
+  card.className = "card";
+  card.id = "card";
+
+  const postBlocks = meta.posts.map(({ post, platforms }) => {
+    const pills = platforms.map(p => engPillHtml(p.platform, p)).join("");
+    const items = platforms
+      .flatMap(p => [
+        ...p.newReplies.map(r => engItemHtml(r, "reply")),
+        ...p.newQuotes.map(q => engItemHtml(q, "quote")),
+      ])
+      .join("");
+    // Prefer the first available platform permalink as the title link
+    const firstLink = platforms.find(p => p.permalink)?.permalink || "";
+    const title = firstLink
+      ? `<a href="${esc(firstLink)}" target="_blank" rel="noopener">${esc(post.title)}</a>`
+      : esc(post.title);
+    return `
+      <div class="eng-post">
+        <div class="eng-post-head">
+          <div class="eng-post-title">${title}</div>
+          <div class="eng-post-meta">${esc(timeAgo(post.publishedAt))}</div>
+        </div>
+        <div class="eng-plat-row">${pills}</div>
+        ${items ? `<div class="eng-items">${items}</div>` : ""}
+      </div>`;
+  }).join("");
+
+  card.innerHTML = `
+    <div class="kind">📡 Signal · ${meta.newCount} new</div>
+    <div class="eng-summary">${meta.newCount} new interaction${meta.newCount === 1 ? "" : "s"} since you last checked</div>
+    ${postBlocks}
+    <div class="eng-foot">
+      <a href="${esc(ENGAGEMENT_DASHBOARD_URL)}" target="_blank" rel="noopener">open full dashboard →</a>
+    </div>
+  `;
+  deck.appendChild(card);
+  bindGestures(card, "engagement");
+}
+
+function renderFortune(deck) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.id = "card";
+  card.innerHTML = `
+    <div class="fortune">
+      <div class="cat">${fortunePick.emoji}</div>
+      <div class="label">caught up</div>
+      <div class="line">${esc(fortunePick.line)}</div>
+      <button class="tap" id="fortuneTap" type="button">🎲 another</button>
+    </div>
+  `;
+  deck.appendChild(card);
+  // Tap button re-rolls without leaving the fortune phase (no dismiss).
+  const tapBtn = card.querySelector("#fortuneTap");
+  if (tapBtn) tapBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    fortunePick = pickFortune();
+    render();
+  });
+  bindGestures(card, "fortune");
+}
+
+function syncActions() {
+  const reject = document.getElementById("rejectBtn");
+  const approve = document.getElementById("approveBtn");
+  const keymap = document.getElementById("keymap");
+  if (phase === "drafts" && draftQueue.length) {
+    reject.style.display = "";
+    approve.style.display = "";
+    reject.disabled = false;
+    approve.disabled = false;
+    reject.textContent = "✕ Drop";
+    approve.textContent = "✓ Approve";
+    keymap.innerHTML = "← drop · → approve · <kbd>J</kbd>/<kbd>K</kbd> also work";
+  } else if (phase === "engagement") {
+    reject.style.display = "none";
+    approve.style.display = "";
+    approve.disabled = false;
+    approve.textContent = "✓ Got it";
+    keymap.innerHTML = "← or → to dismiss · click any link to jump to the post";
+  } else {
+    // fortune
+    reject.style.display = "none";
+    approve.style.display = "";
+    approve.disabled = false;
+    approve.textContent = "🎲 Another";
+    keymap.innerHTML = "← / → re-rolls · tap the button too";
+  }
+}
+
+function render() {
+  const deck = document.getElementById("deck");
+  deck.innerHTML = "";
+  // Phase selection: drafts > engagement (if eligible) > fortune
+  if (draftQueue.length) {
+    phase = "drafts";
+    current = null;
+    engagementMeta = null;
+    renderDraft(deck);
+  } else {
+    const meta = shouldShowEngagement();
+    if (meta) {
+      phase = "engagement";
+      current = null;
+      engagementMeta = meta;
+      renderEngagement(deck);
+    } else {
+      phase = "fortune";
+      current = null;
+      engagementMeta = null;
+      renderFortune(deck);
+    }
+  }
+  syncActions();
+  renderCount();
+}
+
+function bindGestures(card, kind) {
   let startX = 0, startY = 0, dx = 0, dy = 0, tracking = false;
   card.addEventListener("touchstart", (e) => {
     if (e.touches.length !== 1) return;
+    // Don't treat taps on links/buttons as the start of a swipe.
+    if (e.target.closest("a, button")) { tracking = false; return; }
     tracking = true;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
@@ -555,10 +1001,40 @@ function bindGestures(card) {
     if (!tracking) return;
     tracking = false;
     card.style.transition = "transform 0.2s, opacity 0.2s";
-    if (dx > 100) decide("approved");
-    else if (dx < -100) decide("rejected");
+    if (dx > 100) action(kind, "right");
+    else if (dx < -100) action(kind, "left");
     else { card.style.transform = ""; dx = 0; }
   });
+}
+
+// Unified gesture/button handler that routes by phase.
+function action(kind, direction) {
+  if (busy) return;
+  if (kind === "draft") {
+    decide(direction === "right" ? "approved" : "rejected");
+  } else if (kind === "engagement") {
+    dismissEngagement(direction);
+  } else {
+    // fortune: re-roll
+    fortunePick = pickFortune();
+    render();
+  }
+}
+
+function dismissEngagement(direction) {
+  busy = true;
+  const card = document.getElementById("card");
+  if (card) card.classList.add(direction === "right" ? "swipe-right" : "swipe-left");
+  try {
+    localStorage.setItem(LS_BASELINE, JSON.stringify(snapshotFromEngagement(engagement)));
+    localStorage.setItem(LS_DISMISSED, new Date().toISOString());
+  } catch (e) {}
+  setTimeout(() => {
+    fortunePick = pickFortune();
+    engagementMeta = null;
+    render();
+    busy = false;
+  }, 220);
 }
 
 async function decide(decision) {
@@ -577,29 +1053,45 @@ async function decide(decision) {
   } catch (e) {
     console.error(e);
   }
-  queue = queue.filter(g => g.group_id !== groupId);
+  draftQueue = draftQueue.filter(g => g.group_id !== groupId);
   setTimeout(() => { render(); busy = false; }, 220);
   setTimeout(refresh, 1500);
 }
 
 async function refresh() {
-  const fresh = await fetchPending();
+  const [fresh, eng] = await Promise.all([fetchPending(), fetchEngagement()]);
+  // Preserve the head draft if it's still pending (so a slow refresh doesn't
+  // jump us off the card we're looking at).
   const currentId = current?.group_id;
-  queue = fresh;
-  if (currentId && queue.find(g => g.group_id === currentId)) {
-    queue = [queue.find(g => g.group_id === currentId)].concat(
-      queue.filter(g => g.group_id !== currentId)
+  draftQueue = fresh;
+  if (currentId && draftQueue.find(g => g.group_id === currentId)) {
+    draftQueue = [draftQueue.find(g => g.group_id === currentId)].concat(
+      draftQueue.filter(g => g.group_id !== currentId)
     );
   }
+  engagement = eng;
   if (!busy) render();
 }
 
-document.getElementById("rejectBtn").onclick = () => decide("rejected");
-document.getElementById("approveBtn").onclick = () => decide("approved");
+document.getElementById("rejectBtn").onclick = () => {
+  if (phase === "drafts") action("draft", "left");
+  // hidden in other phases
+};
+document.getElementById("approveBtn").onclick = () => {
+  if (phase === "drafts") action("draft", "right");
+  else if (phase === "engagement") action("engagement", "right");
+  else action("fortune", "right");
+};
 window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft" || e.key.toLowerCase() === "j") decide("rejected");
-  else if (e.key === "ArrowRight" || e.key.toLowerCase() === "k") decide("approved");
+  // Ignore arrows / J / K when typing in a form field
+  const tag = (e.target?.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || e.target?.isContentEditable) return;
+  if (e.key === "ArrowLeft" || e.key.toLowerCase() === "j") action(phaseKind(), "left");
+  else if (e.key === "ArrowRight" || e.key.toLowerCase() === "k") action(phaseKind(), "right");
 });
+function phaseKind() {
+  return phase === "drafts" ? "draft" : phase;
+}
 
 refresh();
 setInterval(refresh, 30000);
@@ -632,6 +1124,9 @@ class Handler(BaseHTTPRequestHandler):
                 drafts = load_drafts()
             groups = build_groups(drafts)
             self._send_json(200, groups)
+            return
+        if self.path == "/api/engagement":
+            self._send_json(200, load_engagement())
             return
         if self.path == "/healthz":
             self._send(200, b"ok\n", "text/plain")
