@@ -817,7 +817,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     title: "Tet Festival — San Jose",
     city: "san-jose",
     venue: "Grand Century Mall area",
-    address: "111 Story Rd, San Jose",
+    address: "1111 Story Rd, San Jose",
     category: "community",
     recurrence: "seasonal",
     months: [1, 2],
