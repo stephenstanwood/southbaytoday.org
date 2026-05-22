@@ -15,6 +15,7 @@ import {
 } from "../../../lib/south-bay/holidays";
 import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
+import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 
 const CITIES: { id: City; name: string }[] = [
   { id: "san-jose", name: "San Jose" },
@@ -366,9 +367,10 @@ function UpcomingEventCard({
   const accent = CATEGORY_ACCENT[event.category] ?? CATEGORY_ACCENT.community;
   const photo = eventPhotoUrl(event, 200, 200);
   const [photoFailed, setPhotoFailed] = useState(false);
-  const body = (event.blurb && event.blurb.trim()) ? event.blurb : event.description;
+  const body = cleanDisplayCopy((event.blurb && event.blurb.trim()) ? event.blurb : event.description);
   const urgency = urgencyPill(event.date, event.time, event.endTime, todayIso, nowMins);
-  const title = meetingDisplayTitle(event.title, event.city);
+  const title = cleanDisplayName(meetingDisplayTitle(event.title, event.city));
+  const venue = cleanDisplayName(event.venue);
 
   return (
     <div
@@ -451,12 +453,12 @@ function UpcomingEventCard({
             </span>
           )}
           {event.time && (event.venue || event.city) && <span aria-hidden>·</span>}
-          {event.venue
-            ? <span>{event.venue}</span>
+          {venue
+            ? <span>{venue}</span>
             : <span>{cityLabel(event.city)}</span>
           }
-          {event.venue && <span aria-hidden>·</span>}
-          {event.venue && <span>{cityLabel(event.city)}</span>}
+          {venue && <span aria-hidden>·</span>}
+          {venue && <span>{cityLabel(event.city)}</span>}
           {recurring && (
             <>
               <span aria-hidden>·</span>

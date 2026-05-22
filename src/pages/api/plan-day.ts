@@ -29,6 +29,7 @@ import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
 import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
+import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
 import {
   type Bucket,
   BUCKET_ORDER,
@@ -740,13 +741,13 @@ function buildCandidatePool(
 
     candidates.push({
       id: `event:${evt.id}`,
-      name: evt.title,
+      name: cleanDisplayName(evt.title),
       category: canonicalCategory(evt.category || "events"),
       city: evt.city,
       address: evt.address || "",
-      venue: evt.venue || null,
-      description: evt.description?.slice(0, 200),
-      blurb: (evt as any).blurb || null,
+      venue: cleanDisplayName(evt.venue) || null,
+      description: cleanDisplayCopy(evt.description?.slice(0, 200)),
+      blurb: cleanDisplayCopy((evt as any).blurb) || null,
       cost: evt.cost,
       costNote: (evt as any).costNote || null,
       kidFriendly: evt.kidFriendly ?? null,
@@ -809,11 +810,11 @@ function buildCandidatePool(
 
     candidates.push({
       id: `place:${p.id}`,
-      name: p.name,
+      name: cleanDisplayName(p.name),
       category: canonicalCategory(p.category || "food"),
       city: p.city,
       address: p.address || "",
-      blurb: PLACE_BLURBS.get(p.id) || null,
+      blurb: cleanDisplayCopy(PLACE_BLURBS.get(p.id)) || null,
       rating: p.rating,
       cost: p.cost || null,
       costNote: p.costNote || (p.priceLevel ? priceLevelLabel(p.priceLevel) : null),
@@ -824,7 +825,7 @@ function buildCandidatePool(
       mapsUrl: p.mapsUrl,
       photoRef: p.photoRef || lookupVenuePhoto(p.name) || null,
       hours: p.hours,
-      displayType: p.displayType || null,
+      displayType: cleanDisplayName(p.displayType) || null,
       source: "place",
       score: 0,
       ...(p.curated ? { curated: true, bestSlots: p.bestSlots } : {}),
@@ -1108,7 +1109,7 @@ Return ONLY the JSON array. No explanation.`;
 
     cards.push({
       id: candidate.id,
-      name: candidate.name,
+      name: cleanDisplayName(candidate.name),
       category: candidate.category,
       city: candidate.city,
       address: candidate.address,
@@ -1116,7 +1117,7 @@ Return ONLY the JSON array. No explanation.`;
       eventTime: candidate.eventTime || null,
       eventEndTime: candidate.eventEndTime || null,
       timeBlock: BUCKET_LABELS[bucket],
-      blurb: cardBlurb,
+      blurb: cleanDisplayCopy(cardBlurb),
       url: candidate.url,
       mapsUrl: candidate.mapsUrl,
       cost: candidate.cost,
@@ -1124,7 +1125,7 @@ Return ONLY the JSON array. No explanation.`;
       kidsCostNote: candidate.kidsCostNote,
       photoRef: (candidate as any).photoRef || null,
       image: (candidate as any).image || null,
-      venue: candidate.venue || null,
+      venue: cleanDisplayName(candidate.venue) || null,
       source: candidate.source,
       locked: isLocked,
       rationale: rationaleParts.join(" | "),
@@ -1442,14 +1443,14 @@ Return ONLY the JSON array. No explanation.`;
       const pick = top[idx];
       cards.push({
         id: `place:${pick.id}`,
-        name: pick.name,
+        name: cleanDisplayName(pick.name),
         category: canonicalCategory(pick.category || "outdoor"),
         city: pick.city,
         address: pick.address || "",
         bucket,
         eventTime: null,
         timeBlock: BUCKET_LABELS[bucket],
-        blurb: PLACE_BLURBS.get(pick.id) || fallbackBlurb("place", pick.category, pick.name, null),
+        blurb: cleanDisplayCopy(PLACE_BLURBS.get(pick.id) || fallbackBlurb("place", pick.category, pick.name, null)),
         url: pick.url,
         mapsUrl: pick.mapsUrl,
         cost: pick.cost,

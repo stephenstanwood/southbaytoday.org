@@ -48,6 +48,7 @@ import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
 import { parseDate, parseDatePT, isoDate, todayPT, displayDate, displayTime } from "./lib/dates.mjs";
+import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -928,7 +929,7 @@ function cleanTitle(title) {
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
   }
-  return t;
+  return cleanDisplayName(t);
 }
 
 // Drop a trailing " at <Venue>" from a title when the suffix duplicates the
@@ -1320,7 +1321,7 @@ function polishDescription(text) {
   // Restore domain/decimal placeholder dots.
   t = restoreDomainAndDecimalDots(t);
 
-  return t;
+  return cleanDisplayCopy(t);
 }
 
 /**
@@ -1424,7 +1425,7 @@ function cleanVenue(raw) {
   // If the cleaned value is just a South Bay city/state name with no actual venue,
   // return empty so the caller emits null rather than rendering "Campbell" as a venue.
   if (/^(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale)(,?\s+CA)?$/i.test(v.trim())) return "";
-  return v.trim();
+  return cleanDisplayName(v);
 }
 
 /**

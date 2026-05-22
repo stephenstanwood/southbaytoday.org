@@ -26,6 +26,7 @@ import {
   isBorderAllowedVenue,
 } from "./content-rules.mjs";
 import { logDecision } from "../../../src/lib/south-bay/decisionLog.mjs";
+import { cleanDisplayCopy, cleanDisplayName } from "../../../src/lib/south-bay/displayText.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
@@ -139,6 +140,12 @@ const TERMINOLOGY_FIXES = [
   { pattern: /\bpandemic history\b/gi, replacement: "epidemic history" },
   { pattern: /\bthe pandemic\b(?=[^.]{0,80}\b(AIDS|HIV)\b)/gi, replacement: "the epidemic" },
 ];
+
+function cleanGeneratedText(text) {
+  return cleanDisplayCopy(
+    TERMINOLOGY_FIXES.reduce((s, f) => s.replace(f.pattern, f.replacement), text),
+  );
+}
 
 // IN_AREA_CITIES, OUT_OF_AREA_CITIES, VIRTUAL_SIGNALS are imported from
 // content-rules.mjs above — shared with audit-events and validate-places.
@@ -269,7 +276,7 @@ function applyTerminologyFixes(slot) {
   let touched = 0;
   for (const [k, v] of Object.entries(copy)) {
     if (typeof v === "string") {
-      const fixed = TERMINOLOGY_FIXES.reduce((s, f) => s.replace(f.pattern, f.replacement), v);
+      const fixed = cleanGeneratedText(v);
       if (fixed !== v) {
         copy[k] = fixed;
         touched++;
@@ -277,12 +284,38 @@ function applyTerminologyFixes(slot) {
     } else if (v && typeof v === "object") {
       for (const [kk, vv] of Object.entries(v)) {
         if (typeof vv === "string") {
-          const fixed = TERMINOLOGY_FIXES.reduce((s, f) => s.replace(f.pattern, f.replacement), vv);
+          const fixed = cleanGeneratedText(vv);
           if (fixed !== vv) {
             v[kk] = fixed;
             touched++;
           }
         }
+      }
+    }
+  }
+  return touched;
+}
+
+function sanitizeDayPlanCards(slot) {
+  const cards = slot?.plan?.cards;
+  if (!Array.isArray(cards)) return 0;
+  let touched = 0;
+  for (const card of cards) {
+    if (!card || typeof card !== "object") continue;
+    for (const field of ["name", "title", "venue", "featuredPlace"]) {
+      if (typeof card[field] !== "string") continue;
+      const fixed = cleanDisplayName(card[field]);
+      if (fixed !== card[field]) {
+        card[field] = fixed;
+        touched++;
+      }
+    }
+    for (const field of ["blurb", "summary", "why"]) {
+      if (typeof card[field] !== "string") continue;
+      const fixed = cleanDisplayCopy(card[field]);
+      if (fixed !== card[field]) {
+        card[field] = fixed;
+        touched++;
       }
     }
   }
@@ -486,6 +519,10 @@ export function runQualityReview(schedule, options = {}) {
       const termChanges = applyTerminologyFixes(slot);
       if (termChanges > 0) {
         autoFixed.push({ date, slotType, kind: "terminology", details: `${termChanges} fix(es)` });
+      }
+      const cardTextChanges = sanitizeDayPlanCards(slot);
+      if (cardTextChanges > 0) {
+        autoFixed.push({ date, slotType, kind: "card-copy", details: `${cardTextChanges} text fix(es)` });
       }
 
       // Structural fixes only on drafts.

@@ -20,6 +20,7 @@ import PhotoStrip from "./PhotoStrip";
 import RedditPulseTeaser from "./RedditPulseTeaser";
 import WeekendAheadCard from "./WeekendAheadCard";
 import NewsletterSignup from "../NewsletterSignup";
+import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 // =====================================================================
 // HOME-TAB-LOCKED — DO NOT ADD TEASER COMPONENTS HERE
 // The home tab is hand-curated. Adding new teasers, callouts, strips,
@@ -967,6 +968,9 @@ interface UnsplashPhoto {
 
 function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoji: string; accent: string; showTimeLabel?: boolean }) {
   const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
+  const cardName = cleanDisplayName(card.name) || "";
+  const cardBlurb = cleanDisplayCopy(card.blurb) || "";
+  const cardVenue = cleanDisplayName(card.venue) || "";
 
   useEffect(() => {
     // Skip Unsplash if we already have a photo from ingest (image URL) or Places (photoRef).
@@ -1009,7 +1013,7 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
           display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
         }}>
           {unsplash && !card.photoRef && !card.image
-            ? <img src={unsplash.url} alt={card.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            ? <img src={unsplash.url} alt={cardName} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             : !hasPhoto ? emoji : null}
         </div>
         {/* Unsplash attribution — only when using Unsplash photo */}
@@ -1038,14 +1042,14 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
           )}
           {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#E63946", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
         </div>
-        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{card.name}</h3>
-        {card.source === "event" && card.venue && (
+        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{cardName}</h3>
+        {card.source === "event" && cardVenue && (
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#999" }}>{card.venue}</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#999" }}>{cardVenue}</span>
           </div>
         )}
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{card.blurb}</p>
+        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{cardBlurb}</p>
       </div>
     </>
   );
@@ -1334,4 +1338,3 @@ function ShareButton({ cards, city, kids, weather, compact }: { cards: DayCard[]
     </button>
   );
 }
-

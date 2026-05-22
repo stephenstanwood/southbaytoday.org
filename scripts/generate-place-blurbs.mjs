@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { cleanDisplayCopy } from "../src/lib/south-bay/displayText.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -70,7 +71,7 @@ function pickTemplate(templates, id) {
 
 function lowerType(displayType) {
   if (!displayType) return "spot";
-  const NATIONALITY_RE = /^(Vietnamese|Italian|Chinese|Japanese|Korean|Mexican|Indian|Thai|French|Spanish|Greek|American|Mediterranean|German|Persian|Cuban|Brazilian|Ethiopian|Filipino|Cambodian|Burmese|Lebanese|Turkish|Pakistani|Caribbean|Peruvian|Argentine|Russian|Egyptian|Moroccan|Polish|Portuguese|Hawaiian|Asian|African|European|Latin)\b/;
+  const NATIONALITY_RE = /^(Vietnamese|Italian|Chinese|Japanese|Korean|Taiwanese|Mexican|Indian|Thai|French|Spanish|Greek|American|Mediterranean|German|Persian|Cuban|Brazilian|Ethiopian|Filipino|Cambodian|Burmese|Lebanese|Turkish|Pakistani|Caribbean|Peruvian|Argentine|Russian|Egyptian|Moroccan|Polish|Portuguese|Hawaiian|Asian|African|European|Latin)\b/;
   if (NATIONALITY_RE.test(displayType)) return displayType;
   return displayType.charAt(0).toLowerCase() + displayType.slice(1);
 }
@@ -469,7 +470,7 @@ for (const p of places) {
   const r = research[p.id];
   const summary = cleanEditorial(r?.editorialSummary);
   if (summary) {
-    cache[p.id] = { blurb: summary, source: "editorial", category: p.category };
+    cache[p.id] = { blurb: cleanDisplayCopy(summary), source: "editorial", category: p.category };
     researchHits++;
     continue;
   }
@@ -502,7 +503,7 @@ for (const p of places) {
       blurb = pickTemplate(t, p.id);
     }
   }
-  cache[p.id] = { blurb, source: "template", category: p.category };
+  cache[p.id] = { blurb: cleanDisplayCopy(blurb), source: "template", category: p.category };
   templateHits++;
 }
 

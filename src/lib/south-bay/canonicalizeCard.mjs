@@ -12,6 +12,8 @@
 // the cutover still renders.
 // ---------------------------------------------------------------------------
 
+import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
+
 const VALID_BUCKETS = new Set([
   "breakfast", "morning", "lunch", "afternoon", "dinner", "evening",
 ]);
@@ -92,21 +94,21 @@ export function canonicalizeCard(raw) {
 
   const canonical = {
     id: str(raw.id),
-    name: str(raw.name || raw.title),
+    name: cleanDisplayName(str(raw.name || raw.title)),
     category: str(raw.category, "other"),
     city: str(raw.city || raw.neighborhood),
     address: str(raw.address),
     timeBlock: str(raw.timeBlock),
     bucket: nullableBucket(raw.bucket) || inferBucket(raw.timeBlock, raw.category),
     eventTime: nullableStr(raw.eventTime),
-    blurb: str(raw.blurb),
+    blurb: cleanDisplayCopy(str(raw.blurb)),
     why: str(raw.why),
     url: str(raw.url),
     mapsUrl: nullableStr(raw.mapsUrl),
     cost: nullableStr(raw.cost),
     costNote: nullableStr(raw.costNote),
     photoRef: nullableStr(raw.photoRef),
-    venue: str(raw.venue || raw.name || raw.title),
+    venue: cleanDisplayName(str(raw.venue || raw.name || raw.title)),
     source: str(raw.source || (raw.type === "place" ? "place" : "event"), "event"),
   };
 

@@ -14,6 +14,7 @@ import { CONFIG } from "./lib/constants.mjs";
 import { rewriteTimeReferences, parseEventHour, DAY_NAMES } from "./lib/time-references.mjs";
 import { ptDateString, ptHour, ptDayOfWeek, ptClockString } from "./lib/pt-clock.mjs";
 import { queueBump } from "./lib/event-bumps.mjs";
+import { cleanDisplayCopy } from "../../src/lib/south-bay/displayText.mjs";
 
 import { randomBytes } from "node:crypto";
 
@@ -440,13 +441,13 @@ async function main() {
         if (value && typeof value === "object" && typeof value.text === "string") {
           // Object with a `text` field (currently just pollX) — rewrite the
           // text only; options array is short labels, no time refs to fix.
-          rewrittenCopy[platform] = { ...value, text: rewriteTimeReferences(value.text, rewriteItem, ptTime) };
+          rewrittenCopy[platform] = { ...value, text: cleanDisplayCopy(rewriteTimeReferences(value.text, rewriteItem, ptTime)) };
         } else {
           rewrittenCopy[platform] = value;
         }
         continue;
       }
-      let rewritten = rewriteTimeReferences(value, rewriteItem, ptTime);
+      let rewritten = cleanDisplayCopy(rewriteTimeReferences(value, rewriteItem, ptTime));
       // Final guard: ensure the first letter is uppercase. Catches any future
       // case-mangling from rewrites or upstream copy that slipped a lowercase
       // start past the model. Only touches the first character — body case is

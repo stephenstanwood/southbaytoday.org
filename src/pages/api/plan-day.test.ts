@@ -5,6 +5,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 import { parseHour, fallbackBlurb } from "./plan-day.ts";
+import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
 import {
   bucketForHour,
   bucketForEvent,
@@ -106,4 +107,21 @@ test("fallbackBlurb: place + known category", () => {
 test("fallbackBlurb: truly unknown source/category → last ditch", () => {
   const out = fallbackBlurb("place", "__missing__", "Test Place", null);
   assert.ok(out.length > 0);
+});
+
+test("display cleanup: strips CJK/Hangul translation fragments from names", () => {
+  assert.equal(cleanDisplayName("世界生活館 Amazing Books & Gifts"), "Amazing Books & Gifts");
+  assert.equal(cleanDisplayName("Paik's Noodle / 홍콩반점 산호세"), "Paik's Noodle");
+  assert.equal(cleanDisplayName("Sizzling Pot House (鼎香砂锅馆)"), "Sizzling Pot House");
+});
+
+test("display cleanup: capitalizes proper adjectives in blurbs", () => {
+  assert.equal(
+    cleanDisplayCopy("Cupertino taiwanese restaurant on Stevens Creek Blvd, $$ sit-down."),
+    "Cupertino Taiwanese restaurant on Stevens Creek Blvd, $$ sit-down.",
+  );
+  assert.equal(
+    cleanDisplayCopy("More at https://example.com/taiwanese-food before taiwanese lunch."),
+    "More at https://example.com/taiwanese-food before Taiwanese lunch.",
+  );
 });
