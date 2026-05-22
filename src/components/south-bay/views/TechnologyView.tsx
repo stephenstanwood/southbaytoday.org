@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { CompanyLogo } from "../CompanyLogo";
 import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
-import techBriefingJson from "../../../data/south-bay/tech-briefing.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import {
   TECH_COMPANIES,
@@ -27,13 +26,6 @@ const EXTRA_CATEGORY_LABELS: Record<string, string> = {
   eda: "EDA",
 };
 
-// The briefing claims "This Week" — once we're past weekEnd the claim is false.
-// Hide the panel rather than show a stale "this week" until the regen catches up.
-function isTechBriefingStale(b: { weekEnd?: string; generatedAt?: string }): boolean {
-  const today = new Date().toISOString().slice(0, 10);
-  if (b.weekEnd && today > b.weekEnd) return true;
-  return false;
-}
 function labelForCategory(c: string): string {
   return (
     (CATEGORY_LABELS as Record<string, string>)[c] ??
@@ -1643,18 +1635,86 @@ const SPOTLIGHT_CITY_FILTERS: FilterChip[] = [
     }),
 ];
 
+function FundingHighlightsSection() {
+  const latest = [...RECENTLY_FUNDED]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 8);
+
+  return (
+    <div className="tech-section">
+      <div className="tech-section-head">
+        <h3 className="tech-section-title">Recently Funded</h3>
+        <span className="tech-section-note">
+          Latest public rounds · South Bay startups
+        </span>
+      </div>
+      <div className="tech-funding-summary">
+        <div>
+          <strong>{RAISED_2026_LABEL}</strong>
+          <span>Raised in Q1–Q2 2026</span>
+        </div>
+        <p>
+          {ROUNDS_2026} tracked rounds this year, led by {Q1Q2_TOP_CATEGORIES_NOTE}.
+          The list below keeps the latest notable announcements close without turning
+          the page into a funding archive.
+        </p>
+      </div>
+      <div>
+        {latest.map((company) => (
+          <RecentlyFundedCard key={company.id + company.date} company={company} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HiringSnapshot({ groups }: {
+  groups: Array<{ label: string; note: string; companies: TechCompany[] }>;
+}) {
+  return (
+    <div className="tech-section">
+      <div className="tech-section-head">
+        <h3 className="tech-section-title">Hiring Pulse</h3>
+        <span className="tech-section-note">A quick read, not every open role</span>
+      </div>
+      <div className="tech-hiring-grid">
+        {groups.map((group) => (
+          <div key={group.label} className="tech-hiring-column">
+            <div className="tech-hiring-label">{group.label}</div>
+            <p>{group.note}</p>
+            {group.companies.slice(0, 4).map((company) => (
+              <HiringRow key={company.id} company={company} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SpotlightHighlightsSection() {
+  const spotlight = SCC_SPOTLIGHT.slice(0, 12);
+  return (
+    <div className="tech-section">
+      <div className="tech-section-head">
+        <h3 className="tech-section-title">Smaller, But Notable</h3>
+        <span className="tech-section-note">
+          A curated sample of growth companies and startups
+        </span>
+      </div>
+      <div className="tech-spotlight-grid tech-spotlight-grid--compact">
+        {spotlight.map((company) => (
+          <SpotlightCard key={company.id} company={company} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function TechnologyView() {
-  const [companyCategoryFilter, setCompanyCategoryFilter] = useState<string | null>(null);
-  const [spotlightCityFilter, setSpotlightCityFilter] = useState<string | null>(null);
-
-  const sortedCompanies = [...TECH_COMPANIES]
-    .filter((c) => companyCategoryFilter === null || c.category === companyCategoryFilter)
-    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK);
-
-  const filteredSpotlight =
-    spotlightCityFilter === null
-      ? SCC_SPOTLIGHT
-      : SCC_SPOTLIGHT.filter((c) => c.city === spotlightCityFilter);
+  const topCompanies = [...TECH_COMPANIES]
+    .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
+    .slice(0, 8);
 
   const hiringGroups = [
     {
@@ -1682,31 +1742,18 @@ export default function TechnologyView() {
 
   return (
     <div className="tech-view">
-      {/* ── Header ── */}
       <div className="tech-header">
         <div className="tech-header-eyebrow">South Bay</div>
         <h2 className="tech-header-title">Technology</h2>
         <p className="tech-header-subtitle">
-          The companies headquartered in your backyard — and how many people they
-          employ right here in Santa Clara County.
+          A readable snapshot of the companies, jobs, and funding rounds shaping
+          the local tech economy.
         </p>
         <div className="tech-header-note">
           Data snapshot · Q1 2026 · Santa Clara County employment estimates · Not affiliated with any company listed
         </div>
       </div>
 
-      {/* ── Weekly Tech Briefing ── */}
-      {techBriefingJson?.summary && !isTechBriefingStale(techBriefingJson) && (
-        <div className="tech-briefing">
-          <div className="tech-briefing-head">
-            <span className="tech-briefing-eyebrow">This Week in South Bay Tech</span>
-            <span className="tech-briefing-week">{techBriefingJson.weekLabel}</span>
-          </div>
-          <p className="tech-briefing-body">{techBriefingJson.summary}</p>
-        </div>
-      )}
-
-      {/* ── Pulse strip ── */}
       <div className="tech-pulse">
         {[TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]].map(
           (stat) => (
@@ -1719,13 +1766,9 @@ export default function TechnologyView() {
         )}
       </div>
 
-      {/* ── Latest Funding ticker ── */}
-      <FundingTicker />
-
-      {/* ── Top Employers Leaderboard ── */}
       <div className="tech-section">
         <div className="tech-section-head">
-          <h3 className="tech-section-title">Top Employers</h3>
+          <h3 className="tech-section-title">Anchor Employers</h3>
           <span className="tech-section-note">
             Ranked by Santa Clara County local jobs · Q1 2026
           </span>
@@ -1733,152 +1776,105 @@ export default function TechnologyView() {
         <TopEmployersLeaderboard />
       </div>
 
-      {/* ── This Week in SV History ── */}
-      <SvHistorySection />
+      <FundingHighlightsSection />
 
-      {/* ── Recently Funded ── */}
-      <RecentlyFundedSection />
-
-      {/* ── Hiring Pulse ── */}
       <div className="tech-section">
         <div className="tech-section-head">
-          <h3 className="tech-section-title">Hiring Pulse</h3>
-          <span className="tech-section-note">
-            Q1 2026 · South Bay tech hiring at a glance
-          </span>
-        </div>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 24,
-          }}
-        >
-          {hiringGroups.map((group) => (
-            <div key={group.label}>
-              <div
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  fontFamily: "'Space Mono', monospace",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color:
-                    group.label === "Actively Hiring"
-                      ? "#16a34a"
-                      : group.label === "Reduced Hiring"
-                        ? "#dc2626"
-                        : "#6b7280",
-                  marginBottom: 6,
-                  paddingBottom: 6,
-                  borderBottom: "2px solid var(--sb-border-light)",
-                }}
-              >
-                {group.label}
-              </div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: "var(--sb-muted)",
-                  marginBottom: 8,
-                  lineHeight: 1.4,
-                  fontStyle: "italic",
-                }}
-              >
-                {group.note}
-              </div>
-              {group.companies.map((company) => (
-                <HiringRow key={company.id} company={company} />
-              ))}
-            </div>
-          ))}
-        </div>
-
-        <div
-          style={{
-            marginTop: 12,
-            fontSize: 11,
-            color: "var(--sb-muted)",
-            fontStyle: "italic",
-          }}
-        >
-          Based on public filings, layoff announcements, and job board activity as of Q1 2026.
-          Not investment advice. Career links go to each company's official jobs page.
-        </div>
-      </div>
-
-      {/* ── Company Grid ── */}
-      <div className="tech-section">
-        <div className="tech-section-head">
-          <h3 className="tech-section-title">All Companies</h3>
-          <span className="tech-section-note">Sorted by SCC local employment</span>
-        </div>
-        <div className="tech-filter-strip">
-          {COMPANY_CATEGORY_FILTERS.map((f) => (
-            <button
-              key={String(f.key)}
-              className={`tech-filter-pill${companyCategoryFilter === f.key ? " tech-filter-pill--active" : ""}`}
-              onClick={() => setCompanyCategoryFilter(f.key)}
-            >
-              {f.label}
-            </button>
-          ))}
+          <h3 className="tech-section-title">Major Company Profiles</h3>
+          <span className="tech-section-note">The largest local employers, trimmed to the essentials</span>
         </div>
         <div className="tech-grid">
-          {sortedCompanies.map((company) => (
+          {topCompanies.map((company) => (
             <CompanyCard key={company.id} company={company} />
           ))}
         </div>
       </div>
 
-      {/* ── Spotlight: Startups & More ── */}
-      <div className="tech-section">
-        <div className="tech-section-head">
-          <h3 className="tech-section-title">More South Bay Tech</h3>
-          <span className="tech-section-note">
-            Notable SCC companies beyond the top employers · {SCC_SPOTLIGHT.length} companies
-          </span>
-        </div>
-        <div className="tech-filter-strip">
-          {SPOTLIGHT_CITY_FILTERS.map((f) => (
-            <button
-              key={String(f.key)}
-              className={`tech-filter-pill${spotlightCityFilter === f.key ? " tech-filter-pill--active" : ""}`}
-              onClick={() => setSpotlightCityFilter(f.key)}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-        <div className="tech-spotlight-grid">
-          {filteredSpotlight.map((company) => (
-            <SpotlightCard key={company.id} company={company} />
-          ))}
-          {filteredSpotlight.length === 0 && (
-            <p className="tech-filter-empty">
-              No companies in {spotlightCityFilter} yet.
-            </p>
-          )}
-        </div>
-      </div>
+      <HiringSnapshot groups={hiringGroups} />
+      <SpotlightHighlightsSection />
 
-      {/* ── Tech Events Near You ── */}
-      <TechEventsSection />
-
-      {/* ── Annual Tech Conferences ── */}
-      <AnnualConferencesSection />
-
-      {/* ── Gov × Tech callout ── */}
-      <GovTechCallout />
-
-      {/* ── Footer note ── */}
       <div className="tech-footer-note">
         Employment figures are Santa Clara County estimates as of Q1 2026, derived from campus
         headcount reports, company filings, EDD data, and news coverage. Global headcounts are
         much larger. South Bay Today is not affiliated with any company listed and this is not
         investment advice.
       </div>
+      <TechnologyViewStyles />
     </div>
+  );
+}
+
+function TechnologyViewStyles() {
+  return (
+    <style>{`
+      .tech-funding-summary {
+        display: grid;
+        grid-template-columns: minmax(140px, 220px) 1fr;
+        gap: 18px;
+        align-items: center;
+        border: 1px solid var(--sb-border-light);
+        background: var(--sb-card);
+        padding: 16px;
+      }
+      .tech-funding-summary strong {
+        display: block;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 30px;
+        line-height: 1;
+      }
+      .tech-funding-summary span {
+        display: block;
+        margin-top: 5px;
+        color: var(--sb-muted);
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .tech-funding-summary p {
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .tech-hiring-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .tech-hiring-column {
+        min-width: 0;
+      }
+      .tech-hiring-label {
+        border-bottom: 2px solid var(--sb-border-light);
+        color: var(--sb-ink);
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        margin-bottom: 7px;
+        padding-bottom: 7px;
+        text-transform: uppercase;
+      }
+      .tech-hiring-column p {
+        margin: 0 0 8px;
+        color: var(--sb-muted);
+        font-size: 11px;
+        font-style: italic;
+        line-height: 1.45;
+      }
+      .tech-spotlight-grid--compact {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      @media (max-width: 760px) {
+        .tech-funding-summary,
+        .tech-hiring-grid,
+        .tech-spotlight-grid--compact {
+          grid-template-columns: 1fr;
+        }
+      }
+    `}</style>
   );
 }

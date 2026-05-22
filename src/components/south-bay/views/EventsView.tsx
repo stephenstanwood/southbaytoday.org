@@ -5,7 +5,6 @@ import {
   type EventCategory,
 } from "../../../data/south-bay/events-data";
 import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
-import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 import {
   holidayOn,
   holidaySpanIsos,
@@ -15,10 +14,6 @@ import {
   NAMED_HOLIDAYS,
 } from "../../../lib/south-bay/holidays";
 import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
-import FreewayPulseCard from "../cards/FreewayPulseCard";
-import LaneClosuresCard from "../cards/LaneClosuresCard";
-import SunUvCard from "../cards/SunUvCard";
-import CoastCard from "../cards/CoastCard";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 
 const CITIES: { id: City; name: string }[] = [
@@ -33,13 +28,14 @@ const CITIES: { id: City; name: string }[] = [
   { id: "los-gatos", name: "Los Gatos" },
   { id: "campbell", name: "Campbell" },
   { id: "milpitas", name: "Milpitas" },
+  { id: "santa-cruz", name: "Santa Cruz" },
 ];
 
 const CITY_LABELS: Record<string, string> = {
   "san-jose": "San Jose", "campbell": "Campbell", "los-gatos": "Los Gatos",
   "saratoga": "Saratoga", "cupertino": "Cupertino", "santa-clara": "Santa Clara",
   "sunnyvale": "Sunnyvale", "mountain-view": "Mountain View", "palo-alto": "Palo Alto",
-  "milpitas": "Milpitas", "los-altos": "Los Altos",
+  "milpitas": "Milpitas", "los-altos": "Los Altos", "santa-cruz": "Santa Cruz",
 };
 
 /** Prepend city name to government meeting titles that don't already include it */
@@ -369,166 +365,118 @@ function UpcomingEventCard({
   const showBadge = !(event.cost === "free" && event.category === "community");
   const accent = CATEGORY_ACCENT[event.category] ?? CATEGORY_ACCENT.community;
   const photo = eventPhotoUrl(event, 200, 200);
+  const [photoFailed, setPhotoFailed] = useState(false);
   const body = (event.blurb && event.blurb.trim()) ? event.blurb : event.description;
   const urgency = urgencyPill(event.date, event.time, event.endTime, todayIso, nowMins);
+  const title = meetingDisplayTitle(event.title, event.city);
 
   return (
     <div
+      className="sb-event-card"
       style={{
-        background: "#fff",
-        borderRadius: "var(--sb-radius-lg, 6px)",
-        border: "1.5px solid var(--sb-border-light)",
-        borderLeft: `4px solid ${accent.color}`,
-        padding: "11px 14px",
-        display: "flex",
-        gap: 12,
-        transition: "box-shadow 0.15s",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--sb-shadow-hover)")}
-      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+        "--event-accent": accent.color,
+        "--event-accent-bg": accent.bg,
+      } as React.CSSProperties}
     >
-      {/* Photo or category emoji */}
-      {photo ? (
-        <div
-          style={{
-            width: 72, height: 72, borderRadius: 8, flexShrink: 0,
-            background: `url(${photo}) center/cover no-repeat, ${accent.bg}`,
-            border: `1px solid var(--sb-border-light)`,
-          }}
-          aria-hidden
+      {photo && !photoFailed ? (
+        <img
+          className="sb-event-card-photo"
+          src={photo}
+          alt=""
+          loading="lazy"
+          onError={() => setPhotoFailed(true)}
         />
       ) : (
-        <div style={{
-          width: 72, height: 72, borderRadius: 8, flexShrink: 0,
-          background: accent.bg, display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 28,
-        }}>
+        <div className="sb-event-card-photo sb-event-card-photo--fallback" aria-hidden>
           {accent.emoji}
         </div>
       )}
 
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {/* Category label + cost badge row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-          <span style={{
-            fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-            letterSpacing: "0.1em", textTransform: "uppercase", color: accent.color,
-          }}>
+      <div className="sb-event-card-body">
+        <div className="sb-event-card-kicker">
+          <span style={{ color: accent.color }}>
             {accent.label}
           </span>
           {showBadge && (
-            <span style={{
-              fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace",
-              letterSpacing: "0.04em", padding: "1px 5px", borderRadius: 3,
-              background: badge.bg, color: badge.fg, border: `1px solid ${badge.border}`,
-            }}>
+            <span className="sb-event-micro-badge" style={{ background: badge.bg, color: badge.fg, borderColor: badge.border }}>
               {badge.label}
             </span>
           )}
           {event.kidFriendly && (
-            <span style={{ fontSize: 9, color: "var(--sb-muted)" }}>👶</span>
+            <span className="sb-event-micro-badge" style={{ background: "#FFF7ED", color: "#C2410C", borderColor: "#FED7AA" }}>
+              Kids
+            </span>
           )}
           {urgency && (
             <span
-              className={urgency.pulse ? "sb-urgency-pulse" : undefined}
-              style={{
-                fontSize: 9, fontWeight: 800, fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.06em", padding: "1px 5px", borderRadius: 3,
-                background: urgency.bg, color: urgency.fg, border: `1px solid ${urgency.border}`,
-              }}
+              className={`sb-event-micro-badge${urgency.pulse ? " sb-urgency-pulse" : ""}`}
+              style={{ background: urgency.bg, color: urgency.fg, borderColor: urgency.border }}
             >
               {urgency.label}
             </span>
           )}
           {!urgency && isJustAdded(event.firstSeenAt) && (
             <span
+              className="sb-event-micro-badge"
               title="Added to South Bay Today in the last 72 hours"
-              style={{
-                fontSize: 9, fontWeight: 800, fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.06em", padding: "1px 5px", borderRadius: 3,
-                background: "#ECFEFF", color: "#0E7490", border: "1px solid #A5F3FC",
-              }}
+              style={{ background: "#ECFEFF", color: "#0E7490", borderColor: "#A5F3FC" }}
             >
-              JUST ADDED
+              New
             </span>
           )}
         </div>
 
-        {/* Title */}
-        <div style={{ fontSize: 14, fontWeight: 700, color: "var(--sb-ink)", lineHeight: 1.3, marginBottom: 4 }}>
+        <h3 className="sb-event-card-title">
           {event.url ? (
             <a
               href={event.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "inherit", textDecoration: "none" }}
-              onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-              onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
             >
-              {meetingDisplayTitle(event.title, event.city)}
+              {title}
             </a>
-          ) : meetingDisplayTitle(event.title, event.city)}
-        </div>
+          ) : title}
+        </h3>
 
-        {/* Meta row */}
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2px 8px", fontSize: 11, color: "var(--sb-muted)" }}>
+        <div className="sb-event-card-meta">
           {showDate && event.displayDate && (
-            <><span style={{
-              fontWeight: 700, color: "var(--sb-ink)", fontSize: 11,
-              background: "var(--sb-card)", border: "1px solid var(--sb-border-light)",
-              borderRadius: 3, padding: "0px 5px",
-            }}>{event.displayDate}</span>
-            {(event.time || event.venue || event.city) && <span style={{ color: "var(--sb-border)" }}>·</span>}</>
+            <>
+              <span className="sb-event-date-chip">{event.displayDate}</span>
+              {(event.time || event.venue || event.city) && <span aria-hidden>·</span>}
+            </>
           )}
           {event.time && (
-            <span style={{ fontWeight: 600, color: "var(--sb-ink)", fontSize: 11 }}>
+            <span className="sb-event-card-time">
               {formatTimeRange(event.time, event.endTime, event.category === "sports")}
             </span>
           )}
-          {event.time && (event.venue || event.city) && <span style={{ color: "var(--sb-border)" }}>·</span>}
+          {event.time && (event.venue || event.city) && <span aria-hidden>·</span>}
           {event.venue
             ? <span>{event.venue}</span>
             : <span>{cityLabel(event.city)}</span>
           }
-          {event.venue && <span style={{ color: "var(--sb-border)" }}>·</span>}
+          {event.venue && <span aria-hidden>·</span>}
           {event.venue && <span>{cityLabel(event.city)}</span>}
           {recurring && (
             <>
-              <span style={{ color: "var(--sb-border)" }}>·</span>
+              <span aria-hidden>·</span>
               <span
+                className="sb-event-recurring"
                 title={`${recurring.count} upcoming dates in this series`}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 3,
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: 9.5,
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  textTransform: "uppercase",
-                  padding: "1px 6px",
-                  borderRadius: 100,
-                  background: "#F5F3FF",
-                  color: "#6D28D9",
-                  border: "1px solid #DDD6FE",
-                }}
               >
-                <span aria-hidden style={{ fontSize: 9 }}>🔁</span>
                 {recurring.label}
               </span>
             </>
           )}
         </div>
 
-        {/* Body — prefer blurb, fall back to description */}
         {body && (
-          <p style={{ margin: "5px 0 0", fontSize: 12, lineHeight: 1.5, color: "var(--sb-muted)" }}>
+          <p className="sb-event-card-copy">
             {body}
           </p>
         )}
 
-        {/* Action row: Make it a day + Directions + Add to calendar */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
+        <div className="sb-event-card-actions">
           {event.date && event.city && (
             <MakeItADayButton eventId={event.id} city={event.city} date={event.date} />
           )}
@@ -563,28 +511,10 @@ function AddToCalendarButton({ event }: { event: UpcomingEvent }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => e.stopPropagation()}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "3px 10px",
-        fontSize: 10,
-        fontWeight: 700,
-        fontFamily: "'Space Mono', monospace",
-        letterSpacing: "0.04em",
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: 4,
-        background: "var(--sb-card)",
-        color: "var(--sb-muted)",
-        textDecoration: "none",
-        cursor: "pointer",
-        transition: "all 0.15s",
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#999"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
+      className="sb-event-action"
       title="Add to Google Calendar"
     >
-      📅 Add to calendar
+      Calendar
     </a>
   );
 }
@@ -629,28 +559,10 @@ function DirectionsButton({ event }: { event: UpcomingEvent }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => e.stopPropagation()}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "3px 10px",
-        fontSize: 10,
-        fontWeight: 700,
-        fontFamily: "'Space Mono', monospace",
-        letterSpacing: "0.04em",
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: 4,
-        background: "var(--sb-card)",
-        color: "var(--sb-muted)",
-        textDecoration: "none",
-        cursor: "pointer",
-        transition: "all 0.15s",
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#999"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
+      className="sb-event-action"
       title="Open in Google Maps"
     >
-      📍 Directions
+      Directions
     </a>
   );
 }
@@ -706,23 +618,9 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
     <button
       onClick={handleClick}
       disabled={state === "loading"}
-      style={{
-        padding: "3px 10px",
-        fontSize: 10,
-        fontWeight: 700,
-        fontFamily: "'Space Mono', monospace",
-        letterSpacing: "0.04em",
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: 4,
-        background: state === "loading" ? "#f5f5f5" : "var(--sb-card)",
-        color: state === "done" ? "#16a34a" : "var(--sb-muted)",
-        cursor: state === "loading" ? "wait" : "pointer",
-        transition: "all 0.15s",
-      }}
-      onMouseEnter={(e) => { if (state === "idle") e.currentTarget.style.borderColor = "#999"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--sb-border-light)"; }}
+      className={`sb-event-action${state === "done" ? " sb-event-action--done" : ""}`}
     >
-      {state === "loading" ? "Building plan..." : state === "done" ? "Plan ready ✓" : "Make it a day →"}
+      {state === "loading" ? "Building..." : state === "done" ? "Plan ready" : "Plan day"}
     </button>
   );
 }
@@ -1527,267 +1425,6 @@ function HolidayPicksPreview({
   );
 }
 
-// ── Weekend picks strip ────────────────────────────────────────────────────
-// Surfaces the AI-curated weekend picks from weekend-picks.json — regenerated
-// nightly with editorial "why" copy that pulls 3–5 standout events for the
-// current Fri–Sun. Renders only when today falls inside the picks window AND
-// the file isn't stale (older than 8 days), so the strip never advertises
-// yesterday's weekend.
-//
-// Image/photoRef live on the upcoming-events.json entries, not the picks file,
-// so we join on id to grab thumbnails when available. Tapping a card opens the
-// event URL (preferred) or jumps the date selector when the URL is missing.
-
-interface WeekendPick {
-  id: string;
-  title: string;
-  date: string;
-  displayDate: string;
-  time: string | null;
-  endTime?: string | null;
-  city: string;
-  venue: string;
-  cost: string;
-  url: string;
-  category: string;
-  why: string;
-}
-
-interface WeekendPicksStripProps {
-  events: UpcomingEvent[];
-  selectedCities: Set<City>;
-  allCities: boolean;
-  onJumpToDate: (iso: string) => void;
-}
-
-function WeekendPicksStrip({
-  events,
-  selectedCities,
-  allCities,
-  onJumpToDate,
-}: WeekendPicksStripProps) {
-  const todayIso = todayPT();
-  const data = weekendPicksJson as {
-    generatedAt?: string;
-    weekendStart: string;
-    weekendEnd: string;
-    weekendLabel: string;
-    picks: WeekendPick[];
-  };
-
-  // Window guard: only show on the curated weekend's Fri–Sun. Mon–Thu the
-  // picks describe a weekend that's already passed.
-  if (todayIso < data.weekendStart || todayIso > data.weekendEnd) return null;
-
-  // Staleness guard: if the generator hasn't run in over a week, hide rather
-  // than show last week's picks.
-  if (data.generatedAt) {
-    const ageDays = (Date.now() - new Date(data.generatedAt).getTime()) / 86_400_000;
-    if (ageDays > 8) return null;
-  }
-
-  const eventById = useMemo(() => {
-    const m = new Map<string, UpcomingEvent>();
-    for (const e of events) m.set(e.id, e);
-    return m;
-  }, [events]);
-
-  const visible = useMemo(() => {
-    const out: { pick: WeekendPick; event?: UpcomingEvent }[] = [];
-    for (const p of data.picks) {
-      if (p.date < todayIso) continue;
-      if (!allCities && !selectedCities.has(p.city as City)) continue;
-      out.push({ pick: p, event: eventById.get(p.id) });
-    }
-    return out.slice(0, 4);
-  }, [data.picks, eventById, allCities, selectedCities, todayIso]);
-
-  if (visible.length < 2) return null;
-
-  return (
-    <div
-      style={{
-        marginBottom: 12,
-        padding: "10px 12px",
-        background: "#fff7ed",
-        border: "1px solid #fed7aa",
-        borderRadius: 8,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          gap: 8,
-          marginBottom: 8,
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "#c2410c",
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 12 }}>✦</span>
-        <span>Our weekend picks · {data.weekendLabel}</span>
-      </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: 6,
-        }}
-      >
-        {visible.map(({ pick, event }) => {
-          const cityName = CITY_LABELS[pick.city] ?? pick.city;
-          const photo = event ? eventPhotoUrl(event, 120, 120) : null;
-          const dayShort = new Date(pick.date + "T12:00:00").toLocaleDateString(
-            "en-US",
-            { weekday: "short" },
-          );
-          const dayBadge =
-            pick.date === todayIso
-              ? "Today"
-              : pick.date === addDays(todayIso, 1)
-                ? "Tomorrow"
-                : dayShort;
-          const inner = (
-            <>
-              {photo ? (
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    flexShrink: 0,
-                    borderRadius: 6,
-                    background: `url(${photo}) center/cover no-repeat, #fed7aa`,
-                  }}
-                  aria-hidden
-                />
-              ) : (
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    flexShrink: 0,
-                    borderRadius: 6,
-                    background: "#fed7aa",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 20,
-                    color: "#c2410c",
-                  }}
-                  aria-hidden
-                >
-                  ✦
-                </div>
-              )}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    fontFamily: "var(--sb-serif)",
-                    fontWeight: 700,
-                    fontSize: 13.5,
-                    lineHeight: 1.25,
-                    color: "var(--sb-ink)",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                  }}
-                >
-                  {pick.title}
-                </div>
-                <div
-                  style={{
-                    marginTop: 2,
-                    fontSize: 10.5,
-                    color: "var(--sb-muted)",
-                    fontFamily: "'Space Mono', monospace",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 6,
-                  }}
-                >
-                  <span style={{ color: "#c2410c", fontWeight: 700 }}>{dayBadge}</span>
-                  <span aria-hidden>·</span>
-                  <span
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      maxWidth: 140,
-                    }}
-                  >
-                    {cityName}
-                  </span>
-                  {pick.cost === "free" && (
-                    <>
-                      <span aria-hidden>·</span>
-                      <span style={{ fontWeight: 700, color: "#15803D" }}>FREE</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
-          );
-          const sharedStyle = {
-            display: "flex",
-            gap: 10,
-            alignItems: "center",
-            padding: "8px 10px",
-            background: "#ffffff",
-            border: "1px solid #fed7aa",
-            borderRadius: 6,
-            textAlign: "left" as const,
-            textDecoration: "none",
-            cursor: "pointer",
-            color: "inherit",
-            fontFamily: "inherit",
-            transition: "border-color 0.12s",
-          };
-          return pick.url ? (
-            <a
-              key={pick.id}
-              href={pick.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={sharedStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#fb923c";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#fed7aa";
-              }}
-              title={pick.why}
-            >
-              {inner}
-            </a>
-          ) : (
-            <button
-              key={pick.id}
-              type="button"
-              onClick={() => onJumpToDate(pick.date)}
-              style={sharedStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#fb923c";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#fed7aa";
-              }}
-              title={pick.why}
-            >
-              {inner}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 // ── Heritage / observance month banner ─────────────────────────────────────
 // Subtle one-liner acknowledging federally recognized heritage months that
 // matter to large South Bay communities (AANHPI, Hispanic, Jewish, LGBTQ+,
@@ -1922,9 +1559,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return h && NAMED_HOLIDAYS.some((x) => x.id === h) ? h : null;
   });
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[] } | null>(null);
-  const [forecastByDate, setForecastByDate] = useState<
-    Record<string, { high: number; rainPct: number; emoji: string; desc: string }>
-  >({});
 
   const todayIso = todayPT();
   const tomorrowIso = addDays(todayIso, 1);
@@ -1946,30 +1580,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .then((d) => setUpcomingData(d ?? { events: [] }))
       .catch(() => setUpcomingData({ events: [] }));
   }, []);
-
-  // 5-day forecast — used for the subtle banner above the day view, keyed by
-  // ISO date so the banner can show conditions for whatever day is selected
-  // (not just today). Open-Meteo returns 5 days; later dates fall through.
-  useEffect(() => {
-    const cacheKey = `sb-events-forecast-${todayIso}`;
-    try {
-      const cached = sessionStorage.getItem(cacheKey);
-      if (cached) { setForecastByDate(JSON.parse(cached)); return; }
-    } catch { /* sessionStorage unavailable */ }
-    fetch(`/api/weather?city=san-jose`)
-      .then((r) => r.json())
-      .then((d) => {
-        const days: { date: string; high: number; low: number; rainPct: number; emoji: string; desc: string }[] = d.forecast ?? [];
-        if (days.length === 0) return;
-        const map: Record<string, { high: number; rainPct: number; emoji: string; desc: string }> = {};
-        for (const f of days) {
-          map[f.date] = { high: f.high, rainPct: f.rainPct, emoji: f.emoji, desc: f.desc };
-        }
-        setForecastByDate(map);
-        try { sessionStorage.setItem(cacheKey, JSON.stringify(map)); } catch { /* sessionStorage unavailable */ }
-      })
-      .catch(() => {});
-  }, [todayIso]);
 
   const allEvents = upcomingData?.events ?? [];
   // Reclassify: an event with `ongoing: true` AND a clock time is a recurring
@@ -2415,401 +2025,113 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     : null;
 
   const dayLbl = dayLabel(selectedDate, todayIso, tomorrowIso);
+  const isLoadingEvents = upcomingData === null;
+  const selectedCityNames = Array.from(selectedCities).map(cityLabel).sort();
+  const citySummary = allCities
+    ? "All cities"
+    : selectedCities.size === 0
+      ? "No cities"
+      : selectedCities.size === 1
+        ? selectedCityNames[0]
+        : `${selectedCities.size} cities`;
+  const activeFilterCount = [
+    category !== "all",
+    showKidsOnly,
+    showFreeOnly,
+    showTonightOnly,
+    showWeekendOnly,
+    showLiveNowOnly,
+    showJustAddedOnly,
+    !!activeHeritage,
+    !!activeThemedHolidayId,
+    !allCities,
+  ].filter(Boolean).length;
+  const visibleEventCount = isSearching
+    ? searchResults.length
+    : showWeekendOnly
+      ? weekendGroups.reduce((sum, [, events]) => sum + events.length, 0)
+      : dayEvents.length;
+  const modeTitle = isSearching
+    ? "Search results"
+    : showWeekendOnly
+      ? "This weekend"
+      : showTonightOnly
+        ? "Tonight"
+        : showLiveNowOnly
+          ? "Live now"
+          : dayLbl.primary;
+  const modeSubtitle = isSearching
+    ? `${searchResults.length} result${searchResults.length === 1 ? "" : "s"} for "${search}"`
+    : showWeekendOnly
+      ? `${shortDateLabel(weekendSat)} to ${shortDateLabel(weekendSun)}`
+      : `${dayLbl.secondary} · ${visibleEventCount} event${visibleEventCount === 1 ? "" : "s"}`;
+
+  const chooseDate = (iso: string) => {
+    setSelectedDate(iso);
+    setActiveThemedHolidayId(null);
+    if (iso !== todayIso) setShowLiveNowOnly(false);
+  };
+
+  const clearFilters = () => {
+    setSearch("");
+    setCategory("all");
+    setShowKidsOnly(false);
+    setShowFreeOnly(false);
+    setShowTonightOnly(false);
+    setShowWeekendOnly(false);
+    setShowLiveNowOnly(false);
+    setShowJustAddedOnly(false);
+    setActiveHeritageId(null);
+    setActiveThemedHolidayId(null);
+    if (!allCities) onToggleAllCities();
+  };
 
   return (
-    <>
-      <div className="sb-section-header sb-events-header">
-        <span className="sb-section-title">
-          Events
-          <span style={{ fontSize: 13, fontWeight: 400, color: "var(--sb-muted)", marginLeft: 8 }}>
-            {upcomingEvents.length} upcoming
-            {ongoingEvents.length > 0 && ` · ${ongoingEvents.length} on view`}
-          </span>
-        </span>
-        <div className="sb-section-line" />
-      </div>
-
-      <WeekendPicksStrip
-        events={upcomingEvents}
-        selectedCities={selectedCities}
-        allCities={allCities}
-        onJumpToDate={(iso) => {
-          if (isSearching) setSearch("");
-          if (showWeekendOnly) setShowWeekendOnly(false);
-          if (showTonightOnly) setShowTonightOnly(false);
-          setSelectedDate(iso);
-          setActiveThemedHolidayId(null);
-        }}
-      />
-      {/* Sticky filter bar — search + categories + cities + kids */}
-      <div className="sb-events-sticky-filter">
-        {/* Row 1: search + kids — search is the primary entry point */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}>
-          <div style={{ position: "relative", flex: "1 1 240px", minWidth: 0 }}>
-            <span aria-hidden style={{
-              position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)",
-              fontSize: 13, color: "var(--sb-light)", pointerEvents: "none",
-            }}>🔍</span>
-            <input
-              type="search"
-              placeholder="Search all events…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{
-                width: "100%", padding: "7px 12px 7px 32px",
-                border: "1.5px solid var(--sb-border)", borderRadius: 100,
-                fontFamily: "inherit", fontSize: 13, background: "#fff", color: "var(--sb-ink)",
-                boxSizing: "border-box", outline: "none",
-                transition: "border-color 0.12s, box-shadow 0.12s",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = "var(--sbt-accent, #4F46E5)";
-                e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79, 70, 229, 0.12)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = "var(--sb-border)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            />
-          </div>
-
-          <label style={{
-            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-            fontSize: 12, color: showKidsOnly ? "#fff" : "var(--sb-muted)",
-            cursor: "pointer", userSelect: "none",
-            padding: "5px 12px", borderRadius: 100,
-            border: `1.5px solid ${showKidsOnly ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
-            background: showKidsOnly ? "var(--sbt-accent, #4F46E5)" : "#fff",
-            fontWeight: showKidsOnly ? 600 : 500,
-            transition: "all 0.12s",
-          }}>
-            <input
-              type="checkbox" checked={showKidsOnly}
-              onChange={(e) => setShowKidsOnly(e.target.checked)}
-              style={{ cursor: "pointer", accentColor: "var(--sbt-accent, #4F46E5)" }}
-            />
-            👶 Kids
-            {pillCounts.kids > 0 && (
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showKidsOnly ? "rgba(255,255,255,0.22)" : "#EEF2FF",
-                color: showKidsOnly ? "#fff" : "var(--sbt-accent, #4F46E5)",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.kids}
-              </span>
-            )}
-          </label>
-
-          <label style={{
-            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-            fontSize: 12, color: showFreeOnly ? "#fff" : "var(--sb-muted)",
-            cursor: "pointer", userSelect: "none",
-            padding: "5px 12px", borderRadius: 100,
-            border: `1.5px solid ${showFreeOnly ? "#15803D" : "var(--sb-border)"}`,
-            background: showFreeOnly ? "#15803D" : "#fff",
-            fontWeight: showFreeOnly ? 600 : 500,
-            transition: "all 0.12s",
-          }}>
-            <input
-              type="checkbox" checked={showFreeOnly}
-              onChange={(e) => setShowFreeOnly(e.target.checked)}
-              style={{ cursor: "pointer", accentColor: "#15803D" }}
-            />
-            💵 Free
-            {pillCounts.free > 0 && (
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showFreeOnly ? "rgba(255,255,255,0.22)" : "#F0FDF4",
-                color: showFreeOnly ? "#fff" : "#15803D",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.free}
-              </span>
-            )}
-          </label>
-
-          {pillCounts.live > 0 && (
-            <label style={{
-              display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-              fontSize: 12, color: showLiveNowOnly ? "#fff" : "var(--sb-muted)",
-              cursor: "pointer", userSelect: "none",
-              padding: "5px 12px", borderRadius: 100,
-              border: `1.5px solid ${showLiveNowOnly ? "#DC2626" : "var(--sb-border)"}`,
-              background: showLiveNowOnly ? "#DC2626" : "#fff",
-              fontWeight: showLiveNowOnly ? 600 : 500,
-              transition: "all 0.12s",
-            }}>
-              <input
-                type="checkbox" checked={showLiveNowOnly}
-                onChange={(e) => {
-                  const next = e.target.checked;
-                  setShowLiveNowOnly(next);
-                  if (next) {
-                    setSelectedDate(todayIso);
-                    setShowTonightOnly(false);
-                    setShowWeekendOnly(false);
-                  }
-                }}
-                style={{ cursor: "pointer", accentColor: "#DC2626" }}
-              />
-              <span aria-hidden style={{
-                display: "inline-block", width: 7, height: 7, borderRadius: "50%",
-                background: showLiveNowOnly ? "#fff" : "#DC2626",
-                boxShadow: showLiveNowOnly
-                  ? "0 0 0 2px rgba(255,255,255,0.35)"
-                  : "0 0 0 2px rgba(220, 38, 38, 0.18)",
-                animation: "sb-live-pulse 1.6s ease-in-out infinite",
-              }} />
-              Live now
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showLiveNowOnly ? "rgba(255,255,255,0.22)" : "#FEF2F2",
-                color: showLiveNowOnly ? "#fff" : "#DC2626",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.live}
-              </span>
-            </label>
-          )}
-
-          <label style={{
-            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-            fontSize: 12, color: showTonightOnly ? "#fff" : "var(--sb-muted)",
-            cursor: "pointer", userSelect: "none",
-            padding: "5px 12px", borderRadius: 100,
-            border: `1.5px solid ${showTonightOnly ? "#7C3AED" : "var(--sb-border)"}`,
-            background: showTonightOnly ? "#7C3AED" : "#fff",
-            fontWeight: showTonightOnly ? 600 : 500,
-            transition: "all 0.12s",
-          }}>
-            <input
-              type="checkbox" checked={showTonightOnly}
-              onChange={(e) => {
-                const next = e.target.checked;
-                setShowTonightOnly(next);
-                if (next) {
-                  setSelectedDate(todayIso);
-                  setShowWeekendOnly(false);
-                  setShowLiveNowOnly(false);
-                }
-              }}
-              style={{ cursor: "pointer", accentColor: "#7C3AED" }}
-            />
-            🌙 Tonight
-            {pillCounts.tonight > 0 && (
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showTonightOnly ? "rgba(255,255,255,0.22)" : "#F5F3FF",
-                color: showTonightOnly ? "#fff" : "#7C3AED",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.tonight}
-              </span>
-            )}
-          </label>
-
-          <label style={{
-            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-            fontSize: 12, color: showWeekendOnly ? "#fff" : "var(--sb-muted)",
-            cursor: "pointer", userSelect: "none",
-            padding: "5px 12px", borderRadius: 100,
-            border: `1.5px solid ${showWeekendOnly ? "#EA580C" : "var(--sb-border)"}`,
-            background: showWeekendOnly ? "#EA580C" : "#fff",
-            fontWeight: showWeekendOnly ? 600 : 500,
-            transition: "all 0.12s",
-          }}>
-            <input
-              type="checkbox" checked={showWeekendOnly}
-              onChange={(e) => {
-                const next = e.target.checked;
-                setShowWeekendOnly(next);
-                if (next) {
-                  setShowTonightOnly(false);
-                  setShowLiveNowOnly(false);
-                }
-              }}
-              style={{ cursor: "pointer", accentColor: "#EA580C" }}
-            />
-            🎉 Weekend
-            {pillCounts.weekend > 0 && (
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showWeekendOnly ? "rgba(255,255,255,0.22)" : "#FFF7ED",
-                color: showWeekendOnly ? "#fff" : "#EA580C",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.weekend}
-              </span>
-            )}
-          </label>
-
-          {pillCounts.justAdded > 0 && (
-            <label style={{
-              display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-              fontSize: 12, color: showJustAddedOnly ? "#fff" : "var(--sb-muted)",
-              cursor: "pointer", userSelect: "none",
-              padding: "5px 12px", borderRadius: 100,
-              border: `1.5px solid ${showJustAddedOnly ? "#0E7490" : "var(--sb-border)"}`,
-              background: showJustAddedOnly ? "#0E7490" : "#fff",
-              fontWeight: showJustAddedOnly ? 600 : 500,
-              transition: "all 0.12s",
-            }}>
-              <input
-                type="checkbox" checked={showJustAddedOnly}
-                onChange={(e) => setShowJustAddedOnly(e.target.checked)}
-                style={{ cursor: "pointer", accentColor: "#0E7490" }}
-              />
-              ✨ Just added
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: showJustAddedOnly ? "rgba(255,255,255,0.22)" : "#ECFEFF",
-                color: showJustAddedOnly ? "#fff" : "#0E7490",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {pillCounts.justAdded}
-              </span>
-            </label>
-          )}
+    <div className="sb-events-page">
+      <section className="sb-events-hero" aria-labelledby="events-heading">
+        <div>
+          <div className="sb-events-eyebrow">South Bay calendar</div>
+          <h1 id="events-heading">Events</h1>
+          <p>
+            Concerts, library programs, markets, games, talks, festivals, and
+            neighborhood things worth putting on the calendar.
+          </p>
         </div>
+        <div className="sb-events-hero-stats" aria-label="Event totals">
+          <span><strong>{upcomingEvents.length}</strong> upcoming</span>
+          <span><strong>{eventCountByDate[todayIso] ?? 0}</strong> today</span>
+          {ongoingEvents.length > 0 && <span><strong>{ongoingEvents.length}</strong> exhibits</span>}
+        </div>
+      </section>
 
-        {/* Row 2: Category + city pills — same pill style, cities flow right after categories */}
-        <div className="sb-events-cat-row" style={{ marginBottom: 10 }}>
-          {EVENT_CATEGORIES.map((cat) => {
-            const active = category === cat.id;
-            const count = categoryCounts[cat.id] ?? 0;
-            const showCount = count > 0;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setCategory(cat.id as EventCategory | "all")}
-                style={{
-                  display: "flex", alignItems: "center", gap: 5,
-                  padding: "5px 11px 5px 10px",
-                  border: `1.5px solid ${active ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
-                  borderRadius: 100,
-                  background: active ? "var(--sbt-accent, #4F46E5)" : "#fff",
-                  color: active ? "#fff" : "var(--sb-ink)",
-                  fontSize: 12.5, fontWeight: active ? 600 : 500,
-                  cursor: "pointer", fontFamily: "inherit", transition: "all 0.12s",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <span style={{ fontSize: 13, lineHeight: 1 }}>{cat.emoji}</span>
-                <span>{cat.label}</span>
-                {showCount && (
-                  <span style={{
-                    fontSize: 10, fontWeight: 700,
-                    background: active ? "rgba(255,255,255,0.22)" : "#EEF2FF",
-                    color: active ? "#fff" : "var(--sbt-accent, #4F46E5)",
-                    borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                    minWidth: 18, textAlign: "center",
-                  }}>
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-
-          {/* Subtle divider between categories and cities */}
-          <span aria-hidden style={{
-            width: 1, height: 20, alignSelf: "center",
-            background: "var(--sb-border)", margin: "0 4px",
-          }} />
-
-          {/* All cities pill — toggles between all/none */}
+      <section className="sb-events-controls" aria-label="Find events">
+        <div className="sb-events-nowline">
           <button
-            onClick={onToggleAllCities}
-            aria-pressed={allCities}
-            style={{
-              display: "flex", alignItems: "center", gap: 5,
-              padding: "5px 11px 5px 10px",
-              border: `1.5px solid ${allCities ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
-              borderRadius: 100,
-              background: allCities ? "var(--sbt-accent, #4F46E5)" : "#fff",
-              color: allCities ? "#fff" : "var(--sb-ink)",
-              fontSize: 12.5, fontWeight: allCities ? 600 : 500,
-              cursor: "pointer", fontFamily: "inherit", transition: "all 0.12s",
-              whiteSpace: "nowrap",
-            }}
+            type="button"
+            onClick={() => prevDate && chooseDate(prevDate)}
+            disabled={!prevDate || isSearching || showWeekendOnly}
+            aria-label="Previous day"
+            className="sb-events-day-arrow"
           >
-            <span style={{ fontSize: 13, lineHeight: 1 }}>📍</span>
-            <span>All cities</span>
-            {cityCounts.total > 0 && (
-              <span style={{
-                fontSize: 10, fontWeight: 700,
-                background: allCities ? "rgba(255,255,255,0.22)" : "#EEF2FF",
-                color: allCities ? "#fff" : "var(--sbt-accent, #4F46E5)",
-                borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                minWidth: 18, textAlign: "center",
-              }}>
-                {cityCounts.total}
-              </span>
-            )}
+            &larr;
           </button>
-
-          {/* Individual city pills — multiselect */}
-          {CITIES.map((c) => {
-            const inSelection = selectedCities.has(c.id);
-            const count = cityCounts.perCity[c.id] ?? 0;
-            const showCount = count > 0;
-            return (
-              <button
-                key={c.id}
-                onClick={() => onToggleCity(c.id)}
-                aria-pressed={inSelection}
-                style={{
-                  display: "flex", alignItems: "center", gap: 5,
-                  padding: "5px 11px",
-                  border: `1.5px solid ${inSelection ? "var(--sbt-accent, #4F46E5)" : "var(--sb-border)"}`,
-                  borderRadius: 100,
-                  background: inSelection ? "var(--sbt-accent, #4F46E5)" : "#fff",
-                  color: inSelection ? "#fff" : "var(--sb-ink)",
-                  fontSize: 12.5, fontWeight: inSelection ? 600 : 500,
-                  cursor: "pointer", fontFamily: "inherit", transition: "all 0.12s",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <span>{c.name}</span>
-                {showCount && (
-                  <span style={{
-                    fontSize: 10, fontWeight: 700,
-                    background: inSelection ? "rgba(255,255,255,0.22)" : "#EEF2FF",
-                    color: inSelection ? "#fff" : "var(--sbt-accent, #4F46E5)",
-                    borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                    minWidth: 18, textAlign: "center",
-                  }}>
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+          <div className="sb-events-nowline-text">
+            <div className="sb-events-mode-title">{modeTitle}</div>
+            <div className="sb-events-mode-subtitle">{modeSubtitle}</div>
+          </div>
+          <button
+            type="button"
+            onClick={() => nextDate && chooseDate(nextDate)}
+            disabled={!nextDate || isSearching || showWeekendOnly}
+            aria-label="Next day"
+            className="sb-events-day-arrow"
+          >
+            &rarr;
+          </button>
         </div>
 
-        {/* 7-day date strip — at-a-glance "what's busy this week" so users
-            can pick a day without clicking through prev/next blindly. Hidden
-            in search/weekend/tonight modes since those override day selection. */}
         {!isSearching && !showWeekendOnly && !showTonightOnly && (
-          <div
-            role="tablist"
-            aria-label="Pick a day"
-            style={{
-              display: "flex", gap: 6,
-              overflowX: "auto", overflowY: "hidden",
-              marginTop: 10,
-              paddingBottom: 4,
-              scrollbarWidth: "thin",
-              WebkitOverflowScrolling: "touch",
-            }}
-          >
+          <div className="sb-events-date-rail" role="tablist" aria-label="Pick a day">
             {Array.from({ length: 7 }, (_, i) => addDays(todayIso, i)).map((iso) => {
               const active = iso === selectedDate;
               const count = eventCountByDate[iso] ?? 0;
@@ -2828,287 +2150,231 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
                   aria-label={ariaLabel}
                   title={holiday ? holiday.label : undefined}
                   disabled={empty && !active}
-                  onClick={() => setSelectedDate(iso)}
-                  style={{
-                    flex: "0 0 auto",
-                    minWidth: 56,
-                    padding: "6px 4px",
-                    borderRadius: 8,
-                    border: `1.5px solid ${active ? "var(--sb-ink)" : "var(--sb-border)"}`,
-                    background: active ? "var(--sb-ink)" : "#fff",
-                    color: active ? "#fff" : empty ? "var(--sb-light)" : "var(--sb-ink)",
-                    cursor: empty && !active ? "default" : "pointer",
-                    opacity: empty && !active ? 0.55 : 1,
-                    fontFamily: "'Space Mono', monospace",
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-                    transition: "all 0.12s",
-                    position: "relative",
-                  }}
+                  onClick={() => chooseDate(iso)}
+                  className={`sb-events-date-pill${active ? " is-active" : ""}${empty ? " is-empty" : ""}`}
                 >
-                  {holiday && (
-                    <span
-                      aria-hidden
-                      style={{
-                        position: "absolute",
-                        top: -6,
-                        right: -4,
-                        fontSize: 12,
-                        lineHeight: 1,
-                        filter: empty && !active ? "grayscale(0.4) opacity(0.7)" : "none",
-                      }}
-                    >
-                      {holiday.emoji}
-                    </span>
-                  )}
-                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", opacity: 0.85 }}>
-                    {isToday ? "TODAY" : wkd}
-                  </span>
-                  <span style={{ fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{dayNum}</span>
-                  <span style={{
-                    fontSize: 9, fontWeight: 700,
-                    background: active ? "rgba(255,255,255,0.20)" : empty ? "transparent" : "#EEF2FF",
-                    color: active ? "#fff" : empty ? "var(--sb-light)" : "var(--sbt-accent, #4F46E5)",
-                    padding: "1px 6px", borderRadius: 100, lineHeight: "12px",
-                    minWidth: 18, textAlign: "center",
-                  }}>
-                    {count}
-                  </span>
+                  {holiday && <span className="sb-events-date-holiday" aria-hidden>{holiday.emoji}</span>}
+                  <span className="sb-events-date-weekday">{isToday ? "TODAY" : wkd}</span>
+                  <span className="sb-events-date-number">{dayNum}</span>
+                  <span className="sb-events-date-count">{count}</span>
                 </button>
               );
             })}
           </div>
         )}
 
-        {/* Day navigator — kept inside the sticky filter so event cards never butt against the section divider */}
-        {!isSearching && !showWeekendOnly && (
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: 14, marginTop: 8,
-            paddingTop: 6,
-          }}>
-            <button
-              onClick={() => prevDate && setSelectedDate(prevDate)}
-              disabled={!prevDate}
-              aria-label="Previous day"
-              style={{
-                width: 32, height: 32, borderRadius: 999,
-                border: "1.5px solid var(--sb-border)",
-                background: prevDate ? "#fff" : "transparent",
-                color: prevDate ? "var(--sb-ink)" : "var(--sb-light)",
-                cursor: prevDate ? "pointer" : "default",
-                fontSize: 16, lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                opacity: prevDate ? 1 : 0.4,
-                fontFamily: "inherit",
-              }}
-            >
-              ←
-            </button>
-            <div style={{ textAlign: "center", flex: "0 1 auto", minWidth: 0 }}>
-              <div style={{
-                fontSize: 18,
-                fontWeight: 800,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.08em",
-                color: "var(--sb-ink)",
-                lineHeight: 1.1,
-              }}>
-                {dayLbl.primary}
-              </div>
-              <div style={{
-                fontSize: 12,
-                color: "var(--sb-muted)",
-                fontFamily: "var(--sb-sans)",
-                marginTop: 2,
-              }}>
-                {dayLbl.secondary}
-              </div>
-            </div>
-            <button
-              onClick={() => nextDate && setSelectedDate(nextDate)}
-              disabled={!nextDate}
-              aria-label="Next day"
-              style={{
-                width: 32, height: 32, borderRadius: 999,
-                border: "1.5px solid var(--sb-border)",
-                background: nextDate ? "#fff" : "transparent",
-                color: nextDate ? "var(--sb-ink)" : "var(--sb-light)",
-                cursor: nextDate ? "pointer" : "default",
-                fontSize: 16, lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                opacity: nextDate ? 1 : 0.4,
-                fontFamily: "inherit",
-              }}
-            >
-              →
-            </button>
-          </div>
-        )}
-      </div>
+        <div className="sb-events-toolrow">
+          <label className="sb-events-search">
+            <span className="sb-events-search-icon" aria-hidden>Search</span>
+            <input
+              type="search"
+              placeholder="Search events"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </label>
 
-      {/* Weather banner — surfaces the forecast for the selected day so people
-          planning Saturday/Sunday don't only see today's weather. Open-Meteo
-          gives 5 days; further-out days drop through. Hidden when filtering
-          by category (would override the user's intent), in search mode, or
-          in weekend-grouped mode (covers two days, not one). */}
-      {forecastByDate[selectedDate] && category === "all" && !isSearching && !showWeekendOnly && (() => {
-        const { high, rainPct, emoji, desc } = forecastByDate[selectedDate];
-        const dayWord = selectedDate === todayIso
-          ? "today"
-          : selectedDate === tomorrowIso
-            ? "tomorrow"
-            : new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
-        if (rainPct >= 40) {
-          return (
-            <div style={{
-              marginBottom: 14, padding: "9px 14px",
-              background: "#f0f9ff",
-              border: "1.5px solid #bae6fd",
-              borderRadius: 8, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
-            }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>🌧️</span>
-              <div style={{ flex: 1, minWidth: 180 }}>
-                <span style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
-                  Rainy {dayWord} ({high}°F, {rainPct}% chance of rain)
-                </span>
-                <span style={{ fontSize: 12, color: "var(--sb-muted)", marginLeft: 6 }}>
-                  — great day for a library program or indoor event.
-                </span>
-              </div>
-            </div>
-          );
-        }
-        const isClear = rainPct < 20 && (
-          desc.toLowerCase().includes("clear") ||
-          desc.toLowerCase().includes("sunny") ||
-          desc.toLowerCase().includes("fair") ||
-          rainPct === 0
-        );
-        if (isClear) {
-          return (
-            <div style={{
-              marginBottom: 14, padding: "9px 14px",
-              background: "#fffbeb",
-              border: "1.5px solid #fcd34d",
-              borderRadius: 8, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
-            }}>
-              <span style={{ fontSize: 18, lineHeight: 1 }}>{emoji}</span>
-              <div style={{ flex: 1, minWidth: 180 }}>
-                <span style={{ fontWeight: 700, fontSize: 13, color: "var(--sb-ink)", fontFamily: "var(--sb-sans)" }}>
-                  {desc} {dayWord}, {high}°F
-                </span>
-                <span style={{ fontSize: 12, color: "var(--sb-muted)", marginLeft: 6 }}>
-                  — great day to get outside!
-                </span>
-              </div>
+          <label className="sb-events-select-wrap">
+            <span>Category</span>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as EventCategory | "all")}
+              className="sb-events-select"
+            >
+              {EVENT_CATEGORIES.map((cat) => {
+                const count = categoryCounts[cat.id] ?? 0;
+                const label = cat.id === "all" ? "All categories" : cat.label;
+                return (
+                  <option key={cat.id} value={cat.id}>
+                    {label}{count > 0 ? ` (${count})` : ""}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+
+          <details className="sb-events-refine">
+            <summary>Area: {citySummary}</summary>
+            <div className="sb-events-city-panel">
               <button
-                onClick={() => setCategory("outdoor")}
-                style={{
-                  padding: "5px 12px", background: "#16a34a", color: "#fff",
-                  border: "none", borderRadius: 6, fontSize: 12, fontWeight: 700,
-                  cursor: "pointer", fontFamily: "var(--sb-sans)", whiteSpace: "nowrap",
-                }}
+                type="button"
+                onClick={onToggleAllCities}
+                aria-pressed={allCities}
+                className={`sb-events-city-chip${allCities ? " is-active" : ""}`}
               >
-                Show Outdoor Events
+                All cities
+                {cityCounts.total > 0 && <span>{cityCounts.total}</span>}
               </button>
+              {CITIES.map((c) => {
+                const inSelection = selectedCities.has(c.id);
+                const count = cityCounts.perCity[c.id] ?? 0;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => onToggleCity(c.id)}
+                    aria-pressed={inSelection}
+                    className={`sb-events-city-chip${inSelection ? " is-active" : ""}`}
+                  >
+                    {c.name}
+                    {count > 0 && <span>{count}</span>}
+                  </button>
+                );
+              })}
             </div>
-          );
-        }
-        return null;
-      })()}
+          </details>
+        </div>
+
+        <div className="sb-events-toggle-row" aria-label="Quick filters">
+          <button
+            type="button"
+            aria-pressed={showKidsOnly}
+            onClick={() => setShowKidsOnly((v) => !v)}
+            className={`sb-events-toggle${showKidsOnly ? " is-active" : ""}`}
+          >
+            Kids {pillCounts.kids > 0 && <span>{pillCounts.kids}</span>}
+          </button>
+          <button
+            type="button"
+            aria-pressed={showFreeOnly}
+            onClick={() => setShowFreeOnly((v) => !v)}
+            className={`sb-events-toggle${showFreeOnly ? " is-active" : ""}`}
+            style={{ "--toggle-accent": "#15803D" } as React.CSSProperties}
+          >
+            Free {pillCounts.free > 0 && <span>{pillCounts.free}</span>}
+          </button>
+          {pillCounts.live > 0 && (
+            <button
+              type="button"
+              aria-pressed={showLiveNowOnly}
+              onClick={() => {
+                const next = !showLiveNowOnly;
+                setShowLiveNowOnly(next);
+                if (next) {
+                  chooseDate(todayIso);
+                  setShowTonightOnly(false);
+                  setShowWeekendOnly(false);
+                }
+              }}
+              className={`sb-events-toggle sb-events-toggle--live${showLiveNowOnly ? " is-active" : ""}`}
+              style={{ "--toggle-accent": "#DC2626" } as React.CSSProperties}
+            >
+              Live now <span>{pillCounts.live}</span>
+            </button>
+          )}
+          <button
+            type="button"
+            aria-pressed={showTonightOnly}
+            onClick={() => {
+              const next = !showTonightOnly;
+              setShowTonightOnly(next);
+              if (next) {
+                chooseDate(todayIso);
+                setShowWeekendOnly(false);
+                setShowLiveNowOnly(false);
+              }
+            }}
+            className={`sb-events-toggle${showTonightOnly ? " is-active" : ""}`}
+            style={{ "--toggle-accent": "#7C3AED" } as React.CSSProperties}
+          >
+            Tonight {pillCounts.tonight > 0 && <span>{pillCounts.tonight}</span>}
+          </button>
+          <button
+            type="button"
+            aria-pressed={showWeekendOnly}
+            onClick={() => {
+              const next = !showWeekendOnly;
+              setShowWeekendOnly(next);
+              if (next) {
+                setShowTonightOnly(false);
+                setShowLiveNowOnly(false);
+              }
+            }}
+            className={`sb-events-toggle${showWeekendOnly ? " is-active" : ""}`}
+            style={{ "--toggle-accent": "#EA580C" } as React.CSSProperties}
+          >
+            Weekend {pillCounts.weekend > 0 && <span>{pillCounts.weekend}</span>}
+          </button>
+          {pillCounts.justAdded > 0 && (
+            <button
+              type="button"
+              aria-pressed={showJustAddedOnly}
+              onClick={() => setShowJustAddedOnly((v) => !v)}
+              className={`sb-events-toggle${showJustAddedOnly ? " is-active" : ""}`}
+              style={{ "--toggle-accent": "#0E7490" } as React.CSSProperties}
+            >
+              New {pillCounts.justAdded > 0 && <span>{pillCounts.justAdded}</span>}
+            </button>
+          )}
+          {activeFilterCount > 0 && (
+            <button type="button" onClick={clearFilters} className="sb-events-clear">
+              Clear {activeFilterCount}
+            </button>
+          )}
+        </div>
+      </section>
 
       {isSearching ? (
-        /* Search mode — group results by date */
-        <div>
-          <div style={{ marginBottom: 14, fontSize: 12, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-            {searchResults.length} result{searchResults.length === 1 ? "" : "s"} for &ldquo;{search}&rdquo;
-            {searchResults.length === 0 && " — try clearing filters or broadening your search."}
-          </div>
+        <section className="sb-events-results">
+          {searchResults.length === 0 && (
+            <div className="sb-empty">
+              <div className="sb-empty-title">No matches yet</div>
+              <div className="sb-empty-sub">Try a broader search or clear a filter.</div>
+            </div>
+          )}
           {searchGroups.map(([date, events]) => (
-            <div key={date} style={{ marginBottom: 24 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{
-                  fontSize: 11, fontWeight: 800, fontFamily: "'Space Mono', monospace",
-                  letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sb-ink)",
-                }}>
-                  {shortDateLabel(date)}
-                </span>
-                <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
-                  {events.length} event{events.length === 1 ? "" : "s"}
-                </span>
-                <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
+            <div key={date} className="sb-events-group">
+              <div className="sb-events-group-header">
+                <span>{shortDateLabel(date)}</span>
+                <small>{events.length} event{events.length === 1 ? "" : "s"}</small>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="sb-events-list">
                 {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
               </div>
             </div>
           ))}
-        </div>
+        </section>
       ) : showWeekendOnly ? (
-        /* Weekend mode — both Sat + Sun grouped together */
-        <div>
-          <div style={{ marginBottom: 14, fontSize: 12, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-            This weekend · {shortDateLabel(weekendSat)} – {shortDateLabel(weekendSun)}
-            {weekendGroups.length === 0 && " — nothing matches your filters."}
-          </div>
+        <section className="sb-events-results">
+          {weekendGroups.length === 0 && (
+            <div className="sb-empty">
+              <div className="sb-empty-title">Nothing matches</div>
+              <div className="sb-empty-sub">Try clearing a filter or searching the full calendar.</div>
+            </div>
+          )}
           {weekendGroups.map(([date, events]) => (
-            <div key={date} style={{ marginBottom: 24 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{
-                  fontSize: 11, fontWeight: 800, fontFamily: "'Space Mono', monospace",
-                  letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sb-ink)",
-                }}>
-                  {shortDateLabel(date)}
-                </span>
-                <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
-                  {events.length} event{events.length === 1 ? "" : "s"}
-                </span>
-                <div style={{ flex: 1, height: 1, background: "var(--sb-border-light)" }} />
+            <div key={date} className="sb-events-group">
+              <div className="sb-events-group-header">
+                <span>{shortDateLabel(date)}</span>
+                <small>{events.length} event{events.length === 1 ? "" : "s"}</small>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="sb-events-list">
                 {events.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
               </div>
             </div>
           ))}
-        </div>
+        </section>
       ) : (
-        /* Single-day view */
-        <div>
-          {/* Themed-holiday filter chip — only when active. Lets the user
-              clear the "Mother's Day picks" view back to the full day. */}
+        <section className="sb-events-results">
           {themedHoliday && selectedDate === themedHoliday.iso && (
-            <div style={{
-              display: "flex", alignItems: "center", gap: 8,
-              padding: "6px 10px", marginBottom: 10,
-              background: themedHoliday.holiday.bg,
-              border: `1px solid ${themedHoliday.holiday.color}33`,
-              borderRadius: 6, fontSize: 12,
-              color: themedHoliday.holiday.color,
-            }}>
-              <span aria-hidden style={{ fontSize: 13 }}>{themedHoliday.holiday.emoji}</span>
+            <div
+              className="sb-events-active-note"
+              style={{
+                "--note-bg": themedHoliday.holiday.bg,
+                "--note-color": themedHoliday.holiday.color,
+              } as React.CSSProperties}
+            >
+              <span aria-hidden>{themedHoliday.holiday.emoji}</span>
               <span style={{ fontWeight: 600 }}>
                 Showing {themedHoliday.holiday.label} picks only
               </span>
-              <button
-                type="button"
-                onClick={() => setActiveThemedHolidayId(null)}
-                style={{
-                  marginLeft: "auto",
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: 10, fontWeight: 700, letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  padding: "2px 8px", borderRadius: 100,
-                  background: "#ffffff",
-                  color: themedHoliday.holiday.color,
-                  border: `1px solid ${themedHoliday.holiday.color}55`,
-                  cursor: "pointer",
-                }}
-              >
-                Show all ×
-              </button>
+              <button type="button" onClick={() => setActiveThemedHolidayId(null)}>Show all</button>
             </div>
           )}
 
-          {/* Day events */}
-          {dayEvents.length === 0 ? (
+          {isLoadingEvents ? (
+            <div className="sb-loading"><div className="sb-spinner" /><div className="sb-loading-text">Loading events...</div></div>
+          ) : dayEvents.length === 0 ? (
             <div className="sb-empty">
               <div className="sb-empty-title">Nothing on the calendar</div>
               <div className="sb-empty-sub">
@@ -3116,41 +2382,24 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
               </div>
             </div>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="sb-events-list">
               {dayEvents.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
             </div>
           )}
-        </div>
+        </section>
       )}
 
-      {/* Exhibits — gallery shows that run for many days, no specific clock time */}
       {filteredOngoing.length > 0 && (
-        <div style={{ marginTop: 28 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 6, borderBottom: "2px solid var(--sb-border)" }}>
-            <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)" }}>
-              Exhibits
-            </span>
-            <span style={{ fontSize: 10, color: "var(--sb-light)", fontFamily: "'Space Mono', monospace" }}>
-              {filteredOngoing.length} on view
-            </span>
+        <section className="sb-events-exhibits">
+          <div className="sb-events-group-header">
+            <span>Exhibits</span>
+            <small>{filteredOngoing.length} on view</small>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="sb-events-list">
             {filteredOngoing.map((event) => <UpcomingEventCard key={event.id} event={event} recurring={recurringFor(event)} todayIso={todayIso} nowMins={nowMins} />)}
           </div>
-        </div>
+        </section>
       )}
-
-      {/* Sun & UV — sunrise/sunset, daylight, peak UV; helps frame outdoor plans */}
-      <SunUvCard />
-
-      {/* Coast Watch — tides + Pacific water temp for HMB/coastal day trips */}
-      <CoastCard />
-
-      {/* Freeway Pulse — live travel times so readers can decide whether to head out */}
-      <FreewayPulseCard />
-
-      {/* Lane Closures — scheduled overnight construction work, paired with Pulse */}
-      <LaneClosuresCard />
-    </>
+    </div>
   );
 }

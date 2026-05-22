@@ -2,8 +2,6 @@ import { useState, useCallback, useMemo } from "react";
 import type { DigestData } from "../cards/DigestCard";
 import CouncilDigestTurnstile from "../cards/CouncilDigestTurnstile";
 import MinutesSearchCard from "../cards/MinutesSearchCard";
-import ElectionsCard from "../cards/ElectionsCard";
-import DevelopmentView from "./DevelopmentView";
 import type { City } from "../../../lib/south-bay/types";
 import { getCityName } from "../../../lib/south-bay/cities";
 import digestsJson from "../../../data/south-bay/digests.json";
@@ -52,6 +50,16 @@ function dayPill(iso: string, todayIso: string, tomorrowIso: string): string {
 function meetingDateLabel(iso: string): string {
   const d = new Date(iso + "T12:00:00");
   return d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+}
+
+function countMeetingsInWindow(selectedCities: Set<City>): number {
+  const start = todayPT();
+  const end = addDays(start, 7);
+  return Object.entries(upcomingMeetings).filter(([cityId, meeting]) => {
+    if (!meeting?.date) return false;
+    if (!selectedCities.has(cityId as City)) return false;
+    return meeting.date >= start && meeting.date <= end;
+  }).length;
 }
 
 // ── This Week in Council ───────────────────────────────────────────────────
@@ -280,40 +288,152 @@ export default function GovernmentView({ selectedCities }: Props) {
     () => CITY_ORDER.filter((c) => selectedCities.has(c) && digests.has(c)),
     [selectedCities, digests],
   );
+  const meetingCount = useMemo(
+    () => countMeetingsInWindow(selectedCities),
+    [selectedCities],
+  );
 
   return (
     <div className="gov-view">
-      {/* ── 1. This Week in Council (cross-city pulse) ── */}
-      <CouncilWeekAhead selectedCities={selectedCities} />
+      <section className="gov-hero">
+        <div className="gov-kicker">South Bay / Civic Desk</div>
+        <h1>Local Government</h1>
+        <p>
+          Council meetings, searchable records, and plain-English summaries for
+          the cities you follow. Built for quick civic context, not municipal
+          scavenger hunts.
+        </p>
+        <div className="gov-stat-row" aria-label="Government data summary">
+          <div>
+            <strong>{meetingCount}</strong>
+            <span>Meetings this week</span>
+          </div>
+          <div>
+            <strong>{orderedCities.length}</strong>
+            <span>Digest cities</span>
+          </div>
+          <div>
+            <strong>{selectedCities.size}</strong>
+            <span>Cities selected</span>
+          </div>
+        </div>
+      </section>
 
-      {/* ── 2. Ask the Records ── */}
-      <MinutesSearchCard selectedCities={selectedCities} />
+      <section className="gov-section">
+        <CouncilWeekAhead selectedCities={selectedCities} />
+      </section>
 
-      {/* ── 3. Council Digests turnstile ── */}
-      <div className="sb-section-header" style={{ marginBottom: 4 }}>
-        <span className="sb-section-title">Council Digests</span>
-      </div>
-      <p className="gov-section-blurb">
-        Plain-English summaries of recent council meetings — what was discussed, what was decided.
-        Use the arrows or city pills to flip through.
-      </p>
-      <CouncilDigestTurnstile
-        cities={orderedCities}
-        digests={digests}
-        upcomingMeetings={upcomingMeetings as Record<string, UpcomingMeeting | undefined>}
-        agendaUrls={AGENDA_URLS}
-        onRefresh={refreshDigest}
-        loading={loading}
-        errors={errors}
-      />
+      <section className="gov-section gov-records-section">
+        <MinutesSearchCard selectedCities={selectedCities} />
+      </section>
 
-      {/* ── 4. 2026 Elections ── */}
-      <div style={{ marginTop: 32 }}>
-        <ElectionsCard />
-      </div>
+      <section className="gov-section">
+        <div className="sb-section-header" style={{ marginBottom: 4 }}>
+          <span className="sb-section-title">Council Digests</span>
+        </div>
+        <p className="gov-section-blurb">
+          Recent council meetings in plain English: what was discussed, what was decided,
+          and what is coming next.
+        </p>
+        <CouncilDigestTurnstile
+          cities={orderedCities}
+          digests={digests}
+          upcomingMeetings={upcomingMeetings as Record<string, UpcomingMeeting | undefined>}
+          agendaUrls={AGENDA_URLS}
+          onRefresh={refreshDigest}
+          loading={loading}
+          errors={errors}
+        />
+      </section>
 
-      {/* ── 5. What's Being Built (filtered to active near-term projects) ── */}
-      <DevelopmentView />
+      <GovernmentViewStyles />
     </div>
+  );
+}
+
+function GovernmentViewStyles() {
+  return (
+    <style>{`
+      .gov-view {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+      .gov-kicker {
+        color: var(--sb-muted);
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .gov-hero {
+        padding-bottom: 24px;
+        border-bottom: 3px double var(--sb-border);
+      }
+      .gov-hero h1 {
+        margin: 6px 0 10px;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 42px;
+        line-height: 1;
+      }
+      .gov-hero p {
+        max-width: 700px;
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .gov-stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 22px;
+        border: 1px solid var(--sb-border-light);
+        background: var(--sb-card);
+      }
+      .gov-stat-row > div {
+        padding: 15px 16px;
+        border-left: 1px solid var(--sb-border-light);
+      }
+      .gov-stat-row > div:first-child { border-left: none; }
+      .gov-stat-row strong {
+        display: block;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 28px;
+        line-height: 1;
+      }
+      .gov-stat-row span {
+        display: block;
+        margin-top: 5px;
+        color: var(--sb-muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .gov-section {
+        min-width: 0;
+      }
+      .gov-section > section {
+        margin-bottom: 0 !important;
+      }
+      .gov-records-section > div {
+        margin-bottom: 0 !important;
+      }
+      .gov-view .sb-section-title {
+        font-size: 20px;
+      }
+      @media (max-width: 680px) {
+        .gov-hero h1 { font-size: 34px; }
+        .gov-stat-row { grid-template-columns: 1fr; }
+        .gov-stat-row > div {
+          border-left: none;
+          border-top: 1px solid var(--sb-border-light);
+        }
+        .gov-stat-row > div:first-child { border-top: none; }
+      }
+    `}</style>
   );
 }

@@ -117,178 +117,71 @@ function priceTier(camp: Camp): "budget" | "mid" | "premium" {
 function CampCard({ camp }: { camp: Camp }) {
   const accent = CITY_ACCENT[camp.cityId] ?? "#555";
   const typeColor = TYPE_COLORS[camp.type];
-
-  const orgBadge = (() => {
-    if (camp.orgType === "city") return null;
-    if (camp.orgType === "nonprofit") return { label: "Nonprofit", color: "#0891b2" };
-    if (camp.orgType === "university") return { label: "College", color: "#6d28d9" };
-    return { label: "Private", color: "#6b7280" };
-  })();
-
-  // Only show locations if specific (not just a generic "Various ..." line)
   const usefulLocations = camp.locations.filter(
     (loc) => !loc.toLowerCase().startsWith("various")
   );
+  const orgLabel = ALL_ORG_TYPES.find((o) => o.id === camp.orgType)?.label.replace(" Programs", "") ?? camp.orgType;
+  const price = priceRange(camp);
+  const locationLabel = usefulLocations.slice(0, 2).join(" · ");
 
   return (
-    <div style={{
-      background: "var(--sb-card)",
-      border: "1px solid var(--sb-border-light)",
-      borderLeft: `3px solid ${accent}`,
-      borderRadius: "var(--sb-radius)",
-      padding: "16px 18px",
-    }}>
-      {/* Badges row */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 8 }}>
-        <span style={{
-          fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
-          background: accent + "18", color: accent,
-          letterSpacing: "0.04em",
-        }}>
+    <article className="camps-card" style={{ borderTopColor: accent }}>
+      <div className="camps-card-top">
+        <span className="camps-card-city" style={{ color: accent, background: accent + "14" }}>
           {camp.cityName}
         </span>
-        <span style={{
-          fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
-          background: typeColor + "18", color: typeColor,
-          letterSpacing: "0.04em", textTransform: "uppercase",
-        }}>
-          {camp.type}
+        <span className="camps-card-type" style={{ color: typeColor, background: typeColor + "14" }}>
+          {TYPE_FILTERS.find((t) => t.id === camp.type)?.label ?? camp.type}
         </span>
-        {orgBadge && (
-          <span style={{
-            fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 3,
-            background: orgBadge.color + "18", color: orgBadge.color,
-            letterSpacing: "0.04em",
-          }}>
-            {orgBadge.label}
-          </span>
-        )}
-        {camp.featured && (
-          <span style={{ fontSize: 10, color: "#b45309", fontWeight: 700, marginLeft: "auto" }}>
-            ★ Featured
-          </span>
-        )}
       </div>
 
-      {/* Name */}
-      <div style={{
-        fontFamily: "var(--sb-serif)",
-        fontWeight: 700,
-        fontSize: 16,
-        color: "var(--sb-ink)",
-        lineHeight: 1.3,
-        marginBottom: 5,
-      }}>
-        {camp.name}
+      <h3 className="camps-card-title">{camp.name}</h3>
+      <p className="camps-card-copy">{camp.description}</p>
+
+      <dl className="camps-facts">
+        <div>
+          <dt>Ages</dt>
+          <dd>{camp.ageMin}–{camp.ageMax}</dd>
+        </div>
+        <div>
+          <dt>Weeks</dt>
+          <dd>{weeksLabel(camp)}</dd>
+        </div>
+        <div>
+          <dt>Price</dt>
+          <dd>{price}</dd>
+        </div>
+        <div>
+          <dt>Hours</dt>
+          <dd>{camp.hours}</dd>
+        </div>
+      </dl>
+
+      <div className="camps-card-meta">
+        <span>{orgLabel}</span>
+        {locationLabel && <span>{locationLabel}</span>}
       </div>
 
-      {/* Description */}
-      <p style={{
-        fontSize: 13,
-        color: "var(--sb-muted)",
-        lineHeight: 1.55,
-        margin: "0 0 10px",
-      }}>
-        {camp.description}
-      </p>
-
-      {/* Details grid */}
-      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 10 }}>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.05em", display: "block" }}>Ages</span>
-          <span style={{ fontSize: 12, color: "var(--sb-ink)" }}>{camp.ageMin}–{camp.ageMax}</span>
-        </div>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.05em", display: "block" }}>Hours</span>
-          <span style={{ fontSize: 12, color: "var(--sb-ink)" }}>{camp.hours}</span>
-        </div>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.05em", display: "block" }}>Price</span>
-          <span style={{ fontSize: 12, color: "var(--sb-ink)", fontWeight: 600 }}>{priceRange(camp)}</span>
-          {camp.priceNote && (
-            <span style={{ display: "block", fontSize: 10, color: "#15803d", marginTop: 2 }}>
-              ✓ {camp.priceNote}
-            </span>
-          )}
-        </div>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.05em", display: "block" }}>Coverage</span>
-          <span style={{ fontSize: 12, color: "var(--sb-ink)" }}>{weeksLabel(camp)}</span>
-        </div>
-      </div>
-
-      {/* Locations — only if useful */}
-      {usefulLocations.length > 0 && (
-        <div style={{ fontSize: 11, color: "var(--sb-muted)", marginBottom: 10 }}>
-          📍 {usefulLocations.join(" · ")}
+      {camp.tags.length > 0 && (
+        <div className="camps-card-tags">
+          {camp.tags.slice(0, 4).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </div>
       )}
 
-      {/* Week chips */}
-      <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
-        {SUMMER_WEEKS.map((sw) => {
-          const has = campHasWeek(camp, sw.weekNum);
-          return (
-            <span key={sw.weekNum} style={{
-              fontSize: 10,
-              padding: "2px 6px",
-              borderRadius: 100,
-              border: `1px solid ${has ? accent : "var(--sb-border-light)"}`,
-              background: has ? accent + "18" : "transparent",
-              color: has ? accent : "var(--sb-light, #888)",
-              fontFamily: "'Space Mono', monospace",
-              fontWeight: has ? 700 : 400,
-            }}>
-              W{sw.weekNum}
-            </span>
-          );
-        })}
+      <div className="camps-card-footer">
+        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{camp.weeks.length} sessions listed</span>}
+        <a
+          href={camp.registerUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ background: accent }}
+        >
+          Register
+        </a>
       </div>
-
-      {/* Tags */}
-      <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 12 }}>
-        {camp.tags.map((tag) => (
-          <span key={tag} style={{
-            fontSize: 10,
-            padding: "2px 7px",
-            borderRadius: 100,
-            border: "1px solid var(--sb-border-light)",
-            color: "var(--sb-muted)",
-          }}>
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {camp.notes && (
-        <div style={{
-          fontSize: 11, color: "var(--sb-muted)", fontStyle: "italic",
-          marginBottom: 12, lineHeight: 1.5,
-          padding: "6px 8px", background: "var(--sb-bg)", borderRadius: "var(--sb-radius)",
-        }}>
-          {camp.notes}
-        </div>
-      )}
-
-      <a
-        href={camp.registerUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: "inline-block",
-          padding: "7px 14px",
-          background: accent,
-          color: "#fff",
-          fontSize: 11,
-          fontWeight: 700,
-          textDecoration: "none",
-          borderRadius: "var(--sb-radius)",
-          letterSpacing: "0.04em",
-        }}
-      >
-        Register →
-      </a>
-    </div>
+    </article>
   );
 }
 
@@ -297,234 +190,207 @@ function CampCard({ camp }: { camp: Camp }) {
 // ---------------------------------------------------------------------------
 
 function BrowseMode() {
-  const [selectedCities, setSelectedCities] = useState<Set<string>>(new Set());
+  const [cityFilter, setCityFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<CampType | "all">("all");
   const [orgTypeFilter, setOrgTypeFilter] = useState<string>("all");
   const [priceTierFilter, setPriceTierFilter] = useState<string>("all");
-  const [ageMin, setAgeMin] = useState<string>("");
-  const [ageMax, setAgeMax] = useState<string>("");
+  const [ageFilter, setAgeFilter] = useState<string>("");
   const [weekFilter, setWeekFilter] = useState<number | "all">("all");
+  const [query, setQuery] = useState<string>("");
+  const [showAll, setShowAll] = useState(false);
 
-  const toggleCity = (cityId: string) => {
-    setSelectedCities((prev) => {
-      const next = new Set(prev);
-      if (next.has(cityId)) next.delete(cityId);
-      else next.add(cityId);
-      return next;
-    });
+  const featured = useMemo(
+    () => CAMPS.filter((camp) => camp.featured).slice(0, 3),
+    [],
+  );
+  const featuredIds = useMemo(() => new Set(featured.map((camp) => camp.id)), [featured]);
+
+  const hasFilters =
+    cityFilter !== "all" ||
+    typeFilter !== "all" ||
+    orgTypeFilter !== "all" ||
+    priceTierFilter !== "all" ||
+    ageFilter !== "" ||
+    weekFilter !== "all" ||
+    query.trim() !== "";
+
+  const clearFilters = () => {
+    setCityFilter("all");
+    setTypeFilter("all");
+    setOrgTypeFilter("all");
+    setPriceTierFilter("all");
+    setAgeFilter("");
+    setWeekFilter("all");
+    setQuery("");
+    setShowAll(false);
   };
 
   const filtered = useMemo(() => {
+    const age = ageFilter === "" ? null : parseInt(ageFilter);
+    const q = query.trim().toLowerCase();
     const results = CAMPS.filter((camp) => {
-      if (selectedCities.size > 0 && !selectedCities.has(camp.cityId)) return false;
+      if (!hasFilters && featuredIds.has(camp.id)) return false;
+      if (cityFilter !== "all" && camp.cityId !== cityFilter) return false;
       if (typeFilter !== "all" && camp.type !== typeFilter) return false;
       if (orgTypeFilter !== "all" && camp.orgType !== orgTypeFilter) return false;
       if (priceTierFilter !== "all" && priceTier(camp) !== priceTierFilter) return false;
-      if (ageMin !== "" && camp.ageMax < parseInt(ageMin)) return false;
-      if (ageMax !== "" && camp.ageMin > parseInt(ageMax)) return false;
+      if (age !== null && Number.isFinite(age) && (camp.ageMin > age || camp.ageMax < age)) return false;
       if (weekFilter !== "all" && !campHasWeek(camp, weekFilter)) return false;
+      if (q) {
+        const haystack = [
+          camp.name,
+          camp.cityName,
+          camp.description,
+          camp.orgType,
+          camp.type,
+          ...camp.tags,
+          ...camp.locations,
+        ].join(" ").toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
       return true;
     });
-    // Featured camps first
     return [...results].sort((a, b) => {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
-      return 0;
+      return a.cityName.localeCompare(b.cityName) || a.name.localeCompare(b.name);
     });
-  }, [selectedCities, typeFilter, orgTypeFilter, priceTierFilter, ageMin, ageMax, weekFilter]);
+  }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds]);
+  const visible = hasFilters || showAll ? filtered : filtered.slice(0, 10);
+  const hiddenCount = filtered.length - visible.length;
 
   return (
-    <div>
-      {/* City filter */}
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-          City
-        </div>
-        <div className="camps-city-chips">
-          {ALL_CITIES.map((cityId) => {
-            const active = selectedCities.has(cityId);
-            return (
-              <button
-                key={cityId}
-                onClick={() => toggleCity(cityId)}
-                style={{
-                  fontSize: 11,
-                  padding: "4px 10px",
-                  borderRadius: 100,
-                  border: active ? `1px solid ${CITY_ACCENT[cityId] ?? "#555"}` : "1px solid var(--sb-border)",
-                  background: active ? (CITY_ACCENT[cityId] ?? "#555") + "18" : "transparent",
-                  color: active ? (CITY_ACCENT[cityId] ?? "#555") : "var(--sb-muted)",
-                  cursor: "pointer",
-                  fontWeight: active ? 700 : 400,
-                  transition: "all 0.12s",
-                }}
-              >
-                {getCityLabel(cityId)}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Type + week + age filters */}
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14, alignItems: "flex-end" }}>
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Type
+    <div className="camps-directory">
+      {featured.length > 0 && (
+        <section className="camps-featured" aria-label="Featured camps">
+          <div className="camps-section-head">
+            <div>
+              <div className="camps-kicker">Start Here</div>
+              <h2>Strong first picks</h2>
+            </div>
+            <p>Broad programs with clear dates, reliable registration links, and enough weeks to anchor a summer plan.</p>
           </div>
-          <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-            {TYPE_FILTERS.map((f) => (
-              <button
-                key={f.id}
-                onClick={() => setTypeFilter(f.id)}
-                className={`camps-filter-pill${typeFilter === f.id ? " camps-filter-pill--active" : ""}`}
-              >
-                {f.label}
-              </button>
+          <div className="camps-feature-grid">
+            {featured.map((camp) => (
+              <CampCard key={camp.id} camp={camp} />
             ))}
           </div>
-        </div>
-
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Week
-          </div>
-          <select
-            value={weekFilter === "all" ? "all" : weekFilter}
-            onChange={(e) => setWeekFilter(e.target.value === "all" ? "all" : parseInt(e.target.value))}
-            style={{
-              fontSize: 12,
-              padding: "5px 10px",
-              border: "1px solid var(--sb-border)",
-              borderRadius: "var(--sb-radius)",
-              background: "var(--sb-card)",
-              color: "var(--sb-ink)",
-              cursor: "pointer",
-            }}
-          >
-            <option value="all">All weeks</option>
-            {SUMMER_WEEKS.map((sw) => (
-              <option key={sw.weekNum} value={sw.weekNum}>
-                Week {sw.weekNum} ({sw.label})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Child's Age
-          </div>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <input
-              type="number"
-              min={4}
-              max={17}
-              placeholder="Min"
-              value={ageMin}
-              onChange={(e) => setAgeMin(e.target.value)}
-              style={{
-                width: 60,
-                fontSize: 12,
-                padding: "5px 8px",
-                border: "1px solid var(--sb-border)",
-                borderRadius: "var(--sb-radius)",
-                background: "var(--sb-card)",
-                color: "var(--sb-ink)",
-              }}
-            />
-            <span style={{ fontSize: 12, color: "var(--sb-muted)" }}>–</span>
-            <input
-              type="number"
-              min={4}
-              max={17}
-              placeholder="Max"
-              value={ageMax}
-              onChange={(e) => setAgeMax(e.target.value)}
-              style={{
-                width: 60,
-                fontSize: 12,
-                padding: "5px 8px",
-                border: "1px solid var(--sb-border)",
-                borderRadius: "var(--sb-radius)",
-                background: "var(--sb-card)",
-                color: "var(--sb-ink)",
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Second filter row: Org type + Price tier */}
-      <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 20, alignItems: "flex-end" }}>
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Program Type
-          </div>
-          <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-            {ALL_ORG_TYPES.map((f) => (
-              <button
-                key={f.id}
-                onClick={() => setOrgTypeFilter(f.id)}
-                className={`camps-filter-pill${orgTypeFilter === f.id ? " camps-filter-pill--active" : ""}`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "var(--sb-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Price
-          </div>
-          <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-            {PRICE_TIERS.map((f) => (
-              <button
-                key={f.id}
-                onClick={() => setPriceTierFilter(f.id)}
-                className={`camps-filter-pill${priceTierFilter === f.id ? " camps-filter-pill--active" : ""}`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Results */}
-      <div style={{
-        fontSize: 11,
-        color: "var(--sb-muted)",
-        marginBottom: 14,
-        fontFamily: "'Space Mono', monospace",
-      }}>
-        {filtered.length} camp{filtered.length !== 1 ? "s" : ""} found
-      </div>
-
-      {filtered.length === 0 ? (
-        <div style={{
-          padding: "40px 20px",
-          textAlign: "center",
-          color: "var(--sb-muted)",
-          border: "1px dashed var(--sb-border)",
-          borderRadius: "var(--sb-radius)",
-        }}>
-          <div style={{ fontSize: 24, marginBottom: 8 }}>🏕️</div>
-          <div style={{ fontFamily: "var(--sb-serif)", fontSize: 16, marginBottom: 4 }}>No camps match your filters</div>
-          <div style={{ fontSize: 13 }}>Try adjusting the age range, week, or city selection.</div>
-        </div>
-      ) : (
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: 14,
-        }}>
-          {filtered.map((camp) => (
-            <CampCard key={camp.id} camp={camp} />
-          ))}
-        </div>
+        </section>
       )}
+
+      <section className="camps-browse">
+        <div className="camps-section-head">
+          <div>
+            <div className="camps-kicker">Directory</div>
+            <h2>Browse the full camp list</h2>
+          </div>
+          <p>Use one or two selectors when you need them. Otherwise the directory stays out of your way.</p>
+        </div>
+
+        <div className="camps-toolbar">
+          <label className="camps-search">
+            <span>Search</span>
+            <input
+              type="search"
+              placeholder="Camp name, city, tag"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </label>
+
+          <label>
+            <span>City</span>
+            <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)}>
+              <option value="all">All cities</option>
+              {ALL_CITIES.map((cityId) => (
+                <option key={cityId} value={cityId}>{getCityLabel(cityId)}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            <span>Week</span>
+            <select
+              value={weekFilter === "all" ? "all" : String(weekFilter)}
+              onChange={(e) => setWeekFilter(e.target.value === "all" ? "all" : parseInt(e.target.value))}
+            >
+              <option value="all">All weeks</option>
+              {SUMMER_WEEKS.map((sw) => (
+                <option key={sw.weekNum} value={sw.weekNum}>
+                  Week {sw.weekNum}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            <span>Age</span>
+            <input
+              type="number"
+              min={4}
+              max={17}
+              placeholder="Any"
+              value={ageFilter}
+              onChange={(e) => setAgeFilter(e.target.value)}
+            />
+          </label>
+
+          <label>
+            <span>Focus</span>
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value as CampType | "all")}
+            >
+              {TYPE_FILTERS.map((f) => (
+                <option key={f.id} value={f.id}>{f.label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            <span>Operator</span>
+            <select value={orgTypeFilter} onChange={(e) => setOrgTypeFilter(e.target.value)}>
+              {ALL_ORG_TYPES.map((f) => (
+                <option key={f.id} value={f.id}>{f.label}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            <span>Price</span>
+            <select value={priceTierFilter} onChange={(e) => setPriceTierFilter(e.target.value)}>
+              {PRICE_TIERS.map((f) => (
+                <option key={f.id} value={f.id}>{f.label}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div className="camps-results-head">
+          <span>
+            Showing {visible.length} of {hasFilters ? filtered.length : CAMPS.length} program{CAMPS.length !== 1 ? "s" : ""}
+          </span>
+          {hasFilters && <button onClick={clearFilters}>Clear filters</button>}
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="camps-empty">
+            <h3>No camps match those selectors</h3>
+            <p>Try clearing one field or searching by city instead.</p>
+          </div>
+        ) : (
+          <div className="camps-grid">
+            {visible.map((camp) => (
+              <CampCard key={camp.id} camp={camp} />
+            ))}
+          </div>
+        )}
+        {!hasFilters && hiddenCount > 0 && (
+          <button className="camps-show-more" onClick={() => setShowAll(true)}>
+            Show all {CAMPS.length} programs
+          </button>
+        )}
+      </section>
     </div>
   );
 }
@@ -1079,6 +945,8 @@ function SummerBuilderMode() {
 
 export default function CampsView() {
   const [mode, setMode] = useState<"browse" | "builder">("browse");
+  const cityProgramCount = CAMPS.filter((camp) => camp.orgType === "city").length;
+  const nonprofitCount = CAMPS.filter((camp) => camp.orgType === "nonprofit").length;
 
   const verifiedDisplay = new Date(DATA_VERIFIED_AT + "T00:00:00").toLocaleDateString("en-US", {
     month: "short",
@@ -1088,57 +956,423 @@ export default function CampsView() {
 
   return (
     <div className="camps-view">
-      {/* Header */}
-      <div className="dev-header">
-        <div className="dev-header-eyebrow">South Bay / Summer 2026</div>
-        <h1 className="dev-header-title">Summer Camps</h1>
-        <p className="dev-header-subtitle">
-          City rec programs, specialty camps, sports academies, arts programs, and more — all in one place. Every listing links to the operator's current registration page. Use Summer Builder to piece together your whole summer.
+      <section className="camps-hero">
+        <div className="camps-kicker">South Bay / Summer 2026</div>
+        <h1>Summer Camps</h1>
+        <p>
+          A calmer guide to city rec programs, specialty camps, sports academies,
+          arts programs, and STEM weeks across the South Bay. Every listing links
+          back to the operator's registration page.
         </p>
-        <div className="dev-header-note">
-          {CAMPS.length} programs listed for Summer 2026 · Links verified {verifiedDisplay}
+        <div className="camps-hero-note">
+          Links verified {verifiedDisplay}
         </div>
-      </div>
+        <div className="camps-stat-row" aria-label="Camps data summary">
+          <div>
+            <strong>{CAMPS.length}</strong>
+            <span>Programs</span>
+          </div>
+          <div>
+            <strong>{SUMMER_WEEKS.length}</strong>
+            <span>Summer weeks</span>
+          </div>
+          <div>
+            <strong>{cityProgramCount}</strong>
+            <span>City-run options</span>
+          </div>
+          <div>
+            <strong>{nonprofitCount}</strong>
+            <span>Nonprofit options</span>
+          </div>
+        </div>
+      </section>
 
-      {/* Mode switcher */}
-      <div style={{ display: "flex", gap: 4, marginTop: 22, marginBottom: 24 }}>
+      <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
         <button
           onClick={() => setMode("browse")}
-          style={{
-            padding: "7px 18px",
-            borderRadius: 100,
-            border: "none",
-            background: mode === "browse" ? "var(--sb-ink)" : "var(--sb-border-light)",
-            color: mode === "browse" ? "#fff" : "var(--sb-muted)",
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: "pointer",
-            letterSpacing: "0.04em",
-            transition: "all 0.15s",
-          }}
+          className={mode === "browse" ? "is-active" : ""}
+          aria-selected={mode === "browse"}
         >
-          Browse Camps
+          Directory
         </button>
         <button
           onClick={() => setMode("builder")}
-          style={{
-            padding: "7px 18px",
-            borderRadius: 100,
-            border: "none",
-            background: mode === "builder" ? "var(--sb-ink)" : "var(--sb-border-light)",
-            color: mode === "builder" ? "#fff" : "var(--sb-muted)",
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: "pointer",
-            letterSpacing: "0.04em",
-            transition: "all 0.15s",
-          }}
+          className={mode === "builder" ? "is-active" : ""}
+          aria-selected={mode === "builder"}
         >
-          🏕️ Summer Builder
+          Plan Weeks
         </button>
       </div>
 
-      {mode === "browse" ? <BrowseMode /> : <SummerBuilderMode />}
+      {mode === "browse" ? <BrowseMode /> : (
+        <section className="camps-builder-wrap">
+          <SummerBuilderMode />
+        </section>
+      )}
+      <CampsViewStyles />
     </div>
+  );
+}
+
+function CampsViewStyles() {
+  return (
+    <style>{`
+      .camps-view {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .camps-kicker {
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--sb-muted);
+      }
+
+      .camps-hero {
+        padding-bottom: 24px;
+        border-bottom: 3px double var(--sb-border);
+      }
+      .camps-hero h1 {
+        margin: 6px 0 10px;
+        font-family: var(--sb-serif);
+        font-size: 42px;
+        line-height: 1;
+        color: var(--sb-ink);
+      }
+      .camps-hero p {
+        max-width: 720px;
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .camps-hero-note {
+        margin-top: 10px;
+        color: var(--sb-light);
+        font-size: 11px;
+        letter-spacing: 0.03em;
+      }
+      .camps-stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--sb-border-light);
+        margin-top: 22px;
+        background: var(--sb-card);
+      }
+      .camps-stat-row > div {
+        padding: 15px 16px;
+        border-left: 1px solid var(--sb-border-light);
+      }
+      .camps-stat-row > div:first-child { border-left: none; }
+      .camps-stat-row strong {
+        display: block;
+        font-family: var(--sb-serif);
+        font-size: 28px;
+        line-height: 1;
+        color: var(--sb-ink);
+      }
+      .camps-stat-row span {
+        display: block;
+        margin-top: 5px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--sb-muted);
+      }
+
+      .camps-mode-switch {
+        display: inline-flex;
+        width: max-content;
+        max-width: 100%;
+        gap: 3px;
+        padding: 3px;
+        border: 1px solid var(--sb-border-light);
+        background: var(--sb-card);
+        border-radius: 999px;
+      }
+      .camps-mode-switch button {
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--sb-muted);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        padding: 8px 18px;
+        text-transform: uppercase;
+      }
+      .camps-mode-switch button.is-active {
+        background: var(--sb-ink);
+        color: #fff;
+      }
+
+      .camps-directory,
+      .camps-featured,
+      .camps-browse {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .camps-featured {
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--sb-border-light);
+      }
+      .camps-section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
+        gap: 24px;
+        align-items: end;
+      }
+      .camps-section-head h2 {
+        margin: 3px 0 0;
+        font-family: var(--sb-serif);
+        font-size: 26px;
+        line-height: 1.1;
+        color: var(--sb-ink);
+      }
+      .camps-section-head p {
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .camps-feature-grid,
+      .camps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .camps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .camps-toolbar {
+        display: grid;
+        grid-template-columns: minmax(220px, 1.5fr) repeat(6, minmax(110px, 1fr));
+        gap: 8px;
+        align-items: end;
+        padding: 12px;
+        border: 1px solid var(--sb-border-light);
+        background: rgba(255,255,255,0.55);
+      }
+      .camps-toolbar label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+      }
+      .camps-toolbar label > span {
+        font-family: 'Space Mono', monospace;
+        color: var(--sb-muted);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .camps-toolbar input,
+      .camps-toolbar select {
+        width: 100%;
+        min-width: 0;
+        border: 1px solid var(--sb-border);
+        border-radius: 6px;
+        background: var(--sb-card);
+        color: var(--sb-ink);
+        font-family: var(--sb-sans);
+        font-size: 12px;
+        padding: 9px 10px;
+      }
+
+      .camps-results-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        color: var(--sb-muted);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+      }
+      .camps-results-head button {
+        border: 1px solid var(--sb-border);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--sb-ink);
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 5px 12px;
+      }
+      .camps-show-more {
+        width: max-content;
+        max-width: 100%;
+        justify-self: center;
+        align-self: center;
+        border: 1px solid var(--sb-ink);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--sb-ink);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        padding: 9px 18px;
+        text-transform: uppercase;
+      }
+
+      .camps-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 0;
+        background: var(--sb-card);
+        border: 1px solid var(--sb-border-light);
+        border-top: 3px solid var(--sb-ink);
+        border-radius: 8px;
+        padding: 17px;
+      }
+      .camps-card-top,
+      .camps-card-meta,
+      .camps-card-tags,
+      .camps-card-footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        align-items: center;
+      }
+      .camps-card-city,
+      .camps-card-type,
+      .camps-card-tags span {
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        padding: 4px 8px;
+        text-transform: uppercase;
+      }
+      .camps-card-tags span {
+        border: 1px solid var(--sb-border-light);
+        color: var(--sb-muted);
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .camps-card-title {
+        margin: 0;
+        font-family: var(--sb-serif);
+        font-size: 20px;
+        line-height: 1.15;
+        color: var(--sb-ink);
+      }
+      .camps-card-copy {
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .camps-facts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        margin: 0;
+        background: var(--sb-border-light);
+        border: 1px solid var(--sb-border-light);
+      }
+      .camps-facts div {
+        min-width: 0;
+        background: var(--sb-bg);
+        padding: 9px 10px;
+      }
+      .camps-facts dt {
+        color: var(--sb-light);
+        font-family: 'Space Mono', monospace;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .camps-facts dd {
+        margin: 3px 0 0;
+        color: var(--sb-ink);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+      .camps-card-meta {
+        color: var(--sb-muted);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .camps-card-meta span + span::before {
+        content: "";
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        margin: 0 6px 2px 0;
+        border-radius: 999px;
+        background: var(--sb-border);
+      }
+      .camps-card-footer {
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 3px;
+        color: var(--sb-light);
+        font-size: 11px;
+      }
+      .camps-card-footer a {
+        border-radius: 6px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 7px 12px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .camps-empty,
+      .camps-builder-wrap {
+        border: 1px solid var(--sb-border-light);
+        border-radius: 8px;
+        background: var(--sb-card);
+        padding: 24px;
+      }
+      .camps-empty h3 {
+        margin: 0 0 4px;
+        font-family: var(--sb-serif);
+        font-size: 20px;
+      }
+      .camps-empty p {
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .camps-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .camps-stat-row > div:nth-child(3) { border-left: none; border-top: 1px solid var(--sb-border-light); }
+        .camps-stat-row > div:nth-child(4) { border-top: 1px solid var(--sb-border-light); }
+        .camps-section-head { grid-template-columns: 1fr; gap: 8px; }
+        .camps-feature-grid,
+        .camps-grid { grid-template-columns: 1fr; }
+        .camps-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .camps-search { grid-column: 1 / -1; }
+      }
+
+      @media (max-width: 560px) {
+        .camps-hero h1 { font-size: 34px; }
+        .camps-stat-row strong { font-size: 24px; }
+        .camps-toolbar { grid-template-columns: 1fr; }
+        .camps-mode-switch { width: 100%; }
+        .camps-mode-switch button { flex: 1; padding-inline: 10px; }
+        .camps-card { padding: 15px; }
+      }
+    `}</style>
   );
 }

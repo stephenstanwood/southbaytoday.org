@@ -49,9 +49,6 @@ type FoodItem = {
 
 function FoodTile({ item }: { item: FoodItem }) {
   const isOpen = item.status === "opened";
-  const fallback = isOpen
-    ? "linear-gradient(135deg, #14b8a6 0%, #2563eb 100%)"
-    : "linear-gradient(135deg, #6366f1 0%, #db2777 100%)";
   // Tier 1: real Google Places photo. Tier 2: Recraft food illustration.
   // Tier 3: status-themed gradient.
   const photo = item.photoRef
@@ -71,13 +68,25 @@ function FoodTile({ item }: { item: FoodItem }) {
       href={mapsHref}
       target="_blank"
       rel="noopener noreferrer"
-      className="food-tile"
-      style={{
-        background: photo
-          ? `#000 url(${photo}) center/cover no-repeat`
-          : fallback,
-      }}
+      className={`food-tile food-tile-${isOpen ? "open" : "soon"}${photo ? "" : " food-tile--no-photo"}`}
     >
+      {photo && (
+        <img
+          src={photo}
+          alt=""
+          loading="lazy"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (item.image && img.dataset.fallbackApplied !== "true") {
+              img.dataset.fallbackApplied = "true";
+              img.src = item.image;
+              return;
+            }
+            img.hidden = true;
+            img.closest(".food-tile")?.classList.add("food-tile--no-photo");
+          }}
+        />
+      )}
       <div className="food-tile-shade" />
       <div className="food-tile-top">
         <span className="food-pill food-pill-light">{city}</span>
@@ -109,8 +118,8 @@ function NewAndComingSoon() {
   };
   const openedAll = (data.opened ?? []).filter((i) => i.name && i.cityId);
   const comingSoonAll = (data.comingSoon ?? []).filter((i) => i.name && i.cityId);
-  const opened = openedAll.slice(0, Math.floor(openedAll.length / 4) * 4);
-  const comingSoon = comingSoonAll.slice(0, Math.floor(comingSoonAll.length / 4) * 4);
+  const opened = openedAll.slice(0, 8);
+  const comingSoon = comingSoonAll.slice(0, 8);
   if (opened.length === 0 && comingSoon.length === 0) return null;
 
   const updated = formatShortDate(data.generatedAt.slice(0, 10));
@@ -120,7 +129,7 @@ function NewAndComingSoon() {
       <header className="food-section-head">
         <h2 className="food-h2">New &amp; Coming Soon</h2>
         <p className="food-sub">
-          Restaurants and food spots opening across the South Bay
+          A trimmed board of recent openings and promising permits
           {updated && <> · Updated {updated}</>}
         </p>
       </header>
@@ -253,20 +262,21 @@ function PermitPulse() {
     if (oa !== ob) return oa - ob;
     return b.date.localeCompare(a.date);
   });
+  const visibleItems = items.slice(0, 8);
 
   const updated = formatShortDate(data.generatedAt.slice(0, 10));
 
   return (
     <section className="food-section">
       <header className="food-section-head">
-        <h2 className="food-h2">Permit Pulse</h2>
+        <h2 className="food-h2">Opening Signals</h2>
         <p className="food-sub">
-          Building-permit signals — closures, buildouts, and renovations before they hit health records
+          Building-permit hints before they turn into public opening records
           {updated && <> · Updated {updated}</>}
         </p>
       </header>
       <div className="pulse-list">
-        {items.map((item) => <PermitPulseRow key={item.id} item={item} />)}
+        {visibleItems.map((item) => <PermitPulseRow key={item.id} item={item} />)}
       </div>
       <p className="food-tile-note">
         Sourced from San Jose &amp; Palo Alto building permits · Tap a row to find it on Google Maps
@@ -356,31 +366,153 @@ function FarmersMarkets() {
 
 // ── View ────────────────────────────────────────────────────────────────────
 
+function FoodHero() {
+  const openings = sccFoodOpeningsJson as {
+    generatedAt: string;
+    opened: FoodItem[];
+    comingSoon: FoodItem[];
+  };
+  const marketCount = SOUTH_BAY_EVENTS.filter((e) => e.category === "market").length;
+  const updated = formatShortDate(openings.generatedAt.slice(0, 10));
+
+  return (
+    <section className="food-hero">
+      <div className="food-kicker">South Bay / Food Desk</div>
+      <h1>Food</h1>
+      <p>
+        Recent openings, promising buildouts, and farmers markets across the
+        South Bay, edited down so the good leads are easy to scan.
+      </p>
+      <div className="food-hero-note">
+        Health-permit refresh {updated || "recently"}
+      </div>
+      <div className="food-stat-row" aria-label="Food data summary">
+        <div>
+          <strong>{openings.opened?.length ?? 0}</strong>
+          <span>Recent openings</span>
+        </div>
+        <div>
+          <strong>{openings.comingSoon?.length ?? 0}</strong>
+          <span>Coming soon</span>
+        </div>
+        <div>
+          <strong>{marketCount}</strong>
+          <span>Farmers markets</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function FoodView() {
   return (
-    <>
+    <div className="food-view">
+      <FoodHero />
       <NewAndComingSoon />
-      <PermitPulse />
-      <FarmersMarkets />
+      <div className="food-lower-grid">
+        <PermitPulse />
+        <FarmersMarkets />
+      </div>
       <FoodViewStyles />
-    </>
+    </div>
   );
 }
 
 function FoodViewStyles() {
   return (
     <style>{`
-      .food-section { font-family: 'Inter', sans-serif; }
-      .food-section + .food-section { margin-top: 36px; padding-top: 28px; border-top: 1px solid #eee; }
+      .food-view {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        font-family: 'Inter', sans-serif;
+      }
+      .food-kicker {
+        color: var(--sb-muted);
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .food-hero {
+        padding-bottom: 24px;
+        border-bottom: 3px double var(--sb-border);
+      }
+      .food-hero h1 {
+        margin: 6px 0 10px;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 42px;
+        line-height: 1;
+      }
+      .food-hero p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .food-hero-note {
+        margin-top: 10px;
+        color: var(--sb-light);
+        font-size: 11px;
+        letter-spacing: 0.03em;
+      }
+      .food-stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 22px;
+        border: 1px solid var(--sb-border-light);
+        background: var(--sb-card);
+      }
+      .food-stat-row > div {
+        padding: 15px 16px;
+        border-left: 1px solid var(--sb-border-light);
+      }
+      .food-stat-row > div:first-child { border-left: none; }
+      .food-stat-row strong {
+        display: block;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 28px;
+        line-height: 1;
+      }
+      .food-stat-row span {
+        display: block;
+        margin-top: 5px;
+        color: var(--sb-muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
 
-      .food-section-head { margin-bottom: 16px; }
+      .food-section { min-width: 0; }
+      .food-section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid var(--sb-border);
+        padding-bottom: 8px;
+      }
       .food-h2 {
-        font-size: 26px; font-weight: 900; margin: 0;
-        letter-spacing: -1px; color: #000; line-height: 1.05;
+        margin: 0;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.05;
       }
       .food-sub {
-        font-size: 13px; color: #666;
-        margin: 4px 0 0; font-weight: 500;
+        max-width: 420px;
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.45;
       }
 
       .food-eyebrow {
@@ -393,33 +525,47 @@ function FoodViewStyles() {
 
       .food-tile-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
       }
       .food-tile {
         position: relative;
         display: block;
-        aspect-ratio: 1 / 1;
-        border-radius: 14px;
+        aspect-ratio: 4 / 3;
+        border-radius: 8px;
         overflow: hidden;
         text-decoration: none;
         color: #fff;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        background: #0f172a;
+        border: 1px solid rgba(0,0,0,0.06);
         transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
         cursor: pointer;
       }
+      .food-tile-open.food-tile--no-photo {
+        background: linear-gradient(135deg, #0f766e 0%, #1d4ed8 100%);
+      }
+      .food-tile-soon.food-tile--no-photo {
+        background: linear-gradient(135deg, #4338ca 0%, #0f766e 100%);
+      }
+      .food-tile img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
       .food-tile:hover {
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.14);
       }
       .food-tile-shade {
         position: absolute; inset: 0;
         background: linear-gradient(
           to bottom,
-          rgba(0,0,0,0.0) 0%,
-          rgba(0,0,0,0.0) 28%,
-          rgba(0,0,0,0.62) 72%,
-          rgba(0,0,0,0.92) 100%
+          rgba(0,0,0,0.08) 0%,
+          rgba(0,0,0,0.06) 34%,
+          rgba(0,0,0,0.62) 76%,
+          rgba(0,0,0,0.9) 100%
         );
         pointer-events: none;
       }
@@ -478,11 +624,17 @@ function FoodViewStyles() {
         text-align: right;
       }
 
-      /* Permit pulse — building-permit signals */
+      .food-lower-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+        gap: 26px;
+        align-items: start;
+      }
+
       .pulse-list {
         display: flex; flex-direction: column;
         border: 1px solid var(--sb-border-light, #eee);
-        border-radius: 12px;
+        border-radius: 8px;
         overflow: hidden;
         background: #fff;
       }
@@ -502,7 +654,7 @@ function FoodViewStyles() {
       .pulse-icon {
         display: flex; align-items: center; justify-content: center;
         width: 36px; height: 36px;
-        border-radius: 10px;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 800;
         flex-shrink: 0;
@@ -556,15 +708,18 @@ function FoodViewStyles() {
       }
       .pulse-dot { color: #ccc; }
 
-      /* Farmers markets — weekly schedule */
       .market-week {
         display: flex; flex-direction: column; gap: 14px;
+        border: 1px solid var(--sb-border-light);
+        border-radius: 8px;
+        padding: 12px;
+        background: var(--sb-card);
       }
       .market-day {
         display: grid;
         grid-template-columns: 64px 1fr;
         gap: 14px;
-        padding: 10px 12px 10px 0;
+        padding: 10px 0 10px 0;
         border-top: 1px solid var(--sb-border-light, #eee);
       }
       .market-day:first-child { border-top: none; padding-top: 0; }
@@ -605,9 +760,20 @@ function FoodViewStyles() {
       }
 
       @media (max-width: 760px) {
+        .food-hero h1 { font-size: 34px; }
+        .food-stat-row { grid-template-columns: 1fr; }
+        .food-stat-row > div {
+          border-left: none;
+          border-top: 1px solid var(--sb-border-light);
+        }
+        .food-stat-row > div:first-child { border-top: none; }
+        .food-section-head { display: block; }
+        .food-sub { margin-top: 4px; }
         .food-tile-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .food-tile { aspect-ratio: 1 / 1; }
         .food-tile-name { font-size: 13px; }
         .food-tile-blurb { -webkit-line-clamp: 2; }
+        .food-lower-grid { grid-template-columns: 1fr; }
         .market-day { grid-template-columns: 56px 1fr; gap: 10px; }
         .pulse-row { grid-template-columns: 30px 1fr; gap: 10px; padding: 10px 12px; }
         .pulse-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
