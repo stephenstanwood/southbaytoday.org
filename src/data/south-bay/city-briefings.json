@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T19:11:26.896Z",
+  "generatedAt": "2026-05-22T23:13:24.413Z",
   "weekLabel": "May 22 – May 29",
   "weekStart": "2026-05-22",
   "weekEnd": "2026-05-29",
@@ -7,8 +7,16 @@
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's District 4 tackles the county budget at a community townhall Wednesday evening, while the farmers market returns Sunday morning downtown.",
+      "summary": "Campbell's packed this week: author Mike Huguenor reads tonight at Books Inc., a Memorial Day ceremony Monday morning, and the farmers market returns Sunday.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Mike Huguenor discusses Elvis Is Dead, I'm Still Alive",
+          "when": "Fri, May 22 · 7:00 PM",
+          "venue": "Books Inc. Pruneyard",
+          "category": "arts",
+          "url": "http://l.e.barnesandnoble.com/rts/go2.aspx?h=725546&tp=i-1NGB-Ky-Dem-87KUn6-1w-4V0yR-1c-87KTGH-lDJPDszO8J-by18b&pi=D4pl9pR9KXZi4tQNpa9d09jRNO-IfEyC1qh2xU7xZK4&x=%7cBIW%7cEML%7cL000041184%7c260521_BI_FF_BIW_BOOKS_INC_WEEKLY%7ci-1NGB-Ky-Dem-87KUn6-1w-4V0yR-1c-87KTGH-lDJPDszO8J-by18b%7cL000041184%7c260521_BI_FF_BIW_BOOKS_INC_WEEKLY&hp2=d3c5d0ffc047d0eb0baeceb83e2bd0817747f27149e58a6c70a230045d950ab8"
+        },
         {
           "type": "event",
           "title": "San Francisco God's Image 23rd Annual Concert",
@@ -16,24 +24,24 @@
           "venue": null,
           "category": "music",
           "url": "https://www.campbellca.gov/Calendar.aspx?EID=3956"
-        },
-        {
-          "type": "event",
-          "title": "Campbell Farmers Market",
-          "when": "Sun, May 24 · 9:00 AM",
-          "venue": "Downtown Campbell",
-          "category": "food",
-          "url": "https://www.downtowncampbell.com/farmers-market"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:11.827Z"
+      "generatedAt": "2026-05-22T23:13:09.391Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino's City Council updated its Health and Safety Element, a foundational planning document guiding public health and emergency preparedness through 2040.",
+      "summary": "Cupertino High School's robotics team demos their machines at the library tonight, while the farmers market opens this morning and Lucky Diaz performs for families Saturday.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Cupertino High School Robotics Demonstration",
+          "when": "Fri, May 22 · 6:00 PM",
+          "venue": "Cupertino Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69bee509491b809c6f220d76"
+        },
         {
           "type": "event",
           "title": "Cupertino Farmers Market",
@@ -41,14 +49,6 @@
           "venue": "Oaks Shopping Center",
           "category": "food",
           "url": "https://cafarmersmkts.com/cupertino-market"
-        },
-        {
-          "type": "event",
-          "title": "Lucky Diaz and the Family Jam Band",
-          "when": "Sat, May 23 · 10:30 AM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69e6a5e8e7c57a539c13fb96"
         },
         {
           "type": "cityhall",
@@ -60,12 +60,12 @@
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:12.902Z"
+      "generatedAt": "2026-05-22T23:13:10.764Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos honors Memorial Day Monday at the Flame of Liberty Memorial while the Farmers Market returns Sunday morning at Town Park Plaza.",
+      "summary": "Los Gatos marks Memorial Day with a downtown celebration Monday, while the weekend brings a farmers market and Chinese calligraphy workshop at the library.",
       "highlights": [
         {
           "type": "event",
@@ -85,12 +85,12 @@
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:14.299Z"
+      "generatedAt": "2026-05-22T23:13:12.281Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's city council meets Tuesday to discuss a decarbonization goal and five-year plan alongside proclamations for Bike Month and Asian American heritage.",
+      "summary": "Mountain View's city council meets Tuesday to discuss the city's decarbonization goals and five-year climate plan alongside heritage month proclamations.",
       "highlights": [
         {
           "type": "event",
@@ -118,12 +118,12 @@
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:15.548Z"
+      "generatedAt": "2026-05-22T23:13:13.659Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga marks Memorial Day Monday at the Memorial Arch, while arts events this week span tea at Montalvo and a teen art exhibit at the library.",
+      "summary": "Saratoga's got arts and music this weekend: teen creative club and AAPI art exhibit at the library Saturday, plus open mic Sunday morning.",
       "highlights": [
         {
           "type": "event",
@@ -135,21 +135,29 @@
         },
         {
           "type": "event",
-          "title": "AAPI Teen Art Exhibit 2026",
-          "when": "Sat, May 23 · 5:00 PM",
+          "title": "Creative Collective - A Club for Teens",
+          "when": "Sat, May 23 · 2:00 PM",
           "venue": "Saratoga Library",
-          "category": "arts",
-          "url": "https://sccl.bibliocommons.com/events/69e55e86bd5c392c76454081"
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69d57a4d213814b1b5233ec6"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:17.128Z"
+      "generatedAt": "2026-05-22T23:13:15.325Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale's farmers market returns Saturday morning, while a succulent gardening workshop kicks off Wednesday at the senior center.",
+      "summary": "Sunnyvale's Sustainability Commission reviews the Draft 2025 Urban Water Master Plan and drought contingencies this Monday.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Melita's Musical Playtime",
+          "when": "Fri, May 22 · 11:00 AM",
+          "venue": "Sunnyvale Public Library",
+          "category": "arts",
+          "url": null
+        },
         {
           "type": "event",
           "title": "Teen Space Study Hall",
@@ -159,29 +167,29 @@
           "url": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view"
         },
         {
-          "type": "event",
-          "title": "Sunnyvale Farmers Market",
-          "when": "Sat, May 23 · 9:00 AM",
-          "venue": "Murphy Avenue",
-          "category": "food",
-          "url": "https://urbanvillageonline.com/markets/sunnyvale"
+          "type": "cityhall",
+          "title": "City discusses draft Urban Water Master Plan and drought contingencies",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://sunnyvale.legistar.com/Calendar.aspx?From=5%2F18%2F2026&To=5%2F18%2F2026"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:18.466Z"
+      "generatedAt": "2026-05-22T23:13:16.966Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose City Council approved the Seeds of Peace Monument for Guadalupe River Park and adjusted budget rules for mayoral and district offices this week.",
+      "summary": "San Jose's nightlife heats up Friday with live music at three venues plus comedy at the Improv, while the city council this week approved the Seeds of Peace Monument for Guadalupe River Park.",
       "highlights": [
         {
           "type": "event",
-          "title": "Friday Fun: Origami!",
-          "when": "Fri, May 22 · 4:00 PM",
-          "venue": "Willow Glen Library",
-          "category": "family",
-          "url": "https://sjpl.bibliocommons.com/events/690e9a3d9b8793410094b832"
+          "title": "Pete's Soundhouse",
+          "when": "Fri, May 22 · 6:00 PM",
+          "venue": "Pete Be Center",
+          "category": "music",
+          "url": "https://www.eventbrite.com/e/tiki-pete-presents-petes-soundhouse-tickets-1984598847577?aff=oddtdtcreator"
         },
         {
           "type": "event",
@@ -201,21 +209,13 @@
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:19.837Z"
+      "generatedAt": "2026-05-22T23:13:18.746Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara's art and community calendar fills this weekend with Jonathan Calm's exhibition at SCU, a library book sale, and smartphone help sessions.",
+      "summary": "Santa Clara's libraries and senior center host a book sale, family storytime, smartphone help, and health fair all today, plus SCU holds a lay sending liturgy tonight.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Jonathan Calm - To Wherever, Forever: Archives of Absence & Sites of Passage",
-          "when": "Fri, May 22 · 10:00 AM",
-          "venue": "Santa Clara University",
-          "category": "arts",
-          "url": "https://events.scu.edu/de-saisset/event/369420-jonathan-calm-to-wherever-forever-archives-of"
-        },
         {
           "type": "event",
           "title": "Foundation and Friends Book Sale",
@@ -223,16 +223,32 @@
           "venue": "Santa Clara City Library Northside Branch",
           "category": "education",
           "url": "https://www.sclibrary.org/Home/Components/Calendar/Event/110546/7953?curm=5&cury=2026"
+        },
+        {
+          "type": "event",
+          "title": "Family Storytime with Stay & Play",
+          "when": "Fri, May 22 · 10:30 AM",
+          "venue": "Northside Branch Library",
+          "category": "family",
+          "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112541/"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:21.243Z"
+      "generatedAt": "2026-05-22T23:13:20.031Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Author Joanna Ho launches a new book at Linden Tree Books Saturday morning, kicking off a weekend of storytelling events across Los Altos.",
+      "summary": "Los Altos Library and Linden Tree Books host back-to-back weekend events Saturday, from a superhero comic workshop to author Joanna Ho's book launch.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Making a Superhero Comic Workshop",
+          "when": "Sat, May 23 · 10:00 AM",
+          "venue": "Los Altos Library",
+          "category": "arts",
+          "url": "https://sccl.bibliocommons.com/events/69aa0faccd3d863bd924062b"
+        },
         {
           "type": "event",
           "title": "Book Launch with Joanna Ho",
@@ -240,24 +256,24 @@
           "venue": "Linden Tree Books",
           "category": "arts",
           "url": "https://www.lindentreebooks.com/a-room-with-a-view-69929693.html"
-        },
-        {
-          "type": "event",
-          "title": "Furry Friends Reading Buddies",
-          "when": "Sat, May 23 · 2:30 PM",
-          "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/698f96aa1e64afd01e5b49cf"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:22.723Z"
+      "generatedAt": "2026-05-22T23:13:21.437Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "This weekend, Palo Alto's California Avenue Farmers Market returns Sunday morning alongside a noon origami session at Mitchell Park Library.",
+      "summary": "Palo Alto farmers markets return this weekend at Gilman Street and California Avenue, while the city advances residential electrification strategy to shift homes away from natural gas.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Downtown Palo Alto Farmers' Market",
+          "when": "Sat, May 23 · 8:00 AM",
+          "venue": "Gilman Street between Hamilton and Forest",
+          "category": "music",
+          "url": "https://pafarmersmarket.org"
+        },
         {
           "type": "event",
           "title": "Leisure Noon Origami",
@@ -267,22 +283,30 @@
           "url": "https://paloalto.bibliocommons.com/events/68925efdee7045528b812bb1"
         },
         {
-          "type": "event",
-          "title": "California Ave Farmers Market",
-          "when": "Sun, May 24 · 9:00 AM",
-          "venue": "California Avenue",
-          "category": "food",
-          "url": "https://www.cityofpaloalto.org/Departments/Community-Services/Arts-Sciences/Farmers-Market"
+          "type": "cityhall",
+          "title": "City develops strategy for residential electrification",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://paloalto.legistar.com/Calendar.aspx?From=5%2F15%2F2026&To=5%2F15%2F2026"
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:25.368Z"
+      "generatedAt": "2026-05-22T23:13:22.648Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas City Council appointed a permanent City Manager and advanced a development project with a site permit amendment this week.",
+      "summary": "Milpitas Library hosts five programs this week, from Family Storytime Saturday to Homework Help Tuesday, while City Council appointed a permanent City Manager Tuesday.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Family Storytime",
+          "when": "Sat, May 23 · 11:00 AM",
+          "venue": "Milpitas Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6917aaa5dff9d93e00d015c5"
+        },
         {
           "type": "event",
           "title": "Reading Buddies for Grades K-5",
@@ -292,16 +316,8 @@
           "url": "https://sccl.bibliocommons.com/events/695188a127e5cfe7bab5c895"
         },
         {
-          "type": "event",
-          "title": "Baby Bouncers Lapsit for Prewalkers",
-          "when": "Tue, May 26 · 11:30 AM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/693778316f926136000a0114"
-        },
-        {
           "type": "cityhall",
-          "title": "City Council appoints permanent City Manager",
+          "title": "City Council appoints new permanent City Manager",
           "when": null,
           "venue": null,
           "category": "government",
@@ -309,7 +325,7 @@
         }
       ],
       "weekLabel": "May 22 – May 29",
-      "generatedAt": "2026-05-22T19:11:26.594Z"
+      "generatedAt": "2026-05-22T23:13:24.110Z"
     }
   }
 }
