@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-22T11:16:58.876Z",
+    "generatedAt": "2026-05-22T19:16:45.755Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 34,
-    "placesMatched": 20,
-    "placeGaps": 14,
+    "placesExtracted": 45,
+    "placesMatched": 19,
+    "placeGaps": 26,
     "eventsExtracted": 2,
     "eventsMatched": 0,
     "eventGaps": 2,
@@ -21,247 +21,381 @@
       "kind": "restaurant",
       "context": "ramen restaurant where BTS member visited",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tjhb0y/dating_in_the_bay_isnt_bad_we_just_need_to_go_out/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
         "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
-      "name": "Sonoma Raceway",
+      "name": "Tsujita",
       "city": "",
-      "kind": "venue",
-      "context": "autocross and track day events for meeting people",
+      "kind": "restaurant",
+      "context": "trendy ramen spot in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tjhb0y/dating_in_the_bay_isnt_bad_we_just_need_to_go_out/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
         "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
-      ]
-    },
-    {
-      "name": "David Symphony Hall",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "concert venue in San Jose area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tjhb0y/dating_in_the_bay_isnt_bad_we_just_need_to_go_out/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "The Tech Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "technology museum downtown San Jose",
+      "context": "technology museum in downtown San Jose",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "Japantown",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "neighborhood with Japanese culture and dining",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "Peter's Bakery",
       "city": "San Jose",
       "kind": "bakery",
-      "context": "famous for burnt almond cake San Jose classic",
+      "context": "San Jose classic known for burnt almond cake",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "Tony's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "serves Stromboli",
+      "context": "San Jose restaurant known for stromboli",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "Joe's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "steakhouse",
+      "context": "San Jose steakhouse",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
+      ]
+    },
+    {
+      "name": "Downtown Mountain View",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "car-free downtown Castro Street with restaurants and bars",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "Denny's",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "location on Bascom with 24-hour service",
+      "context": "24-hour diner on Bascom Avenue in Campbell",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
+      ]
+    },
+    {
+      "name": "Campbell Post Office",
+      "city": "Campbell",
+      "kind": "service",
+      "context": "post office on Hamilton Street in Campbell",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
+      ]
+    },
+    {
+      "name": "San Jose Diridon Station",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "Caltrain station in downtown San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ]
     },
     {
       "name": "Rogers",
       "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "new location opened on Middlefield with donuts and dining",
+      "kind": "bakery",
+      "context": "new adjacent location opened on Middlefield",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
       ]
     },
     {
       "name": "Costeñas",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "local restaurant mentioned by residents",
+      "context": "commenter expressed hope for bigger location",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
       ]
     },
     {
-      "name": "Jams Kitchen",
-      "city": "San Jose",
+      "name": "Yemeni coffee shop",
+      "city": "Sunnyvale",
+      "kind": "cafe",
+      "context": "new cafe coming to downtown Sunnyvale",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
+      ]
+    },
+    {
+      "name": "Bloom & Vine",
+      "city": "Mountain View",
       "kind": "restaurant",
-      "context": "Filipino restaurant with traditional dishes",
+      "context": "new Beijing duck restaurant coming to Castro Street",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
       ]
     },
     {
-      "name": "Luisa",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "Filipino restaurant mentioned in recommendations",
+      "name": "Spring Creek",
+      "city": "Santa Clara",
+      "kind": "other",
+      "context": "apartment complex, positive resident experience",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
       ]
     },
     {
-      "name": "Kirk Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "park with large native plants garden",
+      "name": "Lawrence Road Apartments",
+      "city": "Santa Clara",
+      "kind": "other",
+      "context": "apartment complex owned by Greystar, negative reviews",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Felipe's Market",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "affordable produce store on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Apna Mandi",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "Indian market with good prices, same shopping center as Felipe's",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "New India Bazaar",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "Indian grocery store with Friday-Monday sales",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Oakmont Market",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "affordable produce store on Homestead",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Mi Ranchito Produce",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "produce store on Maude Ave",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Chavez",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "affordable grocery option for produce",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Smart and Final",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "grocery store with affordable avocados",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Hankook",
+      "city": "Sunnyvale",
+      "kind": "retail",
+      "context": "grocery store on El Camino with good vegetable prices",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Patel Brothers",
+      "city": "Santa Clara",
+      "kind": "retail",
+      "context": "Indian grocery store on El Camino",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
+      ]
+    },
+    {
+      "name": "Haraz Coffee House",
+      "city": "Mountain View",
+      "kind": "cafe",
+      "context": "new coffee shop opening in June near San Antonio",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Albany Marsh Cleanup",
-      "when": "Sunday June 7th 11 AM to 1 PM",
-      "city": "",
-      "context": "community trash cleanup event at marsh mouth",
+      "name": "FanimeCon",
+      "when": "Memorial Day weekend (May 24-26)",
+      "city": "San Jose",
+      "context": "annual convention at San Jose Convention Center",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
       ]
     },
     {
-      "name": "Tindero",
-      "when": "July 5th",
+      "name": "Kublacon",
+      "when": "Memorial Day weekend",
       "city": "",
-      "context": "Filipino pop-up dinner event by chef with fine dining background",
+      "context": "D&D convention in Burlingame, overlaps with FanimeCon",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
         "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Stars on Ice and other events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tjhb0y/dating_in_the_bay_isnt_bad_we_just_need_to_go_out/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "Castle Rock State Park",
+      "name": "Doppio Zero",
       "city": "",
-      "kind": "park",
-      "context": "hiking area with butterfly sightings",
+      "kind": "restaurant",
+      "context": "trendy pizza spot in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tjhb0y/dating_in_the_bay_isnt_bad_we_just_need_to_go_out/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
         "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1th1f54/a_wonderful_moment_of_humanity_on_el_camino/"
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
-      "matchedName": "Castle Rock State Park"
+      "matchedName": "Doppio Zero Campbell"
     },
     {
       "name": "Winchester Mystery House",
       "city": "San Jose",
       "kind": "venue",
-      "context": "historic mansion with tours and ghost tours available",
+      "context": "historic mansion with tours and nighttime ghost tours",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Winchester Mystery House"
     },
@@ -269,13 +403,13 @@
       "name": "Rosicrucian Egyptian Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "largest Egyptian artifacts collection on west coast",
+      "context": "largest collection of Egyptian artifacts on the west coast",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Rosicrucian Egyptian Museum"
     },
@@ -283,13 +417,13 @@
       "name": "Japanese American Museum",
       "city": "San Jose",
       "kind": "venue",
-      "context": "downtown San Jose museum",
+      "context": "museum in downtown San Jose",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Japanese American Museum of San Jose"
     },
@@ -297,13 +431,13 @@
       "name": "San Jose Museum of Art",
       "city": "San Jose",
       "kind": "venue",
-      "context": "downtown San Jose art museum",
+      "context": "art museum in downtown San Jose",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "San Jose Museum of Art"
     },
@@ -311,13 +445,13 @@
       "name": "Computer History Museum",
       "city": "Mountain View",
       "kind": "venue",
-      "context": "technology history museum",
+      "context": "technology museum near San Jose",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Computer History Museum"
     },
@@ -325,43 +459,15 @@
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "lively downtown area with dining and vibes",
+      "context": "lively downtown area with dining and social atmosphere",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "San Pedro Square Market"
-    },
-    {
-      "name": "Great America",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "amusement park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ],
-      "matchedName": "Great America Amphitheater"
-    },
-    {
-      "name": "Happy Hollow",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "animal park and zoo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ],
-      "matchedName": "Happy Hollow Park & Zoo"
     },
     {
       "name": "Japanese Friendship Garden",
@@ -369,11 +475,11 @@
       "kind": "park",
       "context": "garden in San Jose Japantown",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Japanese Friendship Garden"
     },
@@ -381,13 +487,13 @@
       "name": "Westfield Valley Fair",
       "city": "San Jose",
       "kind": "retail",
-      "context": "large shopping mall with food and retail",
+      "context": "large shopping mall with many food and retail options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Westfield Valley Fair"
     },
@@ -395,13 +501,13 @@
       "name": "Eataly",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Italian food hall with restaurant and groceries",
+      "context": "Italian food hall with restaurant and grocery options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Eataly"
     },
@@ -411,95 +517,124 @@
       "kind": "retail",
       "context": "outdoor shopping center with high-end and casual options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Santana Row"
+    },
+    {
+      "name": "Great America",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "amusement park in South Bay",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
+      ],
+      "matchedName": "Great America Amphitheater"
+    },
+    {
+      "name": "Happy Hollow",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "animal park in San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
+      ],
+      "matchedName": "Happy Hollow Park & Zoo"
     },
     {
       "name": "Stanford Shopping Center",
       "city": "Palo Alto",
       "kind": "retail",
-      "context": "upscale outdoor shopping center",
+      "context": "high-end outdoor shopping center",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "K. MINAMOTO Stanford Shopping Center Store"
-    },
-    {
-      "name": "Castro Street",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "car-free downtown area with restaurants and bars",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
-        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ],
-      "matchedName": "Castro Street, Mountain View"
     },
     {
       "name": "Downtown Campbell",
       "city": "Campbell",
       "kind": "venue",
-      "context": "downtown area with restaurants and entertainment",
+      "context": "downtown area with restaurants and bars",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
       "matchedName": "Downtown Campbell"
     },
     {
-      "name": "Downtown Palo Alto",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "shopping and dining destination",
+      "name": "Great Mall",
+      "city": "Milpitas",
+      "kind": "retail",
+      "context": "shopping mall in Milpitas",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
         "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
         "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
-        "https://www.reddit.com/r/bayarea/comments/1tjqotq/albany_marsh_cleanup_in_two_weeks_sunday_june_7th/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
-      "matchedName": "Downtown Palo Alto"
+      "matchedName": "Great Mall"
     },
     {
-      "name": "Kalesa",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "Filipino restaurant recommended for sinigang and adobo",
+      "name": "Alum Rock Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "park in San Jose where items have been lost and returned",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/SanJose/comments/1tk0x7k/monarch_butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tjxo7t/im_in_san_jose_for_a_few_days_for_work_what_can_i/",
+        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/"
       ],
-      "matchedName": "Kalesa"
+      "matchedName": "Alum Rock Park"
     },
     {
-      "name": "Rene Rose",
+      "name": "Eastridge Center",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "historic super-regional shopping mall opened in 1971",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
+        "https://www.reddit.com/r/mountainview/comments/1th5ara/new_beijing_duck_place_coming_to_castro/"
+      ],
+      "matchedName": "Eastridge Center"
+    },
+    {
+      "name": "Foothill Produce",
       "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Filipino restaurant, noted as expensive",
+      "kind": "retail",
+      "context": "affordable produce store",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/SanJose/comments/1tjqgy8/butterflies_dragonflies/"
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ti9c62/cheap_produce_here/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/mountainview/comments/1th3fkx/interactive_map_of_mvgomvcs_and_surrounding/"
       ],
-      "matchedName": "Rene Rose FILIPINO KITCHEN"
+      "matchedName": "Foothill Produce"
     }
   ],
   "eventMatches": []
