@@ -1162,6 +1162,19 @@ function polishDescription(text) {
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
 
+  // Ticketmaster `info` fields sometimes open with asterisk-wrapped show
+  // annotations: `*21+..... Doors/show start time 8:00pm*`. The block contains
+  // no `.!?` outside the dot-runs and is fused to the following real content
+  // with no whitespace, so the sentence splitter pulls the whole annotation +
+  // first real sentence into a single chunk that no BOILERPLATE_SENTENCE_PATTERN
+  // matches — the preamble leaks into description search/city-page text.
+  // Strip only blocks containing an age tag (`\d+\+`) or `Doors/show start`,
+  // so legitimate `*emphasis*` formatting is preserved.
+  t = t.replace(
+    /\s*\*\s*[^*]*?(?:\d+\+|Doors\/show\s+start)[^*]*?\*\s*/gi,
+    " ",
+  );
+
   // Strip stray space before terminal punctuation ("Birds !", "Social ,",
   // "Passage ;"). Source feeds wrap and re-flow text leaving these. Restricted
   // to , ; . ! ? — colons can be valid styled separators ("Topic : Talk").
