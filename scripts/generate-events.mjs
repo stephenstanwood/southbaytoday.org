@@ -124,6 +124,11 @@ function stripHtml(html) {
     .replace(/&#x2019;/gi, "\u2019").replace(/&#x2018;/gi, "\u2018")
     .replace(/&#x201C;/gi, "\u201C").replace(/&#x201D;/gi, "\u201D")
     .replace(/&#x2013;/gi, "\u2013").replace(/&#x2014;/gi, "\u2014")
+    // Preserve `\u2026` \u2014 the catch-all stripper below would otherwise drop it,
+    // which loses the `[\u2026]` marker that CHM's stripChmRssBoilerplate uses to
+    // anchor the WordPress footer strip. Without this, the footer survives
+    // until truncate() chops it mid-sentence ("The post\u2026").
+    .replace(/&hellip;|&#8230;|&#x2026;/gi, "\u2026")
     .replace(/&#\d+;/g, "").replace(/&[a-z]+;/g, "")
     // Then strip all HTML tags
     .replace(/<[^>]+>/g, " ")
@@ -1291,6 +1296,10 @@ function polishDescription(text) {
   // Lounge", "Cross Fit Games"). Both are single-word brand marks.
   t = t.replace(/\bNet App\b/g, "NetApp");
   t = t.replace(/\bCross Fit\b/g, "CrossFit");
+  // CHM body copy name-drops Steve Jobs's post-Apple venture "NeXT" — the
+  // lowercase+uppercase splitter turns it into "Ne XT". Single-word brand mark
+  // (1985 founding through 1996 Apple acquisition).
+  t = t.replace(/\bNe XT\b/g, "NeXT");
 
   // Split into sentences and drop boilerplate
   const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
