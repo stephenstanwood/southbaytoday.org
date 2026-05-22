@@ -5,6 +5,7 @@ interface Citation {
   date: string;
   meetingType: string;
   topic: string;
+  title: string;
   excerpt: string;
 }
 
@@ -50,11 +51,11 @@ const CITY_ORDER = [
 ];
 
 const STARTERS: { label: string; q: string }[] = [
-  { label: "What's happening with housing?",       q: "affordable housing units" },
-  { label: "Any new parks or trails?",             q: "parks recreation" },
-  { label: "Where's the budget going?",            q: "budget appropriation" },
-  { label: "What road projects are approved?",     q: "traffic roads" },
-  { label: "Any downtown development in the works?", q: "downtown development" },
+  { label: "What's happening with housing?",       q: "housing zoning affordable" },
+  { label: "Any new parks or trails?",             q: "parks trails recreation" },
+  { label: "Where's the budget going?",            q: "budget spending appropriation" },
+  { label: "What road projects are approved?",     q: "traffic transportation streets" },
+  { label: "Any downtown development in the works?", q: "downtown development construction" },
 ];
 
 function formatDate(iso: string): string {
@@ -72,6 +73,7 @@ function abbrevType(t: string): string {
 }
 
 interface ChatTurn {
+  id: string;
   question: string;
   city: string; // city id at time of question
   answer: string | null;
@@ -108,7 +110,9 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
   const ask = async (display: string, searchQuery: string) => {
     if (!city) return;
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const turn: ChatTurn = {
+      id,
       question: display,
       city,
       answer: null,
@@ -134,20 +138,19 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
       }
       const data: AskResponse = await res.json();
       setHistory((h) => {
-        const next = [...h];
-        const last = next[next.length - 1];
-        last.answer = data.answer;
-        last.followups = data.followups ?? [];
-        last.citations = data.citations ?? [];
-        last.totalRecords = data.totalRecords ?? 0;
-        return next;
+        return h.map((t) => t.id === id ? {
+          ...t,
+          answer: data.answer,
+          followups: data.followups ?? [],
+          citations: data.citations ?? [],
+          totalRecords: data.totalRecords ?? 0,
+          showSources: (data.citations ?? []).length > 0,
+        } : t);
       });
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Something went wrong";
       setHistory((h) => {
-        const next = [...h];
-        next[next.length - 1].error = msg;
-        return next;
+        return h.map((t) => t.id === id ? { ...t, error: msg } : t);
       });
     } finally {
       setLoading(false);
@@ -295,8 +298,8 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
                   Hi! I read every recent <strong>{cityName}</strong> council meeting,
                   agenda, and transcript so you don't have to. Ask me anything —
                   budget moves, housing votes, what's getting built, who showed up
-                  to public comment. I'll answer in plain English and link the meetings
-                  I'm pulling from.
+                  to public comment. I'll answer in plain English and show the source
+                  rows I'm pulling from.
                 </>
               ) : (
                 <>
@@ -607,7 +610,12 @@ function SourceRow({ citation, isLast }: { citation: Citation; isLast: boolean }
       </div>
       {citation.excerpt && (
         <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>
-          {citation.excerpt}
+          {citation.title && (
+            <div style={{ color: "var(--sb-ink)", fontWeight: 650, marginBottom: 2 }}>
+              {citation.title}
+            </div>
+          )}
+          <div>{citation.excerpt}</div>
         </div>
       )}
     </div>

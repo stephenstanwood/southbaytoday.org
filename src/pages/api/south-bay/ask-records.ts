@@ -16,6 +16,7 @@ interface StoaRecord {
   topic: string;
   title: string;
   excerpt: string;
+  keywords?: string[];
 }
 
 interface Citation {
@@ -23,6 +24,7 @@ interface Citation {
   date: string;
   meetingType: string;
   topic: string;
+  title: string;
   excerpt: string;
 }
 
@@ -41,6 +43,12 @@ interface AskResponse {
   followups: string[];
   citations: Citation[];
   totalRecords: number;
+}
+
+interface ClaudeAnswer {
+  answer?: string;
+  followups?: string[];
+  sourceIndices?: Array<number | string>;
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -70,9 +78,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   // 1. Pull recent records from Stoa, scoped to the picked city.
-  // Send the user query verbatim — Stoa AND-matches keywords, so a single
-  // search may miss good context. Try a couple of fallback queries for
-  // multi-word natural-language questions to widen recall.
+  // Stoa's public q filter AND-matches terms, so natural-language questions
+  // need several narrower probes. Rank the combined result set locally.
   const records = await searchStoa(cityName, query);
   if (records.length === 0) {
     const payload: AskResponse = {
@@ -86,11 +93,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   // 2. Build a short, friendly Claude prompt with the records as context.
-  const recordsContext = records
-    .slice(0, 8)
+  const contextRecords = records.slice(0, 8);
+  const recordsContext = contextRecords
     .map(
       (r, i) =>
-        `[${i + 1}] ${r.date} · ${r.meetingType}${r.topic ? ` (${r.topic})` : ""}\n${truncate(r.excerpt, 800)}`,
+        `[${i + 1}] ${r.date} · ${r.meetingType}${r.topic ? ` (${r.topic})` : ""}
+Title: ${r.title}
+Excerpt: ${truncate(r.excerpt || r.title, 900)}`,
     )
     .join("\n\n---\n\n");
 
@@ -104,9 +113,12 @@ ${recordsContext}
 Write a JSON object:
 - "answer": 3-5 sentences. Specific (dates, dollar amounts, project names, votes if you see them). Conversational. No "based on the records" preamble. No corporate hedging. If the records only tangentially answer, say so honestly and pivot to what they DO show.
 - "followups": exactly 3 short follow-up questions a curious resident might ask next, based on what's in the records. Each under 60 chars. Specific, not generic.
+- "sourceIndices": 3-5 record numbers that best support the answer, using only the numbers in RECORDS.
 
 Rules:
 - Don't invent facts. Every claim must be grounded in the records above.
+- Keep the tone neutral and resident-friendly. Don't call a policy a "win", "loss", "good", or "bad" unless the records say that.
+- Use commas or semicolons instead of em dashes.
 - Use exact entity names as they appear in the records. If a record says "Via Transportation, Inc. Doing Business as Nomad Transit LLC," don't shorten to just one half.
 - Don't summarize boilerplate (roll call, agenda approval, public comment procedure) as substantive content.
 - If the records are mostly procedural (status updates, agenda planning) with no real news, say that plainly and point to where the substance might be.
@@ -121,13 +133,7 @@ Output ONLY the JSON. No markdown fences, no preamble.`;
       followups: Array.isArray(parsed.followups)
         ? parsed.followups.filter((f) => typeof f === "string" && f.length > 0).slice(0, 3)
         : [],
-      citations: records.slice(0, 5).map((r) => ({
-        city: r.city,
-        date: r.date,
-        meetingType: r.meetingType,
-        topic: r.topic,
-        excerpt: truncate(r.excerpt, 220),
-      })),
+      citations: buildCitations(contextRecords, parsed.sourceIndices),
       totalRecords: records.length,
     };
 
@@ -141,7 +147,7 @@ Output ONLY the JSON. No markdown fences, no preamble.`;
   }
 };
 
-async function completeWithClaude(prompt: string): Promise<{ answer?: string; followups?: string[] }> {
+async function completeWithClaude(prompt: string): Promise<ClaudeAnswer> {
   const providers: Array<() => Promise<string>> = [];
 
   if (import.meta.env.MINI_CLAUDE_URL && import.meta.env.MINI_CLAUDE_TOKEN) {
@@ -193,7 +199,7 @@ async function completeWithClaude(prompt: string): Promise<{ answer?: string; fo
       const raw = await provider();
       const jsonMatch = raw.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error("Claude returned non-JSON");
-      return JSON.parse(jsonMatch[0]) as { answer?: string; followups?: string[] };
+      return JSON.parse(jsonMatch[0]) as ClaudeAnswer;
     } catch (e) {
       errors.push(toErrMsg(e));
     }
@@ -203,29 +209,16 @@ async function completeWithClaude(prompt: string): Promise<{ answer?: string; fo
 }
 
 async function searchStoa(cityName: string, query: string): Promise<StoaRecord[]> {
-  // Try the verbatim query first; Stoa AND-matches, so a multi-word question
-  // often returns 0. If empty, retry with the longest word from the query as a
-  // single keyword fallback so we still surface something relevant.
-  const params = new URLSearchParams({ city: cityName, q: query, limit: "12" });
-  const candidates: StoaRecord[] = [];
-  const primary = preferSubstantive(await stoaFetch(params));
-  candidates.push(...primary.all);
-  if (primary.substantive.length > 0) return primary.substantive;
+  const probes = buildSearchProbes(query);
+  const batches = await Promise.all(
+    probes.map((probe) => stoaFetch(new URLSearchParams({ city: cityName, q: probe, limit: "16" }))),
+  );
 
-  const tokens = query
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
-    .split(/\s+/)
-    .filter((w) => w.length > 3 && !STOPWORDS.has(w))
-    .sort((a, b) => b.length - a.length);
+  const candidates = dedupeRecords(batches.flat());
+  const substantive = candidates.filter(isSubstantiveRecord);
+  const ranked = rankRecords(substantive.length > 0 ? substantive : candidates, query, probes);
 
-  for (const word of tokens.slice(0, 3)) {
-    const fp = new URLSearchParams({ city: cityName, q: word, limit: "12" });
-    const r = preferSubstantive(await stoaFetch(fp));
-    candidates.push(...r.all);
-    if (r.substantive.length > 0) return r.substantive;
-  }
-  return dedupeRecords(candidates).slice(0, 12);
+  return ranked.slice(0, 12);
 }
 
 async function stoaFetch(params: URLSearchParams): Promise<StoaRecord[]> {
@@ -253,13 +246,92 @@ const STOPWORDS = new Set([
   "city", "council", "meeting", "meetings", "this", "that", "from", "into", "they", "them",
   "their", "there", "been", "being", "doing", "going", "would", "should", "could", "tell",
   "show", "give", "find", "look", "know", "want", "need", "make", "made", "much", "many",
-  "more", "less", "most", "least", "anything", "something", "nothing",
+  "more", "less", "most", "least", "anything", "something", "nothing", "happening",
+  "recent", "latest", "approved", "updates",
 ]);
 
-function preferSubstantive(records: StoaRecord[]): { all: StoaRecord[]; substantive: StoaRecord[] } {
-  const all = dedupeRecords(records);
-  const substantive = all.filter(isSubstantiveRecord);
-  return { all, substantive };
+const TOPIC_EXPANSIONS: Array<{ match: RegExp; probes: string[] }> = [
+  { match: /\b(housing|homes|apartment|apartments|tenant|zoning|density|affordable)\b/i, probes: ["housing", "affordable", "density", "zoning", "residential"] },
+  { match: /\b(park|parks|trail|trails|recreation|open space|sports field|field)\b/i, probes: ["parks", "recreation", "trail", "open space"] },
+  { match: /\b(budget|spending|money|tax|taxes|fee|fees|deficit|surplus|appropriation)\b/i, probes: ["budget", "appropriation", "fee", "tax", "financial"] },
+  { match: /\b(road|roads|traffic|street|streets|bike|bicycle|parking|transit|transportation|vta|sidewalk)\b/i, probes: ["traffic", "transportation", "road", "street", "parking", "VTA"] },
+  { match: /\b(development|developments|built|building|construction|downtown|project|projects|permit)\b/i, probes: ["development", "downtown", "project", "construction", "permit"] },
+  { match: /\b(climate|energy|electric|decarbonization|sustainability|emissions|gas)\b/i, probes: ["climate", "energy", "decarbonization", "sustainability"] },
+  { match: /\b(police|public safety|fire|emergency|crime|sheriff)\b/i, probes: ["public safety", "police", "fire", "emergency"] },
+  { match: /\b(homeless|homelessness|encampment|shelter)\b/i, probes: ["homelessness", "shelter", "housing"] },
+];
+
+function buildSearchProbes(query: string): string[] {
+  const normalized = query.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
+  const tokens = normalized
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !STOPWORDS.has(w));
+
+  const probes: string[] = [];
+  addProbe(probes, query.trim());
+
+  for (const expansion of TOPIC_EXPANSIONS) {
+    if (expansion.match.test(query)) {
+      for (const probe of expansion.probes) addProbe(probes, probe);
+    }
+  }
+
+  for (const token of tokens.sort((a, b) => b.length - a.length)) {
+    addProbe(probes, token);
+  }
+
+  return probes.slice(0, 8);
+}
+
+function addProbe(probes: string[], probe: string): void {
+  const clean = probe.replace(/\s+/g, " ").trim();
+  if (clean.length < 2) return;
+  if (probes.some((p) => p.toLowerCase() === clean.toLowerCase())) return;
+  probes.push(clean);
+}
+
+function rankRecords(records: StoaRecord[], query: string, probes: string[]): StoaRecord[] {
+  const queryTokens = query
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !STOPWORDS.has(w));
+  const probeTokens = probes.flatMap((p) => p.toLowerCase().split(/\s+/)).filter((w) => w.length > 2);
+  const terms = [...new Set([...queryTokens, ...probeTokens])];
+
+  return [...records].sort((a, b) => scoreRecord(b, terms) - scoreRecord(a, terms));
+}
+
+function scoreRecord(record: StoaRecord, terms: string[]): number {
+  const title = (record.title ?? "").toLowerCase();
+  const excerpt = (record.excerpt ?? "").toLowerCase();
+  const topic = (record.topic ?? "").toLowerCase();
+  const keywords = (record.keywords ?? []).join(" ").toLowerCase();
+  const haystack = `${title} ${excerpt} ${topic} ${keywords}`;
+
+  let score = 0;
+  for (const term of terms) {
+    if (title.includes(term)) score += 10;
+    if (topic.includes(term)) score += 8;
+    if (keywords.includes(term)) score += 5;
+    if (excerpt.includes(term)) score += 4;
+    if (haystack.includes(term)) score += 1;
+  }
+
+  if (isSubstantiveRecord(record)) score += 12;
+  if (/city council|town council/i.test(record.meetingType)) score += 8;
+  if (/planning/i.test(record.meetingType) && /\b(housing|zoning|development|project|permit)\b/i.test(haystack)) score += 2;
+
+  const ageDays = daysSince(record.date);
+  if (ageDays != null) {
+    if (ageDays <= 180) score += 18;
+    else if (ageDays <= 365) score += 12;
+    else if (ageDays <= 730) score += 5;
+    else if (ageDays <= 1095) score += 2;
+    else score -= 8;
+  }
+
+  return score;
 }
 
 function dedupeRecords(records: StoaRecord[]): StoaRecord[] {
@@ -277,17 +349,44 @@ function dedupeRecords(records: StoaRecord[]): StoaRecord[] {
 function isSubstantiveRecord(record: StoaRecord): boolean {
   const text = `${record.title ?? ""} ${record.excerpt ?? ""}`.trim().toLowerCase();
   if (text.length < 24) return false;
-  return !/\b(meeting (?:video|minutes|agenda) available|agenda available|minutes available|call to order|roll call)\b/i.test(text);
+  return !/\b(meeting (?:video|minutes|agenda) available|agenda available|minutes available|call to order|roll call|approval of minutes|public comment)\b/i.test(text);
 }
 
-function buildRecordsFallback(cityName: string, query: string, records: StoaRecord[]): AskResponse {
-  const citations = records.slice(0, 5).map((r) => ({
+function buildCitations(records: StoaRecord[], sourceIndices?: Array<number | string>): Citation[] {
+  const selected: StoaRecord[] = [];
+  const seen = new Set<string>();
+
+  for (const raw of sourceIndices ?? []) {
+    const index = Number(raw);
+    if (!Number.isInteger(index) || index < 1 || index > records.length) continue;
+    const record = records[index - 1];
+    const key = String(record.id ?? `${record.city}-${record.date}-${record.title}`);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    selected.push(record);
+    if (selected.length >= 5) break;
+  }
+
+  for (const record of records) {
+    const key = String(record.id ?? `${record.city}-${record.date}-${record.title}`);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    selected.push(record);
+    if (selected.length >= 5) break;
+  }
+
+  return selected.slice(0, 5).map((r) => ({
     city: r.city,
     date: r.date,
     meetingType: r.meetingType,
     topic: r.topic,
-    excerpt: truncate(r.excerpt || r.title, 220),
+    title: r.title,
+    excerpt: truncate(r.excerpt || r.title, 260),
   }));
+}
+
+function buildRecordsFallback(cityName: string, query: string, records: StoaRecord[]): AskResponse {
+  const citations = buildCitations(records.slice(0, 5));
   const top = citations.slice(0, 3);
   const recordWord = records.length === 1 ? "record" : "records";
   const subject = query.replace(/\s+/g, " ").trim();
@@ -322,4 +421,10 @@ function formatDate(iso: string): string {
   const d = new Date(`${iso}T12:00:00`);
   if (Number.isNaN(d.getTime())) return iso;
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function daysSince(iso: string): number | null {
+  const d = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
+  return Math.max(0, Math.floor((Date.now() - d.getTime()) / 86_400_000));
 }
