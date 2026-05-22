@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { MiniClaude } from "../../../lib/miniClaude";
-import { errJson, okJson, fetchWithTimeout, toErrMsg, devErrJson } from "../../../lib/apiHelpers";
+import { errJson, okJson, fetchWithTimeout, toErrMsg } from "../../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText } from "../../../lib/models";
 import { CITIES } from "../../../lib/south-bay/cities";
@@ -43,13 +43,8 @@ interface AskResponse {
   totalRecords: number;
 }
 
-const client = new MiniClaude();
-
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!rateLimit(clientAddress, 15)) return rateLimitResponse();
-  if (!import.meta.env.MINI_CLAUDE_URL || !import.meta.env.MINI_CLAUDE_TOKEN) {
-    return errJson("Service not configured", 503);
-  }
 
   let body: { city?: string; query?: string };
   try {
@@ -119,16 +114,7 @@ Rules:
 Output ONLY the JSON. No markdown fences, no preamble.`;
 
   try {
-    const message = await client.messages.create({
-      model: CLAUDE_SONNET,
-      max_tokens: 700,
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    const raw = extractText(message.content);
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error("Claude returned non-JSON");
-    const parsed = JSON.parse(jsonMatch[0]) as { answer?: string; followups?: string[] };
+    const parsed = await completeWithClaude(prompt);
 
     const payload: AskResponse = {
       answer: (parsed.answer ?? "").trim() || `Found ${records.length} ${cityName} records that touch on this — see the sources below.`,
@@ -148,18 +134,83 @@ Output ONLY the JSON. No markdown fences, no preamble.`;
     cache.set(cacheKey, { ts: Date.now(), payload });
     return okJson(payload);
   } catch (e) {
-    console.error("ask-records:", e);
-    return devErrJson("Couldn't generate an answer right now.", toErrMsg(e));
+    console.warn("ask-records model fallback:", toErrMsg(e));
+    const payload = buildRecordsFallback(cityName, query, records);
+    cache.set(cacheKey, { ts: Date.now(), payload });
+    return okJson(payload);
   }
 };
+
+async function completeWithClaude(prompt: string): Promise<{ answer?: string; followups?: string[] }> {
+  const providers: Array<() => Promise<string>> = [];
+
+  if (import.meta.env.MINI_CLAUDE_URL && import.meta.env.MINI_CLAUDE_TOKEN) {
+    providers.push(async () => {
+      const client = new MiniClaude({
+        url: import.meta.env.MINI_CLAUDE_URL,
+        token: import.meta.env.MINI_CLAUDE_TOKEN,
+      });
+      const message = await client.messages.create({
+        model: CLAUDE_SONNET,
+        max_tokens: 700,
+        messages: [{ role: "user", content: prompt }],
+      });
+      return extractText(message.content);
+    });
+  }
+
+  if (import.meta.env.ANTHROPIC_API_KEY) {
+    providers.push(async () => {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": import.meta.env.ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: CLAUDE_SONNET,
+          max_tokens: 700,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        throw new Error(`Anthropic ${res.status}: ${body.slice(0, 300)}`);
+      }
+      const message = (await res.json()) as { content: Array<{ type: string; text?: string }> };
+      return extractText(message.content);
+    });
+  }
+
+  if (providers.length === 0) {
+    throw new Error("No Claude provider configured");
+  }
+
+  const errors: string[] = [];
+  for (const provider of providers) {
+    try {
+      const raw = await provider();
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error("Claude returned non-JSON");
+      return JSON.parse(jsonMatch[0]) as { answer?: string; followups?: string[] };
+    } catch (e) {
+      errors.push(toErrMsg(e));
+    }
+  }
+
+  throw new Error(errors.join(" | "));
+}
 
 async function searchStoa(cityName: string, query: string): Promise<StoaRecord[]> {
   // Try the verbatim query first; Stoa AND-matches, so a multi-word question
   // often returns 0. If empty, retry with the longest word from the query as a
   // single keyword fallback so we still surface something relevant.
   const params = new URLSearchParams({ city: cityName, q: query, limit: "12" });
-  const primary = await stoaFetch(params);
-  if (primary.length > 0) return primary;
+  const candidates: StoaRecord[] = [];
+  const primary = preferSubstantive(await stoaFetch(params));
+  candidates.push(...primary.all);
+  if (primary.substantive.length > 0) return primary.substantive;
 
   const tokens = query
     .toLowerCase()
@@ -170,10 +221,11 @@ async function searchStoa(cityName: string, query: string): Promise<StoaRecord[]
 
   for (const word of tokens.slice(0, 3)) {
     const fp = new URLSearchParams({ city: cityName, q: word, limit: "12" });
-    const r = await stoaFetch(fp);
-    if (r.length > 0) return r;
+    const r = preferSubstantive(await stoaFetch(fp));
+    candidates.push(...r.all);
+    if (r.substantive.length > 0) return r.substantive;
   }
-  return [];
+  return dedupeRecords(candidates).slice(0, 12);
 }
 
 async function stoaFetch(params: URLSearchParams): Promise<StoaRecord[]> {
@@ -203,3 +255,71 @@ const STOPWORDS = new Set([
   "show", "give", "find", "look", "know", "want", "need", "make", "made", "much", "many",
   "more", "less", "most", "least", "anything", "something", "nothing",
 ]);
+
+function preferSubstantive(records: StoaRecord[]): { all: StoaRecord[]; substantive: StoaRecord[] } {
+  const all = dedupeRecords(records);
+  const substantive = all.filter(isSubstantiveRecord);
+  return { all, substantive };
+}
+
+function dedupeRecords(records: StoaRecord[]): StoaRecord[] {
+  const seen = new Set<string>();
+  const out: StoaRecord[] = [];
+  for (const record of records) {
+    const key = String(record.id ?? `${record.city}-${record.date}-${record.title}`);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(record);
+  }
+  return out;
+}
+
+function isSubstantiveRecord(record: StoaRecord): boolean {
+  const text = `${record.title ?? ""} ${record.excerpt ?? ""}`.trim().toLowerCase();
+  if (text.length < 24) return false;
+  return !/\b(meeting (?:video|minutes|agenda) available|agenda available|minutes available|call to order|roll call)\b/i.test(text);
+}
+
+function buildRecordsFallback(cityName: string, query: string, records: StoaRecord[]): AskResponse {
+  const citations = records.slice(0, 5).map((r) => ({
+    city: r.city,
+    date: r.date,
+    meetingType: r.meetingType,
+    topic: r.topic,
+    excerpt: truncate(r.excerpt || r.title, 220),
+  }));
+  const top = citations.slice(0, 3);
+  const recordWord = records.length === 1 ? "record" : "records";
+  const subject = query.replace(/\s+/g, " ").trim();
+
+  const details = top
+    .map((r) => {
+      const type = r.meetingType ? `${r.meetingType}, ` : "";
+      const topic = r.topic && r.topic !== "General" ? ` (${r.topic})` : "";
+      return `${formatDate(r.date)} ${type}${r.excerpt}${topic}`;
+    })
+    .join(" ");
+
+  const answer = records.some(isSubstantiveRecord)
+    ? `I found ${records.length} ${cityName} ${recordWord} that match "${subject}." The clearest trail starts here: ${details} This is a records-search answer, so use the source snippets below as the receipts and double-check before quoting.`
+    : `I found ${records.length} ${cityName} ${recordWord} matching "${subject}", but the available snippets are thin, mostly meeting notices or generic minutes/video entries. The source rows below are still useful as a starting point, but I don't see enough substance here to make a stronger claim.`;
+
+  const topics = [...new Set(records.map((r) => r.topic).filter(Boolean))].slice(0, 2);
+
+  return {
+    answer,
+    followups: [
+      topics[0] ? `What else is in ${topics[0]}?` : "What changed at the latest meeting?",
+      "Show me the budget angle",
+      "Any votes or dollar amounts?",
+    ],
+    citations,
+    totalRecords: records.length,
+  };
+}
+
+function formatDate(iso: string): string {
+  const d = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
