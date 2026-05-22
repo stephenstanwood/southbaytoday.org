@@ -222,20 +222,25 @@ function cleanAddress(raw) {
 
   s = s.trim().replace(/\s+/g, " ");
 
-  // Title case
+  // SCC entry sometimes splits BLVD as "B L" (typo) — normalize before title-casing
+  s = s.replace(/\bB\s+L\b\.?/gi, "Blvd");
+
+  // Title case. Each abbreviation rule consumes an optional trailing period
+  // so a raw input that already has one (e.g. "DR.") doesn't double up to "Dr..".
   s = s
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase())
-    .replace(/\bBl\b/g, "Blvd")
-    .replace(/\bAv\b/g, "Ave")
-    .replace(/\bSt\b/g, "St.")
-    .replace(/\bRd\b/g, "Rd.")
-    .replace(/\bDr\b/g, "Dr.")
-    .replace(/\bCt\b/g, "Ct.")
-    .replace(/\bCi\b/g, "Cir.")
-    .replace(/\bEx\b/g, "Expwy")
-    .replace(/\bWy\b/g, "Way")
-    .replace(/\bSte\b/g, "Ste.")
+    .replace(/\bBl\b\.?/g, "Blvd")
+    .replace(/\bAv\b\.?/g, "Ave")
+    .replace(/\bSt\b\.?/g, "St.")
+    .replace(/\bRd\b\.?/g, "Rd.")
+    .replace(/\bDr\b\.?/g, "Dr.")
+    .replace(/\bCt\b\.?/g, "Ct.")
+    .replace(/\bCi\b\.?/g, "Cir.")
+    .replace(/\bEx\b\.?/g, "Expwy")
+    .replace(/\bPy\b\.?/g, "Pkwy")
+    .replace(/\bWy\b\.?/g, "Way")
+    .replace(/\bSte\b\.?/g, "Ste.")
     .replace(/\bFc-\d+/i, "")
     .replace(/\bUnit\s+Tbd\b/gi, "")
     .replace(/\bUnit\s+Nc-[\w,\s]+$/i, "")
