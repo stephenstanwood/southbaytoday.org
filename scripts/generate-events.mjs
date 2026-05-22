@@ -780,6 +780,22 @@ function cleanTitle(title) {
       ? /(?<!\p{Letter})[A-Z]{2,}(?!\p{Letter})/gu
       : /(?<!\p{Letter})[A-Z]{4,}(?!\p{Letter})/gu;
     t = t.replace(re, (w) => (KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase()));
+    // Second pass: when the first pass tipped a previously-all-caps title into
+    // mixed-case, run the 2+ regex to catch stragglers the conservative 4+
+    // rule left behind. Ticketmaster ships titles like "2026 AMPERS&ONE LIVE
+    // TOUR 'BORN TO DEFINE' IN SAN JOSE" — the 4+ pass lowercases LIVE/TOUR/
+    // BORN/DEFINE/JOSE but leaves ONE/SAN/TO/IN as caps; the resulting
+    // mixed-case form is exactly the shape the 2+ rule is meant for.
+    if (lowerRatio < 0.5) {
+      const letters2 = t.replace(/[^A-Za-z]/g, "");
+      const lowerRatio2 = letters2.length ? letters2.replace(/[^a-z]/g, "").length / letters2.length : 0;
+      if (lowerRatio2 >= 0.5) {
+        t = t.replace(
+          /(?<!\p{Letter})[A-Z]{2,}(?!\p{Letter})/gu,
+          (w) => (KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase()),
+        );
+      }
+    }
   }
   // Downcase capitalized small words mid-title — Ticketmaster and Shoreline
   // feeds title-case every word ("Valley Of Heart's Delight", "Eleanor The
@@ -802,6 +818,17 @@ function cleanTitle(title) {
   // standard title case to lowercase the preposition here.
   t = t.replace(
     /(?<=[A-Za-z])(\s+)(Of|To|By|In|On|For|At|With|From|And|Or|As)(?=\s+(?:the|a|an|our|my|your|his|her|their|its|this|that|these|those)\b)/g,
+    (_, sp, w) => sp + w.toLowerCase(),
+  );
+  // Apostrophe-trailing pass: when a quoted subtitle ends with an apostrophe
+  // immediately before the preposition's leading space, the [A-Za-z] lookbehind
+  // above fails because the closing quote isn't a letter. Ticketmaster ships
+  // tour titles like "...'Born to Define' In San Jose" / "...' Archive. 1 ' In
+  // US" where the preposition deserves the same downcase. Require letter+quote
+  // (not just bare quote) so we don't touch leading quoted phrases like
+  // `"In the beginning..."`.
+  t = t.replace(
+    /(?<=[A-Za-z]['"])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
     (_, sp, w) => sp + w.toLowerCase(),
   );
   // Normalize "--" → en-dash. Stanford Localist feeds emit raw double-hyphens
