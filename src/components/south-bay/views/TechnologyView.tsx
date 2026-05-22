@@ -26,6 +26,14 @@ const EXTRA_CATEGORY_LABELS: Record<string, string> = {
   medtech: "Medtech",
   eda: "EDA",
 };
+
+// The briefing claims "This Week" — once we're past weekEnd the claim is false.
+// Hide the panel rather than show a stale "this week" until the regen catches up.
+function isTechBriefingStale(b: { weekEnd?: string; generatedAt?: string }): boolean {
+  const today = new Date().toISOString().slice(0, 10);
+  if (b.weekEnd && today > b.weekEnd) return true;
+  return false;
+}
 function labelForCategory(c: string): string {
   return (
     (CATEGORY_LABELS as Record<string, string>)[c] ??
@@ -1688,7 +1696,7 @@ export default function TechnologyView() {
       </div>
 
       {/* ── Weekly Tech Briefing ── */}
-      {techBriefingJson?.summary && (
+      {techBriefingJson?.summary && !isTechBriefingStale(techBriefingJson) && (
         <div className="tech-briefing">
           <div className="tech-briefing-head">
             <span className="tech-briefing-eyebrow">This Week in South Bay Tech</span>

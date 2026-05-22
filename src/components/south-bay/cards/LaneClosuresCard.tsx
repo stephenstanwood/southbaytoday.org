@@ -194,9 +194,18 @@ function ClosureRow({ c, nowMs }: { c: Closure; nowMs: number }) {
   );
 }
 
+// Caltrans payload covers the next 36 hours. Once the snapshot is older than
+// that window, "Coming up" and "+ N more closures" both stop reflecting reality
+// (everything is now in the past), so hide the card until the regen catches up.
+const MAX_SNAPSHOT_AGE_MS = 36 * 60 * 60 * 1000;
+
 export default function LaneClosuresCard() {
   if (data.error) return null;
   if (!data.closures || data.closures.length === 0) return null;
+  if (data.generatedAt) {
+    const age = Date.now() - new Date(data.generatedAt).getTime();
+    if (Number.isFinite(age) && age > MAX_SNAPSHOT_AGE_MS) return null;
+  }
 
   const nowMs = Date.now();
   const updated = data.generatedAt ? timeAgo(data.generatedAt) : "";
