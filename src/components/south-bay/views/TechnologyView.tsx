@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { CompanyLogo } from "../CompanyLogo";
+import PageHero from "../PageHero";
 import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import {
@@ -1739,32 +1740,21 @@ export default function TechnologyView() {
       ),
     },
   ];
+  const pulseStats = [TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]];
 
   return (
     <div className="tech-view">
-      <div className="tech-header">
-        <div className="tech-header-eyebrow">South Bay</div>
-        <h2 className="tech-header-title">Technology</h2>
-        <p className="tech-header-subtitle">
-          A readable snapshot of the companies, jobs, and funding rounds shaping
-          the local tech economy.
-        </p>
-        <div className="tech-header-note">
-          Data snapshot · Q1 2026 · Santa Clara County employment estimates · Not affiliated with any company listed
-        </div>
-      </div>
-
-      <div className="tech-pulse">
-        {[TECH_PULSE[0], TECH_PULSE[1], PULSE_RAISED_STAT, TECH_PULSE[2]].map(
-          (stat) => (
-            <div key={stat.label} className="tech-pulse-item">
-              <div className="tech-pulse-value">{stat.value}</div>
-              <div className="tech-pulse-label">{stat.label}</div>
-              <div className="tech-pulse-note">{stat.note}</div>
-            </div>
-          ),
-        )}
-      </div>
+      <PageHero
+        eyebrow="South Bay / Tech Desk"
+        title="Technology"
+        description="A readable snapshot of the companies, jobs, and funding rounds shaping the local tech economy."
+        note="Data snapshot · Q1 2026 · Santa Clara County employment estimates · Not affiliated with any company listed"
+        stats={pulseStats.map((stat) => ({
+          value: stat.value,
+          label: stat.label,
+          note: stat.note,
+        }))}
+      />
 
       <div className="tech-section">
         <div className="tech-section-head">

@@ -8,6 +8,7 @@ import {
   type CampType,
   type CampWeek,
 } from "../../../data/south-bay/camps-data";
+import PageHero from "../PageHero";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -956,36 +957,18 @@ export default function CampsView() {
 
   return (
     <div className="camps-view">
-      <section className="camps-hero">
-        <div className="camps-kicker">South Bay / Summer 2026</div>
-        <h1>Summer Camps</h1>
-        <p>
-          A calmer guide to city rec programs, specialty camps, sports academies,
-          arts programs, and STEM weeks across the South Bay. Every listing links
-          back to the operator's registration page.
-        </p>
-        <div className="camps-hero-note">
-          Links verified {verifiedDisplay}
-        </div>
-        <div className="camps-stat-row" aria-label="Camps data summary">
-          <div>
-            <strong>{CAMPS.length}</strong>
-            <span>Programs</span>
-          </div>
-          <div>
-            <strong>{SUMMER_WEEKS.length}</strong>
-            <span>Summer weeks</span>
-          </div>
-          <div>
-            <strong>{cityProgramCount}</strong>
-            <span>City-run options</span>
-          </div>
-          <div>
-            <strong>{nonprofitCount}</strong>
-            <span>Nonprofit options</span>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="South Bay / Summer 2026"
+        title="Summer Camps"
+        description="A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
+        note={`Links verified ${verifiedDisplay}`}
+        stats={[
+          { value: CAMPS.length, label: "Programs" },
+          { value: SUMMER_WEEKS.length, label: "Summer weeks" },
+          { value: cityProgramCount, label: "City-run options" },
+          { value: nonprofitCount, label: "Nonprofit options" },
+        ]}
+      />
 
       <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
         <button

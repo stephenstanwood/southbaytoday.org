@@ -974,6 +974,85 @@ const {
         padding: 24px;
       }
 
+      /* ── Editorial page hero ── */
+      .sb-page-hero {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        padding-bottom: 24px;
+        border-bottom: 3px double var(--sb-border);
+      }
+      .sb-page-hero-copy {
+        max-width: 760px;
+      }
+      .sb-page-kicker {
+        color: var(--sb-muted);
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .sb-page-title {
+        margin: 6px 0 10px;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 42px;
+        font-weight: 900;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+      .sb-page-subtitle {
+        max-width: 760px;
+        margin: 0;
+        color: var(--sb-muted);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .sb-page-note {
+        margin-top: 10px;
+        color: var(--sb-light);
+        font-size: 11px;
+        letter-spacing: 0.03em;
+      }
+      .sb-page-stats {
+        display: grid;
+        grid-template-columns: repeat(var(--sb-page-stat-count), minmax(0, 1fr));
+        width: 100%;
+        border: 1px solid var(--sb-border-light);
+        background: var(--sb-card);
+      }
+      .sb-page-stat {
+        min-width: 0;
+        padding: 15px 16px;
+        border-left: 1px solid var(--sb-border-light);
+      }
+      .sb-page-stat:first-child {
+        border-left: none;
+      }
+      .sb-page-stat strong {
+        display: block;
+        color: var(--sb-ink);
+        font-family: var(--sb-serif);
+        font-size: 28px;
+        line-height: 1;
+      }
+      .sb-page-stat span {
+        display: block;
+        margin-top: 5px;
+        color: var(--sb-muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .sb-page-stat p {
+        margin: 5px 0 0;
+        color: var(--sb-light);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
       /* ── Section headers ── */
       .sb-section-header {
         display: flex;
@@ -3197,6 +3276,17 @@ const {
         .sb-tab { padding: 10px 16px; font-size: 11px; }
         .sb-filters { padding: 10px 16px; }
         .sb-main { padding: 20px 16px; }
+        .sb-page-title { font-size: 34px; }
+        .sb-page-stats {
+          grid-template-columns: 1fr;
+        }
+        .sb-page-stat {
+          border-left: none;
+          border-top: 1px solid var(--sb-border-light);
+        }
+        .sb-page-stat:first-child {
+          border-top: none;
+        }
         .sb-section-title { font-size: 18px; }
         .sb-games-grid { grid-template-columns: 1fr; }
         .sb-overview-grid { grid-template-columns: 1fr; }

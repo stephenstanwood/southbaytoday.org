@@ -6,6 +6,7 @@ import type { City } from "../../../lib/south-bay/types";
 import { getCityName } from "../../../lib/south-bay/cities";
 import digestsJson from "../../../data/south-bay/digests.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
+import PageHero from "../PageHero";
 
 interface Props {
   selectedCities: Set<City>;
@@ -300,29 +301,16 @@ export default function GovernmentView({ selectedCities }: Props) {
 
   return (
     <div className="gov-view">
-      <section className="gov-hero">
-        <div className="gov-kicker">South Bay / Civic Desk</div>
-        <h1>Local Government</h1>
-        <p>
-          Council meetings, searchable records, and plain-English summaries for
-          the cities you follow. Built for quick civic context, not municipal
-          scavenger hunts.
-        </p>
-        <div className="gov-stat-row" aria-label="Government data summary">
-          <div>
-            <strong>{meetingCount}</strong>
-            <span>Meetings this week</span>
-          </div>
-          <div>
-            <strong>{orderedCities.length}</strong>
-            <span>With digests</span>
-          </div>
-          <div>
-            <strong>{missingDigestCount}</strong>
-            <span>Awaiting digest</span>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="South Bay / Civic Desk"
+        title="Local Government"
+        description="Council meetings, searchable records, and plain-English summaries for the cities you follow. Built for quick civic context, not municipal scavenger hunts."
+        stats={[
+          { value: meetingCount, label: "Meetings this week" },
+          { value: orderedCities.length, label: "With digests" },
+          { value: missingDigestCount, label: "Awaiting digest" },
+        ]}
+      />
 
       <section className="gov-section">
         <CouncilWeekAhead selectedCities={selectedCities} />

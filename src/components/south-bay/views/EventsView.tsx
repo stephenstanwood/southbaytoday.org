@@ -16,6 +16,7 @@ import {
 import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
+import PageHero from "../PageHero";
 
 const CITIES: { id: City; name: string }[] = [
   { id: "san-jose", name: "San Jose" },
@@ -2090,21 +2091,17 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
 
   return (
     <div className="sb-events-page">
-      <section className="sb-events-hero" aria-labelledby="events-heading">
-        <div>
-          <div className="sb-events-eyebrow">South Bay calendar</div>
-          <h1 id="events-heading">Events</h1>
-          <p>
-            Concerts, library programs, markets, games, talks, festivals, and
-            neighborhood things worth putting on the calendar.
-          </p>
-        </div>
-        <div className="sb-events-hero-stats" aria-label="Event totals">
-          <span><strong>{upcomingEvents.length}</strong> upcoming</span>
-          <span><strong>{eventCountByDate[todayIso] ?? 0}</strong> today</span>
-          {ongoingEvents.length > 0 && <span><strong>{ongoingEvents.length}</strong> exhibits</span>}
-        </div>
-      </section>
+      <PageHero
+        headingId="events-heading"
+        eyebrow="South Bay / Calendar"
+        title="Events"
+        description="Concerts, library programs, markets, games, talks, festivals, and neighborhood things worth putting on the calendar."
+        stats={[
+          { value: upcomingEvents.length, label: "Upcoming" },
+          { value: eventCountByDate[todayIso] ?? 0, label: "Today" },
+          { value: ongoingEvents.length, label: "Exhibits" },
+        ]}
+      />
 
       <section className="sb-events-controls" aria-label="Find events">
         <div className="sb-events-nowline">

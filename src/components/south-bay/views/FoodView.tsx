@@ -1,6 +1,7 @@
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
+import PageHero from "../PageHero";
 
 const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
 const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -376,31 +377,17 @@ function FoodHero() {
   const updated = formatShortDate(openings.generatedAt.slice(0, 10));
 
   return (
-    <section className="food-hero">
-      <div className="food-kicker">South Bay / Food Desk</div>
-      <h1>Food</h1>
-      <p>
-        Recent openings, promising buildouts, and farmers markets across the
-        South Bay, edited down so the good leads are easy to scan.
-      </p>
-      <div className="food-hero-note">
-        Health-permit refresh {updated || "recently"}
-      </div>
-      <div className="food-stat-row" aria-label="Food data summary">
-        <div>
-          <strong>{openings.opened?.length ?? 0}</strong>
-          <span>Recent openings</span>
-        </div>
-        <div>
-          <strong>{openings.comingSoon?.length ?? 0}</strong>
-          <span>Coming soon</span>
-        </div>
-        <div>
-          <strong>{marketCount}</strong>
-          <span>Farmers markets</span>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="South Bay / Food Desk"
+      title="Food"
+      description="Recent openings, promising buildouts, and farmers markets across the South Bay, edited down so the good leads are easy to scan."
+      note={`Health-permit refresh ${updated || "recently"}`}
+      stats={[
+        { value: openings.opened?.length ?? 0, label: "Recent openings" },
+        { value: openings.comingSoon?.length ?? 0, label: "Coming soon" },
+        { value: marketCount, label: "Farmers markets" },
+      ]}
+    />
   );
 }
 
