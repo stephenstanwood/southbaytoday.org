@@ -294,29 +294,29 @@ const {
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 22px;
         align-items: end;
-        padding: 8px 0 16px;
-        border-bottom: 1px solid var(--sb-border);
+        padding: 0 0 24px;
+        border-bottom: 3px double var(--sb-border);
       }
       .sb-events-eyebrow {
         font-family: 'Space Mono', monospace;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: var(--sb-accent);
-        margin-bottom: 5px;
+        color: var(--sb-muted);
       }
       .sb-events-hero h1 {
-        margin: 0;
+        margin: 6px 0 10px;
         font-family: var(--sb-serif);
-        font-size: 48px;
-        line-height: 0.98;
-        font-weight: 800;
+        font-size: 42px;
+        line-height: 1;
+        font-weight: 900;
+        letter-spacing: 0;
         color: var(--sb-ink);
       }
       .sb-events-hero p {
-        max-width: 650px;
-        margin: 10px 0 0;
+        max-width: 700px;
+        margin: 0;
         font-size: 15px;
         line-height: 1.65;
         color: var(--sb-muted);
@@ -887,7 +887,7 @@ const {
           grid-template-columns: 1fr;
           gap: 14px;
         }
-        .sb-events-hero h1 { font-size: 38px; }
+        .sb-events-hero h1 { font-size: 34px; }
         .sb-events-hero-stats {
           width: 100%;
           min-width: 0;
@@ -1560,36 +1560,37 @@ const {
       /* Header */
       .tech-header {
         border-bottom: 3px double var(--sb-border);
-        padding-bottom: 20px;
+        padding-bottom: 24px;
       }
       .tech-header-eyebrow {
-        font-size: 11px;
-        font-weight: 700;
+        font-family: 'Space Mono', monospace;
+        font-size: 10px;
+        font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.12em;
         color: var(--sb-muted);
-        margin-bottom: 4px;
       }
       .tech-header-title {
         font-family: var(--sb-serif);
-        font-size: 36px;
+        font-size: 42px;
         font-weight: 900;
-        letter-spacing: -0.02em;
+        letter-spacing: 0;
         color: var(--sb-ink);
-        margin: 0 0 8px 0;
-        line-height: 1.1;
+        margin: 6px 0 10px;
+        line-height: 1;
       }
       .tech-header-subtitle {
         font-size: 15px;
         color: var(--sb-muted);
-        margin: 0 0 10px 0;
-        line-height: 1.5;
-        max-width: 600px;
+        margin: 0;
+        line-height: 1.65;
+        max-width: 700px;
       }
       .tech-header-note {
         font-size: 11px;
         color: var(--sb-light);
         letter-spacing: 0.03em;
+        margin-top: 10px;
       }
 
       /* Pulse strip */
@@ -3209,7 +3210,7 @@ const {
         .re-grid > *:nth-child(4) { display: none; }
 
         /* Tech section mobile */
-        .tech-header-title { font-size: 28px; }
+        .tech-header-title { font-size: 34px; }
         .tech-pulse { grid-template-columns: repeat(2, 1fr); }
         .tech-grid { grid-template-columns: 1fr; }
         .tech-section-head { flex-direction: column; gap: 2px; }

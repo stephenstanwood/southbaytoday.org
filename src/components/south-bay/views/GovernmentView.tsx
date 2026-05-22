@@ -292,6 +292,11 @@ export default function GovernmentView({ selectedCities }: Props) {
     () => countMeetingsInWindow(selectedCities),
     [selectedCities],
   );
+  const selectedGovCityCount = useMemo(
+    () => CITY_ORDER.filter((c) => selectedCities.has(c)).length,
+    [selectedCities],
+  );
+  const missingDigestCount = Math.max(0, selectedGovCityCount - orderedCities.length);
 
   return (
     <div className="gov-view">
@@ -310,11 +315,11 @@ export default function GovernmentView({ selectedCities }: Props) {
           </div>
           <div>
             <strong>{orderedCities.length}</strong>
-            <span>Digest cities</span>
+            <span>With digests</span>
           </div>
           <div>
-            <strong>{selectedCities.size}</strong>
-            <span>Cities selected</span>
+            <strong>{missingDigestCount}</strong>
+            <span>Awaiting digest</span>
           </div>
         </div>
       </section>

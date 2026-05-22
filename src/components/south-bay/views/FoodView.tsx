@@ -129,7 +129,7 @@ function NewAndComingSoon() {
       <header className="food-section-head">
         <h2 className="food-h2">New &amp; Coming Soon</h2>
         <p className="food-sub">
-          A trimmed board of recent openings and promising permits
+          Recent openings + permits
           {updated && <> · Updated {updated}</>}
         </p>
       </header>
@@ -553,6 +553,7 @@ function FoodViewStyles() {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        filter: brightness(0.9) saturate(0.96);
       }
       .food-tile:hover {
         transform: translateY(-2px);
@@ -562,10 +563,11 @@ function FoodViewStyles() {
         position: absolute; inset: 0;
         background: linear-gradient(
           to bottom,
-          rgba(0,0,0,0.08) 0%,
-          rgba(0,0,0,0.06) 34%,
-          rgba(0,0,0,0.62) 76%,
-          rgba(0,0,0,0.9) 100%
+          rgba(0,0,0,0.18) 0%,
+          rgba(0,0,0,0.18) 30%,
+          rgba(0,0,0,0.58) 58%,
+          rgba(0,0,0,0.86) 82%,
+          rgba(0,0,0,0.96) 100%
         );
         pointer-events: none;
       }
@@ -591,7 +593,7 @@ function FoodViewStyles() {
       .food-tile-name {
         font-size: 14px; font-weight: 800;
         line-height: 1.2; color: #fff;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 5px rgba(0,0,0,0.85);
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -599,10 +601,10 @@ function FoodViewStyles() {
         margin-bottom: 3px;
       }
       .food-tile-blurb {
-        font-size: 11px; font-weight: 500;
-        color: rgba(255,255,255,0.92);
+        font-size: 11px; font-weight: 650;
+        color: rgba(255,255,255,0.98);
         line-height: 1.3;
-        text-shadow: 0 1px 1px rgba(0,0,0,0.45);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -611,9 +613,9 @@ function FoodViewStyles() {
       }
       .food-tile-meta {
         display: flex; flex-wrap: wrap; gap: 6px;
-        font-size: 10px; font-weight: 600;
-        color: rgba(255,255,255,0.78);
-        text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+        font-size: 10px; font-weight: 750;
+        color: rgba(255,255,255,0.9);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
       }
       .food-tile-addr {
         max-width: 100%;
@@ -625,10 +627,9 @@ function FoodViewStyles() {
       }
 
       .food-lower-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
-        gap: 26px;
-        align-items: start;
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
       }
 
       .pulse-list {
@@ -773,7 +774,6 @@ function FoodViewStyles() {
         .food-tile { aspect-ratio: 1 / 1; }
         .food-tile-name { font-size: 13px; }
         .food-tile-blurb { -webkit-line-clamp: 2; }
-        .food-lower-grid { grid-template-columns: 1fr; }
         .market-day { grid-template-columns: 56px 1fr; gap: 10px; }
         .pulse-row { grid-template-columns: 30px 1fr; gap: 10px; padding: 10px 12px; }
         .pulse-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }

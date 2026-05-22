@@ -78,6 +78,7 @@ export default function CouncilDigestTurnstile({
 }: Props) {
   const ordered = useMemo(() => cities, [cities]);
   const [index, setIndex] = useState(0);
+  const chipsRef = useRef<HTMLDivElement>(null);
   const activeChipRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -85,8 +86,13 @@ export default function CouncilDigestTurnstile({
   }, [ordered.length, index]);
 
   useEffect(() => {
-    activeChipRef.current?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
-  }, [index]);
+    const scroller = chipsRef.current;
+    const chip = activeChipRef.current;
+    if (!scroller || !chip) return;
+
+    const targetLeft = chip.offsetLeft - (scroller.clientWidth - chip.offsetWidth) / 2;
+    scroller.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+  }, [index, ordered.length]);
 
   const goPrev = useCallback(() => {
     setIndex((i) => (i - 1 + ordered.length) % ordered.length);
@@ -118,7 +124,7 @@ export default function CouncilDigestTurnstile({
 
   return (
     <div className="cdt-wrap" onKeyDown={onKeyDown} tabIndex={0} aria-roledescription="carousel">
-      <div className="cdt-chips" role="tablist" aria-label="City">
+      <div className="cdt-chips" role="tablist" aria-label="City" ref={chipsRef}>
         {ordered.map((c, i) => {
           const isActive = i === index;
           const cAccent = CITY_ACCENT[c] ?? "#1A1A1A";
