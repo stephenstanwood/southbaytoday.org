@@ -87,9 +87,17 @@ const SKIP_REGEX = [
   // San José meta-procedural explainer attached to most agendas — text
   // describing how items get added/dropped, not actual business.
   /^items?\s+recommended\s+to\s+be\s+(?:added|dropped|deferred)/i,
-  // San José boilerplate section header: "Language Access Information:" with
-  // a trailing colon. It announces how to request translation, not business.
-  /^language access information\b/i,
+  // San José boilerplate translation/interpretation block. Two heading
+  // variants appear on different agendas — "Language Access Information:"
+  // (how to request written translation) and "Language Access
+  // Instructions / Instrucciones de interpretación / Hướng dẫn diễn giải"
+  // (the trilingual live-interpretation explainer). Both are agenda
+  // boilerplate, not business items.
+  /^language access (?:information|instructions)\b/i,
+  // The Spanish/Vietnamese halves of the trilingual block sometimes lead
+  // when the English heading is split off — match those defensively.
+  /^instrucciones de interpretaci[óo]n\b/i,
+  /^h[ưu][ớo]ng d[ẫa]n di[ễe]n gi[ảa]i\b/i,
   // Payment ratification — recurring consent items, not news. Catches:
   //   "Approve the List(s) of Claims and Bills..." (Sunnyvale)
   //   "Ratifying Accounts Payable for the periods..." (Cupertino)
