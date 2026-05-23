@@ -10,7 +10,7 @@ _ORGANIZATIONS.txt
 photo-data.json
 photo-votes.json
 
-# Runtime-mutable social pipeline state (not build inputs)
+# Runtime-mutable pipeline state (not build inputs)
 src/data/south-bay/social-approved-queue.json
 src/data/south-bay/social-review-history.json
 src/data/south-bay/social-action-log.json
@@ -24,6 +24,8 @@ src/data/south-bay/recraft-feedback.json
 src/data/south-bay/engagement-drafts.json
 src/data/south-bay/engagement-accounts.json
 src/data/south-bay/social-bump-queue.json
+src/data/south-bay/newsletter-send-history.jsonl
+src/data/south-bay/newsletter-editorial-memory.json
 
 # macOS Finder metadata
 **/.DS_Store

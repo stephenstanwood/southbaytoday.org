@@ -3,7 +3,9 @@
 // Shared helpers: env, Resend API, data loaders, HTML renderer.
 // ---------------------------------------------------------------------------
 
-import { readFileSync } from "node:fs";
+import { spawn } from "node:child_process";
+import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 import { loadEnvLocal } from "../lib/env.mjs";
 import { ARTIFACTS, DATA_DIR, REPO_ROOT } from "../lib/paths.mjs";
@@ -180,7 +182,8 @@ export function loadMilestones() {
 
 // ── Today's content assembler ──────────────────────────────────────────────
 
-export async function assembleNewsletterData(date) {
+export async function assembleNewsletterData(date, opts = {}) {
+  const editorialEnabled = opts.editorial ?? shouldRunEditorialPass();
   const defaultPlans = loadDefaultPlans();
   const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date);
 
@@ -206,14 +209,15 @@ export async function assembleNewsletterData(date) {
     (m) => m.month === parseInt(monthStr) && m.day === parseInt(dayStr)
   );
 
-  const redditPosts = pickRedditPosts(loadRedditPulse().posts || [], 4);
+  const redditCandidates = pickRedditPosts(loadRedditPulse().posts || [], 10);
+  const redditPosts = redditCandidates.slice(0, 4);
   const weather = await fetchWeather();
   const tonightPick = pickTonightEvent(todayEvents);
   const featuredEvents = pickFeaturedEvents(todayEvents, { dayPlan, tonightPick, limit: 10 });
   const dayPlanBlurb = dayPlan ? buildDayPlanBlurb(dayPlan, weather) : "";
   const tonightPickBlurb = tonightPick ? buildTonightBlurb(tonightPick) : "";
 
-  return {
+  const data = {
     date,
     longDate: formatLongDate(date),
     dayPlan, dayPlanBlurb,
@@ -225,7 +229,17 @@ export async function assembleNewsletterData(date) {
     weather,
     todayHistory,
     redditPosts,
+    editorial: null,
+    editorialMeta: { status: editorialEnabled ? "pending" : "disabled" },
   };
+
+  if (!editorialEnabled) return data;
+
+  return applyEditorialPass(data, {
+    eventCandidates: pickEditorialEventCandidates(todayEvents, { dayPlan, limit: 36 }),
+    openingCandidates: recentOpenings,
+    redditCandidates,
+  });
 }
 
 function makeNewsletterPlan(plan, date) {
@@ -384,6 +398,356 @@ function scoreEvent(e, tonight) {
   return score;
 }
 
+function shouldRunEditorialPass() {
+  const v = String(process.env.SBT_NEWSLETTER_EDITORIAL || "1").toLowerCase();
+  return !["0", "false", "off", "no"].includes(v);
+}
+
+function pickEditorialEventCandidates(events, { dayPlan, limit }) {
+  const used = new Set();
+  for (const c of orderedCards(dayPlan)) {
+    used.add(normalizeComparable(c.name));
+    used.add(normalizeComparable(c.id));
+  }
+
+  const eligible = events
+    .filter((e) => e.url)
+    .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
+    .map((event) => ({ event, score: scoreEvent(event, false) + editorialEventBoost(event) }));
+
+  const topOverall = [...eligible].sort((a, b) => b.score - a.score).slice(0, Math.ceil(limit * 0.75));
+  const evening = [...eligible]
+    .filter(({ event }) => parseTimeMinutes(event.time) >= 16 * 60)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 12);
+  const chronological = [...eligible]
+    .sort((a, b) => parseTimeMinutes(a.event.time) - parseTimeMinutes(b.event.time))
+    .slice(0, 8);
+
+  const seen = new Set();
+  const merged = [];
+  for (const { event } of [...topOverall, ...evening, ...chronological]) {
+    const key = normalizeComparable(event.id || event.title);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(event);
+    if (merged.length >= limit) break;
+  }
+  return merged;
+}
+
+function editorialEventBoost(e) {
+  let score = 0;
+  if (/\b(concert|jazz|festival|market|launch|opening|workshop|tour|hike|dance|film|comedy|theater|theatre)\b/i.test(e.title || "")) score += 8;
+  if (/\b(farmers'? market|storytime|reading buddies|book club|office hours)\b/i.test(e.title || "")) score -= 4;
+  if (parseTimeMinutes(e.time) >= 17 * 60) score += 3;
+  if (e.venue) score += 2;
+  return score;
+}
+
+async function applyEditorialPass(data, candidates) {
+  const packet = buildEditorialPacket(data, candidates);
+  const prompt = buildEditorialPrompt(packet);
+  const raw = await callClaudeNewsletterEditor(prompt);
+  const edit = parseClaudeJson(raw);
+  const revised = applyEditorialJson(data, candidates, edit);
+  revised.editorialMeta = {
+    status: "claude",
+    model: process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "opus",
+    eventCandidates: candidates.eventCandidates.length,
+    openingCandidates: candidates.openingCandidates.length,
+    redditCandidates: candidates.redditCandidates.length,
+    generatedAt: new Date().toISOString(),
+  };
+  return revised;
+}
+
+function buildEditorialPacket(data, candidates) {
+  return {
+    date: data.longDate,
+    editorialMemory: newsletterMemoryForPrompt(loadNewsletterEditorialMemory()),
+    weather: data.weather ? {
+      now: `${data.weather.tempNow}F`,
+      high: data.weather.high,
+      low: data.weather.low,
+      rainPct: data.weather.rainPct,
+      description: data.weather.dayDesc,
+    } : null,
+    dayPlan: data.dayPlan ? {
+      city: data.dayPlan.cityName || cityName(data.dayPlan.city),
+      cards: orderedCards(data.dayPlan).map((c, idx) => ({
+        idx,
+        slot: BUCKET_LABEL[c.bucket] || c.timeBlock || "Idea",
+        name: c.name,
+        time: c.eventTime || c.timeBlock || "",
+        venue: c.venue || "",
+        city: cityName(c.city),
+        cost: c.cost === "free" ? "free" : (c.costNote || c.kidsCostNote || ""),
+        blurb: compactText(c.blurb, 180),
+      })),
+    } : null,
+    eventCandidates: candidates.eventCandidates.map((e, idx) => compactEventForEditor(e, idx)),
+    openingCandidates: candidates.openingCandidates.map((o, idx) => ({
+      idx,
+      name: o.name,
+      city: o.cityName || o.cityId || "",
+      address: o.address || "",
+      opened: o.date || "",
+      blurb: compactText(o.blurb, 180),
+    })),
+    meetings: data.tonightMeetings.map((m, idx) => ({
+      idx,
+      city: cityName(m.city),
+      body: m.bodyName || "Meeting",
+      time: m.time || "",
+      location: m.location || "",
+    })),
+    history: data.todayHistory.map((h, idx) => ({
+      idx,
+      company: h.company,
+      city: h.city,
+      year: h.foundedYear,
+      note: compactText(h.anniversaryNote || h.tagline, 240),
+    })),
+    redditCandidates: candidates.redditCandidates.map((p, idx) => ({
+      idx,
+      sub: p.sub || "",
+      title: p.displayTitle || p.title || "",
+      score: p.score || 0,
+      comments: p.numComments || 0,
+      summary: compactText(p.summary, 180),
+    })),
+  };
+}
+
+const NEWSLETTER_HISTORY_FILE = join(DATA_DIR, "newsletter-send-history.jsonl");
+const NEWSLETTER_MEMORY_FILE = join(DATA_DIR, "newsletter-editorial-memory.json");
+
+function loadNewsletterEditorialMemory() {
+  try {
+    return JSON.parse(readFileSync(NEWSLETTER_MEMORY_FILE, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function newsletterMemoryForPrompt(memory) {
+  if (!memory) return null;
+  return {
+    guidance: (memory.guidance || []).slice(-10),
+    recentReflections: (memory.reflections || []).slice(-5).map((r) => ({
+      date: r.date,
+      score: r.score,
+      keepDoing: r.keepDoing,
+      improveNext: r.improveNext,
+      avoid: r.avoid,
+    })),
+  };
+}
+
+function compactEventForEditor(e, idx) {
+  return {
+    idx,
+    id: e.id || "",
+    title: e.title || "",
+    time: e.time || "",
+    venue: e.venue || "",
+    city: cityName(e.city),
+    category: e.category || "",
+    cost: e.cost || "",
+    audience: e.audienceAge || (e.kidFriendly ? "kids/family" : ""),
+    blurb: compactText(e.blurb || e.description, 220),
+  };
+}
+
+function buildEditorialPrompt(packet) {
+  return `You are the morning editor for South Bay Today, a genuinely useful local briefing for Santa Clara County.
+
+Thesis: we have an excellent pile of local data and access to strong AI, so the email should feel edited, selective, and coherent. The target reaction is: "oh damn, this is my morning South Bay briefing."
+
+Your job:
+- Read the editor packet.
+- Use the editorialMemory notes when present; they are lessons from prior sends.
+- Choose what belongs in the email.
+- Cut boring, overly generic, repetitive, or awkward items.
+- Write the morning note and section blurbs.
+- Return structured JSON only.
+
+Voice:
+- Smart, warm, specific, lightly opinionated. A competent local friend who actually read the calendar.
+- Useful beats hype. If the day is quiet, say so plainly and still make the useful parts easy to see.
+- No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
+- Avoid em dashes. Use commas, periods, or parentheses.
+
+Fact rules:
+- Use only facts in the packet. Do not infer addresses, prices, ages, quality, or popularity.
+- Do not claim "every event." This is a selected briefing.
+- Selected indexes must come from the arrays provided.
+- If a section has weak material, select fewer items.
+
+Selection guidance:
+- Pick one evening item only if it is specific, local, and plausible as a good answer to "what should I do tonight?"
+- Featured events should be balanced: adult/family/free/outdoor/culture when available. Do not let generic library items crowd out stronger citywide events unless the day is genuinely family-heavy.
+- Reddit items should be South Bay-specific conversation, not generic Bay Area chatter.
+- Openings should be readable; skip raw or overly bureaucratic entries if they make the email worse.
+
+Return JSON with exactly these keys:
+{
+  "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or tradeoffs in today's material.",
+  "dayPlanHeadline": "short headline for the field guide",
+  "dayPlanBlurb": "2-3 sentences making the plan feel intentional, without pretending it is perfect",
+  "tonightPickIdx": 0,
+  "tonightPickBlurb": "1-2 sentences why this is the evening pick, using only packet facts",
+  "featuredEventIdxs": [0, 1, 2, 3, 4, 5],
+  "eventsHeading": "short section heading",
+  "eventsNote": "1 sentence explaining the shape of the selected events",
+  "openingIdxs": [0, 1],
+  "openingsHeading": "short section heading",
+  "openingsNote": "1 sentence, or empty string if not useful",
+  "redditIdxs": [0, 1, 2, 3],
+  "conversationHeading": "short section heading",
+  "conversationNote": "1 sentence framing the local chatter"
+}
+
+Use null for tonightPickIdx if none is strong enough. Use empty arrays for weak optional sections.
+
+EDITOR PACKET:
+${JSON.stringify(packet, null, 2)}
+`;
+}
+
+const CLAUDE_CLI = process.env.CLAUDE_CLI_PATH || "/opt/homebrew/bin/claude";
+
+async function callClaudeNewsletterEditor(instructions) {
+  const model = process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "opus";
+  const timeoutMs = Number(process.env.SBT_NEWSLETTER_CLAUDE_TIMEOUT_MS || 120_000);
+  return new Promise((resolve, reject) => {
+    let stdout = "";
+    let stderr = "";
+    let done = false;
+    const finish = (err, value) => {
+      if (done) return;
+      done = true;
+      if (err) reject(err);
+      else resolve(value);
+    };
+    const proc = spawn(CLAUDE_CLI, [
+      "-p",
+      "--model", model,
+      "--output-format", "text",
+      "--no-session-persistence",
+    ], { cwd: "/tmp", timeout: timeoutMs });
+    proc.stdout.on("data", (d) => { stdout += d.toString(); });
+    proc.stderr.on("data", (d) => { stderr += d.toString(); });
+    proc.on("error", (err) => finish(new Error(`claude spawn failed: ${err.message}`)));
+    proc.on("close", (code, signal) => {
+      if (signal) return finish(new Error(`claude killed by ${signal}: ${(stderr || stdout).slice(0, 500)}`));
+      if (code !== 0) return finish(new Error(`claude exit ${code}: ${(stderr || stdout).slice(0, 500)}`));
+      finish(null, stdout);
+    });
+    proc.stdin.end(instructions);
+  });
+}
+
+function parseClaudeJson(raw) {
+  const cleaned = String(raw || "")
+    .trim()
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    const start = cleaned.indexOf("{");
+    const end = cleaned.lastIndexOf("}");
+    if (start >= 0 && end > start) {
+      return JSON.parse(cleaned.slice(start, end + 1));
+    }
+    throw new Error(`Claude editor returned non-JSON: ${cleaned.slice(0, 500)}`);
+  }
+}
+
+function applyEditorialJson(data, candidates, edit) {
+  const eventByIdx = new Map(candidates.eventCandidates.map((e, idx) => [idx, e]));
+  const openingByIdx = new Map(candidates.openingCandidates.map((o, idx) => [idx, o]));
+  const redditByIdx = new Map(candidates.redditCandidates.map((p, idx) => [idx, p]));
+
+  const tonightIdx = integerOrNull(edit.tonightPickIdx);
+  const tonightPick = tonightIdx === null ? null : eventByIdx.get(tonightIdx) || null;
+  const featured = pickByIndexes(eventByIdx, edit.featuredEventIdxs, 10)
+    .filter((e) => !tonightPick || normalizeComparable(e.id || e.title) !== normalizeComparable(tonightPick.id || tonightPick.title));
+  const fallbackFeatured = data.featuredEvents
+    .filter((e) => !tonightPick || normalizeComparable(e.id || e.title) !== normalizeComparable(tonightPick.id || tonightPick.title));
+
+  const openings = pickByIndexes(openingByIdx, edit.openingIdxs, 6);
+  const reddit = pickByIndexes(redditByIdx, edit.redditIdxs, 4);
+
+  return {
+    ...data,
+    dayPlanBlurb: limitedString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
+    tonightPick: tonightPick || data.tonightPick,
+    tonightPickBlurb: limitedString(edit.tonightPickBlurb, 500) || (tonightPick ? buildTonightBlurb(tonightPick) : data.tonightPickBlurb),
+    featuredEvents: featured.length ? uniqueItems(featured, 10) : uniqueItems(fallbackFeatured, 10),
+    recentOpenings: openings.length ? openings : data.recentOpenings,
+    redditPosts: reddit.length ? reddit : data.redditPosts,
+    editorial: {
+      briefing: limitedString(edit.briefing, 800),
+      dayPlanHeadline: limitedString(edit.dayPlanHeadline, 120),
+      eventsHeading: limitedString(edit.eventsHeading, 80),
+      eventsNote: limitedString(edit.eventsNote, 240),
+      openingsHeading: limitedString(edit.openingsHeading, 80),
+      openingsNote: limitedString(edit.openingsNote, 220),
+      conversationHeading: limitedString(edit.conversationHeading, 80),
+      conversationNote: limitedString(edit.conversationNote, 220),
+    },
+  };
+}
+
+function integerOrNull(v) {
+  if (v === null || v === undefined || v === "") return null;
+  const n = Number(v);
+  return Number.isInteger(n) ? n : null;
+}
+
+function pickByIndexes(map, raw, limit) {
+  const out = [];
+  const seen = new Set();
+  const indexes = Array.isArray(raw) ? raw : [];
+  for (const value of indexes) {
+    const idx = Number(value);
+    if (!Number.isInteger(idx)) continue;
+    if (seen.has(idx)) continue;
+    const item = map.get(idx);
+    if (!item) continue;
+    seen.add(idx);
+    out.push(item);
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
+function uniqueItems(items, max) {
+  const out = [];
+  const seen = new Set();
+  for (const item of items) {
+    const key = normalizeComparable(item?.id || item?.title || item?.name);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+    if (out.length >= max) break;
+  }
+  return out;
+}
+
+function limitedString(value, max) {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, max);
+}
+
+function compactText(value, max) {
+  return String(value || "").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
 // Ask Claude to rewrite social copy as a newsletter blurb.
 export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
   if (!text) return "";
@@ -472,13 +836,14 @@ export function renderEmail(data) {
   const html = wrapShell(subject, [
     headerBlock(data),
     weatherStrip(data.weather),
-    dayPlanBlock(data.dayPlan, data.dayPlanBlurb),
+    briefingBlock(data.editorial?.briefing),
+    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial),
     tonightPickBlock(data.tonightPick, data.tonightPickBlurb),
-    eventsBlock(data.featuredEvents, data.todayEvents.length),
-    openingsBlock(data.recentOpenings, data.date),
+    eventsBlock(data.featuredEvents, data.todayEvents.length, data.editorial),
+    openingsBlock(data.recentOpenings, data.date, data.editorial),
     meetingsBlock(data.tonightMeetings),
     historyBlock(data.todayHistory),
-    conversationBlock(data.redditPosts),
+    conversationBlock(data.redditPosts, data.editorial),
     footerBlock(),
   ].filter(Boolean).join("\n"));
   return { subject, html };
@@ -515,17 +880,25 @@ function weatherStrip(w) {
 </div>`;
 }
 
-function dayPlanBlock(plan, blurb) {
+function briefingBlock(briefing) {
+  if (!briefing) return "";
+  return `<div style="padding:22px 28px;border-bottom:1px solid ${PALETTE.border};">
+  <div style="font-size:16px;line-height:1.6;color:${PALETTE.ink};">${esc(briefing)}</div>
+</div>`;
+}
+
+function dayPlanBlock(plan, blurb, editorial = null) {
   if (!plan) return "";
   const cards = orderedCards(plan);
   if (!cards.length) return "";
   const rows = cards.map(planCardRow).join("\n");
+  const headline = editorial?.dayPlanHeadline || "A flexible South Bay day";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:18px;">Open the live guide →</a>`
     : "";
   return `<div style="padding:28px;">
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Today's field guide</div>
-  <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};margin-bottom:8px;">A flexible South Bay day</div>
+  <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};margin-bottom:8px;">${esc(headline)}</div>
   <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-bottom:16px;">${esc(blurb)}</div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
   ${cta}
@@ -584,7 +957,7 @@ function eventMeta(e) {
   ].filter(Boolean).join(" · ");
 }
 
-function eventsBlock(events, totalCount = events?.length || 0) {
+function eventsBlock(events, totalCount = events?.length || 0, editorial = null) {
   if (!events?.length) return "";
   const rows = events.map((e) => {
     const title = e.url
@@ -600,17 +973,18 @@ function eventsBlock(events, totalCount = events?.length || 0) {
       ${blurb}
     </td></tr>`;
   }).join("\n");
-  const countNote = totalCount > events.length
+  const heading = editorial?.eventsHeading || "More good options today";
+  const countNote = editorial?.eventsNote || (totalCount > events.length
     ? `The site has ${totalCount} timed events for today; these are the ones most likely to be useful.`
-    : "A short list of timed events worth checking before you make plans.";
+    : "A short list of timed events worth checking before you make plans.");
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">More good options today</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">${esc(heading)}</div>
   <div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-bottom:12px;">${esc(countNote)} <a href="https://southbaytoday.org/#events" style="color:${PALETTE.blue};text-decoration:none;">Open the full calendar →</a></div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
 </div>`;
 }
 
-function openingsBlock(openings, date) {
+function openingsBlock(openings, date, editorial = null) {
   if (!openings?.length) return "";
   const items = openings.map((o) => {
     const cityId = (o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-");
@@ -624,8 +998,13 @@ function openingsBlock(openings, date) {
       ${blurb}
     </div>`;
   }).join("");
+  const heading = editorial?.openingsHeading || "Recently opened";
+  const note = editorial?.openingsNote
+    ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-bottom:12px;">${esc(editorial.openingsNote)}</div>`
+    : "";
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Recently opened</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">${esc(heading)}</div>
+  ${note}
   ${items}
 </div>`;
 }
@@ -665,7 +1044,7 @@ function historyBlock(history) {
 </div>`;
 }
 
-function conversationBlock(posts) {
+function conversationBlock(posts, editorial = null) {
   if (!posts?.length) return "";
   const items = posts.map((p) => {
     const title = p.displayTitle || p.title || "";
@@ -693,9 +1072,11 @@ function conversationBlock(posts) {
       </td>
     </tr>`;
   }).join("\n");
+  const heading = editorial?.conversationHeading || "The Conversation";
+  const note = editorial?.conversationNote || "What people are talking about across the South Bay (via Reddit).";
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">The Conversation</div>
-  <div style="font-size:13px;color:${PALETTE.muted};margin-bottom:14px;">What people are talking about across the South Bay (via Reddit).</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">${esc(heading)}</div>
+  <div style="font-size:13px;color:${PALETTE.muted};margin-bottom:14px;">${esc(note)}</div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${items}</tbody></table>
 </div>`;
 }
@@ -707,6 +1088,217 @@ function footerBlock() {
   <p style="margin:14px 0 0 0;color:${PALETTE.ink};">— Stephen 👋</p>
   <p style="margin:18px 0 0 0;font-size:12px;color:${PALETTE.faint};">South Bay Today · <a href="https://southbaytoday.org" style="color:${PALETTE.faint};">southbaytoday.org</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${PALETTE.faint};">unsubscribe</a></p>
 </div>`;
+}
+
+// ── Discord DM + self-improvement loop ─────────────────────────────────────
+
+export async function sendNewsletterDiscordDm(data, subject) {
+  const content = renderDiscordDigest(data, subject);
+  await sendDiscordDmChunks(content);
+}
+
+export async function recordNewsletterSend({ data, subject, broadcastId = null }) {
+  const sentAt = new Date().toISOString();
+  appendFileSync(NEWSLETTER_HISTORY_FILE, JSON.stringify({
+    sentAt,
+    date: data.date,
+    subject,
+    broadcastId,
+    editorialMeta: data.editorialMeta,
+    selections: newsletterSelectionSnapshot(data),
+  }) + "\n");
+
+  try {
+    await reflectOnNewsletter({ data, subject, sentAt });
+  } catch (err) {
+    console.warn(`editorial reflection failed: ${err.message}`);
+  }
+}
+
+function renderDiscordDigest(data, subject) {
+  const lines = [`📬 **${subject}**`];
+  if (data.editorial?.briefing) lines.push("", data.editorial.briefing);
+  if (data.weather) {
+    lines.push("", `**Weather:** ${data.weather.tempNow}° now, high ${data.weather.high}°, low ${data.weather.low}°, ${String(data.weather.dayDesc || "").toLowerCase()}.`);
+  }
+  if (data.dayPlan?.cards?.length) {
+    lines.push("", `**${data.editorial?.dayPlanHeadline || "Today's field guide"}**`);
+    if (data.dayPlanBlurb) lines.push(data.dayPlanBlurb);
+    for (const c of orderedCards(data.dayPlan).slice(0, 6)) {
+      const meta = [c.eventTime || c.timeBlock, c.venue, c.city ? cityName(c.city) : null].filter(Boolean).join(" · ");
+      lines.push(`• ${markdownLink(c.name, c.url || c.mapsUrl)}${meta ? ` — ${meta}` : ""}`);
+    }
+  }
+  if (data.tonightPick) {
+    lines.push("", `**Tonight:** ${markdownLink(data.tonightPick.title, data.tonightPick.url)}`);
+    const meta = eventMeta(data.tonightPick);
+    if (meta) lines.push(meta);
+    if (data.tonightPickBlurb) lines.push(data.tonightPickBlurb);
+  }
+  if (data.featuredEvents?.length) {
+    lines.push("", `**${data.editorial?.eventsHeading || "More good options today"}**`);
+    if (data.editorial?.eventsNote) lines.push(data.editorial.eventsNote);
+    for (const e of data.featuredEvents) {
+      const meta = eventMeta(e);
+      lines.push(`• ${markdownLink(e.title, e.url)}${meta ? ` — ${meta}` : ""}`);
+    }
+  }
+  if (data.recentOpenings?.length) {
+    lines.push("", `**${data.editorial?.openingsHeading || "Recently opened"}**`);
+    if (data.editorial?.openingsNote) lines.push(data.editorial.openingsNote);
+    for (const o of data.recentOpenings.slice(0, 5)) {
+      lines.push(`• ${o.name}${o.cityName ? ` — ${o.cityName}` : ""}${o.blurb ? `: ${o.blurb}` : ""}`);
+    }
+  }
+  if (data.tonightMeetings?.length) {
+    lines.push("", "**Civic meetings tonight**");
+    for (const m of data.tonightMeetings) lines.push(`• ${cityName(m.city)} — ${m.bodyName || "Meeting"}`);
+  }
+  if (data.todayHistory?.length) {
+    lines.push("", "**On this day in Silicon Valley**");
+    for (const h of data.todayHistory) lines.push(`• ${h.company} (${h.foundedYear}, ${h.city}): ${h.anniversaryNote || h.tagline}`);
+  }
+  if (data.redditPosts?.length) {
+    lines.push("", `**${data.editorial?.conversationHeading || "The Conversation"}**`);
+    if (data.editorial?.conversationNote) lines.push(data.editorial.conversationNote);
+    for (const p of data.redditPosts) {
+      const meta = [p.sub ? `r/${p.sub}` : null, p.numComments ? `${p.numComments} comments` : null].filter(Boolean).join(" · ");
+      lines.push(`• ${markdownLink(p.displayTitle || p.title, p.permalink)}${meta ? ` — ${meta}` : ""}`);
+    }
+  }
+  lines.push("", "https://southbaytoday.org");
+  return lines.join("\n");
+}
+
+function newsletterSelectionSnapshot(data) {
+  return {
+    briefing: data.editorial?.briefing || "",
+    dayPlan: orderedCards(data.dayPlan).map((c) => c.name),
+    tonightPick: data.tonightPick?.title || null,
+    featuredEvents: (data.featuredEvents || []).map((e) => e.title),
+    openings: (data.recentOpenings || []).map((o) => o.name),
+    meetings: (data.tonightMeetings || []).map((m) => `${cityName(m.city)} ${m.bodyName || "Meeting"}`),
+    history: (data.todayHistory || []).map((h) => h.company),
+    reddit: (data.redditPosts || []).map((p) => p.displayTitle || p.title),
+  };
+}
+
+async function reflectOnNewsletter({ data, subject, sentAt }) {
+  const prompt = `You are improving South Bay Today's daily newsletter generator.
+
+Read the newsletter that just went out. Give a concise editorial critique that will make TOMORROW'S newsletter better.
+
+Return JSON only:
+{
+  "score": 1-10,
+  "keepDoing": ["specific thing to preserve"],
+  "improveNext": ["specific instruction for tomorrow's editor pass"],
+  "avoid": ["pattern to avoid"],
+  "guidance": ["short reusable rule for future prompt memory"]
+}
+
+Be specific. Do not praise generic structure. Focus on selection quality, local usefulness, awkward copy, repetition, over/under-indexing family events, and whether the email feels like a real morning briefing.
+
+NEWSLETTER:
+${renderDiscordDigest(data, subject)}
+`;
+  const raw = await callClaudeNewsletterEditor(prompt);
+  const reflection = parseClaudeJson(raw);
+  saveNewsletterReflection({ reflection, data, subject, sentAt });
+}
+
+function saveNewsletterReflection({ reflection, data, subject, sentAt }) {
+  const current = loadNewsletterEditorialMemory() || { guidance: [], reflections: [] };
+  const entry = {
+    date: data.date,
+    subject,
+    sentAt,
+    score: numberInRange(reflection.score, 1, 10),
+    keepDoing: stringArray(reflection.keepDoing, 4, 180),
+    improveNext: stringArray(reflection.improveNext, 6, 220),
+    avoid: stringArray(reflection.avoid, 6, 180),
+  };
+  const guidance = [
+    ...(current.guidance || []),
+    ...stringArray(reflection.guidance, 8, 220),
+    ...entry.improveNext,
+  ].slice(-24);
+  const output = {
+    _meta: { updatedAt: new Date().toISOString(), generator: "newsletter self-reflection" },
+    guidance,
+    reflections: [...(current.reflections || []), entry].slice(-30),
+  };
+  writeFileSync(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");
+}
+
+function numberInRange(value, min, max) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return Math.max(min, Math.min(max, n));
+}
+
+function stringArray(value, limit, maxLen) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((v) => limitedString(v, maxLen))
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function markdownLink(label, url) {
+  const clean = escapeMarkdown(label || "");
+  if (!url) return clean;
+  return `[${clean}](${url})`;
+}
+
+function escapeMarkdown(s) {
+  return String(s || "").replace(/([\\`*_{}[\]()#+.!|>~-])/g, "\\$1");
+}
+
+function resolveDiscordBotToken() {
+  try {
+    const txt = readFileSync(join(homedir(), ".claude/channels/discord/.env"), "utf8");
+    const match = txt.match(/DISCORD_BOT_TOKEN\s*=\s*"?([^"\n]+)"?/);
+    if (match) return match[1].trim();
+  } catch {}
+  return process.env.CAT_SIGNAL_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN || null;
+}
+
+async function sendDiscordDmChunks(content) {
+  const token = resolveDiscordBotToken();
+  const channel = process.env.DISCORD_DM_CHANNEL || process.env.STEPHEN_DM_CHANNEL_ID || "1486102002474811524";
+  if (!token) throw new Error("DISCORD_BOT_TOKEN missing for newsletter DM");
+  const chunks = splitDiscordMessage(content, 1850);
+  for (let i = 0; i < chunks.length; i++) {
+    const prefix = chunks.length > 1 ? `(${i + 1}/${chunks.length}) ` : "";
+    const res = await fetch(`https://discord.com/api/v10/channels/${channel}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bot ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: `${prefix}${chunks[i]}`.slice(0, 1990) }),
+    });
+    if (!res.ok) {
+      throw new Error(`Discord DM ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    }
+  }
+}
+
+function splitDiscordMessage(content, maxLen) {
+  const chunks = [];
+  let cur = "";
+  for (const para of String(content || "").split("\n")) {
+    const next = cur ? `${cur}\n${para}` : para;
+    if (next.length <= maxLen) {
+      cur = next;
+    } else {
+      if (cur) chunks.push(cur);
+      cur = para.length > maxLen ? para.slice(0, maxLen) : para;
+    }
+  }
+  if (cur) chunks.push(cur);
+  return chunks;
 }
 
 // ── Newsletter config (audience id stored locally) ─────────────────────────

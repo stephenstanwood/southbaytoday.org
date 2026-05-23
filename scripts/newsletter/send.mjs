@@ -14,6 +14,7 @@
 
 import {
   assembleNewsletterData, renderEmail, resendFetch,
+  recordNewsletterSend, sendNewsletterDiscordDm,
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
 
@@ -27,13 +28,15 @@ function bool(name) { return args.includes(`--${name}`); }
 const date = flag("date") || todayPT();
 const testTo = flag("test");
 const dryRun = bool("dry-run");
+const editorial = !bool("no-editorial");
 
 async function main() {
-  const data = await assembleNewsletterData(date);
+  const data = await assembleNewsletterData(date, { editorial });
   const { subject, html } = renderEmail(data);
 
   console.log(`subject: ${subject}`);
   console.log(`events: ${data.todayEvents.length}, featured: ${data.featuredEvents.length}, openings: ${data.recentOpenings.length}, history: ${data.todayHistory.length}, meetings: ${data.tonightMeetings.length}, conversation: ${data.redditPosts.length}`);
+  console.log(`editorial: ${data.editorialMeta?.status || "unknown"}`);
 
   if (!data.dayPlan && !data.todayEvents.length) {
     console.error("⚠️  No day-plan AND no events for today — refusing to send empty newsletter.");
@@ -84,6 +87,20 @@ async function main() {
     body: JSON.stringify({}),
   });
   console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
+
+  let dmError = null;
+  try {
+    await sendNewsletterDiscordDm(data, subject);
+    console.log("discord DM sent");
+  } catch (err) {
+    dmError = err;
+    console.error(`discord DM failed: ${err.message}`);
+  }
+
+  await recordNewsletterSend({ data, subject, broadcastId: broadcast.id });
+  console.log("newsletter send recorded");
+
+  if (dmError) throw dmError;
 }
 
 main().catch((err) => {

@@ -15,11 +15,13 @@ function flag(name) {
   const i = args.indexOf(`--${name}`);
   return i === -1 ? null : args[i + 1];
 }
+function bool(name) { return args.includes(`--${name}`); }
 
 const date = flag("date") || todayPT();
 const out = flag("out");
+const editorial = !bool("no-editorial");
 
-const data = await assembleNewsletterData(date);
+const data = await assembleNewsletterData(date, { editorial });
 const { subject, html } = renderEmail(data);
 
 if (out) {
