@@ -69,11 +69,10 @@ function computeDefaultDays() {
   return daysToNextWed + 7 + 1;
 }
 const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || String(computeDefaultDays()));
-// --hero-only: skip the 10-day social generation entirely and just refresh
-// default-plans.json (today's adults plan pulled from the existing social
-// schedule + a fresh kids plan for the homepage). Intended for the daily
-// 2:30 AM cron that keeps the homepage first-paint fresh between the
-// weekly Saturday social run.
+// --hero-only: skip the social batch entirely and just refresh
+// default-plans.json. This is now the standalone homepage/newsletter plan
+// generator: it calls /api/plan-day directly for adults + kids instead of
+// depending on social-schedule.json.
 const heroOnly = args.includes("--hero-only");
 
 // Generic URL hosts that mean "no real event link" — copy generated against
@@ -938,12 +937,12 @@ async function main() {
     console.log(`\n🏠 Hero-only refresh — ${today}`);
     const schedule = loadSchedule();
     const plansData = loadDefaultPlans();
-    const { kids: yesterdayKidsNames } = extractPreviousPlanNames(plansData);
+    const { adults: yesterdayAdultsNames, kids: yesterdayKidsNames } = extractPreviousPlanNames(plansData);
     if (dryRun) {
       console.log(`\n🏜️  Dry run (hero-only)`);
       return;
     }
-    await writeHomepageDefaultPlans(schedule, today, yesterdayKidsNames);
+    await writeHomepageDefaultPlans(schedule, today, yesterdayAdultsNames, yesterdayKidsNames);
     try {
       const repoRoot = join(__dirname, "..", "..");
       const dirty = execSync("git diff --name-only -- src/data/south-bay/default-plans.json", { cwd: repoRoot, encoding: "utf8" }).trim();
@@ -1138,12 +1137,9 @@ async function main() {
     console.log(`\n✅ Schedule saved`);
 
     // ── Homepage hero plans ──────────────────────────────────────────────
-    // The homepage's SouthBayTodayView reads default-plans.json for instant
-    // first-paint. Today's adults plan is the one social just generated; we
-    // only need an extra Claude call for today's kids plan. Client-side the
-    // card list is filtered by current time, so we don't need anchor
-    // variants — one plan per mode is enough.
-    await writeHomepageDefaultPlans(schedule, today, yesterdayKidsNames);
+    // The homepage's SouthBayTodayView and the daily email read
+    // default-plans.json for instant first-paint / morning digest content.
+    await writeHomepageDefaultPlans(schedule, today, yesterdayAdultsNames, yesterdayKidsNames);
 
     // Auto-commit schedule + plan JSONs. social-schedule.json is included here
     // so the uncommitted-changes window can't be wiped by another process doing
@@ -1173,19 +1169,42 @@ async function main() {
 
 const DEFAULT_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
 
-async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames = []) {
-  const todayAdults = schedule.days?.[todayStr]?.["day-plan"];
-  if (!todayAdults?.plan?.cards?.length) {
-    console.warn("   ⚠️  Today's adults plan is missing — skipping default-plans.json update");
+async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsNames = [], yesterdayKidsNames = []) {
+  const { citySlug, cityName } = selectHomepageCity(todayStr);
+
+  console.log(`\n📋 Generating today's adults plan (${cityName}) for homepage/newsletter...`);
+  let todayAdultsPlan = null;
+  try {
+    const recentlyShown = yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 1 }));
+    todayAdultsPlan = await fetchPlanFromApi(citySlug, todayStr, { kids: false, recentlyShown });
+    if (todayAdultsPlan?.cards?.length) {
+      deriveMissingEventTimes(todayAdultsPlan.cards);
+      await enrichCardPhotos(todayAdultsPlan.cards);
+      await enrichMissingImages(todayAdultsPlan.cards);
+    }
+  } catch (err) {
+    console.warn(`   ⚠️  Adults plan fetch failed: ${err.message}`);
+  }
+
+  // Carry forward fallbacks keep the site from going blank if the API is
+  // briefly down. Prefer the old social schedule while it still exists, then
+  // the prior default-plans.json.
+  const previousPlans = loadDefaultPlans()?.plans || {};
+  const scheduledTodayAdults = schedule.days?.[todayStr]?.["day-plan"];
+  const fallbackAdultsEntry = scheduledTodayAdults?.plan?.cards?.length
+    ? {
+        cards: scheduledTodayAdults.plan.cards,
+        weather: scheduledTodayAdults.plan.weather || null,
+        city: scheduledTodayAdults.city,
+        kids: false,
+        carriedForward: true,
+        generatedAt: new Date().toISOString(),
+      }
+    : carryForwardPlan(previousPlans, "adults", "adults:tomorrow");
+  if (!todayAdultsPlan?.cards?.length && !fallbackAdultsEntry?.cards?.length) {
+    console.warn("   ⚠️  Today's adults plan unavailable — skipping default-plans.json update");
     return;
   }
-  const citySlug = todayAdults.city;
-  const cityName = todayAdults.cityName;
-
-  // Enrich the adults plan's cards with Unsplash for any still missing a
-  // photoRef, so the homepage renders images on first paint.
-  deriveMissingEventTimes(todayAdults.plan.cards);
-  await enrichMissingImages(todayAdults.plan.cards);
 
   // Generate today's kids plan — this is the only extra Claude call option 2
   // introduces relative to the social-only baseline.
@@ -1209,77 +1228,85 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
   // ── Tomorrow's hero plans ────────────────────────────────────────────────
   // The homepage flips into tomorrow mode after 6 PM (kids) / 8 PM (adults).
   // Without dedicated tomorrow heroes, today's cache leaks today-only events
-  // into tomorrow's view. Tomorrow's adults plan is already generated as part
-  // of the 10-day social batch; we just pull it out and add a kids fetch.
+  // into tomorrow's view.
   const tomorrowStr = isoOffset(todayStr, 1);
-  const tomorrowAdults = schedule.days?.[tomorrowStr]?.["day-plan"];
+  const { citySlug: tomorrowCitySlug, cityName: tomorrowCityName } = selectHomepageCity(tomorrowStr);
   let tomorrowAdultsEntry = null;
   let tomorrowKidsEntry = null;
-  if (tomorrowAdults?.plan?.cards?.length) {
-    deriveMissingEventTimes(tomorrowAdults.plan.cards);
-    await enrichMissingImages(tomorrowAdults.plan.cards);
-    tomorrowAdultsEntry = {
-      cards: tomorrowAdults.plan.cards,
-      weather: tomorrowAdults.plan.weather || null,
-      city: tomorrowAdults.city,
-      kids: false,
-      planDate: tomorrowStr,
-      generatedAt: new Date().toISOString(),
-    };
-    console.log(`\n📋 Generating tomorrow's kids plan (${tomorrowAdults.cityName}) for homepage...`);
-    try {
-      const todayNames = (kidsPlan?.cards || todayAdults.plan.cards).map((c) => c.name).filter(Boolean);
-      const recentlyShown = [
-        ...yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 2 })),
-        ...todayNames.map((n) => ({ name: n, daysAgo: 1 })),
-      ];
-      const tomorrowKidsPlan = await fetchPlanFromApi(tomorrowAdults.city, tomorrowStr, { kids: true, recentlyShown });
-      if (tomorrowKidsPlan?.cards?.length) {
-        deriveMissingEventTimes(tomorrowKidsPlan.cards);
-        await enrichCardPhotos(tomorrowKidsPlan.cards);
-        await enrichMissingImages(tomorrowKidsPlan.cards);
-        tomorrowKidsEntry = {
-          cards: tomorrowKidsPlan.cards,
-          weather: tomorrowKidsPlan.weather || null,
-          city: tomorrowAdults.city,
-          kids: true,
-          planDate: tomorrowStr,
-          generatedAt: new Date().toISOString(),
-        };
-      }
-    } catch (err) {
-      console.warn(`   ⚠️  Tomorrow kids plan fetch failed: ${err.message}`);
+  console.log(`\n📋 Generating tomorrow's adults plan (${tomorrowCityName}) for homepage...`);
+  try {
+    const todayAdultNames = (todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
+    const recentlyShown = [
+      ...yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 2 })),
+      ...todayAdultNames.map((n) => ({ name: n, daysAgo: 1 })),
+    ];
+    const tomorrowAdultsPlan = await fetchPlanFromApi(tomorrowCitySlug, tomorrowStr, { kids: false, recentlyShown });
+    if (tomorrowAdultsPlan?.cards?.length) {
+      deriveMissingEventTimes(tomorrowAdultsPlan.cards);
+      await enrichCardPhotos(tomorrowAdultsPlan.cards);
+      await enrichMissingImages(tomorrowAdultsPlan.cards);
+      tomorrowAdultsEntry = {
+        cards: tomorrowAdultsPlan.cards,
+        weather: tomorrowAdultsPlan.weather || null,
+        city: tomorrowCitySlug,
+        kids: false,
+        planDate: tomorrowStr,
+        generatedAt: new Date().toISOString(),
+      };
     }
-  } else {
-    console.warn(`   ⚠️  Tomorrow's adults plan (${tomorrowStr}) missing from schedule — skipping tomorrow heroes`);
+  } catch (err) {
+    console.warn(`   ⚠️  Tomorrow adults plan fetch failed: ${err.message}`);
   }
 
-  const adultsEntry = {
-    cards: todayAdults.plan.cards,
-    weather: todayAdults.plan.weather || null,
+  console.log(`\n📋 Generating tomorrow's kids plan (${tomorrowCityName}) for homepage...`);
+  try {
+    const todayNames = (kidsPlan?.cards || todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
+    const recentlyShown = [
+      ...yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 2 })),
+      ...todayNames.map((n) => ({ name: n, daysAgo: 1 })),
+    ];
+    const tomorrowKidsPlan = await fetchPlanFromApi(tomorrowCitySlug, tomorrowStr, { kids: true, recentlyShown });
+    if (tomorrowKidsPlan?.cards?.length) {
+      deriveMissingEventTimes(tomorrowKidsPlan.cards);
+      await enrichCardPhotos(tomorrowKidsPlan.cards);
+      await enrichMissingImages(tomorrowKidsPlan.cards);
+      tomorrowKidsEntry = {
+        cards: tomorrowKidsPlan.cards,
+        weather: tomorrowKidsPlan.weather || null,
+        city: tomorrowCitySlug,
+        kids: true,
+        planDate: tomorrowStr,
+        generatedAt: new Date().toISOString(),
+      };
+    }
+  } catch (err) {
+    console.warn(`   ⚠️  Tomorrow kids plan fetch failed: ${err.message}`);
+  }
+
+  const adultsEntry = todayAdultsPlan?.cards?.length ? {
+    cards: todayAdultsPlan.cards,
+    weather: todayAdultsPlan.weather || null,
     city: citySlug,
     kids: false,
+    planDate: todayStr,
     generatedAt: new Date().toISOString(),
-  };
+  } : fallbackAdultsEntry;
   const kidsEntry = kidsPlan ? {
     cards: kidsPlan.cards,
     weather: kidsPlan.weather || null,
     city: citySlug,
     kids: true,
+    planDate: todayStr,
     generatedAt: new Date().toISOString(),
   } : null;
 
   // Carry-forward fallback: if today's or tomorrow's kids fetch returned empty,
   // reuse the previous run's cards with events stripped (today-only events
   // would leak). Better than dropping the key entirely.
-  const previousPlans = loadDefaultPlans()?.plans || {};
   const carryForwardKids = (...keys) => {
     for (const key of keys) {
-      const prev = previousPlans[key];
-      if (!prev?.cards?.length) continue;
-      const placesOnly = prev.cards.filter((c) => c.source !== "event");
-      if (!placesOnly.length) continue;
-      return { ...prev, cards: placesOnly, carriedForward: true };
+      const prev = carryForwardPlan(previousPlans, key);
+      if (prev) return prev;
     }
     return null;
   };
@@ -1312,6 +1339,31 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayKidsNames 
     ? ` | tomorrow ${tomorrowAdultsEntry.cards.length} adults ${fmtKids(finalTomorrowKidsEntry, !!tomorrowKidsEntry)}`
     : "";
   console.log(`   🏠 default-plans.json: ${adultsEntry.cards.length} adults ${kidsMsg}${tomMsg}`);
+}
+
+function carryForwardPlan(plans, ...keys) {
+  for (const key of keys) {
+    const prev = plans[key];
+    if (!prev?.cards?.length) continue;
+    const placesOnly = prev.cards.filter((c) => c.source !== "event");
+    if (!placesOnly.length) continue;
+    return { ...prev, cards: placesOnly, carriedForward: true, generatedAt: new Date().toISOString() };
+  }
+  return null;
+}
+
+function selectHomepageCity(dateStr) {
+  const cityKeys = Object.keys(CITY_NAMES);
+  const day = dayOfYear(dateStr);
+  const citySlug = cityKeys[day % cityKeys.length];
+  return { citySlug, cityName: CITY_NAMES[citySlug] || citySlug };
+}
+
+function dayOfYear(isoStr) {
+  const [y, m, d] = isoStr.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  const start = new Date(Date.UTC(y, 0, 0));
+  return Math.floor((dt - start) / 86400000);
 }
 
 /** Add `n` days to a YYYY-MM-DD string and return a new YYYY-MM-DD. */

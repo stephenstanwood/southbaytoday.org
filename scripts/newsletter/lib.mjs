@@ -66,6 +66,10 @@ export function loadSocialSchedule() {
   return readJson(join(DATA_DIR, "social-schedule.json"));
 }
 
+export function loadDefaultPlans() {
+  return readJson(join(DATA_DIR, "default-plans.json"));
+}
+
 export function loadEvents() {
   return readJson(ARTIFACTS.events);
 }
@@ -177,10 +181,8 @@ export function loadMilestones() {
 // ── Today's content assembler ──────────────────────────────────────────────
 
 export async function assembleNewsletterData(date) {
-  const schedule = loadSocialSchedule();
-  const todaySlots = schedule.days?.[date] || {};
-  const dayPlan = todaySlots["day-plan"] || null;
-  const tonightPick = todaySlots["tonight-pick"] || null;
+  const defaultPlans = loadDefaultPlans();
+  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date);
 
   const allEvents = loadEvents().events || [];
   const todayEvents = allEvents
@@ -189,7 +191,9 @@ export async function assembleNewsletterData(date) {
     .sort((a, b) => parseTimeMinutes(a.time) - parseTimeMinutes(b.time));
 
   const openings = loadOpenings();
-  const todaysOpenings = (openings.opened || []).filter((o) => o.date === date);
+  const recentOpenings = (openings.opened || [])
+    .filter((o) => daysBetween(o.date, date) >= 0 && daysBetween(o.date, date) <= 10)
+    .slice(0, 6);
 
   const meetings = loadMeetings().meetings || {};
   const tonightMeetings = Object.entries(meetings)
@@ -202,16 +206,12 @@ export async function assembleNewsletterData(date) {
     (m) => m.month === parseInt(monthStr) && m.day === parseInt(dayStr)
   );
 
-  const redditPosts = (loadRedditPulse().posts || []).slice(0, 8);
-
-  // Prefer the email variant baked in by the social copy-gen. Fall back to a
-  // live Claude rewrite when the schedule entry was written before the email
-  // variant existed.
-  const [weather, dayPlanBlurb, tonightPickBlurb] = await Promise.all([
-    fetchWeather(),
-    dayPlan ? (dayPlan.copy?.email || rewriteForEmail(dayPlan.copy?.facebook || dayPlan.copy?.threads || "", "plan")) : "",
-    tonightPick ? (tonightPick.copy?.email || rewriteForEmail(tonightPick.copy?.facebook || tonightPick.copy?.threads || "", "pick")) : "",
-  ]);
+  const redditPosts = pickRedditPosts(loadRedditPulse().posts || [], 4);
+  const weather = await fetchWeather();
+  const tonightPick = pickTonightEvent(todayEvents);
+  const featuredEvents = pickFeaturedEvents(todayEvents, { dayPlan, tonightPick, limit: 10 });
+  const dayPlanBlurb = dayPlan ? buildDayPlanBlurb(dayPlan, weather) : "";
+  const tonightPickBlurb = tonightPick ? buildTonightBlurb(tonightPick) : "";
 
   return {
     date,
@@ -219,12 +219,169 @@ export async function assembleNewsletterData(date) {
     dayPlan, dayPlanBlurb,
     tonightPick, tonightPickBlurb,
     todayEvents,
-    todaysOpenings,
+    featuredEvents,
+    recentOpenings,
     tonightMeetings,
     weather,
     todayHistory,
     redditPosts,
   };
+}
+
+function makeNewsletterPlan(plan, date) {
+  if (!plan?.cards?.length) return null;
+  return {
+    ...plan,
+    planDate: plan.planDate || date,
+    cityName: cityName(plan.city),
+    planUrl: "https://southbaytoday.org/",
+  };
+}
+
+function daysBetween(fromDate, toDate) {
+  if (!fromDate || !toDate) return Infinity;
+  const from = new Date(`${fromDate}T12:00:00Z`).getTime();
+  const to = new Date(`${toDate}T12:00:00Z`).getTime();
+  if (!Number.isFinite(from) || !Number.isFinite(to)) return Infinity;
+  return Math.round((to - from) / 86400000);
+}
+
+const BUCKET_LABEL = {
+  breakfast: "Breakfast",
+  morning: "Morning",
+  lunch: "Lunch",
+  afternoon: "Afternoon",
+  dinner: "Dinner",
+  evening: "Evening",
+};
+const BUCKET_ORDER = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+
+function orderedCards(plan) {
+  const cards = plan?.cards || [];
+  return [...cards].sort((a, b) => {
+    const ai = BUCKET_ORDER.indexOf(a.bucket);
+    const bi = BUCKET_ORDER.indexOf(b.bucket);
+    if (ai !== -1 || bi !== -1) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    return parseTimeMinutes(a.eventTime || a.timeBlock) - parseTimeMinutes(b.eventTime || b.timeBlock);
+  });
+}
+
+function humanList(items) {
+  const clean = items.filter(Boolean);
+  if (clean.length <= 1) return clean[0] || "";
+  if (clean.length === 2) return `${clean[0]} and ${clean[1]}`;
+  return `${clean.slice(0, -1).join(", ")}, and ${clean.at(-1)}`;
+}
+
+function buildDayPlanBlurb(plan, weather) {
+  const cards = orderedCards(plan);
+  const cities = [...new Set(cards.map((c) => cityName(c.city)).filter(Boolean))].slice(0, 3);
+  const standout = cards.find((c) => c.source === "event") || cards.find((c) => c.bucket === "evening") || cards[0];
+  const dayDesc = weather?.dayDesc ? lowerFirst(weather.dayDesc) : "steady weather";
+  const weatherBit = weather
+    ? `${dayDesc}, high ${weather.high}°`
+    : "a full day of options";
+  const cityBit = cities.length ? `around ${humanList(cities)}` : "around the South Bay";
+  const standoutBit = standout
+    ? ` The one I would notice first: ${standout.name}${standout.blurb ? `, ${lowerFirst(trimPeriod(standout.blurb))}` : ""}.`
+    : "";
+  return `Today's plan is a flexible menu ${cityBit}: a place to start, somewhere to wander, and a dinner/evening idea if the day keeps going. Weather looks like ${weatherBit}.${standoutBit}`;
+}
+
+function lowerFirst(s) {
+  if (!s) return "";
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+
+function trimPeriod(s) {
+  return String(s || "").trim().replace(/[.。]+$/, "");
+}
+
+function buildTonightBlurb(event) {
+  const why = event.blurb || event.description || "";
+  const where = event.venue
+    ? `at ${event.venue}${event.city ? ` in ${cityName(event.city)}` : ""}`
+    : (event.city ? `in ${cityName(event.city)}` : "");
+  const lead = [
+    event.cost === "free" ? "Free" : null,
+    event.time ? `at ${event.time}` : null,
+    where,
+  ].filter(Boolean).join(" ");
+  const detail = why
+    ? trimPeriod(why).slice(0, 220)
+    : "A specific, low-friction evening option if you want one clear answer";
+  return `${lead ? `${lead}. ` : ""}${detail}.`;
+}
+
+function pickTonightEvent(events) {
+  const choices = events
+    .filter((e) => !e.virtual)
+    .filter((e) => parseTimeMinutes(e.time) >= 16 * 60)
+    .filter((e) => e.url)
+    .filter((e) => !/\b(board|commission|committee|meeting|study session|webinar|book club)\b/i.test(e.title || ""))
+    .map((e) => ({ event: e, score: scoreEvent(e, true) }))
+    .sort((a, b) => b.score - a.score);
+  return choices[0]?.event || null;
+}
+
+function pickFeaturedEvents(events, { dayPlan, tonightPick, limit }) {
+  const used = new Set();
+  for (const c of orderedCards(dayPlan)) {
+    used.add(normalizeComparable(c.name));
+    used.add(normalizeComparable(c.id));
+  }
+  if (tonightPick) used.add(normalizeComparable(tonightPick.title));
+  return events
+    .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
+    .map((e) => ({ event: e, score: scoreEvent(e, false) }))
+    .sort((a, b) => b.score - a.score || parseTimeMinutes(a.event.time) - parseTimeMinutes(b.event.time))
+    .slice(0, limit)
+    .map((x) => x.event);
+}
+
+const LOCAL_REDDIT_SUBS = new Set([
+  "SanJose", "sanjose", "Sunnyvale", "sunnyvale", "santaclara", "mountainview",
+  "PaloAlto", "paloalto", "Cupertino", "LosGatos", "campbell", "Milpitas",
+]);
+const LOCAL_REDDIT_TERMS = /\b(san jose|south bay|santa clara|sunnyvale|mountain view|palo alto|cupertino|campbell|los gatos|saratoga|los altos|milpitas|morgan hill|gilroy)\b/i;
+
+function pickRedditPosts(posts, limit) {
+  return posts
+    .map((post, index) => ({ post, score: scoreRedditPost(post, index) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((x) => x.post);
+}
+
+function scoreRedditPost(post, index) {
+  const title = `${post.displayTitle || post.title || ""} ${post.summary || ""}`;
+  let score = Math.max(0, 40 - index);
+  if (LOCAL_REDDIT_SUBS.has(post.sub)) score += 45;
+  if (LOCAL_REDDIT_TERMS.test(title)) score += 30;
+  if (post.numComments) score += Math.min(25, Math.log2(post.numComments + 1) * 5);
+  if (post.score) score += Math.min(15, Math.log2(post.score + 1) * 2);
+  if (!LOCAL_REDDIT_SUBS.has(post.sub) && !LOCAL_REDDIT_TERMS.test(title)) score -= 70;
+  return score;
+}
+
+function normalizeComparable(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function scoreEvent(e, tonight) {
+  let score = 0;
+  const hour = parseTimeMinutes(e.time);
+  if (Number.isFinite(hour) && hour < 9999) score += 10;
+  if (tonight && hour >= 17 * 60) score += 10;
+  if (e.image) score += 5;
+  if (e.blurb) score += 8;
+  if (e.cost === "free") score += 4;
+  if (e.kidFriendly) score += 2;
+  if (e.virtual) score -= 20;
+  if (/\b(board|commission|committee|meeting|study session|webinar)\b/i.test(e.title || "")) score -= 15;
+  if (/\b(book club|storytime|story time|support group|office hours)\b/i.test(e.title || "")) score -= 6;
+  return score;
 }
 
 // Ask Claude to rewrite social copy as a newsletter blurb.
@@ -317,8 +474,8 @@ export function renderEmail(data) {
     weatherStrip(data.weather),
     dayPlanBlock(data.dayPlan, data.dayPlanBlurb),
     tonightPickBlock(data.tonightPick, data.tonightPickBlurb),
-    eventsBlock(data.todayEvents),
-    openingsBlock(data.todaysOpenings),
+    eventsBlock(data.featuredEvents, data.todayEvents.length),
+    openingsBlock(data.recentOpenings, data.date),
     meetingsBlock(data.tonightMeetings),
     historyBlock(data.todayHistory),
     conversationBlock(data.redditPosts),
@@ -360,74 +517,125 @@ function weatherStrip(w) {
 
 function dayPlanBlock(plan, blurb) {
   if (!plan) return "";
-  const img = plan.imageUrl ? `<img src="${esc(plan.imageUrl)}" alt="Today's plan" style="width:100%;display:block;border-radius:8px;">` : "";
+  const cards = orderedCards(plan);
+  if (!cards.length) return "";
+  const rows = cards.map(planCardRow).join("\n");
   const cta = plan.planUrl
-    ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">See the full plan →</a>`
+    ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:18px;">Open the live guide →</a>`
     : "";
   return `<div style="padding:28px;">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">A plan for your day</div>
-  ${img}
-  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurb)}</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Today's field guide</div>
+  <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};margin-bottom:8px;">A flexible South Bay day</div>
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-bottom:16px;">${esc(blurb)}</div>
+  <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
   ${cta}
 </div>`;
 }
 
 function tonightPickBlock(pick, blurb) {
   if (!pick) return "";
-  const img = pick.imageUrl ? `<img src="${esc(pick.imageUrl)}" alt="Tonight's pick" style="width:100%;display:block;border-radius:8px;">` : "";
-  const ticketUrl = pick.item?.url || null;
-  const ctaLabel = pick.item?.cost === "paid" ? "Get tickets →" : "Event details →";
+  const meta = eventMeta(pick);
+  const ticketUrl = pick.url || null;
+  const ctaLabel = pick.cost === "paid" ? "Get tickets →" : "Event details →";
   const cta = ticketUrl
     ? `<a href="${esc(ticketUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">${esc(ctaLabel)}</a>`
     : "";
   return `<div style="padding:0 28px 28px 28px;border-top:1px solid ${PALETTE.border};padding-top:28px;">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:10px;">Tonight's pick</div>
-  ${img}
-  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:14px;">${esc(blurb)}</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Tonight's pick</div>
+  <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};">${esc(pick.title)}</div>
+  ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:4px;">${esc(meta)}</div>` : ""}
+  <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-top:12px;">${esc(blurb)}</div>
   ${cta}
 </div>`;
 }
 
-function eventsBlock(events) {
+function planCardRow(card) {
+  const label = BUCKET_LABEL[card.bucket] || card.timeBlock || "Idea";
+  const name = card.url || card.mapsUrl
+    ? `<a href="${esc(card.url || card.mapsUrl)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:700;">${esc(card.name)}</a>`
+    : `<span style="color:${PALETTE.ink};font-weight:700;">${esc(card.name)}</span>`;
+  const meta = [
+    card.eventTime || card.timeBlock,
+    card.venue,
+    card.city ? cityName(card.city) : null,
+    card.cost === "free" ? "Free" : (card.costNote || card.kidsCostNote),
+  ].filter(Boolean).join(" · ");
+  const blurb = card.blurb
+    ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(card.blurb)}</div>`
+    : "";
+  return `<tr>
+    <td width="92" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+      <div style="font-size:12px;color:${PALETTE.faint};font-weight:700;text-transform:uppercase;letter-spacing:0.7px;">${esc(label)}</div>
+    </td>
+    <td style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+      <div style="font-size:15px;line-height:1.35;">${name}</div>
+      ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:3px;">${esc(meta)}</div>` : ""}
+      ${blurb}
+    </td>
+  </tr>`;
+}
+
+function eventMeta(e) {
+  return [
+    e.time,
+    e.venue,
+    e.city ? cityName(e.city) : null,
+    e.cost === "free" ? "Free" : null,
+  ].filter(Boolean).join(" · ");
+}
+
+function eventsBlock(events, totalCount = events?.length || 0) {
   if (!events?.length) return "";
   const rows = events.map((e) => {
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
-    const meta = [
-      e.time ? esc(e.time) : null,
-      e.venue ? esc(e.venue) : null,
-      e.city ? esc(cityName(e.city)) : null,
-      e.cost === "free" ? "Free" : null,
-    ].filter(Boolean).join(" · ");
+    const meta = eventMeta(e);
+    const blurb = e.blurb
+      ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(e.blurb)}</div>`
+      : "";
     return `<tr><td style="padding:8px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
       <div>${title}</div>
-      <div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${meta}</div>
+      ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${esc(meta)}</div>` : ""}
+      ${blurb}
     </td></tr>`;
   }).join("\n");
+  const countNote = totalCount > events.length
+    ? `The site has ${totalCount} timed events for today; these are the ones most likely to be useful.`
+    : "A short list of timed events worth checking before you make plans.";
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">All of today's events (${events.length})</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:6px;">More good options today</div>
+  <div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-bottom:12px;">${esc(countNote)} <a href="https://southbaytoday.org/#events" style="color:${PALETTE.blue};text-decoration:none;">Open the full calendar →</a></div>
   <table style="width:100%;border-collapse:collapse;"><tbody>${rows}</tbody></table>
 </div>`;
 }
 
-function openingsBlock(openedToday) {
-  if (!openedToday?.length) return "";
-  const items = openedToday.map((o) => {
+function openingsBlock(openings, date) {
+  if (!openings?.length) return "";
+  const items = openings.map((o) => {
     const cityId = (o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-");
     const locParts = [o.address, cityName(cityId)].filter(Boolean);
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
+    const age = openingAge(o.date, date);
     const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
     return `<div style="margin-bottom:10px;">
       <div style="font-size:15px;color:${PALETTE.ink};"><strong>${esc(o.name)}</strong>${loc}</div>
+      ${age ? `<div style="font-size:12px;color:${PALETTE.faint};margin-top:2px;">${esc(age)}</div>` : ""}
       ${blurb}
     </div>`;
   }).join("");
-  const heading = openedToday.length === 1 ? "New today" : `New today (${openedToday.length})`;
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};">
-  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">${heading}</div>
+  <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:14px;">Recently opened</div>
   ${items}
 </div>`;
+}
+
+function openingAge(openedDate, todayDate) {
+  const days = daysBetween(openedDate, todayDate);
+  if (!Number.isFinite(days)) return "";
+  if (days === 0) return "Opened today";
+  if (days === 1) return "Opened yesterday";
+  return `Opened ${days} days ago`;
 }
 
 function meetingsBlock(meetings) {

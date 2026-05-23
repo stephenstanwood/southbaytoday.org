@@ -33,7 +33,7 @@ async function main() {
   const { subject, html } = renderEmail(data);
 
   console.log(`subject: ${subject}`);
-  console.log(`events: ${data.todayEvents.length}, openings: ${data.todaysOpenings.length}, history: ${data.todayHistory.length}, meetings: ${data.tonightMeetings.length}, conversation: ${data.redditPosts.length}`);
+  console.log(`events: ${data.todayEvents.length}, featured: ${data.featuredEvents.length}, openings: ${data.recentOpenings.length}, history: ${data.todayHistory.length}, meetings: ${data.tonightMeetings.length}, conversation: ${data.redditPosts.length}`);
 
   if (!data.dayPlan && !data.todayEvents.length) {
     console.error("⚠️  No day-plan AND no events for today — refusing to send empty newsletter.");
