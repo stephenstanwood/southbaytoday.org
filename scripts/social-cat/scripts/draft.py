@@ -100,15 +100,24 @@ def load_already_drafted_uris() -> set[str]:
     return uris
 
 
-def load_already_drafted_topics() -> set[str]:
-    """Topic titles we've already drafted in any prior cycle.
+REJECTED_DRAFT_STATUSES = {"rejected", "expired"}
 
-    Same trend popping up next cycle shouldn't yield a new set of standalone
-    drafts. Exact-match dedup is the floor — fuzzy matching is a TODO.
+
+def load_drafted_topic_buckets() -> tuple[set[str], set[str], set[str]]:
+    """Return (all_drafted_topics, rejected_topics, rejected_source_urls).
+
+    Splitting buckets lets us:
+    - keep dedup against ALL prior drafts (approved/posted/queued included)
+    - surface REJECTED items with stronger DO-NOT-REDRAFT language
+    - drop source URLs that produced a rejected draft from the radar feed
+      before the LLM ever sees them, so it can't try a fresh angle on the
+      same underlying item
     """
     if not DRAFTS_PATH.exists():
-        return set()
-    topics: set[str] = set()
+        return set(), set(), set()
+    all_topics: set[str] = set()
+    rejected_topics: set[str] = set()
+    rejected_urls: set[str] = set()
     with DRAFTS_PATH.open() as f:
         for line in f:
             line = line.strip()
@@ -121,9 +130,17 @@ def load_already_drafted_topics() -> set[str]:
             if rec.get("type") == "reply":
                 continue
             topic = (rec.get("topic") or "").strip()
+            status = (rec.get("status") or "").strip().lower()
             if topic:
-                topics.add(topic.lower())
-    return topics
+                all_topics.add(topic.lower())
+                if status in REJECTED_DRAFT_STATUSES:
+                    rejected_topics.add(topic.lower())
+            if status in REJECTED_DRAFT_STATUSES:
+                for s in rec.get("sources") or []:
+                    url = (s or {}).get("url")
+                    if url:
+                        rejected_urls.add(url)
+    return all_topics, rejected_topics, rejected_urls
 
 
 def build_prompt(
@@ -131,9 +148,11 @@ def build_prompt(
     *,
     already_replied_uris: set[str] | None = None,
     already_drafted_topics: set[str] | None = None,
+    rejected_topics: set[str] | None = None,
 ) -> str:
     already_replied_uris = already_replied_uris or set()
     already_drafted_topics = already_drafted_topics or set()
+    rejected_topics = rejected_topics or set()
     # Split into two pools:
     #   A: cultural-moment sources (reddit/hn/buzzfeed/mashable) — STANDALONES only
     #   B: Bluesky local-search posts — REPLY targets only
@@ -186,6 +205,17 @@ def build_prompt(
         )
     else:
         already_drafted_topics_block = "  (none yet — this is a fresh queue)"
+
+    # Rejected topics get a stronger block — these are items Stephen explicitly
+    # ❌'d. The recurring failure mode is the LLM finding a fresh angle on the
+    # same underlying news/article and re-drafting; that wastes Stephen's swiper
+    # attention and our LLM budget.
+    if rejected_topics:
+        rejected_topics_block = "\n".join(
+            f"  - {t}" for t in sorted(rejected_topics)[:60]
+        )
+    else:
+        rejected_topics_block = "  (none yet)"
 
     platforms_str = ", ".join(PLATFORMS)
 
@@ -315,8 +345,13 @@ HARD EDITORIAL RULES (both must pass — skip item if either fails)
 
 **RULE 1b — No re-drafting topics we've already done.** If a trend's title or angle is essentially the same as one already in the "already drafted topics" list below, SKIP IT. Even a freshly-trending source item about the same underlying event (e.g. Google I/O happening today AND tomorrow) doesn't get a new standalone — we already wrote one. Pick a different cultural moment instead.
 
+**RULE 1c — Rejected topics are dead. Don't try a new angle.** The "REJECTED TOPICS" list below is items Stephen explicitly ❌'d. Do NOT re-draft any of them with fresh wording, a new local hook, a different city, or a different framing. If a trending source item is about the same underlying news/article/study/release as a rejected topic, SKIP THE ENTIRE ITEM — don't try to rescue it with a new angle. Stephen rejected the topic, not the wording. Examples of the failure mode to avoid: "Project Hail Mary stars" rejected → don't then draft "Project Hail Mary's stars are real — NASA Ames is right here". "AI model almanac" rejected → don't then draft "the AI model catalog". Same underlying thing = skip.
+
 ALREADY DRAFTED TOPICS (skip anything that overlaps):
 {already_drafted_topics_block}
+
+REJECTED TOPICS (Stephen explicitly ❌'d — do NOT re-draft with a new angle, skip the underlying item entirely):
+{rejected_topics_block}
 
 **RULE 2 — Positive AND funny.** SBT doesn't do beefs, callouts, accusations, fights, scolding, doom, scandals, or anti-anyone snark. Skip stories that are "X vs. Y", "exec accused of...", lawsuits, schadenfreude, political horror. We are not the drama account. We are not the dunking account. BUT: positive ≠ humorless. The trend layer is where SBT gets to be observably funny (see the HOW TO BE FUNNY section above). Wholesome and witty are not opposites.
 
@@ -513,13 +548,24 @@ def main():
     print(f"[draft] loaded {len(items)} trend items")
 
     already_uris = load_already_drafted_uris()
-    already_topics = load_already_drafted_topics()
-    print(f"[draft] dedup: {len(already_uris)} URIs, {len(already_topics)} topics already drafted")
+    already_topics, rejected_topics, rejected_source_urls = load_drafted_topic_buckets()
+    print(
+        f"[draft] dedup: {len(already_uris)} URIs, {len(already_topics)} topics, "
+        f"{len(rejected_topics)} rejected topics, {len(rejected_source_urls)} rejected source URLs"
+    )
+
+    if rejected_source_urls:
+        before = len(items)
+        items = [it for it in items if (it.get("url") or "") not in rejected_source_urls]
+        dropped = before - len(items)
+        if dropped:
+            print(f"[draft] dropped {dropped} trend items whose URL produced a rejected draft")
 
     prompt = build_prompt(
         items,
         already_replied_uris=already_uris,
         already_drafted_topics=already_topics,
+        rejected_topics=rejected_topics,
     )
     print(f"[draft] calling claude (prompt {len(prompt)} chars)")
     response = call_claude(prompt)
