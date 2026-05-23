@@ -244,6 +244,10 @@ function cleanAddress(raw) {
     .replace(/\bFc-\d+/i, "")
     .replace(/\bUnit\s+Tbd\b/gi, "")
     .replace(/\bUnit\s+Nc-[\w,\s]+$/i, "")
+    // Spanish prepositions in proper-noun South Bay place names stay lowercase
+    // after title-casing ("El Paseo de Saratoga"). Skip "De Anza" — that's a
+    // surname (Juan Bautista de Anza) rendered "De Anza" in local naming.
+    .replace(/\bEl Paseo De\b/g, "El Paseo de")
     .replace(/\s+/g, " ")
     .trim()
     .replace(/[.,]+$/, "");
