@@ -29,6 +29,7 @@ import { CITY_NAMES } from "./lib/constants.mjs";
 import { runQualityReview } from "./lib/post-gen-review.mjs";
 import { normalizeName } from "./lib/normalizeName.mjs";
 import { canonicalizePlanCards } from "../../src/lib/south-bay/canonicalizeCard.mjs";
+import { buildMjPromptForSlot } from "./lib/mj-prompt.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
@@ -546,6 +547,22 @@ async function generateImageForSlot(slot, dateStr, slotType) {
     slot.imageStyle = "abstract";
   }
   slot.imagePrompt = prompt;
+
+  // Pre-cache the Midjourney prompt for tonight-picks so the review portal's
+  // MJ box is ready the moment Stephen expands the slot — no spinning wait
+  // for Opus distillation. Mirrors the per-approve pregen in
+  // copy-review-server.mjs but happens at batch time instead. Failures are
+  // swallowed; portal can always regen on demand.
+  if (slotType === "tonight-pick" && slot.imageUrl && slot.imageStyle !== "upload") {
+    try {
+      const mjPrompt = await buildMjPromptForSlot(slot, slotType);
+      slot.mjPrompt = mjPrompt;
+      slot.mjPromptAt = new Date().toISOString();
+      console.log(`      🎨 MJ prompt pre-cached`);
+    } catch (err) {
+      console.error(`      ⚠️  MJ pregen failed: ${err.message}`);
+    }
+  }
 }
 
 /** Fires a 🔴 Discord alert if Pass 4 (emergency fill) couldn't fill some
