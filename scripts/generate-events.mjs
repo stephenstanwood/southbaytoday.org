@@ -1687,6 +1687,11 @@ function parseRssItems(xml) {
       eventDates: get("calendarEvent:EventDates") || get("calendarEvent:eventDates") || "",
       eventTimes: get("calendarEvent:EventTimes") || get("calendarEvent:eventTimes") || "",
       location: get("calendarEvent:location") || get("calendarEvent:Location") || get("location"),
+      livewhaleId: get("livewhale:id"),
+      livewhaleCategories: get("livewhale:categories"),
+      livewhaleTags: get("livewhale:tags"),
+      georssPoint: get("georss:point"),
+      georssFeatureName: get("georss:featurename"),
       // Localist-specific
       georss_point: get("georss:point"),
       s_localtime: get("s:localtime"),
@@ -1970,6 +1975,54 @@ function inferScuCategory(title, desc) {
   return base;
 }
 
+const SOUTH_BAY_GEO_CENTERS = [
+  { city: "campbell", lat: 37.2872, lon: -121.9500 },
+  { city: "cupertino", lat: 37.3230, lon: -122.0322 },
+  { city: "los-altos", lat: 37.3852, lon: -122.1141 },
+  { city: "los-gatos", lat: 37.2261, lon: -121.9822 },
+  { city: "milpitas", lat: 37.4323, lon: -121.8996 },
+  { city: "mountain-view", lat: 37.3861, lon: -122.0839 },
+  { city: "palo-alto", lat: 37.4419, lon: -122.1430 },
+  { city: "san-jose", lat: 37.3382, lon: -121.8863 },
+  { city: "santa-clara", lat: 37.3541, lon: -121.9552 },
+  { city: "saratoga", lat: 37.2638, lon: -122.0230 },
+  { city: "sunnyvale", lat: 37.3688, lon: -122.0363 },
+];
+
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = (d) => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function nearestSouthBayCityFromGeoPoint(point) {
+  const [latRaw, lonRaw] = String(point || "").trim().split(/\s+/).map(Number);
+  if (!Number.isFinite(latRaw) || !Number.isFinite(lonRaw)) return null;
+  let best = null;
+  for (const center of SOUTH_BAY_GEO_CENTERS) {
+    const km = haversineKm(latRaw, lonRaw, center.lat, center.lon);
+    if (!best || km < best.km) best = { ...center, km };
+  }
+  // Far enough to catch San Luis Obispo / SF / Oakland / other regional alumni
+  // events, wide enough to keep normal South Bay edge cases.
+  return best && best.km <= 35 ? best.city : null;
+}
+
+function inferScuCost(item) {
+  const haystack = [
+    item.livewhaleCategories,
+    item.livewhaleTags,
+    item.description,
+  ].filter(Boolean).join(" ");
+  if (/\bfree\b/i.test(haystack)) return "free";
+  return "";
+}
+
 async function fetchScuEvents() {
   console.log("  ⏳ Santa Clara University Events...");
   try {
@@ -1980,6 +2033,12 @@ async function fetchScuEvents() {
       if (isStudentOnlyEvent(item)) { skippedScu++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
+      const geoCity = item.georssPoint ? nearestSouthBayCityFromGeoPoint(item.georssPoint) : null;
+      if (item.georssPoint && !geoCity) {
+        skippedScu++;
+        return null;
+      }
+      const venue = cleanVenue(item.location || item.georssFeatureName || "") || "Santa Clara University";
       return {
         id: h("scu", item.link || item.title, item.pubDate),
         title: item.title,
@@ -1987,11 +2046,11 @@ async function fetchScuEvents() {
         displayDate: displayDate(start),
         time: displayTime(start),
         endTime: null,
-        venue: item.location || "Santa Clara University",
+        venue,
         address: "",
-        city: "santa-clara",
+        city: geoCity || "santa-clara",
         category: inferScuCategory(item.title, item.description),
-        cost: "free",
+        cost: inferScuCost(item),
         description: truncate(stripHtml(item.description)),
         url: item.link,
         source: "Santa Clara University",

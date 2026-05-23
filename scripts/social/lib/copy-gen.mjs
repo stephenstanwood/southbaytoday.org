@@ -58,6 +58,7 @@ VOICE:
 - Never generic ("your Saturday is fully booked"), never forced ("stacked", "huge"), never vague ("got options")
 - Never sound like the venue's PR team or homepage copy
 - No permit/construction jargon ("new build", "finish interior", "TI work")
+- Do not use em dashes. Use commas, periods, or parentheses instead.
 
 STRUCTURE:
 - ONE item per post. Full detail. The POST is the point — the content stands alone.
@@ -256,6 +257,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   recordUntaggedItem(item, { slot: "single" });
 
   stripUrlsFromNoUrlPlatforms(variants);
+  stripEmDashes(variants);
   enforceHardLimits(variants);
 
   return variants;
@@ -372,6 +374,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "mast
   if (!variants.mastodon) variants.mastodon = variants.bluesky;
 
   stripUrlsFromNoUrlPlatforms(variants);
+  stripEmDashes(variants);
   enforceHardLimits(variants);
 
   return variants;
@@ -460,6 +463,13 @@ function stripUrlsFromNoUrlPlatforms(variants) {
       variants.pollX.text = variants.pollX.text.replace(/https?:\/\/\S+/g, "").replace(/[ \t]{2,}/g, " ").trim();
       if (variants.pollX.text !== before) console.warn(`[copy-gen] stripped URL(s) from pollX.text`);
     }
+  }
+}
+
+function stripEmDashes(variants) {
+  for (const [key, value] of Object.entries(variants)) {
+    if (typeof value !== "string") continue;
+    variants[key] = value.replace(/\s*—\s*/g, ", ");
   }
 }
 
@@ -667,6 +677,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   recordUntaggedItem(plan, { slot: "day-plan" });
 
   stripUrlsFromNoUrlPlatforms(variants);
+  stripEmDashes(variants);
   enforceHardLimits(variants);
 
   return variants;
@@ -691,6 +702,15 @@ export async function generateTonightPickCopy(item) {
   if (!isUsableSocialUrl(postUrl)) {
     throw new Error(`tonight-pick "${item.title || item.name}" has no usable URL (got "${postUrl}") — caller must filter`);
   }
+  let eventDateContext = "";
+  if (item.date) {
+    const d = new Date(`${item.date}T12:00:00`);
+    if (!Number.isNaN(d.getTime())) {
+      const weekday = d.toLocaleDateString("en-US", { weekday: "long", timeZone: "America/Los_Angeles" });
+      const monthDay = d.toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "America/Los_Angeles" });
+      eventDateContext = `The post publishes on the event date: ${weekday}, ${monthDay}. If you mention a weekday, it MUST be ${weekday}.`;
+    }
+  }
 
   const prompt = `Write a social post recommending ONE thing to do TONIGHT in the South Bay. This is our midday "tonight pick" — make people excited about their evening.
 
@@ -698,10 +718,13 @@ ITEM:
 - Title: ${item.title || item.name}
 - City: ${item.cityName || item.city || ""}
 - Venue: ${item.venue || ""}
+- Date: ${item.date || ""}
 - Time: ${item.time || "tonight"}
 - Category: ${item.category || ""}
 - Summary: ${(item.summary || item.blurb || "").slice(0, 300)}
 - Cost: ${item.costNote || item.cost || ""}
+
+DATE ACCURACY: ${eventDateContext}
 
 URL FOR BLUESKY/MASTODON ONLY: ${postUrl}
 ${mentions}
@@ -770,6 +793,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
   recordUntaggedItem(item, { slot: "tonight-pick" });
 
   stripUrlsFromNoUrlPlatforms(variants);
+  stripEmDashes(variants);
   enforceHardLimits(variants);
 
   return variants;

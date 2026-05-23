@@ -372,7 +372,7 @@ function pickTonightEvent(candidates, dateStr, recentVenues = new Set(), recentT
   if (dateEvents.length === 0) return null;
 
   // Boring event patterns — skip these as tonight picks
-  const BORING_TONIGHT = /\b(board of|trustees|commission|committee|council meeting|task force|budget hearing|town hall meeting|book club|chess club|book sale)\b/i;
+  const BORING_TONIGHT = /\b(board of|trustees|commission|committee|council meeting|task force|budget hearing|budget|townhall|town hall meeting|book club|chess club|book sale)\b/i;
 
   const norm = normalizeName;
 
