@@ -437,6 +437,10 @@ function TodaysGamesSection({ allGames }: { allGames: ParsedGame[] }) {
 
 // ── Team schedule card ──
 
+function hasLiveGames(games: ParsedGame[]): boolean {
+  return games.some((g) => g.status === "in");
+}
+
 function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGame[] }) {
   const todayMs = new Date().setHours(0, 0, 0, 0);
 
@@ -451,7 +455,8 @@ function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGa
     .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
     .slice(0, 2); // next 2 games
 
-  const displayed = [...past, ...live, ...upcoming];
+  const hasLive = hasLiveGames(games);
+  const displayed = hasLive ? [...live, ...upcoming] : [...past, ...upcoming];
   const leagueLabel = LEAGUE_META[team.league]?.label ?? team.league.toUpperCase();
 
   // Extract the SB team's logo from any available game, fall back to static CDN URL
@@ -465,8 +470,6 @@ function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGa
   const record = latestGame
     ? (latestGame.isSouthBayHome ? latestGame.homeRecord : latestGame.awayRecord)
     : undefined;
-
-  const hasLive = live.length > 0;
 
   return (
     <div style={{
@@ -507,6 +510,37 @@ function TeamScheduleCard({ team, games }: { team: SouthBayTeam; games: ParsedGa
           No games in this window
         </div>
       )}
+    </div>
+  );
+}
+
+function TeamScheduleGrid({
+  teams,
+  gamesByTeam,
+}: {
+  teams: SouthBayTeam[];
+  gamesByTeam: Map<string, ParsedGame[]>;
+}) {
+  return (
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+      gap: 12,
+      alignItems: "start",
+    }}>
+      {teams.map((team) => {
+        const games = gamesByTeam.get(team.key) ?? [];
+        const hasLive = hasLiveGames(games);
+
+        return (
+          <div key={team.key} style={{ gridColumn: hasLive ? "1 / -1" : undefined, minWidth: 0 }}>
+            <TeamScheduleCard
+              team={team}
+              games={games}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -633,16 +667,7 @@ export default function SportsView() {
           <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
             South Bay
           </div>
-          <div style={{ columns: "240px auto", columnGap: 12 }}>
-            {localTeams.map((team) => (
-              <div key={team.key} style={{ breakInside: "avoid", marginBottom: 12 }}>
-                <TeamScheduleCard
-                  team={team}
-                  games={gamesByTeam.get(team.key) ?? []}
-                />
-              </div>
-            ))}
-          </div>
+          <TeamScheduleGrid teams={localTeams} gamesByTeam={gamesByTeam} />
         </div>
       )}
 
@@ -652,16 +677,7 @@ export default function SportsView() {
           <div style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 10 }}>
             Bay Area
           </div>
-          <div style={{ columns: "240px auto", columnGap: 12 }}>
-            {bayAreaTeams.map((team) => (
-              <div key={team.key} style={{ breakInside: "avoid", marginBottom: 12 }}>
-                <TeamScheduleCard
-                  team={team}
-                  games={gamesByTeam.get(team.key) ?? []}
-                />
-              </div>
-            ))}
-          </div>
+          <TeamScheduleGrid teams={bayAreaTeams} gamesByTeam={gamesByTeam} />
         </div>
       )}
     </>
