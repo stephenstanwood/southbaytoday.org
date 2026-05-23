@@ -164,6 +164,8 @@ SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator 
 
 NEVER FABRICATE: do not invent case names, party names, dollar amounts, vote counts, addresses, or any specific fact not present in the agenda data. Closed session line items often list only a citation like "Conf. with Legal Counsel — existing litigation" with no party names — if a name isn't in the source, do not make one up. Skip the item.
 
+NEVER NAME STAFF CONTACTS: Legistar agendas include bureaucratic metadata like "Staff Contact: Jane Doe" or "Project Manager: John Smith" or "Sponsoring Department: …". These identify the city employee handling the paperwork, NOT the subject of the action. Never write "This follows the staff contact listing X", "named X as the new …", or treat a staff-contact name as the appointee/principal of the item. Omit these names entirely.
+
 MATCH THE SOURCE'S FRAMING — DO NOT NARROW: if a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the agenda explicitly uses that word. Do not invent illustrative examples ("for immigration, tax, or other..."). Stick to the source's wording on sensitive framing.
 
 DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: if a meeting's date matches today's date and the agenda is forward-looking (e.g. "proposed", "to consider", "study session"), do not write that it was approved or adopted. Use forward-looking language ("to hear", "to consider", "scheduled to review") or skip the item.
@@ -197,6 +199,9 @@ const HEDGE_PATTERNS = [
   /\bagenda\s+(?:didn'?t|did\s+not)\s+(?:provide|specify|include|detail)\b/i,
   /\b(?:exact|specific)\s+(?:nature|content|terms|impact)\s+(?:remains|is)\s+unclear\b/i,
   /\bdetails?\s+(?:remain|are)\s+unclear\b/i,
+  /\bstaff\s+contact\b/i,
+  /\bproject\s+manager\s+(?:is|listing|listed)\b/i,
+  /\bsponsoring\s+department\b/i,
 ];
 
 function isHedgeSummary(summary) {
