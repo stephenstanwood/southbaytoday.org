@@ -1,146 +1,134 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-22T23:19:19.002Z",
+    "generatedAt": "2026-05-23T11:14:35.789Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 14
+    "sourceCount": 12
   },
   "summary": {
-    "threadsMined": 14,
-    "placesExtracted": 19,
-    "placesMatched": 5,
-    "placeGaps": 14,
-    "eventsExtracted": 2,
+    "threadsMined": 12,
+    "placesExtracted": 52,
+    "placesMatched": 21,
+    "placeGaps": 31,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Kumako Ramen",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "ramen restaurant where BTS member visited",
+      "name": "Trader Joe's",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery price comparison study across multiple locations",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
-        "https://www.reddit.com/r/bayarea/comments/1tk7dmr/gavin_newsom_intervenes_amid_historic_tech_layoffs/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/"
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
     {
-      "name": "Rancho",
-      "city": "Mountain View",
-      "kind": "park",
-      "context": "area with numerous butterflies observed recently",
+      "name": "Grocery Outlet",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery price comparison, 25-30% cheaper than Safeway",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
-        "https://www.reddit.com/r/bayarea/comments/1tk7dmr/gavin_newsom_intervenes_amid_historic_tech_layoffs/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/"
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
     {
-      "name": "Jams Kitchen",
+      "name": "Costco",
+      "city": "San Leandro",
+      "kind": "retail",
+      "context": "grocery price comparison study",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ]
+    },
+    {
+      "name": "99 Ranch",
+      "city": "",
+      "kind": "retail",
+      "context": "produce and Asian groceries alternative to Costco",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ]
+    },
+    {
+      "name": "Meet Fresh",
+      "city": "South Bay",
+      "kind": "restaurant",
+      "context": "Taiwanese shaved snow, closest option locally",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ]
+    },
+    {
+      "name": "Powder",
+      "city": "San Francisco",
+      "kind": "restaurant",
+      "context": "Taiwanese shaved ice on Divisadero",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ]
+    },
+    {
+      "name": "Blockheads",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "Filipino food restaurant",
+      "context": "Taiwanese shaved ice on East side, closed",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
     {
-      "name": "Luisa",
-      "city": "Milpitas",
+      "name": "Snowflake",
+      "city": "Fremont",
       "kind": "restaurant",
-      "context": "Filipino restaurant recommendation",
+      "context": "First Taiwanese snow ice shop in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
     {
-      "name": "Denny's",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "Bascom Ave location, wallet return story",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "Rogers",
-      "city": "Mountain View",
-      "kind": "cafe",
-      "context": "new location opened on Middlefield",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "Calaveras Reservoir",
-      "city": "",
-      "kind": "park",
-      "context": "scenic winding road for hiking and driving",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "Sunol Wilderness",
-      "city": "",
-      "kind": "park",
-      "context": "hiking destination accessed via Calaveras Road",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "Mount Hamilton",
-      "city": "",
-      "kind": "park",
-      "context": "Butterfly Mariposa Lily blooming location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "FanimeCon",
+      "name": "Snow Miracle",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "annual convention at Convention Center Memorial Day weekend",
+      "kind": "restaurant",
+      "context": "Taiwanese shaved ice at Oakridge Mall, closed",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
@@ -148,11 +136,12 @@
       "name": "La Chingada Taqueria",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast burrito spot with crispy tater tots",
+      "context": "breakfast burrito with crispy tater tots",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
@@ -160,11 +149,12 @@
       "name": "Roses Cafe",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast burrito spot with crispy hashbrown and bacon",
+      "context": "breakfast burrito with crispy hashbrown",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
@@ -172,122 +162,548 @@
       "name": "Cafe Rosalina",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast burrito spot mentioned in discussion",
+      "context": "seasoned potatoes breakfast burrito",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     },
     {
       "name": "Cat and Cloud",
-      "city": "Santa Clara",
+      "city": "Santa Cruz",
       "kind": "restaurant",
-      "context": "top tier breakfast burrito spot over the hill in SC",
+      "context": "top tier breakfast burrito near South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ]
+    },
+    {
+      "name": "Haraz Coffee House",
+      "city": "Mountain View",
+      "kind": "cafe",
+      "context": "new coffee shop opening near San Antonio",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "SP2",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown nightlife venue near San Pedro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Continental",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown house music venue",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Splash",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown San Jose nightlife",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Fuze",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hip-hop nightlife venue downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Myth",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hip-hop nightlife venue downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Aura",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hip-hop nightlife venue downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Temple",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hip-hop nightlife venue downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "San Jose Bar And Grill",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hip-hop nightlife venue downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Fuego",
+      "city": "Sunnyvale",
+      "kind": "bar",
+      "context": "hip-hop venue near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Pure Nightclub",
+      "city": "Sunnyvale",
+      "kind": "bar",
+      "context": "EDM and hip-hop venue near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Cardiff",
+      "city": "Campbell",
+      "kind": "bar",
+      "context": "house music venue near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Kartoum",
+      "city": "Campbell",
+      "kind": "bar",
+      "context": "nightlife venue near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "The Bears",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "nightlife venue mentioned for younger crowd",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "San Pedro Market",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "nightlife destination near San Pedro Square",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ]
+    },
+    {
+      "name": "Baekjeong",
+      "city": "",
+      "kind": "restaurant",
+      "context": "Korean BBQ restaurant leveraging Resy bookings",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ]
+    },
+    {
+      "name": "Good Karma Bikes",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "used bike co-op across from Diridon Station",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ]
+    },
+    {
+      "name": "Silicon Valley Bike Exchange",
+      "city": "Palo Alto",
+      "kind": "service",
+      "context": "used bike shop similar to Good Karma Bikes",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Tindero",
-      "when": "July 5th",
+      "name": "Weekday Hiking Group for the Laid-Off",
+      "when": "Tuesday, May 26 @ 10:30 AM",
       "city": "San Francisco",
-      "context": "Filipino pop-up dinner event, fine dining",
+      "context": "4.2mi Presidio hike for job seekers and unemployed",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ]
-    },
-    {
-      "name": "FanimeCon",
-      "when": "Memorial Day weekend",
-      "city": "San Jose",
-      "context": "annual anime and pop culture convention",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Castle Rock State Park",
-      "city": "Saratoga",
-      "kind": "park",
-      "context": "park with high butterfly activity recently",
+      "name": "Whole Foods",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery price comparison study across multiple locations",
       "sourceUrls": [
         "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
-        "https://www.reddit.com/r/bayarea/comments/1tk7dmr/gavin_newsom_intervenes_amid_historic_tech_layoffs/",
-        "https://www.reddit.com/r/bayarea/comments/1tk44ry/anyone_noticing_a_lot_more_butterflies_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1tk2id3/this_bts_fan_was_working_at_her_parents_san_jose/",
-        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/"
-      ],
-      "matchedName": "Castle Rock State Park"
-    },
-    {
-      "name": "Kalesa",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "Filipino restaurant recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ],
-      "matchedName": "Kalesa"
-    },
-    {
-      "name": "Rene Rose",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Filipino restaurant, on expensive side",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tk73ok/calaveras_reservoir/",
-        "https://www.reddit.com/r/bayarea/comments/1tkkmh5/butterfly_mariposa_lily_blooming_on_mount_hamilton/",
-        "https://www.reddit.com/r/bayarea/comments/1tk6gw1/spots_for_filipino_food/",
-        "https://www.reddit.com/r/Campbell/comments/1tijc7b/4am_at_dennys/",
-        "https://www.reddit.com/r/mountainview/comments/1thuci5/new_adjacent_rogers_is_open_on_middlefield/"
-      ],
-      "matchedName": "Rene Rose FILIPINO KITCHEN"
-    },
-    {
-      "name": "Eastridge Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "super-regional shopping mall opened in 1971",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ],
-      "matchedName": "Eastridge Center"
+      "matchedName": "Whole Foods Market"
+    },
+    {
+      "name": "Safeway",
+      "city": "",
+      "kind": "retail",
+      "context": "grocery price comparison study across multiple locations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ],
+      "matchedName": "Safeway"
+    },
+    {
+      "name": "Snowtime",
+      "city": "South Bay",
+      "kind": "restaurant",
+      "context": "Taiwanese-style shaved snow dessert shop",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ],
+      "matchedName": "Snowtime"
+    },
+    {
+      "name": "Sulbing",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Korean shaved ice bingsu alternative",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
+        "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
+      ],
+      "matchedName": "Sulbing Cafe"
     },
     {
       "name": "Morning Lobby",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "breakfast burrito spot on Almaden & Cherry with tater tots",
+      "context": "breakfast burrito with fantastic tater tots on Almaden & Cherry",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ti4ldp/new_cafe_is_coming_to_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1tk6rbp/surprised_this_wasnt_posted_in_here_but_fanimecon/",
-        "https://www.reddit.com/r/SanJose/comments/1tk7vqx/the_history_of_the_eastridge_center_in_san_jose_ca/",
+        "https://www.reddit.com/r/bayarea/comments/1tkx6h1/i_got_tired_of_seeing_all_the_vibes_based/",
+        "https://www.reddit.com/r/bayarea/comments/1tl4hrt/weekday_hiking_group_for_the_laidoff_tuesday/",
+        "https://www.reddit.com/r/mountainview/comments/1tj0agm/butterflies/",
+        "https://www.reddit.com/r/SanJose/comments/1tkxbfd/anyone_here_familiar_with_real_taiwanese_shaved/",
         "https://www.reddit.com/r/SanJose/comments/1tkseu7/when_it_comes_to_breakfast_burritos_what_do_you/"
       ],
       "matchedName": "Morning Lobby"
+    },
+    {
+      "name": "Sunnyvale Baylands Parkrun",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "free timed 5K on Saturdays at 8 am",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Sunnyvale Baylands Park"
+    },
+    {
+      "name": "Central Park",
+      "city": "Santa Clara",
+      "kind": "park",
+      "context": "walkable from 95051 area, hosts city events",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Central Park"
+    },
+    {
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "popular nightlife destination near SJSU",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    },
+    {
+      "name": "The Wagon Wheel",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "bar frequented by SJSU students and alumni",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Wagon Wheel Barbecue"
+    },
+    {
+      "name": "Paper Plane",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown nightlife venue, less ratchet end",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Paper Plane"
+    },
+    {
+      "name": "55 South",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown nightlife and San Pedro area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "55 South"
+    },
+    {
+      "name": "Haberdasher",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "basement speakeasy type bar downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Haberdasher"
+    },
+    {
+      "name": "Cash Only",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "downtown San Jose nightlife",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Cash Only"
+    },
+    {
+      "name": "Katie Bloom",
+      "city": "Campbell",
+      "kind": "bar",
+      "context": "nightlife venue near San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Katie Bloom's"
+    },
+    {
+      "name": "Miniboss",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "nightlife venue mentioned for younger crowd",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "MINIBOSS"
+    },
+    {
+      "name": "Guildhouse",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "nightlife venue with early closing time",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tl5gwg/went_to_alameda_to_watch_the_mandalorian_with/",
+        "https://www.reddit.com/r/santaclara/comments/1thvheq/how_did_you_find_a_good_apartment_in_santa_clara/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
+        "https://www.reddit.com/r/mountainview/comments/1tizy5v/haraz_coffee_house_near_san_antonio_is_opening_in/",
+        "https://www.reddit.com/r/SanJose/comments/1tl2z5l/nightlife_at_sj/"
+      ],
+      "matchedName": "Guildhouse"
+    },
+    {
+      "name": "Galpão Gaucho",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "Brazilian steakhouse, accepts Resy credit",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ],
+      "matchedName": "Galpão Gaucho Brazilian Steakhouse"
+    },
+    {
+      "name": "Suspiro",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "restaurant at Santana Row, recommended",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ],
+      "matchedName": "Suspiro"
+    },
+    {
+      "name": "Valley Goat",
+      "city": "",
+      "kind": "restaurant",
+      "context": "restaurant recommendation for Resy credit",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ],
+      "matchedName": "Valley Goat"
+    },
+    {
+      "name": "Ushiya",
+      "city": "Milpitas",
+      "kind": "restaurant",
+      "context": "all-you-can-eat Japanese BBQ",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ],
+      "matchedName": "Ushiya Grill"
+    },
+    {
+      "name": "Oak & Rye",
+      "city": "Los Gatos",
+      "kind": "restaurant",
+      "context": "restaurant option for Amex Resy credit",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tk3kg9/amex_resy_credit/",
+        "https://www.reddit.com/r/SanJose/comments/1tknwjc/are_there_any_bicycle_coops_or_shops_that_deal_in/"
+      ],
+      "matchedName": "Oak & Rye"
     }
   ],
   "eventMatches": []

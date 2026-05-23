@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Venues/orgs we tried to tag but couldn't find in social-handles.json. Auto-populated at gen time. Resolve by adding entries to social-handles.json (this file's entries are then dropped on next run).",
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-23"
   },
   "gaps": {
     "central park library edinger room": {
@@ -973,6 +973,326 @@
         }
       ],
       "lastSeen": "2026-05-20"
+    },
+    "nob hill": {
+      "displayName": "Nob Hill",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "saratoga",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "thai basil restaurant": {
+      "displayName": "Thai Basil Restaurant",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "sunnyvale",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "jeopardy bar league": {
+      "displayName": "Jeopardy Bar League",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "campbell library": {
+      "displayName": "Campbell Library",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "goodnight little storytime": {
+      "displayName": "Goodnight, Little Storytime",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "trivia night": {
+      "displayName": "Trivia Night",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "park it market": {
+      "displayName": "Park-It Market",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "tammytea love": {
+      "displayName": "TammyTea Love",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "arastradero preserve vista point": {
+      "displayName": "Arastradero Preserve Vista Point",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "palo-alto",
+          "category": "outdoor",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "the ritz": {
+      "displayName": "The Ritz",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "the flatliners samiam strangelight": {
+      "displayName": "The Flatliners, Samiam, Strangelight",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "oil painting exhibit": {
+      "displayName": "Oil Painting Exhibit",
+      "firstSeen": "2026-05-23",
+      "occurrences": 2,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-altos",
+          "category": "arts",
+          "kind": "card"
+        },
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "dr funk": {
+      "displayName": "Dr. Funk",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "trivia mondays": {
+      "displayName": "Trivia Mondays",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "zoom": {
+      "displayName": "Zoom",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "venue"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "understanding anti retaliation and anti harassment protections workshop": {
+      "displayName": "Understanding Anti-Retaliation and Anti-Harassment Protections workshop",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "el mercadito": {
+      "displayName": "El Mercadito",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "san-jose",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "wednesday travel nights hiking the french alps": {
+      "displayName": "Wednesday Travel Nights: Hiking the French Alps",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-altos",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "pho thin hanoi vietnamese restaurant": {
+      "displayName": "PHO THIN HANOI VIETNAMESE RESTAURANT",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "milpitas",
+          "category": "food",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "the peaceful poets": {
+      "displayName": "The Peaceful Poets",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "milpitas",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "mandarin english bilingual family storytime": {
+      "displayName": "Mandarin/English Bilingual Family Storytime",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "tonight-pick",
+          "kind": "title"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "pride flag raising ceremony": {
+      "displayName": "Pride Flag Raising Ceremony",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "sunnyvale",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "poetry open mic": {
+      "displayName": "Poetry Open Mic",
+      "firstSeen": "2026-05-23",
+      "occurrences": 2,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-altos",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
+    },
+    "social stitching": {
+      "displayName": "Social Stitching",
+      "firstSeen": "2026-05-23",
+      "occurrences": 1,
+      "contexts": [
+        {
+          "slot": "day-plan",
+          "city": "los-gatos",
+          "category": "events",
+          "kind": "card"
+        }
+      ],
+      "lastSeen": "2026-05-23"
     }
   }
 }
