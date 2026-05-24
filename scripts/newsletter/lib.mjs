@@ -1092,18 +1092,44 @@ function footerBlock() {
 
 // ── Discord DM + self-improvement loop ─────────────────────────────────────
 
-export async function sendNewsletterDiscordDm(data, subject) {
-  const content = renderDiscordDigest(data, subject);
+export async function publishNewsletterArchive(data, html) {
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!token) throw new Error("BLOB_READ_WRITE_TOKEN missing for newsletter HTML archive");
+
+  const { del, put } = await import("@vercel/blob");
+  const pathname = `newsletters/${data.date}.html`;
+
+  try {
+    await del(pathname, { token });
+  } catch (err) {
+    const msg = String(err?.message || err || "");
+    if (!/not.?found|404|BlobNotFoundError/i.test(msg)) throw err;
+  }
+
+  const result = await put(pathname, archiveNewsletterHtml(html), {
+    access: "public",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "text/html; charset=utf-8",
+    token,
+    cacheControlMaxAge: 0,
+  });
+  return result.url;
+}
+
+export async function sendNewsletterDiscordDm(data, subject, archiveUrl = null) {
+  const content = renderDiscordDm(data, subject, archiveUrl);
   await sendDiscordDmChunks(content);
 }
 
-export async function recordNewsletterSend({ data, subject, broadcastId = null }) {
+export async function recordNewsletterSend({ data, subject, broadcastId = null, archiveUrl = null }) {
   const sentAt = new Date().toISOString();
   appendFileSync(NEWSLETTER_HISTORY_FILE, JSON.stringify({
     sentAt,
     date: data.date,
     subject,
     broadcastId,
+    archiveUrl,
     editorialMeta: data.editorialMeta,
     selections: newsletterSelectionSnapshot(data),
   }) + "\n");
@@ -1113,6 +1139,46 @@ export async function recordNewsletterSend({ data, subject, broadcastId = null }
   } catch (err) {
     console.warn(`editorial reflection failed: ${err.message}`);
   }
+}
+
+function archiveNewsletterHtml(html) {
+  return String(html || "")
+    .replace(
+      /<a href="\{\{\{RESEND_UNSUBSCRIBE_URL\}\}\}"[^>]*>unsubscribe<\/a>/gi,
+      "unsubscribe from the email"
+    )
+    .replace(/\{\{\{RESEND_UNSUBSCRIBE_URL\}\}\}/g, "https://southbaytoday.org");
+}
+
+function renderDiscordDm(data, subject, archiveUrl) {
+  const lines = [`📬 **${subject}**`];
+  const blurb = newsletterDmBlurb(data);
+  if (blurb) lines.push("", blurb);
+  if (archiveUrl) lines.push("", `Full email: ${archiveUrl}`);
+  return lines.join("\n");
+}
+
+function newsletterDmBlurb(data) {
+  const drafted = data.editorial?.briefing || data.dayPlanBlurb || "";
+  if (drafted) return compactText(drafted, 900);
+
+  const bits = [];
+  if (data.dayPlan?.cards?.length) {
+    const cities = [...new Set(orderedCards(data.dayPlan).map((c) => cityName(c.city)).filter(Boolean))].slice(0, 3);
+    bits.push(`Today's field guide has ${data.dayPlan.cards.length} stops${cities.length ? ` around ${humanList(cities)}` : ""}.`);
+  }
+  if (data.tonightPick) {
+    bits.push(`Tonight's pick is ${data.tonightPick.title}${data.tonightPick.time ? ` at ${data.tonightPick.time}` : ""}.`);
+  }
+  if (data.featuredEvents?.length) {
+    const totalEvents = data.todayEvents?.length || data.featuredEvents.length;
+    bits.push(`${totalEvents} timed events are on the board, led by ${humanList(data.featuredEvents.slice(0, 3).map((e) => e.title))}.`);
+  }
+  if (data.recentOpenings?.length) {
+    bits.push(`Food radar has ${humanList(data.recentOpenings.slice(0, 2).map((o) => o.name))}.`);
+  }
+
+  return compactText(bits.join(" ") || "Today's South Bay Today email is ready, with the field guide, events, openings, civic notes, and local conversation.", 900);
 }
 
 function renderDiscordDigest(data, subject) {

@@ -14,7 +14,7 @@
 
 import {
   assembleNewsletterData, renderEmail, resendFetch,
-  recordNewsletterSend, sendNewsletterDiscordDm,
+  publishNewsletterArchive, recordNewsletterSend, sendNewsletterDiscordDm,
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
 
@@ -89,15 +89,18 @@ async function main() {
   console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
 
   let dmError = null;
+  let archiveUrl = null;
   try {
-    await sendNewsletterDiscordDm(data, subject);
+    archiveUrl = await publishNewsletterArchive(data, html);
+    console.log(`newsletter archive: ${archiveUrl}`);
+    await sendNewsletterDiscordDm(data, subject, archiveUrl);
     console.log("discord DM sent");
   } catch (err) {
     dmError = err;
     console.error(`discord DM failed: ${err.message}`);
   }
 
-  await recordNewsletterSend({ data, subject, broadcastId: broadcast.id });
+  await recordNewsletterSend({ data, subject, broadcastId: broadcast.id, archiveUrl });
   console.log("newsletter send recorded");
 
   if (dmError) throw dmError;
