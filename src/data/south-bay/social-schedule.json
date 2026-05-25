@@ -442,7 +442,7 @@
     },
     "2026-05-23": {
       "day-plan": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "day-plan",
         "city": "milpitas",
         "cityName": "Milpitas",
@@ -612,10 +612,18 @@
         "copyApprovedAt": "2026-05-16T14:19:36.698Z",
         "imageApprovedAt": "2026-05-16T14:19:36.698Z",
         "generatedAt": "2026-05-16T10:41:55.965Z",
-        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Milpitas\n\nBreakfast — Sunnyvale Farmers Market\nShop for local produce, artisan goods, and ready-to-eat food weekly.\n\nMorning — Sierra Vista Open Space Preserve\nNature preserve with hiking/biking/equestrian trails through varied landscapes w\n\nLunch — Katana Sushi & Sake\nSushi & rolls plus sake drinks served in a space with exposed ceiling joists & J\n\nAfternoon — Tien Dao Christian Media Association\nMilpitas bookstore on Cadillac Ct, good for a slow browse.\n\nDinner — House of Genji\nCooked-to-order Japanese teppanyaki prepared tableside, with fried rice & sushi \n\nEvening — Dolphin Hyperspace\nCatch Dolphin Hyperspace's experimental electronic and jazz performance.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nTrue duotone risograph print — only two colors overlapping (fluorescent orange + deep teal, OR hot pink + navy, OR chartreuse + burgundy — pick one palette). Visible halftone dot patterns, slight misregistration, grainy paper texture. Minimal layout, indie-zine feel, chunky display sans-serif.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: vertical stacked blocks, one stop per horizontal band, reading top to bottom.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
+        "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nSunnyvale + San Jose + Milpitas\n\nBreakfast — Sunnyvale Farmers Market\nShop for local produce, artisan goods, and ready-to-eat food weekly.\n\nMorning — Sierra Vista Open Space Preserve\nNature preserve with hiking/biking/equestrian trails through varied landscapes w\n\nLunch — Katana Sushi & Sake\nSushi & rolls plus sake drinks served in a space with exposed ceiling joists & J\n\nAfternoon — Tien Dao Christian Media Association\nMilpitas bookstore on Cadillac Ct, good for a slow browse.\n\nDinner — House of Genji\nCooked-to-order Japanese teppanyaki prepared tableside, with fried rice & sushi \n\nEvening — Dolphin Hyperspace\nCatch Dolphin Hyperspace's experimental electronic and jazz performance.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nTrue duotone risograph print — only two colors overlapping (fluorescent orange + deep teal, OR hot pink + navy, OR chartreuse + burgundy — pick one palette). Visible halftone dot patterns, slight misregistration, grainy paper texture. Minimal layout, indie-zine feel, chunky display sans-serif.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: vertical stacked blocks, one stop per horizontal band, reading top to bottom.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: playful and loud — embrace the chaos, let elements collide, energy over polish.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names.",
+        "publishedAt": "2026-05-23T14:16:51.419Z",
+        "publishedTo": [
+          {
+            "platform": "pinterest",
+            "ok": false,
+            "error": "Pinterest POST /pins failed (403): {\"code\":29,\"message\":\"Apps with Trial access may not create Pins in production https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead.\"}"
+          }
+        ]
       },
       "tonight-pick": {
-        "status": "image-approved",
+        "status": "published",
         "slotType": "tonight-pick",
         "item": {
           "title": "Live Music",
@@ -648,7 +656,9 @@
         "generatedAt": "2026-05-16T10:42:35.989Z",
         "imagePrompt": "Terrazzo pattern illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Cream field scattered with muted stone chips—dusty rose, sage, charcoal. Center narrow column featuring abstracted stylized guitar silhouette fragmented into saturated warm gold and burnt orange, overlaid with flowing musical note shapes in deep indigo and coral. Sparse confetti dots and stars scattered in wide margins. Electric, vibrant energy with bold color contrast and movement. Editorial magazine spread aesthetic.",
         "mjPrompt": "{Bauhaus typography poster sans-serif primary blocks geometric, pixel art 8-bit grid limited palette retro digital, mid-century modern organic curves muted warm palette atomic-era, Donald Judd minimalist box geometry industrial, Japanese ukiyo-e woodblock flat color fields delicate ink line, Frank Stella protractor concentric stripes geometric, dazzle camouflage geometric bold black white shapes, Adinkra stamped pattern earth tones west african symbol, folk art naive style hand-drawn whimsical bright colors, linocut block print carved texture visible grain 2-3 inks indie feel, tonalism muted atmosphere soft fog quiet contemplation, WPA mid-century travel poster stylized geometry limited palette, minimal line art bold color fills large color fields, mezzotint velvety dark tones gradual fades atmospheric mystery, Navajo blanket geometric stripes warm earth palette} of brushed cymbals catching low amber, the curve of a bass neck against dim brick, smoke unfurling past a string of warm bulbs, condensation beading on a tilted glass, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
-        "mjPromptAt": "2026-05-16T21:04:11.255Z"
+        "mjPromptAt": "2026-05-16T21:04:11.255Z",
+        "publishedAt": "2026-05-23T18:53:29.229Z",
+        "publishedTo": []
       },
       "wildcard": {
         "status": "image-approved",
@@ -1108,7 +1118,7 @@
     },
     "2026-05-26": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "los-gatos",
         "cityName": "Los Gatos",
@@ -1277,8 +1287,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-26-day-plan-1779532281390.png",
         "imageStyle": "art-deco-travel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:58:53.572Z",
+        "imageApprovedAt": "2026-05-23T11:58:53.572Z",
         "generatedAt": "2026-05-23T10:31:21.387Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"TUESDAY IN THE SOUTH BAY\"\nSan Jose + Saratoga + Sunnyvale\n\nBreakfast — heytea\nQuick coffee in San Jose on Hostetter Rd.\n\nMorning — Nob Hill\nHiking spot in the Saratoga hills\n\nLunch — Thai Basil Restaurant\nBright eatery lures locals with Southern Thai specialties, including curries & n\n\nAfternoon — Sports Basement Sunnyvale\nSprawling retailer for sports & outdoor clothing, gear & accessories, plus equip\n\nDinner — Eos & Nyx\nSan Jose californian restaurant on S Second St.\n\nEvening — Jeopardy Bar League\nCompete in Jeopardy trivia league at Three Sisters Whiskey Bar.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArt Deco travel poster aesthetic (1930s golden age). Bold geometric sunbursts, stepped triangular motifs, streamlined chrome-style lines. Deep teal, burnt orange, cream, and gold accents. Elegant Art Deco sans-serif type with condensed letterforms. Hint of travel poster nostalgia meets modern city guide.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: monospace typewriter-style face for times and metadata, a contrasting display face for venue names.\nDecoration: collage-feel scraps of torn paper, washi tape strips, or ripped edges around section boundaries.\nDensity: generous breathing room around headlines and between stops.\nMood: electric and vibrant — push saturation, add movement and visual punch.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
@@ -1293,7 +1303,7 @@
         }
       ],
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Understanding Anti-Retaliation and Anti-Harassment Protections workshop",
@@ -1319,17 +1329,19 @@
           "bumpThreads": "Doors in 30 — the anti-retaliation and anti-harassment protections workshop starts at 6:30 PM on Zoom tonight. 📘 #SouthBay",
           "bumpBluesky": "Starting in 30: tonight's Zoom workshop on the new anti-retaliation and anti-harassment protections, 6:30 PM. 📘 #SouthBay"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-26-tonight-pick-1779533108255.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-26-tonight-pick-upload-1779538681010.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:18:03.303Z",
+        "imageApprovedAt": "2026-05-23T12:18:03.303Z",
         "generatedAt": "2026-05-23T10:45:08.255Z",
-        "imagePrompt": "Minimal line art collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Bold primary colors—deep blue, bright yellow, red—with cream and charcoal. Left side densely layered with fragmented open book silhouette and torn paper scraps with washi tape strips. Right side airy, negative space. Center features abstracted shield shape suggesting protection. Intersecting geometric planes, ripped edges marking section boundaries. Playful energy, asymmetric composition, editorial magazine aesthetic."
+        "imagePrompt": "Minimal line art collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Bold primary colors—deep blue, bright yellow, red—with cream and charcoal. Left side densely layered with fragmented open book silhouette and torn paper scraps with washi tape strips. Right side airy, negative space. Center features abstracted shield shape suggesting protection. Intersecting geometric planes, ripped edges marking section boundaries. Playful energy, asymmetric composition, editorial magazine aesthetic.",
+        "mjPrompt": "{fauvist wild color non-realistic palette emotional intensity, terrazzo pattern cream field scattered small stone chips muted accents, art deco travel poster stepped geometry chrome lines rich teal and gold, chromatic aberration glitch RGB channel offsets scanlines digital grain, hard-edge painting flat sharp geometric color blocks crisp, Mughal garden painting elaborate detail architecture refined, Andean textile geometric warp weft alpaca palette, Cubist faceted planes multiple viewpoints geometric fragmentation, Chinese gongbi meticulous brush detail traditional symbolic, Futurist motion lines diagonal energy speed dynamic, ashcan school gritty urban earth tones early 20th century, Saul Bass film poster bold silhouettes flat shapes stark contrast, sacred geometry mandala precise compass shapes meditative, plein air impressionist quick brushwork outdoor light dappled, risograph print grainy texture 2-color overprint zine energy} of a folded legal page softening under lamplight, the quiet weight of a closed binder on a desk, blue screen-glow spilling across a coffee ring, a pencil resting between underlined paragraphs, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:09:49.720Z"
       }
     },
     "2026-05-27": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Music on Castro - Samba Cruz Trio",
@@ -1356,10 +1368,10 @@
           "bumpThreads": "Heading out soon? Samba Cruz Trio takes Castro Street in about 30 minutes. 🎶 #MountainView",
           "bumpBluesky": "Samba Cruz Trio on Castro Street in 30. Downtown Mountain View, outdoors. 🎶 #MountainView"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-27-tonight-pick-1779538502302.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-27-tonight-pick-upload-1779539369312.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:29:31.068Z",
+        "imageApprovedAt": "2026-05-23T12:29:31.068Z",
         "generatedAt": "2026-05-23T12:14:58.983Z",
         "imagePrompt": "Abstract editorial illustration in redwood fog-gray California landscape style. Stylized golden hour light breaking through layered, fragmented hillsides in muted greens, charcoal, and warm ochre. Integrate a bold, geometric guitar silhouette fragmented across the composition—strings abstracted into thin horizontal color stripes (burnt orange, sage, gold) that divide sections like a magazine spread. Wide margins frame a narrow central column of visual chaos: colliding angular shapes, energetic brushstrokes, layered translucent rectangles suggesting urban downtown architecture. Musical notation dissolves into abstraction. Rich textural contrast between smooth fog-like washes and sharp, jagged mark-making. High-energy, playful, deliberately unpolished. 4:5 portrait ratio. Album art aesthetic—striking and stop-scroll worthy.",
         "mjPrompt": "{risograph print grainy texture 2-color overprint zine energy, Bauhaus geometric primary shapes structured grid, Cuban screen-print poster bold limited color graphic energy, topographic contour lines abstract landscape pattern, stained glass leaded outline jewel-tone color blocks rich saturation, Memphis design squiggles confetti dots 80s bold pastels playful, WPA mid-century travel poster stylized geometry limited palette, linocut block print carved texture visible grain 2-3 inks indie feel, isometric flat illustration architectural spatial depth, color field painting large flat saturated planes meditative scale, watercolor translucent wash bleeding edges paper texture wet-on-wet, paper cut collage layered flat shapes subtle shadows craft feel, gouache painterly texture muted vintage palette, jazz album cover blue note bold typography rhythm, woodcut bold black lines stark white space german expressionist} of samba rhythm rippling through Castro Street storefront geometry, guitar curves and hand drums dissolving into warm evening light, sidewalks marked by dancing color stripes and downtown window glow, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
@@ -1376,7 +1388,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "saratoga",
         "cityName": "Saratoga",
@@ -1543,15 +1555,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-27-day-plan-1779533169055.png",
         "imageStyle": "novel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:02.156Z",
+        "imageApprovedAt": "2026-05-23T11:59:02.156Z",
         "generatedAt": "2026-05-23T10:46:09.055Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"WEDNESDAY IN THE SOUTH BAY\"\nSan Jose + Cupertino + Santa Clara + Los Altos\n\nBreakfast — Coffee & Water Lab\nSaratoga Ave cafe in San Jose for an espresso and a sit.\n\nMorning — Deer Hollow Farm\nCupertino trail loop, easy to medium effort.\n\nLunch — Athena Grill & Catering\nFestive eatery, decked out in blue & white, draws crowds with hearty Greek eats,\n\nAfternoon — El Mercadito\nBrowse vendors selling Latin American crafts, food, and goods downtown.\n\nDinner — A Slice of New York\nPizzeria turning out thin-crust pies in a space lined with New York City street \n\nEvening — Wednesday Travel Nights: Hiking the French Alps\nWatch slideshow and hear stories from a four-day hike through the French Alps.\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArchitectural drawing aesthetic — isometric building silhouettes, thin construction lines, dimension annotations, paper-drafting feel in sepia + accent.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: vertical stacked blocks, one stop per horizontal band, reading top to bottom.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: generous breathing room around headlines and between stops.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
     },
     "2026-05-28": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "TammyTea Love",
@@ -1577,12 +1589,14 @@
           "bumpThreads": "Starting soon at @sanjoseimprov — TammyTea Love at 8 PM. Last call to grab a seat. 🎤 #SanJose",
           "bumpBluesky": "Doors in 30 at @sanjoseimprov — TammyTea Love, 8 PM. 🎤 #SanJose"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-28-tonight-pick-1779532569799.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-28-tonight-pick-upload-1779539066653.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:24:29.900Z",
+        "imageApprovedAt": "2026-05-23T12:24:29.900Z",
         "generatedAt": "2026-05-23T10:36:09.799Z",
-        "imagePrompt": "Risograph screen print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric neon pink, deep teal, and cream overprint with grainy halftone texture. Left side densely layered with fragmented microphone silhouette and abstracted stage light rays piercing through organic blob shapes. Right side airy and open with faint landscape suggestions in soft teal washes. Asymmetric energy—bold color blocking, intentional registration shifts, zine-print rawness. Stylized comedy club architecture fragments woven abstractly through composition. High saturation, palpable movement."
+        "imagePrompt": "Risograph screen print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric neon pink, deep teal, and cream overprint with grainy halftone texture. Left side densely layered with fragmented microphone silhouette and abstracted stage light rays piercing through organic blob shapes. Right side airy and open with faint landscape suggestions in soft teal washes. Asymmetric energy—bold color blocking, intentional registration shifts, zine-print rawness. Stylized comedy club architecture fragments woven abstractly through composition. High saturation, palpable movement.",
+        "mjPrompt": "{cyanotype blueprint single-tone deep blue ink wash, Indian Madhubani folk pattern bold outline natural pigments, gouache painterly texture muted vintage palette, stained glass leaded outline jewel-tone color blocks rich saturation, risograph print grainy texture 2-color overprint zine energy, folk art naive style hand-drawn whimsical bright colors, Vorticist sharp angular machine-age british modernism, weaving warp-weft texture earth-tone yarn dimensional grid, Suprematist floating geometric shapes white void minimalist, minimal line art bold color fills large color fields, pixel art 8-bit grid limited palette retro digital, Vienna Secession Klimt gold leaf decorative pattern, art deco travel poster stepped geometry chrome lines rich teal and gold, Polish poster school surreal expressive 60s illustration, Scandinavian minimal generous whitespace muted earth tones thin lines} of a single microphone caught in a hot spotlight, condensation beading on a lowball glass, velvet curtain folds swallowing the back of a small stage, laughter-warm amber bleeding into dim brick, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:03:37.261Z"
       },
       "_reviewHistory": [
         {
@@ -1595,7 +1609,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "cupertino",
         "cityName": "Cupertino",
@@ -1741,15 +1755,15 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-28-day-plan-1779533251776.png",
         "imageStyle": "novel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:13.589Z",
+        "imageApprovedAt": "2026-05-23T11:59:13.589Z",
         "generatedAt": "2026-05-23T10:47:31.776Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"THURSDAY IN THE SOUTH BAY\"\nSanta Clara + Los Altos + Milpitas + Los Gatos + Palo Alto\n\nBreakfast — MoDo Hawaii\nSanta Clara bakery on El Camino Real for pastries and grab-and-go pulls.\n\nMorning — American Cancer Society Discovery Shop - Los Altos, CA\nLos Altos thrift store on Main St\n\nLunch — PHO THIN HANOI VIETNAMESE RESTAURANT\nSit-down Vietnamese restaurant in Milpitas on Serra Way # 106, mid-tier prices.\n\nAfternoon — Sanity Thai Massage\nLos Gatos massage studio on S Santa Cruz Ave\n\nDinner — Ethel's Fancy\nTable-service eatery on Waverley St in Palo Alto.\n\nEvening — The Peaceful Poets\nRead and discuss poetry with a welcoming group of local writers and poetry lover\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nJapanese woodblock print (ukiyo-e) aesthetic with bold outlines, flat color areas, and nature motifs. Traditional meets modern typography.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: content flows diagonally across the page, with stop cards tilted slightly, creating movement from top-left to bottom-right.\nTypography: tight condensed all-caps throughout, with letter-spacing that's almost claustrophobic on headlines.\nDecoration: small confetti dots and stars scattered sparsely in the margins and between sections.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
     },
     "2026-05-29": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "sunnyvale",
         "cityName": "Sunnyvale",
@@ -1918,8 +1932,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-29-day-plan-1779532656540.png",
         "imageStyle": "postcard-stamp",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:18.023Z",
+        "imageApprovedAt": "2026-05-23T11:59:18.023Z",
         "generatedAt": "2026-05-23T10:37:36.540Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"FRIDAY IN THE SOUTH BAY\"\nCupertino + Palo Alto + Santa Clara + Campbell\n\nBreakfast — Rainbow Donuts and Boba (Previously Babo Boba Cafe)\nQuick coffee in Cupertino on Homestead Rd.\n\nMorning — Arastradero Preserve Vista Point\nHiking spot in the Palo Alto hills\n\nLunch — Tong Sui Desserts & Drinks (Palo Alto)\nPalo Alto sweet stop\n\nAfternoon — Triton Museum of Art\nExhibits of contemporary & historical works, with an emphasis on Bay Area artist\n\nDinner — LUNA Mexican Kitchen - The Pruneyard\nVibrant, rustic Mexican eatery serving enchiladas, tacos & meat dishes, plus win\n\nEvening — This Is Now with Angie Coiro: Theo Baker\nHear investigative journalist Theo Baker recount the Stanford fraud case that le\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nVintage postcard / stamp aesthetic. Bordered postcard frame with a subtle scalloped or dashed edge. Sepia/vintage photo color treatment for any illustrative areas, but bright modern accent colors (coral, teal) for the text blocks. \"Greetings from the South Bay\" energy. Slight grain and faded edges. Travel-nostalgia meets current-day.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: stop cards cascade down the page at slightly different widths, each overlapping the next by a hair, like shuffled index cards.\nTypography: primary face is clean sans-serif, but the lead word/phrase is hand-lettered in a loose script for a personal touch.\nDecoration: thin horizontal color stripes between sections as dividers.\nDensity: editorial wide margins, like a magazine spread, with the content column narrow relative to the page.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
@@ -1934,7 +1948,7 @@
         }
       ],
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Mandarin/English Bilingual Family Storytime",
@@ -1960,17 +1974,19 @@
           "bumpThreads": "Doors in 30 at the Cupertino Library for the bilingual family storytime. Stories, songs, a craft. Free. 📚 #Cupertino",
           "bumpBluesky": "Starting in 30: bilingual Mandarin/English family storytime at the Cupertino Library. Free, kids and caretakers welcome. 📚 #Cupertino #SouthBay"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-29-tonight-pick-1779533288590.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-29-tonight-pick-upload-1779539241595.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:27:24.899Z",
+        "imageApprovedAt": "2026-05-23T12:27:24.899Z",
         "generatedAt": "2026-05-23T10:48:08.589Z",
-        "imagePrompt": "Isometric architectural illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric vibrant palette—saturated coral, deep teal, golden yellow, vibrant magenta. Fragmented stylized open book silhouette and abstracted musical note form woven through bold geometric planes and stacked isometric blocks. Rich layered composition with sharp angles, dimensional depth, generous negative space. Electric visual energy, high saturation, magazine editorial aesthetic. Pure abstract spatial geometry punctuated by two recognizable anchors—book and music—dissolving into color fields and architectural forms."
+        "imagePrompt": "Isometric architectural illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric vibrant palette—saturated coral, deep teal, golden yellow, vibrant magenta. Fragmented stylized open book silhouette and abstracted musical note form woven through bold geometric planes and stacked isometric blocks. Rich layered composition with sharp angles, dimensional depth, generous negative space. Electric visual energy, high saturation, magazine editorial aesthetic. Pure abstract spatial geometry punctuated by two recognizable anchors—book and music—dissolving into color fields and architectural forms.",
+        "mjPrompt": "{screen print poster halftone dots limited 3-color palette retro, Bauhaus typography poster sans-serif primary blocks geometric, Saul Steinberg single-line drawing whimsy intellectual cartooning, Matisse cut-paper bold organic shapes clean edges joyful flat color, Memphis design squiggles confetti dots 80s bold pastels playful, dazzle camouflage geometric bold black white shapes, Aboriginal Australian dot painting tessellated landscape symbolic, Lichtenstein ben-day dots comic panel thick outline pop, Russian avant-garde rodchenko diagonal red typography revolutionary, cyanotype blueprint single-tone deep blue ink wash, encaustic wax painting layered translucent dimensional surface, plein air impressionist quick brushwork outdoor light dappled, Rothko color field soft rectangles ethereal scale meditative, Islamic geometric tile tessellation interlocking pattern, De Stijl primary rectangles black lines mondrian grid} of felt animals pinned to a soft flannel board, picture books fanned open under warm library light, paper-cut red lanterns above scattered crayons, brush-stroke characters drying on cream paper, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:03:44.618Z"
       }
     },
     "2026-05-30": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "mountain-view",
         "cityName": "Mountain View",
@@ -2116,13 +2132,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-30-day-plan-1779532763142.png",
         "imageStyle": "scrapbook",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:22.219Z",
+        "imageApprovedAt": "2026-05-23T11:59:22.219Z",
         "generatedAt": "2026-05-23T10:39:23.142Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SATURDAY IN THE SOUTH BAY\"\nMountain View + Santa Clara + Palo Alto + Saratoga\n\nBreakfast — Peet's Coffee\nBerkeley-born chain featuring signature coffee, tea & blended drinks alongside b\n\nMorning — Computer History Museum\nExhibits on early computers, the growth of the Internet, industry pioneers & mor\n\nLunch — Annie's Sandwiches\nSanta Clara sandwich shop on Park Ave, $.\n\nAfternoon — Forest Spa Boutique\nPalo Alto treatment spa on Ramona St, book a slot and unwind.\n\nDinner — Restaurant Gish\nRelaxed eatery with menus featuring creative Korean dishes & desserts, plus outd\n\nEvening — AAPI Teen Art Exhibit 2026\nBrowse teen artwork celebrating AAPI heritage on display in the library's Group \n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nScrapbook / mood board aesthetic. Warm kraft paper or corkboard textured background. Each stop presented as a tilted white card or polaroid frame pinned to the board. Handwritten-style captions beneath each card. Colorful washi tape strips, push pins, small sticker decorations. Warm, personal, tactile, DIY feeling.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: tight condensed all-caps throughout, with letter-spacing that's almost claustrophobic on headlines.\nDecoration: no decoration — the layout and typography carry it; pure negative space does the work.\nDensity: packed and dense — information fills most of the frame, very little negative space.\nMood: electric and vibrant — push saturation, add movement and visual punch.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "The Flatliners, Samiam, Strangelight",
@@ -2148,17 +2164,19 @@
           "bumpThreads": "Heading to The Ritz tonight? Flatliners/Samiam/Strangelight kicks off in about 30. Last call to grab a ticket. 🎸 #SanJose",
           "bumpBluesky": "30 minutes out from Flatliners, Samiam, and Strangelight at The Ritz. 7 PM start. 🎸 #SanJose"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-30-tonight-pick-1779532802442.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-30-tonight-pick-upload-1779538598008.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:16:42.383Z",
+        "imageApprovedAt": "2026-05-23T12:16:42.383Z",
         "generatedAt": "2026-05-23T10:40:02.442Z",
-        "imagePrompt": "California redwood fog-gray landscape abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Densely layered stylized hills in warm gold, dusty sage, and charcoal with fragmented electric guitar silhouette woven through layered organic blob shapes suggesting rolling terrain. Golden hour light filtering through soft fog gradients. Rich color field: burnt amber, fog-gray, deep forest green, cream. Abstract but topically connected—guitar form recognizable but stylized and dissolved into landscape. Editorial sophistication with generous breathing room. NO PSYCHEDELIA, NO TRIPPY EFFECTS."
+        "imagePrompt": "California redwood fog-gray landscape abstraction, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Densely layered stylized hills in warm gold, dusty sage, and charcoal with fragmented electric guitar silhouette woven through layered organic blob shapes suggesting rolling terrain. Golden hour light filtering through soft fog gradients. Rich color field: burnt amber, fog-gray, deep forest green, cream. Abstract but topically connected—guitar form recognizable but stylized and dissolved into landscape. Editorial sophistication with generous breathing room. NO PSYCHEDELIA, NO TRIPPY EFFECTS.",
+        "mjPrompt": "{Swiss International Style helvetica grid clean asymmetric, illuminated manuscript medieval marginalia gold ink decorative, Saul Bass film poster bold silhouettes flat shapes stark contrast, chromatic aberration glitch RGB channel offsets scanlines digital grain, Suprematist floating geometric shapes white void minimalist, cyanotype blueprint single-tone deep blue ink wash, watercolor translucent wash bleeding edges paper texture wet-on-wet, geometric abstraction crisp shapes pure color modernist, Mughal garden painting elaborate detail architecture refined, concrete art swiss geometric pure abstraction, Indian Madhubani folk pattern bold outline natural pigments, sacred geometry mandala precise compass shapes meditative, Push Pin Studios flat illustration sophisticated 60s graphic, mid-century jazz album cover blue note bold typography rhythm, Vienna Secession Klimt gold leaf decorative pattern} of smoke curling through low red stage light, chrome guitar strings catching warm glare, scuffed amplifier grille humming in dim haze, sweat-slick setlist taped to scarred wood, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:03:50.060Z"
       }
     },
     "2026-05-31": {
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "palo-alto",
         "cityName": "Palo Alto",
@@ -2327,13 +2345,13 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-31-day-plan-1779532876636.png",
         "imageStyle": "art-deco-travel",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:29.107Z",
+        "imageApprovedAt": "2026-05-23T11:59:29.107Z",
         "generatedAt": "2026-05-23T10:41:16.636Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"SUNDAY IN THE SOUTH BAY\"\nSanta Clara + Los Altos + Cupertino + Palo Alto\n\nBreakfast — 1 Oz Coffee\nModern, open-air coffee shop with a stylish patio offering choice espresso drink\n\nMorning — Los Altos History Museum\nMuseum built to replicate a 1930s farmhouse, with permanent & temporary exhibits\n\nLunch — Wei's Fish\nSit-down Chinese restaurant in Cupertino on S De Anza Blvd, $$$ range.\n\nAfternoon — Illusive Comics & Games, LLC\nSizable center for comic books, graphic novels, collectibles, board games & grou\n\nDinner — Wildseed\nPalo Alto restaurant on South, $$$ for a sit-down dinner.\n\nEvening — Oil Painting Exhibit\nBrowse Bing Weng's oil paintings on display, then attend the public reception wi\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nArt Deco travel poster aesthetic (1930s golden age). Bold geometric sunbursts, stepped triangular motifs, streamlined chrome-style lines. Deep teal, burnt orange, cream, and gold accents. Elegant Art Deco sans-serif type with condensed letterforms. Hint of travel poster nostalgia meets modern city guide.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: centered axis — all content anchored to a vertical center line, symmetrical feel, clean spine running through.\nTypography: one massive headline that dominates the top third of the poster, supporting text much smaller.\nDecoration: thin horizontal color stripes between sections as dividers.\nDensity: intentionally asymmetric — dense on one side, airy on the other.\nMood: warm and inviting — lean into approachable, friendly tones even if the base palette is cool.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       },
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Oil Painting Exhibit",
@@ -2359,17 +2377,19 @@
           "bumpThreads": "Quick reminder: Bing Weng's oil paintings at the Los Altos Library are a great after-work detour tonight. 🎨 #LosAltos",
           "bumpBluesky": "Last call for a calm Thursday — Bing Weng's oil paintings at the Los Altos Library. 🎨 #LosAltos"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-31-tonight-pick-1779532917460.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-05-31-tonight-pick-upload-1779538471268.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:14:40.554Z",
+        "imageApprovedAt": "2026-05-23T12:14:40.554Z",
         "generatedAt": "2026-05-23T10:41:57.460Z",
-        "imagePrompt": "Risograph screen print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric burnt sienna, deep teal, and cream overprint with grainy halftone texture. Left side densely layered with fragmented canvas and paintbrush silhouettes woven through geometric triangles and circles. Right side airy negative space. Sharp rectangular accents and small squares scattered asymmetrically for rhythm. Bold saturated color fields create visual punch and movement. Library-inspired abstraction with tactile zine energy."
+        "imagePrompt": "Risograph screen print illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Electric burnt sienna, deep teal, and cream overprint with grainy halftone texture. Left side densely layered with fragmented canvas and paintbrush silhouettes woven through geometric triangles and circles. Right side airy negative space. Sharp rectangular accents and small squares scattered asymmetrically for rhythm. Bold saturated color fields create visual punch and movement. Library-inspired abstraction with tactile zine energy.",
+        "mjPrompt": "{isometric flat illustration architectural spatial depth, chromatic aberration glitch RGB channel offsets scanlines digital grain, screen print poster halftone dots limited 3-color palette retro, sacred geometry mandala precise compass shapes meditative, Mexican papel picado cut paper banner festive primary colors, stained glass leaded outline jewel-tone color blocks rich saturation, De Stijl primary rectangles black lines mondrian grid, Saul Bass film poster bold silhouettes flat shapes stark contrast, editorial magazine wide margins single bold accent color sophisticated restraint, gouache painterly texture muted vintage palette, art deco travel poster stepped geometry chrome lines rich teal and gold, Cuban screen-print poster bold limited color graphic energy, terrazzo pattern cream field scattered small stone chips muted accents, embroidery thread texture stitched outline tactile fabric, geometric abstraction crisp shapes pure color modernist} of thick oil paint ridged in palette-knife strokes, deep ultramarine pooling beside burnt sienna, linseed sheen catching low gallery glow, a single sable brush resting on a smeared rag, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:03:55.928Z"
       }
     },
     "2026-06-01": {
       "tonight-pick": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "tonight-pick",
         "item": {
           "title": "Trivia Mondays",
@@ -2395,12 +2415,14 @@
           "bumpThreads": "Heads up — Trivia Mondays at Dr. Funk starts in 30 minutes. Downtown San Jose, 7:30 PM. 🍹 #SanJose",
           "bumpBluesky": "30 minutes out: trivia at Dr. Funk, downtown San Jose, 7:30 PM. 🍹 #SanJose"
         },
-        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-06-01-tonight-pick-1779533046776.png",
-        "imageStyle": "abstract",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-06-01-tonight-pick-upload-1779538294462.jpg",
+        "imageStyle": "upload",
+        "copyApprovedAt": "2026-05-23T12:11:42.349Z",
+        "imageApprovedAt": "2026-05-23T12:11:42.349Z",
         "generatedAt": "2026-05-23T10:44:06.776Z",
-        "imagePrompt": "Editorial magazine collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Vibrant coral as single bold accent color against cream and warm charcoal. Densely layered composition with fragmented tiki torch silhouette and abstracted cocktail glass form woven through intersecting geometric planes, textured fields, and overlapping linear elements. Rich warm undertones throughout. Sophisticated restraint with maximum visual density—negative space minimal, typography-less layout carries all weight. Approachable yet polished, editorial sophistication."
+        "imagePrompt": "Editorial magazine collage illustration, 4:5 portrait ratio. NO PEOPLE, NO TEXT. Vibrant coral as single bold accent color against cream and warm charcoal. Densely layered composition with fragmented tiki torch silhouette and abstracted cocktail glass form woven through intersecting geometric planes, textured fields, and overlapping linear elements. Rich warm undertones throughout. Sophisticated restraint with maximum visual density—negative space minimal, typography-less layout carries all weight. Approachable yet polished, editorial sophistication.",
+        "mjPrompt": "{brutalist raw concrete typography unpolished anti-design, minimal line art bold color fills large color fields, California redwood and fog-gray landscape abstraction stylized hills golden hour, Hokusai dynamic wave landscape compositional power, art deco travel poster stepped geometry chrome lines rich teal and gold, icon painting byzantine gold leaf stylized halos religious, weaving warp-weft texture earth-tone yarn dimensional grid, chromatic aberration glitch RGB channel offsets scanlines digital grain, Agnes Martin gentle horizontal grid soft graphite quiet, wireframe blueprint geometric architecture line drawing, abstract expressionism gestural brushwork vivid color blocks, sashiko indigo blue running stitch repair pattern japanese, Mughal garden painting elaborate detail architecture refined, stained glass leaded outline jewel-tone color blocks rich saturation, Vorticist sharp angular machine-age british modernism} of lacquered tiki mug glinting under low red light, pencil paused above a folded quiz card, condensation pooling on dark wood, paper umbrellas tipped against amber glassware, flat graphic illustration, abstract composition --ar 4:5 --no photograph, photo, photorealistic, realism, 3D render, render, framed art, gallery wall, museum interior, exhibition, art show, plinth, hanging artwork, stage, audience, text, words, letters, watermark, signature, logo, people, faces, hands",
+        "mjPromptAt": "2026-05-23T12:04:01.769Z"
       },
       "_reviewHistory": [
         {
@@ -2413,7 +2435,7 @@
         }
       ],
       "day-plan": {
-        "status": "draft",
+        "status": "image-approved",
         "slotType": "day-plan",
         "city": "santa-clara",
         "cityName": "Santa Clara",
@@ -2580,8 +2602,8 @@
         },
         "imageUrl": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/posters/2026-06-01-day-plan-1779533448254.png",
         "imageStyle": "editorial-magazine",
-        "copyApprovedAt": null,
-        "imageApprovedAt": null,
+        "copyApprovedAt": "2026-05-23T11:59:33.395Z",
+        "imageApprovedAt": "2026-05-23T11:59:33.395Z",
         "generatedAt": "2026-05-23T10:50:48.253Z",
         "imagePrompt": "Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:\n\n\"MONDAY IN THE SOUTH BAY\"\nLos Altos + Santa Clara + Cupertino + Los Gatos\n\nBreakfast — Bluestone Lane Los Altos Café\n1st St cafe in Los Altos for an espresso and a sit.\n\nMorning — Santa Clara University\nThis 1851 Jesuit university offers a scenic campus with gardens & Mission Reviva\n\nLunch — Taiwan Porridge - Cupertino\nUnpretentious restaurant with a relaxed atmosphere specializing in Taiwanese com\n\nAfternoon — Social Stitching\nKnit, crochet, or cross-stitch alongside other crafters in a casual social setti\n\nDinner — Red Pepper Bar and Grill\nCasual hangout with covered patio for margaritas & a variety of Cali-Mex eats in\n\nEvening — Poetry Open Mic\nShare your own poetry or listen to others read theirs in a welcoming open mic se\n\nsouthbaytoday.org\n\nDESIGN DIRECTION:\nHigh-end editorial magazine layout (think New York Magazine or The Gentlewoman). Large expressive serif display headline dominates the top. Clean grid with rule lines between sections. Single bold accent color against generous white space. Sophisticated, restrained, reads like a print feature.\n\nCOMPOSITION DIRECTION (interpret within the style above):\nLayout: asymmetric — elements intentionally off-grid, some stops float left, others right, varied sizes.\nTypography: monospace typewriter-style face for times and metadata, a contrasting display face for venue names.\nDecoration: sharp geometric accents — triangles, circles, small squares — placed deliberately for rhythm.\nDensity: intentionally asymmetric — dense on one side, airy on the other.\nMood: quiet and confident — restrained, editorial, sophisticated.\n\nCRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include \"STOP 1\", \"STOP 2\" labels — just the times and venue names."
       }
