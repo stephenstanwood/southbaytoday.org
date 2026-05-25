@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-25T11:17:25.579Z",
+      "generatedAt": "2026-05-25T19:09:53.823Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-25T11:17:28.302Z",
+      "generatedAt": "2026-05-25T19:09:56.315Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -187,24 +187,24 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00114",
-          "address": "2875 El Camino Real",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to remove (1) existing exterior storefront door to be infilled with storefront framing and glazing and removal of (1) existing exterior storefront door for replacement with new storefront door and glazing to match adjacent existing storefront for both. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-19",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00112",
           "address": "180 El Camino Real",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Request for a Minor Staff Level Architectural Review to allow for the removal of one Coast Live Oak tree with a significant lean and one Chinese Fringe tree that was damaged by collision with a car in the parking lot of Nordstrom. The two trees will be replaced with 24” box trees of the same species in the same locations. CEQA Status: Not a Project. Zoning District: CC – Community Commercial. For More Information Contact the Project Planner Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-19",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00114",
+          "address": "2875 El Camino Real",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review to remove (1) existing exterior storefront door to be infilled with storefront framing and glazing and removal of (1) existing exterior storefront door for replacement with new storefront door and glazing to match adjacent existing storefront for both. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-19",
