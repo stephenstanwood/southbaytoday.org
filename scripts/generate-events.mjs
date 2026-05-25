@@ -727,6 +727,10 @@ function cleanTitle(title) {
     "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
+    // Japanese American Citizens League — appears as "SJ JACL" in JAMsj titles.
+    // 4-letter so it survives the conservative pass, but the second 2+ pass
+    // downcases it once the surrounding title tips into mixed case.
+    "JACL",
     // Local youth-program brand names that arrive ALL-CAPS from BiblioCommons
     "XFYD",
     // Library/program acronyms that arrive ALL-CAPS in source titles but the
@@ -1260,6 +1264,8 @@ function polishDescription(text) {
     // title parentheticals. Mirrored from cleanTitle's KEEP_UPPER so body
     // text doesn't drift out of sync with the title.
     "TLAB", "HICAP",
+    // Japanese American Citizens League — mirrored from cleanTitle's KEEP_UPPER.
+    "JACL",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
@@ -1301,6 +1307,12 @@ function polishDescription(text) {
   // lowercase+uppercase splitter turns it into "Ne XT". Single-word brand mark
   // (1985 founding through 1996 Apple acquisition).
   t = t.replace(/\bNe XT\b/g, "NeXT");
+  // Japanese American Museum of San Jose styles itself "JAMsj" in its own
+  // newsletters and on jamsj.org; the splitter rule above turns "JAMsj" into
+  // "JA Msj" because the ([A-Z]{2,})([A-Z][a-z]{2,}) shape matches JA + Msj.
+  // Same family of fix as PayPal/NetApp/CrossFit/NeXT — single-word brand mark
+  // that the camel-splitter pulls apart.
+  t = t.replace(/\bJA Msj\b/g, "JAMsj");
 
   // Split into sentences and drop boilerplate
   const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
