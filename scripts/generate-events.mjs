@@ -841,6 +841,15 @@ function cleanTitle(title) {
     /(?<=[A-Za-z]['"])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
     (_, sp, w) => sp + w.toLowerCase(),
   );
+  // Wider variant: when the close quote sits after a digit ("'Archive.1'") or
+  // is whitespace-padded ("' Archive. 1 '"), the letter+quote lookbehind above
+  // misses. Anchor on a balanced quote pair so we only fire after a real
+  // closing quote (not a leading quoted phrase). Caught WOODZ' "...' Archive.
+  // 1 ' In US" 2026-05-25.
+  t = t.replace(
+    /(['"][^'"]*['"])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
+    (_, q, sp, w) => q + sp + w.toLowerCase(),
+  );
   // Normalize "--" → en-dash. Stanford Localist feeds emit raw double-hyphens
   // as subtitle separators ("Literature of the Middle East--Book Display");
   // standard typography wants a single en-dash with spaces. Only fires when
@@ -1318,6 +1327,16 @@ function polishDescription(text) {
   // Same family of fix as PayPal/NetApp/CrossFit/NeXT — single-word brand mark
   // that the camel-splitter pulls apart.
   t = t.replace(/\bJA Msj\b/g, "JAMsj");
+  // Consumer-tech brand marks the camel-splitter pulls apart: SJPL computer-help
+  // listings write "PowerPoint", Palo Alto library uses "YouTube", inbound
+  // ICS feeds drop "iPhone" — all become "Power Point" / "You Tube" / "i Phone"
+  // after the [a-z][A-Z] splitter. Reunite them so brand copy reads correctly.
+  t = t.replace(/\bPower Point\b/g, "PowerPoint");
+  t = t.replace(/\bYou Tube\b/g, "YouTube");
+  // iPhone is tricky — lowercase "i" is rare as a word, but "I Phone" at a
+  // sentence start would be a real two-word phrase. Only reunite the lowercase
+  // form ("i Phone") since that's the only camel-split shape that produces it.
+  t = t.replace(/\bi Phones?\b/g, (m) => m.endsWith("s") ? "iPhones" : "iPhone");
 
   // Split into sentences and drop boilerplate
   const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
