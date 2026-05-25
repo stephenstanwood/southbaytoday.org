@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-25T19:17:41.418Z",
+    "generatedAt": "2026-05-25T23:17:03.041Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
@@ -9,9 +9,9 @@
     "placesExtracted": 40,
     "placesMatched": 14,
     "placeGaps": 26,
-    "eventsExtracted": 5,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,194 +19,259 @@
       "name": "St. James Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "hosts Levitt San Jose summer concert series",
+      "context": "hosts Levitt San Jose free summer concert series",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Levitt San Jose",
       "city": "San Jose",
       "kind": "venue",
-      "context": "free summer concert series at St. James Park",
+      "context": "free concerts all summer long at St. James Park",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Hope Thrift",
       "city": "San Jose",
       "kind": "retail",
-      "context": "affordable thrift shop with huge clothing and home goods selection",
+      "context": "affordable thrift store with shirts under $10, good selection",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Black & Brown",
       "city": "San Jose",
       "kind": "retail",
-      "context": "curated thrift store, affordable option",
+      "context": "curated thrift store recommended for affordable options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Classic Loot",
       "city": "San Jose",
       "kind": "retail",
-      "context": "curated thrift store, affordable option",
+      "context": "curated thrift store recommended for affordable options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "2nd Street",
       "city": "San Jose",
       "kind": "retail",
-      "context": "curated thrift store, affordable option",
+      "context": "curated thrift store recommended for affordable options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Moon Zooom",
       "city": "San Jose",
       "kind": "retail",
-      "context": "curated thrift store, affordable option",
+      "context": "curated thrift store recommended for affordable options",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
-      "name": "Goodwill Bins",
+      "name": "Goodwill Outlet",
       "city": "San Jose",
       "kind": "retail",
-      "context": "discounted thrift bins at Tully and King location",
+      "context": "bin-style thrift on Tully, everything sold by the pound",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Savers",
       "city": "San Jose",
       "kind": "retail",
-      "context": "thrift shop option, noted as expensive by some",
+      "context": "thrift store with discount opportunities and 20% coupon with donation",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Thrift Box",
       "city": "San Jose",
       "kind": "retail",
-      "context": "located in Willow Glen, good prices",
+      "context": "thrift store in Willow Glen with good prices and upscale items",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Unicorn Thrift Shop",
       "city": "San Jose",
       "kind": "retail",
-      "context": "supports small local business",
+      "context": "local business with good prices",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Happy Dragon Thrift",
       "city": "Los Gatos",
       "kind": "retail",
-      "context": "great prices for thrifted items",
+      "context": "thrift store with great prices",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
+      ]
+    },
+    {
+      "name": "Salvation Army Thriftstore",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "thrift store with monthly 50% off clothes sales and coupons",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
+        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
+        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
+      ]
+    },
+    {
+      "name": "Little Lou's BBQ",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "recently reopened after several bad health inspections",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
+        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
+        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
       "name": "Acme",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
-      "context": "sourdough bakery tried and compared",
+      "context": "sourdough bakery mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
     {
       "name": "Manresa",
-      "city": "Los Gatos",
+      "city": "",
       "kind": "restaurant",
-      "context": "noted for great bread offerings",
+      "context": "known for great bread",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
     {
-      "name": "Node Beeple Exhibit",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "digital art and NFT exhibit featuring Beeple works",
+      "name": "Rosalind Bakery",
+      "city": "Pacifica",
+      "kind": "bakery",
+      "context": "sourdough option outside South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ]
+    },
+    {
+      "name": "Backhaus",
+      "city": "San Mateo",
+      "kind": "bakery",
+      "context": "highly rated sourdough",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ]
+    },
+    {
+      "name": "LeBoulanger",
+      "city": "",
+      "kind": "bakery",
+      "context": "former sourdough source on Castro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ]
+    },
+    {
+      "name": "Sumano's Bakery",
+      "city": "Watsonville",
+      "kind": "bakery",
+      "context": "sliced sourdough available in stores",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
@@ -214,12 +279,38 @@
       "name": "Sultans Kebab",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "new kebab restaurant opened May 19, highly praised",
+      "context": "newly opened kebab restaurant",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ]
+    },
+    {
+      "name": "Chavez Market",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "quality produce including watermelon",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ]
+    },
+    {
+      "name": "Campbell Farmers Market",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "recommended for fresh produce",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
@@ -227,12 +318,12 @@
       "name": "Meet Fresh",
       "city": "Cupertino",
       "kind": "cafe",
-      "context": "Taiwanese shaved snow spot, noted as closed",
+      "context": "Taiwanese shaved snow spot, recently closed",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
@@ -240,315 +331,231 @@
       "name": "Red Hot Wok",
       "city": "Cupertino",
       "kind": "restaurant",
-      "context": "authentic Taiwanese restaurant with shaved ice dessert",
+      "context": "serves Taiwanese shaved ice dessert",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ]
     },
     {
-      "name": "Class 302",
-      "city": "",
-      "kind": "cafe",
-      "context": "Southern California shaved snow and boba shop reference",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
-        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
-        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
-      ]
-    },
-    {
-      "name": "Hops and Sessions",
-      "city": "Livermore",
-      "kind": "bar",
-      "context": "weekly trivia nights, outside South Bay",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Aloha",
+      "name": "Mission Bowling",
       "city": "San Jose",
       "kind": "venue",
-      "context": "roller skating venue, now closed",
+      "context": "bowling alley with food and drinks, $12 unlimited bowling",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
+        "https://www.reddit.com/r/bayarea/comments/1tnjr9p/come_bowl_with_a_stranger/",
         "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Hogue Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "roller skating lessons held here",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Skate Better Now",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "roller skating lessons with Nastassia at multiple locations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Hearts Delight Roller Derby",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "roller derby events and community",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Tuesday Night Skates",
-      "city": "San Jose",
-      "kind": "event",
-      "context": "weekly downtown roller skating gatherings",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Mickaboo",
-      "city": "Palo Alto",
-      "kind": "service",
-      "context": "bird rescue nonprofit, adoption events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
+        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmwkhz/convenient_place_to_vote/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "Levitt San Jose Summer Concert Series",
-      "when": "Summer, June 7 date mentioned",
+      "when": "June 7 and throughout summer",
       "city": "San Jose",
-      "context": "free outdoor concerts at St. James Park all summer",
+      "context": "free concerts all summer long at St. James Park",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ]
     },
     {
-      "name": "Node Beeple Exhibit",
-      "when": "ending next week, weekends only",
-      "city": "Palo Alto",
-      "context": "digital art exhibit featuring Beeple and robot dogs",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
-        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
-        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
-      ]
-    },
-    {
-      "name": "Taiwan Shaved Snow farmers market pop-ups",
+      "name": "SJ Clothing Swap",
       "when": "ongoing",
-      "city": "Cupertino",
-      "context": "college student vendors at Alum Rock and Foster City markets",
+      "city": "San Jose",
+      "context": "free clothing swap event, reduce textile waste, 20 item max",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
-        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
-        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
-        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
+        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
+        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
+      ]
+    },
+    {
+      "name": "Mission Bowling - Unlimited Bowling Night",
+      "when": "Monday",
+      "city": "San Jose",
+      "context": "$12 unlimited bowling with food and drinks available",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnjr9p/come_bowl_with_a_stranger/",
+        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
+        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmwkhz/convenient_place_to_vote/"
       ]
     },
     {
       "name": "Bird Adoption & Toymaking Faire",
-      "when": "date not specified",
+      "when": "",
       "city": "Palo Alto",
-      "context": "free bird adoption and toy making event at Museum",
+      "context": "free event with Mickaboo rescue birds, toy making activities",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
+        "https://www.reddit.com/r/bayarea/comments/1tnjr9p/come_bowl_with_a_stranger/",
         "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ]
-    },
-    {
-      "name": "Viva Calle",
-      "when": "coming up in a couple weeks",
-      "city": "San Jose",
-      "context": "street event with skating, biking, walking",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
+        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmwkhz/convenient_place_to_vote/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Sunnyvale Baylands Parkrun",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "free Saturday 5K runs, walker and dog friendly",
+      "name": "Discovery Shop",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "thrift store on Almaden and Branham with cute items",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ],
-      "matchedName": "Sunnyvale Baylands Park"
+      "matchedName": "American Cancer Society Discovery Shop - Los Altos, CA"
+    },
+    {
+      "name": "Pacific Catch",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "recently closed due to health code violations with roaches",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
+        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
+        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
+      ],
+      "matchedName": "Pacific Catch"
     },
     {
       "name": "Central Park",
       "city": "Santa Clara",
       "kind": "park",
-      "context": "walkable from 95051 area, hosts big city events",
+      "context": "walkable from 95051 area with big city events",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ],
       "matchedName": "Central Park"
+    },
+    {
+      "name": "Sunnyvale Baylands Parkrun",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "free timed 5K on Saturdays at 8am, walker and dog friendly",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
+        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
+        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
+      ],
+      "matchedName": "Sunnyvale Baylands Park"
     },
     {
       "name": "San Tomas Aquino Creek Trail",
       "city": "Santa Clara",
       "kind": "park",
-      "context": "scenic bicycle trail from Central Park Library to Baylands",
+      "context": "scenic bike trail from Central Park Library to Levi's Stadium and Baylands",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
         "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
         "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/Campbell/comments/1tl2al2/pacific_catch_closure/",
+        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/"
       ],
       "matchedName": "San Tomas Aquino Creek Trail"
-    },
-    {
-      "name": "Salvation Army",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "thrift store on Alameda, good prices with 50% off sales",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "The Salvation Army San Jose Temple Corps Community Center"
-    },
-    {
-      "name": "Discovery Shop",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "on Almaden and Branham, cute items but slightly high prices",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "American Cancer Society Discovery Shop - Los Altos, CA"
     },
     {
       "name": "GK Pastry",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "top-rated sourdough bakery in Mountain View area",
+      "context": "highly praised sourdough bakery",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "GK Pastry"
     },
     {
       "name": "Midwife and the Baker",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
-      "context": "sourdough bakery tried and compared",
+      "context": "sourdough option discussed in thread",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "The Midwife and The Baker"
     },
     {
       "name": "Little Sky",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
-      "context": "sourdough option recommended",
+      "context": "sourdough recommendation",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "Little Sky Bakery | Los Altos"
     },
     {
       "name": "Craftsman and Wolves",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
       "context": "makes house sourdough on weekends",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tmvw7i/saw_this_in_st_james_park_on_my_walk/",
-        "https://www.reddit.com/r/santaclara/comments/1tkzivi/advice_for_firsttime_homeowner_in_santa_clara/",
-        "https://www.reddit.com/r/mountainview/comments/1tkzgjp/new_rake_for_the_japanese_rock_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1tnflha/what_thrift_shops_are_still_worth_going_too/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "Craftsman and Wolves"
     },
     {
-      "name": "Elia",
+      "name": "Raley's Nob Hill",
+      "city": "",
+      "kind": "retail",
+      "context": "sourdough option, location closing",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
+        "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
+      ],
+      "matchedName": "Nob Hill"
+    },
+    {
+      "name": "Elia Restaurant",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "new restaurant opened May 19, same owner as Sultans Kebab",
+      "context": "newly opened, same owner as Sultans",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "Elia"
@@ -557,12 +564,12 @@
       "name": "Snowtime",
       "city": "",
       "kind": "cafe",
-      "context": "Taiwanese shaved snow spot in South Bay area",
+      "context": "shaved snow dessert spot",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "Snowtime"
@@ -571,39 +578,26 @@
       "name": "Sul & Beans",
       "city": "Cupertino",
       "kind": "cafe",
-      "context": "Korean bingsoo shop on Main Street",
+      "context": "Korean bingsoo on Main Street",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmp633/went_to_the_node_beeple_exhibit_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/SanJose/comments/1tn88ro/sj_wild_deers/",
-        "https://www.reddit.com/r/SanJose/comments/1tmpo6h/went_to_the_beeple_node_exhibit/",
         "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/",
+        "https://www.reddit.com/r/SanJose/comments/1tngxvz/wheres_everyone_getting_their_watermelon_from/",
         "https://www.reddit.com/r/Cupertino/comments/1tm089b/does_anyone_else_wish_there_was_a_proper/"
       ],
       "matchedName": "Sul & Beans"
     },
     {
-      "name": "The Plex",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "roller skating, limited availability",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
-        "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
-      ],
-      "matchedName": "The Plex"
-    },
-    {
       "name": "Museum of American Heritage",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "hosting Bird Adoption & Toymaking Faire event",
+      "context": "hosting bird adoption and toymaking faire event",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tmm29m/anyone_want_to_do_weekly_trivia_in_the_peninsula/",
-        "https://www.reddit.com/r/SanJose/comments/1tmmdar/places_to_view_participate_in_roller_skating/",
+        "https://www.reddit.com/r/bayarea/comments/1tnjr9p/come_bowl_with_a_stranger/",
         "https://www.reddit.com/r/paloalto/comments/1tmlh9v/bird_adoption_toymaking_faire_free/",
-        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/"
+        "https://www.reddit.com/r/paloalto/comments/1tl3dhs/interactive_map_of_public_transport_in_palo_alto/",
+        "https://www.reddit.com/r/mountainview/comments/1tmwkhz/convenient_place_to_vote/"
       ],
       "matchedName": "The Museum of American Heritage"
     }
