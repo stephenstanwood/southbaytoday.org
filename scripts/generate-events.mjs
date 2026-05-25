@@ -131,6 +131,15 @@ function stripHtml(html) {
     // until truncate() chops it mid-sentence ("The post\u2026").
     .replace(/&hellip;|&#8230;|&#x2026;/gi, "\u2026")
     .replace(/&#\d+;/g, "").replace(/&[a-z]+;/g, "")
+    // BiblioCommons (and other rich-text editors) occasionally save a word
+    // wrapped across two adjacent same-tag inline-formatting runs — e.g.
+    // `<strong>g</strong><strong>rades 4-5</strong>` from an SCCL Page
+    // Turners listing. The catch-all tag-stripper below replaces each tag
+    // with a single space, which turns the boundary into "g rades" (two
+    // adjacent spaces collapse to one, leaving a literal space mid-word).
+    // Drop the boundary when both tags are the same inline-formatting tag
+    // so the word reunites before the catch-all runs.
+    .replace(/<\/(strong|em|b|i|u|span)\b[^>]*><\1\b[^>]*>/gi, "")
     // Then strip all HTML tags
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ").trim();
