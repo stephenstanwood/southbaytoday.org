@@ -787,6 +787,22 @@ function cleanTitle(title) {
     // MS, RDMS, RVT") in description copy — and would, if any title carried
     // them, get downcased the same way.
     "RDMS", "RVT", "CNM",
+    // Society for Human Resource Management — SJSU's continuing-ed prep course
+    // for the SHRM-CP and SHRM-SCP certifications arrives as "SHRM Test Prep
+    // Course Informational Session" from Localist and gets downcased to "Shrm
+    // Test Prep…" by the 4+ pass. SHRM is the standard sector-wide acronym for
+    // the certification body; preserving it.
+    "SHRM",
+    // Web-tech acronyms that BiblioCommons computer-help listings and Stanford/
+    // SJSU CS course descriptions name-drop in titles ("HTML Code Bootcamp",
+    // "Intro to CSS / JSON / PDF Workflow"). 4 letters survives the 4+ pass
+    // only with KEEP_UPPER coverage.
+    "HTML", "JSON",
+    // Deep Cuts Book Club — Kepler's brands its 2026 series "DCBC Comes of Age"
+    // in the event title; the venue uses DCBC as its own program abbreviation
+    // in the poster filename and elsewhere on keplers.org. 4 letters, downcased
+    // by the 4+ pass without coverage.
+    "DCBC",
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -816,6 +832,15 @@ function cleanTitle(title) {
       }
     }
   }
+  // Contraction recovery: when an ALL-CAPS run gets downcased to title case,
+  // a trailing apostrophe-S (or 'D, 'LL, etc.) stays uppercase because the
+  // {2,}/{4,} regex stops at the apostrophe (non-letter). "BERMAN'S" rolls
+  // through as Berman + 'S → reads as a typo. Downcase the lone uppercase
+  // letters when they sit after a Titlecased word + apostrophe and end at a
+  // word boundary. Requires the leading run to have lowercase (so true
+  // acronyms like "JFK'S" / "FBI'S" — which the upstream pass didn't touch
+  // — stay intact).
+  t = t.replace(/([A-Z][a-z]+)'([A-Z]+)\b/g, (_, w, suffix) => w + "'" + suffix.toLowerCase());
   // Downcase capitalized small words mid-title — Ticketmaster and Shoreline
   // feeds title-case every word ("Valley Of Heart's Delight", "Eleanor The
   // Great", "Born To Define"). Standard title-case style lowercases articles,
@@ -1296,8 +1321,20 @@ function polishDescription(text) {
     // but the 2+ second pass downcases it once the surrounding title (with the
     // long parenthetical) tips into mixed case.
     "BYOB",
+    // Mirrored from cleanTitle's KEEP_UPPER — SHRM-CP / SHRM-SCP body copy in
+    // SJSU's HR-prep listings, HTML/JSON in BiblioCommons computer-help
+    // descriptions, DCBC in Kepler's Deep Cuts Book Club series text.
+    "SHRM", "HTML", "JSON", "DCBC",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
+  // Contraction recovery: mirror of the cleanTitle apostrophe-S fix. When the
+  // 4+ rule downcases an ALL-CAPS run (PHOEBE BERMAN → Phoebe Berman) but the
+  // trailing 'S sits past the apostrophe word boundary, it stays uppercase
+  // ("Phoebe Berman'S Gonna Lose IT" from Kepler's Brooke Averick description).
+  // Downcase any uppercase letters that sit after a Titlecased word + apostrophe
+  // and end at a word boundary. Same conservative shape as cleanTitle —
+  // requires the leading run to have lowercase so "JFK'S" / "FBI'S" stay intact.
+  t = t.replace(/([A-Z][a-z]+)'([A-Z]+)\b/g, (_, w, suffix) => w + "'" + suffix.toLowerCase());
 
   // Insert space between concatenated words ("NIGHTSat" → "NIGHTS at", "USAMex" → "USA Mex")
   // — split all-caps run before a Cap+lowercase WORD prefix. Requires 2+
