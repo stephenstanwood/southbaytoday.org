@@ -1700,6 +1700,32 @@ function inferCategory(title, desc, type, venue = "") {
   return "community";
 }
 
+function isOngoingExhibitLike(title, desc = "", venue = "") {
+  const cleanDesc = stripHtml(desc || "");
+  const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
+
+  // These are recurring programs, talks, trainings, or services that Localist
+  // can model as long-running series. They are not "on view" listings.
+  if (/\b(yoga|pilates|meditation|mindfulness|workshop|training|class|course|rounds?|speaker series|lecture series|guest speaker|worship|service|volunteer|volunteering|al-anon|qualtrics|upstander|book club|storytime)\b/.test(haystack)) {
+    return false;
+  }
+
+  return /\b(exhibit|exhibition|showcase|installation|on view|gallery|art\s+show|book display|map exhibit|sculpture walk|works by|mfa thesis|archive room|collection|artist|artwork|sculpture|painting|photography|printmaker|contemporary art|art and architecture)\b/.test(haystack);
+}
+
+function inferUniversityCategory(title, desc, type, venue = "") {
+  const titleLower = String(title || "").toLowerCase();
+  const cleanDesc = stripHtml(desc || "");
+  const haystack = `${title || ""} ${cleanDesc} ${type || ""} ${venue || ""}`.toLowerCase();
+
+  if (isOngoingExhibitLike(title, desc, venue)) return "arts";
+  if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
+  if (/\b(guest speaker|speaker series|lecture|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
+  if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
+
+  return inferCategory(title, cleanDesc, type, venue);
+}
+
 // ── RSS Parser (regex-based, no dependencies) ──
 
 function parseRssItems(xml) {
@@ -1812,12 +1838,15 @@ async function fetchStanfordEvents() {
       // Stanford Localist returns series events: first_date = series start, last_date = series end.
       // Many recurring events started weeks ago but are still ongoing.
       // Use today as the event date for ongoing events (started in past, ends in future).
+      const venue = cleanVenue(ev.location_name || "") || "Stanford University";
+      const description = stripHtml(ev.description_text || ev.description || "");
       let eventDate = start;
       let isOngoing = false;
       if (start < now) {
         if (end && end >= now) {
-          eventDate = now; // currently running → anchor to today
-          isOngoing = true; // multi-day exhibit/series — show in Ongoing section, not Today
+          if (!isOngoingExhibitLike(ev.title, description, venue)) return null;
+          eventDate = now; // currently running exhibit → anchor to today
+          isOngoing = true; // show in Exhibits section, not Today
         } else {
           return null; // fully in the past
         }
@@ -1830,12 +1859,12 @@ async function fetchStanfordEvents() {
         time: isOngoing ? null : displayTime(start),   // no time for ongoing exhibits
         endTime: isOngoing ? null : (end ? displayTime(end) : null),
         ongoing: isOngoing,
-        venue: cleanVenue(ev.location_name || "") || "Stanford University",
+        venue,
         address: ev.address || "",
         city: "palo-alto",
-        category: inferCategory(ev.title, ev.description_text || "", ""),
+        category: inferUniversityCategory(ev.title, description, "", venue),
         cost: (ev.free || /\balcoholics anonymous\b/i.test(ev.title)) ? "free" : "paid",
-        description: truncate(stripHtml(ev.description_text || ev.description || "")),
+        description: truncate(description),
         url: ev.localist_url || `https://events.stanford.edu/event/${ev.id}`,
         source: "Stanford Events",
         kidFriendly: false,
@@ -1923,12 +1952,12 @@ async function fetchSjsuEvents() {
       if (!start) return null;
       item.title = restoreSjsuAcronyms(item.title);
       item.description = restoreSjsuAcronyms(item.description);
-      const category = inferCategory(item.title, item.description, "");
+      const venue = item.location || extractVenueFromTitle(item.title) || "San Jose State University";
+      const category = inferUniversityCategory(item.title, item.description, "", venue);
       // SJSU's Localist platform emits a 224x42 wordmark as og:image which
       // crops to "SAN UNI" on a square tile. Pin a real square asset:
       // Spartan helmet for athletics, SJSU monogram for everything else.
       const image = category === "sports" ? "/logos/sjsu-spartan.png" : "/logos/sjsu-monogram.png";
-      const venue = item.location || extractVenueFromTitle(item.title) || "San Jose State University";
       // SJSU's Localist feed has no price field, so we default to free —
       // accurate for campus lectures, library events, exhibits. Two
       // exceptions: every athletics entry, and the "Alumni Night at the
@@ -1981,6 +2010,7 @@ async function fetchSjsuEvents() {
       if (occurrences.length < 3) continue;
       occurrences.sort((a, b) => a._startMs - b._startMs);
       const keep = occurrences[0];
+      if (!isOngoingExhibitLike(keep.title, keep.description, keep.venue)) continue;
       keep.time = null;
       keep.endTime = null;
       keep.ongoing = true;
@@ -1997,18 +2027,6 @@ async function fetchSjsuEvents() {
     console.log(`  ⚠️  SJSU: ${err.message}`);
     return [];
   }
-}
-
-// SCU-specific category inference: use inferCategory as a base but reclassify
-// "sports" events that are actually talks, speaker series, or community events.
-const SCU_SPORTS_PATTERNS = /\b(game|match|tournament|championship|athletics|swim meet|track meet|vs\.?|invitational|regatta|scrimmage)\b/i;
-
-function inferScuCategory(title, desc) {
-  const base = inferCategory(title, desc, "");
-  if (base === "sports" && !SCU_SPORTS_PATTERNS.test(title)) {
-    return "community";
-  }
-  return base;
 }
 
 const SOUTH_BAY_GEO_CENTERS = [
@@ -2085,7 +2103,7 @@ async function fetchScuEvents() {
         venue,
         address: "",
         city: geoCity || "santa-clara",
-        category: inferScuCategory(item.title, item.description),
+        category: inferUniversityCategory(item.title, item.description, "", venue),
         cost: inferScuCost(item),
         description: truncate(stripHtml(item.description)),
         url: item.link,
@@ -2115,6 +2133,7 @@ async function fetchScuEvents() {
       if (occurrences.length < 3) continue;
       occurrences.sort((a, b) => a._startMs - b._startMs);
       const keep = occurrences[0];
+      if (!isOngoingExhibitLike(keep.title, keep.description, keep.venue)) continue;
       keep.time = null;
       keep.endTime = null;
       keep.ongoing = true;
@@ -5595,7 +5614,7 @@ async function main() {
   const seenExhibit = new Set();
   const finalEvents = deduped.filter((e) => {
     const key = normTitle(e);
-    if (exhibitKeys.has(key)) {
+    if (exhibitKeys.has(key) && isOngoingExhibitLike(e.title, e.description, e.venue)) {
       if (seenExhibit.has(key)) return false;
       seenExhibit.add(key);
       e.ongoing = true; // flag for UI — show in "Exhibits" section, not day-by-day feed

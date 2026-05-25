@@ -238,6 +238,32 @@ const CATEGORY_ACCENT: Record<string, { color: string; bg: string; label: string
   sports:    { color: "#1E3A8A", bg: "#EFF6FF", label: "Sports",    emoji: "🏟️" },
 };
 
+function eventTextBlob(event: UpcomingEvent): string {
+  return `${event.title || ""} ${event.blurb || ""} ${event.description || ""} ${event.venue || ""}`.toLowerCase();
+}
+
+function isOngoingExhibitEvent(event: UpcomingEvent): boolean {
+  const text = eventTextBlob(event);
+  if (/\b(yoga|pilates|meditation|mindfulness|workshop|training|class|course|rounds?|speaker series|guest speaker|worship|service|volunteer|volunteering|al-anon|qualtrics|upstander|storytime)\b/.test(text)) {
+    return false;
+  }
+  return /\b(exhibit|exhibition|showcase|installation|on view|gallery|art\s+show|book display|map exhibit|sculpture walk|works by|mfa thesis|archive room|collection|artist|artwork|sculpture|painting|photography|printmaker|contemporary art|art and architecture)\b/.test(text);
+}
+
+function normalizedEventCategory(event: UpcomingEvent): string {
+  const text = eventTextBlob(event);
+  if (isOngoingExhibitEvent(event)) return "arts";
+  if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(text)) return "community";
+  if (/\b(guest speaker|speaker series|lecture|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|reading)\b/.test(text)) return "education";
+  if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(String(event.title || "").toLowerCase())) return "music";
+  return event.category || "community";
+}
+
+function normalizeEventForDisplay(event: UpcomingEvent): UpcomingEvent {
+  const category = normalizedEventCategory(event);
+  return category === event.category ? event : { ...event, category };
+}
+
 // ── Date helpers ───────────────────────────────────────────────────────────
 
 function todayPT(): string {
@@ -1584,7 +1610,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .catch(() => setUpcomingData({ events: [] }));
   }, []);
 
-  const allEvents = upcomingData?.events ?? [];
+  const allEvents = useMemo(
+    () => (upcomingData?.events ?? []).map(normalizeEventForDisplay),
+    [upcomingData],
+  );
   // Reclassify: an event with `ongoing: true` AND a clock time is a recurring
   // event (weekly storytime, ESL class, multi-night theater run) that the
   // multi-day-detection rules in generate-events.mjs over-flagged. Treat it
@@ -1595,7 +1624,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     [allEvents],
   );
   const ongoingEvents = useMemo(
-    () => allEvents.filter((e) => e.ongoing && !e.time),
+    () => allEvents.filter((e) => e.ongoing && !e.time && isOngoingExhibitEvent(e)),
     [allEvents],
   );
 

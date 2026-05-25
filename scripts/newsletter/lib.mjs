@@ -8,13 +8,15 @@ import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { loadEnvLocal } from "../lib/env.mjs";
-import { ARTIFACTS, DATA_DIR, REPO_ROOT } from "../lib/paths.mjs";
+import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
 
 loadEnvLocal();
 
 // ── Resend ─────────────────────────────────────────────────────────────────
 
 const RESEND_BASE = "https://api.resend.com";
+const SITE_URL = "https://southbaytoday.org";
+const NEWSLETTER_ARCHIVE_PREFIX = "/newsletters";
 
 export async function resendFetch(path, init = {}) {
   const key = process.env.RESEND_API_KEY;
@@ -145,6 +147,15 @@ export function loadRedditPulse() {
   return readJson(ARTIFACTS.redditPulse);
 }
 
+function loadSocialScheduleDay(date) {
+  try {
+    const schedule = loadSocialSchedule();
+    return schedule.days?.[date] || schedule[date] || null;
+  } catch {
+    return null;
+  }
+}
+
 // Reuses the regex-based parser from generate-sv-history.mjs.
 export function loadMilestones() {
   const src = readFileSync(join(DATA_DIR, "tech-companies.ts"), "utf8");
@@ -185,7 +196,8 @@ export function loadMilestones() {
 export async function assembleNewsletterData(date, opts = {}) {
   const editorialEnabled = opts.editorial ?? shouldRunEditorialPass();
   const defaultPlans = loadDefaultPlans();
-  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date);
+  const socialDay = loadSocialScheduleDay(date);
+  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date, socialDay?.["day-plan"]);
 
   const allEvents = loadEvents().events || [];
   const todayEvents = allEvents
@@ -216,6 +228,16 @@ export async function assembleNewsletterData(date, opts = {}) {
   const featuredEvents = pickFeaturedEvents(todayEvents, { dayPlan, tonightPick, limit: 10 });
   const dayPlanBlurb = dayPlan ? buildDayPlanBlurb(dayPlan, weather) : "";
   const tonightPickBlurb = tonightPick ? buildTonightBlurb(tonightPick) : "";
+  const visuals = newsletterVisuals({
+    date,
+    longDate: formatLongDate(date),
+    socialDay,
+    dayPlan,
+    tonightPick,
+    featuredEvents,
+    recentOpenings,
+    redditPosts,
+  });
 
   const data = {
     date,
@@ -229,6 +251,7 @@ export async function assembleNewsletterData(date, opts = {}) {
     weather,
     todayHistory,
     redditPosts,
+    visuals,
     editorial: null,
     editorialMeta: { status: editorialEnabled ? "pending" : "disabled" },
   };
@@ -242,13 +265,48 @@ export async function assembleNewsletterData(date, opts = {}) {
   });
 }
 
-function makeNewsletterPlan(plan, date) {
+function makeNewsletterPlan(plan, date, socialSlot = null) {
   if (!plan?.cards?.length) return null;
   return {
     ...plan,
     planDate: plan.planDate || date,
     cityName: cityName(plan.city),
-    planUrl: "https://southbaytoday.org/",
+    planUrl: socialSlot?.planUrl || plan.planUrl || `${SITE_URL}/`,
+  };
+}
+
+function usableImage(url) {
+  const value = String(url || "").trim();
+  return /^https?:\/\//i.test(value) ? value : "";
+}
+
+function firstUsableImage(items, picker) {
+  for (const item of items || []) {
+    const image = usableImage(picker(item));
+    if (image) return image;
+  }
+  return "";
+}
+
+function newsletterVisuals({ longDate, socialDay, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
+  const dayPlanImage = usableImage(socialDay?.["day-plan"]?.imageUrl)
+    || firstUsableImage(orderedCards(dayPlan), (c) => c.image);
+  const tonightPickImage = usableImage(tonightPick?.image)
+    || usableImage(socialDay?.["tonight-pick"]?.imageUrl);
+  const eventsImage = firstUsableImage(featuredEvents, (e) => e.image);
+  const openingsImage = firstUsableImage(recentOpenings, (o) => o.image);
+  const conversationImage = firstUsableImage(redditPosts, (p) => p.image);
+  const archiveImage = dayPlanImage || tonightPickImage || eventsImage || openingsImage || conversationImage || `${SITE_URL}/images/og-image.png`;
+
+  return {
+    dayPlanImage,
+    dayPlanImageAlt: `South Bay Today field guide for ${longDate}`,
+    tonightPickImage,
+    tonightPickImageAlt: tonightPick?.title || "Tonight's pick",
+    archiveImage,
+    eventsImage,
+    openingsImage,
+    conversationImage,
   };
 }
 
@@ -682,7 +740,7 @@ function applyEditorialJson(data, candidates, edit) {
   const openings = pickByIndexes(openingByIdx, edit.openingIdxs, 6);
   const reddit = pickByIndexes(redditByIdx, edit.redditIdxs, 4);
 
-  return {
+  const revised = {
     ...data,
     dayPlanBlurb: limitedString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
     tonightPick: tonightPick || data.tonightPick,
@@ -701,6 +759,19 @@ function applyEditorialJson(data, candidates, edit) {
       conversationNote: limitedString(edit.conversationNote, 220),
     },
   };
+
+  revised.visuals = newsletterVisuals({
+    date: revised.date,
+    longDate: revised.longDate,
+    socialDay: loadSocialScheduleDay(revised.date),
+    dayPlan: revised.dayPlan,
+    tonightPick: revised.tonightPick,
+    featuredEvents: revised.featuredEvents,
+    recentOpenings: revised.recentOpenings,
+    redditPosts: revised.redditPosts,
+  });
+
+  return revised;
 }
 
 function integerOrNull(v) {
@@ -837,27 +908,40 @@ export function renderEmail(data) {
     headerBlock(data),
     weatherStrip(data.weather),
     briefingBlock(data.editorial?.briefing),
-    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial),
-    tonightPickBlock(data.tonightPick, data.tonightPickBlurb),
+    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial, data.visuals),
+    tonightPickBlock(data.tonightPick, data.tonightPickBlurb, data.visuals),
     eventsBlock(data.featuredEvents, data.todayEvents.length, data.editorial),
     openingsBlock(data.recentOpenings, data.date, data.editorial),
     meetingsBlock(data.tonightMeetings),
     historyBlock(data.todayHistory),
     conversationBlock(data.redditPosts, data.editorial),
     footerBlock(),
-  ].filter(Boolean).join("\n"));
+  ].filter(Boolean).join("\n"), data);
   return { subject, html };
 }
 
-function wrapShell(subject, body) {
+function wrapShell(subject, body, data = null) {
+  const description = compactText(data?.editorial?.briefing || data?.dayPlanBlurb || "A morning South Bay briefing with the field guide, events, openings, civic notes, and local conversation.", 220);
+  const image = data?.visuals?.archiveImage || `${SITE_URL}/images/og-image.png`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(subject)}</title>
+<meta name="description" content="${esc(description)}">
+<meta property="og:title" content="${esc(subject)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:image" content="${esc(image)}">
+<meta property="og:site_name" content="South Bay Today">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(subject)}">
+<meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${esc(image)}">
 </head>
 <body style="margin:0;padding:0;background:${PALETTE.card};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:${PALETTE.ink};">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${esc(description)}</div>
 <div style="max-width:620px;margin:0 auto;background:${PALETTE.bg};">
 ${body}
 </div>
@@ -887,16 +971,23 @@ function briefingBlock(briefing) {
 </div>`;
 }
 
-function dayPlanBlock(plan, blurb, editorial = null) {
+function dayPlanBlock(plan, blurb, editorial = null, visuals = null) {
   if (!plan) return "";
   const cards = orderedCards(plan);
   if (!cards.length) return "";
   const rows = cards.map(planCardRow).join("\n");
   const headline = editorial?.dayPlanHeadline || "A flexible South Bay day";
+  const poster = usableImage(visuals?.dayPlanImage);
+  const posterHtml = poster
+    ? `<a href="${esc(plan.planUrl || SITE_URL)}" style="display:block;text-decoration:none;margin:0 auto 20px auto;max-width:390px;">
+        <img src="${esc(poster)}" alt="${esc(visuals?.dayPlanImageAlt || headline)}" width="390" style="width:100%;max-width:390px;height:auto;display:block;border-radius:10px;border:1px solid ${PALETTE.border};">
+      </a>`
+    : "";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:18px;">Open the live guide →</a>`
     : "";
   return `<div style="padding:28px;">
+  ${posterHtml}
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Today's field guide</div>
   <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};margin-bottom:8px;">${esc(headline)}</div>
   <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-bottom:16px;">${esc(blurb)}</div>
@@ -905,15 +996,20 @@ function dayPlanBlock(plan, blurb, editorial = null) {
 </div>`;
 }
 
-function tonightPickBlock(pick, blurb) {
+function tonightPickBlock(pick, blurb, visuals = null) {
   if (!pick) return "";
   const meta = eventMeta(pick);
   const ticketUrl = pick.url || null;
+  const image = usableImage(pick.image) || usableImage(visuals?.tonightPickImage);
+  const imageHtml = image
+    ? `<img src="${esc(image)}" alt="${esc(visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0 0 16px 0;border:1px solid ${PALETTE.border};">`
+    : "";
   const ctaLabel = pick.cost === "paid" ? "Get tickets →" : "Event details →";
   const cta = ticketUrl
     ? `<a href="${esc(ticketUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:14px;">${esc(ctaLabel)}</a>`
     : "";
   return `<div style="padding:0 28px 28px 28px;border-top:1px solid ${PALETTE.border};padding-top:28px;">
+  ${imageHtml}
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Tonight's pick</div>
   <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};">${esc(pick.title)}</div>
   ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:4px;">${esc(meta)}</div>` : ""}
@@ -960,6 +1056,12 @@ function eventMeta(e) {
 function eventsBlock(events, totalCount = events?.length || 0, editorial = null) {
   if (!events?.length) return "";
   const rows = events.map((e) => {
+    const image = usableImage(e.image);
+    const thumb = image
+      ? `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+          <img src="${esc(image)}" alt="" width="72" height="72" style="width:72px;height:72px;display:block;border-radius:8px;object-fit:cover;">
+        </td>`
+      : "";
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
@@ -967,7 +1069,7 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
     const blurb = e.blurb
       ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(e.blurb)}</div>`
       : "";
-    return `<tr><td style="padding:8px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+    return `<tr>${thumb}<td style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
       <div>${title}</div>
       ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${esc(meta)}</div>` : ""}
       ${blurb}
@@ -992,11 +1094,18 @@ function openingsBlock(openings, date, editorial = null) {
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
     const age = openingAge(o.date, date);
     const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
-    return `<div style="margin-bottom:10px;">
-      <div style="font-size:15px;color:${PALETTE.ink};"><strong>${esc(o.name)}</strong>${loc}</div>
-      ${age ? `<div style="font-size:12px;color:${PALETTE.faint};margin-top:2px;">${esc(age)}</div>` : ""}
-      ${blurb}
-    </div>`;
+    const image = usableImage(o.image);
+    const thumb = image
+      ? `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;"><img src="${esc(image)}" alt="" width="58" height="58" style="width:58px;height:58px;display:block;border-radius:8px;object-fit:cover;"></td>`
+      : "";
+    return `<table style="width:100%;border-collapse:collapse;margin-bottom:10px;"><tbody><tr>
+      ${thumb}
+      <td style="vertical-align:top;padding:0 0 12px 0;">
+        <div style="font-size:15px;color:${PALETTE.ink};"><strong>${esc(o.name)}</strong>${loc}</div>
+        ${age ? `<div style="font-size:12px;color:${PALETTE.faint};margin-top:2px;">${esc(age)}</div>` : ""}
+        ${blurb}
+      </td>
+    </tr></tbody></table>`;
   }).join("");
   const heading = editorial?.openingsHeading || "Recently opened";
   const note = editorial?.openingsNote
@@ -1106,7 +1215,7 @@ export async function publishNewsletterArchive(data, html) {
     if (!/not.?found|404|BlobNotFoundError/i.test(msg)) throw err;
   }
 
-  const result = await put(pathname, archiveNewsletterHtml(html), {
+  await put(pathname, archiveNewsletterHtml(html), {
     access: "public",
     addRandomSuffix: false,
     allowOverwrite: true,
@@ -1114,7 +1223,11 @@ export async function publishNewsletterArchive(data, html) {
     token,
     cacheControlMaxAge: 0,
   });
-  return result.url;
+  return newsletterArchiveUrl(data.date);
+}
+
+function newsletterArchiveUrl(date) {
+  return `${SITE_URL}${NEWSLETTER_ARCHIVE_PREFIX}/${date}`;
 }
 
 export async function sendNewsletterDiscordDm(data, subject, archiveUrl = null) {
