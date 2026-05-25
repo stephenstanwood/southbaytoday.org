@@ -1313,6 +1313,12 @@ function polishDescription(text) {
     // that can appear inside body copy and would be downcased by the wedge rule
     // if surrounded by mixed-case neighbors ("Catholic JST programs offer…").
     "HSI", "JST",
+    // Football-club designation: SJSU's CSU-alumni-night mailer for Bay FC
+    // wrote "be a part of the Bay FC Legacy" in body copy. The wedge rule
+    // matched "Bay " + FC + " Legacy" and downcased FC → "Fc" because the
+    // 2-letter club designation wasn't mirrored from cleanTitle's KEEP_UPPER.
+    // FC is unambiguously a football-club abbreviation in English body copy.
+    "FC",
   ]);
   t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => KEEP_UPPER_SHORT.has(w) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.
@@ -1344,6 +1350,16 @@ function polishDescription(text) {
   // sentence start would be a real two-word phrase. Only reunite the lowercase
   // form ("i Phone") since that's the only camel-split shape that produces it.
   t = t.replace(/\bi Phones?\b/g, (m) => m.endsWith("s") ? "iPhones" : "iPhone");
+  // SJPL library tech-help listings write "WiFi" (no hyphen) — the camel
+  // splitter turns it into "Wi Fi". The brand is officially Wi-Fi (Wi-Fi
+  // Alliance trademark), so reunite to the hyphenated canonical form rather
+  // than the closed-up WiFi the source used.
+  t = t.replace(/\bWi Fi\b/g, "Wi-Fi");
+  // Back to the Future the Musical body copy ("When Marty McFly finds himself
+  // transported back to 1955…") becomes "Marty Mc Fly" after the camel
+  // splitter hits the c→F boundary. McFly is a single-word surname brand mark
+  // (the character + the UK band of the same spelling).
+  t = t.replace(/\bMc Fly\b/g, "McFly");
 
   // Split into sentences and drop boilerplate. Capture trailing closers
   // (`"`, `'`, `)`, `]`) as part of the terminator group so a quoted clause
