@@ -1199,6 +1199,13 @@ function polishDescription(text) {
   // to , ; . ! ? — colons can be valid styled separators ("Topic : Talk").
   t = t.replace(/\s+([,.;!?])/g, "$1");
 
+  // Tighten the `. "` artifact at end-of-string — Kepler's and SCU description
+  // bodies emit a stray space between a clause-terminating period and the
+  // closing quote of a tail quoted phrase (`...as an "urgent manifesto. "`).
+  // Run before sentence-splitting so the closing quote pairs with the period
+  // and the trailing-fragment-drop step below doesn't strip it as a lone quote.
+  t = t.replace(/\.\s+"\s*$/, '."');
+
   // Collapse repeated terminal punctuation in body copy ("Be a Mini Maker!!!!"
   // from a SJPL BiblioCommons description). Mirror of cleanTitle's collapse so
   // titles and bodies normalize the same way.
@@ -1338,13 +1345,40 @@ function polishDescription(text) {
   // form ("i Phone") since that's the only camel-split shape that produces it.
   t = t.replace(/\bi Phones?\b/g, (m) => m.endsWith("s") ? "iPhones" : "iPhone");
 
-  // Split into sentences and drop boilerplate
-  const sentences = t.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [t];
+  // Split into sentences and drop boilerplate. Capture trailing closers
+  // (`"`, `'`, `)`, `]`) as part of the terminator group so a quoted clause
+  // ending the sentence (`...as an "urgent manifesto for our tumultuous time."`)
+  // doesn't split into `...time.` + lone `"`, which the drop-trailing-noise
+  // step below would then strip as an unclosed-quote artifact.
+  const sentences = t.match(/[^.!?]+[.!?]+["'’”)\]]*|[^.!?]+$/g) || [t];
   const kept = sentences.filter((s) => {
     const trimmed = s.trim();
     if (!trimmed) return false;
     return !BOILERPLATE_SENTENCE_PATTERNS.some((re) => re.test(trimmed));
   });
+
+  // Drop a trailing no-terminator fragment when it follows a complete sentence
+  // and signals truncation noise. Two recurring sources:
+  // 1. CHM RSS teasers cut mid-sentence at a "[…] Read more" link; the boilerplate
+  //    strip removes the link suffix but leaves the dangling pre-text behind
+  //    (e.g. Steve Jobs in Exile: "...called NeXT. Though often described as his \"wilderness").
+  // 2. BiblioCommons feeds concatenate accessibility-metadata section headers
+  //    into description bodies without separators (e.g. SJPL Bingo:
+  //    "...join us! ADA Accommodation Requests").
+  // Conservative — only fires when there's a prior terminated sentence AND the
+  // dangling fragment carries a clear noise signal (unclosed quote or known
+  // metadata label). Short legit fragments ending mid-phrase are preserved.
+  if (kept.length > 1) {
+    const last = kept[kept.length - 1].trim();
+    const prev = kept[kept.length - 2].trim();
+    if (!/[.!?…]$/.test(last) && /[.!?…]$/.test(prev)) {
+      const openQuotes = (last.match(/"/g) || []).length;
+      const hasUnclosedQuote = openQuotes % 2 === 1;
+      const isMetadataLabel = /^(ADA Accommodation Requests|Wheelchair Accessible|Reading Levels|Hearing Loop|Audio Description|Closed Captioning|Sign Language Interpretation|Sensory[\s-]?Friendly|Accessibility Features?|Special Accommodations?)\b/i.test(last);
+      if (hasUnclosedQuote || isMetadataLabel) kept.pop();
+    }
+  }
+
   t = kept.join(" ").replace(/\s+/g, " ").trim();
 
   // Capitalize first letter of each sentence
