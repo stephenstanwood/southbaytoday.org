@@ -749,7 +749,7 @@ function cleanTitle(title) {
     "AI", "AR", "VR", "EV", "PM", "AM", "DJ", "TV", "PC", "IT", "HR", "PR", "ER",
     "SF", "SJ", "LA", "CA", "SC", "US", "UK", "FC", "RB",
     "GK", "II", "TK", "JR", "SR", "VS",
-    "BBQ", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
+    "BBQ", "BYOB", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
     "HPC",
     "FAR", "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
     "NCAA", "PAC", "POV", "PSA", "SAG", "SAT", "SAP", "SBN", "SCU", "SIG", "SJZ",
@@ -1266,6 +1266,11 @@ function polishDescription(text) {
     "TLAB", "HICAP",
     // Japanese American Citizens League — mirrored from cleanTitle's KEEP_UPPER.
     "JACL",
+    // "Bring Your Own Book" book club acronym — SJPL ships it in titles like
+    // "BYOB (Bring Your Own Book) Book Club". 4 letters, survives the 4+ pass,
+    // but the 2+ second pass downcases it once the surrounding title (with the
+    // long parenthetical) tips into mixed case.
+    "BYOB",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
 
