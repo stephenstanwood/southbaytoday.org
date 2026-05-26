@@ -140,6 +140,13 @@ function stripHtml(html) {
     // Drop the boundary when both tags are the same inline-formatting tag
     // so the word reunites before the catch-all runs.
     .replace(/<\/(strong|em|b|i|u|span)\b[^>]*><\1\b[^>]*>/gi, "")
+    // Superscript/subscript tags wrap a fragment that's joined to the
+    // preceding token with no whitespace — ordinal suffixes ("3<sup>rd</sup>"
+    // → "3rd"), footnote markers, chemical formulas ("H<sub>2</sub>O").
+    // The catch-all tag stripper replaces each tag with a space, which
+    // turns "3<sup>rd</sup>" into "3 rd". Drop sup/sub tags without
+    // inserting whitespace so the fragment stays joined.
+    .replace(/<\/?(sup|sub)\b[^>]*>/gi, "")
     // Then strip all HTML tags
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ").trim();
