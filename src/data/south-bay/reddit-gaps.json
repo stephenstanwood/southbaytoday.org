@@ -1,42 +1,81 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-26T19:17:29.850Z",
+    "generatedAt": "2026-05-26T23:17:46.309Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 51,
-    "placesMatched": 9,
-    "placeGaps": 42,
-    "eventsExtracted": 5,
+    "placesExtracted": 33,
+    "placesMatched": 11,
+    "placeGaps": 22,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Acme",
+      "name": "Don Edwards San Francisco Bay National Wildlife Refuge",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "estuary nature area in Alviso neighborhood with kayaking",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Alviso Marina",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "waterfront area in Alviso with kayaking and paddleboarding",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Maria Elenas",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "iconic Mexican restaurant in Alviso, flood damage visible",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Acme Bread Company",
       "city": "",
       "kind": "bakery",
-      "context": "sourdough bakery mentioned in Mountain View thread",
+      "context": "sourdough bakery mentioned in quality comparisons",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
       "name": "Manresa",
-      "city": "Mountain View",
+      "city": "Los Gatos",
       "kind": "restaurant",
-      "context": "restaurant known for great bread",
+      "context": "restaurant with great bread offerings",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
@@ -45,11 +84,11 @@
       "name": "Portside Bakery",
       "city": "",
       "kind": "bakery",
-      "context": "sourdough bakery mentioned in Mountain View comparison",
+      "context": "recommended sourdough bakery option",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
@@ -58,582 +97,311 @@
       "name": "Firebrand",
       "city": "",
       "kind": "bakery",
-      "context": "sourdough bakery recommended in Mountain View thread",
+      "context": "recommended sourdough bakery option",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
-      "name": "Rocket Dog",
+      "name": "Sumano's Bakery",
+      "city": "Watsonville",
+      "kind": "bakery",
+      "context": "sliced sourdough available in Mountain View stores",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Rocket Dog Rescue",
       "city": "San Jose",
       "kind": "service",
-      "context": "dog rescue organization that pulled Jet",
+      "context": "dog rescue organization fostering senior Chihuahua Jet",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
-      "name": "Alviso Marina",
+      "name": "OAS",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "waterfront location in Alviso neighborhood",
+      "kind": "service",
+      "context": "animal shelter where Jet was surrendered after owner passed",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Don Edwards Estuary",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "nature preserve and wildlife viewing area in Alviso",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
-        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Google Alviso Campus",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "newly opened Google office location in Alviso",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
-        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
-        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Zareen's",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "Indian restaurant with soft naan",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Chaat Café",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "fast-casual Indian, South San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "iGrill",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Indian buffet, North San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "8Elements",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "North Indian restaurant, Evergreen area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "New Indian Cuisine",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Indian on Willow, highly rated",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Tandoori Cafe",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Indian with good prices",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Anjappar",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian restaurant recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Fitoor",
-      "city": "",
-      "kind": "restaurant",
-      "context": "North Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Yellow Chilli",
-      "city": "",
-      "kind": "restaurant",
-      "context": "North Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Eylan",
-      "city": "",
-      "kind": "restaurant",
-      "context": "North Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Anantara",
-      "city": "",
-      "kind": "restaurant",
-      "context": "South Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Mylapore",
-      "city": "",
-      "kind": "restaurant",
-      "context": "South Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Raunak",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Everest",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian with soft naans",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Talab",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Bengali cuisine, North San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Mantra",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "all-you-can-eat Indian",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Indian Sizzler",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Indian buffet",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Amber",
-      "city": "Milpitas",
-      "kind": "restaurant",
-      "context": "Indian restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Mylapore Express",
-      "city": "",
-      "kind": "restaurant",
-      "context": "fast-casual South Indian",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Rajjot",
-      "city": "",
-      "kind": "restaurant",
-      "context": "fast-casual North Indian",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Indian Tadka",
-      "city": "",
-      "kind": "restaurant",
-      "context": "highly rated Indian cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Saapaaduu",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "South Indian, butter masala with chicken",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Shah Restaurant",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Indian restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Desi Dhaba",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Paradise Biryani",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indian restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Emperor of India",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Indian restaurant, South San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
       ]
     },
     {
       "name": "The Pro",
       "city": "Palo Alto",
       "kind": "bar",
-      "context": "trivia on Monday nights",
+      "context": "hosts trivia nights on Mondays",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "Fred's",
-      "city": "",
+      "city": "Palo Alto",
       "kind": "venue",
-      "context": "trivia Tuesday, Palo Alto/Mountain View",
+      "context": "hosts trivia on Tuesdays, boarding games",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "Rose and Crown",
-      "city": "",
+      "city": "Palo Alto",
       "kind": "bar",
-      "context": "trivia on Wednesday nights",
+      "context": "hosts trivia on Wednesdays",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
+      ]
+    },
+    {
+      "name": "Board game place on corner of Birch and Cal Ave",
+      "city": "Palo Alto",
+      "kind": "venue",
+      "context": "board game venue in Palo Alto",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
+        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "Laughing Monk Brew Pub",
       "city": "Santa Clara",
-      "kind": "venue",
-      "context": "South Bay Overland group meetups",
+      "kind": "bar",
+      "context": "hosts South Bay Overland Group meetups for camping trips",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "Henry Kaiser Memorial Park",
-      "city": "Oakland",
-      "kind": "park",
-      "context": "cleanup event in Downtown Oakland",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "MacKenzie Park",
-      "city": "Palo Alto",
-      "kind": "park",
-      "context": "pickleball group meeting location",
-      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
         "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "SJSU Concert Hall",
       "city": "San Jose",
       "kind": "venue",
-      "context": "Game & Anime Live Concert June 14 at 6 PM",
+      "context": "hosts Game & Anime Live Concert on June 14th at 6 PM",
       "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
         "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
-      "name": "Ainsley Spouthouse",
-      "city": "Campbell",
-      "kind": "bar",
-      "context": "beer garden opening delayed, construction updates discussed",
+      "name": "MacKenzie Park",
+      "city": "Palo Alto",
+      "kind": "park",
+      "context": "pickleball courts for group play",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ]
+    },
+    {
+      "name": "Milpitas Humane Society",
+      "city": "Milpitas",
+      "kind": "service",
+      "context": "volunteer to interact with and walk dogs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ]
+    },
+    {
+      "name": "San Jose Animal Care & Control",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "volunteer to hang out with and walk dogs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ]
+    },
+    {
+      "name": "Silicon Valley Pet Project",
+      "city": "",
+      "kind": "service",
+      "context": "dog interaction and adoption services",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ]
+    },
+    {
+      "name": "Petco",
+      "city": "Saratoga",
+      "kind": "retail",
+      "context": "humane society adoptions, puppies and kittens",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ]
+    },
+    {
+      "name": "Sultans Kebab",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "newly opened May 2026, Mediterranean kebabs and mezze",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "Alviso Noon Ride",
-      "when": "bi-weekly",
+      "when": "biweekly",
       "city": "San Jose",
       "context": "amateur bicycle race in Alviso neighborhood",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
-      "name": "Bay Area Adventure Gals",
-      "when": "weekly",
-      "city": "",
-      "context": "Facebook group with weekly hiking meetups",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "South Bay Overland Group",
-      "when": "next Sunday",
+      "name": "Office Furniture & Equipment Liquidation Sale",
+      "when": "May 30th",
       "city": "Santa Clara",
-      "context": "camping and weekend trips at Laughing Monk",
+      "context": "office furniture clearance sale at 1793 Lafayette St",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "Cake Party",
       "when": "Sunday, June 14th at 11:00 am",
       "city": "Sunnyvale",
-      "context": "2nd annual cake party at Washington Park, bring one cake",
+      "context": "community potluck cake gathering at Washington Park",
       "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
         "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     },
     {
       "name": "Game & Anime Live Concert",
-      "when": "June 14 at 6 PM",
+      "when": "June 14th at 6 PM",
       "city": "San Jose",
-      "context": "orchestra performing video game and anime music at SJSU",
+      "context": "orchestra concert featuring video game and anime music",
       "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
         "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Castle Rock State Park",
+      "city": "Saratoga",
+      "kind": "park",
+      "context": "popular hiking destination with multiple trails and views",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ],
+      "matchedName": "Castle Rock State Park"
+    },
+    {
+      "name": "Big Basin Redwoods State Park",
+      "city": "Boulder Creek",
+      "kind": "park",
+      "context": "favorite parks in Bay Area, mentioned alongside Castle Rock",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ],
+      "matchedName": "Big Basin Cafe"
+    },
+    {
+      "name": "Sanborn County Park",
+      "city": "Saratoga",
+      "kind": "park",
+      "context": "hiking trail connecting to Castle Rock via Skyline Boulevard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
+        "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ],
+      "matchedName": "Sanborn County Park"
+    },
+    {
       "name": "GK Pastry",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "highly rated sourdough bakery, winner by large margin",
+      "context": "top-rated sourdough bakery, expensive but excellent quality",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
@@ -643,11 +411,11 @@
       "name": "Midwife and the Baker",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough bakery with country loaf style bread",
+      "context": "sourdough bakery with whole wheat country loaf style bread",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
@@ -657,11 +425,11 @@
       "name": "Little Sky",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough bakery recommendation in Mountain View",
+      "context": "recommended sourdough bakery option",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
@@ -673,81 +441,67 @@
       "kind": "bakery",
       "context": "makes house sourdough on weekends",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tnlw35/san_joses_contribution_to_pop_culture/",
-        "https://www.reddit.com/r/bayarea/comments/1tnkrqj/i_love_janky_steph_curry_paintings_so_much_can/",
+        "https://www.reddit.com/r/bayarea/comments/1tnwesh/castle_rock_state_park_my_personal_therapy_spot/",
         "https://www.reddit.com/r/SanJose/comments/1tnv5sw/why_is_alviso_not_a_bigger_feature_for_san_jose/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1tnq976/calling_all_senior_chihuahua_lovers_11_year_old/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
       "matchedName": "Craftsman and Wolves"
     },
     {
-      "name": "Ulavacharu Tiffins",
-      "city": "Santa Clara",
-      "kind": "restaurant",
-      "context": "South Indian, also Campbell location",
+      "name": "Washington Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "hosts cake party event on June 14th",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ],
-      "matchedName": "Ulavacharu Tiffins"
-    },
-    {
-      "name": "California Momo Kitchen",
-      "city": "",
-      "kind": "restaurant",
-      "context": "Indo-Chinese cuisine",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ],
-      "matchedName": "California Momo Kitchen"
+      "matchedName": "Washington Park"
     },
     {
       "name": "Rengstorff Park",
       "city": "Mountain View",
       "kind": "park",
-      "context": "free weekly acroyoga meetup Saturdays",
+      "context": "hosts free acroyoga meetup on Saturdays",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/SanJose/comments/1tnoty7/indian_restaurant_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1tnx9wh/any_women_in_their_30s_interested_in_an_activeish/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/",
+        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/"
       ],
       "matchedName": "Rengstorff Park"
-    },
-    {
-      "name": "Washington Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "hosting 2nd annual cake party event June 14",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
-      ],
-      "matchedName": "Washington Park"
     },
     {
       "name": "Mitchell Park",
       "city": "Palo Alto",
       "kind": "park",
-      "context": "pickleball group meeting location",
+      "context": "pickleball courts, casual rotation play",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
         "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
-        "https://www.reddit.com/r/SanJose/comments/1tnxppy/game_anime_live_concert_from_local_orchestra_in/",
-        "https://www.reddit.com/r/Campbell/comments/1tme4lc/ainsley_spouthouse_updates/"
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
       ],
       "matchedName": "Mitchell Park"
+    },
+    {
+      "name": "Elia Restaurant",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "newly opened May 2026, same owner as Sultans Kebab",
+      "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tnkttl/anyone_in_palo_alto_want_to_start_a_regular/",
+        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/",
+        "https://www.reddit.com/r/santaclara/comments/1tnks3k/south_bay_pickleball_group_beginners_and/",
+        "https://www.reddit.com/r/Campbell/comments/1tmcsld/sultans_kebab_and_elia_restaurant_are_open/"
+      ],
+      "matchedName": "Elia"
     }
   ],
   "eventMatches": []
