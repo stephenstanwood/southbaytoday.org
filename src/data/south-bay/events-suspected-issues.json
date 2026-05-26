@@ -1,55 +1,51 @@
 {
   "_meta": {
-    "auditedAt": "2026-05-20T02:04:50.640Z"
+    "auditedAt": "2026-05-26T22:00:40.469Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1202,
+    "total": 1400,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 0
     },
-    "byReason": {
-      "virtual-not-flagged": 1
-    },
+    "byReason": {},
     "hard": [],
-    "soft": [
-      {
-        "id": "paloalto-69cf2b70491b809c6f24e18a",
-        "title": "Short Story Social: \"Dominion\" by Lauren Acampora",
-        "city": "palo-alto",
-        "date": "2026-09-24",
-        "location": "Palo Alto City Library",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      }
-    ]
+    "soft": []
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 141,
+    "total": 320,
     "totals": {
-      "hard": 1,
-      "soft": 1,
+      "hard": 5,
+      "soft": 0,
       "info": 0
     },
     "byReason": {
-      "meeting-title": 1,
-      "out-of-area": 1
+      "out-of-area": 5
     },
     "hard": [
       {
-        "id": "inbound_molsi3ka_ew6mi8",
-        "title": "Jan M. Flynn author event for Griffin Speaker",
+        "id": "inbound_0134ad7ad56916a5_01",
+        "title": "Boots & Brews Country Music Festival",
         "city": null,
-        "date": "2026-05-21T00:00:00-07:00",
-        "location": "Books Inc. Laurel Village, San Francisco",
+        "date": "2026-06-20T00:00:00-07:00",
+        "location": "Morgan Hill",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_dc385c22ba8a97b4_01",
+        "title": "Global Run Day with Hoka + A Runner's Mind",
+        "city": null,
+        "date": "2026-06-03T18:00:00-07:00",
+        "location": "A Runner's Mind, 3575 Sacramento St, San Francisco, CA 94118",
         "findings": [
           {
             "severity": "hard",
@@ -57,23 +53,50 @@
             "detail": "location mentions \"san francisco\" with no in-area city token"
           }
         ]
-      }
-    ],
-    "soft": [
+      },
       {
-        "id": "inbound_mon1brj6_dezijy",
-        "title": "Town Council Budget Hearing",
-        "city": "los-gatos",
-        "date": "2026-05-19T19:00:00-07:00",
-        "location": "",
+        "id": "inbound_f816af6122ab01b5_04",
+        "title": "Mer-MAY Party",
+        "city": null,
+        "date": "2026-05-29T00:00:00-07:00",
+        "location": "Gilroy Library",
         "findings": [
           {
-            "severity": "soft",
-            "reason": "meeting-title",
-            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_f816af6122ab01b5_05",
+        "title": "Chinese Medicine for Chronic Pain",
+        "city": null,
+        "date": "2026-05-30T00:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_f816af6122ab01b5_07",
+        "title": "Tai Chi",
+        "city": null,
+        "date": "2026-05-26T19:00:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
           }
         ]
       }
-    ]
+    ],
+    "soft": []
   }
 }
