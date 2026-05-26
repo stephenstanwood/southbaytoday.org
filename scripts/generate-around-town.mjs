@@ -175,11 +175,13 @@ KEEP: notable development projects (housing, commercial, controversial permits),
 Meeting data:
 ${content}
 
+NO FILLER ADJECTIVES: do not call a project "significant", "substantial", "major", "large-scale", "notable", or "important" without saying *why* the resident should care. Do not write "This represents …", "This reflects ongoing …", "This underscores …" — sentences that gesture at significance instead of stating it. If you can't name the concrete reason (jobs, units, location, price tag, who's affected), drop the second sentence. One useful sentence beats two with one of them puffed up.
+
 Return a JSON array (may be empty if nothing is interesting). Each item:
 {
   "date": "YYYY-MM-DD",
   "headline": "short plain-English headline (max 12 words, no jargon). NEVER start a number with $; fiscal years like 2026-27 must be written as 'FY 2026-27', not '$2026-27'.",
-  "summary": "1-2 sentences. What happened, why it matters. Written for a resident. NEVER use relative time words (tonight, today, this week) — use date or day name. NEVER admit you don't know what happened ('though specifics weren't provided', 'details weren't clear', 'without more details') — if you would have to, return [] instead."
+  "summary": "1-2 sentences. What happened, why it matters. Written for a resident. NEVER use relative time words (tonight, today, this week) — use date or day name. NEVER admit you don't know what happened ('though specifics weren't provided', 'details weren't clear', 'without more details') — if you would have to, return [] instead. NEVER pad with filler significance language (see NO FILLER ADJECTIVES above)."
 }
 
 Return [] if nothing is genuinely interesting. Quality over quantity.`;
@@ -207,6 +209,34 @@ const HEDGE_PATTERNS = [
 function isHedgeSummary(summary) {
   const s = String(summary || "");
   return HEDGE_PATTERNS.some((re) => re.test(s));
+}
+
+// AI-speak filler: a trailing sentence that gestures at significance without
+// naming a concrete reason. Three real shapes pulled from around-town.json:
+//   "This large-scale development represents substantial investment in the city's commercial real estate."
+//   "The project reflects ongoing corporate investment in San José's commercial districts."
+//   "This represents a significant leadership decision for the city's executive administration."
+// First sentences in those items carried real info (dollar amount, address,
+// action) — only the second sentence was padding. Strip the padding sentence
+// instead of dropping the whole item.
+const FILLER_TAIL_PATTERNS = [
+  /\bthis\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals)\b/i,
+  /\bthe\s+(?:project|decision|action|move|change|update)\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals)\b/i,
+  /\bthis\s+(?:large[-\s]scale|major|significant|substantial)\s+\w+\s+(?:represents|reflects|underscores)\b/i,
+  /\b(?:represents|reflects)\s+(?:ongoing|substantial|significant|continued)\s+\w+\s+in\b/i,
+];
+
+function stripFillerTail(summary) {
+  const s = String(summary || "").trim();
+  if (!s) return s;
+  // Split on sentence-ending punctuation followed by whitespace and a capital.
+  const sentences = s.split(/(?<=[.!?])\s+(?=[A-Z])/);
+  if (sentences.length < 2) return s;
+  const last = sentences[sentences.length - 1];
+  if (FILLER_TAIL_PATTERNS.some((re) => re.test(last))) {
+    return sentences.slice(0, -1).join(" ").trim();
+  }
+  return s;
 }
 
 async function gatherMeetingItems(meetingType) {
@@ -313,18 +343,20 @@ async function gatherPermitItems() {
     console.log(`  ⏳ ${config.cityName}: evaluating ${permits.length} notable permits...`);
 
     try {
-      const found = await claudeJson(`These are recently issued building permits in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about (new businesses, significant housing, major construction). Skip routine renovations and ADUs unless they represent a notable trend.
+      const found = await claudeJson(`These are recently issued building permits in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about — new businesses, new housing, large construction projects, or anything unusual. Skip routine renovations and ADUs unless they fit a broader pattern worth pointing out.
 
 Permits:
 ${permitText}
 
 IMPORTANT — a permit being issued means construction is *cleared to begin*, NOT that it has started. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches" — those imply a milestone the data does not support. Use language like "permitted", "receives building permit", "cleared to build", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
+NO FILLER ADJECTIVES: do not call a project "significant", "substantial", "major", "large-scale", "notable", or "important" without saying *why* the resident should care. Do not write "This represents …", "This reflects ongoing …", "This underscores …" — sentences that gesture at significance instead of stating it. If you can't name the concrete reason (square footage, units, tenant, dollar tag in context, neighborhood impact), drop the second sentence. One useful sentence beats two with one of them puffed up.
+
 Return a JSON array. Each item:
 {
   "date": "YYYY-MM-DD",
   "headline": "short plain-English headline (max 12 words). Use permit-accurate verbs only.",
-  "summary": "1-2 sentences. What's being permitted, where, why it matters. Do not assert construction has started."
+  "summary": "1-2 sentences. What's being permitted, where, why it matters. Do not assert construction has started. No filler significance language."
 }
 
 Return [] if nothing is genuinely noteworthy.`, 512);
@@ -473,6 +505,22 @@ async function main() {
   if (hedgeFiltered.length < allItems.length) {
     console.log(`  ${allItems.length - hedgeFiltered.length} hedge items dropped`);
   }
+
+  // Filler-tail trim: strip a trailing "This represents …" / "The project
+  // reflects ongoing …" sentence so the deploy keeps the useful first sentence
+  // without the AI-speak puff. Safety net for the NO FILLER ADJECTIVES prompt
+  // rule — same shape as hedge but rewrites rather than drops.
+  let trimmed = 0;
+  for (const item of hedgeFiltered) {
+    const before = item.summary;
+    const after = stripFillerTail(before);
+    if (after !== before) {
+      item.summary = after;
+      trimmed += 1;
+      console.log(`  ✂️  trimmed filler tail [${item.cityName}]: ${item.headline}`);
+    }
+  }
+  if (trimmed) console.log(`  ${trimmed} filler tails trimmed`);
 
   // Sort by date descending
   hedgeFiltered.sort((a, b) => b.date.localeCompare(a.date));
