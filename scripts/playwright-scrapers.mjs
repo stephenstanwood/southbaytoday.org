@@ -102,6 +102,55 @@ function normalizeTime(raw) {
   return t || null;
 }
 
+const MONTH_RE = "Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?";
+const NAV_JUNK_RE = /^(skip\s+to|back\s+to\s+top|navigation|breadcrumb|close\s+menu|view\s+all|load\s+more|show\s+more|read\s+more|subscribe|donate|search|menu|events?\s+search|events?\s+search\s+and\s+views\s+navigation)$/i;
+const KID_RE = /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i;
+
+function yearAwareDate(raw) {
+  if (!raw) return null;
+  const text = String(raw).replace(/\s+/g, " ").trim();
+  if (!text) return null;
+
+  const withYear = tryParseDate(text);
+  if (withYear) return withYear;
+
+  const monthDay = text.match(new RegExp(`\\b(${MONTH_RE})\\s+\\d{1,2}\\b`, "i"));
+  if (!monthDay) return null;
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+  const candidateText = `${monthDay[0]}, ${currentYear}`;
+  let parsed = tryParseDate(candidateText);
+  if (!parsed) return null;
+
+  const candidate = new Date(`${parsed}T12:00:00-07:00`);
+  if (candidate.getMonth() < currentMonth - 3) {
+    parsed = tryParseDate(`${monthDay[0]}, ${currentYear + 1}`);
+  }
+  return parsed;
+}
+
+function clockFromText(text) {
+  if (!text) return null;
+  const match = String(text).match(/\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\b/i);
+  return normalizeTime(match?.[0]?.replace(/\./g, ""));
+}
+
+function isUsefulTitle(title) {
+  const t = (title || "").replace(/\s+/g, " ").trim();
+  return t.length >= 4 && t.length <= 140 && !NAV_JUNK_RE.test(t);
+}
+
+function normalizeVenueText(raw, fallback) {
+  const text = (raw || "").replace(/\s+/g, " ").trim();
+  if (!text) return fallback;
+  if (/^-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+$/.test(text)) return fallback;
+  if (/^\d{3,6}\s+/.test(text)) return fallback;
+  if (/,\s*(CA|California)(\s+\d{5})?\b/i.test(text)) return fallback;
+  return text.length > 80 ? fallback : text;
+}
+
 /** Convert an ISO datetime ("2026-05-02T19:00:00-07:00") to "H:MM AM/PM".
  *  Returns null if the string has no time component or is unparseable.
  *  Treats the offset literally — for sources that emit local-wall-clock with
@@ -1426,6 +1475,379 @@ async function scrapeHPB(page) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// HIGH-YIELD VENUES / DISTRICTS
+// ═══════════════════════════════════════════════════════════════════════════
+
+async function scrapeMountainWinery(page) {
+  await page.setExtraHTTPHeaders({
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+  });
+  await page.goto("https://www.mountainwinery.com/concert-series", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(3000);
+
+  const raw = await page.evaluate(() => {
+    const events = [];
+    const seen = new Set();
+
+    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    for (const s of scripts) {
+      try {
+        const data = JSON.parse(s.textContent);
+        const stack = Array.isArray(data) ? [...data] : [data];
+        while (stack.length) {
+          const item = stack.shift();
+          if (!item || typeof item !== "object") continue;
+          if (Array.isArray(item)) { stack.push(...item); continue; }
+          const type = Array.isArray(item["@type"]) ? item["@type"].join(" ") : item["@type"];
+          if (/\bEvent\b/i.test(type || "") && item.name && item.startDate) {
+            const key = `${item.name}|${item.startDate}`;
+            if (!seen.has(key)) {
+              seen.add(key);
+              events.push({ title: item.name, date: item.startDate, link: item.url, venue: item.location?.name });
+            }
+          }
+          for (const value of Object.values(item)) {
+            if (value && typeof value === "object") stack.push(value);
+          }
+        }
+      } catch { /* ignore */ }
+    }
+
+    const lines = (document.body?.innerText || "")
+      .split(/\n+/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    for (let i = 0; i < lines.length; i++) {
+      const dateLine = lines[i];
+      if (!/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/i.test(dateLine)) continue;
+      const time = lines[i + 1] && /\d/.test(lines[i + 1]) ? lines[i + 1] : null;
+      const candidates = [];
+      for (let j = i - 1; j >= 0; j--) {
+        const line = lines[j];
+        if (/^BUY TICKETS$/i.test(line)) break;
+        if (/^(JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER|JANUARY|FEBRUARY|MARCH|APRIL|MAY)\s*\d{4}$/i.test(line)) break;
+        candidates.unshift(line);
+      }
+      const titleCandidates = candidates
+        .filter((line) => !/^(BUY TICKETS|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|CANN PRESENTS|PALLADIUM ENTERTAINMENT PRESENTS|AN EVENING WITH|PRIMETIME)$/i.test(line))
+        .filter((line) => !/\bpresents\b$/i.test(line))
+        .filter((line) => !/^with special guests?/i.test(line))
+        .filter((line) => !/\b(line dancing|tour)\b/i.test(line))
+        .filter((line) => !/^\d{1,2}:\d{2}\s*(AM|PM)$/i.test(line))
+        .filter((line) => !/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun),/i.test(line));
+      let title = titleCandidates[titleCandidates.length - 1];
+      if (/^(celebrating|where it all began|usa meets|the very best)/i.test(title || "") && titleCandidates.length > 1) {
+        title = titleCandidates[titleCandidates.length - 2];
+      } else if (titleCandidates.length > 1 && !/^(with|featuring|special guests?|celebrating)/i.test(titleCandidates[titleCandidates.length - 1])) {
+        const previous = titleCandidates[titleCandidates.length - 2];
+        if (!/^(an evening with|cann presents|palladium entertainment presents|primetime)$/i.test(previous)) {
+          title = `${previous} with ${titleCandidates[titleCandidates.length - 1]}`;
+        }
+      }
+      if (!title) continue;
+      const key = `${title}|${dateLine}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      events.push({ title, date: dateLine, time, link: "https://www.mountainwinery.com/concert-series" });
+    }
+    return events;
+  });
+
+  const COMEDY_NAMES = /\b(Trevor Noah|Bill Burr|Jeff Dunham|John Mulaney|Dana Carvey|Chris Tucker|Jeff Foxworthy|David Spade|Sebastian Maniscalco|Tom Segura|Bert Kreischer|Nate Bargatze|Jerry Seinfeld|Ali Wong|Hasan Minhaj|Adam Sandler|Kevin Hart|Bo Burnham|Mike Birbiglia|Jim Gaffigan|Patton Oswalt|Iliza Shlesinger|Ronny Chieng|Pete Davidson)\b/i;
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    // Drop billing fragments where the headliner couldn't be parsed —
+    // "with Wang Chung…", "Special Guest Cheap Trick" — these would render
+    // as a meaningless event title.
+    if (/^(with\s|special guest)/i.test(r.title)) return null;
+    const isComedy = /\b(comedy|comedian|stand-?up)\b/i.test(r.title) || COMEDY_NAMES.test(r.title);
+    return {
+      title: r.title,
+      date,
+      time: isoTimeToClock(r.date) || clockFromText(r.time) || clockFromText(r.date),
+      endTime: null,
+      venue: r.venue || "The Mountain Winery",
+      address: "14831 Pierce Rd, Saratoga, CA 95070",
+      city: "saratoga",
+      url: r.link || "https://www.mountainwinery.com/concert-series",
+      source: "Mountain Winery",
+      category: isComedy ? "arts" : "music",
+      cost: "paid",
+      kidFriendly: KID_RE.test(r.title),
+    };
+  }).filter(Boolean);
+}
+
+const SAN_JOSE_THEATERS = [
+  {
+    name: "San Jose Theaters",
+    url: "https://sanjosetheaters.org/calendar-condensed/",
+    source: "San Jose Theaters",
+    venue: "San Jose Theaters",
+    address: "Downtown San Jose",
+  },
+  {
+    name: "Hammer Theatre",
+    url: "https://hammertheatre.com/events/",
+    source: "Hammer Theatre",
+    venue: "Hammer Theatre Center",
+    address: "101 Paseo de San Antonio, San Jose, CA 95113",
+  },
+];
+
+async function scrapeEventListPage(page, config) {
+  await page.goto(config.url, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(config.waitMs || 2500);
+
+  const raw = await page.evaluate((monthReSource) => {
+    const events = [];
+    const seen = new Set();
+    const monthRe = new RegExp(`\\b(${monthReSource})\\s+\\d{1,2}(?:,\\s*\\d{4})?\\b`, "i");
+
+    const push = (event) => {
+      if (!event.title || !event.date) return;
+      const key = `${event.title}|${event.date}|${event.link || ""}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      events.push(event);
+    };
+
+    for (const s of document.querySelectorAll('script[type="application/ld+json"]')) {
+      try {
+        const data = JSON.parse(s.textContent);
+        const stack = Array.isArray(data) ? [...data] : [data];
+        while (stack.length) {
+          const item = stack.shift();
+          if (!item || typeof item !== "object") continue;
+          if (Array.isArray(item)) { stack.push(...item); continue; }
+          const type = Array.isArray(item["@type"]) ? item["@type"].join(" ") : item["@type"];
+          if (/\bEvent\b/i.test(type || "")) {
+            push({
+              title: item.name,
+              date: item.startDate,
+              endDate: item.endDate,
+              link: item.url,
+              venue: item.location?.name,
+            });
+          }
+          for (const value of Object.values(item)) {
+            if (value && typeof value === "object") stack.push(value);
+          }
+        }
+      } catch { /* ignore */ }
+    }
+
+    const cards = document.querySelectorAll("article, [class*='event'], [class*='tribe'], [class*='calendar'], .card, li");
+    for (const card of cards) {
+      const text = card.textContent?.replace(/\s+/g, " ").trim() || "";
+      if (text.length < 10 || text.length > 900) continue;
+      const titleEl = card.querySelector("h1,h2,h3,h4,[class*='title'],[class*='name']");
+      const title = titleEl?.textContent?.replace(/\s+/g, " ").trim();
+      const date = card.querySelector("time")?.getAttribute("datetime")
+        || card.querySelector("time")?.textContent
+        || text.match(monthRe)?.[0];
+      const link = titleEl?.closest("a")?.href || card.querySelector("a[href]")?.href;
+      const venue = card.querySelector("[class*='venue'], [class*='location']")?.textContent?.replace(/\s+/g, " ").trim();
+      push({ title, date, link, venue, text });
+    }
+    return events;
+  }, MONTH_RE);
+
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    return {
+      title: r.title,
+      date,
+      time: isoTimeToClock(r.date) || clockFromText(r.text || r.date),
+      endTime: isoTimeToClock(r.endDate),
+      venue: normalizeVenueText(r.venue, config.venue),
+      address: config.address,
+      city: config.city || "san-jose",
+      url: r.link && !/^mailto:/i.test(r.link) ? r.link : config.url,
+      source: config.source,
+      category: config.category || inferCategory(r.title),
+      cost: config.cost || null,
+      kidFriendly: KID_RE.test(`${r.title} ${r.text || ""}`),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeSanJoseTheaters(page) {
+  return scrapeEventListPage(page, SAN_JOSE_THEATERS[0]);
+}
+
+async function scrapeHammerTheatre(page) {
+  const events = await scrapeEventListPage(page, SAN_JOSE_THEATERS[1]);
+  return events.filter((e) => !/\bthere are no upcoming events\b|events search/i.test(e.title));
+}
+
+async function scrapeChildrensDiscoveryMuseum(page) {
+  await page.goto("https://www.cdm.org/calendar/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+
+  const raw = await page.evaluate(() => {
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const out = [];
+    const labels = /^(Art Activity|Performance|Special Event|Ongoing|Always on)$/i;
+    for (let i = 0; i < lines.length; i++) {
+      const date = lines[i];
+      if (!/^(Weekdays|Weekends|Every|Saturday|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|March|April|May|June|July|August|September|October|November|December)\b/i.test(date)) continue;
+      const title = lines[i - 1];
+      const type = lines[i - 2];
+      if (!title || labels.test(title) || !labels.test(type || "Special Event")) continue;
+      const time = lines[i + 1] && /\d{1,2}(:\d{2})?\s*(am|pm)/i.test(lines[i + 1]) ? lines[i + 1] : null;
+      out.push({ title, date, time, type });
+    }
+    return out;
+  });
+
+  return raw.map((r) => {
+    let date = yearAwareDate(r.date);
+    if (/^(weekdays|weekends|every)/i.test(r.date)) date = TODAY;
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    return {
+      title: r.title,
+      date,
+      time: clockFromText(r.time),
+      endTime: null,
+      venue: "Children's Discovery Museum",
+      address: "180 Woz Way, San Jose, CA 95110",
+      city: "san-jose",
+      url: "https://www.cdm.org/calendar/",
+      source: "Children's Discovery Museum",
+      category: "family",
+      cost: "paid",
+      kidFriendly: true,
+    };
+  }).filter(Boolean);
+}
+
+async function scrapePaloAltoArtCenter(page) {
+  return scrapeEventListPage(page, {
+    url: "https://www.cityofpaloalto.org/Departments/Community-Services/Arts-Sciences/Palo-Alto-Art-Center/Events",
+    source: "Palo Alto Art Center",
+    venue: "Palo Alto Art Center",
+    address: "1313 Newell Rd, Palo Alto, CA 94303",
+    city: "palo-alto",
+    category: "arts",
+    cost: "free",
+  });
+}
+
+async function scrapeMidpen(page) {
+  await page.goto("https://www.openspace.org/where-to-go/events-activities", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  const raw = await page.evaluate(() => {
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const out = [];
+    for (let i = 0; i < lines.length; i++) {
+      const activity = lines[i];
+      if (!/^(GUIDED ACTIVITY|VOLUNTEER PROJECT)$/i.test(activity)) continue;
+      const title = lines[i + 1];
+      const date = lines[i + 2];
+      const time = lines[i + 3];
+      const preserve = lines.slice(i + 4, i + 10).find((l) => /\bPreserve\b|\bSierra Azul\b|\bFremont Older\b|\bBear Creek\b|\bMonte Bello\b/i.test(l));
+      out.push({ activity, title, date, time, preserve });
+    }
+    return out;
+  });
+  const locationRules = [
+    [/bear creek redwoods|sierra azul/i, "los-gatos"],
+    [/fremont older|monte bello/i, "cupertino"],
+    [/rancho san antonio/i, "los-altos"],
+    [/foothills|los trancos/i, "palo-alto"],
+  ];
+  const outOfArea = /\b(la honda|pulgas ridge|purisima|long ridge|russian ridge|skyline ridge|windy hill|el corte de madera|pescadero|half moon bay)\b/i;
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    if (/\b(meeting|budget|committee|board)\b/i.test(r.title)) return null;
+    const place = (r.preserve || "Midpen Open Space Preserve").replace(/\t.*$/, "").trim();
+    if (outOfArea.test(`${r.title} ${place}`)) return null;
+    let city = "santa-clara-county";
+    for (const [re, slug] of locationRules) {
+      if (re.test(`${r.title} ${place}`)) { city = slug; break; }
+    }
+    return {
+      title: r.title,
+      date,
+      time: clockFromText(r.time),
+      endTime: null,
+      venue: place,
+      address: "Various Midpen preserves",
+      city,
+      url: "https://www.openspace.org/where-to-go/events-activities",
+      source: "Midpen Open Space",
+      category: r.activity === "VOLUNTEER PROJECT" ? "community" : "outdoor",
+      cost: "free",
+      kidFriendly: KID_RE.test(r.title),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeGuadalupeRiverPark(page) {
+  return scrapeEventListPage(page, {
+    url: "https://www.grpg.org/events",
+    source: "Guadalupe River Park Conservancy",
+    venue: "Guadalupe River Park",
+    address: "438 Coleman Ave, San Jose, CA 95110",
+    city: "san-jose",
+    category: "outdoor",
+    cost: "free",
+  });
+}
+
+async function scrapeSantanaRow(page) {
+  await page.goto("https://www.santanarow.com/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  const raw = await page.evaluate(() => {
+    const out = [];
+    const links = [...document.querySelectorAll('a[href*="/event/"]')];
+    for (const a of links) {
+      const text = a.textContent?.replace(/\s+/g, " ").trim() || "";
+      const m = text.match(/^((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:\s*[-–]\s*(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+)?\d{1,2})?,\s*\d{4})(.+)$/i);
+      if (!m) continue;
+      let title = m[2].trim();
+      title = title.replace(/\b(Join us|Bring your|The San Jose|Did you know|Santana Row is|Makers Market|Are you looking).*/i, "").trim();
+      if (!title) continue;
+      out.push({ title, date: m[1], link: a.href, text });
+    }
+    return out;
+  });
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title) || /work on the row/i.test(r.title)) return null;
+    return {
+      title: r.title,
+      date,
+      time: clockFromText(r.text),
+      endTime: null,
+      venue: "Santana Row",
+      address: "377 Santana Row, San Jose, CA 95128",
+      city: "san-jose",
+      url: r.link || "https://www.santanarow.com/events/",
+      source: "Santana Row",
+      category: inferCategory(r.title),
+      cost: null,
+      kidFriendly: KID_RE.test(r.text),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeDowntownMountainView(page) {
+  return scrapeEventListPage(page, {
+    url: "https://www.downtownmountainview.com/events",
+    source: "Downtown Mountain View",
+    venue: "Downtown Mountain View",
+    address: "Castro Street, Mountain View, CA",
+    city: "mountain-view",
+    category: "community",
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // Main
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1476,6 +1898,15 @@ async function main() {
   tasks.push({ name: "City Lights Theater", fn: (b) => runScraper(b, "City Lights Theater", scrapeCityLights) });
   tasks.push({ name: "ICA San Jose", fn: (b) => runScraper(b, "ICA San Jose", scrapeICASanJose) });
   tasks.push({ name: "SCCCFD (Eventbrite)", fn: (b) => runScraper(b, "SCCCFD (Eventbrite)", scrapeSCCCFD) });
+  tasks.push({ name: "Mountain Winery", fn: (b) => runScraper(b, "Mountain Winery", scrapeMountainWinery) });
+  tasks.push({ name: "San Jose Theaters", fn: (b) => runScraper(b, "San Jose Theaters", scrapeSanJoseTheaters) });
+  tasks.push({ name: "Hammer Theatre", fn: (b) => runScraper(b, "Hammer Theatre", scrapeHammerTheatre) });
+  tasks.push({ name: "Children's Discovery Museum", fn: (b) => runScraper(b, "Children's Discovery Museum", scrapeChildrensDiscoveryMuseum) });
+  tasks.push({ name: "Palo Alto Art Center", fn: (b) => runScraper(b, "Palo Alto Art Center", scrapePaloAltoArtCenter) });
+  tasks.push({ name: "Midpen Open Space", fn: (b) => runScraper(b, "Midpen Open Space", scrapeMidpen) });
+  tasks.push({ name: "Guadalupe River Park", fn: (b) => runScraper(b, "Guadalupe River Park", scrapeGuadalupeRiverPark) });
+  tasks.push({ name: "Santana Row", fn: (b) => runScraper(b, "Santana Row", scrapeSantanaRow) });
+  tasks.push({ name: "Downtown Mountain View", fn: (b) => runScraper(b, "Downtown Mountain View", scrapeDowntownMountainView) });
 
   // Bookstores
   tasks.push({ name: "Books Inc", fn: (b) => runScraper(b, "Books Inc", scrapeBooksInc) });
