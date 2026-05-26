@@ -1,43 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-25T23:09:48.328Z",
+      "generatedAt": "2026-05-26T11:09:33.104Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 18 – May 25",
+      "dateRange": "May 19 – May 26",
       "stats": {
-        "total": 462,
-        "notable": 30,
-        "newUnits": 9,
-        "totalValuation": 54770377
+        "total": 356,
+        "notable": 20,
+        "newUnits": 4,
+        "totalValuation": 47164407
       },
       "permits": [
-        {
-          "id": "2025-098497-RS",
-          "address": "2174 Old Piedmont Rd",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New 2 Sty SFR Duplex Construction",
-          "valuation": 1003820,
-          "units": 2,
-          "issueDate": "2026-05-19",
-          "subtype": "Duplex"
-        },
-        {
-          "id": "2025-129607-RS",
-          "address": "2334 Lansford Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 110754,
-          "units": 1,
-          "issueDate": "2026-05-19",
-          "subtype": "2nd Unit Added"
-        },
         {
           "id": "2026-113954-RS",
           "address": "267 Washington St #2",
@@ -48,18 +24,6 @@
           "valuation": 109875,
           "units": 1,
           "issueDate": "2026-05-20",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-142289-RS",
-          "address": "1422 Vinci Park Wy #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Garage Converion to Jadu",
-          "valuation": 80318,
-          "units": 1,
-          "issueDate": "2026-05-19",
           "subtype": "2nd Unit Added"
         },
         {
@@ -99,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-136536-RS",
-          "address": "73 Avenida Espana #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Studio Detached ADU",
-          "valuation": 50389,
-          "units": 1,
-          "issueDate": "2026-05-19",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-119455-CI",
           "address": "5853 Rue Ferrari",
           "category": "commercial-large",
@@ -133,18 +85,66 @@
           "units": 0,
           "issueDate": "2026-05-20",
           "subtype": "Office"
+        },
+        {
+          "id": "2026-119196-CI",
+          "address": "397 W Trimble Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Office",
+          "valuation": 1262940,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-118860-CI",
+          "address": "1815 Hillsdale Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Bmo Tenant Improvement",
+          "valuation": 990000,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Bank"
+        },
+        {
+          "id": "2026-118525-CI",
+          "address": "155 Bernal Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Blossom Dental Excellence TI for Dental Office",
+          "valuation": 900000,
+          "units": 0,
+          "issueDate": "2026-05-22",
+          "subtype": "Medical/Dental Clinic"
+        },
+        {
+          "id": "2026-119199-CI",
+          "address": "399 W Trimble Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Office",
+          "valuation": 781200,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-25T23:09:50.859Z",
+      "generatedAt": "2026-05-26T11:09:35.657Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 18 – May 25",
+      "dateRange": "May 19 – May 26",
       "stats": {
-        "total": 98,
+        "total": 77,
         "notable": 5,
         "newUnits": 0,
         "totalValuation": 0

@@ -1,80 +1,64 @@
 {
-  "generatedAt": "2026-05-25T23:11:24.786Z",
-  "weekLabel": "May 25 – Jun 1",
-  "weekStart": "2026-05-25",
-  "weekEnd": "2026-06-01",
+  "generatedAt": "2026-05-26T11:11:05.641Z",
+  "weekLabel": "May 26 – Jun 2",
+  "weekStart": "2026-05-26",
+  "weekEnd": "2026-06-02",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell hosts a Memorial Day Ceremony at City Hall this morning, plus the library launches three storytimes across the week for families.",
+      "summary": "County Supervisor Susan Ellenberg holds a community town hall at Campbell Library Wednesday evening, plus three professional development events land this week.",
       "highlights": [
         {
           "type": "event",
-          "title": "Memorial Day Ceremony",
-          "when": "Mon, May 25 · 9:00 AM",
-          "venue": "Campbell City Hall",
+          "title": "Power Networking Lunch",
+          "when": "Tue, May 26 · 12:00 PM",
+          "venue": "Sushi Confidential",
           "category": "community",
-          "url": null
+          "url": "https://business.campbellchamber.net/events/details/power-networking-lunch-at-sushi-confidential-16469"
         },
         {
           "type": "event",
-          "title": "Music & Movement Storytime",
-          "when": "Tue, May 26 · 10:30 AM",
+          "title": "Community Town Hall with County Supervisor Susan Ellenberg",
+          "when": "Wed, May 27 · 6:00 PM",
           "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69fbb43b8e677a28001a5ae8"
+          "category": "community",
+          "url": "https://libraaryaware.com/3CFGD9"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:12.086Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:51.732Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino Library stacks the week with AANHPI Month book clubs for kids and a Morocco travel night, while the city updates its Health and Safety General Plan element.",
+      "summary": "Cupertino's City Council reviewed updates to its General Plan's Health and Safety Element, setting policy direction for public health and emergency preparedness through 2040.",
       "highlights": [
         {
           "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Tue, May 26 · 10:30 AM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/694353974be11d3d00d8b3ca"
-        },
-        {
-          "type": "event",
-          "title": "Celebrate AANHPI Month: Freedom Readers Book Club (Grades 5-8)",
-          "when": "Tue, May 26 · 4:00 PM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69e7c23b1e64afd01e6ab720"
+          "title": "Cupertino Farmers Market",
+          "when": "Fri, May 29 · 9:00 AM",
+          "venue": "Oaks Shopping Center",
+          "category": "food",
+          "url": "https://cafarmersmkts.com/cupertino-market"
         },
         {
           "type": "cityhall",
-          "title": "Cupertino updates Health and Safety element of General Plan",
+          "title": "Cupertino updates Health and Safety Element of General Plan",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://cupertino.legistar.com/Calendar.aspx?From=5%2F19%2F2026&To=5%2F19%2F2026"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:13.572Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:52.812Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos marks Memorial Day downtown Monday noon, while the library hosts health services tabling, crafts, and storytime programming later this week.",
+      "summary": "Los Gatos Library hosts five programs this week, from baby storytimes to kids' knitting and a Music Together demo.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Memorial Day Celebration",
-          "when": "Mon, May 25 · 12:00 PM",
-          "venue": "Downtown Los Gatos",
-          "category": "community",
-          "url": null
-        },
         {
           "type": "event",
           "title": "Gardner Health Services Tabling",
@@ -82,15 +66,23 @@
           "venue": "Los Gatos Library",
           "category": "community",
           "url": "https://losgatosca.libcal.com/event/16898009"
+        },
+        {
+          "type": "event",
+          "title": "Crafty Corner (Ages 3-10)",
+          "when": "Tue, May 26 · 4:00 PM",
+          "venue": "Los Gatos Library",
+          "category": "community",
+          "url": "https://losgatosca.libcal.com/event/15695369"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:14.826Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:54.123Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View City Council considers its decarbonization goals and five-year plan while the community gathers for book clubs, storytime, and a senior film screening Tuesday.",
+      "summary": "Mountain View hosts five events today spanning library scanning services, a senior film screening, storytime for kids, a book club discussion, and a workplace rights workshop.",
       "highlights": [
         {
           "type": "event",
@@ -107,48 +99,40 @@
           "venue": "Mountain View Senior Center",
           "category": "community",
           "url": "https://www.mountainview.gov/our-city/departments/community-services/recreation/senior-center"
-        },
-        {
-          "type": "council",
-          "title": "City Decarbonization Goal and Five-Year Plan Approach and Actions",
-          "when": "Tue, May 26",
-          "venue": null,
-          "category": "government",
-          "url": "https://mountainview.legistar.com/MeetingDetail.aspx?ID=3360&GUID=9C0B992B-89B8-470D-AE64-6D89D91442A5"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:16.148Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:55.414Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga observes Memorial Day this morning at Blaney Plaza, while the library hosts family storytimes and homework help all week, plus an arts performance on abolition at Montalvo.",
+      "summary": "Saratoga hosts a wildfire preparedness workshop Tuesday at Joan Pisani Community Center, plus Yacht Rock Revue takes the stage at Mountain Winery same evening.",
       "highlights": [
         {
           "type": "event",
-          "title": "Memorial Day Observance",
-          "when": "Mon, May 25 · 9:30 AM",
-          "venue": "Memorial Arch in Blaney Plaza",
-          "category": "community",
-          "url": null
+          "title": "Freedom Time: dancing justice dancing abolition",
+          "when": "Wed, May 27 · 12:00 PM",
+          "venue": "Montalvo Arts Center",
+          "category": "arts",
+          "url": "https://my.montalvoarts.org/3206/3207"
         },
         {
           "type": "event",
-          "title": "Family Storytime",
-          "when": "Tue, May 26 · 11:00 AM",
-          "venue": "Saratoga Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a0371fa703c336300271e7d"
+          "title": "Saratoga Farmers Market",
+          "when": "Sat, May 30 · 9:00 AM",
+          "venue": "West Valley College",
+          "category": "food",
+          "url": "https://cafarmersmkts.com/saratoga-market"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:17.521Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:56.678Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale releases a draft water shortage contingency plan for public review as California faces ongoing drought pressures.",
+      "summary": "Sunnyvale's library hosts author Irena Smith discussing her book Troika Wednesday night, while the city eyes updates to its water shortage response plan.",
       "highlights": [
         {
           "type": "event",
@@ -168,36 +152,36 @@
         },
         {
           "type": "cityhall",
-          "title": "City releases draft water shortage plan for public review",
+          "title": "Sunnyvale updates water shortage contingency plan",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://sunnyvale.legistar.com/Calendar.aspx?From=5%2F18%2F2026&To=5%2F18%2F2026"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:18.487Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:58.254Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose's City Council approved a Seeds of Peace Monument for Guadalupe River Park and set the Tully Road Eastridge Business Improvement District's 2026-2027 budget this week.",
+      "summary": "San Jose City Council approved the Seeds of Peace Monument artwork for Guadalupe River Park, honoring survivors with a public art installation.",
       "highlights": [
         {
           "type": "event",
-          "title": "Live Music",
-          "when": "Mon, May 25 · 6:00 PM",
-          "venue": "San Pedro Square Market",
-          "category": "music",
-          "url": "https://sjdowntown.com/event/live-music/2026-05-25/"
+          "title": "Indoor Family Storytime with Stay and Play",
+          "when": "Tue, May 26 · 11:00 AM",
+          "venue": "East SJ Carnegie Library",
+          "category": "family",
+          "url": "https://sjpl.bibliocommons.com/events/693330536724c63d00e572ab"
         },
         {
           "type": "event",
-          "title": "Trivia Mondays",
-          "when": "Mon, May 25 · 7:30 PM",
-          "venue": "Dr. Funk",
-          "category": "community",
-          "url": "https://sjdowntown.com/event/trivia-mondays/2026-05-25/"
+          "title": "All Ages Storytime: Over in the Meadow",
+          "when": "Tue, May 26 · 11:30 AM",
+          "venue": "Children's Discovery Museum of San Jose",
+          "category": "family",
+          "url": null
         },
         {
           "type": "council",
@@ -208,13 +192,13 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?ID=7624&GUID=58D0F466-53AF-451E-9A39-5317BFDC2336"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:19.674Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:10:59.703Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara University hosts discussions on AI ethics Tuesday and engineering inclusivity Wednesday, plus student music performances this week.",
+      "summary": "Santa Clara University hosts a panel on Catholic ethics and artificial intelligence tonight, while the de Saisset Museum opens Jonathan Calm's exhibition on absence and passage this week.",
       "highlights": [
         {
           "type": "event",
@@ -233,38 +217,38 @@
           "url": "https://events.scu.edu/school-of-engineering/event/453152-magnificent-humanity-catholic-ethics-and"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:20.854Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:11:01.127Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library hosts five storytimes and book clubs this week, from baby programs to adult discussions across multiple languages.",
+      "summary": "Los Altos Library hosts a Gardening for Biodiversity talk Thursday night, while Linden Tree Books launches a Middle Grade Book Club Sunday afternoon.",
       "highlights": [
         {
           "type": "event",
-          "title": "Bilingual Mandarin Family Storytime",
-          "when": "Tue, May 26 · 1:00 PM",
+          "title": "Gardening for Biodiversity",
+          "when": "Thu, May 28 · 7:00 PM",
           "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69b835d281b67dfe32acec73"
+          "category": "education",
+          "url": "https://libraryaware.com/3CFGDJ"
         },
         {
           "type": "event",
-          "title": "Bilingual Spanish Family Storytime / Hora de cuentos bilingüe para familias",
-          "when": "Tue, May 26 · 10:30 AM",
-          "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69b835d42866a5b488426bf5"
+          "title": "Middle Grade Book Club: A Tale of Plagues and Perfumes",
+          "when": "Sun, May 31 · 4:00 PM",
+          "venue": "Linden Tree Books",
+          "category": "arts",
+          "url": "https://www.lindentreebooks.com/a-room-with-a-view-69929693.html"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:21.997Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:11:02.575Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto libraries host teen study spaces and family LEGO sessions this week, while the city weighs residential electrification program principles to shift homes away from natural gas.",
+      "summary": "Palo Alto considers principles to guide residential electrification programs aimed at meeting regional air quality standards.",
       "highlights": [
         {
           "type": "event",
@@ -284,36 +268,28 @@
         },
         {
           "type": "cityhall",
-          "title": "City Council to hear residential electrification program proposals",
+          "title": "City to set principles for residential electrification programs",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://paloalto.legistar.com/Calendar.aspx?From=5%2F15%2F2026&To=5%2F15%2F2026"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:23.495Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:11:04.274Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas City Council appointed a permanent City Manager this week, solidifying leadership for the city's administrative operations.",
+      "summary": "Milpitas City Council appointed a permanent City Manager this week to oversee city operations and administration.",
       "highlights": [
         {
           "type": "event",
-          "title": "Baby Bouncers Lapsit for Prewalkers",
-          "when": "Tue, May 26 · 11:30 AM",
+          "title": "Grow for Monarchs",
+          "when": "Sat, May 30 · 2:00 PM",
           "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/693778316f926136000a0114"
-        },
-        {
-          "type": "event",
-          "title": "Homework Help for Grades K-6",
-          "when": "Tue, May 26 · 4:00 PM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/693778116f926136000a00fa"
+          "category": "education",
+          "url": "https://libraryaware.com/3CFGDK"
         },
         {
           "type": "cityhall",
@@ -324,8 +300,8 @@
           "url": "https://www.ci.milpitas.ca.gov/government/council/"
         }
       ],
-      "weekLabel": "May 25 – Jun 1",
-      "generatedAt": "2026-05-25T23:11:24.483Z"
+      "weekLabel": "May 26 – Jun 2",
+      "generatedAt": "2026-05-26T11:11:05.338Z"
     }
   }
 }
