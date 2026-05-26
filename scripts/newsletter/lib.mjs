@@ -296,7 +296,7 @@ function newsletterVisuals({ longDate, socialDay, dayPlan, tonightPick, featured
   const eventsImage = firstUsableImage(featuredEvents, (e) => e.image);
   const openingsImage = firstUsableImage(recentOpenings, (o) => o.image);
   const conversationImage = firstUsableImage(redditPosts, (p) => p.image);
-  const archiveImage = dayPlanImage || tonightPickImage || eventsImage || openingsImage || conversationImage || `${SITE_URL}/images/og-image.png`;
+  const archiveImage = dayPlanImage || tonightPickImage || eventsImage || openingsImage || conversationImage || "";
 
   return {
     dayPlanImage,
@@ -633,7 +633,7 @@ Your job:
 
 Voice:
 - Smart, warm, specific, lightly opinionated. A competent local friend who actually read the calendar.
-- Useful beats hype. If the day is quiet, say so plainly and still make the useful parts easy to see.
+- Useful beats hype. Never describe a day or part of a day as quiet, slow, thin, light, sparse, sleepy, soft, or weak. There is always something to do; frame the useful options and strongest patterns without apologizing for the calendar.
 - No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
 - Avoid em dashes. Use commas, periods, or parentheses.
 
@@ -742,21 +742,21 @@ function applyEditorialJson(data, candidates, edit) {
 
   const revised = {
     ...data,
-    dayPlanBlurb: limitedString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
+    dayPlanBlurb: newsletterCopyString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
     tonightPick: tonightPick || data.tonightPick,
-    tonightPickBlurb: limitedString(edit.tonightPickBlurb, 500) || (tonightPick ? buildTonightBlurb(tonightPick) : data.tonightPickBlurb),
+    tonightPickBlurb: newsletterCopyString(edit.tonightPickBlurb, 500) || (tonightPick ? buildTonightBlurb(tonightPick) : data.tonightPickBlurb),
     featuredEvents: featured.length ? uniqueItems(featured, 10) : uniqueItems(fallbackFeatured, 10),
     recentOpenings: openings.length ? openings : data.recentOpenings,
     redditPosts: reddit.length ? reddit : data.redditPosts,
     editorial: {
-      briefing: limitedString(edit.briefing, 800),
-      dayPlanHeadline: limitedString(edit.dayPlanHeadline, 120),
-      eventsHeading: limitedString(edit.eventsHeading, 80),
-      eventsNote: limitedString(edit.eventsNote, 240),
-      openingsHeading: limitedString(edit.openingsHeading, 80),
-      openingsNote: limitedString(edit.openingsNote, 220),
-      conversationHeading: limitedString(edit.conversationHeading, 80),
-      conversationNote: limitedString(edit.conversationNote, 220),
+      briefing: newsletterCopyString(edit.briefing, 800),
+      dayPlanHeadline: newsletterCopyString(edit.dayPlanHeadline, 120),
+      eventsHeading: newsletterCopyString(edit.eventsHeading, 80),
+      eventsNote: newsletterCopyString(edit.eventsNote, 240),
+      openingsHeading: newsletterCopyString(edit.openingsHeading, 80),
+      openingsNote: newsletterCopyString(edit.openingsNote, 220),
+      conversationHeading: newsletterCopyString(edit.conversationHeading, 80),
+      conversationNote: newsletterCopyString(edit.conversationNote, 220),
     },
   };
 
@@ -813,6 +813,37 @@ function uniqueItems(items, max) {
 function limitedString(value, max) {
   if (typeof value !== "string") return "";
   return value.trim().slice(0, max);
+}
+
+const DAY_CONTEXT_WORDS = [
+  "today", "tonight", "day", "calendar", "lineup", "morning", "daytime", "afternoon", "evening",
+  "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+];
+const DAY_CONTEXT = `(?:this\\s+)?(?:the\\s+)?(?:${DAY_CONTEXT_WORDS.join("|")})`;
+const DOWNBEAT_DAY_LANGUAGE = "(?:quiet|quieter|quietest|slow|slower|slowest|thin|thinner|thinnest|light|lighter|lightest|sparse|sparser|sparsest|sleepy|soft|weak)";
+
+function newsletterCopyString(value, max) {
+  const cleaned = rewriteDownbeatDayLanguage(limitedString(value, max));
+  return hasDownbeatDayLanguage(cleaned) ? "" : cleaned;
+}
+
+function rewriteDownbeatDayLanguage(value) {
+  return String(value || "")
+    .replace(
+      new RegExp(`\\b(${DAY_CONTEXT})\\s+(?:looks|feels|seems|is|are|runs)\\s+(?:a\\s+little\\s+|pretty\\s+|comparatively\\s+|relatively\\s+|more\\s+|less\\s+)?${DOWNBEAT_DAY_LANGUAGE}\\b`, "gi"),
+      (_match, period) => `${period} has useful options`
+    )
+    .replace(
+      new RegExp(`\\b(${DAY_CONTEXT})\\s+has\\s+(?:a\\s+)?${DOWNBEAT_DAY_LANGUAGE}\\s+(?:feel|shape|stretch|window)\\b`, "gi"),
+      (_match, period) => `${period} has useful options`
+    );
+}
+
+function hasDownbeatDayLanguage(value) {
+  const text = String(value || "");
+  const dayThenTerm = new RegExp(`\\b${DAY_CONTEXT}\\b[^.!?]{0,80}\\b${DOWNBEAT_DAY_LANGUAGE}\\b`, "i");
+  const termThenDay = new RegExp(`\\b${DOWNBEAT_DAY_LANGUAGE}\\s+${DAY_CONTEXT}\\b`, "i");
+  return dayThenTerm.test(text) || termThenDay.test(text);
 }
 
 function compactText(value, max) {
@@ -922,7 +953,12 @@ export function renderEmail(data) {
 
 function wrapShell(subject, body, data = null) {
   const description = compactText(data?.editorial?.briefing || data?.dayPlanBlurb || "A morning South Bay briefing with the field guide, events, openings, civic notes, and local conversation.", 220);
-  const image = data?.visuals?.archiveImage || `${SITE_URL}/images/og-image.png`;
+  const image = data?.visuals?.archiveImage || "";
+  const imageMeta = image
+    ? `<meta property="og:image" content="${esc(image)}">
+<meta name="twitter:image" content="${esc(image)}">`
+    : "";
+  const twitterCard = image ? "summary_large_image" : "summary";
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -932,13 +968,12 @@ function wrapShell(subject, body, data = null) {
 <meta name="description" content="${esc(description)}">
 <meta property="og:title" content="${esc(subject)}">
 <meta property="og:description" content="${esc(description)}">
-<meta property="og:image" content="${esc(image)}">
+${imageMeta}
 <meta property="og:site_name" content="South Bay Today">
 <meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="${twitterCard}">
 <meta name="twitter:title" content="${esc(subject)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${esc(image)}">
 </head>
 <body style="margin:0;padding:0;background:${PALETTE.card};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:${PALETTE.ink};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${esc(description)}</div>

@@ -27,17 +27,13 @@ function fallbackBlobUrl(pathname: string): string {
 function archiveMetaHtml(date: string, body: string): string {
   const title = `South Bay Today - ${date}`;
   const canonical = `${SITE_URL}/newsletters/${date}`;
-  const image = `${SITE_URL}/images/og-image.png`;
   const meta = `
 <meta name="description" content="${esc(title)}">
 <meta property="og:title" content="${esc(title)}">
-<meta property="og:image" content="${esc(image)}">
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:site_name" content="South Bay Today">
 <meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:image" content="${esc(image)}">
 <link rel="canonical" href="${esc(canonical)}">`;
 
   if (/<\/head>/i.test(body)) {
