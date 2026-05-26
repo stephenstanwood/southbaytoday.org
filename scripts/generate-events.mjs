@@ -1736,9 +1736,14 @@ function inferCategory(title, desc, type, venue = "") {
   // override the program type. Explicit sport names like "soccer"/"basketball" still trigger.
   const isLibraryVenue = /\b(library|libraries)\b/.test(venueLower);
   const isLibraryActivityGames = isLibraryVenue ||
-    /\bgames[,;]?\s*(crafts?|activities|bubbles|more)/i.test(t) ||
-    /\b(crafts?|activities)\s+(?:and\s+)?games\b/i.test(t) ||
-    /\bgames\s+and\s+activities\b/i.test(t);
+    /\bgames[,;]?\s*(crafts?|activities|bubbles|more|food|prizes|drinks|raffles?)/i.test(t) ||
+    /\b(crafts?|activities|food|prizes|drinks|raffles?)\s+(?:and\s+)?games\b/i.test(t) ||
+    /\bgames\s+and\s+(activities|prizes|food|drinks|raffles?)\b/i.test(t) ||
+    // BBQ/cookout/potluck/mixer/social title signals: "games" in the description
+    // here describes lawn games (cornhole, ladder ball, trivia) at a networking
+    // gathering, not athletic sports. Title-anchored to avoid matching legitimate
+    // sports events that mention socializing in their description.
+    /\b(bbq|barbecue|barbeque|cookout|potluck|mixer|reception|networking)\b/i.test(title);
   // Carnivals (school carnivals, business carnivals, festival carnivals) are community
   // events — descriptions often mention "carnival games" which would otherwise hit the
   // sports branch via t.includes("game"). Music/arts carnivals (e.g. Mötley Crüe's
