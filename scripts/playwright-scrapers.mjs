@@ -137,6 +137,21 @@ function clockFromText(text) {
   return normalizeTime(match?.[0]?.replace(/\./g, ""));
 }
 
+function clockRangeFromText(text) {
+  if (!text) return { time: null, endTime: null };
+  const matches = [...String(text).matchAll(/\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\b/gi)]
+    .map((m) => normalizeTime(m[0].replace(/\./g, "")));
+  return { time: matches[0] || null, endTime: matches[1] || null };
+}
+
+function clockMinutes(time) {
+  const m = String(time || "").match(/^0?(\d{1,2})(?::(\d{2}))?\s*([ap]m)$/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10) % 12;
+  if (/pm/i.test(m[3])) h += 12;
+  return h * 60 + parseInt(m[2] || "0", 10);
+}
+
 function isUsefulTitle(title) {
   const t = (title || "").replace(/\s+/g, " ").trim();
   return t.length >= 4 && t.length <= 140 && !NAV_JUNK_RE.test(t);
@@ -197,7 +212,7 @@ function inferCategory(title) {
 // TIER 1 — Currently blocked/broken sources
 // ═══════════════════════════════════════════════════════════════════════════
 
-// ── CivicPlus City Calendars (4 cities, all 403 on iCal feed) ──
+// ── CivicPlus City Calendars (3 cities, 403 on iCal feed) ──
 
 const CIVIC_PLUS_CITIES = [
   {
@@ -217,12 +232,6 @@ const CIVIC_PLUS_CITIES = [
     url: "https://www.sanjoseca.gov/Calendar.aspx",
     city: "san-jose",
     source: "City of San Jose",
-  },
-  {
-    name: "City of Cupertino",
-    url: "https://www.cupertino.org/Calendar.aspx",
-    city: "cupertino",
-    source: "City of Cupertino",
   },
 ];
 
@@ -1532,6 +1541,7 @@ async function scrapeMountainWinery(page) {
         .filter((line) => !/^(BUY TICKETS|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|CANN PRESENTS|PALLADIUM ENTERTAINMENT PRESENTS|AN EVENING WITH|PRIMETIME)$/i.test(line))
         .filter((line) => !/\bpresents\b$/i.test(line))
         .filter((line) => !/^with special guests?/i.test(line))
+        .filter((line) => !/^performed by\b/i.test(line))
         .filter((line) => !/\b(line dancing|tour)\b/i.test(line))
         .filter((line) => !/^\d{1,2}:\d{2}\s*(AM|PM)$/i.test(line))
         .filter((line) => !/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun),/i.test(line));
@@ -1675,7 +1685,52 @@ async function scrapeEventListPage(page, config) {
 }
 
 async function scrapeSanJoseTheaters(page) {
-  return scrapeEventListPage(page, SAN_JOSE_THEATERS[0]);
+  const url = "https://events.timely.fun/jc0x91t0/stream?tags=677512582&notoolbar=1&nofilters=1&timely_id=timely-iframe-embed-0";
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(3500);
+
+  const raw = await page.evaluate(() => {
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const out = [];
+    const venues = ["California Theatre", "Montgomery Theater", "San Jose Civic", "Center for the Performing Arts"];
+    const dayHeader = /^(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),/;
+    for (let i = 1; i < lines.length; i++) {
+      const detail = lines[i];
+      if (!/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s+\d{4}/i.test(detail)) continue;
+      const title = lines[i - 1];
+      if (!title || dayHeader.test(title)) continue;
+      const venue = venues.find((v) => detail.includes(v)) || "San Jose Theaters";
+      const time = detail.match(/@\s*([^@]+?)\s+(?:California Theatre|Montgomery Theater|San Jose Civic|Center for the Performing Arts)/)?.[1] || null;
+      out.push({ title, date: detail, time, venue });
+    }
+    return out;
+  });
+
+  const addressByVenue = {
+    "California Theatre": "345 S 1st St, San Jose, CA 95113",
+    "Montgomery Theater": "271 S Market St, San Jose, CA 95113",
+    "San Jose Civic": "135 W San Carlos St, San Jose, CA 95113",
+    "Center for the Performing Arts": "255 S Almaden Blvd, San Jose, CA 95113",
+  };
+
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    return {
+      title: r.title,
+      date,
+      time: clockFromText(r.time),
+      endTime: null,
+      venue: r.venue,
+      address: addressByVenue[r.venue] || "Downtown San Jose",
+      city: "san-jose",
+      url: "https://sanjosetheaters.org/calendar-condensed/",
+      source: "San Jose Theaters",
+      category: inferCategory(r.title),
+      cost: "paid",
+      kidFriendly: KID_RE.test(r.title),
+    };
+  }).filter(Boolean);
 }
 
 async function scrapeHammerTheatre(page) {
@@ -1684,6 +1739,9 @@ async function scrapeHammerTheatre(page) {
 }
 
 async function scrapeChildrensDiscoveryMuseum(page) {
+  await page.setExtraHTTPHeaders({
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+  });
   await page.goto("https://www.cdm.org/calendar/", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
 
@@ -1740,7 +1798,7 @@ async function scrapeMidpen(page) {
   await page.goto("https://www.openspace.org/where-to-go/events-activities", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
-    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const lines = (document.body?.innerText || "").split(/\n+|\t+|\s+\|\s+/).map((l) => l.trim()).filter(Boolean);
     const out = [];
     for (let i = 0; i < lines.length; i++) {
       const activity = lines[i];
@@ -1759,6 +1817,13 @@ async function scrapeMidpen(page) {
     [/rancho san antonio/i, "los-altos"],
     [/foothills|los trancos/i, "palo-alto"],
   ];
+  const cityLabel = {
+    "los-gatos": "Los Gatos",
+    "cupertino": "Cupertino",
+    "los-altos": "Los Altos",
+    "palo-alto": "Palo Alto",
+    "santa-clara-county": "Santa Clara County",
+  };
   const outOfArea = /\b(la honda|pulgas ridge|purisima|long ridge|russian ridge|skyline ridge|windy hill|el corte de madera|pescadero|half moon bay)\b/i;
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
@@ -1776,7 +1841,7 @@ async function scrapeMidpen(page) {
       time: clockFromText(r.time),
       endTime: null,
       venue: place,
-      address: "Various Midpen preserves",
+      address: place === "Midpen Open Space Preserve" ? "" : `${place}, ${cityLabel[city] || "Santa Clara County"}`,
       city,
       url: "https://www.openspace.org/where-to-go/events-activities",
       source: "Midpen Open Space",
@@ -1807,12 +1872,10 @@ async function scrapeSantanaRow(page) {
     const links = [...document.querySelectorAll('a[href*="/event/"]')];
     for (const a of links) {
       const text = a.textContent?.replace(/\s+/g, " ").trim() || "";
-      const m = text.match(/^((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:\s*[-–]\s*(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+)?\d{1,2})?,\s*\d{4})(.+)$/i);
-      if (!m) continue;
-      let title = m[2].trim();
-      title = title.replace(/\b(Join us|Bring your|The San Jose|Did you know|Santana Row is|Makers Market|Are you looking).*/i, "").trim();
-      if (!title) continue;
-      out.push({ title, date: m[1], link: a.href, text });
+      const title = a.querySelector("h1,h2,h3,.title")?.textContent?.replace(/\s+/g, " ").trim();
+      const date = a.querySelector(".date")?.textContent?.replace(/\s+/g, " ").trim();
+      if (!title || !date) continue;
+      out.push({ title, date, link: a.href, text });
     }
     return out;
   });
@@ -1845,6 +1908,365 @@ async function scrapeDowntownMountainView(page) {
     city: "mountain-view",
     category: "community",
   });
+}
+
+async function scrapeCupertinoOpenCities(page) {
+  const directoryUrl = "https://www.cupertino.gov/Events-directory";
+  await page.goto(directoryUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(1500);
+
+  const links = [];
+  const seenLinks = new Set();
+  const collectLinks = async () => {
+    const pageLinks = await page.evaluate(() => {
+      return [...document.querySelectorAll("a[href]")]
+        .map((a) => ({
+          text: a.textContent?.replace(/\s+/g, " ").trim() || "",
+          href: a.href?.split("#")[0],
+        }))
+        .filter((a) => /\d{2}\s+[A-Z][a-z]{2}\s+20\d{2}/.test(a.text) && a.href?.includes("cupertino.gov"));
+    });
+    for (const link of pageLinks) {
+      if (!link.href || seenLinks.has(link.href)) continue;
+      seenLinks.add(link.href);
+      links.push(link);
+    }
+  };
+
+  for (let pageNo = 1; pageNo <= 4; pageNo++) {
+    await collectLinks();
+    const next = page.locator(`a[href$="#page-${pageNo + 1}"]`).first();
+    if ((await next.count()) === 0) break;
+    await next.click();
+    await page.waitForTimeout(900);
+  }
+
+  const raw = [];
+  for (const link of links.slice(0, 45)) {
+    try {
+      await page.goto(link.href, { waitUntil: "domcontentloaded", timeout: 30_000 });
+      await page.waitForTimeout(500);
+      const detail = await page.evaluate(() => {
+        const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+        const title = document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim()
+          || document.title.replace(/\s+Cupertino CA\s*$/i, "").trim();
+        const nextDate = document.querySelector(".event-date")?.textContent?.replace(/\s+/g, " ").trim().replace(/^Next date:\s*/i, "");
+        const slots = [...document.querySelectorAll(".multi-date-item")]
+          .map((li) => li.textContent?.replace(/\s+/g, " ").trim())
+          .filter(Boolean);
+        if (slots.length === 0 && nextDate) slots.push(nextDate);
+
+        const titleIdx = lines.findIndex((line) => line === title);
+        const whenIdx = lines.findIndex((line) => /^When$/i.test(line));
+        const description = titleIdx >= 0 && whenIdx > titleIdx
+          ? lines.slice(titleIdx + 2, whenIdx).join(" ").replace(/\s+/g, " ").trim()
+          : "";
+        const locationIdx = lines.findIndex((line) => /^Location$/i.test(line));
+        const location = locationIdx >= 0 ? lines[locationIdx + 1] || "" : "";
+        const costIdx = lines.findIndex((line) => /^Cost$/i.test(line));
+        const cost = costIdx >= 0 ? lines[costIdx + 1] || "" : "";
+        const taggedIdx = lines.findIndex((line) => /^Tagged as:$/i.test(line));
+        const tags = taggedIdx >= 0 ? lines.slice(taggedIdx + 1, taggedIdx + 8).join(" ") : "";
+        return { title, slots, description, location, cost, tags };
+      });
+      for (const slot of detail.slots) raw.push({ ...detail, slot, url: link.href });
+    } catch {
+      // OpenCities detail pages occasionally time out under load; keep the rest.
+    }
+  }
+
+  const seen = new Set();
+  return raw.map((r) => {
+    if (/observed holidays|working group meetings/i.test(r.title)) return null;
+    const date = yearAwareDate(r.slot);
+    const { time, endTime } = clockRangeFromText(r.slot);
+    if (!date || date < TODAY || !time || !isUsefulTitle(r.title)) return null;
+    const venue = normalizeVenueText((r.location || "").split(",")[0], "Cupertino");
+    const key = `${date}|${time}|${r.title}|${venue}`;
+    if (seen.has(key)) return null;
+    seen.add(key);
+    return {
+      title: r.title,
+      date,
+      time,
+      endTime: clockMinutes(endTime) > clockMinutes(time) ? endTime : null,
+      venue,
+      address: r.location || "",
+      city: "cupertino",
+      url: r.url,
+      source: "City of Cupertino",
+      category: /\b(concert|music|disco|movie)\b/i.test(r.title) ? "music" : inferCategory(`${r.title} ${r.tags || ""}`),
+      cost: /^free$/i.test(r.cost || "") ? "free" : null,
+      description: r.description,
+      kidFriendly: KID_RE.test(`${r.title} ${r.tags || ""}`),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeOperaSanJose(page) {
+  await page.goto("https://www.operasj.org/events", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2000);
+  const raw = await page.evaluate(() => {
+    const out = [];
+    for (const card of document.querySelectorAll(".tribe-events-calendar-list__event")) {
+      const title = card.querySelector(".tribe-events-calendar-list__event-title-link")?.textContent?.replace(/\s+/g, " ").trim();
+      const link = card.querySelector(".tribe-events-calendar-list__event-title-link")?.href;
+      const timeEl = card.querySelector(".tribe-events-calendar-list__event-datetime");
+      const date = timeEl?.getAttribute("datetime") || timeEl?.textContent;
+      const timeText = timeEl?.textContent?.replace(/\s+/g, " ").trim();
+      const description = card.querySelector(".tribe-events-calendar-list__event-description")?.textContent?.replace(/\s+/g, " ").trim() || "";
+      if (title) out.push({ title, link, date, timeText, description });
+    }
+    return out;
+  });
+
+  const seen = new Set();
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date || r.timeText);
+    const time = clockFromText(r.timeText);
+    if (!date || date < TODAY || !time || !isUsefulTitle(r.title)) return null;
+    const key = `${date}|${time}|${r.title}`;
+    if (seen.has(key)) return null;
+    seen.add(key);
+    return {
+      title: r.title,
+      date,
+      time,
+      endTime: null,
+      venue: "California Theatre",
+      address: "345 S 1st St, San Jose, CA 95113",
+      city: "san-jose",
+      url: r.link || "https://www.operasj.org/events",
+      source: "Opera San José",
+      category: "arts",
+      cost: "paid",
+      description: r.description,
+      kidFriendly: false,
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeGreatAmerica(page) {
+  await page.goto("https://www.sixflags.com/cagreatamerica/events", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  const raw = await page.evaluate(() => {
+    const out = [];
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    for (let i = 0; i < lines.length; i++) {
+      const title = lines[i].match(/^(Fireworks|Tricks and Treats|Oktoberfest|Carnivale|Grand Carnivale|Kids Boo Fest|Holiday in the Park)$/i)?.[0];
+      if (!title) continue;
+      const dateText = lines.slice(i + 1, i + 4).find((line) => /\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2}/i.test(line));
+      const link = [...document.querySelectorAll('a[href*="/events/"]')].find((a) => (a.href || "").toLowerCase().includes(title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")))?.href;
+      if (dateText) out.push({ title, dateText, link });
+    }
+    return out;
+  });
+
+  const expanded = [];
+  for (const r of raw) {
+    const m = r.dateText.match(/^([A-Za-z]+)\s+(\d{1,2})(?:\s*&\s*([A-Za-z]+)?\s*(\d{1,2}))?,\s*(\d{4})$/);
+    if (!m) { expanded.push(r); continue; }
+    expanded.push({ ...r, dateText: `${m[1]} ${m[2]}, ${m[5]}` });
+    if (m[4]) expanded.push({ ...r, dateText: `${m[3] || m[1]} ${m[4]}, ${m[5]}` });
+  }
+
+  const seen = new Set();
+  return expanded.map((r) => {
+    const date = yearAwareDate(r.dateText);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    const key = `${date}|${r.title}`;
+    if (seen.has(key)) return null;
+    seen.add(key);
+    return {
+      title: r.title,
+      date,
+      time: null,
+      endTime: null,
+      venue: "California's Great America",
+      address: "4701 Great America Pkwy, Santa Clara, CA 95054",
+      city: "santa-clara",
+      url: r.link || "https://www.sixflags.com/cagreatamerica/events",
+      source: "California's Great America",
+      category: "family",
+      cost: "paid",
+      kidFriendly: true,
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeLevisStadium(page) {
+  await page.goto("https://levisstadium.com/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  const raw = await page.evaluate(() => {
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const months = new Set(["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]);
+    const out = [];
+    for (let i = 0; i < lines.length - 1; i++) {
+      if (!months.has(lines[i].toUpperCase()) || !/^\d{1,2}$/.test(lines[i + 1])) continue;
+      const parts = [];
+      for (let j = i + 2; j < lines.length && parts.length < 5; j++) {
+        const line = lines[j];
+        if (/^BUY TICKETS?|^BUY TICKET PACKAGE|^Later events/i.test(line)) break;
+        if (!line || /^\s+$/.test(line)) continue;
+        parts.push(line);
+      }
+      if (!parts.length) continue;
+      out.push({ month: lines[i], day: lines[i + 1], parts });
+    }
+    return out;
+  });
+  const categoryPrefixes = /^(FIFA WORLD CUP)$/i;
+  return raw.map((r) => {
+    const date = yearAwareDate(`${r.month} ${r.day}, ${new Date().getFullYear()}`);
+    if (!date || date < TODAY) return null;
+    const cleanParts = r.parts.filter((p) => !new RegExp(`^${r.month}\\s+${r.day}$`, "i").test(p));
+    let title = cleanParts[0] || "";
+    if (categoryPrefixes.test(title) && cleanParts[1]) title = `${title}: ${cleanParts[1]}`;
+    if (/^FIFA WORLD CUP\s*\|\s*/i.test(title)) title = title.replace(/^FIFA WORLD CUP\s*\|\s*/i, "FIFA World Cup: ");
+    else if (title.includes("|")) {
+      const pieces = title.split("|").map((p) => p.trim()).filter(Boolean);
+      title = pieces.slice(0, 2).join(": ");
+    }
+    if (!isUsefulTitle(title)) return null;
+    return {
+      title,
+      date,
+      time: null,
+      endTime: null,
+      venue: "Levi's Stadium",
+      address: "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
+      city: "santa-clara",
+      url: "https://levisstadium.com/events/",
+      source: "Levi's Stadium",
+      category: inferCategory(title),
+      cost: "paid",
+      kidFriendly: /\b(kids?|family)\b/i.test(cleanParts.join(" ")),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeSapCenter(page) {
+  const calendarUrl = "https://www.sapcenter.com/events/";
+  await page.goto(calendarUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+
+  const detailUrls = await page.evaluate(() => {
+    const seen = new Set();
+    const out = [];
+    for (const a of document.querySelectorAll('a[href*="/events/detail/"]')) {
+      const href = a.href?.split("#")[0];
+      if (!href || seen.has(href)) continue;
+      seen.add(href);
+      out.push(href);
+    }
+    return out;
+  });
+
+  const raw = [];
+  for (const url of detailUrls.slice(0, 40)) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30_000 });
+      await page.waitForTimeout(600);
+      const detail = await page.evaluate(() => {
+        const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+        const title = document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim()
+          || document.title.replace(/\s*\|\s*SAP Center\s*$/i, "").trim();
+        const lineAfter = (label) => {
+          const idx = lines.findIndex((line) => line.toLowerCase() === label.toLowerCase());
+          return idx >= 0 ? lines[idx + 1] : null;
+        };
+        const venue = lines.some((line) => /^at\s+Tech CU Arena$/i.test(line)) ? "Tech CU Arena" : "SAP Center";
+        const dateLine = lineAfter("Date");
+        const eventStarts = lineAfter("Event Starts");
+        const year = dateLine?.match(/\b(20\d{2})\b/)?.[1] || new Date().getFullYear();
+        const schedules = [];
+        for (let i = 0; i < lines.length - 1; i++) {
+          const date = lines[i].match(/^(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),\s+([A-Z]+)\s+(\d{1,2})$/i);
+          if (!date) continue;
+          const time = lines[i + 1];
+          if (!/\b\d{1,2}(?::\d{2})?\s*(am|pm)\b/i.test(time)) continue;
+          schedules.push({ dateText: `${date[2]} ${date[3]}, ${year}`, time });
+        }
+        const detailsStart = lines.findIndex((line) => /^Event Details$/i.test(line));
+        const detailsEnd = detailsStart >= 0
+          ? lines.findIndex((line, idx) => idx > detailsStart && /^(May|June|July|August|September|October|November|December)\s+20\d{2}$|^EVENTS & TICKETS$|^View all events/i.test(line))
+          : -1;
+        const description = detailsStart >= 0
+          ? lines.slice(detailsStart + 1, detailsEnd > detailsStart ? detailsEnd : detailsStart + 8).join(" ").replace(/\s+/g, " ").trim()
+          : "";
+        return { title, venue, dateLine, eventStarts, schedules, description };
+      });
+
+      const slots = detail.schedules.length
+        ? detail.schedules
+        : [{ dateText: detail.dateLine, time: detail.eventStarts }];
+      for (const slot of slots) {
+        raw.push({ ...detail, dateText: slot.dateText, time: slot.time, url });
+      }
+    } catch {
+      // Some older detail links intermittently 404; skip and keep the scraper moving.
+    }
+  }
+
+  const seen = new Set();
+  return raw.map((r) => {
+    const date = yearAwareDate(r.dateText);
+    const time = clockFromText(r.time);
+    if (!date || date < TODAY || !time || !isUsefulTitle(r.title)) return null;
+    const key = `${date}|${time}|${r.title}|${r.venue}`;
+    if (seen.has(key)) return null;
+    seen.add(key);
+    return {
+      title: r.title,
+      date,
+      time,
+      endTime: null,
+      venue: r.venue,
+      address: r.venue === "Tech CU Arena" ? "1500 S 10th St, San Jose, CA 95112" : "525 W Santa Clara St, San Jose, CA 95113",
+      city: "san-jose",
+      url: r.url || calendarUrl,
+      source: r.venue === "Tech CU Arena" ? "Tech CU Arena" : "SAP Center",
+      category: inferCategory(r.title),
+      cost: "paid",
+      description: r.description || "",
+      kidFriendly: KID_RE.test(`${r.title} ${r.description || ""}`),
+    };
+  }).filter(Boolean);
+}
+
+async function scrapeTheTechUpcoming(page) {
+  await page.goto("https://www.thetech.org/explore/upcoming-events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  const raw = await page.evaluate(() => {
+    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const out = [];
+    for (let i = 0; i < lines.length; i++) {
+      const date = lines[i];
+      if (!/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s+\d{4}\s+\d{1,2}:\d{2}/i.test(date)) continue;
+      const title = lines[i - 1];
+      const venue = lines[i + 1] && !/get tickets|plan your visit/i.test(lines[i + 1]) ? lines[i + 1] : "The Tech Interactive";
+      out.push({ title, date, venue });
+    }
+    return out;
+  });
+  return raw.map((r) => {
+    const date = yearAwareDate(r.date);
+    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    return {
+      title: r.title,
+      date,
+      time: clockFromText(r.date),
+      endTime: null,
+      venue: normalizeVenueText(r.venue, "The Tech Interactive"),
+      address: "201 S Market St, San Jose, CA 95113",
+      city: "san-jose",
+      url: "https://www.thetech.org/explore/upcoming-events/",
+      source: "The Tech Interactive",
+      category: inferCategory(r.title),
+      cost: "paid",
+      kidFriendly: true,
+    };
+  }).filter(Boolean);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1907,6 +2329,12 @@ async function main() {
   tasks.push({ name: "Guadalupe River Park", fn: (b) => runScraper(b, "Guadalupe River Park", scrapeGuadalupeRiverPark) });
   tasks.push({ name: "Santana Row", fn: (b) => runScraper(b, "Santana Row", scrapeSantanaRow) });
   tasks.push({ name: "Downtown Mountain View", fn: (b) => runScraper(b, "Downtown Mountain View", scrapeDowntownMountainView) });
+  tasks.push({ name: "City of Cupertino", fn: (b) => runScraper(b, "City of Cupertino", scrapeCupertinoOpenCities) });
+  tasks.push({ name: "Opera San José", fn: (b) => runScraper(b, "Opera San José", scrapeOperaSanJose) });
+  tasks.push({ name: "California's Great America", fn: (b) => runScraper(b, "California's Great America", scrapeGreatAmerica) });
+  tasks.push({ name: "Levi's Stadium", fn: (b) => runScraper(b, "Levi's Stadium", scrapeLevisStadium) });
+  tasks.push({ name: "SAP Center", fn: (b) => runScraper(b, "SAP Center", scrapeSapCenter) });
+  tasks.push({ name: "The Tech Upcoming", fn: (b) => runScraper(b, "The Tech Upcoming", scrapeTheTechUpcoming) });
 
   // Bookstores
   tasks.push({ name: "Books Inc", fn: (b) => runScraper(b, "Books Inc", scrapeBooksInc) });
@@ -1939,7 +2367,7 @@ async function main() {
       city: e.city,
       category: e.category || inferCategory(e.title),
       cost: e.cost || null,
-      description: "",
+      description: e.description || "",
       url: e.url,
       source: e.source,
       kidFriendly: e.kidFriendly || false,

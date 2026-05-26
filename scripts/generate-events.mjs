@@ -103,6 +103,8 @@ const TITLE_BLOCKLIST = [
   /\bPay Day\b/i,          // internal HR payroll notices
   /\bResearch Week Braintrust\b/i, // internal student workshop
   /\bFlash Sale Fridays\b/i, // Stanford gear hub — requires SUID card
+  /\bSierra Nevada Concert Experience\b/i, // Ticketmaster VIP lounge package, not the show itself
+  /\bCrossFit Games Lounge Day\s+\d+\b/i, // Ticketmaster lounge add-on, not the event itself
 ];
 
 function isBlockedEvent(title) {
