@@ -756,8 +756,9 @@ function cleanTitle(title) {
     // → "(Hicap)"). TLAB = Teen Library Advisory Board (Palo Alto Library);
     // HICAP = Health Insurance Counseling & Advocacy Program (CA state).
     "TLAB", "HICAP",
-    // South Bay venues / institutions
-    "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD",
+    // South Bay venues / institutions. SVCF = Silicon Valley Community
+    // Foundation — title-cased to "Svcf" by the 2+ pass without coverage.
+    "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
@@ -1297,7 +1298,7 @@ function polishDescription(text) {
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "AAVE", "ADHD", "PTSD",
     // South Bay / arts venues
-    "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "VTAA", "VTAS",
+    "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "VTAA", "VTAS",
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
     // School districts (mostly title-only, but BiblioCommons body copy
     // occasionally name-drops them — keep parity with cleanTitle's list).
