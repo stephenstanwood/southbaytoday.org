@@ -1,67 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-26T23:10:09.612Z",
+      "generatedAt": "2026-05-27T11:08:32.482Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 19 – May 26",
+      "dateRange": "May 20 – May 27",
       "stats": {
-        "total": 356,
-        "notable": 20,
-        "newUnits": 4,
-        "totalValuation": 47164407
+        "total": 268,
+        "notable": 13,
+        "newUnits": 0,
+        "totalValuation": 43614069
       },
       "permits": [
-        {
-          "id": "2026-113954-RS",
-          "address": "267 Washington St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Detach Garage Conversion to ADU",
-          "valuation": 109875,
-          "units": 1,
-          "issueDate": "2026-05-20",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-139755-RS",
-          "address": "2543 Loomis Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Coversion to Jadu",
-          "valuation": 74569,
-          "units": 1,
-          "issueDate": "2026-05-20",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-104137-RS",
-          "address": "1407 Bouret Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Attached ADU",
-          "valuation": 72709,
-          "units": 1,
-          "issueDate": "2026-05-20",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-129104-RS",
-          "address": "2029 Kilchoan Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case Garage Conversion to ADU",
-          "valuation": 70849,
-          "units": 1,
-          "issueDate": "2026-05-20",
-          "subtype": "2nd Unit Added"
-        },
         {
           "id": "2026-119455-CI",
           "address": "5853 Rue Ferrari",
@@ -73,18 +25,6 @@
           "units": 0,
           "issueDate": "2026-05-22",
           "subtype": "R & D Lab"
-        },
-        {
-          "id": "2026-118157-CI",
-          "address": "560 S Winchester Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Bofa (Bemp100%) Office TI",
-          "valuation": 2400000,
-          "units": 0,
-          "issueDate": "2026-05-20",
-          "subtype": "Office"
         },
         {
           "id": "2026-119196-CI",
@@ -133,23 +73,95 @@
           "units": 0,
           "issueDate": "2026-05-21",
           "subtype": "Office"
+        },
+        {
+          "id": "2026-117260-CI",
+          "address": "593 N 5th St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Additions/Alterations",
+          "description": "Dental Office TI",
+          "valuation": 758536,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Medical/Dental Clinic"
+        },
+        {
+          "id": "2026-119239-CI",
+          "address": "590 Brennan St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "(B 100%) Reroof",
+          "valuation": 740280,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Manufacturing"
+        },
+        {
+          "id": "2026-119237-CI",
+          "address": "2394 Evergreen Pl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "New Restaurant Tous Les Jours",
+          "valuation": 476000,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Restaurant"
+        },
+        {
+          "id": "2026-119427-CI",
+          "address": "441 W Trimble Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Office",
+          "valuation": 325500,
+          "units": 0,
+          "issueDate": "2026-05-22",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-119191-CI",
+          "address": "375 W Trimble Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Office",
+          "valuation": 312480,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-26T23:10:12.033Z",
+      "generatedAt": "2026-05-27T11:08:34.879Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 19 – May 26",
+      "dateRange": "May 20 – May 27",
       "stats": {
-        "total": 77,
-        "notable": 5,
+        "total": 87,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01328",
+          "address": "74 Erstwild Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Bathroom remodel. Replaced (E) window with (N) window at the same location, canceled one window, (N) shower enclosure, (N) bathroom exhaust fan",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-21",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01341",
           "address": "1215 Harriet St",
@@ -175,39 +187,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01308",
-          "address": "766 Bryant St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-19",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00112",
-          "address": "180 El Camino Real",
+          "id": "26PLN-00118",
+          "address": "4175 Manuela Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for a Minor Staff Level Architectural Review to allow for the removal of one Coast Live Oak tree with a significant lean and one Chinese Fringe tree that was damaged by collision with a car in the parking lot of Nordstrom. The two trees will be replaced with 24” box trees of the same species in the same locations. CEQA Status: Not a Project. Zoning District: CC – Community Commercial. For More Information Contact the Project Planner Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-19",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00114",
-          "address": "2875 El Camino Real",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to remove (1) existing exterior storefront door to be infilled with storefront framing and glazing and removal of (1) existing exterior storefront door for replacement with new storefront door and glazing to match adjacent existing storefront for both. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-19",
+          "issueDate": "2026-05-26",
           "subtype": "Over the Counter Approved"
         }
       ]
