@@ -198,7 +198,9 @@ function inferCategory(title) {
   if (/\b(theater|theatre|play|comedy|improv|show|performance)\b/.test(t)) return "arts";
   if (/\b(book|author|reading|poetry|literary|signing)\b/.test(t)) return "arts";
   if (/\b(yoga|meditation|wellness|mindful)\b/.test(t)) return "community";
-  if (/\b(hike|walk|run|fitness|sport|game)\b/.test(t)) return "sports";
+  // Charity/awareness walks (Walk a Mile, Walk to End X, NAMIWalks) are community events,
+  // not sports — strip "walk" from the sports keywords.
+  if (/\b(hike|run|fitness|sport|game)\b/.test(t)) return "sports";
   if (/\b(food|cook|wine|beer|tast|farm|restaurant)\b/.test(t)) return "food";
   // Must return a key from EventCategory in src/data/south-bay/events-data.ts:
   // market | family | music | arts | sports | community | outdoor | education | food
@@ -800,9 +802,18 @@ async function scrapeHistorySJ(page) {
         if (!date || date < TODAY) continue;
 
         const venue = r.location?.split("|")[0]?.trim() || "History Park";
-        const address = r.location?.includes("|")
+        // Address can contain extra newlines + appeals ("Stay tuned for ticket information!",
+        // "Cost: Free, Register Online", "Pumpkin and carving supplies included…") —
+        // strip on first newline OR on those known suffix phrases.
+        const rawAddress = r.location?.includes("|")
           ? r.location.split("|")[1]?.trim()
           : "635 Phelan Ave, San Jose, CA 95112";
+        const cleanedAddress = rawAddress
+          ?.split("\n")[0]
+          ?.split(/\s+(?:Stay tuned|Cost:|Register Online|Pumpkin and carving)/i)[0]
+          ?.trim()
+          ?.replace(/[\s,]+$/, "");
+        const address = cleanedAddress || "635 Phelan Ave, San Jose, CA 95112";
 
         allEvents.push({
           title: r.title,
