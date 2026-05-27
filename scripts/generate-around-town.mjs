@@ -220,23 +220,31 @@ function isHedgeSummary(summary) {
 // action) — only the second sentence was padding. Strip the padding sentence
 // instead of dropping the whole item.
 const FILLER_TAIL_PATTERNS = [
-  /\bthis\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals)\b/i,
-  /\bthe\s+(?:project|decision|action|move|change|update)\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals)\b/i,
+  /\bthis\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals|suggests|indicates)\b/i,
+  /\bthe\s+(?:project|decision|action|move|change|update)\s+(?:represents|reflects|underscores|highlights|demonstrates|marks|signals|suggests|indicates)\b/i,
   /\bthis\s+(?:large[-\s]scale|major|significant|substantial)\s+\w+\s+(?:represents|reflects|underscores)\b/i,
   /\b(?:represents|reflects)\s+(?:ongoing|substantial|significant|continued)\s+\w+\s+in\b/i,
 ];
+
+// "X and suggests/indicates/signals a major Y in the city/area" — a conjunctive
+// AI-hedge tail tacked onto a real first clause. Strip only the trailing clause,
+// not the whole sentence, so the concrete info before "and" survives.
+const FILLER_CONJUNCTIVE_TAIL =
+  /,?\s+and\s+(?:suggests|indicates|signals|points\s+to|reflects)\s+(?:a|an|ongoing|continued|growing|broader|wider)\s+[^.!?]*[.!?]?\s*$/i;
 
 function stripFillerTail(summary) {
   const s = String(summary || "").trim();
   if (!s) return s;
   // Split on sentence-ending punctuation followed by whitespace and a capital.
   const sentences = s.split(/(?<=[.!?])\s+(?=[A-Z])/);
-  if (sentences.length < 2) return s;
-  const last = sentences[sentences.length - 1];
-  if (FILLER_TAIL_PATTERNS.some((re) => re.test(last))) {
-    return sentences.slice(0, -1).join(" ").trim();
-  }
-  return s;
+  const trimmed = sentences.length >= 2 && FILLER_TAIL_PATTERNS.some((re) => re.test(sentences[sentences.length - 1]))
+    ? sentences.slice(0, -1).join(" ").trim()
+    : s;
+  // Strip a trailing "and suggests/indicates/signals …" clause from the final sentence.
+  return trimmed.replace(FILLER_CONJUNCTIVE_TAIL, (match) => {
+    const endsWithPunct = /[.!?]\s*$/.test(match);
+    return endsWithPunct ? "." : "";
+  });
 }
 
 async function gatherMeetingItems(meetingType) {
