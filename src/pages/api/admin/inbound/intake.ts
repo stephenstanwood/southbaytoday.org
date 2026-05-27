@@ -18,7 +18,8 @@
  * Env vars required:
  *   RESEND_API_KEY            full-access key
  *   RESEND_WEBHOOK_SECRET     Svix signing secret for this webhook
- *   ANTHROPIC_API_KEY         for the event extractor
+ *   MINI_CLAUDE_URL/TOKEN     preferred event extractor backend
+ *   ANTHROPIC_API_KEY         fallback event extractor backend
  *   BLOB_READ_WRITE_TOKEN     Vercel Blob for storage
  */
 
@@ -50,8 +51,10 @@ export const POST: APIRoute = async ({ request }) => {
   const secret = process.env.RESEND_WEBHOOK_SECRET ?? "";
   if (!secret) return jsonError(500, "RESEND_WEBHOOK_SECRET not set");
 
-  if (!process.env.MINI_CLAUDE_URL || !process.env.MINI_CLAUDE_TOKEN) {
-    return jsonError(500, "MINI_CLAUDE_URL/MINI_CLAUDE_TOKEN not set");
+  const hasMiniBackend = !!(process.env.MINI_CLAUDE_URL && process.env.MINI_CLAUDE_TOKEN);
+  const hasAnthropicFallback = !!process.env.ANTHROPIC_API_KEY;
+  if (!hasMiniBackend && !hasAnthropicFallback) {
+    return jsonError(500, "no extractor backend configured");
   }
 
   const resendKey = process.env.RESEND_API_KEY ?? "";
@@ -87,7 +90,8 @@ export const POST: APIRoute = async ({ request }) => {
   // 3. Dedup check — Svix can redeliver
   const hash = dedupHashFor(meta.from, meta.subject, meta.messageId || meta.emailId);
   const log = await readIntakeLog();
-  if (log.some((l) => l.dedupHash === hash)) {
+  const priorForHash = latestLogEntry(log, (l) => l.dedupHash === hash);
+  if (priorForHash && priorForHash.outcome !== "extractor-error") {
     console.log(`[intake] duplicate — ${meta.from} "${meta.subject.slice(0, 60)}"`);
     return Response.json({ ok: true, outcome: "duplicate" });
   }
@@ -105,7 +109,8 @@ export const POST: APIRoute = async ({ request }) => {
   //      (e.g. Stephen forwards a chamber newsletter that already hit our
   //      inbox directly) hashes the same and short-circuits.
   const contentHash = contentHashFor(email.subject, email.body);
-  if (log.some((l) => l.contentHash === contentHash)) {
+  const priorForContent = latestLogEntry(log, (l) => l.contentHash === contentHash);
+  if (priorForContent && priorForContent.outcome !== "extractor-error") {
     console.log(
       `[intake] content-duplicate — ${email.from} "${email.subject.slice(0, 60)}"`
     );
@@ -211,7 +216,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // 6. Dedup against today vs past
-  const todayIso = new Date().toISOString().slice(0, 10);
+  const todayIso = todayInPacific();
   const futureEvents = extracted.filter((e) => e.startsAt.slice(0, 10) >= todayIso);
 
   if (futureEvents.length === 0) {
@@ -268,6 +273,20 @@ async function appendLog(existing: InboundIntakeLog[], entry: InboundIntakeLog):
   // Keep the last 500 log entries
   const next = [...existing, entry].slice(-500);
   await writeIntakeLog(next);
+}
+
+function latestLogEntry(
+  log: InboundIntakeLog[],
+  predicate: (entry: InboundIntakeLog) => boolean
+): InboundIntakeLog | null {
+  for (let i = log.length - 1; i >= 0; i--) {
+    if (predicate(log[i])) return log[i];
+  }
+  return null;
+}
+
+function todayInPacific(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
 function jsonError(status: number, message: string): Response {

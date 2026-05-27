@@ -2,8 +2,9 @@
  * Event extractor — single Claude Haiku call per inbound email.
  *
  * Routes through the Mini Claude proxy (Stephen's Max subscription) instead
- * of the metered Anthropic API. Falls back to an empty array on any parse
- * error — the intake endpoint logs and moves on.
+ * of the metered Anthropic API when available. Falls back to the Anthropic API
+ * if the proxy is down/misconfigured so inbound mail does not silently stop
+ * producing events.
  */
 
 import { MiniClaude } from "../miniClaude.js";
@@ -15,6 +16,7 @@ type AnthropicImageBlock = {
   source: { type: "base64"; media_type: string; data: string };
 };
 type AnthropicContentBlock = AnthropicTextBlock | AnthropicImageBlock;
+type AnthropicMessageResponse = { content: AnthropicTextBlock[] };
 
 export interface ExtractedEvent {
   title: string;
@@ -105,7 +107,7 @@ Other rules:
 - Do NOT invent fields. If a field is missing, use null (or empty string for description).
 - Prefer the event's own page URL over the newsletter's main URL.
   - NEVER use a mailto: link as sourceUrl. If the only contact is an email address, set sourceUrl to null.
-  - NEVER use Constant Contact / ccsend / click-tracking redirect URLs that don't point at a public event page. Prefer the venue or chamber's own URL.
+  - Prefer the venue or chamber's own URL. If the only event-specific link is a newsletter click-tracking URL, return it; the pipeline will unwrap it later.
 - If the city is Morgan Hill or Gilroy, return cityName: null (we don't cover those).
 - Return ONLY the JSON object, no markdown code fences, no commentary.
 
@@ -118,11 +120,9 @@ If a time is given anywhere (HTML or image), include it in startsAt as "T15:00:0
 export async function extractEvents(
   email: InboundEmail,
   // anthropicKey is preserved in the signature so callers don't have to change.
-  // The proxy is configured via MINI_CLAUDE_URL / MINI_CLAUDE_TOKEN env vars.
+  // Prefer this key for direct API fallback, else ANTHROPIC_API_KEY.
   _opts?: { anthropicKey?: string }
 ): Promise<ExtractedEvent[]> {
-  const client = new MiniClaude();
-
   // Prefer HTML when available — flyer layouts lose their date/time/location
   // adjacency when flattened to plain text.
   const htmlForModel = email.html ? compactHtml(email.html) : "";
@@ -153,12 +153,12 @@ ${bodyBlock}`;
     if (block) userBlocks.push(block);
   }
 
-  const response = await client.messages.create({
+  const response = await createClaudeMessage({
     model: "claude-haiku-4-5-20251001",
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: userBlocks }],
-  });
+  }, _opts);
 
   const text = response.content
     .filter((block) => block.type === "text")
@@ -180,20 +180,70 @@ ${bodyBlock}`;
 }
 
 /**
- * Null out tracker / click-redirect sourceUrls that sneak past the prompt.
- * These URLs break our "sourceUrl must be a public event page" invariant
- * and can expire when the campaign ends.
+ * Null out non-web source URLs that sneak past the prompt. Tracker links are
+ * intentionally preserved: pull-inbound-events.mjs unwraps them before
+ * generate-events.mjs tries to backfill missing times from canonical pages.
  */
-const TRACKER_HOST_RE = /\b(cc\.rs6\.net|ccsend\.com|constantcontact\.com|click\.mlsend\.com|mailchi\.mp|click\.mailerlite\.com|utm_|trk\.klclick|links\.mkt|click\.e\.|eml\.|t\.co)\b/i;
-
 function sanitizeExtractedEvent(e: ExtractedEvent): ExtractedEvent {
   const cleaned = { ...e };
   if (cleaned.sourceUrl) {
-    if (TRACKER_HOST_RE.test(cleaned.sourceUrl) || cleaned.sourceUrl.startsWith("mailto:")) {
+    if (cleaned.sourceUrl.startsWith("mailto:")) {
       cleaned.sourceUrl = null;
     }
   }
   return cleaned;
+}
+
+async function createClaudeMessage(
+  params: Parameters<MiniClaude["messages"]["create"]>[0],
+  opts?: { anthropicKey?: string }
+): Promise<AnthropicMessageResponse> {
+  const errors: string[] = [];
+  const miniUrl = envValue("MINI_CLAUDE_URL");
+  const miniToken = envValue("MINI_CLAUDE_TOKEN");
+  if (miniUrl && miniToken) {
+    try {
+      const client = new MiniClaude({ url: miniUrl, token: miniToken });
+      return await client.messages.create(params);
+    } catch (err) {
+      errors.push((err as Error).message);
+      console.error("[extractor] Mini Claude failed; trying Anthropic fallback:", (err as Error).message);
+    }
+  }
+
+  const anthropicKey = opts?.anthropicKey || envValue("ANTHROPIC_API_KEY");
+  if (!anthropicKey) {
+    if (errors.length > 0) throw new Error(errors.join("; "));
+    throw new Error("No extractor backend configured: set MINI_CLAUDE_URL/MINI_CLAUDE_TOKEN or ANTHROPIC_API_KEY");
+  }
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "anthropic-version": "2023-06-01",
+      "x-api-key": anthropicKey,
+    },
+    body: JSON.stringify(params),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    const prefix = errors.length ? ` after Mini failure (${errors.join("; ")})` : "";
+    throw new Error(`Anthropic fallback ${res.status}${prefix}: ${body.slice(0, 300)}`);
+  }
+
+  return (await res.json()) as AnthropicMessageResponse;
+}
+
+function envValue(key: string): string {
+  const fromImport = typeof import.meta !== "undefined"
+    ? (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.[key]
+    : undefined;
+  const fromProcess = typeof process !== "undefined"
+    ? process.env?.[key]
+    : undefined;
+  return (fromImport ?? fromProcess ?? "") || "";
 }
 
 /**
@@ -217,12 +267,15 @@ async function fetchImageAsBase64(url: string): Promise<ImageBlock | null> {
     });
     if (!res.ok) return null;
     const contentType = res.headers.get("content-type") || "image/jpeg";
-    const mediaType = normalizeMediaType(contentType);
+    const headerMediaType = normalizeMediaType(contentType);
+    const arrayBuffer = await res.arrayBuffer();
+    const buf = Buffer.from(arrayBuffer);
+    const mediaType = sniffMediaType(buf) || headerMediaType;
     if (!mediaType) return null;
-    const buf = await res.arrayBuffer();
-    // Cap at 5MB per image to keep the message payload sane
-    if (buf.byteLength > 5 * 1024 * 1024) return null;
-    const data = Buffer.from(buf).toString("base64");
+    // Anthropic's image limit is applied after base64 encoding. Keep raw bytes
+    // well below 5MB so the encoded payload cannot cross the API limit.
+    if (buf.byteLength > 3.5 * 1024 * 1024) return null;
+    const data = buf.toString("base64");
     return { type: "image", source: { type: "base64", media_type: mediaType, data } };
   } catch {
     return null;
@@ -235,6 +288,36 @@ function normalizeMediaType(ct: string): ImageBlock["source"]["media_type"] | nu
   if (lc.includes("png")) return "image/png";
   if (lc.includes("gif")) return "image/gif";
   if (lc.includes("webp")) return "image/webp";
+  return null;
+}
+
+function sniffMediaType(buf: Buffer): ImageBlock["source"]["media_type"] | null {
+  if (buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) {
+    return "image/jpeg";
+  }
+  if (
+    buf.length >= 8 &&
+    buf[0] === 0x89 &&
+    buf[1] === 0x50 &&
+    buf[2] === 0x4e &&
+    buf[3] === 0x47 &&
+    buf[4] === 0x0d &&
+    buf[5] === 0x0a &&
+    buf[6] === 0x1a &&
+    buf[7] === 0x0a
+  ) {
+    return "image/png";
+  }
+  if (buf.length >= 6 && buf.subarray(0, 6).toString("ascii").startsWith("GIF8")) {
+    return "image/gif";
+  }
+  if (
+    buf.length >= 12 &&
+    buf.subarray(0, 4).toString("ascii") === "RIFF" &&
+    buf.subarray(8, 12).toString("ascii") === "WEBP"
+  ) {
+    return "image/webp";
+  }
   return null;
 }
 
@@ -278,8 +361,18 @@ function isValidExtractedEvent(e: unknown): e is ExtractedEvent {
 }
 
 function stripCodeFence(text: string): string {
-  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-  return fenced ? fenced[1] : text;
+  const trimmed = text.trim();
+  const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenced) return fenced[1];
+  if (trimmed.startsWith("```")) {
+    return trimmed
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/```\s*$/i, "");
+  }
+  const first = trimmed.indexOf("{");
+  const last = trimmed.lastIndexOf("}");
+  if (first !== -1 && last > first) return trimmed.slice(first, last + 1);
+  return text;
 }
 
 function truncate(s: string, max: number): string {

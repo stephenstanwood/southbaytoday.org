@@ -40,6 +40,7 @@
     "test:plan-day": "node --import tsx --test src/pages/api/plan-day.test.ts",
     "test:calendar": "node --import tsx --test src/lib/south-bay/calendarLink.test.ts",
     "playwright-scrape": "node scripts/playwright-scrapers.mjs",
+    "replay-inbound-events": "node --import tsx scripts/lookout/replay-inbound-events.ts",
     "health-report": "node scripts/health-report.mjs",
     "generate-scc-food-openings": "node scripts/generate-scc-food-openings.mjs",
     "generate-freeway-pulse": "node scripts/generate-freeway-pulse.mjs",
