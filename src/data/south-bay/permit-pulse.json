@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-27T19:10:01.138Z",
+      "generatedAt": "2026-05-27T23:09:51.972Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-27T19:10:03.525Z",
+      "generatedAt": "2026-05-27T23:09:54.393Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-01317",
-          "address": "3705 Starr King Cir",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-20",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-01341",
           "address": "1215 Harriet St",
           "category": "residential-remodel",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-22",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01317",
+          "address": "3705 Starr King Cir",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-20",
           "subtype": "Permit Issued"
         },
         {
