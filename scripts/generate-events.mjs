@@ -30,6 +30,10 @@
  *   - San Jose Theaters (iCal)
  *   - South Bay Musical Theatre (show pages)
  *   - Los Altos Stage Company (WordPress events)
+ *   - Hammer Theatre (VBO Tickets HTML)
+ *   - Gamble Garden (The Events Calendar API)
+ *   - Mexican Heritage Plaza (Squarespace events)
+ *   - Museum of American Heritage (Squarespace events)
  *   - Silicon Valley Leadership Group (RSS)
  *   - Happy Hollow Park & Zoo (RSS)
  *   - LibCal (Los Gatos, Milpitas) — BLOCKED: API requires OAuth (see note below)
@@ -136,7 +140,8 @@ function stripHtml(html) {
     // anchor the WordPress footer strip. Without this, the footer survives
     // until truncate() chops it mid-sentence ("The post\u2026").
     .replace(/&hellip;|&#8230;|&#x2026;/gi, "\u2026")
-    .replace(/&#\d+;/g, "").replace(/&[a-z]+;/g, "")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code, 10)))
+    .replace(/&[a-z]+;/g, "")
     // BiblioCommons (and other rich-text editors) occasionally save a word
     // wrapped across two adjacent same-tag inline-formatting runs — e.g.
     // `<strong>g</strong><strong>rades 4-5</strong>` from an SCCL Page
@@ -537,6 +542,7 @@ const VIRTUAL_PATTERNS = [
   /\bzoom link\b/i,
   /\bonline only\b/i,
   /\bwebinar\b/i,
+  /\blive[-\s]?stream\b/i,
 ];
 
 function isVirtualEvent(title, description, venue) {
@@ -4582,8 +4588,9 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
         const loc = item.location || {};
         const venue = loc.addressTitle || defaultVenue;
         const addr = loc.addressLine1
-          ? `${loc.addressLine1}, ${loc.addressLine2 || ""}`.trim()
+          ? `${loc.addressLine1}, ${loc.addressLine2 || ""}`.replace(/,\s*$/, "").trim()
           : defaultAddress;
+        const city = inferCity(venue, addr) || defaultCity;
         const desc = item.excerpt
           ? stripHtml(item.excerpt)
           : (item.body ? truncate(stripHtml(item.body)) : "");
@@ -4600,11 +4607,13 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
           venue,
           address: addr,
-          city: defaultCity,
+          city,
           category: inferCategory(item.title, desc, "", venue),
           // "Free Admission" or "Free " in the title (e.g. JAMsj's free-admission
           // days) overrides the venue's default "paid" cost.
-          cost: /\bfree\s+admission\b/i.test(item.title) || /^free\b/i.test(item.title.trim())
+          cost: /\bfree\s+(admission|event|food|concert|workshop)\b/i.test(item.title + " " + desc)
+            || /\badmission\s+is\s+free\b/i.test(desc)
+            || /^free\b/i.test(item.title.trim())
             ? "free"
             : "paid",
           description: desc,
@@ -4640,6 +4649,26 @@ async function fetchKeplersEvents() {
     "palo-alto",
     "Kepler's Books",
     "1010 El Camino Real, Menlo Park, CA 94025",
+  );
+}
+
+async function fetchMexicanHeritagePlazaEvents() {
+  return fetchSquarespaceEvents(
+    "https://mhplaza.org/allevents",
+    "Mexican Heritage Plaza",
+    "san-jose",
+    "Mexican Heritage Plaza",
+    "1700 Alum Rock Ave, San Jose, CA 95116",
+  );
+}
+
+async function fetchMuseumOfAmericanHeritageEvents() {
+  return fetchSquarespaceEvents(
+    "https://www.moah.org/moahevents",
+    "Museum of American Heritage",
+    "palo-alto",
+    "Museum of American Heritage",
+    "351 Homer Avenue, Palo Alto, CA 94301",
   );
 }
 
@@ -5558,6 +5587,165 @@ async function fetchLosAltosStageEvents() {
   }
 }
 
+async function fetchHammerTheatreEvents() {
+  console.log("  ⏳ Hammer Theatre...");
+  try {
+    const siteId = "8B177AF0-B39C-408B-B5CB-47CD99E2BC9D";
+    const orgId = "7239";
+    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&o=${orgId}&eid=0&edid=0&PluginType=Embed`;
+    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
+    const session = pluginHtml.match(/events\?s=([0-9a-f-]{36})/i)?.[1];
+    if (!session) throw new Error("missing VBO session");
+
+    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
+    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
+    const today = todayPT();
+    const events = [];
+
+    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
+    for (const block of blocks) {
+      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
+      const eid = block.match(/\bEID(\d+)\b/)?.[1];
+      const title = cleanHammerTitle(
+        decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
+        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? ""),
+      );
+      if (!edid || !eid || !title || isBlockedEvent(title)) continue;
+
+      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "");
+      const venue = cleanPearHtml(block.match(/TextVenueName[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "") || "Hammer Theatre Center";
+      const address = cleanPearHtml(block.match(/TextVenueAddress[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "")
+        || "101 Paseo De San Antonio, San Jose, CA 95113";
+      const description = truncate(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""));
+      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
+      const url = decodePearText(block.match(/<a[^>]+href="(https?:\/\/[^"]+)"/i)?.[1] ?? "")
+        || `https://hammertheatre.vbotickets.com/event/details/${eid}`;
+      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
+
+      let occurrences = [];
+      try {
+        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
+        occurrences = parsePearOccurrences(sliderHtml, rangeText);
+      } catch (err) {
+        console.log(`  ↳ Hammer Theatre date fetch failed for ${title}: ${err.message}`);
+      }
+
+      if (occurrences.length === 0) {
+        const fallback = rangeText.match(/(?:[A-Za-z]{3},\s*)?(\d{1,2})\/(\d{1,2})\/(20\d{2})\s*@\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
+        if (fallback) {
+          const date = `${fallback[3]}-${fallback[1].padStart(2, "0")}-${fallback[2].padStart(2, "0")}`;
+          const time = fallback[4].replace(/\s+/g, " ").replace(/\s*(am|pm)$/i, (_, suffix) => ` ${suffix.toUpperCase()}`);
+          occurrences = [{ date, time }];
+        }
+      }
+
+      for (const occurrence of occurrences) {
+        if (occurrence.date < today) continue;
+        const start = parseDatePT(`${occurrence.date}T12:00:00`);
+        events.push({
+          id: h("hammertheatre", eid, occurrence.date, occurrence.time),
+          title,
+          date: occurrence.date,
+          displayDate: displayDate(start),
+          time: occurrence.time,
+          endTime: null,
+          venue,
+          address,
+          city: "san-jose",
+          category: inferCategory(title, description, "", venue),
+          cost: /\b(free admission|admission is free|pay what you can|donations? (?:are )?welcome)\b/i.test(title + " " + description) ? "free" : "paid",
+          description,
+          url,
+          source: "Hammer Theatre",
+          ...(image ? { image } : {}),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|alice in wonderland)\b/i.test(title + " " + description),
+        });
+      }
+
+      await new Promise((r) => setTimeout(r, 150));
+    }
+
+    console.log(`  ✅ Hammer Theatre: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Hammer Theatre: ${err.message}`);
+    return [];
+  }
+}
+
+function cleanHammerTitle(title) {
+  return String(title || "")
+    .replace(/&#183;|&middot;/gi, "·")
+    .replace(/\bLeo Presents presents\b/i, "Leo Presents")
+    .replace(/\s*\(APAPA[^)]*\)/i, "")
+    .replace(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]+/gu, "")
+    .replace(/\bpresents\s*·\s*/gi, "presents ")
+    .replace(/\s*·\s*\|\s*/g, " ")
+    .replace(/\s+\|\s+/g, " ")
+    .replace(/\s+·\s+/g, " - ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+async function fetchGambleGardenEvents() {
+  console.log("  ⏳ Gamble Garden...");
+  try {
+    const today = todayPT();
+    const events = [];
+    for (let page = 1; page <= 5; page++) {
+      const url = `https://www.gamblegarden.org/wp-json/tribe/events/v1/events?per_page=50&page=${page}`;
+      const data = await fetchJson(url, { timeout: 20_000 });
+      const rawEvents = data.events || [];
+      for (const ev of rawEvents) {
+        const start = parseDatePT(ev.start_date);
+        if (!start) continue;
+        const date = isoDate(start);
+        if (date < today) continue;
+        const title = stripHtml(ev.title || "").trim();
+        if (!title || isBlockedEvent(title)) continue;
+        const end = parseDatePT(ev.end_date);
+        const venue = ev.venue?.venue || "Gamble Garden";
+        const addressParts = [
+          ev.venue?.address,
+          ev.venue?.city,
+          ev.venue?.stateprovince,
+          ev.venue?.zip,
+        ].filter(Boolean);
+        const address = addressParts.length ? addressParts.join(", ") : "1431 Waverley Street, Palo Alto, CA 94301";
+        const description = truncate(stripBareUrls(stripHtml(ev.description || ev.excerpt || "")));
+        const image = ev.image?.url || "";
+
+        events.push({
+          id: h("gamblegarden", ev.id || ev.url, date, displayTime(start) || ""),
+          title,
+          date,
+          displayDate: displayDate(start),
+          time: ev.all_day ? null : displayTime(start),
+          endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+          venue,
+          address,
+          city: "palo-alto",
+          category: inferCategory(title, description, "", venue),
+          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${description}`) ? "free" : (ev.cost ? "paid" : null),
+          description,
+          url: ev.url || "https://www.gamblegarden.org/events/",
+          source: "Gamble Garden",
+          ...(image ? { image } : {}),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|second saturday|scavenger|craft)\b/i.test(title + " " + description),
+        });
+      }
+      if (page >= (data.total_pages || 1)) break;
+      await new Promise((r) => setTimeout(r, 150));
+    }
+
+    console.log(`  ✅ Gamble Garden: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Gamble Garden: ${err.message}`);
+    return [];
+  }
+}
+
 // ── Playwright-scraped events (pre-scraped by playwright-scrapers.mjs on Mini) ──
 // Covers: CivicPlus cities, LibCal libraries, The Tech, bookstores,
 // and robust replacements for fragile HTML scrapers (SJ Jazz, SJMA, etc.)
@@ -5886,6 +6074,10 @@ async function main() {
     fetchSanJoseTheatersEvents,
     fetchSouthBayMusicalTheatreEvents,
     fetchLosAltosStageEvents,
+    fetchHammerTheatreEvents,
+    fetchGambleGardenEvents,
+    fetchMexicanHeritagePlazaEvents,
+    fetchMuseumOfAmericanHeritageEvents,
     fetchPlaywrightEvents,
     fetchInboundEvents,
   ];
