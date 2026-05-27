@@ -1,17 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-27T11:19:39.015Z",
+    "generatedAt": "2026-05-27T19:17:20.940Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 34,
-    "placesMatched": 9,
-    "placeGaps": 25,
-    "eventsExtracted": 3,
+    "placesExtracted": 33,
+    "placesMatched": 11,
+    "placeGaps": 22,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
@@ -19,398 +19,424 @@
       "name": "Taco Bravo",
       "city": "Campbell",
       "kind": "restaurant",
-      "context": "iconic late-night taco spot, cultural landmark",
+      "context": "late-night taco spot, iconic South Bay location",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Eduardo's",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "family-owned Mexican restaurant mentioned as local favorite",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
-      ]
-    },
-    {
-      "name": "Tower Records",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "nostalgia reference, now closed",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     },
     {
       "name": "Del Taco",
       "city": "",
       "kind": "restaurant",
-      "context": "mentioned as former South Bay option, specific location unclear",
+      "context": "nostalgia mention, compared to Taco Bravo",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
       ]
     },
     {
-      "name": "Henry Kaiser Memorial Park",
+      "name": "Eduardo's",
       "city": "",
-      "kind": "park",
-      "context": "cleanup event location, outside South Bay (Oakland)",
+      "kind": "restaurant",
+      "context": "family-owned Mexican restaurant in South Bay",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
       ]
     },
     {
-      "name": "Colonial House Apartments",
-      "city": "San Jose",
-      "kind": "other",
-      "context": "residential apartment complex discussed for housing",
+      "name": "Tower Records",
+      "city": "",
+      "kind": "retail",
+      "context": "historical South Bay landmark, closed",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
       ]
     },
     {
       "name": "Gaslighter",
+      "city": "",
+      "kind": "venue",
+      "context": "historical South Bay venue, mentioned with nostalgia",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "The Alameda",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "walkable street with shops and restaurants",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Japantown",
       "city": "San Jose",
       "kind": "venue",
-      "context": "nightlife venue mentioned in nostalgic context",
+      "context": "walkable neighborhood with bike lanes, lower cost than Willow Glen",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Campbell",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "similar neighborhood to Willow Glen with great cycling community",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Sunnyvale",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "more affordable alternative to Willow Glen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Saratoga",
+      "city": "Saratoga",
+      "kind": "venue",
+      "context": "recommended South Bay area to consider",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Morgan Hill",
+      "city": "Morgan Hill",
+      "kind": "venue",
+      "context": "alternative to consider for relocation",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "SAP",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "major venue/arena in San Jose area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Avaya",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "venue in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Caltrain",
+      "city": "",
+      "kind": "service",
+      "context": "public transit near downtown San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Sunday farmers market at the brewery",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "farmers market in Japantown area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ]
+    },
+    {
+      "name": "Vallco",
+      "city": "Cupertino",
+      "kind": "retail",
+      "context": "former shopping mall with food court and stores",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
+        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/"
+      ]
+    },
+    {
+      "name": "TODAI",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "restaurant formerly at Vallco mall food court",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
+        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/"
       ]
     },
     {
       "name": "Acme",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough bakery, compared with other local options",
+      "context": "sourdough bakery in Mountain View area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     },
     {
       "name": "Manresa",
-      "city": "Mountain View",
+      "city": "Los Gatos",
       "kind": "restaurant",
-      "context": "praised for great bread offerings",
+      "context": "highly regarded restaurant with great bread",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     },
     {
       "name": "Portside Bakery",
       "city": "",
       "kind": "bakery",
-      "context": "recommended sourdough and bread bakery",
+      "context": "sourdough bakery recommendation",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     },
     {
       "name": "Firebrand",
       "city": "",
       "kind": "bakery",
-      "context": "recommended sourdough bakery option",
+      "context": "sourdough bakery mentioned in recommendations",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     },
     {
       "name": "Sumano's Bakery",
       "city": "Watsonville",
       "kind": "bakery",
-      "context": "sourdough bakery, available in Mountain View stores",
+      "context": "sourdough bakery with products in Mountain View stores",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ]
-    },
-    {
-      "name": "The Pro",
-      "city": "Palo Alto",
-      "kind": "bar",
-      "context": "trivia on Monday nights at the bar",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Fred's",
-      "city": "Palo Alto",
-      "kind": "venue",
-      "context": "trivia on Tuesday nights",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Rose and Crown",
-      "city": "Palo Alto",
-      "kind": "bar",
-      "context": "trivia on Wednesday nights",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Laughing Monk Brew Pub",
-      "city": "Santa Clara",
-      "kind": "bar",
-      "context": "South Bay overland group meetup for camping trips",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Milk Tea Lab",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place with specialty jelly options",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Passion-T",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place, location on Senter Rd mentioned",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Boba Galaxy",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place with specialty jelly options",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Pekoe",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place with mango flavored options",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Tisane",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place with mango drink options",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Milpitas Humane Society",
-      "city": "Milpitas",
-      "kind": "service",
-      "context": "volunteer opportunities to interact with dogs",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "SJ Animals",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "dog shelter with volunteer opportunities",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Petco",
-      "city": "Saratoga",
-      "kind": "retail",
-      "context": "adoption events with humane society puppies and kittens",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "Silicon Valley Pet Project",
-      "city": "",
-      "kind": "service",
-      "context": "puppy interaction and play opportunities",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Sunnyvale Cake Party",
+      "name": "Cake Party",
       "when": "Sunday, June 14th at 11:00 am",
       "city": "Sunnyvale",
-      "context": "second annual community cake gathering and potluck celebration",
+      "context": "community cake-sharing gathering, second annual event",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
         "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/"
       ]
     },
     {
-      "name": "Acroyoga intro class",
-      "when": "Thursdays at 7:30pm",
-      "city": "Mountain View",
-      "context": "weekly intro acroyoga class with community workout",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ]
-    },
-    {
-      "name": "South Bay Overland Group meetup",
-      "when": "next Sunday",
+      "name": "Office Furniture & Equipment Liquidation Sale",
+      "when": "May 30th",
       "city": "Santa Clara",
-      "context": "camping and weekend trips for 30-50 age group",
+      "context": "full office liquidation sale at 1793 Lafayette St",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
+        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Santana Row",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "shopping/entertainment area mentioned in crime discussion",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
-      ],
-      "matchedName": "Santana Row"
-    },
-    {
       "name": "Philz",
       "city": "",
       "kind": "cafe",
-      "context": "mentioned as landmark near Taco Bravo location",
+      "context": "coffee shop near Taco Bravo",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1togjoa/we_cleaned_up_two_spots_in_oakland_and_got_40/",
-        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
         "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tonn5h/need_to_move_to_san_jose_soon_is_this_an_good/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/"
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
       ],
       "matchedName": "Philz Coffee"
+    },
+    {
+      "name": "Rose Garden",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "nice neighborhood with shops and restaurants",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ],
+      "matchedName": "Rose Garden Branch Library"
+    },
+    {
+      "name": "Willow Glen",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "cute downtown area with walkable shops and dining",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ],
+      "matchedName": "Willow Glen"
+    },
+    {
+      "name": "Backesto Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "has tennis courts, located in Japantown area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ],
+      "matchedName": "Backesto Park"
+    },
+    {
+      "name": "Los Gatos",
+      "city": "Los Gatos",
+      "kind": "venue",
+      "context": "great neighborhood with cycling community",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/bayarea/comments/1tokt3p/congrats_to_sandisk_western_digital_and_micron/",
+        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/"
+      ],
+      "matchedName": "Los Gatos Creek Trail"
+    },
+    {
+      "name": "Original Joe's",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "historic 70-year-old landmark, ownership succession news",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
+        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/"
+      ],
+      "matchedName": "Original Joe's San Jose"
+    },
+    {
+      "name": "Washington Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "host venue for Sunnyvale Cake Party event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
+        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/"
+      ],
+      "matchedName": "Washington Park"
     },
     {
       "name": "GK Pastry",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "highly rated sourdough bakery, winner for best sourdough",
+      "context": "highly rated sourdough bakery, winner in local comparison",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ],
       "matchedName": "GK Pastry"
     },
@@ -418,83 +444,40 @@
       "name": "Midwife and the Baker",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough and bread bakery, popular local option",
+      "context": "sourdough bakery mentioned in local recommendations",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ],
       "matchedName": "The Midwife and The Baker"
     },
     {
       "name": "Little Sky",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
-      "context": "recommended sourdough bakery in Mountain View",
+      "context": "sourdough bakery recommendation in Bay Area",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ],
       "matchedName": "Little Sky Bakery | Los Altos"
     },
     {
       "name": "Craftsman and Wolves",
-      "city": "Mountain View",
+      "city": "",
       "kind": "bakery",
       "context": "makes house sourdough on weekends",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
         "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/"
       ],
       "matchedName": "Craftsman and Wolves"
-    },
-    {
-      "name": "Washington Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "venue for Sunnyvale Cake Party event on June 14th",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tomhzv/how_to_reduce_bay_area_school_stress/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/bayarea/comments/1to9mp4/well_always_be_here_to_have_your_back_unemployed/"
-      ],
-      "matchedName": "Washington Park"
-    },
-    {
-      "name": "Rengstorff Park",
-      "city": "Mountain View",
-      "kind": "park",
-      "context": "free weekly acroyoga meetup on Saturdays",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ],
-      "matchedName": "Rengstorff Park"
-    },
-    {
-      "name": "Happy Lemon",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "boba tea place with mango flavored drinks",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tlx6e5/looking_for_friends_in_the_palo_alto_area/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1toe0ns/need_help_tracking_down_the_name_of_a_specific/",
-        "https://www.reddit.com/r/SanJose/comments/1toilnq/place_to_play_with_dogs/"
-      ],
-      "matchedName": "Happy Lemon Coleman Adding An Equipment"
     }
   ],
   "eventMatches": []

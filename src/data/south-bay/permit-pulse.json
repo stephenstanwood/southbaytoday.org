@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-27T11:08:32.482Z",
+      "generatedAt": "2026-05-27T19:10:01.138Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-27T11:08:34.879Z",
+      "generatedAt": "2026-05-27T19:10:03.525Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,15 +151,15 @@
       },
       "permits": [
         {
-          "id": "26BLD-01328",
-          "address": "74 Erstwild Ct",
+          "id": "26BLD-01317",
+          "address": "3705 Starr King Cir",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Bathroom remodel. Replaced (E) window with (N) window at the same location, canceled one window, (N) shower enclosure, (N) bathroom exhaust fan",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-21",
+          "issueDate": "2026-05-20",
           "subtype": "Permit Issued"
         },
         {
@@ -175,15 +175,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01317",
-          "address": "3705 Starr King Cir",
+          "id": "26BLD-01328",
+          "address": "74 Erstwild Ct",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Building Permit",
+          "description": "Res: Bathroom remodel. Replaced (E) window with (N) window at the same location, canceled one window, (N) shower enclosure, (N) bathroom exhaust fan",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-20",
+          "issueDate": "2026-05-21",
           "subtype": "Permit Issued"
         },
         {
