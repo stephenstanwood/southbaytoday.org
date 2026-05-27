@@ -100,6 +100,9 @@ export function fuzzyDedupEvents(events) {
         if (!titleMatch) continue;
 
         const tm2 = parseTimeMin(e2.time);
+        if (e1.source && e1.source === e2.source && tm1 != null && tm2 != null && Math.abs(tm1 - tm2) > 30) {
+          continue;
+        }
         const timeClose = tm1 != null && tm2 != null && Math.abs(tm1 - tm2) <= 30;
         const v2 = tokenize(e2.venue);
         const venueClose = jaccard(v1, v2) >= 0.4;

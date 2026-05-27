@@ -5,7 +5,7 @@
  * Scrapes upcoming events from all available South Bay feeds and writes
  * them to src/data/south-bay/upcoming-events.json.
  *
- * Sources (23 active):
+ * Sources include:
  *   - Stanford Events (Localist JSON API) — 60-day window
  *   - SJSU Events (RSS)
  *   - Santa Clara University Events (RSS)
@@ -26,6 +26,10 @@
  *   - Computer History Museum Events (RSS + title-based date extraction)
  *   - Montalvo Arts Center (RSS)
  *   - San Jose Jazz (RSS)
+ *   - The Pear Theatre (VBO Tickets HTML)
+ *   - San Jose Theaters (iCal)
+ *   - South Bay Musical Theatre (show pages)
+ *   - Los Altos Stage Company (WordPress events)
  *   - Silicon Valley Leadership Group (RSS)
  *   - Happy Hollow Park & Zoo (RSS)
  *   - LibCal (Los Gatos, Milpitas) — BLOCKED: API requires OAuth (see note below)
@@ -1909,12 +1913,13 @@ function parseIcalEvents(ical) {
     const dtend = get("DTEND");
     const location = get("LOCATION");
     const description = get("DESCRIPTION");
+    const categories = get("CATEGORIES");
     const url = get("URL");
     const uid = get("UID");
 
     if (!summary) continue;
 
-    events.push({ summary, dtstart, dtend, location, description, url, uid });
+    events.push({ summary, dtstart, dtend, location, description, categories, url, uid });
   }
   return events;
 }
@@ -5190,6 +5195,369 @@ async function fetchJamsjEvents() {
   );
 }
 
+// ── The Pear Theatre (VBO Tickets HTML) ──
+
+function decodePearText(value = "") {
+  return value
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, "\"")
+    .replace(/&apos;|&#39;/gi, "'")
+    .replace(/&rsquo;/gi, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cleanPearHtml(value = "") {
+  return decodePearText(stripHtml(value));
+}
+
+function parsePearDateRange(rangeText) {
+  const match = decodePearText(rangeText).match(/(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s*-\s*(\d{1,2})\/(\d{1,2})\/(\d{4}))?/);
+  if (!match) return null;
+
+  const startMonth = parseInt(match[1], 10);
+  const startDay = parseInt(match[2], 10);
+  const startYear = parseInt(match[3], 10);
+  const endMonth = match[4] ? parseInt(match[4], 10) : startMonth;
+  const endDay = match[5] ? parseInt(match[5], 10) : startDay;
+  const endYear = match[6] ? parseInt(match[6], 10) : startYear;
+
+  return {
+    startMonth,
+    startDay,
+    startYear,
+    endMonth,
+    endDay,
+    endYear,
+    startDate: `${startYear}-${String(startMonth).padStart(2, "0")}-${String(startDay).padStart(2, "0")}`,
+    endDate: `${endYear}-${String(endMonth).padStart(2, "0")}-${String(endDay).padStart(2, "0")}`,
+  };
+}
+
+function parsePearOccurrences(sliderHtml, rangeText) {
+  const months = {
+    jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+    jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+  };
+  const range = parsePearDateRange(rangeText);
+  const currentYear = new Date().getFullYear();
+  const occurrences = [];
+  const seen = new Set();
+  const re = /DateMonth[^>]*>\s*([A-Za-z]{3,9})[\s\S]*?DateDay[^>]*>\s*(\d{1,2})[\s\S]*?WeekDayTime[^>]*>\s*-\s*([^<]+)/gi;
+
+  let match;
+  while ((match = re.exec(sliderHtml)) !== null) {
+    const month = months[match[1].slice(0, 3).toLowerCase()];
+    const day = parseInt(match[2], 10);
+    if (!month || !day) continue;
+
+    let year = range?.startYear ?? currentYear;
+    let date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    if (range && date < range.startDate && range.endYear > range.startYear) {
+      year = range.endYear;
+      date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+    if (range && (date < range.startDate || date > range.endDate)) continue;
+
+    const time = match[3]
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/\s*(am|pm)$/i, (_, suffix) => ` ${suffix.toUpperCase()}`);
+    const key = `${date}|${time}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    occurrences.push({ date, time });
+  }
+
+  return occurrences;
+}
+
+async function fetchPearTheatreEvents() {
+  console.log("  ⏳ The Pear Theatre...");
+  try {
+    const siteId = "42AED627-D621-4B8F-960F-B0AA83FB1469";
+    const orgId = "7928";
+    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&o=${orgId}&eid=0&edid=0&PluginType=Embed`;
+    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
+    const session = pluginHtml.match(/events\?s=([0-9a-f-]{36})/i)?.[1];
+    if (!session) throw new Error("missing VBO session");
+
+    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
+    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
+    const today = todayPT();
+    const events = [];
+
+    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
+    for (const block of blocks) {
+      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
+      const eid = block.match(/\bEID(\d+)\b/)?.[1];
+      const title = decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
+        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? "");
+      if (!edid || !eid || !title) continue;
+
+      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "");
+      const venue = cleanPearHtml(block.match(/TextVenueName[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "") || "The Pear Theatre";
+      const address = cleanPearHtml(block.match(/TextVenueAddress[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "")
+        || "1110 La Avenida Street Suite A, Mountain View, CA 94043";
+      const description = truncate(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""));
+      const priceText = cleanPearHtml(block.match(/EventListPrice[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "")
+        .replace(/^price\s*:?\s*/i, "")
+        .replace(/\.00\b/g, "");
+      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
+      const url = `https://thepear.vbotickets.com/events?eid=${eid}`;
+      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
+
+      let occurrences = [];
+      try {
+        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
+        occurrences = parsePearOccurrences(sliderHtml, rangeText);
+      } catch (err) {
+        console.log(`  ↳ The Pear Theatre date fetch failed for ${title}: ${err.message}`);
+      }
+
+      for (const occurrence of occurrences) {
+        if (occurrence.date < today) continue;
+        const start = parseDatePT(`${occurrence.date}T12:00:00`);
+        events.push({
+          id: h("peartheatre", eid, occurrence.date, occurrence.time),
+          title,
+          date: occurrence.date,
+          displayDate: displayDate(start),
+          time: occurrence.time,
+          endTime: null,
+          venue,
+          address,
+          city: "mountain-view",
+          category: "arts",
+          cost: /\bfree\b/i.test(priceText) ? "free" : (priceText ? "paid" : null),
+          ...(priceText ? { costNote: priceText } : {}),
+          description,
+          url,
+          source: "The Pear Theatre",
+          ...(image ? { image } : {}),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + description),
+        });
+      }
+
+      await new Promise((r) => setTimeout(r, 200));
+    }
+
+    console.log(`  ✅ The Pear Theatre: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  The Pear Theatre: ${err.message}`);
+    return [];
+  }
+}
+
+// ── Performing arts calendars ──
+
+function cleanEscapedCalendarText(value = "") {
+  return stripHtml(String(value)
+    .replace(/\\n/g, " ")
+    .replace(/\\,/g, ",")
+    .replace(/\\;/g, ";")
+    .replace(/\\\\/g, "\\"))
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractFirstImageUrl(html = "") {
+  const match = html.match(/<img[^>]+src=['"]([^'"]+)['"]/i)
+    || html.match(/<meta[^>]+property=['"]og:image['"][^>]+content=['"]([^'"]+)['"]/i)
+    || html.match(/<meta[^>]+content=['"]([^'"]+)['"][^>]+property=['"]og:image['"]/i);
+  return match?.[1]?.replace(/&amp;/g, "&") || "";
+}
+
+function parseNaturalDateTime(monthName, day, year, time, ampm) {
+  const months = {
+    jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+    jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12,
+  };
+  const month = months[monthName.toLowerCase().replace(/\.$/, "").slice(0, monthName.toLowerCase().startsWith("sept") ? 4 : 3)];
+  if (!month) return null;
+  const date = `${year}-${String(month).padStart(2, "0")}-${String(parseInt(day, 10)).padStart(2, "0")}`;
+  const clock = `${time} ${ampm.toUpperCase()}`.replace(/^(\d{1,2}):(\d{2})\s+/, (_, h, m) => `${parseInt(h, 10)}:${m} `);
+  return { date, time: clock };
+}
+
+async function fetchSanJoseTheatersEvents() {
+  console.log("  ⏳ San Jose Theaters...");
+  try {
+    const ical = await fetchText(
+      "https://sanjosetheaters.org/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events",
+      { timeout: 30_000 },
+    );
+    const rawEvents = parseIcalEvents(ical);
+    const today = todayPT();
+    const events = [];
+
+    for (const ev of rawEvents) {
+      const title = cleanEscapedCalendarText(ev.summary);
+      if (!title || isBlockedEvent(title)) continue;
+      const start = parseIcalDate(ev.dtstart);
+      if (!start) continue;
+      const date = isoDate(start);
+      if (date < today) continue;
+      const time = displayTime(start);
+      if (!time) continue;
+      const end = parseIcalDate(ev.dtend);
+      const venueParts = cleanEscapedCalendarText(ev.location).split("|").map((part) => part.trim()).filter(Boolean);
+      const venue = cleanEscapedCalendarText(ev.categories) || venueParts[0] || "San Jose Theaters";
+      const address = venueParts[1] || "";
+      const rawDesc = String(ev.description || "").replace(/\\n/g, "\n").replace(/\\,/g, ",");
+      const description = truncate(stripBareUrls(stripHtml(rawDesc)));
+      const image = extractFirstImageUrl(rawDesc);
+      const url = ev.url || "https://sanjosetheaters.org/calendar/";
+
+      events.push({
+        id: h("sanjosetheaters", url, date, time),
+        title,
+        date,
+        displayDate: displayDate(start),
+        time,
+        endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+        venue,
+        address,
+        city: "san-jose",
+        category: inferCategory(title, description, ev.categories || "", venue),
+        cost: "paid",
+        description,
+        url,
+        source: "San Jose Theaters",
+        ...(image ? { image } : {}),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|cmt|bluey|disney)\b/i.test(title + " " + description),
+      });
+    }
+
+    console.log(`  ✅ San Jose Theaters: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  San Jose Theaters: ${err.message}`);
+    return [];
+  }
+}
+
+async function fetchSouthBayMusicalTheatreEvents() {
+  console.log("  ⏳ South Bay Musical Theatre...");
+  const pages = [
+    "https://southbaymt.com/shows/ticket-sales/in-the-heights/",
+    "https://southbaymt.com/shows/ticket-sales/ouam/",
+    "https://southbaymt.com/shows/ticket-sales/holiday-sunshine/",
+    "https://southbaymt.com/shows/ticket-sales/come-from-away/",
+    "https://southbaymt.com/shows/ticket-sales/musicomedy/",
+    "https://southbaymt.com/shows/ticket-sales/southpacific2027/",
+    "https://southbaymt.com/shows/ticket-sales/candide/",
+  ];
+  const today = todayPT();
+  const events = [];
+
+  for (const pageUrl of pages) {
+    try {
+      const html = await fetchText(pageUrl, { timeout: 20_000 });
+      const title = cleanEscapedCalendarText(html.match(/<title[^>]*>([^<]+)/i)?.[1] || "")
+        .replace(/\s+(?:[-–]\s+)?South Bay Musical Theatre\s*$/i, "");
+      if (!title) continue;
+      const bodyText = cleanEscapedCalendarText(html)
+        .replace(/\s+/g, " ")
+        .trim();
+      const sectionStart = bodyText.search(/SHOW DATES\s*(?:&|AND)?\s*TIMES|DATES\s*(?:&|AND)?\s*TIMES/i);
+      const dateText = sectionStart >= 0 ? bodyText.slice(sectionStart, sectionStart + 2500) : bodyText;
+      const description = truncate(stripBareUrls(bodyText
+        .replace(/^.*?Loading\.\.\.\s*/i, "")
+        .replace(/SHOW DATES[\s\S]*$/i, "")
+        .trim()));
+      const image = extractFirstImageUrl(html);
+      const re = /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t\.?|tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2}),\s+(20\d{2})\s+at\s+(\d{1,2}:\d{2})\s*(am|pm)\b/gi;
+      let match;
+      while ((match = re.exec(dateText)) !== null) {
+        const parsed = parseNaturalDateTime(match[1], match[2], match[3], match[4], match[5]);
+        if (!parsed || parsed.date < today) continue;
+        const start = parseDatePT(`${parsed.date}T12:00:00`);
+        events.push({
+          id: h("southbaymt", pageUrl, parsed.date, parsed.time),
+          title,
+          date: parsed.date,
+          displayDate: displayDate(start),
+          time: parsed.time,
+          endTime: null,
+          venue: "Saratoga Civic Theater",
+          address: "13777 Fruitvale Avenue, Saratoga, CA 95070",
+          city: "saratoga",
+          category: "arts",
+          cost: "paid",
+          costNote: "From $30",
+          description,
+          url: pageUrl,
+          source: "South Bay Musical Theatre",
+          ...(image ? { image } : {}),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney)\b/i.test(title + " " + description),
+        });
+      }
+      await new Promise((r) => setTimeout(r, 150));
+    } catch (err) {
+      console.log(`  ↳ South Bay Musical Theatre page failed: ${err.message}`);
+    }
+  }
+
+  console.log(`  ✅ South Bay Musical Theatre: ${events.length} events`);
+  return events;
+}
+
+async function fetchLosAltosStageEvents() {
+  console.log("  ⏳ Los Altos Stage Company...");
+  try {
+    const items = await fetchJson("https://losaltosstage.org/wp-json/wp/v2/events?per_page=50", { timeout: 20_000 });
+    const today = todayPT();
+    const events = [];
+
+    for (const item of items || []) {
+      const pageUrl = item.link;
+      const title = cleanEscapedCalendarText(item.title?.rendered || "");
+      if (!pageUrl || !title || isBlockedEvent(title)) continue;
+      try {
+        const html = await fetchText(pageUrl, { timeout: 20_000 });
+        const text = cleanEscapedCalendarText(html);
+        const match = text.match(/\bStart date\s+([A-Za-z]+)\s+(\d{1,2}),\s+(20\d{2})\s+(\d{1,2}:\d{2})\s*(am|pm)\b/i);
+        if (!match) continue;
+        const parsed = parseNaturalDateTime(match[1], match[2], match[3], match[4], match[5]);
+        if (!parsed || parsed.date < today) continue;
+        const start = parseDatePT(`${parsed.date}T12:00:00`);
+        const image = extractFirstImageUrl(html);
+
+        events.push({
+          id: h("losaltosstage", pageUrl, parsed.date, parsed.time),
+          title,
+          date: parsed.date,
+          displayDate: displayDate(start),
+          time: parsed.time,
+          endTime: null,
+          venue: "Los Altos Stage Company",
+          address: "97 Hillview Ave, Los Altos, CA 94022",
+          city: "los-altos",
+          category: "arts",
+          cost: "paid",
+          description: "",
+          url: pageUrl,
+          source: "Los Altos Stage Company",
+          ...(image ? { image } : {}),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|youth)\b/i.test(title),
+        });
+        await new Promise((r) => setTimeout(r, 150));
+      } catch (err) {
+        console.log(`  ↳ Los Altos Stage detail failed for ${title}: ${err.message}`);
+      }
+    }
+
+    console.log(`  ✅ Los Altos Stage Company: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Los Altos Stage Company: ${err.message}`);
+    return [];
+  }
+}
+
 // ── Playwright-scraped events (pre-scraped by playwright-scrapers.mjs on Mini) ──
 // Covers: CivicPlus cities, LibCal libraries, The Tech, bookstores,
 // and robust replacements for fragile HTML scrapers (SJ Jazz, SJMA, etc.)
@@ -5514,6 +5882,10 @@ async function main() {
     fetchSjMuseumOfArtEvents,
     fetchJamsjEvents,
     fetchHistorySanJoseEvents,
+    fetchPearTheatreEvents,
+    fetchSanJoseTheatersEvents,
+    fetchSouthBayMusicalTheatreEvents,
+    fetchLosAltosStageEvents,
     fetchPlaywrightEvents,
     fetchInboundEvents,
   ];
@@ -5690,7 +6062,7 @@ async function main() {
     // Strip common venue suffixes (" — San Jose Jazz", " at SJSU", etc.) before comparing
     const strippedTitle = e.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
     const normTitle = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);
-    const key = `${normTitle}|${e.date}`;
+    const key = `${normTitle}|${e.date}|${normTimeKey(e.time)}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -5823,7 +6195,7 @@ async function main() {
       // Only dedup events with a title + date — closures and ambient entries
       // without those fields don't collide meaningfully.
       if (!e.title || !e.date) { kept.push(e); continue; }
-      const k = `${normKey(e.title)}|${e.date}|${normKey(e.venue)}`;
+      const k = `${normKey(e.title)}|${e.date}|${normKey(e.venue)}|${normTimeKey(e.time)}`;
       const existing = byKey.get(k);
       if (!existing) {
         byKey.set(k, { event: e, idx: kept.length });
