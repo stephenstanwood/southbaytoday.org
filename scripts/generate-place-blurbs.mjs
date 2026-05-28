@@ -32,10 +32,16 @@ const CITY_NAMES = {
   "los-altos": "Los Altos", "milpitas": "Milpitas", "santa-cruz": "Santa Cruz",
 };
 
-function extractStreet(address, cityName) {
+function normalizeKey(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function extractStreet(address, cityName, placeName = "") {
   if (!address) return null;
   const firstSeg = address.split(",")[0]?.trim();
   if (!firstSeg) return null;
+  const placeKey = normalizeKey(placeName);
+  if (placeKey && normalizeKey(firstSeg).includes(placeKey)) return null;
   // Strip leading street number (single or hyphenated range), then trailing
   // unit/building/floor/suite blobs.
   // The leading-number strip must require a hyphen for the secondary digits —
@@ -53,6 +59,7 @@ function extractStreet(address, cityName) {
   ).trim();
   if (!cleaned || cleaned.length < 3) return null;
   if (/^\d+$/.test(cleaned) || /^P\.?O\.?\s*Box/i.test(cleaned)) return null;
+  if (!/\b(?:Ave|St|Blvd|Rd|Dr|Ct|Ln|Way|Wy|Pl|Pkwy|Hwy|Ter|Cir|Expy|Expressway|Alameda|Row|Mall|Square|Real)\b/i.test(cleaned)) return null;
   // Drop streets named after the city — "Saratoga library on Saratoga Ave"
   // reads as redundant. The card already shows the city as a chip.
   if (cityName && new RegExp(`^${cityName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}\\b`, "i").test(cleaned)) return null;
@@ -90,12 +97,297 @@ function priceTier(priceLevel) {
   return map[priceLevel] || null;
 }
 
+const FOOD_TYPE_LABELS = {
+  afghani_restaurant: "Afghan restaurant",
+  african_restaurant: "African restaurant",
+  american_restaurant: "American restaurant",
+  asian_fusion_restaurant: "Asian fusion restaurant",
+  asian_restaurant: "Asian restaurant",
+  austrian_restaurant: "Austrian restaurant",
+  bagel_shop: "Bagel shop",
+  barbecue_restaurant: "Barbecue restaurant",
+  bar_and_grill: "Bar & grill",
+  beer_garden: "Beer garden",
+  brazilian_restaurant: "Brazilian restaurant",
+  breakfast_restaurant: "Breakfast restaurant",
+  brewpub: "Brewpub",
+  brewery: "Brewery",
+  brunch_restaurant: "Brunch restaurant",
+  buffet_restaurant: "Buffet restaurant",
+  burmese_restaurant: "Burmese restaurant",
+  cajun_restaurant: "Cajun restaurant",
+  californian_restaurant: "Californian restaurant",
+  cantonese_restaurant: "Cantonese restaurant",
+  chicken_restaurant: "Chicken restaurant",
+  chinese_noodle_restaurant: "Chinese noodle restaurant",
+  chinese_restaurant: "Chinese restaurant",
+  cocktail_bar: "Cocktail bar",
+  coffee_shop: "Coffee shop",
+  deli: "Deli",
+  dessert_restaurant: "Dessert restaurant",
+  dim_sum_restaurant: "Dim sum restaurant",
+  diner: "Diner",
+  eastern_european_restaurant: "Eastern European restaurant",
+  dumpling_restaurant: "Dumpling restaurant",
+  filipino_restaurant: "Filipino restaurant",
+  fine_dining_restaurant: "Fine dining restaurant",
+  fast_food_restaurant: "Fast food restaurant",
+  food_court: "Food court",
+  french_restaurant: "French restaurant",
+  fusion_restaurant: "Fusion restaurant",
+  gastropub: "Gastropub",
+  german_restaurant: "German restaurant",
+  greek_restaurant: "Greek restaurant",
+  hamburger_restaurant: "Hamburger restaurant",
+  halal_restaurant: "Halal restaurant",
+  hawaiian_restaurant: "Hawaiian restaurant",
+  hot_pot_restaurant: "Hot pot restaurant",
+  indian_restaurant: "Indian restaurant",
+  indonesian_restaurant: "Indonesian restaurant",
+  israeli_restaurant: "Israeli restaurant",
+  italian_restaurant: "Italian restaurant",
+  japanese_curry_restaurant: "Japanese curry restaurant",
+  japanese_izakaya_restaurant: "Izakaya",
+  japanese_restaurant: "Japanese restaurant",
+  korean_barbecue_restaurant: "Korean barbecue restaurant",
+  korean_restaurant: "Korean restaurant",
+  lebanese_restaurant: "Lebanese restaurant",
+  mediterranean_restaurant: "Mediterranean restaurant",
+  mexican_restaurant: "Mexican restaurant",
+  middle_eastern_restaurant: "Middle Eastern restaurant",
+  north_indian_restaurant: "North Indian restaurant",
+  oyster_bar_restaurant: "Oyster bar",
+  pakistani_restaurant: "Pakistani restaurant",
+  persian_restaurant: "Persian restaurant",
+  peruvian_restaurant: "Peruvian restaurant",
+  portuguese_restaurant: "Portuguese restaurant",
+  pizza_restaurant: "Pizza restaurant",
+  pub: "Pub",
+  ramen_restaurant: "Ramen restaurant",
+  sandwich_shop: "Sandwich shop",
+  seafood_restaurant: "Seafood restaurant",
+  soup_restaurant: "Soup restaurant",
+  south_indian_restaurant: "South Indian restaurant",
+  spanish_restaurant: "Spanish restaurant",
+  steak_house: "Steak house",
+  sushi_restaurant: "Sushi restaurant",
+  taiwanese_restaurant: "Taiwanese restaurant",
+  tapas_restaurant: "Tapas restaurant",
+  tea_house: "Tea house",
+  thai_restaurant: "Thai restaurant",
+  tonkatsu_restaurant: "Tonkatsu restaurant",
+  turkish_restaurant: "Turkish restaurant",
+  vegan_restaurant: "Vegan restaurant",
+  vegetarian_restaurant: "Vegetarian restaurant",
+  vietnamese_restaurant: "Vietnamese restaurant",
+  wine_bar: "Wine bar",
+};
+
+const GENERIC_FOOD_TYPES = new Set([
+  "restaurant", "food", "point_of_interest", "establishment", "meal_takeaway",
+  "meal_delivery", "food_delivery", "catering_service", "family_restaurant",
+  "service", "store", "food_store",
+]);
+
+function foodDisplayType(p) {
+  const display = String(p.displayType || "").trim();
+  if (display && !/^(restaurant|food|null|undefined)$/i.test(display)) return display;
+  for (const type of p.types || []) {
+    if (GENERIC_FOOD_TYPES.has(type)) continue;
+    if (FOOD_TYPE_LABELS[type]) return FOOD_TYPE_LABELS[type];
+  }
+  const profile = foodProfileFromName(p.name || "", "");
+  return profile?.label || display || "Restaurant";
+}
+
+function isFoodPlace(p) {
+  if (p.category === "food") return true;
+  if (FOOD_TYPE_LABELS[p.primaryType]) return true;
+  for (const type of p.types || []) {
+    if (FOOD_TYPE_LABELS[type]) return true;
+  }
+  return /\b(restaurant|cafe|bakery|coffee|tea|dessert|bar|grill|brewpub|brewery|deli|pizza|ramen|sushi)\b/i.test(p.displayType || "");
+}
+
+function capFirst(value) {
+  const s = String(value || "").trim();
+  if (!s) return "";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function foodProfileFromName(name, typeText) {
+  const hay = normalizeKey(name) + " " + normalizeKey(typeText);
+  const rules = [
+    [/bloom bagels|main street bagels|bagel/, "bagel shop", "bagels, coffee, and breakfast sandwiches"],
+    [/roja/, "fine-dining restaurant", "seasonal dinner plates and cocktails"],
+    [/le l kitchen|lele kitchen/, "Asian restaurant", "Asian plates and rice bowls"],
+    [/first born/, "sandwich shop", "sandwiches, brunch plates, and coffee"],
+    [/asa restaurant/, "New American restaurant", "seafood, pastas, and seasonal dinner plates"],
+    [/shepherd sims/, "American restaurant", "burgers, steaks, and cocktails"],
+    [/los gatos parkside/, "American restaurant", "burgers, salads, and dinner plates"],
+    [/senza italian/, "Italian restaurant", "pasta, pizza, and Italian plates"],
+    [/oy gluten free/, "gluten-free bakery", "gluten-free breads, pastries, and baked goods"],
+    [/intl kitchen/, "Asian restaurant", "Asian plates, noodles, and rice bowls"],
+    [/la casa mia/, "Japanese-Italian restaurant", "Japanese-style pastas, gratins, and cafe plates"],
+    [/big al s/, "bowling-alley restaurant", "burgers, pizza, wings, and group-friendly bites"],
+    [/nar restaurant/, "Eastern European restaurant", "kebabs, dumplings, and Eastern European plates"],
+    [/bloomsgiving/, "cafe and flower shop", "coffee, cafe bites, and flowers"],
+    [/saigon breadfast|sai gon breadfast/, "Vietnamese sandwich shop", "banh mi, coffee, and Vietnamese breakfast bites"],
+    [/redwood caf|redwood cafe/, "cafe", "breakfast plates, sandwiches, and coffee"],
+    [/ethel s fancy/, "New American restaurant", "seasonal New American plates and cocktails"],
+    [/naschmarkt/, "Austrian restaurant", "schnitzel, sausages, and Austrian plates"],
+    [/lou herbert s/, "cafe bar", "coffee, cocktails, and cafe plates"],
+    [/san pedro square market/, "food hall", "multiple food vendors, drinks, and casual plates"],
+    [/burma roots|burma taste|rangoon ruby/, "Burmese restaurant", "tea leaf salad, curries, and Burmese noodles"],
+    [/holy cannoli/, "dessert caterer", "cannoli, pastries, and Italian sweets"],
+    [/augustine/, "bakery cafe", "pastries, coffee, and cafe plates"],
+    [/tarim garden|xinjiang|uyghur/, "Xinjiang restaurant", "hand-pulled noodles, kebabs, and Uyghur-style plates"],
+    [/jashn/, "Indian restaurant", "curries, kebabs, and Indian plates"],
+    [/hero ranch/, "American restaurant", "steaks, seafood, and cocktails"],
+    [/goga/, "fine-dining restaurant", "seasonal tasting-menu plates and wine"],
+    [/historic saratoga village/, "village dining area", "cafes, restaurants, and walkable Saratoga stops"],
+    [/flowers saratoga/, "Californian restaurant", "dinner plates, cocktails, and patio drinks"],
+    [/khao thai/, "Thai restaurant", "Thai curries, noodles, and rice plates"],
+    [/frankie/, "Italian restaurant", "pasta, pizza, and Italian-American plates"],
+    [/dishdash/, "Middle Eastern restaurant", "kebabs, hummus, and Middle Eastern plates"],
+    [/trifecta/, "catering-friendly lunch spot", "sandwiches, wraps, and lunch plates"],
+    [/the stand/, "American classics spot", "burgers, sandwiches, salads, and fries"],
+    [/bayon temple|khmer|cambod/, "Cambodian restaurant", "Cambodian/Khmer plates"],
+    [/latin asian fusion/, "Latin-Asian fusion restaurant", "Latin-Asian fusion plates"],
+    [/empanada/, "empanada shop", "savory and sweet empanadas"],
+    [/good salad|sprout|salad|palmetto superfood|raw superfood|true food|wildseed/, "salad and bowls spot", "salads, bowls, and plant-forward plates"],
+    [/pho|banh mi|vpho|y linh/, "Vietnamese restaurant", "pho, banh mi, and rice plates"],
+    [/la jaiba|mariscos|cajun crack|bag o crab|cap'?t loui|crab|raw bar|one fish|oyster|surmai/, "seafood restaurant", "fish, crab, and seafood plates"],
+    [/taqueria|taco|burrito|jalisco|distrito federal|luna mexican|dos burros|mayan|fiesta vallarta|el comal|cantina/, "Mexican restaurant", "tacos, burritos, and Mexican plates"],
+    [/sushi|sushiko|kakuna|mj sushi/, "sushi restaurant", "sushi rolls and Japanese plates"],
+    [/ramen|hironori/, "ramen shop", "ramen bowls and Japanese small plates"],
+    [/udon|marugame|uzumakiya/, "udon shop", "udon bowls and Japanese small plates"],
+    [/dumpling|xlb|xiao long bao|dough zone|bun dynasty/, "dumpling house", "dumplings, buns, and Chinese small plates"],
+    [/mian|noodle|malatang|special noodle|duan chun zhen|noodlepanda|fish with you/, "noodle shop", "noodle bowls and soup"],
+    [/hot pot|shabu|claypot|xpp|home eat/, "hot pot and claypot spot", "hot pots, claypots, and shareable plates"],
+    [/biryani|curry|tiffin|dosa|naan|thaali|masakali|ambrosia|avachi|bangalore|calcutta|karimi|aurum|inchin|namaste/, "Indian restaurant", "curries, biryani, and tandoori plates"],
+    [/momo|kathmandu/, "Himalayan dumpling spot", "momos, curries, and Himalayan plates"],
+    [/bbq chicken|bb q chicken|fried chicken|starbird|fire wings|chicken|wings/, "chicken spot", "fried chicken, wings, and sandwiches"],
+    [/korean|tofu|hansang|danbi|saucy asian/, "Korean restaurant", "Korean comfort plates, tofu stews, and barbecue"],
+    [/gyu kaku|yakiniku|ushiya/, "Japanese barbecue restaurant", "table-grilled meats and Japanese barbecue"],
+    [/burger|super duper|konjoe|main street burgers/, "burger spot", "burgers, fries, and casual plates"],
+    [/pizza|pizzeria|square pie|rosie/, "pizza spot", "pizza, slices, and Italian-leaning casual plates"],
+    [/steak|chop house|morton's|fleming|galp[aã]o gaucho/, "steakhouse", "steaks, grilled meats, and sides"],
+    [/barbecue|bbq|smoke/, "barbecue restaurant", "barbecue plates and smoked meats"],
+    [/crepe/, "crepe cafe", "crepes, salads, and cafe plates"],
+    [/pancake|breakfast|brunch|mimosas|breaking dawn|uncle john|holder|country inn|orange bowl|creamery/, "breakfast and brunch spot", "eggs, pancakes, and brunch plates"],
+    [/sandwich|panino|bun me up|oakmont/, "sandwich shop", "sandwiches, coffee, and quick lunch plates"],
+    [/coffee|cafe|caffe|roasting|philz|lookout|arwa|bijan|nahita|olympus/, "cafe", "coffee, pastries, and cafe bites"],
+    [/bakery|donut|doughnut|cake|bundt|patisserie|pastry/, "bakery", "pastries, cakes, and baked goods"],
+    [/ice cream|gelato|creamery|tong sui|dessert|sweets|boba|tea|teaspoon/, "dessert and drinks shop", "desserts, tea drinks, and sweet snacks"],
+    [/wine|vino|tasting house|tessora/, "wine bar", "wine pours and small plates"],
+    [/brew|beer|tap|barrel/, "beer bar", "beer, taps, and pub bites"],
+    [/pub|grill|bar|district|local union|double d|topgolf|dave buster/, "bar and grill", "burgers, drinks, and shareable plates"],
+    [/coconuts|caribbean/, "Caribbean restaurant", "Caribbean plates"],
+    [/cascal|suspiro|macarena|bodeguita/, "Spanish and Latin restaurant", "tapas, Latin plates, and cocktails"],
+  ];
+  for (const [rx, label, food] of rules) {
+    if (rx.test(hay)) return { label, food };
+  }
+  return null;
+}
+
+function foodProfileFromType(typeText) {
+  const t = normalizeKey(typeText);
+  const checks = [
+    [/bagel/, "bagel shop", "bagels, coffee, and breakfast sandwiches"],
+    [/pakistani/, "Pakistani restaurant", "kebabs, curries, and Pakistani plates"],
+    [/persian/, "Persian restaurant", "kebabs, rice plates, and Persian stews"],
+    [/burmese/, "Burmese restaurant", "tea leaf salad, curries, and Burmese noodles"],
+    [/portuguese/, "Portuguese restaurant", "Portuguese small plates, seafood, and brunch plates"],
+    [/austrian/, "Austrian restaurant", "schnitzel, sausages, and Austrian plates"],
+    [/eastern european/, "Eastern European restaurant", "kebabs, dumplings, and Eastern European plates"],
+    [/xinjiang|uyghur|halal/, "halal restaurant", "kebabs, rice plates, and halal-friendly plates"],
+    [/fine dining/, "fine-dining restaurant", "seasonal dinner plates and cocktails"],
+    [/fast food/, "quick-service restaurant", "sandwiches, bowls, and quick bites"],
+    [/south indian/, "South Indian restaurant", "dosas, idli, and tiffin plates"],
+    [/north indian|indian/, "Indian restaurant", "curries, biryani, and tandoori plates"],
+    [/cambodian/, "Cambodian restaurant", "Cambodian/Khmer plates"],
+    [/vietnamese/, "Vietnamese restaurant", "pho, banh mi, and rice plates"],
+    [/mexican/, "Mexican restaurant", "tacos, burritos, and Mexican plates"],
+    [/sushi/, "sushi restaurant", "sushi rolls and Japanese plates"],
+    [/ramen/, "ramen shop", "ramen bowls and Japanese small plates"],
+    [/japanese curry/, "Japanese curry shop", "Japanese curry rice and cutlet plates"],
+    [/izakaya/, "izakaya", "Japanese small plates and drinks"],
+    [/tonkatsu/, "tonkatsu restaurant", "fried pork cutlets and Japanese set plates"],
+    [/japanese/, "Japanese restaurant", "Japanese plates"],
+    [/korean barbecue/, "Korean barbecue restaurant", "table-grilled meats and Korean sides"],
+    [/korean/, "Korean restaurant", "Korean comfort plates, tofu stews, and barbecue"],
+    [/chinese noodle/, "Chinese noodle shop", "Chinese noodle soups and wok dishes"],
+    [/dumpling|dim sum|cantonese/, "Chinese dumpling and dim sum spot", "dumplings, buns, and Cantonese plates"],
+    [/taiwanese/, "Taiwanese restaurant", "Taiwanese noodles, rice plates, and snacks"],
+    [/chinese/, "Chinese restaurant", "Chinese plates"],
+    [/thai/, "Thai restaurant", "Thai curries, noodles, and rice plates"],
+    [/filipino/, "Filipino restaurant", "Filipino comfort plates"],
+    [/hawaiian/, "Hawaiian spot", "poke, rice bowls, and island-style plates"],
+    [/cajun/, "Cajun restaurant", "Cajun seafood boils and saucy shellfish"],
+    [/seafood|oyster/, "seafood restaurant", "fish, crab, and seafood plates"],
+    [/barbecue/, "barbecue restaurant", "barbecue plates and smoked meats"],
+    [/brazilian/, "Brazilian steakhouse", "grilled meats and Brazilian sides"],
+    [/peruvian/, "Peruvian restaurant", "Peruvian chicken, seafood, and rice plates"],
+    [/burger|hamburger/, "burger spot", "burgers and fries"],
+    [/pizza/, "pizza spot", "pizza and Italian-leaning casual plates"],
+    [/italian/, "Italian restaurant", "pasta, pizza, and Italian plates"],
+    [/french|bistro/, "French bistro", "French bistro plates"],
+    [/greek/, "Greek restaurant", "gyros, souvlaki, and mezze"],
+    [/israeli|middle eastern|mediterranean|lebanese|turkish/, "Mediterranean restaurant", "pita, kebabs, hummus, and mezze"],
+    [/persian/, "Persian restaurant", "kebabs, rice plates, and Persian stews"],
+    [/spanish|tapas/, "Spanish restaurant", "tapas and Spanish plates"],
+    [/american|californian/, "American restaurant", "burgers, sandwiches, and American plates"],
+    [/breakfast|brunch|diner/, "breakfast and brunch spot", "eggs, pancakes, and brunch plates"],
+    [/sandwich|deli/, "sandwich shop", "sandwiches and quick lunch plates"],
+    [/coffee|cafe/, "cafe", "coffee, pastries, and cafe bites"],
+    [/tea/, "tea house", "tea drinks and sweet snacks"],
+    [/bakery|pastry|donut|cake/, "bakery", "pastries, cakes, and baked goods"],
+    [/ice cream|dessert|chocolate|confectionery/, "dessert shop", "desserts and sweet snacks"],
+    [/wine/, "wine bar", "wine pours and small plates"],
+    [/cocktail/, "cocktail bar", "cocktails and bar snacks"],
+    [/brew|beer/, "beer bar", "beer, taps, and pub bites"],
+    [/pub|bar and grill|gastropub|bar\b/, "bar and grill", "burgers, drinks, and shareable plates"],
+    [/food court/, "food hall", "multiple food vendors under one roof"],
+    [/vegan|vegetarian/, "plant-based spot", "plant-based bowls and cafe plates"],
+    [/asian fusion|fusion/, "Asian fusion restaurant", "Asian-fusion plates"],
+  ];
+  for (const [rx, label, food] of checks) {
+    if (rx.test(t)) return { label, food };
+  }
+  return null;
+}
+
+function inferFoodProfile(p, displayType) {
+  const typeText = [displayType, ...(p.types || [])].filter(Boolean).join(" ");
+  return foodProfileFromName(p.name || "", typeText)
+    || foodProfileFromType(typeText)
+    || { label: "restaurant", food: "dinner plates, drinks, and casual bites" };
+}
+
+function buildFoodProfileBlurb(p, ctx, profile) {
+  const { cityName, street } = ctx;
+  const priceLevel = priceTier(ctx.priceLevel);
+  const where = street ? " in " + cityName + " on " + street : " in " + cityName;
+  const priced = priceLevel ? ", " + priceLevel : "";
+  const templates = [
+    capFirst(profile.food) + where + priced + ".",
+    cityName + " " + profile.label + " for " + profile.food + (street ? " on " + street : "") + ".",
+  ];
+  return pickTemplate(templates, p.id);
+}
+
 // Trim editorial summary if it has marketing fluff or runs too long.
 function cleanEditorial(text) {
   if (!text) return null;
   let t = text.trim();
   // Strip leading "We're..." / "Our..." marketing voice that sometimes appears.
   t = t.replace(/^(We are|We're|Our|Welcome to)\b/i, "").trim();
+  t = t
+    .replace(/also serving a full menu of /gi, "also serving ")
+    .replace(/serving a full menu of /gi, "serving ")
+    .replace(/& a full menu of /gi, "& ");
   if (t.length > 220) {
     // Take first sentence
     const first = t.split(/(?<=[.!?])\s+/)[0]?.trim();
@@ -109,149 +401,9 @@ function cleanEditorial(text) {
 
 // FOOD ----------------------------------------------------------------------
 function blurbForFood(p, ctx) {
-  const { cityName, street, types } = ctx;
-  const priceLevel = priceTier(ctx.priceLevel);
-  const type = lowerType(p.displayType || "restaurant");
-  const isCoffee = /coffee|cafe|tea house/i.test(p.displayType || "");
-  const isBakery = /bakery|patisserie|donut|pastry/i.test(p.displayType || "");
-  const isIceCream = /ice cream|gelato|frozen yogurt|dessert/i.test(p.displayType || "");
-  const isQuickBite = /sandwich|deli|bagel|breakfast restaurant/i.test(p.displayType || "");
-  const isFastCasual = (types || []).includes("fast_food_restaurant") || (types || []).includes("meal_takeaway");
-  const isWineBar = /\bwine bar\b/i.test(p.displayType || "");
-  const isCocktailBar = /\bcocktail bar\b/i.test(p.displayType || "");
-  const isBrewery = /\bbrewery|taproom\b/i.test(p.displayType || "");
-  const isWinery = /\bwinery|tasting room\b/i.test(p.displayType || "");
-  const isPub = /\bpub|gastropub\b/i.test(p.displayType || "");
-  const isBar = !isWineBar && !isCocktailBar && !isPub && /\bbar\b/i.test(p.displayType || "");
-  const isGenericRestaurant = /^restaurant$/i.test(p.displayType || "");
-
-  if (isWineBar) {
-    const t = [
-      street ? `Wine bar in ${cityName} on ${street} — by-the-glass pours and small plates.` : `${cityName} wine bar — by-the-glass pours and small plates.`,
-      `${cityName} wine bar${street ? ` on ${street}` : ""} for an unhurried glass.`,
-      `Sit-down wine bar in ${cityName}${street ? ` on ${street}` : ""}, bottles and flights.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isCocktailBar) {
-    const t = [
-      street ? `${cityName} cocktail bar on ${street} — built for sitting at the bar.` : `${cityName} cocktail bar.`,
-      `Cocktails in ${cityName}${street ? ` on ${street}` : ""}, mixed with care.`,
-      `${cityName} cocktail spot${street ? ` on ${street}` : ""} — low light, short menu.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isBrewery) {
-    const t = [
-      street ? `${cityName} brewery on ${street} — taps, flights, sometimes a food truck.` : `${cityName} brewery — taps, flights, sometimes a food truck.`,
-      `Drink local in ${cityName}${street ? ` on ${street}` : ""} — brewery with rotating taps.`,
-      `${cityName} taproom${street ? ` on ${street}` : ""}, pour a flight and post up.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isWinery) {
-    const t = [
-      `${cityName} tasting room${street ? ` on ${street}` : ""} — flights and bottle pours, no rush.`,
-      street ? `Winery on ${street} in ${cityName} — short pour or stay for a flight.` : `${cityName} winery — short pour or stay for a flight.`,
-      `Local wine in ${cityName}${street ? ` on ${street}` : ""}, low-key tasting room.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isPub) {
-    const t = [
-      `${cityName} pub${street ? ` on ${street}` : ""} — pints, a bite, easy to linger.`,
-      street ? `Gastropub on ${street} in ${cityName} — beers and a real food menu.` : `${cityName} gastropub — beers and a real food menu.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isBar) {
-    const t = [
-      `Neighborhood bar in ${cityName}${street ? ` on ${street}` : ""} — easy stop for a pint.`,
-      street ? `${cityName} bar on ${street}, casual and unfussy.` : `${cityName} bar, casual and unfussy.`,
-      `${cityName} watering hole${street ? ` on ${street}` : ""}.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-
-  if (isCoffee) {
-    const t = [
-      street ? `${cityName} coffee stop on ${street}.` : `${cityName} coffee stop.`,
-      street ? `${street} cafe in ${cityName} for an espresso and a sit.` : `Cafe in ${cityName} for an espresso and a sit.`,
-      `Quick coffee in ${cityName}${street ? ` on ${street}` : ""}.`,
-      `${cityName} cafe — order at the counter and post up.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isBakery) {
-    const t = [
-      street ? `${cityName} bakery on ${street} for pastries and grab-and-go pulls.` : `${cityName} bakery for pastries and grab-and-go pulls.`,
-      `Pastry stop in ${cityName}${street ? ` on ${street}` : ""}.`,
-      `${cityName} bakery — slice of cake or a croissant for the road.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isIceCream) {
-    const t = [
-      street ? `${cityName} ${type} on ${street} for a quick scoop walk.` : `${cityName} ${type} for a quick scoop walk.`,
-      `Dessert stop in ${cityName}${street ? ` on ${street}` : ""}.`,
-      `${cityName} sweet stop — grab a cone and wander.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (isQuickBite) {
-    const tier = priceLevel ? `, ${priceLevel}` : "";
-    return street ? `${cityName} ${type} on ${street}${tier}.` : `${cityName} ${type}${tier}.`;
-  }
-  if (isFastCasual) {
-    return street
-      ? `${cityName} ${type} on ${street}${priceLevel ? `, ${priceLevel}` : ""} — counter-service.`
-      : `${cityName} ${type}${priceLevel ? `, ${priceLevel}` : ""}, counter-service.`;
-  }
-  if (priceLevel === "$$$$") {
-    const t = [
-      street ? `Upscale ${type} on ${street} in ${cityName}, $$$$ — worth dressing up for.` : `Upscale ${type} in ${cityName}, $$$$.`,
-      `${cityName} fine-dining ${type}${street ? ` on ${street}` : ""}, $$$$.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (priceLevel === "$$$") {
-    const t = [
-      street ? `${cityName} ${type} on ${street}, $$$ for a sit-down dinner.` : `${cityName} ${type}, $$$.`,
-      `Sit-down ${type} in ${cityName}${street ? ` on ${street}` : ""}, $$$ range.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (priceLevel === "$$") {
-    const t = [
-      street ? `${cityName} ${type} on ${street}, $$ sit-down.` : `${cityName} ${type}, $$.`,
-      `Sit-down ${type} in ${cityName}${street ? ` on ${street}` : ""}, mid-tier prices.`,
-      `${cityName} ${type}${street ? ` on ${street}` : ""} — $$ and worth a table.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  if (priceLevel === "$") {
-    const t = [
-      street ? `${cityName} ${type} on ${street}, $ and casual.` : `${cityName} ${type}, $ and casual.`,
-      `Cheap ${type} in ${cityName}${street ? ` on ${street}` : ""}.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  // No priceLevel + no special subtype. Mix three variants so a city full of
-  // "Restaurant" displayType places doesn't read as one identical sentence.
-  if (isGenericRestaurant) {
-    const t = [
-      street ? `${cityName} sit-down spot on ${street}, full menu.` : `${cityName} sit-down spot, full menu.`,
-      street ? `Table-service eatery on ${street} in ${cityName}.` : `Table-service eatery in ${cityName}.`,
-      `${cityName} restaurant${street ? ` on ${street}` : ""} — solid neighborhood pick.`,
-    ];
-    return pickTemplate(t, p.id);
-  }
-  const t = [
-    street ? `${cityName} ${type} on ${street}.` : `${cityName} ${type}.`,
-    street ? `${cityName} ${type}, sit-down on ${street}.` : `Sit-down ${type} in ${cityName}.`,
-    street ? `${cityName}'s ${type} on ${street}, table service.` : `${cityName}'s ${type}, table service.`,
-  ];
-  return pickTemplate(t, p.id);
+  const displayType = foodDisplayType(p);
+  const profile = inferFoodProfile(p, displayType);
+  return buildFoodProfileBlurb(p, ctx, profile);
 }
 
 // OUTDOOR -------------------------------------------------------------------
@@ -457,7 +609,8 @@ let researchHits = 0, templateHits = 0;
 
 for (const p of places) {
   const cityName = CITY_NAMES[p.city] || p.city;
-  const street = extractStreet(p.address, cityName);
+  const street = extractStreet(p.address, cityName, p.name);
+  const category = isFoodPlace(p) ? "food" : p.category;
   const ctx = {
     cityName,
     street,
@@ -470,14 +623,14 @@ for (const p of places) {
   const r = research[p.id];
   const summary = cleanEditorial(r?.editorialSummary);
   if (summary) {
-    cache[p.id] = { blurb: cleanDisplayCopy(summary), source: "editorial", category: p.category };
+    cache[p.id] = { blurb: cleanDisplayCopy(summary), source: "editorial", category };
     researchHits++;
     continue;
   }
 
   // Template fallback.
   let blurb;
-  switch (p.category) {
+  switch (category) {
     case "food": blurb = blurbForFood(p, ctx); break;
     case "outdoor": blurb = blurbForOutdoor(p, ctx); break;
     case "museum": blurb = blurbForMuseum(p, ctx); break;
@@ -503,7 +656,7 @@ for (const p of places) {
       blurb = pickTemplate(t, p.id);
     }
   }
-  cache[p.id] = { blurb: cleanDisplayCopy(blurb), source: "template", category: p.category };
+  cache[p.id] = { blurb: cleanDisplayCopy(blurb), source: "template", category };
   templateHits++;
 }
 
@@ -531,7 +684,7 @@ const cats = new Map();
 for (const p of places) {
   if (cats.size >= 8) break;
   if (cache[p.id].source !== "template") continue;
-  if (cats.has(p.category)) continue;
-  cats.set(p.category, { name: p.name, blurb: cache[p.id].blurb });
+  if (cats.has(cache[p.id].category)) continue;
+  cats.set(cache[p.id].category, { name: p.name, blurb: cache[p.id].blurb });
 }
 for (const [cat, x] of cats) console.log(`  [${cat}] ${x.name} → ${x.blurb}`);

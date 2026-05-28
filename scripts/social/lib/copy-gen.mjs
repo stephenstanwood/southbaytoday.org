@@ -67,7 +67,7 @@ STRUCTURE:
 LINK POLICY (CRITICAL — different per platform):
 - X, Threads, Facebook, Instagram: **NO URL** anywhere in the copy body. None. Not even a shortened domain. Outbound links suppress reach on every one of these platforms. People who want more info will find us — we're in the bio.
 - Bluesky, Mastodon: include the FULL URL with https:// at the end. These platforms don't algorithmically suppress links.
-- Email: NO URL — the newsletter template has its own CTA buttons.
+- Email: NO URL — the newsletter template has its own CTA buttons. Email copy must be location-agnostic because readers are spread across Santa Clara County; never assume where the reader is.
 - On X / Threads, a separate self-reply with the link is added by the publisher AFTER the post. You do not write that reply. Treat the post as if it has no link at all.
 
 PLATFORM-NATIVE VOICE (write each variant like you live on that platform — don't translate one to the others):
@@ -623,7 +623,7 @@ This is ${slotCount} ${slotWord}. Write seven main variants — each NATIVE to i
 
 6. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different rhythm, slightly more descriptive (Mastodon culture is less marketing-y). Include URL. 1-2 hashtags. Do not return identical or near-identical text to Bluesky.
 
-7. Email (max 600 chars, NO URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails — the email shows the image and a "See the full plan" button below.
+7. Email (max 600 chars, NO URL) — 2-4 sentences for the morning newsletter. Plain place names (no @-handles), no hashtags, no "see link below" / "all mapped here" CTA tails. Location-agnostic: no "closer in", "closer to home", "near you", "if you're around", or "worth the drive." The email shows the image and a "See the full plan" button below.
 
 ALSO write an X poll variant. The publisher uses this on every ~3rd day-plan publish to drive engagement (polls boost X reach 2-3x and force a pick-one commitment from followers).
 
@@ -745,7 +745,7 @@ Write seven MAIN variants — each NATIVE to its platform (don't translate):
 
 6. Mastodon (max 480 chars INCLUDING URL + hashtags) — write a DISTINCT variant from Bluesky: different opener, different rhythm, slightly more descriptive (Mastodon culture is less marketing-y). Include URL. 1-2 hashtags. Do not return identical or near-identical text to Bluesky.
 
-7. Email (max 400 chars, NO URL) — 1-3 sentences. Plain place names (no @-handles), no hashtags, no "tap the link" CTA tails — the email has an image and a "Get tickets" button below.
+7. Email (max 400 chars, NO URL) — 1-3 sentences. Plain place names (no @-handles), no hashtags, no "tap the link" CTA tails. Location-agnostic: no "closer in", "closer to home", "near you", "if you're around", or "worth the drive." The email has an image and a "Get tickets" button below.
 
 ALSO write three SHORT "doors-in-30" follow-up bumps. The publisher will post these as replies to the main post about 30 min before the event starts, catching the after-work "what should I do tonight?" audience. Style: one tight sentence each, present-tense urgency. NO URL (the parent already has it). Tag the same @handles you used in the main post.
 

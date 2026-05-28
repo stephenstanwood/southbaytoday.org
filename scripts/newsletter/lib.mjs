@@ -634,6 +634,7 @@ Your job:
 Voice:
 - Smart, warm, specific, lightly opinionated. A competent local friend who actually read the calendar.
 - Useful beats hype. Never describe a day or part of a day as quiet, slow, thin, light, sparse, sleepy, soft, or weak. There is always something to do; frame the useful options and strongest patterns without apologizing for the calendar.
+- Location-agnostic. Readers are spread across Santa Clara County, so never write from a presumed home base or reader location. Avoid phrases like "closer in", "closer to home", "near you", "depending on where you are", or "worth the drive." Compare options by city, venue, time, cost, audience, or mood instead.
 - No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
 - Avoid em dashes. Use commas, periods, or parentheses.
 
@@ -821,10 +822,21 @@ const DAY_CONTEXT_WORDS = [
 ];
 const DAY_CONTEXT = `(?:this\\s+)?(?:the\\s+)?(?:${DAY_CONTEXT_WORDS.join("|")})`;
 const DOWNBEAT_DAY_LANGUAGE = "(?:quiet|quieter|quietest|slow|slower|slowest|thin|thinner|thinnest|light|lighter|lightest|sparse|sparser|sparsest|sleepy|soft|weak)";
+const READER_RELATIVE_LOCATION_PATTERNS = [
+  /\bcloser in\b/i,
+  /\bcloser to home\b/i,
+  /\bcloser to you\b/i,
+  /\bnear you\b/i,
+  /\bnear where you\b/i,
+  /\bdepending on where you (?:actually )?are\b/i,
+  /\byour part of (?:town|the county|the south bay)\b/i,
+  /\bworth the drive\b/i,
+  /\bif you(?:'re| are) (?:nearby|close by|around)\b/i,
+];
 
 function newsletterCopyString(value, max) {
-  const cleaned = rewriteDownbeatDayLanguage(limitedString(value, max));
-  return hasDownbeatDayLanguage(cleaned) ? "" : cleaned;
+  const cleaned = sanitizeNewsletterCopy(limitedString(value, max));
+  return hasDownbeatDayLanguage(cleaned) || hasReaderRelativeLocationLanguage(cleaned) ? "" : cleaned;
 }
 
 function rewriteDownbeatDayLanguage(value) {
@@ -846,6 +858,33 @@ function hasDownbeatDayLanguage(value) {
   return dayThenTerm.test(text) || termThenDay.test(text);
 }
 
+export function sanitizeNewsletterCopy(value) {
+  return rewriteDownbeatDayLanguage(rewriteReaderRelativeLocationLanguage(value));
+}
+
+function rewriteReaderRelativeLocationLanguage(value) {
+  return String(value || "")
+    .replace(/(^|[.!?]\s+)closer in,?\s+/gi, "$1Also, ")
+    .replace(/(^|[.!?]\s+)closer to home,?\s+/gi, "$1Also, ")
+    .replace(/(^|[.!?]\s+)closer to you,?\s+/gi, "$1Also, ")
+    .replace(/\bthe closer-in option\b/gi, "another option")
+    .replace(/\bcloser-in option\b/gi, "another option")
+    .replace(/\bnear you\b/gi, "in the South Bay")
+    .replace(/\bnear where you (?:actually )?are\b/gi, "in the South Bay")
+    .replace(/\bdepending on where you (?:actually )?are\b/gi, "depending on what you want to do")
+    .replace(/\byour part of (?:town|the county|the South Bay)\b/gi, "the relevant city")
+    .replace(/\bworth the drive\b/gi, "worth considering")
+    .replace(/\bif you(?:'re| are) nearby\b/gi, "if it fits your plans")
+    .replace(/\bif you(?:'re| are) close by\b/gi, "if it fits your plans")
+    .replace(/(^|[.!?]\s+)if you(?:'re| are) around ([^,.!?]+)/gi, "$1In $2")
+    .replace(/\bif you(?:'re| are) around\b/gi, "if it fits your plans");
+}
+
+function hasReaderRelativeLocationLanguage(value) {
+  const text = String(value || "");
+  return READER_RELATIVE_LOCATION_PATTERNS.some((pattern) => pattern.test(text));
+}
+
 function compactText(value, max) {
   return String(value || "").replace(/\s+/g, " ").trim().slice(0, max);
 }
@@ -856,7 +895,7 @@ export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY missing — add to .env.local");
 
-  const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email.";
+  const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email. The email must be location-agnostic because readers are spread across the county; never assume where the reader is.";
 
   const guidance = kind === "pick"
     ? "This is the 'tonight's pick' blurb for a single event. 1-3 sentences. Email gets an image + a CTA button below the text, so don't say things like 'tap the link' or 'see below'."
@@ -864,7 +903,7 @@ export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
 
   const prompt = `${guidance}
 
-Strip @-handles, hashtags, and trailing URL-dependent CTAs. Use natural place names ("Ridge Vineyards" not "@RidgeVineyards"). Keep specifics — venue names, times, what people will do. Read like a friend telling them what's on.
+Strip @-handles, hashtags, and trailing URL-dependent CTAs. Use natural place names ("Ridge Vineyards" not "@RidgeVineyards"). Keep specifics — venue names, times, what people will do. Read like a friend telling them what's on. Do not use reader-relative geography such as "closer in", "closer to home", "near you", "if you're around", or "worth the drive"; use city/venue/time/audience context instead.
 
 Original social copy:
 """
@@ -1097,6 +1136,7 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
           <img src="${esc(image)}" alt="" width="72" height="72" style="width:72px;height:72px;display:block;border-radius:8px;object-fit:cover;">
         </td>`
       : "";
+    const contentColspan = image ? "" : ' colspan="2"';
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
@@ -1104,7 +1144,7 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
     const blurb = e.blurb
       ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(e.blurb)}</div>`
       : "";
-    return `<tr>${thumb}<td style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+    return `<tr>${thumb}<td${contentColspan} style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
       <div>${title}</div>
       ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${esc(meta)}</div>` : ""}
       ${blurb}

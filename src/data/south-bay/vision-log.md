@@ -1909,7 +1909,7 @@ The UI pattern — emoji option pills, then a "Build My Day →" button that pro
 2. **Save / share your plan** — "Copy day plan" or "Share link" using URL params to encode the preferences, so people can share plans with friends.
 3. **Events volume push** — the standing order to reach 100+ events becomes more urgent now that Plan My Day makes events data visible and actionable. More events = more interesting plans.
 4. **Government digest expansion** — the Legistar scraper to unlock San Jose, Mountain View, Sunnyvale would add a huge amount of Gov tab value. Still the most impactful infrastructure improvement.
-5. **Development tracker** — "what's being built near you" remains the most uniquely ownable section. No other South Bay product touches this.
+5. **Development tracker** — "what's being built across the South Bay" remains the most uniquely ownable section. No other South Bay product touches this.
 
 ### Next 3 Strongest Ideas
 1. **Events volume push to 100+** — the standing order. Plan My Day makes this urgent: more events = more personalized plans. Target: library programs, city parks calendars, Stanford public events, cultural centers.

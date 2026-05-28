@@ -43,7 +43,7 @@ const MANUAL_OVERRIDES = {
   "san-jose:233 W Santa Clara St": { blurb: "Historic cocktail lounge inside the Hotel De Anza, a downtown San Jose landmark since 1931" },
   "san-jose:22 N White Rd": { blurb: "Mexican tortilleria and taqueria on the east side" },
   "palo-alto:407 Lytton Av": { blurb: "Japanese bistro opening in downtown Palo Alto" },
-  "palo-alto:401 Webster St": { blurb: "Neighborhood American restaurant on Webster St undergoing a kitchen remodel" },
+  "palo-alto:401 Webster St": { blurb: "Neighborhood American kitchen undergoing a remodel on Webster St" },
   "palo-alto:388 Cambridge Av": { blurb: "SF-famous bakery known for its flaky croissants, fitting out 2,150 SF on Cambridge Ave in Palo Alto" },
   "palo-alto:552 Waverley St": { name: "Bon Broth SF", blurb: "San Francisco bone broth and Vietnamese soup restaurant fitting out a new space on Waverley St" },
   "san-jose:1725 Branham Ln": { name: "El Pollo Loco", blurb: "Mexican-style chicken chain on Branham Lane near Almaden Valley getting updated signage" },
