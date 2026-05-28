@@ -44,6 +44,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
 const PLACES_PATH = join(REPO_ROOT, "src", "data", "south-bay", "places.json");
 const CACHE_PATH = join(REPO_ROOT, "src", "data", "south-bay", "event-image-cache.json");
+const BLOCKED_EVENT_IMAGE_PATTERNS = [
+  /images\.unsplash\.com\/photo-1585899873671-ade0aa28a821/i,
+];
+
+function isBlockedEventImage(url) {
+  return BLOCKED_EVENT_IMAGE_PATTERNS.some((re) => re.test(String(url || "")));
+}
 
 // ---------------------------------------------------------------------------
 // Venue → photoRef lookup (Tier 1)
@@ -189,6 +196,7 @@ const OG_VALIDATE_TIMEOUT_MS = 5000;
 
 async function validateOgImage(imageUrl) {
   if (!imageUrl) return { ok: false, reason: "empty url" };
+  if (isBlockedEventImage(imageUrl)) return { ok: false, reason: "blocked image" };
   if (BAD_OG_URL.test(imageUrl)) return { ok: false, reason: "filename pattern" };
 
   try {
@@ -292,7 +300,10 @@ async function fetchUnsplashByCategory(category) {
     if (!results.length) return null;
     // Take a deterministic-ish first-of-top-5 to keep cache hits stable
     // across runs while still varying category-to-category.
-    const photo = results[0];
+    const photo = results.find((candidate) => {
+      const url = candidate?.urls?.small || candidate?.urls?.regular || "";
+      return url && !isBlockedEventImage(url);
+    });
     if (!photo) return null;
     // Required by Unsplash terms — fire-and-forget the download endpoint.
     if (photo.links?.download_location) {
@@ -413,6 +424,11 @@ export async function resolveEventImages(events, opts = {}) {
         stats.prevalidated_decoded++;
       }
     }
+    if (isBlockedEventImage(e.image)) {
+      if (!dryRun) e.image = null;
+      stats.prevalidated_dropped++;
+      continue;
+    }
     // Cheap sanity check — must be a valid http(s) URL. Anything weirder
     // (data:, javascript:, malformed) is dropped so we resolve fresh.
     try {
@@ -452,6 +468,17 @@ export async function resolveEventImages(events, opts = {}) {
     if (cache.byUrl[url]) {
       const hit = cache.byUrl[url];
       if (hit.image) {
+        if (isBlockedEventImage(hit.image)) {
+          cache.byUrl[url] = {
+            image: null,
+            rejected: hit.image,
+            rejectReason: "blocked image",
+            fetchedAt: new Date().toISOString(),
+          };
+          stats.tier2_rejected++;
+          needUnsplash.push(e);
+          return;
+        }
         if (!dryRun) e.image = hit.image;
         stats.tier2_cached++;
         return;
@@ -497,6 +524,16 @@ export async function resolveEventImages(events, opts = {}) {
   for (const e of needUnsplash) {
     const cat = String(e.category || "community").toLowerCase();
     let cached = cache.byCategory[cat];
+    if (cached?.image && isBlockedEventImage(cached.image)) {
+      cache.byCategory[cat] = {
+        ...cached,
+        image: null,
+        rejected: cached.image,
+        rejectReason: "blocked image",
+        invalidatedAt: new Date().toISOString(),
+      };
+      cached = null;
+    }
     if (!cached || !cached.image) {
       if (!process.env.UNSPLASH_ACCESS_KEY) {
         if (!warnedNoUnsplashKey) {
