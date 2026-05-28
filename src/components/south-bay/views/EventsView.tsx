@@ -413,6 +413,7 @@ function UpcomingEventCard({
           src={photo}
           alt=""
           loading="lazy"
+          decoding="async"
           onError={() => setPhotoFailed(true)}
         />
       ) : (
