@@ -11,7 +11,8 @@
  * Run: node --env-file=.env.local scripts/generate-weekend-picks.mjs
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
@@ -110,7 +111,7 @@ async function main() {
   console.log(`Found ${weekend.length} weekend events (Sat: ${satEvents.length}, Sun: ${sunEvents.length})`);
 
   if (satEvents.length === 0 && sunEvents.length === 0) {
-    writeFileSync(OUT_PATH, JSON.stringify({ weekendLabel: label, generatedAt: new Date().toISOString(), picks: [] }, null, 2) + "\n");
+    writeFileAtomic(OUT_PATH, JSON.stringify({ weekendLabel: label, generatedAt: new Date().toISOString(), picks: [] }, null, 2) + "\n");
     console.log("No weekend events — wrote empty picks.");
     return;
   }
@@ -288,7 +289,7 @@ Return ONLY a JSON array of 8 objects (4 S-codes ranked best-first, then 4 U-cod
     console.warn(`\n⚠️  Expected 2 Sat + 2 Sun, got ${satPicks} Sat + ${sunPicks} Sun — homepage card will stay hidden until this resolves.`);
   }
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${output.picks.length} picks written to weekend-picks.json (${satPicks} Sat + ${sunPicks} Sun)`);
   output.picks.forEach((p) => console.log(`  • ${p.title} — ${p.why}`));
 }

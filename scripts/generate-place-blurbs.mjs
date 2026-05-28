@@ -11,10 +11,11 @@
 // No LLM calls. Deterministic. Templates vary by category cluster + hash
 // the place id so 50 Italian restaurants don't all read the same.
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanDisplayCopy } from "../src/lib/south-bay/displayText.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -670,7 +671,7 @@ const out = {
   blurbs: cache,
 };
 
-writeFileSync(OUT, JSON.stringify(out, null, 2));
+writeFileAtomic(OUT, JSON.stringify(out, null, 2));
 console.log(`Wrote ${OUT}`);
 console.log(`  ${out._meta.blurbCount} blurbs (${researchHits} from Google editorialSummary, ${templateHits} from templates)`);
 console.log(`\nSample editorial (5):`);

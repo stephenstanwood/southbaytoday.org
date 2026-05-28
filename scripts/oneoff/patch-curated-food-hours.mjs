@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "places.json");
@@ -43,5 +44,5 @@ for (const p of places) {
   patched++;
   console.log(`  ✅ ${id}: hours patched`);
 }
-writeFileSync(PLACES_FILE, JSON.stringify(data, null, 2) + "\n");
+writeFileAtomic(PLACES_FILE, JSON.stringify(data, null, 2) + "\n");
 console.log(`\nPatched ${patched} entries, skipped ${skipped} (already correct).`);

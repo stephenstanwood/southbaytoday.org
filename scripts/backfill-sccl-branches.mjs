@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 import { polishDescription } from "./generate-events.mjs"; // forces module load (also a sanity check it exports)
 
@@ -92,7 +93,7 @@ function main() {
     }
   }
 
-  writeFileSync(FILE, JSON.stringify(data, null, 2));
+  writeFileAtomic(FILE, JSON.stringify(data, null, 2));
   console.log(`SCCL venue updates: ${scclVenueChanged}`);
   console.log(`Title strips:       ${titleStripped}`);
 }

@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..");
@@ -52,6 +53,6 @@ console.log(`\nBlurbed: ${blurbed} / ${events.length} (${((blurbed / events.leng
 
 if (!dryRun) {
   data.events = events;
-  writeFileSync(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
+  writeFileAtomic(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
   console.log(`\n✓ Wrote upcoming-events.json with blurb fields`);
 }

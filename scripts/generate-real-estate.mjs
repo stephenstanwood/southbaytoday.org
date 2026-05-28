@@ -9,7 +9,7 @@
  * Run: node scripts/generate-real-estate.mjs
  */
 
-import { writeFileSync, createWriteStream } from "fs";
+import { createWriteStream } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createGunzip } from "zlib";
@@ -17,6 +17,7 @@ import { createInterface } from "readline";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import { tmpdir } from "os";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "real-estate.json");
@@ -151,7 +152,7 @@ async function main() {
     attribution: "Data sourced from Redfin (redfin.com). All Residential, monthly.",
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${cities.length} cities written to real-estate.json`);
   cities.forEach((c) => {
     const price = c.medianSalePrice ? `$${(c.medianSalePrice / 1000).toFixed(0)}K` : "N/A";

@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -61,7 +62,7 @@ for (const p of missing) {
 }
 
 if (!dryRun) {
-  writeFileSync(PLACES_FILE, JSON.stringify(data, null, 2));
+  writeFileAtomic(PLACES_FILE, JSON.stringify(data, null, 2));
   console.log(`\nwrote ${PLACES_FILE}: ${filled} filled, ${stillMissing} still missing`);
 } else {
   console.log(`\n[dry run] would fill ${filled}, ${stillMissing} genuinely have no photos`);

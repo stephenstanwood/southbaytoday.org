@@ -12,6 +12,7 @@
  * emails. It won't unsubscribe, and it skips welcome/ack emails.
  */
 import fs from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const env = fs.readFileSync("/Users/stephenstanwood/Projects/southbaytoday.org/.env.local", "utf8");
 env.split("\n").forEach(l => {
@@ -104,7 +105,7 @@ for (const e of emails) {
   }
 }
 
-fs.writeFileSync(CACHE_FILE, JSON.stringify([...seen]));
+writeFileAtomic(CACHE_FILE, JSON.stringify([...seen]));
 
 console.log(`\n─────────────────────────────────────────`);
 console.log(`processed: ${processed}  |  skipped: ${skipped}  |  failed: ${failed}`);

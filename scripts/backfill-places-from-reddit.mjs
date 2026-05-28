@@ -17,6 +17,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { ARTIFACTS } from "./lib/paths.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { autotagPlace } from "./lib/infer-place-tags.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -324,7 +325,7 @@ async function main() {
     placesData._meta.lastBackfillSource = "reddit-gaps";
   }
 
-  writeFileSync(ARTIFACTS.places, JSON.stringify(placesData, null, 2) + "\n");
+  writeFileAtomic(ARTIFACTS.places, JSON.stringify(placesData, null, 2) + "\n");
 
   console.log(`\n✅ Added ${added.length} new places to places.json`);
   added.forEach((p) => console.log(`   • ${p.name} — ${p.city} — ${p.category} (${p.rating}★)`));

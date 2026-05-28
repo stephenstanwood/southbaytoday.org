@@ -6,9 +6,10 @@
  * Run: node scripts/lookout/generate-manual-list.mjs
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -108,5 +109,5 @@ lines.push("3. Tracker at `/admin/newsletters?key=<ADMIN_KEY>` updates to `recei
 lines.push("");
 lines.push("**Admin key:** `sbt_cdc1df30b8f7c200f5074404d322dab1`");
 
-writeFileSync(join(__dirname, "..", "..", "MANUAL_SIGNUP_LIST.md"), lines.join("\n"));
+writeFileAtomic(join(__dirname, "..", "..", "MANUAL_SIGNUP_LIST.md"), lines.join("\n"));
 console.log("wrote MANUAL_SIGNUP_LIST.md");

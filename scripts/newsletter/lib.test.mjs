@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { renderEmail } from "./lib.mjs";
+import { renderEmail, formatLongDate, todayPT } from "./lib.mjs";
 
 const BLOCKED_UNSPLASH = "https://images.unsplash.com/photo-1585899873671-ade0aa28a821?crop=entropy&w=400";
 
@@ -47,4 +47,28 @@ test("newsletter renders also-calendar events chronologically and hides stale/bl
   assert.ok(html.indexOf("Early Event") < html.indexOf("Late Event"));
   assert.equal(html.includes("Old Cafe"), false);
   assert.equal(html.includes("Newly open"), false);
+});
+
+// ── Date helpers (PT-safe formatting — the timezone-drift bug class) ──────────
+
+test("todayPT returns a YYYY-MM-DD string in Pacific Time", () => {
+  const t = todayPT();
+  assert.match(t, /^\d{4}-\d{2}-\d{2}$/);
+  const expected = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(new Date());
+  assert.equal(t, expected);
+});
+
+test("formatLongDate renders a full weekday/month/day/year string", () => {
+  assert.match(formatLongDate("2026-05-06"), /^[A-Z][a-z]+, [A-Z][a-z]+ \d{1,2}, \d{4}$/);
+  assert.ok(formatLongDate("2026-05-06").includes("May 6, 2026"));
+});
+
+test("formatLongDate does NOT drift across the year boundary (PT, not UTC)", () => {
+  // A naive new Date('2026-01-01') formatted in PT renders as Dec 31, 2025.
+  // The helper pins noon-UTC + PT to avoid exactly that — lock it in.
+  assert.ok(formatLongDate("2026-01-01").includes("January 1, 2026"));
+  assert.ok(!formatLongDate("2026-01-01").includes("2025"));
 });

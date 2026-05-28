@@ -58,7 +58,9 @@ function loadPlans(): Record<string, SharedPlan> {
 }
 
 function generateId(): string {
-  const bytes = new Uint8Array(4);
+  // 8 bytes (16 hex chars) — 4 bytes left only ~4B IDs, brute-forceable as the
+  // plan store grows. 8 bytes makes guessing a valid plan URL infeasible.
+  const bytes = new Uint8Array(8);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }

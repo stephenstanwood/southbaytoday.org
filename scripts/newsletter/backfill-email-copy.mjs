@@ -6,9 +6,10 @@
 // Usage: node scripts/newsletter/backfill-email-copy.mjs
 // ---------------------------------------------------------------------------
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { DATA_DIR } from "../lib/paths.mjs";
+import { writeFileAtomic } from "../lib/io.mjs";
 import { rewriteForEmail } from "./lib.mjs";
 
 const path = join(DATA_DIR, "social-schedule.json");
@@ -38,7 +39,7 @@ for (const date of Object.keys(schedule.days).sort()) {
   }
 }
 
-writeFileSync(path, JSON.stringify(schedule, null, 2) + "\n");
+writeFileAtomic(path, JSON.stringify(schedule, null, 2) + "\n");
 console.log(`\nupdated: ${updated}, skipped: ${skipped}, errors: ${errors.length}`);
 if (errors.length) {
   console.log("errors:");

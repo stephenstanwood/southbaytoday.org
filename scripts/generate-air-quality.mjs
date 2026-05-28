@@ -9,9 +9,9 @@
  * Run: node scripts/generate-air-quality.mjs
  */
 
-import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "air-quality.json");
@@ -136,7 +136,7 @@ async function main() {
     cities: results,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2));
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2));
   console.log(`\n✅ Done — ${results.length} cities → ${OUT_PATH}`);
   console.log(`   South Bay avg AQI: ${avgAqi} (${avgLabel})`);
 }

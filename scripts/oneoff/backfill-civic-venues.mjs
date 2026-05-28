@@ -4,6 +4,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PATH = join(__dirname, "../../src/data/south-bay/upcoming-events.json");
@@ -48,5 +49,5 @@ for (const ev of data.events) {
   }
 }
 
-writeFileSync(PATH, JSON.stringify(data, null, 2) + "\n");
+writeFileAtomic(PATH, JSON.stringify(data, null, 2) + "\n");
 console.log(`\nPatched ${patched} events.`);

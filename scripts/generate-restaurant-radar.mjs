@@ -10,7 +10,7 @@
  * Run: node scripts/generate-restaurant-radar.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -521,7 +521,7 @@ async function main() {
     items: allItems_final,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${allItems.length} restaurant permit signals (SJ: ${topSjItems.length}, PA: ${paItems.length}) → restaurant-radar.json`);
   allItems.forEach((it) =>
     console.log(`  [${it.city}][${it.label}] ${it.address}${it.name ? ` — ${it.name}` : ""}${it.valuation ? ` ($${it.valuation.toLocaleString()})` : ""}`)

@@ -2,7 +2,8 @@
 // loadJsonCache returns a default value on missing/malformed files so
 // scripts can depend on it without re-implementing try/catch boilerplate.
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./io.mjs";
 
 export function loadJsonCache(path, defaultValue = {}) {
   if (!existsSync(path)) return defaultValue;
@@ -14,5 +15,5 @@ export function loadJsonCache(path, defaultValue = {}) {
 }
 
 export function saveJson(path, data) {
-  writeFileSync(path, JSON.stringify(data, null, 2));
+  writeFileAtomic(path, JSON.stringify(data, null, 2));
 }

@@ -5,7 +5,7 @@
 // send/subscribe flow can find it.
 // ---------------------------------------------------------------------------
 
-import { writeFileSync } from "node:fs";
+import { writeFileAtomic } from "../lib/io.mjs";
 import { resendFetch, CONFIG_PATH, loadConfig } from "./lib.mjs";
 
 const AUDIENCE_NAME = "South Bay Today — Daily";
@@ -25,7 +25,7 @@ async function main() {
     });
     audienceId = created.id;
     console.log(`created audience: ${audienceId}`);
-    writeFileSync(CONFIG_PATH, JSON.stringify({
+    writeFileAtomic(CONFIG_PATH, JSON.stringify({
       audienceId,
       audienceName: AUDIENCE_NAME,
       createdAt: new Date().toISOString(),

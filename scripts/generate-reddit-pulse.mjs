@@ -17,11 +17,12 @@
  * Run: node --env-file=.env.local scripts/generate-reddit-pulse.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { DATA_DIR, ARTIFACTS, generatorMeta } from "./lib/paths.mjs";
 import { generateAndUpload } from "./social/lib/recraft.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -642,7 +643,7 @@ Return ONLY a JSON array of objects, no other text.`;
   }
 
   // Persist image cache (even on partial failure — we want successful URLs saved).
-  writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(imageCache, null, 2) + "\n");
+  writeFileAtomic(IMAGE_CACHE_PATH, JSON.stringify(imageCache, null, 2) + "\n");
 
   // Prune cache entries that haven't been seen in pulse for >30 days.
   // (Simple pruning: keep only ones referenced this run + recent ones.)
@@ -653,7 +654,7 @@ Return ONLY a JSON array of objects, no other text.`;
     const ageDays = (now - new Date(entry.generatedAt).getTime()) / 86400000;
     if (pulseIds.has(id) || ageDays < 30) prunedCache[id] = entry;
   }
-  writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(prunedCache, null, 2) + "\n");
+  writeFileAtomic(IMAGE_CACHE_PATH, JSON.stringify(prunedCache, null, 2) + "\n");
 
   // ─── PHASE 3c: Light-touch title polish ─────────────────────────────
   // Runs AFTER image filtering so we polish only what we're actually shipping
@@ -734,7 +735,7 @@ No other text.`;
       externalUrl: p.externalUrl,
     })),
   };
-  writeFileSync(PULSE_OUT, JSON.stringify(pulseOutput, null, 2) + "\n");
+  writeFileAtomic(PULSE_OUT, JSON.stringify(pulseOutput, null, 2) + "\n");
   console.log(`✅ ${pulse.length} pulse items → reddit-pulse.json`);
 
   // ─── PHASE 4: Comment mining for entity extraction ──────────────────
@@ -1021,7 +1022,7 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
 
       if (appendedCount > 0) {
         fo.generatedAt = new Date().toISOString();
-        writeFileSync(ARTIFACTS.foodOpenings, JSON.stringify(fo, null, 2) + "\n");
+        writeFileAtomic(ARTIFACTS.foodOpenings, JSON.stringify(fo, null, 2) + "\n");
         console.log(`✅ Auto-appended ${appendedCount} restaurant openings → scc-food-openings.json`);
       }
     } catch (err) {
@@ -1049,7 +1050,7 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
     placeMatches,
     eventMatches,
   };
-  writeFileSync(GAPS_OUT, JSON.stringify(gapsOutput, null, 2) + "\n");
+  writeFileAtomic(GAPS_OUT, JSON.stringify(gapsOutput, null, 2) + "\n");
   console.log(`\n✅ Gaps: ${placeGaps.length} places + ${eventGaps.length} events → reddit-gaps.json`);
   placeGaps.slice(0, 15).forEach((g) => console.log(`   ⚠️  [place/${g.kind || "?"}] ${g.name}${g.city ? ` (${g.city})` : ""} — ${g.context || ""}`));
   if (eventGaps.length > 0) console.log("");
