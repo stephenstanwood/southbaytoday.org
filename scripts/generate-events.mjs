@@ -685,6 +685,14 @@ const TITLE_FIXES = {
   "Fopal": "FOPAL",     // Friends of Palo Alto Library — biblio API title-cases it
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
   "Xfyd ": "XFYD ",     // XFYD chess club — all-caps brand name on flyers
+  // Performer/brand acronyms styled ALL-CAPS in the act's own marketing — the
+  // 2+ regex downcases them once the rest of the title tips into mixed case,
+  // and they're too generic (ONE, RJ, DSP, EXE) to safely add to KEEP_UPPER.
+  // Targeting the specific brand string keeps the fix narrow.
+  "Ampers&One": "Ampers&ONE",          // K-pop boy group Ampers&ONE
+  "Rockstar Dsp": "Rockstar DSP",      // composer Devi Sri Prasad, billed as DSP
+  "Densetsu.Exe": "Densetsu.EXE",      // anime idol group Densetsu.EXE
+  "Lori & Rj": "Lori & RJ",            // Magical Bridge performers Lori & RJ
   // "US" the pronoun vs. "US" the country abbreviation: KEEP_UPPER preserves
   // "US" so country uses ("In US") stay capitalized, but a few source titles
   // capitalize the pronoun ("Makes US"). Override the specific pronoun cases.
