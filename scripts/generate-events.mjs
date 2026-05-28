@@ -4382,6 +4382,17 @@ const MEETUP_JUNK = [
   /\bget\s+rich\b/i,
   /\bpaid\s+course\b/i,
   /\bfree\s+trial\b/i,     // usually sales funnels
+  /\bbusiness\s+referral\b/i,
+  /\breferral\s+group\b/i,
+  /\bnetworking\b/i,
+  /\byoung\s+professionals?\s+mixer\b/i,
+  /\bventure\s+capital\b/i,
+  /\bcowork(?:ing)?\b/i,
+  /\bco-?work\b/i,
+  /\bmembers?\s+meeting\b/i,
+  /\bbooth\s+build\s+meeting\b/i,
+  /\bspeaker\s+and\s+title\s+tba\b/i,
+  /\bsan\s+francisco\b/i,
 ];
 
 // Map Meetup city name → slug used in this codebase
@@ -4422,11 +4433,25 @@ const MEETUP_ACCEPTED_CITIES = new Set([
   "palo-alto", "menlo-park",
 ]);
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function normalizeMeetupAddress(address, city) {
+  let cleaned = address?.trim();
+  if (!cleaned || /^https?:\/\//i.test(cleaned)) return null;
+  cleaned = cleaned.replace(/,\s*$/, "");
+  if (city && !new RegExp(`\\b${escapeRegExp(city)}\\b`, "i").test(cleaned)) {
+    cleaned = `${cleaned}, ${city}`;
+  }
+  return cleaned;
+}
+
 async function fetchMeetupEvents() {
-  const CLIENT_ID = process.env.MEETUP_CLIENT_ID;
-  const MEMBER_ID = process.env.MEETUP_MEMBER_ID;
-  const KID = process.env.MEETUP_KID;
-  const PRIVATE_KEY = process.env.MEETUP_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  const CLIENT_ID = process.env.MEETUP_CLIENT_ID?.trim();
+  const MEMBER_ID = process.env.MEETUP_MEMBER_ID?.replace(/\\n/g, "").trim();
+  const KID = process.env.MEETUP_KID?.trim();
+  const PRIVATE_KEY = process.env.MEETUP_PRIVATE_KEY?.trim().replace(/\\n/g, "\n");
 
   if (!CLIENT_ID || !MEMBER_ID || !KID || !PRIVATE_KEY) {
     console.log("  ⚠️  Meetup: credentials not set, skipping");
@@ -4530,6 +4555,12 @@ async function fetchMeetupEvents() {
   // Blocked Meetup group urlnames — add when a group consistently produces off-brand content
   const BLOCKED_MEETUP_GROUPS = new Set([
     "bay-area-childfree-connections", // childfree social group — not a fit for SBS audience
+    "bay-area-how-to-build-a-business-training-networking-group",
+    "bay-area-jewish-singles-havurah",
+    "bay-area-social-networking-group",
+    "los-gatos-business-referral-networking-meetup-group",
+    "silicon-valley-startup-idea-to-ipo",
+    "svtech_ai_venture_capital",
   ]);
 
   const events = [];
@@ -4548,7 +4579,12 @@ async function fetchMeetupEvents() {
 
     const title = node.title?.trim();
     if (!title) continue;
-    if (MEETUP_JUNK.some((p) => p.test(title))) continue;
+    const qualityText = [
+      title,
+      node.group?.name,
+      node.group?.urlname,
+    ].filter(Boolean).join(" ");
+    if (MEETUP_JUNK.some((p) => p.test(qualityText))) continue;
 
     const city = node.venue?.city;
     const citySlug = meetupCitySlug(city);
@@ -4558,7 +4594,9 @@ async function fetchMeetupEvents() {
     if (!start) continue;
 
     const venue = node.venue?.name?.trim() || node.group?.name || "TBD";
-    const address = node.venue?.address?.trim() || null;
+    const address = normalizeMeetupAddress(node.venue?.address, city);
+    const locationText = [venue, address].filter(Boolean).join(" ");
+    if (/\b(?:somewhere|secret(?:\s+\w+){0,3}\s+location|released\s+on\s+day|private\s+home|home\s+near)\b/i.test(locationText)) continue;
 
     events.push({
       id: h("meetup", node.id),
