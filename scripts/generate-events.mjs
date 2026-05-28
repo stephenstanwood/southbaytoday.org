@@ -1902,15 +1902,24 @@ function parseIcalEvents(ical) {
   for (let i = 1; i < eventBlocks.length; i++) {
     const block = eventBlocks[i].split("END:VEVENT")[0];
     const get = (prop) => {
-      // Handle folded lines and various property formats
-      const regex = new RegExp(`^${prop}[;:](.*)`, "mi");
+      // Capture the delimiter so we know whether the line uses parameter syntax
+      // (`PROP;PARAM=value:value`) or plain (`PROP:value`). Without this split,
+      // a DESCRIPTION body containing HTML with `class=` / `src=` before any
+      // `https://` would trip the parameter-handler and the parser would chop
+      // the description at the colon inside the URL — leaving leftover image-tag
+      // attribute fragments (`width='200' height='200' />…`) in the body.
+      const regex = new RegExp(`^${prop}([;:])(.*)`, "mi");
       const m = block.match(regex);
       if (!m) return "";
-      let val = m[1];
-      // Handle value after parameters (e.g., DTSTART;TZID=America/Los_Angeles:20260401T180000)
-      const colonIdx = val.indexOf(":");
-      if (colonIdx > 0 && val.substring(0, colonIdx).includes("=")) {
-        val = val.substring(colonIdx + 1);
+      const delim = m[1];
+      let val = m[2];
+      // Only re-parse for the colon that ends the parameter list when params
+      // are actually present (delimiter was `;`).
+      if (delim === ";") {
+        const colonIdx = val.indexOf(":");
+        if (colonIdx > 0) {
+          val = val.substring(colonIdx + 1);
+        }
       }
       return val.trim();
     };
