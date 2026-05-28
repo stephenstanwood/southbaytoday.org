@@ -21,7 +21,7 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 export function isAdmin(request: Request): boolean {
-  const expected = process.env.ADMIN_KEY ?? import.meta.env.ADMIN_KEY ?? "";
+  const expected = process.env.ADMIN_KEY ?? import.meta.env?.ADMIN_KEY ?? "";
   if (!expected) return false;
 
   const auth = request.headers.get("authorization") ?? "";
