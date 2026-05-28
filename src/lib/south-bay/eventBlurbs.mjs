@@ -104,6 +104,7 @@ Each blurb describes what someone would actually DO at the event — catch the t
 Strict rules:
 - Exactly one sentence, 10–20 words.
 - Describe what happens THERE (specific action, not generic "swing by").
+- Lead with a concrete action verb (See, Hear, Tour, Walk, Make, Watch, Taste, Learn). Avoid the vague openers "explore" and "discover" — name what visitors actually do.
 - If a description is given, rewrite its substance in planner voice — don't copy marketing prose.
 - NEVER say: "real event", "only today", "one-time", "unforgettable", "anchor event", "right now".
 - NEVER use AI-marketing tone words: "legendary", "iconic", "magical", "whimsical", "cozy", "laid-back", "charming", "delightful", "must-see", "world-class", "hidden gem", "nestled", "tucked away", "quaint", "powerhouse", "vibrant", "bustling", "immersive", "tapestry", "delve". State what the act/event is concretely instead (e.g. "Grammy-winning vocalist", "six-piece Hawaiian reggae band").
