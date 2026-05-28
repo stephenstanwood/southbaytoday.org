@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-05-26T23:17:24.867Z"
+    "auditedAt": "2026-05-28T03:10:49.846Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1529,
+    "total": 1695,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,14 +16,14 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 320,
+    "total": 322,
     "totals": {
-      "hard": 5,
+      "hard": 4,
       "soft": 0,
       "info": 0
     },
     "byReason": {
-      "out-of-area": 5
+      "out-of-area": 4
     },
     "hard": [
       {
@@ -79,20 +79,6 @@
             "severity": "hard",
             "reason": "out-of-area",
             "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_f816af6122ab01b5_07",
-        "title": "Tai Chi",
-        "city": null,
-        "date": "2026-05-26T19:00:00-07:00",
-        "location": "Morgan Hill Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"morgan hill\" with no in-area city token"
           }
         ]
       }
