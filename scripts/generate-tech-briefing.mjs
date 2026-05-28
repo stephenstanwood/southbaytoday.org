@@ -11,7 +11,8 @@
  * Run: node scripts/generate-tech-briefing.mjs
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
@@ -200,7 +201,7 @@ Reply with ONLY the briefing text — no headline, no quotes, no preamble.`;
     summary,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`✅ tech-briefing.json written`);
 }
 

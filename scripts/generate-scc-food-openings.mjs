@@ -11,7 +11,8 @@
  * Run: node scripts/generate-scc-food-openings.mjs
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
@@ -395,7 +396,7 @@ function loadPhotoCache() {
 
 function savePhotoCache(cache) {
   cache.generatedAt = new Date().toISOString();
-  writeFileSync(PHOTO_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+  writeFileAtomic(PHOTO_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
 }
 
 async function searchPlacesPhotoRef(name, address, cityId, apiKey) {
@@ -463,7 +464,7 @@ function loadImageCache() {
 }
 
 function saveImageCache(cache) {
-  writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+  writeFileAtomic(IMAGE_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
 }
 
 async function generateRecraftPrompts(items) {
@@ -722,7 +723,7 @@ async function main() {
     comingSoon: comingSoonWithBlurbs,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2));
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2));
 
   console.log(`✅ ${openedDeduped.length} recently opened, ${comingSoonFinal.length} coming soon → scc-food-openings.json`);
   console.log("\nRecently opened:");

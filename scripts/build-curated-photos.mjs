@@ -11,6 +11,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { BLOCKED_IDS } from "./blocked-photos.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -40,5 +41,5 @@ const curated = allPhotos
 // Shuffle deterministically-ish (stable across runs unless pool changes)
 curated.sort((a, b) => a.id.localeCompare(b.id));
 
-writeFileSync(outPath, JSON.stringify({ photos: curated }, null, 2));
+writeFileAtomic(outPath, JSON.stringify({ photos: curated }, null, 2));
 console.log(`✅ ${curated.length} curated photos → ${outPath}`);

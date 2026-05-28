@@ -12,9 +12,9 @@
  * Run: node scripts/generate-upcoming-meetings.mjs
  */
 
-import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-meetings.json");
@@ -609,7 +609,7 @@ async function main() {
     meetings,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   const count = Object.keys(meetings).length;
   console.log(`\n✅ Done — ${count} cities with upcoming meetings → ${OUT_PATH}`);
 }

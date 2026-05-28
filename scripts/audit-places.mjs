@@ -13,6 +13,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { writeFileAtomic } from "./lib/io.mjs";
 import {
   SLUG_TO_CITY_TOKENS,
   NON_CA_STATES,
@@ -163,7 +164,7 @@ function main() {
     info: infoEntries,
   };
 
-  writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2) + "\n");
+  writeFileAtomic(REPORT_PATH, JSON.stringify(report, null, 2) + "\n");
 
   console.log(`Audited ${data.places.length} places.`);
   console.log(`  hard: ${totals.hard}  soft: ${totals.soft}  info: ${totals.info}`);

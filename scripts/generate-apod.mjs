@@ -11,7 +11,7 @@
  * Run: node scripts/generate-apod.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -68,7 +68,7 @@ async function main() {
     sourceUrl: "https://apod.nasa.gov/apod/astropix.html",
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`✅ ${items.length} APOD images written to apod.json`);
   items.forEach((i) => console.log(`  • ${i.date}: ${i.title}`));
 }

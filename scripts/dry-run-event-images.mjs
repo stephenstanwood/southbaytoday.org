@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { resolveEventImages } from "../src/lib/south-bay/eventImages.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -31,6 +32,6 @@ console.log(`\nResolved: ${resolved} / ${events.length} (${((resolved / events.l
 
 if (!dryRun) {
   data.events = events;
-  writeFileSync(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
+  writeFileAtomic(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
   console.log(`\n✓ Wrote upcoming-events.json with image fields`);
 }

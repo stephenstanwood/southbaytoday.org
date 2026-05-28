@@ -8,7 +8,8 @@
  * Run: node --env-file=.env.local scripts/generate-spring-break-picks.mjs
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
@@ -153,7 +154,7 @@ Return ONLY a JSON array of 12 objects, no other text:
     }).filter(Boolean),
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${output.picks.length} spring break picks written to spring-break-picks.json (target: 12)`);
   output.picks.forEach((p) => console.log(`  • [${p.date}] ${p.title} — ${p.why}`));
 }

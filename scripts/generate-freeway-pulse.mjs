@@ -14,7 +14,7 @@
  * Run: node scripts/generate-freeway-pulse.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -194,7 +194,7 @@ async function main() {
     raw = await fetchJson(SOURCE_URL);
   } catch (err) {
     console.error("Caltrans CMS fetch failed:", err.message);
-    writeFileSync(
+    writeFileAtomic(
       OUT_PATH,
       JSON.stringify(
         { signs: [], generatedAt: new Date().toISOString(), error: err.message, source: "Caltrans D4", sourceUrl: SOURCE_URL },
@@ -295,7 +295,7 @@ async function main() {
     },
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${signs.length} freeway snapshot(s) written; ${alertCount} alert(s)`);
   for (const s of signs) {
     if (s.alert) {

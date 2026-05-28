@@ -15,7 +15,8 @@
  *                No Socrata or ArcGIS public permit dataset found.
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { readFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -280,7 +281,7 @@ async function main() {
   } catch {}
   const output = { cities: { ...existing.cities, "san-jose": cityEntry } };
 
-  writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
+  writeFileAtomic(OUTPUT_PATH, JSON.stringify(output, null, 2));
   console.log(
     `  ✅ Done — ${recent.length} permits this week, ${notable.length} notable, ${newUnits} new units → permit-pulse.json`
   );
@@ -506,7 +507,7 @@ async function mainAll() {
     let existing = { cities: {} };
     try { existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8")); } catch {}
     const output = { cities: { ...existing.cities, "palo-alto": paEntry } };
-    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
+    writeFileAtomic(OUTPUT_PATH, JSON.stringify(output, null, 2));
     console.log("  ✅ Palo Alto written to permit-pulse.json");
   }
 }

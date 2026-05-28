@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -38,7 +39,7 @@ for (const file of TARGETS) {
   // syntactically meaningful in JSON.
   const cleaned = raw.replace(SYMBOL_RE, "").replace(/[ \t]{2,}(?![\w])/g, " ");
   if (cleaned === raw) continue;
-  writeFileSync(path, cleaned);
+  writeFileAtomic(path, cleaned);
   // Count visible symbols stripped.
   const before = (raw.match(SYMBOL_RE) || []).length;
   console.log(`  ${file}: stripped ${before} symbol(s)`);

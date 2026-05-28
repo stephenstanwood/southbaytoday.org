@@ -16,6 +16,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { writeFileAtomic } from "./lib/io.mjs";
 import {
   SLUG_TO_CITY_TOKENS,
   OUT_OF_AREA_CITIES,
@@ -245,7 +246,7 @@ function main() {
     upcoming,
     inbound,
   };
-  writeFileSync(REPORT, JSON.stringify(report, null, 2) + "\n");
+  writeFileAtomic(REPORT, JSON.stringify(report, null, 2) + "\n");
 
   for (const src of [upcoming, inbound]) {
     console.log(`\n=== ${src.label} ===`);

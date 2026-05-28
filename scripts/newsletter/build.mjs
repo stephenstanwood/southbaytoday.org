@@ -7,7 +7,7 @@
 //   node scripts/newsletter/build.mjs --out /tmp/newsletter.html
 // ---------------------------------------------------------------------------
 
-import { writeFileSync } from "node:fs";
+import { writeFileAtomic } from "../lib/io.mjs";
 import { assembleNewsletterData, renderEmail, todayPT } from "./lib.mjs";
 
 const args = process.argv.slice(2);
@@ -25,7 +25,7 @@ const data = await assembleNewsletterData(date, { editorial });
 const { subject, html } = renderEmail(data);
 
 if (out) {
-  writeFileSync(out, html, "utf8");
+  writeFileAtomic(out, html);
   console.error(`wrote ${out}`);
   console.error(`subject: ${subject}`);
 } else {

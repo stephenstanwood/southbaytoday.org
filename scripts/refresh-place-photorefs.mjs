@@ -10,10 +10,11 @@
 // bursts hit rate limits and produce silent skips.
 
 import { execSync } from "node:child_process";
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -106,7 +107,7 @@ console.log(`\nfinal: refreshed=${refreshed}, gone=${gone}, errored=${errored}`)
 
 data._meta = data._meta || {};
 data._meta.lastPhotoRefRefresh = new Date().toISOString();
-writeFileSync(PLACES, JSON.stringify(data, null, 2));
+writeFileAtomic(PLACES, JSON.stringify(data, null, 2));
 console.log("places.json written");
 
 // Propagate fresh refs to every JSON file in src/data/south-bay/ that
@@ -148,7 +149,7 @@ for (const file of dataFiles) {
   const stats = { count: 0 };
   walkAndSwap(json, stats);
   if (stats.count > 0) {
-    writeFileSync(file, JSON.stringify(json, null, 2));
+    writeFileAtomic(file, JSON.stringify(json, null, 2));
     propagated.push({ file, count: stats.count });
     console.log(`${file.split("/").pop()}: ${stats.count} updated`);
   }

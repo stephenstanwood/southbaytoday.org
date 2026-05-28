@@ -12,7 +12,8 @@
  *   node --env-file=.env.local scripts/generate-around-town.mjs
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
@@ -433,7 +434,7 @@ function gatherDevItems() {
   }
 
   // Save updated cache
-  writeFileSync(DEV_CACHE_PATH, JSON.stringify(newCache, null, 2) + "\n");
+  writeFileAtomic(DEV_CACHE_PATH, JSON.stringify(newCache, null, 2) + "\n");
 
   if (isFirstRun) {
     console.log(`  📦 First run — seeded cache with ${Object.keys(newCache).length} projects (no items generated)`);
@@ -493,7 +494,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ Done — ${topItems.length} items written to ${OUT_PATH}`);
   for (const item of topItems) {
     console.log(`  [${item.source}] ${item.cityName} (${item.date}): ${item.headline}`);
