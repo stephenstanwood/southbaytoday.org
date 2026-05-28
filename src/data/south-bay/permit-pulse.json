@@ -1,19 +1,43 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-27T23:09:51.972Z",
+      "generatedAt": "2026-05-28T11:10:33.095Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 20 – May 27",
+      "dateRange": "May 21 – May 28",
       "stats": {
-        "total": 268,
-        "notable": 13,
-        "newUnits": 0,
-        "totalValuation": 43614069
+        "total": 284,
+        "notable": 12,
+        "newUnits": 1,
+        "totalValuation": 181052318
       },
       "permits": [
+        {
+          "id": "2025-138790-RS",
+          "address": "258 Duffy Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to Jadu",
+          "valuation": 62056,
+          "units": 1,
+          "issueDate": "2026-05-26",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-118560-CI",
+          "address": "131 Great Oaks Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "New Construction",
+          "description": "Equinix Sv19 Data Center Bldg",
+          "valuation": 137965000,
+          "units": 0,
+          "issueDate": "2026-05-26",
+          "subtype": "Data Center"
+        },
         {
           "id": "2026-119455-CI",
           "address": "5853 Rue Ferrari",
@@ -25,30 +49,6 @@
           "units": 0,
           "issueDate": "2026-05-22",
           "subtype": "R & D Lab"
-        },
-        {
-          "id": "2026-119196-CI",
-          "address": "397 W Trimble Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Office",
-          "valuation": 1262940,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-118860-CI",
-          "address": "1815 Hillsdale Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Bmo Tenant Improvement",
-          "valuation": 990000,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Bank"
         },
         {
           "id": "2026-118525-CI",
@@ -63,52 +63,28 @@
           "subtype": "Medical/Dental Clinic"
         },
         {
-          "id": "2026-119199-CI",
-          "address": "399 W Trimble Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Office",
-          "valuation": 781200,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-117260-CI",
-          "address": "593 N 5th St",
+          "id": "2026-118779-CI",
+          "address": "1162 Blossom Hill Rd",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Additions/Alterations",
-          "description": "Dental Office TI",
-          "valuation": 758536,
+          "description": "Chick-Fil-a Demo/Add",
+          "valuation": 809557,
           "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Medical/Dental Clinic"
+          "issueDate": "2026-05-26",
+          "subtype": "Restaurant"
         },
         {
-          "id": "2026-119239-CI",
-          "address": "590 Brennan St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "(B 100%) Reroof",
-          "valuation": 740280,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Manufacturing"
-        },
-        {
-          "id": "2026-119237-CI",
-          "address": "2394 Evergreen Pl",
+          "id": "2026-118316-CI",
+          "address": "30 Rio Robles",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "New Restaurant Tous Les Jours",
-          "valuation": 476000,
+          "description": "F5 (Bem100%) Fitness Room TI",
+          "valuation": 468395,
           "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Restaurant"
+          "issueDate": "2026-05-26",
+          "subtype": "Office"
         },
         {
           "id": "2026-119427-CI",
@@ -123,55 +99,67 @@
           "subtype": "Office"
         },
         {
-          "id": "2026-119191-CI",
-          "address": "375 W Trimble Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Office",
-          "valuation": 312480,
+          "id": "2025-135664-RS",
+          "address": "2143 Bello Av",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Main Residence Demo/ Rebuild",
+          "valuation": 684522,
+          "units": 1,
+          "issueDate": "2026-05-26",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-103038-RS",
+          "address": "3928 Caxton Ct",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Code Case Aro Homes Demo/Rebuild Case #201307550",
+          "valuation": 504149,
+          "units": 1,
+          "issueDate": "2026-05-26",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-119004-CI",
+          "address": "2360 Zanker Rd",
+          "category": "commercial",
+          "categoryLabel": "Commercial",
+          "workType": "Tenant Improvement",
+          "description": "(B 100%) Rack Installation",
+          "valuation": 167965,
           "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Office"
+          "issueDate": "2026-05-22",
+          "subtype": "Warehouse/Storage"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-27T23:09:54.393Z",
+      "generatedAt": "2026-05-28T11:10:35.365Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 20 – May 27",
+      "dateRange": "May 21 – May 28",
       "stats": {
-        "total": 87,
+        "total": 107,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01341",
-          "address": "1215 Harriet St",
+          "id": "26BLD-01334",
+          "address": "627 Tennyson Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "workType": "Building Permit",
+          "description": "Res: Like-for-like interior remodel of the existing powder room and master bathroom.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-22",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01317",
-          "address": "3705 Starr King Cir",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-20",
+          "issueDate": "2026-05-21",
           "subtype": "Permit Issued"
         },
         {
@@ -184,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-21",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01341",
+          "address": "1215 Harriet St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-22",
           "subtype": "Permit Issued"
         },
         {

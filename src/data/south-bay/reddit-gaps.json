@@ -1,172 +1,232 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-27T23:17:31.966Z",
+    "generatedAt": "2026-05-28T11:18:56.025Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 26,
-    "placesMatched": 10,
-    "placeGaps": 16,
-    "eventsExtracted": 2,
+    "placesExtracted": 29,
+    "placesMatched": 8,
+    "placeGaps": 21,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Taco Bravo",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "late-night cheap taco destination, iconic South Bay spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
-      "name": "Del Taco",
-      "city": "",
-      "kind": "restaurant",
-      "context": "nostalgia mention, former South Bay location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
-      "name": "Eduardo's",
-      "city": "",
-      "kind": "restaurant",
-      "context": "family-owned Mexican restaurant in South Bay area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
-      "name": "Tower Records",
-      "city": "",
-      "kind": "retail",
-      "context": "former South Bay location, nostalgia mention",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
-      "name": "The Gaslighter",
-      "city": "",
-      "kind": "venue",
-      "context": "former South Bay venue, nostalgia mention",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
       "name": "The Alameda",
       "city": "San Jose",
       "kind": "venue",
-      "context": "walkable neighborhood with shops and restaurants",
+      "context": "shopping and dining area, walking distance from midtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ]
-    },
-    {
-      "name": "Japantown",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "walkable neighborhood with bike lanes, alternative to Willow Glen",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
       ]
     },
     {
       "name": "SAP",
       "city": "San Jose",
       "kind": "venue",
-      "context": "landmark venue, walking distance from neighborhoods",
+      "context": "venue, walking distance from midtown residential areas",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
       ]
     },
     {
       "name": "Avaya",
       "city": "San Jose",
       "kind": "venue",
-      "context": "landmark location in South Bay area",
+      "context": "venue, short drive from central San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
+        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
+        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
       ]
     },
     {
-      "name": "Caltrain",
+      "name": "Mervyn's",
+      "city": "Mountain View",
+      "kind": "retail",
+      "context": "former building now being redeveloped for school",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Shake Shack",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "near school construction, employees may be affected",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Walmart",
+      "city": "Mountain View",
+      "kind": "retail",
+      "context": "near school construction site",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Lucky's",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "parking lot location where dog was found",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "San Jose Animal Shelter",
       "city": "San Jose",
       "kind": "service",
-      "context": "transit service, walking distance from neighborhoods",
+      "context": "notified about found dog, at full capacity",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
       ]
     },
     {
-      "name": "Vallco Mall",
-      "city": "Cupertino",
-      "kind": "venue",
-      "context": "former shopping mall, nostalgic discussion of past tenants",
+      "name": "Santa Clara County Animal Services",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "resource for pet foster and adoption services",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
         "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/bayarea/comments/1tplgjk/i_pulled_what_every_bay_area_hospital_actually/"
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Doggie Protective Services",
+      "city": "Palo Alto",
+      "kind": "service",
+      "context": "recommended for dog foster and rescue assistance",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Diridon",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "location of weekly Wednesday food festival",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ]
+    },
+    {
+      "name": "Zen's",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "rebranded udon restaurant, formerly Ramen Seas",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Rokko",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "Japanese restaurant, same owners as Zen's",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Fugetsu",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "Japanese restaurant, same owners as Zen's",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Tao Tao",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "mentioned as closed or no longer operating",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+      ]
+    },
+    {
+      "name": "Taco Bravo",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "iconic South Bay taco restaurant since 1970s",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
+        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
       "name": "Acme",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough option tried in sourdough comparison thread",
+      "context": "sourdough bread, frequently mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
@@ -174,11 +234,11 @@
       "name": "Manresa",
       "city": "Mountain View",
       "kind": "restaurant",
-      "context": "noted for great bread offerings",
+      "context": "serves great bread",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
@@ -186,11 +246,11 @@
       "name": "Portside Bakery",
       "city": "",
       "kind": "bakery",
-      "context": "recommended sourdough option in Bay Area",
+      "context": "sourdough and baked goods mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
@@ -198,136 +258,107 @@
       "name": "Firebrand",
       "city": "",
       "kind": "bakery",
-      "context": "mentioned sourdough bakery option",
+      "context": "sourdough recommendations",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     },
     {
-      "name": "Sumano's",
-      "city": "Watsonville",
+      "name": "Sumano's Bakery",
+      "city": "",
       "kind": "bakery",
-      "context": "favorite sourdough source, distributed in Mountain View stores",
+      "context": "Watsonville sourdough, sold in South Bay stores",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Cake Party",
-      "when": "Sunday, June 14th at 11:00 am",
-      "city": "Sunnyvale",
-      "context": "2nd annual informal cake lovers gathering at Washington Park",
+      "name": "Weekly Wednesdays Food Festival",
+      "when": "Wednesdays",
+      "city": "San Jose",
+      "context": "mini food fest next to Diridon station",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Office Furniture & Equipment Liquidation Sale",
-      "when": "May 30th",
-      "city": "Santa Clara",
-      "context": "full office liquidation with heavily discounted furniture and equipment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Philz",
-      "city": "San Jose",
-      "kind": "cafe",
-      "context": "coffee shop near Taco Bravo location",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ],
-      "matchedName": "Philz Coffee"
-    },
-    {
-      "name": "Willow Glen",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "walkable neighborhood with dining and coffee shops",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ],
-      "matchedName": "Willow Glen"
-    },
-    {
-      "name": "Rose Garden",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "nice neighborhood with shops and restaurants",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpfmd7/parking_job_of_the_year_spotted_in_santa_clara/",
-        "https://www.reddit.com/r/SanJose/comments/1toqufg/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/bayarea/comments/1toosw5/bay_area_transit_tax_effort_submits_over_305000/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/"
-      ],
-      "matchedName": "Rose Garden Branch Library"
-    },
-    {
       "name": "Original Joe's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "historic steakhouse addressing closure rumors, seeking new ownership",
+      "context": "Italian restaurant, rumored closure corrected by owners",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
         "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/Cupertino/comments/1tmicoq/vallco_mall_cupertino_2016/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/bayarea/comments/1tplgjk/i_pulled_what_every_bay_area_hospital_actually/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
+        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
       ],
       "matchedName": "Original Joe's San Jose"
     },
     {
-      "name": "Washington Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "hosting 2nd annual cake party on June 14th",
+      "name": "24 Hour Fitness",
+      "city": "Mountain View",
+      "kind": "other",
+      "context": "landmark near new school construction site",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ],
+      "matchedName": "British Swim School at 24 Hour Fitness - Sunnyvale"
+    },
+    {
+      "name": "Slice House",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "near school construction, employees may be affected",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
+        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
+        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
+        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
+        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+      ],
+      "matchedName": "Slice House Mountain View by Tony Gemignani"
+    },
+    {
+      "name": "Ramen Seas",
+      "city": "Sunnyvale",
+      "kind": "restaurant",
+      "context": "closed, rebranded as Zen's",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
-      "matchedName": "Washington Park"
+      "matchedName": "Ramen Seas"
     },
     {
       "name": "GK Pastry",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "highly rated sourdough bakery, multiple recommendations",
+      "context": "highly rated sourdough, winner for best quality",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
       "matchedName": "GK Pastry"
@@ -336,11 +367,11 @@
       "name": "Midwife and the Baker",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "sourdough bakery frequently mentioned and visited",
+      "context": "sourdough and pastry options, highly regarded",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
       "matchedName": "The Midwife and The Baker"
@@ -349,11 +380,11 @@
       "name": "Little Sky",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "recommended sourdough option in Mountain View",
+      "context": "sourdough recommendation",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
       "matchedName": "Little Sky Bakery | Los Altos"
@@ -362,27 +393,14 @@
       "name": "Craftsman and Wolves",
       "city": "Mountain View",
       "kind": "bakery",
-      "context": "makes house sourdough on weekends, multiple mentions",
+      "context": "makes house sourdough on weekends",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
+        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
+        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
         "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
       ],
       "matchedName": "Craftsman and Wolves"
-    },
-    {
-      "name": "Raley's Nob Hill",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "closing location with noted sourdough, mentioned in thread",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1toanxm/cake_party/",
-        "https://www.reddit.com/r/SanJose/comments/1tp0eys/after_70_years_original_joes_owners_look_to_sell/",
-        "https://www.reddit.com/r/santaclara/comments/1tntlzt/liquidation/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "Nob Hill"
     }
   ],
   "eventMatches": []

@@ -1,6 +1,28 @@
 {
   "flags": [
     {
+      "business_id": "PR0411015",
+      "name": "Pasta Fresca",
+      "city": "San Jose",
+      "address": "87 N San Pedro St 131",
+      "date": "2026-05-27",
+      "score": 78,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "No rodents, insects, birds, or animals"
+    },
+    {
+      "business_id": "PR0330422",
+      "name": "Darda Seafood Restaurant",
+      "city": "Milpitas",
+      "address": "296 Barber Ct",
+      "date": "2026-05-27",
+      "score": 30,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Routine inspection conducted in conjunction with foodborne illness investigation CO0159746"
+    },
+    {
       "business_id": "PR0394529",
       "name": "The Press Room",
       "city": "San Jose",
@@ -12,17 +34,6 @@
       "summary": "Food in good condition, safe, unadulterated"
     },
     {
-      "business_id": "PR0304423",
-      "name": "Tgi's Sushi",
-      "city": "Campbell",
-      "address": "100 W Hamilton Av C",
-      "date": "2026-05-26",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow up inspection regarding facility closure on 05/13/26, 05/15/26, 05/19/26, 05/22/26 for vermin infestation"
-    },
-    {
       "business_id": "PR0330928",
       "name": "Cali Spartan Mexican Kitchen",
       "city": "San Jose",
@@ -32,6 +43,17 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
+      "date": "2026-05-26",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/13/26, 05/15/26, 05/19/26, 05/22/26 for vermin infestation"
     },
     {
       "business_id": "PR0302056",
@@ -67,17 +89,6 @@
       "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
-      "business_id": "PR0304423",
-      "name": "Tgi's Sushi",
-      "city": "Campbell",
-      "address": "100 W Hamilton Av C",
-      "date": "2026-05-22",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow up inspection regarding facility closure on 05/13/26, 05/15/26, 05/19/26 for vermin infestation"
-    },
-    {
       "business_id": "PR0340066",
       "name": "Pacific Catch Restaurant",
       "city": "Campbell",
@@ -87,6 +98,28 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "Follow up inspection regarding facility closure on 05/20/26 and 05/21/26 for vermin infestation"
+    },
+    {
+      "business_id": "PR0305050",
+      "name": "District",
+      "city": "San Jose",
+      "address": "65 N San Pedro St",
+      "date": "2026-05-22",
+      "score": 79,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
+      "date": "2026-05-22",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/13/26, 05/15/26, 05/19/26 for vermin infestation"
     },
     {
       "business_id": "PR0427420",
@@ -100,15 +133,15 @@
       "summary": "Refer to CO0159728"
     },
     {
-      "business_id": "PR0305050",
-      "name": "District",
-      "city": "San Jose",
-      "address": "65 N San Pedro St",
-      "date": "2026-05-22",
-      "score": 79,
+      "business_id": "PR0304807",
+      "name": "Erik's Deli Cafe Campbell",
+      "city": "Campbell",
+      "address": "1777 S Bascom Av",
+      "date": "2026-05-21",
+      "score": 75,
       "result": "Y",
       "type": "ROUTINE INSPECTION",
-      "summary": "Food in good condition, safe, unadulterated"
+      "summary": "Hot and cold water available"
     },
     {
       "business_id": "PR0340066",
@@ -144,39 +177,6 @@
       "summary": "A follow-up inspection will be conducted on 5/25/2026  to verily compliance with all of the cited major violations"
     },
     {
-      "business_id": "PR0304807",
-      "name": "Erik's Deli Cafe Campbell",
-      "city": "Campbell",
-      "address": "1777 S Bascom Av",
-      "date": "2026-05-21",
-      "score": 75,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Hot and cold water available"
-    },
-    {
-      "business_id": "PR0304940",
-      "name": "Ume Tea",
-      "city": "San Jose",
-      "address": "2067 Camden Av",
-      "date": "2026-05-20",
-      "score": 72,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "A follow-up inspection shall be conducted"
-    },
-    {
-      "business_id": "PR0340066",
-      "name": "Pacific Catch Restaurant",
-      "city": "Campbell",
-      "address": "1875 S Bascom Av 550",
-      "date": "2026-05-20",
-      "score": null,
-      "result": "R",
-      "type": "ROUTINE INSPECTION",
-      "summary": "In conjunction with CO0159698"
-    },
-    {
       "business_id": "PR0330568",
       "name": "Anjappar Chettinad Indian Restaurant",
       "city": "Milpitas",
@@ -186,17 +186,6 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Two or more major violations were cited during the routine inspection"
-    },
-    {
-      "business_id": "PR0306138",
-      "name": "Dumpling Hours",
-      "city": "Palo Alto",
-      "address": "530 Bryant St",
-      "date": "2026-05-20",
-      "score": 58,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Proper hot and cold holding temperatures"
     },
     {
       "business_id": "PR0301401",
@@ -210,6 +199,39 @@
       "summary": "A follow up inspection will be conducted by 05/22/26 to verify compliance"
     },
     {
+      "business_id": "PR0340066",
+      "name": "Pacific Catch Restaurant",
+      "city": "Campbell",
+      "address": "1875 S Bascom Av 550",
+      "date": "2026-05-20",
+      "score": null,
+      "result": "R",
+      "type": "ROUTINE INSPECTION",
+      "summary": "In conjunction with CO0159698"
+    },
+    {
+      "business_id": "PR0304940",
+      "name": "Ume Tea",
+      "city": "San Jose",
+      "address": "2067 Camden Av",
+      "date": "2026-05-20",
+      "score": 72,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "A follow-up inspection shall be conducted"
+    },
+    {
+      "business_id": "PR0306138",
+      "name": "Dumpling Hours",
+      "city": "Palo Alto",
+      "address": "530 Bryant St",
+      "date": "2026-05-20",
+      "score": 58,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Proper hot and cold holding temperatures"
+    },
+    {
       "business_id": "PR0304423",
       "name": "Tgi's Sushi",
       "city": "Campbell",
@@ -219,28 +241,6 @@
       "result": "R",
       "type": "FOLLOW-UP INSPECTION",
       "summary": "Follow up inspection regarding facility closure on 05/13/26 and 05/15/26 for vermin infestation"
-    },
-    {
-      "business_id": "PR0304681",
-      "name": "Duc Huong",
-      "city": "San Jose",
-      "address": "2345 Mckee Rd",
-      "date": "2026-05-19",
-      "score": 53,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "No food safety manager certificate found on file"
-    },
-    {
-      "business_id": "PR0330565",
-      "name": "Siam Station Milpitas",
-      "city": "Milpitas",
-      "address": "210 Barber Ct",
-      "date": "2026-05-19",
-      "score": 64,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Two or more major violations were cited during the routine inspection"
     },
     {
       "business_id": "PR0300248",
@@ -254,6 +254,28 @@
       "summary": "this facility is hereby order closed due to rodent dropping contamination"
     },
     {
+      "business_id": "PR0330565",
+      "name": "Siam Station Milpitas",
+      "city": "Milpitas",
+      "address": "210 Barber Ct",
+      "date": "2026-05-19",
+      "score": 64,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "Two or more major violations were cited during the routine inspection"
+    },
+    {
+      "business_id": "PR0304681",
+      "name": "Duc Huong",
+      "city": "San Jose",
+      "address": "2345 Mckee Rd",
+      "date": "2026-05-19",
+      "score": 53,
+      "result": "Y",
+      "type": "ROUTINE INSPECTION",
+      "summary": "No food safety manager certificate found on file"
+    },
+    {
       "business_id": "PR0306041",
       "name": "Kusan Uyghur Cuisine",
       "city": "San Jose",
@@ -263,6 +285,17 @@
       "result": "R",
       "type": "ROUTINE INSPECTION",
       "summary": "Facility is closed due to the following major violation: Rodent activity"
+    },
+    {
+      "business_id": "PR0304423",
+      "name": "Tgi's Sushi",
+      "city": "Campbell",
+      "address": "100 W Hamilton Av C",
+      "date": "2026-05-15",
+      "score": null,
+      "result": "R",
+      "type": "FOLLOW-UP INSPECTION",
+      "summary": "Follow up inspection regarding facility closure on 05/13/26 for vermin infestation"
     },
     {
       "business_id": "PR0304143",
@@ -287,28 +320,6 @@
       "summary": "THIS FACILITY IS NOW CLOSED DUE TO HAVING NO HOT WATER (120F MINIMUM AT THE 3 COMPARTMENT SINK),"
     },
     {
-      "business_id": "PR0304423",
-      "name": "Tgi's Sushi",
-      "city": "Campbell",
-      "address": "100 W Hamilton Av C",
-      "date": "2026-05-15",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow up inspection regarding facility closure on 05/13/26 for vermin infestation"
-    },
-    {
-      "business_id": "PR0301934",
-      "name": "Little Lou's Bbq",
-      "city": "Campbell",
-      "address": "2455 S Winchester Bl",
-      "date": "2026-05-14",
-      "score": null,
-      "result": "R",
-      "type": "FOLLOW-UP INSPECTION",
-      "summary": "Follow up inspection regarding facility closure on 05/08/26, 05/12/26, and 05/13/26 for vermin infestation"
-    },
-    {
       "business_id": "PR0307903",
       "name": "Mendoza Taqueria",
       "city": "San Jose",
@@ -318,20 +329,9 @@
       "result": "Y",
       "type": "ROUTINE INSPECTION",
       "summary": "Proper cooling methods"
-    },
-    {
-      "business_id": "PR0365575",
-      "name": "China Palace",
-      "city": "Milpitas",
-      "address": "688 Barber Ln",
-      "date": "2026-05-13",
-      "score": 47,
-      "result": "Y",
-      "type": "ROUTINE INSPECTION",
-      "summary": "Two or more major violations were cited during the routine inspection"
     }
   ],
-  "generatedAt": "2026-05-27T23:09:20.693Z",
+  "generatedAt": "2026-05-28T11:10:05.937Z",
   "source": "Santa Clara County Department of Environmental Health",
   "sourceUrl": "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/"
 }
