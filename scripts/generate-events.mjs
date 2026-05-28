@@ -882,6 +882,15 @@ function cleanTitle(title) {
     /(?<=[A-Za-z])(\s+)(A|An|Of|The|And|To|By|In|On|For|Or|But|Nor|As|At|With|From)(?=\s+[A-Z])/g,
     (_, sp, w) => sp + w.toLowerCase(),
   );
+  // Re-capitalize the article "The" when it directly follows a possessive and
+  // leads into a capitalized word ("Disney's the Lion King Jr.", "Rodgers &
+  // Hammerstein's the Sound of Music"): in `X's The …`, the article begins the
+  // proper title of a work, so the downcase pass above shouldn't have touched
+  // it. Scoped to "the" only — "a"/"an" after a possessive are usually
+  // grammatical articles ("Everyone's a Star"), not title leads, so those stay
+  // lowercased. The 4 Hammer Theatre Lion King date-variants kept reverting to
+  // lowercase "the" because the live patch couldn't survive the nightly regen.
+  t = t.replace(/(['’]s\s+)the(\s+[A-Z])/g, "$1The$2");
   // Companion pass: same downcase when the small word sits in front of a
   // lowercase determiner / possessive / demonstrative. Catches the History SJ
   // "Cars In the Park" pattern where the source already lowercased "the" but
@@ -1434,6 +1443,12 @@ function polishDescription(text) {
   // splitter hits the c→F boundary. McFly is a single-word surname brand mark
   // (the character + the UK band of the same spelling).
   t = t.replace(/\bMc Fly\b/g, "McFly");
+  // "NorCal" (Northern California, as in NorCal Academy of Performing Arts) is a
+  // closed-up single token; the lowercase+uppercase splitter pulls it into
+  // "Nor Cal". Capital-N "Nor Cal" only ever comes from that split — a genuine
+  // "neither … nor Cal" conjunction would be lowercase "nor" — so reuniting is
+  // safe. Same family as PayPal/NetApp/CrossFit/NeXT/McFly.
+  t = t.replace(/\bNor Cal\b/g, "NorCal");
 
   // Split into sentences and drop boilerplate. Capture trailing closers
   // (`"`, `'`, `)`, `]`) as part of the terminator group so a quoted clause
