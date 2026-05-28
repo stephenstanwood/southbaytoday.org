@@ -17,6 +17,10 @@ loadEnvLocal();
 const RESEND_BASE = "https://api.resend.com";
 const SITE_URL = "https://southbaytoday.org";
 const NEWSLETTER_ARCHIVE_PREFIX = "/newsletters";
+const NEWSLETTER_OPENING_MAX_AGE_DAYS = 6;
+const BLOCKED_NEWSLETTER_IMAGE_PATTERNS = [
+  /images\.unsplash\.com\/photo-1585899873671-ade0aa28a821/i,
+];
 
 export async function resendFetch(path, init = {}) {
   const key = process.env.RESEND_API_KEY;
@@ -207,7 +211,7 @@ export async function assembleNewsletterData(date, opts = {}) {
 
   const openings = loadOpenings();
   const recentOpenings = (openings.opened || [])
-    .filter((o) => daysBetween(o.date, date) >= 0 && daysBetween(o.date, date) <= 10)
+    .filter((o) => isFreshOpening(o, date))
     .slice(0, 6);
 
   const meetings = loadMeetings().meetings || {};
@@ -277,7 +281,12 @@ function makeNewsletterPlan(plan, date, socialSlot = null) {
 
 function usableImage(url) {
   const value = String(url || "").trim();
+  if (isBlockedNewsletterImage(value)) return "";
   return /^https?:\/\//i.test(value) ? value : "";
+}
+
+function isBlockedNewsletterImage(url) {
+  return BLOCKED_NEWSLETTER_IMAGE_PATTERNS.some((re) => re.test(String(url || "")));
 }
 
 function firstUsableImage(items, picker) {
@@ -316,6 +325,11 @@ function daysBetween(fromDate, toDate) {
   const to = new Date(`${toDate}T12:00:00Z`).getTime();
   if (!Number.isFinite(from) || !Number.isFinite(to)) return Infinity;
   return Math.round((to - from) / 86400000);
+}
+
+function isFreshOpening(opening, date) {
+  const age = daysBetween(opening?.date, date);
+  return Number.isFinite(age) && age >= 0 && age <= NEWSLETTER_OPENING_MAX_AGE_DAYS;
 }
 
 const BUCKET_LABEL = {
@@ -387,13 +401,18 @@ function buildTonightBlurb(event) {
 
 function pickTonightEvent(events) {
   const choices = events
-    .filter((e) => !e.virtual)
-    .filter((e) => parseTimeMinutes(e.time) >= 16 * 60)
-    .filter((e) => e.url)
-    .filter((e) => !/\b(board|commission|committee|meeting|study session|webinar|book club)\b/i.test(e.title || ""))
+    .filter(isTonightPickCandidate)
     .map((e) => ({ event: e, score: scoreEvent(e, true) }))
     .sort((a, b) => b.score - a.score);
   return choices[0]?.event || null;
+}
+
+function isTonightPickCandidate(e) {
+  if (!e || e.virtual || !e.url) return false;
+  const minutes = parseTimeMinutes(e.time);
+  if (!Number.isFinite(minutes) || minutes < 16 * 60 || minutes >= 24 * 60) return false;
+  const text = `${e.title || ""} ${e.venue || ""} ${e.category || ""}`.toLowerCase();
+  return !/\b(board|commission|committee|meeting|study session|webinar|book club|maintenance|cleanup|clean-up|repair|workday|work day)\b/i.test(text);
 }
 
 function pickFeaturedEvents(events, { dayPlan, tonightPick, limit }) {
@@ -634,7 +653,9 @@ Your job:
 Voice:
 - Smart, warm, specific, lightly opinionated. A competent local friend who actually read the calendar.
 - Useful beats hype. Never describe a day or part of a day as quiet, slow, thin, light, sparse, sleepy, soft, or weak. There is always something to do; frame the useful options and strongest patterns without apologizing for the calendar.
-- Location-agnostic. Readers are spread across Santa Clara County, so never write from a presumed home base or reader location. Avoid phrases like "closer in", "closer to home", "near you", "depending on where you are", or "worth the drive." Compare options by city, venue, time, cost, audience, or mood instead.
+- Write like a person talks. Avoid stiff phrasing like "daytime favors practical use of time."
+- Do not over-explain geography or logistics. The day plan is a set of ideas, not a route defense.
+- Do not tell readers what they are "passing on" or what a choice means skipping. Explain why the selected thing is worth noticing.
 - No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
 - Avoid em dashes. Use commas, periods, or parentheses.
 
@@ -645,23 +666,23 @@ Fact rules:
 - If a section has weak material, select fewer items.
 
 Selection guidance:
-- Pick one evening item only if it is specific, local, and plausible as a good answer to "what should I do tonight?"
+- Pick one evening item only if it starts at 4 PM or later, is specific, local, and plausible as a good answer to "what should I do tonight?" Never pick maintenance, cleanup, repair, meetings, webinars, or generic admin/service items.
 - Featured events should be balanced: adult/family/free/outdoor/culture when available. Do not let generic library items crowd out stronger citywide events unless the day is genuinely family-heavy.
 - Reddit items should be South Bay-specific conversation, not generic Bay Area chatter.
-- Openings should be readable; skip raw or overly bureaucratic entries if they make the email worse.
+- Openings should be readable and genuinely fresh; skip raw, overly bureaucratic, or week-old entries if they make the email worse.
 
 Return JSON with exactly these keys:
 {
-  "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or tradeoffs in today's material.",
+  "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or useful clusters in today's material.",
   "dayPlanHeadline": "short headline for the field guide",
-  "dayPlanBlurb": "2-3 sentences making the plan feel intentional, without pretending it is perfect",
+  "dayPlanBlurb": "2-3 sentences making the plan feel intentional and useful",
   "tonightPickIdx": 0,
   "tonightPickBlurb": "1-2 sentences why this is the evening pick, using only packet facts",
   "featuredEventIdxs": [0, 1, 2, 3, 4, 5],
-  "eventsHeading": "short section heading",
+  "eventsHeading": "Also on the calendar",
   "eventsNote": "1 sentence explaining the shape of the selected events",
   "openingIdxs": [0, 1],
-  "openingsHeading": "short section heading",
+  "openingsHeading": "Newly opened",
   "openingsNote": "1 sentence, or empty string if not useful",
   "redditIdxs": [0, 1, 2, 3],
   "conversationHeading": "short section heading",
@@ -732,22 +753,30 @@ function applyEditorialJson(data, candidates, edit) {
   const redditByIdx = new Map(candidates.redditCandidates.map((p, idx) => [idx, p]));
 
   const tonightIdx = integerOrNull(edit.tonightPickIdx);
-  const tonightPick = tonightIdx === null ? null : eventByIdx.get(tonightIdx) || null;
+  const editedTonightPick = tonightIdx === null ? null : eventByIdx.get(tonightIdx) || null;
+  const tonightPick = editedTonightPick && isTonightPickCandidate(editedTonightPick)
+    ? editedTonightPick
+    : null;
   const featured = pickByIndexes(eventByIdx, edit.featuredEventIdxs, 10)
     .filter((e) => !tonightPick || normalizeComparable(e.id || e.title) !== normalizeComparable(tonightPick.id || tonightPick.title));
   const fallbackFeatured = data.featuredEvents
     .filter((e) => !tonightPick || normalizeComparable(e.id || e.title) !== normalizeComparable(tonightPick.id || tonightPick.title));
 
-  const openings = pickByIndexes(openingByIdx, edit.openingIdxs, 6);
+  const openings = pickByIndexes(openingByIdx, edit.openingIdxs, 6)
+    .filter((o) => isFreshOpening(o, data.date));
   const reddit = pickByIndexes(redditByIdx, edit.redditIdxs, 4);
+  const finalTonightPick = tonightPick || data.tonightPick;
+  const editedTonightBlurb = tonightPick && isBlurbAnchoredToEvent(edit.tonightPickBlurb, tonightPick)
+    ? newsletterCopyString(edit.tonightPickBlurb, 500)
+    : "";
 
   const revised = {
     ...data,
     dayPlanBlurb: newsletterCopyString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
-    tonightPick: tonightPick || data.tonightPick,
-    tonightPickBlurb: newsletterCopyString(edit.tonightPickBlurb, 500) || (tonightPick ? buildTonightBlurb(tonightPick) : data.tonightPickBlurb),
+    tonightPick: finalTonightPick,
+    tonightPickBlurb: editedTonightBlurb || (finalTonightPick ? buildTonightBlurb(finalTonightPick) : data.tonightPickBlurb),
     featuredEvents: featured.length ? uniqueItems(featured, 10) : uniqueItems(fallbackFeatured, 10),
-    recentOpenings: openings.length ? openings : data.recentOpenings,
+    recentOpenings: openings.length ? openings : data.recentOpenings.filter((o) => isFreshOpening(o, data.date)),
     redditPosts: reddit.length ? reddit : data.redditPosts,
     editorial: {
       briefing: newsletterCopyString(edit.briefing, 800),
@@ -811,6 +840,24 @@ function uniqueItems(items, max) {
   return out;
 }
 
+function isBlurbAnchoredToEvent(blurb, event) {
+  const text = normalizeComparable(blurb);
+  if (!text || !event) return false;
+  const anchors = [
+    event.title,
+    event.venue,
+    cityName(event.city),
+  ].flatMap(anchorTokens);
+  return anchors.some((token) => token.length >= 5 && text.includes(token));
+}
+
+function anchorTokens(value) {
+  const normalized = normalizeComparable(value);
+  if (!normalized) return [];
+  const tokens = normalized.split(/\s+/).filter((token) => token.length >= 5);
+  return [normalized, ...tokens];
+}
+
 function limitedString(value, max) {
   if (typeof value !== "string") return "";
   return value.trim().slice(0, max);
@@ -822,21 +869,10 @@ const DAY_CONTEXT_WORDS = [
 ];
 const DAY_CONTEXT = `(?:this\\s+)?(?:the\\s+)?(?:${DAY_CONTEXT_WORDS.join("|")})`;
 const DOWNBEAT_DAY_LANGUAGE = "(?:quiet|quieter|quietest|slow|slower|slowest|thin|thinner|thinnest|light|lighter|lightest|sparse|sparser|sparsest|sleepy|soft|weak)";
-const READER_RELATIVE_LOCATION_PATTERNS = [
-  /\bcloser in\b/i,
-  /\bcloser to home\b/i,
-  /\bcloser to you\b/i,
-  /\bnear you\b/i,
-  /\bnear where you\b/i,
-  /\bdepending on where you (?:actually )?are\b/i,
-  /\byour part of (?:town|the county|the south bay)\b/i,
-  /\bworth the drive\b/i,
-  /\bif you(?:'re| are) (?:nearby|close by|around)\b/i,
-];
 
 function newsletterCopyString(value, max) {
-  const cleaned = sanitizeNewsletterCopy(limitedString(value, max));
-  return hasDownbeatDayLanguage(cleaned) || hasReaderRelativeLocationLanguage(cleaned) ? "" : cleaned;
+  const cleaned = rewriteAwkwardNewsletterLanguage(rewriteDownbeatDayLanguage(limitedString(value, max)));
+  return hasBlockedNewsletterCopyLanguage(cleaned) ? "" : cleaned;
 }
 
 function rewriteDownbeatDayLanguage(value) {
@@ -858,31 +894,16 @@ function hasDownbeatDayLanguage(value) {
   return dayThenTerm.test(text) || termThenDay.test(text);
 }
 
-export function sanitizeNewsletterCopy(value) {
-  return rewriteDownbeatDayLanguage(rewriteReaderRelativeLocationLanguage(value));
-}
-
-function rewriteReaderRelativeLocationLanguage(value) {
+function rewriteAwkwardNewsletterLanguage(value) {
   return String(value || "")
-    .replace(/(^|[.!?]\s+)closer in,?\s+/gi, "$1Also, ")
-    .replace(/(^|[.!?]\s+)closer to home,?\s+/gi, "$1Also, ")
-    .replace(/(^|[.!?]\s+)closer to you,?\s+/gi, "$1Also, ")
-    .replace(/\bthe closer-in option\b/gi, "another option")
-    .replace(/\bcloser-in option\b/gi, "another option")
-    .replace(/\bnear you\b/gi, "in the South Bay")
-    .replace(/\bnear where you (?:actually )?are\b/gi, "in the South Bay")
-    .replace(/\bdepending on where you (?:actually )?are\b/gi, "depending on what you want to do")
-    .replace(/\byour part of (?:town|the county|the South Bay)\b/gi, "the relevant city")
-    .replace(/\bworth the drive\b/gi, "worth considering")
-    .replace(/\bif you(?:'re| are) nearby\b/gi, "if it fits your plans")
-    .replace(/\bif you(?:'re| are) close by\b/gi, "if it fits your plans")
-    .replace(/(^|[.!?]\s+)if you(?:'re| are) around ([^,.!?]+)/gi, "$1In $2")
-    .replace(/\bif you(?:'re| are) around\b/gi, "if it fits your plans");
+    .replace(/\b(daytime|the day|today)\s+favors\s+practical use of time\b/gi, "today is good for practical errands and easy outings");
 }
 
-function hasReaderRelativeLocationLanguage(value) {
+function hasBlockedNewsletterCopyLanguage(value) {
   const text = String(value || "");
-  return READER_RELATIVE_LOCATION_PATTERNS.some((pattern) => pattern.test(text));
+  return hasDownbeatDayLanguage(text)
+    || /\b(?:passing on|means passing|choosing it means|choose it means|skip(?:ping)? over)\b/i.test(text)
+    || /\b(?:rather than stops on a route|as alternatives rather than|not a route|route defense)\b/i.test(text);
 }
 
 function compactText(value, max) {
@@ -895,7 +916,7 @@ export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY missing — add to .env.local");
 
-  const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email. The email must be location-agnostic because readers are spread across the county; never assume where the reader is.";
+  const SYSTEM = "You're an editor for South Bay Today, a hyperlocal Santa Clara County newsletter. Voice: smart, well-informed neighbor — direct, warm, never corporate. You take social copy and rewrite it for the morning email.";
 
   const guidance = kind === "pick"
     ? "This is the 'tonight's pick' blurb for a single event. 1-3 sentences. Email gets an image + a CTA button below the text, so don't say things like 'tap the link' or 'see below'."
@@ -903,7 +924,7 @@ export async function rewriteForEmail(text, kind /* "plan" | "pick" */) {
 
   const prompt = `${guidance}
 
-Strip @-handles, hashtags, and trailing URL-dependent CTAs. Use natural place names ("Ridge Vineyards" not "@RidgeVineyards"). Keep specifics — venue names, times, what people will do. Read like a friend telling them what's on. Do not use reader-relative geography such as "closer in", "closer to home", "near you", "if you're around", or "worth the drive"; use city/venue/time/audience context instead.
+Strip @-handles, hashtags, and trailing URL-dependent CTAs. Use natural place names ("Ridge Vineyards" not "@RidgeVineyards"). Keep specifics — venue names, times, what people will do. Read like a friend telling them what's on.
 
 Original social copy:
 """
@@ -1127,16 +1148,32 @@ function eventMeta(e) {
   ].filter(Boolean).join(" · ");
 }
 
+function chronologicalEvents(events) {
+  return [...(events || [])].sort((a, b) => {
+    const timeDelta = parseTimeMinutes(a.time) - parseTimeMinutes(b.time);
+    if (timeDelta) return timeDelta;
+    return String(a.title || "").localeCompare(String(b.title || ""));
+  });
+}
+
+function newsletterSectionHeading(value, fallback) {
+  const clean = compactText(value, 80);
+  const comparable = clean.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  if (!clean || comparable === "on the calendar" || comparable === "also also on the calendar") return fallback;
+  if (comparable === "newly open") return "Newly opened";
+  return clean;
+}
+
 function eventsBlock(events, totalCount = events?.length || 0, editorial = null) {
   if (!events?.length) return "";
-  const rows = events.map((e) => {
+  const displayEvents = chronologicalEvents(events);
+  const rows = displayEvents.map((e) => {
     const image = usableImage(e.image);
     const thumb = image
       ? `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
           <img src="${esc(image)}" alt="" width="72" height="72" style="width:72px;height:72px;display:block;border-radius:8px;object-fit:cover;">
         </td>`
       : "";
-    const contentColspan = image ? "" : ' colspan="2"';
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
@@ -1144,13 +1181,13 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
     const blurb = e.blurb
       ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(e.blurb)}</div>`
       : "";
-    return `<tr>${thumb}<td${contentColspan} style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+    return `<tr>${thumb}<td style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
       <div>${title}</div>
       ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${esc(meta)}</div>` : ""}
       ${blurb}
     </td></tr>`;
   }).join("\n");
-  const heading = editorial?.eventsHeading || "More good options today";
+  const heading = newsletterSectionHeading(editorial?.eventsHeading, "Also on the calendar");
   const countNote = editorial?.eventsNote || (totalCount > events.length
     ? `The site has ${totalCount} timed events for today; these are the ones most likely to be useful.`
     : "A short list of timed events worth checking before you make plans.");
@@ -1162,8 +1199,9 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
 }
 
 function openingsBlock(openings, date, editorial = null) {
-  if (!openings?.length) return "";
-  const items = openings.map((o) => {
+  const freshOpenings = (openings || []).filter((o) => isFreshOpening(o, date));
+  if (!freshOpenings.length) return "";
+  const items = freshOpenings.map((o) => {
     const cityId = (o.cityId || o.cityName || "").toLowerCase().replace(/ /g, "-");
     const locParts = [o.address, cityName(cityId)].filter(Boolean);
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
@@ -1182,7 +1220,7 @@ function openingsBlock(openings, date, editorial = null) {
       </td>
     </tr></tbody></table>`;
   }).join("");
-  const heading = editorial?.openingsHeading || "Recently opened";
+  const heading = newsletterSectionHeading(editorial?.openingsHeading, "Newly opened");
   const note = editorial?.openingsNote
     ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-bottom:12px;">${esc(editorial.openingsNote)}</div>`
     : "";
@@ -1362,8 +1400,9 @@ function newsletterDmBlurb(data) {
     const totalEvents = data.todayEvents?.length || data.featuredEvents.length;
     bits.push(`${totalEvents} timed events are on the board, led by ${humanList(data.featuredEvents.slice(0, 3).map((e) => e.title))}.`);
   }
-  if (data.recentOpenings?.length) {
-    bits.push(`Food radar has ${humanList(data.recentOpenings.slice(0, 2).map((o) => o.name))}.`);
+  const freshOpenings = (data.recentOpenings || []).filter((o) => isFreshOpening(o, data.date));
+  if (freshOpenings.length) {
+    bits.push(`Food radar has ${humanList(freshOpenings.slice(0, 2).map((o) => o.name))}.`);
   }
 
   return compactText(bits.join(" ") || "Today's South Bay Today email is ready, with the field guide, events, openings, civic notes, and local conversation.", 900);
@@ -1390,17 +1429,18 @@ function renderDiscordDigest(data, subject) {
     if (data.tonightPickBlurb) lines.push(data.tonightPickBlurb);
   }
   if (data.featuredEvents?.length) {
-    lines.push("", `**${data.editorial?.eventsHeading || "More good options today"}**`);
+    lines.push("", `**${newsletterSectionHeading(data.editorial?.eventsHeading, "Also on the calendar")}**`);
     if (data.editorial?.eventsNote) lines.push(data.editorial.eventsNote);
-    for (const e of data.featuredEvents) {
+    for (const e of chronologicalEvents(data.featuredEvents)) {
       const meta = eventMeta(e);
       lines.push(`• ${markdownLink(e.title, e.url)}${meta ? ` — ${meta}` : ""}`);
     }
   }
-  if (data.recentOpenings?.length) {
-    lines.push("", `**${data.editorial?.openingsHeading || "Recently opened"}**`);
+  const freshOpenings = (data.recentOpenings || []).filter((o) => isFreshOpening(o, data.date));
+  if (freshOpenings.length) {
+    lines.push("", `**${newsletterSectionHeading(data.editorial?.openingsHeading, "Newly opened")}**`);
     if (data.editorial?.openingsNote) lines.push(data.editorial.openingsNote);
-    for (const o of data.recentOpenings.slice(0, 5)) {
+    for (const o of freshOpenings.slice(0, 5)) {
       lines.push(`• ${o.name}${o.cityName ? ` — ${o.cityName}` : ""}${o.blurb ? `: ${o.blurb}` : ""}`);
     }
   }
@@ -1429,8 +1469,8 @@ function newsletterSelectionSnapshot(data) {
     briefing: data.editorial?.briefing || "",
     dayPlan: orderedCards(data.dayPlan).map((c) => c.name),
     tonightPick: data.tonightPick?.title || null,
-    featuredEvents: (data.featuredEvents || []).map((e) => e.title),
-    openings: (data.recentOpenings || []).map((o) => o.name),
+    featuredEvents: chronologicalEvents(data.featuredEvents || []).map((e) => e.title),
+    openings: (data.recentOpenings || []).filter((o) => isFreshOpening(o, data.date)).map((o) => o.name),
     meetings: (data.tonightMeetings || []).map((m) => `${cityName(m.city)} ${m.bodyName || "Meeting"}`),
     history: (data.todayHistory || []).map((h) => h.company),
     reddit: (data.redditPosts || []).map((p) => p.displayTitle || p.title),
