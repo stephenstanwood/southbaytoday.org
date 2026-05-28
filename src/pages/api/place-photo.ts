@@ -16,11 +16,15 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
 
   const url = new URL(request.url);
   const photoRef = url.searchParams.get("ref");
-  const maxW = Math.min(Number(url.searchParams.get("w")) || 400, 800);
-  const maxH = Math.min(Number(url.searchParams.get("h")) || 300, 600);
+  // Clamp to a positive range: a negative w/h (e.g. ?w=-100) otherwise passed
+  // straight through Math.min into the upstream Google request.
+  const maxW = Math.max(1, Math.min(Number(url.searchParams.get("w")) || 400, 800));
+  const maxH = Math.max(1, Math.min(Number(url.searchParams.get("h")) || 300, 600));
 
-  if (!photoRef) {
-    return new Response("Missing ref param", { status: 400 });
+  // photoRef is interpolated into the Google URL path — reject anything that
+  // looks like a full URL or path-traversal attempt (defense-in-depth SSRF).
+  if (!photoRef || photoRef.includes("://") || photoRef.includes("..") || /\s/.test(photoRef)) {
+    return new Response("Missing or invalid ref param", { status: 400 });
   }
 
   const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY;

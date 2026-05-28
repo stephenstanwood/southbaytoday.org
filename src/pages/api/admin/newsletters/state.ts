@@ -9,14 +9,12 @@
 
 import type { APIRoute } from "astro";
 import { readTracker } from "../../../../lib/lookout/tracker.ts";
+import { isAdmin } from "../../../../lib/adminAuth";
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
-  const url = new URL(request.url);
-  const expected = process.env.ADMIN_KEY ?? "";
-  const provided = url.searchParams.get("key") ?? "";
-  if (!expected || provided !== expected) {
+  if (!isAdmin(request)) {
     return Response.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 

@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
+import { rateLimit, rateLimitResponse } from '../../lib/rateLimit';
 
 const TYPE_META: Record<string, { emoji: string; label: string; color: number }> = {
   event:      { emoji: '📅', label: 'Event Submission', color: 0x3b82f6 },
@@ -9,7 +10,11 @@ const TYPE_META: Record<string, { emoji: string; label: string; color: number }>
   feedback:   { emoji: '💬', label: 'Feedback',          color: 0x8b5cf6 },
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
+  // Reader-facing endpoint that fans out to a Discord webhook — rate-limit so
+  // a single client can't flood the feedback channel.
+  if (!rateLimit(clientAddress, 5)) return rateLimitResponse();
+
   const webhookUrl = import.meta.env.DISCORD_FEEDBACK_WEBHOOK;
   if (!webhookUrl) {
     return new Response(JSON.stringify({ error: 'Not configured' }), { status: 500 });
@@ -25,6 +30,9 @@ export const POST: APIRoute = async ({ request }) => {
   const { type = 'feedback', message, page } = body;
   if (!message?.trim()) {
     return new Response(JSON.stringify({ error: 'Message required' }), { status: 400 });
+  }
+  if (message.length > 5000) {
+    return new Response(JSON.stringify({ error: 'Message too long' }), { status: 413 });
   }
 
   const meta = TYPE_META[type] ?? TYPE_META.feedback;
