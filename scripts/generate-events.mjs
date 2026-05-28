@@ -1521,8 +1521,9 @@ function cleanVenue(raw) {
   // Trigger only when the trailing chunk starts with a number and ends with a street suffix
   // so we don't chop legitimate venue names that contain numbers (e.g. "Building 5").
   v = v.replace(/[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*$/, "");
-  // Strip trailing ", <truncated dir>" e.g. "Los Altos History Museum, 51 So." (truncated address)
-  v = v.replace(/,\s+\d+\s+(N|S|E|W|N\.|S\.|E\.|W\.|No|So|Ea|We)\.?\s*$/i, "");
+  // Strip trailing "<truncated dir>" e.g. "Los Altos History Museum, 51 So." or
+  // "Civic Center Lawn 110 E." (truncated address) — comma OR space separated.
+  v = v.replace(/[,\s]+\d+\s+(N|S|E|W|N\.|S\.|E\.|W\.|No|So|Ea|We)\.?\s*$/i, "");
   // Strip trailing bare number after a street/trail suffix: "Balzer Field and
   // LG Creek Trail 41" → "Balzer Field and LG Creek Trail". Happens when the
   // street/zip tail upstream got truncated, leaving an orphan house number.
@@ -4593,7 +4594,10 @@ async function fetchMeetupEvents() {
     const start = parseDate(node.dateTime);
     if (!start) continue;
 
-    const venue = node.venue?.name?.trim() || node.group?.name || "TBD";
+    // Run through cleanVenue so Meetup organizers who type a raw street address
+    // into the venue-name field ("22500 Cristo Rey Dr") fall back to the group
+    // name rather than rendering a bare address as the venue.
+    const venue = cleanVenue(node.venue?.name?.trim() || "") || node.group?.name || "TBD";
     const address = normalizeMeetupAddress(node.venue?.address, city);
     const locationText = [venue, address].filter(Boolean).join(" ");
     if (/\b(?:somewhere|secret(?:\s+\w+){0,3}\s+location|released\s+on\s+day|private\s+home|home\s+near)\b/i.test(locationText)) continue;
