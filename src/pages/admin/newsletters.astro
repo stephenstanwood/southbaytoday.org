@@ -685,8 +685,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             openBtn.textContent = "…";
             try {
               const res = await fetch(
-                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=signup-posted&key=${encodeURIComponent(providedKey)}`,
-                { method: "POST" }
+                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=signup-posted`,
+                { method: "POST", headers: { Authorization: `Bearer ${providedKey}` } }
               );
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -747,8 +747,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             pill.disabled = true;
             try {
               const res = await fetch(
-                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=${next}&key=${encodeURIComponent(providedKey)}`,
-                { method: "POST" }
+                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=${next}`,
+                { method: "POST", headers: { Authorization: `Bearer ${providedKey}` } }
               );
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -805,8 +805,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             undoBtn.disabled = true;
             try {
               const res = await fetch(
-                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=not-attempted&key=${encodeURIComponent(providedKey)}`,
-                { method: "POST" }
+                `/api/admin/newsletters/mark?id=${encodeURIComponent(id)}&status=not-attempted`,
+                { method: "POST", headers: { Authorization: `Bearer ${providedKey}` } }
               );
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -846,8 +846,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
             delBtn.textContent = "…";
             try {
               const res = await fetch(
-                `/api/admin/newsletters/delete?id=${encodeURIComponent(id)}&key=${encodeURIComponent(providedKey)}`,
-                { method: "DELETE" }
+                `/api/admin/newsletters/delete?id=${encodeURIComponent(id)}`,
+                { method: "DELETE", headers: { Authorization: `Bearer ${providedKey}` } }
               );
               if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -1053,8 +1053,8 @@ const orderedCategories = Object.keys(grouped).sort((a, b) => {
         async function pollOnce() {
           try {
             const res = await fetch(
-              `/api/admin/newsletters/state?key=${encodeURIComponent(providedKey)}`,
-              { cache: "no-store" }
+              `/api/admin/newsletters/state`,
+              { cache: "no-store", headers: { Authorization: `Bearer ${providedKey}` } }
             );
             if (!res.ok) return;
             const json = await res.json();

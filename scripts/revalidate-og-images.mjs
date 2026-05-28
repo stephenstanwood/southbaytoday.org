@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { revalidateOgCache } from "../src/lib/south-bay/eventImages.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -47,6 +48,6 @@ if (!dryRun && stats.rejected > 0) {
       cleared++;
     }
   }
-  writeFileSync(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
+  writeFileAtomic(EVENTS_PATH, JSON.stringify(data, null, 2) + "\n");
   console.log(`\n✓ Cleared .image on ${cleared} events whose OG image failed validation`);
 }

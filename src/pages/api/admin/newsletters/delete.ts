@@ -9,17 +9,16 @@
 
 import type { APIRoute } from "astro";
 import { readTracker, markDeleted } from "../../../../lib/lookout/tracker.ts";
+import { isAdmin } from "../../../../lib/adminAuth";
 
 export const prerender = false;
 
 async function handle(request: Request): Promise<Response> {
-  const url = new URL(request.url);
-  const expected = process.env.ADMIN_KEY ?? "";
-  const provided = url.searchParams.get("key") ?? "";
-  if (!expected || provided !== expected) {
+  if (!isAdmin(request)) {
     return Response.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 
+  const url = new URL(request.url);
   const id = url.searchParams.get("id") ?? "";
   if (!id) {
     return Response.json({ ok: false, error: "missing id" }, { status: 400 });

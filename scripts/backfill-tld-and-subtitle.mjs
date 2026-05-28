@@ -18,6 +18,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = resolve(__dirname, "../src/data/south-bay/upcoming-events.json");
@@ -102,7 +103,7 @@ function main() {
     return;
   }
 
-  writeFileSync(DATA_PATH, JSON.stringify(data, null, 2) + "\n");
+  writeFileAtomic(DATA_PATH, JSON.stringify(data, null, 2) + "\n");
   console.log(`Dropped TLD-orphan descriptions: ${tldDropped}`);
   console.log(`Stripped subtitle-aware venue suffix: ${subtitleStripped}\n`);
   for (const s of samples.tld) {

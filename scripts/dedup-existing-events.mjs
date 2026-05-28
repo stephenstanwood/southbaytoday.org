@@ -10,9 +10,10 @@
  * Run: node scripts/dedup-existing-events.mjs
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -31,5 +32,5 @@ if (droppedCount === 0) {
 
 raw.events = kept;
 raw.eventCount = kept.length;
-writeFileSync(EVENTS_PATH, JSON.stringify(raw, null, 2));
+writeFileAtomic(EVENTS_PATH, JSON.stringify(raw, null, 2));
 console.log(`Dropped ${droppedCount} fuzzy duplicates: ${before} → ${kept.length}`);

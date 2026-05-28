@@ -13,10 +13,11 @@
 //
 // Requires GOOGLE_PLACES_API_KEY in .env.local (Mini).
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -121,13 +122,13 @@ async function worker() {
     else fail++;
     if (done % 100 === 0) {
       process.stdout.write(`  ${done}/${scored.length} | summary=${ok} no-summary=${noSummary} fail=${fail}\n`);
-      writeFileSync(OUT, JSON.stringify(cache, null, 2));
+      writeFileAtomic(OUT, JSON.stringify(cache, null, 2));
     }
   }
 }
 
 await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 
-writeFileSync(OUT, JSON.stringify(cache, null, 2));
+writeFileAtomic(OUT, JSON.stringify(cache, null, 2));
 console.log(`\nDone. ${ok} with editorialSummary, ${noSummary} without, ${fail} failed. Output: ${OUT}`);
 console.log(`Coverage: ${((ok / scored.length) * 100).toFixed(1)}% have a Google editorial summary.`);

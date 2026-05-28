@@ -15,9 +15,10 @@
  * Cap: 30 per city, sorted by rating desc, then ratingCount desc.
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_PATH = join(__dirname, "..", "src", "data", "south-bay", "places.json");
@@ -76,7 +77,7 @@ const out = {
   cities: byCity,
 };
 
-writeFileSync(OUT_PATH, JSON.stringify(out));
+writeFileAtomic(OUT_PATH, JSON.stringify(out));
 
 console.log(`✓ Wrote ${out.stats.totalCandidates} candidates across ${Object.keys(byCity).length} cities → ${OUT_PATH}`);
 for (const [c, n] of Object.entries(out.stats.cities).sort((a, b) => b[1] - a[1])) {

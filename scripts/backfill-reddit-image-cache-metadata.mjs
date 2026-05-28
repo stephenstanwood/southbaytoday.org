@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { DATA_DIR } from "./lib/paths.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
 
@@ -117,7 +118,7 @@ async function main() {
       cache[id].topic = r.topic || null;
       updated++;
     }
-    writeFileSync(IMAGE_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+    writeFileAtomic(IMAGE_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
     console.log(`  ✓ wrote ${updated}/${toClassify.length} so far`);
   }
 

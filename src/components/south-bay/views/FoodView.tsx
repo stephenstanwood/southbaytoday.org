@@ -76,6 +76,7 @@ function FoodTile({ item }: { item: FoodItem }) {
           src={photo}
           alt=""
           loading="lazy"
+          decoding="async"
           onError={(e) => {
             const img = e.currentTarget;
             if (item.image && img.dataset.fallbackApplied !== "true") {

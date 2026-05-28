@@ -11,10 +11,11 @@
  * Env: BLOB_READ_WRITE_TOKEN (from .env.local)
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { head, list } from "@vercel/blob";
+import { writeFileAtomic } from "./lib/io.mjs";
 import {
   ACRONYM_FIXES,
   VIRTUAL_TITLE_SIGNALS,
@@ -150,5 +151,5 @@ const out = {
   events: fresh,
 };
 
-writeFileSync(OUT_PATH, JSON.stringify(out, null, 2));
+writeFileAtomic(OUT_PATH, JSON.stringify(out, null, 2));
 console.log(`✅ inbound-events.json: ${fresh.length} events (${events.length} total in blob)`);

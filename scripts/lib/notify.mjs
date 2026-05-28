@@ -8,9 +8,10 @@
 // Per-key cooldown via /tmp so a noisy run only fires one DM. Best-effort —
 // never throws, never blocks the caller.
 
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { writeFileAtomic } from "./io.mjs";
 
 const COOLDOWN_MIN = 60;
 
@@ -31,7 +32,7 @@ function inCooldown(key) {
 }
 
 function stampCooldown(key) {
-  try { writeFileSync(cooldownFile(key), String(Date.now())); } catch {}
+  try { writeFileAtomic(cooldownFile(key), String(Date.now())); } catch {}
 }
 
 /**

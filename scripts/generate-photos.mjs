@@ -13,7 +13,8 @@
  *   9 = CC0 (public domain)  10 = PDM
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { createHash } from "crypto";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -138,7 +139,7 @@ async function main() {
     cities: results,
   };
 
-  writeFileSync(OUT, JSON.stringify(out, null, 2));
+  writeFileAtomic(OUT, JSON.stringify(out, null, 2));
   console.log(`\n✅ Done — ${total} photos across ${CITIES.length} cities → ${OUT}`);
 }
 

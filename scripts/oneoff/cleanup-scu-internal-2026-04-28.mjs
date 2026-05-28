@@ -3,6 +3,7 @@
 // filter takes effect immediately (before the next nightly regen). Mirrors the
 // patterns added to generate-events.mjs in the same commit.
 import fs from "node:fs";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 const PATH = "src/data/south-bay/upcoming-events.json";
 const URL_PATHS = /\/(human-resources|advancement-services|teaching-and-learning|campus-ministry)\//i;
@@ -22,6 +23,6 @@ data.events = data.events.filter((e) => {
 });
 data.eventCount = data.events.length;
 
-fs.writeFileSync(PATH, JSON.stringify(data, null, 2) + "\n");
+writeFileAtomic(PATH, JSON.stringify(data, null, 2) + "\n");
 console.log(`Dropped ${before - data.events.length} SCU internal events:`);
 for (const d of dropped) console.log(`  - ${d.title}`);

@@ -47,6 +47,7 @@ export default memo(function PhotoStrip() {
       <img
         src={p.thumb}
         alt={p.title}
+        decoding="async"
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         onError={(e) => { (e.currentTarget.closest("a") as HTMLElement).style.display = "none"; }}
       />

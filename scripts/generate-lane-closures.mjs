@@ -11,7 +11,7 @@
  * Run: node scripts/generate-lane-closures.mjs
  */
 
-import { writeFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -136,7 +136,7 @@ async function main() {
       closures: [],
       error: `HTTP ${res.status}`,
     };
-    writeFileSync(OUT_PATH, JSON.stringify(fallback, null, 2));
+    writeFileAtomic(OUT_PATH, JSON.stringify(fallback, null, 2));
     console.warn(`[lane-closures] feed returned ${res.status} — wrote empty payload`);
     return;
   }
@@ -259,7 +259,7 @@ async function main() {
     closures: trimmed,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2));
+  writeFileAtomic(OUT_PATH, JSON.stringify(payload, null, 2));
   console.log(
     `[lane-closures] ${stats.total} closures (${stats.full} full, ${stats.activeNow} active) → ${trimmed.length} written (${activeNow.length} active + ${Math.min(upcoming.length, UPCOMING_CAP)} upcoming)`,
   );

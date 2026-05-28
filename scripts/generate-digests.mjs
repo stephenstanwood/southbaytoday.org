@@ -12,10 +12,11 @@
  *   node --env-file=.env.local scripts/generate-digests.mjs
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "digests.json");
@@ -398,7 +399,7 @@ async function main() {
     return;
   }
 
-  writeFileSync(OUT_PATH, JSON.stringify(digests, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(digests, null, 2) + "\n");
   console.log(`\nDone — ${Object.keys(digests).length} digests written to ${OUT_PATH}`);
 }
 

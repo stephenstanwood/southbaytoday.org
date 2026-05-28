@@ -1509,6 +1509,20 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     noCache = false,
   } = body;
 
+  // Defensive input caps — these arrays come straight from the client and feed
+  // normalization + the Claude prompt. Without bounds, a crafted request could
+  // send megabyte arrays. Limits sit far above any legitimate session. Also
+  // doubles as an array-type guard (the lockedCards for..of below would
+  // misbehave on a non-array value).
+  const overCap = (a: unknown, max: number) => Array.isArray(a) && a.length > max;
+  if (
+    overCap(lockedCards, 20) || overCap(lockedIds, 20) ||
+    overCap(dismissedIds, 300) || overCap(dismissedNames, 300) ||
+    overCap(blockedNames, 300) || overCap(recentlyShown, 100)
+  ) {
+    return errJson("Too many items in request", 413);
+  }
+
   // Merge lockedCards into lockedIds + bucket map.
   const lockedBucketMap = new Map<string, Bucket | null>();
   for (const lc of lockedCards) {

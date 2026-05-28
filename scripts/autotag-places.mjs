@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { ARTIFACTS } from "./lib/paths.mjs";
 import { autotagPlace } from "./lib/infer-place-tags.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const DRY = process.argv.includes("--dry");
 
@@ -47,5 +48,5 @@ if (DRY) {
   process.exit(0);
 }
 
-writeFileSync(ARTIFACTS.places, JSON.stringify(json, null, 2));
+writeFileAtomic(ARTIFACTS.places, JSON.stringify(json, null, 2));
 console.log(`\nwrote ${ARTIFACTS.places}`);

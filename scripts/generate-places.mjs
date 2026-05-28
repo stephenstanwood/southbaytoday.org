@@ -10,10 +10,11 @@
 //        or set GOOGLE_PLACES_API_KEY in .env.local
 // ---------------------------------------------------------------------------
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ARTIFACTS, DATA_DIR, REPO_ROOT, generatorMeta } from "./lib/paths.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { autotagPlace } from "./lib/infer-place-tags.mjs";
 
 // ---------------------------------------------------------------------------
@@ -721,7 +722,7 @@ async function main() {
   };
 
   const outPath = join(DATA_DIR, "places.json");
-  writeFileSync(outPath, JSON.stringify(output, null, 2));
+  writeFileAtomic(outPath, JSON.stringify(output, null, 2));
 
   // Gate: block bad regenerations from going out (e.g. non-CA contamination,
   // slug/address mismatches). Script exits non-zero on failure; caller sees

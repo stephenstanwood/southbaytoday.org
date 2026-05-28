@@ -15,6 +15,7 @@
 
 import { chromium } from "playwright";
 import { writeFileSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
@@ -280,6 +281,6 @@ report.push(await tryScraper(page, "Camp CMT (image pricing)",  scrapeCampCmt));
 
 await browser.close();
 
-writeFileSync(OUT_PATH, JSON.stringify({ scrapedAt: new Date().toISOString(), report }, null, 2));
+writeFileAtomic(OUT_PATH, JSON.stringify({ scrapedAt: new Date().toISOString(), report }, null, 2));
 console.log(`\n📄 Report written to ${OUT_PATH}`);
 console.log(`   Total scrapers: ${report.length} · OK: ${report.filter((r) => r.ok).length}`);

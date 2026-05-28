@@ -8,9 +8,9 @@
  * Run: node scripts/generate-outages.mjs
  */
 
-import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "outages.json");
@@ -51,7 +51,7 @@ async function main() {
   } catch (err) {
     console.error("PG&E API error:", err.message);
     // Write empty outages rather than crashing the builder
-    writeFileSync(
+    writeFileAtomic(
       OUT_PATH,
       JSON.stringify({ outages: [], generatedAt: new Date().toISOString(), error: err.message }, null, 2) + "\n",
     );
@@ -89,7 +89,7 @@ async function main() {
     sourceUrl: "https://pgealerts.alerts.pge.com/outagecenter/",
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${outages.length} outage(s), ${totalCustomers} customers affected`);
   outages.forEach((o) =>
     console.log(`  • ${o.city}: ${o.customers ?? "?"} customers — ${o.cause ?? "unknown cause"} — ERT: ${o.etor ?? "TBD"}`)

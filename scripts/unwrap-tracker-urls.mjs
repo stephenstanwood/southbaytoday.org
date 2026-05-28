@@ -18,6 +18,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { unwrapMany, isTrackerUrl } from "../src/lib/south-bay/unwrapTrackerUrl.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -31,7 +32,7 @@ function loadJson(path) {
 }
 
 function writeJson(path, data) {
-  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
+  writeFileAtomic(path, JSON.stringify(data, null, 2) + "\n");
 }
 
 async function processInbound() {

@@ -9,9 +9,9 @@
  * Run: node scripts/generate-health-scores.mjs
  */
 
-import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { writeFileAtomic } from "./lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "health-scores.json");
@@ -72,7 +72,7 @@ async function main() {
   console.log(`  ${rawInspections.length} yellow/red inspections found`);
 
   if (rawInspections.length === 0) {
-    writeFileSync(
+    writeFileAtomic(
       OUT_PATH,
       JSON.stringify({ flags: [], generatedAt: new Date().toISOString() }, null, 2) + "\n",
     );
@@ -156,7 +156,7 @@ async function main() {
     sourceUrl: "https://data.sccgov.org/stories/s/SCC-DEH-Food-Facility-Inspections-Data/8ptb-6646/",
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ ${flags.length} flags written to health-scores.json`);
   flags.slice(0, 10).forEach((f) =>
     console.log(`  • [${f.result}] ${f.name} — ${f.city} (${f.date}) score=${f.score ?? "?"}`)
