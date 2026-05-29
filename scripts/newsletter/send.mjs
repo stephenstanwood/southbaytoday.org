@@ -17,6 +17,7 @@ import {
   publishNewsletterArchive, recordNewsletterSend, sendNewsletterDiscordDm,
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
+import { generateNewsletterHero } from "./generate-hero.mjs";
 
 const args = process.argv.slice(2);
 function flag(name) {
@@ -31,6 +32,17 @@ const dryRun = bool("dry-run");
 const editorial = !bool("no-editorial");
 
 async function main() {
+  // Real broadcasts regenerate the designed day-plan hero poster first; skip for
+  // QA (--test/--dry-run) to avoid burning Recraft credits. A failure falls back
+  // to the first card's photo, so it never blocks the send.
+  if (!testTo && !dryRun) {
+    try {
+      await generateNewsletterHero(date);
+    } catch (err) {
+      console.warn(`⚠️  newsletter hero gen failed: ${err.message} — using card-image fallback`);
+    }
+  }
+
   const data = await assembleNewsletterData(date, { editorial });
   const { subject, html } = renderEmail(data);
 
