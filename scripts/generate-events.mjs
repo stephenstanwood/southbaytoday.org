@@ -1009,6 +1009,22 @@ function cleanTitle(title) {
         .trim();
     } while (t !== prev);
   }
+  // Strip a trailing colon left by source subtitles. Stanford Localist
+  // ("Public Tour | Cantor Highlights:") and Meetup ("Brunch Ethics at
+  // Jack's:") emit titles whose trailing subtitle/label got truncated,
+  // leaving a dangling colon — no event title legitimately ends in one.
+  t = t.replace(/\s*:\s*$/, "");
+  // Strip a trailing sentence period when the final token is a full word
+  // (≥4 letters) and not a known abbreviation. Meetup hike titles arrive as
+  // full sentences ("Friday Night Hike @ Rancho San Antonio in Cupertino.",
+  // "Almaden Quicksilver Hike @ Mockingbird Hill Entrance."). The ≥4-letter
+  // guard + abbreviation set keeps terminal-period abbreviations intact:
+  // "Damon Wayans Jr." (Jr = 2 letters), "W.A.S.P." (final run is 1 letter),
+  // "Disney's The Lion King Jr.", and "...Bros."
+  {
+    const TITLE_ABBR = new Set(["Blvd", "Corp", "Dept", "Univ", "Assn", "Bros", "Mtns"]);
+    t = t.replace(/\b([A-Za-z]{4,})\.\s*$/, (m, word) => (TITLE_ABBR.has(word) ? m : word));
+  }
   // Apply known recurring fixes from source data
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
@@ -5092,9 +5108,15 @@ async function fetchSjdaEvents() {
         // string. cleanVenue strips out address blobs and returns "" so the
         // fallback ("Downtown San Jose") kicks in.
         const venue = cleanVenue(rawVenue);
-        const addr = typeof e.venue === "object" && e.venue
-          ? `${(e.venue.address || "").replace(/[\s,]+$/, "")}, ${e.venue.city || "San Jose"}`.trim()
-          : "";
+        // Only build a joined address when SJDA actually supplies a street.
+        // When e.venue.address is empty the old join produced a bare
+        // ", San Jose" tail (the `city` field already carries san-jose), which
+        // surfaced as a stray leading-comma address on cards.
+        const addr = (() => {
+          if (typeof e.venue !== "object" || !e.venue) return "";
+          const street = (e.venue.address || "").replace(/[\s,]+$/, "").trim();
+          return street ? `${street}, ${e.venue.city || "San Jose"}` : "";
+        })();
         const desc = e.excerpt
           ? truncate(stripHtml(typeof e.excerpt === "string" ? e.excerpt : e.excerpt?.rendered || ""))
           : "";
