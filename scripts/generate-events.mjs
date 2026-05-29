@@ -6449,6 +6449,25 @@ async function main() {
         .replace(/[\u00a0]/g, " ") // non-breaking space → regular space
         .replace(/\s+/g, " ").trim();
     }
+    // Address gets the same entity/whitespace treatment as venue, plus a strip
+    // of CivicPlus "View Map" link text and normalized comma spacing. Sources
+    // like City of Cupertino emit "Venue, Street, Zip, View Map" with
+    // non-breaking-space separators; Palo Alto emits double-spaced streets.
+    if (e.address) {
+      e.address = e.address
+        .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+        .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+        .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&nbsp;/g, " ")
+        .replace(/<[^>]+>/g, "")
+        .replace(/[ ]/g, " ")          // non-breaking space → regular space
+        .replace(/,?\s*View Map\s*$/i, "")  // strip CivicPlus map-link CTA
+        .replace(/\s+/g, " ")
+        .replace(/\s*,\s*/g, ", ")          // normalize comma spacing
+        .replace(/(?:\s*,)+\s*$/, "")       // strip trailing comma(s)
+        .replace(/^\s*,\s*/, "")            // strip leading comma
+        .trim();
+    }
     // WordPress sources emit &#038; (and &amp;) inside href attrs; the scraper
     // grabs the raw attr text, so the entity survives into the URL. Decode the
     // ampersand variants so query-string separators round-trip as `&` when the
