@@ -1594,6 +1594,10 @@ function cleanVenue(raw) {
   v = v.replace(/^Dr\s+Funk\b/, "Dr. Funk");
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
   if (/^\d+\s/.test(v)) return "";
+  // Organizer typed raw GPS coordinates into the venue-name field (e.g.
+  // "37°19'05.5\"N 121°54'25.9\"W" or "37.318, -121.907"). Coordinates aren't a
+  // display name — return empty so the caller falls back to the group/source name.
+  if (/\d\s*°/.test(v) || /^[-+]?\d{1,3}\.\d{3,}\s*,\s*[-+]?\d{1,3}\.\d{3,}$/.test(v)) return "";
   // If the cleaning passes left only digits behind (e.g. "41" or "457" — typically
   // a CivicPlus location field that contained only an event ID or partial address),
   // return empty so the caller falls back to the source name.
@@ -1678,7 +1682,7 @@ function inferCategory(title, desc, type, venue = "") {
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
   if (isMedicalProcedureEvent) return "education";
   // Startup pitch events hosted in campus theaters should be community, not arts.
-  const isStartupPitch = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night)\b/.test(t);
+  const isStartupPitch = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night|pitch\s+circuit)\b/.test(t);
   if (isStartupPitch) return "community";
   // Academic/professional conferences in the title are always education — must run BEFORE
   // the arts check so medical/health conference descriptions containing "performance" (clinical
@@ -5089,7 +5093,7 @@ async function fetchSjdaEvents() {
         // fallback ("Downtown San Jose") kicks in.
         const venue = cleanVenue(rawVenue);
         const addr = typeof e.venue === "object" && e.venue
-          ? `${e.venue.address || ""}, ${e.venue.city || "San Jose"}`.trim()
+          ? `${(e.venue.address || "").replace(/[\s,]+$/, "")}, ${e.venue.city || "San Jose"}`.trim()
           : "";
         const desc = e.excerpt
           ? truncate(stripHtml(typeof e.excerpt === "string" ? e.excerpt : e.excerpt?.rendered || ""))
