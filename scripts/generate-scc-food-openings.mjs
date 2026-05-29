@@ -295,13 +295,41 @@ function shouldSkip(item) {
  * Generate one-line blurbs for a list of recently opened restaurants using Claude Haiku.
  * Returns a map of item id → blurb string.
  */
-async function generateBlurbs(items) {
+function blurbList(items) {
+  return items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"}, ${i.cityName}`).join("\n");
+}
+
+/**
+ * Shared Haiku call: runs `prompt`, parses the returned [{name, blurb}] array,
+ * and maps it back onto item ids. The blurb generators below differ only in
+ * their prompt + log label.
+ */
+async function generateBlurbMap(items, prompt, label) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey || items.length === 0) return {};
-
   const client = new Anthropic({ apiKey });
-  const list = items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"}, ${i.cityName}`).join("\n");
+  try {
+    const msg = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 1024,
+      messages: [{ role: "user", content: prompt }],
+    });
+    let text = msg.content[0]?.text ?? "[]";
+    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
+    const parsed = JSON.parse(text);
+    const map = {};
+    for (const entry of parsed) {
+      const match = items.find((i) => i.name === entry.name);
+      if (match) map[match.id] = entry.blurb;
+    }
+    return map;
+  } catch (err) {
+    console.warn(`${label} failed:`, err.message);
+    return {};
+  }
+}
 
+async function generateBlurbs(items) {
   const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
 
 For each newly opened restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it offers. Focus on cuisine type, chain background, or what makes it distinctive. No exclamation points, no hype. Don't start with the restaurant name.
@@ -312,30 +340,10 @@ Examples of good blurbs:
 - "Robotic smoothie kiosk at Grant Rd and El Camino Real."
 
 Restaurants:
-${list}
+${blurbList(items)}
 
 Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
-
-  try {
-    const msg = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: prompt }],
-    });
-    let text = msg.content[0]?.text ?? "[]";
-    // Strip markdown code fences if present
-    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
-    const parsed = JSON.parse(text);
-    const map = {};
-    for (const entry of parsed) {
-      const match = items.find((i) => i.name === entry.name);
-      if (match) map[match.id] = entry.blurb;
-    }
-    return map;
-  } catch (err) {
-    console.warn("Blurb generation failed:", err.message);
-    return {};
-  }
+  return generateBlurbMap(items, prompt, "Blurb generation");
 }
 
 /**
@@ -343,12 +351,6 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
  * Returns a map of item id → blurb string.
  */
 async function generateComingSoonBlurbs(items) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey || items.length === 0) return {};
-
-  const client = new Anthropic({ apiKey });
-  const list = items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"}, ${i.cityName}`).join("\n");
-
   const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
 
 For each "coming soon" restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it will offer. Focus on cuisine type, chain background, or location context. No exclamation points, no hype. Don't start with the restaurant name.
@@ -359,29 +361,10 @@ Examples of good blurbs:
 - "Sushi restaurant opening on Los Gatos Blvd."
 
 Restaurants:
-${list}
+${blurbList(items)}
 
 Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
-
-  try {
-    const msg = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: prompt }],
-    });
-    let text = msg.content[0]?.text ?? "[]";
-    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
-    const parsed = JSON.parse(text);
-    const map = {};
-    for (const entry of parsed) {
-      const match = items.find((i) => i.name === entry.name);
-      if (match) map[match.id] = entry.blurb;
-    }
-    return map;
-  } catch (err) {
-    console.warn("Coming-soon blurb generation failed:", err.message);
-    return {};
-  }
+  return generateBlurbMap(items, prompt, "Coming-soon blurb generation");
 }
 
 // ── Google Places photoRef enrichment ────────────────────────────────────
