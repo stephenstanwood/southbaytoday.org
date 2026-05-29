@@ -49,6 +49,7 @@
 
 import { readFileSync, existsSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { catSignal } from "./lib/notify.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
@@ -6697,8 +6698,32 @@ async function main() {
     events: collapsedEvents,
   };
 
+  // Capture the previous run BEFORE overwriting, for the regression guard below.
+  let prevRun = null;
+  try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ Done — ${collapsedEvents.length} events (${ongoingCount} ongoing) from ${sourceNames.length} sources → ${OUT_PATH}`);
+
+  // Regression guard. Scrapers fail quietly — each logs "⚠️ <Source>" and the run
+  // continues with fewer events — so a whole batch breaking goes unnoticed. If the
+  // contributing-source count or total events craters vs the previous run, DM.
+  if (prevRun) {
+    const prevSources = prevRun.sources?.length || 0;
+    const prevEvents = prevRun.eventCount || prevRun.events?.length || 0;
+    const lostSources = prevSources - sourceNames.length;
+    if (prevSources >= 10 && (lostSources >= 4 || collapsedEvents.length < prevEvents * 0.6)) {
+      console.warn(`⚠️  Regression vs previous run: ${prevSources}→${sourceNames.length} sources, ${prevEvents}→${collapsedEvents.length} events`);
+      await catSignal({
+        key: "events-source-regression",
+        title: "Event pipeline regression",
+        body:
+          `generate-events dropped from **${prevSources}→${sourceNames.length}** sources and ` +
+          `**${prevEvents}→${collapsedEvents.length}** events vs the previous run. ` +
+          `A batch of scrapers likely broke — check the run log for ⚠️ lines.`,
+      });
+    }
+  }
 
   // Summary by city
   const byCity = {};
