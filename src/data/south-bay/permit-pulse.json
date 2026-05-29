@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-28T23:10:45.124Z",
+      "generatedAt": "2026-05-29T11:07:36.503Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 21 – May 28",
+      "dateRange": "May 22 – May 29",
       "stats": {
         "total": 284,
-        "notable": 12,
-        "newUnits": 1,
-        "totalValuation": 181052318
+        "notable": 14,
+        "newUnits": 2,
+        "totalValuation": 147332469
       },
       "permits": [
+        {
+          "id": "2022-686550-RS",
+          "address": "2915 Remington Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion Revised From ADU to Jadu",
+          "valuation": 67137,
+          "units": 1,
+          "issueDate": "2026-05-27",
+          "subtype": "2nd Unit Added"
+        },
         {
           "id": "2025-138790-RS",
           "address": "258 Duffy Ct #2",
@@ -39,28 +51,16 @@
           "subtype": "Data Center"
         },
         {
-          "id": "2026-119455-CI",
-          "address": "5853 Rue Ferrari",
+          "id": "2026-119997-CI",
+          "address": "1935 S 10th St",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "PLD Athena Phase B - Site Work",
-          "valuation": 35000000,
+          "workType": "ReRoof",
+          "description": "Commercial/Industrial",
+          "valuation": 1302000,
           "units": 0,
-          "issueDate": "2026-05-22",
-          "subtype": "R & D Lab"
-        },
-        {
-          "id": "2026-118525-CI",
-          "address": "155 Bernal Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Blossom Dental Excellence TI for Dental Office",
-          "valuation": 900000,
-          "units": 0,
-          "issueDate": "2026-05-22",
-          "subtype": "Medical/Dental Clinic"
+          "issueDate": "2026-05-27",
+          "subtype": "Commercial/Industrial"
         },
         {
           "id": "2026-118779-CI",
@@ -75,6 +75,18 @@
           "subtype": "Restaurant"
         },
         {
+          "id": "2026-114094-CI",
+          "address": "3011 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Intermolecular Clf3 Gas Cabinet Install",
+          "valuation": 600000,
+          "units": 0,
+          "issueDate": "2026-05-27",
+          "subtype": "R & D Lab"
+        },
+        {
           "id": "2026-118316-CI",
           "address": "30 Rio Robles",
           "category": "commercial-large",
@@ -87,52 +99,40 @@
           "subtype": "Office"
         },
         {
-          "id": "2026-119427-CI",
-          "address": "441 W Trimble Rd",
+          "id": "2026-119483-CI",
+          "address": "2855 Stevens Creek Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Journeys Tenant Improvement",
+          "valuation": 325000,
+          "units": 0,
+          "issueDate": "2026-05-27",
+          "subtype": "Retail"
+        },
+        {
+          "id": "2026-111295-CI",
+          "address": "795 Almaden Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Finish Interior",
+          "description": "(Bemp 100%) Childcare Facility",
+          "valuation": 325000,
+          "units": 0,
+          "issueDate": "2026-05-27",
+          "subtype": "School/Daycare"
+        },
+        {
+          "id": "2026-119973-CI",
+          "address": "2360 Qume Dr",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "ReRoof",
-          "description": "Office",
-          "valuation": 325500,
+          "description": "(B 100%) Reroof",
+          "valuation": 202368,
           "units": 0,
-          "issueDate": "2026-05-22",
+          "issueDate": "2026-05-27",
           "subtype": "Office"
-        },
-        {
-          "id": "2025-135664-RS",
-          "address": "2143 Bello Av",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Additions/Alterations",
-          "description": "Main Residence Demo/ Rebuild",
-          "valuation": 684522,
-          "units": 1,
-          "issueDate": "2026-05-26",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-103038-RS",
-          "address": "3928 Caxton Ct",
-          "category": "residential-large",
-          "categoryLabel": "Major Renovation",
-          "workType": "Additions/Alterations",
-          "description": "Code Case Aro Homes Demo/Rebuild Case #201307550",
-          "valuation": 504149,
-          "units": 1,
-          "issueDate": "2026-05-26",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-119004-CI",
-          "address": "2360 Zanker Rd",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Tenant Improvement",
-          "description": "(B 100%) Rack Installation",
-          "valuation": 167965,
-          "units": 0,
-          "issueDate": "2026-05-22",
-          "subtype": "Warehouse/Storage"
         }
       ]
     },
