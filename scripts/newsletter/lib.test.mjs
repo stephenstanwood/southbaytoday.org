@@ -72,3 +72,29 @@ test("formatLongDate does NOT drift across the year boundary (PT, not UTC)", () 
   assert.ok(formatLongDate("2026-01-01").includes("January 1, 2026"));
   assert.ok(!formatLongDate("2026-01-01").includes("2025"));
 });
+
+// ── Dark-mode email ──────────────────────────────────────────────────────────
+
+test("email head carries dark-mode overrides, keeps light styles, spares accents", () => {
+  const { html } = renderEmail({
+    date: "2026-05-28",
+    longDate: "Thursday, May 28, 2026",
+    weather: null, dayPlan: null, dayPlanBlurb: "",
+    tonightPick: null, tonightPickBlurb: "",
+    todayEvents: [], featuredEvents: [], recentOpenings: [],
+    tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  });
+  // Color-scheme signal + media query are present.
+  assert.match(html, /<meta name="color-scheme" content="light dark">/);
+  assert.match(html, /@media \(prefers-color-scheme: dark\)/);
+  // Structural ink color gets a dark override; the light inline value still ships.
+  assert.ok(html.includes('[style*="color:#1a1a2e"]'));
+  // Accent hexes must NOT appear inside the dark block (left vibrant, not flattened).
+  const darkBlock = html.slice(
+    html.indexOf("@media (prefers-color-scheme: dark)"),
+    html.indexOf("</style>"),
+  );
+  assert.equal(darkBlock.includes("#7c3aed"), false);
+  assert.equal(darkBlock.includes("#3b4ef0"), false);
+});

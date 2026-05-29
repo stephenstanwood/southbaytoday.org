@@ -1043,6 +1043,24 @@ ${imageMeta}
 <meta name="twitter:card" content="${twitterCard}">
 <meta name="twitter:title" content="${esc(subject)}">
 <meta name="twitter:description" content="${esc(description)}">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<style>
+  /* Dark-mode overrides for clients that honor prefers-color-scheme (Apple Mail,
+     iOS Mail, Outlook for Mac). Attribute selectors key off the exact PALETTE hex
+     values used inline, so no per-section markup changes are needed; accent
+     colors (blue #3b4ef0, purple #7c3aed) are intentionally left vibrant. Gmail
+     and Outlook-Windows ignore <style> media queries and keep the light theme. */
+  @media (prefers-color-scheme: dark) {
+    [style*="background:#ffffff"] { background:#16161f !important; }
+    [style*="background:#f7f6fb"] { background:#1f1f2b !important; }
+    [style*="color:#1a1a2e"] { color:#ececf3 !important; }
+    [style*="color:#5b6478"] { color:#aeb6c6 !important; }
+    [style*="color:#9099a8"] { color:#8b93a4 !important; }
+    [style*="#e4e6ee"] { border-color:#2e2e40 !important; }
+    [style*="8px solid #f7f6fb"] { border-color:#1f1f2b !important; }
+  }
+</style>
 </head>
 <body style="margin:0;padding:0;background:${PALETTE.card};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:${PALETTE.ink};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${esc(description)}</div>
