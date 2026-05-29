@@ -4,11 +4,12 @@
 // ---------------------------------------------------------------------------
 
 import { spawn } from "node:child_process";
-import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { loadEnvLocal } from "../lib/env.mjs";
 import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 loadEnvLocal();
 
@@ -1517,7 +1518,7 @@ function saveNewsletterReflection({ reflection, data, subject, sentAt }) {
     guidance,
     reflections: [...(current.reflections || []), entry].slice(-30),
   };
-  writeFileSync(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");
 }
 
 function numberInRange(value, min, max) {
