@@ -158,6 +158,12 @@ export default function ElectionsCard() {
     .sort((a, b) => a.isoDate.localeCompare(b.isoDate))
     .slice(0, 4);
 
+  // Once the standard registration deadline has passed but the election is
+  // still ahead, remind voters they can still register — California offers
+  // same-day Conditional Voter Registration through Election Day.
+  const regDeadlinePassed = daysUntil("2026-05-18") < 0;
+  const showSameDayNote = regDeadlinePassed && focusDays >= 0;
+
   return (
     <div
       style={{
@@ -277,6 +283,27 @@ export default function ElectionsCard() {
           })}
         </div>
       </div>
+
+      {/* ── Same-day registration reminder ── */}
+      {showSameDayNote && (
+        <div
+          style={{
+            marginBottom: 14,
+            padding: "8px 10px",
+            background: "#eef2ff",
+            border: "1px solid #c7d2fe",
+            borderRadius: 4,
+            fontSize: 11,
+            color: "#3730a3",
+            lineHeight: 1.5,
+          }}
+        >
+          <strong>Missed the registration deadline?</strong> You can still register and vote
+          the same day through Election Day. California offers Conditional Voter Registration
+          at any Santa Clara County vote center or the Registrar's office — your ballot is
+          counted once registration is verified.
+        </div>
+      )}
 
       {/* ── Races on the ballot ── */}
       <div style={{ marginBottom: 14 }}>
