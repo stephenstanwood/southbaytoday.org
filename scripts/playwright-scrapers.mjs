@@ -17,7 +17,9 @@
  *   node scripts/playwright-scrapers.mjs
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
+import { todayPT } from "./lib/dates.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
@@ -47,7 +49,7 @@ function isoDate(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
-const TODAY = new Date().toISOString().split("T")[0];
+const TODAY = todayPT();
 
 /** Run async tasks with bounded concurrency */
 async function pool(fns, concurrency = 4) {
@@ -2400,7 +2402,7 @@ async function main() {
     events,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2));
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2));
   console.log(`\n✅ Wrote ${events.length} events from ${Object.keys(bySrc).length} sources to ${OUT_PATH}`);
   console.log("   Breakdown:", Object.entries(bySrc).map(([s, n]) => `${s}: ${n}`).join(", "));
 }

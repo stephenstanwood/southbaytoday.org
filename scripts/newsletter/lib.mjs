@@ -4,11 +4,12 @@
 // ---------------------------------------------------------------------------
 
 import { spawn } from "node:child_process";
-import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { loadEnvLocal } from "../lib/env.mjs";
 import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
+import { writeFileAtomic } from "../lib/io.mjs";
 
 loadEnvLocal();
 
@@ -70,24 +71,28 @@ function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
-export function loadSocialSchedule() {
-  return readJson(join(DATA_DIR, "social-schedule.json"));
+// Resilient loader: a single missing/corrupt source file must NOT abort the
+// whole newsletter. Returns `fallback` and warns, so the send proceeds with the
+// sections it can build. (send.mjs still refuses a fully-empty issue.)
+function loadOptional(path, fallback, label) {
+  try {
+    return readJson(path);
+  } catch (err) {
+    console.warn(`⚠️  newsletter: ${label} unavailable (${err.message}) — skipping that section`);
+    return fallback;
+  }
 }
 
 export function loadDefaultPlans() {
-  return readJson(join(DATA_DIR, "default-plans.json"));
+  return loadOptional(join(DATA_DIR, "default-plans.json"), { plans: {} }, "default-plans");
 }
 
 export function loadEvents() {
-  return readJson(ARTIFACTS.events);
+  return loadOptional(ARTIFACTS.events, { events: [] }, "events");
 }
 
 export function loadOpenings() {
-  return readJson(ARTIFACTS.foodOpenings);
-}
-
-export function loadAirQuality() {
-  return readJson(ARTIFACTS.airQuality);
+  return loadOptional(ARTIFACTS.foodOpenings, { opened: [] }, "openings");
 }
 
 // ── Weather (Open-Meteo, no key) ───────────────────────────────────────────
@@ -144,25 +149,21 @@ export async function fetchWeather() {
 }
 
 export function loadMeetings() {
-  return readJson(ARTIFACTS.meetings);
+  return loadOptional(ARTIFACTS.meetings, { meetings: {} }, "meetings");
 }
 
 export function loadRedditPulse() {
-  return readJson(ARTIFACTS.redditPulse);
-}
-
-function loadSocialScheduleDay(date) {
-  try {
-    const schedule = loadSocialSchedule();
-    return schedule.days?.[date] || schedule[date] || null;
-  } catch {
-    return null;
-  }
+  return loadOptional(ARTIFACTS.redditPulse, { posts: [] }, "reddit-pulse");
 }
 
 // Reuses the regex-based parser from generate-sv-history.mjs.
 export function loadMilestones() {
-  const src = readFileSync(join(DATA_DIR, "tech-companies.ts"), "utf8");
+  let src;
+  try {
+    src = readFileSync(join(DATA_DIR, "tech-companies.ts"), "utf8");
+  } catch {
+    return [];
+  }
   const startIdx = src.indexOf("export const TECH_MILESTONES");
   if (startIdx === -1) return [];
   const nextExport = src.indexOf("\nexport ", startIdx + 1);
@@ -200,8 +201,7 @@ export function loadMilestones() {
 export async function assembleNewsletterData(date, opts = {}) {
   const editorialEnabled = opts.editorial ?? shouldRunEditorialPass();
   const defaultPlans = loadDefaultPlans();
-  const socialDay = loadSocialScheduleDay(date);
-  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date, socialDay?.["day-plan"]);
+  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date);
 
   const allEvents = loadEvents().events || [];
   const todayEvents = allEvents
@@ -235,7 +235,6 @@ export async function assembleNewsletterData(date, opts = {}) {
   const visuals = newsletterVisuals({
     date,
     longDate: formatLongDate(date),
-    socialDay,
     dayPlan,
     tonightPick,
     featuredEvents,
@@ -269,13 +268,13 @@ export async function assembleNewsletterData(date, opts = {}) {
   });
 }
 
-function makeNewsletterPlan(plan, date, socialSlot = null) {
+function makeNewsletterPlan(plan, date) {
   if (!plan?.cards?.length) return null;
   return {
     ...plan,
     planDate: plan.planDate || date,
     cityName: cityName(plan.city),
-    planUrl: socialSlot?.planUrl || plan.planUrl || `${SITE_URL}/`,
+    planUrl: plan.planUrl || `${SITE_URL}/`,
   };
 }
 
@@ -297,11 +296,9 @@ function firstUsableImage(items, picker) {
   return "";
 }
 
-function newsletterVisuals({ longDate, socialDay, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
-  const dayPlanImage = usableImage(socialDay?.["day-plan"]?.imageUrl)
-    || firstUsableImage(orderedCards(dayPlan), (c) => c.image);
-  const tonightPickImage = usableImage(tonightPick?.image)
-    || usableImage(socialDay?.["tonight-pick"]?.imageUrl);
+function newsletterVisuals({ longDate, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
+  const dayPlanImage = firstUsableImage(orderedCards(dayPlan), (c) => c.image);
+  const tonightPickImage = usableImage(tonightPick?.image);
   const eventsImage = firstUsableImage(featuredEvents, (e) => e.image);
   const openingsImage = firstUsableImage(recentOpenings, (o) => o.image);
   const conversationImage = firstUsableImage(redditPosts, (p) => p.image);
@@ -793,7 +790,6 @@ function applyEditorialJson(data, candidates, edit) {
   revised.visuals = newsletterVisuals({
     date: revised.date,
     longDate: revised.longDate,
-    socialDay: loadSocialScheduleDay(revised.date),
     dayPlan: revised.dayPlan,
     tonightPick: revised.tonightPick,
     featuredEvents: revised.featuredEvents,
@@ -1522,7 +1518,7 @@ function saveNewsletterReflection({ reflection, data, subject, sentAt }) {
     guidance,
     reflections: [...(current.reflections || []), entry].slice(-30),
   };
-  writeFileSync(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");
 }
 
 function numberInRange(value, min, max) {

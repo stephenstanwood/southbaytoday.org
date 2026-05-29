@@ -47,7 +47,8 @@
  *   node scripts/generate-events.mjs
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
@@ -4880,7 +4881,7 @@ function loadTimeBackfillCache() {
 
 function saveTimeBackfillCache(cache) {
   try {
-    writeFileSync(TIME_BACKFILL_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+    writeFileAtomic(TIME_BACKFILL_CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
   } catch { /* non-fatal */ }
 }
 
@@ -6696,7 +6697,7 @@ async function main() {
     events: collapsedEvents,
   };
 
-  writeFileSync(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ Done — ${collapsedEvents.length} events (${ongoingCount} ongoing) from ${sourceNames.length} sources → ${OUT_PATH}`);
 
   // Summary by city
