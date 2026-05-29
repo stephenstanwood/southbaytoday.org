@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-29T11:07:36.503Z",
+      "generatedAt": "2026-05-29T19:09:20.133Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,43 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-28T23:10:47.539Z",
+      "generatedAt": "2026-05-29T19:09:22.432Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 21 – May 28",
+      "dateRange": "May 22 – May 29",
       "stats": {
-        "total": 107,
-        "notable": 4,
+        "total": 104,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01328",
-          "address": "74 Erstwild Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Bathroom remodel. Replaced (E) window with (N) window at the same location, canceled one window, (N) shower enclosure, (N) bathroom exhaust fan",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01334",
-          "address": "627 Tennyson Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Like-for-like interior remodel of the existing powder room and master bathroom.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-21",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01341",
           "address": "1215 Harriet St",
@@ -187,6 +163,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26PLN-00122",
+          "address": "250 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
           "id": "26PLN-00118",
           "address": "4175 Manuela Av",
           "category": "entitlement",
@@ -196,6 +184,42 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-26",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00124",
+          "address": "520 Webster St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00125",
+          "address": "528 High St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
           "subtype": "Over the Counter Approved"
         }
       ]
