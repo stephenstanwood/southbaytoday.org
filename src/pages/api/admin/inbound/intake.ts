@@ -347,8 +347,12 @@ async function fetchReceivedEmail(
   const data = (await res.json()) as Record<string, unknown>;
 
   const text = stringFrom(data.text);
-  const html = stringFrom(data.html);
-  const body = text || stripHtml(html);
+  // Bound the content we hold + forward downstream. A runaway/hostile sender
+  // could deliver multi-MB HTML; the extractor already truncates for the LLM,
+  // but cap here too so dedup hashing + storage stay bounded.
+  const MAX_BODY = 200_000;
+  const html = stringFrom(data.html).slice(0, MAX_BODY);
+  const body = (text || stripHtml(html)).slice(0, MAX_BODY);
 
   const listedFrom = stringFrom(data.from) || fallback.from;
   const from = resolveRealSender(listedFrom, data.headers, data.reply_to);

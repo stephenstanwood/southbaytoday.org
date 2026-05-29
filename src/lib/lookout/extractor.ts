@@ -160,9 +160,9 @@ ${bodyBlock}`;
     messages: [{ role: "user", content: userBlocks }],
   }, _opts);
 
-  const text = response.content
+  const text = (response.content as Array<{ type: string; text?: string }>)
     .filter((block) => block.type === "text")
-    .map((block) => block.text)
+    .map((block) => block.text ?? "")
     .join("");
 
   const jsonText = stripCodeFence(text).trim();
