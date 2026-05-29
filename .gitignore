@@ -6,6 +6,8 @@ node_modules/
 .astro/
 .vercel
 .env*.local
+.env.local.*
+.env*.bak*
 _ORGANIZATIONS.txt
 photo-data.json
 photo-votes.json
