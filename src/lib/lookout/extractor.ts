@@ -184,7 +184,7 @@ ${bodyBlock}`;
  * intentionally preserved: pull-inbound-events.mjs unwraps them before
  * generate-events.mjs tries to backfill missing times from canonical pages.
  */
-function sanitizeExtractedEvent(e: ExtractedEvent): ExtractedEvent {
+export function sanitizeExtractedEvent(e: ExtractedEvent): ExtractedEvent {
   const cleaned = { ...e };
   if (cleaned.sourceUrl) {
     if (cleaned.sourceUrl.startsWith("mailto:")) {
@@ -349,7 +349,7 @@ function extractFlyerImageUrls(html: string): string[] {
   return urls;
 }
 
-function isValidExtractedEvent(e: unknown): e is ExtractedEvent {
+export function isValidExtractedEvent(e: unknown): e is ExtractedEvent {
   if (!e || typeof e !== "object") return false;
   const o = e as Record<string, unknown>;
   return (
@@ -360,7 +360,7 @@ function isValidExtractedEvent(e: unknown): e is ExtractedEvent {
   );
 }
 
-function stripCodeFence(text: string): string {
+export function stripCodeFence(text: string): string {
   const trimmed = text.trim();
   const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
   if (fenced) return fenced[1];
