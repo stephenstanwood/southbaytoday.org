@@ -1572,6 +1572,12 @@ function cleanVenue(raw) {
   // "Council Chambers - 110 E. Main St" or just a partial street number
   // "Saratoga Senior Center - 19655" (CivicPlus often appends only the number).
   v = v.replace(/\s+-\s+\d+(\s+.*)?$/, "");
+  // Strip a bare trailing state ", CA" (no zip) so the city-suffix strip below
+  // can then remove the city. Handles Meetup's "Sanborn-Skyline County Park,
+  // Saratoga, CA" → drop ", CA", then ", Saratoga" → "Sanborn-Skyline County
+  // Park". A real venue name ending in a lone ", CA" token doesn't occur; it's
+  // always the trailing state abbreviation.
+  v = v.replace(/,\s*CA\s*$/i, "");
   // Strip trailing ", <SouthBayCity>" when no street/state/zip follows.
   // Example: "West Valley College, Saratoga" → "West Valley College".
   // The `city` field already carries this info; duplicating it in the venue
