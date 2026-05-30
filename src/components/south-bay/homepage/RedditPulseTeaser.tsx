@@ -97,10 +97,8 @@ export default function RedditPulseTeaser() {
               <div className="rp-tile-bottom">
                 <div className="rp-title">{p.displayTitle || p.title}</div>
                 <div className="rp-meta">
-                  <span>↑ {p.score}</span>
-                  <span>·</span>
-                  <span>💬 {p.numComments}</span>
-                  <span>·</span>
+                  {p.score > 0 && <><span>↑ {p.score}</span><span>·</span></>}
+                  {p.numComments > 0 && <><span>💬 {p.numComments}</span><span>·</span></>}
                   <span>{formatAge(p.ageHours)}</span>
                 </div>
               </div>
