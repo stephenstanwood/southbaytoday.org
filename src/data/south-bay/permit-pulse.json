@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-29T23:09:12.616Z",
+      "generatedAt": "2026-05-30T11:07:55.336Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 22 – May 29",
+      "dateRange": "May 23 – May 30",
       "stats": {
-        "total": 284,
-        "notable": 14,
+        "total": 368,
+        "notable": 17,
         "newUnits": 2,
-        "totalValuation": 147332469
+        "totalValuation": 148890145
       },
       "permits": [
         {
@@ -87,6 +87,18 @@
           "subtype": "R & D Lab"
         },
         {
+          "id": "2026-117608-CI",
+          "address": "1111 Saratoga Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Built Golf Performance Tenant Improvement",
+          "valuation": 520948,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Health Club"
+        },
+        {
           "id": "2026-118316-CI",
           "address": "30 Rio Robles",
           "category": "commercial-large",
@@ -99,6 +111,18 @@
           "subtype": "Office"
         },
         {
+          "id": "2026-119960-CI",
+          "address": "333 Santana Row",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bemp100%) Reformation #1110",
+          "valuation": 464515,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Retail"
+        },
+        {
           "id": "2026-119483-CI",
           "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
@@ -109,58 +133,34 @@
           "units": 0,
           "issueDate": "2026-05-27",
           "subtype": "Retail"
-        },
-        {
-          "id": "2026-111295-CI",
-          "address": "795 Almaden Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Finish Interior",
-          "description": "(Bemp 100%) Childcare Facility",
-          "valuation": 325000,
-          "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "School/Daycare"
-        },
-        {
-          "id": "2026-119973-CI",
-          "address": "2360 Qume Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "(B 100%) Reroof",
-          "valuation": 202368,
-          "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-29T23:09:15.590Z",
+      "generatedAt": "2026-05-30T11:07:57.639Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 22 – May 29",
+      "dateRange": "May 23 – May 30",
       "stats": {
-        "total": 104,
-        "notable": 6,
+        "total": 105,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01341",
-          "address": "1215 Harriet St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-22",
-          "subtype": "Permit Issued"
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00125",
@@ -169,6 +169,18 @@
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00122",
+          "address": "250 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
@@ -193,30 +205,6 @@
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00122",
-          "address": "250 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",

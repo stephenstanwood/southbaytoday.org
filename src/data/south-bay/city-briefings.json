@@ -1,47 +1,39 @@
 {
-  "generatedAt": "2026-05-29T23:10:54.201Z",
-  "weekLabel": "May 29 – Jun 5",
-  "weekStart": "2026-05-29",
-  "weekEnd": "2026-06-05",
+  "generatedAt": "2026-05-30T11:09:41.222Z",
+  "weekLabel": "May 30 – Jun 6",
+  "weekStart": "2026-05-30",
+  "weekEnd": "2026-06-06",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's got a packed Saturday: a film screening of Kintsukuroi at the library, a dance performance from Studio 10, and board games at 7Stars Bar and Grill.",
+      "summary": "Campbell hosts a packed Saturday lineup: a Kintsukuroi film screening, dance performance, board games night, and two separate meetups for immigrants and newcomers.",
       "highlights": [
         {
           "type": "event",
-          "title": "Lunch & Learn: Work2Future",
-          "when": "Fri, May 29 · 12:00 PM",
-          "venue": "Courtyard by Marriott",
-          "category": "education",
-          "url": "https://business.campbellchamber.net/events/details/lunch-learn-16510"
+          "title": "Saturday Board Games in Campbell",
+          "when": "Sat, May 30 · 1:00 PM",
+          "venue": "7Stars Bar and Grill",
+          "category": "community",
+          "url": "https://www.meetup.com/bay-area-active-social-20s-30s/events/314516369/"
         },
         {
           "type": "event",
-          "title": "Lunch & Learn - Campbell Chamber of Commerce",
-          "when": "Fri, May 29 · 12:00 PM",
-          "venue": null,
-          "category": "education",
-          "url": "https://business.campbellchamber.net/events/details/lunch-learn-16510"
+          "title": "Kintsukuroi Movie Screening",
+          "when": "Sat, May 30 · 11:00 AM",
+          "venue": "Campbell Library",
+          "category": "arts",
+          "url": "https://sccl.bibliocommons.com/events/69bad57267801235ed72e194"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:39.088Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:23.837Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino's farmers market opens today at Oaks Shopping Center, while City Council next week considers proclamations for Pride Month and World Environment Day.",
+      "summary": "Cupertino's library hosts a used book sale and storytime Saturday morning, while McClellan Ranch opens its Environmental Education Center and blacksmith shop this weekend.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Cupertino Farmers Market",
-          "when": "Fri, May 29 · 9:00 AM",
-          "venue": "Oaks Shopping Center",
-          "category": "food",
-          "url": "https://cafarmersmkts.com/cupertino-market"
-        },
         {
           "type": "event",
           "title": "Family Storytime",
@@ -49,6 +41,14 @@
           "venue": "Cupertino Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/6943539a1e64afd01e4fa2f6"
+        },
+        {
+          "type": "event",
+          "title": "Environmental Education Center Open House",
+          "when": "Sat, May 30 · 11:00 AM",
+          "venue": "McClellan Ranch Preserve",
+          "category": "family",
+          "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House"
         },
         {
           "type": "council",
@@ -59,22 +59,14 @@
           "url": "https://cupertino.legistar.com/MeetingDetail.aspx?ID=5292&GUID=390FBE8B-C93C-45BB-ABD2-47825DED44C0"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:40.243Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:25.522Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos outdoors enthusiasts have five nature and community events this weekend, from morning hikes at Bear Creek Redwoods to habitat restoration and sunset viewing at Sierra Azul.",
+      "summary": "Los Gatos hosts five outdoor and community events this weekend, including habitat restoration at Sierra Azul Preserve and hikes at Vasona Lake and Castle Rock.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Morning Hike at Bear Creek Redwoods",
-          "when": "Fri, May 29 · 9:00 AM",
-          "venue": "Bear Creek Redwoods OSP",
-          "category": "outdoor",
-          "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-10/"
-        },
         {
           "type": "event",
           "title": "💚Green Exercise 5 miles 🥾Walk/Hike Los Gatos Vasona Lake 🏞️",
@@ -82,48 +74,56 @@
           "venue": "Parking lot",
           "category": "community",
           "url": "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/314239924/"
+        },
+        {
+          "type": "event",
+          "title": "Informed Community Book Club",
+          "when": "Sat, May 30 · 2:00 PM",
+          "venue": "Los Gatos Library",
+          "category": "arts",
+          "url": "https://losgatosca.libcal.com/event/16789838"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:41.471Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:27.443Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's library hosts speedcubing and storytime today, while the Senior Center screens Eleanor the Great tonight.",
+      "summary": "Mountain View's packed Saturday lineup spans a composting workshop at the library, Pacific Ballet's spring showcase, and multiple community music and arts events.",
       "highlights": [
         {
           "type": "event",
-          "title": "Deer Hollow Storytime",
-          "when": "Fri, May 29 · 11:00 AM",
-          "venue": "Mountain View Public Library",
-          "category": "family",
-          "url": "https://mountainview.libcal.com/event/15633185"
+          "title": "5th Grade Open House",
+          "when": "Sat, May 30 · 1:00 PM",
+          "venue": "The View Teen Center",
+          "category": "arts",
+          "url": null
         },
         {
           "type": "event",
-          "title": "Speedcubing for All Skill Levels",
-          "when": "Fri, May 29 · 4:00 PM",
+          "title": "Free Composting Basics Workshop",
+          "when": "Sat, May 30 · 10:30 AM",
           "venue": "Mountain View Public Library",
           "category": "community",
-          "url": "https://mountainview.libcal.com/event/16561178"
+          "url": "https://mountainview.libcal.com/event/15120998"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:42.560Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:29.551Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "In the Heights opens at Saratoga Civic Theater this weekend while the AAPI Teen Art Exhibit debuts Saturday at the library.",
+      "summary": "Saratoga's packed this weekend with a farmers market, scholarship workshop, teen art exhibit, and multiple showings of \"In the Heights\" at the civic theater.",
       "highlights": [
         {
           "type": "event",
-          "title": "In the Heights",
-          "when": "Fri, May 29 · 8:00 PM",
-          "venue": "Saratoga Civic Theater",
-          "category": "arts",
-          "url": "https://southbaymt.com/shows/ticket-sales/in-the-heights/"
+          "title": "Paying for College with Scholarships",
+          "when": "Sat, May 30 · 2:00 PM",
+          "venue": "Saratoga Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69bae98eb6c4ac1fedc69c07"
         },
         {
           "type": "event",
@@ -134,22 +134,14 @@
           "url": "https://sccl.bibliocommons.com/events/69e55e86bd5c392c76454082"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:44.697Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:30.704Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale's skies fill with kites Saturday as the community gathers for flying, a book discussion, and a drum circle at local parks and the library.",
+      "summary": "Sunnyvale's got a packed Saturday with a farmers market, drum circle, and two film screenings, while the city eyes its water future amid drought concerns.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Let's meet up to explore the skies and fly for fun! All levels welcome. Bayland",
-          "when": "Sat, May 30 · 10:00 AM",
-          "venue": "Baylands Park",
-          "category": "community",
-          "url": "https://www.meetup.com/flying-drones-for-fun/events/314683091/"
-        },
         {
           "type": "event",
           "title": "Teen Book Discussion: They Called Us Enemy",
@@ -157,6 +149,14 @@
           "venue": "Sunnyvale Public Library",
           "category": "arts",
           "url": "https://sunnyvale.libcal.com/event/16500304"
+        },
+        {
+          "type": "event",
+          "title": "☕ Coffee & Chill — Meet Cool Humans Irl 😎✨ @ Redwood Place Cafe & Market",
+          "when": "Sat, May 30 · 2:00 PM",
+          "venue": "Redwood Place Cafe & Market",
+          "category": "community",
+          "url": "https://www.meetup.com/bay-area-social-club-20s-30s-hikes-brunch-game-nights/events/314824409/"
         },
         {
           "type": "council",
@@ -167,29 +167,29 @@
           "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?ID=4516&GUID=60A6E2D5-E4D7-4A98-B5E6-1C78B335D653"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:46.041Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:32.267Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San Jose",
-      "summary": "San Jose approves Seeds of Peace Monument artwork at Guadalupe River Park while permits green-light Equinix data center expansion and Chick-fil-A renovation this week.",
+      "summary": "San Jose's Saturday buzzes with family activities from board games to storytelling, while a $138 million data center and Chick-fil-A expansion recently won city permits.",
       "highlights": [
         {
           "type": "event",
-          "title": "Groove a Disco Ball",
-          "when": "Fri, May 29 · 10:00 AM",
-          "venue": "Children's Discovery Museum",
+          "title": "Ha'a Hula / Te Reva O Te Manu",
+          "when": "Sat, May 30 · 1:00 PM",
+          "venue": "Children's Discovery Museum of San Jose",
           "category": "family",
-          "url": "https://www.cdm.org/calendar/"
+          "url": "https://www.cdm.org/event/dance-featuring-haa-hula-te-reva-o-te-manu/"
         },
         {
           "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Fri, May 29 · 11:30 AM",
-          "venue": "Children's Discovery Museum",
-          "category": "family",
-          "url": "https://www.cdm.org/calendar/"
+          "title": "Saturday Afternoon Board Games in the Park!",
+          "when": "Sat, May 30 · 1:30 PM",
+          "venue": "The Games Group",
+          "category": "community",
+          "url": "https://www.meetup.com/hikegamecraftsj/events/314725388/"
         },
         {
           "type": "council",
@@ -200,46 +200,46 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?ID=7624&GUID=58D0F466-53AF-451E-9A39-5317BFDC2336"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:47.493Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:33.682Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara's got live music tonight at Mission Santa Clara, plus a culinary history talk tomorrow exploring 18th-century food in Colonial New England and Spanish California.",
+      "summary": "Santa Clara hosts five events Saturday spanning colonial cuisine, genetic engineering workshops, belly dance, construction networking, and water infrastructure feedback.",
       "highlights": [
         {
           "type": "event",
-          "title": "1-on-1 Smartphone Help",
-          "when": "Fri, May 29 · 11:00 AM",
-          "venue": "Technology Center",
-          "category": "education",
-          "url": "https://www.sclibrary.org/Home/Components/Calendar/Event/111931/7953?curm=4&cury=2026"
+          "title": "Seeds of a Nation: 18th-Century Eats in Colonial New England & Spanish California",
+          "when": "Sat, May 30 · 1:00 PM",
+          "venue": "Central Park Library - Edinger Room",
+          "category": "food",
+          "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112211/"
         },
         {
           "type": "event",
-          "title": "Spring Orchestra & Wind Ensemble",
-          "when": "Fri, May 29 · 7:30 PM",
-          "venue": "Mission Santa Clara",
-          "category": "music",
-          "url": "https://events.scu.edu/arts-and-sciences/event/360488-spring-orchestra-wind-ensemble"
+          "title": "Water & Sewer Focus Group",
+          "when": "Sat, May 30 · 1:00 PM",
+          "venue": null,
+          "category": "community",
+          "url": "https://www.sclibrary.org/Home/Components/Calendar/Event/112533/7953"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:49.125Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:34.941Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "This weekend, Los Altos hosts a talk on unhoused communities in Silicon Valley at Neutra House Saturday morning, plus a middle-grade book club discussion Sunday.",
+      "summary": "Los Altos Library hosts Poetry Open Mic Monday evening, while the Oil Painting Exhibit opens Sunday at the library.",
       "highlights": [
         {
           "type": "event",
-          "title": "Spotlight: Brian Barth on Unhoused Communities in Silicon Valley",
-          "when": "Sat, May 30 · 11:00 AM",
-          "venue": "Neutra House",
-          "category": "community",
-          "url": "https://www.meetup.com/ethical-culture-society-of-silicon-valley/events/314306443/"
+          "title": "Creative Collective - A Club for Teens",
+          "when": "Sat, May 30 · 2:00 PM",
+          "venue": "Los Altos Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69e179e1cdd2f7e31fe25eb6"
         },
         {
           "type": "event",
@@ -250,39 +250,47 @@
           "url": "https://www.lindentreebooks.com/a-tale-of-plagues-and-perfumes.html"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:50.466Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:36.801Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Kepler's Books hosts back-to-back author events tonight and tomorrow, while the Downtown Farmers' Market returns Saturday morning on Gilman Street.",
+      "summary": "Downtown's farmers market opens early Saturday morning on Gilman Street, while Kevin Wilson reads with Kate Folk at Kepler's Books the same afternoon.",
       "highlights": [
         {
           "type": "event",
-          "title": "This Is Now with Angie Coiro: Theo Baker",
-          "when": "Fri, May 29 · 6:00 PM",
+          "title": "Kevin Wilson with Kate Folk",
+          "when": "Sat, May 30 · 4:00 PM",
           "venue": "Kepler's Books",
           "category": "arts",
-          "url": "https://www.keplers.org/upcoming-events-internal/theo-baker"
+          "url": "https://www.keplers.org/upcoming-events-internal/kevin-wilson"
         },
         {
           "type": "event",
-          "title": "My Gall Friday",
-          "when": "Fri, May 29 · 9:00 AM",
-          "venue": "Los Trancos Preserve",
-          "category": "outdoor",
-          "url": "https://www.openspace.org/where-to-go/events-activities"
+          "title": "Downtown Palo Alto Farmers' Market",
+          "when": "Sat, May 30 · 8:00 AM",
+          "venue": "Gilman Street between Hamilton and Forest",
+          "category": "music",
+          "url": "https://us.list-manage.com/PmDOB2LsqnM?e=95253c7d1f&c2id=781a68119576efa2ed37ef40c949c899"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:51.877Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:38.061Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas City Council appointed a permanent city manager this month, while the library launches monarch education and storytimes for young kids this weekend and next week.",
+      "summary": "City Council appointed a permanent City Manager this week, while the library hosts storytimes, a monarch-gardening workshop, and chess club for kids through early June.",
       "highlights": [
+        {
+          "type": "event",
+          "title": "Family Storytime",
+          "when": "Sat, May 30 · 11:00 AM",
+          "venue": "Milpitas Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6917aaa5dff9d93e00d015c6"
+        },
         {
           "type": "event",
           "title": "Grow for Monarchs",
@@ -292,24 +300,16 @@
           "url": "https://sccl.bibliocommons.com/events/69e008c1bd9a3c316a532faa"
         },
         {
-          "type": "event",
-          "title": "LEGO Club for Grades K - 8",
-          "when": "Mon, Jun 1 · 3:30 PM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/69165795c313c23700e200e5"
-        },
-        {
           "type": "cityhall",
-          "title": "City Council appoints new permanent city manager",
+          "title": "City Council appoints permanent City Manager",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://www.ci.milpitas.ca.gov/government/council/"
         }
       ],
-      "weekLabel": "May 29 – Jun 5",
-      "generatedAt": "2026-05-29T23:10:53.898Z"
+      "weekLabel": "May 30 – Jun 6",
+      "generatedAt": "2026-05-30T11:09:40.921Z"
     }
   }
 }
