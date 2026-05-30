@@ -1783,6 +1783,30 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#0891b2",
     url: "https://countablelabs.com",
   },
+  {
+    id: "deepinfra",
+    name: "DeepInfra",
+    city: "Palo Alto",
+    category: "cloud",
+    round: "Series B",
+    amount: "$107M",
+    date: "2026-05-04",
+    tagline: "Runs the GPU infrastructure that lets developers serve open-source and agentic AI models at production scale — now handling close to five trillion tokens a week. The $107M Series B (co-led by 500 Global and Georges Harik, with Nvidia, Samsung Next, and Supermicro) follows a 25× jump in volume since its Series A.",
+    color: "#1d4ed8",
+    url: "https://deepinfra.com",
+  },
+  {
+    id: "radixark",
+    name: "RadixArk",
+    city: "Redwood City",
+    category: "ai",
+    round: "Seed",
+    amount: "$100M",
+    date: "2026-05-05",
+    tagline: "Founded by the creators of the open-source SGLang serving engine to build large-scale inference and training infrastructure for frontier AI models. The $100M seed — led by Accel and Spark Capital at a $400M valuation, with NVIDIA's venture arm, AMD, and MediaTek — is one of the largest seed rounds the South Bay has seen this year.",
+    color: "#6366f1",
+    url: "https://radixark.com",
+  },
 ];
 
 // Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
