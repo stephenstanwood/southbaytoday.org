@@ -1759,6 +1759,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#4338ca",
     url: "https://hark.com",
   },
+  {
+    id: "countable-labs",
+    name: "Countable Labs",
+    city: "Palo Alto",
+    category: "medtech",
+    round: "Venture",
+    amount: "$26M",
+    date: "2026-05-28",
+    tagline: "Single-molecule, counting-based PCR platform that claims roughly 10× the sensitivity of conventional PCR for cell and gene therapy, minimal residual disease testing, and biomarker validation. ARCH Venture Partners led the oversubscribed round, with F-Prime Capital and Primer Ventures.",
+    color: "#0891b2",
+    url: "https://countablelabs.com",
+  },
 ];
 
 // Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
