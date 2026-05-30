@@ -1276,10 +1276,8 @@ function CityRedditTiles({ cityId, cityName }: { cityId: string; cityName: strin
               <div className="cr-tile-bottom">
                 <div className="cr-title">{p.displayTitle || p.title}</div>
                 <div className="cr-meta">
-                  <span>↑ {p.score}</span>
-                  <span>·</span>
-                  <span>💬 {p.numComments}</span>
-                  <span>·</span>
+                  {p.score > 0 && <><span>↑ {p.score}</span><span>·</span></>}
+                  {p.numComments > 0 && <><span>💬 {p.numComments}</span><span>·</span></>}
                   <span>{chatterAge(p.ageHours)}</span>
                 </div>
               </div>

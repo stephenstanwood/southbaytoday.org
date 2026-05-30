@@ -1,407 +1,331 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-28T11:18:56.025Z",
+    "generatedAt": "2026-05-30T01:08:38.647Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 29,
-    "placesMatched": 8,
-    "placeGaps": 21,
-    "eventsExtracted": 1,
-    "eventsMatched": 0,
-    "eventGaps": 1,
+    "placesExtracted": 9,
+    "placesMatched": 5,
+    "placeGaps": 4,
+    "eventsExtracted": 15,
+    "eventsMatched": 1,
+    "eventGaps": 14,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "The Alameda",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "shopping and dining area, walking distance from midtown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
-        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
-        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
-      ]
-    },
-    {
-      "name": "SAP",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "venue, walking distance from midtown residential areas",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
-        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
-        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
-      ]
-    },
-    {
-      "name": "Avaya",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "venue, short drive from central San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
-        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
-        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
-      ]
-    },
-    {
-      "name": "Mervyn's",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "former building now being redeveloped for school",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "Shake Shack",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "near school construction, employees may be affected",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "Walmart",
-      "city": "Mountain View",
-      "kind": "retail",
-      "context": "near school construction site",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "Lucky's",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "parking lot location where dog was found",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "San Jose Animal Shelter",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "notified about found dog, at full capacity",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "Santa Clara County Animal Services",
-      "city": "Santa Clara",
-      "kind": "service",
-      "context": "resource for pet foster and adoption services",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
-      ]
-    },
-    {
-      "name": "Doggie Protective Services",
+      "name": "Zingsters",
       "city": "Palo Alto",
-      "kind": "service",
-      "context": "recommended for dog foster and rescue assistance",
+      "kind": "restaurant",
+      "context": "new chicken restaurant on University Avenue",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ]
     },
     {
-      "name": "Diridon",
+      "name": "Rooster T Feathers",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "hosting Silicon Valley Pun Competition",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ]
+    },
+    {
+      "name": "The Ritz",
       "city": "San Jose",
       "kind": "venue",
-      "context": "location of weekly Wednesday food festival",
+      "context": "hosting multiple live music events May 29-31, 2026",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ]
     },
     {
-      "name": "Zen's",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "rebranded udon restaurant, formerly Ramen Seas",
+      "name": "Corinthian Grand Ballroom",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosting Candlelight Fleetwood Mac tribute concert May 29",
       "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Rokko",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Japanese restaurant, same owners as Zen's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Fugetsu",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "Japanese restaurant, same owners as Zen's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Tao Tao",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "mentioned as closed or no longer operating",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Taco Bravo",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "iconic South Bay taco restaurant since 1970s",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Acme",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "sourdough bread, frequently mentioned",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Manresa",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "serves great bread",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Portside Bakery",
-      "city": "",
-      "kind": "bakery",
-      "context": "sourdough and baked goods mentioned",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Firebrand",
-      "city": "",
-      "kind": "bakery",
-      "context": "sourdough recommendations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ]
-    },
-    {
-      "name": "Sumano's Bakery",
-      "city": "",
-      "kind": "bakery",
-      "context": "Watsonville sourdough, sold in South Bay stores",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Weekly Wednesdays Food Festival",
-      "when": "Wednesdays",
-      "city": "San Jose",
-      "context": "mini food fest next to Diridon station",
+      "name": "Mini Summer Camp for Toddlers",
+      "when": "4 mornings (dates not specified)",
+      "city": "Sunnyvale",
+      "context": "toddler yoga, robotics, sensory play for ages 3-5",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ]
+    },
+    {
+      "name": "Silicon Valley Pun Competition",
+      "when": "Sunday (date not specified)",
+      "city": "Sunnyvale",
+      "context": "comedy competition with tickets via Rooster T Feathers",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ]
+    },
+    {
+      "name": "Repair Café Silicon Valley",
+      "when": "Sunday May 31, 11 AM–3 PM",
+      "city": "Los Gatos",
+      "context": "free repairs on household items at Los Gatos Library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ]
+    },
+    {
+      "name": "LEGO Fan event",
+      "when": "",
+      "city": "Los Gatos",
+      "context": "supports local LEGO Robotics Youth Teams",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tqimg4/bay_area_juneteenth_events_festivals/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/",
+        "https://www.reddit.com/r/SanJose/comments/1tri0w7/dog_friendly_food_places/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/"
+      ]
+    },
+    {
+      "name": "Bay Area Juneteenth Events, Festivals",
+      "when": "",
+      "city": "",
+      "context": "Juneteenth celebration events across Bay Area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tqimg4/bay_area_juneteenth_events_festivals/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/",
+        "https://www.reddit.com/r/SanJose/comments/1tri0w7/dog_friendly_food_places/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/"
+      ]
+    },
+    {
+      "name": "Group hike at Rancho San Antonio",
+      "when": "June 13th",
+      "city": "Cupertino",
+      "context": "organized group hike for all skill levels",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tqimg4/bay_area_juneteenth_events_festivals/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/",
+        "https://www.reddit.com/r/SanJose/comments/1tri0w7/dog_friendly_food_places/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/"
+      ]
+    },
+    {
+      "name": "Para Siempre",
+      "when": "",
+      "city": "San Jose",
+      "context": "Latin EDM Music Festival with presale passes",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tqimg4/bay_area_juneteenth_events_festivals/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/",
+        "https://www.reddit.com/r/SanJose/comments/1tri0w7/dog_friendly_food_places/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/"
+      ]
+    },
+    {
+      "name": "San Jose Energy Awareness Extravaganza",
+      "when": "Tuesday, June 2nd, 11 a.m. - 1 p.m.",
+      "city": "San Jose",
+      "context": "free immersive workshop on e-waste and digital art with Miguel Novelo",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "Beginner-Friendly D&D One-Shots",
+      "when": "June and July sessions",
+      "city": "San Jose",
+      "context": "in-person tabletop RPG sessions for newcomers and experienced players",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "FRIKITONA – Classic vs Current Reggaeton Fiesta",
+      "when": "Friday, May 29, 2026",
+      "city": "San Jose",
+      "context": "reggaeton music event at The Ritz",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "The Flatliners / Samiam with Special Guest Strangelight",
+      "when": "Saturday, May 30, 2026",
+      "city": "San Jose",
+      "context": "live band performances at The Ritz",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "Lords of Acid / Dead on a Sunday",
+      "when": "Sunday, May 31, 2026",
+      "city": "San Jose",
+      "context": "live music event at The Ritz featuring multiple artists",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "Candlelight: Tribute to Fleetwood Mac",
+      "when": "Friday, May 29, 2026, 6:30 PM",
+      "city": "San Jose",
+      "context": "candlelit string quartet tribute concert at Corinthian Grand Ballroom",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
+      ]
+    },
+    {
+      "name": "2026 San Jose Greek Festival",
+      "when": "May 29-31, 2026",
+      "city": "San Jose",
+      "context": "multi-day cultural festival at 1260 Davis St",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Original Joe's",
+      "name": "Los Gatos Library",
+      "city": "Los Gatos",
+      "kind": "venue",
+      "context": "hosting Repair Café Silicon Valley event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ],
+      "matchedName": "Los Gatos Library"
+    },
+    {
+      "name": "Rancho San Antonio",
+      "city": "Cupertino",
+      "kind": "park",
+      "context": "group hike venue on June 13th",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tqimg4/bay_area_juneteenth_events_festivals/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/",
+        "https://www.reddit.com/r/SanJose/comments/1tri0w7/dog_friendly_food_places/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/"
+      ],
+      "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
+    },
+    {
+      "name": "Institute of Contemporary Art San José",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Italian restaurant, rumored closure corrected by owners",
+      "kind": "venue",
+      "context": "hosting Miguel Novelo's INFRAMUNDO solo exhibition",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tp47nt/talk_me_out_of_moving_to_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1tp4vf0/i_paint_2_young_blue_collar_workers_enjoying/",
-        "https://www.reddit.com/r/SanJose/comments/1tp9b0s/original_joes_corrected_the_mercury_news_stating/",
-        "https://www.reddit.com/r/bayarea/comments/1tpu51b/connect_bay_area_sb_63_got_more_than_enough/",
-        "https://www.reddit.com/r/SanJose/comments/1tpf9qb/relocating_to_san_jose_with_93k_salary_will_this/"
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ],
-      "matchedName": "Original Joe's San Jose"
+      "matchedName": "Institute of Contemporary Art San Jose"
     },
     {
-      "name": "24 Hour Fitness",
-      "city": "Mountain View",
-      "kind": "other",
-      "context": "landmark near new school construction site",
+      "name": "San Jose City Hall Rotunda",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosting Energy Awareness Extravaganza free event June 2nd",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ],
-      "matchedName": "British Swim School at 24 Hour Fitness - Sunnyvale"
+      "matchedName": "City Hall Cafe"
     },
     {
-      "name": "Slice House",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "near school construction, employees may be affected",
+      "name": "Guildhouse",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "board game venue mentioned as potential meetup location",
       "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1tp79za/santa_clara_has_second_most_data_centers_in_the_us/",
-        "https://www.reddit.com/r/SanJose/comments/1tpd0mn/san_jose_sidewalk_romance_now_there_are/",
-        "https://www.reddit.com/r/mountainview/comments/1tpblea/tree_removal_for_new_school_near_24_hour_fitness/",
-        "https://www.reddit.com/r/SanJose/comments/1tpotet/cool_mini_food_fest_next_to_diridon_weekly/",
-        "https://www.reddit.com/r/SanJose/comments/1tppoej/found_dog/"
+        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
+        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
+        "https://www.reddit.com/r/SanJose/comments/1tqt629/board_game_peeps/",
+        "https://www.reddit.com/r/SanJose/comments/1tqptdn/things_to_do_in_san_jose_this_weekend_529_531_2026/"
       ],
-      "matchedName": "Slice House Mountain View by Tony Gemignani"
-    },
-    {
-      "name": "Ramen Seas",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "closed, rebranded as Zen's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "Ramen Seas"
-    },
-    {
-      "name": "GK Pastry",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "highly rated sourdough, winner for best quality",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "GK Pastry"
-    },
-    {
-      "name": "Midwife and the Baker",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "sourdough and pastry options, highly regarded",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "The Midwife and The Baker"
-    },
-    {
-      "name": "Little Sky",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "sourdough recommendation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "Little Sky Bakery | Los Altos"
-    },
-    {
-      "name": "Craftsman and Wolves",
-      "city": "Mountain View",
-      "kind": "bakery",
-      "context": "makes house sourdough on weekends",
-      "sourceUrls": [
-        "https://www.reddit.com/r/bayarea/comments/1tpsfpl/powerball_ticket_worth_481000_sold_in_sunnyvale/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpfu5m/ramen_seas_became_zens/",
-        "https://www.reddit.com/r/Campbell/comments/1torrcb/tell_me_youre_from_the_south_bay_without_telling/",
-        "https://www.reddit.com/r/mountainview/comments/1tmu2tc/wheres_the_best_sourdough/"
-      ],
-      "matchedName": "Craftsman and Wolves"
+      "matchedName": "Guildhouse"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Celebrate Santa Clara Night Market",
+      "when": "June 5-6 (Friday 4-9 PM, Saturday 2-9 PM)",
+      "city": "Santa Clara",
+      "context": "110+ makers, artists, live entertainment, beer garden, free event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
+      ],
+      "matchedName": "Celebrate Santa Clara Night Market"
+    }
+  ]
 }

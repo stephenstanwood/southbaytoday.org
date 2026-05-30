@@ -3,16 +3,19 @@
  * generate-reddit-pulse.mjs
  *
  * Pulls top + recent posts from South Bay-relevant subreddits, classifies them
- * via Haiku, mines comments on high-signal threads for named places/events,
- * and writes:
+ * via Haiku, extracts named places/events from titles + bodies, and writes:
  *
  *   reddit-pulse.json — curated "What the South Bay is Saying" feed for the homepage
  *   reddit-gaps.json  — places/events mentioned on Reddit that we don't have
  *
  * Also auto-appends high-confidence restaurant openings to scc-food-openings.json.
  *
- * Polite to Reddit: identified user-agent, 2s between requests, public .json
- * endpoints only (no auth required for read-only public listings).
+ * Source: Reddit's public RSS feeds (reddit.com/r/<sub>/{top,new}/.rss). The
+ * unauthenticated *.json API now 403s and new API apps are gated to moderation
+ * use cases (Responsible Builder Policy, 2026-05), but RSS stays open. Trade-off:
+ * RSS carries no score and no comment trees, so ranking is recency-based and
+ * entity extraction works off post titles + bodies only.
+ * Polite: identified user-agent, 2s between requests, read-only.
  *
  * Run: node --env-file=.env.local scripts/generate-reddit-pulse.mjs
  */
@@ -40,9 +43,8 @@ const PULSE_OUT = join(DATA_DIR, "reddit-pulse.json");
 const GAPS_OUT  = join(DATA_DIR, "reddit-gaps.json");
 const IMAGE_CACHE_PATH = join(DATA_DIR, "reddit-image-cache.json");
 
-// Posts whose comments we mine for entities. Tunable — too high = slow + rate-limit risk.
+// Posts we extract named entities from (title + body). Tunable.
 const MAX_COMMENT_FETCHES = 14;
-const TOP_COMMENTS_PER_POST = 30;
 
 // Map free-text city strings (Haiku output) → canonical South Bay cityId.
 // Cities NOT in this map are out-of-scope (e.g., Daly City, Oakland, SF) and
@@ -122,42 +124,27 @@ const SUBS = [
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function fetchRedditListing(sub, sort, params = "") {
-  const url = `https://www.reddit.com/r/${sub}/${sort}.json?${params}`;
+// Fetch a subreddit's public Atom feed and return the raw <entry> blocks.
+// Reddit 403s the unauthenticated *.json API and gates new API apps to
+// moderation use cases (Responsible Builder Policy, 2026-05) — but the public
+// RSS feeds stay open. They carry title/link/author/timestamp/body but NO
+// score and NO comments, so ranking is recency-based and comment mining is gone.
+async function fetchRedditRss(sub, path) {
+  const url = `https://www.reddit.com/r/${sub}/${path}`;
   try {
     const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
     if (res.status === 404 || res.status === 403) {
-      console.log(`  ⤳ r/${sub} ${sort}: ${res.status} (skipped)`);
+      console.log(`  ⤳ r/${sub} ${path}: ${res.status} (skipped)`);
       return [];
     }
     if (!res.ok) {
-      console.log(`  ⤳ r/${sub} ${sort}: HTTP ${res.status}`);
+      console.log(`  ⤳ r/${sub} ${path}: HTTP ${res.status}`);
       return [];
     }
-    const data = await res.json();
-    return data?.data?.children?.map((c) => c.data) ?? [];
+    const xml = await res.text();
+    return xml.match(/<entry>[\s\S]*?<\/entry>/g) ?? [];
   } catch (err) {
-    console.log(`  ⤳ r/${sub} ${sort}: ${err.message}`);
-    return [];
-  }
-}
-
-async function fetchPostComments(sub, postId, limit = 30) {
-  const url = `https://www.reddit.com/r/${sub}/comments/${postId}.json?limit=${limit}&sort=top`;
-  try {
-    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
-    if (!res.ok) return [];
-    const data = await res.json();
-    const commentsListing = data?.[1]?.data?.children ?? [];
-    return commentsListing
-      .filter((c) => c.kind === "t1")
-      .map((c) => ({
-        body: c.data.body || "",
-        score: c.data.score ?? 0,
-        author: c.data.author,
-      }))
-      .filter((c) => c.body && c.body !== "[deleted]" && c.body !== "[removed]");
-  } catch {
+    console.log(`  ⤳ r/${sub} ${path}: ${err.message}`);
     return [];
   }
 }
@@ -173,27 +160,50 @@ function decodeHtmlEntities(s) {
     .replace(/&nbsp;/g, " ");
 }
 
-function normalizePost(p, weight, scope) {
-  if (p.stickied) return null;
-  if (p.removed_by_category) return null;
-  if (p.author === "[deleted]") return null;
-  if (p.over_18) return null;
-  if (typeof p.title !== "string") return null;
+// Parse one Atom <entry> from a subreddit RSS feed into the post shape the rest
+// of the pipeline expects. score/numComments are unknowable over RSS → 0 (the
+// homepage + city tiles hide the ↑/💬 chips when 0). The body comes from
+// <content>, which for self-posts holds the post text followed by a
+// "submitted by … [link] [comments]" footer we strip off.
+function normalizeRssEntry(entry, subName, weight, scope) {
+  const grab = (re) => { const m = entry.match(re); return m ? m[1] : ""; };
 
-  const ageHours = (Date.now() / 1000 - p.created_utc) / 3600;
+  const id = grab(/<id>([^<]+)<\/id>/).replace(/^t3_/, "");
+  const title = decodeHtmlEntities(grab(/<title>([\s\S]*?)<\/title>/).trim());
+  if (!id || !title) return null;
+
+  const author = grab(/<author>[\s\S]*?<name>([^<]+)<\/name>/).replace(/^\/u\//, "");
+  // AutoModerator posts are megathreads / classifieds / stickies — never content.
+  if (author === "AutoModerator") return null;
+
+  const permalink = grab(/<link[^>]*\bhref="([^"]+)"/);
+  const ts = grab(/<published>([^<]+)<\/published>/) || grab(/<updated>([^<]+)<\/updated>/);
+  const createdUtc = ts ? Math.floor(new Date(ts).getTime() / 1000) : Math.floor(Date.now() / 1000);
+
+  // <content> is HTML-encoded; decode, drop the SC_OFF/ON markers and the trailing
+  // "submitted by … [link] [comments]" boilerplate, then strip tags to plain text.
+  let body = decodeHtmlEntities(grab(/<content[^>]*>([\s\S]*?)<\/content>/));
+  body = body
+    .replace(/<!--\s*SC_O(?:FF|N)\s*-->/g, "")
+    .replace(/&#32;/g, " ")
+    .replace(/submitted by[\s\S]*$/i, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
   return {
-    id: p.id,
-    sub: p.subreddit,
-    title: decodeHtmlEntities(p.title.trim()),
-    selftext: decodeHtmlEntities((p.selftext || "").slice(0, 1200)),
-    author: p.author,
-    score: p.score ?? 0,
-    numComments: p.num_comments ?? 0,
-    createdUtc: p.created_utc,
-    ageHours,
-    permalink: `https://www.reddit.com${p.permalink}`,
-    externalUrl: p.url_overridden_by_dest && p.url_overridden_by_dest !== p.url ? p.url_overridden_by_dest : (p.is_self ? null : p.url),
-    isSelf: p.is_self,
+    id,
+    sub: subName,
+    title,
+    selftext: body.slice(0, 1200),
+    author,
+    score: 0,
+    numComments: 0,
+    createdUtc,
+    ageHours: (Date.now() / 1000 - createdUtc) / 3600,
+    permalink,
+    externalUrl: null,
+    isSelf: true,
     weight,
     scope,
   };
@@ -253,7 +263,7 @@ function normalizeName(s) {
 // ─── Main ─────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`Fetching ${SUBS.length} subreddits…\n`);
+  console.log(`Fetching ${SUBS.length} subreddits via RSS…\n`);
 
   // ─── PHASE 1: Fetch posts from every sub ────────────────────────────
   const ptMonth = Number(new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", month: "numeric" }));
@@ -262,21 +272,16 @@ async function main() {
   if (skipped.length) console.log(`Skipping offseason subs: ${skipped.map((s) => `r/${s.name}`).join(", ")}\n`);
   const all = [];
   for (const sub of activeSubs) {
-    const topDay = await fetchRedditListing(sub.name, "top", "t=day&limit=25");
+    const topEntries = await fetchRedditRss(sub.name, "top/.rss?t=day");
     await sleep(REQUEST_DELAY_MS);
-    const newer = await fetchRedditListing(sub.name, "new", "limit=15");
+    const newEntries = await fetchRedditRss(sub.name, "new/.rss");
     await sleep(REQUEST_DELAY_MS);
 
     const seen = new Set();
-    const merged = [...topDay, ...newer].filter((p) => {
-      if (!p?.id || seen.has(p.id)) return false;
-      seen.add(p.id);
-      return true;
-    });
-
-    const normalized = merged
-      .map((p) => normalizePost(p, sub.weight, sub.scope))
+    const normalized = [...topEntries, ...newEntries]
+      .map((e) => normalizeRssEntry(e, sub.name, sub.weight, sub.scope))
       .filter(Boolean)
+      .filter((p) => { if (seen.has(p.id)) return false; seen.add(p.id); return true; })
       .filter((p) => p.ageHours <= 96);
 
     console.log(`  ✓ r/${sub.name}: ${normalized.length} posts`);
@@ -295,28 +300,34 @@ async function main() {
   if (droppedOOA > 0) console.log(`Dropped ${droppedOOA} out-of-area posts (SF/AskSF/etc.) pre-classification.`);
 
   const candidates = geoScoped
-    .filter((p) => p.score >= 5 || p.numComments >= 3)
-    .sort((a, b) => (b.score * b.weight) - (a.score * a.weight))
+    // RSS feeds are Reddit's own top/day + new listings — already pre-curated, and
+    // there's no score to floor on. Rank by sub weight then recency so the highest-
+    // signal local subs lead the slice we hand to the classifier.
+    .sort((a, b) => (b.weight - a.weight) || (b.createdUtc - a.createdUtc))
     .slice(0, 300);
 
-  console.log(`${candidates.length} candidates passed engagement floor.\n`);
+  console.log(`${candidates.length} candidates to classify.\n`);
 
   // ─── PHASE 2: Classify with Haiku ───────────────────────────────────
-  const list = candidates
-    .map((p, i) => {
-      const body = p.selftext ? ` — "${p.selftext.slice(0, 200).replace(/\n+/g, " ")}"` : "";
-      return `${i + 1}. [r/${p.sub}, ↑${p.score}, ${p.numComments}c] ${p.title}${body}`;
-    })
-    .join("\n");
+  // Classify in chunks so the JSON response can't blow past max_tokens. RSS has
+  // no engagement floor, so the candidate pool is large; one monolithic call
+  // truncates. Global 1-based indices are preserved across chunks so the enrich
+  // step below still matches by `i`.
+  const buildClassifyPrompt = (chunk, startIdx) => {
+    const list = chunk
+      .map((p, j) => {
+        const body = p.selftext ? ` — "${p.selftext.slice(0, 200).replace(/\n+/g, " ")}"` : "";
+        return `${startIdx + j + 1}. [r/${p.sub}] ${p.title}${body}`;
+      })
+      .join("\n");
+    return `You are curating Reddit posts for South Bay Today, a Silicon Valley local discovery site. The vibe is light, uplifting, locally-relevant. Cities we cover: San Jose, Sunnyvale, Palo Alto, Mountain View, Santa Clara, Cupertino, Los Gatos, Saratoga, Campbell, Milpitas. NOT covered: SF, Oakland, East Bay, North Bay, Peninsula north of Palo Alto, anything outside the Bay Area.
 
-  const classifyPrompt = `You are curating Reddit posts for South Bay Today, a Silicon Valley local discovery site. The vibe is light, uplifting, locally-relevant. Cities we cover: San Jose, Sunnyvale, Palo Alto, Mountain View, Santa Clara, Cupertino, Los Gatos, Saratoga, Campbell, Milpitas. NOT covered: SF, Oakland, East Bay, North Bay, Peninsula north of Palo Alto, anything outside the Bay Area.
-
-Here are ${candidates.length} Reddit posts:
+Here are ${chunk.length} Reddit posts:
 
 ${list}
 
 For each post, output a JSON object with:
-- "i": the 1-based index
+- "i": the 1-based index shown for each post
 - "category": one of:
     "event"            — a specific upcoming event or activity (concert, festival, run, market, class)
     "restaurant_news"  — restaurant opening, closing, new location, expansion, or strong recommendation
@@ -345,18 +356,24 @@ CRITICAL: a headline that complains, sounds defensive, or warns about something 
 Be strict on relevance. Crime/lawsuits/scary stuff = relevance 1-3 (we won't surface). Boring complaints = 1-3. A guy ranting about traffic = relevance 1. An MRI study recruitment = relevance 1. A new restaurant opening = relevance 9. A great rec thread = relevance 8.
 
 Return ONLY a JSON array of objects, no other text.`;
+  };
 
   console.log("Classifying with Haiku…");
-  let classified;
-  let rawClassify;
-  try {
-    rawClassify = await callClaude(classifyPrompt, 16384);
-    classified = parseJson(rawClassify);
-  } catch (err) {
-    console.error("Classify error:", err.message);
-    console.error("Raw response head:", (rawClassify || "").slice(0, 300));
-    console.error("Raw response tail:", (rawClassify || "").slice(-300));
-    process.exit(1);
+  const CLASSIFY_CHUNK = 60;
+  const classified = [];
+  for (let start = 0; start < candidates.length; start += CLASSIFY_CHUNK) {
+    const chunk = candidates.slice(start, start + CLASSIFY_CHUNK);
+    let raw;
+    try {
+      raw = await callClaude(buildClassifyPrompt(chunk, start), 16384);
+      classified.push(...parseJson(raw));
+    } catch (err) {
+      console.error("Classify error:", err.message);
+      console.error("Raw response head:", (raw || "").slice(0, 300));
+      console.error("Raw response tail:", (raw || "").slice(-300));
+      process.exit(1);
+    }
+    console.log(`  ✓ classified ${Math.min(start + CLASSIFY_CHUNK, candidates.length)}/${candidates.length}`);
   }
 
   const enriched = candidates.map((c, i) => {
@@ -738,27 +755,19 @@ No other text.`;
   writeFileAtomic(PULSE_OUT, JSON.stringify(pulseOutput, null, 2) + "\n");
   console.log(`✅ ${pulse.length} pulse items → reddit-pulse.json`);
 
-  // ─── PHASE 4: Comment mining for entity extraction ──────────────────
-  // Pick the highest-relevance discussion/restaurant/event posts for deep mining.
-  const miningCandidates = enriched
+  // ─── PHASE 4: Pick posts to mine for named entities ─────────────────
+  // RSS exposes no comment trees, so entity extraction runs on the post title +
+  // body only. Opening announcements ("X just opened on Bascom") are usually the
+  // post itself, so this still surfaces the highest-value gaps — just fewer than
+  // the old comment mining did. Highest-relevance posts first.
+  const minedPosts = enriched
     .filter((p) => ["discussion", "restaurant_news", "event", "news"].includes(p.category))
     .filter((p) => p.relevance >= 6)
-    .sort((a, b) => b.numComments + b.score - (a.numComments + a.score))
-    .slice(0, MAX_COMMENT_FETCHES);
+    .sort((a, b) => b.relevance - a.relevance)
+    .slice(0, MAX_COMMENT_FETCHES)
+    .map((p) => ({ ...p, commentText: "", commentCountFetched: 0 }));
 
-  console.log(`\nMining comments on ${miningCandidates.length} threads…`);
-  const minedPosts = [];
-  for (const post of miningCandidates) {
-    const comments = await fetchPostComments(post.sub, post.id, TOP_COMMENTS_PER_POST);
-    await sleep(REQUEST_DELAY_MS);
-    const commentText = comments
-      .slice(0, TOP_COMMENTS_PER_POST)
-      .map((c) => c.body)
-      .join("\n--\n")
-      .slice(0, 4000);
-    minedPosts.push({ ...post, commentText, commentCountFetched: comments.length });
-    console.log(`  ✓ r/${post.sub}/${post.id}: ${comments.length} comments`);
-  }
+  console.log(`\nExtracting entities from ${minedPosts.length} posts (titles + bodies; RSS has no comments)…`);
 
   // ─── PHASE 5: Extract named entities via Haiku ──────────────────────
   // Chunk posts to keep prompts reasonable.
