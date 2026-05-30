@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-30T11:07:55.336Z",
+      "generatedAt": "2026-05-30T19:08:54.568Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-30T11:07:57.639Z",
+      "generatedAt": "2026-05-30T19:08:57.087Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,24 +151,24 @@
       },
       "permits": [
         {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00125",
           "address": "528 High St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
@@ -187,18 +187,6 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00118",
-          "address": "4175 Manuela Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-26",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00124",
           "address": "520 Webster St",
           "category": "entitlement",
@@ -208,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00118",
+          "address": "4175 Manuela Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-26",
           "subtype": "Over the Counter Approved"
         }
       ]

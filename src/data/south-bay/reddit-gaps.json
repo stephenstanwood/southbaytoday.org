@@ -1,219 +1,206 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-30T11:15:13.494Z",
+    "generatedAt": "2026-05-30T19:15:55.204Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 8,
-    "placesMatched": 5,
-    "placeGaps": 3,
-    "eventsExtracted": 11,
+    "placesExtracted": 7,
+    "placesMatched": 3,
+    "placeGaps": 4,
+    "eventsExtracted": 10,
     "eventsMatched": 1,
-    "eventGaps": 10,
+    "eventGaps": 9,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Ameswell Hotel",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "hosting comedy showcase on June 11",
+      "name": "Petco Sunnyvale Adoption Center",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "cat and kitten adoption center opened June 2025",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     },
     {
-      "name": "Roosters",
-      "city": "Sunnyvale",
+      "name": "Asian Art Museum",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Silicon Valley Pun Competition this Sunday",
+      "context": "monthly museum meetup destination for Bay Area Museum Friends",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
+      ]
+    },
+    {
+      "name": "Ameswell Hotel",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "hosting Comedy Hour showcase June 11",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/"
       ]
     },
     {
       "name": "Zingsters",
       "city": "Palo Alto",
       "kind": "restaurant",
-      "context": "new chicken restaurant opened on University Avenue",
+      "context": "new location on University Avenue now open",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
+        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
+        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
       ]
     }
   ],
   "eventGaps": [
     {
+      "name": "Petco Sunnyvale Adoption Center Open House",
+      "when": "Saturday 10 AM to 2 PM",
+      "city": "Sunnyvale",
+      "context": "cat adoption event to reach 1000 adoptions milestone",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
+      ]
+    },
+    {
+      "name": "Bay Area Museum Friends Monthly Meetup",
+      "when": "Tomorrow 11:30 AM",
+      "city": "San Jose",
+      "context": "monthly low-pressure museum exploration group at Asian Art Museum",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
+        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
+      ]
+    },
+    {
       "name": "Para Siempre Latin EDM Music Festival",
-      "when": "2024",
+      "when": "2025",
       "city": "San Jose",
-      "context": "Latin EDM music festival with presale pass signup",
+      "context": "Latin EDM music festival with presale signup available",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
         "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     },
     {
-      "name": "San Jose Energy Awareness Extravaganza",
-      "when": "Tuesday June 2, 11 a.m. - 1 p.m.",
-      "city": "San Jose",
-      "context": "free workshops on e-waste and art with Miguel Novelo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
-      ]
-    },
-    {
-      "name": "In-Person D&D One-Shots South Bay",
+      "name": "In-Person D&D One-Shots",
       "when": "June and July sessions",
-      "city": "",
-      "context": "beginner-friendly Dungeons & Dragons sessions in South Bay area",
+      "city": "Sunnyvale",
+      "context": "beginner-friendly Dungeons & Dragons adventures hosted locally",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
         "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     },
     {
       "name": "Comedy Hour at The Ameswell",
-      "when": "Thursday, June 11 at 6 PM",
+      "when": "Thursday June 11, 6 PM",
       "city": "Mountain View",
       "context": "comedy showcase with SF and South Bay comics",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/"
+      ]
+    },
+    {
+      "name": "Fog City Funnies Stand Up Comedy Troupe",
+      "when": "Saturday June 13",
+      "city": "",
+      "context": "stand-up comedy performance",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/"
       ]
     },
     {
       "name": "Repair Café Silicon Valley",
-      "when": "Thursday, May 28 from 5:00 PM to 7:00 PM",
+      "when": "Thursday May 28, 5:00 PM - 7:00 PM",
       "city": "Palo Alto",
-      "context": "free repair event for household items at Rinconada Library",
+      "context": "free repair event for household items at library",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
         "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
         "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
         "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
       ]
     },
     {
       "name": "Mini Summer Camp for Toddlers",
-      "when": "4-morning drop-off session",
-      "city": "Sunnyvale",
-      "context": "yoga, robotics, and sensory play for ages 3-5",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
-      ]
-    },
-    {
-      "name": "Silicon Valley Pun Competition",
-      "when": "Sunday",
-      "city": "Sunnyvale",
-      "context": "pun competition at Roosters",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
-      ]
-    },
-    {
-      "name": "Silicon Valley Poker Tournament",
-      "when": "Saturday August 1, 2026, 4:00 PM",
-      "city": "Santa Clara",
-      "context": "14th annual poker night benefiting Special Olympics",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
-      ]
-    },
-    {
-      "name": "LEGO Fan event",
       "when": "",
-      "city": "",
-      "context": "supporting local LEGO Robotics Youth Teams",
+      "city": "Sunnyvale",
+      "context": "4-morning drop-off camp with yoga and robotics",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/"
       ]
     },
     {
-      "name": "Bay Area Hikers Group Hike",
+      "name": "Bay Area group hike",
       "when": "June 13th",
       "city": "Cupertino",
-      "context": "group hike at Rancho San Antonio for all levels",
+      "context": "all paces welcome at Rancho San Antonio",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
         "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
         "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Institute of Contemporary Art San José",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Miguel Novelo's INFRAMUNDO solo exhibition",
-      "sourceUrls": [
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
-      ],
-      "matchedName": "Institute of Contemporary Art San Jose"
-    },
-    {
       "name": "Rinconada Library",
       "city": "Palo Alto",
       "kind": "venue",
-      "context": "hosting Repair Café Silicon Valley event May 28",
+      "context": "hosting free repair café event May 28",
       "sourceUrls": [
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tpi2g0/silicon_valley_pun_competition_this_sunday/",
-        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1tpmqu6/mini_summer_camp_for_toddlers/"
       ],
       "matchedName": "Rinconada Library"
     },
@@ -223,25 +210,12 @@
       "kind": "venue",
       "context": "hosting Repair Café Silicon Valley event",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
         "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
         "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
       ],
       "matchedName": "Los Gatos Library"
-    },
-    {
-      "name": "Triton Museum of Art",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "hosting Silicon Valley Poker Tournament 2026",
-      "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
-      ],
-      "matchedName": "Triton Museum of Art"
     },
     {
       "name": "Rancho San Antonio",
@@ -249,9 +223,9 @@
       "kind": "park",
       "context": "group hike destination June 13th",
       "sourceUrls": [
+        "https://www.reddit.com/r/paloalto/comments/1tom9hv/yummy_chicken_on_university_avenue/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
         "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/santaclara/comments/1tpn53e/boots_bets_big_wins_silicon_valley_poker_night/",
         "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
       ],
       "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
@@ -260,14 +234,14 @@
   "eventMatches": [
     {
       "name": "Celebrate Santa Clara Night Market",
-      "when": "Friday June 5 and Saturday June 6",
+      "when": "Friday June 5 and Saturday June 6, 4-9pm and 2-9pm",
       "city": "Santa Clara",
-      "context": "weekend two with 110+ local makers, artists, live entertainment",
+      "context": "110+ local makers, artists, chefs, live entertainment, beer garden",
       "sourceUrls": [
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1ts4qmd/help_us_reach_1000_adoptions_in_our_first_year/",
+        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
         "https://www.reddit.com/r/SanJose/comments/1trab2x/latin_edm_music_festival_coming_to_san_jose_this/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7u5i/san_jose_energy_awareness_extravaganza_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tr7owf/inperson_dd_in_south_bay_beginnerfriendly/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ],
       "matchedName": "Celebrate Santa Clara Night Market"
