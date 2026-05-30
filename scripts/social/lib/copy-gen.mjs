@@ -86,6 +86,7 @@ TRUST MODEL:
 
 THINGS TO NEVER DO:
 - Don't claim things you aren't sure about (don't say "home opener" unless told it is)
+- Don't invent any detail that isn't in the source data — venue names, addresses, prices, dates, lineups, or quotes. If a detail is missing, leave it out rather than guess.
 - Don't use permit/construction language
 - Don't combine multiple unrelated items
 - Don't promote events that have already happened
