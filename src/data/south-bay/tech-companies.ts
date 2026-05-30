@@ -1742,7 +1742,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     category: "saas",
     round: "Series A",
     amount: "$30M",
-    date: "2026-05-16",
+    date: "2026-05-14",
     tagline: "An agentic marketing platform — autonomous AI agents that handle social, moderation, creator, and commerce workflows for brands. The Series A (Menlo Ventures) funds engineering and applied-AI hiring.",
     color: "#9333ea",
     url: "https://www.nectarsocial.com",
