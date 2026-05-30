@@ -1412,6 +1412,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://axiommath.ai",
   },
   {
+    id: "palebluedot-ai",
+    name: "PaleBlueDot AI",
+    city: "Palo Alto",
+    category: "cloud",
+    round: "Series B",
+    amount: "$150M",
+    date: "2026-01-28",
+    tagline: "AI compute platform that brokers spare GPU capacity to AI companies and builds dedicated GPU clusters for enterprises — making large-scale compute faster and cheaper to access. The Series B (B Capital) valued the Palo Alto company at over $1B; revenue grew more than 10× in the prior year.",
+    color: "#2563eb",
+    url: "https://palebluedot.ai",
+  },
+  {
     id: "exaforce",
     name: "Exaforce",
     city: "San Jose",
