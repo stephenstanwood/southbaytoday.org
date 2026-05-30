@@ -39,7 +39,7 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|APTS\b|HOMEOWNER|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b/i;
+const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b/i;
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
@@ -272,6 +272,11 @@ function shouldSkip(item) {
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
+
+  // Skip entries whose site location is a PO Box — a storefront food venue is
+  // never located at a PO Box. These are almost always HOA/apartment amenity
+  // permits (pool kitchens, clubhouses) filed under a mailing address.
+  if (/\bP\.?\s*O\.?\s*BOX\b/i.test(item.site_location ?? "")) return true;
 
   // Skip entries with no city or city outside South Bay
   const city = (item.city ?? "").toUpperCase();
