@@ -722,6 +722,13 @@ function cleanTitle(title) {
     // Includes colon ("Friday Fun : DIY" → "Friday Fun:") — appears in SJPL and
     // Palo Alto Library titles ("Online Author Talk : Nir Eyal").
     .replace(/\s+([,.;:!?])/g, "$1")
+    // Insert a missing space AFTER a colon between two letters
+    // ("Challenger:A True Story" → "Challenger: A True Story"). Library and
+    // Ticketmaster titles occasionally drop the space in "Main Title:Subtitle".
+    // Letter-only on both sides so clock times (1:00), ratios, and URLs (://)
+    // stay untouched. Runs after the space-before-colon strip so a stray
+    // " : " collapses cleanly to ": ".
+    .replace(/([A-Za-z]):([A-Za-z])/g, "$1: $2")
     .replace(/\s{2,}/g, " ")
     // Expand concert-billing "w/" shorthand to "with". Ticketmaster lineup
     // titles like "Dana Carvey w/ David Spade" or "Kaleo w/ Dawes" arrive as
