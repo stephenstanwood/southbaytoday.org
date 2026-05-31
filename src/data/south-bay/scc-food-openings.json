@@ -1,8 +1,44 @@
 {
-  "generatedAt": "2026-05-31T11:10:29.306Z",
+  "generatedAt": "2026-05-31T19:10:43.972Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0878516",
+      "name": "La Corneta",
+      "address": "324 University Ave",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-05-29",
+      "status": "opened",
+      "sourceId": "SR0878516",
+      "blurb": "Mexican casual dining chain offering tacos, burritos, and traditional Yucatan specialties.",
+      "photoRef": "places/ChIJW6cfQgC7j4ARfrKbxmPji5c/photos/Ab43m-tzpMeHT_nXBAYvEYiEXyt64Z-hFJruRaVMmM7aHEkhzzleNjKu3Qswv9CvqnwFuTrj_TdeuiLciQZ8VM1lz93GX7TM436XoOaIV7Ja8D66Rp_9z4MP_cPLhO7PU7Iwi29Ifs9Cx8_UaT49h1mI02YJcj8Dlwg1V1QImw4Du0WBjZXE-1bmOpaWcj-aCgVsz-BLfoG2tuTBueM0SwFwlTCLiCaYZBXrIikS0bthRdL2BSfN2L1RgjczdNrfn_n79EGT-d4mkiJvZazdrVft3ioBLyCAztXyaF4v4dHuCXuCArTHMBAF97-7QmYQrRwNX2vN-WBmfJ5v9G4eoa_podW0k7Xyb4tfiOdV1rIVmjxn-PSzHJJtsP8WYhtKFwmj__TPFHa_MiluM0oJ7L-azXkTNvwnjWseiaj8sWqApv3NK-baQRRZg1thvEDi8A"
+    },
+    {
+      "id": "opened-SR0881250",
+      "name": "La Superior Rosticeria",
+      "address": "1074 Leigh Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-29",
+      "status": "opened",
+      "sourceId": "SR0881250",
+      "blurb": "Rotisserie chicken and Latin American roasted meats counter-service restaurant.",
+      "photoRef": "places/ChIJxUJfW7Y0joAR5YMopS6V_Iw/photos/Ab43m-uprIeD__crOhMRYOfyav2nBF4mzxRsm14Wy1DS1FyRATqcNoOKIPLxzXtAk-NZ5X2aaNlxsDvuHck8CEIVsM87-S60TeYtPfmWOrSDee3pZD702DxLcpmD3IBbE-jtgT7ieRBGBsY9RDSr3FPxGywJwNcq4yM0m0lk0sPoEdIohhBS-60CyirFfxoGwZvuXTj_fH5_tJ2msDdGjDQaORNTvV3QTB9LwumJnLkE6aYsaLACKRiBuddYF319sYfRgcUx__qtenilP9sxMeHEazdeC4dpLe3eticI3Jvt9hcUXVIz6Jo8ob_XVlkmUzJPu0IGqE1kmZc20pHY-GngafDfMQbKCydH_WTwrJzqHU6puL9nHf-EO2s9tG7yCT4ZcNrwZglfAeTZJSCPaJyTsfqtnJS9bDIH679zGbTSldeHKRh4zcUIr49a8yr51g"
+    },
+    {
+      "id": "opened-SR0882361",
+      "name": "Golden Malatang Restaurant",
+      "address": "1089 S De Anza Blvd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-28",
+      "status": "opened",
+      "sourceId": "SR0882361",
+      "blurb": "Chinese self-serve hot pot with customizable broths and ingredient selections.",
+      "photoRef": "places/ChIJ64jnD9AzjoARmdc5MVGOnYI/photos/Ab43m-tzv2Z7DVxsd5gnv3TvVmxSQyj311GHT8RamCUjyAAnr4vQqQQcZ7ZtKg4y1tUoh0-9-yGAJkKehkQGmyJ0slHvrjbmM__iZEVsXoYpAb1EyjRDTRq6KvtfaQb0JIRgyCb8o0JiihxZW702IY9wSvf_IP1LMsQMMRLtU19ymjXOuiR0rZ5avEyxtomc5IlTBuAyBulxXDSMBtrSuuLUDd6PRv0hUNe4PKc-6F9RVrYx0S_d39cQp3pC8tprLA0GbiHOfS0WCTlDEcx1aUlKHP_vYXOrPp-S2CZ-oTkbYIUHRwYqjfQ_TaTXdIA9D3eYTmBAL4ykbOvC4zvZuFWSLom1WirGOSXsWzzXFi8pof3dBqph72Q7QB9Czoa2l1CAxAOyURqJ2c-iP32xN3ArjJg283m274Ua4pjP9zdj5qwANgMNRKoS2Ew5n1TihVaF"
+    },
     {
       "id": "opened-SR0883404",
       "name": "Las Cazuelas",
@@ -12,7 +48,7 @@
       "date": "2026-05-27",
       "status": "opened",
       "sourceId": "SR0883404",
-      "blurb": "Mexican restaurant serving traditional cazuela-style dishes in San Jose.",
+      "blurb": "Mexican restaurant serving traditional cazuela-style dishes and regional cuisine.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0883404.png"
     },
     {
@@ -24,7 +60,7 @@
       "date": "2026-05-27",
       "status": "opened",
       "sourceId": "SR0881688",
-      "blurb": "Japanese ramen and noodle restaurant in Campbell.",
+      "blurb": "Japanese ramen and noodle restaurant specializing in tonkotsu pork broth.",
       "photoRef": "places/ChIJRe7wwCA1joARHWeFEZc6jRY/photos/Ab43m-tMlpN9_s_rqNCY6xE5gDYpXUxdSWIPt0Gkx1FRl5QliS4OLqvFqAjzmsIxvsJcdFpNOfN1IitrSWzsq75zLAvajoqTXPT0HcPMXZPcQyZ37Kx9wHT7Vc9GwZByJayrpSs9NhDDA_JvHf0JBWYaXTlWDMSBo2Nu1i07I3pXJ7f56zzGicJuOuVjtRD7BMSxfeupScaHv0KBvqxecqT6K9f9-MaInN83U4mYBe6qvlpkaECugwPnw3G03Kfm3Y-LTQFtN7PBeymPo1p6lsc1kjsPQN6TuosEknJIaLSLFMwCCQ"
     },
     {
@@ -36,7 +72,7 @@
       "date": "2026-05-26",
       "status": "opened",
       "sourceId": "SR0881374",
-      "blurb": "Japanese izakaya-style bar and dining in Milpitas.",
+      "blurb": "Japanese casual dining featuring ramen, udon, and donburi rice bowls.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881374.png"
     },
     {
@@ -48,7 +84,7 @@
       "date": "2026-05-26",
       "status": "opened",
       "sourceId": "SR0878202",
-      "blurb": "Regional pizza chain expanding with new San Jose location.",
+      "blurb": "Pizza chain known for Gourmet Specialty pizzas and casual dining.",
       "photoRef": "places/ChIJJXDhwY_Kj4ARdH8XZqAGw_s/photos/Ab43m-v-tMibc9TuXmQi4ECvoyWPpUqvk_BFMwrNgAqknRxwcGUkEqVzSVOrZjWh86V-N3favr8DG-fWY4GW-XgP50Lay5JeKTQ4lfChoEguwFQpI1CraEEz2q7RxCBsiiyPAzrwFEz882YLrvX72h5FV0D8BTZRCMlYvXTi6iESOFL4n5wm5iDARdlStD9-Ixb6mpzgZAMyqy3Ogdb1p8WX3KgBFKejAGL_9vnuWSBItr3WVtnih-9KyGzWAskFJ98io6x0xlLTbNOXX899Jf7QA1JKsIRSwkhA0G__sKSCkGGEKw"
     },
     {
@@ -60,7 +96,7 @@
       "date": "2026-05-26",
       "status": "opened",
       "sourceId": "SR0882813",
-      "blurb": "Bubble tea shop specializing in milk tea drinks.",
+      "blurb": "Taiwanese boba tea shop offering milk teas, slushes, and beverages.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0882813.png"
     },
     {
@@ -84,71 +120,95 @@
       "date": "2026-05-21",
       "status": "opened",
       "sourceId": "SR0881239",
-      "blurb": "Donut shop known for large novelty donuts and variety.",
+      "blurb": "Artisanal donut shop and café known for fresh daily donuts.",
       "photoRef": "places/ChIJERJ44GbKj4ARc9-1ze0Lnv8/photos/Ab43m-sIHMD9_OwyxuEexM1vf81ewUK6GbnNdmlKfOHj42Yh8hzZPJP2UZxQm5LPomN1vWzbSomrmROPwPH6d2IAn0BwMDJh8b4dS62ld6JGw68lbCO9HShTX2-wpJytQF6SfNNBZK47MZTzArluC1caadK2qN6fPoH6J567FqIc4tPdpQCD2ZcyOhUmgt9kRTZwcgQ7WSoft2lph5pGZwgiOYI50RX4oKO3zYVYRqg2hsiA_g4FftZC7whZBVEnuR0xGcKbwtrpVTda1pxumI_EiNib_n_cB_ixNwFh0SQfVBOaSJCGDqwwiUFZsqqTCSz_pR_nqMsCGQD-ViyYadnTTBlmKnJPVWteOfLoUJtvZu75OPG5xtxMQi9oAt_kxpkY3OBn2t-cBsp0mDouRx1KKpyppYnfTM2X8A_4YT5twL-ZjDqkS_g2KKTNmgUug-Kv"
     },
     {
-      "id": "opened-SR0878727",
-      "name": "T & T Supermarket Westgate Kd Production",
+      "id": "opened-SR0878729",
+      "name": "T & T Supermarket Westgate Seafood And Meat",
       "address": "1600 Saratoga Ave, Spc 44",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
       "date": "2026-05-21",
       "status": "opened",
-      "sourceId": "SR0878727",
-      "blurb": "Asian supermarket food court with prepared takeout options.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0878727.png"
+      "sourceId": "SR0878729",
+      "blurb": "Asian grocery market with fresh seafood and meat counter service.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0878729.png"
     },
     {
-      "id": "opened-SR0884293",
-      "name": "Famous Dave's",
-      "address": "61 Curtner Ave",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-05-20",
-      "status": "opened",
-      "sourceId": "SR0884293",
-      "blurb": "Classic American BBQ chain with smoked meats — returning to San Jose at 61 Curtner Ave.",
-      "photoRef": "places/ChIJzaXruxszjoARe9HOcr5EBCY/photos/Ab43m-uWT3FdFhUGgmPwecQ1XNKypfqoBE_2uVp6D4tbpm9rPPDcfbZCFYRB_5CumvOVjUhJt2YjLYdcSu8T_wdsQGBazktbVX2H7tceQ0GqOUbb64gcGyw9AF-Ba_Yc7ERl8HaiWqbFpVrS23cC6IFmMlQPORXYwWyYQYycwwKxZNyGT3WYatGA7OXLK6QzIquVc_sms-kgPWwHzm9R_JZM0iImIulqbZl_vrCfsPfLtGJcw6lRO8D80FFxECX876wbgR5eidq_56XgrxOC0h6cxJnORIeu9W4C2ppOW_F3Krs"
-    },
-    {
-      "id": "opened-SR0879940",
-      "name": "Hilton Santa Clara Coffee Bar",
+      "id": "opened-SR0879901",
+      "name": "Hilton Santa Clara - L1 Buffet W/L1 Private Dining & L8 Private Dining",
       "address": "4949 Great America Pkwy",
       "cityId": "santa-clara",
       "cityName": "SANTA CLARA",
       "date": "2026-05-19",
       "status": "opened",
-      "sourceId": "SR0879940",
-      "blurb": "Hotel coffee shop offering coffee and light breakfast items.",
-      "photoRef": "places/ChIJy3dl287Jj4ARq4yV_OvOu9w/photos/Ab43m-s8TiBvhE2KxvlBQ_jqkJ21uRnjMDYMUeQwiLXZlvoVb2q_xwi9AzJtt5PM1px7Hp8o7hx2gxojuNmzE0stfOjbbn8Yt2TLO7J-B7s4BBKlglKXUyh8LFG6NT54zm5j7QXkkaomjlSAXLsWuHzAk0OMkhBHELLd_SWKV-mcCuketAn1vhsAME0UhSo8tfB0qgla8Cz78G39U7yiiVAqJh5uilSheWH5UoOtgf0na0f7SDxCpDdWl5_eBkv1gQhLwLQkqamN_aOb7TLz7S9IFB6POnxBQnZfLhcnAbS5tnLOHQ"
-    },
-    {
-      "id": "opened-SR0881087",
-      "name": "E Phedi Coffee",
-      "address": "2268 Senter Rd., #210",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-05-18",
-      "status": "opened",
-      "sourceId": "SR0881087",
-      "blurb": "Coffee shop specializing in Ethiopian coffee and espresso drinks.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881087.png"
-    },
-    {
-      "id": "opened-SR0877651",
-      "name": "The Posh Bagel",
-      "address": "2005 Camden Ave",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-05-15",
-      "status": "opened",
-      "sourceId": "SR0877651",
-      "blurb": "Bagel shop offering fresh bagels and sandwich options.",
-      "photoRef": "places/ChIJUw8mEQA1joARJpXAWCYOt2Y/photos/Ab43m-skSyJulAe_xyMnRihwg2X2zU7oxwEZUeaF0HH96YMJ0I3kwqFgOx7mwhwCB3p3NAu8qCwVY9vnhsvYrgIKMM_tfTjIi9QHOevLkvNbSzwpFGgzAqkOj2W_UHKcEanoxM3PXYibkckGvBehE4irWYqEPvK26LlLH3ZCljZjmIREP6uHsJUz6ZdTgmgD6yoJuB9WP7wCRNALcw2rKsZa0sNqeHm4omlomeCuNmVlL6bafhOiDyDdRwGWA2SKkUPXp5eLvRfucyGLQmT_0r9d0uyrwPXR5_4MCvPU48KdOSHJpBd3uUV97zYaEWhId8GJ5sWsXdsxGrWyyy5GXaLpGkRNkYlrUKk2hl1oGdWAjRXJF8pU8sen6Idt3hCGq9K43cEx-HOv2rgd81iUWi7IsvsSsq1XFx21oC6b825mOzc"
+      "sourceId": "SR0879901",
+      "blurb": "Hotel buffet and private event dining spaces in convention center location.",
+      "photoRef": "places/ChIJy3dl287Jj4ARq4yV_OvOu9w/photos/Ab43m-v0UDw6dxXPj1cKfv1rOC5UIUyQVuR-pzAVAmvw893tsF8k8Jd41hV1PxZDRL6K-_IKFCViE5zPw4xyKVMgtyXa49207K9k99s7koshTPHkqCK4T0iMit9g75KCg7-PJBjDyn96tYVDcJMEbp6SUYG6oOUw5nMYhTQZDOjjC39z0xN120VTAslBb_v6SdoWO-LB9BXb7LiBs-_eeq6Pc5CqZ8K9VsNM8mvo3ziCSkPK9RPfK0PkmhoaCfpl_O28nAIFjwFmU-XainxLGDTmHbL1VbTGEthB79L4lD5nnEueeQ"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0884832",
+      "name": "American Cafe Milkshake Station",
+      "address": "2401 Agnew Rd",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "date": "2026-05-29",
+      "status": "coming-soon",
+      "sourceId": "SR0884832",
+      "blurb": "American casual dining and milkshakes opening on Agnew Rd in Santa Clara.",
+      "photoRef": "places/ChIJS1P3IMfJj4ARyYfto6rO7tk/photos/Ab43m-uaRcEyDJuoEqdqRGr6bgnowbGejvgomibWiI-o1g7DzjQEnzJJzz3i9wFHNqKUVI5p7lI2sJFkDdIqaoLblVcgvr03x01iPSMmUFXXlt0y4BGKxT6uakvK-Qd9zeU3I6fd-O71vAkA2xz459A5-W6R5kB2zhNZnltpdmYtJRi5o0kpwf_sWJD5d2EOeV04mJgThgXzEGvs9jVZhzh_vyALSDJYgDUNxtF2N4s-pa7gLELnPB0500BD1Mvd--50uYJgURdyU1keDq3HcDWEPZbjiyvh7S1U0yeZC4yuZULiLPOR81WFIRLMWl_K6-T5qyhBVbQ_T1PAqTgqlw5pLqEGLRiD4DGhabxoEOms-AaKY0SnFS65-Fl4_LfCmK2OB3Ngi0pCtg556SM9hAURBqamRO1nFHz1QsZKp77bQlRGAeMR"
+    },
+    {
+      "id": "soon-SR0884830",
+      "name": "Ee Sushi New Food Facility",
+      "address": "14526 Camden Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-29",
+      "status": "coming-soon",
+      "sourceId": "SR0884830",
+      "blurb": "Sushi restaurant opening on Camden Ave in San Jose.",
+      "photoRef": "places/ChIJUbe1Rlo0joARCUakzHT-12M/photos/Ab43m-uMaehtZF5W4uBWldYL3-pyzHtBvQdeBuT_jLp77RWKp0gdZZPPRwd1hhQp51Smo8vfYWI9N_pt8an6uDJMJ7kiDxzhq7Glh2yBzN-AAFLYL6AP4_OBjGM1QkZwJtejOx-iZSxqKMfx1ik_aKlY34HefT6a-E_tlWcTF6R9EdRfElUV2BYym9To5eualr0mNZWPV1iHRLFJsieZdDMAthMBS9hZd0CITaQ1SJW91ONQIjDNLHYU8MrO2q8S-9DeBy1wewLlnxwNml1cmvNFV9bGydUj-B2SxGt5tbgTWI2zfPipt_bB2KFTuM-YJzKbcHY1FrfwO2V7QOqQ-eWCrBy27-I9q8V7ze2-PdD-PCGIBsDxsi4JIYn2Lzb_V-yEE2nKQm718QCOpn0VSC7sU7pZmkH1CUS1KDXka5h_-Z0TdA"
+    },
+    {
+      "id": "soon-SR0883339",
+      "name": "Grand Dynasty Seafood Restaurant",
+      "address": "6164 Bolinger Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-29",
+      "status": "coming-soon",
+      "sourceId": "SR0883339",
+      "blurb": "Seafood restaurant opening on Bolinger Rd in San Jose.",
+      "photoRef": "places/ChIJLSaUToO1j4ARdVELfKk7U_U/photos/Ab43m-tN3SIy25ZgbldN2CTsrfzKU9C3X_VxWc356J12erp6kGTE3wsqfq0PKHk7ufhhPIumq0KYf1XEi4J29CagW_usGdVqmiiANWhwduiVJYB1DYLFmCEmCv8e5La0XvMSFJqyhy48n3LWVTxNmXMk9D0zXIX9JuRQqZ_1TVMNm1fBBpnNHpFKnmQ8iY1-j4N9xosswYnOxAHbzCRAIJ8Uf7zf9eY9rDg1W3VoW03NBT8yMPxh1D1eQzUZlsRaNNU8d5-H994IofjLxJZTx10sNO9uC_akOoWlNWNAd_-RPZ3zbbPHyONUgFlexHNJejzAhhKkrPvQz6xt5nemR1ufSZsCWBVtIcMHjKstjACAB4UuLZIFAPk_laRTJ7obMp81StacMX5JPlOUZA3U5pJ-P-5BqC1ZylQ8YhOoWI47E_eVQw"
+    },
+    {
+      "id": "soon-SR0884144",
+      "name": "Qamaria Yemeni Coffee Ti",
+      "address": "2880 Stevens Creek Blvd, Ste. 110",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-05-29",
+      "status": "coming-soon",
+      "sourceId": "SR0884144",
+      "blurb": "Yemeni coffee shop opening on Stevens Creek Blvd in San Jose.",
+      "photoRef": "places/ChIJLeDhUwDrj4ARMwWfL_6MK6k/photos/Ab43m-v6OoJuvH88sAyZ2NuZ3En93sb71bPJ2IYO-_NEqLwSShtV3wYBz5R0drgg_LB7EzuvSh3tz71z1KWG-RkWr29Neuw_9k5FRa42Lh8NKs_uq8Rrcn24BnkQnSxBbP9WsCfZtqHomD_F1J7Dfc8X-AKkNeGl8aomJyqA8_zGx3mQqYOMlETFsWsTV0N4nI7n12cRCUNrK5vjqUGqfblz_5nBEMhcLtLacbQPyjzz6DHDYAZ8ZmbLWMEmU1Qx39egqi-cld0J8tTdJ0bNuGBWhoZl78ghYjBR786RSfjS614RivhNVv7i54JyVSWAQWT0RbqFbxH0BWNmLiSxufINPLd8RF0Wg0M9xfPB6dmb9Pn5lirTJNmZpatusRytqm2G8rCUw585-cQqGVQmBbsJb6i-N0BQ-iJbbwg_hZYVJY75rq8NrXICrIN4ZxuIiQ"
+    },
+    {
+      "id": "soon-SR0884845",
+      "name": "Swaraj India",
+      "address": "1855 El Camino Real",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "date": "2026-05-29",
+      "status": "coming-soon",
+      "sourceId": "SR0884845",
+      "blurb": "Indian restaurant opening on El Camino Real in Santa Clara.",
+      "photoRef": "places/ChIJiXGrHZvLj4ARGmM0XUMY5Lg/photos/Ab43m-tODJbENPZfQzU4ui838BsmNL14YfrLDNqUF6XJUuuF180I0oRYfiNBlaqIyBbHi3aZUsLS2F0nSPzHcm_suOkixDFR3DXHyNN2CMzsGRaQ0kaENVEwqD26FzLatKkE3k-G81RCUEYFcNwHIw6adAufwO4pWgiTRONqVO2fkOux-087Yh9M90Vzz_35k80waQIUEpRxzCrfarJ5leEPAoqmjCZzRMb5aVtERu6kkmkYct_vjOLOF_rTW0hG-jXM1N_7BpllCcHHHN1Z7WXo0efMyGqKL0lj9Gh255ZH0yreqasB73TTKMtWzPR4MFNn1KC140mIQRX3_vze6AYvyOeSchGEGpB_cDnNy-8F7ApZt4fAPmsxUAFZsV5o0DbjPpM8ftW4OUmapbxxtYtvJYR9ICt5McfHL4dLGleJQ50j48s"
+    },
     {
       "id": "soon-SR0884388",
       "name": "Bothaus",
@@ -158,7 +218,7 @@
       "date": "2026-05-27",
       "status": "coming-soon",
       "sourceId": "SR0884388",
-      "blurb": null,
+      "blurb": "German beer hall and gastropub opening on Castro St in Mountain View.",
       "photoRef": "places/ChIJW2ynIPu3j4ARXDXw5S94e0o/photos/Ab43m-s32R3qHG7VjydfmmW0XOeBKgV11UJfV4wQg461EbDTOjRjdXkVwodeLDwtO_s07hI3x-BlrwFJFNiXrE9CrdXarws-ic0eMMgtvRLY7x8JX1CtiuwOEhE_p9bzlJgLGN3bblIwrxPI-iRc2sIlTaZYcswqWTHaqegHVRup5F8HpRVgegiqmyUhf36xV6eWZ5L_rsaComSVyGOl-PGFV7n5BRuZE1y8BpSsiFUenLPs-ghJf7NJOaE68oEynr4yNbGeVuUttxKpfxBya9v3qhr_Y2U-bEyJk1QHFxVIntRDW4qozxrKvsi3V_7-r2Xuph5sBKqu9X-1Otya-2kVrGOJJRbK5deqtB1gqacGculOkzEsHlP2I9VtmkK3wZja3E3m4QoX8ul8QZAQDzgf3ZHJUK_c96pBxG2gaereCSn2pQ"
     },
     {
@@ -170,7 +230,7 @@
       "date": "2026-05-27",
       "status": "coming-soon",
       "sourceId": "SR0884461",
-      "blurb": null,
+      "blurb": "Tea shop opening on Grant Rd in Mountain View.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884461.png"
     },
     {
@@ -182,20 +242,8 @@
       "date": "2026-05-27",
       "status": "coming-soon",
       "sourceId": "SR0875664",
-      "blurb": null,
+      "blurb": "Sushi and cafe opening on La Rambla Ave in Santa Clara.",
       "photoRef": "places/ChIJGX32DjK3j4ARc_Xujun9uBY/photos/Ab43m-tHu7jZXOM4ACKFR7ENrhh2sN_UcS16akZJUKgpylYKIefVLDp3vNergwj1m-vrCT17GfLBY7C0YBsn99FeulPHgRYK15tO6hK36G0x5p0a3-ZDgNJi7NaAP6Cl0A247BFvFRpkyyccIVrTVcdvfMq7Ni1B38zIZKzR7UizvDi0Lreaz02FuLL56occFyyau6MKD0jj7CO1bKEJpJjE5wauoHZbLVLFsjjrxPzaIV8uiqyPP1aymY6g-ooTrC2hgXqZHZpE9gP3FbXb1xy9Ds0sviT1ncm8UMvghp_aZZ78VQ"
-    },
-    {
-      "id": "soon-SR0884014",
-      "name": "Tea Annie",
-      "address": "656a Fremont Ave",
-      "cityId": "los-altos",
-      "cityName": "LOS ALTOS",
-      "date": "2026-05-27",
-      "status": "coming-soon",
-      "sourceId": "SR0884014",
-      "blurb": null,
-      "photoRef": "places/ChIJoSaYsCuxj4ARfRl6NsAGuNI/photos/Ab43m-s27Z-RW78r-eHkQvGD-qoRY3oh2Mo_iou8Y7D7O_oqLLrCQEPOJfdS7ZH8B6zPvQ0DTROPihHjiynFKLocJPkTnPCzUro4iL9S6uuru3z8qm7OjfWttjK71eMPQdqBmsejm0coE2kizkVELmcwEutRihJSR6DAPzFAyiiczOuWy20bfnTOikIMbSihtXgRCE6wpM14xANcLfu47e8WtUpJdUHJdWU1UokrYCsAy8L0-aqYjSBPpEY6m1Y0TgHq4NlRDoz-gS_1S0set28ccUq7HPfeJ0HDemyD-yR1Vx5STA"
     },
     {
       "id": "soon-SR0884003",
@@ -206,20 +254,20 @@
       "date": "2026-05-27",
       "status": "coming-soon",
       "sourceId": "SR0884003",
-      "blurb": null,
+      "blurb": "Wings restaurant opening on San Antonio Rd in Mountain View.",
       "photoRef": "places/ChIJ7bP7KF2xj4ARMaNXyffXJ6Q/photos/Ab43m-tqPihPd3Z8Y7-W0ML4EBHcoiJfMC6wmWKqVwqmV4MmvZTvjQmoifwaFM18u-6N9CVECvV6gCes9ck-RS5c7DjVV8O3m1Bwg3z5eWmju1NOVWZGWzDH_AEv60FA8EQ_S2VEn_11XMxsk3XQOXqol272TtdXZholUZyOJyf1h11usrvNhlM4rXwpeMATR3pDmZoti1NbV95FMiQwsuFK6_cyAVjmKhlV53EwZ1kq4Q7HQ9hxVFm1LyX0OR1AubxEJ7XUkdCf87ZRG15nrGPLVC1x1rOrgnx6_NY7fyY1EgG40A"
     },
     {
-      "id": "soon-SR0884773",
-      "name": "K119 Tamira",
-      "address": "82-96 E Santa Clara St. K119",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-05-26",
+      "id": "soon-SR0884014",
+      "name": "Tea Annie",
+      "address": "656a Fremont Ave",
+      "cityId": "los-altos",
+      "cityName": "LOS ALTOS",
+      "date": "2026-05-27",
       "status": "coming-soon",
-      "sourceId": "SR0884773",
-      "blurb": null,
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884773.png"
+      "sourceId": "SR0884014",
+      "blurb": "Tea shop opening on Fremont Ave in Los Altos.",
+      "photoRef": "places/ChIJoSaYsCuxj4ARfRl6NsAGuNI/photos/Ab43m-s27Z-RW78r-eHkQvGD-qoRY3oh2Mo_iou8Y7D7O_oqLLrCQEPOJfdS7ZH8B6zPvQ0DTROPihHjiynFKLocJPkTnPCzUro4iL9S6uuru3z8qm7OjfWttjK71eMPQdqBmsejm0coE2kizkVELmcwEutRihJSR6DAPzFAyiiczOuWy20bfnTOikIMbSihtXgRCE6wpM14xANcLfu47e8WtUpJdUHJdWU1UokrYCsAy8L0-aqYjSBPpEY6m1Y0TgHq4NlRDoz-gS_1S0set28ccUq7HPfeJ0HDemyD-yR1Vx5STA"
     },
     {
       "id": "soon-SR0884404",
@@ -230,68 +278,20 @@
       "date": "2026-05-26",
       "status": "coming-soon",
       "sourceId": "SR0884404",
-      "blurb": null,
+      "blurb": "Vietnamese sandwich shop opening on Monterey Rd in San Jose.",
       "photoRef": "places/ChIJNbwnuSrNj4ARzmYyRInamkw/photos/Ab43m-vJVXBaH6wISicLyMCPh60n2EjJjW8ffj8HfPxKjhPh258X2QPVOp0LgQfEfWM-nN-ZfZXOpK-daydIirb-Pb1pvQcnmMG974ujdS981eL8wUyRKIM1XVdQhJ3FrqLfhJ7bj52XykHzURRZ0e1vkGUhcCrH5R3h8JpgPtEZSpV65Ws9c4eQ1ydUDYwyJ1kEtTiI4bsxibWUdzqsbWGHmM20PF7u2tI1e_F7lGPPmY2iPZ1A9y2vz3Oi1j5IMMfgknpIEWuoV1ltyLmDzBRjPwjavnZi3Gj2qmHAmwfeQV1KN5Qzn7NonMiznICwLqnwCRPqWpDzbsTJK2J2kBYj9aWLMw2ndXJAzzPkLM5sEK86h8iIdSxpUPwaaS7vXqplITRcUMGSjyrsS1_0urs8s9oEor6T6lKWj-aUDanUDfT6IPQmoOJUws_KvL6ATw"
     },
     {
-      "id": "soon-SR0883562",
-      "name": "Indian Eatery",
-      "address": "291 W Mckinley Ave",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "date": "2026-05-26",
-      "status": "coming-soon",
-      "sourceId": "SR0883562",
-      "blurb": null,
-      "photoRef": "places/ChIJ138bNgC3j4ARGTUJXgPFUj4/photos/Ab43m-suLYeDrP-Z59x4hBbGsUWE9oBMMvt9HwI05QkoPnzn1L4jtziHGHV0UNwxDndJMuuOGpubSeFnqtoMgzyDUEyA13-JPzvPOAm0bufrmSqmffeIv8Bj-tb3zG1SEz0bYontcOehIAtR-gpM_fNMPeI9RRo3g7d1ZfeyvGlO_c4RQ4wS0Mm8QH_Xt3nL4asiOqSjje4IVk3NhTPdw2NePnNpCW0fTCiIRfuHMdflvWbN8CD3gQ46NtkD_p5rxnqPlpNOQS1RvAgkapCujXmwgpZzPF_8uR89yJYX7UxGERmUhA"
-    },
-    {
-      "id": "soon-SR0884726",
-      "name": "La Vallenata Food Truck",
-      "address": "Mff",
-      "cityId": "sunnyvale",
-      "cityName": "SUNNYVALE",
-      "date": "2026-05-22",
-      "status": "coming-soon",
-      "sourceId": "SR0884726",
-      "blurb": null,
-      "photoRef": "places/ChIJKbcAAQO3j4ARId-CDs_5zEE/photos/Ab43m-tjIPPvSED0Se2gI46NfTEdriHjN-bgkkelpins8B73tFY79b6qB3y0FOOPUt3SBCVjsE8wdVIU0NIlld9sbhCZ3RSNOeglWJTz__yqk4QkxiaY7MBi57DyD8QaVWqZETj9Kqxi4BX9H8sNPLlS6f5NQYPVHQp0vGThgAmdj5tQi0myaqpm2tYStDjGdimPAIIxbtMEmcDLPLOk6UT0lWUSEoliOVTv40Y44miXi8Whyr1lKZvywtyTnWcrIPot5Qua0NXAgkFU3fUT8XM30CeJwk_lkHq4yk9kf3gIQ_evLGzhLbP98pxUU7BsOYPfpdRTGY1ddCrh0ByIfpa6Ieknkvk7aYSeg_uBoZDP3C3wVK7fiGR1Ib3F-JLZ81CFCitDgQq9_Ct5g9870xjJ4lU4gXG8ZRXyg1s3w6mZ0QLGBw"
-    },
-    {
-      "id": "soon-SR0884416",
-      "name": "Caffe Rework",
-      "address": "4 Infinite Loop",
-      "cityId": "cupertino",
-      "cityName": "CUPERTINO",
-      "date": "2026-05-22",
-      "status": "coming-soon",
-      "sourceId": "SR0884416",
-      "blurb": null,
-      "photoRef": "places/ChIJvQPIOfW1j4ARVT_DNdp5Uk8/photos/Ab43m-vGys-aGsizvKETYgUqu3-bGrq7C46OaMDkvr7rh8TlKc2bmBiOWu1JmpLyeTC148i5FYphASmEAT3oEr99C5heB7kIgt90koJvfvRx63wxq9ahAw-ptmzwAllDoEbUIwQh9TIz0vVjXzlKdSrGK2o16Hts9Fm0HdigHT9iJPV8yVYlfB-OvDnrhNGxkHEbuogjU4UuMlsMaVPO5bTGjpZI7HDO5Qb9WlTOLlTd1na8ovPnvwZ8vjKMPDgLdeOAlhTSJNSFRw1zkws7C3HVL42qxODhDidBig5dFcrXUfwY08MJxFDdqOz9Z_cjHUOE9jGcYpIypnfA1aXtdNKYDMcxgdc76QNUfuQhu9jHR99zn1FgYBnMULNGdZ15zQsGXm9PwHWneDlM2nGnAyyEZqtf33eraBQKXnVayQ12VugAcw"
-    },
-    {
-      "id": "soon-SR0884286",
-      "name": "Whole Foods Market Los Altos - Kitchen Bakery",
-      "address": "4800 El Camino Real",
-      "cityId": "los-altos",
-      "cityName": "LOS ALTOS",
-      "date": "2026-05-21",
-      "status": "coming-soon",
-      "sourceId": "SR0884286",
-      "blurb": null,
-      "photoRef": "places/ChIJOdKVDTu7j4ARAWS1bVZzzz8/photos/Ab43m-sFEHbagEYFYkhkNT6RHZ6JkZnWFZ3gx1LDCN30ZgjiXx9qfYXtLu6OY34e_Djy-8qAWCIBuqgxtrP4jyNhCXJ6DcCSeqAszW7niAgJ2PT1OtjWUDR2qPINr4YzgG29i-YsHIItF_LEJMF9CHjHa8PclGkVJSSSfeUYDl58nWiMKRH9AdPUYD6vp6RukyZwBFs8cFUL_8Aol5IWr0Vbo14MXw1dmY5Z4eIJVqpJs0n1-KnA7SnOFX-MgutpX1i3q7m0TGSzFR8K2OAjl2R_dcp0Pnwtcf46V9bENBZgNvsS4C5E2Dc88yyl4axzlO59BygQL26KsbI-PFYXKpSdd8mHdUEuGrBeDlNgM_-eexqjUJCOHtG3S5Q5GRWiqTeRkhxmMZ9cwRWVnFZ-pD0PWVvRlqs5IPIhMuJmS8_bx_FYORFOhXLPkdUXROOUHZ4q"
-    },
-    {
-      "id": "soon-SR0883832",
-      "name": "Afc Sushi @ Safeway #316",
-      "address": "179 Branham Ln",
+      "id": "soon-SR0884773",
+      "name": "K119 Tamira",
+      "address": "82-96 E Santa Clara St. K119",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
-      "date": "2026-05-21",
+      "date": "2026-05-26",
       "status": "coming-soon",
-      "sourceId": "SR0883832",
-      "blurb": null,
-      "photoRef": "places/ChIJeWbogxgyjoARnT7MmtIB9Xw/photos/Ab43m-ssHzvR6k3fNTZmHfmb91s1694Cx2Yw6vEdwk1c79gWbEQcmY_xvJvkQvhp1jjL9l1-Jd-Na-SoMOXV2pstm7XJ7bJAAcmZsB3WzQ9RbAm_B8XX_Ta5B03dMmJ_EGPNCSN7a9tCmjdHke13pIE3jDxfG2z40SESwT4gwOZMsHvWrevPE7AYOmcj_BEkhQQCCmlqJNc2Nf5-A5THrW-DsUrkWXlHyBYCpGeNJfNEYmUIXZr42suVOdhL4cjcsx_13r--WZxDa9g6QNPQiRWu3-uUJI3soMs6I4PytBEAsnCuyCPR4Uj185wGt9jzgkD4Sgr4W2KQPYvyAeNnk93jcBKWClZWY0RFR1d51yj6J5CKRZotBjkaJR5fskKAS2TZn4y_gEtpPLf89qZjrRzjdmQFUAYEaSrDMJirdPtSE8bM070"
+      "sourceId": "SR0884773",
+      "blurb": "Thai restaurant opening on East Santa Clara St in San Jose.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884773.png"
     }
   ]
 }
