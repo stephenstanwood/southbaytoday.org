@@ -759,6 +759,14 @@ function cleanTitle(title) {
     // capitalized. Run before the case-balancing rules so they see the fixed
     // form ("Wong's" reads as mixed-case, not as a 1-letter all-caps run).
     .replace(/(\w)'S\b/g, "$1's")
+    // Recover the "Let's" contraction when feeds drop the apostrophe. A
+    // capitalized standalone "Lets" token in an event title is effectively
+    // always the contraction ("Lets eat", "Lets Talk", "Lets Dance") — the
+    // verb sense ("the pass lets you in") only appears lowercase mid-sentence,
+    // which a Title-cased event name doesn't produce. Case-sensitive so all-caps
+    // brand styling ("LETS") and substrings ("Outlets", "Tablets") stay intact.
+    // Recurring manual copy-edit in the title data — handle it upstream.
+    .replace(/\bLets\b/g, "Let's")
     .trim();
   // Downcase ALL-CAPS words that aren't known acronyms. Titles that are
   // mostly mixed-case (lowerRatio ≥ 0.5) get the aggressive 2+ letter rule:
@@ -1276,6 +1284,15 @@ function polishDescription(text) {
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
+
+  // Strip trademark/copyright/service-mark glyphs from body copy — parity with
+  // cleanTitle (which strips them from titles) and the venue-name cleaner.
+  // Feeds emit "LEGO® fans unite" and "Cake Picnic™phenomenon"; the glyph is
+  // visual noise. When it sits wedged between two word characters with no
+  // space (the Cake Picnic™phenomenon case) replace it with a space so the
+  // words don't fuse — otherwise just drop it. A later \s{2,} collapse tidies
+  // any double space left behind ("LEGO® " → "LEGO  " → "LEGO ").
+  t = t.replace(/([A-Za-z0-9])[®©™℠℗](?=[A-Za-z0-9])/g, "$1 ").replace(/[®©™℠℗]/g, "");
 
   // Ticketmaster `info` fields sometimes open with asterisk-wrapped show
   // annotations: `*21+..... Doors/show start time 8:00pm*`. The block contains
