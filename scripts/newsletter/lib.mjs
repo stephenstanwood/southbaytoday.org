@@ -308,6 +308,25 @@ function firstUsableImage(items, picker) {
   return "";
 }
 
+// Newsletter rows must NEVER render with a blank image slot — every event,
+// opening and conversation item gets a thumbnail. `newsletterImage` returns the
+// item's own usable image or the branded fallback tile, and `newsletterThumbStyle`
+// sets that same fallback as the <img> background so a *broken* (404) src still
+// shows art instead of an empty box. Together these guarantee: (1) every item has
+// an image, (2) no empty left-column gaps (e.g. the conversation / "Around the
+// South Bay" section). Keep both wired into eventsBlock/openingsBlock/
+// conversationBlock — do not revert to conditional thumbnails.
+const NEWSLETTER_IMAGE_FALLBACK = `${SITE_URL}/images/logo-mark.png`;
+
+function newsletterImage(url) {
+  return usableImage(url) || NEWSLETTER_IMAGE_FALLBACK;
+}
+
+function newsletterThumbStyle(size, radius) {
+  return `width:${size}px;height:${size}px;display:block;border-radius:${radius}px;object-fit:cover;`
+    + `background:${PALETTE.card} url('${NEWSLETTER_IMAGE_FALLBACK}') center/cover no-repeat;`;
+}
+
 function newsletterVisuals({ date, longDate, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
   const dayPlanImage = usableImage(loadNewsletterHero(date))
     || firstUsableImage(orderedCards(dayPlan), (c) => c.image);
@@ -1195,12 +1214,10 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
   if (!events?.length) return "";
   const displayEvents = chronologicalEvents(events);
   const rows = displayEvents.map((e) => {
-    const image = usableImage(e.image);
-    const thumb = image
-      ? `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
-          <img src="${esc(image)}" alt="" width="72" height="72" style="width:72px;height:72px;display:block;border-radius:8px;object-fit:cover;">
-        </td>`
-      : "";
+    const image = newsletterImage(e.image);
+    const thumb = `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+          <img src="${esc(image)}" alt="" width="72" height="72" style="${newsletterThumbStyle(72, 8)}">
+        </td>`;
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
@@ -1234,10 +1251,8 @@ function openingsBlock(openings, date, editorial = null) {
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
     const age = openingAge(o.date, date);
     const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
-    const image = usableImage(o.image);
-    const thumb = image
-      ? `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;"><img src="${esc(image)}" alt="" width="58" height="58" style="width:58px;height:58px;display:block;border-radius:8px;object-fit:cover;"></td>`
-      : "";
+    const image = newsletterImage(o.image);
+    const thumb = `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;"><img src="${esc(image)}" alt="" width="58" height="58" style="${newsletterThumbStyle(58, 8)}"></td>`;
     return `<table style="width:100%;border-collapse:collapse;margin-bottom:10px;"><tbody><tr>
       ${thumb}
       <td style="vertical-align:top;padding:0 0 12px 0;">
@@ -1303,9 +1318,7 @@ function conversationBlock(posts, editorial = null) {
       p.score ? `↑ ${p.score}` : null,
       p.numComments ? `💬 ${p.numComments}` : null,
     ].filter(Boolean).join(" · ");
-    const thumb = p.image
-      ? `<img src="${esc(p.image)}" alt="" width="64" height="64" style="width:64px;height:64px;display:block;border-radius:6px;object-fit:cover;">`
-      : "";
+    const thumb = `<img src="${esc(newsletterImage(p.image))}" alt="" width="64" height="64" style="${newsletterThumbStyle(64, 6)}">`;
     const titleHtml = p.permalink
       ? `<a href="${esc(p.permalink)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;line-height:1.4;">${esc(title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;line-height:1.4;">${esc(title)}</span>`;

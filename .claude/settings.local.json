@@ -3,7 +3,10 @@
     "allow": [
       "mcp__Claude_Preview__preview_start",
       "Skill(update-config)",
-      "Skill(update-config:*)"
+      "Skill(update-config:*)",
+      "Bash(mkdir -p ~/.claude)",
+      "Bash(printf '%s\\\\n' '# Conventions' '- When I say \"placeholder,\" do nothing — I'\\\\''m just opening a thread for later.')",
+      "Read(//root/.claude/**)"
     ]
   }
 }

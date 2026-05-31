@@ -45,3 +45,6 @@ Do NOT add health-score / inspection / closure / quake / outage / water / air-qu
 
 ## Don't surface "this was built but never rendered" components
 When you find an orphan component file or a data file with no visible UI, that is almost always intentional — either Stephen removed the rendering or the data is used elsewhere (social pipeline, day-plan generation, freshness checks). Do NOT "complete" it by wiring it in. Surface a 1-line note in your end-of-turn summary if you think something is genuinely missing, and let Stephen decide.
+
+## Newsletter — every item must render an image
+Every row in the newsletter (`scripts/newsletter/lib.mjs`) — events, openings, and conversation/"Around the South Bay" items — MUST render a thumbnail. Never gate the image cell on `usableImage()` being truthy (that leaves missing items with no image and produces empty left-column gaps). Use `newsletterImage(url)` (returns the item's image or the branded fallback) for the `src`, and `newsletterThumbStyle(size, radius)` for the style (it sets the fallback as the `<img>` background so even a broken/404 src degrades to branded art instead of an empty box). Do not revert these to conditional thumbnails.
