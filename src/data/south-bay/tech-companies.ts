@@ -1004,6 +1004,18 @@ export interface RecentlyFunded {
 
 export const RECENTLY_FUNDED: RecentlyFunded[] = [
   {
+    id: "canyon-code",
+    name: "Canyon Code",
+    city: "Sunnyvale",
+    category: "saas",
+    round: "Pre-Seed",
+    amount: "$5M",
+    date: "2026-05-26",
+    tagline: "A workflow-intelligence layer that gives enterprises granular controls to optimize, manage, and govern fleets of AI agents at scale. Launched out of stealth with a Cota Capital–led pre-seed.",
+    color: "#4f46e5",
+    url: "https://canyoncode.ai",
+  },
+  {
     id: "nexthop-ai",
     name: "Nexthop AI",
     city: "Santa Clara",
