@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-31T19:08:39.500Z",
+      "generatedAt": "2026-05-31T23:08:59.572Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-31T19:08:41.827Z",
+      "generatedAt": "2026-05-31T23:09:01.744Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26PLN-00124",
-          "address": "520 Webster St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00122",
           "address": "250 Hamilton Av",
           "category": "entitlement",
@@ -175,15 +163,15 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00118",
-          "address": "4175 Manuela Av",
+          "id": "26PLN-00124",
+          "address": "520 Webster St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-26",
+          "issueDate": "2026-05-28",
           "subtype": "Over the Counter Approved"
         },
         {
@@ -208,6 +196,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00118",
+          "address": "4175 Manuela Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-26",
           "subtype": "Over the Counter Approved"
         }
       ]
