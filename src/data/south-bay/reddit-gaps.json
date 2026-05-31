@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-05-30T23:15:52.647Z",
+    "generatedAt": "2026-05-31T11:16:14.198Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 8,
-    "placesMatched": 4,
-    "placeGaps": 4,
+    "placesExtracted": 7,
+    "placesMatched": 2,
+    "placeGaps": 5,
     "eventsExtracted": 8,
     "eventsMatched": 1,
     "eventGaps": 7,
@@ -16,96 +16,83 @@
   },
   "placeGaps": [
     {
-      "name": "Asian Art Museum",
-      "city": "San Jose",
+      "name": "Next Level Games",
+      "city": "Mountain View",
       "kind": "venue",
-      "context": "museum meetup location, monthly Bay Area Museum Friends gathering",
+      "context": "board game cafe location being reopened by local trio",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
         "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
+      ]
+    },
+    {
+      "name": "Henry Coe State Park",
+      "city": "",
+      "kind": "park",
+      "context": "hosting Ranch Day family event June 7",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
+        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
+      ]
+    },
+    {
+      "name": "The Ameswell Hotel",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "hosting Comedy Hour showcase June 11 at 6 PM",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
+        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
+      ]
+    },
+    {
+      "name": "Woof Board",
+      "city": "Campbell",
+      "kind": "retail",
+      "context": "new dog boutique in downtown Campbell on main street",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tskelb/best_spot_for_tacos/",
+        "https://www.reddit.com/r/SanJose/comments/1tsd18m/author_george_takei_they_called_us_enemy/",
+        "https://www.reddit.com/r/SanJose/comments/1ts4ai9/shout_out_to_new_dog_boutique_in_downtown_campbell/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     },
     {
       "name": "Lopez Taqueria",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "serves breakfast burritos with bacon, refried beans, potatoes",
+      "context": "breakfast burritos with bacon, refried beans, potatoes",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
-        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
-      ]
-    },
-    {
-      "name": "Henry Coe State Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "Hunting Hollow location, hosting Ranch Day family event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
-        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
-      ]
-    },
-    {
-      "name": "Ameswell Hotel",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "hosting comedy showcase on June 11",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tqiwct/beginner_pickleballpadel_recommendations_around/",
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/"
+        "https://www.reddit.com/r/SanJose/comments/1tskelb/best_spot_for_tacos/",
+        "https://www.reddit.com/r/SanJose/comments/1tsd18m/author_george_takei_they_called_us_enemy/",
+        "https://www.reddit.com/r/SanJose/comments/1ts4ai9/shout_out_to_new_dog_boutique_in_downtown_campbell/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     }
   ],
   "eventGaps": [
     {
       "name": "Ranch Day",
-      "when": "Sunday June 7th, 10:00 a.m. – 3:00 p.m.",
-      "city": "San Jose",
-      "context": "free family fun event at Henry Coe State Park",
+      "when": "Sunday June 7",
+      "city": "",
+      "context": "free family fun event 10 AM-3 PM at Hunting Hollow",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
         "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
-      ]
-    },
-    {
-      "name": "Museum Meetup at the Asian Art Museum",
-      "when": "Tomorrow, 11:30am",
-      "city": "San Jose",
-      "context": "monthly Bay Area Museum Friends gathering, includes lunch nearby",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
-        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
-      ]
-    },
-    {
-      "name": "In-Person D&D One-Shots",
-      "when": "June and July",
-      "city": "Sunnyvale",
-      "context": "beginner-friendly Dungeons & Dragons sessions, local DM",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tqiwct/beginner_pickleballpadel_recommendations_around/",
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/"
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
       ]
     },
     {
@@ -114,11 +101,37 @@
       "city": "Mountain View",
       "context": "comedy showcase with SF and South Bay comics",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tqiwct/beginner_pickleballpadel_recommendations_around/",
+        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
+        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
         "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/"
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
+      ]
+    },
+    {
+      "name": "Author Talk: George Takei, They Called Us Enemy - Community Livestream Viewing",
+      "when": "Sunday, May 31, 2026 2:00PM–4:00PM",
+      "city": "San Jose",
+      "context": "free virtual author talk at East SJ Carnegie library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tskelb/best_spot_for_tacos/",
+        "https://www.reddit.com/r/SanJose/comments/1tsd18m/author_george_takei_they_called_us_enemy/",
+        "https://www.reddit.com/r/SanJose/comments/1ts4ai9/shout_out_to_new_dog_boutique_in_downtown_campbell/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
+      ]
+    },
+    {
+      "name": "In-Person D&D One-Shots (Beginner-Friendly)",
+      "when": "June and July sessions",
+      "city": "",
+      "context": "local Dungeons & Dragons adventures in South Bay area",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tskelb/best_spot_for_tacos/",
+        "https://www.reddit.com/r/SanJose/comments/1tsd18m/author_george_takei_they_called_us_enemy/",
+        "https://www.reddit.com/r/SanJose/comments/1ts4ai9/shout_out_to_new_dog_boutique_in_downtown_campbell/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/"
       ]
     },
     {
@@ -127,63 +140,48 @@
       "city": "Mountain View",
       "context": "stand-up comedy performance",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tqiwct/beginner_pickleballpadel_recommendations_around/",
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
         "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/"
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ]
     },
     {
-      "name": "Repair Café Silicon Valley",
-      "when": "Thursday, May 28, 5-7 PM",
+      "name": "Repair Café Silicon Valley at Rinconada Library",
+      "when": "Thursday May 28, 5:00 PM - 7:00 PM",
       "city": "Palo Alto",
-      "context": "first weeknight repair event at Rinconada Library",
+      "context": "free repair event for household items",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ]
     },
     {
-      "name": "Bay Area Group Hike",
-      "when": "June 13th",
-      "city": "Cupertino",
-      "context": "all paces and levels welcome at Rancho San Antonio",
+      "name": "Repair Café Silicon Valley at Los Gatos Library",
+      "when": "Sunday May 31, 11:00 AM - 3:00 PM",
+      "city": "Los Gatos",
+      "context": "free repair event for household items",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ]
     }
   ],
   "placeMatches": [
-    {
-      "name": "Next Level",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "board game cafe, location being reopened by trio",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
-        "https://www.reddit.com/r/SanJose/comments/1tsd6bq/the_menu_is_growing/",
-        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
-        "https://www.reddit.com/r/SanJose/comments/1tropi7/museum_meetup_at_the_asian_art_museum_tomorrow/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
-      ],
-      "matchedName": "Next Level Board Game Cafe"
-    },
     {
       "name": "Rinconada Library",
       "city": "Palo Alto",
       "kind": "venue",
       "context": "hosting Repair Café Silicon Valley event",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ],
       "matchedName": "Rinconada Library"
     },
@@ -191,40 +189,28 @@
       "name": "Los Gatos Library",
       "city": "Los Gatos",
       "kind": "venue",
-      "context": "hosting Repair Café Silicon Valley free repairs",
+      "context": "hosting Repair Café Silicon Valley event",
       "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/mountainview/comments/1tqd8yo/sat_june_13_fog_city_funnies_stand_up_comedy/",
         "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/"
       ],
       "matchedName": "Los Gatos Library"
-    },
-    {
-      "name": "Rancho San Antonio",
-      "city": "Cupertino",
-      "kind": "park",
-      "context": "group hike location on June 13th",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
-      ],
-      "matchedName": "Rancho San Antonio County Park & Open Space Preserve"
     }
   ],
   "eventMatches": [
     {
       "name": "Celebrate Santa Clara Night Market",
-      "when": "Friday June 5, Saturday June 6",
+      "when": "June 5-6",
       "city": "Santa Clara",
-      "context": "weekend two with 110+ makers, artists, live entertainment",
+      "context": "110+ makers, artists, live entertainment, beer garden",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tpsy64/free_repairs_in_palo_alto_rinconada_library_on/",
+        "https://www.reddit.com/r/SanJose/comments/1tsasds/coming_home_trio_plans_to_reopen_mountain_view/",
+        "https://www.reddit.com/r/SanJose/comments/1tsa54y/free_family_fun_at_ranch_day_sunday_june_7th_at/",
+        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/Cupertino/comments/1tooj2d/calling_all_bay_area_hikers/"
+        "https://www.reddit.com/r/bayarea/comments/1tsastp/coming_home_trio_plans_to_reopen_mountain_view/"
       ],
       "matchedName": "Celebrate Santa Clara Night Market"
     }
