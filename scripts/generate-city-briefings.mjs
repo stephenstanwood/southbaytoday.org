@@ -130,6 +130,7 @@ Important rules:
 - Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
 - Match the verb to the source summary. If a city hall summary says the council "held a public hearing," your verb is "heard" or "reviewed" — not "approved." If the summary says "approved," "adopted," or "filed," use that exact verb. Never upgrade a hearing to an approval.
 - Match tense to the date. City hall items show their date in parentheses; today is ${new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}. Items dated in the past must use past tense. Reserve present or future tense for items whose date is today or later.
+- A person named in an event title is NOT necessarily physically present. Many author talks, "One Book" programs, and library events are livestreams, screenings, or watch parties hosted locally. Do not write that someone "visits," "appears at," "comes to," or "performs at" a venue unless the data explicitly says so. When unsure, describe what the venue is doing — "the library hosts a discussion of," "screens," "streams" — rather than asserting the person is there in person.
 
 ${parts.join("\n\n")}
 
