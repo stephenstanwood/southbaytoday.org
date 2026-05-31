@@ -6620,12 +6620,16 @@ async function main() {
   console.log(`   👥 audience: kids=${audienceCounts.kids} adult=${audienceCounts.adult} all=${audienceCounts.all}`);
 
   // Image resolution — Tier 1 (Places venue match) + Tier 2 (OG scrape) +
-  // Tier 3 (Unsplash by category) always run. Tier 4 (Recraft) is opt-in
-  // via RESOLVE_EVENT_IMAGES_RECRAFT=1 since it costs money. Cache is
-  // persisted so re-runs don't re-fetch.
+  // Tier 3 (Unsplash by category) always run. Tier 4 (Recraft) crafts a
+  // per-event tile for anything still imageless so every event carries an
+  // image (site + newsletter); set RESOLVE_EVENT_IMAGES_RECRAFT=0 to disable.
+  // The byFingerprint cache means re-runs reuse tiles and never re-bill;
+  // maxRecraft (default 30) caps fresh spend per run.
   const { resolveEventImages } = await import("../src/lib/south-bay/eventImages.mjs");
   console.log("\n🖼  Resolving event images (Places → OG → Unsplash → Recraft)...");
-  const imgStats = await resolveEventImages(collapsedEvents);
+  const imgStats = await resolveEventImages(collapsedEvents, {
+    enableRecraft: process.env.RESOLVE_EVENT_IMAGES_RECRAFT !== "0",
+  });
   if (imgStats.prevalidated_decoded || imgStats.prevalidated_dropped) {
     console.log(`   Pre-pass: decoded=${imgStats.prevalidated_decoded} dropped=${imgStats.prevalidated_dropped} (broken pre-existing URLs)`);
   }
