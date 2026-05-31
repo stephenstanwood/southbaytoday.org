@@ -1016,6 +1016,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://canyoncode.ai",
   },
   {
+    id: "vortex-imaging",
+    name: "Vortex Imaging",
+    city: "Sunnyvale",
+    category: "medtech",
+    round: "Venture Round",
+    amount: "$12M",
+    date: "2026-05-18",
+    tagline: "Computational ultrasound that reconstructs high-quality 3D volumetric scans at the point of care using GPU-accelerated cloud processing. Raised $12M and expanded its board to push the technology toward clinical diagnostics.",
+    color: "#0891b2",
+    url: "https://www.vortex-imaging.com",
+  },
+  {
     id: "nexthop-ai",
     name: "Nexthop AI",
     city: "Santa Clara",
