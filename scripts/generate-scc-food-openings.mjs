@@ -60,6 +60,7 @@ const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
 // doesn't match the brand (e.g. "SWEET GREENS" plural → "sweetgreen" actual chain).
 const NAME_OVERRIDES = {
   "SR0881648": "sweetgreen",
+  "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
 };
 
 const BLURB_OVERRIDES = {
@@ -96,7 +97,7 @@ const BLURB_OVERRIDES = {
   "SR0880855": "Johnny Donuts coming to Santana Row area — handcrafted doughnuts and coffee at Olin Ave.",
   "SR0883952": "Chama Nativa Brazilian Steakhouse — rodizio churrasco with tableside carving service — opening on Blossom Hill Rd in San Jose.",
   "SR0884604": "Sushi restaurant opening at 15650 Los Gatos Blvd in Los Gatos.",
-  "SR0880082": "Seafood restaurant focusing on crab dishes — coming to 625 Coleman Ave in San Jose.",
+  "SR0880082": "Seafood restaurant focusing on crab dishes, now open at 625 Coleman Ave in San Jose.",
   "SR0884303": "Boba tea shop opening at De Anza Blvd in Cupertino's shopping district.",
   "SR0884106": "Japanese restaurant opening at 10445 S De Anza Blvd in Cupertino.",
   "SR0884217": "Breakfast and brunch spot at 545 San Antonio Rd in Mountain View.",
