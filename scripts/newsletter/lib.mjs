@@ -308,23 +308,23 @@ function firstUsableImage(items, picker) {
   return "";
 }
 
-// Newsletter rows must NEVER render with a blank image slot — every event,
-// opening and conversation item gets a thumbnail. `newsletterImage` returns the
-// item's own usable image or the branded fallback tile, and `newsletterThumbStyle`
-// sets that same fallback as the <img> background so a *broken* (404) src still
-// shows art instead of an empty box. Together these guarantee: (1) every item has
-// an image, (2) no empty left-column gaps (e.g. the conversation / "Around the
-// South Bay" section). Keep both wired into eventsBlock/openingsBlock/
-// conversationBlock — do not revert to conditional thumbnails.
-const NEWSLETTER_IMAGE_FALLBACK = `${SITE_URL}/icon-512.png`;
-
-function newsletterImage(url) {
-  return usableImage(url) || NEWSLETTER_IMAGE_FALLBACK;
-}
-
-function newsletterThumbStyle(size, radius) {
-  return `width:${size}px;height:${size}px;display:block;border-radius:${radius}px;object-fit:cover;`
-    + `background:${PALETTE.card} url('${NEWSLETTER_IMAGE_FALLBACK}') center/cover no-repeat;`;
+// Square thumbnail <img> for an event/opening/conversation row.
+//
+// Every newsletter item is expected to carry a real or *crafted* per-item image
+// — `ensureNewsletterImages` (scripts/newsletter/ensure-images.mjs) Recrafts a
+// tile for anything missing one before we render, so this should almost always
+// produce a thumbnail. We deliberately do NOT fall back to a generic branded
+// icon: a one-size-fits-all logo tile looks worse than nothing, so when an item
+// genuinely has no usable image (e.g. a local QA build with no RECRAFT_API_KEY)
+// this returns "" and the caller drops the whole image cell — the row renders
+// text-only with no empty left-column gap. The crafted image is also set as the
+// <img> background so a client that fails to load the <img> still shows the art.
+function squareThumbImg(url, size, radius) {
+  const img = usableImage(url);
+  if (!img) return "";
+  const style = `width:${size}px;height:${size}px;display:block;border-radius:${radius}px;`
+    + `object-fit:cover;background:${PALETTE.card} url('${esc(img)}') center/cover no-repeat;`;
+  return `<img src="${esc(img)}" alt="" width="${size}" height="${size}" style="${style}">`;
 }
 
 function newsletterVisuals({ date, longDate, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
@@ -1214,10 +1214,12 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
   if (!events?.length) return "";
   const displayEvents = chronologicalEvents(events);
   const rows = displayEvents.map((e) => {
-    const image = newsletterImage(e.image);
-    const thumb = `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
-          <img src="${esc(image)}" alt="" width="72" height="72" style="${newsletterThumbStyle(72, 8)}">
-        </td>`;
+    const img = squareThumbImg(e.image, 72, 8);
+    const thumb = img
+      ? `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+          ${img}
+        </td>`
+      : "";
     const title = e.url
       ? `<a href="${esc(e.url)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;">${esc(e.title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;">${esc(e.title)}</span>`;
@@ -1251,8 +1253,10 @@ function openingsBlock(openings, date, editorial = null) {
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
     const age = openingAge(o.date, date);
     const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
-    const image = newsletterImage(o.image);
-    const thumb = `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;"><img src="${esc(image)}" alt="" width="58" height="58" style="${newsletterThumbStyle(58, 8)}"></td>`;
+    const img = squareThumbImg(o.image, 58, 8);
+    const thumb = img
+      ? `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;">${img}</td>`
+      : "";
     return `<table style="width:100%;border-collapse:collapse;margin-bottom:10px;"><tbody><tr>
       ${thumb}
       <td style="vertical-align:top;padding:0 0 12px 0;">
@@ -1318,7 +1322,10 @@ function conversationBlock(posts, editorial = null) {
       p.score ? `↑ ${p.score}` : null,
       p.numComments ? `💬 ${p.numComments}` : null,
     ].filter(Boolean).join(" · ");
-    const thumb = `<img src="${esc(newsletterImage(p.image))}" alt="" width="64" height="64" style="${newsletterThumbStyle(64, 6)}">`;
+    const img = squareThumbImg(p.image, 64, 6);
+    const thumbCell = img
+      ? `<td width="64" style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">${img}</td>`
+      : "";
     const titleHtml = p.permalink
       ? `<a href="${esc(p.permalink)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:600;line-height:1.4;">${esc(title)}</a>`
       : `<span style="color:${PALETTE.ink};font-weight:600;line-height:1.4;">${esc(title)}</span>`;
@@ -1326,8 +1333,8 @@ function conversationBlock(posts, editorial = null) {
       ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(p.summary)}</div>`
       : "";
     return `<tr>
-      <td width="64" style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">${thumb}</td>
-      <td style="padding:10px 0 10px 12px;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+      ${thumbCell}
+      <td style="padding:10px 0 10px ${img ? "12px" : "0"};border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
         <div>${titleHtml}</div>
         ${summary}
         <div style="font-size:12px;color:${PALETTE.faint};margin-top:4px;letter-spacing:0.3px;">${esc(meta)}</div>

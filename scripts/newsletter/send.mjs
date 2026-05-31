@@ -18,6 +18,7 @@ import {
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
 import { generateNewsletterHero } from "./generate-hero.mjs";
+import { ensureNewsletterImages } from "./ensure-images.mjs";
 
 const args = process.argv.slice(2);
 function flag(name) {
@@ -44,6 +45,22 @@ async function main() {
   }
 
   const data = await assembleNewsletterData(date, { editorial });
+
+  // Backstop: craft a per-item tile for any event/opening/conversation row that
+  // is still imageless after the generators. Skip for QA (--test/--dry-run) to
+  // avoid burning Recraft credits; a cache hit is free, so real sends rarely
+  // pay. Failures are non-fatal — the renderer just drops the image cell.
+  if (!testTo && !dryRun) {
+    try {
+      const imgStats = await ensureNewsletterImages(data);
+      console.log(`images: ${imgStats.preexisting} kept, ${imgStats.cached} cached, ${imgStats.generated} crafted` +
+        (imgStats.skipped_no_key ? `, ${imgStats.skipped_no_key} skipped (no key)` : "") +
+        (imgStats.failed ? `, ${imgStats.failed} failed` : ""));
+    } catch (err) {
+      console.warn(`⚠️  newsletter image backstop failed: ${err.message} — rows may render text-only`);
+    }
+  }
+
   const { subject, html } = renderEmail(data);
 
   console.log(`subject: ${subject}`);
