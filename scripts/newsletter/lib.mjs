@@ -316,7 +316,7 @@ function firstUsableImage(items, picker) {
 // an image, (2) no empty left-column gaps (e.g. the conversation / "Around the
 // South Bay" section). Keep both wired into eventsBlock/openingsBlock/
 // conversationBlock — do not revert to conditional thumbnails.
-const NEWSLETTER_IMAGE_FALLBACK = `${SITE_URL}/images/logo-mark.png`;
+const NEWSLETTER_IMAGE_FALLBACK = `${SITE_URL}/icon-512.png`;
 
 function newsletterImage(url) {
   return usableImage(url) || NEWSLETTER_IMAGE_FALLBACK;
