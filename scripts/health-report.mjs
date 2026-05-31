@@ -78,14 +78,6 @@ const ARTIFACTS = [
     metaFn: (d) => d.generatedAt,
   },
   {
-    name: "Tech Briefing",
-    file: "tech-briefing.json",
-    cadence: "weekly",
-    maxStaleHours: 168,
-    countFn: (d) => d.items?.length || d.stories?.length,
-    metaFn: (d) => d.generatedAt,
-  },
-  {
     name: "Restaurant Radar",
     file: "restaurant-radar.json",
     cadence: "daily",
