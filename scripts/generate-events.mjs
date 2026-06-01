@@ -3392,7 +3392,7 @@ function mapTicketmasterEvent(e) {
     displayDate: displayDate(start),
     time: timeStr ? displayTime(start) : null,
     endTime: null,
-    venue: venueName,
+    venue: cleanVenue(venueName),
     address: venue?.address?.line1 || "",
     city,
     category: inferCategory(e.name, genre, segment, venueName),
