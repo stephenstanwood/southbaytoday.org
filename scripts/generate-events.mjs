@@ -1566,6 +1566,12 @@ function cleanVenue(raw) {
   v = v.replace(/^-\s+/, "");
   // If the string is meeting directions ("Meet at...", "Check in at..."), not a venue name
   if (/^(meet|check\s+in)\s+(at|in)\s+/i.test(v)) return "";
+  // Meetup organizers sometimes type a parking note into the venue-name field
+  // ("Street Parking for Free", "Free Parking"). That's an instruction, not a
+  // place name — return empty so the caller falls back to the group/source name.
+  // Anchored to the whole string so legitimate "<Place> Parking Lot" venues
+  // (e.g. "De Anza College Parking Lot A") are untouched.
+  if (/^(?:free\s+|street\s+)*parking(?:\s+lot)?(?:\s+(?:is\s+)?(?:for\s+)?free)?$/i.test(v)) return "";
   // If the entire string is just "City, CA Zip" or "City CA Zip" (no venue name), return empty
   if (/^[A-Za-z][a-zA-Z\s]+,?\s+CA\s+\d{5}/.test(v) && v.split(",").length <= 3) return "";
   // Remove trailing "  City ST zip" pattern (double-space before city)
