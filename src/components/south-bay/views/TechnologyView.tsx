@@ -1693,8 +1693,22 @@ function HiringSnapshot({ groups }: {
   );
 }
 
+// "Smaller, But Notable" is the startup/growth showcase — the public mega-caps
+// (Intuit, Broadcom, Fortinet, …) already get the Anchor Employers leaderboard
+// and Major Company Profiles up top, so leading with them here both buries the
+// actual startups and contradicts the section's own "growth companies and
+// startups" promise. Drop public-stage entries and surface startups first.
+const SPOTLIGHT_STAGE_ORDER: Record<SccTechSpotlight["stage"], number> = {
+  startup: 0,
+  growth: 1,
+  public: 2,
+};
+
 function SpotlightHighlightsSection() {
-  const spotlight = SCC_SPOTLIGHT.slice(0, 12);
+  const spotlight = [...SCC_SPOTLIGHT]
+    .filter((c) => c.stage !== "public")
+    .sort((a, b) => SPOTLIGHT_STAGE_ORDER[a.stage] - SPOTLIGHT_STAGE_ORDER[b.stage])
+    .slice(0, 12);
   return (
     <div className="tech-section">
       <div className="tech-section-head">
