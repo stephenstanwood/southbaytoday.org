@@ -1578,6 +1578,12 @@ function cleanVenue(raw) {
   // Trigger only when the trailing chunk starts with a number and ends with a street suffix
   // so we don't chop legitimate venue names that contain numbers (e.g. "Building 5").
   v = v.replace(/[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*$/, "");
+  // Same pattern but tolerant of a unit/building tail AFTER the street suffix:
+  // "Koll Oakmead Park, 3350 Scott Blvd Building 54" → "Koll Oakmead Park".
+  // Meetup organizers append a full street address (number + street + unit) into
+  // the venue-name field; the address field already carries it, so strip from the
+  // house number onward when a street-suffix token is followed by a unit keyword.
+  v = v.replace(/[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s+(Building|Bldg|Suite|Ste|Unit|Floor|Fl|Room|Rm|Apt|#)\b.*$/i, "");
   // Strip trailing "<truncated dir>" e.g. "Los Altos History Museum, 51 So." or
   // "Civic Center Lawn 110 E." (truncated address) — comma OR space separated.
   v = v.replace(/[,\s]+\d+\s+(N|S|E|W|N\.|S\.|E\.|W\.|No|So|Ea|We)\.?\s*$/i, "");
