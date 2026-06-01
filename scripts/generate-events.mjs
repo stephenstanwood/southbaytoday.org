@@ -1173,6 +1173,14 @@ const BOILERPLATE_SENTENCE_PATTERNS = [
   /\bvisit (our|the) website\b/i,
   /\bsee (our|the) website\b/i,
   /\bfor more (info|information|details)\b.*\bvisit\b/i,
+  // Newsletter/notification call-to-action lines. Cupertino's "Monthly Chat
+  // with Mayor Moore" scrape trails the real description with a mashed-up UI
+  // block — "Sign up to receive notifications about upcoming meetings: e
+  // Notification Sign-Up Dates and Locations [venue] [address] View Map" —
+  // which arrives as the final no-terminator fragment and survives every other
+  // filter. The CTA verb phrase is never substantive event prose, so dropping
+  // any fragment that carries it strips the whole tail cleanly.
+  /\bsign up to receive (notifications?|updates?|emails?|alerts?|reminders?)\b/i,
   // Truncation artifact: SJ Improv Ticketmaster `info` field opens with a
   // ticket-delivery-delay preamble that DOES NOT match `^do not`, so the raw
   // looksLikeVenuePolicy gate accepts it. truncate(text,200) then cuts inside
