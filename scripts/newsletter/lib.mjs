@@ -296,6 +296,29 @@ function usableImage(url) {
   return /^https?:\/\//i.test(value) ? value : "";
 }
 
+// Events and places carry their image either as a full URL (`image`) or as a
+// Google Places photo reference (`photoRef` — the single most common source,
+// ~54% of events). The site renders photoRef through /api/place-photo; email
+// needs an absolute URL, so resolve it here. Without this, every Places-sourced
+// event shows up imageless in the inbox — the recurring "no image" bug.
+function resolveImageUrl(item, w = 144, h = 144) {
+  const direct = usableImage(item?.image);
+  if (direct) return direct;
+  const ref = item?.photoRef;
+  if (typeof ref === "string" && ref.trim() && !ref.includes("://") && !ref.includes("..") && !/\s/.test(ref)) {
+    return `${SITE_URL}/api/place-photo?ref=${encodeURIComponent(ref)}&w=${w}&h=${h}`;
+  }
+  return "";
+}
+
+function firstResolvedImage(items, w = 144, h = 144) {
+  for (const item of items || []) {
+    const url = resolveImageUrl(item, w, h);
+    if (url) return url;
+  }
+  return "";
+}
+
 function isBlockedNewsletterImage(url) {
   return BLOCKED_NEWSLETTER_IMAGE_PATTERNS.some((re) => re.test(String(url || "")));
 }
@@ -311,9 +334,9 @@ function firstUsableImage(items, picker) {
 function newsletterVisuals({ date, longDate, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
   const dayPlanImage = usableImage(loadNewsletterHero(date))
     || firstUsableImage(orderedCards(dayPlan), (c) => c.image);
-  const tonightPickImage = usableImage(tonightPick?.image);
-  const eventsImage = firstUsableImage(featuredEvents, (e) => e.image);
-  const openingsImage = firstUsableImage(recentOpenings, (o) => o.image);
+  const tonightPickImage = resolveImageUrl(tonightPick, 800, 600);
+  const eventsImage = firstResolvedImage(featuredEvents, 144, 144);
+  const openingsImage = firstResolvedImage(recentOpenings, 116, 116);
   const conversationImage = firstUsableImage(redditPosts, (p) => p.image);
   const archiveImage = dayPlanImage || tonightPickImage || eventsImage || openingsImage || conversationImage || "";
 
@@ -1081,8 +1104,9 @@ function headerBlock(data) {
 function weatherStrip(w) {
   if (!w) return "";
   const rain = w.rainPct >= 30 ? ` · ${w.rainPct}% rain` : "";
+  const cond = (w.dayDesc || "").toLowerCase();
   return `<div style="padding:14px 28px;background:${PALETTE.card};font-size:14px;color:${PALETTE.muted};">
-  ${esc(w.emoji)} <strong style="color:${PALETTE.ink};">${esc(w.tempNow)}°F</strong> ${esc((w.dayDesc || "").toLowerCase())} · high ${esc(w.high)}°, low ${esc(w.low)}°${rain}
+  ${esc(w.emoji)} ${cond ? `${esc(cond)} · ` : ""}high <strong style="color:${PALETTE.ink};">${esc(w.high)}°</strong>, low ${esc(w.low)}°${rain}
 </div>`;
 }
 
@@ -1122,7 +1146,7 @@ function tonightPickBlock(pick, blurb, visuals = null) {
   if (!pick) return "";
   const meta = eventMeta(pick);
   const ticketUrl = pick.url || null;
-  const image = usableImage(pick.image) || usableImage(visuals?.tonightPickImage);
+  const image = resolveImageUrl(pick, 800, 600) || usableImage(visuals?.tonightPickImage);
   const imageHtml = image
     ? `<img src="${esc(image)}" alt="${esc(visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0 0 16px 0;border:1px solid ${PALETTE.border};">`
     : "";
@@ -1195,7 +1219,7 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
   if (!events?.length) return "";
   const displayEvents = chronologicalEvents(events);
   const rows = displayEvents.map((e) => {
-    const image = usableImage(e.image);
+    const image = resolveImageUrl(e, 144, 144);
     const thumb = image
       ? `<td width="72" style="padding:10px 12px 10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
           <img src="${esc(image)}" alt="" width="72" height="72" style="width:72px;height:72px;display:block;border-radius:8px;object-fit:cover;">
@@ -1236,7 +1260,7 @@ function openingsBlock(openings, date, editorial = null) {
     const loc = locParts.length ? ` <span style="color:${PALETTE.muted};">— ${esc(locParts.join(", "))}</span>` : "";
     const age = openingAge(o.date, date);
     const blurb = o.blurb ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:2px;">${esc(o.blurb)}</div>` : "";
-    const image = usableImage(o.image);
+    const image = resolveImageUrl(o, 116, 116);
     const thumb = image
       ? `<td width="58" style="padding:0 12px 12px 0;vertical-align:top;"><img src="${esc(image)}" alt="" width="58" height="58" style="width:58px;height:58px;display:block;border-radius:8px;object-fit:cover;"></td>`
       : "";

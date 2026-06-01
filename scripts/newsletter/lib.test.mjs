@@ -83,6 +83,33 @@ test("also-calendar events without an image span the full width (colspan), not t
   assert.equal(walkRow.includes("colspan"), false);
 });
 
+test("events expose their image via photoRef (Places proxy), not just a full image URL", () => {
+  // Root cause of the recurring "no image" bug: ~54% of events store their image
+  // as a Google Places `photoRef` (rendered through /api/place-photo), NOT as a
+  // full `image` URL. The newsletter must resolve photoRef to an ABSOLUTE proxy
+  // URL or those events render imageless in the inbox.
+  const { html } = renderEmail({
+    date: "2026-05-28",
+    longDate: "Thursday, May 28, 2026",
+    weather: null, dayPlan: null, dayPlanBlurb: "",
+    tonightPick: null, tonightPickBlurb: "",
+    todayEvents: [{}, {}, {}],
+    featuredEvents: [
+      // photoRef only — the common case. Must still get an <img>.
+      { title: "Museum Talk", time: "10:00 AM", venue: "Los Altos History Museum", city: "los-altos", url: "https://example.com/museum", photoRef: "places/ChIJabc123/photos/xyz789" },
+    ],
+    recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  });
+
+  const idx = html.indexOf("Museum Talk");
+  const row = html.slice(html.lastIndexOf("<tr>", idx), idx);
+  // Renders an absolute place-photo proxy URL (email needs absolute, not /api/...).
+  assert.match(row, /<img [^>]*src="https:\/\/southbaytoday\.org\/api\/place-photo\?ref=places%2FChIJabc123%2Fphotos%2Fxyz789/);
+  // And therefore does NOT fall back to the no-image colspan layout.
+  assert.equal(row.includes("colspan"), false);
+});
+
 // ── Date helpers (PT-safe formatting — the timezone-drift bug class) ──────────
 
 test("todayPT returns a YYYY-MM-DD string in Pacific Time", () => {
