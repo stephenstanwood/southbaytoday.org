@@ -49,6 +49,40 @@ test("newsletter renders also-calendar events chronologically and hides stale/bl
   assert.equal(html.includes("Newly open"), false);
 });
 
+test("also-calendar events without an image span the full width (colspan), not the 72px image gutter", () => {
+  // Regression: the events list is ONE shared table. Rows with an image emit two cells
+  // (<td width=72>img</td><td>text</td>); rows without an image must span BOTH columns,
+  // or their lone cell lands in the 72px image column and the text gets crammed into a
+  // narrow strip with the right half blank. (Flagged repeatedly — keep this locked.)
+  const { html } = renderEmail({
+    date: "2026-05-28",
+    longDate: "Thursday, May 28, 2026",
+    weather: null, dayPlan: null, dayPlanBlurb: "",
+    tonightPick: null, tonightPickBlurb: "",
+    todayEvents: [{}, {}, {}],
+    featuredEvents: [
+      // No image → must carry colspan="2".
+      { title: "Book Club Night", time: "7:00 PM", venue: "Campbell Library", city: "campbell", url: "https://example.com/book" },
+      // With image → keeps the [thumb][text] two-cell layout.
+      { title: "Morning Walk", time: "9:00 AM", venue: "Creek Trail", city: "campbell", url: "https://example.com/walk", image: "https://southbaytoday.org/img/walk.jpg" },
+    ],
+    recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  });
+
+  // The no-image event's content cell spans both columns.
+  const bookIdx = html.indexOf("Book Club Night");
+  assert.ok(bookIdx > -1, "no-image event should render");
+  const rowSlice = html.slice(html.lastIndexOf("<tr>", bookIdx), bookIdx);
+  assert.match(rowSlice, /colspan="2"/);
+
+  // The image event keeps its 72px thumb cell and does NOT colspan its text.
+  const walkIdx = html.indexOf("Morning Walk");
+  const walkRow = html.slice(html.lastIndexOf("<tr>", walkIdx), walkIdx);
+  assert.match(walkRow, /width="72"/);
+  assert.equal(walkRow.includes("colspan"), false);
+});
+
 // ── Date helpers (PT-safe formatting — the timezone-drift bug class) ──────────
 
 test("todayPT returns a YYYY-MM-DD string in Pacific Time", () => {

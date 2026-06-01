@@ -1208,7 +1208,9 @@ function eventsBlock(events, totalCount = events?.length || 0, editorial = null)
     const blurb = e.blurb
       ? `<div style="font-size:13px;color:${PALETTE.muted};line-height:1.45;margin-top:3px;">${esc(e.blurb)}</div>`
       : "";
-    return `<tr>${thumb}<td style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
+    // No image → span both columns so text fills the row instead of being crammed
+    // into the 72px image column (the shared table is sized by the rows that DO have images).
+    return `<tr>${thumb}<td${image ? "" : ' colspan="2"'} style="padding:10px 0;border-bottom:1px solid ${PALETTE.border};vertical-align:top;">
       <div>${title}</div>
       ${meta ? `<div style="font-size:13px;color:${PALETTE.muted};margin-top:2px;">${esc(meta)}</div>` : ""}
       ${blurb}
