@@ -714,6 +714,18 @@ function cleanTitle(title) {
     // noise on cards and badges; the underlying entities are still legally
     // recognizable without the glyph.
     .replace(/[®©™℠℗]/g, "")
+    // Strip emoji and pictographic decoration. Meetup/community feeds wrap
+    // titles in sparkles, hiking boots, wizards, etc. ("✨ TLAB Relaunch ✨",
+    // "💚Easy Walk🥾Hike…") — same visual-noise rationale as the ®™ strip above.
+    // Replace with a space (not "") so emoji used as word separators don't fuse
+    // neighbors ("Walk🥾Hike" → "Walk Hike"); the \s{2,} collapse + trim below
+    // tidy the result. Covers regional indicators, the main pictograph blocks,
+    // misc symbols + dingbats (incl. ✨ U+2728), variation selectors, ZWJ, and
+    // skin-tone modifiers.
+    .replace(
+      /[\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FE0F}\u{200D}\u{1F3FB}-\u{1F3FF}]/gu,
+      " ",
+    )
     // Straighten curly quotes — match polishDescription so titles and bodies
     // share normalization. Smart-quote forms render fine in some fonts but
     // break copy-paste, search, and our typography defaults.
@@ -5648,6 +5660,22 @@ async function fetchSouthBayMusicalTheatreEvents() {
       const description = truncate(stripBareUrls(bodyText
         .replace(/^.*?Loading\.\.\.\s*/i, "")
         .replace(/SHOW DATES[\s\S]*$/i, "")
+        // Strip the page header meta block that prefixes every SBMT synopsis:
+        // "<Show Title> <byline> <ISO-8601 timestamp> [EspaÑOL] <Show Title>
+        // <run-date range>." — e.g. "Once Upon a Mattress Doug Hughes
+        // 2026-04-30T14:37:43-07:00 Once Upon a Mattress Sep. 25 – Oct. 17, 2026
+        // Music by…". The byline + published timestamp are dev metadata, the
+        // repeated title + dates duplicate the card's own title/date, and the
+        // mojibake "EspaÑOL" is a corrupted language-toggle link. Drop through
+        // the timestamp first, then through the trailing "<Month D … YYYY>"
+        // caption (anchored to a month name so a synopsis without the caption,
+        // on other show pages, is left intact).
+        .replace(/^[\s\S]*?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-+]\d{2}:\d{2}\s*/, "")
+        .replace(/^Espa[\wñÑ]*\s*/i, "")
+        .replace(
+          /^[\s\S]{0,80}?\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z.]*\s+\d{1,2}\b[\s\S]*?\b20\d{2}[.,]?\s+/i,
+          "",
+        )
         .trim()));
       const image = extractFirstImageUrl(html);
       const re = /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t\.?|tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2}),\s+(20\d{2})\s+at\s+(\d{1,2}:\d{2})\s*(am|pm)\b/gi;
