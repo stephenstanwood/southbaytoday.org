@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-01T19:08:48.038Z",
+      "generatedAt": "2026-06-01T23:08:47.426Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-01T11:10:13.717Z",
+      "generatedAt": "2026-06-01T23:08:49.677Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -175,12 +175,24 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00125",
-          "address": "528 High St",
+          "id": "26PLN-00124",
+          "address": "520 Webster St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00122",
+          "address": "250 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
@@ -199,24 +211,12 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00122",
-          "address": "250 Hamilton Av",
+          "id": "26PLN-00125",
+          "address": "528 High St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00124",
-          "address": "520 Webster St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",

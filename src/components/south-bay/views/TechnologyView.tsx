@@ -558,7 +558,8 @@ function TechEventsSection() {
             {chmEvents.map((e) => (
               <a
                 key={e.id}
-                href={e.url}
+                href={e.url ?? "#"}
+                onClick={(ev) => !e.url && ev.preventDefault()}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -616,7 +617,8 @@ function TechEventsSection() {
           {upcomingEvents.map((e) => (
             <a
               key={e.id}
-              href={e.url}
+              href={e.url ?? "#"}
+              onClick={(ev) => !e.url && ev.preventDefault()}
               target="_blank"
               rel="noopener noreferrer"
               style={{
