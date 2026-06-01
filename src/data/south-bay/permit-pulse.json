@@ -1,19 +1,67 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-05-31T23:08:59.572Z",
+      "generatedAt": "2026-06-01T11:10:11.470Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 24 – May 31",
+      "dateRange": "May 25 – Jun 1",
       "stats": {
-        "total": 365,
-        "notable": 17,
-        "newUnits": 2,
-        "totalValuation": 148890145
+        "total": 431,
+        "notable": 26,
+        "newUnits": 7,
+        "totalValuation": 153341629
       },
       "permits": [
+        {
+          "id": "2025-114879-RS",
+          "address": "3555 Chamberlain Dr",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Lot 6 New 2 Sty Main Residence",
+          "valuation": 688446,
+          "units": 1,
+          "issueDate": "2026-05-29",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-115403-RS",
+          "address": "279 E St James St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached 838 Sf ADU Above Garage",
+          "valuation": 192075,
+          "units": 1,
+          "issueDate": "2026-05-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-100664-RS",
+          "address": "1224 Laurie Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "2-Story Detached ADU",
+          "valuation": 143584,
+          "units": 1,
+          "issueDate": "2026-05-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-146278-RS",
+          "address": "4887 Pepperwood Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to Jadu",
+          "valuation": 78965,
+          "units": 1,
+          "issueDate": "2026-05-29",
+          "subtype": "2nd Unit Added"
+        },
         {
           "id": "2022-686550-RS",
           "address": "2915 Remington Wy #2",
@@ -39,6 +87,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-143457-RS",
+          "address": "2787 George Blauer Pl #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to Jadu",
+          "valuation": 40582,
+          "units": 1,
+          "issueDate": "2026-05-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2026-118560-CI",
           "address": "131 Great Oaks Bl",
           "category": "commercial-large",
@@ -51,6 +111,18 @@
           "subtype": "Data Center"
         },
         {
+          "id": "2026-119333-CI",
+          "address": "935 Mclaughlin Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "(B 100%) Reroof",
+          "valuation": 2512860,
+          "units": 0,
+          "issueDate": "2026-05-29",
+          "subtype": "Warehouse/Storage"
+        },
+        {
           "id": "2026-119997-CI",
           "address": "1935 S 10th St",
           "category": "commercial-large",
@@ -61,95 +133,71 @@
           "units": 0,
           "issueDate": "2026-05-27",
           "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-118779-CI",
-          "address": "1162 Blossom Hill Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Additions/Alterations",
-          "description": "Chick-Fil-a Demo/Add",
-          "valuation": 809557,
-          "units": 0,
-          "issueDate": "2026-05-26",
-          "subtype": "Restaurant"
-        },
-        {
-          "id": "2026-114094-CI",
-          "address": "3011 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Intermolecular Clf3 Gas Cabinet Install",
-          "valuation": 600000,
-          "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "R & D Lab"
-        },
-        {
-          "id": "2026-117608-CI",
-          "address": "1111 Saratoga Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Built Golf Performance Tenant Improvement",
-          "valuation": 520948,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Health Club"
-        },
-        {
-          "id": "2026-118316-CI",
-          "address": "30 Rio Robles",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "F5 (Bem100%) Fitness Room TI",
-          "valuation": 468395,
-          "units": 0,
-          "issueDate": "2026-05-26",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-119960-CI",
-          "address": "333 Santana Row",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bemp100%) Reformation #1110",
-          "valuation": 464515,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-119483-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Journeys Tenant Improvement",
-          "valuation": 325000,
-          "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-05-31T23:09:01.744Z",
+      "generatedAt": "2026-06-01T11:10:13.717Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 24 – May 31",
+      "dateRange": "May 25 – Jun 1",
       "stats": {
         "total": 107,
-        "notable": 5,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01409",
+          "address": "543 Seale Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-31",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00125",
+          "address": "528 High St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00118",
+          "address": "4175 Manuela Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-26",
+          "subtype": "Over the Counter Approved"
+        },
         {
           "id": "26PLN-00122",
           "address": "250 Hamilton Av",
@@ -172,42 +220,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00125",
-          "address": "528 High St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00118",
-          "address": "4175 Manuela Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-26",
           "subtype": "Over the Counter Approved"
         }
       ]
