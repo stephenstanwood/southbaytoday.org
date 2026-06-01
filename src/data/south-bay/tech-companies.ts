@@ -491,7 +491,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "pure-storage",
     name: "Pure Storage",
-    city: "Mountain View",
+    city: "Santa Clara",
     category: "hardware",
     stage: "public",
     tagline: "All-flash storage arrays for enterprise and AI data infrastructure. Growing with AI boom.",
