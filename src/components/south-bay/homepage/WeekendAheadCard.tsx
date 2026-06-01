@@ -34,7 +34,7 @@ interface WeekendPick {
   endTime?: string | null;
   city: string;
   venue: string;
-  cost: string;
+  cost: string | null;
   url: string;
   category: string;
   why: string;
