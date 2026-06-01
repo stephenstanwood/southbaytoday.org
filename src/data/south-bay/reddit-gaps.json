@@ -1,258 +1,166 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-01T19:17:48.164Z",
+    "generatedAt": "2026-06-01T23:16:58.464Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 8,
-    "placesMatched": 2,
-    "placeGaps": 6,
-    "eventsExtracted": 10,
-    "eventsMatched": 4,
-    "eventGaps": 6,
+    "placesExtracted": 6,
+    "placesMatched": 1,
+    "placeGaps": 5,
+    "eventsExtracted": 5,
+    "eventsMatched": 1,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Ameswell Hotel",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "hosting comedy showcase on June 11",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ]
-    },
-    {
-      "name": "The Ritz",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Infected Rain concert on June 2",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ]
-    },
-    {
-      "name": "San Jose Improv",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Bruce Jingles comedy show on June 3",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ]
-    },
-    {
       "name": "Lopez Taqueria",
       "city": "Sunnyvale",
       "kind": "restaurant",
-      "context": "two-for-one breakfast burrito special with bacon and beans",
+      "context": "breakfast burrito special with bacon and beans",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/"
+        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
       ]
     },
     {
-      "name": "Repair Café Silicon Valley",
-      "city": "Los Gatos",
-      "kind": "service",
-      "context": "free repair event for household items at library",
+      "name": "Hidden Villa",
+      "city": "Los Altos",
+      "kind": "venue",
+      "context": "Outstanding in the Field sold out event on 6/13",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
+      ]
+    },
+    {
+      "name": "Merlion Restaurant",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "closing, replacement being sought",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/",
+        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/",
-        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/"
+        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/"
+      ]
+    },
+    {
+      "name": "Home Depot",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "Monterey Road location, found wallet",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tu53f1/lost_wallet_home_depot/",
+        "https://www.reddit.com/r/SanJose/comments/1tu4xyl/soccer_for_4year_old/",
+        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/",
+        "https://www.reddit.com/r/SanJose/comments/1ttinqi/trails_to_run_a_good_58_miles/"
       ]
     },
     {
       "name": "Vito's Pizza",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "featured in YouTube video about accessible dining",
+      "context": "featured in YouTube pizza-making video",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/",
-        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/"
+        "https://www.reddit.com/r/SanJose/comments/1tu53f1/lost_wallet_home_depot/",
+        "https://www.reddit.com/r/SanJose/comments/1tu4xyl/soccer_for_4year_old/",
+        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/",
+        "https://www.reddit.com/r/SanJose/comments/1ttinqi/trails_to_run_a_good_58_miles/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Comedy Hour at The Ameswell",
-      "when": "Thursday, June 11 at 6 PM",
-      "city": "Mountain View",
-      "context": "comedy showcase with SF and South Bay comics",
+      "name": "Outstanding in the Field",
+      "when": "6/13",
+      "city": "Los Altos",
+      "context": "farm dinner event at Hidden Villa, sold out",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
         "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
       ]
     },
     {
-      "name": "50th Arts & Wine Festival of Sunnyvale",
-      "when": "next weekend (Sunday)",
+      "name": "Arts & Wine Festival",
+      "when": "next weekend",
       "city": "Sunnyvale",
-      "context": "downtown festival with volunteer opportunities",
+      "context": "50th annual festival downtown with volunteering opportunities",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
         "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ]
-    },
-    {
-      "name": "In-Person D&D Beginner-Friendly One-Shots",
-      "when": "July (June almost full)",
-      "city": "",
-      "context": "local D&D adventures for beginners and experienced players",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/"
-      ]
-    },
-    {
-      "name": "Fog City Funnies Stand Up Comedy Troupe",
-      "when": "Saturday June 13",
-      "city": "Mountain View",
-      "context": "stand up comedy performance",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
-        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/"
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/"
       ]
     },
     {
       "name": "Repair Café Silicon Valley",
-      "when": "Sunday May 31, 11:00 AM–3:00 PM",
+      "when": "Sunday May 31, 11am-3pm",
       "city": "Los Gatos",
       "context": "free household item repairs at Los Gatos Library",
       "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/",
+        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/",
-        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/"
+        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/"
       ]
     },
     {
       "name": "California Adopt-a-Pet Day",
       "when": "Saturday June 6",
       "city": "",
-      "context": "Bay Area shelters participating with waived adoption fees",
+      "context": "30+ Bay Area shelters participating, waived adoption fees statewide",
       "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/",
+        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/",
-        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/"
+        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "San Jose Center for the Performing Arts",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Back to the Future Broadway production",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ],
-      "matchedName": "San Jose Center for the Performing Arts"
-    },
-    {
       "name": "Los Gatos Library",
       "city": "Los Gatos",
       "kind": "venue",
-      "context": "hosting Repair Café Silicon Valley event Sunday",
+      "context": "hosts Repair Café Silicon Valley free repair event",
       "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/",
+        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
-        "https://www.reddit.com/r/losgatos/comments/1tr47gy/lego_fan_event_support_local_lego_robotics_youth/",
-        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/",
-        "https://www.reddit.com/r/SanJose/comments/1tu29zp/so_i_made_my_first_pizza_by_vta_only_video_on/"
+        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/"
       ],
       "matchedName": "Los Gatos Library"
     }
   ],
   "eventMatches": [
     {
-      "name": "Infected Rain, Stitched Up Heart, Short Fuse",
-      "when": "Tuesday, June 2 at 7 PM",
-      "city": "San Jose",
-      "context": "live rock concert at The Ritz",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ],
-      "matchedName": "Infected Rain, Stitched Up Heart, Short Fuse"
-    },
-    {
-      "name": "Back to the Future – Broadway San Jose",
-      "when": "Tuesday, June 2 at 7:30 PM",
-      "city": "San Jose",
-      "context": "Broadway musical production at performing arts center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ],
-      "matchedName": "Back to the Future – Broadway San Jose"
-    },
-    {
-      "name": "Bruce Jingles",
-      "when": "Wednesday, June 3 at 8 PM",
-      "city": "San Jose",
-      "context": "comedy show at San Jose Improv",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1tqhnk4/excited_to_bring_a_comedy_showcase_to_the/",
-        "https://www.reddit.com/r/SanJose/comments/1ttjt3c/stuff_to_doexplore_in_sj_hopefully_something/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72rv/things_to_do_in_san_jose_this_week_62_67_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tt72ju/good_seafood_spots_here/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ],
-      "matchedName": "Bruce Jingles"
-    },
-    {
       "name": "Celebrate Santa Clara Night Market",
-      "when": "Friday June 5 and Saturday June 6, 4-9 p.m. / 2-9 p.m.",
+      "when": "June 5-6",
       "city": "Santa Clara",
-      "context": "110+ local makers, artists, live entertainment, beer garden, free event",
+      "context": "110+ local makers, artists, chefs, live entertainment, beer garden",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1ts6cha/a_yummy_twoforone_special_breakfast_burrito_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tr7yz3/inperson_dd_in_south_bay_beginnerfriendly/",
-        "https://www.reddit.com/r/mountainview/comments/1tqgcxk/saturday_june_13_fog_city_funnies_stand_up_comedy/",
+        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/",
         "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
-        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/"
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/losgatos/comments/1trct7u/free_repairs_this_sunday_at_the_lg_library/",
+        "https://www.reddit.com/r/bayarea/comments/1ttxu7b/we_can_do_this_people_take_a_pet_home_save_a_life/"
       ],
       "matchedName": "Celebrate Santa Clara Night Market"
     }
