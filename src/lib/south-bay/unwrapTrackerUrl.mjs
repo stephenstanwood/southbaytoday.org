@@ -46,7 +46,24 @@ const TRACKER_PATTERNS = [
   /\bclicks\.aweber\.com\b/i,                   // AWeber
   /\bbit\.ly\b/i,                               // Bit.ly shorteners
   /\btinyurl\.com\b/i,                          // TinyURL
+  /\blinks?-?\d*\.govdelivery\.com\/CL0\//i,    // GovDelivery / Granicus (city newsletters)
 ];
+
+// GovDelivery (Granicus) wraps the destination URL-encoded directly in the
+// path: links-2.govdelivery.com/CL0/<encoded-destination>/1/<tracking>...
+// We can decode it without a network fetch (and the tracker links expire),
+// so resolve it by parsing the path rather than following the redirect.
+function decodeGovDelivery(url) {
+  const m = /\/CL0\/([^/]+)/i.exec(url);
+  if (!m) return null;
+  try {
+    const dest = decodeURIComponent(m[1]);
+    if (/^https?:\/\//i.test(dest)) return stripTrackingParams(dest);
+  } catch {
+    // fall through
+  }
+  return null;
+}
 
 // Tracking params to strip from the FINAL resolved URL (still useful to
 // keep affiliate tags like `aff=` for Eventbrite — those carry attribution
@@ -113,6 +130,11 @@ function saveCache(cache) {
 // ---------------------------------------------------------------------------
 
 async function resolveOne(url) {
+  // GovDelivery embeds the destination in the path — decode it directly,
+  // no fetch needed (and the tracker URL expires after the email blast).
+  const govDest = decodeGovDelivery(url);
+  if (govDest) return govDest;
+
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
