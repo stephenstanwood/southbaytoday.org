@@ -8,8 +8,6 @@
 // <style> block so it works in any layout without depending on global CSS.
 // ---------------------------------------------------------------------------
 
-import NewsletterSignup from "./NewsletterSignup";
-
 type TabId = "overview" | "events" | "camps" | "government" | "technology" | "food";
 
 const TABS: Array<{ id: TabId; label: string; href: string }> = [
@@ -54,7 +52,6 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
             <div>{todayLabel}</div>
           </div>
           <div className="sb-slogan">All local. Good vibes. No ads.</div>
-          <NewsletterSignup variant="header" />
         </div>
       </header>
 

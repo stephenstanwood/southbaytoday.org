@@ -5,7 +5,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 export default function NewsletterSignup({
   variant = "card",
 }: {
-  variant?: "card" | "inline" | "minimal" | "header";
+  variant?: "card" | "inline" | "minimal";
 }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -38,25 +38,8 @@ export default function NewsletterSignup({
 
   const isCard = variant === "card";
   const isMinimal = variant === "minimal";
-  const isHeader = variant === "header";
 
   if (status === "success") {
-    if (isHeader) {
-      return (
-        <div
-          style={{
-            marginTop: 10,
-            fontSize: 12,
-            fontWeight: 600,
-            color: "#1a1a2e",
-            fontFamily: "'Inter', sans-serif",
-            textAlign: "center",
-          }}
-        >
-          📬 You're in — first email at 6:00&nbsp;AM tomorrow.
-        </div>
-      );
-    }
     if (isMinimal) {
       return (
         <div style={{ fontSize: 12, color: "#1a1a2e", fontFamily: "'Inter', sans-serif", textAlign: "center" }}>
@@ -81,86 +64,6 @@ export default function NewsletterSignup({
           A plan for the day lands in your inbox at 6:00&nbsp;AM.
         </div>
       </div>
-    );
-  }
-
-  // ── Header: ultra-compact masthead treatment. A quiet eyebrow + a single
-  //    input row, centered. Lives where the social icons used to sit, so it
-  //    has to stay small enough not to compete with the logo.
-  if (isHeader) {
-    return (
-      <>
-        <form onSubmit={onSubmit} className="sbt-nl-hdr">
-          <span className="sbt-nl-hdr-eyebrow">Free daily email</span>
-          <div className="sbt-nl-hdr-row">
-            <input
-              type="email"
-              required
-              autoComplete="email"
-              placeholder="you@email.com"
-              aria-label="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={status === "submitting"}
-              className="sbt-nl-hdr-input"
-            />
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              className="sbt-nl-hdr-button"
-            >
-              {status === "submitting" ? "…" : "Subscribe"}
-            </button>
-          </div>
-          {error && <div className="sbt-nl-hdr-error">{error}</div>}
-        </form>
-        <style>{`
-          .sbt-nl-hdr {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            margin-top: 10px;
-            font-family: 'Inter', sans-serif;
-          }
-          .sbt-nl-hdr-eyebrow {
-            font-size: 10px;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--sb-light, #8a8597);
-          }
-          .sbt-nl-hdr-row { display: flex; gap: 6px; }
-          .sbt-nl-hdr-input {
-            padding: 7px 11px;
-            border: 1px solid #d7d3cb;
-            border-radius: 3px;
-            font-size: 13px;
-            background: #fff;
-            color: #1a1a2e;
-            width: 200px;
-            font-family: inherit;
-          }
-          .sbt-nl-hdr-input:focus { outline: none; border-color: #5b54c9; }
-          .sbt-nl-hdr-button {
-            padding: 7px 14px;
-            background: #1a1a2e;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            white-space: nowrap;
-            font-family: inherit;
-          }
-          .sbt-nl-hdr-button:disabled { opacity: 0.7; cursor: wait; }
-          .sbt-nl-hdr-error { font-size: 11px; color: #c0392b; }
-          @media (max-width: 560px) { .sbt-nl-hdr-input { width: 170px; } }
-        `}</style>
-      </>
     );
   }
 
