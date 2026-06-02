@@ -1,127 +1,151 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-02T19:16:18.406Z",
+    "generatedAt": "2026-06-02T23:16:48.827Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 3,
-    "placesMatched": 1,
-    "placeGaps": 2,
-    "eventsExtracted": 5,
-    "eventsMatched": 2,
-    "eventGaps": 3,
+    "placesExtracted": 4,
+    "placesMatched": 0,
+    "placeGaps": 4,
+    "eventsExtracted": 6,
+    "eventsMatched": 1,
+    "eventGaps": 5,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
+      "name": "Ladera Oaks",
+      "city": "Portola Valley",
+      "kind": "venue",
+      "context": "pickleball meetup location for beginners and intermediate players",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
+        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/"
+      ]
+    },
+    {
       "name": "CHIPS Summer Camp",
       "city": "Sunnyvale",
-      "kind": "other",
-      "context": "hands-on STEM camp for kids building IoT projects",
+      "kind": "venue",
+      "context": "hands-on STEM summer camp with electronics and IoT projects",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
+        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/",
-        "https://www.reddit.com/r/SanJose/comments/1tumfq1/unexpected_walking_companion/",
-        "https://www.reddit.com/r/SanJose/comments/1tubbv7/designed_painted_this_mural_for_professional/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
+        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/"
+      ]
+    },
+    {
+      "name": "Boiling Crab",
+      "city": "",
+      "kind": "restaurant",
+      "context": "crab restaurant mentioned as favorite spot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/AskSF/comments/1tukefa/turkey_v_paraguay_619_santa_clara_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tv5bzt/best_ghost_tour_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1tv2d0n/any_good_crab_spots_that_have_the_meat_already/",
+        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/"
       ]
     },
     {
       "name": "Hidden Villa",
       "city": "Los Altos",
       "kind": "venue",
-      "context": "hosting Outstanding in the Field dinner event",
+      "context": "hosting Outstanding in the Field event on 6/13",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv0f8j/someone_asked_what_its_really_like_living_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tudfv0/a_dilemma_ricks_or_baskin_robbins/",
-        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
-        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/"
+        "https://www.reddit.com/r/SanJose/comments/1tumfq1/unexpected_walking_companion/",
+        "https://www.reddit.com/r/SanJose/comments/1tulpxv/place_thats_walkable/",
+        "https://www.reddit.com/r/SanJose/comments/1tubbv7/designed_painted_this_mural_for_professional/",
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Sunnyvale Arts & Wine Festival",
-      "when": "next weekend",
-      "city": "Sunnyvale",
-      "context": "50th annual festival downtown with volunteer opportunities",
+      "name": "Pickleball Meetup at Ladera Oaks",
+      "when": "Friday 3 PM",
+      "city": "Portola Valley",
+      "context": "beginners to intermediate pickleball with coaching available",
       "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
+        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/",
-        "https://www.reddit.com/r/SanJose/comments/1tumfq1/unexpected_walking_companion/",
-        "https://www.reddit.com/r/SanJose/comments/1tubbv7/designed_painted_this_mural_for_professional/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
+        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/"
       ]
     },
     {
-      "name": "Turkey v. Paraguay World Cup Match",
+      "name": "10th Annual Pride Flag Raising Ceremony",
+      "when": "Wednesday June 3 at 11:00 am",
+      "city": "Santa Clara",
+      "context": "celebration of love, diversity, and inclusion at City Hall",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
+        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/"
+      ]
+    },
+    {
+      "name": "Turkey v. Paraguay World Cup",
       "when": "June 19",
       "city": "Santa Clara",
-      "context": "World Cup soccer match in Santa Clara",
+      "context": "World Cup match in Santa Clara",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/AskSF/comments/1tukefa/turkey_v_paraguay_619_santa_clara_ca/",
-        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
-        "https://www.reddit.com/r/SanJose/comments/1tulpxv/place_thats_walkable/"
+        "https://www.reddit.com/r/SanJose/comments/1tv5bzt/best_ghost_tour_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1tv2d0n/any_good_crab_spots_that_have_the_meat_already/",
+        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/"
+      ]
+    },
+    {
+      "name": "Adult dodgeball drop-in",
+      "when": "tonight",
+      "city": "Santa Clara",
+      "context": "casual adult dodgeball game",
+      "sourceUrls": [
+        "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
+        "https://www.reddit.com/r/AskSF/comments/1tukefa/turkey_v_paraguay_619_santa_clara_ca/",
+        "https://www.reddit.com/r/SanJose/comments/1tv5bzt/best_ghost_tour_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1tv2d0n/any_good_crab_spots_that_have_the_meat_already/",
+        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/"
       ]
     },
     {
       "name": "Outstanding in the Field",
       "when": "6/13",
       "city": "Los Altos",
-      "context": "sold out farm-to-table dinner event at Hidden Villa",
+      "context": "sold out dining event at Hidden Villa",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv0f8j/someone_asked_what_its_really_like_living_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tudfv0/a_dilemma_ricks_or_baskin_robbins/",
-        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
-        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/"
+        "https://www.reddit.com/r/SanJose/comments/1tumfq1/unexpected_walking_companion/",
+        "https://www.reddit.com/r/SanJose/comments/1tulpxv/place_thats_walkable/",
+        "https://www.reddit.com/r/SanJose/comments/1tubbv7/designed_painted_this_mural_for_professional/",
+        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/"
       ]
     }
   ],
-  "placeMatches": [
-    {
-      "name": "Rick's",
-      "city": "Palo Alto",
-      "kind": "restaurant",
-      "context": "ice cream destination, compared with Baskin Robbins",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv0f8j/someone_asked_what_its_really_like_living_in/",
-        "https://www.reddit.com/r/paloalto/comments/1tudfv0/a_dilemma_ricks_or_baskin_robbins/",
-        "https://www.reddit.com/r/paloalto/comments/1tu49en/outstanding_in_the_field_613/",
-        "https://www.reddit.com/r/mountainview/comments/1tu487v/outstanding_in_the_field_613/"
-      ],
-      "matchedName": "Rick's Cafe"
-    }
-  ],
+  "placeMatches": [],
   "eventMatches": [
     {
-      "name": "Adult Dodgeball Drop-in",
-      "when": "tonight",
-      "city": "Santa Clara",
-      "context": "casual drop-in dodgeball game",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/",
-        "https://www.reddit.com/r/SanJose/comments/1tumfq1/unexpected_walking_companion/",
-        "https://www.reddit.com/r/SanJose/comments/1tubbv7/designed_painted_this_mural_for_professional/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tt2m7p/volunteer_and_make_friends_in_the_arts_wine/"
-      ],
-      "matchedName": "Adult Dodgeball - Drop In & Play!"
-    },
-    {
       "name": "Celebrate Santa Clara Night Market",
-      "when": "Friday June 5 and Saturday June 6, 4-9pm and 2-9pm",
+      "when": "Friday June 5 and Saturday June 6",
       "city": "Santa Clara",
       "context": "110+ local makers, artists, chefs, live entertainment, beer garden",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1ttwzso/happy_june_los_gatos/",
         "https://www.reddit.com/r/santaclara/comments/1trkacu/night_market/",
         "https://www.reddit.com/r/AskSF/comments/1tukefa/turkey_v_paraguay_619_santa_clara_ca/",
-        "https://www.reddit.com/r/SanJose/comments/1tuxj3i/birthday_party_ideas_1011_year_olds/",
-        "https://www.reddit.com/r/SanJose/comments/1tulpxv/place_thats_walkable/"
+        "https://www.reddit.com/r/SanJose/comments/1tv5bzt/best_ghost_tour_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1tv2d0n/any_good_crab_spots_that_have_the_meat_already/",
+        "https://www.reddit.com/r/SanJose/comments/1tuuy22/adult_dodgeball_drop_in_play_tonight_in_santa/"
       ],
       "matchedName": "Celebrate Santa Clara Night Market"
     }
