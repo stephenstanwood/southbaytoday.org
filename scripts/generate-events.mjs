@@ -1871,7 +1871,10 @@ function inferCategory(title, desc, type, venue = "") {
     // here describes lawn games (cornhole, ladder ball, trivia) at a networking
     // gathering, not athletic sports. Title-anchored to avoid matching legitimate
     // sports events that mention socializing in their description.
-    /\b(bbq|barbecue|barbeque|cookout|potluck|mixer|reception|networking)\b/i.test(title);
+    /\b(bbq|barbecue|barbeque|cookout|potluck|mixer|reception|networking)\b/i.test(title) ||
+    // "lawn games" anywhere (cornhole, ladder ball, giant Jenga) are casual
+    // recreation at park pop-ups / community series, not athletic sports.
+    /\blawn games?\b/i.test(t);
   // Carnivals (school carnivals, business carnivals, festival carnivals) are community
   // events — descriptions often mention "carnival games" which would otherwise hit the
   // sports branch via t.includes("game"). Music/arts carnivals (e.g. Mötley Crüe's
