@@ -1734,7 +1734,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Series A",
     amount: "$700M",
     date: "2026-05-21",
-    tagline: "Brett Adcock's new lab building a universal personal AI interface paired with custom hardware devices. The $700M Series A (Parkway Venture Capital) is one of the largest early rounds for a still-secretive South Bay startup.",
+    tagline: "Brett Adcock's (Figure AI, Archer Aviation) new lab building a universal personal AI interface paired with custom hardware devices, with first multimodal models due this summer. The $700M Series A — led by Parkway Venture Capital with NVIDIA, AMD Ventures, Qualcomm Ventures, Intel Capital, and Salesforce Ventures all in — valued the still-secretive startup at $6B, one of the largest pre-product rounds in AI history.",
     color: "#4338ca",
     url: "https://hark.com",
   },
