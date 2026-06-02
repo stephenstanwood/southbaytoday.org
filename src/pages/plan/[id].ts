@@ -332,15 +332,6 @@ export const GET: APIRoute = async ({ params, url }) => {
   .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; }
   .sb-date-line { font-size: 12px; color: var(--sb-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
   .sb-slogan { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sb-light); margin-top: 6px; }
-  .sbt-nl-hdr { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 10px; }
-  .sbt-nl-hdr-eyebrow { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 700; color: var(--sb-light); }
-  .sbt-nl-hdr-row { display: flex; gap: 6px; }
-  .sbt-nl-hdr-input { padding: 7px 11px; border: 1px solid #d7d3cb; border-radius: 3px; font-size: 13px; background: #fff; color: var(--sb-ink); width: 200px; font-family: inherit; }
-  .sbt-nl-hdr-input:focus { outline: none; border-color: #5b54c9; }
-  .sbt-nl-hdr-button { padding: 7px 14px; background: var(--sb-ink); color: #fff; border: none; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; white-space: nowrap; font-family: inherit; }
-  .sbt-nl-hdr-button:disabled { opacity: 0.7; cursor: wait; }
-  .sbt-nl-hdr-msg { font-size: 11px; }
-  @media (max-width: 560px) { .sbt-nl-hdr-input { width: 170px; } }
   .sb-nav { border-top: 1px solid var(--sb-border); border-bottom: 1px solid var(--sb-border); padding: 0 24px; }
   .sb-nav-inner { max-width: 960px; margin: 0 auto; display: flex; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   @media (min-width: 860px) { .sb-nav-inner { justify-content: center; } }
@@ -373,14 +364,6 @@ export const GET: APIRoute = async ({ params, url }) => {
     </a>
     <div class="sb-date-line">${esc(dateStr)}</div>
     <div class="sb-slogan">All local. Good vibes. No ads.</div>
-    <form class="sbt-nl-hdr" id="sbt-nl-form">
-      <span class="sbt-nl-hdr-eyebrow">Free daily email</span>
-      <div class="sbt-nl-hdr-row">
-        <input type="email" required autocomplete="email" placeholder="you@email.com" aria-label="Email address" class="sbt-nl-hdr-input" id="sbt-nl-email" />
-        <button type="submit" class="sbt-nl-hdr-button" id="sbt-nl-btn">Subscribe</button>
-      </div>
-      <div class="sbt-nl-hdr-msg" id="sbt-nl-msg"></div>
-    </form>
   </div>
 </header>
 <nav class="sb-nav">
@@ -402,36 +385,6 @@ export const GET: APIRoute = async ({ params, url }) => {
   </div>
 </div>
 ${scriptHtml}
-<script>
-(function(){
-  var f = document.getElementById('sbt-nl-form');
-  if (!f) return;
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    var input = document.getElementById('sbt-nl-email');
-    var btn = document.getElementById('sbt-nl-btn');
-    var msg = document.getElementById('sbt-nl-msg');
-    var email = (input.value || '').trim();
-    if (!email) return;
-    btn.disabled = true; btn.textContent = '…'; msg.textContent = '';
-    fetch('/api/newsletter/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
-    }).then(function(r){ return r.json(); }).then(function(data){
-      if (data && data.ok) {
-        f.outerHTML = '<div style="font-size:12px;color:#1a1a2e;font-weight:600;text-align:center;margin-top:10px;">📬 Subscribed! First email tomorrow at 6:00 AM.</div>';
-      } else {
-        btn.disabled = false; btn.textContent = 'Subscribe';
-        msg.style.color = '#c0392b'; msg.textContent = (data && data.error) || 'Could not subscribe';
-      }
-    }).catch(function(){
-      btn.disabled = false; btn.textContent = 'Subscribe';
-      msg.style.color = '#c0392b'; msg.textContent = 'Network error, try again';
-    });
-  });
-})();
-</script>
 </body>
 </html>`;
 

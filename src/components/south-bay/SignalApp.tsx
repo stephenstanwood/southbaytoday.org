@@ -167,7 +167,6 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
             <div>{todayLabel}</div>
           </div>
           <div className="sb-slogan">All local. Good vibes. No ads.</div>
-          <NewsletterSignup variant="header" />
         </div>
       </header>
 
