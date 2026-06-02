@@ -2399,8 +2399,10 @@ export const TECH_CONFERENCES: TechConference[] = [
     venue: "Apple Park",
     city: "Cupertino",
     typicalMonth: 6,
-    description: "Apple's Worldwide Developers Conference. Keynotes and sessions stream online; Apple hosts select developers for in-person labs at Apple Park. The defining Cupertino tech event of the year.",
-    url: "https://developer.apple.com/wwdc/",
+    typicalDay: 8,
+    typicalEndDay: 12,
+    description: "Apple's Worldwide Developers Conference. The June 8 keynote (10 a.m. PT) and the week's sessions stream free online; Apple hosts select developers for in-person labs at Apple Park. The defining Cupertino tech event of the year.",
+    url: "https://developer.apple.com/wwdc26/",
     scale: "global",
   },
   {
