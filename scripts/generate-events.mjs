@@ -2144,13 +2144,24 @@ const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|re
 // generic. Conservative phrases only — bare "Broncos" appears in public sports
 // coverage too.
 const SCU_INTERNAL_DESC = /\b(?:free|open)\s+to\s+(?:all\s+)?broncos\b|\bbronco\s+(?:community|family)\b|\b(?:mba|ms|phd|undergraduate|graduate)\s+(?:and\s+\w+\s+)?students?\s+and\s+alumni\b/i;
+// Audience gating: a university-feed event explicitly addressed to "students"
+// (or limited to them) is campus-internal, not for the general public —
+// e.g. "Free Chair Massages for Students" / "during finals week, students only".
+// Only applied to the SJSU + SCU feeds (see isStudentOnlyEvent callers), so
+// "for students" here is a reliable internal signal; a public lecture or
+// performance won't address its audience as "students". Matched against both
+// title and description. Deliberately NOT triggered by a bare "student"
+// (e.g. "student art exhibition open to the public" stays).
+const STUDENT_ONLY_AUDIENCE = /\b(?:students?[\s-]only|for\s+(?:scu\s+|sjsu\s+|spartan\s+|bronco\s+|current\s+|currently[\s-]enrolled\s+|enrolled\s+|all\s+|our\s+|fellow\s+)?students\b|open\s+to\s+(?:all\s+)?students\b|currently\s+enrolled|valid\s+student\s+id|with\s+(?:a\s+)?(?:valid\s+)?student\s+id|finals?\s+week|during\s+finals|study\s+break)\b/i;
 
 function isStudentOnlyEvent(item) {
   if (STUDENT_ONLY_URL_PATHS.test(item.link || "")) return true;
   if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
+  if (STUDENT_ONLY_AUDIENCE.test(item.title || "")) return true;
   const desc = stripHtml(item.description || "");
   if (STUDENT_ONLY_DESC.test(desc)) return true;
   if (SCU_INTERNAL_DESC.test(desc)) return true;
+  if (STUDENT_ONLY_AUDIENCE.test(desc)) return true;
   return false;
 }
 

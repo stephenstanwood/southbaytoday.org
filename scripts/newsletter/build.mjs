@@ -8,7 +8,7 @@
 // ---------------------------------------------------------------------------
 
 import { writeFileAtomic } from "../lib/io.mjs";
-import { assembleNewsletterData, renderEmail, todayPT } from "./lib.mjs";
+import { assembleNewsletterData, finalizeNewsletterImages, renderEmail, todayPT } from "./lib.mjs";
 
 const args = process.argv.slice(2);
 function flag(name) {
@@ -22,6 +22,7 @@ const out = flag("out");
 const editorial = !bool("no-editorial");
 
 const data = await assembleNewsletterData(date, { editorial });
+await finalizeNewsletterImages(data);
 const { subject, html } = renderEmail(data);
 
 if (out) {
