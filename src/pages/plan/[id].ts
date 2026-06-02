@@ -51,8 +51,12 @@ function loadSharedPlans(): Record<string, any> {
 
 function buildCardInner(card: any, origin: string, accent: string): string {
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
+  // Google Places photoRefs expire (~30 days) and then /api/place-photo 404s.
+  // Render the emoji tile underneath the photo and lay the <img> over it; if the
+  // photo fails to load, onerror hides it and the emoji shows through — no broken
+  // image glyph (the React Events tab degrades the same way via onError).
   const photoHtml = card.photoRef
-    ? `<img src="${esc(origin)}/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200" alt="${esc(card.name)}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;flex-shrink:0">`
+    ? `<div style="position:relative;width:72px;height:72px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;overflow:hidden">${emoji}<img src="${esc(origin)}/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200" alt="${esc(card.name)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>`
     : `<div style="width:72px;height:72px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0">${emoji}</div>`;
   const eventBadge = card.source === "event"
     ? `<span style="font-size:8px;font-weight:800;color:#fff;background:#E63946;padding:1px 5px;border-radius:3px;letter-spacing:0.5px">EVENT</span>`

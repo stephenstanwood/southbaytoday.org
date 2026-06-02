@@ -290,10 +290,41 @@ function makeNewsletterPlan(plan, date) {
   };
 }
 
+// Build-time image reachability cache. Email clients can't run an onError
+// fallback the way the React Events tab does, so a dead URL becomes a permanent
+// broken-image glyph in the inbox. The single biggest source of this: Google
+// Places photoRefs expire (~30 days) and then /api/place-photo 404s every one
+// of them (~54% of events resolve their image via photoRef). We verify each
+// candidate URL once during assembly (verifyNewsletterImages) and drop only the
+// ones that return a *definitive* non-image response — transient network errors
+// are left as "unknown" so a build-time blip never blanks every image.
+const imageVerification = new Map(); // resolved URL -> true (ok) | false (dead)
+
+function isVerifiedDead(url) {
+  return imageVerification.get(String(url || "")) === false;
+}
+
 function usableImage(url) {
   const value = String(url || "").trim();
   if (isBlockedNewsletterImage(value)) return "";
+  if (isVerifiedDead(value)) return "";
+  // place-photo proxy URLs are keyed for verification by their ref (reachability
+  // is size-independent), so a known-dead ref is dropped regardless of w/h.
+  const m = value.match(/\/api\/place-photo\?ref=([^&]+)/);
+  if (m && isVerifiedDead(`placephoto:${safeDecode(m[1])}`)) return "";
   return /^https?:\/\//i.test(value) ? value : "";
+}
+
+function safeDecode(s) {
+  try { return decodeURIComponent(s); } catch { return s; }
+}
+
+function isValidPhotoRef(ref) {
+  return typeof ref === "string" && ref.trim() && !ref.includes("://") && !ref.includes("..") && !/\s/.test(ref);
+}
+
+function placePhotoUrl(ref, w, h) {
+  return `${SITE_URL}/api/place-photo?ref=${encodeURIComponent(ref)}&w=${w}&h=${h}`;
 }
 
 // Events and places carry their image either as a full URL (`image`) or as a
@@ -305,10 +336,97 @@ function resolveImageUrl(item, w = 144, h = 144) {
   const direct = usableImage(item?.image);
   if (direct) return direct;
   const ref = item?.photoRef;
-  if (typeof ref === "string" && ref.trim() && !ref.includes("://") && !ref.includes("..") && !/\s/.test(ref)) {
-    return `${SITE_URL}/api/place-photo?ref=${encodeURIComponent(ref)}&w=${w}&h=${h}`;
+  if (isValidPhotoRef(ref)) {
+    if (isVerifiedDead(`placephoto:${ref}`)) return "";
+    return placePhotoUrl(ref, w, h);
   }
   return "";
+}
+
+// ── Build-time image reachability probe ──────────────────────────────────────
+// Returns true (loads as an image), false (definitive non-image: 4xx or a 2xx
+// that isn't an image), or null (transient: timeout / network error / 5xx — we
+// leave these as "unknown" rather than blanking a possibly-fine image).
+async function probeImage(url) {
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      redirect: "follow",
+      signal: AbortSignal.timeout(8000),
+      headers: { "User-Agent": "SouthBayTodayBot/1.0 (+https://southbaytoday.org; newsletter image check)" },
+    });
+    if (res.status >= 500) return null;
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    return res.ok && ct.startsWith("image");
+  } catch {
+    return null;
+  }
+}
+
+async function runWithConcurrency(items, limit, worker) {
+  const queue = [...items];
+  const runners = Array.from({ length: Math.min(Math.max(1, limit), queue.length || 1) }, async () => {
+    while (queue.length) await worker(queue.shift());
+  });
+  await Promise.all(runners);
+}
+
+// Verify every image URL the newsletter is about to render and cache the result
+// so usableImage/resolveImageUrl can drop the dead ones. Best-effort: failures
+// to probe are treated as "unknown" and the image is kept.
+export async function verifyNewsletterImages(data) {
+  if (!data) return { checked: 0, dead: 0 };
+  const directUrls = new Set();
+  const refs = new Set();
+  const addDirect = (url) => {
+    const v = String(url || "").trim();
+    if (/^https?:\/\//i.test(v) && !isBlockedNewsletterImage(v)) directUrls.add(v);
+  };
+  const addItem = (item) => {
+    if (!item) return;
+    addDirect(item.image);
+    if (isValidPhotoRef(item.photoRef)) refs.add(item.photoRef);
+  };
+
+  for (const c of orderedCards(data.dayPlan)) addItem(c);
+  addItem(data.tonightPick);
+  for (const e of data.featuredEvents || []) addItem(e);
+  for (const o of data.recentOpenings || []) addItem(o);
+  for (const p of data.redditPosts || []) addDirect(p?.image);
+  // Hero / OG image are direct URLs derived from the same content set.
+  for (const k of ["dayPlanImage", "tonightPickImage", "archiveImage"]) addDirect(data.visuals?.[k]);
+
+  const tasks = [
+    ...[...directUrls].map((u) => ({ key: u, url: u })),
+    ...[...refs].map((r) => ({ key: `placephoto:${r}`, url: placePhotoUrl(r, 144, 144) })),
+  ].filter((t) => !imageVerification.has(t.key));
+
+  await runWithConcurrency(tasks, 8, async ({ key, url }) => {
+    const ok = await probeImage(url);
+    if (ok !== null) imageVerification.set(key, ok);
+  });
+
+  const dead = tasks.filter((t) => imageVerification.get(t.key) === false).length;
+  if (dead) console.log(`  🖼  newsletter images: ${dead}/${tasks.length} candidates unreachable — hidden to avoid broken tiles`);
+  return { checked: tasks.length, dead };
+}
+
+// Verify reachability of all candidate images, then recompute visuals so the
+// hero / OG image also skip anything now known dead. Call this once on the
+// fully-assembled (post-editorial) data, right before renderEmail.
+export async function finalizeNewsletterImages(data) {
+  if (!data) return data;
+  await verifyNewsletterImages(data);
+  data.visuals = newsletterVisuals({
+    date: data.date,
+    longDate: data.longDate,
+    dayPlan: data.dayPlan,
+    tonightPick: data.tonightPick,
+    featuredEvents: data.featuredEvents,
+    recentOpenings: data.recentOpenings,
+    redditPosts: data.redditPosts,
+  });
+  return data;
 }
 
 function firstResolvedImage(items, w = 144, h = 144) {

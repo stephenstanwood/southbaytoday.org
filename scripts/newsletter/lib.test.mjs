@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { renderEmail, formatLongDate, todayPT } from "./lib.mjs";
+import { renderEmail, finalizeNewsletterImages, formatLongDate, todayPT } from "./lib.mjs";
 
 const BLOCKED_UNSPLASH = "https://images.unsplash.com/photo-1585899873671-ade0aa28a821?crop=entropy&w=400";
 
@@ -108,6 +108,73 @@ test("events expose their image via photoRef (Places proxy), not just a full ima
   assert.match(row, /<img [^>]*src="https:\/\/southbaytoday\.org\/api\/place-photo\?ref=places%2FChIJabc123%2Fphotos%2Fxyz789/);
   // And therefore does NOT fall back to the no-image colspan layout.
   assert.equal(row.includes("colspan"), false);
+});
+
+test("finalizeNewsletterImages drops events whose photoRef is dead (no broken tile in inbox)", async () => {
+  // Underlying cause of the recurring broken-image bug: Google Places photoRefs
+  // expire and /api/place-photo then 404s every one. Email can't onError-fallback
+  // like the React tab, so the dead ones must be dropped at build time and the row
+  // falls back to the full-width (colspan) text layout.
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("/api/place-photo")) {
+      return new Response("Photo not found", { status: 404, headers: { "content-type": "text/plain" } });
+    }
+    return new Response(new Uint8Array([0]), { status: 200, headers: { "content-type": "image/jpeg" } });
+  };
+  try {
+    const data = {
+      date: "2026-05-29",
+      longDate: "Friday, May 29, 2026",
+      weather: null, dayPlan: null, dayPlanBlurb: "",
+      tonightPick: null, tonightPickBlurb: "",
+      todayEvents: [{}, {}],
+      featuredEvents: [
+        { title: "Dead Ref Event", time: "10:00 AM", venue: "Some Museum", city: "campbell", url: "https://example.com/dead", photoRef: "places/ChIJdeadref/photos/expired99" },
+        { title: "Live Image Event", time: "2:00 PM", venue: "Live Hall", city: "campbell", url: "https://example.com/live", image: "https://cdn.example.com/live-photo.jpg" },
+      ],
+      recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+      visuals: {}, editorial: null,
+    };
+    await finalizeNewsletterImages(data);
+    const { html } = renderEmail(data);
+
+    // Dead ref → no place-photo <img>, row falls back to colspan text layout.
+    assert.equal(html.includes("places%2FChIJdeadref"), false);
+    const deadIdx = html.indexOf("Dead Ref Event");
+    const deadRow = html.slice(html.lastIndexOf("<tr>", deadIdx), deadIdx);
+    assert.ok(deadRow.includes("colspan"), "dead-photoRef row should span both columns");
+
+    // Live direct image → still rendered with its <img>.
+    assert.match(html, /<img [^>]*src="https:\/\/cdn\.example\.com\/live-photo\.jpg"/);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});
+
+test("finalizeNewsletterImages keeps images when the probe errors (transient), never blanks everything", async () => {
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => { throw new Error("network down"); };
+  try {
+    const data = {
+      date: "2026-05-30",
+      longDate: "Saturday, May 30, 2026",
+      weather: null, dayPlan: null, dayPlanBlurb: "",
+      tonightPick: null, tonightPickBlurb: "",
+      todayEvents: [{}],
+      featuredEvents: [
+        { title: "Maybe Event", time: "11:00 AM", venue: "Maybe Hall", city: "campbell", url: "https://example.com/maybe", photoRef: "places/ChIJmaybe/photos/transient1" },
+      ],
+      recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+      visuals: {}, editorial: null,
+    };
+    await finalizeNewsletterImages(data);
+    const { html } = renderEmail(data);
+    // Probe threw → unknown → image kept (we don't punish a build-time network blip).
+    assert.match(html, /<img [^>]*src="https:\/\/southbaytoday\.org\/api\/place-photo\?ref=places%2FChIJmaybe/);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
 });
 
 // ── Date helpers (PT-safe formatting — the timezone-drift bug class) ──────────

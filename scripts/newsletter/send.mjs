@@ -13,7 +13,7 @@
 // ---------------------------------------------------------------------------
 
 import {
-  assembleNewsletterData, renderEmail, resendFetch,
+  assembleNewsletterData, finalizeNewsletterImages, renderEmail, resendFetch,
   publishNewsletterArchive, recordNewsletterSend, sendNewsletterDiscordDm,
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
@@ -44,6 +44,7 @@ async function main() {
   }
 
   const data = await assembleNewsletterData(date, { editorial });
+  await finalizeNewsletterImages(data);
   const { subject, html } = renderEmail(data);
 
   console.log(`subject: ${subject}`);
