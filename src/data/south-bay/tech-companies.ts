@@ -1003,18 +1003,9 @@ export interface RecentlyFunded {
 }
 
 export const RECENTLY_FUNDED: RecentlyFunded[] = [
-  {
-    id: "signos",
-    name: "Signos",
-    city: "Palo Alto",
-    category: "medtech",
-    round: "Series B",
-    amount: "$20M",
-    date: "2026-05-27",
-    tagline: "FDA-cleared system that pairs an over-the-counter continuous glucose monitor with an AI app to show how food and lifestyle affect weight. The Series B drew Dexcom and GV (Google Ventures) and came with a Dexcom retail partnership as Signos scaled tenfold in six months.",
-    color: "#0d9488",
-    url: "https://www.signos.com/blog/signos-announces-series-b-funding",
-  },
+  // Note: Signos ($20M Series B, May 2026) was dropped — HQ is Burlingame
+  // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
+  // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
     id: "canyon-code",
     name: "Canyon Code",
