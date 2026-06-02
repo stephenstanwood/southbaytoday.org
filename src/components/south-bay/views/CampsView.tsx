@@ -14,6 +14,15 @@ import PageHero from "../PageHero";
 // Constants
 // ---------------------------------------------------------------------------
 
+// Drop summer weeks that have already ended so the week picker and planner
+// never offer a week you can't attend. SignalApp is client:only, so this
+// `new Date()` is the viewer's real local date — no SSR/hydration mismatch.
+// Once every week is past (summer's over) we fall back to the full set so the
+// planner never renders an empty week list.
+const TODAY_ISO = new Date().toLocaleDateString("en-CA");
+const UPCOMING_WEEKS = SUMMER_WEEKS.filter((w) => w.endDate >= TODAY_ISO);
+const ACTIVE_WEEKS = UPCOMING_WEEKS.length > 0 ? UPCOMING_WEEKS : SUMMER_WEEKS;
+
 const CITY_ACCENT: Record<string, string> = {
   "san-jose":      "#be123c",
   "mountain-view": "#0369a1",
@@ -316,7 +325,7 @@ function BrowseMode() {
               onChange={(e) => setWeekFilter(e.target.value === "all" ? "all" : parseInt(e.target.value))}
             >
               <option value="all">All weeks</option>
-              {SUMMER_WEEKS.map((sw) => (
+              {ACTIVE_WEEKS.map((sw) => (
                 <option key={sw.weekNum} value={sw.weekNum}>
                   Week {sw.weekNum}
                 </option>
@@ -636,11 +645,13 @@ function SummerBuilderMode() {
             Which weeks need coverage?
           </h2>
           <p style={{ fontSize: 13, color: "var(--sb-muted)", marginBottom: 16 }}>
-            Select the weeks you need a camp for. Week {SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).
+            Select the weeks you need a camp for.
+            {ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
+              ` Week ${SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).`}
           </p>
           <button
             onClick={() => {
-              const allNums = SUMMER_WEEKS.map(sw => sw.weekNum);
+              const allNums = ACTIVE_WEEKS.map(sw => sw.weekNum);
               const allSelected = allNums.every(n => selectedWeeks.has(n));
               setSelectedWeeks(allSelected ? new Set() : new Set(allNums));
             }}
@@ -648,12 +659,12 @@ function SummerBuilderMode() {
               padding: "5px 14px",
               borderRadius: 100,
               border: "1px solid var(--sb-border)",
-              background: SUMMER_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "var(--sb-ink)" : "transparent",
-              color: SUMMER_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "#fff" : "var(--sb-muted)",
+              background: ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "var(--sb-ink)" : "transparent",
+              color: ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "#fff" : "var(--sb-muted)",
               fontSize: 11, fontWeight: 700, cursor: "pointer", marginBottom: 16,
             }}
           >
-            {SUMMER_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "Clear all" : `Select all ${SUMMER_WEEKS.length} weeks`}
+            {ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "Clear all" : `Select all ${ACTIVE_WEEKS.length} weeks`}
           </button>
         </div>
 
@@ -663,7 +674,7 @@ function SummerBuilderMode() {
           gap: 8,
           marginBottom: 28,
         }}>
-          {SUMMER_WEEKS.map((sw) => {
+          {ACTIVE_WEEKS.map((sw) => {
             const selected = selectedWeeks.has(sw.weekNum);
             return (
               <button

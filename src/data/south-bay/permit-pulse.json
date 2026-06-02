@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-01T23:08:47.426Z",
+      "generatedAt": "2026-06-02T11:06:30.182Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 25 – Jun 1",
+      "dateRange": "May 26 – Jun 2",
       "stats": {
-        "total": 431,
-        "notable": 26,
-        "newUnits": 7,
-        "totalValuation": 153341629
+        "total": 284,
+        "notable": 18,
+        "newUnits": 6,
+        "totalValuation": 9712266
       },
       "permits": [
         {
@@ -75,18 +75,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-138790-RS",
-          "address": "258 Duffy Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 62056,
-          "units": 1,
-          "issueDate": "2026-05-26",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-143457-RS",
           "address": "2787 George Blauer Pl #2",
           "category": "residential-new",
@@ -97,18 +85,6 @@
           "units": 1,
           "issueDate": "2026-05-29",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-118560-CI",
-          "address": "131 Great Oaks Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "New Construction",
-          "description": "Equinix Sv19 Data Center Bldg",
-          "valuation": 137965000,
-          "units": 0,
-          "issueDate": "2026-05-26",
-          "subtype": "Data Center"
         },
         {
           "id": "2026-119333-CI",
@@ -133,23 +109,59 @@
           "units": 0,
           "issueDate": "2026-05-27",
           "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2026-114094-CI",
+          "address": "3011 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Intermolecular Clf3 Gas Cabinet Install",
+          "valuation": 600000,
+          "units": 0,
+          "issueDate": "2026-05-27",
+          "subtype": "R & D Lab"
+        },
+        {
+          "id": "2026-117608-CI",
+          "address": "1111 Saratoga Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Built Golf Performance Tenant Improvement",
+          "valuation": 520948,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Health Club"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-01T23:08:49.677Z",
+      "generatedAt": "2026-06-02T11:06:32.551Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 25 – Jun 1",
+      "dateRange": "May 26 – Jun 2",
       "stats": {
-        "total": 107,
-        "notable": 6,
+        "total": 128,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01398",
+          "address": "762 Wildwood Ln",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Guest bathroom remodel like for like including removing a non-load bearing wall. Replacing window like for like.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01409",
           "address": "543 Seale Av",
@@ -161,18 +173,6 @@
           "units": 0,
           "issueDate": "2026-05-31",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00124",
@@ -187,12 +187,12 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00122",
-          "address": "250 Hamilton Av",
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
@@ -208,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-26",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00122",
+          "address": "250 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
           "subtype": "Over the Counter Approved"
         },
         {
