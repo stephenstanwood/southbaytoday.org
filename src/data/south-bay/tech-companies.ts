@@ -1007,6 +1007,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "reliable-robotics",
+    name: "Reliable Robotics",
+    city: "Mountain View",
+    category: "robotics",
+    round: "Venture Round",
+    amount: "$160M",
+    date: "2026-04-21",
+    tagline: "Autonomous flight systems that retrofit existing aircraft — starting with the Cessna 208 Caravan — for remotely operated, uncrewed cargo and defense missions. The round was led by Nimble Partners with RTX Ventures, bringing total funding to $300M at a valuation near $1B as the company builds its FAA certification case.",
+    color: "#2563eb",
+    url: "https://reliable.co",
+  },
+  {
     id: "canyon-code",
     name: "Canyon Code",
     city: "Sunnyvale",
