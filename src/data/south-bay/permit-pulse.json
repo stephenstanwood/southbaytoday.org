@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-02T23:09:02.565Z",
+      "generatedAt": "2026-06-03T19:08:51.530Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 26 – Jun 2",
+      "dateRange": "May 27 – Jun 3",
       "stats": {
-        "total": 290,
-        "notable": 18,
-        "newUnits": 6,
-        "totalValuation": 9712266
+        "total": 319,
+        "notable": 19,
+        "newUnits": 5,
+        "totalValuation": 9835237
       },
       "permits": [
         {
@@ -63,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2022-686550-RS",
-          "address": "2915 Remington Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion Revised From ADU to Jadu",
-          "valuation": 67137,
-          "units": 1,
-          "issueDate": "2026-05-27",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-143457-RS",
           "address": "2787 George Blauer Pl #2",
           "category": "residential-new",
@@ -99,28 +87,16 @@
           "subtype": "Warehouse/Storage"
         },
         {
-          "id": "2026-119997-CI",
-          "address": "1935 S 10th St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Commercial/Industrial",
-          "valuation": 1302000,
-          "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-114094-CI",
-          "address": "3011 N 1st St",
+          "id": "2026-120530-CI",
+          "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Intermolecular Clf3 Gas Cabinet Install",
-          "valuation": 600000,
+          "description": "(Bemp100%) Ralph Lauren TI #1124",
+          "valuation": 1600000,
           "units": 0,
-          "issueDate": "2026-05-27",
-          "subtype": "R & D Lab"
+          "issueDate": "2026-06-01",
+          "subtype": "Retail"
         },
         {
           "id": "2026-117608-CI",
@@ -133,6 +109,30 @@
           "units": 0,
           "issueDate": "2026-05-28",
           "subtype": "Health Club"
+        },
+        {
+          "id": "2026-119960-CI",
+          "address": "333 Santana Row",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Bemp100%) Reformation #1110",
+          "valuation": 464515,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Retail"
+        },
+        {
+          "id": "2026-120181-CI",
+          "address": "5601 Great Oaks Py #6",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Western Digital (Bem100%) Gap Etch Tool Install",
+          "valuation": 400000,
+          "units": 0,
+          "issueDate": "2026-05-29",
+          "subtype": "Manufacturing"
         }
       ]
     },
