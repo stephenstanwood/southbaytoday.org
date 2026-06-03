@@ -1912,7 +1912,11 @@ function inferCategory(title, desc, type, venue = "") {
   const titleHasAtMarketVenue = /\bat\s+[\w'’ ]*\bmarkets?\b/i.test(titleLower); // "...at San Pedro Square Market"
   const titleHasBrandPossessiveMarket = /\b\w+(?:'|’)s\s+[\w ]*\bmarkets?\b/i.test(titleLower); // "Hobee's Pancake Market"
   const isMarketTitle = (titleMarketActivity || titleEndsInMarketWord) && !titleHasAtMarketVenue && !titleHasBrandPossessiveMarket;
-  if (isMarketTitle || isFairEvent || /\bvendor\b/.test(titleLower) || isCraftMarket) return "market";
+  // A market/fair is an in-person gathering. Online/virtual talks ABOUT a fair
+  // (e.g. "State Fair Crafts with Smithsonian Curator") are lectures, not markets —
+  // skip the market bucket so they fall through to the education/arts checks below.
+  const isOnlineEvent = /\b(online|virtual|webinar|zoom|livestream)\b/.test(venueLower);
+  if (!isOnlineEvent && (isMarketTitle || isFairEvent || /\bvendor\b/.test(titleLower) || isCraftMarket)) return "market";
   // Workshops/classes/lectures in the TITLE are educational — check before outdoor to avoid false positives
   if (/\b(workshop|webinar|seminar|lecture|class|tutorial|training|course)\b/.test(titleLower)) return "education";
   // Indoor venues (libraries, aquatic centers, etc.) host gardening/nature talks and rec swims —
@@ -1927,7 +1931,7 @@ function inferCategory(title, desc, type, venue = "") {
   const outdoorHaystack = `${title} ${desc} ${type}`.toLowerCase();
   const hasOutdoorWord = /\b(hik\w*|outdoor\w*|garden\w*|nature|trail\w*|park\w*)\b/.test(outdoorHaystack);
   if (!isIndoorVenue && hasOutdoorWord) return "outdoor";
-  if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
+  if (t.includes("book") || t.includes("reading") || t.includes("lecture") || t.includes("workshop") || t.includes("class") || t.includes("learn") || t.includes("seminar") || t.includes("talk") || t.includes("discussion") || t.includes("curator") || t.includes("stem") || t.includes("science") || t.includes("coding") || t.includes("tech")) return "education";
   if (t.includes("food") || t.includes("cooking") || t.includes("taste") || t.includes("chef") || t.includes("wine") || t.includes("beer") || t.includes("culinary") || /\b(pancake|breakfast|brunch|bake sale|food truck|barbecue|bbq|bake-off|chili cook-off)\b/.test(t)) return "food";
   return "community";
 }
