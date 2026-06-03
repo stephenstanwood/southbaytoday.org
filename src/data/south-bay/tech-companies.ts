@@ -158,8 +158,8 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "up",
     trendNote: "7K at Santa Clara HQ + SCC offices; growing with AI GPU demand",
     highlights: [
-      "Blackwell GPU architecture (B100/B200) powering next-generation AI data centers globally",
-      "Market cap surpassed $3 trillion — briefly the most valuable company in the world",
+      "Blackwell GPUs now deployed across every major cloud; the next-generation Vera Rubin platform ramps through 2026, with Jensen Huang projecting $1 trillion in Blackwell and Rubin orders by 2027",
+      "Market cap above $5 trillion — the world's most valuable company",
     ],
     description:
       "GPUs and AI accelerators. The defining company of the current AI era. Santa Clara's crown jewel.",
@@ -637,7 +637,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Palo Alto",
     category: "saas",
     stage: "growth",
-    tagline: "Enterprise AI search across every app your company uses — Slack, Drive, GitHub, Salesforce, and more. Series F at $7.2B valuation. Rapid enterprise adoption.",
+    tagline: "Enterprise AI search across every app your company uses — Slack, Drive, GitHub, Salesforce, and more. Series F at $7.2B valuation; crossed $300M ARR in May 2026.",
     color: "#7C3AED",
     url: "https://www.glean.com",
     employeesNote: "~1,000 employees",
