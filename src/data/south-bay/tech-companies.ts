@@ -1786,18 +1786,6 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#1d4ed8",
     url: "https://deepinfra.com",
   },
-  {
-    id: "radixark",
-    name: "RadixArk",
-    city: "Redwood City",
-    category: "ai",
-    round: "Seed",
-    amount: "$100M",
-    date: "2026-05-05",
-    tagline: "Founded by the creators of the open-source SGLang serving engine to build large-scale inference and training infrastructure for frontier AI models. The $100M seed — led by Accel and Spark Capital at a $400M valuation, with NVIDIA's venture arm, AMD, and MediaTek — is one of the largest seed rounds the South Bay has seen this year.",
-    color: "#6366f1",
-    url: "https://radixark.com",
-  },
 ];
 
 // Pulse stats for the header strip. The third slot ("Raised in Q1–Q2 …") is
