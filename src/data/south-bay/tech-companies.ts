@@ -1007,6 +1007,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "radixark",
+    name: "RadixArk",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$100M",
+    date: "2026-05-05",
+    tagline: "The team behind SGLang — the open-source inference engine that already serves trillions of tokens a day for Google, Microsoft, and xAI — building an end-to-end platform for training, fine-tuning, and running frontier AI models. Founders Ying Sheng and Banghua Zhu launched out of stealth at a $400M valuation, with Accel and Spark Capital leading and NVIDIA, AMD, and MediaTek joining.",
+    color: "#6366f1",
+    url: "https://www.radixark.com",
+  },
+  {
     id: "reliable-robotics",
     name: "Reliable Robotics",
     city: "Mountain View",
