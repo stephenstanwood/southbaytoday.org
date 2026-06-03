@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-03T19:08:51.530Z",
+      "generatedAt": "2026-06-03T23:08:47.266Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,15 +137,15 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-02T23:09:05.019Z",
+      "generatedAt": "2026-06-03T23:08:49.596Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 26 – Jun 2",
+      "dateRange": "May 27 – Jun 3",
       "stats": {
-        "total": 128,
-        "notable": 7,
+        "total": 127,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -175,28 +175,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00118",
-          "address": "4175 Manuela Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Addition of glass above a portion of an existing trellis (increase of lot coverage) at Congregation Kol Emeth",
+          "id": "26BLD-01438",
+          "address": "968 Embarcadero Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-05-26",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00122",
-          "address": "250 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
+          "issueDate": "2026-06-02",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00123",
@@ -232,6 +220,30 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00122",
+          "address": "250 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00127",
+          "address": "755 Page Mill Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "OTC Minor Architectural Review - door removal",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-02",
           "subtype": "Over the Counter Approved"
         }
       ]
