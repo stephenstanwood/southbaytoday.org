@@ -1764,7 +1764,7 @@ export default function TechnologyView() {
         eyebrow="South Bay / Tech Desk"
         title="Technology"
         description="A readable snapshot of the companies, jobs, and funding rounds shaping the local tech economy."
-        note="Data snapshot · Q1 2026 · Santa Clara County employment estimates · Not affiliated with any company listed"
+        note="Data snapshot · Q1–Q2 2026 · Santa Clara County employment estimates · Not affiliated with any company listed"
         stats={pulseStats.map((stat) => ({
           value: stat.value,
           label: stat.label,
@@ -1776,7 +1776,7 @@ export default function TechnologyView() {
         <div className="tech-section-head">
           <h3 className="tech-section-title">Anchor Employers</h3>
           <span className="tech-section-note">
-            Ranked by Santa Clara County local jobs · Q1 2026
+            Ranked by Santa Clara County local jobs · Q1–Q2 2026
           </span>
         </div>
         <TopEmployersLeaderboard />
@@ -1800,7 +1800,7 @@ export default function TechnologyView() {
       <SpotlightHighlightsSection />
 
       <div className="tech-footer-note">
-        Employment figures are Santa Clara County estimates as of Q1 2026, derived from campus
+        Employment figures are Santa Clara County estimates as of Q1–Q2 2026, derived from campus
         headcount reports, company filings, EDD data, and news coverage. Global headcounts are
         much larger. South Bay Today is not affiliated with any company listed and this is not
         investment advice.
