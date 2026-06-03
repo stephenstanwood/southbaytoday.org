@@ -1542,7 +1542,13 @@ function polishDescription(text) {
       const openQuotes = (last.match(/"/g) || []).length;
       const hasUnclosedQuote = openQuotes % 2 === 1;
       const isMetadataLabel = /^(ADA Accommodation Requests|Wheelchair Accessible|Reading Levels|Hearing Loop|Audio Description|Closed Captioning|Sign Language Interpretation|Sensory[\s-]?Friendly|Accessibility Features?|Special Accommodations?)\b/i.test(last);
-      if (hasUnclosedQuote || isMetadataLabel) kept.pop();
+      // Bare call-to-action verb left dangling when the scraper truncated the
+      // CTA sentence mid-phrase (e.g. "...accompanied by an adult. Register"
+      // from a cut "Register at the door"). The complete CTA forms are dropped
+      // upstream by BOILERPLATE_SENTENCE_PATTERNS, but a lone trailing verb with
+      // no object slips through. It's never substantive prose — drop it.
+      const isCtaFragment = /^(Register|RSVP|Sign\s?up|Tickets?|Buy\s+tickets?|Get\s+tickets?|Learn\s+more|More\s+info|Read\s+more|Details)(\s+(now|here|online|today))?[.!]?$/i.test(last);
+      if (hasUnclosedQuote || isMetadataLabel || isCtaFragment) kept.pop();
     }
   }
 
