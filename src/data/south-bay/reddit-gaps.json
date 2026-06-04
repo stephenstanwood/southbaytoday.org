@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-03T19:17:11.198Z",
+    "generatedAt": "2026-06-04T19:18:37.514Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 9,
+    "placesExtracted": 12,
     "placesMatched": 1,
-    "placeGaps": 8,
+    "placeGaps": 11,
     "eventsExtracted": 5,
     "eventsMatched": 0,
     "eventGaps": 5,
@@ -16,190 +16,226 @@
   },
   "placeGaps": [
     {
+      "name": "San Jose Animal Care Services",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "pet adoption event location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
+      ]
+    },
+    {
+      "name": "Humane Society Silicon Valley",
+      "city": "Milpitas",
+      "kind": "service",
+      "context": "pet adoption event location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
+      ]
+    },
+    {
+      "name": "Silicon Valley Animal Center",
+      "city": "Santa Clara",
+      "kind": "service",
+      "context": "pet adoption event location",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
+      ]
+    },
+    {
       "name": "Parque de Los Pobladores",
       "city": "San Jose",
       "kind": "park",
-      "context": "Make Music Day venue featuring Fandangos performance",
+      "context": "Make Music Day venue with Fandangos performance",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
       "name": "St. James Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "Make Music Day venue with Levitt Pavilion San Jose",
+      "context": "Make Music Day venue with Levitt Pavilion",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
       "name": "Levitt Pavilion San Jose",
       "city": "San Jose",
       "kind": "venue",
-      "context": "Make Music Day international musicians performances",
+      "context": "Make Music Day international musicians performance",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
       "name": "Paseo de San Antonio",
       "city": "San Jose",
       "kind": "venue",
-      "context": "Make Music Day busker performances location",
+      "context": "Make Music Day busker performances",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
+      ]
+    },
+    {
+      "name": "Sonic Runway",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "Make Music Day interactive public art project",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
       "name": "Arteaga's",
       "city": "San Jose",
       "kind": "retail",
-      "context": "Make Music Day market with live music performances",
+      "context": "Make Music Day pop-up performances location",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
-      ]
-    },
-    {
-      "name": "Ladera Oaks",
-      "city": "Portola Valley",
-      "kind": "venue",
-      "context": "pickleball meetup location for beginners and intermediate",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/mountainview/comments/1tsiu3z/rice_and_dice_may_replace_next_level/",
-        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/",
-        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/"
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
       "name": "CHIPS Summer Camp",
       "city": "Sunnyvale",
       "kind": "service",
-      "context": "hands-on STEM summer camp with electronics and IoT projects",
+      "context": "hands-on STEM summer camp for children",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/mountainview/comments/1tsiu3z/rice_and_dice_may_replace_next_level/",
-        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/",
-        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/"
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
-      "name": "Rice and Dice",
-      "city": "Mountain View",
-      "kind": "restaurant",
-      "context": "replacing Next Level restaurant",
+      "name": "Crescent Park",
+      "city": "Palo Alto",
+      "kind": "service",
+      "context": "small bike mechanic garage hiring part-time workers",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/mountainview/comments/1tsiu3z/rice_and_dice_may_replace_next_level/",
-        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/",
-        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/"
+        "https://www.reddit.com/r/mountainview/comments/1twv3yw/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twv247/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twgh5r/hiring_part_time_bike_mechanics/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1twf059/walkingrunning_groupseven_seas_park_areanorth/"
       ]
     }
   ],
   "eventGaps": [
     {
+      "name": "California Adopt-a-Pet Day",
+      "when": "Saturday, June 6",
+      "city": "San Jose",
+      "context": "third annual statewide pet adoption event, waived fees",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
+      ]
+    },
+    {
       "name": "Make Music Day San José",
-      "when": "Sunday, June 21, 2026 11:00 AM – 11:00 PM",
+      "when": "Sunday, June 21, 2026",
       "city": "San Jose",
-      "context": "Free citywide music and art celebration festival",
+      "context": "free citywide music celebration with performances throughout",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
-      "name": "BelicoFest",
+      "name": "Pitbull & Lil Jon",
       "when": "",
-      "city": "San Jose",
-      "context": "Música Mexicana live music event at PayPal Park",
+      "city": "Mountain View",
+      "context": "concert event in Mountain View",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
-      ]
-    },
-    {
-      "name": "Pickleball Meetup",
-      "when": "Friday 3 PM",
-      "city": "Portola Valley",
-      "context": "beginner and intermediate pickleball meetup at Ladera Oaks",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
+        "https://www.reddit.com/r/SanJose/comments/1twvr6v/california_adopt_a_pet_day_is_this_saturday_the/",
+        "https://www.reddit.com/r/mountainview/comments/1tw9yxz/pitbull_lil_jon_in_mountain_view_ca/",
+        "https://www.reddit.com/r/paloalto/comments/1tw8mlr/this_summer_give_your_child_more_than_just/",
         "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/mountainview/comments/1tsiu3z/rice_and_dice_may_replace_next_level/",
-        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/",
-        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/"
+        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/"
       ]
     },
     {
-      "name": "10th Annual Pride Flag Raising Ceremony",
-      "when": "Wednesday June 3 at 11:00 AM",
-      "city": "Santa Clara",
-      "context": "City of Santa Clara celebrates love diversity and inclusion",
+      "name": "Weekday Hiking Group for the Laid-off",
+      "when": "Monday",
+      "city": "Palo Alto",
+      "context": "support group hiking meetup for job seekers",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1tv4f73/pickleball_this_friday_3_pm_at_ladera_oaks/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tufgof/this_summer_give_your_child_more_than_just/",
-        "https://www.reddit.com/r/mountainview/comments/1tsiu3z/rice_and_dice_may_replace_next_level/",
-        "https://www.reddit.com/r/santaclara/comments/1tv4erf/join_us_on_june_3_at_1100_am/",
-        "https://www.reddit.com/r/Cupertino/comments/1ttxxzn/finally_they_found_a_replacement_for_merlion/"
+        "https://www.reddit.com/r/mountainview/comments/1twv3yw/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twv247/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twgh5r/hiring_part_time_bike_mechanics/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1twf059/walkingrunning_groupseven_seas_park_areanorth/"
       ]
     },
     {
-      "name": "Pride Month - Quakes Style",
-      "when": "June",
-      "city": "San Jose",
-      "context": "San Jose Earthquakes pride month celebration event",
+      "name": "Walking/Running Group - Seven Seas Park Area",
+      "when": "flexible morning or evening",
+      "city": "Sunnyvale",
+      "context": "beginner-friendly 5K/10K training group ages 30-40",
       "sourceUrls": [
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tuc1hq/happy_pride_month_quakes_style/",
-        "https://www.reddit.com/r/bayarea/comments/1tvesl4/help_with_housing_in_palo_altomountain/",
-        "https://www.reddit.com/r/SanJose/comments/1tvh4e1/watch_the_backrooms_for_some_san_jose_nostalgia/",
-        "https://www.reddit.com/r/SanJose/comments/1tvdvw5/cycling_groups_for_beginners/"
+        "https://www.reddit.com/r/mountainview/comments/1twv3yw/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twv247/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twgh5r/hiring_part_time_bike_mechanics/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1twf059/walkingrunning_groupseven_seas_park_areanorth/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "PayPal Park",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Inaugural venue for BelicoFest Música Mexicana",
+      "name": "Seven Seas Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "walking and running group meeting location",
       "sourceUrls": [
-        "https://www.reddit.com/r/siliconvalley/comments/1tvssqg/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SJEarthquakes/comments/1tvvo3y/belicofest_brings_música_mexicana_to_the_bay_area/",
-        "https://www.reddit.com/r/bayarea/comments/1tvsrfe/make_music_day_san_josé_free_event/",
-        "https://www.reddit.com/r/SanJose/comments/1tvslgx/make_music_day_san_josé_2026/",
-        "https://www.reddit.com/r/SanJose/comments/1tv4fw9/summer_activitiesclasses_for_kids/"
+        "https://www.reddit.com/r/mountainview/comments/1twv3yw/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twv247/weekday_hiking_group_for_the_laidoff_monday_palo/",
+        "https://www.reddit.com/r/paloalto/comments/1twgh5r/hiring_part_time_bike_mechanics/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1twf059/walkingrunning_groupseven_seas_park_areanorth/"
       ],
-      "matchedName": "PayPal Park"
+      "matchedName": "Seven Seas Park"
     }
   ],
   "eventMatches": []

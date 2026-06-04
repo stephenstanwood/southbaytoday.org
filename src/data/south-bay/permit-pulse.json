@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-03T23:08:47.266Z",
+      "generatedAt": "2026-06-04T19:09:02.376Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 27 – Jun 3",
+      "dateRange": "May 28 – Jun 4",
       "stats": {
-        "total": 319,
-        "notable": 19,
-        "newUnits": 5,
-        "totalValuation": 9835237
+        "total": 347,
+        "notable": 26,
+        "newUnits": 75,
+        "totalValuation": 25352442
       },
       "permits": [
+        {
+          "id": "2025-123452-MF",
+          "address": "700 E St John St",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "New Apartment & Parking Garage",
+          "valuation": 10081452,
+          "units": 68,
+          "issueDate": "2026-06-02",
+          "subtype": "Apartment"
+        },
         {
           "id": "2025-114879-RS",
           "address": "3555 Chamberlain Dr",
@@ -51,6 +63,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-116662-RS",
+          "address": "6932 Serenity Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Preapproved ADU Site Specific Apex Homes 749 Sqft",
+          "valuation": 126648,
+          "units": 1,
+          "issueDate": "2026-06-02",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-146278-RS",
           "address": "4887 Pepperwood Wy #2",
           "category": "residential-new",
@@ -60,6 +84,18 @@
           "valuation": 78965,
           "units": 1,
           "issueDate": "2026-05-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-146538-RS",
+          "address": "1135 Foxworthy Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 52080,
+          "units": 1,
+          "issueDate": "2026-06-02",
           "subtype": "2nd Unit Added"
         },
         {
@@ -75,6 +111,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2026-112066-CI",
+          "address": "5000 Mitty Wy",
+          "category": "new-construction",
+          "categoryLabel": "New Construction",
+          "workType": "New Construction",
+          "description": "Archbishop Mitty High School (B 100%) Remove and Replace Tuff Sheds",
+          "valuation": 46000,
+          "units": 0,
+          "issueDate": "2026-06-02",
+          "subtype": "School/Daycare"
+        },
+        {
           "id": "2026-119333-CI",
           "address": "935 Mclaughlin Av",
           "category": "commercial-large",
@@ -85,83 +133,23 @@
           "units": 0,
           "issueDate": "2026-05-29",
           "subtype": "Warehouse/Storage"
-        },
-        {
-          "id": "2026-120530-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bemp100%) Ralph Lauren TI #1124",
-          "valuation": 1600000,
-          "units": 0,
-          "issueDate": "2026-06-01",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-117608-CI",
-          "address": "1111 Saratoga Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Built Golf Performance Tenant Improvement",
-          "valuation": 520948,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Health Club"
-        },
-        {
-          "id": "2026-119960-CI",
-          "address": "333 Santana Row",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bemp100%) Reformation #1110",
-          "valuation": 464515,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-120181-CI",
-          "address": "5601 Great Oaks Py #6",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Western Digital (Bem100%) Gap Etch Tool Install",
-          "valuation": 400000,
-          "units": 0,
-          "issueDate": "2026-05-29",
-          "subtype": "Manufacturing"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-03T23:08:49.596Z",
+      "generatedAt": "2026-06-04T19:09:04.610Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 27 – Jun 3",
+      "dateRange": "May 28 – Jun 4",
       "stats": {
-        "total": 127,
+        "total": 90,
         "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01409",
-          "address": "543 Seale Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-31",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01398",
           "address": "762 Wildwood Ln",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01409",
+          "address": "543 Seale Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-31",
           "subtype": "Permit Issued"
         },
         {
@@ -187,18 +187,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00124",
           "address": "520 Webster St",
           "category": "entitlement",
@@ -211,12 +199,12 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00125",
-          "address": "528 High St",
+          "id": "26PLN-00123",
+          "address": "445 Bryant St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
@@ -229,6 +217,18 @@
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-05-28",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00125",
+          "address": "528 High St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-05-28",
