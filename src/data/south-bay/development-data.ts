@@ -211,6 +211,22 @@ export const DEV_PROJECTS: DevProject[] = [
   },
 
   {
+    id: "algarve-apartments-san-jose",
+    name: "Algarve Apartments",
+    city: "San Jose",
+    cityId: "san-jose",
+    category: "housing",
+    status: "approved",
+    description:
+      "Santa Clara County and Abode Housing are advancing 91 units of affordable housing at 1135 East Santa Clara Street, replacing an underutilized commercial property east of downtown San José. The seven-story building (over a single-story podium) reserves 24 units for military veterans and 36 as permanent supportive housing, and uses modular construction to speed delivery. Designed by Lowney Architecture, the project is entitled and seeking expedited approvals under California's SB 35 streamlining law.",
+    scale: "91 affordable units, 7 stories",
+    developer: "Abode Housing / Santa Clara County",
+    timeline: "Entitled April 2026; SB 35 approvals in progress",
+    featured: false,
+    sourceNote: "Source: SF YIMBY (April 2026). Verify current status with the City of San José.",
+  },
+
+  {
     id: "santa-clara-station-area-plan",
     name: "Santa Clara Station Area Land Use Plan",
     city: "Santa Clara",
