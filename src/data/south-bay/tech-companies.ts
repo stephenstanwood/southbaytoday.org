@@ -1595,18 +1595,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#1d4ed8",
     url: "https://hyfix.ai",
   },
-  {
-    id: "zum-redwood-city",
-    name: "Zūm",
-    city: "Redwood City",
-    category: "saas",
-    round: "Strategic",
-    amount: "$100M",
-    date: "2026-04-16",
-    tagline: "Connected Mobility Experience platform managing school bus fleets for K-12 districts across 17 states — routing, real-time tracking, and fleet ops in one system. TPG's Rise Fund led the round, valuing Zūm at ~$1.7 billion.",
-    color: "#7c3aed",
-    url: "https://ridezum.com",
-  },
+  // Note: Zūm ($100M strategic, Apr 2026) was dropped — HQ is Redwood City
+  // (San Mateo County / mid-Peninsula), not the South Bay. Same boundary
+  // call as Signos above. If coverage ever extends north of Redwood City,
+  // re-add.
   {
     id: "sonire-therapeutics",
     name: "Sonire Therapeutics",
