@@ -1484,7 +1484,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     date: "2026-01-21",
     tagline: "Pure-play AI networking infrastructure that links GPUs, accelerators, memory, storage, and networking into one synchronized system for large-scale AI clusters — taking on Cisco and Broadcom from Santa Clara. Oversubscribed Series A hit unicorn status in months.",
     color: "#0369a1",
-    url: "https://upscale.ai",
+    url: "https://upscaleai.com",
   },
   {
     id: "etched",
