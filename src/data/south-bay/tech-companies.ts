@@ -2445,4 +2445,17 @@ export const TECH_CONFERENCES: TechConference[] = [
     scale: "regional",
     applicationDeadline: "2026-04-26",
   },
+  {
+    id: "hot-chips",
+    name: "Hot Chips",
+    organizer: "IEEE",
+    venue: "Stanford Memorial Auditorium",
+    city: "Palo Alto",
+    typicalMonth: 8,
+    typicalDay: 23,
+    typicalEndDay: 25,
+    description: "The semiconductor industry's leading conference on high-performance chips since 1989 — where companies first unveil the architectures behind new processors, GPUs, and AI accelerators. Held each August at Stanford, it's a must-watch for the South Bay's deep bench of chip designers.",
+    url: "https://hotchips.org/",
+    scale: "global",
+  },
 ];
