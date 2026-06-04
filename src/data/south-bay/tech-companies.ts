@@ -1007,6 +1007,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "terra-ai",
+    name: "Terra AI",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Series A",
+    amount: "$20M",
+    date: "2026-06-03",
+    tagline:
+      "AI platform that fuses geophysics, geochemistry, and drilling data into probabilistic 3D models of the subsurface — driving faster, lower-cost mineral and energy exploration across mining, enhanced geothermal, and carbon storage. Khosla Ventures led the Series A with strategic backing from BHP Ventures, building on a $3.4M seed and aimed at putting modern exploration tools in the hands of smaller junior miners.",
+    color: "#4338ca",
+    url: "https://www.terraai.com",
+  },
+  {
     id: "radixark",
     name: "RadixArk",
     city: "Palo Alto",
