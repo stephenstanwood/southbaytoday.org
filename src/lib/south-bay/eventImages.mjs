@@ -194,10 +194,17 @@ const OG_MIN_BYTES = 4000;       // < 4KB → almost certainly a logo
 const OG_MAX_BYTES = 10_000_000; // > 10MB → not a sane OG image
 const OG_VALIDATE_TIMEOUT_MS = 5000;
 
+function rejectableImageUrl(imageUrl) {
+  if (!imageUrl) return "";
+  if (isBlockedEventImage(imageUrl)) return "blocked image";
+  if (BAD_OG_URL.test(imageUrl)) return "filename pattern";
+  return "";
+}
+
 async function validateOgImage(imageUrl) {
   if (!imageUrl) return { ok: false, reason: "empty url" };
-  if (isBlockedEventImage(imageUrl)) return { ok: false, reason: "blocked image" };
-  if (BAD_OG_URL.test(imageUrl)) return { ok: false, reason: "filename pattern" };
+  const rejectReason = rejectableImageUrl(imageUrl);
+  if (rejectReason) return { ok: false, reason: rejectReason };
 
   try {
     const ctrl = new AbortController();
@@ -424,7 +431,8 @@ export async function resolveEventImages(events, opts = {}) {
         stats.prevalidated_decoded++;
       }
     }
-    if (isBlockedEventImage(e.image)) {
+    const rejectReason = rejectableImageUrl(e.image);
+    if (rejectReason) {
       if (!dryRun) e.image = null;
       stats.prevalidated_dropped++;
       continue;
@@ -468,11 +476,12 @@ export async function resolveEventImages(events, opts = {}) {
     if (cache.byUrl[url]) {
       const hit = cache.byUrl[url];
       if (hit.image) {
-        if (isBlockedEventImage(hit.image)) {
+        const rejectReason = rejectableImageUrl(hit.image);
+        if (rejectReason) {
           cache.byUrl[url] = {
             image: null,
             rejected: hit.image,
-            rejectReason: "blocked image",
+            rejectReason,
             fetchedAt: new Date().toISOString(),
           };
           stats.tier2_rejected++;

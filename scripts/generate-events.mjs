@@ -445,6 +445,7 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bclass\s+meeting\s+for\s+/i,
   // Private class visits (faculty-arranged, not public)
   /\bclass\s+visit\b/i,
+  /^Visit:\s+.*\bHigh School\b/i,
   // Internal seminar series / recurring workshop codes (not public events)
   /\bBRICS\s+Session\b/i,
   /^[A-Z]{3,5}\s+Session$/,
@@ -3687,7 +3688,16 @@ function fetchSantaCruzPicks() {
     // in here. Monday Night Revels dates are NOT hardcoded because the SCS
     // 2026 Revels schedule isn't posted yet; guessing dates leads to bad
     // downstream plans (e.g. a "Monday Night" event appearing on a Wednesday).
-    { title: "Santa Cruz Shakespeare 2026 Summer Season Opens", date: "2026-06-22", time: "7:30 PM", venue: "The Grove at DeLaveaga Park", address: "501 Upper Park Rd, Santa Cruz, CA 95065", url: "https://santacruzshakespeare.org", description: "Opening night of Santa Cruz Shakespeare's outdoor summer rep season at the Grove at DeLaveaga Park. Season runs through late August." },
+    {
+      title: "Santa Cruz Shakespeare 2026 Summer Season Opens",
+      date: "2026-06-22",
+      time: "7:30 PM",
+      venue: "The Grove at DeLaveaga Park",
+      address: "501 Upper Park Rd, Santa Cruz, CA 95065",
+      url: "https://santacruzshakespeare.org",
+      image: "https://santacruzshakespeare.org/wp-content/uploads/2026/03/home-2026-post-300x300.png",
+      description: "Opening night of Santa Cruz Shakespeare's outdoor summer rep season at the Grove at DeLaveaga Park. Season runs through late August.",
+    },
   ];
   const today = todayPT();
   const events = raw
@@ -3710,6 +3720,7 @@ function fetchSantaCruzPicks() {
         description: e.description ?? "",
         url: e.url,
         source: "Santa Cruz Picks",
+        ...(e.image ? { image: e.image } : {}),
         kidFriendly: true,
       };
     });
@@ -5580,11 +5591,127 @@ function cleanEscapedCalendarText(value = "") {
     .trim();
 }
 
-function extractFirstImageUrl(html = "") {
-  const match = html.match(/<img[^>]+src=['"]([^'"]+)['"]/i)
-    || html.match(/<meta[^>]+property=['"]og:image['"][^>]+content=['"]([^'"]+)['"]/i)
-    || html.match(/<meta[^>]+content=['"]([^'"]+)['"][^>]+property=['"]og:image['"]/i);
-  return match?.[1]?.replace(/&amp;/g, "&") || "";
+const BAD_EXTRACTED_IMAGE_URL = /(?:^|[/_\-.])(?:logo|icon|favicon|default(?:[-_]image)?|placeholder|empty|blank|spacer|sprite|og[-_]default|share[-_]image|social[-_]share)(?:[/_\-.]|$)/i;
+const BAD_EXTRACTED_IMAGE_ATTR = /\b(?:icon|favicon|header|footer|sticky|newsletter|bloom|social|share|avatar)\b/i;
+
+function decodeHtmlAttr(value = "") {
+  return String(value || "")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;/gi, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&amp;/gi, "&");
+}
+
+function attrValue(attrs, name) {
+  const m = String(attrs || "").match(new RegExp(`\\b${name}\\s*=\\s*(['"])([\\s\\S]*?)\\1`, "i"));
+  return m ? decodeHtmlAttr(m[2]) : "";
+}
+
+function absolutizeImageUrl(url, baseUrl = "") {
+  const raw = decodeHtmlAttr(url).trim();
+  if (!raw || /^(?:data|javascript):/i.test(raw)) return "";
+  try {
+    return baseUrl ? new URL(raw, baseUrl).toString() : raw;
+  } catch {
+    return raw;
+  }
+}
+
+function bestSrcsetUrl(srcset, baseUrl = "") {
+  const candidates = decodeHtmlAttr(srcset)
+    .split(",")
+    .map((part) => {
+      const bits = part.trim().split(/\s+/);
+      const url = absolutizeImageUrl(bits[0], baseUrl);
+      const descriptor = bits[1] || "";
+      const width = descriptor.endsWith("w") ? parseInt(descriptor, 10) : 0;
+      const density = descriptor.endsWith("x") ? parseFloat(descriptor) * 1000 : 0;
+      return { url, score: width || density || 1 };
+    })
+    .filter((c) => c.url);
+  return candidates.sort((a, b) => b.score - a.score)[0]?.url || "";
+}
+
+function imageScore({ url, attrs = "", source = "img", index = 0 }) {
+  if (!url || BAD_EXTRACTED_IMAGE_URL.test(url)) return -Infinity;
+  if (BAD_EXTRACTED_IMAGE_ATTR.test(attrs)) return -Infinity;
+
+  const width = Number(attrValue(attrs, "width")) || 0;
+  const height = Number(attrValue(attrs, "height")) || 0;
+  if ((width && width <= 40) || (height && height <= 40)) return -Infinity;
+
+  let score = source === "meta" ? 30 : 20;
+  if (/\/wp-content\/uploads\//i.test(url)) score += 12;
+  if (/\.(?:jpe?g|png|webp)(?:[?#]|$)/i.test(url)) score += 4;
+  if (width >= 100 && height >= 100) score += 20;
+  if (Math.max(width, height) >= 600) score += 6;
+  if (/\b(?:wp-image|size-|alignleft|alignright|featured|poster)\b/i.test(attrs)) score += 10;
+  if (/\b(?:loading|lazy|decode|fetchpriority)\b/i.test(attrs)) score += 2;
+  score -= index * 0.01;
+  return score;
+}
+
+function extractFirstImageUrl(html = "", baseUrl = "") {
+  const candidates = [];
+  let index = 0;
+
+  for (const m of html.matchAll(/<meta[^>]+(?:property|name)=['"](?:og:image(?::secure_url)?|twitter:image)['"][^>]+content=['"]([^'"]+)['"][^>]*>/gi)) {
+    candidates.push({ url: absolutizeImageUrl(m[1], baseUrl), source: "meta", attrs: m[0], index: index++ });
+  }
+  for (const m of html.matchAll(/<meta[^>]+content=['"]([^'"]+)['"][^>]+(?:property|name)=['"](?:og:image(?::secure_url)?|twitter:image)['"][^>]*>/gi)) {
+    candidates.push({ url: absolutizeImageUrl(m[1], baseUrl), source: "meta", attrs: m[0], index: index++ });
+  }
+  for (const m of html.matchAll(/<link[^>]+rel=['"]image_src['"][^>]+href=['"]([^'"]+)['"][^>]*>/gi)) {
+    candidates.push({ url: absolutizeImageUrl(m[1], baseUrl), source: "meta", attrs: m[0], index: index++ });
+  }
+  for (const m of html.matchAll(/<img\b([^>]+)>/gi)) {
+    const attrs = m[1];
+    const url = bestSrcsetUrl(attrValue(attrs, "srcset"), baseUrl)
+      || absolutizeImageUrl(attrValue(attrs, "src"), baseUrl);
+    candidates.push({ url, source: "img", attrs, index: index++ });
+  }
+
+  return candidates
+    .map((candidate) => ({ ...candidate, score: imageScore(candidate) }))
+    .filter((candidate) => Number.isFinite(candidate.score))
+    .sort((a, b) => b.score - a.score)[0]?.url || "";
+}
+
+function contentImageHtml(html = "") {
+  const start = String(html).search(/<div[^>]+class=['"][^'"]*(?:post-content|entry-content)[^'"]*['"][^>]*>/i);
+  if (start < 0) return html;
+  const body = html.slice(start);
+  const end = body.search(/<(?:footer|script)\b|<div[^>]+class=['"][^'"]*(?:fusion-footer|footer-widget|et_bloom|et_social)[^'"]*['"][^>]*>/i);
+  return end > 0 ? body.slice(0, end) : body;
+}
+
+function normalizeLinkText(value = "") {
+  return stripHtml(value).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function findInternalContentPageByTitle(html = "", title = "", baseUrl = "") {
+  const wanted = normalizeLinkText(title);
+  if (!wanted) return "";
+  const base = baseUrl ? new URL(baseUrl) : null;
+  for (const m of html.matchAll(/<a\b([^>]+)>([\s\S]*?)<\/a>/gi)) {
+    const label = normalizeLinkText(m[2]);
+    if (label !== wanted) continue;
+    const href = attrValue(m[1], "href");
+    if (!href) continue;
+    try {
+      const url = base ? new URL(href, base).toString() : href;
+      if (base && new URL(url).host !== base.host) continue;
+      if (/\/events\//i.test(new URL(url).pathname)) continue;
+      return url;
+    } catch {
+      continue;
+    }
+  }
+  return "";
 }
 
 function parseNaturalDateTime(monthName, day, year, time, ampm) {
@@ -5623,10 +5750,10 @@ async function fetchSanJoseTheatersEvents() {
       const venueParts = cleanEscapedCalendarText(ev.location).split("|").map((part) => part.trim()).filter(Boolean);
       const venue = cleanEscapedCalendarText(ev.categories) || venueParts[0] || "San Jose Theaters";
       const address = venueParts[1] || "";
+      const url = ev.url || "https://sanjosetheaters.org/calendar/";
       const rawDesc = String(ev.description || "").replace(/\\n/g, "\n").replace(/\\,/g, ",");
       const description = truncate(stripBareUrls(stripHtml(rawDesc)));
-      const image = extractFirstImageUrl(rawDesc);
-      const url = ev.url || "https://sanjosetheaters.org/calendar/";
+      const image = extractFirstImageUrl(rawDesc, url);
 
       events.push({
         id: h("sanjosetheaters", url, date, time),
@@ -5701,7 +5828,7 @@ async function fetchSouthBayMusicalTheatreEvents() {
           "",
         )
         .trim()));
-      const image = extractFirstImageUrl(html);
+      const image = extractFirstImageUrl(contentImageHtml(html), pageUrl);
       const re = /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t\.?|tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{1,2}),\s+(20\d{2})\s+at\s+(\d{1,2}:\d{2})\s*(am|pm)\b/gi;
       let match;
       while ((match = re.exec(dateText)) !== null) {
@@ -5757,7 +5884,18 @@ async function fetchLosAltosStageEvents() {
         const parsed = parseNaturalDateTime(match[1], match[2], match[3], match[4], match[5]);
         if (!parsed || parsed.date < today) continue;
         const start = parseDatePT(`${parsed.date}T12:00:00`);
-        const image = extractFirstImageUrl(html);
+        let image = extractFirstImageUrl(contentImageHtml(html), pageUrl);
+        if (!image) {
+          const showPageUrl = findInternalContentPageByTitle(html, title, pageUrl);
+          if (showPageUrl) {
+            try {
+              const showHtml = await fetchText(showPageUrl, { timeout: 20_000 });
+              image = extractFirstImageUrl(contentImageHtml(showHtml), showPageUrl);
+            } catch {
+              // Keep the event; image resolver will try Places/OG/cache later.
+            }
+          }
+        }
 
         events.push({
           id: h("losaltosstage", pageUrl, parsed.date, parsed.time),
@@ -5998,6 +6136,13 @@ function fetchInboundEvents() {
     const today = todayPT();
 
     const out = [];
+    const inboundImageForEvent = (event) => {
+      const sourceUrl = String(event.sourceUrl || "");
+      if (/mountainview\.gov\/our-city\/departments\/community-services\/music-on-castro/i.test(sourceUrl)) {
+        return "https://www.mountainview.gov/home/showpublishedimage/8655/639045040316800000";
+      }
+      return "";
+    };
     let skipBlocked = 0, skipCity = 0, skipPast = 0;
     for (const e of events || []) {
       if (!e.startsAt || !e.title) continue;
@@ -6094,6 +6239,7 @@ function fetchInboundEvents() {
       }
       // Drop bare city/state stubs like "Campbell" or "San Jose, CA" — those aren't venues.
       venueName = cleanVenue(venueName) || null;
+      const image = inboundImageForEvent(e);
 
       out.push({
         id: h("inbound", e.id, dateKey, e.title),
@@ -6110,6 +6256,7 @@ function fetchInboundEvents() {
         description: e.description ?? "",
         url: e.sourceUrl ?? "",
         source: "City Newsletter",
+        ...(image ? { image } : {}),
         kidFriendly,
       });
     }
