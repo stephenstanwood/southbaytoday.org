@@ -1248,6 +1248,18 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.sunday.ai",
   },
   {
+    id: "xscape-photonics",
+    name: "Xscape Photonics",
+    city: "Santa Clara",
+    category: "chip",
+    round: "Series A ext.",
+    amount: "$37M",
+    date: "2026-03-11",
+    tagline: "Generates eight wavelengths of laser light on a single silicon photonics chip — its CombX technology lets AI data centers push far more data down each optical fiber, easing the bandwidth bottleneck between GPUs. The extension (led by Addition, with NVIDIA and IAG Capital continuing) brings the Series A to $81M; founded by Columbia University photonics researchers.",
+    color: "#06B6D4",
+    url: "https://www.xscapephotonics.com",
+  },
+  {
     id: "eridu",
     name: "Eridu",
     city: "Saratoga",
