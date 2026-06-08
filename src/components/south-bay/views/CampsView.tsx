@@ -327,7 +327,7 @@ function BrowseMode() {
               <option value="all">All weeks</option>
               {ACTIVE_WEEKS.map((sw) => (
                 <option key={sw.weekNum} value={sw.weekNum}>
-                  Week {sw.weekNum}
+                  Week {sw.weekNum} · {sw.label}
                 </option>
               ))}
             </select>
