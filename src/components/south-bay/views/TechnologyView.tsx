@@ -902,6 +902,20 @@ const LAST_30_ROUNDS = RECENTLY_FUNDED.filter((r) => r.date >= LAST_30_CUTOFF);
 // the "what's hot" callout never lies about what residents are actually seeing
 // in the funding list below.
 const Q1Q2_FUNDED = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01");
+// Period label for the year-to-date funding stats — spans Q1 through the
+// quarter of the latest tracked 2026 round, derived from the data so it never
+// claims a quarter the list doesn't actually cover and never silently goes
+// stale once Q3+ rounds land. (The employment-snapshot labels elsewhere in
+// this view are a genuine static data vintage and intentionally stay
+// hardcoded — don't make those dynamic.)
+const FUNDING_PERIOD_LABEL = (() => {
+  const latestDate = Q1Q2_FUNDED.reduce(
+    (max, r) => (r.date > max ? r.date : max),
+    "2026-01-01",
+  );
+  const quarter = Math.ceil(parseInt(latestDate.slice(5, 7), 10) / 3);
+  return quarter <= 1 ? "Q1 2026" : `Q1–Q${quarter} 2026`;
+})();
 const Q1Q2_CATEGORY_COUNTS = Q1Q2_FUNDED.reduce<Record<string, number>>(
   (acc, r) => {
     acc[r.category] = (acc[r.category] ?? 0) + 1;
@@ -934,7 +948,7 @@ const Q1Q2_TOP_CATEGORIES = Object.entries(Q1Q2_CATEGORY_COUNTS)
 const Q1Q2_TOP_CATEGORIES_NOTE = Q1Q2_TOP_CATEGORIES.join(", ");
 const PULSE_RAISED_STAT = {
   value: RAISED_2026_LABEL,
-  label: "Raised in Q1–Q2 2026",
+  label: `Raised in ${FUNDING_PERIOD_LABEL}`,
   note: `${ROUNDS_2026} South Bay startup rounds · ${Q1Q2_TOP_CATEGORIES_NOTE} led the way`,
 };
 // Top 3 rounds in the last 30 days by dollar amount — drives the recap text
@@ -1654,7 +1668,7 @@ function FundingHighlightsSection() {
       <div className="tech-funding-summary">
         <div>
           <strong>{RAISED_2026_LABEL}</strong>
-          <span>Raised in Q1–Q2 2026</span>
+          <span>Raised in {FUNDING_PERIOD_LABEL}</span>
         </div>
         <p>
           {ROUNDS_2026} tracked rounds this year, led by {Q1Q2_TOP_CATEGORIES_NOTE}.
