@@ -1007,6 +1007,32 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "pomo",
+    name: "Pomo",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$4.5M",
+    date: "2026-04-08",
+    tagline:
+      "An agentic marketing-intelligence platform for mid-market teams: it pulls together fragmented marketing signals and tells you what matters, why, and what to do next — turning noise into a prioritized list of decisions. Founded by ex–Google DeepMind and Databricks engineers, the seed was led by Kindred Ventures with Databricks Ventures, SV Angel, 645 Ventures, Seven Stars, and Timeless Partners joining.",
+    color: "#4f46e5",
+    url: "https://usepomo.ai",
+  },
+  {
+    id: "expert-intelligence",
+    name: "Expert Intelligence",
+    city: "Santa Clara",
+    category: "medtech",
+    round: "Seed",
+    amount: "$5.8M",
+    date: "2026-02-04",
+    tagline:
+      "AI that automates expert decision-making inside regulated labs — pharma, drug manufacturing, food and environmental testing. Its Limited Sample Model learns how analysts judge results from a handful of examples, built for tightly controlled settings where training data is scarce. Founded by Lalin Theverapperuma (ex-Apple, Meta, Intel, Bosch); the seed was led by Sierra Ventures with TSVC and Acorn Pacific Ventures.",
+    color: "#2563eb",
+    url: "https://www.expertintelligence.ai",
+  },
+  {
     id: "terra-ai",
     name: "Terra AI",
     city: "Palo Alto",
