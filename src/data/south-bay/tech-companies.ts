@@ -1770,7 +1770,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   {
     id: "hark",
     name: "Hark",
-    city: "San Jose",
+    city: "Palo Alto",
     category: "ai",
     round: "Series A",
     amount: "$700M",
