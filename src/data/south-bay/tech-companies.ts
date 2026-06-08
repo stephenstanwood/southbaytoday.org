@@ -978,10 +978,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Mountain View",
     category: "software",
     stage: "growth",
-    tagline: "The company behind ChatGPT and the GPT model series just signed a 10-year lease on a 450,000 sq ft campus at 350–380 Ellis Street in Mountain View — making Silicon Valley its second major hub alongside San Francisco. Valued at $300B+.",
+    tagline: "The company behind ChatGPT and the GPT model series signed a 10-year lease on a 439,000 sq ft campus at 350–380 Ellis Street in Mountain View — making Silicon Valley its second major hub alongside San Francisco. Valued at $300B+.",
     color: "#10A37F",
     url: "https://openai.com",
-    employeesNote: "~3,000 employees globally; MV campus opening 2026",
+    employeesNote: "~7,000+ employees globally; MV campus opening 2026",
   },
 ];
 
