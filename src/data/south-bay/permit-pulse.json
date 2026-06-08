@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-04T23:09:00.733Z",
+      "generatedAt": "2026-06-08T19:08:33.474Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "May 28 – Jun 4",
+      "dateRange": "Jun 1 – Jun 8",
       "stats": {
-        "total": 347,
-        "notable": 26,
-        "newUnits": 75,
-        "totalValuation": 25352442
+        "total": 397,
+        "notable": 29,
+        "newUnits": 215,
+        "totalValuation": 52126759
       },
       "permits": [
+        {
+          "id": "2026-118798-MF",
+          "address": "110 Yoshino Wy",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "(Bemp 100%) Trimble Modular Apts",
+          "valuation": 21903272,
+          "units": 136,
+          "issueDate": "2026-06-04",
+          "subtype": "Apartment"
+        },
         {
           "id": "2025-123452-MF",
           "address": "700 E St John St",
@@ -27,39 +39,51 @@
           "subtype": "Apartment"
         },
         {
-          "id": "2025-114879-RS",
-          "address": "3555 Chamberlain Dr",
+          "id": "2026-119233-MF",
+          "address": "110 Yoshino Wy",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "(Bemp 100%) Trimble Modular Apts Parking Area",
+          "valuation": 4977423,
+          "units": 1,
+          "issueDate": "2026-06-04",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2025-124064-RS",
+          "address": "6757 Devonshire Dr",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Lot 6 New 2 Sty Main Residence",
-          "valuation": 688446,
+          "description": "Demo/Rebuild",
+          "valuation": 567829,
           "units": 1,
-          "issueDate": "2026-05-29",
+          "issueDate": "2026-06-05",
           "subtype": "Single-Family"
         },
         {
-          "id": "2025-115403-RS",
-          "address": "279 E St James St #2",
+          "id": "2025-132247-RS",
+          "address": "6757 Devonshire Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Detached 838 Sf ADU Above Garage",
-          "valuation": 192075,
+          "description": "Attached ADU",
+          "valuation": 168921,
           "units": 1,
-          "issueDate": "2026-05-29",
+          "issueDate": "2026-06-05",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-100664-RS",
-          "address": "1224 Laurie Av #2",
+          "id": "2026-100942-RS",
+          "address": "1074 Prouty Wy #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "2-Story Detached ADU",
-          "valuation": 143584,
+          "description": "Detached ADU",
+          "valuation": 161143,
           "units": 1,
-          "issueDate": "2026-05-29",
+          "issueDate": "2026-06-05",
           "subtype": "2nd Unit Added"
         },
         {
@@ -75,93 +99,57 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-146278-RS",
-          "address": "4887 Pepperwood Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 78965,
-          "units": 1,
-          "issueDate": "2026-05-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-146538-RS",
-          "address": "1135 Foxworthy Av #2",
+          "id": "2024-090874-RS",
+          "address": "1451 Goldenlake Rd #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Detached ADU",
-          "valuation": 52080,
+          "valuation": 124281,
           "units": 1,
-          "issueDate": "2026-06-02",
+          "issueDate": "2026-06-03",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-143457-RS",
-          "address": "2787 George Blauer Pl #2",
+          "id": "2024-083316-RS",
+          "address": "3059 Cray Ct #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 40582,
+          "description": "(Bemp100%) New 2-Story Detached ADU",
+          "valuation": 122928,
           "units": 1,
-          "issueDate": "2026-05-29",
+          "issueDate": "2026-06-04",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-112066-CI",
-          "address": "5000 Mitty Wy",
-          "category": "new-construction",
-          "categoryLabel": "New Construction",
+          "id": "2025-144521-RS",
+          "address": "2848 La Jolla Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Archbishop Mitty High School (B 100%) Remove and Replace Tuff Sheds",
-          "valuation": 46000,
-          "units": 0,
-          "issueDate": "2026-06-02",
-          "subtype": "School/Daycare"
-        },
-        {
-          "id": "2026-119333-CI",
-          "address": "935 Mclaughlin Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "(B 100%) Reroof",
-          "valuation": 2512860,
-          "units": 0,
-          "issueDate": "2026-05-29",
-          "subtype": "Warehouse/Storage"
+          "description": "Detached ADU",
+          "valuation": 106189,
+          "units": 1,
+          "issueDate": "2026-06-03",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-04T23:09:03.100Z",
+      "generatedAt": "2026-06-08T19:08:35.889Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "May 28 – Jun 4",
+      "dateRange": "Jun 1 – Jun 8",
       "stats": {
-        "total": 90,
-        "notable": 8,
+        "total": 47,
+        "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01409",
-          "address": "543 Seale Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-31",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01438",
           "address": "968 Embarcadero Rd",
@@ -173,66 +161,6 @@
           "units": 0,
           "issueDate": "2026-06-02",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01398",
-          "address": "762 Wildwood Ln",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Guest bathroom remodel like for like including removing a non-load bearing wall. Replacing window like for like.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00122",
-          "address": "250 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-270)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00125",
-          "address": "528 High St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-268)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00124",
-          "address": "520 Webster St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-271)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00123",
-          "address": "445 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Planning OTC for modifying the matrix sign graphics (original Planning approval under 24PLN-269)",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-05-28",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00127",
