@@ -612,7 +612,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "figure-ai",
     name: "Figure AI",
-    city: "Sunnyvale",
+    city: "San Jose",
     category: "robotics",
     stage: "startup",
     tagline: "Humanoid robots for real warehouse and factory work. Raised $675M from OpenAI, Microsoft, NVIDIA, and Amazon. BMW and UPS pilots underway.",
@@ -623,10 +623,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "1x-technologies",
     name: "1X Technologies",
-    city: "Sunnyvale",
+    city: "Palo Alto",
     category: "robotics",
     stage: "startup",
-    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. US headquarters in Sunnyvale.",
+    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. US headquarters in Palo Alto.",
     color: "#E11D48",
     url: "https://www.1x.tech",
     employeesNote: "~200 employees",
