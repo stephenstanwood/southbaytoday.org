@@ -682,6 +682,11 @@ async function scrapeLindenTree(page) {
     .map((r) => {
       const date = tryParseDate(r.date);
       if (!date || date < TODAY) return null;
+      // Links ending in .html are Lightspeed PRODUCT pages — the "featured book"
+      // anchor inside each listing, not an event page. Five events once shipped
+      // all pointing at the same sticker-book product (and inherited its white
+      // product-cover og:image). Only keep non-product links.
+      const eventLink = r.link && !/\.html(\?|$)/i.test(r.link) ? r.link : null;
       return {
         title: r.title,
         date,
@@ -690,7 +695,7 @@ async function scrapeLindenTree(page) {
         venue: "Linden Tree Books",
         address: "265 State St, Los Altos, CA 94022",
         city: "los-altos",
-        url: r.link || "https://www.lindentreebooks.com/events-calendar",
+        url: eventLink || "https://www.lindentreebooks.com/events-calendar",
         source: "Linden Tree Books",
         category: "arts",
         cost: "free",

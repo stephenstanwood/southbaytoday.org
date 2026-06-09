@@ -60,6 +60,13 @@ function normVenue(s) {
   return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
 
+// Event-feed venue names that don't string-match their places.json entry
+// (normalized form → normalized places.json name). Substring matching can't
+// bridge these because extra words sit mid-name.
+const VENUE_ALIASES = {
+  "linden tree books": "linden tree children s books",
+};
+
 let _venueLookup = null;
 function getVenueLookup() {
   if (_venueLookup) return _venueLookup;
@@ -82,7 +89,7 @@ export function lookupVenuePhoto(venue) {
   const norm = normVenue(venue);
   if (!norm) return null;
   const lookup = getVenueLookup();
-  const exact = lookup.get(norm);
+  const exact = lookup.get(norm) ?? lookup.get(VENUE_ALIASES[norm] ?? "");
   if (exact) return exact;
   // Substring — only for place names ≥9 chars to avoid spurious hits.
   for (const [placeName, photoRef] of lookup) {
