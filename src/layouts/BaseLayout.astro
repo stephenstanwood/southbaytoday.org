@@ -10,6 +10,8 @@ interface Props {
   fontsUrl?: string;
   /** meta theme-color */
   themeColor?: string;
+  /** keep page out of search indexes */
+  noindex?: boolean;
 }
 
 const {
@@ -17,10 +19,22 @@ const {
   description,
   fontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
   themeColor = "#f8f4ef",
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = "https://southbaytoday.org";
+const pagePath = Astro.url.pathname === "/" ? "" : Astro.url.pathname;
+const pageUrl = `${siteUrl}${pagePath}`;
 const ogImage = `${siteUrl}/images/og-image.png`;
+
+const websiteSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "The South Bay Today",
+  url: siteUrl,
+  description:
+    "Day plans, events, restaurants, and local government coverage across the South Bay: San Jose, Campbell, Los Gatos, Mountain View, Palo Alto, and more.",
+});
 ---
 
 <html lang="en">
@@ -32,18 +46,21 @@ const ogImage = `${siteUrl}/images/og-image.png`;
     <meta name="p:domain_verify" content="20abfa2be74d95110b898926172f52eb" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:site_name" content="The South Bay Today" />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@stephenstanwood" />
+    <meta name="twitter:site" content="@southbaysignal" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <link rel="canonical" href={siteUrl} />
-    <a rel="me" href="https://mastodon.social/@southbaytoday" style="display:none">Mastodon</a>
+    <link rel="canonical" href={pageUrl} />
+    <link rel="me" href="https://mastodon.social/@southbaytoday" />
+    <script type="application/ld+json" set:html={websiteSchema} />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />

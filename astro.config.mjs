@@ -11,7 +11,9 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'static',
   adapter: vercel(),
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({
+    filter: (page) => !page.includes('/logo-preview') && !page.includes('/admin'),
+  })],
   vite: {
     // @ts-ignore - tailwindcss/vite type mismatch with astro's bundled vite
     plugins: [tailwindcss()],

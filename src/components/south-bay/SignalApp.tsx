@@ -227,6 +227,8 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
           <NewsletterSignup variant="minimal" />
         </div>
         a project of <a href="https://stanwood.dev" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Permanent Marker', cursive", textDecoration: "none", color: "inherit" }}>stanwood.dev</a>
+        <span aria-hidden="true" style={{ margin: "0 6px", opacity: 0.4 }}>·</span>
+        <a href="/privacy" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>privacy</a>
       </footer>
     </>
   );
