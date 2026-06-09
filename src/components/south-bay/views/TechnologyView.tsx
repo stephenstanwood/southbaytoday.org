@@ -1237,6 +1237,15 @@ function milestoneAge(m: TechMilestone): number {
   return new Date().getFullYear() - m.foundedYear;
 }
 
+// Anniversary notes may embed live counts so they never go stale year-over-year:
+//   {years}   → the integer age (e.g. "33")
+//   {ordinal} → the ordinal age (e.g. "33rd")
+function expandMilestoneNote(note: string, age: number): string {
+  return note
+    .replaceAll("{years}", String(age))
+    .replaceAll("{ordinal}", ordinal(age));
+}
+
 function ordinal(n: number): string {
   if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
   if (n % 10 === 1) return `${n}st`;
@@ -1317,7 +1326,7 @@ function SvHistorySection() {
                     {m.city} · est. {m.foundedYear}
                   </span>
                 </div>
-                <p className="tech-milestone-note">{m.anniversaryNote}</p>
+                <p className="tech-milestone-note">{expandMilestoneNote(m.anniversaryNote, age)}</p>
                 {m.chmExhibit && (
                   <div className="tech-milestone-chm">
                     <span>🏛️</span>
