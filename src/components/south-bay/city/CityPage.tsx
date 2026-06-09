@@ -9,7 +9,7 @@ import type { City } from "../../../lib/south-bay/types";
 import { CITY_MAP } from "../../../lib/south-bay/cities";
 import {
   TODAY_ISO, NOW_PT,
-  startMinutes, formatTimeRange, isNotEnded,
+  startMinutes, formatTimeRange, hasNotStarted,
   formatAge,
 } from "../../../lib/south-bay/timeHelpers";
 import {
@@ -992,12 +992,12 @@ function CityEventsBlock({
     let today = 0, tomorrow = 0, weekend = 0;
     for (const e of cityEvents) {
       if (!passesFilters(e)) continue;
-      if (e.date === TODAY_ISO && isNotEnded(e.time)) today++;
+      if (e.date === TODAY_ISO && hasNotStarted(e.time)) today++;
       if (e.date === TOMORROW_ISO) tomorrow++;
       if (WEEKEND_ISOS.includes(e.date)) {
         // Don't double-count: if today/tomorrow IS the weekend, the user
         // selects the weekend bucket explicitly to see both days together.
-        if (e.date === TODAY_ISO && !isNotEnded(e.time)) continue;
+        if (e.date === TODAY_ISO && !hasNotStarted(e.time)) continue;
         weekend++;
       }
     }
@@ -1012,13 +1012,13 @@ function CityEventsBlock({
     };
     let list: UpcomingEvent[] = [];
     if (bucket === "today") {
-      list = cityEvents.filter((e) => e.date === TODAY_ISO && isNotEnded(e.time) && passesFilters(e));
+      list = cityEvents.filter((e) => e.date === TODAY_ISO && hasNotStarted(e.time) && passesFilters(e));
     } else if (bucket === "tomorrow") {
       list = cityEvents.filter((e) => e.date === TOMORROW_ISO && passesFilters(e));
     } else {
       list = cityEvents.filter((e) => {
         if (!WEEKEND_ISOS.includes(e.date)) return false;
-        if (e.date === TODAY_ISO && !isNotEnded(e.time)) return false;
+        if (e.date === TODAY_ISO && !hasNotStarted(e.time)) return false;
         return passesFilters(e);
       });
     }
