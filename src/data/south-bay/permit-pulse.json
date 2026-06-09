@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-08T19:08:33.474Z",
+      "generatedAt": "2026-06-09T19:08:39.157Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 1 – Jun 8",
+      "dateRange": "Jun 2 – Jun 9",
       "stats": {
-        "total": 397,
-        "notable": 29,
-        "newUnits": 215,
-        "totalValuation": 52126759
+        "total": 297,
+        "notable": 19,
+        "newUnits": 145,
+        "totalValuation": 35080578
       },
       "permits": [
         {
@@ -24,18 +24,6 @@
           "valuation": 21903272,
           "units": 136,
           "issueDate": "2026-06-04",
-          "subtype": "Apartment"
-        },
-        {
-          "id": "2025-123452-MF",
-          "address": "700 E St John St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "New Apartment & Parking Garage",
-          "valuation": 10081452,
-          "units": 68,
-          "issueDate": "2026-06-02",
           "subtype": "Apartment"
         },
         {
@@ -87,18 +75,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-116662-RS",
-          "address": "6932 Serenity Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Preapproved ADU Site Specific Apex Homes 749 Sqft",
-          "valuation": 126648,
-          "units": 1,
-          "issueDate": "2026-06-02",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2024-090874-RS",
           "address": "1451 Goldenlake Rd #2",
           "category": "residential-new",
@@ -133,18 +109,42 @@
           "units": 1,
           "issueDate": "2026-06-03",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-120886-RS",
+          "address": "4794 Sally Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2-Story ADU to Be 2nd Floor Above Existing Garage",
+          "valuation": 82854,
+          "units": 1,
+          "issueDate": "2026-06-03",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-105250-RS",
+          "address": "1370 Terilyn Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 60872,
+          "units": 1,
+          "issueDate": "2026-06-05",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-08T19:08:35.889Z",
+      "generatedAt": "2026-06-09T19:08:41.462Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 1 – Jun 8",
+      "dateRange": "Jun 2 – Jun 9",
       "stats": {
-        "total": 47,
+        "total": 25,
         "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
