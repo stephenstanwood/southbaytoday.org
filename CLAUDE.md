@@ -27,8 +27,8 @@ Run these scripts to refresh pre-generated data:
 
 ## Tabs
 Order: Today | Events | Camps | Gov | Tech | Food
-Hash routing: #overview, #events, #camps, #government, #technology, #food
-Gov now includes Development (folded in 2026-04-23 — the "What's Being Built" section near the bottom renders `<DevelopmentView />`). Weather + Sports tabs removed 2026-04-23 (not enough content to justify).
+Path routing with legacy hash fallback: each tab is a real page (`/`, `/events`, `/camps`, `/gov`, `/tech`, `/food`); old `#events`-style hashes still resolve in SignalApp.
+Weather + Sports tabs removed 2026-04-23 (not enough content to justify). The Gov "What's Being Built" Development section was removed 2026-05-22 (commit 0a86b010, "Polish secondary South Bay pages"). `DevelopmentView.tsx`, `ElectionsCard.tsx`, and `SportsView.tsx` are orphans — do NOT re-wire them into any tab, and don't spend cycles "fixing" them (an automated session patched the orphaned ElectionsCard on 2026-06-09 for nothing). Their data files (`development-data.ts`, `elections-2026.ts`) stay — other pipelines reference them.
 
 ## Home tab is curated — do not add teasers
 Do NOT add new teaser sections, callouts, strips, or cards to `src/components/south-bay/homepage/SouthBayTodayView.tsx` (the Today/Home tab). The layout is hand-curated. If a nightly-generated data source isn't surfaced on Home, that's deliberate, not a gap to fill. Three autonomous additions have been removed: JustOpenedTeaser and AroundTownTeaser (2026-04-25), WeekendPicksCard (2026-04-26). Routine work — bug fixes, copy edits, scrapers, scoring tweaks, additions to OTHER tabs — is fine; new visual sections on Home need explicit Stephen approval BEFORE writing the component. This applies even when the data file already exists and looks "obviously meant to render somewhere" — surface it on a non-Home tab or leave it for Stephen to wire up.
