@@ -152,6 +152,10 @@ export default function ElectionsCard() {
   const pastPrimary = primaryDays < -7;
   const focusDays = pastPrimary ? generalDays : primaryDays;
   const focusLabel = pastPrimary ? "General Election" : "CA Primary";
+  // During the 7-day grace window after an election day the focus stays on the
+  // just-passed race, so focusDays goes negative — show a "complete" state
+  // instead of a nonsensical negative countdown ("-7 days to CA Primary").
+  const focusPast = focusDays < 0;
 
   const upcomingDates = KEY_DATES
     .filter((kd) => daysUntil(kd.isoDate) >= 0)
@@ -203,8 +207,8 @@ export default function ElectionsCard() {
           style={{
             textAlign: "right",
             flexShrink: 0,
-            background: focusDays <= 30 ? "#fef2f2" : "#f0f9ff",
-            border: `1px solid ${focusDays <= 30 ? "#fecaca" : "#bae6fd"}`,
+            background: focusPast ? "#ecfdf5" : focusDays <= 30 ? "#fef2f2" : "#f0f9ff",
+            border: `1px solid ${focusPast ? "#a7f3d0" : focusDays <= 30 ? "#fecaca" : "#bae6fd"}`,
             borderRadius: 4,
             padding: "6px 10px",
           }}
@@ -214,14 +218,14 @@ export default function ElectionsCard() {
               fontSize: 22,
               fontWeight: 700,
               fontFamily: "'Space Mono', monospace",
-              color: focusDays <= 30 ? "#c0392b" : "#1d4ed8",
+              color: focusPast ? "#065f46" : focusDays <= 30 ? "#c0392b" : "#1d4ed8",
               lineHeight: 1,
             }}
           >
-            {focusDays}
+            {focusPast ? "✓" : focusDays}
           </div>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--sb-muted)", marginTop: 2 }}>
-            days to {focusLabel}
+            {focusPast ? `${focusLabel} complete` : `days to ${focusLabel}`}
           </div>
         </div>
       </div>
