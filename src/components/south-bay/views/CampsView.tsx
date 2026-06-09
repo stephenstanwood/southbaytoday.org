@@ -268,6 +268,7 @@ function BrowseMode() {
   }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds]);
   const visible = hasFilters || showAll ? filtered : filtered.slice(0, 10);
   const hiddenCount = filtered.length - visible.length;
+  const shownTotal = hasFilters ? filtered.length : CAMPS.length;
 
   return (
     <div className="camps-directory">
@@ -378,7 +379,7 @@ function BrowseMode() {
 
         <div className="camps-results-head">
           <span>
-            Showing {visible.length} of {hasFilters ? filtered.length : CAMPS.length} program{CAMPS.length !== 1 ? "s" : ""}
+            Showing {visible.length} of {shownTotal} program{shownTotal !== 1 ? "s" : ""}
           </span>
           {hasFilters && <button onClick={clearFilters}>Clear filters</button>}
         </div>
