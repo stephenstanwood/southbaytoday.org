@@ -639,6 +639,7 @@ interface OpenNowCandidate {
   hours: Record<string, string | undefined>;
   mapsUrl: string | null;
   url: string | null;
+  photoRef?: string | null;
 }
 
 const OPEN_DAY_KEYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
@@ -695,13 +696,21 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityId, tick]);
 
-  // Unsplash thumbnail per pick (keyed off place id + category so the same
-  // place gets a stable photo within one mount; reshuffle reroll re-fetches).
+  // Venue photo per pick: real Places photo when the candidate carries a
+  // photoRef, Unsplash category lookup only for the refless minority.
   const [thumbs, setThumbs] = useState<Record<string, string>>({});
   useEffect(() => {
     let cancelled = false;
-    setThumbs({});
-    Promise.all(picks.map((p) => {
+    const base: Record<string, string> = {};
+    const needsLookup = picks.filter((p) => {
+      if (p.photoRef) {
+        base[p.id] = `/api/place-photo?ref=${encodeURIComponent(p.photoRef)}&w=320&h=200`;
+        return false;
+      }
+      return true;
+    });
+    setThumbs(base);
+    Promise.all(needsLookup.map((p) => {
       const q = p.displayType || p.category || p.name;
       return fetch(`/api/unsplash-photo?query=${encodeURIComponent(q)}`)
         .then((r) => r.ok ? r.json() : null)
@@ -709,7 +718,7 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
         .catch(() => null);
     })).then((results) => {
       if (cancelled) return;
-      const map: Record<string, string> = {};
+      const map: Record<string, string> = { ...base };
       for (const r of results) if (r) map[r.id] = r.url;
       setThumbs(map);
     });
@@ -768,7 +777,7 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
               <div style={{
                 aspectRatio: "16 / 10",
                 background: thumb
-                  ? `url(${thumb}) center/cover no-repeat`
+                  ? `url(${thumb}) center/cover no-repeat, linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%)`
                   : "linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%)",
                 display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32,
               }}>

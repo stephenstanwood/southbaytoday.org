@@ -63,6 +63,7 @@ for (const cityId of Object.keys(byCity)) {
     hours: p.hours,
     mapsUrl: p.mapsUrl ?? null,
     url: p.url ?? null,
+    photoRef: p.photoRef ?? null,
   }));
 }
 
