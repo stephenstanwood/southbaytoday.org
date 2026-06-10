@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-09T19:08:39.157Z",
+      "generatedAt": "2026-06-10T19:09:10.351Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 2 – Jun 9",
+      "dateRange": "Jun 3 – Jun 10",
       "stats": {
-        "total": 297,
-        "notable": 19,
-        "newUnits": 145,
-        "totalValuation": 35080578
+        "total": 325,
+        "notable": 22,
+        "newUnits": 146,
+        "totalValuation": 40084468
       },
       "permits": [
         {
@@ -51,6 +51,18 @@
           "subtype": "Single-Family"
         },
         {
+          "id": "2025-110519-RS",
+          "address": "3301 Woodside Ln",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 202908,
+          "units": 1,
+          "issueDate": "2026-06-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-132247-RS",
           "address": "6757 Devonshire Dr #2",
           "category": "residential-new",
@@ -75,15 +87,15 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2024-090874-RS",
-          "address": "1451 Goldenlake Rd #2",
+          "id": "2025-126802-RS",
+          "address": "3226 Cherry Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 124281,
+          "description": "New Detached ADU",
+          "valuation": 126648,
           "units": 1,
-          "issueDate": "2026-06-03",
+          "issueDate": "2026-06-08",
           "subtype": "2nd Unit Added"
         },
         {
@@ -99,27 +111,15 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-144521-RS",
-          "address": "2848 La Jolla Av #2",
+          "id": "2024-100757-RS",
+          "address": "4947 Minas Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 106189,
+          "description": "Garage Conversion to Jadu",
+          "valuation": 71238,
           "units": 1,
-          "issueDate": "2026-06-03",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-120886-RS",
-          "address": "4794 Sally Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New 2-Story ADU to Be 2nd Floor Above Existing Garage",
-          "valuation": 82854,
-          "units": 1,
-          "issueDate": "2026-06-03",
+          "issueDate": "2026-06-08",
           "subtype": "2nd Unit Added"
         },
         {
@@ -137,44 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-09T19:08:41.462Z",
+      "generatedAt": "2026-06-10T19:09:12.727Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 2 – Jun 9",
+      "dateRange": "Jun 3 – Jun 10",
       "stats": {
-        "total": 25,
-        "notable": 2,
+        "total": 0,
+        "notable": 0,
         "newUnits": 0,
         "totalValuation": 0
       },
-      "permits": [
-        {
-          "id": "26BLD-01438",
-          "address": "968 Embarcadero Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-02",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00127",
-          "address": "755 Page Mill Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "OTC Minor Architectural Review - door removal",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-02",
-          "subtype": "Over the Counter Approved"
-        }
-      ]
+      "permits": []
     }
   }
 }

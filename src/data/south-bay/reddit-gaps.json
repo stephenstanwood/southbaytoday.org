@@ -1,140 +1,194 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-09T19:17:51.540Z",
+    "generatedAt": "2026-06-10T19:19:35.944Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 5,
-    "placesMatched": 1,
+    "placesExtracted": 7,
+    "placesMatched": 3,
     "placeGaps": 4,
-    "eventsExtracted": 4,
-    "eventsMatched": 0,
+    "eventsExtracted": 6,
+    "eventsMatched": 2,
     "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Dim Sum bakery at Santa Teresa Square",
+      "name": "Playback",
       "city": "San Jose",
-      "kind": "bakery",
-      "context": "new dim sum bakery by Nob Hill Foods, fresh daily",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u0ub0y/best_food_in_south_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1u0q758/new_dim_sum_bakery_in_south_san_jose_by_nob_hill/",
-        "https://www.reddit.com/r/paloalto/comments/1u19gba/palo_alto_how_a_parklet_program_is_boosting/",
-        "https://www.reddit.com/r/mountainview/comments/1tyukpx/support_the_hub_rwc_by_coming_to_see_the_fog_city/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tyozeu/shoutout_to_the_arts_and_wine_festival_this_year/"
-      ]
-    },
-    {
-      "name": "Watercourse Bay",
-      "city": "Palo Alto",
       "kind": "venue",
-      "context": "hot tub and spa facility for anniversary celebration",
+      "context": "near World Cup fan zone setup on San Pedro",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1ty2jix/planning_10year_anniversary_at_watercourse_bay/",
-        "https://www.reddit.com/r/Campbell/comments/1tyrxqr/your_pet_called_they_want_their_portrait_painted/",
-        "https://www.reddit.com/r/bayarea/comments/1u13kbb/moving_to_bay_area_for_google/",
-        "https://www.reddit.com/r/SanJose/comments/1u0xbgx/northern_indian_restaurants_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1u0lgis/tennis_runs/"
+        "https://www.reddit.com/r/bayarea/comments/1u1kege/andy_and_thousands_of_volunteers_have_cleared/",
+        "https://www.reddit.com/r/SanJose/comments/1u28wgr/viva_calle_san_jose_this_sunday_0614/",
+        "https://www.reddit.com/r/SanJose/comments/1u1tami/wheres_your_goto_for_affordable_ny_style_pizza/",
+        "https://www.reddit.com/r/SanJose/comments/1u1m0ci/mexico_vs_south_africa_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u1gh19/san_pedro_getting_decked_out_for_wc/"
       ]
     },
     {
-      "name": "South Bay Dog Training",
-      "city": "Campbell",
+      "name": "Mountain View Senior Center",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "hosts Repair Café Silicon Valley free repair event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1u24ck7/free_repairs_this_weekend_at_mountain_view_senior/",
+        "https://www.reddit.com/r/paloalto/comments/1u1fs9b/how_much_are_you_paying_for_tacos_bay_area/",
+        "https://www.reddit.com/r/paloalto/comments/1u19gba/palo_alto_how_a_parklet_program_is_boosting/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0mpik/breakfast/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0k8bj/sunnyvale_butcher/"
+      ]
+    },
+    {
+      "name": "Repair Café Silicon Valley",
+      "city": "Mountain View",
       "kind": "service",
-      "context": "hosting Paint Your Pet event on June 28",
+      "context": "free household item repairs Saturday June 13",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1ty2jix/planning_10year_anniversary_at_watercourse_bay/",
-        "https://www.reddit.com/r/Campbell/comments/1tyrxqr/your_pet_called_they_want_their_portrait_painted/",
-        "https://www.reddit.com/r/bayarea/comments/1u13kbb/moving_to_bay_area_for_google/",
-        "https://www.reddit.com/r/SanJose/comments/1u0xbgx/northern_indian_restaurants_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1u0lgis/tennis_runs/"
+        "https://www.reddit.com/r/mountainview/comments/1u24ck7/free_repairs_this_weekend_at_mountain_view_senior/",
+        "https://www.reddit.com/r/paloalto/comments/1u1fs9b/how_much_are_you_paying_for_tacos_bay_area/",
+        "https://www.reddit.com/r/paloalto/comments/1u19gba/palo_alto_how_a_parklet_program_is_boosting/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0mpik/breakfast/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0k8bj/sunnyvale_butcher/"
       ]
     },
     {
-      "name": "Royal Taj",
-      "city": "Campbell",
-      "kind": "restaurant",
-      "context": "Northern Indian restaurant, permanently closed earlier this year",
+      "name": "Before Baby: Bay Area",
+      "city": "Sunnyvale",
+      "kind": "service",
+      "context": "in-home infant safety service launching September",
       "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1ty2jix/planning_10year_anniversary_at_watercourse_bay/",
-        "https://www.reddit.com/r/Campbell/comments/1tyrxqr/your_pet_called_they_want_their_portrait_painted/",
-        "https://www.reddit.com/r/bayarea/comments/1u13kbb/moving_to_bay_area_for_google/",
-        "https://www.reddit.com/r/SanJose/comments/1u0xbgx/northern_indian_restaurants_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1u0lgis/tennis_runs/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0i9gb/need_a_new_burrito_spot/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0hvti/free_tacos_raynor_park_tuesday_69_46pm/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0dm2e/we_built_an_inhome_infant_safety_service_for/",
+        "https://www.reddit.com/r/losgatos/comments/1u1foax/muse_markets_is_so_back/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Fog City Funnies Stand Up Comedy Troupe",
-      "when": "",
+      "name": "Weekly Cleanup Events",
+      "when": "Saturdays and sometimes Wednesdays",
+      "city": "",
+      "context": "ongoing illegal dumping and trash cleanup volunteer program",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1u1kege/andy_and_thousands_of_volunteers_have_cleared/",
+        "https://www.reddit.com/r/SanJose/comments/1u28wgr/viva_calle_san_jose_this_sunday_0614/",
+        "https://www.reddit.com/r/SanJose/comments/1u1tami/wheres_your_goto_for_affordable_ny_style_pizza/",
+        "https://www.reddit.com/r/SanJose/comments/1u1m0ci/mexico_vs_south_africa_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u1gh19/san_pedro_getting_decked_out_for_wc/"
+      ]
+    },
+    {
+      "name": "Mexico vs South Africa Watch Party",
+      "when": "Thursday June 11 at 11am",
+      "city": "San Jose",
+      "context": "soccer match watch party at Mezcal downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1u1kege/andy_and_thousands_of_volunteers_have_cleared/",
+        "https://www.reddit.com/r/SanJose/comments/1u28wgr/viva_calle_san_jose_this_sunday_0614/",
+        "https://www.reddit.com/r/SanJose/comments/1u1tami/wheres_your_goto_for_affordable_ny_style_pizza/",
+        "https://www.reddit.com/r/SanJose/comments/1u1m0ci/mexico_vs_south_africa_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u1gh19/san_pedro_getting_decked_out_for_wc/"
+      ]
+    },
+    {
+      "name": "Repair Café Silicon Valley",
+      "when": "Saturday June 13, 11 AM to 3 PM",
       "city": "Mountain View",
-      "context": "comedy show benefiting The Hub RWC",
+      "context": "free repairs on household items and electronics",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u0ub0y/best_food_in_south_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1u0q758/new_dim_sum_bakery_in_south_san_jose_by_nob_hill/",
+        "https://www.reddit.com/r/mountainview/comments/1u24ck7/free_repairs_this_weekend_at_mountain_view_senior/",
+        "https://www.reddit.com/r/paloalto/comments/1u1fs9b/how_much_are_you_paying_for_tacos_bay_area/",
         "https://www.reddit.com/r/paloalto/comments/1u19gba/palo_alto_how_a_parklet_program_is_boosting/",
-        "https://www.reddit.com/r/mountainview/comments/1tyukpx/support_the_hub_rwc_by_coming_to_see_the_fog_city/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tyozeu/shoutout_to_the_arts_and_wine_festival_this_year/"
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0mpik/breakfast/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0k8bj/sunnyvale_butcher/"
       ]
     },
     {
-      "name": "Arts and Wine Festival",
-      "when": "weekend",
+      "name": "Free Tacos @ Raynor Park",
+      "when": "Tuesday June 9, 4-6PM",
       "city": "Sunnyvale",
-      "context": "diverse vendors and original products festival",
+      "context": "free taco event, RSVP required via Partiful",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u0ub0y/best_food_in_south_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1u0q758/new_dim_sum_bakery_in_south_san_jose_by_nob_hill/",
-        "https://www.reddit.com/r/paloalto/comments/1u19gba/palo_alto_how_a_parklet_program_is_boosting/",
-        "https://www.reddit.com/r/mountainview/comments/1tyukpx/support_the_hub_rwc_by_coming_to_see_the_fog_city/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tyozeu/shoutout_to_the_arts_and_wine_festival_this_year/"
-      ]
-    },
-    {
-      "name": "Paint Your Pet",
-      "when": "June 28, 2:00-4:00 PM",
-      "city": "Campbell",
-      "context": "pet portrait painting event at South Bay Dog Training",
-      "sourceUrls": [
-        "https://www.reddit.com/r/paloalto/comments/1ty2jix/planning_10year_anniversary_at_watercourse_bay/",
-        "https://www.reddit.com/r/Campbell/comments/1tyrxqr/your_pet_called_they_want_their_portrait_painted/",
-        "https://www.reddit.com/r/bayarea/comments/1u13kbb/moving_to_bay_area_for_google/",
-        "https://www.reddit.com/r/SanJose/comments/1u0xbgx/northern_indian_restaurants_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1u0lgis/tennis_runs/"
-      ]
-    },
-    {
-      "name": "Free Tacos at Raynor Park",
-      "when": "Tuesday 6/9 4-6PM",
-      "city": "Sunnyvale",
-      "context": "free taco giveaway event, RSVP required",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1u0k8bj/sunnyvale_butcher/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0i9gb/need_a_new_burrito_spot/",
         "https://www.reddit.com/r/Sunnyvale/comments/1u0hvti/free_tacos_raynor_park_tuesday_69_46pm/",
         "https://www.reddit.com/r/Sunnyvale/comments/1u0dm2e/we_built_an_inhome_infant_safety_service_for/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tzfcg7/looking_to_create_pickleball_and_hiking_groups/"
+        "https://www.reddit.com/r/losgatos/comments/1u1foax/muse_markets_is_so_back/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Mezcal",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hosting Mexico vs South Africa watch party",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1u1kege/andy_and_thousands_of_volunteers_have_cleared/",
+        "https://www.reddit.com/r/SanJose/comments/1u28wgr/viva_calle_san_jose_this_sunday_0614/",
+        "https://www.reddit.com/r/SanJose/comments/1u1tami/wheres_your_goto_for_affordable_ny_style_pizza/",
+        "https://www.reddit.com/r/SanJose/comments/1u1m0ci/mexico_vs_south_africa_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u1gh19/san_pedro_getting_decked_out_for_wc/"
+      ],
+      "matchedName": "Mezcal Restaurant"
+    },
+    {
       "name": "Raynor Park",
       "city": "Sunnyvale",
       "kind": "park",
-      "context": "free tacos event Tuesday 6/9 4-6PM",
+      "context": "free taco event Tuesday 6/9 4-6PM",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1u0k8bj/sunnyvale_butcher/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0i9gb/need_a_new_burrito_spot/",
         "https://www.reddit.com/r/Sunnyvale/comments/1u0hvti/free_tacos_raynor_park_tuesday_69_46pm/",
         "https://www.reddit.com/r/Sunnyvale/comments/1u0dm2e/we_built_an_inhome_infant_safety_service_for/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1tzfcg7/looking_to_create_pickleball_and_hiking_groups/"
+        "https://www.reddit.com/r/losgatos/comments/1u1foax/muse_markets_is_so_back/"
       ],
       "matchedName": "Raynor Park"
+    },
+    {
+      "name": "Town Plaza Park",
+      "city": "Los Gatos",
+      "kind": "park",
+      "context": "Muse Markets event Saturday June 13th 11am-5pm",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0i9gb/need_a_new_burrito_spot/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0hvti/free_tacos_raynor_park_tuesday_69_46pm/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0dm2e/we_built_an_inhome_infant_safety_service_for/",
+        "https://www.reddit.com/r/losgatos/comments/1u1foax/muse_markets_is_so_back/"
+      ],
+      "matchedName": "Los Gatos Town Plaza Park"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Viva Calle San Jose",
+      "when": "Sunday June 14",
+      "city": "San Jose",
+      "context": "street festival with central route",
+      "sourceUrls": [
+        "https://www.reddit.com/r/bayarea/comments/1u1kege/andy_and_thousands_of_volunteers_have_cleared/",
+        "https://www.reddit.com/r/SanJose/comments/1u28wgr/viva_calle_san_jose_this_sunday_0614/",
+        "https://www.reddit.com/r/SanJose/comments/1u1tami/wheres_your_goto_for_affordable_ny_style_pizza/",
+        "https://www.reddit.com/r/SanJose/comments/1u1m0ci/mexico_vs_south_africa_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u1gh19/san_pedro_getting_decked_out_for_wc/"
+      ],
+      "matchedName": "SJMA at Viva Calle San Jose"
+    },
+    {
+      "name": "Muse Markets",
+      "when": "Saturday June 13, 11am-5pm",
+      "city": "Los Gatos",
+      "context": "market event at Town Plaza Park and Montebello Way",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0i9gb/need_a_new_burrito_spot/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0hvti/free_tacos_raynor_park_tuesday_69_46pm/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1u0dm2e/we_built_an_inhome_infant_safety_service_for/",
+        "https://www.reddit.com/r/losgatos/comments/1u1foax/muse_markets_is_so_back/"
+      ],
+      "matchedName": "Muse Markets"
+    }
+  ]
 }
