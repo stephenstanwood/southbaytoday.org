@@ -27,12 +27,21 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
 }
 
 export default memo(function PhotoStrip() {
-  // First render uses a fixed seed so the server-rendered strip and the
-  // hydrating client agree; the per-visit random order (variety across
-  // visits) lands one frame later, before most thumbs have loaded.
-  const [seed, setSeed] = useState(1);
+  // Server render and first client render show a fixed-height placeholder;
+  // the strip itself mounts once, post-hydration, with its per-visit random
+  // order. Rendering real photos with a build-time seed first and reshuffling
+  // after mount swaps ~17 of 20 tiles mid-animation (the pool is ~139) —
+  // every thumb fetched twice and the marquee stutters through hydration.
+  const [seed, setSeed] = useState<number | null>(null);
   useEffect(() => { setSeed(Math.floor(Math.random() * 1_000_000)); }, []);
   if (ALL_PHOTOS.length < 4) return null;
+  if (seed === null) {
+    return (
+      <div style={{ overflow: "hidden", marginTop: 4, marginBottom: 4 }}>
+        <div style={{ height: 200 }} />
+      </div>
+    );
+  }
   const strip = seededShuffle(ALL_PHOTOS, seed).slice(0, Math.min(20, ALL_PHOTOS.length));
 
   const tile = (p: CuratedPhoto, keySuffix: string) => (
