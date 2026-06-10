@@ -168,12 +168,19 @@ function getEffectiveTime(kids: boolean): {
  *  Schema: `plans.adults` / `plans.kids` for today, `plans["adults:tomorrow"]`
  *  / `plans["kids:tomorrow"]` for the next-day flip. Buckets don't expire on
  *  the clock the way old timeBlock cards did, so no time-based filtering — the
- *  homepage dims past buckets in render. */
-function loadDefaultPlan(kids: boolean): { cards: DayCard[]; anchor: City | null } {
+ *  homepage dims past buckets in render.
+ *
+ *  `forceToday` skips the clock-driven tomorrow branch — used by the initial
+ *  render so SSR HTML and client hydration agree regardless of when the build
+ *  ran vs. when the page is viewed. The post-mount refine effect re-runs with
+ *  the real clock. */
+function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { cards: DayCard[]; anchor: City | null } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
-    const eff = getEffectiveTime(kids);
+    const eff = opts?.forceToday
+      ? { isTomorrow: false as const }
+      : getEffectiveTime(kids);
     const kidsSuffix = kids ? "kids" : "adults";
 
     // Read either the new schema ("adults") or the legacy ":h9" anchor key
@@ -227,11 +234,15 @@ type Props = {
 const REGIONAL_ANCHOR: City = "san-jose";
 
 export default function SouthBayTodayView(_props: Props) {
-  const [state, setState] = useState<LocalState>(() => loadState());
-  // Read state.kids (from localStorage) so returning users see the right
-  // mode on first paint — not always adults.
+  // All initial state must be deterministic — this component server-renders
+  // at build time (client:load), so the first client render has to reproduce
+  // the build's HTML byte-for-byte. That means: no localStorage, no clock, no
+  // randomness in initializers. First paint is the neutral shape (adults mode,
+  // today's plan, all buckets visible); the refine effect below upgrades to
+  // the user's stored mode and real time-of-day immediately after mount.
+  const [state, setState] = useState<LocalState>(() => defaultState());
   const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null } | null>(null);
-  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(state.kids);
+  if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(false, { forceToday: true });
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
   const [weather, setWeather] = useState<string | null>(() => {
@@ -239,8 +250,7 @@ export default function SouthBayTodayView(_props: Props) {
     try {
       const json = defaultPlansJson as any;
       const plans = json.plans || {};
-      const kidsSuffix = state.kids ? "kids" : "adults";
-      return plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather || null;
+      return plans.adults?.weather || plans["adults:h9"]?.weather || null;
     } catch { return null; }
   });
   // Loading is reserved for explicit Reshuffle clicks. Initial paint always
@@ -250,12 +260,14 @@ export default function SouthBayTodayView(_props: Props) {
   const [error, setError] = useState<string | null>(null);
   // Live "now" signal so past cards fall off without a reload. planDateISO
   // is the target date of the plan in view — when it's today we filter
-  // cards whose end time has already passed.
-  const [nowMinutes, setNowMinutes] = useState(() => getNowMinutesPT());
-  const [planDateISO, setPlanDateISO] = useState<string>(() => {
-    const eff = getEffectiveTime(state.kids);
-    return eff.planDate || getTodayISOInPT();
-  });
+  // cards whose end time has already passed. nowMinutes starts at 0 (nothing
+  // has passed yet = full-day shape) and gets the real clock on mount.
+  const [nowMinutes, setNowMinutes] = useState(0);
+  // Initialized to "today" rather than the evening tomorrow-flip so the
+  // initial render is clock-independent: every comparison against
+  // getTodayISOInPT() resolves the same way on the build server and in the
+  // hydrating browser even though the two clocks differ.
+  const [planDateISO, setPlanDateISO] = useState<string>(() => getTodayISOInPT());
   const fetchRef = useRef(0);
   const lastAnchorRef = useRef<City | null>(initialPlan.current.anchor);
   // Anchor diversity within a single session.
@@ -266,13 +278,32 @@ export default function SouthBayTodayView(_props: Props) {
 
   // Keep nowMinutes live so past buckets drop out of the grid as soon as
   // their cutoff hits, without a reload. 30 s is plenty — cutoffs are
-  // hour-resolution. Also drives the kids/tomorrow flip.
+  // hour-resolution. Also drives the kids/tomorrow flip. Set immediately on
+  // mount — initial state is 0 so the server-rendered HTML is deterministic.
   useEffect(() => {
+    setNowMinutes(getNowMinutesPT());
     const t = setInterval(() => setNowMinutes(getNowMinutesPT()), 30000);
     return () => clearInterval(t);
   }, []);
 
-  useEffect(() => { saveState(state); }, [state]);
+  // Don't persist until the refine effect has read the stored prefs —
+  // otherwise the deterministic kids:false first render would clobber a
+  // returning kids-mode user's preference before we ever load it.
+  const prefsLoadedRef = useRef(false);
+  useEffect(() => { if (prefsLoadedRef.current) saveState(state); }, [state]);
+
+  // Post-hydration refine: apply localStorage prefs + the real clock. Runs
+  // once, immediately after mount, replacing what the initializers used to do
+  // (kids mode from sbt-prefs, evening flip to tomorrow's plan).
+  useEffect(() => {
+    const stored = loadState();
+    prefsLoadedRef.current = true;
+    const eff = getEffectiveTime(stored.kids);
+    if (stored.kids || eff.isTomorrow) {
+      applyMode(stored.kids);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchPlan = useCallback(async (noCache = false) => {
     const id = ++fetchRef.current;
@@ -353,9 +384,10 @@ export default function SouthBayTodayView(_props: Props) {
     if (tom.weather) setWeather(tom.weather);
   }, [cards, planDateISO, nowMinutes, loading, state.kids]);
 
-  // Actions
-  const handleKidsToggle = () => {
-    const nextKids = !state.kids;
+  // Actions. applyMode loads the pre-generated plan for a target audience
+  // mode using the real clock (today or, past the evening cutoff, tomorrow).
+  // Shared by the kids toggle and the post-hydration refine effect.
+  function applyMode(nextKids: boolean) {
     setState({ kids: nextKids });
     // Try the pre-generated plan for the new mode first — that's the whole
     // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
@@ -373,7 +405,8 @@ export default function SouthBayTodayView(_props: Props) {
       const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
       if (w) setWeather(w);
     } catch {}
-  };
+  }
+  const handleKidsToggle = () => applyMode(!state.kids);
   const handleNewPlan = () => fetchPlan(true);
 
   // Tomorrow mode: 6pm for kids, 8pm for adults — same cutoff used in

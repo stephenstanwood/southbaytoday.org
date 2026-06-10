@@ -121,13 +121,27 @@ export default function CityPage({ cityId, cityName }: Props) {
   // ── Meeting ──
   const meetings = (upcomingMeetingsJson as unknown as { meetings: Record<string, any> }).meetings ?? {};
   const nextMeeting = meetings[cityId];
-  const meetingIsToday = nextMeeting?.date === TODAY_ISO;
 
   // ── Digest ──
   const digest = (digestsJson as Record<string, any>)[cityId];
-  const digestAge = digest?.meetingDateIso
-    ? (Date.now() - new Date(digest.meetingDateIso).getTime()) / 86400000
-    : 999;
+
+  // "Tonight" highlight and digest staleness both depend on the visitor's
+  // clock, which the build-time render can't know. First render uses neutral
+  // values derived only from the JSON (not tonight; digest fresh if it has a
+  // date, hidden if not) so server and client HTML match; the mount effect
+  // applies the real clock. Worst case is a one-frame style/visibility tweak
+  // in the bottom-of-page civic panel.
+  const [meetingIsToday, setMeetingIsToday] = useState(false);
+  const [digestAge, setDigestAge] = useState<number>(() => (digest?.meetingDateIso ? 0 : 999));
+  useEffect(() => {
+    setMeetingIsToday(nextMeeting?.date === TODAY_ISO);
+    setDigestAge(
+      digest?.meetingDateIso
+        ? (Date.now() - new Date(digest.meetingDateIso).getTime()) / 86400000
+        : 999,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityId]);
 
   // ── City config ──
   const city = CITY_MAP[cityId as City];
@@ -686,17 +700,22 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   // Random selection happens once per mount — pin it in state so React's strict
   // mode double-render in dev doesn't show two different sets.
   const [tick, setTick] = useState(0);
+  // "Open right now" is inherently clock-and-random, so the server render
+  // (and the matching first client render) shows nothing; the panel pops in
+  // post-mount. It lives near the bottom of the page, so no visible jank.
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); }, []);
   const allByCity = (openNowCandidatesJson as { cities?: Record<string, OpenNowCandidate[]> }).cities ?? {};
   const pool = allByCity[cityId] ?? [];
 
   const picks = useMemo(() => {
-    if (pool.length === 0) return [];
+    if (!ready || pool.length === 0) return [];
     const dayKey = OPEN_DAY_KEYS[NOW_PT.getDay()];
     const mins = NOW_PT.getHours() * 60 + NOW_PT.getMinutes();
     const open = pool.filter((p) => isOpenAt(p.hours, dayKey, mins));
     return shuffleInPlace([...open]).slice(0, 6);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityId, tick]);
+  }, [cityId, tick, ready]);
 
   // Venue photo per pick: real Places photo when the candidate carries a
   // photoRef, Unsplash category lookup only for the refless minority.

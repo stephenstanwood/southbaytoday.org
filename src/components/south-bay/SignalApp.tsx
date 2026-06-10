@@ -43,11 +43,14 @@ const SLUG_TO_TAB: Record<string, Tab> = Object.fromEntries(
 
 function tabFromLocation(): Tab {
   if (typeof window === "undefined") return "overview";
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
-  const fromPath = SLUG_TO_TAB[path];
-  if (fromPath) return fromPath;
+  // Hash first: a tab-valid hash only exists on legacy /#events-style
+  // bookmarks (navigateTo always pushes clean slug paths), and checking the
+  // path first would swallow it — "/" maps to overview, so the fallback
+  // never fired for exactly the bookmarks it was built for.
   const hash = window.location.hash.slice(1);
-  return TAB_IDS.has(hash) ? (hash as Tab) : "overview";
+  if (TAB_IDS.has(hash)) return hash as Tab;
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  return SLUG_TO_TAB[path] ?? "overview";
 }
 
 interface SignalAppProps {
@@ -55,7 +58,10 @@ interface SignalAppProps {
 }
 
 export default function SignalApp({ initialTab }: SignalAppProps = {}) {
-  const [activeTab, setActiveTab] = useState<Tab>(() => initialTab ?? tabFromLocation());
+  // Deterministic first render: the page's own tab, never the URL hash. A
+  // legacy #events-style bookmark would make the hydrating client disagree
+  // with the server HTML; the mount effect below resolves the hash instead.
+  const [activeTab, setActiveTab] = useState<Tab>(() => initialTab ?? "overview");
   // Auto-refresh the masthead date on day rollover so a tab left open past
   // midnight doesn't show yesterday's label.
   const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
@@ -81,6 +87,11 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
 
   useEffect(() => {
     const sync = () => { setActiveTab(tabFromLocation()); window.scrollTo(0, 0); };
+    // Resolve legacy hash bookmarks (e.g. /#events) once after hydration.
+    // No scroll reset here — on a plain load the tabs already agree and we
+    // must not fight the browser's scroll restoration.
+    const located = tabFromLocation();
+    setActiveTab((cur) => (cur === located ? cur : located));
     window.addEventListener("popstate", sync);
     window.addEventListener("hashchange", sync);
     return () => {

@@ -8,6 +8,8 @@
 // <style> block so it works in any layout without depending on global CSS.
 // ---------------------------------------------------------------------------
 
+import { useState, useEffect } from "react";
+
 type TabId = "overview" | "events" | "camps" | "government" | "technology" | "food";
 
 const TABS: Array<{ id: TabId; label: string; href: string }> = [
@@ -25,11 +27,26 @@ export interface MastheadProps {
   activeTab?: TabId | null;
 }
 
-export default function Masthead({ activeTab = null }: MastheadProps) {
-  const todayLabel = new Date().toLocaleDateString("en-US", {
+function formatTodayLabel(): string {
+  return new Date().toLocaleDateString("en-US", {
     weekday: "long", month: "long", day: "numeric",
     timeZone: "America/Los_Angeles",
   }).toUpperCase();
+}
+
+export default function Masthead({ activeTab = null }: MastheadProps) {
+  // Same pattern as SignalApp's masthead: the server HTML carries the build
+  // night's date, so refresh it on mount (suppressHydrationWarning covers the
+  // text swap) and keep it current across midnight for long-lived tabs.
+  const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
+  useEffect(() => {
+    setTodayLabel(formatTodayLabel());
+    const id = setInterval(() => {
+      const next = formatTodayLabel();
+      setTodayLabel((prev) => (prev === next ? prev : next));
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <>
@@ -49,7 +66,7 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
             </span>
           </a>
           <div className="sb-date">
-            <div>{todayLabel}</div>
+            <div suppressHydrationWarning>{todayLabel}</div>
           </div>
           <div className="sb-slogan">All local. Good vibes. No ads.</div>
         </div>

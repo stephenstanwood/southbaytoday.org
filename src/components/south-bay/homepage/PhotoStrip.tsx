@@ -2,7 +2,7 @@
 // Photo strip — auto-scrolling marquee of curated South Bay photos
 // ---------------------------------------------------------------------------
 
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
 
 type CuratedPhoto = {
@@ -27,9 +27,13 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
 }
 
 export default memo(function PhotoStrip() {
+  // First render uses a fixed seed so the server-rendered strip and the
+  // hydrating client agree; the per-visit random order (variety across
+  // visits) lands one frame later, before most thumbs have loaded.
+  const [seed, setSeed] = useState(1);
+  useEffect(() => { setSeed(Math.floor(Math.random() * 1_000_000)); }, []);
   if (ALL_PHOTOS.length < 4) return null;
-  const LOAD_SEED = Math.floor(Math.random() * 1_000_000);
-  const strip = seededShuffle(ALL_PHOTOS, LOAD_SEED).slice(0, Math.min(20, ALL_PHOTOS.length));
+  const strip = seededShuffle(ALL_PHOTOS, seed).slice(0, Math.min(20, ALL_PHOTOS.length));
 
   const tile = (p: CuratedPhoto, keySuffix: string) => (
     <a

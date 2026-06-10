@@ -17,8 +17,9 @@ const { cityId, cityName } = Astro.props;
 const title = `${cityName} — South Bay Today`;
 const description = `What's happening in ${cityName} today: events, city council meetings, development updates, and local news.`;
 
-// CityPage is client:only, so this build-time JSON-LD block (next 7 days of
-// the city's events) is the only event content crawlers see on this page.
+// Build-time JSON-LD block (next 7 days of the city's events). CityPage
+// server-renders its chrome now, but its events list still arrives via a
+// client fetch — this structured data is what crawlers index for events.
 const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const weekOut = new Date();
 weekOut.setDate(weekOut.getDate() + 7);
@@ -74,6 +75,6 @@ const jsonLd = eventListJsonLd(cityEvents, {
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
-  <CityPage cityId={cityId} cityName={cityName} client:only="react" />
+  <CityPage cityId={cityId} cityName={cityName} client:load />
   <StaticLinkStrip days govCities />
 </BaseLayout>

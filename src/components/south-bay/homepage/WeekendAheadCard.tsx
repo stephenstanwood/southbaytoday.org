@@ -9,6 +9,7 @@
 // the section entirely rather than show a lopsided row.
 // ---------------------------------------------------------------------------
 
+import { useState, useEffect } from "react";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 
 const CITY_LABELS: Record<string, string> = {
@@ -79,7 +80,15 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
     picks: WeekendPick[];
   };
 
-  const todayIso = todayPT();
+  // Everything below keys off "today" (weekday gate, staleness, Today/
+  // Tomorrow badges), so the whole card waits for mount: the server render
+  // can't know the visitor's date, and any clock read here would mismatch
+  // the build-time HTML. SSR/first paint render nothing; the card appears
+  // right after hydration. It sits below the fold, so no visible jank.
+  const [todayIso, setTodayIso] = useState<string | null>(null);
+  useEffect(() => { setTodayIso(todayPT()); }, []);
+  if (!todayIso) return null;
+
   const todayDow = new Date(todayIso + "T12:00:00").getDay();
 
   // Hide on Sat/Sun — by then weekend events should be flowing into the
