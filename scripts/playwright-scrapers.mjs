@@ -2064,6 +2064,77 @@ async function scrapeOperaSanJose(page) {
   }).filter(Boolean);
 }
 
+async function scrapeTheatreWorks(page) {
+  // Tessitura TNEW SPA — the list view renders every on-sale production with
+  // its full performance calendar (12-month window). Only productions with
+  // tickets on sale appear; later-season shows roll in as they go on sale.
+  // Downstream generate-events caps non-sports events at 180 days out.
+  await page.goto("https://my.theatreworks.org/events", { waitUntil: "networkidle", timeout: 45_000 });
+  await page.waitForSelector(".tn-prod-list-item", { timeout: 20_000 });
+  const raw = await page.evaluate(() => {
+    const out = [];
+    for (const item of document.querySelectorAll(".tn-prod-list-item")) {
+      const title = item.querySelector("h1,h2,h3,h4")?.textContent?.replace(/\s+/g, " ").trim();
+      const blob = (item.textContent || "").replace(/\s+/g, " ");
+      // Listing body = run range + venue + credits + synopsis; the synopsis is
+      // reliably the longest paragraph.
+      const paragraphs = [...item.querySelectorAll("p")]
+        .map((p) => p.textContent.replace(/\s+/g, " ").trim());
+      const description = paragraphs.sort((a, b) => b.length - a.length)[0] || "";
+      const venueKey = /Lucie Stern/i.test(blob)
+        ? "lucie"
+        : /Mountain View Center/i.test(blob) ? "mvcpa" : null;
+      const perfs = [...item.querySelectorAll(".tn-prod-list-item__perf-list-item")].map((perf) => ({
+        datetime: perf.querySelector(".tn-prod-list-item__perf-property--datetime")?.textContent?.replace(/\s+/g, " ").trim() || "",
+        href: perf.querySelector(".tn-prod-list-item__perf-anchor")?.href || null,
+      }));
+      if (title && perfs.length) out.push({ title, venueKey, description, perfs });
+    }
+    return out;
+  });
+
+  const VENUES = {
+    lucie: { venue: "Lucie Stern Theatre", address: "1305 Middlefield Rd, Palo Alto, CA 94301", city: "palo-alto" },
+    mvcpa: { venue: "Mountain View Center for the Performing Arts", address: "500 Castro St, Mountain View, CA 94041", city: "mountain-view" },
+  };
+
+  const events = [];
+  const seen = new Set();
+  for (const prod of raw) {
+    const loc = VENUES[prod.venueKey];
+    if (!loc) continue; // unknown venue — skip rather than guess a city
+    if (!isUsefulTitle(prod.title)) continue;
+    for (const perf of prod.perfs) {
+      const dm = perf.datetime.match(/([A-Za-z]+ \d{1,2}, \d{4})/);
+      const date = dm ? tryParseDate(dm[1]) : null;
+      // TNEW renders "7:30PM" with no space — normalize to "7:30 PM"
+      const time = clockFromText(perf.datetime)?.replace(/(\d)\s*([ap]m)$/i, "$1 $2").toUpperCase();
+      if (!date || date < TODAY || !time) continue;
+      // Matinee + evening share a downstream id (it ignores time) — keep the
+      // first listed performance per day (TNEW lists chronologically).
+      const key = `${prod.title}|${date}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      events.push({
+        title: prod.title,
+        date,
+        time,
+        endTime: null,
+        venue: loc.venue,
+        address: loc.address,
+        city: loc.city,
+        url: perf.href || "https://my.theatreworks.org/events",
+        source: "TheatreWorks Silicon Valley",
+        category: "arts",
+        cost: "paid",
+        description: prod.description,
+        kidFriendly: false,
+      });
+    }
+  }
+  return events;
+}
+
 async function scrapeGreatAmerica(page) {
   await page.goto("https://www.sixflags.com/cagreatamerica/events", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
@@ -2349,6 +2420,7 @@ async function main() {
   tasks.push({ name: "Downtown Mountain View", fn: (b) => runScraper(b, "Downtown Mountain View", scrapeDowntownMountainView) });
   tasks.push({ name: "City of Cupertino", fn: (b) => runScraper(b, "City of Cupertino", scrapeCupertinoOpenCities) });
   tasks.push({ name: "Opera San José", fn: (b) => runScraper(b, "Opera San José", scrapeOperaSanJose) });
+  tasks.push({ name: "TheatreWorks Silicon Valley", fn: (b) => runScraper(b, "TheatreWorks Silicon Valley", scrapeTheatreWorks) });
   tasks.push({ name: "California's Great America", fn: (b) => runScraper(b, "California's Great America", scrapeGreatAmerica) });
   tasks.push({ name: "Levi's Stadium", fn: (b) => runScraper(b, "Levi's Stadium", scrapeLevisStadium) });
   tasks.push({ name: "SAP Center", fn: (b) => runScraper(b, "SAP Center", scrapeSapCenter) });
