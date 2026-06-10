@@ -454,8 +454,10 @@ function blurbForOutdoor(p, ctx) {
 function blurbForMuseum(p, ctx) {
   const { cityName, street } = ctx;
   const dt = (p.displayType || "").toLowerCase();
+  const nameLower = (p.name || "").toLowerCase();
   const isLibrary = /library/.test(dt);
-  const isGallery = /gallery|art museum/.test(dt);
+  const isGallery = /gallery|art museum/.test(dt) || /\bgallery\b/.test(nameLower);
+  const isStudio = /studio/.test(dt) || /\bstudios?\b/.test(nameLower);
 
   if (isLibrary) {
     const t = [
@@ -467,6 +469,20 @@ function blurbForMuseum(p, ctx) {
   }
   if (isGallery) {
     return street ? `${cityName} gallery on ${street}, low-key drop-in.` : `${cityName} gallery, low-key drop-in.`;
+  }
+  if (isStudio) {
+    return street
+      ? `Art studio in ${cityName} on ${street} — check class and workshop times before you go.`
+      : `Art studio in ${cityName} — check class and workshop times before you go.`;
+  }
+  // Google's type is too generic to describe a visit around (Services, Store, ...)
+  if (/^(services|store|establishment)$/.test(dt)) {
+    return street ? `${cityName} stop on ${street} — worth a quick visit.` : `${cityName} stop — worth a quick visit.`;
+  }
+  // Not actually a museum (university, mosque, cultural center, school...) —
+  // describe it as what Google says it is rather than claiming "museum".
+  if (dt && !/museum|historical|landmark|monument|planetarium|observation/.test(dt)) {
+    return street ? `${p.displayType} in ${cityName} on ${street}.` : `${p.displayType} in ${cityName}.`;
   }
   // Real museum
   return street ? `${cityName} museum on ${street}, plan an hour or two.` : `${cityName} museum, plan an hour or two.`;

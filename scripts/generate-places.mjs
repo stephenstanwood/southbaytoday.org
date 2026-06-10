@@ -233,7 +233,7 @@ const TYPE_TO_CATEGORY = {
   // Museums & culture
   museum: "museum",
   art_gallery: "museum",
-  art_studio: "museum",
+  art_studio: "arts",
   cultural_landmark: "museum",
   historical_landmark: "museum",
   historical_place: "museum",

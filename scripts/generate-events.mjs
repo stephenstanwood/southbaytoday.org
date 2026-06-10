@@ -196,6 +196,11 @@ const INTERNAL_EVENT_PATTERNS = [
   /\b(accounting|finance|marketing|management)\s+awards?\s+banquet\b/i,
   // Events explicitly limited to a university's staff / faculty / employees
   /\bfor\s+(scu|sjsu|stanford)\s+(staff|faculty|employees)\b/i,
+  // Instructor-facing course-design training ("...home pages for your online
+  // courses", "...easy for your students to navigate") — SJSU Localist keeps
+  // re-emitting a 2021 "Creative Canvas Home Pages" workshop with current dates
+  /\byour\s+(online\s+)?courses?\b/i,
+  /\byour\s+students\b/i,
   /\bacademic\s+calendar\b/i,
   /\bconferral\s+of\s+degrees?\b/i,
   /\binstruction\s+begins?\b/i,

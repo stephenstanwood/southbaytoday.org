@@ -298,10 +298,11 @@ async function main() {
     if (r.date > today) continue;
     // Accept "City Council" or "Town Council" — Los Gatos is the only Town in SCC.
     if (r.meetingType !== "City Council" && r.meetingType !== "Town Council") continue;
-    // Stoa mislabels some commission meetings as "City Council" — skip them
+    // Stoa mislabels some commission/board meetings as "City Council" — skip any
+    // record whose title names a non-council body (e.g. Sunnyvale's "5:30 P.M.
+    // PERSONNEL BOARD MEETING" came through typed City Council on 2026-06-08).
     const titleLower = (r.title || "").toLowerCase();
-    if (titleLower.includes("commission") && !titleLower.includes("council")) continue;
-    if (titleLower.includes("board of") && !titleLower.includes("council")) continue;
+    if (/\b(commission|committee|board|authority|task force)\b/.test(titleLower) && !titleLower.includes("council")) continue;
     const existing = byCity[r.city];
     // Prefer records with real content; among those, take most recent
     const rReal = hasRealContent(r);
