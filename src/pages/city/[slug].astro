@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import CityPage from "../../components/south-bay/city/CityPage.tsx";
+import StaticLinkStrip from "../../components/south-bay/StaticLinkStrip.astro";
 import { CITIES } from "../../lib/south-bay/cities";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
@@ -74,4 +75,5 @@ const jsonLd = eventListJsonLd(cityEvents, {
   </Fragment>
 
   <CityPage cityId={cityId} cityName={cityName} client:only="react" />
+  <StaticLinkStrip days govCities />
 </BaseLayout>

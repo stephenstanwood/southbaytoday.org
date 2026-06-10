@@ -1,9 +1,12 @@
 ---
 import SignalShell from "../layouts/SignalShell.astro";
+import StaticLinkStrip from "../components/south-bay/StaticLinkStrip.astro";
 ---
 
 <SignalShell
   title="Gov — South Bay Today"
   description="Plain-English digests of South Bay city council meetings, what's being built, and 2026 elections."
   initialTab="government"
-/>
+>
+  <StaticLinkStrip govCities />
+</SignalShell>

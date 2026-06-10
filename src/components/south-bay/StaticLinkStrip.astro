@@ -1,0 +1,94 @@
+---
+// Quiet static link blocks rendered below the app on tab/city pages. The
+// point is crawl-graph: the high-authority app URLs pass internal links into
+// the static layer (day listings, council pages, food openings). Pure HTML —
+// renders pre-hydration and for crawlers; visually it reads as a sitemap-ish
+// footer extension, deliberately understated.
+import upcomingData from "../../data/south-bay/upcoming-events.json";
+import digestsJson from "../../data/south-bay/digests.json";
+
+interface Props {
+  days?: boolean;
+  govCities?: boolean;
+  foodNew?: boolean;
+}
+
+const { days = false, govCities = false, foodNew = false } = Astro.props;
+
+const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+const eventDates = days
+  ? [...new Set(
+      ((upcomingData as { events?: { date?: string; time?: string }[] }).events ?? [])
+        .filter((e) => e.date && e.time && e.date >= todayPt)
+        .map((e) => e.date as string),
+    )]
+      .sort()
+      .slice(0, 14)
+  : [];
+
+const dayLabel = (d: string) =>
+  new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+
+const govCityList = govCities
+  ? Object.values(digestsJson as Record<string, { city: string; cityName: string }>)
+      .map((d) => ({ id: d.city, name: d.cityName }))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  : [];
+---
+
+{(eventDates.length > 0 || govCityList.length > 0 || foodNew) && (
+  <nav class="sls" aria-label="Browse the site">
+    {eventDates.length > 0 && (
+      <p>
+        <span class="sls-label">Events by day</span>
+        {eventDates.map((d) => <a href={`/events/${d}`}>{dayLabel(d)}</a>)}
+        <a href="/rss.xml">RSS</a>
+      </p>
+    )}
+    {govCityList.length > 0 && (
+      <p>
+        <span class="sls-label">Council summaries</span>
+        {govCityList.map((c) => <a href={`/gov/${c.id}`}>{c.name}</a>)}
+      </p>
+    )}
+    {foodNew && (
+      <p>
+        <span class="sls-label">Food</span>
+        <a href="/food/new">New &amp; coming-soon restaurants</a>
+      </p>
+    )}
+  </nav>
+)}
+
+<style>
+  .sls {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 6px 24px 34px;
+    text-align: center;
+  }
+  .sls p {
+    margin: 6px 0;
+    font-size: 11px;
+    line-height: 2;
+    color: #888;
+  }
+  .sls-label {
+    font-family: "Space Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 10px;
+  }
+  .sls a {
+    color: #777;
+    text-decoration: none;
+    margin: 0 7px;
+    white-space: nowrap;
+  }
+  .sls a:hover {
+    color: #1a1a1a;
+    text-decoration: underline;
+  }
+</style>

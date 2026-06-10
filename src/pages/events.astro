@@ -1,5 +1,6 @@
 ---
 import SignalShell from "../layouts/SignalShell.astro";
+import StaticLinkStrip from "../components/south-bay/StaticLinkStrip.astro";
 import upcomingData from "../data/south-bay/upcoming-events.json";
 import { CITIES } from "../lib/south-bay/cities";
 import { eventListJsonLd, type SchemaEventRecord } from "../lib/south-bay/eventSchema";
@@ -28,4 +29,5 @@ const jsonLd = eventListJsonLd(todaysEvents, {
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
+  <StaticLinkStrip days />
 </SignalShell>

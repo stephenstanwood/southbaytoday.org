@@ -1,9 +1,12 @@
 ---
 import SignalShell from "../layouts/SignalShell.astro";
+import StaticLinkStrip from "../components/south-bay/StaticLinkStrip.astro";
 ---
 
 <SignalShell
   title="Food — South Bay Today"
   description="Restaurant openings, closings, and food coverage across the South Bay."
   initialTab="food"
-/>
+>
+  <StaticLinkStrip foodNew />
+</SignalShell>
