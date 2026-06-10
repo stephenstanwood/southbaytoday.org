@@ -295,7 +295,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     description:
       "Data storage hardware. Split off Sandisk to focus on the hard drive business.",
     color: "#CC1414",
-    careersUrl: "https://careers.westerndigital.com",
+    careersUrl: "https://www.westerndigital.com/careers",
   },
   {
     id: "ebay",
@@ -371,7 +371,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     description:
       "The world's largest semiconductor equipment company. Every chip in your phone, laptop, and AI server was made using Applied's machines.",
     color: "#1b6ca8",
-    careersUrl: "https://jobs.amat.com",
+    careersUrl: "https://careers.appliedmaterials.com",
   },
   {
     id: "supermicro",
@@ -584,7 +584,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     stage: "startup",
     tagline: "RISC-V SoC startup founded by ex-Apple chip engineers. Aiming at server and AI workloads.",
     color: "#DC2626",
-    url: "https://www.rivos.com",
+    url: "https://rivosinc.com",
     employeesNote: "400 employees",
   },
   {
@@ -1451,7 +1451,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     date: "2026-05-13",
     tagline: "Rivian CEO RJ Scaringe's industrial-robotics spinoff — foundation models, purpose-built robots, and deployment infrastructure for dexterous manufacturing tasks. A $400M round led by Kleiner Perkins pushed total funding past $1B in six months at a $3.4B valuation.",
     color: "#7c3aed",
-    url: "https://mindrobotics.ai",
+    url: "https://www.mindrobotics.com",
   },
   {
     id: "sycamore",
