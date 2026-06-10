@@ -1,0 +1,133 @@
+---
+// Static "new restaurants" page — the crawlable surface for the SCC
+// health-permit openings data ("new restaurants san jose 2026" queries).
+// The Food tab renders the same data interactively; this page is pure HTML,
+// month-stamped, regenerated nightly.
+import CalendarShell from "../../layouts/CalendarShell.astro";
+import openingsJson from "../../data/south-bay/scc-food-openings.json";
+
+interface Opening {
+  id: string;
+  name: string;
+  address?: string | null;
+  cityId?: string | null;
+  cityName?: string | null;
+  date?: string | null;
+  blurb?: string | null;
+}
+
+const data = openingsJson as { generatedAt?: string; opened?: Opening[]; comingSoon?: Opening[] };
+const opened = data.opened ?? [];
+const comingSoon = data.comingSoon ?? [];
+
+const monthLabel = new Date().toLocaleDateString("en-US", {
+  timeZone: "America/Los_Angeles",
+  month: "long",
+  year: "numeric",
+});
+
+const title = `New restaurants in the South Bay (${monthLabel}) — South Bay Today`;
+const description = `${opened.length} recently opened and ${comingSoon.length} coming-soon restaurants, cafes, and food shops across San Jose, Cupertino, Palo Alto, and more — from county health-permit records.`;
+
+// "PALO ALTO" → "Palo Alto"
+const tidyCity = (s?: string | null) =>
+  (s ?? "")
+    .toLowerCase()
+    .replace(/\b[a-z]/g, (c) => c.toUpperCase());
+
+const fmtDate = (d?: string | null) =>
+  d && /^\d{4}-\d{2}-\d{2}$/.test(d)
+    ? new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", month: "short", day: "numeric" })
+    : null;
+
+const breadcrumbJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
+    { "@type": "ListItem", position: 2, name: "Food", item: "https://southbaytoday.org/food" },
+    { "@type": "ListItem", position: 3, name: "New & coming soon" },
+  ],
+});
+---
+
+<CalendarShell title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={breadcrumbJsonLd} />
+  </Fragment>
+
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href="/food">← Food desk</a>
+    <span class="cal-kicker">South Bay / Food</span>
+    <span />
+  </nav>
+
+  <h1>New restaurants in the South Bay</h1>
+  <p class="cal-sub">
+    {opened.length} recently opened · {comingSoon.length} coming soon — sourced from Santa
+    Clara County health-permit records, refreshed daily ·{" "}
+    <a href="/food">browse the Food desk →</a>
+  </p>
+
+  <section>
+    <h2 class="fn-section">Recently opened</h2>
+    <ol class="cal-list">
+      {opened.map((r) => (
+        <li class="cal-event">
+          <div class="cal-time">{fmtDate(r.date) ?? "—"}</div>
+          <div class="cal-body">
+            <h3 class="fn-name">{r.name}</h3>
+            <p class="cal-meta">{[r.address, tidyCity(r.cityName)].filter(Boolean).join(" · ")}</p>
+            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section>
+    <h2 class="fn-section">Coming soon</h2>
+    <ol class="cal-list">
+      {comingSoon.map((r) => (
+        <li class="cal-event">
+          <div class="cal-time">{fmtDate(r.date) ?? "—"}</div>
+          <div class="cal-body">
+            <h3 class="fn-name">{r.name}</h3>
+            <p class="cal-meta">{[r.address, tidyCity(r.cityName)].filter(Boolean).join(" · ")}</p>
+            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <p class="fn-note">
+    Dates are permit dates from the county's environmental-health records — actual opening
+    days can differ. Spot something wrong? Use the Tips &amp; Feedback button on the
+    <a href="/food">Food desk</a>.
+  </p>
+</CalendarShell>
+
+<style>
+  .fn-section {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 26px 0 4px;
+  }
+  .fn-name {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 4px;
+  }
+  .fn-note {
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--light);
+  }
+  .fn-note a {
+    color: inherit;
+  }
+</style>

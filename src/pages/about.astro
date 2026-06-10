@@ -1,0 +1,94 @@
+---
+// About / methodology page — what the site is, where the data comes from, how
+// often it refreshes. Plain trust-building content for readers (and the
+// quality signals search engines look for in anything news-shaped).
+import CalendarShell from "../layouts/CalendarShell.astro";
+
+const title = "About — South Bay Today";
+const description =
+  "What The South Bay Today is, where the data comes from, and how it stays current. All local. Good vibes. No ads.";
+---
+
+<CalendarShell title={title} description={description}>
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href="/">← Home</a>
+    <span class="cal-kicker">South Bay / About</span>
+    <span />
+  </nav>
+
+  <h1>About The South Bay Today</h1>
+  <p class="cal-sub">All local. Good vibes. No ads.</p>
+
+  <div class="about-body">
+    <p>
+      The South Bay Today is a daily guide to life across the South Bay — Campbell, Cupertino,
+      Los Altos, Los Gatos, Milpitas, Mountain View, Palo Alto, San Jose, Santa Clara, Saratoga,
+      and Sunnyvale. It answers one question: <em>what should we do today?</em> Day plans,
+      events, summer camps, restaurant openings, city council meetings, and the local tech
+      economy, all in one place.
+    </p>
+
+    <h2>Where the information comes from</h2>
+    <p>
+      Everything on the site traces back to a primary source. Events come from venue, library,
+      city, and university calendars across 20+ feeds. Restaurant openings come from Santa Clara
+      County environmental-health permit records. Council coverage is built from each city's
+      official agenda and minutes systems, summarized into plain English with links back to the
+      original record on every page. Weather comes from the National Weather Service. Photos
+      come from the venues themselves and Creative Commons contributors, credited where shown.
+    </p>
+    <p>
+      Pipelines that gather and summarize this run on a mix of scripts and AI tooling, with
+      automated fact-checking passes and human review. When something's wrong anyway — a moved
+      event, a misdated opening — tell us with the Tips &amp; Feedback button in the corner of
+      any page, and it gets fixed fast.
+    </p>
+
+    <h2>How often it updates</h2>
+    <p>
+      The site rebuilds nightly with fresh data, and event listings refresh through the day.
+      The <a href="/">daily plan</a> is new every morning; the
+      <a href="/rss.xml">RSS feed</a> and the morning email carry it beyond the site.
+    </p>
+
+    <h2>Who's behind it</h2>
+    <p>
+      It's an independent project of <a href="https://stanwood.dev" rel="noopener noreferrer">stanwood.dev</a> —
+      built by a South Bay resident because this guide didn't exist and seemed like it should.
+      There are no ads, no paywall, and no sponsored placements; nothing on the site is paid
+      for by the businesses or venues that appear on it.
+    </p>
+
+    <p class="about-fineprint">
+      Listings link to official sources — always double-check times and prices with the venue
+      before heading out. <a href="/privacy">Privacy policy</a>.
+    </p>
+  </div>
+</CalendarShell>
+
+<style>
+  .about-body {
+    max-width: 64ch;
+  }
+  .about-body p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 14px;
+  }
+  .about-body h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 21px;
+    font-weight: 800;
+    margin: 26px 0 8px;
+  }
+  .about-body a {
+    color: inherit;
+    font-weight: 600;
+  }
+  .about-fineprint {
+    margin-top: 26px;
+    font-size: 12.5px !important;
+    color: var(--light) !important;
+  }
+</style>

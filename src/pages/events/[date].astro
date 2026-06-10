@@ -109,16 +109,26 @@ const description = `${events.length} things happening across the South Bay on $
   .filter(Boolean)
   .join(", ")}, and more.`;
 
-const jsonLd = eventListJsonLd(events as SchemaEventRecord[], {
+const listJsonLd = eventListJsonLd(events as SchemaEventRecord[], {
   name: `South Bay events on ${dayLabel}`,
   url: `https://southbaytoday.org/events/${date}`,
   limit: 60,
+});
+const breadcrumbJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
+    { "@type": "ListItem", position: 2, name: "Events", item: "https://southbaytoday.org/events" },
+    { "@type": "ListItem", position: 3, name: dayLabel },
+  ],
 });
 ---
 
 <CalendarShell title={title} description={description}>
   <Fragment slot="head">
-    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+    {listJsonLd && <script type="application/ld+json" set:html={listJsonLd} />}
+    <script type="application/ld+json" set:html={breadcrumbJsonLd} />
   </Fragment>
 
   <nav class="cal-daynav" aria-label="Browse days">

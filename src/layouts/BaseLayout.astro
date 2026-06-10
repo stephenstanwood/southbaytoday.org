@@ -12,6 +12,8 @@ interface Props {
   themeColor?: string;
   /** keep page out of search indexes */
   noindex?: boolean;
+  /** absolute URL for og:image / twitter:image (defaults to the site card) */
+  ogImage?: string;
 }
 
 const {
@@ -20,12 +22,13 @@ const {
   fontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
   themeColor = "#f8f4ef",
   noindex = false,
+  ogImage: ogImageProp,
 } = Astro.props;
 
 const siteUrl = "https://southbaytoday.org";
 const pagePath = Astro.url.pathname === "/" ? "" : Astro.url.pathname;
 const pageUrl = `${siteUrl}${pagePath}`;
-const ogImage = `${siteUrl}/images/og-image.png`;
+const ogImage = ogImageProp || `${siteUrl}/images/og-image.png`;
 
 const websiteSchema = JSON.stringify({
   "@context": "https://schema.org",

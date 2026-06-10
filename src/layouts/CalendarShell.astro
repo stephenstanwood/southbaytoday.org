@@ -8,14 +8,17 @@ import BaseLayout from "./BaseLayout.astro";
 interface Props {
   title: string;
   description: string;
+  /** absolute URL for og:image (e.g. an event's photo) */
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage } = Astro.props;
 ---
 
 <BaseLayout
   title={title}
   description={description}
+  ogImage={ogImage}
   themeColor="#F7F8FA"
   fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
 >
@@ -34,6 +37,8 @@ const { title, description } = Astro.props;
 
     <footer class="cal-footer">
       a project of <a href="https://stanwood.dev" rel="noopener noreferrer">stanwood.dev</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/about">about</a>
       <span aria-hidden="true"> · </span>
       <a href="/privacy">privacy</a>
     </footer>
