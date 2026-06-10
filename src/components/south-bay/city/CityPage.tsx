@@ -106,7 +106,9 @@ export default function CityPage({ cityId, cityName }: Props) {
   }, [cityId]);
 
   useEffect(() => {
-    fetch("/api/south-bay/upcoming-events")
+    // City pages only render today/tomorrow/this-weekend, so the 14-day near
+    // feed (~40% of the full payload) covers everything they show.
+    fetch("/api/south-bay/upcoming-events-near")
       .then((r) => r.ok ? r.json() : null)
       .then((d) => setUpcomingData(d ?? { events: [] }))
       .catch(() => setUpcomingData({ events: [] }));

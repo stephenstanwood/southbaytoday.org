@@ -1605,10 +1605,28 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   });
 
   useEffect(() => {
+    // Two-stage load: the 14-day near feed paints the visible rail (today + 6
+    // days) fast, then the full feed replaces it for search, far dates, and
+    // the upcoming-total stat. If near fails we still try full.
+    let cancelled = false;
+    let fullLanded = false;
+    fetch("/api/south-bay/upcoming-events-near")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!cancelled && !fullLanded && d) setUpcomingData(d);
+      })
+      .catch(() => {});
     fetch("/api/south-bay/upcoming-events")
-      .then((r) => r.ok ? r.json() : null)
-      .then((d) => setUpcomingData(d ?? { events: [] }))
-      .catch(() => setUpcomingData({ events: [] }));
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (cancelled) return;
+        fullLanded = true;
+        setUpcomingData(d ?? { events: [] });
+      })
+      .catch(() => {
+        if (!cancelled) setUpcomingData((prev) => prev ?? { events: [] });
+      });
+    return () => { cancelled = true; };
   }, []);
 
   const allEvents = useMemo(
