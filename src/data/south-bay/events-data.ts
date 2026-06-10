@@ -312,7 +312,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: false,
     description:
-      "Free Saturday morning yoga and pilates in Santana Row Park with lululemon. Check-in at 8:30am, class at 9am. Bring your own mat.",
+      "Free Saturday morning yoga and Pilates in Santana Row Park with lululemon. Check-in at 8:30am, class at 9am. Bring your own mat.",
     url: "https://santanarow.com/events/",
     emoji: "🧘",
   },
@@ -882,7 +882,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
   {
     id: "sharks-home-games",
-    title: "San Jose Sharks – Home Games",
+    title: "San Jose Sharks — Home Games",
     city: "san-jose",
     venue: "SAP Center",
     address: "525 W Santa Clara St, San Jose",
@@ -900,7 +900,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
   },
   {
     id: "earthquakes-home-games",
-    title: "San Jose Earthquakes – Home Games",
+    title: "San Jose Earthquakes — Home Games",
     city: "san-jose",
     venue: "PayPal Park",
     address: "1123 Coleman Ave, San Jose",
@@ -917,7 +917,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
   },
   {
     id: "sj-giants-milb",
-    title: "San Jose Giants – Home Games",
+    title: "San Jose Giants — Home Games",
     city: "san-jose",
     venue: "Excite Ballpark",
     address: "588 E Alma Ave, San Jose",
@@ -953,7 +953,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
   },
   {
     id: "barracuda-home-games",
-    title: "San Jose Barracuda – Home Games",
+    title: "San Jose Barracuda — Home Games",
     city: "san-jose",
     venue: "Tech CU Arena",
     address: "1500 S 10th St, San Jose",
