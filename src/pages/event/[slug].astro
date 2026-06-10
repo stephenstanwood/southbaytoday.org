@@ -4,6 +4,7 @@
 // + city" queries); the page links out prominently to the source. Pure Astro.
 import CalendarShell from "../../layouts/CalendarShell.astro";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
+import archiveData from "../../data/south-bay/events-archive.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { buildGoogleCalendarUrl } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
@@ -31,19 +32,27 @@ interface RawEvent {
 
 export function getStaticPaths() {
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
+  const archived = (archiveData as { events?: RawEvent[] }).events ?? [];
   const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const upcoming = all.filter((e) => e.date && e.date >= todayPt && e.time);
-  return [...buildEventSlugs(upcoming)].map(([slug, event]) => ({
+  // Passed events keep resolving for ~30 days (the archive's window) with a
+  // "this event has passed" banner — no next-morning 404s. Upcoming wins when
+  // a recurring event appears in both pools.
+  const past = archived.filter((e) => e.date && e.date < todayPt && e.time);
+  const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
+  const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
+  return [...buildEventSlugs(pool)].map(([slug, event]) => ({
     params: { slug },
-    props: { event },
+    props: { event, passed: Boolean(event.date && event.date < todayPt) },
   }));
 }
 
 interface Props {
   event: RawEvent;
+  passed: boolean;
 }
 
-const { event } = Astro.props;
+const { event, passed } = Astro.props;
 const cityName = event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null;
 
 const dayLabel = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US", {
@@ -85,10 +94,26 @@ const calendarUrl = buildGoogleCalendarUrl({
   url: event.url,
 });
 
-const schema = eventToSchema({ ...event, cityName } as SchemaEventRecord);
-const jsonLd = schema
-  ? JSON.stringify({ "@context": "https://schema.org", ...schema })
-  : null;
+const eventSchema = eventToSchema({ ...event, cityName } as SchemaEventRecord);
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
+    { "@type": "ListItem", position: 2, name: "Events", item: "https://southbaytoday.org/events" },
+    { "@type": "ListItem", position: 3, name: dayLabel, item: `https://southbaytoday.org/events/${event.date}` },
+    { "@type": "ListItem", position: 4, name: event.title ?? "" },
+  ],
+};
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": eventSchema ? [eventSchema, breadcrumbSchema] : [breadcrumbSchema],
+});
+
+const absoluteOgImage = imageUrl
+  ? imageUrl.startsWith("http")
+    ? imageUrl
+    : `https://southbaytoday.org${imageUrl}`
+  : undefined;
 
 // Body copy: blurb leads; description follows only when it adds something new.
 const blurb = (event.blurb ?? "").trim();
@@ -96,16 +121,22 @@ const longDesc = (event.description ?? "").trim();
 const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.slice(0, 40));
 ---
 
-<CalendarShell title={title} description={description}>
+<CalendarShell title={title} description={description} ogImage={absoluteOgImage}>
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
   <nav class="cal-daynav" aria-label="Breadcrumb">
-    <a href={`/events/${event.date}`}>← {dayLabel}</a>
+    {passed ? <a href="/events">← Upcoming events</a> : <a href={`/events/${event.date}`}>← {dayLabel}</a>}
     <span class="cal-kicker">South Bay / Event</span>
     <span />
   </nav>
+
+  {passed && (
+    <p class="cal-passed">
+      This event has passed — it happened {dayLabel}. <a href="/events">See what's coming up →</a>
+    </p>
+  )}
 
   <h1>{event.title}</h1>
   <p class="cal-sub">
@@ -147,18 +178,33 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         Event details ↗
       </a>
     )}
-    {calendarUrl && (
+    {!passed && calendarUrl && (
       <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer">
         Add to Google Calendar
       </a>
     )}
-    <a class="cal-btn" href={`/events/${event.date}`}>
-      More events this day
-    </a>
+    {passed ? (
+      <a class="cal-btn" href="/events">Upcoming events</a>
+    ) : (
+      <a class="cal-btn" href={`/events/${event.date}`}>More events this day</a>
+    )}
   </div>
 </CalendarShell>
 
 <style>
+  .cal-passed {
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    border: 1px solid #fde68a;
+    background: #fffbeb;
+    color: #92400e;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .cal-passed a {
+    color: inherit;
+    font-weight: 700;
+  }
   .cal-detail-photo {
     width: 100%;
     max-height: 420px;

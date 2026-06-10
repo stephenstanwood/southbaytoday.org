@@ -6951,6 +6951,37 @@ async function main() {
   let prevRun = null;
   try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
 
+  // Rolling 30-day archive of events that age out of the upcoming file. The
+  // static /event/<slug> pages build from upcoming ∪ archive so a page keeps
+  // resolving (with a "this event has passed" banner) instead of 404ing the
+  // morning after — preserves earned links and avoids index churn. Never let
+  // archive maintenance break the main pipeline.
+  try {
+    const ARCHIVE_PATH = join(__dirname, "..", "src", "data", "south-bay", "events-archive.json");
+    const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - 30);
+    const cutoffPt = cutoff.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+
+    let archive = { events: [] };
+    try { archive = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8")); } catch { /* first run */ }
+    const byId = new Map((archive.events ?? []).map((e) => [e.id ?? `${e.date}|${e.title}`, e]));
+
+    const aging = (prevRun?.events ?? []).filter(
+      (e) => typeof e?.date === "string" && e.date < todayPt,
+    );
+    for (const e of aging) byId.set(e.id ?? `${e.date}|${e.title}`, e);
+
+    const kept = [...byId.values()].filter(
+      (e) => typeof e?.date === "string" && e.date >= cutoffPt && e.date < todayPt,
+    );
+    kept.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id ?? "").localeCompare(String(b.id ?? "")));
+    writeFileAtomic(ARCHIVE_PATH, JSON.stringify({ updatedAt: new Date().toISOString(), eventCount: kept.length, events: kept }, null, 2) + "\n");
+    console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (30-day window)`);
+  } catch (err) {
+    console.warn(`⚠️  events-archive maintenance failed (non-fatal): ${err.message}`);
+  }
+
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ Done — ${collapsedEvents.length} events (${ongoingCount} ongoing) from ${sourceNames.length} sources → ${OUT_PATH}`);
 
