@@ -1,0 +1,243 @@
+---
+// Per-event detail pages — one stable URL per upcoming event, with a single
+// schema.org Event block. These are the long-tail crawl surface ("event name
+// + city" queries); the page links out prominently to the source. Pure Astro.
+import CalendarShell from "../../layouts/CalendarShell.astro";
+import upcomingData from "../../data/south-bay/upcoming-events.json";
+import { CITIES } from "../../lib/south-bay/cities";
+import { buildGoogleCalendarUrl } from "../../lib/south-bay/calendarLink";
+import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
+import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
+
+interface RawEvent {
+  id?: string | null;
+  title?: string | null;
+  date?: string | null;
+  time?: string | null;
+  endTime?: string | null;
+  venue?: string | null;
+  address?: string | null;
+  city?: string | null;
+  url?: string | null;
+  image?: string | null;
+  photoRef?: string | null;
+  blurb?: string | null;
+  description?: string | null;
+  cost?: string | null;
+  kidFriendly?: boolean | null;
+  category?: string | null;
+  source?: string | null;
+}
+
+export function getStaticPaths() {
+  const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
+  const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const upcoming = all.filter((e) => e.date && e.date >= todayPt && e.time);
+  return [...buildEventSlugs(upcoming)].map(([slug, event]) => ({
+    params: { slug },
+    props: { event },
+  }));
+}
+
+interface Props {
+  event: RawEvent;
+}
+
+const { event } = Astro.props;
+const cityName = event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null;
+
+const dayLabel = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US", {
+  timeZone: "UTC",
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+const timeLabel = event.endTime && event.time ? `${event.time}–${event.endTime}` : event.time ?? "";
+const metaBits = [timeLabel, event.venue, cityName].filter(Boolean);
+const title = `${event.title} — ${dayLabel} — South Bay Today`;
+const description = `${event.title} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
+  cityName ? ` in ${cityName}` : ""
+}. ${(event.blurb || event.description || "").slice(0, 140)}`.trim();
+
+const imageUrl = event.image && /^https?:\/\//i.test(event.image)
+  ? event.image
+  : event.photoRef
+    ? `/api/place-photo?ref=${encodeURIComponent(event.photoRef)}&w=760&h=420`
+    : null;
+
+const mapsQuery = [event.venue, event.address, cityName ? `${cityName}, CA` : null]
+  .filter(Boolean)
+  .join(", ");
+const mapsUrl = mapsQuery ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}` : null;
+
+const calendarUrl = buildGoogleCalendarUrl({
+  title: event.title ?? "",
+  date: event.date ?? "",
+  time: event.time,
+  endTime: event.endTime,
+  venue: event.venue,
+  address: event.address,
+  city: event.city,
+  description: event.description,
+  blurb: event.blurb,
+  url: event.url,
+});
+
+const schema = eventToSchema({ ...event, cityName } as SchemaEventRecord);
+const jsonLd = schema
+  ? JSON.stringify({ "@context": "https://schema.org", ...schema })
+  : null;
+
+// Body copy: blurb leads; description follows only when it adds something new.
+const blurb = (event.blurb ?? "").trim();
+const longDesc = (event.description ?? "").trim();
+const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.slice(0, 40));
+---
+
+<CalendarShell title={title} description={description}>
+  <Fragment slot="head">
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+  </Fragment>
+
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href={`/events/${event.date}`}>← {dayLabel}</a>
+    <span class="cal-kicker">South Bay / Event</span>
+    <span />
+  </nav>
+
+  <h1>{event.title}</h1>
+  <p class="cal-sub">
+    {metaBits.join(" · ")}
+    {event.cost === "free" && <span class="cal-chip">Free</span>}
+    {event.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
+  </p>
+
+  {imageUrl && (
+    <img class="cal-detail-photo" src={imageUrl} alt={`${event.title}${event.venue ? ` at ${event.venue}` : ""}`} loading="lazy" />
+  )}
+
+  {blurb && <p class="cal-detail-copy">{blurb}</p>}
+  {showDesc && <p class="cal-detail-copy cal-detail-copy--secondary">{longDesc}</p>}
+
+  <dl class="cal-detail-facts">
+    <div><dt>When</dt><dd>{dayLabel}{timeLabel ? ` · ${timeLabel}` : ""}</dd></div>
+    {event.venue && (
+      <div>
+        <dt>Where</dt>
+        <dd>
+          {event.venue}
+          {event.address ? ` — ${event.address}` : ""}
+          {cityName ? `, ${cityName}` : ""}
+          {mapsUrl && (
+            <>
+              {" "}· <a href={mapsUrl} rel="noopener noreferrer">map</a>
+            </>
+          )}
+        </dd>
+      </div>
+    )}
+    {event.source && <div><dt>Listed by</dt><dd>{event.source}</dd></div>}
+  </dl>
+
+  <div class="cal-detail-actions">
+    {event.url && (
+      <a class="cal-btn cal-btn--primary" href={event.url} rel="noopener noreferrer">
+        Event details ↗
+      </a>
+    )}
+    {calendarUrl && (
+      <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer">
+        Add to Google Calendar
+      </a>
+    )}
+    <a class="cal-btn" href={`/events/${event.date}`}>
+      More events this day
+    </a>
+  </div>
+</CalendarShell>
+
+<style>
+  .cal-detail-photo {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    margin: 0 0 18px;
+  }
+  .cal-detail-copy {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 64ch;
+    margin: 0 0 12px;
+  }
+  .cal-detail-copy--secondary {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .cal-detail-facts {
+    margin: 22px 0;
+    border-top: 1px solid var(--border-light);
+  }
+  .cal-detail-facts > div {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .cal-detail-facts dt {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--light);
+    padding-top: 3px;
+  }
+  .cal-detail-facts dd {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .cal-detail-facts dd a {
+    color: inherit;
+  }
+  .cal-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .cal-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink);
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .cal-btn:hover {
+    border-color: var(--ink);
+  }
+  .cal-btn--primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .cal-btn--primary:hover {
+    opacity: 0.88;
+  }
+</style>

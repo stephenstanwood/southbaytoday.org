@@ -1,0 +1,220 @@
+---
+// Shared chrome for the static crawlable pages (/events/<date>, /event/<slug>).
+// Pure HTML masthead + footer around a slot; styles are global but namespaced
+// under .cal-page. No React, no hydration — these pages exist for crawlers,
+// no-JS readers, and fast cold loads.
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  themeColor="#F7F8FA"
+  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+>
+  <Fragment slot="head">
+    <slot name="head" />
+  </Fragment>
+
+  <div class="cal-page">
+    <header class="cal-masthead">
+      <a href="/" class="cal-brand"><em>the</em> South Bay <span>Today</span></a>
+    </header>
+
+    <main class="cal-main">
+      <slot />
+    </main>
+
+    <footer class="cal-footer">
+      a project of <a href="https://stanwood.dev" rel="noopener noreferrer">stanwood.dev</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/privacy">privacy</a>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .cal-page {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --light: #888;
+    --border: #c8c4bc;
+    --border-light: #e5e2db;
+    background: #faf9f6;
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+  }
+  .cal-masthead {
+    text-align: center;
+    padding: 22px 16px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cal-brand {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 26px;
+    font-weight: 900;
+  }
+  .cal-brand em {
+    font-weight: 400;
+    font-size: 16px;
+    margin-right: 4px;
+  }
+  .cal-brand span {
+    display: block;
+    font-family: "Space Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .cal-main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 26px 20px 48px;
+  }
+  .cal-daynav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .cal-daynav a {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .cal-daynav a:hover {
+    text-decoration: underline;
+  }
+  .cal-kicker {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cal-page h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1.05;
+    margin: 0 0 8px;
+  }
+  .cal-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 26px;
+    padding-bottom: 18px;
+    border-bottom: 3px double var(--border);
+  }
+  .cal-sub a {
+    color: inherit;
+    font-weight: 600;
+  }
+  .cal-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .cal-event {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .cal-time {
+    font-family: "Space Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+  .cal-body h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 4px;
+  }
+  .cal-body h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .cal-body h2 a:hover {
+    text-decoration: underline;
+  }
+  .cal-meta {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .cal-chip {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 8px;
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #15803d;
+    border-radius: 999px;
+    font-family: "Space Mono", monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: 1px;
+  }
+  .cal-chip--kids {
+    border-color: #fde68a;
+    background: #fffbeb;
+    color: #b45309;
+  }
+  .cal-copy {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+  .cal-footer {
+    text-align: center;
+    padding: 22px 16px 30px;
+    border-top: 1px solid var(--border);
+    color: var(--light);
+    font-size: 12px;
+  }
+  .cal-footer a {
+    color: inherit;
+  }
+  @media (max-width: 540px) {
+    .cal-page h1 {
+      font-size: 29px;
+    }
+    .cal-event {
+      grid-template-columns: 1fr;
+      gap: 3px;
+    }
+    .cal-time {
+      padding-top: 0;
+    }
+  }
+</style>

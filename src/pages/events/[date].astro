@@ -3,13 +3,15 @@
 // The interactive Events tab is a client:only React app, so these pages are
 // what search engines (and no-JS readers) actually see. Pure Astro, no
 // hydration; regenerated on every nightly data build.
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import CalendarShell from "../../layouts/CalendarShell.astro";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { parseClockTime } from "../../lib/south-bay/calendarLink";
+import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 
 interface RawEvent {
+  id?: string | null;
   title?: string | null;
   date?: string | null;
   time?: string | null;
@@ -31,6 +33,12 @@ export function getStaticPaths() {
   const WINDOW_DAYS = 60; // defined inside: getStaticPaths runs in isolated scope
   const cityNames = new Map(CITIES.map((c) => [c.id, c.name]));
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
+
+  // Reverse lookup id → detail slug so listing links match /event/[slug].
+  const slugById = new Map<string, string>();
+  for (const [slug, e] of buildEventSlugs(all)) {
+    if (e.id) slugById.set(String(e.id), slug);
+  }
 
   const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const horizon = new Date();
@@ -57,7 +65,11 @@ export function getStaticPaths() {
         const tb = parseClockTime(b.time);
         return (ta ? ta.h * 60 + ta.m : 1441) - (tb ? tb.h * 60 + tb.m : 1441);
       })
-      .map((e) => ({ ...e, cityName: e.city ? cityNames.get(e.city) ?? null : null }));
+      .map((e) => ({
+        ...e,
+        cityName: e.city ? cityNames.get(e.city) ?? null : null,
+        detailSlug: e.id ? slugById.get(String(e.id)) ?? null : null,
+      }));
     return {
       params: { date },
       props: {
@@ -72,7 +84,7 @@ export function getStaticPaths() {
 
 interface Props {
   date: string;
-  events: (RawEvent & { cityName: string | null })[];
+  events: (RawEvent & { cityName: string | null; detailSlug: string | null })[];
   prevDate: string | null;
   nextDate: string | null;
 }
@@ -104,242 +116,46 @@ const jsonLd = eventListJsonLd(events as SchemaEventRecord[], {
 });
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  themeColor="#F7F8FA"
-  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
->
+<CalendarShell title={title} description={description}>
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
-  <div class="cal-page">
-    <header class="cal-masthead">
-      <a href="/" class="cal-brand"><em>the</em> South Bay <span>Today</span></a>
-    </header>
+  <nav class="cal-daynav" aria-label="Browse days">
+    {prevDate ? <a href={`/events/${prevDate}`}>← {shortLabel(prevDate)}</a> : <span />}
+    <span class="cal-kicker">South Bay / Calendar</span>
+    {nextDate ? <a href={`/events/${nextDate}`}>{shortLabel(nextDate)} →</a> : <span />}
+  </nav>
 
-    <main class="cal-main">
-      <nav class="cal-daynav" aria-label="Browse days">
-        {prevDate ? <a href={`/events/${prevDate}`}>← {shortLabel(prevDate)}</a> : <span />}
-        <span class="cal-kicker">South Bay / Calendar</span>
-        {nextDate ? <a href={`/events/${nextDate}`}>{shortLabel(nextDate)} →</a> : <span />}
-      </nav>
+  <h1>{dayLabel}</h1>
+  <p class="cal-sub">
+    {events.length} {events.length === 1 ? "event" : "events"} across {cityCount}{" "}
+    {cityCount === 1 ? "city" : "South Bay cities"} ·{" "}
+    <a href="/events">search &amp; filter on the Events tab →</a>
+  </p>
 
-      <h1>{dayLabel}</h1>
-      <p class="cal-sub">
-        {events.length} {events.length === 1 ? "event" : "events"} across {cityCount}{" "}
-        {cityCount === 1 ? "city" : "South Bay cities"} ·{" "}
-        <a href="/events">search &amp; filter on the Events tab →</a>
-      </p>
-
-      <ol class="cal-list">
-        {events.map((e) => (
-          <li class="cal-event">
-            <div class="cal-time">{e.time}</div>
-            <div class="cal-body">
-              <h2>
-                {e.url ? (
-                  <a href={e.url} rel="noopener noreferrer">{e.title}</a>
-                ) : (
-                  e.title
-                )}
-              </h2>
-              <p class="cal-meta">
-                {[e.venue, e.cityName].filter(Boolean).join(" · ")}
-                {e.cost === "free" && <span class="cal-chip">Free</span>}
-                {e.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
-              </p>
-              {(e.blurb || e.description) && <p class="cal-copy">{e.blurb || e.description}</p>}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </main>
-
-    <footer class="cal-footer">
-      a project of <a href="https://stanwood.dev" rel="noopener noreferrer">stanwood.dev</a>
-      <span aria-hidden="true"> · </span>
-      <a href="/privacy">privacy</a>
-    </footer>
-  </div>
-</BaseLayout>
-
-<style>
-  .cal-page {
-    --ink: #1a1a1a;
-    --muted: #555;
-    --light: #888;
-    --border: #c8c4bc;
-    --border-light: #e5e2db;
-    background: #faf9f6;
-    color: var(--ink);
-    font-family: "Inter", system-ui, sans-serif;
-    min-height: 100vh;
-  }
-  .cal-masthead {
-    text-align: center;
-    padding: 22px 16px 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .cal-brand {
-    color: var(--ink);
-    text-decoration: none;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 26px;
-    font-weight: 900;
-  }
-  .cal-brand em {
-    font-weight: 400;
-    font-size: 16px;
-    margin-right: 4px;
-  }
-  .cal-brand span {
-    display: block;
-    font-family: "Space Mono", monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-  .cal-main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 26px 20px 48px;
-  }
-  .cal-daynav {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .cal-daynav a {
-    font-family: "Space Mono", monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .cal-daynav a:hover {
-    text-decoration: underline;
-  }
-  .cal-kicker {
-    font-family: "Space Mono", monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  h1 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 38px;
-    font-weight: 900;
-    line-height: 1.05;
-    margin: 0 0 8px;
-  }
-  .cal-sub {
-    color: var(--muted);
-    font-size: 14px;
-    margin: 0 0 26px;
-    padding-bottom: 18px;
-    border-bottom: 3px double var(--border);
-  }
-  .cal-sub a {
-    color: inherit;
-    font-weight: 600;
-  }
-  .cal-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .cal-event {
-    display: grid;
-    grid-template-columns: 86px minmax(0, 1fr);
-    gap: 14px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border-light);
-  }
-  .cal-time {
-    font-family: "Space Mono", monospace;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--ink);
-    white-space: nowrap;
-    padding-top: 3px;
-  }
-  .cal-body h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.25;
-    margin: 0 0 4px;
-  }
-  .cal-body h2 a {
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .cal-body h2 a:hover {
-    text-decoration: underline;
-  }
-  .cal-meta {
-    margin: 0;
-    font-size: 12.5px;
-    color: var(--muted);
-  }
-  .cal-chip {
-    display: inline-block;
-    margin-left: 8px;
-    padding: 1px 8px;
-    border: 1px solid #bbf7d0;
-    background: #f0fdf4;
-    color: #15803d;
-    border-radius: 999px;
-    font-family: "Space Mono", monospace;
-    font-size: 9.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    vertical-align: 1px;
-  }
-  .cal-chip--kids {
-    border-color: #fde68a;
-    background: #fffbeb;
-    color: #b45309;
-  }
-  .cal-copy {
-    margin: 6px 0 0;
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--muted);
-    max-width: 60ch;
-  }
-  .cal-footer {
-    text-align: center;
-    padding: 22px 16px 30px;
-    border-top: 1px solid var(--border);
-    color: var(--light);
-    font-size: 12px;
-  }
-  .cal-footer a {
-    color: inherit;
-  }
-  @media (max-width: 540px) {
-    h1 {
-      font-size: 29px;
-    }
-    .cal-event {
-      grid-template-columns: 1fr;
-      gap: 3px;
-    }
-    .cal-time {
-      padding-top: 0;
-    }
-  }
-</style>
+  <ol class="cal-list">
+    {events.map((e) => (
+      <li class="cal-event">
+        <div class="cal-time">{e.time}</div>
+        <div class="cal-body">
+          <h2>
+            {e.detailSlug ? (
+              <a href={`/event/${e.detailSlug}`}>{e.title}</a>
+            ) : e.url ? (
+              <a href={e.url} rel="noopener noreferrer">{e.title}</a>
+            ) : (
+              e.title
+            )}
+          </h2>
+          <p class="cal-meta">
+            {[e.venue, e.cityName].filter(Boolean).join(" · ")}
+            {e.cost === "free" && <span class="cal-chip">Free</span>}
+            {e.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
+          </p>
+          {(e.blurb || e.description) && <p class="cal-copy">{e.blurb || e.description}</p>}
+        </div>
+      </li>
+    ))}
+  </ol>
+</CalendarShell>
