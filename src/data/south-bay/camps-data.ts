@@ -40,7 +40,7 @@ export interface Camp {
 }
 
 // Date this data was last verified against operator websites.
-export const DATA_VERIFIED_AT = "2026-05-22";
+export const DATA_VERIFIED_AT = "2026-06-10";
 
 // 11-week summer schedule. Week 4 is a 4-day short week — Jul 4 falls on
 // Saturday in 2026, so Jul 3 is the federal observed holiday.
@@ -826,7 +826,7 @@ export const CAMPS: Camp[] = [
     days: "Mon/Wed/Fri",
     locations: ["The Little Gym of San Jose (South), 1375 Blossom Hill Rd Suite 36, San Jose 95118"],
     description: "Themed weekly camps blending gymnastics, group games, team challenges, and crafts. New theme each week — Crazy Carnival, Ninja, Superhero, Mermaid & Pirate, Under the Sea, and more.",
-    registerUrl: "https://www.thelittlegym.com/san-jose-south-ca/camps",
+    registerUrl: "https://www.thelittlegym.com/california-san-jose-south/camps/",
     priceNote: "$70/day · 5-day $345 · 10-day $685 · 20-day $1,300 · 10% off for members.",
     weeks: [
       { weekNum: 1, label: "Crazy Carnival",         startDate: "2026-06-08", endDate: "2026-06-12", displayDates: "Jun 8–12",   residentPrice: 210 },
