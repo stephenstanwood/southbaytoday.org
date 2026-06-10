@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 // themselves keep resolving for ~30 days (grace banner) but crawlers shouldn't
 // be steered at them.
 const buildDayPt = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
-const isPastDatedUrl = (page) => {
+const isPastDatedUrl = (/** @type {string} */ page) => {
   const m = page.match(/\/events?\/(\d{4}-\d{2}-\d{2})/);
   return m ? m[1] < buildDayPt : false;
 };

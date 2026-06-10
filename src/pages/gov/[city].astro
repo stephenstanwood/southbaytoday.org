@@ -44,7 +44,7 @@ interface Props {
 const { digest } = Astro.props;
 const cityId = digest.city;
 const cityName = digest.cityName;
-const meeting = ((meetingsJson as { meetings?: Record<string, Meeting> }).meetings ?? {})[cityId] ?? null;
+const meeting = ((meetingsJson as unknown as { meetings?: Record<string, Meeting> }).meetings ?? {})[cityId] ?? null;
 
 const meetingDayLabel = meeting?.date
   ? new Date(`${meeting.date}T12:00:00Z`).toLocaleDateString("en-US", {

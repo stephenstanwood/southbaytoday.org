@@ -10,6 +10,11 @@ import { parseClockTime } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 
+// This file compiles to a component named `Date` (from the [date] param),
+// shadowing the global Date constructor in the language server's view of the
+// module. Alias the real constructor so date math typechecks.
+const DateCtor = globalThis.Date;
+
 interface RawEvent {
   id?: string | null;
   title?: string | null;
@@ -31,7 +36,8 @@ interface RawEvent {
 
 export function getStaticPaths() {
   const WINDOW_DAYS = 60; // defined inside: getStaticPaths runs in isolated scope
-  const cityNames = new Map(CITIES.map((c) => [c.id, c.name]));
+  const DateCtor = globalThis.Date; // ditto — see module-level alias note
+  const cityNames = new Map<string, string>(CITIES.map((c) => [c.id, c.name]));
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
 
   // Reverse lookup id → detail slug so listing links match /event/[slug].
@@ -40,8 +46,8 @@ export function getStaticPaths() {
     if (e.id) slugById.set(String(e.id), slug);
   }
 
-  const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const horizon = new Date();
+  const todayPt = new DateCtor().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const horizon = new DateCtor();
   horizon.setDate(horizon.getDate() + WINDOW_DAYS);
   const horizonPt = horizon.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
@@ -91,7 +97,7 @@ interface Props {
 
 const { date, events, prevDate, nextDate } = Astro.props;
 
-const dayLabel = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+const dayLabel = new DateCtor(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
   timeZone: "UTC",
   weekday: "long",
   month: "long",
@@ -99,7 +105,7 @@ const dayLabel = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
   year: "numeric",
 });
 const shortLabel = (d: string) =>
-  new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+  new DateCtor(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
 
 const cityCount = new Set(events.map((e) => e.city).filter(Boolean)).size;
 const title = `Events on ${dayLabel} — South Bay Today`;
