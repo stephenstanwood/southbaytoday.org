@@ -3177,11 +3177,13 @@ const {
         0%   { transform: translateX(0); }
         100% { transform: translateX(-50%); }
       }
+      /* Tile spacing lives on the tiles (margin-right) so translateX(-50%)
+         loops exactly; flex gap here would desync the wrap point. */
       .photo-strip-track {
         display: flex;
-        gap: 3px;
         width: max-content;
         animation: photo-scroll 90s linear infinite;
+        will-change: transform;
       }
       .photo-strip-track:hover { animation-play-state: paused; }
       .apod-strip-track {

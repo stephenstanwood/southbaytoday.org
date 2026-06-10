@@ -55,6 +55,11 @@ export default memo(function PhotoStrip() {
         flexShrink: 0, display: "block", position: "relative",
         height: 200, width: 280, overflow: "hidden", background: "#ccc",
         borderRadius: 6,
+        // Spacing via margin, not flex gap: every tile is exactly 283px of
+        // pitch, so one copy is 20×283 and translateX(-50%) lands precisely
+        // on the second copy — flex gap left the loop 1.5px (gap/2) short,
+        // a visible snap every 90s cycle.
+        marginRight: 3,
       }}
     >
       <img
@@ -62,7 +67,9 @@ export default memo(function PhotoStrip() {
         alt={p.title}
         decoding="async"
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        onError={(e) => { (e.currentTarget.closest("a") as HTMLElement).style.display = "none"; }}
+        // Keep the 280px box on a dead thumb (gray placeholder) — collapsing
+        // the tile changes track width mid-animation and shifts the strip.
+        onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
       />
       <div className="ps-caption">
         <span style={{ fontSize: 9, color: "#fff", fontFamily: "'Space Mono', monospace", lineHeight: 1.5 }}>
@@ -85,9 +92,9 @@ export default memo(function PhotoStrip() {
         }
         .photo-strip-track {
           display: flex;
-          gap: 3px;
           width: max-content;
           animation: photo-scroll 90s linear infinite;
+          will-change: transform;
         }
         .photo-strip-track:hover { animation-play-state: paused; }
         .ps-caption {
