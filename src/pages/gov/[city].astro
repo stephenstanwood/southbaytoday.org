@@ -1,0 +1,248 @@
+---
+// Static per-city council pages — plain-English digest of the latest meeting
+// plus the next agenda. This coverage exists nowhere else on the web, so these
+// pages are the site's strongest unique-content surface. Pure Astro; content
+// refreshes whenever the council pipeline writes a new digest.
+import CalendarShell from "../../layouts/CalendarShell.astro";
+import digestsJson from "../../data/south-bay/digests.json";
+import meetingsJson from "../../data/south-bay/upcoming-meetings.json";
+
+interface Digest {
+  city: string;
+  cityName: string;
+  body: string;
+  meetingDate: string;
+  meetingDateIso: string;
+  title: string;
+  summary: string;
+  keyTopics?: string[];
+  schedule?: string | null;
+  sourceUrl?: string | null;
+}
+
+interface Meeting {
+  date?: string;
+  displayDate?: string;
+  bodyName?: string;
+  location?: string;
+  url?: string;
+  agendaItems?: { title: string }[];
+}
+
+export function getStaticPaths() {
+  const digests = digestsJson as Record<string, Digest>;
+  return Object.keys(digests).map((city) => ({
+    params: { city },
+    props: { digest: digests[city] },
+  }));
+}
+
+interface Props {
+  digest: Digest;
+}
+
+const { digest } = Astro.props;
+const cityId = digest.city;
+const cityName = digest.cityName;
+const meeting = ((meetingsJson as { meetings?: Record<string, Meeting> }).meetings ?? {})[cityId] ?? null;
+
+const meetingDayLabel = meeting?.date
+  ? new Date(`${meeting.date}T12:00:00Z`).toLocaleDateString("en-US", {
+      timeZone: "UTC",
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+  : null;
+
+const title = `${cityName} City Council — meeting summaries & next agenda — South Bay Today`;
+const description = `${digest.summary.slice(0, 155)}`;
+
+const schemas: Record<string, unknown>[] = [
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
+      { "@type": "ListItem", position: 2, name: "Local Government", item: "https://southbaytoday.org/gov" },
+      { "@type": "ListItem", position: 3, name: `${cityName} City Council`, item: `https://southbaytoday.org/gov/${cityId}` },
+    ],
+  },
+];
+if (meeting?.date) {
+  schemas.push({
+    "@type": "Event",
+    name: `${cityName} ${meeting.bodyName ?? "City Council"} meeting`,
+    startDate: meeting.date,
+    ...(meeting.location || cityName
+      ? {
+          location: {
+            "@type": "Place",
+            name: meeting.location || `${cityName} City Hall`,
+            address: { "@type": "PostalAddress", addressLocality: cityName, addressRegion: "CA" },
+          },
+        }
+      : {}),
+    ...(meeting.url ? { url: meeting.url } : {}),
+  });
+}
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": schemas });
+
+const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
+---
+
+<CalendarShell title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={jsonLd} />
+  </Fragment>
+
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href="/gov">← All cities</a>
+    <span class="cal-kicker">South Bay / Civic Desk</span>
+    <span />
+  </nav>
+
+  <h1>{cityName} City Council</h1>
+  <p class="cal-sub">
+    Plain-English summaries of {cityName} council meetings, updated as agendas and
+    minutes post{digest.schedule ? ` · meets ${digest.schedule}` : ""} ·{" "}
+    <a href={`/city/${cityId}`}>everything in {cityName} →</a>
+  </p>
+
+  {meeting && meetingDayLabel && (
+    <section class="gov-block gov-block--next">
+      <h2>Next meeting · {meetingDayLabel}</h2>
+      {agendaPreview.length > 0 ? (
+        <ul>
+          {agendaPreview.map((item) => (
+            <li>{item.title}</li>
+          ))}
+        </ul>
+      ) : (
+        <p class="gov-muted">Agenda not yet posted — check the city's calendar closer to the date.</p>
+      )}
+      {meeting.url && (
+        <a class="cal-btn cal-btn--primary" href={meeting.url} rel="noopener noreferrer">
+          Full agenda ↗
+        </a>
+      )}
+    </section>
+  )}
+
+  <section class="gov-block">
+    <h2>Last meeting · {digest.meetingDate}</h2>
+    <p class="gov-summary">{digest.summary}</p>
+    {(digest.keyTopics ?? []).length > 0 && (
+      <>
+        <h3>What came up</h3>
+        <ul>
+          {(digest.keyTopics ?? []).map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      </>
+    )}
+    <p class="gov-muted">
+      Summarized from the official record.
+      {digest.sourceUrl && (
+        <>
+          {" "}
+          <a href={digest.sourceUrl} rel="noopener noreferrer">Agendas &amp; minutes ↗</a>
+        </>
+      )}
+    </p>
+  </section>
+
+  <div class="cal-detail-actions">
+    <a class="cal-btn" href="/gov">All South Bay councils</a>
+    <a class="cal-btn" href={`/city/${cityId}`}>{cityName} today</a>
+  </div>
+</CalendarShell>
+
+<style>
+  .gov-block {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .gov-block h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 21px;
+    font-weight: 800;
+    margin: 0 0 10px;
+  }
+  .gov-block h3 {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 16px 0 6px;
+  }
+  .gov-block ul {
+    margin: 0 0 12px;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .gov-block li {
+    margin-bottom: 4px;
+  }
+  .gov-summary {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 64ch;
+    margin: 0 0 8px;
+  }
+  .gov-muted {
+    font-size: 12.5px;
+    color: var(--light);
+    margin: 8px 0 0;
+  }
+  .gov-muted a {
+    color: inherit;
+  }
+  .gov-block--next {
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 8px;
+  }
+  .cal-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .cal-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink);
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .cal-btn:hover {
+    border-color: var(--ink);
+  }
+  .cal-btn--primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+    margin-top: 6px;
+  }
+  .cal-btn--primary:hover {
+    opacity: 0.88;
+  }
+</style>
