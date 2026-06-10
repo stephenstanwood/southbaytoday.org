@@ -7,12 +7,21 @@ interface Props {
   title?: string;
   description?: string;
   initialTab?: Tab;
+  /**
+   * Server-render the app shell at build time (client:load). Tab pages use
+   * this so crawlers and first paint get the masthead/nav/footer plus each
+   * lazy view's loading state as real HTML. The homepage opts out: its
+   * SouthBayTodayView renders time-of-day- and localStorage-dependent
+   * content in the initial pass, which would hydration-mismatch.
+   */
+  ssr?: boolean;
 }
 
 const {
   title = "The South Bay Today",
   description = "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San Jose, Palo Alto, and 6 more South Bay cities.",
   initialTab,
+  ssr = true,
 } = Astro.props;
 ---
 
@@ -3361,5 +3370,9 @@ const {
     <slot name="head" />
   </Fragment>
 
-  <SignalApp client:only="react" initialTab={initialTab} />
+  {ssr ? (
+    <SignalApp client:load initialTab={initialTab} />
+  ) : (
+    <SignalApp client:only="react" initialTab={initialTab} />
+  )}
 </BaseLayout>

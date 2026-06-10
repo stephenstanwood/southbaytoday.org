@@ -60,6 +60,9 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
   // midnight doesn't show yesterday's label.
   const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
   useEffect(() => {
+    // Refresh immediately on mount (server HTML may carry the build night's
+    // date) and then keep it current across midnight for long-lived tabs.
+    setTodayLabel(formatTodayLabel());
     const id = setInterval(() => {
       const next = formatTodayLabel();
       setTodayLabel((prev) => (prev === next ? prev : next));
@@ -164,7 +167,7 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
             </span>
           </a>
           <div className="sb-date">
-            <div>{todayLabel}</div>
+            <div suppressHydrationWarning>{todayLabel}</div>
           </div>
           <div className="sb-slogan">All local. Good vibes. No ads.</div>
         </div>
