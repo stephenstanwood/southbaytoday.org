@@ -47,8 +47,15 @@ const CITIES = [
   { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "2nd and 4th Tuesday",   agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale",    legistarApi: "sunnyvaleca" },
   { city: "cupertino",     stoaCity: "Cupertino",     cityName: "Cupertino",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino",    legistarApi: "cupertino" },
   { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",   legistarApi: "santaclara" },
+  // Milpitas + Palo Alto digests stall when Stoa lacks full agenda text: recent
+  // Milpitas records are CivicClerk stubs ("Meeting record available on...") that
+  // fail hasRealContent, and recent Palo Alto records are commission/item-level
+  // rather than City Council. The fix belongs upstream in Stoa ingestion.
+  // Palo Alto has no legistarApi: webapi.legistar.com/v1/paloalto is not a
+  // provisioned client (500 "connection string not set up") even though the
+  // public paloalto.legistar.com calendar exists for source links.
   { city: "milpitas",      stoaCity: "Milpitas",      cityName: "Milpitas",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://www.ci.milpitas.ca.gov/government/council/" },
-  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.cityofpaloalto.org/Government/City-Clerk/Meetings-Agendas-Minutes", legistar: "paloalto", legistarApi: "paloalto" },
+  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.cityofpaloalto.org/Government/City-Clerk/Meetings-Agendas-Minutes", legistar: "paloalto" },
 ];
 
 // If Stoa's most recent record for a city is older than this many days, we try

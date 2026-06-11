@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // South Bay Signal — Development Tracker
 // Curated major development projects across the South Bay
-// Data reflects publicly reported information as of March 2026
+// Data reflects publicly reported information as of June 2026
 // ---------------------------------------------------------------------------
 
 export type DevStatus =
