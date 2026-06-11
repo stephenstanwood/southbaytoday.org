@@ -30,6 +30,7 @@
  *   - San Jose Theaters (iCal)
  *   - South Bay Musical Theatre (show pages)
  *   - Los Altos Stage Company (WordPress events)
+ *   - Palo Alto Players (Venture Event Manager AJAX, per-performance)
  *   - Hammer Theatre (VBO Tickets HTML)
  *   - Gamble Garden (The Events Calendar API)
  *   - Mexican Heritage Plaza (Squarespace events)
@@ -5934,6 +5935,115 @@ async function fetchLosAltosStageEvents() {
   }
 }
 
+async function fetchPaloAltoPlayersEvents() {
+  console.log("  ⏳ Palo Alto Players...");
+  try {
+    // Venture Event Manager calendar AJAX (robots.txt allows admin-ajax.php).
+    // Returns one entry per performance with an epoch start + ticket link —
+    // calendar id 263 is the public /calendar/ page's all-productions view.
+    const now = Math.floor(Date.now() / 1000);
+    const res = await fetch("https://paplayers.org/wp-admin/admin-ajax.php", {
+      method: "POST",
+      headers: { "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        action: "vem_get_events",
+        id: "263",
+        event: "0",
+        start: String(now - 86_400),
+        end: String(now + 150 * 86_400),
+        moment: "x",
+        futureOnly: "false",
+      }),
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const perfs = (JSON.parse(await res.text())?.events || []).filter((p) => p?.start && p?.title);
+
+    // One detail fetch per production (a handful per season) for the synopsis,
+    // pretty permalink, and venue. PAP's resident home is the Lucie Stern
+    // Theater; the page's JSON-LD location overrides if a show plays elsewhere.
+    const detailCache = new Map();
+    async function productionDetail(rawUrl) {
+      const pageUrl = String(rawUrl || "").replace(/&#0*38;/g, "&").replace(/&amp;/g, "&");
+      if (detailCache.has(pageUrl)) return detailCache.get(pageUrl);
+      const detail = {
+        url: pageUrl || "https://paplayers.org/calendar/",
+        description: "",
+        venue: "Lucie Stern Theatre",
+        address: "1305 Middlefield Rd, Palo Alto, CA 94301",
+      };
+      if (pageUrl) {
+        try {
+          const html = await fetchText(pageUrl, { timeout: 20_000 });
+          detail.url = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || detail.url;
+          const og = html.match(/<meta property="og:description" content="([^"]*)"/)?.[1];
+          if (og) detail.description = truncate(cleanEscapedCalendarText(og));
+          const venueName = html.match(/"@type":\s*"Place",\s*"name":\s*"([^"]+)"/)?.[1];
+          const street = html.match(/"streetAddress":\s*"([^"]+)"/)?.[1];
+          const locality = html.match(/"addressLocality":\s*"([^"]+)"/)?.[1];
+          const zip = html.match(/"postalCode":\s*"([^"]+)"/)?.[1];
+          // Keep the default "Lucie Stern Theatre" spelling (matches the
+          // TheatreWorks scraper) — only override for a different venue.
+          if (venueName && street && locality && !/lucie stern/i.test(venueName)) {
+            detail.venue = cleanEscapedCalendarText(venueName);
+            detail.address = `${street}, ${locality}, CA${zip ? ` ${zip}` : ""}`;
+          }
+          await new Promise((r) => setTimeout(r, 150));
+        } catch {
+          // Keep Lucie Stern defaults — every PAP production runs there.
+        }
+      }
+      detailCache.set(pageUrl, detail);
+      return detail;
+    }
+
+    const fmt = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "numeric", minute: "2-digit", hour12: true,
+    });
+    const today = todayPT();
+    const events = [];
+
+    for (const perf of perfs) {
+      const title = cleanEscapedCalendarText(perf.title);
+      if (!title || isBlockedEvent(title)) continue;
+      const parts = Object.fromEntries(
+        fmt.formatToParts(new Date(Number(perf.start) * 1000)).map((p) => [p.type, p.value]),
+      );
+      const date = `${parts.year}-${parts.month}-${parts.day}`;
+      if (date < today) continue;
+      const time = `${parts.hour}:${parts.minute} ${parts.dayPeriod.toUpperCase()}`;
+      const detail = await productionDetail(perf.url);
+
+      events.push({
+        id: h("paplayers", title, date, time),
+        title,
+        date,
+        displayDate: displayDate(parseDatePT(`${date}T12:00:00`)),
+        time,
+        endTime: null,
+        venue: detail.venue,
+        address: detail.address,
+        city: "palo-alto",
+        category: "arts",
+        cost: "paid",
+        description: detail.description,
+        url: detail.url,
+        source: "Palo Alto Players",
+        ...(perf.thumb ? { image: perf.thumb } : {}),
+        kidFriendly: /\b(kid|child|family|story|youth|teen|junior|disney)\b/i.test(title + " " + detail.description),
+      });
+    }
+
+    console.log(`  ✅ Palo Alto Players: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Palo Alto Players: ${err.message}`);
+    return [];
+  }
+}
+
 async function fetchHammerTheatreEvents() {
   console.log("  ⏳ Hammer Theatre...");
   try {
@@ -6430,6 +6540,7 @@ async function main() {
     fetchSanJoseTheatersEvents,
     fetchSouthBayMusicalTheatreEvents,
     fetchLosAltosStageEvents,
+    fetchPaloAltoPlayersEvents,
     fetchHammerTheatreEvents,
     fetchGambleGardenEvents,
     fetchMexicanHeritagePlazaEvents,
@@ -7026,4 +7137,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   });
 }
 
-export { polishDescription, cleanTitle, stripRedundantVenueSuffix };
+export { polishDescription, cleanTitle, stripRedundantVenueSuffix, fetchPaloAltoPlayersEvents };
