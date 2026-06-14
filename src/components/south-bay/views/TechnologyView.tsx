@@ -1358,15 +1358,23 @@ function getConferenceNextDate(
   const startMonth = conf.typicalMonth;
   const endMonth = conf.typicalEndMonth ?? startMonth;
   const endDayForBound = conf.typicalEndDay ?? conf.typicalDay ?? 15;
-  const thisYearEndMs = new Date(now.getFullYear(), endMonth - 1, endDayForBound).getTime();
-  const yearOffset = (thisYearEndMs - now.getTime()) / 86400000 < -7 ? 1 : 0;
+  // Roll to next year once the conference has actually ENDED (end-of-day on the
+  // last day has passed) — not when the start date slips by. Keying the rollover
+  // and "upcoming" flag off the end date keeps a multi-day event visible while
+  // it's happening, but stops an already-finished conference (e.g. WWDC the week
+  // after it wraps) from lingering under "Coming Up" with a past date.
+  const thisYearEndMs = new Date(now.getFullYear(), endMonth - 1, endDayForBound, 23, 59, 59).getTime();
+  const yearOffset = thisYearEndMs < now.getTime() ? 1 : 0;
   const year = now.getFullYear() + yearOffset;
   const startMonthName = MONTH_NAMES_FULL[startMonth - 1];
   const endMonthName = MONTH_NAMES_FULL[endMonth - 1];
   const approxDay = conf.typicalDay ?? 15;
   const targetMs = new Date(year, startMonth - 1, approxDay).getTime();
+  const endMsForYear = new Date(year, endMonth - 1, endDayForBound, 23, 59, 59).getTime();
   const diffDays = (targetMs - now.getTime()) / (1000 * 60 * 60 * 24);
-  const isUpcoming = diffDays >= -7 && diffDays <= 90;
+  // Upcoming = starts within the next 90 days AND hasn't ended yet (so it stays
+  // highlighted while in progress, then drops out the moment it's over).
+  const isUpcoming = diffDays <= 90 && endMsForYear >= now.getTime();
   let label = `${startMonthName} ${year}`;
   if (conf.typicalDay) {
     if (conf.typicalEndDay && endMonth !== startMonth) {
