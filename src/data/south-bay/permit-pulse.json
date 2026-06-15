@@ -1,155 +1,204 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-10T19:09:10.351Z",
+      "generatedAt": "2026-06-15T19:09:17.551Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 3 – Jun 10",
+      "dateRange": "Jun 8 – Jun 15",
       "stats": {
-        "total": 325,
-        "notable": 22,
-        "newUnits": 146,
-        "totalValuation": 40084468
+        "total": 440,
+        "notable": 35,
+        "newUnits": 22,
+        "totalValuation": 41301622
       },
       "permits": [
         {
-          "id": "2026-118798-MF",
-          "address": "110 Yoshino Wy",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "(Bemp 100%) Trimble Modular Apts",
-          "valuation": 21903272,
-          "units": 136,
-          "issueDate": "2026-06-04",
-          "subtype": "Apartment"
-        },
-        {
-          "id": "2026-119233-MF",
-          "address": "110 Yoshino Wy",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "(Bemp 100%) Trimble Modular Apts Parking Area",
-          "valuation": 4977423,
-          "units": 1,
-          "issueDate": "2026-06-04",
-          "subtype": "Apartment"
-        },
-        {
-          "id": "2025-124064-RS",
-          "address": "6757 Devonshire Dr",
+          "id": "2026-118235-RS",
+          "address": "4 Echo Pl",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Demo/Rebuild",
-          "valuation": 567829,
+          "description": "Miller Lots 6 & 7 (Bemp 100%) New Duplex",
+          "valuation": 722764,
+          "units": 2,
+          "issueDate": "2026-06-10",
+          "subtype": "Duplex"
+        },
+        {
+          "id": "2026-118164-RS",
+          "address": "6 Echo Pl",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 5 (Bemp 100%) New Single Family",
+          "valuation": 712238,
           "units": 1,
-          "issueDate": "2026-06-05",
+          "issueDate": "2026-06-10",
           "subtype": "Single-Family"
         },
         {
-          "id": "2025-110519-RS",
-          "address": "3301 Woodside Ln",
+          "id": "2026-118137-RS",
+          "address": "1 Echo Pl",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 1 (Bemp 100%) New Single Family",
+          "valuation": 639440,
+          "units": 1,
+          "issueDate": "2026-06-10",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-118140-RS",
+          "address": "3 Echo Pl",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 2 (Bemp 100%) New Single Family",
+          "valuation": 629553,
+          "units": 1,
+          "issueDate": "2026-06-10",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-118190-RS",
+          "address": "5 Echo Pl",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 3 (Bemp 100%) New SFR",
+          "valuation": 623737,
+          "units": 1,
+          "issueDate": "2026-06-10",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-118193-RS",
+          "address": "8 Echo Pl",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 4 (Bemp 100%) New SFR",
+          "valuation": 623737,
+          "units": 1,
+          "issueDate": "2026-06-10",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-132399-RS",
+          "address": "1194 Sherwood Av",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "(Bemp100%) Demo/Rebuild",
+          "valuation": 484245,
+          "units": 1,
+          "issueDate": "2026-06-11",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-118240-RS",
+          "address": "1360 Miller Av",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Miller Lot 8 (Bemp 100%) New Duplex",
+          "valuation": 382482,
+          "units": 2,
+          "issueDate": "2026-06-10",
+          "subtype": "Duplex"
+        },
+        {
+          "id": "2025-126229-RS",
+          "address": "558 Richmond Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "New Detached ADU",
-          "valuation": 202908,
+          "valuation": 125972,
           "units": 1,
-          "issueDate": "2026-06-08",
+          "issueDate": "2026-06-11",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-132247-RS",
-          "address": "6757 Devonshire Dr #2",
+          "id": "2026-116135-RS",
+          "address": "632 N 15th St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 168921,
+          "description": "Ab 2533 Legalize Garage Conversion to ADU",
+          "valuation": 115658,
           "units": 1,
-          "issueDate": "2026-06-05",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-100942-RS",
-          "address": "1074 Prouty Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 161143,
-          "units": 1,
-          "issueDate": "2026-06-05",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-126802-RS",
-          "address": "3226 Cherry Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 126648,
-          "units": 1,
-          "issueDate": "2026-06-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2024-083316-RS",
-          "address": "3059 Cray Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bemp100%) New 2-Story Detached ADU",
-          "valuation": 122928,
-          "units": 1,
-          "issueDate": "2026-06-04",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2024-100757-RS",
-          "address": "4947 Minas Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 71238,
-          "units": 1,
-          "issueDate": "2026-06-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-105250-RS",
-          "address": "1370 Terilyn Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 60872,
-          "units": 1,
-          "issueDate": "2026-06-05",
+          "issueDate": "2026-06-12",
           "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-10T19:09:12.727Z",
+      "generatedAt": "2026-06-15T19:09:20.096Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 3 – Jun 10",
+      "dateRange": "Jun 8 – Jun 15",
       "stats": {
-        "total": 0,
-        "notable": 0,
+        "total": 125,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
-      "permits": []
+      "permits": [
+        {
+          "id": "26BLD-01537",
+          "address": "3859 Corina Wy",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Bathroom remodel (70sf). New shower, toilet, vanity and electrical work in master bathroom",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-09",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01512",
+          "address": "3178 Fallen Leaf St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-08",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00133",
+          "address": "1801 Page Mill Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to remove one dead Pinus Radiata. Three 24 inch box Chinese Elm trees will be planted onsite as replacement trees. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-10",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00130",
+          "address": "407 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Over-The-Counter Planning application for backyard outdoor dining less than 20 patrons with artificial landscape and additional seating for an existing restaurant.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-09",
+          "subtype": "Over the Counter Approved"
+        }
+      ]
     }
   }
 }
