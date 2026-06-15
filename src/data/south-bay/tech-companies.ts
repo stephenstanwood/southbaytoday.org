@@ -1020,6 +1020,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.coram.ai",
   },
   {
+    id: "maneva",
+    name: "Maneva",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Series A",
+    amount: "$27M",
+    date: "2026-06-10",
+    tagline:
+      "Physical-AI platform that turns the cameras already mounted on a factory floor into real-time operational intelligence — no rip-and-replace required. Its VITA agent makes accept / reject / reroute quality calls up to 30 times a second, while its ALIS agent watches safety and line productivity, both running on NVIDIA edge devices. Founded by CEO Rae Jeong and CTO Kelvin Chan; the Series A was led by U.S. Venture Partners with returning backers Bling Capital and Freestyle Capital plus angels including Gokul Rajaram, taking total funding to $38.4M.",
+    color: "#7c3aed",
+    url: "https://www.maneva.ai",
+  },
+  {
     id: "pomo",
     name: "Pomo",
     city: "Palo Alto",
