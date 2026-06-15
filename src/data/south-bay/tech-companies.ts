@@ -1007,6 +1007,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "coram-ai",
+    name: "Coram AI",
+    city: "Sunnyvale",
+    category: "security",
+    round: "Series B",
+    amount: "$35M",
+    date: "2026-06-10",
+    tagline:
+      "AI-native physical security platform that turns the cameras and access-control gear a building already has into autonomous investigators — surfacing incidents, answering “what happened,” and coordinating response across video, access, and guest workflows without a rip-and-replace. Founded by ex-Lyft and Zoox self-driving leaders Ashesh Jain and Peter Ondruska, it now runs at 1,500+ U.S. sites; the Series B was co-led by Ansa Capital and Battery Ventures with UP.Partners, 8VC, and Mosaic Ventures, taking total funding to $66M.",
+    color: "#2563eb",
+    url: "https://www.coram.ai",
+  },
+  {
     id: "pomo",
     name: "Pomo",
     city: "Palo Alto",
