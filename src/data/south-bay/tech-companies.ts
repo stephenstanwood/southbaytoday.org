@@ -2388,6 +2388,17 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/Apple_Store",
     defunct: false,
   },
+  {
+    id: "oracle",
+    company: "Oracle",
+    city: "Santa Clara",
+    foundedYear: 1977,
+    month: 6,
+    day: 16,
+    tagline: "Santa Clara startup that built the first commercial SQL database — the software the modern internet runs its data on.",
+    anniversaryNote: "Oracle was founded June 16, 1977, in Santa Clara as Software Development Laboratories by Larry Ellison, Bob Miner, and Ed Oates — three former Ampex engineers who pooled $2,000 in starting capital. Their bet was on a then-obscure IBM research paper describing the relational database; in 1979 they shipped the first commercial SQL relational database management system, beating IBM itself to market. The company renamed itself Oracle in 1982 and grew into one of the world's largest software makers, the backbone for storing and querying business data everywhere from banks to airlines.",
+    url: "https://en.wikipedia.org/wiki/Oracle_Corporation",
+  },
 ];
 
 // ---------------------------------------------------------------------------
