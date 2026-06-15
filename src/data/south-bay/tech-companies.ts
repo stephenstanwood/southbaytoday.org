@@ -615,7 +615,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "robotics",
     stage: "startup",
-    tagline: "Humanoid robots for real warehouse and factory work. Raised $675M from OpenAI, Microsoft, NVIDIA, and Amazon. BMW and UPS pilots underway.",
+    tagline: "Humanoid robots for real warehouse and factory work, now mass-produced at its BotQ factory in San Jose. Raised $1B+ in a 2025 Series C at a $39B valuation, with backing from NVIDIA, Intel Capital, Qualcomm, and Salesforce. BMW pilot underway.",
     color: "#18181B",
     url: "https://figure.ai",
     employeesNote: "~400 employees",
