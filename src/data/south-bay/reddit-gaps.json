@@ -1,163 +1,173 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-15T19:20:08.514Z",
+    "generatedAt": "2026-06-15T23:14:37.632Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 12
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 12,
-    "placesExtracted": 7,
-    "placesMatched": 1,
-    "placeGaps": 6,
-    "eventsExtracted": 6,
+    "threadsMined": 14,
+    "placesExtracted": 10,
+    "placesMatched": 7,
+    "placeGaps": 3,
+    "eventsExtracted": 10,
     "eventsMatched": 1,
-    "eventGaps": 5,
+    "eventGaps": 9,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Calabazas Dirt Jumps",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "dirt jump park for biking and recreation",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u6okow/i_was_at_the_calabazas_dirt_jumps_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u61uwx/hows_the_world_cup_crowd_in_dtsj/",
-        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/"
-      ]
-    },
-    {
-      "name": "St James Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "hosts Levitt San Jose outdoor concert series",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u6okow/i_was_at_the_calabazas_dirt_jumps_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u61uwx/hows_the_world_cup_crowd_in_dtsj/",
-        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/"
-      ]
-    },
-    {
-      "name": "Calabazas Bike Track",
-      "city": "Cupertino",
-      "kind": "park",
-      "context": "bike track reopened as of June 14",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
-      ]
-    },
-    {
-      "name": "Cimarron Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "landmark near neighborhood garage sale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
-      ]
-    },
-    {
-      "name": "Levi's Stadium",
+      "name": "San Jose Improv",
       "city": "San Jose",
       "kind": "venue",
-      "context": "stadium hosts international football matches",
+      "context": "Comedy venue hosting Mike E. Winfield performance",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
       ]
     },
     {
       "name": "The Ritz",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosts emo night concert event",
+      "context": "hosting emo night concert this Saturday",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1u66ac3/hiking_group/",
+        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/",
+        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/",
+        "https://www.reddit.com/r/SanJose/comments/1u6ttz2/ice_cream/"
+      ]
+    },
+    {
+      "name": "St James Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "location of Levitt San Jose outdoor music events",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u66ac3/hiking_group/",
+        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/",
+        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/",
+        "https://www.reddit.com/r/SanJose/comments/1u6ttz2/ice_cream/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "World Cup Watch Party",
+      "name": "USA v Australia",
+      "when": "Friday 6/19",
+      "city": "San Jose",
+      "context": "soccer match at San Pedro Square",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u6u6p6/best_restaurants_in_the_south_bay_with_a_quiet/",
+        "https://www.reddit.com/r/SanJose/comments/1u6tdh1/dog_fosters_needed_this_summer/",
+        "https://www.reddit.com/r/SanJose/comments/1u6pxft/san_pedro_square_san_jose_usa_v_australia_friday/",
+        "https://www.reddit.com/r/SanJose/comments/1u6prgt/aguachiles_ceviche_tostadas_micheladas_and_more/",
+        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/"
+      ]
+    },
+    {
+      "name": "Aguachiles, Ceviche, Tostadas Pop-up",
+      "when": "Tuesday, June 30th",
+      "city": "Campbell",
+      "context": "seafood pop-up event at One Fish Raw Bar, 5:30-8:30pm",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u6u6p6/best_restaurants_in_the_south_bay_with_a_quiet/",
+        "https://www.reddit.com/r/SanJose/comments/1u6tdh1/dog_fosters_needed_this_summer/",
+        "https://www.reddit.com/r/SanJose/comments/1u6pxft/san_pedro_square_san_jose_usa_v_australia_friday/",
+        "https://www.reddit.com/r/SanJose/comments/1u6prgt/aguachiles_ceviche_tostadas_micheladas_and_more/",
+        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/"
+      ]
+    },
+    {
+      "name": "Mike E. Winfield Comedy Show",
+      "when": "Thursday June 18, 8PM-9PM",
+      "city": "San Jose",
+      "context": "AGT rising star performing at San Jose Improv",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ]
+    },
+    {
+      "name": "Pride Drag Show & Queer Singles Night",
+      "when": "Thursday June 18, 6:30PM-10PM",
+      "city": "Campbell",
+      "context": "Drag performances and matchmaking event at Cedar Room",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ]
+    },
+    {
+      "name": "Shakira Concert",
+      "when": "Friday June 19, 7:30PM-8:30PM",
+      "city": "San Jose",
+      "context": "Concert at SAP Center during World Cup",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ]
+    },
+    {
+      "name": "Dia De Portugal",
+      "when": "Saturday",
+      "city": "San Jose",
+      "context": "Portuguese cultural event at Historic Park",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ]
+    },
+    {
+      "name": "Portugal vs Colombia World Cup Match Watch Party",
+      "when": "June 27",
+      "city": "San Jose",
+      "context": "World Cup watch party on June 27 at San Pedro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ]
+    },
+    {
+      "name": "Korea vs Mexico World Cup Match",
       "when": "Thursday",
       "city": "San Jose",
-      "context": "Korea vs Mexico match viewing at San Pedro Square",
+      "context": "World Cup match watch party locations sought",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u6okow/i_was_at_the_calabazas_dirt_jumps_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u61uwx/hows_the_world_cup_crowd_in_dtsj/",
-        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/"
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
       ]
     },
     {
       "name": "Levitt San Jose",
       "when": "",
       "city": "San Jose",
-      "context": "outdoor concert series at St James Park",
+      "context": "outdoor music series at St James Park",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u6okow/i_was_at_the_calabazas_dirt_jumps_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u61uwx/hows_the_world_cup_crowd_in_dtsj/",
-        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/"
-      ]
-    },
-    {
-      "name": "San Pedro Square Watch Party",
-      "when": "",
-      "city": "San Jose",
-      "context": "watch party for sports matches",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
-      ]
-    },
-    {
-      "name": "Neighborhood Garage Sale",
-      "when": "Saturday June 20, 9 AM–2 PM",
-      "city": "San Jose",
-      "context": "moving sale at Mabury Rd and Timor Court",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
-      ]
-    },
-    {
-      "name": "Qatar vs. Switzerland Match",
-      "when": "",
-      "city": "San Jose",
-      "context": "international football match at Levi's Stadium",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1u66ac3/hiking_group/",
+        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/",
+        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/",
+        "https://www.reddit.com/r/SanJose/comments/1u6ttz2/ice_cream/"
       ]
     }
   ],
@@ -166,18 +176,97 @@
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "World Cup watch party venue with large crowds",
+      "context": "hosting USA v Australia match and large crowds",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u6okow/i_was_at_the_calabazas_dirt_jumps_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u61uwx/hows_the_world_cup_crowd_in_dtsj/",
-        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/",
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1u6u6p6/best_restaurants_in_the_south_bay_with_a_quiet/",
+        "https://www.reddit.com/r/SanJose/comments/1u6tdh1/dog_fosters_needed_this_summer/",
+        "https://www.reddit.com/r/SanJose/comments/1u6pxft/san_pedro_square_san_jose_usa_v_australia_friday/",
+        "https://www.reddit.com/r/SanJose/comments/1u6prgt/aguachiles_ceviche_tostadas_micheladas_and_more/",
+        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    },
+    {
+      "name": "One Fish Raw Bar",
+      "city": "Campbell",
+      "kind": "restaurant",
+      "context": "hosting aguachiles, ceviche, tostadas pop-up event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u6u6p6/best_restaurants_in_the_south_bay_with_a_quiet/",
+        "https://www.reddit.com/r/SanJose/comments/1u6tdh1/dog_fosters_needed_this_summer/",
+        "https://www.reddit.com/r/SanJose/comments/1u6pxft/san_pedro_square_san_jose_usa_v_australia_friday/",
+        "https://www.reddit.com/r/SanJose/comments/1u6prgt/aguachiles_ceviche_tostadas_micheladas_and_more/",
+        "https://www.reddit.com/r/SanJose/comments/1u64buo/more_crowds_at_san_pedro_square/"
+      ],
+      "matchedName": "One Fish Raw Bar"
+    },
+    {
+      "name": "Cedar Room",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "Hosting Pride Drag Show & Queer Singles Night event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ],
+      "matchedName": "Cedar Room"
+    },
+    {
+      "name": "SAP Center at San Jose",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "Hosting Shakira concert June 19",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ],
+      "matchedName": "SAP Center"
+    },
+    {
+      "name": "Lake Cunningham",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "Skate park location for skateboarding",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ],
+      "matchedName": "Lake Cunningham Regional Park"
+    },
+    {
+      "name": "Historic Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "Hosting Dia De Portugal event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
+      ],
+      "matchedName": "Agnews Historic Park"
+    },
+    {
+      "name": "San Pedro",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "World Cup watch party venue for Portugal match",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u617cs/things_to_do_in_san_jose_this_week_618_621_2026/",
+        "https://www.reddit.com/r/SanJose/comments/1u6u72h/skate_park_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1u6kvds/dirty_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1u6iob0/portugal_colombia_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u67l0t/world_cup_watch_party/"
       ],
       "matchedName": "San Pedro Square Market"
     }
@@ -189,11 +278,10 @@
       "city": "San Jose",
       "context": "concert event at The Ritz",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u5v2m0/san_pedro_square_watch_party/",
-        "https://www.reddit.com/r/Cupertino/comments/1u4gbji/calabazas_bike_track_reopened/",
-        "https://www.reddit.com/r/SanJose/comments/1u6nis0/moving_sale_this_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1u6kru6/levis_stadium_experience_update/",
-        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1u66ac3/hiking_group/",
+        "https://www.reddit.com/r/SanJose/comments/1u63mwn/anyone_going_to_the_emo_night_at_the_ritz/",
+        "https://www.reddit.com/r/SanJose/comments/1u61dkm/levitt_san_jose_st_james_park/",
+        "https://www.reddit.com/r/SanJose/comments/1u6ttz2/ice_cream/"
       ],
       "matchedName": "The Emo Night Tour"
     }
