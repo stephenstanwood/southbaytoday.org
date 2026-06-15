@@ -593,7 +593,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Palo Alto",
     category: "chip",
     stage: "growth",
-    tagline: "Full-stack AI inference: custom wafer-scale chip plus a software layer tuned for large models. Co-founded by Stanford CS professors.",
+    tagline: "Full-stack AI inference built on its Reconfigurable Dataflow Unit (RDU) chip, paired with a software layer tuned for large models. Co-founded by Stanford CS professors.",
     color: "#E85D04",
     url: "https://sambanova.ai",
     employeesNote: "~300 employees",
