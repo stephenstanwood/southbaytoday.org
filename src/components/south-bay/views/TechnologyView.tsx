@@ -1155,7 +1155,9 @@ function RecentlyFundedSection() {
 
       {/* Stage filter */}
       <div style={{ display: "flex", gap: 6, marginBottom: 14, flexWrap: "wrap" }}>
-        {(["all", "last30", "early"] as const).map((f) => (
+        {(["all", "last30", "early"] as const)
+          .filter((f) => f === "all" || (f === "last30" ? last30Count > 0 : earlyCount > 0))
+          .map((f) => (
           <button
             key={f}
             onClick={() => setStageFilter(f)}
@@ -1182,9 +1184,41 @@ function RecentlyFundedSection() {
       </div>
 
       <div>
-        {filtered.map((company) => (
-          <RecentlyFundedCard key={company.id + company.date} company={company} />
-        ))}
+        {filtered.length > 0 ? (
+          filtered.map((company) => (
+            <RecentlyFundedCard key={company.id + company.date} company={company} />
+          ))
+        ) : (
+          <div
+            style={{
+              padding: "18px 14px",
+              fontSize: 13,
+              color: "var(--sb-muted)",
+              fontFamily: "var(--sb-sans)",
+              textAlign: "center",
+              border: "1px dashed var(--sb-border-light)",
+              borderRadius: 6,
+            }}
+          >
+            Switch to{" "}
+            <button
+              onClick={() => setStageFilter("all")}
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                color: "#7c3aed",
+                fontWeight: 700,
+                fontFamily: "inherit",
+                fontSize: "inherit",
+                cursor: "pointer",
+              }}
+            >
+              All
+            </button>{" "}
+            to see every tracked South Bay raise.
+          </div>
+        )}
       </div>
       <div
         style={{
