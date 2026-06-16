@@ -264,6 +264,12 @@ const BARE_ENTITY_PATTERN = /^[A-Za-z0-9&'\s]{1,30}\s+(LLC|Inc\.|Inc|Corp\.|Corp
 // Non-food establishments that sometimes appear in health permit data (law firms, spas, etc.)
 const NON_FOOD_PATTERNS = /\b(LLP|L\.L\.P\.)\b|\bATTORNEY|BARRISTERS|SOLICITORS|\bLAW\s+(OFFICES?|GROUP|FIRM)\b/i;
 
+// Dollar/variety stores carry packaged food (so they get a health permit) but are
+// not food destinations readers care about in a restaurant-openings feed. Grocery
+// stores (Whole Foods, T&T, Grocery Outlet) are intentionally kept — only skip
+// general-merchandise dollar/variety chains.
+const VARIETY_STORE_PATTERNS = /\bDOLLAR\s*TREE\b|\bDOLLAR\s*GENERAL\b|\bFAMILY\s*DOLLAR\b|\b99\s*(CENTS?|¢)\b|\bDOLLARAMA\b|\bFIVE\s*BELOW\b/i;
+
 function shouldSkip(item) {
   const name = item.business_name ?? "";
   const rawName = name.replace(/^E-\s*/i, "").trim();
@@ -273,6 +279,7 @@ function shouldSkip(item) {
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
+  if (VARIETY_STORE_PATTERNS.test(rawName)) return true;
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
 
   // Skip entries whose site location is a PO Box — a storefront food venue is
