@@ -1238,10 +1238,27 @@ function RecentlyFundedSection() {
 
 const WINDOW_DAYS = 8;
 
+// The calendar year whose occurrence of this milestone's month/day sits
+// closest to `now`. Checking only the current year misses anniversaries that
+// fall just across a year boundary (e.g. HP on Jan 1 viewed in late December),
+// so consider the adjacent years too.
+function nearestOccurrenceYear(m: TechMilestone, now: Date): number {
+  let bestYear = now.getFullYear();
+  let bestDiff = Infinity;
+  for (const yr of [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1]) {
+    const diff = Math.abs(new Date(yr, m.month - 1, m.day).getTime() - now.getTime());
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestYear = yr;
+    }
+  }
+  return bestYear;
+}
+
 function getActiveMilestones(): TechMilestone[] {
   const now = new Date();
   return TECH_MILESTONES.filter((m) => {
-    const mDate = new Date(now.getFullYear(), m.month - 1, m.day);
+    const mDate = new Date(nearestOccurrenceYear(m, now), m.month - 1, m.day);
     const diff = Math.abs(mDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
     return diff <= WINDOW_DAYS;
   });
@@ -1268,7 +1285,7 @@ function getNextMilestone(): { milestone: TechMilestone; daysUntil: number } | n
 }
 
 function milestoneAge(m: TechMilestone): number {
-  return new Date().getFullYear() - m.foundedYear;
+  return nearestOccurrenceYear(m, new Date()) - m.foundedYear;
 }
 
 // Anniversary notes may embed live counts so they never go stale year-over-year:
