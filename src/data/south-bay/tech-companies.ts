@@ -2033,17 +2033,6 @@ export const TECH_MILESTONES: TechMilestone[] = [
     url: "https://en.wikipedia.org/wiki/VMware",
   },
   {
-    id: "oracle",
-    company: "Oracle",
-    city: "Santa Clara",
-    foundedYear: 1977,
-    month: 6,
-    day: 16,
-    tagline: "Database and cloud giant founded in Santa Clara — Oracle's relational database became the backbone of enterprise software worldwide.",
-    anniversaryNote: "Oracle was founded June 16, 1977 as Software Development Laboratories in Santa Clara by Larry Ellison, Bob Miner, and Ed Oates. The Oracle database powered nearly every major corporation's data systems for four decades.",
-    url: "https://en.wikipedia.org/wiki/Oracle_Corporation",
-  },
-  {
     id: "ebay",
     company: "eBay",
     city: "San Jose",
