@@ -1015,7 +1015,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$35M",
     date: "2026-06-10",
     tagline:
-      "AI-native physical security platform that turns the cameras and access-control gear a building already has into autonomous investigators — surfacing incidents, answering “what happened,” and coordinating response across video, access, and guest workflows without a rip-and-replace. Founded by ex-Lyft and Zoox self-driving leaders Ashesh Jain and Peter Ondruska, it now runs at 1,500+ U.S. sites; the Series B was co-led by Ansa Capital and Battery Ventures with UP.Partners, 8VC, and Mosaic Ventures, taking total funding to $66M.",
+      "AI-native physical security that turns a building’s existing cameras and access-control gear into autonomous investigators — surfacing incidents and answering “what happened” without a rip-and-replace. Founded by ex-Lyft and Zoox self-driving leaders Ashesh Jain and Peter Ondruska, it now runs at 1,500+ U.S. sites; the Series B was co-led by Ansa Capital and Battery Ventures, taking total funding to $66M.",
     color: "#2563eb",
     url: "https://www.coram.ai",
   },
@@ -1028,7 +1028,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$27M",
     date: "2026-06-10",
     tagline:
-      "Physical-AI platform that turns the cameras already mounted on a factory floor into real-time operational intelligence — no rip-and-replace required. Its VITA agent makes accept / reject / reroute quality calls up to 30 times a second, while its ALIS agent watches safety and line productivity, both running on NVIDIA edge devices. Founded by CEO Rae Jeong and CTO Kelvin Chan; the Series A was led by U.S. Venture Partners with returning backers Bling Capital and Freestyle Capital plus angels including Gokul Rajaram, taking total funding to $38.4M.",
+      "Physical-AI platform that turns the cameras already mounted on a factory floor into real-time operational intelligence — its VITA agent makes accept/reject/reroute quality calls up to 30 times a second while a second agent watches safety and line productivity, both on NVIDIA edge devices. Founded by Rae Jeong and Kelvin Chan; the Series A was led by U.S. Venture Partners, taking total funding to $38.4M.",
     color: "#7c3aed",
     url: "https://www.maneva.ai",
   },
