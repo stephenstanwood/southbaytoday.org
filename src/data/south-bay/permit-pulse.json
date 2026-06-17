@@ -1,91 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-16T19:09:10.818Z",
+      "generatedAt": "2026-06-17T19:09:12.325Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 9 – Jun 16",
+      "dateRange": "Jun 10 – Jun 17",
       "stats": {
-        "total": 349,
-        "notable": 33,
-        "newUnits": 21,
-        "totalValuation": 40606145
+        "total": 339,
+        "notable": 23,
+        "newUnits": 7,
+        "totalValuation": 48447370
       },
       "permits": [
-        {
-          "id": "2026-118235-RS",
-          "address": "4 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lots 6 & 7 (Bemp 100%) New Duplex",
-          "valuation": 722764,
-          "units": 2,
-          "issueDate": "2026-06-10",
-          "subtype": "Duplex"
-        },
-        {
-          "id": "2026-118164-RS",
-          "address": "6 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 5 (Bemp 100%) New Single Family",
-          "valuation": 712238,
-          "units": 1,
-          "issueDate": "2026-06-10",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-118137-RS",
-          "address": "1 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 1 (Bemp 100%) New Single Family",
-          "valuation": 639440,
-          "units": 1,
-          "issueDate": "2026-06-10",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-118140-RS",
-          "address": "3 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 2 (Bemp 100%) New Single Family",
-          "valuation": 629553,
-          "units": 1,
-          "issueDate": "2026-06-10",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-118190-RS",
-          "address": "5 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 3 (Bemp 100%) New SFR",
-          "valuation": 623737,
-          "units": 1,
-          "issueDate": "2026-06-10",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-118193-RS",
-          "address": "8 Echo Pl",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 4 (Bemp 100%) New SFR",
-          "valuation": 623737,
-          "units": 1,
-          "issueDate": "2026-06-10",
-          "subtype": "Single-Family"
-        },
         {
           "id": "2025-132399-RS",
           "address": "1194 Sherwood Av",
@@ -97,18 +25,6 @@
           "units": 1,
           "issueDate": "2026-06-11",
           "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-118240-RS",
-          "address": "1360 Miller Av",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Miller Lot 8 (Bemp 100%) New Duplex",
-          "valuation": 382482,
-          "units": 2,
-          "issueDate": "2026-06-10",
-          "subtype": "Duplex"
         },
         {
           "id": "2025-126229-RS",
@@ -133,26 +49,110 @@
           "units": 1,
           "issueDate": "2026-06-12",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-107903-RS",
+          "address": "2271 Pumpherston Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Conversion to Jadu",
+          "valuation": 75245,
+          "units": 1,
+          "issueDate": "2026-06-15",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-115239-RS",
+          "address": "2777 Twin Oaks Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case Legalize Unpermitted Garage Conversion to Jadu",
+          "valuation": 66621,
+          "units": 1,
+          "issueDate": "2026-06-15",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-116144-RS",
+          "address": "1544 Amesbury Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Ab 2533 Legalize Attach Patio to ADU",
+          "valuation": 64254,
+          "units": 1,
+          "issueDate": "2026-06-12",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-106855-RS",
+          "address": "4082 Jarvis Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Jadu",
+          "valuation": 59012,
+          "units": 1,
+          "issueDate": "2026-06-15",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-121166-CI",
+          "address": "3655 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Samsung TI",
+          "valuation": 19896285,
+          "units": 0,
+          "issueDate": "2026-06-12",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-121525-CI",
+          "address": "321 Park Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "TI New Chillers & Cooling Towers",
+          "valuation": 13000000,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Office"
+        },
+        {
+          "id": "2025-103772-CI",
+          "address": "3655 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Samsung (Bemp100%) Office TI",
+          "valuation": 5253737,
+          "units": 0,
+          "issueDate": "2026-06-12",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-16T19:09:13.370Z",
+      "generatedAt": "2026-06-17T19:09:14.800Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 9 – Jun 16",
+      "dateRange": "Jun 10 – Jun 17",
       "stats": {
-        "total": 115,
-        "notable": 6,
+        "total": 117,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
+          "id": "26BLD-01585",
+          "address": "206 Everett Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -175,8 +175,20 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01585",
-          "address": "206 Everett Av",
+          "id": "26BLD-01598",
+          "address": "710 Chimalus Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -187,27 +199,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01537",
-          "address": "3859 Corina Wy",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Bathroom remodel (70sf). New shower, toilet, vanity and electrical work in master bathroom",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-09",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00130",
-          "address": "407 Lytton Av",
+          "id": "26PLN-00138",
+          "address": "400 Hamilton Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Over-The-Counter Planning application for backyard outdoor dining less than 20 patrons with artificial landscape and additional seating for an existing restaurant.",
+          "description": "Request for an Over the Counter Architectural Review to install a barrier arm with a long range reader at the surface parking lot entry and exit. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalo.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-09",
+          "issueDate": "2026-06-16",
           "subtype": "Over the Counter Approved"
         },
         {
@@ -220,6 +220,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-10",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00141",
+          "address": "250 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Over the Counter Architectural Review to install three illuminated wall signs etter on the front and side elevations of the existing commercial building. Sign will be internally illuminated LED with electrical connection to existing building power. The proposed sign to read, \"Fifth Third Bank\". Environmental Assessment: Not a Project. For more information contact the project planner Val Perez at Val Perez-Ibardolasa@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
           "subtype": "Over the Counter Approved"
         }
       ]
