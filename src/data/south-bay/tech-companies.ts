@@ -213,9 +213,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "chip",
     sccEmployeesK: 5,
     trend: "up",
-    trendNote: "5K at Santa Clara HQ; growing as MI300X earns data center wins",
+    trendNote: "5K at Santa Clara HQ; MI350 GPUs plus multi-year OpenAI and Meta deals drive data center growth",
     highlights: [
-      "MI300X AI GPU positioned as the primary alternative to NVIDIA H100 for AI workloads",
+      "MI355X AI GPU competes head-to-head with NVIDIA's Blackwell B200; the MI400 series ramps in 2026",
       "EPYC server CPUs dominant across major cloud providers — AWS, Azure, Google Cloud",
     ],
     description:
