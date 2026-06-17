@@ -1007,6 +1007,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
   {
+    id: "xcena",
+    name: "XCENA",
+    city: "Santa Clara",
+    category: "chip",
+    round: "Series B",
+    amount: "$135M",
+    date: "2026-05-29",
+    tagline:
+      "Memory-centric computing for AI infrastructure — its MX1 computational memory keeps data next to compute to clear the memory bottlenecks that throttle large AI workloads. Led by CEO Jin Kim, the Series B was co-led by Atinum Investment and IMM Investment, bringing total funding to $185M at a $570M valuation.",
+    color: "#1d4ed8",
+    url: "https://xcena.com",
+  },
+  {
     id: "coram-ai",
     name: "Coram AI",
     city: "Sunnyvale",
