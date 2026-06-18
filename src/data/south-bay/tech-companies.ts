@@ -1028,7 +1028,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$35M",
     date: "2026-06-10",
     tagline:
-      "AI-native physical security that turns a building's existing cameras and access-control gear into autonomous investigators — surfacing incidents and answering \"what happened\" without a rip-and-replace. Founded by ex-Lyft and Zoox self-driving leaders Ashesh Jain and Peter Ondruska, it now runs at 1,500+ U.S. sites; the Series B was co-led by Ansa Capital and Battery Ventures, taking total funding to $66M.",
+      "AI-native physical security that turns a building's existing cameras and access-control gear into autonomous investigators — surfacing incidents and answering \"what happened\" without a rip-and-replace. Founded by ex-Lyft and Zoox self-driving leaders Ashesh Jain and Peter Ondruska, it now runs at 1,500+ sites across the U.S. and Canada; the Series B was co-led by Ansa Capital and Battery Ventures, taking total funding to $66M.",
     color: "#2563eb",
     url: "https://www.coram.ai",
   },
