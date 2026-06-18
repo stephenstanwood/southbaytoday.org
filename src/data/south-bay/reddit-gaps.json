@@ -1,140 +1,163 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-18T11:13:00.922Z",
+    "generatedAt": "2026-06-18T19:13:32.126Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 10,
-    "placesExtracted": 5,
+    "threadsMined": 9,
+    "placesExtracted": 8,
     "placesMatched": 2,
-    "placeGaps": 3,
-    "eventsExtracted": 4,
+    "placeGaps": 6,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 4,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
+    {
+      "name": "La Plaza",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosted Mexico vs South Korea watch party",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ]
+    },
     {
       "name": "Parque de los Pobladores",
       "city": "San Jose",
       "kind": "park",
       "context": "venue for CityDance World Stage Series events",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
         "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ]
+    },
+    {
+      "name": "San Jose Food Not Bombs",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "local charity accepting kitchen equipment donations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ]
+    },
+    {
+      "name": "Hero Tent",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "local charity accepting kitchen equipment donations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ]
+    },
+    {
+      "name": "Westgate",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "proposed Chick-fil-A location next to mall",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
       ]
     },
     {
       "name": "Bill Wilson Center",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Pride event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
-      ]
-    },
-    {
-      "name": "Levi's Stadium",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "World Cup matches, section 226 seating sun exposure",
+      "context": "Pride event venue",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u92caf/sadly_i_jumped_the_gun_when_purchasing_wc_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1u8zmye/world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/",
-        "https://www.reddit.com/r/SanJose/comments/1u8om3x/vta_from_south_san_jose_to_levis/"
+        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
+        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
+        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
       ]
     }
   ],
   "eventGaps": [
     {
+      "name": "Mexico vs South Korea Watch Party",
+      "when": "today 4:30pm",
+      "city": "San Jose",
+      "context": "free family friendly soccer watch party at La Plaza",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ]
+    },
+    {
       "name": "CityDance San José World Stage Series",
       "when": "June 18, 21, 24, 30",
       "city": "San Jose",
-      "context": "free culturally vibrant dance and music events downtown",
+      "context": "free dance and music events celebrating global cultures",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
         "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
       ]
     },
     {
       "name": "Bill Wilson Center Pride Event",
-      "when": "",
+      "when": "tomorrow (from post date)",
       "city": "San Jose",
-      "context": "Pride celebration event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
-      ]
-    },
-    {
-      "name": "Low-cost Spay/Neuter + Vaccines Clinic",
-      "when": "June 23, 2026",
-      "city": "San Jose",
-      "context": "affordable pet medical services clinic for cats",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
-      ]
-    },
-    {
-      "name": "FIFA World Cup Round of 32",
-      "when": "July 1, 5pm",
-      "city": "San Jose",
-      "context": "World Cup match at Levi's Stadium",
+      "context": "ongoing pride celebration event",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u92caf/sadly_i_jumped_the_gun_when_purchasing_wc_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1u8zmye/world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/",
-        "https://www.reddit.com/r/SanJose/comments/1u8om3x/vta_from_south_san_jose_to_levis/"
+        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
+        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
+        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Chick-fil-A",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "proposed new location next to Westgate mall",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u8h9jl/lowcost_spayneuter_vaccines_for_owned_cats_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u904vb/never_knew_we_had_an_airport_mascot/"
-      ],
-      "matchedName": "Chick-fil-A"
-    },
-    {
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "World Cup watch party with big screen viewing",
+      "context": "hosted Mexico soccer game watch party",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
+        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
+        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    },
+    {
+      "name": "San Pedro Square Market",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "World Cup watch party with big screen",
       "sourceUrls": [
         "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u92caf/sadly_i_jumped_the_gun_when_purchasing_wc_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1u8zmye/world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/",
-        "https://www.reddit.com/r/SanJose/comments/1u8om3x/vta_from_south_san_jose_to_levis/"
+        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
+        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
+        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
       ],
       "matchedName": "San Pedro Square Market"
     }

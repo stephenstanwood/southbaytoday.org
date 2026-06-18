@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "pulledAt": "2026-06-18T11:07:07.121Z",
-    "totalInBlob": 1506,
-    "freshCount": 444
+    "pulledAt": "2026-06-18T19:09:15.013Z",
+    "totalInBlob": 1511,
+    "freshCount": 449
   },
   "events": [
     {
@@ -94,6 +94,22 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
+    },
+    {
+      "id": "inbound_mqjr42ra_ezovvu",
+      "receivedAt": "2026-06-18T17:04:18.212Z",
+      "fromEmail": "info@ridgetrail.org",
+      "emailSubject": "☀️ Ridge Trail News: June 2026",
+      "title": "Buck Full Moon Group Hike",
+      "startsAt": "2026-07-29T18:00:00-07:00",
+      "endsAt": null,
+      "location": "Alum Rock Park, San Jose, CA",
+      "description": "Full moon group hike featuring stretching, connection circle, snacks, and a 7-mile moderate loop. Experience golden hour into moonlight hiking.",
+      "sourceUrl": "https://luma.com/n7xfgalw",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://bayarearidgetrailcouncil.cmail20.com/t/d-l-wlisyd-hjljedldi-p/"
     },
     {
       "id": "inbound_mpobb3iu_90itil",
@@ -5010,6 +5026,22 @@
       "status": "new"
     },
     {
+      "id": "inbound_mqjrpvnn_hz7udi",
+      "receivedAt": "2026-06-18T17:19:45.202Z",
+      "fromEmail": "redwoods@sempervirens.org",
+      "emailSubject": "Will the Giants Return?",
+      "title": "Nature's Echo: The Science of Hope",
+      "startsAt": "2026-06-30T00:00:00-07:00",
+      "endsAt": null,
+      "location": "Zoom webinar",
+      "description": "Conversation with ecologist and U.N. Advisor Thomas Crowther about biodiversity loss, human wellbeing, and the science of hope.",
+      "sourceUrl": "https://click.everyaction.com/k/133580308/628359682/661986146?nvep=ew0KICAiVGVuYW50VXJpIjogIm5ncHZhbjovL3Zhbi9FQS9FQTAwMS8xLzU5NjgzIiwNCiAgIkRpc3RyaWJ1dGlvblVuaXF1ZUlkIjogIjQ5OWMxN2I5LTM5NmItZjExMS04ZmNiLTAwMGQzYTE4OTA1YyIsDQogICJFbWFpbEFkZHJlc3MiOiAic2FuZGNhdGh5cGVAZ21haWwuY29tIg0KfQ%3D%3D&hmac=3YPsvjz-rHRNv16TCIRLsYgJnZDlm8CMbBRbaSweePI=&emci=c4fb285f-786a-f111-8fcb-000d3a14b640&emdi=499c17b9-396b-f111-8fcb-000d3a18905c&ceid=14469802#/registration",
+      "cityKey": null,
+      "cityName": null,
+      "status": "new",
+      "virtual": true
+    },
+    {
       "id": "inbound_c703cc22c0ae5584_01",
       "receivedAt": "2026-05-18 17:02:38.151571+00",
       "fromEmail": "tickets@cmtsj.org",
@@ -6653,6 +6685,54 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
+    },
+    {
+      "id": "inbound_mqjkl6bt_48wqxe",
+      "receivedAt": "2026-06-18T14:02:03.100Z",
+      "fromEmail": "connect@cdm.org",
+      "emailSubject": "Celebrate Juneteenth at the Purple Museum",
+      "title": "Juneteenth Community Celebration",
+      "startsAt": "2026-06-19T11:00:00-07:00",
+      "endsAt": "2026-06-19T15:00:00-07:00",
+      "location": "Children's Discovery Museum, 180 Woz Way, San Jose, CA 95110",
+      "description": "Celebrate freedom, culture, and community with drumming workshops led by Pope Flyne, plus craft activities and friendship bracelets.",
+      "sourceUrl": "https://www.cdm.org/event/juneteenth/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=JfYFvBKPDhdV3GgG1jfdj5ntGIWXQOQzXEHnAbiQsB9bBbs8G8lO9A"
+    },
+    {
+      "id": "inbound_mqjkl6bt_wuvbs2",
+      "receivedAt": "2026-06-18T14:02:03.100Z",
+      "fromEmail": "connect@cdm.org",
+      "emailSubject": "Celebrate Juneteenth at the Purple Museum",
+      "title": "Star-Spangled Day of Play",
+      "startsAt": "2026-07-01T12:00:00-07:00",
+      "endsAt": null,
+      "location": "Children's Discovery Museum, 180 Woz Way, San Jose, CA 95110",
+      "description": "Festive day of red, white, and blue activities including sparkler-inspired art and Bubble Wrap Firecracker Stomp with projected fireworks.",
+      "sourceUrl": "https://www.cdm.org/event/star-spangled-day-of-play/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=-4p9FbgjMfpPcs7HVEarfocvkceIwRBsIUb4Y2ibsmibmqMk5VWDOA"
+    },
+    {
+      "id": "inbound_mqjkl6bt_u247dy",
+      "receivedAt": "2026-06-18T14:02:03.100Z",
+      "fromEmail": "connect@cdm.org",
+      "emailSubject": "Celebrate Juneteenth at the Purple Museum",
+      "title": "Math Fest",
+      "startsAt": "2026-07-11T00:00:00-07:00",
+      "endsAt": null,
+      "location": "Children's Discovery Museum, 180 Woz Way, San Jose, CA 95110",
+      "description": "Hands-on math festival in partnership with Julia Robinson Math Festival featuring interactive activities and challenges for children and families.",
+      "sourceUrl": "https://14945.blackbaudhosting.com/14945/page.aspx?pid=196&tab=2&txobjid=dbc85ced-cc24-478b-97c0-96bae65493a9",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=zUXqT0dcr0OcwfeTHMBV7XBZdeJ0q_tsV2b_cvUjrM1VEUpMcvwXJw"
     },
     {
       "id": "inbound_mon1kt0p_iszcd4",
