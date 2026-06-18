@@ -1061,6 +1061,23 @@ function cleanTitle(title) {
     const TITLE_ABBR = new Set(["Blvd", "Corp", "Dept", "Univ", "Assn", "Bros", "Mtns"]);
     t = t.replace(/\b([A-Za-z]{4,})\.\s*$/, (m, word) => (TITLE_ABBR.has(word) ? m : word));
   }
+  // Strip orphaned CJK/fullwidth punctuation. Some Meetup feeds (e.g. JTPA's
+  // Japanese-language events) arrive with the Japanese title text lost upstream,
+  // leaving only the structural punctuation behind — "JTPA ー 「 ー ： ー 」" —
+  // which renders as meaningless glyph noise on cards. When a title carries CJK
+  // brackets, the prolonged-sound mark (ー), or fullwidth punctuation but holds
+  // ZERO CJK letters (kana/kanji/hangul) to anchor them, the punctuation is
+  // orphaned junk; strip it. Titles with real CJK text are left untouched, so
+  // legitimate Japanese/Chinese/Korean event names keep their punctuation. This
+  // was a recurring manual copy-edit (the garble regenerated nightly) — handled
+  // upstream now.
+  {
+    const hasCjkLetter = /[぀-ゟァ-ヺヿ㐀-䶿一-鿿豈-﫿가-힣ｦ-ﾝ]/.test(t);
+    const CJK_PUNCT = /[　-〿・ー！-／：-＠［-｀｛-･]/;
+    if (!hasCjkLetter && CJK_PUNCT.test(t)) {
+      t = t.replace(/[　-〿・ー！-／：-＠［-｀｛-･]/g, " ").replace(/\s{2,}/g, " ").trim();
+    }
+  }
   // Apply known recurring fixes from source data
   for (const [bad, fix] of Object.entries(TITLE_FIXES)) {
     t = t.replaceAll(bad, fix);
