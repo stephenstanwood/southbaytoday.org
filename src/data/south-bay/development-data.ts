@@ -89,14 +89,14 @@ export const DEV_PROJECTS: DevProject[] = [
     city: "San Jose",
     cityId: "san-jose",
     category: "mixed-use",
-    status: "under-construction",
+    status: "on-hold",
     description:
-      "Google's mixed-use development adjacent to Diridon Station, approved by San Jose City Council in 2021. The project spans office, housing, retail, parks, and community uses near the region's largest transit hub. Google has scaled back its office ambitions since the original approval but reaffirmed housing commitments; initial site work is underway.",
+      "Google's 80-acre mixed-use district next to Diridon Station, approved by San Jose City Council in 2021 for up to 7.3M sq ft of office plus 4,000+ homes, parks, and retail near the region's largest transit hub. Google ended its development partnership with Lendlease in 2023 and paused active construction; the entitled site remains largely cleared while the company reassesses the timeline. Under the development agreement, a $54M community-fund payment is triggered if construction hasn't started by July 2031.",
     scale: "Up to 7.3M sq ft; 4,000+ housing units planned",
-    developer: "Google / Lendlease",
-    timeline: "Phased — office timeline revised; housing phases ongoing",
+    developer: "Google (Lendlease partnership ended 2023)",
+    timeline: "Entitled 2021; active construction paused",
     featured: true,
-    sourceNote: "Lendlease announced exit from US construction in Sept 2023 — verify current developer/partner at sanjoseca.gov or google.com/downtownwest.",
+    sourceNote: "Status confirmed June 2026: Google ended the Lendlease partnership in 2023 and active construction is paused. Verify at sanjoseca.gov Downtown West page or realestate.withgoogle.com/sanjose.",
   },
 
   {
