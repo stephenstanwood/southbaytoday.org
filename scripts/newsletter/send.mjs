@@ -101,13 +101,22 @@ async function main() {
   });
   console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
 
+  // Daily Discord DM is OFF by default (Stephen turned it off 2026-06-18).
+  // The email broadcast + public archive still run; the cat-signal DM only
+  // fires when NEWSLETTER_DISCORD_DM=1 is explicitly set. Do not re-enable
+  // unconditionally.
+  const dmEnabled = process.env.NEWSLETTER_DISCORD_DM === "1";
   let dmError = null;
   let archiveUrl = null;
   try {
     archiveUrl = await publishNewsletterArchive(data, html);
     console.log(`newsletter archive: ${archiveUrl}`);
-    await sendNewsletterDiscordDm(data, subject, archiveUrl);
-    console.log("discord DM sent");
+    if (dmEnabled) {
+      await sendNewsletterDiscordDm(data, subject, archiveUrl);
+      console.log("discord DM sent");
+    } else {
+      console.log("discord DM skipped (NEWSLETTER_DISCORD_DM not set)");
+    }
   } catch (err) {
     dmError = err;
     console.error(`discord DM failed: ${err.message}`);
