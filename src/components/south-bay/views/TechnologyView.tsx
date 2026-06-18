@@ -916,6 +916,19 @@ const FUNDING_PERIOD_LABEL = (() => {
   const quarter = Math.ceil(parseInt(latestDate.slice(5, 7), 10) / 3);
   return quarter <= 1 ? "Q1 2026" : `Q1–Q${quarter} 2026`;
 })();
+// Full span of the funding list (oldest → newest round), e.g. "Q4 2025 – Q2
+// 2026". Derived from the data so the Recently Funded section note never claims
+// a quarter range the list doesn't actually cover once newer rounds land —
+// same staleness guard as FUNDING_PERIOD_LABEL above.
+const FUNDING_SPAN_LABEL = (() => {
+  if (RECENTLY_FUNDED.length === 0) return "";
+  const dates = RECENTLY_FUNDED.map((r) => r.date);
+  const qlabel = (iso: string) =>
+    `Q${Math.ceil(parseInt(iso.slice(5, 7), 10) / 3)} ${iso.slice(0, 4)}`;
+  const lo = qlabel(dates.reduce((min, d) => (d < min ? d : min)));
+  const hi = qlabel(dates.reduce((max, d) => (d > max ? d : max)));
+  return lo === hi ? lo : `${lo} – ${hi}`;
+})();
 const Q1Q2_CATEGORY_COUNTS = Q1Q2_FUNDED.reduce<Record<string, number>>(
   (acc, r) => {
     acc[r.category] = (acc[r.category] ?? 0) + 1;
@@ -1026,7 +1039,7 @@ function RecentlyFundedSection() {
       <div className="tech-section-head">
         <h3 className="tech-section-title">Recently Funded</h3>
         <span className="tech-section-note">
-          South Bay startups · Q4 2025 – Q2 2026 · {RECENTLY_FUNDED.length} rounds
+          South Bay startups · {FUNDING_SPAN_LABEL} · {RECENTLY_FUNDED.length} rounds
         </span>
       </div>
 
