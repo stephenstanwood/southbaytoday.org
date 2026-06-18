@@ -1,41 +1,53 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-17T19:09:12.325Z",
+      "generatedAt": "2026-06-18T11:06:53.032Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 10 – Jun 17",
+      "dateRange": "Jun 11 – Jun 18",
       "stats": {
-        "total": 339,
-        "notable": 23,
-        "newUnits": 7,
-        "totalValuation": 48447370
+        "total": 338,
+        "notable": 24,
+        "newUnits": 10,
+        "totalValuation": 46354753
       },
       "permits": [
         {
-          "id": "2025-132399-RS",
-          "address": "1194 Sherwood Av",
+          "id": "2025-114735-RS",
+          "address": "3550 Chamberlain Dr",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "(Bemp100%) Demo/Rebuild",
-          "valuation": 484245,
+          "description": "Lot 3 New 2-Story SFR",
+          "valuation": 564057,
           "units": 1,
-          "issueDate": "2026-06-11",
+          "issueDate": "2026-06-16",
           "subtype": "Single-Family"
         },
         {
-          "id": "2025-126229-RS",
-          "address": "558 Richmond Av #2",
+          "id": "2025-114728-RS",
+          "address": "3554 Chamberlain Dr",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Lot 4 New 2-Story SFR",
+          "valuation": 526893,
+          "units": 1,
+          "issueDate": "2026-06-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-111335-RS",
+          "address": "15 Kent Ct #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "New Detached ADU",
-          "valuation": 125972,
+          "valuation": 202908,
           "units": 1,
-          "issueDate": "2026-06-11",
+          "issueDate": "2026-06-16",
           "subtype": "2nd Unit Added"
         },
         {
@@ -48,6 +60,18 @@
           "valuation": 115658,
           "units": 1,
           "issueDate": "2026-06-12",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-141055-RS",
+          "address": "1194 Sherwood Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "(Bemp100%) Attached ADU",
+          "valuation": 84545,
+          "units": 1,
+          "issueDate": "2026-06-16",
           "subtype": "2nd Unit Added"
         },
         {
@@ -75,6 +99,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2026-104736-RS",
+          "address": "4592 Brunswick Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Converison to Jadu",
+          "valuation": 65607,
+          "units": 1,
+          "issueDate": "2026-06-16",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2026-116144-RS",
           "address": "1544 Amesbury Wy #2",
           "category": "residential-new",
@@ -97,62 +133,26 @@
           "units": 1,
           "issueDate": "2026-06-15",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-121166-CI",
-          "address": "3655 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Samsung TI",
-          "valuation": 19896285,
-          "units": 0,
-          "issueDate": "2026-06-12",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-121525-CI",
-          "address": "321 Park Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "TI New Chillers & Cooling Towers",
-          "valuation": 13000000,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Office"
-        },
-        {
-          "id": "2025-103772-CI",
-          "address": "3655 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Samsung (Bemp100%) Office TI",
-          "valuation": 5253737,
-          "units": 0,
-          "issueDate": "2026-06-12",
-          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-17T19:09:14.800Z",
+      "generatedAt": "2026-06-18T11:06:55.655Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 10 – Jun 17",
+      "dateRange": "Jun 11 – Jun 18",
       "stats": {
-        "total": 117,
-        "notable": 7,
+        "total": 127,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01585",
-          "address": "206 Everett Av",
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -175,6 +175,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01585",
+          "address": "206 Everett Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01598",
           "address": "710 Chimalus Dr",
           "category": "residential-remodel",
@@ -187,18 +199,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26PLN-00138",
           "address": "400 Hamilton Av",
           "category": "entitlement",
@@ -208,18 +208,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-16",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00133",
-          "address": "1801 Page Mill Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to remove one dead Pinus Radiata. Three 24 inch box Chinese Elm trees will be planted onsite as replacement trees. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-10",
           "subtype": "Over the Counter Approved"
         },
         {
