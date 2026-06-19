@@ -197,6 +197,12 @@ function cleanName(raw) {
   // "Kaizen Lounge"). These are SCC filing artifacts, not part of the name.
   s = s.replace(/\s+(San Jose|Palo Alto|Mountain View|Sunnyvale|Santa Clara|Cupertino|Milpitas|Campbell|Saratoga|Los Gatos|Los Altos)?\s*\bPc\s*-?\d+\s*$/i, "").trim();
 
+  // Strip trailing business-entity suffixes ("K108 Hey Noodle LLC" → "K108 Hey
+  // Noodle"). These are filing-entity artifacts on the permit, not how the
+  // restaurant brands itself. Restaurants effectively never display a trailing
+  // LLC/Inc/Corp, so this is safe; leave "Co." alone (real names like "Brewing Co.").
+  s = s.replace(/\s+(LLC|L\.L\.C\.|Inc\.?|Incorporated|Corp\.?|Corporation)\s*$/i, "").trim();
+
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();
 
