@@ -1356,6 +1356,15 @@ function polishDescription(text) {
   // to , ; . ! ? — colons can be valid styled separators ("Topic : Talk").
   t = t.replace(/\s+([,.;!?])/g, "$1");
 
+  // Insert a missing space AFTER a colon wedged between two letters
+  // ("Cohousing:Intentional Neighborhoods" → "Cohousing: Intentional ...").
+  // Mirror of cleanTitle's colon fix — Meetup group names and feed bodies drop
+  // the space in "Title:Subtitle". Letter-only on both sides so clock times
+  // (1:00), ratios (2:1), and URLs (https://) stay untouched. This was a
+  // recurring manual copy-edit in the event JSON that got wiped on every
+  // regen — handle it upstream so it sticks.
+  t = t.replace(/([A-Za-z]):([A-Za-z])/g, "$1: $2");
+
   // Tighten the `. "` artifact at end-of-string — Kepler's and SCU description
   // bodies emit a stray space between a clause-terminating period and the
   // closing quote of a tail quoted phrase (`...as an "urgent manifesto. "`).
