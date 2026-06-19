@@ -22,6 +22,10 @@ import PageHero from "../PageHero";
 const TODAY_ISO = new Date().toLocaleDateString("en-CA");
 const UPCOMING_WEEKS = SUMMER_WEEKS.filter((w) => w.endDate >= TODAY_ISO);
 const ACTIVE_WEEKS = UPCOMING_WEEKS.length > 0 ? UPCOMING_WEEKS : SUMMER_WEEKS;
+// True while at least one summer week is still ahead. Once summer's fully over
+// we stop hiding finished camps so the tab keeps showing the full lineup
+// off-season (mirrors the ACTIVE_WEEKS fallback above).
+const SEASON_ACTIVE = UPCOMING_WEEKS.length > 0;
 
 const CITY_ACCENT: Record<string, string> = {
   "san-jose":      "#be123c",
@@ -84,6 +88,13 @@ function getCityLabel(cityId: string): string {
 // Camp has a given week number
 function campHasWeek(camp: Camp, weekNum: number): boolean {
   return camp.weeks.some((w) => w.weekNum === weekNum);
+}
+
+// Camp still has at least one session a kid could attend. Camps with no dated
+// weeks (year-round / undated programs) are always considered current.
+function campHasUpcomingWeek(camp: Camp): boolean {
+  if (camp.weeks.length === 0) return true;
+  return camp.weeks.some((w) => w.endDate >= TODAY_ISO);
 }
 
 // Get camp week data for a specific week number
@@ -210,7 +221,10 @@ function BrowseMode() {
   const [showAll, setShowAll] = useState(false);
 
   const featured = useMemo(
-    () => CAMPS.filter((camp) => camp.featured).slice(0, 3),
+    () =>
+      CAMPS.filter(
+        (camp) => camp.featured && (!SEASON_ACTIVE || campHasUpcomingWeek(camp)),
+      ).slice(0, 3),
     [],
   );
   const featuredIds = useMemo(() => new Set(featured.map((camp) => camp.id)), [featured]);
@@ -240,6 +254,9 @@ function BrowseMode() {
     const q = query.trim().toLowerCase();
     const results = CAMPS.filter((camp) => {
       if (!hasFilters && featuredIds.has(camp.id)) return false;
+      // Hide camps whose every session has already ended (until summer's over,
+      // when we fall back to showing the full lineup).
+      if (SEASON_ACTIVE && !campHasUpcomingWeek(camp)) return false;
       if (cityFilter !== "all" && camp.cityId !== cityFilter) return false;
       if (typeFilter !== "all" && camp.type !== typeFilter) return false;
       if (orgTypeFilter !== "all" && camp.orgType !== orgTypeFilter) return false;
@@ -268,7 +285,12 @@ function BrowseMode() {
   }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds]);
   const visible = hasFilters || showAll ? filtered : filtered.slice(0, 10);
   const hiddenCount = filtered.length - visible.length;
-  const shownTotal = hasFilters ? filtered.length : CAMPS.length;
+  // Total of camps still browsable (excludes ones whose every session ended).
+  const currentCampsCount = useMemo(
+    () => CAMPS.filter((camp) => !SEASON_ACTIVE || campHasUpcomingWeek(camp)).length,
+    [],
+  );
+  const shownTotal = hasFilters ? filtered.length : currentCampsCount;
 
   return (
     <div className="camps-directory">
@@ -398,7 +420,7 @@ function BrowseMode() {
         )}
         {!hasFilters && hiddenCount > 0 && (
           <button className="camps-show-more" onClick={() => setShowAll(true)}>
-            Show all {CAMPS.length} programs
+            Show all {currentCampsCount} programs
           </button>
         )}
       </section>
