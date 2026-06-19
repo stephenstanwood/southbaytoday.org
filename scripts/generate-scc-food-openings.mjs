@@ -281,6 +281,64 @@ function cleanAddress(raw) {
   return s || null;
 }
 
+/**
+ * Build a dedup key for an item's location. The same physical suite is often
+ * written different ways across permits ("...Blvd, Ste. 1891" vs "...Blvd #1891"),
+ * which used to slip past dedup and surface the same venue twice (e.g. a venue's
+ * main kitchen + its sushi-bar facility filed as separate food-facility permits).
+ * Canonicalize unit/suite markers so identical suites collapse, while genuinely
+ * different units in the same building (Unit A vs Unit B) stay distinct.
+ */
+function addressKey(item) {
+  const addr = (item.address ?? "")
+    .toLowerCase()
+    .replace(/,/g, " ")
+    .replace(/\b(ste|suite|unit|apt|no|#)\.?\s*/g, "#")
+    .replace(/\s+/g, " ")
+    .trim();
+  return `${item.cityId}:${addr}`;
+}
+
+/**
+ * Longest shared leading-word run across a group of names. Permit splits append
+ * facility descriptors to a common base ("Asia Live Main", "Asia Live 1st Floor
+ * Kitchen Sushi Bar" → "Asia Live"), so the shared prefix is the real venue name.
+ * Returns "" when names diverge from the first word (keep the original name then).
+ */
+function commonNamePrefix(names) {
+  const wordLists = names.map((n) => n.split(/\s+/));
+  const first = wordLists[0];
+  let i = 0;
+  for (; i < first.length; i++) {
+    const w = first[i].toLowerCase();
+    if (!wordLists.every((wl) => (wl[i] ?? "").toLowerCase() === w)) break;
+  }
+  return first.slice(0, i).join(" ").trim();
+}
+
+/**
+ * Collapse items sharing a normalized address into one entry. When the collapsed
+ * group's names share a base prefix shorter than the kept name, use the prefix so
+ * we show "Asia Live" rather than "Asia Live 1st Floor Kitchen Sushi Bar".
+ */
+function dedupeByAddress(items) {
+  const groups = new Map();
+  for (const item of items) {
+    const key = addressKey(item);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  }
+  return [...groups.values()].map((group) => {
+    const rep = group[0];
+    if (group.length === 1) return rep;
+    const prefix = commonNamePrefix(group.map((g) => g.name));
+    if (prefix && prefix.length < rep.name.length) {
+      return { ...rep, name: prefix };
+    }
+    return rep;
+  });
+}
+
 // Pure legal entity names (no real business descriptor) — e.g. "Sp Social LLC", "Umesjoakland Inc."
 const BARE_ENTITY_PATTERN = /^[A-Za-z0-9&'\s]{1,30}\s+(LLC|Inc\.|Inc|Corp\.|Corp|Ltd\.|Ltd|L\.L\.C\.|L\.L\.P\.|LLP|Co\.)$/i;
 
@@ -657,14 +715,9 @@ async function main() {
     })
     .filter(Boolean);
 
-  // Deduplicate by address (same address can have multiple units in same building)
-  const seenAddresses = new Set();
-  const openedDeduped = opened.filter((item) => {
-    const key = `${item.cityId}:${item.address?.toLowerCase()}`;
-    if (seenAddresses.has(key)) return false;
-    seenAddresses.add(key);
-    return true;
-  });
+  // Deduplicate by address (different units in same building stay distinct;
+  // the same suite written two ways collapses to one — see addressKey)
+  const openedDeduped = dedupeByAddress(opened);
 
   // --- Coming soon: plan approved but no final inspection yet ---
   const comingSoonRaw = await fetchPage(
@@ -694,19 +747,11 @@ async function main() {
     .filter(Boolean);
 
   // Deduplicate coming soon by address
-  const seenComing = new Set();
-  const comingSoonDeduped = comingSoon.filter((item) => {
-    const key = `${item.cityId}:${item.address?.toLowerCase()}`;
-    if (seenComing.has(key)) return false;
-    seenComing.add(key);
-    return true;
-  });
+  const comingSoonDeduped = dedupeByAddress(comingSoon);
 
   // Remove items from coming-soon that are already in opened
-  const openedAddresses = new Set(openedDeduped.map((i) => `${i.cityId}:${i.address?.toLowerCase()}`));
-  const comingSoonFinal = comingSoonDeduped.filter(
-    (i) => !openedAddresses.has(`${i.cityId}:${i.address?.toLowerCase()}`),
-  );
+  const openedAddresses = new Set(openedDeduped.map((i) => addressKey(i)));
+  const comingSoonFinal = comingSoonDeduped.filter((i) => !openedAddresses.has(addressKey(i)));
 
   // Generate blurbs for top opened restaurants
   const topOpened = openedDeduped.slice(0, 12);
