@@ -51,6 +51,18 @@ const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVI
 // Gas station brands — convenience stores at gas stations aren't restaurant openings
 const GAS_STATION_PATTERNS = /\b(SHELL|CHEVRON|ARCO|MOBIL|EXXON|VALERO|BP|CIRCLE K|76 GAS|TEXACO|SINCLAIR|SUNOCO|MARATHON|PHILLIPS 66|LOVE'S|PILOT)\b/i;
 
+// Large-venue concessions — stands inside a stadium, arena, convention center,
+// or amphitheatre file health permits but aren't neighborhood restaurants: you
+// can only reach them with an event ticket. Same reasoning as the corporate
+// cafeteria filter. Matched against the venue name (e.g. "Levis Stadium B143",
+// "Santa Clara Convention Center Refresh").
+const VENUE_CONCESSION_PATTERNS = /\bLEVI'?S?\s+STADIUM\b|\bCONVENTION\s+CENTER\b|\bSAP\s+CENTER\b|\bPAYPAL\s+PARK\b|\bAVAYA\s+STADIUM\b|\bSHORELINE\s+AMPHITHEATRE?\b/i;
+
+// Venue/transit addresses — some concessions carry a plain food name (e.g.
+// "Bad Egg / Pizza My Heart") so only the SITE ADDRESS reveals they're inside an
+// airport terminal or a stadium. Match those against the location, not the name.
+const VENUE_ADDRESS_PATTERNS = /\bAIRPORT\s+BLVD\b|\bSJC\b|\bTERM(INAL)?\s+[A-Z0-9]\b|MARIE\s+P\.?\s+DEBARTOLO/i;
+
 // Patterns for names that need more cleanup
 const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
 
@@ -180,6 +192,11 @@ function cleanName(raw) {
   // keyword without a trailing city — covers cases like "Blendid At City Sports"
   s = s.replace(/\s+At\s+(City\s+Sports|Walmart|Costco|Target|Whole\s+Foods|Safeway|Stanford\s+Mall|Valley\s+Fair|Westfield|Santana\s+Row).*$/i, "").trim();
 
+  // Strip trailing plan-check / permit codes ("Pc03", "Pc 03", "Pc-03"), with an
+  // optional redundant city name in front ("Kaizen Lounge San Jose Pc03" →
+  // "Kaizen Lounge"). These are SCC filing artifacts, not part of the name.
+  s = s.replace(/\s+(San Jose|Palo Alto|Mountain View|Sunnyvale|Santa Clara|Cupertino|Milpitas|Campbell|Saratoga|Los Gatos|Los Altos)?\s*\bPc\s*-?\d+\s*$/i, "").trim();
+
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();
 
@@ -281,6 +298,8 @@ function shouldSkip(item) {
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
   if (VARIETY_STORE_PATTERNS.test(rawName)) return true;
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
+  if (VENUE_CONCESSION_PATTERNS.test(rawName)) return true;
+  if (VENUE_ADDRESS_PATTERNS.test(item.site_location ?? "")) return true;
 
   // Skip entries whose site location is a PO Box — a storefront food venue is
   // never located at a PO Box. These are almost always HOA/apartment amenity
