@@ -1,10 +1,70 @@
 {
   "_meta": {
-    "pulledAt": "2026-06-18T19:09:15.013Z",
-    "totalInBlob": 1511,
-    "freshCount": 449
+    "pulledAt": "2026-06-19T19:09:17.680Z",
+    "totalInBlob": 1529,
+    "freshCount": 441
   },
   "events": [
+    {
+      "id": "inbound_mqk4wcg6_a0ao1z",
+      "receivedAt": "2026-06-18T23:30:49.225Z",
+      "fromEmail": "noreply@civicplus.com",
+      "emailSubject": "Town of Los Gatos Newsletter - What's New! - Thursday, June 18, 2026",
+      "title": "Life in Los Gatos Art Camp",
+      "startsAt": "2026-06-22T09:00:00-07:00",
+      "endsAt": "2026-06-22T12:00:00-07:00",
+      "location": "New Museum Los Gatos (NUMU), Los Gatos",
+      "description": "Week-long camp for young artists ages 8-12 to create artwork capturing their perspective on the history and charm of Los Gatos, in partnership with Los Gatos Recreation.",
+      "sourceUrl": "https://www.numulosgatos.org/lifeinlg",
+      "cityKey": "los-gatos",
+      "cityName": "Los Gatos",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mqk4wcg6_29prgd",
+      "receivedAt": "2026-06-18T23:30:49.225Z",
+      "fromEmail": "noreply@civicplus.com",
+      "emailSubject": "Town of Los Gatos Newsletter - What's New! - Thursday, June 18, 2026",
+      "title": "Wildfire readiness workshop",
+      "startsAt": "2026-07-15T18:00:00-07:00",
+      "endsAt": "2026-07-15T20:00:00-07:00",
+      "location": "Cupertino Community Hall, Cupertino",
+      "description": "Santa Clara County Fire Department community workshop on wildfire preparedness covering Ready, Set, Go model with resource fair and representatives from CAL FIRE, American Red Cross, and PG&E.",
+      "sourceUrl": "https://www.eventbrite.com/o/santa-clara-county-fire-department-11074830922",
+      "cityKey": "cupertino",
+      "cityName": "Cupertino",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mqk4wcg6_jesdt7",
+      "receivedAt": "2026-06-18T23:30:49.225Z",
+      "fromEmail": "noreply@civicplus.com",
+      "emailSubject": "Town of Los Gatos Newsletter - What's New! - Thursday, June 18, 2026",
+      "title": "Wildfire readiness workshop",
+      "startsAt": "2026-08-27T18:00:00-07:00",
+      "endsAt": "2026-08-27T20:00:00-07:00",
+      "location": "Los Altos Community Center, Los Altos",
+      "description": "Santa Clara County Fire Department community workshop on wildfire preparedness covering Ready, Set, Go model with resource fair and representatives from CAL FIRE, American Red Cross, and PG&E.",
+      "sourceUrl": "https://www.eventbrite.com/o/santa-clara-county-fire-department-11074830922",
+      "cityKey": "los-altos",
+      "cityName": "Los Altos",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mqk4wcg6_15l9ia",
+      "receivedAt": "2026-06-18T23:30:49.225Z",
+      "fromEmail": "noreply@civicplus.com",
+      "emailSubject": "Town of Los Gatos Newsletter - What's New! - Thursday, June 18, 2026",
+      "title": "National Night Out",
+      "startsAt": "2026-08-04T17:00:00-07:00",
+      "endsAt": "2026-08-04T19:00:00-07:00",
+      "location": "Town Plaza Park, Los Gatos",
+      "description": "Community event with cornhole, dunk tank, blow-up batting cage, mini-motorcycle rides, ice cream, and activities hosted by Los Gatos-Monte Sereno Police Department with participation from county fire and emergency response teams.",
+      "sourceUrl": null,
+      "cityKey": "los-gatos",
+      "cityName": "Los Gatos",
+      "status": "new"
+    },
     {
       "id": "inbound_mq1ct9ts_2bpl6l",
       "receivedAt": "2026-06-05 20:05:29.692568+00",
@@ -247,21 +307,6 @@
       "sourceUrl": "https://live.stanford.edu",
       "cityKey": null,
       "cityName": null,
-      "status": "new"
-    },
-    {
-      "id": "inbound_mpmwxf5x_16pcu2",
-      "receivedAt": "2026-05-26 17:31:14.65716+00",
-      "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
-      "emailSubject": "What’s Happening Next at Heritage Theatre",
-      "title": "Surf's Up, Dance On!",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Heritage Theatre, 1 W. Campbell Ave #C32, Campbell, CA 95008",
-      "description": "Annual dance recital by Infinity Dance Studio.",
-      "sourceUrl": "https://www.HeritageTheatre.org",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
       "status": "new"
     },
     {
@@ -657,22 +702,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mq5ccyjw_z24yes",
-      "receivedAt": "2026-06-08 15:00:44.806292+00",
-      "fromEmail": "communications-tritonmuseum.org@shared1.ccsend.com",
-      "emailSubject": "Triton Museum of Art Updates",
-      "title": "The art of the game: portrayal of sports and competition in art history",
-      "startsAt": "2026-06-18T19:00:00-07:00",
-      "endsAt": "2026-06-18T20:30:00-07:00",
-      "location": "Triton Museum of Art, 1505 Warburton Avenue, Santa Clara, CA",
-      "description": "Executive Director Preston Metcalf explores sports and competition in art from Ancient Greece through modern times, celebrating this year's Futbol exhibition at the museum.",
-      "sourceUrl": "https://www.eventbrite.com/e/the-art-of-the-game-the-portrayal-of-sports-competition-in-art-history-tickets-1990918017384?aff=oddtdtcreator",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new",
-      "sourceUrlOriginal": "https://pr8ioizab.cc.rs6.net/tn.jsp?f=00196n-z86t5kx2uqsKBYmsUqq7Acsui1TMPX-M8ck6A66-MTzwHLr7zoscmoW3SWPDryx1eao0bq6aY0D034OgCXxKMJ6tptFFd4xu5ZU62bpXEsyLvLTIsHPDnn6kutUoBv8QNfxJKT4I6iw733FKPtf4EA8Owga-0EHXYFA_KR7mAARnhirMtp59hrlPMgOJLelOMfNP2NNN9_m7VD_KEQQyWiv51ThYJX00DbKj5K0TeBIlTbsmwcH85XF6iX_91nrMlH7so8Ew0rzf1wPiXCXVvAO8G_32lCF8zx6zP_0oYxgS0eSu_Q==&c=3L-e2wpk54Gi4A_d2s5TFljoVwLuMsbEK557heAd0N6YBsi8GBrIvQ==&ch=4chTybEIu-O4exX6SH-TqnBDe5JNPawplbJFqvNYE02HYM5VVweOAQ=="
-    },
-    {
       "id": "inbound_mq5ccyjw_fwn0ss",
       "receivedAt": "2026-06-08 15:00:44.806292+00",
       "fromEmail": "communications-tritonmuseum.org@shared1.ccsend.com",
@@ -782,22 +811,6 @@
       "cityName": "Santa Clara",
       "status": "new",
       "sourceUrlOriginal": "https://pr8ioizab.cc.rs6.net/tn.jsp?f=00196n-z86t5kx2uqsKBYmsUqq7Acsui1TMPX-M8ck6A66-MTzwHLr7zq1fqUQhltc_yW0-ZgL7T5INr3cX4NuAed2EXWVz1428MSNPwUxHPeknIadzbIqYcSnGWec8FwN5yZT_sUrXn8uG_r4ldavpBN7w14wrePyiJgGFa11OfL7hvzvJdKZjHHXYIHGBOWloztOKRQ4wDtTcNXN1ZR_fJg==&c=3L-e2wpk54Gi4A_d2s5TFljoVwLuMsbEK557heAd0N6YBsi8GBrIvQ==&ch=4chTybEIu-O4exX6SH-TqnBDe5JNPawplbJFqvNYE02HYM5VVweOAQ=="
-    },
-    {
-      "id": "inbound_mpx6okyi_4p9h8v",
-      "receivedAt": "2026-06-02 22:01:42.425157+00",
-      "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
-      "emailSubject": "Discover What’s Coming Up at Heritage Theatre",
-      "title": "Infinity Dance: Surf's Up, Dance On!",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Heritage Theatre, 1 W. Campbell Ave #C32, Campbell, CA 95008",
-      "description": "Annual dance recital.",
-      "sourceUrl": "https://heritagetheatre.showare.com/eventperformances.asp?evt=47",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new",
-      "sourceUrlOriginal": "https://ncu8kubab.cc.rs6.net/tn.jsp?f=0011UNUpi8oZBChEHwTeyaiemofALvhGwUmeNrDltNMWX2AlUBg0B6TQUpRqkMGtLJbeJtR2QgblB088PYPBeZ2gPrtpQ0x5Q8MbifAE8I7q6H39X6tpEczi5vPAirGARwnSOY30wt_Sa_-uZf4rnoHOKgqnqxP5AIyh9TfwnwomkNicQzj37N8JZzdCD-CYUDcIs2DNwhTc1BnVyVSFwNfgQ==&c=oA3v_JRw2TeZGsJd9BQvh7D3bMMP8b34x1YtuQ-DQPcO6cPEP7si1g==&ch=wJzsJFJGvNzsQjQHWq_L8AxjJKr0xiJrJW6OuWxbg_78jdJRO836Hg=="
     },
     {
       "id": "inbound_mpx6okyi_bmh1cd",
@@ -987,22 +1000,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mq6x5ujc_s6vgfv",
-      "receivedAt": "2026-06-09 17:31:27.78425+00",
-      "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
-      "emailSubject": "See What's Coming to Heritage Theatre",
-      "title": "Infinity Dance: Surf's Up, Dance On!",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Heritage Theatre, 1 W. Campbell Ave #C32, Campbell, CA 95008",
-      "description": "Annual dance recital showcasing performances from Infinity Dance Studio.",
-      "sourceUrl": "https://heritagetheatre.showare.com/eventperformances.asp?evt=47",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new",
-      "sourceUrlOriginal": "https://ncu8kubab.cc.rs6.net/tn.jsp?f=0013VzsMX1JBi4KQjJfGYJueOirmSuA0HKl4fNDNe-EHFI-chbgnEH1TeeU1u7i28tsmyh3y9NDn25gfhR2dAeWTYdF6tR1Z1vL4RtRhBfn4rZr1dRl8rusbIHFeFrC6v4YjBVhU_Dl0bEPNkxTzK8ZKxs2o1RbXnbdPrQ7zjnJzLT3hg_V9r81RiMGGAHanBTxtHM6GQLkSJ8ySYL64TuQ7g==&c=AXV1XY3Ob8QBirsquXApEWQuqQeO5swYIx5c354Zh8UGIziYtM9ohQ==&ch=zDI9MXifwWfxFDeqZ7hv72Tlm6xDXc9ZhkX1UVKyE2ZrB2Gx8MuILA=="
-    },
-    {
       "id": "inbound_mq6x5ujc_lj0rz4",
       "receivedAt": "2026-06-09 17:31:27.78425+00",
       "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
@@ -1130,21 +1127,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mppxfiaa_hh9flj",
-      "receivedAt": "2026-05-28 20:06:07.538189+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "2026 June Senior Center Monthly Newsletter",
-      "title": "Don't Fall for It: Preventing Falls and Fraud",
-      "startsAt": "2026-06-18T13:00:00-07:00",
-      "endsAt": null,
-      "location": "Mountain View Senior Center, Social Hall, 266 Escuela Ave, Mountain View, CA 94040",
-      "description": "Dual presentation on reducing fall risks through home design and exercise, plus how to recognize scams and fraud.",
-      "sourceUrl": "https://www.mountainview.gov/our-city/departments/community-services/recreation/senior-center",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mppxfiaa_ca6drk",
       "receivedAt": "2026-05-28 20:06:07.538189+00",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -1188,22 +1170,6 @@
       "cityKey": "mountain-view",
       "cityName": "Mountain View",
       "status": "new"
-    },
-    {
-      "id": "inbound_mqgx8g4k_4aozfp",
-      "receivedAt": "2026-06-16T17:31:02.365Z",
-      "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
-      "emailSubject": "Fill Your Calendar with Live Entertainment",
-      "title": "Infinity Dance: Surf's Up, Dance On!",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Heritage Theatre, 1 W. Campbell Ave, Campbell, CA 95008",
-      "description": "Annual dance recital featuring Infinity Dance Studio. Performances June 18 & 19.",
-      "sourceUrl": "https://heritagetheatre.showare.com/eventperformances.asp?evt=47",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new",
-      "sourceUrlOriginal": "https://ncu8kubab.cc.rs6.net/tn.jsp?f=001cSw8Yj3XTsqS8yyeJlSB9IQ7cko9VT9uA7fHcDzXI6nWW-m67SN9lPA7EMubUeOXMhipBUkTe9wSmNCaoDGLQGEEVn8uB9xf7xOuPFEVGSuWaml6u1y--M9fpgD_xKpCesdTEIYGOzt64wH4Im4PwoCKY74vbMRTXkorlSgDSAlVtFKc2xjj4W_Ltaqet8i6PS7FlQEJ3EUczajcYM6WHA==&c=s6lisRUG-7sa4GUUT54M90FEnwyLysvly5tfIzQPrKbwR-k3Il-rEA==&ch=WwMYznX-kuYZ2OeahkXp9SaDwXtRg9_EPyzUM1mlZeInaGW7gkP1NQ=="
     },
     {
       "id": "inbound_mqgx8g4k_5u18sp",
@@ -1608,21 +1574,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqgw3wq0_bx94bl",
-      "receivedAt": "2026-06-16T17:02:00.646Z",
-      "fromEmail": "librarians@info.SantaClaraCA.gov",
-      "emailSubject": "NORTHSIDE: Miss Molly Bubbles",
-      "title": "Miss Molly Bubbles",
-      "startsAt": "2026-06-18T17:30:00-07:00",
-      "endsAt": "2026-06-18T18:30:00-07:00",
-      "location": "Northside Branch Library, 695 Moreland Way, Santa Clara, CA 95054",
-      "description": "Bubble show featuring bubble haircuts, giant bubbles, and children performing inside bubbles. Part of the Summer Adventure reading program.",
-      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112539/",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
       "id": "inbound_mpvd41sg_2dltvm",
       "receivedAt": "2026-06-01 15:26:35.375618+00",
       "fromEmail": "librarians@info.SantaClaraCA.gov",
@@ -1710,21 +1661,6 @@
       "sourceUrl": null,
       "cityKey": "mountain-view",
       "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqa816m8_uojnj9",
-      "receivedAt": "2026-06-12T01:01:32.152Z",
-      "fromEmail": "info@happyhollow.org",
-      "emailSubject": "From circus comedy to stunt dogs: Summer shows are here!",
-      "title": "Coventry & Kaluza Circus and Comedy",
-      "startsAt": "2026-06-18T11:00:00-07:00",
-      "endsAt": "2026-06-28T15:00:00-07:00",
-      "location": "Happy Hollow Park & Zoo, 1300 Senter Road, San Jose, CA 95112",
-      "description": "Award-winning circus comedians perform interactive shows featuring juggling, acrobatics, music, comedy and high-number hula hooping. Shows daily Thursday–Sunday at 11 a.m., 1 p.m. and 3 p.m. Included with Happy Hollow admission.",
-      "sourceUrl": "https://www.happyhollow.org",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
       "status": "new"
     },
     {
@@ -1847,23 +1783,6 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
-    },
-    {
-      "id": "inbound_mq70c5af_cgk244",
-      "receivedAt": "2026-06-09 19:02:30.077779+00",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "ONLINE: Health Talk - Reproductive Health for Women",
-      "title": "Health Talk - Reproductive Health for Women",
-      "startsAt": "2026-06-18T12:30:00-07:00",
-      "endsAt": "2026-06-18T13:30:00-07:00",
-      "location": "Online",
-      "description": "Free health education session on contraception, preconception care, and family planning with Dr. Mibhali Bhalala, a Kaiser Permanente OBGYN board-certified in Lifestyle Medicine.",
-      "sourceUrl": "https://events.teams.microsoft.com/event/2f5c7f4d-2813-4e9a-b512-9d1fcc3776f2@3f8a7bc4-e337-47a5-a0fc-0d512c0e05f1",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new",
-      "virtual": true,
-      "sourceUrlOriginal": "https://links-1.govdelivery.com/CL0/https:%2F%2Fevents.teams.microsoft.com%2Fevent%2F2f5c7f4d-2813-4e9a-b512-9d1fcc3776f2@3f8a7bc4-e337-47a5-a0fc-0d512c0e05f1/1/0100019eadc3b64d-262a0f96-9fdc-4897-9462-10e16768044f-000000/lt-QO-VGhzhCw1UhwADaoDNxArEJswUHiA6Ei1u5Urg=452"
     },
     {
       "id": "inbound_4496305343c96c9c_01",
@@ -2140,6 +2059,21 @@
       "status": "new"
     },
     {
+      "id": "inbound_mql6hjj2_rjesid",
+      "receivedAt": "2026-06-19T17:01:59.393Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Haopinaka Hula",
+      "title": "Haopinaka Hula",
+      "startsAt": "2026-06-23T17:30:00-07:00",
+      "endsAt": "2026-06-23T18:00:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, CA 95050",
+      "description": "Hawaiian guitars and hula dancers celebrate island music and dance with the spirit of aloha. Sponsored by the Santa Clara City Foundation and Friends.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112493/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_4e9aba0138bf9887_01",
       "receivedAt": "2026-05-15 20:31:32.944815+00",
       "fromEmail": "studio@bagi.org",
@@ -2154,21 +2088,6 @@
       "cityName": "San Jose",
       "status": "new",
       "sourceUrlOriginal": "https://geayhdcab.cc.rs6.net/tn.jsp?f=001Zw8dZgbWlHY4rO1JBmfpuzOdsNDZgM2mTDDVW_TaQz_EXzkxERC4oO5TG88t7L-vNKVrBNpRt-0HGFhEBuG7AekeolE3K_yaEfnt917cjX1O0GIyH09Y_DoSVnlTbQUxH_TBiJPEC1rt8VNs-LD9Ep3Nvw3doeq_er9M-9oQVezqMNFloIs62ZkKIgGOSpVtuUud8I7VBnir0T79-rrznuvaVlZr-d9vhRFUG8g2dAEmZEoDyqKpDVqArWcd632WhTTMC9GxRq6PdAU3PCn4GrVniEFIod9JcpJ8g7DPkool0nmrOqcqHw==&c=vF8pgbPUNfmEaKoQqm0D6EMFyfZVD9-8MTcdlwwyLJaTmD67Ba4kHw==&ch=cKuwqwLa75N1S0W73cJxZkX3Zyg6j67D18WqhY-FVMUCkXBIq8eK_g=="
-    },
-    {
-      "id": "inbound_mpzod1u2_ezvt1b",
-      "receivedAt": "2026-06-04 15:49:47.494827+00",
-      "fromEmail": "stephen@southbaytoday.org",
-      "emailSubject": "Fwd: Downtown Campbell Car Show Saturday June 6 (9:00-3PM) and More Events",
-      "title": "Magic Hour x Rooted Ritual by Aura Stream & Momstera Lounge",
-      "startsAt": "2026-06-18T19:00:00-07:00",
-      "endsAt": null,
-      "location": "Campbell",
-      "description": "Sacred evening of guided meditation, sound healing, and intentional planting experience combining grounding and plant ritual.",
-      "sourceUrl": "https://www.downtowncampbell.com/event/2026/06/magic-hour-x-rooted-ritual-aura-stream-momstera-lounge",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new"
     },
     {
       "id": "inbound_mpzod1u2_w1sw4o",
@@ -2337,38 +2256,6 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
-    },
-    {
-      "id": "inbound_mqh0jeqk_32wiey",
-      "receivedAt": "2026-06-16T19:03:08.767Z",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Shop Street Markets and Pop-up Shops Across Downtown",
-      "title": "Free yoga session",
-      "startsAt": "2026-06-18T17:30:00-07:00",
-      "endsAt": "2026-06-18T18:30:00-07:00",
-      "location": "ICA San Jose",
-      "description": "One-hour yoga class in the main gallery surrounded by rotating exhibits. Bring your own mat.",
-      "sourceUrl": "https://www.eventbrite.com/e/free-yoga-at-the-ica-san-jose-tickets-1990995822100?aff=erelexpmlt",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=0729c0d177&e=e0f43ae3a8"
-    },
-    {
-      "id": "inbound_mqh0jeqk_vu5e7z",
-      "receivedAt": "2026-06-16T19:03:08.767Z",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Shop Street Markets and Pop-up Shops Across Downtown",
-      "title": "Dog-friendly World Cup watch party",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": "2026-06-18T21:00:00-07:00",
-      "location": "RFRD Canine Recreation Center, 56 Barack Obama Blvd.",
-      "description": "Watch the Mexico vs. South Korea soccer match in a dog-friendly environment with your canine companions.",
-      "sourceUrl": "https://www.sanjosecreekside.com/events/mexico-vs-south-korea-viewing-party-at-rfrd-canine-recreation-center",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=af55463162&e=e0f43ae3a8"
     },
     {
       "id": "inbound_mqh0jeqk_wpssuj",
@@ -2904,22 +2791,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mq0815u9_ijim5e",
-      "receivedAt": "2026-06-05 01:00:41.027815+00",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "June at SPL - Summer Reading, LGBTQ Pride Month, US 250th Anniversary",
-      "title": "Nurturing Future Generations with Blogger Ted Page",
-      "startsAt": "2026-06-18T11:00:00-07:00",
-      "endsAt": "2026-06-18T12:00:00-07:00",
-      "location": null,
-      "description": "Virtual conversation with storyteller and blogger Ted Page about his book Good Grandpa, which gathers stories and wisdom from grandfathers across all walks of life.",
-      "sourceUrl": "https://libraryc.org/sunnyvalelibrary/162638",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new",
-      "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/https:%2F%2Flibraryc.org%2Fsunnyvalelibrary%2F162638/1/0101019e954bcddc-014b4af7-0566-4c82-8d63-2de57d0f661c-000000/kWF22ZxJle9xci_O8nEGqS-i2GVu8YgPxJGhKkHkIJ0=452"
-    },
-    {
       "id": "inbound_mq0815u9_pmf3m2",
       "receivedAt": "2026-06-05 01:00:41.027815+00",
       "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
@@ -3175,21 +3046,6 @@
       "location": "200 block of Castro Street, Downtown Mountain View, CA",
       "description": "Free live music performance in downtown.",
       "sourceUrl": "https://www.mountainview.gov/our-city/departments/community-services/music-on-castro",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mpvlbpzc_fauouf",
-      "receivedAt": "2026-06-01 19:14:18.368819+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "June 2026 Recreation eNewsletter",
-      "title": "Senior Workshop: Don't Fall for It",
-      "startsAt": "2026-06-18T13:00:00-07:00",
-      "endsAt": null,
-      "location": "Senior Center, 266 Escuela Avenue, Mountain View, CA",
-      "description": "Educational workshop for ages 55+ on preventing falls and fraud.",
-      "sourceUrl": "https://www.mountainview.gov/our-city/departments/community-services/recreation/senior-center/special-events-workshops",
       "cityKey": "mountain-view",
       "cityName": "Mountain View",
       "status": "new"
@@ -3840,6 +3696,22 @@
       "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/http:%2F%2Ftickets.mvcpa.com%2FPYTSTE/1/0101019e8422a743-1a7a8c45-0b16-4a7f-b16a-84c87c8f21f9-000000/hk35iG-TTYPpREjWkYl-w9R_IqwiCrEtp7_yhR3nY4E=452"
     },
     {
+      "id": "inbound_mql06kno_kv0jrn",
+      "receivedAt": "2026-06-19T14:06:25.563Z",
+      "fromEmail": "studio@bagi.org",
+      "emailSubject": "An Auction Sneak Peek, Dinner Details, and the Upcoming Fun",
+      "title": "Turn Up The Heat",
+      "startsAt": "2026-07-12T17:30:00-07:00",
+      "endsAt": "2026-07-12T20:30:00-07:00",
+      "location": "Bay Area Glass Institute, 635 Phelan Ave, San Jose, CA 95112",
+      "description": "BAGI's 30th Anniversary Capital Campaign fundraiser featuring live neon bending and flameworking demonstrations, catered dinner, wine, beer, auction items, and gallery exhibition.",
+      "sourceUrl": "https://givebutter.com/c/turn-up-the-heat-26",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://geayhdcab.cc.rs6.net/tn.jsp?f=001iaqYYB2ltPOoEjHJMZPnqAhnOWqsCk8u6-PFEmBWCnAnIhWJqvWLSGID3jop8-uprbx48G9rFCxlKtLx86ZJ8w-9Ep_TU90hvRRuWtsUuV4G2au-eTXc-GtTxy3sR50ailqcF2Q9DxJ6CaSfczPm87CLAugs4EMAuLLWuUjvW34bB7ngE-ROHg==&c=AbyVyI-VqOF4kvWVLV3_cHe4JLbRXrF3OkagEv4wPv9B7Wy9tc6M_Q==&ch=kGxPyGuHbGFZWySkeP76QHV41wRFKgQm2aX3mWfDQqgzIC5_ctTH9Q=="
+    },
+    {
       "id": "inbound_mpr6cmsg_6yr1bp",
       "receivedAt": "2026-05-29 17:00:30.833685+00",
       "fromEmail": "latest@email.live.stanford.edu",
@@ -3930,22 +3802,6 @@
       "cityName": "Los Gatos",
       "status": "new",
       "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=001R52C4zjjLe40VObXDYrk6m2UbWjduYdykmfxaggvUj9k0gwGUFrxH_q9IPwmFc7h3A_4HGy_W87-nMQg7_iWzKz54qxWPmu-hD3VXrorNxW-y-6UewRlo5XDSIGBCDqGNGHUZOgTz0aSRSb32f2JNO96XrLJ6cIVHtADdDZ0mWTshLJQNgHjS60gRrIR_tzs3lLRjgYWGlI1hMr_JOCyNZhSHqMgGtyapN8qkN3dZzY8Sj6Vqb90wUtaK42gQlre&c=c_ThfGE44Z1j9ac-QcdD9S8KaPm6x0FzQs-xeKggnaC6iJ712ehWwQ==&ch=ftoHTJyo5qt6TWZRUZeD0aBW3k7cYfjgJaP9yfjxBACLxA9SuVMyeQ=="
-    },
-    {
-      "id": "inbound_mqfefyer_y9l1io",
-      "receivedAt": "2026-06-15T15:59:38.550Z",
-      "fromEmail": "noreply@libraryaware.com",
-      "emailSubject": "SCCLD Newsletter June 15, 2026",
-      "title": "Virtual author talk: Ted Page on Good Grandpa",
-      "startsAt": "2026-06-18T11:00:00-07:00",
-      "endsAt": "2026-06-18T12:00:00-07:00",
-      "location": "Virtual",
-      "description": "Storyteller and blogger Ted Page discusses his collection of stories bringing wisdom and experiences of many grandfathers.",
-      "sourceUrl": "https://sccld.org/author-events",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new",
-      "virtual": true
     },
     {
       "id": "inbound_mqfefyer_mknvvs",
@@ -4084,6 +3940,69 @@
       "status": "new"
     },
     {
+      "id": "inbound_mqk89ggw_qx367w",
+      "receivedAt": "2026-06-19T01:03:03.120Z",
+      "fromEmail": "chamber@losgatoschamber.ccsend.com",
+      "emailSubject": "Chamber Updates - June 18, 2026",
+      "title": "Claude AI fluency workshop",
+      "startsAt": "2026-06-22T09:00:00-07:00",
+      "endsAt": "2026-06-22T12:30:00-07:00",
+      "location": "Dr. Martin Luther King Jr. Library, San Jose, CA",
+      "description": "Free hands-on workshop for business leaders on applying Claude AI to real workflows, includes lunch.",
+      "sourceUrl": "https://forms.office.com/g/hh592aycuK",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mqk89ggw_2ikkbq",
+      "receivedAt": "2026-06-19T01:03:03.120Z",
+      "fromEmail": "chamber@losgatoschamber.ccsend.com",
+      "emailSubject": "Chamber Updates - June 18, 2026",
+      "title": "Marketing Mondays: Google Business Profile",
+      "startsAt": "2026-06-30T10:00:00-07:00",
+      "endsAt": "2026-06-30T12:00:00-07:00",
+      "location": null,
+      "description": "Free workshop on local SEO and optimizing your Google Business Profile to dominate local search results.",
+      "sourceUrl": "https://www.sanmateosbdc.org/event/marketing-mondays-google-business-profile/",
+      "cityKey": null,
+      "cityName": null,
+      "status": "new",
+      "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=0015NI3VKiZxveYRQo1TDq7feq_cg9GJVk_Osv4IEdrdWiIvxppDaB3VYpsXBX7bNvHVixuDkdlXd0zY_TTiyizz82aU5pVI-G2yb4yW7IzUMrstEpXLDLcUxTUiFuGWnYTHTfecyoDPTspf7qoY91H1B1QAqbeiFYNGiqol3amdI_eAXV3yWTkmsdOio1opBTOaL9tHkYP0e7gphy9sWUUW1C3K-354_J2&c=gsCcaDQ7o7zYW5J1lM8Aad7pPgAxry-YM4UIeYlAW_skmKSUGCSNQw==&ch=heSwJ1h9VSi9mSY4r9W-l7gGQJ_O_u_qFboM0pgZqNRCVAo4E00ONQ=="
+    },
+    {
+      "id": "inbound_mqk89ggw_ib4731",
+      "receivedAt": "2026-06-19T01:03:03.120Z",
+      "fromEmail": "chamber@losgatoschamber.ccsend.com",
+      "emailSubject": "Chamber Updates - June 18, 2026",
+      "title": "GOLD Thursday",
+      "startsAt": "2026-07-02T17:00:00-07:00",
+      "endsAt": "2026-07-02T21:00:00-07:00",
+      "location": "North Santa Cruz Avenue, Los Gatos, CA",
+      "description": "Monthly downtown community gathering with live music, local shopping and dining, free face painting, organic cotton candy, and complimentary entertainment zone for adults 21+ with wristband.",
+      "sourceUrl": "https://www.losgatoschamber.com/gold-thursdays",
+      "cityKey": "los-gatos",
+      "cityName": "Los Gatos",
+      "status": "new",
+      "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=0015NI3VKiZxveYRQo1TDq7feq_cg9GJVk_Osv4IEdrdWiIvxppDaB3VQ9H9cNHha1YDCi9qoODaRikjjyW7T13hX0M1H9bkNiQbEryKuVZd2_siUyGi6FTmZHeLONl1WrAOv559kbnhfwcVsYPK4frxoYAwGQ0XnjG_pk8W4bb1aq25O5yYujEug==&c=gsCcaDQ7o7zYW5J1lM8Aad7pPgAxry-YM4UIeYlAW_skmKSUGCSNQw==&ch=heSwJ1h9VSi9mSY4r9W-l7gGQJ_O_u_qFboM0pgZqNRCVAo4E00ONQ=="
+    },
+    {
+      "id": "inbound_mqk89ggw_knzppq",
+      "receivedAt": "2026-06-19T01:03:03.120Z",
+      "fromEmail": "chamber@losgatoschamber.ccsend.com",
+      "emailSubject": "Chamber Updates - June 18, 2026",
+      "title": "Taste of Los Gatos",
+      "startsAt": "2026-09-19T12:00:00-07:00",
+      "endsAt": "2026-09-19T17:00:00-07:00",
+      "location": "Downtown Los Gatos, CA",
+      "description": "Free family-friendly food festival featuring tastings from 25+ local restaurants, regional wines, beer, cider, and mocktails.",
+      "sourceUrl": "https://docs.google.com/forms/d/e/1FAIpQLSequTCLK8mcPSbpJvBSl9xnQbi36Eob0tnIAB0h5KoOUtJ8vg/viewform?usp=dialog",
+      "cityKey": "los-gatos",
+      "cityName": "Los Gatos",
+      "status": "new",
+      "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=0015NI3VKiZxveYRQo1TDq7feq_cg9GJVk_Osv4IEdrdWiIvxppDaB3VYpsXBX7bNvHTq6POzfB2I5MZMOQtx_okWFiPN43zf2vOVCsE0wKmqixPOnP4b-96ltOL2PoLfLmxxjW3iacSYZzEWKFHF1lJp9Dgk-FIodCBHWrh4m-99ZfGp_3mKrmQitSm-CAlX66I5yqZVf6p_rxkwVIkyOOuC1rLg5LweCZTeS_TvfykOvg3_wgwCzoPO5PGz2HTeM7bXkEn7jT1mO60dzXhDJrSB9Uz1ecoWa5&c=gsCcaDQ7o7zYW5J1lM8Aad7pPgAxry-YM4UIeYlAW_skmKSUGCSNQw==&ch=heSwJ1h9VSi9mSY4r9W-l7gGQJ_O_u_qFboM0pgZqNRCVAo4E00ONQ=="
+    },
+    {
       "id": "inbound_mppsz7u8_hi34sb",
       "receivedAt": "2026-05-28 18:02:58.564024+00",
       "fromEmail": "cantor-enews@stanford.edu",
@@ -4176,22 +4095,6 @@
       "cityKey": "saratoga",
       "cityName": "Saratoga",
       "status": "new"
-    },
-    {
-      "id": "inbound_mqfxb16e_zowyjf",
-      "receivedAt": "2026-06-16T00:47:18.810Z",
-      "fromEmail": "reply@fanmail.sjearthquakes.com",
-      "emailSubject": "New Week. New Matchups. Same Place.",
-      "title": "Mexico vs. Korea Republic – World Cup watch party",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "San Pedro Square, San Jose, CA",
-      "description": "Free public World Cup Group A match watch party presented by El Camino Health.",
-      "sourceUrl": "https://www.sjearthquakes.com/soccercelebration/schedule",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://click.fanmail.sjearthquakes.com/?qs=ABB7InYiOjEsImQiOjQ5MDl9AAEAAAAAAMJ6VxAFSFv2iiGd2D2_5I2D0IlRSWnEkCjsBIqVCyv-CAi-Rdd0AXGlRKLSnDexGBscT_0wQrBs891ZVqwN7DkU0Oesb-_2LUFQLg"
     },
     {
       "id": "inbound_mqfxb16e_v2omce",
@@ -4381,22 +4284,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqfeg43b_zjma51",
-      "receivedAt": "2026-06-15T15:59:33.845Z",
-      "fromEmail": "noreply@libraryaware.com",
-      "emailSubject": "SCCLD Newsletter June 15, 2026",
-      "title": "Virtual Author Talk: Ted Page",
-      "startsAt": "2026-06-18T11:00:00-07:00",
-      "endsAt": "2026-06-18T12:00:00-07:00",
-      "location": "Online event",
-      "description": "Storyteller and blogger Ted Page discusses his collection of stories from grandfathers, bringing wisdom and experiences from Grandfatherland.",
-      "sourceUrl": "https://sccld.org/author-events",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new",
-      "virtual": true
-    },
-    {
       "id": "inbound_mqfeg43b_je2yyg",
       "receivedAt": "2026-06-15T15:59:33.845Z",
       "fromEmail": "noreply@libraryaware.com",
@@ -4501,21 +4388,6 @@
       "endsAt": "2026-06-27T12:00:00-07:00",
       "location": "Columbia Neighborhood Center Gym, Sunnyvale",
       "description": "Free basketball clinic for students in grades 3–6 to build skills and stay active during summer.",
-      "sourceUrl": "https://www.sunnyvale.ca.gov/recreation-and-community/classes-and-activities",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mpv6us11_k6r506",
-      "receivedAt": "2026-06-01 12:31:01.641226+00",
-      "fromEmail": "cityofsunnyvale@public.govdelivery.com",
-      "emailSubject": "Activities Newsletter June 2026",
-      "title": "Family Fun at the Park",
-      "startsAt": "2026-06-18T19:00:00-07:00",
-      "endsAt": "2026-07-30T20:00:00-07:00",
-      "location": "Various parks throughout Sunnyvale",
-      "description": "Free weekly family event nights featuring live performers at neighborhood parks.",
       "sourceUrl": "https://www.sunnyvale.ca.gov/recreation-and-community/classes-and-activities",
       "cityKey": "sunnyvale",
       "cityName": "Sunnyvale",
@@ -5042,6 +4914,85 @@
       "virtual": true
     },
     {
+      "id": "inbound_mql6mh1l_v59xxr",
+      "receivedAt": "2026-06-19T17:03:48.167Z",
+      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
+      "emailSubject": "Virtual Author Talks, Comics Workshop, Pollinator Week, and More!",
+      "title": "Simple, Sustainable, and Powerfully Delicious Meals with Sana Javeri Kadri and Asha Loupy",
+      "startsAt": "2026-06-23T11:00:00-07:00",
+      "endsAt": "2026-06-23T12:00:00-07:00",
+      "location": null,
+      "description": "Online author talk with Sana Javeri Kadri and Asha Loupy about The Diaspora Spice Co. Cookbook, featuring recipes from India and Sri Lanka's sustainable spice farms.",
+      "sourceUrl": "https://libraryc.org/sunnyvalelibrary/164492",
+      "cityKey": "sunnyvale",
+      "cityName": "Sunnyvale",
+      "status": "new",
+      "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/https:%2F%2Flibraryc.org%2Fsunnyvalelibrary%2F164492/1/0101019ee0d69e06-23c14f34-8540-402b-ad32-397b8a32855f-000000/XHBXmu_zjRWuCxd3bB1Fc41_fxgM1wwtZa8pA9RXlI8=452"
+    },
+    {
+      "id": "inbound_mql6mh1l_l54jvv",
+      "receivedAt": "2026-06-19T17:03:48.167Z",
+      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
+      "emailSubject": "Virtual Author Talks, Comics Workshop, Pollinator Week, and More!",
+      "title": "Unearth a Story: How to Make Autobiographical Comics",
+      "startsAt": "2026-06-24T19:00:00-07:00",
+      "endsAt": "2026-06-24T20:00:00-07:00",
+      "location": "Sunnyvale Public Library, Program Room",
+      "description": "Introductory class on autobiographical comics exploring different styles and creative processes. Participants will draft their own one-page comic. All skill levels welcome.",
+      "sourceUrl": "https://sunnyvale.libcal.com/event/16691499",
+      "cityKey": "sunnyvale",
+      "cityName": "Sunnyvale",
+      "status": "new",
+      "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/https:%2F%2Fsunnyvale.libcal.com%2Fevent%2F16691499/1/0101019ee0d69e06-23c14f34-8540-402b-ad32-397b8a32855f-000000/b0EH530qKMxme0Ukozgd1S9TEOTyFSDSnpY0REbfaYY=452"
+    },
+    {
+      "id": "inbound_mql6mh1l_55zkju",
+      "receivedAt": "2026-06-19T17:03:48.167Z",
+      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
+      "emailSubject": "Virtual Author Talks, Comics Workshop, Pollinator Week, and More!",
+      "title": "Dinosaurs, Climate Change, and Resilience: Author Talk with Evan Jevnikar",
+      "startsAt": "2026-06-25T18:00:00-07:00",
+      "endsAt": "2026-06-25T19:00:00-07:00",
+      "location": null,
+      "description": "Online discussion with paleontologist Evan Jevnikar about how prehistoric patterns and dinosaur fossils reveal lessons for understanding modern climate change and survival.",
+      "sourceUrl": "https://sunnyvale.libcal.com/event/16119286",
+      "cityKey": "sunnyvale",
+      "cityName": "Sunnyvale",
+      "status": "new",
+      "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/https:%2F%2Fsunnyvale.libcal.com%2Fevent%2F16119286/1/0101019ee0d69e06-23c14f34-8540-402b-ad32-397b8a32855f-000000/va_UxFagBgRbgG-3434HiVRPEmEKp69YQ9TbB7LYwf4=452"
+    },
+    {
+      "id": "inbound_mql6mh1l_bjvfo3",
+      "receivedAt": "2026-06-19T17:03:48.167Z",
+      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
+      "emailSubject": "Virtual Author Talks, Comics Workshop, Pollinator Week, and More!",
+      "title": "Unearth Your Artist: Introduction to Zentangle Workshop",
+      "startsAt": "2026-06-27T14:00:00-07:00",
+      "endsAt": "2026-06-27T16:00:00-07:00",
+      "location": "Sunnyvale Public Library, Program Room",
+      "description": "Introduction to the Zentangle Method, a meditative drawing technique using structured patterns. Embraces a no-mistakes philosophy and welcomes all skill levels.",
+      "sourceUrl": null,
+      "cityKey": "sunnyvale",
+      "cityName": "Sunnyvale",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mql6mh1l_wuwdsv",
+      "receivedAt": "2026-06-19T17:03:48.167Z",
+      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
+      "emailSubject": "Virtual Author Talks, Comics Workshop, Pollinator Week, and More!",
+      "title": "Pollinator Week BioBlitz at Charles Street Garden",
+      "startsAt": "2026-06-28T13:00:00-07:00",
+      "endsAt": "2026-06-28T14:30:00-07:00",
+      "location": "Sunnyvale Public Library Plaza, then Charles Street Garden",
+      "description": "Citizen science event to count pollinators for Pollinator Week using the iNaturalist app. Participants help collect data on pollinator distribution across North America.",
+      "sourceUrl": "https://sunnyvale.libcal.com/event/16750982",
+      "cityKey": "sunnyvale",
+      "cityName": "Sunnyvale",
+      "status": "new",
+      "sourceUrlOriginal": "https://links-2.govdelivery.com/CL0/https:%2F%2Fsunnyvale.libcal.com%2Fevent%2F16750982/1/0101019ee0d69e06-23c14f34-8540-402b-ad32-397b8a32855f-000000/GaBoYdT1v6QPuA3-zUAuE-7acqkvPiXMrOtzoue3ICU=452"
+    },
+    {
       "id": "inbound_c703cc22c0ae5584_01",
       "receivedAt": "2026-05-18 17:02:38.151571+00",
       "fromEmail": "tickets@cmtsj.org",
@@ -5449,21 +5400,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mpvrsabm_jl7k9f",
-      "receivedAt": "2026-06-01 22:17:43.243371+00",
-      "fromEmail": "PRCustomerServe@info.SantaClaraCA.gov",
-      "emailSubject": "Senior Center June 2026 Newsletter Now Available!",
-      "title": "Senior Center Summer BBQ",
-      "startsAt": "2026-06-18T00:00:00-07:00",
-      "endsAt": null,
-      "location": "Santa Clara Senior Center",
-      "description": "First BBQ of the summer. Tickets available for purchase at the front desk beginning June 11.",
-      "sourceUrl": "https://www.santaclaraca.gov/our-city/departments-g-z/parks-recreation/community-centers/senior-center",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
       "id": "inbound_mppkivve_ep3h4q",
       "receivedAt": "2026-05-28 14:07:03.052001+00",
       "fromEmail": "connect@cdm.org",
@@ -5478,6 +5414,21 @@
       "cityName": "San Jose",
       "status": "new",
       "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=s_uqiHI_HFejytLAu11Hoj4a6xZM7LeyZcNrAygRPoCqi9YRrgrllw"
+    },
+    {
+      "id": "inbound_mqla3ti7_4zj1ll",
+      "receivedAt": "2026-06-19T18:44:45.535Z",
+      "fromEmail": "info@pafarmersmarket.org",
+      "emailSubject": "Downtown Palo Alto Farmers' Market - June 20, 2026",
+      "title": "Downtown Palo Alto Farmers' Market",
+      "startsAt": "2026-06-20T08:00:00-07:00",
+      "endsAt": "2026-06-20T12:00:00-07:00",
+      "location": "Gilman Street between Hamilton and Forest, Palo Alto, CA",
+      "description": "Weekly farmers market with fresh local produce, flowers, prepared foods, and live music. Baby ostriches from Big Chuck's Ostrich Farm will be on display.",
+      "sourceUrl": "https://us.list-manage.com/7UaGaiNh2mA?e=95253c7d1f&c2id=781a68119576efa2ed37ef40c949c899",
+      "cityKey": "palo-alto",
+      "cityName": "Palo Alto",
+      "status": "new"
     },
     {
       "id": "inbound_mq5fiqyp_tm0nzz",
@@ -5653,21 +5604,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mpva6dgx_1aoyd5",
-      "receivedAt": "2026-06-01 14:02:16.02277+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "Summer Reading Begins, Celebrating Pride, Traveling with Mango Languages, and More",
-      "title": "Summer Reading Seed Art",
-      "startsAt": "2026-06-18T14:00:00-07:00",
-      "endsAt": null,
-      "location": "Mountain View Public Library, 585 Franklin St., Mountain View, CA 94041",
-      "description": "Craft activity tied to the summer reading program theme of planting seeds and nourishing minds.",
-      "sourceUrl": "https://mountainview.libcal.com/event/16649456",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mpva6dgx_n31r0d",
       "receivedAt": "2026-06-01 14:02:16.02277+00",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -5760,6 +5696,36 @@
       "status": "new"
     },
     {
+      "id": "inbound_mqk61bjo_1pbkov",
+      "receivedAt": "2026-06-19T00:00:57.236Z",
+      "fromEmail": "no-reply@email.sjsharks.com",
+      "emailSubject": "Player Signing, Opening Night, and More!",
+      "title": "San Jose Sharks Draft Viewing Party",
+      "startsAt": "2026-06-26T15:15:00-07:00",
+      "endsAt": null,
+      "location": "SAP Center, 525 W Santa Clara St, San Jose, CA 95113",
+      "description": "Watch the NHL Entry Draft live on the center-hung videoboard at SAP Center. Free tickets and parking. Doors open 3 PM for Sharks365 members, 3:15 PM for the general public. Event ends at conclusion of the first round.",
+      "sourceUrl": "https://link.sjsharks.com/u/nrd.php?p=4a3DEG8Klj_11824_801865_1_11&ems_l=1153032&i=1&d=MTEzNjIyODUz%7CNGEzREVHOEtsag%3D%3D%7CMmM3YWNhZTRmNGZlMTZjYzE%3D%7C&_esuh=_11_68201cfe627ae0216ac1afae394d8da0a5493a4e3b934489f80f9dea7d20dea4",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mqk61bjp_lq62s1",
+      "receivedAt": "2026-06-19T00:00:57.236Z",
+      "fromEmail": "no-reply@email.sjsharks.com",
+      "emailSubject": "Player Signing, Opening Night, and More!",
+      "title": "Barracuda Opening Night",
+      "startsAt": "2026-10-03T00:00:00-07:00",
+      "endsAt": null,
+      "location": "SAP Center, 525 W Santa Clara St, San Jose, CA 95113",
+      "description": "Opening game of the San Jose Barracuda 2026-27 season, presented by Rotten Robbie.",
+      "sourceUrl": null,
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new"
+    },
+    {
       "id": "inbound_mpvw3onc_a01mbw",
       "receivedAt": "2026-06-02 00:17:51.936534+00",
       "fromEmail": "reply@fanmail.sjearthquakes.com",
@@ -5803,21 +5769,6 @@
       "sourceUrl": "https://www.eventbrite.com/e/10-minute-walk-nature-journaling-tickets-1991014083721?aff=oddtdtcreator",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqfl2qxv_okawyw",
-      "receivedAt": "2026-06-15T19:02:57.404Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "Waacking Dance Workshop, Gardening for Biodiversity, and More!",
-      "title": "Author talk: Stories from the heart of grandfatherhood",
-      "startsAt": "2026-06-18T11:00:00-07:00",
-      "endsAt": "2026-06-18T12:00:00-07:00",
-      "location": null,
-      "description": "Virtual conversation with author Ted Page about his book 'Good Grandpa: Stories from the Heart of Grandfatherhood'.",
-      "sourceUrl": "https://libraryc.org/sunnyvalelibrary/162638",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
       "status": "new"
     },
     {
@@ -5928,36 +5879,6 @@
       "cityName": "Palo Alto",
       "status": "new",
       "sourceUrlOriginal": "https://email.live.stanford.edu/c/AQjouxYQkKcMGOKC7o8BIN-xmgIomPfRA6QugnonlZaO-cUERAcsR859xUJUdKm8bvscubEMTom0"
-    },
-    {
-      "id": "inbound_mphm00j3_critgu",
-      "receivedAt": "2026-05-23 00:23:47.210247+00",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "June Events for Kids",
-      "title": "Dash Robot Coding",
-      "startsAt": "2026-06-18T15:00:00-07:00",
-      "endsAt": "2026-06-18T16:00:00-07:00",
-      "location": "Sunnyvale Public Library, Program Room",
-      "description": "Learn to code the Dash robot and participate in fun coding challenges. Grades 2-5. Limited to 30 kids; doors close when full. No registration required.",
-      "sourceUrl": null,
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mphm00j3_1p0r1a",
-      "receivedAt": "2026-05-23 00:23:47.210247+00",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "June Events for Kids",
-      "title": "Family Fun Nights: Rock Steady Juggling",
-      "startsAt": "2026-06-18T19:00:00-07:00",
-      "endsAt": null,
-      "location": "Washington Park, 840 W. Washington Ave, Sunnyvale",
-      "description": "Evening of family fun in the park with juggling performance. For all ages.",
-      "sourceUrl": null,
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
     },
     {
       "id": "inbound_mphm00j3_szkxjv",
@@ -6413,21 +6334,6 @@
       "sourceUrlOriginal": "https://i5pqsadab.cc.rs6.net/tn.jsp?f=001Byh_qZV_3xEfWVXFSdgZ-zyuou5jGqAoeRhXOjtJPLvWx0qjRDHpf_RkjFBRhpgIcFopl0cHTI3grMaGehAbmQgy-1InaQDeJblrBRvdtMe6N23FIrAK6IumJOxBdHu_MyaZ_0D-2I7lyfTWTq9Js3OCFb515CLu0s7JWL5TjLeHPlUJ5UkAJ2bn__qoCAZMcQt32Wu3mZjfBzQSxIKwqH-u1LQs43RcBSbjf3kKyjVv1GujmirbQa1kPYyxPCL0TJf_Sye-By8FAdIyYdUa-tSYbSOVWtDl1B69mJeVNGVTUx2vLwBpUN6DJe9tFRetU7Y33HSyE8HG5dIEnygGdro3OlzbK3Q9uSQBKH5fk4NRwOL-vuLUUykVuruiGAiXIw_mE8p-iFc=&c=QEZnbeHCyx1HeDFzUQh9fAOzkJfsZ2PDV3iKIWj9ygOVd6CGbkw1jA==&ch=K_Lo2Svw_qZjrrNiqzGGap64aEKn1rxKk2B7CQi03s6TEduzsyVAXw=="
     },
     {
-      "id": "inbound_f2fb5a897a1a5931_03",
-      "receivedAt": "2026-05-19 17:01:26.7638+00",
-      "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
-      "emailSubject": "Don’t Miss These Upcoming Events",
-      "title": "Infinity Dance: Surf's Up, Dance On!",
-      "startsAt": "2026-06-18T18:00:00-07:00",
-      "endsAt": null,
-      "location": "Heritage Theatre, 1 W Campbell Ave, Campbell, CA 95008",
-      "description": "Annual dance recital.",
-      "sourceUrl": "https://www.heritagetheatre.org",
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new"
-    },
-    {
       "id": "inbound_f2fb5a897a1a5931_04",
       "receivedAt": "2026-05-19 17:01:26.7638+00",
       "fromEmail": "boxofficestaff@campbellrecreation.ccsend.com",
@@ -6565,21 +6471,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mq9w6lwt_ksjlok",
-      "receivedAt": "2026-06-11T19:29:45.888Z",
-      "fromEmail": "no-reply@email.sjsharks.com",
-      "emailSubject": "Calder Cup Finals Start Friday - Watch Live on AHLTV on FloHockey",
-      "title": "Calder Cup Finals Game 4 - Chicago Wolves vs Toronto Marlies",
-      "startsAt": "2026-06-18T19:00:00-04:00",
-      "endsAt": null,
-      "location": null,
-      "description": "AHL Calder Cup Finals Game 4 at Toronto. Stream live on AHLTV on FloHockey.",
-      "sourceUrl": "https://link.sjsharks.com/u/nrd.php?p=4a3DEG8Klj_12275_795857_1_11&ems_l=1145430&i=1&d=MTEyNDUyMDQ4%7CNGEzREVHOEtsag%3D%3D%7CMmM3YWNhZTRmNGZlMTZjYzE%3D%7C&_esuh=_11_c5519960d1e31b898a1b81bea7367c465c10d18e7e19b6d391ba4e731bf4eb1a",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
       "id": "inbound_mq9w6lwt_y4qynk",
       "receivedAt": "2026-06-11T19:29:45.888Z",
       "fromEmail": "no-reply@email.sjsharks.com",
@@ -6655,21 +6546,6 @@
       "cityName": "San Jose",
       "status": "new",
       "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=65Gt1icV9ZRvBP4N4kjYjJ_z7DOdOEQ_OeOJ__tazSVjDnu8RTJazg"
-    },
-    {
-      "id": "inbound_f801d7080f7521a8_01",
-      "receivedAt": "2026-05-15 23:01:50.217802+00",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "CENTRAL: In the Loop - Knitting & Crochet Club",
-      "title": "CENTRAL: In the Loop - Knitting & Crochet Club",
-      "startsAt": "2026-06-18T17:00:00-07:00",
-      "endsAt": "2026-06-18T18:30:00-07:00",
-      "location": "Central Park Library, Central Studio, 2635 Homestead Road, Santa Clara, California 95051",
-      "description": "A casual, self-directed social group for knitting and crochet enthusiasts of all experience levels to work on projects, share tips, and meet fellow crafters. No registration required; no formal instruction provided.",
-      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112506/",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
     },
     {
       "id": "inbound_mq7ftvuq_qcx8uc",

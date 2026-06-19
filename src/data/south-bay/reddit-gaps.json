@@ -1,135 +1,109 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-18T19:13:32.126Z",
+    "generatedAt": "2026-06-19T19:15:15.047Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 9,
+    "threadsMined": 14,
     "placesExtracted": 8,
-    "placesMatched": 2,
-    "placeGaps": 6,
-    "eventsExtracted": 3,
-    "eventsMatched": 0,
-    "eventGaps": 3,
+    "placesMatched": 5,
+    "placeGaps": 3,
+    "eventsExtracted": 5,
+    "eventsMatched": 1,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "La Plaza",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosted Mexico vs South Korea watch party",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
-      ]
-    },
-    {
-      "name": "Parque de los Pobladores",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "venue for CityDance World Stage Series events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
-      ]
-    },
-    {
-      "name": "San Jose Food Not Bombs",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "local charity accepting kitchen equipment donations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
-      ]
-    },
-    {
-      "name": "Hero Tent",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "local charity accepting kitchen equipment donations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
-      ]
-    },
-    {
-      "name": "Westgate",
+      "name": "T&T Asian Grocery Store",
       "city": "San Jose",
       "kind": "retail",
-      "context": "proposed Chick-fil-A location next to mall",
+      "context": "grand opening at Westgate mall, Canadian chain",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
       ]
     },
     {
-      "name": "Bill Wilson Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Pride event venue",
+      "name": "Meet Fresh",
+      "city": "Cupertino",
+      "kind": "restaurant",
+      "context": "closure discussed, was popular location",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
+        "https://www.reddit.com/r/SanJose/comments/1u9fn8l/inside_the_bay_areas_newest_asian_megastore_55000/",
+        "https://www.reddit.com/r/SanJose/comments/1ua7v18/what_happened_to_meet_fresh_cupertino/",
+        "https://www.reddit.com/r/SanJose/comments/1u9s963/had_a_blast_tonight_at_the_mexico_game/",
+        "https://www.reddit.com/r/SanJose/comments/1u9olfe/looking_for_beginner_friendly_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1u9o7qj/looking_for_a_loving_home_in_bay_area_for_the/"
+      ]
+    },
+    {
+      "name": "The Guild House",
+      "city": "",
+      "kind": "venue",
+      "context": "DnD and gaming groups, welcoming to solo players",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u9n1d4/free_events_at_east_san_jose_carnegie_library/",
+        "https://www.reddit.com/r/SanJose/comments/1u9mevh/fyi_they_added_a_3rd_big_screen_to_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u9kadt/dndgamer_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1u9npy5/has_apartment_research_ever_stopped_you_from/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Mexico vs South Korea Watch Party",
-      "when": "today 4:30pm",
+      "name": "Sharks Way - Mexico v Korea Game",
+      "when": "",
       "city": "San Jose",
-      "context": "free family friendly soccer watch party at La Plaza",
+      "context": "crowd gathering at San Pedro Square",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
       ]
     },
     {
-      "name": "CityDance San José World Stage Series",
-      "when": "June 18, 21, 24, 30",
-      "city": "San Jose",
-      "context": "free dance and music events celebrating global cultures",
+      "name": "Craft Club",
+      "when": "August 9",
+      "city": "",
+      "context": "arts and crafts gathering at Ramos Park for creative people",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
       ]
     },
     {
-      "name": "Bill Wilson Center Pride Event",
-      "when": "tomorrow (from post date)",
+      "name": "Mexico game",
+      "when": "",
       "city": "San Jose",
-      "context": "ongoing pride celebration event",
+      "context": "sporting event where attendees socialized",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
+        "https://www.reddit.com/r/SanJose/comments/1u9fn8l/inside_the_bay_areas_newest_asian_megastore_55000/",
+        "https://www.reddit.com/r/SanJose/comments/1ua7v18/what_happened_to_meet_fresh_cupertino/",
+        "https://www.reddit.com/r/SanJose/comments/1u9s963/had_a_blast_tonight_at_the_mexico_game/",
+        "https://www.reddit.com/r/SanJose/comments/1u9olfe/looking_for_beginner_friendly_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1u9o7qj/looking_for_a_loving_home_in_bay_area_for_the/"
+      ]
+    },
+    {
+      "name": "Make Music Day: Karaoke at the Library",
+      "when": "Sunday June 21, 2026, 3:00 PM - 4:30 PM",
+      "city": "San Jose",
+      "context": "free citywide music celebration with karaoke at Carnegie Library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u9n1d4/free_events_at_east_san_jose_carnegie_library/",
+        "https://www.reddit.com/r/SanJose/comments/1u9mevh/fyi_they_added_a_3rd_big_screen_to_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u9kadt/dndgamer_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1u9npy5/has_apartment_research_ever_stopped_you_from/"
       ]
     }
   ],
@@ -138,29 +112,84 @@
       "name": "San Pedro Square",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosted Mexico soccer game watch party",
+      "context": "hosted Sharks Way crowd for Mexico v Korea game",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u98hrv/mexico_vs_south_korea_watch_party/",
-        "https://www.reddit.com/r/SanJose/comments/1u98xbn/psa_for_todays_mexico_game_at_san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1u8neem/citydance_world_stage_parque_de_los_pobladores/",
-        "https://www.reddit.com/r/SanJose/comments/1u9evno/looking_to_donate_kitchen_equipment_to_a_charity/",
-        "https://www.reddit.com/r/SanJose/comments/1u8uir9/chickfila_restaurant_proposed_at_site_next_to_san/"
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
       ],
       "matchedName": "San Pedro Square Market"
     },
     {
-      "name": "San Pedro Square Market",
+      "name": "Nirvana Soul",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Black-owned breakfast restaurant",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
+      ],
+      "matchedName": "Nirvana Soul Coffee"
+    },
+    {
+      "name": "Ramos Park",
+      "city": "",
+      "kind": "park",
+      "context": "hosting Craft Club on August 9",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ua6ecm/sharks_way_crowd_was_awesome_at_san_pedro_square/",
+        "https://www.reddit.com/r/SanJose/comments/1ua4ay5/its_juneteenth_shout_out_a_local_black_owned/",
+        "https://www.reddit.com/r/SanJose/comments/1ua0rxv/tt_asian_grocery_store_originally_from_canada_had/",
+        "https://www.reddit.com/r/SanJose/comments/1u9rbo3/craft_clubb/",
+        "https://www.reddit.com/r/Cupertino/comments/1u9rb83/craft_club/"
+      ],
+      "matchedName": "Ramos Park"
+    },
+    {
+      "name": "East San Jose Carnegie Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "World Cup watch party with big screen",
+      "context": "hosts board games and karaoke events, free all ages",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1u8nqcx/flying_into_san_jose_for_work_any_advice_on/",
-        "https://www.reddit.com/r/SanJose/comments/1u8msjm/bill_wilson_center_pride_event/",
-        "https://www.reddit.com/r/SanJose/comments/1u98mtf/apartment_suggestions/",
-        "https://www.reddit.com/r/SanJose/comments/1u8v031/world_cup_watch_party_at_san_pedro_sq/"
+        "https://www.reddit.com/r/SanJose/comments/1u9n1d4/free_events_at_east_san_jose_carnegie_library/",
+        "https://www.reddit.com/r/SanJose/comments/1u9mevh/fyi_they_added_a_3rd_big_screen_to_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u9kadt/dndgamer_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1u9npy5/has_apartment_research_ever_stopped_you_from/"
+      ],
+      "matchedName": "East San Jose Carnegie Library"
+    },
+    {
+      "name": "San Pedro",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "added third big screen by ball courtyard",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u9n1d4/free_events_at_east_san_jose_carnegie_library/",
+        "https://www.reddit.com/r/SanJose/comments/1u9mevh/fyi_they_added_a_3rd_big_screen_to_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u9kadt/dndgamer_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1u9npy5/has_apartment_research_ever_stopped_you_from/"
       ],
       "matchedName": "San Pedro Square Market"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Board Game Day",
+      "when": "Sunday June 21, 2026, 1:00 PM - 2:00 PM",
+      "city": "San Jose",
+      "context": "monthly family-friendly board games at Carnegie Library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1u9n1d4/free_events_at_east_san_jose_carnegie_library/",
+        "https://www.reddit.com/r/SanJose/comments/1u9mevh/fyi_they_added_a_3rd_big_screen_to_san_pedro/",
+        "https://www.reddit.com/r/SanJose/comments/1u9kadt/dndgamer_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1u9npy5/has_apartment_research_ever_stopped_you_from/"
+      ],
+      "matchedName": "Board Game Day"
+    }
+  ]
 }

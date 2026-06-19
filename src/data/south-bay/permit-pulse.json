@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-18T19:09:01.729Z",
+      "generatedAt": "2026-06-19T19:09:03.474Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 11 – Jun 18",
+      "dateRange": "Jun 12 – Jun 19",
       "stats": {
-        "total": 338,
+        "total": 367,
         "notable": 24,
-        "newUnits": 10,
-        "totalValuation": 46354753
+        "newUnits": 14,
+        "totalValuation": 20919679
       },
       "permits": [
         {
@@ -51,15 +51,51 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-116135-RS",
-          "address": "632 N 15th St #2",
+          "id": "2026-121719-RS",
+          "address": "550 S Kiely Bl #230",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Ab 2533 Legalize Garage Conversion to ADU",
-          "valuation": 115658,
+          "description": "Bldg 4 Mf ADU Unit #230 Epr Code Case Convert Rec Room to ADU @ 2nd Floor",
+          "valuation": 179235,
           "units": 1,
-          "issueDate": "2026-06-12",
+          "issueDate": "2026-06-17",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-096992-RS",
+          "address": "981 Elm St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case (Bepm100%%) Detached Garage Conversion to ADU",
+          "valuation": 133750,
+          "units": 1,
+          "issueDate": "2026-06-17",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-122998-RS",
+          "address": "4590 Houndshaven Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 120899,
+          "units": 1,
+          "issueDate": "2026-06-17",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-139309-RS",
+          "address": "839 Schiele Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 105850,
+          "units": 1,
+          "issueDate": "2026-06-17",
           "subtype": "2nd Unit Added"
         },
         {
@@ -87,65 +123,29 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-115239-RS",
-          "address": "2777 Twin Oaks Ln #2",
+          "id": "2026-106599-RS",
+          "address": "3142 Modred Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Code Case Legalize Unpermitted Garage Conversion to Jadu",
-          "valuation": 66621,
+          "description": "Code Case Attached Garage Conversion to ADU",
+          "valuation": 66960,
           "units": 1,
-          "issueDate": "2026-06-15",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-104736-RS",
-          "address": "4592 Brunswick Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Converison to Jadu",
-          "valuation": 65607,
-          "units": 1,
-          "issueDate": "2026-06-16",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-116144-RS",
-          "address": "1544 Amesbury Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Ab 2533 Legalize Attach Patio to ADU",
-          "valuation": 64254,
-          "units": 1,
-          "issueDate": "2026-06-12",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-106855-RS",
-          "address": "4082 Jarvis Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Jadu",
-          "valuation": 59012,
-          "units": 1,
-          "issueDate": "2026-06-15",
+          "issueDate": "2026-06-17",
           "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-18T19:09:03.916Z",
+      "generatedAt": "2026-06-19T19:09:05.962Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 11 – Jun 18",
+      "dateRange": "Jun 12 – Jun 19",
       "stats": {
         "total": 127,
-        "notable": 6,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -153,30 +153,6 @@
         {
           "id": "26BLD-01584",
           "address": "3721 Middlefield Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01598",
-          "address": "710 Chimalus Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-16",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -196,6 +172,54 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01636",
+          "address": "315 Colorado Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01598",
+          "address": "710 Chimalus Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01630",
+          "address": "285 Olive Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-18",
           "subtype": "Permit Issued"
         },
         {
