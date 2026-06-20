@@ -1013,7 +1013,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     category: "eda",
     round: "Seed",
     amount: "$24M",
-    date: "2026-06-19",
+    date: "2026-06-18",
     tagline:
       "AI-driven platform that turns a demanding workload into a production-ready chip design — letting a company build custom silicon without standing up a large semiconductor team. Founders Ebrahim Hussain (ex-Apple and Tesla custom silicon) and Aaditya Subedi (Harvard AI code-verification research) met at Stanford; the seed was led by Kindred Ventures with TQ Ventures, Race Capital, and Together Fund, and angels including OpenAI's Srinivas Narayanan, Perplexity's Aravind Srinivas, and Stanford's Kunle Olukotun.",
     color: "#4338ca",
