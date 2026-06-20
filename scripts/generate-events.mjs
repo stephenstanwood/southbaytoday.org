@@ -1920,6 +1920,9 @@ function inferCategory(title, desc, type, venue = "") {
   // "Carnival of Sins", Saint-Saëns' "Carnival of the Animals") are caught by the
   // earlier music/arts checks and never reach this point.
   if (/\bcarnival\b/.test(titleLower)) return "community";
+  // Picnics are community/social gatherings — descriptions mention "games"
+  // (lawn games, raffles, activities) that would otherwise hit the sports branch.
+  if (/\bpicnic\b/.test(titleLower)) return "community";
   // "vs." and "vs " as sports indicators should only be checked in the TITLE, not descriptions —
   // descriptions can use "vs." for technical comparisons ("DataFrames vs. Series").
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");

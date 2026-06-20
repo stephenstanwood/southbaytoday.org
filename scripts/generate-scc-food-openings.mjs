@@ -39,7 +39,7 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b/i;
+const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b/i;
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
@@ -61,7 +61,9 @@ const VENUE_CONCESSION_PATTERNS = /\bLEVI'?S?\s+STADIUM\b|\bCONVENTION\s+CENTER\
 // Venue/transit addresses — some concessions carry a plain food name (e.g.
 // "Bad Egg / Pizza My Heart") so only the SITE ADDRESS reveals they're inside an
 // airport terminal or a stadium. Match those against the location, not the name.
-const VENUE_ADDRESS_PATTERNS = /\bAIRPORT\s+BLVD\b|\bSJC\b|\bTERM(INAL)?\s+[A-Z0-9]\b|MARIE\s+P\.?\s+DEBARTOLO/i;
+// Raw SCC site_location abbreviates "Boulevard" as "BL" (e.g. "1701 AIRPORT BL
+// SPC B2990" = SJC terminal), so match AIRPORT BL with the VD optional.
+const VENUE_ADDRESS_PATTERNS = /\bAIRPORT\s+BL(?:VD)?\b|\bSJC\b|\bTERM(INAL)?\s+[A-Z0-9]\b|MARIE\s+P\.?\s+DEBARTOLO/i;
 
 // Patterns for names that need more cleanup
 const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
