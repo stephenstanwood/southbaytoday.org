@@ -2504,17 +2504,6 @@ export const TECH_CONFERENCES: TechConference[] = [
     scale: "global",
   },
   {
-    id: "svforum-summit",
-    name: "SVForum Tech Summit",
-    organizer: "SVForum",
-    venue: "Computer History Museum",
-    city: "Mountain View",
-    typicalMonth: 9,
-    description: "Silicon Valley's regional tech and innovation summit — panels on SV's economic competitiveness, emerging sectors, and local tech policy. Held at the Computer History Museum in Mountain View.",
-    url: "https://www.siliconvalley.forum",
-    scale: "regional",
-  },
-  {
     id: "startup-world-cup-sv",
     name: "Startup World Cup Silicon Valley",
     organizer: "Pegasus Tech Ventures",
