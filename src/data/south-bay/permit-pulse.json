@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-20T19:08:58.318Z",
+      "generatedAt": "2026-06-20T23:08:56.820Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-20T19:09:00.621Z",
+      "generatedAt": "2026-06-20T23:08:59.212Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,15 +151,15 @@
       },
       "permits": [
         {
-          "id": "26BLD-01598",
-          "address": "710 Chimalus Dr",
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-16",
+          "issueDate": "2026-06-15",
           "subtype": "Permit Issued"
         },
         {
@@ -175,27 +175,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01585",
-          "address": "206 Everett Av",
+          "id": "26BLD-01598",
+          "address": "710 Chimalus Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
+          "issueDate": "2026-06-16",
           "subtype": "Permit Issued"
         },
         {
@@ -211,6 +199,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01585",
+          "address": "206 Everett Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01630",
           "address": "285 Olive Av",
           "category": "residential-remodel",
@@ -223,24 +223,24 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00138",
-          "address": "400 Hamilton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a barrier arm with a long range reader at the surface parking lot entry and exit. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalo.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-16",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00141",
           "address": "250 Lytton Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Over the Counter Architectural Review to install three illuminated wall signs etter on the front and side elevations of the existing commercial building. Sign will be internally illuminated LED with electrical connection to existing building power. The proposed sign to read, \"Fifth Third Bank\". Environmental Assessment: Not a Project. For more information contact the project planner Val Perez at Val Perez-Ibardolasa@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00138",
+          "address": "400 Hamilton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to install a barrier arm with a long range reader at the surface parking lot entry and exit. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalo.gov.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-16",
