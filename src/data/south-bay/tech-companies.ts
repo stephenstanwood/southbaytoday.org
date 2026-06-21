@@ -99,7 +99,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "chip",
     sccEmployeesK: 14,
     trend: "down",
-    trendNote: "14K in SCC; another ~15% workforce cut underway in Tan's 2025–26 restructuring",
+    trendNote: "14K in SCC; Tan's 2025 restructuring cut global headcount ~20% to ~88K",
     highlights: [
       "Lip-Bu Tan took over as CEO March 2025; cutting layers of management and ~25K jobs by year-end",
       "Reported preliminary foundry deals with Apple and Tesla; chip yields still trail TSMC",
