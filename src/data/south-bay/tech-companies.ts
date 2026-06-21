@@ -2414,6 +2414,18 @@ export const TECH_MILESTONES: TechMilestone[] = [
     anniversaryNote: "Oracle was founded June 16, 1977, in Santa Clara as Software Development Laboratories by Larry Ellison, Bob Miner, and Ed Oates — three former Ampex engineers who pooled $2,000 in starting capital. Their bet was on a then-obscure IBM research paper describing the relational database; in 1979 they shipped the first commercial SQL relational database management system, beating IBM itself to market. The company renamed itself Oracle in 1982 and grew into one of the world's largest software makers, the backbone for storing and querying business data everywhere from banks to airlines.",
     url: "https://en.wikipedia.org/wiki/Oracle_Corporation",
   },
+  {
+    id: "iphone-on-sale",
+    company: "Apple",
+    city: "Cupertino",
+    foundedYear: 2007,
+    month: 6,
+    day: 29,
+    tagline: "The original iPhone went on sale June 29, 2007 — the Cupertino product that turned a Macworld demo into the device the world carries in its pocket.",
+    anniversaryNote: "On June 29, 2007, the original iPhone went on sale at 6 p.m. local time, almost six months after Steve Jobs first showed it off at Macworld. Lines wrapped around Apple and AT&T stores for days beforehand — the most anticipated gadget launch the industry had ever seen. It shipped in two models, a 4GB at $499 and an 8GB at $599, both tied to a two-year AT&T contract, and Apple reported selling 270,000 units in the first 30 hours. There was no App Store yet, no copy-and-paste, no 3G — and it still rewrote the rules: a full-screen multi-touch phone with a real web browser at a moment when rivals were still selling keyboards and styluses. The hardware, the software, and the launch were all designed on Apple's campus in Cupertino, and within a decade the iPhone had become the best-selling consumer electronics product in history.",
+    url: "https://en.wikipedia.org/wiki/IPhone_(1st_generation)",
+    defunct: false,
+  },
 ];
 
 // ---------------------------------------------------------------------------
