@@ -97,6 +97,15 @@ function campHasUpcomingWeek(camp: Camp): boolean {
   return camp.weeks.some((w) => w.endDate >= TODAY_ISO);
 }
 
+// Sessions a parent can still register for. During an active season the week
+// picker and planner already hide finished weeks, so the card footer should
+// match — count only upcoming weeks, not the all-time total. Once the season is
+// over (no upcoming weeks) fall back to the full count so the card isn't blank.
+function sessionCount(camp: Camp): number {
+  const upcoming = camp.weeks.filter((w) => w.endDate >= TODAY_ISO).length;
+  return upcoming > 0 ? upcoming : camp.weeks.length;
+}
+
 // Get camp week data for a specific week number
 function getCampWeek(camp: Camp, weekNum: number): CampWeek | undefined {
   return camp.weeks.find((w) => w.weekNum === weekNum);
@@ -192,7 +201,7 @@ function CampCard({ camp }: { camp: Camp }) {
       )}
 
       <div className="camps-card-footer">
-        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{camp.weeks.length} sessions listed</span>}
+        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{sessionCount(camp)} sessions listed</span>}
         <a
           href={camp.registerUrl}
           target="_blank"
