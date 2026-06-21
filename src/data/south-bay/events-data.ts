@@ -411,7 +411,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     time: "10:30am",
     cost: "free",
     kidFriendly: true,
-    description: "Storytime for ages 18 months – 5 years at the newly reopened Campbell Library. No storytime on June 17.",
+    description: "Storytime for ages 18 months – 5 years at the newly reopened Campbell Library.",
     url: "https://www.sccl.org/campbell",
     emoji: "📚",
     startDate: "2026-05-13",
