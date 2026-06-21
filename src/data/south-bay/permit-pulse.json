@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-20T23:08:56.820Z",
+      "generatedAt": "2026-06-21T19:09:47.691Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 13 – Jun 20",
+      "dateRange": "Jun 14 – Jun 21",
       "stats": {
-        "total": 450,
+        "total": 443,
         "notable": 33,
         "newUnits": 14,
-        "totalValuation": 26709730
+        "totalValuation": 26703416
       },
       "permits": [
         {
@@ -137,12 +137,12 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-20T23:08:59.212Z",
+      "generatedAt": "2026-06-21T19:09:50.028Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 13 – Jun 20",
+      "dateRange": "Jun 14 – Jun 21",
       "stats": {
         "total": 137,
         "notable": 8,
@@ -150,18 +150,6 @@
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01584",
           "address": "3721 Middlefield Rd",
@@ -172,18 +160,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01598",
-          "address": "710 Chimalus Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-16",
           "subtype": "Permit Issued"
         },
         {
@@ -220,6 +196,30 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-18",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01598",
+          "address": "710 Chimalus Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
           "subtype": "Permit Issued"
         },
         {
