@@ -6359,13 +6359,20 @@ function fetchInboundEvents() {
       // street name instead of a raw address. The full address still rides
       // along in the address field.
       const location = e.location ?? "";
-      const hadLeadingNumber = /^\d+(-\d+)?\s+/.test(location);
+      // Leading street number, including multi-number ranges joined by a dash,
+      // ampersand, slash, or "and" ("315-367 S First St", "21 & 23 Post Street").
+      // Without consuming the whole range, "21 & 23 Post Street" strips only "21 "
+      // and leaves "& 23 Post Street" — which then dodges the bare-address empty-out
+      // below (it requires a leading letter) and surfaces a broken venue.
+      const LEADING_STREET_NUMBER = /^\d+(?:\s*[-–&/]\s*\d+|\s+and\s+\d+)*\s+/i;
+      const hadLeadingNumber = LEADING_STREET_NUMBER.test(location);
       let venueName = location.includes(",") ? location.split(",")[0].trim() : location;
       // Strip leading street number and optional "block of" phrasing — newsletter
       // sources sometimes write "200 block of Castro Street (near Dana Street)"
       // which yields a useless "block of Castro Street …" venue otherwise.
-      if (/^\d+(-\d+)?\s+(block\s+of\s+)?/i.test(venueName)) {
-        venueName = venueName.replace(/^\d+(-\d+)?\s+(block\s+of\s+)?/i, "").trim();
+      const LEADING_STREET_NUMBER_BLOCK = /^\d+(?:\s*[-–&/]\s*\d+|\s+and\s+\d+)*\s+(block\s+of\s+)?/i;
+      if (LEADING_STREET_NUMBER_BLOCK.test(venueName)) {
+        venueName = venueName.replace(LEADING_STREET_NUMBER_BLOCK, "").trim();
       }
       // If the original location was a bare street address (e.g.
       // "123 Los Gatos Blvd, Los Gatos, CA") with no venue name, the strip
