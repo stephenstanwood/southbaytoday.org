@@ -408,6 +408,12 @@ function BrowseMode() {
           </label>
         </div>
 
+        {ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) && (
+          <p style={{ fontSize: 12, color: "var(--sb-muted)", margin: "10px 0 0" }}>
+            * Week {SHORT_WEEK_NUM} is a short week — no camp Fri Jul 3 (July 4th observed).
+          </p>
+        )}
+
         <div className="camps-results-head">
           <span>
             Showing {visible.length} of {shownTotal} program{shownTotal !== 1 ? "s" : ""}
