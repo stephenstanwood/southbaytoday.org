@@ -1089,19 +1089,6 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.expertintelligence.ai",
   },
   {
-    id: "axiom-math",
-    name: "Axiom Math",
-    city: "Palo Alto",
-    category: "ai",
-    round: "Series A",
-    amount: "$200M",
-    date: "2026-03-12",
-    tagline:
-      "AI that generates formally verified code and mathematical proofs in the Lean language — every output carries a machine-checkable guarantee of correctness instead of the plausible-but-unproven answers a typical model returns. Founded by Carina Hong, a Morgan Prize–winning mathematician who left a Stanford J.D./Ph.D. program; the company's prover scored a perfect 12/12 on the Putnam exam in late 2025. Menlo Ventures led the $200M Series A at a $1.6B post-money valuation, on top of a $64M seed (≈$264M raised to date).",
-    color: "#6d28d9",
-    url: "https://axiommath.ai",
-  },
-  {
     id: "terra-ai",
     name: "Terra AI",
     city: "Palo Alto",
@@ -1536,14 +1523,15 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   },
   {
     id: "axiom-math-ai",
-    name: "Axiom Math AI",
+    name: "Axiom Math",
     city: "Palo Alto",
-    category: "software",
+    category: "ai",
     round: "Series A",
     amount: "$200M",
     date: "2026-03-12",
-    tagline: "AI that formally proves AI-generated code is correct — using the Lean proof language to give mathematical certainty that code will never return wrong answers. Founded by MIT graduate Carina Hong, who scored a perfect 12/12 on the Putnam Competition and proved a 20-year-old open conjecture. $1.6B valuation led by Menlo Ventures.",
-    color: "#7c3aed",
+    tagline:
+      "AI that generates formally verified code and mathematical proofs in the Lean language — every output carries a machine-checkable guarantee of correctness instead of the plausible-but-unproven answers a typical model returns. Founded by Carina Hong, a Morgan Prize–winning mathematician who left a Stanford J.D./Ph.D. program; the company's prover scored a perfect 12/12 on the Putnam exam in late 2025. Menlo Ventures led the $200M Series A at a $1.6B post-money valuation, on top of a $64M seed (≈$264M raised to date).",
+    color: "#6d28d9",
     url: "https://axiommath.ai",
   },
   {
