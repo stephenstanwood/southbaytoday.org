@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "exaforce",
+    name: "Exaforce",
+    city: "San Jose",
+    category: "security",
+    round: "Series B",
+    amount: "$125M",
+    date: "2026-05-12",
+    tagline:
+      "AI-driven security operations: its \"Exabots\" automate the SOC grunt work — triaging alerts and investigating threats in real time — to cut manual analyst toil by up to 90%, with a natural-language \"vibe hunting\" mode for chasing down suspicious activity. Founded by Ankur Singla (who previously built Volterra, acquired by F5) and Jakub Pavlik; the Series B drew HarbourVest, Peak XV, Mayfield, Khosla Ventures, and Seligman Ventures, taking total funding to $200M.",
+    color: "#2563eb",
+    url: "https://www.exaforce.com",
+  },
+  {
     id: "architect-labs",
     name: "Architect Labs",
     city: "Palo Alto",
