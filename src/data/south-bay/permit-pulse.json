@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-21T19:09:47.691Z",
+      "generatedAt": "2026-06-22T19:08:45.322Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 14 – Jun 21",
+      "dateRange": "Jun 15 – Jun 22",
       "stats": {
-        "total": 443,
-        "notable": 33,
-        "newUnits": 14,
-        "totalValuation": 26703416
+        "total": 383,
+        "notable": 26,
+        "newUnits": 11,
+        "totalValuation": 11449817
       },
       "permits": [
         {
@@ -111,18 +111,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-107903-RS",
-          "address": "2271 Pumpherston Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Garage Conversion to Jadu",
-          "valuation": 75245,
-          "units": 1,
-          "issueDate": "2026-06-15",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-106599-RS",
           "address": "3142 Modred Dr #2",
           "category": "residential-new",
@@ -133,35 +121,35 @@
           "units": 1,
           "issueDate": "2026-06-17",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-104736-RS",
+          "address": "4592 Brunswick Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Converison to Jadu",
+          "valuation": 65607,
+          "units": 1,
+          "issueDate": "2026-06-16",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-21T19:09:50.028Z",
+      "generatedAt": "2026-06-22T19:08:47.422Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 14 – Jun 21",
+      "dateRange": "Jun 15 – Jun 22",
       "stats": {
-        "total": 137,
+        "total": 140,
         "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01584",
-          "address": "3721 Middlefield Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01636",
           "address": "315 Colorado Av",
@@ -175,8 +163,44 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01584",
+          "address": "3721 Middlefield Rd",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01598",
+          "address": "710 Chimalus Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-16",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26BLD-01585",
           "address": "206 Everett Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01581",
+          "address": "3102 Stelling Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -196,30 +220,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-18",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01598",
-          "address": "710 Chimalus Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-16",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
           "subtype": "Permit Issued"
         },
         {
