@@ -1006,19 +1006,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Note: Signos ($20M Series B, May 2026) was dropped — HQ is Burlingame
   // (San Mateo County / mid-Peninsula), not the South Bay. Was mislabeled
   // "Palo Alto." If coverage ever extends north of Redwood City, re-add.
-  {
-    id: "ent",
-    name: "Ent",
-    city: "Santa Clara",
-    category: "security",
-    round: "Seed",
-    amount: "$100M",
-    date: "2026-06-16",
-    tagline:
-      "Cybersecurity startup that came out of stealth with intent-aware, on-device AI that catches risky actions in the workspace before they happen — pitched as bringing prevention back to endpoint security. Founded by RiskIQ veterans Elias \"Lou\" Manousos (CEO) and Brandon Dixon (CTO), whose prior company Microsoft acquired in 2021; the round — one of the largest seeds in cybersecurity history — was led by Decibel Partners with Sequoia, Crosspoint Capital, Craft Ventures, Felicis, Shield Capital, and In-Q-Tel.",
-    color: "#4f46e5",
-    url: "https://ent.ai",
-  },
+  // Note: Ent ($100M seed, June 2026) was dropped — HQ is San Francisco, not
+  // the South Bay. Was mislabeled "Santa Clara." Founder Elias Manousos's
+  // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
+  // in SF. Far north of Redwood City; out of coverage.
   {
     id: "architect-labs",
     name: "Architect Labs",
