@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "upscale-ai",
+    name: "Upscale AI",
+    city: "Santa Clara",
+    category: "network",
+    round: "Series A-1",
+    amount: "$190M",
+    date: "2026-06-22",
+    tagline:
+      "Building an open-standard networking fabric for AI data centers — a full-stack silicon, systems, and software platform that lets chips from different vendors work together at full speed, linking accelerators, memory, and storage into one high-performance cluster. Founded by CEO Barun Kar (a founding Palo Alto Networks team member who ran Juniper's Ethernet portfolio) and Executive Chairman Rajiv Khemani (founder of Innovium, acquired by Marvell for $1.1B). The Series A-1 extension was led by Premji Invest with new backers NVIDIA, Salesforce Ventures, Temasek, and Seligman Ventures, taking total funding to $500M at a $2B valuation.",
+    color: "#1e40af",
+    url: "https://upscale.com",
+  },
+  {
     id: "exaforce",
     name: "Exaforce",
     city: "San Jose",
