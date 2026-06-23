@@ -32,6 +32,23 @@ const dryRun = bool("dry-run");
 const editorial = !bool("no-editorial");
 
 async function main() {
+  const cfg = loadConfig();
+  if (!cfg.audienceId) {
+    console.error("no audienceId in newsletter-config.json — run setup-audience.mjs first");
+    process.exit(1);
+  }
+
+  // Don't burn generation (Recraft hero + LLM editorial) on a real run when the
+  // audience has no subscribers. QA paths (--test/--dry-run) still build below.
+  if (!testTo && !dryRun) {
+    const contactsResp = await resendFetch(`/audiences/${cfg.audienceId}/contacts`, { method: "GET" }).catch(() => null);
+    const contactCount = Array.isArray(contactsResp?.data) ? contactsResp.data.filter((c) => !c.unsubscribed).length : 0;
+    if (contactCount === 0) {
+      console.log("newsletter: audience has 0 contacts — skipping generation entirely (no hero, no editorial, no send). Add subscribers to enable.");
+      return;
+    }
+  }
+
   // Real broadcasts regenerate the designed day-plan hero poster first; skip for
   // QA (--test/--dry-run) to avoid burning Recraft credits. A failure falls back
   // to the first card's photo, so it never blocks the send.
@@ -76,12 +93,6 @@ async function main() {
     return;
   }
 
-  const cfg = loadConfig();
-  if (!cfg.audienceId) {
-    console.error("no audienceId in newsletter-config.json — run setup-audience.mjs first");
-    process.exit(1);
-  }
-
   const broadcast = await resendFetch("/broadcasts", {
     method: "POST",
     body: JSON.stringify({
@@ -95,20 +106,11 @@ async function main() {
   });
   console.log(`broadcast created: ${broadcast.id}`);
 
-  // Resend rejects sends to an audience with no contacts (422). Skip the send
-  // when the audience is empty — the broadcast draft + public archive still
-  // happen, and sending resumes automatically once subscribers are added.
-  const contactsResp = await resendFetch(`/audiences/${cfg.audienceId}/contacts`, { method: "GET" }).catch(() => null);
-  const contactCount = Array.isArray(contactsResp?.data) ? contactsResp.data.length : 0;
-  if (contactCount === 0) {
-    console.log("audience has 0 contacts — skipping broadcast send (draft + archive still created). Add subscribers to enable sending.");
-  } else {
-    const sendRes = await resendFetch(`/broadcasts/${broadcast.id}/send`, {
-      method: "POST",
-      body: JSON.stringify({}),
-    });
-    console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
-  }
+  const sendRes = await resendFetch(`/broadcasts/${broadcast.id}/send`, {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
+  console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
 
   // Daily Discord DM is OFF by default (Stephen turned it off 2026-06-18).
   // The email broadcast + public archive still run; the cat-signal DM only
