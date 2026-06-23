@@ -95,11 +95,20 @@ async function main() {
   });
   console.log(`broadcast created: ${broadcast.id}`);
 
-  const sendRes = await resendFetch(`/broadcasts/${broadcast.id}/send`, {
-    method: "POST",
-    body: JSON.stringify({}),
-  });
-  console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
+  // Resend rejects sends to an audience with no contacts (422). Skip the send
+  // when the audience is empty — the broadcast draft + public archive still
+  // happen, and sending resumes automatically once subscribers are added.
+  const contactsResp = await resendFetch(`/audiences/${cfg.audienceId}/contacts`, { method: "GET" }).catch(() => null);
+  const contactCount = Array.isArray(contactsResp?.data) ? contactsResp.data.length : 0;
+  if (contactCount === 0) {
+    console.log("audience has 0 contacts — skipping broadcast send (draft + archive still created). Add subscribers to enable sending.");
+  } else {
+    const sendRes = await resendFetch(`/broadcasts/${broadcast.id}/send`, {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    console.log(`broadcast sent: ${JSON.stringify(sendRes)}`);
+  }
 
   // Daily Discord DM is OFF by default (Stephen turned it off 2026-06-18).
   // The email broadcast + public archive still run; the cat-signal DM only
