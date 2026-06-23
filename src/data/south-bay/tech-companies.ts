@@ -560,7 +560,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Santa Clara",
     category: "chip",
     stage: "startup",
-    tagline: "In-memory compute chip for AI inference at the data center edge. Well-funded stealth player.",
+    tagline: "Its Corsair in-memory compute chip targets AI inference at the data center edge. Microsoft-backed; raised a $275M Series C in late 2025 at a $2B valuation (~$450M total) to take on NVIDIA on inference.",
     color: "#1E3A5F",
     url: "https://www.d-matrix.ai",
     employeesNote: "200 employees",
