@@ -1076,6 +1076,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.maneva.ai",
   },
   {
+    id: "nace-ai",
+    name: "Nace.AI",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$21.5M",
+    date: "2026-05-05",
+    tagline:
+      "Applied-AI company building a \"Metamodel\" that turns a company's policies and procedures into purpose-built small language models — starting with finance, audit, and compliance, where 100+ specialized agents run the workflow and human experts sign off on the final call. Founded by CEO Dos Baha (ex-Goat.AI) with ex-Google/Apple engineer Sudha Valluru and ex-Meta engineer Zhanibek Datbayev; the seed was led by Walden Catalyst with General Catalyst joining.",
+    color: "#6d28d9",
+    url: "https://nace.ai",
+  },
+  {
     id: "pomo",
     name: "Pomo",
     city: "Palo Alto",
