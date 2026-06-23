@@ -1621,18 +1621,11 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#0f172a",
     url: "https://articul8.ai",
   },
-  {
-    id: "upscale-ai",
-    name: "Upscale AI",
-    city: "Santa Clara",
-    category: "network",
-    round: "Series A",
-    amount: "$200M",
-    date: "2026-01-21",
-    tagline: "Pure-play AI networking infrastructure that links GPUs, accelerators, memory, storage, and networking into one synchronized system for large-scale AI clusters — taking on Cisco and Broadcom from Santa Clara. Oversubscribed Series A hit unicorn status in months.",
-    color: "#0369a1",
-    url: "https://upscaleai.com",
-  },
+  // Upscale AI's Jan 2026 $200M Series A was deduped into the June 2026
+  // $190M Series A-1 extension entry above (id "upscale-ai", same company /
+  // Santa Clara / network). The newer entry carries the full arc — $500M
+  // total, $2B valuation. Keeping both double-counted the company in the
+  // funding grid/ticker and inflated the YTD "raised" headline by $200M.
   {
     id: "etched",
     name: "Etched",
