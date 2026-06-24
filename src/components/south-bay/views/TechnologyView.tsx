@@ -1017,18 +1017,27 @@ function getActiveMilestones(): TechMilestone[] {
   });
 }
 
-function getNextMilestone(): { milestone: TechMilestone; daysUntil: number } | null {
+function getNextMilestone(): {
+  milestone: TechMilestone;
+  daysUntil: number;
+  occurrenceYear: number;
+} | null {
   const now = new Date();
   const nowMs = now.getTime();
-  let best: { milestone: TechMilestone; daysUntil: number } | null = null;
+  let best: {
+    milestone: TechMilestone;
+    daysUntil: number;
+    occurrenceYear: number;
+  } | null = null;
   for (const m of TECH_MILESTONES) {
     for (const yearOffset of [0, 1]) {
-      const mDate = new Date(now.getFullYear() + yearOffset, m.month - 1, m.day);
+      const occurrenceYear = now.getFullYear() + yearOffset;
+      const mDate = new Date(occurrenceYear, m.month - 1, m.day);
       const diffMs = mDate.getTime() - nowMs;
       const diffDays = diffMs / (1000 * 60 * 60 * 24);
       if (diffDays > WINDOW_DAYS) {
         if (!best || diffDays < best.daysUntil) {
-          best = { milestone: m, daysUntil: Math.ceil(diffDays) };
+          best = { milestone: m, daysUntil: Math.ceil(diffDays), occurrenceYear };
         }
         break;
       }
@@ -1064,9 +1073,9 @@ function SvHistorySection() {
   if (milestones.length === 0) {
     const next = getNextMilestone();
     if (!next) return null;
-    const { milestone: m, daysUntil } = next;
-    const age = new Date().getFullYear() - m.foundedYear;
-    const mDate = new Date(new Date().getFullYear(), m.month - 1, m.day);
+    const { milestone: m, daysUntil, occurrenceYear } = next;
+    const age = occurrenceYear - m.foundedYear;
+    const mDate = new Date(occurrenceYear, m.month - 1, m.day);
     const monthLabel = mDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
     return (
       <div className="tech-section">
