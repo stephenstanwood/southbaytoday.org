@@ -1,223 +1,75 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-20T19:16:30.133Z",
+    "generatedAt": "2026-06-24T03:16:55.039Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 14
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 14,
-    "placesExtracted": 6,
-    "placesMatched": 3,
+    "threadsMined": 8,
+    "placesExtracted": 3,
+    "placesMatched": 0,
     "placeGaps": 3,
-    "eventsExtracted": 9,
-    "eventsMatched": 1,
-    "eventGaps": 8,
+    "eventsExtracted": 1,
+    "eventsMatched": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Celtic Tea Shop",
+      "name": "Jensen's Foreign Car Service",
       "city": "San Jose",
-      "kind": "cafe",
-      "context": "hosting Harry Potter birthday afternoon tea event",
+      "kind": "service",
+      "context": "highly trusted auto repair shop, owner Jay",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
+        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
+        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
+        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
+        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
       ]
     },
     {
-      "name": "Levi's Stadium",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "World Cup game viewing location",
+      "name": "Fresh Baked",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "favorite sandwich shop in downtown San Jose",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uazq1o/mental_health_volunteering_opportunities/",
-        "https://www.reddit.com/r/SanJose/comments/1ualgot/soccer_league_for_8yo_2018/",
-        "https://www.reddit.com/r/SanJose/comments/1uaity5/turkish_party_bus_downtown_before_world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1uaigq6/paraguay_vs_turkey_watch_party/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1uafzhd/weekday_hiking_group_for_the_laidoff_monday_los/"
+        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
+        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
+        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
+        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
       ]
     },
     {
-      "name": "Faber's Cyclery",
+      "name": "Duc Huong",
       "city": "San Jose",
-      "kind": "retail",
-      "context": "previous Bike Tag #184 location",
+      "kind": "restaurant",
+      "context": "banh mi sandwiches, popular local spot",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
+        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
+        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
+        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
+        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Harry Potter's Birthday Afternoon Tea 2026/Lughnasa Celebration",
-      "when": "2026",
-      "city": "San Jose",
-      "context": "celebration event at Celtic Tea Shop near Pearl and Branham",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
-      ]
-    },
-    {
-      "name": "Indie Horror RPG Weekly Sessions",
-      "when": "Sunday June 21st at 3pm",
-      "city": "San Jose",
-      "context": "Mothership sci-fi horror RPG session at Guildhouse, recruiting players",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
-      ]
-    },
-    {
-      "name": "Turkish party bus downtown before World Cup game",
+      "name": "Protospiel Bay Area",
       "when": "",
       "city": "San Jose",
-      "context": "pre-game party event at Levi's Stadium",
+      "context": "3-day board game event, recently returned",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uazq1o/mental_health_volunteering_opportunities/",
-        "https://www.reddit.com/r/SanJose/comments/1ualgot/soccer_league_for_8yo_2018/",
-        "https://www.reddit.com/r/SanJose/comments/1uaity5/turkish_party_bus_downtown_before_world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1uaigq6/paraguay_vs_turkey_watch_party/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1uafzhd/weekday_hiking_group_for_the_laidoff_monday_los/"
-      ]
-    },
-    {
-      "name": "Paraguay vs Turkey watch party",
-      "when": "",
-      "city": "San Jose",
-      "context": "World Cup match watch party event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uazq1o/mental_health_volunteering_opportunities/",
-        "https://www.reddit.com/r/SanJose/comments/1ualgot/soccer_league_for_8yo_2018/",
-        "https://www.reddit.com/r/SanJose/comments/1uaity5/turkish_party_bus_downtown_before_world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1uaigq6/paraguay_vs_turkey_watch_party/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1uafzhd/weekday_hiking_group_for_the_laidoff_monday_los/"
-      ]
-    },
-    {
-      "name": "weekday hiking group for the laid-off",
-      "when": "Monday",
-      "city": "Los Gatos",
-      "context": "regular Monday hiking group meetup",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uazq1o/mental_health_volunteering_opportunities/",
-        "https://www.reddit.com/r/SanJose/comments/1ualgot/soccer_league_for_8yo_2018/",
-        "https://www.reddit.com/r/SanJose/comments/1uaity5/turkish_party_bus_downtown_before_world_cup_game/",
-        "https://www.reddit.com/r/SanJose/comments/1uaigq6/paraguay_vs_turkey_watch_party/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1uafzhd/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
-      ]
-    },
-    {
-      "name": "Bike Tag #185: Neighborhood Window Shopping",
-      "when": "ongoing",
-      "city": "San Jose",
-      "context": "community bike tag challenge game",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
-      ]
-    },
-    {
-      "name": "STEM Camp for Ages 3–5",
-      "when": "summer",
-      "city": "Sunnyvale",
-      "context": "educational camp program at Interface RND",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
-      ]
-    },
-    {
-      "name": "Save Las Palmas Park Yard Sign Distribution",
-      "when": "June 27, 1-3 PM",
-      "city": "Sunnyvale",
-      "context": "community fundraiser event at Las Palmas Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
+        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
+        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
+        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
+        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
       ]
     }
   ],
-  "placeMatches": [
-    {
-      "name": "Guildhouse",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "weekly indie tabletop RPG sessions hosted here",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
-      ],
-      "matchedName": "Guildhouse"
-    },
-    {
-      "name": "Ramos Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "hosting Craft Club event on August 9",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
-      ],
-      "matchedName": "Ramos Park"
-    },
-    {
-      "name": "Las Palmas Park",
-      "city": "Sunnyvale",
-      "kind": "park",
-      "context": "subject of Save Las Palmas Park campaign",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uafy20/weekday_hiking_group_for_the_laidoff_monday_los/",
-        "https://www.reddit.com/r/SanJose/comments/1uademe/bike_tag_185_neighborhood_window_shopping/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9nsds/stem_camp_for_ages_35/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u8rbfp/save_las_palmas_park_yard_signs/"
-      ],
-      "matchedName": "Las Palmas Park"
-    }
-  ],
-  "eventMatches": [
-    {
-      "name": "Craft Club",
-      "when": "August 9",
-      "city": "Sunnyvale",
-      "context": "arts and crafts gathering at Ramos Park to meet creative people",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ub1p1s/harry_potters_birthday_afternoon_tea_2026lughnasa/",
-        "https://www.reddit.com/r/SanJose/comments/1uaxwr0/looking_for_indie_horror_rpg_players_in_person/",
-        "https://www.reddit.com/r/SanJose/comments/1uakr3c/weekend_2_of_world_cup_vibes_still_out_there_love/",
-        "https://www.reddit.com/r/SanJose/comments/1uae45j/romantic_boba_or_tea_shop_for_a_date/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1u9rb1p/craft_clubbbb/"
-      ],
-      "matchedName": "Craft Club for Adults: The Magnificent American Bald Eagle - A Joy of Drawing Workshop"
-    }
-  ]
+  "placeMatches": [],
+  "eventMatches": []
 }

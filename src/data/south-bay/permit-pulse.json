@@ -1,55 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-22T19:08:45.322Z",
+      "generatedAt": "2026-06-24T03:09:00.422Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 15 – Jun 22",
+      "dateRange": "Jun 16 – Jun 23",
       "stats": {
-        "total": 383,
-        "notable": 26,
-        "newUnits": 11,
-        "totalValuation": 11449817
+        "total": 277,
+        "notable": 18,
+        "newUnits": 6,
+        "totalValuation": 8475095
       },
       "permits": [
-        {
-          "id": "2025-114735-RS",
-          "address": "3550 Chamberlain Dr",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Lot 3 New 2-Story SFR",
-          "valuation": 564057,
-          "units": 1,
-          "issueDate": "2026-06-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2025-114728-RS",
-          "address": "3554 Chamberlain Dr",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Lot 4 New 2-Story SFR",
-          "valuation": 526893,
-          "units": 1,
-          "issueDate": "2026-06-16",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2025-111335-RS",
-          "address": "15 Kent Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 202908,
-          "units": 1,
-          "issueDate": "2026-06-16",
-          "subtype": "2nd Unit Added"
-        },
         {
           "id": "2026-121719-RS",
           "address": "550 S Kiely Bl #230",
@@ -99,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-141055-RS",
-          "address": "1194 Sherwood Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bemp100%) Attached ADU",
-          "valuation": 84545,
-          "units": 1,
-          "issueDate": "2026-06-16",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-106599-RS",
           "address": "3142 Modred Dr #2",
           "category": "residential-new",
@@ -123,93 +75,81 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-104736-RS",
-          "address": "4592 Brunswick Av #2",
+          "id": "2026-097210-RS",
+          "address": "315 S 17th St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Converison to Jadu",
-          "valuation": 65607,
+          "description": "Detached Garage Conversion to ADU",
+          "valuation": 50389,
           "units": 1,
-          "issueDate": "2026-06-16",
+          "issueDate": "2026-06-17",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-123419-CI",
+          "address": "1768 Automation Py",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Foxconn (Bem100%) Tool Install",
+          "valuation": 2380987,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Manufacturing"
+        },
+        {
+          "id": "2026-123656-CI",
+          "address": "160 Rio Robles",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Analog Devices (Bem100%) Building C Lab Expansion",
+          "valuation": 704828,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-123634-CI",
+          "address": "121 Bernal Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Retail",
+          "valuation": 468720,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Retail"
+        },
+        {
+          "id": "2026-123682-CI",
+          "address": "121 Bernal Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Retail",
+          "valuation": 423150,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-22T19:08:47.422Z",
+      "generatedAt": "2026-06-24T03:09:02.709Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 15 – Jun 22",
+      "dateRange": "Jun 16 – Jun 23",
       "stats": {
-        "total": 140,
-        "notable": 8,
+        "total": 110,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01636",
-          "address": "315 Colorado Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-18",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01584",
-          "address": "3721 Middlefield Rd",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01598",
-          "address": "710 Chimalus Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-16",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01585",
-          "address": "206 Everett Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01581",
-          "address": "3102 Stelling Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-15",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01630",
           "address": "285 Olive Av",
@@ -223,27 +163,39 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00141",
-          "address": "250 Lytton Av",
+          "id": "26BLD-01636",
+          "address": "315 Colorado Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-18",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00148",
+          "address": "545 Bryant St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Over the Counter Architectural Review to install three illuminated wall signs etter on the front and side elevations of the existing commercial building. Sign will be internally illuminated LED with electrical connection to existing building power. The proposed sign to read, \"Fifth Third Bank\". Environmental Assessment: Not a Project. For more information contact the project planner Val Perez at Val Perez-Ibardolasa@PaloAlto.gov.",
+          "description": "Request for an Over-the-Counter Architectural Review to remove and replace courtyard hardscape, landscaping, drainage, pathway lighting, and other minor site plan changes. Arborist Report Included. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-16",
+          "issueDate": "2026-06-22",
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00138",
-          "address": "400 Hamilton Av",
+          "id": "26PLN-00147",
+          "address": "425 Page Mill Rd",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install a barrier arm with a long range reader at the surface parking lot entry and exit. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalo.gov.",
+          "description": "Request for an Over-the-Counter Architectural Review to install (1) internally illuminated wall sign for \"IFS\" (Industrial and Financial Systems) a Professional Office use in a 6,000+/- square foot tenant space on the 2nd floor. The sign will be constructed of individual aluminum letters with acrylic faces. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-16",
+          "issueDate": "2026-06-22",
           "subtype": "Over the Counter Approved"
         }
       ]
