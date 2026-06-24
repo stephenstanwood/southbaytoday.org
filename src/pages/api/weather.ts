@@ -8,8 +8,12 @@ import { okJson } from "../../lib/apiHelpers";
 
 /**
  * Weather proxy for South Bay Today.
- * Primary: NOAA / National Weather Service (api.weather.gov) — authoritative US forecasts, no key.
- * Fallback: Open-Meteo — used only if NWS errors. NWS skews ~5° cooler than Open-Meteo for South Bay heat events; we trust NWS.
+ * Primary: Open-Meteo's "best match" consumer blend — tracks Google / weather.com, which is
+ *   what readers compare against. For the valley floor (e.g. Campbell) NWS's point forecast
+ *   runs ~5-10° hotter than Google's number; readers (rightly) read that as "the site is wrong,"
+ *   so we lead with the cooler consumer-blend high. Open-Meteo also keeps *today* in the list
+ *   with its realized high (like Google), instead of dropping it after the afternoon as NWS does.
+ * Fallback: NOAA / National Weather Service (api.weather.gov) — used only if Open-Meteo errors.
  * Returns current conditions + 5-day daily forecast. Cached 30 min via CDN.
  */
 
@@ -164,15 +168,15 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
   const lon = cityConfig?.lon ?? DEFAULT_WEATHER_LON;
 
   try {
-    const result = await fetchNws(lat, lon);
+    const result = await fetchOpenMeteo(lat, lon);
     return okJson(result, { "Cache-Control": "public, s-maxage=1800, max-age=900" });
-  } catch (nwsErr) {
-    console.warn("nws weather failed, falling back to open-meteo:", nwsErr);
+  } catch (omErr) {
+    console.warn("open-meteo weather failed, falling back to nws:", omErr);
     try {
-      const result = await fetchOpenMeteo(lat, lon);
+      const result = await fetchNws(lat, lon);
       return okJson(result, { "Cache-Control": "public, s-maxage=1800, max-age=900" });
-    } catch (omErr) {
-      console.error("weather fetch error (both providers failed):", omErr);
+    } catch (nwsErr) {
+      console.error("weather fetch error (both providers failed):", nwsErr);
       return okJson({ weather: null, forecast: null });
     }
   }
