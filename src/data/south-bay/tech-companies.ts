@@ -2563,7 +2563,9 @@ export const TECH_CONFERENCES: TechConference[] = [
     description: "Silicon Valley's regional qualifier for the Startup World Cup — top 15 selected startups pitch live before leading investors and executives at the Computer History Museum. The winner advances to the Grand Finale in San Francisco each fall, where 100+ regional champions compete for a $1M investment prize.",
     url: "https://www.startupworldcup.io/silicon-valley-regional",
     scale: "regional",
-    applicationDeadline: "2026-04-26",
+    // 2026 event passed (May 7); next occurrence rolls to May 2027. The prior
+    // applicationDeadline ("2026-04-26") is a year in the past and can never
+    // re-fire correctly — re-add a deadline once the 2027 apply-by date is known.
   },
   {
     id: "hot-chips",
