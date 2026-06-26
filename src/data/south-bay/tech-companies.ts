@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "hang-ten-systems",
+    name: "Hang Ten Systems",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$32M",
+    date: "2026-06-24",
+    tagline:
+      "Enterprise AI services built around agentic code generation: it helps large companies continuously build, change, and run the software that runs the business — at a fraction of the usual cost and time — using AI agents plus reusable \"AI skills\" and domain expertise. Founded by CEO Vishal Sikka (former Infosys CEO and SAP board member) with CTO Navin Budhiraja, Chief Design Officer Sanjay Rajagopalan, and forward-deployed-engineering lead Tao Liu; Yahoo co-founder Jerry Yang sits on the board. The seed was led by Mayfield with a strategic investment from Aramco Ventures, and early customers include Siemens Gamesa and Fresenius.",
+    color: "#312e81",
+    url: "https://hangten.ai",
+  },
+  {
     id: "upscale-ai",
     name: "Upscale AI",
     city: "Santa Clara",
