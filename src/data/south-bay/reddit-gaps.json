@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-24T03:16:55.039Z",
+    "generatedAt": "2026-06-26T03:15:40.324Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 8
+    "sourceCount": 4
   },
   "summary": {
-    "threadsMined": 8,
-    "placesExtracted": 3,
+    "threadsMined": 4,
+    "placesExtracted": 2,
     "placesMatched": 0,
-    "placeGaps": 3,
+    "placeGaps": 2,
     "eventsExtracted": 1,
     "eventsMatched": 0,
     "eventGaps": 1,
@@ -16,57 +16,41 @@
   },
   "placeGaps": [
     {
-      "name": "Jensen's Foreign Car Service",
+      "name": "Japacurry",
       "city": "San Jose",
-      "kind": "service",
-      "context": "highly trusted auto repair shop, owner Jay",
+      "kind": "restaurant",
+      "context": "Japanese curry restaurant with garden, relocated from SoFa Market",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
-        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
-        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
-        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
+        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
+        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
+        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
       ]
     },
     {
-      "name": "Fresh Baked",
+      "name": "IES Portuguese Hall",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "favorite sandwich shop in downtown San Jose",
+      "kind": "venue",
+      "context": "hosts annual Espirito Santo festa with Portuguese rodeo event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
-        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
-        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
-        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
-      ]
-    },
-    {
-      "name": "Duc Huong",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "banh mi sandwiches, popular local spot",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
-        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
-        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
-        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
+        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
+        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
+        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Protospiel Bay Area",
-      "when": "",
+      "name": "Espirito Santo Festa",
+      "when": "June 26-27, 2026",
       "city": "San Jose",
-      "context": "3-day board game event, recently returned",
+      "context": "annual Portuguese festival with tourada a corda, live music, dancing",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1udyngj/jensens_foreign_car_service/",
-        "https://www.reddit.com/r/SanJose/comments/1udt72c/protospiel_bay_area_is_back_3day_board_game_event/",
-        "https://www.reddit.com/r/SanJose/comments/1udqinr/favorite_sandwich_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1udrdp2/good_spots_with_ice_cream_that_isnt_oversweetened/",
-        "https://www.reddit.com/r/SanJose/comments/1udl1fr/looking_for_chinese_bakerydelidin_sum/"
+        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
+        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
+        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
+        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
       ]
     }
   ],
