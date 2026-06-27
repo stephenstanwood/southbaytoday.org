@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "quantifind",
+    name: "Quantifind",
+    city: "Palo Alto",
+    category: "security",
+    round: "Growth",
+    amount: "$200M",
+    date: "2026-06-26",
+    tagline:
+      "AI-native risk intelligence for financial-crime, compliance, and national-security teams: its Graphyte platform unifies internal, third-party, and open-source data to help banks and government agencies screen sanctions/KYC, investigate illicit finance, and surface relationship risk with entity resolution and graph intelligence. The growth investment was led by Summit Partners, with existing investors Citi Ventures, S&P Global, Deloitte, and Stephens Group participating.",
+    color: "#334155",
+    url: "https://www.quantifind.com",
+  },
+  {
     id: "hang-ten-systems",
     name: "Hang Ten Systems",
     city: "Palo Alto",
