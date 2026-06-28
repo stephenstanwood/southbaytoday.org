@@ -1024,6 +1024,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.quantifind.com",
   },
   {
+    id: "netris",
+    name: "Netris",
+    city: "Santa Clara",
+    category: "network",
+    round: "Series A",
+    amount: "$15M",
+    date: "2026-06-25",
+    tagline:
+      "Network automation and hard multi-tenancy for AI cloud operators: its NAAM platform configures the Ethernet, InfiniBand, NVLink, BlueField, virtual, and edge networking layers behind GPU clusters so neoclouds and AI factories can launch tenants without hand-building every fabric. The Series A was led by Andreessen Horowitz, with partner Guido Appenzeller joining the board, after 800% ARR growth and 35+ live AI-cluster deployments in 12 months.",
+    color: "#0ea5e9",
+    url: "https://www.netris.io",
+  },
+  {
     id: "hang-ten-systems",
     name: "Hang Ten Systems",
     city: "Palo Alto",
