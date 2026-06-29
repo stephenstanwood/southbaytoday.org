@@ -1037,6 +1037,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://www.netris.io",
   },
   {
+    id: "scaled-cognition",
+    name: "Scaled Cognition",
+    city: "Mountain View",
+    category: "ai",
+    round: "Series A",
+    amount: "$100M",
+    date: "2026-06-25",
+    tagline:
+      "Vertical AI lab building APT-1 (Agentic Pretrained Transformer), a frontier model designed from the ground up for enterprise customer experience: it aims to eliminate hallucinations and enforce company policies architecturally so support agents give deterministic, verifiable answers in production CX workflows. Founded by CEO Dan Roth (former Microsoft VP of Conversational AI), CTO Dan Klein (UC Berkeley AI/NLP professor), and CFO Damon Pender — the trio behind Semantic Machines, the conversational-AI pioneer Microsoft acquired in 2018. The Series A was led by Khosla Ventures, with participation from Genesys.",
+    color: "#4338ca",
+    url: "https://www.scaledcognition.com",
+  },
+  {
     id: "hang-ten-systems",
     name: "Hang Ten Systems",
     city: "Palo Alto",
