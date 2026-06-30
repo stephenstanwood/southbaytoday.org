@@ -1,30 +1,30 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-26T03:08:53.143Z",
+      "generatedAt": "2026-06-30T03:08:42.856Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 18 – Jun 25",
+      "dateRange": "Jun 22 – Jun 29",
       "stats": {
-        "total": 291,
-        "notable": 22,
-        "newUnits": 10,
-        "totalValuation": 13426405
+        "total": 479,
+        "notable": 37,
+        "newUnits": 39,
+        "totalValuation": 56366614
       },
       "permits": [
         {
-          "id": "2025-146731-RS",
-          "address": "300 S 31st St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
+          "id": "2026-119039-MF",
+          "address": "426 Page St",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 169090,
-          "units": 1,
-          "issueDate": "2026-06-22",
-          "subtype": "2nd Unit Added"
+          "description": "Page Estate 2 (Bemp 100%) New Construction",
+          "valuation": 3806941,
+          "units": 20,
+          "issueDate": "2026-06-24",
+          "subtype": "Apartment"
         },
         {
           "id": "2025-144078-RS",
@@ -36,6 +36,42 @@
           "valuation": 168245,
           "units": 1,
           "issueDate": "2026-06-23",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-098728-RS",
+          "address": "798 Tonga Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 164863,
+          "units": 1,
+          "issueDate": "2026-06-26",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-101706-RS",
+          "address": "6670 Bollinger Rd #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached ADU",
+          "valuation": 145248,
+          "units": 1,
+          "issueDate": "2026-06-25",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-146842-RS",
+          "address": "3915 Loganberry Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 2 Attached ADU",
+          "valuation": 134934,
+          "units": 1,
+          "issueDate": "2026-06-26",
           "subtype": "2nd Unit Added"
         },
         {
@@ -51,27 +87,27 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-099568-RS",
-          "address": "3175 Rocky Mountain Dr #2",
+          "id": "2026-106194-RS",
+          "address": "1990 Creek Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 124281,
+          "description": "Detached ADU",
+          "valuation": 126648,
           "units": 1,
-          "issueDate": "2026-06-22",
+          "issueDate": "2026-06-25",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-145092-RS",
-          "address": "3360 Burgundy Dr #2",
+          "id": "2025-147176-RS",
+          "address": "181 E Hedding St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Detached Garage Conversion to ADU",
-          "valuation": 109225,
+          "valuation": 115996,
           "units": 1,
-          "issueDate": "2026-06-22",
+          "issueDate": "2026-06-25",
           "subtype": "2nd Unit Added"
         },
         {
@@ -87,69 +123,57 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-104985-RS",
-          "address": "3155 Zion Ln #2",
+          "id": "2026-104906-RS",
+          "address": "1266 Candia Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 77781,
+          "description": "Detached ADU",
+          "valuation": 83869,
           "units": 1,
-          "issueDate": "2026-06-22",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-127057-RS",
-          "address": "6471 Canterbury Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Attached Jadu",
-          "valuation": 72961,
-          "units": 1,
-          "issueDate": "2026-06-22",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2022-676194-RS",
-          "address": "2173 Mabel Av",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case - Garage Conversion to Jadu",
-          "valuation": 66102,
-          "units": 1,
-          "issueDate": "2026-06-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-147264-RS",
-          "address": "2281 Lansford Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Jadu",
-          "valuation": 65945,
-          "units": 1,
-          "issueDate": "2026-06-22",
+          "issueDate": "2026-06-26",
           "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-26T03:08:55.517Z",
+      "generatedAt": "2026-06-30T03:08:45.314Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 18 – Jun 25",
+      "dateRange": "Jun 22 – Jun 29",
       "stats": {
-        "total": 114,
+        "total": 120,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01699",
+          "address": "860 Nw Moana Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-25",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01716",
+          "address": "98 Erstwild Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-26",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01662",
           "address": "1905 Edgewood Dr",
@@ -175,18 +199,6 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00153",
-          "address": "385 Sherman Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install a privacy window film on the interior windows of the second and third floor building which face neighboring property lines. Zone District: Community Commercial (CC(2)). CEQA Status: Exempt from the provisions of CEQA per section 15301. For more information please contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-24",
-          "subtype": "Over the Counter Approved"
-        },
-        {
           "id": "26PLN-00150",
           "address": "364 University Av",
           "category": "entitlement",
@@ -199,27 +211,15 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00148",
-          "address": "545 Bryant St",
+          "id": "26PLN-00153",
+          "address": "385 Sherman Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to remove and replace courtyard hardscape, landscaping, drainage, pathway lighting, and other minor site plan changes. Arborist Report Included. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
+          "description": "Request for an Over-the-Counter Architectural Review to install a privacy window film on the interior windows of the second and third floor building which face neighboring property lines. Zone District: Community Commercial (CC(2)). CEQA Status: Exempt from the provisions of CEQA per section 15301. For more information please contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-22",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00147",
-          "address": "425 Page Mill Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install (1) internally illuminated wall sign for \"IFS\" (Industrial and Financial Systems) a Professional Office use in a 6,000+/- square foot tenant space on the 2nd floor. The sign will be constructed of individual aluminum letters with acrylic faces. Environmental Assessment: Not a Project. For more information, contact Scott McKay at Scott.McKay@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-22",
+          "issueDate": "2026-06-24",
           "subtype": "Over the Counter Approved"
         }
       ]

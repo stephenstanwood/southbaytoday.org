@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-06-26T03:15:40.324Z",
+    "generatedAt": "2026-06-30T03:16:45.963Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 4
+    "sourceCount": 2
   },
   "summary": {
-    "threadsMined": 4,
-    "placesExtracted": 2,
+    "threadsMined": 2,
+    "placesExtracted": 1,
     "placesMatched": 0,
-    "placeGaps": 2,
+    "placeGaps": 1,
     "eventsExtracted": 1,
     "eventsMatched": 0,
     "eventGaps": 1,
@@ -16,41 +16,25 @@
   },
   "placeGaps": [
     {
-      "name": "Japacurry",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Japanese curry restaurant with garden, relocated from SoFa Market",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
-        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
-        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
-      ]
-    },
-    {
-      "name": "IES Portuguese Hall",
-      "city": "San Jose",
+      "name": "Campbell Downtown Farmer's Market",
+      "city": "Campbell",
       "kind": "venue",
-      "context": "hosts annual Espirito Santo festa with Portuguese rodeo event",
+      "context": "YIMBY table hosting discussion about housing",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
-        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
-        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
+        "https://www.reddit.com/r/Campbell/comments/1uick6h/4th_of_july_events_for_little_kids/",
+        "https://www.reddit.com/r/Campbell/comments/1uh9qk3/yimby_table_at_farmers_market_tomorrow/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Espirito Santo Festa",
-      "when": "June 26-27, 2026",
-      "city": "San Jose",
-      "context": "annual Portuguese festival with tourada a corda, live music, dancing",
+      "name": "4th of July kid-friendly festivities",
+      "when": "4th of July",
+      "city": "Campbell",
+      "context": "daytime events for children under 5",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ueyrz6/stumbled_upon_this_hidden_garden_in_downtown_by/",
-        "https://www.reddit.com/r/SanJose/comments/1ufdob1/the_big_portuguese_festa_is_happening_at_ies/",
-        "https://www.reddit.com/r/SanJose/comments/1ufnyyv/trusted_car_shop/",
-        "https://www.reddit.com/r/SanJose/comments/1ufesug/altish_hair_salons_in_san_jose/"
+        "https://www.reddit.com/r/Campbell/comments/1uick6h/4th_of_july_events_for_little_kids/",
+        "https://www.reddit.com/r/Campbell/comments/1uh9qk3/yimby_table_at_farmers_market_tomorrow/"
       ]
     }
   ],
