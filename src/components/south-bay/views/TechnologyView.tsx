@@ -712,13 +712,39 @@ const ROUND_COLORS: Record<string, { bg: string; color: string; border: string }
   "Series E": { bg: "#ecfdf5", color: "#065f46", border: "#6ee7b7" },
   "Series F": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
   "Series F+": { bg: "#fdf4ff", color: "#581c87", border: "#d8b4fe" },
+  Growth: { bg: "#e0e7ff", color: "#3730a3", border: "#a5b4fc" },
+  Venture: { bg: "#f1f5f9", color: "#334155", border: "#cbd5e1" },
   Strategic: { bg: "#f0fdf4", color: "#166534", border: "#86efac" },
   Convertible: { bg: "#f0f9ff", color: "#0369a1", border: "#7dd3fc" },
   Acquired: { bg: "#f0fdfa", color: "#0f766e", border: "#5eead4" },
 };
 
+// Resolve a funding-round label to a ROUND_COLORS key. The funding cron coins
+// many variants ("Series A ext.", "Series A-1", "Series C+", "Strategic
+// Investment", "Series G", "Venture Round"); without normalization they fall
+// through to the flat gray default, so "Series A" gets a blue badge while
+// "Series A ext." right beside it goes gray. Map each variant onto its stage
+// family so future spellings auto-resolve too. (Display still shows the raw
+// label — only the color is normalized.)
+function roundColorKey(round: string): string {
+  const r = round.trim();
+  if (ROUND_COLORS[r]) return r;
+  const series = r.match(/^Series\s+([A-Z])/i);
+  if (series) {
+    const letter = series[1].toUpperCase();
+    // Anything past Series F shares the deepest-purple "Series F+" styling.
+    return letter >= "G" ? "Series F+" : `Series ${letter}`;
+  }
+  if (/^Pre-Series/i.test(r)) return "Pre-Seed";
+  if (/^Seed/i.test(r)) return "Seed"; // "Seed ext.", "Seed + Series A", etc.
+  if (/Strategic/i.test(r)) return "Strategic";
+  if (/Venture/i.test(r)) return "Venture";
+  if (/Growth/i.test(r)) return "Growth";
+  return r; // unknown → default gray
+}
+
 function RoundBadge({ round }: { round: string }) {
-  const style = ROUND_COLORS[round] ?? { bg: "#f3f4f6", color: "#374151", border: "#d1d5db" };
+  const style = ROUND_COLORS[roundColorKey(round)] ?? { bg: "#f3f4f6", color: "#374151", border: "#d1d5db" };
   return (
     <span
       style={{
