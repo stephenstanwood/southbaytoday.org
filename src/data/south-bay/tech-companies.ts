@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "queue",
+    name: "Queue",
+    city: "Palo Alto",
+    category: "medtech",
+    round: "Seed",
+    amount: "$12.6M",
+    date: "2026-06-30",
+    tagline:
+      "A fully autonomous robotic pharmacy: its machine fills and verifies prescriptions straight from sealed wholesale pill bottles — no on-site pharmacist required — to lower fulfillment costs and extend pharmacy access to retail, healthcare, and underserved settings. The system already handles the 250 most-prescribed U.S. medications. Emerging from stealth, the oversubscribed seed was led by AlleyCorp with House Capital, Ubiquity Ventures, Grep Ventures, and Banter Capital, following a $6M pre-seed led by Riot Ventures for $18.6M total. Founded by CEO Nick Desai (founder of home-care company Heal) and CTO Josh Liu (ex-Tesla, ex-Zipline).",
+    color: "#0d9488",
+    url: "https://queue.inc",
+  },
+  {
     id: "quantifind",
     name: "Quantifind",
     city: "Palo Alto",
