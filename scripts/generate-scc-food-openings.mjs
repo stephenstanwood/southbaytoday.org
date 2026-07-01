@@ -136,6 +136,8 @@ const SOURCE_ID_SKIP = new Set([
   "SR0881676", // Walmart Nsvc B4 Breakrooms — employee break rooms at Walmart, not a public restaurant
   "SR0883046", // Life Time Fitness - Santana Row — gym with internal food facility, not a standalone restaurant
   "SR0884858", // Ice Cream Machine Installation — equipment supplier/installer permit at 19409 Stevens Creek Blvd, not a food venue
+  "SR0883070", // B250 Cityline Databricks — office cafeteria in Databricks' Cityline Sunnyvale building (250 W Washington), not a public restaurant
+  "SR0883065", // B200 Cityline — same Databricks Cityline campus (200 W Washington); building-code permit placeholder, not a public restaurant name
   // Re-inspections of long-standing chain locations — surfaced because we dropped the elapsed-time filter.
   // Add to this list when triaging false positives surfaced by the script.
   "SR0876482", // E-FOGO DE CHAO SJ — existing Santana Row location since ~2014 (8800+ Yelp reviews), re-inspection
