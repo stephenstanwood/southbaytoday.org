@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-06-30T03:08:42.856Z",
+      "generatedAt": "2026-07-01T03:08:43.832Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 22 – Jun 29",
+      "dateRange": "Jun 23 – Jun 30",
       "stats": {
-        "total": 479,
-        "notable": 37,
-        "newUnits": 39,
-        "totalValuation": 56366614
+        "total": 351,
+        "notable": 30,
+        "newUnits": 35,
+        "totalValuation": 50065617
       },
       "permits": [
         {
@@ -25,18 +25,6 @@
           "units": 20,
           "issueDate": "2026-06-24",
           "subtype": "Apartment"
-        },
-        {
-          "id": "2025-144078-RS",
-          "address": "1210 Siler Ln #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "ADU - Detached",
-          "valuation": 168245,
-          "units": 1,
-          "issueDate": "2026-06-23",
-          "subtype": "2nd Unit Added"
         },
         {
           "id": "2026-098728-RS",
@@ -75,18 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2022-676237-RS",
-          "address": "2173 Mabel Av",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case - Attached ADU",
-          "valuation": 129388,
-          "units": 1,
-          "issueDate": "2026-06-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-106194-RS",
           "address": "1990 Creek Dr #2",
           "category": "residential-new",
@@ -111,18 +87,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-146495-RS",
-          "address": "1830 Potrero Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 102299,
-          "units": 1,
-          "issueDate": "2026-06-23",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-104906-RS",
           "address": "1266 Candia Dr #2",
           "category": "residential-new",
@@ -133,23 +97,83 @@
           "units": 1,
           "issueDate": "2026-06-26",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-109750-RS",
+          "address": "1700 Dolores Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Music Studio Conversion to Detach ADU",
+          "valuation": 80825,
+          "units": 1,
+          "issueDate": "2026-06-26",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-144614-RS",
+          "address": "5991 Shawcroft Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 76936,
+          "units": 1,
+          "issueDate": "2026-06-24",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-118911-RS",
+          "address": "2930 Castleton Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to Jadu",
+          "valuation": 73723,
+          "units": 1,
+          "issueDate": "2026-06-24",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-06-30T03:08:45.314Z",
+      "generatedAt": "2026-07-01T03:08:46.083Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 22 – Jun 29",
+      "dateRange": "Jun 23 – Jun 30",
       "stats": {
-        "total": 120,
-        "notable": 6,
+        "total": 106,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01688",
+          "address": "698 Matadero Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Redrain 3 spots in the bathrooms and kitchen",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01732",
+          "address": "151 Lowell Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-29",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01699",
           "address": "860 Nw Moana Ct",
@@ -161,54 +185,6 @@
           "units": 0,
           "issueDate": "2026-06-25",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01716",
-          "address": "98 Erstwild Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-26",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01662",
-          "address": "1905 Edgewood Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-23",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00152",
-          "address": "552 Waverley St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to renovate the exiting entry facade with new glazing and siding. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-23",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00150",
-          "address": "364 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Reveiw to install of one illuminated exterior blade sign to read, \"Ribbit\". The sign will be made of aluminum with a chrome finish with neon green letters and will be 30 inches wide by six inches tall. Zoning District: Downtown Commercial (CD-C (GF)(P)). CEQA Status: Exempt from the provisions of CEQA per Section 15301. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-23",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00153",
