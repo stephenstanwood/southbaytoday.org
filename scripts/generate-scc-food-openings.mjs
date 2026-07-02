@@ -46,7 +46,16 @@ const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|CO
 const EQUIPMENT_ONLY_PATTERNS = /\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
-const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG)\b/i;
+const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS)\b/i;
+
+// Databricks Cityline office campus (200/250 W Washington Ave, Sunnyvale) —
+// internal food facilities filed under building-code placeholder names
+// ("B200 Cityline", "B250 Cityline Databricks - L2 Mk"), not public restaurants.
+// SCC rotates the record ID on each re-filing (SR0883065→SR0883062,
+// SR0883070→SR0883071), so a SOURCE_ID_SKIP entry can't keep up — match the
+// "B### Cityline" building-code name instead. Real Cityline tenants brand
+// themselves ("Philz", etc.), never "B### Cityline".
+const CITYLINE_OFFICE_PATTERN = /\bB\d{2,3}\s+CITYLINE\b/i;
 
 // Gas station brands — convenience stores at gas stations aren't restaurant openings
 const GAS_STATION_PATTERNS = /\b(SHELL|CHEVRON|ARCO|MOBIL|EXXON|VALERO|BP|CIRCLE K|76 GAS|TEXACO|SINCLAIR|SUNOCO|MARATHON|PHILLIPS 66|LOVE'S|PILOT)\b/i;
@@ -367,6 +376,7 @@ function shouldSkip(item) {
   if (SKIP_PATTERNS.test(name)) return true;
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
+  if (CITYLINE_OFFICE_PATTERN.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;
   if (VARIETY_STORE_PATTERNS.test(rawName)) return true;
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
