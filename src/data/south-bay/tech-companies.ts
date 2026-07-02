@@ -1024,6 +1024,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://queue.inc",
   },
   {
+    id: "straiker",
+    name: "Straiker",
+    city: "Mountain View",
+    category: "security",
+    round: "Series A",
+    amount: "$64M",
+    date: "2026-06-29",
+    tagline:
+      "Agentic-security platform for enterprise AI agents: it discovers where agents are running, adversarially tests them before deployment, and monitors runtime behavior for autonomous threats. The Series A was led by Marathon Management Partners, Citi Ventures, Illuminate Financial, and Workday Ventures, with continued support from Bain Capital Ventures and Lightspeed; Gokul Rajaram joined the board. Straiker launched in 2025 and says run-rate revenue has grown more than 15x in less than a year.",
+    color: "#4f46e5",
+    url: "https://straiker.ai",
+  },
+  {
     id: "quantifind",
     name: "Quantifind",
     city: "Palo Alto",

@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-07-02 — Cycle 112: Straiker Added to Recently Funded
+
+### Context
+Thursday July 2, 2026. Automated builder cycle. The Tech tab's Recently Funded section is the highest-value surface for new local company coverage because it renders directly and keeps the page from feeling stale.
+
+### What Was Built
+
+**Tech tab: Straiker added to RECENTLY_FUNDED**
+
+Added Straiker (Mountain View, $64M Series A, June 29, 2026): agentic-security platform for enterprise AI agents. The company says its platform discovers enterprise agents, tests them adversarially before deployment, and monitors runtime behavior. The round was led by Marathon Management Partners, Citi Ventures, Illuminate Financial, and Workday Ventures, with Bain Capital Ventures and Lightspeed continuing. Source checked against Straiker's PRNewswire release.
+
+### Why This Was the Strongest Move
+Residents opening the Tech tab now see a fresh Mountain View security round from this week in the top funding list. It is a clean primary-source addition, and it ships without touching the protected Home, Events, or Food layouts.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch** — Keep scanning primary releases for early-July South Bay funding rounds, especially AI security, chips, and robotics.
+2. **Logo follow-up** — Let the nightly tech-logo fetcher resolve Straiker; if it misses or returns a placeholder, add a narrow override for `straiker`.
+3. **Tech copy audit** — Review older 2026 funding blurbs for stale valuation or acquisition claims that should be tightened against primary sources.
+
+---
+
 ## 2026-05-02 — Cycle 111: Closed Cycle 110's "Next 3" — Case-Insensitive TLD Masker + Subtitle-Aware Suffix Strip
 
 ### Context
