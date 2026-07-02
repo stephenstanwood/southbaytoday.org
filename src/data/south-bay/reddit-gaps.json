@@ -1,299 +1,181 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-01T03:14:25.044Z",
+    "generatedAt": "2026-07-02T03:15:41.550Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 12
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 12,
-    "placesExtracted": 11,
-    "placesMatched": 7,
-    "placeGaps": 4,
-    "eventsExtracted": 10,
-    "eventsMatched": 1,
-    "eventGaps": 9,
+    "threadsMined": 14,
+    "placesExtracted": 8,
+    "placesMatched": 2,
+    "placeGaps": 6,
+    "eventsExtracted": 4,
+    "eventsMatched": 0,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Mission College",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "hosts Santa Clara 4th of July Celebration",
+      "name": "Tee Nee Thai",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "open for breakfast and lunch during Rose White Blue Festival",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
       ]
     },
     {
-      "name": "SoFA",
+      "name": "Foxtale Fermentation",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "free live music, beer, and food in downtown San Jose",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+      ]
+    },
+    {
+      "name": "Hapa Brewery",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "USA watch party alternative near SAP Center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+      ]
+    },
+    {
+      "name": "El Buen Sabor Pizza Wings",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Jackson and McKee location, $9.99 lunch special",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
+        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
+        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
+        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
+      ]
+    },
+    {
+      "name": "MLK Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "overflow venue for San Pedro Square watch party",
+      "context": "hosts Short Story Society meetings downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
+        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
+        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
+        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
+        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
       ]
     },
     {
-      "name": "DomesSJ",
+      "name": "Berryessa Flea Market",
       "city": "San Jose",
       "kind": "venue",
-      "context": "World Cup match viewing location",
+      "context": "weekend flea market on Berryessa",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
-      ]
-    },
-    {
-      "name": "Levi's Stadium",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "hosting USA vs Bosnia World Cup match on Wednesday",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujv1jm/san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1uju0h7/looking_forward_to_beating_the_crowds_by_riding/"
+        "https://www.reddit.com/r/SanJose/comments/1ukbsep/looking_for_a_good_jazz_club_for_a_terminally_ill/",
+        "https://www.reddit.com/r/SanJose/comments/1ul5geq/will_the_flea_market_on_berryessa_be_open_this/",
+        "https://www.reddit.com/r/SanJose/comments/1ul05rd/soccer_leagues/",
+        "https://www.reddit.com/r/SanJose/comments/1uky48g/tattoo_artistshop_recommendations/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Make a Confetti Canon",
-      "when": "Friday July 3, 4:00 PM",
+      "name": "Rose, White & Blue Parade and Festival",
+      "when": "Saturday July 4, 2026",
       "city": "San Jose",
-      "context": "free kids workshop on energy and projectile motion",
+      "context": "Bay Area's largest longest-standing 4th of July tradition celebration",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
       ]
     },
     {
-      "name": "National Treasure Movie Screening & Popcorn",
-      "when": "Friday July 3, 3:00 PM",
+      "name": "Team USA Watch Party",
+      "when": "July 1",
       "city": "San Jose",
-      "context": "Independence Day themed screening with craft",
+      "context": "World Cup USA vs Bosnia watch party at Hapa Brewery",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
       ]
     },
     {
-      "name": "Friday Fun: Flag Windsocks",
-      "when": "Friday July 3, 4:00 PM",
+      "name": "Short Story Society of San Jose",
+      "when": "Tuesday nights 6-8pm",
       "city": "San Jose",
-      "context": "drop-in craft session for holiday celebration",
+      "context": "weekly reading group at MLK library downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
+        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
+        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
+        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
+        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
       ]
     },
     {
-      "name": "LASERS: Bad Bunny Laser Show",
-      "when": "Friday July 3, 6:00 PM",
+      "name": "USA vs Bosnia World Cup Watch Party",
+      "when": "7/1",
       "city": "San Jose",
-      "context": "laser light show under IMAX Dome at The Tech",
+      "context": "multiple watch party locations sought in downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ]
-    },
-    {
-      "name": "Santa Clara's 4th of July Celebration",
-      "when": "Saturday July 4",
-      "city": "Santa Clara",
-      "context": "Independence Day celebration event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ]
-    },
-    {
-      "name": "México vs Ecuador World Cup Watch Party",
-      "when": "today",
-      "city": "San Jose",
-      "context": "soccer watch party at multiple South Bay venues",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
-      ]
-    },
-    {
-      "name": "Colombia World Cup Game Watch",
-      "when": "July 3",
-      "city": "San Jose",
-      "context": "World Cup viewing at Santana Row",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
-      ]
-    },
-    {
-      "name": "Belgium vs Senegal World Cup Match",
-      "when": "tomorrow",
-      "city": "San Jose",
-      "context": "being shown at San Pedro Square",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujv1jm/san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1uju0h7/looking_forward_to_beating_the_crowds_by_riding/"
-      ]
-    },
-    {
-      "name": "USA vs Bosnia World Cup Match",
-      "when": "Wednesday",
-      "city": "Santa Clara",
-      "context": "World Cup match at Levi's Stadium",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujv1jm/san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1uju0h7/looking_forward_to_beating_the_crowds_by_riding/"
+        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
+        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
+        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
+        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Hillview Branch Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Make a Confetti Canon kids workshop",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ],
-      "matchedName": "Hillview Branch Library"
-    },
-    {
-      "name": "Educational Park Branch Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts National Treasure screening and craft",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ],
-      "matchedName": "Educational Park Branch Library"
-    },
-    {
-      "name": "Willow Glen Branch Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts Friday Fun Flag Windsocks craft session",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ],
-      "matchedName": "Willow Glen Branch Library"
-    },
-    {
-      "name": "The Tech Interactive",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "K-Pop and Bad Bunny laser shows under IMAX Dome",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ],
-      "matchedName": "The Tech Interactive"
-    },
-    {
-      "name": "Mezcal",
+      "name": "Hop & Vine",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "México vs Ecuador watch party downtown",
+      "context": "open for breakfast and lunch during Rose White Blue Festival",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
       ],
-      "matchedName": "Mezcal Restaurant"
+      "matchedName": "Hop & Vine"
     },
     {
-      "name": "San Pedro Square",
+      "name": "LUNA Mexican Kitchen",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "World Cup watch party venue at capacity",
+      "kind": "restaurant",
+      "context": "open for breakfast and lunch during Rose White Blue Festival",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv1jm/san_pedro_square/",
-        "https://www.reddit.com/r/SanJose/comments/1uju0h7/looking_forward_to_beating_the_crowds_by_riding/"
+        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
+        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
+        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
       ],
-      "matchedName": "San Pedro Square Market"
-    },
-    {
-      "name": "Santana Row",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "World Cup watch party destination with multiple restaurants",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ujufzo/méxico_vs_ecuador_at_mezcal/",
-        "https://www.reddit.com/r/SanJose/comments/1ujpie3/women_ownedoperated_mechanics/",
-        "https://www.reddit.com/r/SanJose/comments/1uk7cry/watch_party_update_san_pedro_square_is_at/",
-        "https://www.reddit.com/r/SanJose/comments/1uk1p0q/the_domessj/",
-        "https://www.reddit.com/r/SanJose/comments/1ujv9os/santana_row_for_world_cup_colombia_game/"
-      ],
-      "matchedName": "Santana Row"
+      "matchedName": "Luna Mexican Kitchen"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "LASERS: K-Pop Demon Hunters",
-      "when": "Friday July 3, 4:45 PM",
-      "city": "San Jose",
-      "context": "laser light show under IMAX Dome at The Tech",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uk5bbz/thai_food_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1uk0jrx/any_cool_restaurants_on_the_east_side/",
-        "https://www.reddit.com/r/SanJose/comments/1ujsij8/july_4th_holiday_weekend_events_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1uk9lon/trivia_night/",
-        "https://www.reddit.com/r/SanJose/comments/1uk4prh/cheap_eye_checkup_near_sjsu_sjdt/"
-      ],
-      "matchedName": "Lasers: K-Pop Demon Hunters"
-    }
-  ]
+  "eventMatches": []
 }
