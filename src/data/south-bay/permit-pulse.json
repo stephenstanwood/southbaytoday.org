@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-02T03:08:57.086Z",
+      "generatedAt": "2026-07-03T03:08:53.569Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 24 – Jul 1",
+      "dateRange": "Jun 25 – Jul 2",
       "stats": {
-        "total": 349,
-        "notable": 29,
-        "newUnits": 21,
-        "totalValuation": 32947520
+        "total": 334,
+        "notable": 19,
+        "newUnits": 16,
+        "totalValuation": 13436436
       },
       "permits": [
         {
@@ -39,18 +39,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-101706-RS",
-          "address": "6670 Bollinger Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Attached ADU",
-          "valuation": 145248,
-          "units": 1,
-          "issueDate": "2026-06-25",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-146842-RS",
           "address": "3915 Loganberry Dr #2",
           "category": "residential-new",
@@ -72,30 +60,6 @@
           "valuation": 128508,
           "units": 1,
           "issueDate": "2026-06-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-106194-RS",
-          "address": "1990 Creek Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 126648,
-          "units": 1,
-          "issueDate": "2026-06-25",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-147176-RS",
-          "address": "181 E Hedding St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage Conversion to ADU",
-          "valuation": 115996,
-          "units": 1,
-          "issueDate": "2026-06-25",
           "subtype": "2nd Unit Added"
         },
         {
@@ -133,33 +97,69 @@
           "units": 1,
           "issueDate": "2026-06-26",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2024-105646-RS",
+          "address": "2332 Pacheco Dr #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to Jadu",
+          "valuation": 73216,
+          "units": 1,
+          "issueDate": "2026-06-26",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-139904-RS",
+          "address": "3154 Cortona Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 62056,
+          "units": 1,
+          "issueDate": "2026-06-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-119161-RS",
+          "address": "4054 San Ramon Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to Jadu",
+          "valuation": 61718,
+          "units": 1,
+          "issueDate": "2026-06-26",
+          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-02T03:08:59.267Z",
+      "generatedAt": "2026-07-03T03:08:55.864Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 24 – Jul 1",
+      "dateRange": "Jun 25 – Jul 2",
       "stats": {
-        "total": 97,
+        "total": 88,
         "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01732",
-          "address": "151 Lowell Av",
+          "id": "26BLD-01767",
+          "address": "2011 Park Bl",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-29",
+          "issueDate": "2026-07-01",
           "subtype": "Permit Issued"
         },
         {
@@ -175,15 +175,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01699",
-          "address": "860 Nw Moana Ct",
+          "id": "26BLD-01732",
+          "address": "151 Lowell Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-06-25",
+          "issueDate": "2026-06-29",
           "subtype": "Permit Issued"
         }
       ]
