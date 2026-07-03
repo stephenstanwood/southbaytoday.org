@@ -694,6 +694,7 @@ const TITLE_FIXES = {
   "Fopal": "FOPAL",     // Friends of Palo Alto Library — biblio API title-cases it
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
   "Xfyd ": "XFYD ",     // XFYD chess club — all-caps brand name on flyers
+  "Grpc's": "GRPC's",   // Guadalupe River Park Conservancy — Google Cal title-cases it
   // Performer/brand acronyms styled ALL-CAPS in the act's own marketing — the
   // 2+ regex downcases them once the rest of the title tips into mixed case,
   // and they're too generic (ONE, RJ, DSP, EXE) to safely add to KEEP_UPPER.
