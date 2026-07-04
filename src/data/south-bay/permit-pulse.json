@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-03T03:08:53.569Z",
+      "generatedAt": "2026-07-04T03:09:06.567Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 25 – Jul 2",
+      "dateRange": "Jun 26 – Jul 3",
       "stats": {
-        "total": 334,
-        "notable": 19,
-        "newUnits": 16,
-        "totalValuation": 13436436
+        "total": 357,
+        "notable": 22,
+        "newUnits": 13,
+        "totalValuation": 11466349
       },
       "permits": [
         {
@@ -27,28 +27,16 @@
           "subtype": "Apartment"
         },
         {
-          "id": "2026-098728-RS",
-          "address": "798 Tonga Ct #2",
+          "id": "2025-136541-RS",
+          "address": "1489 Saratoga Av",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 164863,
+          "description": "New SFR & Attached Garage",
+          "valuation": 549610,
           "units": 1,
-          "issueDate": "2026-06-26",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-146842-RS",
-          "address": "3915 Loganberry Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 2 Attached ADU",
-          "valuation": 134934,
-          "units": 1,
-          "issueDate": "2026-06-26",
-          "subtype": "2nd Unit Added"
+          "issueDate": "2026-07-01",
+          "subtype": "Single-Family"
         },
         {
           "id": "2026-109367-RS",
@@ -75,39 +63,27 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-104906-RS",
-          "address": "1266 Candia Dr #2",
+          "id": "2025-146118-RS",
+          "address": "1503 Mt Shasta Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 83869,
+          "description": "Garage Conversion to ADU",
+          "valuation": 64254,
           "units": 1,
-          "issueDate": "2026-06-26",
+          "issueDate": "2026-07-01",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-109750-RS",
-          "address": "1700 Dolores Dr #2",
+          "id": "2025-125752-RS",
+          "address": "5149 Discovery Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Music Studio Conversion to Detach ADU",
-          "valuation": 80825,
+          "description": "Convert (E) Garage to Jadu",
+          "valuation": 63859,
           "units": 1,
-          "issueDate": "2026-06-26",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2024-105646-RS",
-          "address": "2332 Pacheco Dr #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 73216,
-          "units": 1,
-          "issueDate": "2026-06-26",
+          "issueDate": "2026-07-01",
           "subtype": "2nd Unit Added"
         },
         {
@@ -123,33 +99,69 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-119161-RS",
-          "address": "4054 San Ramon Wy #2",
+          "id": "2025-121768-RS",
+          "address": "986 Rock Canyon Cl #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to Jadu",
-          "valuation": 61718,
+          "description": "Attached Garage Conversion and Expansion to ADU 323 Sqft",
+          "valuation": 54616,
           "units": 1,
-          "issueDate": "2026-06-26",
+          "issueDate": "2026-07-01",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-124260-CI",
+          "address": "3940 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Figure Ai (Bemp100%) Office TI",
+          "valuation": 1300000,
+          "units": 0,
+          "issueDate": "2026-06-30",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-125416-CI",
+          "address": "55 Old Tully Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Roof Top Solar and Battery",
+          "valuation": 643960,
+          "units": 0,
+          "issueDate": "2026-07-01",
+          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-03T03:08:55.864Z",
+      "generatedAt": "2026-07-04T03:09:09.010Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 25 – Jul 2",
+      "dateRange": "Jun 26 – Jul 3",
       "stats": {
-        "total": 88,
+        "total": 111,
         "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01732",
+          "address": "151 Lowell Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-29",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01767",
           "address": "2011 Park Bl",
@@ -172,18 +184,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-30",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01732",
-          "address": "151 Lowell Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-29",
           "subtype": "Permit Issued"
         }
       ]

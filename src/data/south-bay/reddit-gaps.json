@@ -1,181 +1,192 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-02T03:15:41.550Z",
+    "generatedAt": "2026-07-04T03:16:36.303Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 8,
-    "placesMatched": 2,
-    "placeGaps": 6,
-    "eventsExtracted": 4,
-    "eventsMatched": 0,
+    "placesExtracted": 7,
+    "placesMatched": 5,
+    "placeGaps": 2,
+    "eventsExtracted": 5,
+    "eventsMatched": 1,
     "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Tee Nee Thai",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "open for breakfast and lunch during Rose White Blue Festival",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
-      ]
-    },
-    {
-      "name": "Foxtale Fermentation",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "free live music, beer, and food in downtown San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
-      ]
-    },
-    {
-      "name": "Hapa Brewery",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "USA watch party alternative near SAP Center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
-      ]
-    },
-    {
-      "name": "El Buen Sabor Pizza Wings",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Jackson and McKee location, $9.99 lunch special",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
-        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
-        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
-        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
-      ]
-    },
-    {
-      "name": "MLK Library",
+      "name": "SAP",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosts Short Story Society meetings downtown",
+      "context": "2026 Earthquakes Soccer Celebration watch party location",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
-        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
-        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
-        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
       ]
     },
     {
-      "name": "Berryessa Flea Market",
+      "name": "Lincoln High School",
       "city": "San Jose",
       "kind": "venue",
-      "context": "weekend flea market on Berryessa",
+      "context": "4th of July Rose White Blue Parade starting location",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukbsep/looking_for_a_good_jazz_club_for_a_terminally_ill/",
-        "https://www.reddit.com/r/SanJose/comments/1ul5geq/will_the_flea_market_on_berryessa_be_open_this/",
-        "https://www.reddit.com/r/SanJose/comments/1ul05rd/soccer_leagues/",
-        "https://www.reddit.com/r/SanJose/comments/1uky48g/tattoo_artistshop_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Rose, White & Blue Parade and Festival",
-      "when": "Saturday July 4, 2026",
+      "name": "2026 Earthquakes Soccer Celebration",
+      "when": "Sunday July 5th",
       "city": "San Jose",
-      "context": "Bay Area's largest longest-standing 4th of July tradition celebration",
+      "context": "World Cup watch party at Discovery Meadow and SAP",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
       ]
     },
     {
-      "name": "Team USA Watch Party",
-      "when": "July 1",
+      "name": "Global Soccer Watch Party",
+      "when": "all day",
       "city": "San Jose",
-      "context": "World Cup USA vs Bosnia watch party at Hapa Brewery",
+      "context": "Almaden Lake Park with food trucks and live music",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
       ]
     },
     {
-      "name": "Short Story Society of San Jose",
-      "when": "Tuesday nights 6-8pm",
+      "name": "Soccer Celebration World Cup Watch Party",
+      "when": "July 5",
       "city": "San Jose",
-      "context": "weekly reading group at MLK library downtown",
+      "context": "Mexico-England and Brazil-Norway matches at Discovery Meadow",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
-        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
-        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
-        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
+        "https://www.reddit.com/r/SanJose/comments/1umlg3z/soccer_celebration_world_cup_watch_party_for_july/",
+        "https://www.reddit.com/r/SanJose/comments/1umkw0a/sap_center_is_also_hosting_a_watch_party_this/",
+        "https://www.reddit.com/r/SanJose/comments/1umvcv7/helping_people_and_avoiding_trash_can_scavenging/",
+        "https://www.reddit.com/r/SanJose/comments/1umstnl/i_hope_postworld_cup_theres_a_lot_more_civic/",
+        "https://www.reddit.com/r/SanJose/comments/1umml5a/trying_out_the_famous_ramen_nagi_at_valley_fair/"
       ]
     },
     {
-      "name": "USA vs Bosnia World Cup Watch Party",
-      "when": "7/1",
+      "name": "Mexico/England World Cup Watch Party",
+      "when": "Sunday",
       "city": "San Jose",
-      "context": "multiple watch party locations sought in downtown",
+      "context": "watch party at SAP Center with seated viewing",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ul0t7s/world_cup_watch_parties/",
-        "https://www.reddit.com/r/Campbell/comments/1ul08la/usa_vs_bosnia_watch_parties_in_campbell_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1ukzrk5/alternative_watch_party_options_for_usa_vs_bosnia/",
-        "https://www.reddit.com/r/SanJose/comments/1ukvko2/got_the_999_lunch_special_with_meat_lovers_at_el/",
-        "https://www.reddit.com/r/SanJose/comments/1ukmojl/join_the_short_story_society_of_san_jose_on/"
+        "https://www.reddit.com/r/SanJose/comments/1umlg3z/soccer_celebration_world_cup_watch_party_for_july/",
+        "https://www.reddit.com/r/SanJose/comments/1umkw0a/sap_center_is_also_hosting_a_watch_party_this/",
+        "https://www.reddit.com/r/SanJose/comments/1umvcv7/helping_people_and_avoiding_trash_can_scavenging/",
+        "https://www.reddit.com/r/SanJose/comments/1umstnl/i_hope_postworld_cup_theres_a_lot_more_civic/",
+        "https://www.reddit.com/r/SanJose/comments/1umml5a/trying_out_the_famous_ramen_nagi_at_valley_fair/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Hop & Vine",
+      "name": "Discovery Meadow",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "open for breakfast and lunch during Rose White Blue Festival",
+      "kind": "park",
+      "context": "2026 Earthquakes Soccer Celebration watch party venue",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg3z/soccer_celebration_world_cup_watch_party_for_july/",
+        "https://www.reddit.com/r/SanJose/comments/1umkw0a/sap_center_is_also_hosting_a_watch_party_this/",
+        "https://www.reddit.com/r/SanJose/comments/1umvcv7/helping_people_and_avoiding_trash_can_scavenging/",
+        "https://www.reddit.com/r/SanJose/comments/1umstnl/i_hope_postworld_cup_theres_a_lot_more_civic/",
+        "https://www.reddit.com/r/SanJose/comments/1umml5a/trying_out_the_famous_ramen_nagi_at_valley_fair/"
       ],
-      "matchedName": "Hop & Vine"
+      "matchedName": "Discovery Meadow"
     },
     {
-      "name": "LUNA Mexican Kitchen",
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "original World Cup watch party location before move",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    },
+    {
+      "name": "Almaden Lake Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "Global Soccer Watch Party with food trucks and live music",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
+      ],
+      "matchedName": "Almaden Lake Park"
+    },
+    {
+      "name": "SAP Center",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosting Mexico/England watch party with seating",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1umlg3z/soccer_celebration_world_cup_watch_party_for_july/",
+        "https://www.reddit.com/r/SanJose/comments/1umkw0a/sap_center_is_also_hosting_a_watch_party_this/",
+        "https://www.reddit.com/r/SanJose/comments/1umvcv7/helping_people_and_avoiding_trash_can_scavenging/",
+        "https://www.reddit.com/r/SanJose/comments/1umstnl/i_hope_postworld_cup_theres_a_lot_more_civic/",
+        "https://www.reddit.com/r/SanJose/comments/1umml5a/trying_out_the_famous_ramen_nagi_at_valley_fair/"
+      ],
+      "matchedName": "SAP Center"
+    },
+    {
+      "name": "Ramen Nagi",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "open for breakfast and lunch during Rose White Blue Festival",
+      "context": "famous ramen restaurant at Valley Fair with long lines",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ukyo9k/this_saturday_rose_white_blue_parade_and_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1ul4pnj/for_after_the_world_cup/",
-        "https://www.reddit.com/r/SanJose/comments/1ukyt6a/world_cup_usa_vs_bosnia_h_71_watch_parties_report/",
-        "https://www.reddit.com/r/SanJose/comments/1ukax84/usa_watch_party_hapa_brewery_near_sap/",
-        "https://www.reddit.com/r/SanJose/comments/1ul1md8/where_to_donate_hair_nearby/"
+        "https://www.reddit.com/r/SanJose/comments/1umlg3z/soccer_celebration_world_cup_watch_party_for_july/",
+        "https://www.reddit.com/r/SanJose/comments/1umkw0a/sap_center_is_also_hosting_a_watch_party_this/",
+        "https://www.reddit.com/r/SanJose/comments/1umvcv7/helping_people_and_avoiding_trash_can_scavenging/",
+        "https://www.reddit.com/r/SanJose/comments/1umstnl/i_hope_postworld_cup_theres_a_lot_more_civic/",
+        "https://www.reddit.com/r/SanJose/comments/1umml5a/trying_out_the_famous_ramen_nagi_at_valley_fair/"
       ],
-      "matchedName": "Luna Mexican Kitchen"
+      "matchedName": "Ramen Nagi"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Rose, White & Blue Parade and Festival",
+      "when": "July 4, 2026",
+      "city": "San Jose",
+      "context": "4th of July parade starting 10:00 AM at Lincoln High School",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1umon97/im_fostering_two_brokittens_in_sj_peabody_and/",
+        "https://www.reddit.com/r/SanJose/comments/1umerjx/world_cup_watch_moved_to_discovery_meadow_and_sap/",
+        "https://www.reddit.com/r/SanJose/comments/1um9r3p/shadow_has_been_adopted/",
+        "https://www.reddit.com/r/SanJose/comments/1umq33l/almaden_lake_watch_party/",
+        "https://www.reddit.com/r/SanJose/comments/1umlg6j/4th_of_july_parade_and_festival_rose_white_blue/"
+      ],
+      "matchedName": "Rose, White & Blue Parade and Festival"
+    }
+  ]
 }

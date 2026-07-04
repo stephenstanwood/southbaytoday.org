@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "pulledAt": "2026-07-03T03:09:11.366Z",
-    "totalInBlob": 2076,
-    "freshCount": 635
+    "pulledAt": "2026-07-04T03:09:22.750Z",
+    "totalInBlob": 2093,
+    "freshCount": 640
   },
   "events": [
     {
@@ -93,6 +93,21 @@
       "sourceUrl": "https://www.sclibrary.org/books-more/books/summer-reading",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr5a9c6h_59s1cp",
+      "receivedAt": "2026-07-03T18:44:45.309Z",
+      "fromEmail": "info@pafarmersmarket.org",
+      "emailSubject": "Downtown Palo Alto Farmers' Market - July 4, 2026",
+      "title": "Downtown Palo Alto Farmers' Market",
+      "startsAt": "2026-07-04T08:00:00-07:00",
+      "endsAt": "2026-07-04T12:00:00-07:00",
+      "location": "Gilman Street between Hamilton and Forest, Palo Alto, CA",
+      "description": "Weekly farmers' market featuring fresh produce, flowers, prepared foods, and live music. This week features musician Kavita Matthews starting at 9:30 AM.",
+      "sourceUrl": "https://pafarmersmarket.org",
+      "cityKey": "palo-alto",
+      "cityName": "Palo Alto",
       "status": "new"
     },
     {
@@ -519,21 +534,6 @@
       "location": "Lake Cunningham Park, 2305 S. White Rd., San José, CA 95148",
       "description": "Free festival celebrating America's 250th birthday with food, live entertainment, family-friendly activities, and a drone show at 9 p.m.",
       "sourceUrl": "https://www.sanjoseca.gov/your-government/departments-offices/mayor-and-city-council/district-8/2026-4th-of-july-celebration-at-lake-cunningham",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzovxmh_6ycvet",
-      "receivedAt": "2026-06-29T20:47:39.511Z",
-      "fromEmail": "webrequests@sanjoseca.gov",
-      "emailSubject": "Media Advisory: Fourth of July Fireworks Press Conference",
-      "title": "San Jose Giants postgame fireworks",
-      "startsAt": "2026-07-03T21:00:00-07:00",
-      "endsAt": null,
-      "location": "Excite Ballpark, San José, CA",
-      "description": "Postgame fireworks following San Jose Giants game. Game ticket required for entry.",
-      "sourceUrl": "https://www.milb.com/san-jose/tickets/fireworks",
       "cityKey": "san-jose",
       "cityName": "San Jose",
       "status": "new"
@@ -1059,22 +1059,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr3xy8ti_wzgxrp",
-      "receivedAt": "2026-07-02T20:12:26.579Z",
-      "fromEmail": "reply@fanmail.mlssoccer.com",
-      "emailSubject": "Lionel Messi keeps chasing greatness 🐐",
-      "title": "Argentina vs Cape Verde - FIFA World Cup Round of 32",
-      "startsAt": "2026-07-03T22:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "Argentina faces Cape Verde in the Round of 32 of the 2026 FIFA World Cup, with Lionel Messi leading the team in pursuit of another World Cup title.",
-      "sourceUrl": "https://www.mlssoccer.com/competitions/fifa-world-cup/2026/matches/argvscpv-07-03-2026/?et=",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new",
-      "sourceUrlOriginal": "https://click.fanmail.mlssoccer.com/?qs=ABB7InYiOjEsImQiOjQ5MjV9AAEAAAAAAP64CDejk0kncxxqdrwRC4tNKOx_owlp08SaE7rwhYv9J-jadpPnFQiyM2eo96umnplmvIQOgFBwf-hLTPV8OH0_pCT5PnFMDKklRg"
-    },
-    {
       "id": "inbound_mpvgjy06_ikenjk",
       "receivedAt": "2026-06-01 17:03:22.886396+00",
       "fromEmail": "news@info.SantaClaraCA.gov",
@@ -1382,21 +1366,6 @@
       "cityName": "Santa Clara",
       "status": "new",
       "virtual": true
-    },
-    {
-      "id": "inbound_mqzvlls6_khm5h3",
-      "receivedAt": "2026-06-29T23:55:29.424Z",
-      "fromEmail": "info@sjmusart.org",
-      "emailSubject": "Immerse Yourself in a Special Artist Performance this Friday, July 3 🎉 🖼️  👩🏼‍🎨",
-      "title": "The Mother of All Demos",
-      "startsAt": "2026-07-03T18:00:00-07:00",
-      "endsAt": "2026-07-03T21:00:00-07:00",
-      "location": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
-      "description": "Zany, participatory performance by artist Sarah Buckius exploring women's roles in past and future technologies. Includes interactive tech zone by Gameshop Downstairs and zine.baby.",
-      "sourceUrl": "https://sjmusart.org",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
     },
     {
       "id": "inbound_mqzvlls6_h55ef1",
@@ -1943,6 +1912,21 @@
       "status": "new"
     },
     {
+      "id": "inbound_mr5av79w_gytttc",
+      "receivedAt": "2026-07-03T19:01:50.956Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Ukrainian English Storytime",
+      "title": "Ukrainian English Storytime",
+      "startsAt": "2026-07-11T10:30:00-07:00",
+      "endsAt": "2026-07-11T11:30:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
+      "description": "Interactive bilingual storytime for multilingual children featuring stories, songs, and rhymes in Ukrainian and English, followed by playtime.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113203/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_mqqyil9c_5toyq0",
       "receivedAt": "2026-06-23T18:07:18.061Z",
       "fromEmail": "reply@fanmail.sjearthquakes.com",
@@ -2197,22 +2181,6 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
-    },
-    {
-      "id": "inbound_mqhavr2y_kryku7",
-      "receivedAt": "2026-06-16T23:55:12.930Z",
-      "fromEmail": "info@sjmusart.org",
-      "emailSubject": "Celebrate Juneteenth this Friday at the San José Museum of Art",
-      "title": "The Mother of All Demos",
-      "startsAt": "2026-07-03T18:00:00-07:00",
-      "endsAt": "2026-07-03T21:00:00-07:00",
-      "location": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
-      "description": "Multimedia performance by artist Sarah Buckius exploring the roles of women in past and future technologies, from textile patents to AI and robot design.",
-      "sourceUrl": "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=3d58b91c-9338-4cee-95bf-18bd513b3c47",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://e.wordfly.com/click?sid=Mjc5M180MTdfNjM2NjNfNjk4Mg&l=49363d57-d269-f111-a84c-0050569dd3d9"
     },
     {
       "id": "inbound_mqhavr2y_51r375",
@@ -3192,21 +3160,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqspdj4t_dkwj5p",
-      "receivedAt": "2026-06-24T23:26:56.506Z",
-      "fromEmail": "noreply@civicplus.com",
-      "emailSubject": "Celebrate the 4th of July Safely for cityofmontesereno.org",
-      "title": "Fireworks display",
-      "startsAt": "2026-07-03T21:00:00-07:00",
-      "endsAt": null,
-      "location": "Excite Ballpark, 588 E. Alma Ave., San Jose, CA",
-      "description": "Professional fireworks display after the ballgame. Time is approximate.",
-      "sourceUrl": "https://www.montesereno.org/civicalerts.aspx?AID=690",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
-    },
-    {
       "id": "inbound_mqspdj4t_fl76so",
       "receivedAt": "2026-06-24T23:26:56.506Z",
       "fromEmail": "noreply@civicplus.com",
@@ -3477,6 +3430,102 @@
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
+    },
+    {
+      "id": "inbound_mr577w76_4wdrge",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Hobee's Pancake Market",
+      "startsAt": "2026-07-04T09:00:00-07:00",
+      "endsAt": "2026-07-04T14:00:00-07:00",
+      "location": "Hobee's Downtown",
+      "description": "Enjoy breakfast, brunch or lunch while browsing displays from local vendors and artisans at this weekly market.",
+      "sourceUrl": "https://www.hobees.com/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=5fc2c322a0&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_mr577w76_x98yc9",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Independence Day Carillon Concert",
+      "startsAt": "2026-07-04T15:00:00-07:00",
+      "endsAt": "2026-07-04T16:00:00-07:00",
+      "location": "Trinity Episcopal Cathedral, 81 N 2nd Street, San Jose, CA",
+      "description": "Celebrate America's 250th Birthday with the sounds of the Cathedral's bell tower carillons. All are welcome.",
+      "sourceUrl": "https://trinitysj.org/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=8ea40b1f1a&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_mr577w76_5ydnxy",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Bank of America Museums on Us Weekend",
+      "startsAt": "2026-07-04T11:00:00-07:00",
+      "endsAt": "2026-07-05T18:00:00-07:00",
+      "location": "San Jose Museum of Art",
+      "description": "Free general admission for Bank of America, Merrill, or U.S. Trust cardholders presenting a valid physical or digital card with photo ID.",
+      "sourceUrl": "https://sjmusart.org/event/museums-on-us-july-2026",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=054d17abe7&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_mr577w76_xttuz8",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Levitt Pavilion Concert Series: The Altons",
+      "startsAt": "2026-07-05T13:30:00-07:00",
+      "endsAt": "2026-07-05T16:45:00-07:00",
+      "location": "St. James Park",
+      "description": "Free outdoor concert featuring The Altons, an emerging West Coast souldies band from Southeast Los Angeles, with food trucks and family-friendly activities.",
+      "sourceUrl": "https://www.levittsanjose.org/2026-concert-series",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=a94ae55025&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_mr577w76_oq0f8w",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Starlight Saturdays",
+      "startsAt": "2026-07-18T18:00:00-07:00",
+      "endsAt": null,
+      "location": "St. James Park",
+      "description": "2026 season featuring live comedy, outdoor movies, great food, drinks, and family-friendly fun in Downtown San Jose. Continuing on August 1 and 15.",
+      "sourceUrl": "https://sjdowntown.com/starlight-cinema/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=c42af0bb86&e=e0f43ae3a8"
+    },
+    {
+      "id": "inbound_mr577w76_2x9abf",
+      "receivedAt": "2026-07-03T17:19:27.341Z",
+      "fromEmail": "sjda@sjdowntown.com",
+      "emailSubject": "Celebrate 4th of July Weekend Downtown",
+      "title": "Dine Downtown",
+      "startsAt": "2026-07-09T00:00:00-07:00",
+      "endsAt": "2026-07-19T23:59:59-07:00",
+      "location": "Downtown San Jose",
+      "description": "18th annual culinary event featuring 11 days of exceptional dining at Downtown San Jose restaurants, from casual bites to elevated chef-driven menus.",
+      "sourceUrl": "https://sjdowntown.com/dine-downtown/",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=799b7a385b&e=e0f43ae3a8"
     },
     {
       "id": "inbound_mqblc727_yt2a17",
@@ -5132,6 +5181,38 @@
       "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=0015NI3VKiZxveYRQo1TDq7feq_cg9GJVk_Osv4IEdrdWiIvxppDaB3VYpsXBX7bNvHTq6POzfB2I5MZMOQtx_okWFiPN43zf2vOVCsE0wKmqixPOnP4b-96ltOL2PoLfLmxxjW3iacSYZzEWKFHF1lJp9Dgk-FIodCBHWrh4m-99ZfGp_3mKrmQitSm-CAlX66I5yqZVf6p_rxkwVIkyOOuC1rLg5LweCZTeS_TvfykOvg3_wgwCzoPO5PGz2HTeM7bXkEn7jT1mO60dzXhDJrSB9Uz1ecoWa5&c=gsCcaDQ7o7zYW5J1lM8Aad7pPgAxry-YM4UIeYlAW_skmKSUGCSNQw==&ch=heSwJ1h9VSi9mSY4r9W-l7gGQJ_O_u_qFboM0pgZqNRCVAo4E00ONQ=="
     },
     {
+      "id": "inbound_mr54fdi6_um8f88",
+      "receivedAt": "2026-07-03T16:01:28.640Z",
+      "fromEmail": "latest@email.live.stanford.edu",
+      "emailSubject": "July E-News: 250 Years of the United States",
+      "title": "A Midsummer Night's Dream - San Francisco Symphony",
+      "startsAt": "2026-07-16T19:30:00-07:00",
+      "endsAt": null,
+      "location": "Frost Amphitheater, Stanford University, Stanford, CA",
+      "description": "San Francisco Symphony performs Mendelssohn's A Midsummer Night's Dream and Tchaikovsky's Romeo and Juliet, conducted by Nicolas Ellis with violinist Geneva Lewis.",
+      "sourceUrl": "https://live.stanford.edu/events/26-frost/sfs/",
+      "cityKey": "palo-alto",
+      "cityName": "Palo Alto",
+      "status": "new",
+      "sourceUrlOriginal": "https://email.live.stanford.edu/c/AQjouxYQi_oMGOKC7o8BILj3qAIogYfvAw1XS5cpKRx26xl96uK8dCNWdYy9XY8WzT4iiXzIjdla"
+    },
+    {
+      "id": "inbound_mr54fdi6_utzefg",
+      "receivedAt": "2026-07-03T16:01:28.640Z",
+      "fromEmail": "latest@email.live.stanford.edu",
+      "emailSubject": "July E-News: 250 Years of the United States",
+      "title": "James Bond Forever - San Francisco Symphony",
+      "startsAt": "2026-07-23T19:30:00-07:00",
+      "endsAt": null,
+      "location": "Frost Amphitheater, Stanford University, Stanford, CA",
+      "description": "San Francisco Symphony celebrates 60 years of James Bond films with iconic themes, conducted by Steven Reineke and featuring Tony Award-winning performer Lena Hall.",
+      "sourceUrl": "https://live.stanford.edu/events/26-frost/sfs/",
+      "cityKey": "palo-alto",
+      "cityName": "Palo Alto",
+      "status": "new",
+      "sourceUrlOriginal": "https://email.live.stanford.edu/c/AQjouxYQi_oMGOKC7o8BILj3qAIogYfvAw1XS5cpKRx26xl96uK8dCNWdYy9XY8WzT4iiXzIjdla"
+    },
+    {
       "id": "inbound_mqit42cz_4pivyf",
       "receivedAt": "2026-06-18T01:12:51.600Z",
       "fromEmail": "reply@fanmail.sjearthquakes.com",
@@ -6546,21 +6627,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqspagb4_7vbgrp",
-      "receivedAt": "2026-06-24T23:24:31.930Z",
-      "fromEmail": "noreply@civicplus.com",
-      "emailSubject": "Celebrate the 4th of July Safely for cityofmontesereno.org",
-      "title": "Fireworks display",
-      "startsAt": "2026-07-03T21:00:00-07:00",
-      "endsAt": null,
-      "location": "Excite Ballpark, 588 E. Alma Ave., San Jose, CA",
-      "description": "Professional fireworks display after the ballgame. Ticketed event.",
-      "sourceUrl": null,
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new"
-    },
-    {
       "id": "inbound_mqspagb4_ywiwk1",
       "receivedAt": "2026-06-24T23:24:31.930Z",
       "fromEmail": "noreply@civicplus.com",
@@ -7090,21 +7156,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqpvrp67_7y142f",
-      "receivedAt": "2026-06-23T00:02:38.361Z",
-      "fromEmail": "librarians@info.SantaClaraCA.gov",
-      "emailSubject": "MISSION: Tech Classes in July at Santa Clara City Library",
-      "title": "1-on-1 Smartphone Help at Mission Library",
-      "startsAt": "2026-07-03T11:00:00-07:00",
-      "endsAt": "2026-07-03T13:00:00-07:00",
-      "location": "Mission Branch Library, 1098 Lexington Street, Santa Clara, CA",
-      "description": "Book a 15-minute appointment for personalized help with your iPhone or Android smartphone, including photo editing, cloud storage, app setup, and security management.",
-      "sourceUrl": "https://www.sclibrary.org/Home/Components/Calendar/Event/113312/7953",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
       "id": "inbound_mqpvrp67_s1te2t",
       "receivedAt": "2026-06-23T00:02:38.361Z",
       "fromEmail": "librarians@info.SantaClaraCA.gov",
@@ -7596,6 +7647,21 @@
       "cityName": "Palo Alto",
       "status": "new",
       "sourceUrlOriginal": "https://email.live.stanford.edu/c/AQjouxYQ0qwMGOKC7o8BIO2xmgIopO_RA0XHPRrjfrYW8gLXHDRZKsE9Wc4phuodop4zPRoV-MVs"
+    },
+    {
+      "id": "inbound_mr56ljnv_g6bd6s",
+      "receivedAt": "2026-07-03T17:02:19.660Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Firefighter Storytime",
+      "title": "Firefighter Storytime",
+      "startsAt": "2026-07-06T10:30:00-07:00",
+      "endsAt": "2026-07-06T11:15:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
+      "description": "Join local firefighters for storytime, followed by photos with firefighters and the fire truck.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112333/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
     },
     {
       "id": "inbound_mqzclbmv_9a9mk3",
@@ -8470,38 +8536,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr1b9ika_wr6riw",
-      "receivedAt": "2026-07-01T00:01:37.220Z",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Welcome Team USA to Downtown San Jose ⚽",
-      "title": "First Friday: The Mother of All Demos",
-      "startsAt": "2026-07-03T18:00:00-07:00",
-      "endsAt": "2026-07-03T21:00:00-07:00",
-      "location": "San Jose Museum of Art, San Jose",
-      "description": "Zany participatory multimedia performance by artist Sarah Buckius exploring the roles of women in past and future technologies. Free admission.",
-      "sourceUrl": "https://sjmusart.org/event/first-friday-mother-all-demos",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=99807acf39&e=e0f43ae3a8"
-    },
-    {
-      "id": "inbound_mr1b9ika_6jbygv",
-      "receivedAt": "2026-07-01T00:01:37.220Z",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Welcome Team USA to Downtown San Jose ⚽",
-      "title": "LASERS: K-POP Demon Hunters",
-      "startsAt": "2026-07-03T00:00:00-07:00",
-      "endsAt": "2026-07-04T23:59:59-07:00",
-      "location": "The Tech Interactive, San Jose",
-      "description": "High-energy laser show featuring K-pop music with dazzling laser effects bringing the hit movie K-Pop Demon Hunters to life.",
-      "sourceUrl": "https://tickets.thetech.org/events/019c0209-5293-5bea-4c9c-8ad87164827b",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=113c956095&e=e0f43ae3a8"
-    },
-    {
       "id": "inbound_mr1b9ika_8fqhjp",
       "receivedAt": "2026-07-01T00:01:37.220Z",
       "fromEmail": "sjda@sjdowntown.com",
@@ -8588,6 +8622,51 @@
       "location": "Central Park Library, 2635 Homestead Road, Santa Clara, California 95051",
       "description": "Introductory workshop on nature journaling and mindful movement using the INIWIRO framework. Learn to cultivate a consistent nature journaling practice and explore digital tools like iNaturalist and Merlin through a gentle ten-minute walk route.",
       "sourceUrl": "https://www.eventbrite.com/e/10-minute-walk-nature-journaling-tickets-1991014083721?aff=oddtdtcreator",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr583f9j_7djeln",
+      "receivedAt": "2026-07-03T17:44:12.254Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "Join us for FREE Watch Parties at Santa Clara Convention Center | July 9-11",
+      "title": "Celebrate Santa Clara Watch Parties - Thursday",
+      "startsAt": "2026-07-09T13:00:00-07:00",
+      "endsAt": "2026-07-09T17:00:00-07:00",
+      "location": "Santa Clara Convention Center, Santa Clara, CA",
+      "description": "Free watch party featuring Match 97 on big screens with activities and entertainment for all ages. Food and beverages available for purchase.",
+      "sourceUrl": "https://www.eventbrite.com/e/celebrate-santa-clara-watch-parties-at-santa-clara-convention-center-tickets-1992884056861",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr583f9j_n0fh9t",
+      "receivedAt": "2026-07-03T17:44:12.254Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "Join us for FREE Watch Parties at Santa Clara Convention Center | July 9-11",
+      "title": "Celebrate Santa Clara Watch Parties - Friday",
+      "startsAt": "2026-07-10T12:00:00-07:00",
+      "endsAt": "2026-07-10T16:00:00-07:00",
+      "location": "Santa Clara Convention Center, Santa Clara, CA",
+      "description": "Free watch party featuring Match 98 on big screens with activities and entertainment for all ages. Food and beverages available for purchase.",
+      "sourceUrl": "https://www.eventbrite.com/e/celebrate-santa-clara-watch-parties-at-santa-clara-convention-center-tickets-1992884056861",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr583f9j_lr2ig1",
+      "receivedAt": "2026-07-03T17:44:12.254Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "Join us for FREE Watch Parties at Santa Clara Convention Center | July 9-11",
+      "title": "Celebrate Santa Clara Watch Parties - Saturday",
+      "startsAt": "2026-07-11T14:00:00-07:00",
+      "endsAt": "2026-07-11T21:00:00-07:00",
+      "location": "Santa Clara Convention Center, Santa Clara, CA",
+      "description": "Free watch parties featuring Match 99 at 2 p.m. and Match 100 at 6 p.m. on big screens with activities and entertainment for all ages. Food and beverages available for purchase.",
+      "sourceUrl": "https://www.eventbrite.com/e/celebrate-santa-clara-watch-parties-at-santa-clara-convention-center-tickets-1992884056861",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
@@ -9474,21 +9553,6 @@
       "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=zUXqT0dcr0OcwfeTHMBV7XBZdeJ0q_tsV2b_cvUjrM1VEUpMcvwXJw"
     },
     {
-      "id": "inbound_mon1kt0p_wle2lg",
-      "receivedAt": "2026-05-01 15:02:26.933946+00",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "Aquatics May eNewsletter",
-      "title": "Night Rec Swim",
-      "startsAt": "2026-07-03T17:00:00-07:00",
-      "endsAt": "2026-07-03T19:00:00-07:00",
-      "location": "Rengstorff Park Aquatics Center, 2073 Crisanto Avenue, Mountain View, CA 94040",
-      "description": "Evening recreational swim session for recreation swim members.",
-      "sourceUrl": "https://anc.apm.activecommunities.com/mountainviewrecreation/membership/search/detail/29?onlineSiteId=0",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mon1kt0p_nw62hp",
       "receivedAt": "2026-05-01 15:02:26.933946+00",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -9561,6 +9625,21 @@
       "sourceUrl": "https://anc.apm.activecommunities.com/mountainviewrecreation/membership/search/detail/29?onlineSiteId=0",
       "cityKey": "mountain-view",
       "cityName": "Mountain View",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr56ljma_02axhk",
+      "receivedAt": "2026-07-03T17:02:22.360Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Tie Dye Workshop",
+      "title": "Tie Dye Workshop",
+      "startsAt": "2026-07-07T17:30:00-07:00",
+      "endsAt": "2026-07-07T18:15:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
+      "description": "Create a colorful drawstring bag using vibrant dyes. No registration required; all supplies provided while materials last.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113054/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
       "status": "new"
     },
     {
