@@ -817,6 +817,14 @@ function cleanTitle(title) {
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
+    // South Bay venue/program/sponsor acronyms that arrive ALL-CAPS but get
+    // downcased by the 2+ pass once the surrounding title tips mixed-case
+    // ("ASML Next Gen Stage…" → "Asml", "TSRP: Henna Designs" → "Tsrp",
+    // "RJJT Presents Moana Jr." → "Rjjt"). ASML = the lithography company
+    // sponsoring SJMA's SJ Jazz stage; TSRP = Teen Summer Reading Program
+    // (SCC Library); RJJT = Roberta Jones Junior Theatre (City of Santa Clara).
+    // Recurring manual copy-edit in the title data — handled upstream here.
+    "ASML", "TSRP", "RJJT",
     // 2–3 letter acronyms that legitimately appear in event titles. Anything
     // NOT in this list gets title-cased when the surrounding title is mostly
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).

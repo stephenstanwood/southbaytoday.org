@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-07-04 — Cycle 113: Root-Cause Fix for Recurring Acronym Mangling
+
+### Context
+Friday July 4, 2026. Automated builder cycle. No genuinely fresh (post–June 30) South Bay funding round surfaced from primary sources this cycle — the July 1 roundups only carried Queue (Palo Alto), already in RECENTLY_FUNDED. Rather than force a stale funding add, fixed a recurring copy-edit root cause: the last several manual commits (ASML/TSRP/RJJT) patched mangled acronyms directly in `upcoming-events.json`, which the nightly regen overwrites.
+
+### What Was Built
+
+**Title casing: ASML / TSRP / RJJT added to `KEEP_UPPER` in `scripts/generate-events.mjs`**
+
+`cleanTitle()`'s 2+ downcase pass was lowercasing these all-caps source acronyms to Asml/Tsrp/Rjjt once the surrounding title tipped mixed-case. Stephen kept re-fixing them in the JSON by hand, but each nightly regen re-mangled them. Added all three to `KEEP_UPPER` (verified against primary sources: ASML = the lithography company sponsoring SJMA's SJ Jazz stage; TSRP = Teen Summer Reading Program, SCC Library; RJJT = Roberta Jones Junior Theatre, City of Santa Clara). Confirmed with a `cleanTitle` unit check — all five prior offenders (incl. GRPC's, already covered) now round-trip clean.
+
+### Why This Was the Strongest Move
+It stops a recurring manual copy-edit at the source instead of the symptom. The regenerated event titles will keep their proper acronym casing on Cupertino Library, SJ Jazz, and Santa Clara youth-theatre listings without another hand-patch.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch** — keep scanning primary releases for early-July South Bay rounds (AI security, chips, robotics); nothing fresh surfaced July 1–4.
+2. **Acronym sweep** — periodically diff regenerated titles for new mangled acronyms and fold confirmed ones into `KEEP_UPPER` rather than the JSON.
+3. **Tech copy audit** — review older 2026 funding blurbs for stale valuation/acquisition claims against primary sources.
+
+---
+
 ## 2026-07-02 — Cycle 112: Straiker Added to Recently Funded
 
 ### Context
