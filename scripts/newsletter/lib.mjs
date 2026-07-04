@@ -17,6 +17,7 @@ loadEnvLocal();
 
 const RESEND_BASE = "https://api.resend.com";
 const SITE_URL = "https://southbaytoday.org";
+const BRAND_AVATAR_URL = `${SITE_URL}/images/sbt-newsletter-avatar.png`;
 const NEWSLETTER_ARCHIVE_PREFIX = "/newsletters";
 const NEWSLETTER_OPENING_MAX_AGE_DAYS = 6;
 const BLOCKED_NEWSLETTER_IMAGE_PATTERNS = [
@@ -1148,6 +1149,7 @@ export function renderEmail(data) {
   const html = wrapShell(subject, [
     headerBlock(data),
     weatherStrip(data.weather),
+    leadImageBlock(data),
     briefingBlock(data.editorial?.briefing),
     dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial, data.visuals),
     tonightPickBlock(data.tonightPick, data.tonightPickBlurb, data.visuals),
@@ -1213,9 +1215,18 @@ ${body}
 }
 
 function headerBlock(data) {
-  return `<div style="padding:28px 28px 12px 28px;border-bottom:1px solid ${PALETTE.border};">
-  <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;">South Bay Today</div>
-  <div style="font-size:22px;font-weight:700;margin-top:4px;color:${PALETTE.ink};">${esc(data.longDate)}</div>
+  return `<div style="padding:24px 28px 14px 28px;border-bottom:1px solid ${PALETTE.border};">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+    <tr>
+      <td style="width:58px;vertical-align:middle;padding-right:14px;">
+        <img src="${esc(BRAND_AVATAR_URL)}" alt="" width="54" height="54" style="width:54px;height:54px;border-radius:50%;display:block;border:2px solid #ffffff;">
+      </td>
+      <td style="vertical-align:middle;">
+        <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;">South Bay Today</div>
+        <div style="font-size:22px;font-weight:700;margin-top:4px;color:${PALETTE.ink};">${esc(data.longDate)}</div>
+      </td>
+    </tr>
+  </table>
 </div>`;
 }
 
@@ -1235,23 +1246,28 @@ function briefingBlock(briefing) {
 </div>`;
 }
 
+function leadImageBlock(data) {
+  const image = usableImage(data?.visuals?.dayPlanImage);
+  if (!image) return "";
+  const planUrl = data?.dayPlan?.planUrl || SITE_URL;
+  const alt = data?.visuals?.dayPlanImageAlt || `South Bay Today field guide for ${data?.longDate || "today"}`;
+  return `<div style="padding:22px 28px 0 28px;">
+  <a href="${esc(planUrl)}" style="display:block;text-decoration:none;">
+    <img src="${esc(image)}" alt="${esc(alt)}" width="564" style="width:100%;height:auto;display:block;border-radius:12px;border:1px solid ${PALETTE.border};">
+  </a>
+</div>`;
+}
+
 function dayPlanBlock(plan, blurb, editorial = null, visuals = null) {
   if (!plan) return "";
   const cards = orderedCards(plan);
   if (!cards.length) return "";
   const rows = cards.map(planCardRow).join("\n");
   const headline = editorial?.dayPlanHeadline || "A flexible South Bay day";
-  const poster = usableImage(visuals?.dayPlanImage);
-  const posterHtml = poster
-    ? `<a href="${esc(plan.planUrl || SITE_URL)}" style="display:block;text-decoration:none;margin:0 auto 20px auto;max-width:390px;">
-        <img src="${esc(poster)}" alt="${esc(visuals?.dayPlanImageAlt || headline)}" width="390" style="width:100%;max-width:390px;height:auto;display:block;border-radius:10px;border:1px solid ${PALETTE.border};">
-      </a>`
-    : "";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:18px;">Open the live guide →</a>`
     : "";
   return `<div style="padding:28px;">
-  ${posterHtml}
   <div style="font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:${PALETTE.purple};font-weight:700;margin-bottom:8px;">Today's field guide</div>
   <div style="font-size:18px;font-weight:700;color:${PALETTE.ink};margin-bottom:8px;">${esc(headline)}</div>
   <div style="font-size:15px;line-height:1.6;color:${PALETTE.ink};margin-bottom:16px;">${esc(blurb)}</div>

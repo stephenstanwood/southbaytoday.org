@@ -88,7 +88,7 @@ interface LocalState {
 // ---------------------------------------------------------------------------
 
 const ACCENT_COLORS = [
-  "#FF6B35", "#E63946", "#06D6A0", "#7B2FBE", "#1A5AFF", "#FF3CAC",
+  "#FF7B2B", "#F43F7C", "#8738F5", "#22C6D3", "#FFD338", "#13072F",
 ];
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -450,7 +450,7 @@ export default function SouthBayTodayView(_props: Props) {
   const visibleBuckets = BUCKET_ORDER;
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
+    <div className="sbt-home-shell">
       {/* Weekly forecast banner */}
       <div style={{ marginBottom: 0, paddingTop: 12 }}>
         <ForecastCard homeCity={displayCity} />
@@ -613,16 +613,31 @@ export default function SouthBayTodayView(_props: Props) {
       </nav>
 
       <style>{`
+        .sbt-home-shell {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 0 16px 80px;
+        }
         /* ── Headline row ── */
         .sbt-headline-row {
-          padding: 22px 0 14px;
+          padding: 26px 0 18px;
+          position: relative;
+        }
+        .sbt-headline-row::before {
+          content: '';
+          position: absolute;
+          inset: 5px -18px 0;
+          z-index: -1;
+          border-radius: 28px;
+          background:
+            linear-gradient(135deg, rgba(255,123,43,0.14), rgba(244,63,124,0.10) 35%, rgba(135,56,245,0.12) 68%, rgba(34,198,211,0.14));
         }
         .sbt-question {
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: 32px;
-          font-weight: 800;
-          color: #1a1a2e;
-          letter-spacing: -0.5px;
+          font-size: 36px;
+          font-weight: 900;
+          color: #13072f;
+          letter-spacing: 0;
           line-height: 1.15;
           margin: 0 0 14px;
         }
@@ -634,7 +649,8 @@ export default function SouthBayTodayView(_props: Props) {
         }
         @media (max-width: 480px) {
           .sbt-headline-row { padding: 18px 0 12px; }
-          .sbt-question { font-size: 26px; margin-bottom: 12px; }
+          .sbt-headline-row::before { inset: 3px -10px 0; border-radius: 20px; }
+          .sbt-question { font-size: 28px; margin-bottom: 12px; }
         }
         .sbt-shuffle {
           font-family: 'Inter', sans-serif;
@@ -642,8 +658,8 @@ export default function SouthBayTodayView(_props: Props) {
           font-weight: 900;
           padding: 4px 14px;
           border-radius: 14px;
-          border: 2px solid #000;
-          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
+          border: 2px solid #13072f;
+          background: linear-gradient(135deg, #8738f5 0%, #f43f7c 54%, #ff7b2b 100%);
           color: #fff;
           cursor: pointer;
           text-transform: uppercase;
@@ -686,9 +702,9 @@ export default function SouthBayTodayView(_props: Props) {
           font-weight: 900;
           padding: 4px 14px;
           border-radius: 14px;
-          border: 2px solid #000;
+          border: 2px solid #13072f;
           background: #fff;
-          color: #000;
+          color: #13072f;
           cursor: pointer;
           text-transform: uppercase;
           letter-spacing: 1px;
@@ -697,7 +713,7 @@ export default function SouthBayTodayView(_props: Props) {
           white-space: nowrap;
         }
         .sbt-share-pill:hover {
-          background: #000;
+          background: #13072f;
           color: #fff;
         }
         .sbt-share-pill:disabled {
@@ -740,10 +756,13 @@ export default function SouthBayTodayView(_props: Props) {
         .sbt-newsletter-card {
           width: 100%;
           padding: 18px 22px;
-          border: 1px solid #C8C4BC;
-          border-radius: 4px;
-          background: #fff;
+          border: 1px solid rgba(135, 56, 245, 0.22);
+          border-radius: 10px;
+          background:
+            linear-gradient(#fff, #fff) padding-box,
+            linear-gradient(135deg, #ff7b2b, #f43f7c, #8738f5, #22c6d3) border-box;
           box-sizing: border-box;
+          box-shadow: 0 14px 32px rgba(31, 12, 73, 0.08);
         }
         @media (max-width: 640px) {
           .sbt-newsletter-row { margin: 12px -8px 8px; }
@@ -752,30 +771,39 @@ export default function SouthBayTodayView(_props: Props) {
         .sbt-bucket {
           background: #fff;
           border-radius: 12px;
-          border: 1px solid #e8e8e8;
+          border: 1px solid rgba(135, 56, 245, 0.16);
           overflow: hidden;
           display: flex;
           flex-direction: column;
           position: relative;
           min-height: 140px;
+          box-shadow: 0 12px 26px rgba(31, 12, 73, 0.07);
+          transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, border-color 0.16s ease-out;
+        }
+        .sbt-bucket:hover {
+          transform: translateY(-2px);
+          border-color: rgba(135, 56, 245, 0.34);
+          box-shadow: 0 18px 36px rgba(31, 12, 73, 0.11);
         }
         .sbt-bucket-header {
           display: flex;
           align-items: center;
           gap: 8px;
           padding: 10px 14px 6px;
+          background: linear-gradient(90deg, rgba(255,123,43,0.10), rgba(34,198,211,0.08));
         }
         .sbt-bucket-accent {
-          width: 10px;
-          height: 10px;
+          width: 12px;
+          height: 12px;
           border-radius: 50%;
           flex-shrink: 0;
+          box-shadow: 0 0 0 3px rgba(255,255,255,0.9), 0 0 0 4px rgba(19,7,47,0.08);
         }
         .sbt-bucket-label {
           font-family: 'Inter', sans-serif;
           font-size: 12px;
           font-weight: 900;
-          color: #111;
+          color: #13072f;
           letter-spacing: 1px;
           text-transform: uppercase;
         }
@@ -807,7 +835,7 @@ export default function SouthBayTodayView(_props: Props) {
           gap: 0;
           background: #fff;
           border-radius: 10px;
-          border: 1px solid #e8e8e8;
+          border: 1px solid rgba(135, 56, 245, 0.16);
           overflow: hidden;
           position: relative;
         }
@@ -896,7 +924,7 @@ export default function SouthBayTodayView(_props: Props) {
         .sbt-city-directory {
           margin-top: 36px;
           padding-top: 28px;
-          border-top: 1px solid #eee;
+          border-top: 1px solid rgba(135, 56, 245, 0.14);
           display: flex;
           flex-direction: column;
           gap: 14px;
@@ -908,7 +936,7 @@ export default function SouthBayTodayView(_props: Props) {
           font-weight: 700;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #666;
+          color: #6f5d85;
         }
         .sbt-city-directory-pills {
           display: flex;
@@ -921,16 +949,16 @@ export default function SouthBayTodayView(_props: Props) {
           gap: 8px;
           padding: 6px 14px 6px 6px;
           border-radius: 999px;
-          border: 2px solid #000;
+          border: 2px solid #13072f;
           background: #fff;
-          color: #1a1a2e;
+          color: #13072f;
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 15px;
           font-weight: 700;
           letter-spacing: -0.2px;
           text-decoration: none;
           line-height: 1;
-          box-shadow: 2px 2px 0 #000;
+          box-shadow: 2px 2px 0 #13072f;
           transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out, color 0.15s ease-out;
         }
         .sbt-city-pill-monogram {
@@ -940,7 +968,7 @@ export default function SouthBayTodayView(_props: Props) {
           width: 24px;
           height: 24px;
           border-radius: 999px;
-          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
+          background: linear-gradient(135deg, #8738f5, #22c6d3);
           color: #fff;
           font-family: 'Space Mono', monospace;
           font-size: 10px;
@@ -950,13 +978,13 @@ export default function SouthBayTodayView(_props: Props) {
         }
         .sbt-city-pill:hover {
           transform: translate(-2px, -2px);
-          box-shadow: 4px 4px 0 #000;
-          background: linear-gradient(135deg, #1E3A8A, #4C1D95);
+          box-shadow: 4px 4px 0 #13072f;
+          background: linear-gradient(135deg, #8738f5, #f43f7c, #ff7b2b);
           color: #fff;
         }
         .sbt-city-pill:hover .sbt-city-pill-monogram {
           background: #fff;
-          color: #1E3A8A;
+          color: #8738f5;
         }
         @media (max-width: 480px) {
           .sbt-city-pill {

@@ -30,20 +30,24 @@ const {
   <Fragment slot="head">
     <style is:global>
       :root {
-        --sb-bg: #FAF9F6;
+        --sb-bg: #FFF8F2;
         --sb-card: #FFFFFF;
-        --sb-ink: #1A1A1A;
-        --sb-muted: #555555;
-        --sb-light: #888888;
-        --sb-border: #C8C4BC;
-        --sb-border-light: #E5E2DB;
-        --sb-rule: #1A1A1A;
-        --sb-primary: #1A1A1A;
-        --sb-primary-light: #F0EFEC;
-        --sb-accent: #C0392B;
-        --sb-accent-light: #FDEEEC;
-        --sb-live: #C0392B;
-        --sb-win: #1A1A1A;
+        --sb-ink: #13072F;
+        --sb-muted: #5f5870;
+        --sb-light: #8d829d;
+        --sb-border: rgba(124, 58, 237, 0.25);
+        --sb-border-light: rgba(34, 198, 211, 0.22);
+        --sb-rule: #13072F;
+        --sb-primary: #13072F;
+        --sb-primary-light: #F4ECFF;
+        --sb-accent: #8738F5;
+        --sb-accent-light: #F3E8FF;
+        --sb-sunset: #FF7B2B;
+        --sb-coral: #F43F7C;
+        --sb-teal: #22C6D3;
+        --sb-gold: #FFD338;
+        --sb-live: #F43F7C;
+        --sb-win: #13072F;
         --sb-loss: #999999;
         --sb-radius: 2px;
         --sb-shadow: none;
@@ -55,7 +59,8 @@ const {
 
       body {
         font-family: var(--sb-sans);
-        background: var(--sb-bg);
+        background:
+          linear-gradient(180deg, #fff8f2 0%, #fff7ff 44%, #f3fbff 100%);
         color: var(--sb-ink);
         margin: 0;
         overflow-x: clip;
@@ -64,8 +69,10 @@ const {
 
       /* ── Masthead ── */
       .sb-header {
-        background: var(--sb-bg);
-        padding: 24px 24px 12px;
+        background:
+          radial-gradient(circle at 50% -18%, rgba(255, 123, 43, 0.24), transparent 34%),
+          linear-gradient(180deg, #fffaf5 0%, var(--sb-bg) 100%);
+        padding: 26px 24px 14px;
         text-align: center;
         border-bottom: none;
       }
@@ -84,8 +91,18 @@ const {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 9px;
       }
       .sb-brand-icon { display: none; }
+      .sb-brand-mark {
+        width: 86px;
+        height: 86px;
+        border-radius: 999px;
+        display: block;
+        background: #fff;
+        border: 4px solid #fff;
+        box-shadow: 0 14px 34px rgba(31, 12, 73, 0.16), 0 0 0 1px rgba(123, 47, 190, 0.12);
+      }
 
       /* ── Logo ── */
       .sb-logo { display: inline-block; user-select: none; }
@@ -93,8 +110,8 @@ const {
       .sb-logo-the { font-family: var(--sb-serif); font-weight: 400; font-style: italic; font-size: 18px; color: var(--sb-ink); }
       .sb-logo-south-bay { font-family: var(--sb-serif); font-weight: 900; font-size: 40px; line-height: 1; color: var(--sb-ink); letter-spacing: -0.01em; }
       .sb-logo-signal-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-      .sb-logo-signal-rule { flex: 1; height: 1px; background: var(--sb-ink); opacity: 0.35; }
-      .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sb-ink); }
+      .sb-logo-signal-rule { flex: 1; height: 2px; background: linear-gradient(90deg, var(--sb-sunset), var(--sb-coral), var(--sb-accent), var(--sb-teal)); opacity: 0.8; }
+      .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sb-accent); }
       .sb-date {
         font-size: 12px;
         color: var(--sb-muted);
@@ -115,9 +132,10 @@ const {
 
       /* ── Nav tabs ── */
       .sb-nav {
-        background: var(--sb-bg);
-        border-top: 1px solid var(--sb-border);
-        border-bottom: 1px solid var(--sb-border);
+        background: rgba(255, 250, 245, 0.92);
+        backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(123, 47, 190, 0.18);
+        border-bottom: 1px solid rgba(34, 198, 211, 0.18);
         padding: 0 24px;
         position: sticky;
         top: 0;
@@ -176,7 +194,7 @@ const {
       .sb-tab:hover { color: var(--sb-ink); }
       .sb-tab--active {
         color: var(--sb-ink);
-        border-bottom-color: var(--sb-ink);
+        border-bottom-color: var(--sb-accent);
       }
       .sb-tab--disabled {
         color: var(--sb-light);

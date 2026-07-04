@@ -4,6 +4,45 @@ import { renderEmail, finalizeNewsletterImages, formatLongDate, todayPT } from "
 
 const BLOCKED_UNSPLASH = "https://images.unsplash.com/photo-1585899873671-ade0aa28a821?crop=entropy&w=400";
 
+test("newsletter lead image renders before the opening briefing and is not duplicated in the field guide", () => {
+  const hero = "https://cdn.example.com/sbt-hero.jpg";
+  const briefing = "Happy Fourth. The morning belongs to parades, and after dark you have options.";
+  const { html } = renderEmail({
+    date: "2026-07-04",
+    longDate: "Saturday, July 4, 2026",
+    weather: null,
+    dayPlan: {
+      planUrl: "https://southbaytoday.org/plan/fourth",
+      cards: [
+        { bucket: "morning", name: "Rose, White & Blue Parade", city: "san-jose", timeBlock: "Morning" },
+      ],
+    },
+    dayPlanBlurb: "A flexible holiday field guide.",
+    tonightPick: null,
+    tonightPickBlurb: "",
+    todayEvents: [],
+    featuredEvents: [],
+    recentOpenings: [],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {
+      dayPlanImage: hero,
+      dayPlanImageAlt: "South Bay Today holiday field guide",
+    },
+    editorial: {
+      briefing,
+      dayPlanHeadline: "Holiday field guide",
+    },
+  });
+
+  const visibleBriefingIdx = html.indexOf(`font-size:16px;line-height:1.6;color:#1a1a2e;">${briefing}`);
+  assert.ok(html.includes("https://southbaytoday.org/images/sbt-newsletter-avatar.png"));
+  assert.ok(html.indexOf(hero) < visibleBriefingIdx);
+  assert.ok(visibleBriefingIdx < html.indexOf("Today's field guide"));
+  assert.equal(html.split(hero).length - 1, 1);
+});
+
 test("newsletter renders also-calendar events chronologically and hides stale/blocked assets", () => {
   const { html } = renderEmail({
     date: "2026-05-28",
