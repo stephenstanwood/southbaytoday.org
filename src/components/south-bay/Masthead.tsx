@@ -53,6 +53,14 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
       <header className="sb-header">
         <div className="sb-header-inner">
           <a href="/" className="sb-brand">
+            <img
+              src="/images/sbt-newsletter-avatar.png"
+              alt=""
+              width={86}
+              height={86}
+              className="sb-brand-mark"
+              aria-hidden="true"
+            />
             <span className="sb-logo">
               <span className="sb-logo-main-row">
                 <span className="sb-logo-the">the</span>
@@ -92,8 +100,10 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
           --sb-max-width: 960px;
         }
         .sb-header {
-          background: var(--sb-bg);
-          padding: 24px 24px 12px;
+          background:
+            radial-gradient(circle at 50% -18%, rgba(255, 123, 43, 0.24), transparent 34%),
+            linear-gradient(180deg, #fffaf5 0%, var(--sb-bg) 100%);
+          padding: 26px 24px 14px;
           text-align: center;
           border-bottom: none;
         }
@@ -112,14 +122,24 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 9px;
+        }
+        .sb-brand-mark {
+          width: 86px;
+          height: 86px;
+          border-radius: 999px;
+          display: block;
+          background: #fff;
+          border: 4px solid #fff;
+          box-shadow: 0 14px 34px rgba(31, 12, 73, 0.16), 0 0 0 1px rgba(123, 47, 190, 0.12);
         }
         .sb-logo { display: inline-block; user-select: none; }
         .sb-logo-main-row { display: flex; align-items: baseline; gap: 6px; }
         .sb-logo-the { font-family: var(--sb-serif); font-weight: 400; font-style: italic; font-size: 18px; color: var(--sb-ink); }
         .sb-logo-south-bay { font-family: var(--sb-serif); font-weight: 900; font-size: 40px; line-height: 1; color: var(--sb-ink); letter-spacing: -0.01em; }
         .sb-logo-signal-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-        .sb-logo-signal-rule { flex: 1; height: 1px; background: var(--sb-ink); opacity: 0.35; }
-        .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sb-ink); }
+        .sb-logo-signal-rule { flex: 1; height: 2px; background: linear-gradient(90deg, #ff7b2b, #f43f7c, #8738f5, #22c6d3); opacity: 0.8; }
+        .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #8738f5; }
         .sb-date {
           font-size: 12px;
           color: var(--sb-muted);
@@ -137,9 +157,10 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
           margin-top: 6px;
         }
         .sb-nav {
-          background: var(--sb-bg);
-          border-top: 1px solid var(--sb-border);
-          border-bottom: 1px solid var(--sb-border);
+          background: rgba(255, 250, 245, 0.92);
+          backdrop-filter: blur(14px);
+          border-top: 1px solid rgba(123, 47, 190, 0.18);
+          border-bottom: 1px solid rgba(34, 198, 211, 0.18);
           padding: 0 24px;
           position: sticky;
           top: 0;
@@ -178,11 +199,12 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
         }
         .sb-tab:hover { color: var(--sb-ink); }
         .sb-tab--active {
-          color: var(--sb-ink);
-          border-bottom-color: var(--sb-ink);
+          color: #12062f;
+          border-bottom-color: #8738f5;
         }
         @media (max-width: 640px) {
           .sb-header { padding: 20px 16px 12px; }
+          .sb-brand-mark { width: 72px; height: 72px; }
           .sb-nav { padding: 0 16px; }
           .sb-tab { padding: 10px 16px; font-size: 11px; }
         }
