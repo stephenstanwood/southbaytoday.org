@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-04T03:09:06.567Z",
+      "generatedAt": "2026-07-05T03:08:49.763Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 26 – Jul 3",
+      "dateRange": "Jun 27 – Jul 4",
       "stats": {
-        "total": 357,
-        "notable": 22,
-        "newUnits": 13,
-        "totalValuation": 11466349
+        "total": 447,
+        "notable": 26,
+        "newUnits": 15,
+        "totalValuation": 13561882
       },
       "permits": [
         {
@@ -39,6 +39,18 @@
           "subtype": "Single-Family"
         },
         {
+          "id": "2025-145718-RS",
+          "address": "6710 Wisteria Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Pdox New Attached ADU",
+          "valuation": 140736,
+          "units": 1,
+          "issueDate": "2026-07-02",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2026-109367-RS",
           "address": "249 S Sunset Av #2",
           "category": "residential-new",
@@ -60,6 +72,18 @@
           "valuation": 112783,
           "units": 1,
           "issueDate": "2026-06-29",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-107162-RS",
+          "address": "2629 Autumnvale Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case Legalize Detached Garage Converted to ADU",
+          "valuation": 76091,
+          "units": 1,
+          "issueDate": "2026-07-02",
           "subtype": "2nd Unit Added"
         },
         {
@@ -109,59 +133,23 @@
           "units": 1,
           "issueDate": "2026-07-01",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-124260-CI",
-          "address": "3940 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Figure Ai (Bemp100%) Office TI",
-          "valuation": 1300000,
-          "units": 0,
-          "issueDate": "2026-06-30",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-125416-CI",
-          "address": "55 Old Tully Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Be 100%) Roof Top Solar and Battery",
-          "valuation": 643960,
-          "units": 0,
-          "issueDate": "2026-07-01",
-          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-04T03:09:09.010Z",
+      "generatedAt": "2026-07-05T03:08:52.016Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 26 – Jul 3",
+      "dateRange": "Jun 27 – Jul 4",
       "stats": {
-        "total": 111,
+        "total": 109,
         "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01732",
-          "address": "151 Lowell Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-29",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01767",
           "address": "2011 Park Bl",
@@ -184,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-30",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01732",
+          "address": "151 Lowell Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-06-29",
           "subtype": "Permit Issued"
         }
       ]
