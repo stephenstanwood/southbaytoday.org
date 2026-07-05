@@ -825,6 +825,17 @@ function cleanTitle(title) {
     // (SCC Library); RJJT = Roberta Jones Junior Theatre (City of Santa Clara).
     // Recurring manual copy-edit in the title data — handled upstream here.
     "ASML", "TSRP", "RJJT",
+    // More South Bay venue/org/program acronyms that arrive ALL-CAPS from
+    // source feeds but the 2+/4+ pass downcases once the title tips mixed-case:
+    //   NUMU = New Museum Los Gatos ("Still Life Drawing at NUMU")
+    //   CMT  = Children's Musical Theater San Jose ("Legally Blonde – CMT Mainstage")
+    //   ACGA = Assoc. of Clay & Glass Artists of CA ("ACGA Clay & Glass Festival")
+    //   SBDC = Small Business Development Center ("Silicon Valley SBDC x Emumba")
+    //   BMR  = Below Market Rate (spelled out in title: "Below Market Rate (BMR)…")
+    //   CRC  = Collegiate Recovery Community (spelled out in title)
+    //   ASL  = American Sign Language ("The Sound of Music - ASL Performance")
+    //   UX / UXR = design/research terms ("UX Wizards UX, Product + UXR … Mixer")
+    "NUMU", "CMT", "ACGA", "SBDC", "BMR", "CRC", "ASL", "UX", "UXR",
     // 2–3 letter acronyms that legitimately appear in event titles. Anything
     // NOT in this list gets title-cased when the surrounding title is mostly
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).
@@ -1466,6 +1477,11 @@ function polishDescription(text) {
     // SJSU's HR-prep listings, HTML/JSON in BiblioCommons computer-help
     // descriptions, DCBC in Kepler's Deep Cuts Book Club series text.
     "SHRM", "HTML", "JSON", "DCBC",
+    // Mirrored from cleanTitle's KEEP_UPPER (4-letter only — the body rule below
+    // runs the 4+ pass): NUMU = New Museum Los Gatos, SBDC = Small Business
+    // Development Center, ACGA = Assoc. of Clay & Glass Artists of CA. The
+    // shorter siblings (CMT/BMR/CRC/ASL/UX/UXR) are never matched by the 4+ rule.
+    "NUMU", "SBDC", "ACGA",
   ]);
   t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
   // Contraction recovery: mirror of the cleanTitle apostrophe-S fix. When the
