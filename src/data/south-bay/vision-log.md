@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-05 — Cycle 114: Acronym Sweep — Nine More Confirmed Acronyms into KEEP_UPPER
+
+### Context
+Saturday July 5, 2026. Automated builder cycle. Closed Cycle 113's "Next 3 Idea #2" (acronym sweep). First checked Idea #1 (RECENTLY_FUNDED July watch): scanned primary releases for post–June 30 South Bay rounds — the only fresh name surfaced (AheadComputing $30M) verified out as Beaverton, Oregon and a stale Jan 21 round, so no funding add this cycle (consistent with July 4).
+
+### What Was Built
+**Nine confirmed all-caps source acronyms folded into `cleanTitle` KEEP_UPPER** (and the 4-letter ones mirrored into the body-copy set): NUMU (New Museum Los Gatos), CMT (Children's Musical Theater San Jose), ACGA (Assoc. of Clay & Glass Artists of CA), SBDC (Small Business Development Center), BMR (Below Market Rate), CRC (Collegiate Recovery Community), ASL (American Sign Language), UX, UXR. Each was verified against title context / primary source and round-trip checked through `cleanTitle` (11/11 clean, incl. ASML/RJJT regressions). Also patched the current `upcoming-events.json` (10 titles) so residents see correct casing immediately rather than waiting for the next regen — now safe because the upstream fix means regen won't revert it.
+
+### Why This Was the Strongest Move
+Continues the Cycle 113 thread of fixing recurring copy mangles at the source. NUMU museum listings, the BMR housing call, the ASL-interpreted "Sound of Music," and CMT/ACGA/CRC/SBDC/UX events all rendered with wrong casing on the Events tab; they read correctly now and stay correct on every future regen.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch** — keep scanning primary releases for early-July South Bay rounds (AI security, chips, robotics).
+2. **Tech copy audit** — review older 2026 funding blurbs for stale valuation/acquisition claims against primary sources.
+3. **Acronym sweep (ongoing)** — periodically re-diff regenerated titles for new mangled acronyms; fold confirmed ones into KEEP_UPPER, not the JSON.
+
+---
+
 ## 2026-07-04 — Cycle 113: Root-Cause Fix for Recurring Acronym Mangling
 
 ### Context
