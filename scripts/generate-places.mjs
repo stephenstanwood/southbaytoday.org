@@ -328,8 +328,22 @@ const NAME_SUFFIXES_TO_STRIP = [
   /\s*-\s*\w+\s*Trailhead$/i,
 ];
 
+const NAME_REWRITES = [
+  {
+    pattern: /^Sweet\s+treats\s+Boutiquet\s+Gref\s+LLC$/i,
+    replacement: "Sweet Treats Gref",
+  },
+  {
+    pattern: /^Sweet\s+Treats\s+Boutique\s+GREF\s+LLC$/i,
+    replacement: "Sweet Treats Gref",
+  },
+];
+
 function cleanPlaceName(name) {
   let cleaned = name;
+  for (const rewrite of NAME_REWRITES) {
+    cleaned = cleaned.replace(rewrite.pattern, rewrite.replacement);
+  }
   for (const pattern of NAME_SUFFIXES_TO_STRIP) {
     cleaned = cleaned.replace(pattern, "");
   }
