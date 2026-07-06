@@ -1606,7 +1606,7 @@ export default function TechnologyView() {
   const hiringGroups = [
     {
       label: "Actively Hiring",
-      note: "Growing headcount — AI, security, and SaaS leading the wave",
+      note: "Growing headcount — AI hardware demand lifting chipmakers and server builders, with security and SaaS also expanding",
       companies: TECH_COMPANIES.filter((c) => c.trend === "up").sort(
         (a, b) => b.sccEmployeesK - a.sccEmployeesK
       ),
