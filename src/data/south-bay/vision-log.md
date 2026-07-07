@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-07 — Cycle 194: OXMIQ Labs Added to Recently Funded
+
+### Context
+Tuesday July 7, 2026. Automated builder cycle. Closed the standing "RECENTLY_FUNDED July watch" (top-of-list follow-up carried since Cycle 112): scanned primary releases for a genuinely fresh (post–June 30) South Bay round. Nuro and TinyFish surfaced in aggregators but both verified out as Aug 2025 rounds. One clean fresh name landed.
+
+### What Was Built
+**Tech tab: OXMIQ Labs added to RECENTLY_FUNDED** (Campbell, $35M Series A, July 1, 2026). Raja Koduri's GPU-architecture startup — its licensable OxCore core bundles a CUDA-compatible GPU, a tensor unit, and an on-die orchestrator so chipmakers can build custom AI silicon without a full chip program. Co-led by Fundomo and Samsung Catalyst Fund with MediaTek, Intel Capital, Pegatron VC, Darwin Ventures, and Morgan Creek Digital; $60M total to date; Tenstorrent CEO Jim Keller joined the board. Verified against OXMIQ's own release and the BusinessWire dateline (both July 1). Sorts to the top of the funding list (newest date), so residents opening Tech see a fresh Campbell chip round first.
+
+### Why This Was the Strongest Move
+The Recently Funded list is the Tech tab's highest-value rendered surface, and Campbell is a core coverage city rarely represented in the funding roll. Clean primary-source add, ships without touching protected Home/Events/Food layouts.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch (ongoing)** — keep scanning primary releases for mid-July South Bay rounds (AI security, chips, robotics).
+2. **Tech copy audit** — review older 2026 funding blurbs for stale valuation/acquisition claims against primary sources.
+3. **Logo follow-up** — let the nightly tech-logo fetcher resolve `oxmiq`; add a narrow override if it misses or returns a placeholder.
+
+---
+
 ## 2026-07-05 — Cycle 114: Acronym Sweep — Nine More Confirmed Acronyms into KEEP_UPPER
 
 ### Context

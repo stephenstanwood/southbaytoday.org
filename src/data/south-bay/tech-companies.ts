@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "oxmiq",
+    name: "OXMIQ Labs",
+    city: "Campbell",
+    category: "chip",
+    round: "Series A",
+    amount: "$35M",
+    date: "2026-07-01",
+    tagline:
+      "A licensable GPU and AI architecture instead of a chip: its OxCore core packs three compute engines — a CUDA-compatible GPU, a tensor unit, and an on-die orchestrator — into one block that semiconductor and AI-system makers can drop into custom silicon without running a full chip program. Founded by Raja Koduri, the veteran GPU architect who led graphics at Intel, AMD, and Apple. The Series A was co-led by Fundomo and Samsung Catalyst Fund, with MediaTek, Intel Capital, Pegatron Venture Capital, Darwin Ventures, Morgan Creek Digital, and others joining, bringing OXMIQ to $60M total. Tenstorrent CEO Jim Keller joined the board.",
+    color: "#7c3aed",
+    url: "https://oxmiq.ai",
+  },
+  {
     id: "queue",
     name: "Queue",
     city: "Palo Alto",
