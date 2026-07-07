@@ -253,6 +253,7 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
         <a href="/about" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>about</a>
         <span aria-hidden="true" style={{ margin: "0 6px", opacity: 0.4 }}>·</span>
         <a href="/privacy" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>privacy</a>
+        <div style={{ marginTop: 6, opacity: 0.55, fontSize: 12 }}>© Stoa Works LLC</div>
       </footer>
     </>
   );
