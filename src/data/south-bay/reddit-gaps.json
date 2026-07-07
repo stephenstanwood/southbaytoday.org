@@ -1,155 +1,60 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-05T03:15:25.467Z",
+    "generatedAt": "2026-07-07T03:16:59.610Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 14
+    "sourceCount": 10
   },
   "summary": {
-    "threadsMined": 14,
-    "placesExtracted": 4,
-    "placesMatched": 4,
-    "placeGaps": 0,
-    "eventsExtracted": 6,
+    "threadsMined": 10,
+    "placesExtracted": 3,
+    "placesMatched": 1,
+    "placeGaps": 2,
+    "eventsExtracted": 0,
     "eventsMatched": 0,
-    "eventGaps": 6,
-    "autoAppendedOpenings": 1
+    "eventGaps": 0,
+    "autoAppendedOpenings": 0
   },
-  "placeGaps": [],
-  "eventGaps": [
+  "placeGaps": [
     {
-      "name": "Sunnyvale 4th of July Event",
-      "when": "4th of July, 10am-2pm",
-      "city": "Sunnyvale",
-      "context": "Downtown celebration with bike parade at 9am",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unjxff/a_slice_of_new_york_asony_update_6/",
-        "https://www.reddit.com/r/SanJose/comments/1unh566/san_jose_gets_its_own_mini_sphere_as_cutting_edge/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umw5rs/sunnyvale_4th_of_july_event_downtown_102_bike/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umlh8j/4th_of_july_parade_and_festival_rose_white_blue/",
-        "https://www.reddit.com/r/SanJose/comments/1unopwk/looking_for_4_sap_center_watch_party_tickets_to/"
-      ]
-    },
-    {
-      "name": "Rose, White & Blue Parade",
-      "when": "4th of July",
-      "city": "Sunnyvale",
-      "context": "4th of July parade and festival in Sunnyvale",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unjxff/a_slice_of_new_york_asony_update_6/",
-        "https://www.reddit.com/r/SanJose/comments/1unh566/san_jose_gets_its_own_mini_sphere_as_cutting_edge/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umw5rs/sunnyvale_4th_of_july_event_downtown_102_bike/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umlh8j/4th_of_july_parade_and_festival_rose_white_blue/",
-        "https://www.reddit.com/r/SanJose/comments/1unopwk/looking_for_4_sap_center_watch_party_tickets_to/"
-      ]
-    },
-    {
-      "name": "World Cup Watch Party",
-      "when": "Tomorrow (date unspecified)",
+      "name": "The Ritz",
       "city": "San Jose",
-      "context": "Family-friendly World Cup match watch party at SAP Center",
+      "kind": "venue",
+      "context": "live music venue currently being review bombed",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unjxff/a_slice_of_new_york_asony_update_6/",
-        "https://www.reddit.com/r/SanJose/comments/1unh566/san_jose_gets_its_own_mini_sphere_as_cutting_edge/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umw5rs/sunnyvale_4th_of_july_event_downtown_102_bike/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umlh8j/4th_of_july_parade_and_festival_rose_white_blue/",
-        "https://www.reddit.com/r/SanJose/comments/1unopwk/looking_for_4_sap_center_watch_party_tickets_to/"
+        "https://www.reddit.com/r/SanJose/comments/1up3i6d/pokémon_go_friends/",
+        "https://www.reddit.com/r/SanJose/comments/1up2ak9/if_youve_enjoyed_a_show_at_the_ritz_they_are/",
+        "https://www.reddit.com/r/SanJose/comments/1uoyia0/im_drawing_an_historicalmythological_map_of/",
+        "https://www.reddit.com/r/SanJose/comments/1uorkt3/massive_shoutout_to_all_the_mexico_supporters/",
+        "https://www.reddit.com/r/SanJose/comments/1upgvte/debate_clubs_for_adults_in_south_bay/"
       ]
     },
     {
-      "name": "Sunnyvale 4th of July celebration",
-      "when": "4th of July",
-      "city": "Sunnyvale",
-      "context": "fireworks and celebration event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unmgee/fireworklight_show_where_i_can_stay_in_car_with/",
-        "https://www.reddit.com/r/SanJose/comments/1unkeye/recommend_firework_spot/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1unhff6/thank_you_city_of_sunnyvale/",
-        "https://www.reddit.com/r/SanJose/comments/1unc19d/moving_to_san_jose_this_month_whats_something/",
-        "https://www.reddit.com/r/SanJose/comments/1unqamq/is_it_one_big_screen_on_the_side_for_the_sap/"
-      ]
-    },
-    {
-      "name": "Great America Fireworks",
-      "when": "",
-      "city": "Santa Clara",
-      "context": "fireworks display event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1unng57/fireworks/",
-        "https://www.reddit.com/r/SanJose/comments/1unitud/discovery_meadow_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1ung9bp/looking_for_film_photographer_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1un68p4/what_is_it_like_living_in_silicon_valley/"
-      ]
-    },
-    {
-      "name": "Discovery Meadow World Cup Viewing",
-      "when": "",
+      "name": "Kim Tar",
       "city": "San Jose",
-      "context": "Brazil x Norway match viewing event",
+      "kind": "restaurant",
+      "context": "roast duck over rice restaurant",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1unng57/fireworks/",
-        "https://www.reddit.com/r/SanJose/comments/1unitud/discovery_meadow_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1ung9bp/looking_for_film_photographer_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1un68p4/what_is_it_like_living_in_silicon_valley/"
+        "https://www.reddit.com/r/SanJose/comments/1updgwt/seeking_lgbt_friendly_trans_dd_players/",
+        "https://www.reddit.com/r/SanJose/comments/1up52jx/any_mauritians_in_the_bay_area/",
+        "https://www.reddit.com/r/SanJose/comments/1uoy0a0/visitng_for_a_week_where_should_i_drink/",
+        "https://www.reddit.com/r/SanJose/comments/1upfeyc/roast_duck/",
+        "https://www.reddit.com/r/SanJose/comments/1upcxdk/hows_living_here_these_days/"
       ]
     }
   ],
+  "eventGaps": [],
   "placeMatches": [
-    {
-      "name": "A Slice of New York (ASONY)",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "New pizzeria nearing completion, epoxy floor installation phase",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unjxff/a_slice_of_new_york_asony_update_6/",
-        "https://www.reddit.com/r/SanJose/comments/1unh566/san_jose_gets_its_own_mini_sphere_as_cutting_edge/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umw5rs/sunnyvale_4th_of_july_event_downtown_102_bike/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umlh8j/4th_of_july_parade_and_festival_rose_white_blue/",
-        "https://www.reddit.com/r/SanJose/comments/1unopwk/looking_for_4_sap_center_watch_party_tickets_to/"
-      ],
-      "matchedName": "A Slice of New York"
-    },
-    {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "World Cup watch party venue hosting family events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1unjxff/a_slice_of_new_york_asony_update_6/",
-        "https://www.reddit.com/r/SanJose/comments/1unh566/san_jose_gets_its_own_mini_sphere_as_cutting_edge/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umw5rs/sunnyvale_4th_of_july_event_downtown_102_bike/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1umlh8j/4th_of_july_parade_and_festival_rose_white_blue/",
-        "https://www.reddit.com/r/SanJose/comments/1unopwk/looking_for_4_sap_center_watch_party_tickets_to/",
-        "https://www.reddit.com/r/SanJose/comments/1unmgee/fireworklight_show_where_i_can_stay_in_car_with/",
-        "https://www.reddit.com/r/SanJose/comments/1unkeye/recommend_firework_spot/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1unhff6/thank_you_city_of_sunnyvale/",
-        "https://www.reddit.com/r/SanJose/comments/1unc19d/moving_to_san_jose_this_month_whats_something/",
-        "https://www.reddit.com/r/SanJose/comments/1unqamq/is_it_one_big_screen_on_the_side_for_the_sap/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "Great America",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "fireworks display visible from Peterson area",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1unng57/fireworks/",
-        "https://www.reddit.com/r/SanJose/comments/1unitud/discovery_meadow_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1ung9bp/looking_for_film_photographer_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1un68p4/what_is_it_like_living_in_silicon_valley/"
-      ],
-      "matchedName": "Great America Amphitheater"
-    },
     {
       "name": "Discovery Meadow",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "World Cup viewing event venue",
+      "kind": "park",
+      "context": "hosted Mexico vs England World Cup watch party",
       "sourceUrls": [
-        "https://www.reddit.com/r/Sunnyvale/comments/1unng57/fireworks/",
-        "https://www.reddit.com/r/SanJose/comments/1unitud/discovery_meadow_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1ung9bp/looking_for_film_photographer_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1un68p4/what_is_it_like_living_in_silicon_valley/"
+        "https://www.reddit.com/r/SanJose/comments/1up3i6d/pokémon_go_friends/",
+        "https://www.reddit.com/r/SanJose/comments/1up2ak9/if_youve_enjoyed_a_show_at_the_ritz_they_are/",
+        "https://www.reddit.com/r/SanJose/comments/1uoyia0/im_drawing_an_historicalmythological_map_of/",
+        "https://www.reddit.com/r/SanJose/comments/1uorkt3/massive_shoutout_to_all_the_mexico_supporters/",
+        "https://www.reddit.com/r/SanJose/comments/1upgvte/debate_clubs_for_adults_in_south_bay/"
       ],
       "matchedName": "Discovery Meadow"
     }

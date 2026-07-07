@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-05T03:08:49.763Z",
+      "generatedAt": "2026-07-07T03:09:19.290Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 27 – Jul 4",
+      "dateRange": "Jun 29 – Jul 6",
       "stats": {
-        "total": 447,
-        "notable": 26,
-        "newUnits": 15,
-        "totalValuation": 13561882
+        "total": 344,
+        "notable": 17,
+        "newUnits": 6,
+        "totalValuation": 8912415
       },
       "permits": [
-        {
-          "id": "2026-124514-MF",
-          "address": "445 N 6th St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "Alden Ventures New 6 Unit Apartment",
-          "valuation": 879706,
-          "units": 6,
-          "issueDate": "2026-06-29",
-          "subtype": "Apartment"
-        },
         {
           "id": "2025-136541-RS",
           "address": "1489 Saratoga Av",
@@ -48,30 +36,6 @@
           "valuation": 140736,
           "units": 1,
           "issueDate": "2026-07-02",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-109367-RS",
-          "address": "249 S Sunset Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Pdox Ab 2533 Legalize Detached Unit to ADU",
-          "valuation": 128508,
-          "units": 1,
-          "issueDate": "2026-06-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2023-094530-RS",
-          "address": "692 Bold Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Manufactured Detached ADU",
-          "valuation": 112783,
-          "units": 1,
-          "issueDate": "2026-06-29",
           "subtype": "2nd Unit Added"
         },
         {
@@ -111,18 +75,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-139904-RS",
-          "address": "3154 Cortona Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 62056,
-          "units": 1,
-          "issueDate": "2026-06-29",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-121768-RS",
           "address": "986 Rock Canyon Cl #2",
           "category": "residential-new",
@@ -133,19 +85,67 @@
           "units": 1,
           "issueDate": "2026-07-01",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-124260-CI",
+          "address": "3940 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Figure Ai (Bemp100%) Office TI",
+          "valuation": 1300000,
+          "units": 0,
+          "issueDate": "2026-06-30",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-125432-CI",
+          "address": "875 N 13th St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Roof Mounted Solar and Battery",
+          "valuation": 665633,
+          "units": 0,
+          "issueDate": "2026-07-02",
+          "subtype": "Hotel/Motel"
+        },
+        {
+          "id": "2026-125416-CI",
+          "address": "55 Old Tully Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Roof Top Solar and Battery",
+          "valuation": 643960,
+          "units": 0,
+          "issueDate": "2026-07-01",
+          "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2025-146249-RS",
+          "address": "6710 Wisteria Wy",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Sbldemo (E) 1sty SFR and Rebuild (N) 2sty SFR",
+          "valuation": 800724,
+          "units": 1,
+          "issueDate": "2026-07-02",
+          "subtype": "Single-Family"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-05T03:08:52.016Z",
+      "generatedAt": "2026-07-07T03:09:21.733Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 27 – Jul 4",
+      "dateRange": "Jun 29 – Jul 6",
       "stats": {
-        "total": 109,
-        "notable": 3,
+        "total": 85,
+        "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -172,18 +172,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-06-30",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01732",
-          "address": "151 Lowell Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-29",
           "subtype": "Permit Issued"
         }
       ]

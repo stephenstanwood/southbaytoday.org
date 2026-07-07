@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "pulledAt": "2026-07-05T03:09:01.098Z",
-    "totalInBlob": 2094,
-    "freshCount": 583
+    "pulledAt": "2026-07-07T03:09:33.761Z",
+    "totalInBlob": 2108,
+    "freshCount": 570
   },
   "events": [
     {
@@ -108,21 +108,6 @@
       "sourceUrl": "https://mountainview.zoom.us/webinar/register/WN_l92yifXQTdabfzO0JgbJAA",
       "cityKey": "mountain-view",
       "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
-      "id": "inbound_054b8a7b9897fd4a_08",
-      "receivedAt": "2026-05-22 17:03:14.025789+00",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "'One Book, One Coast', Adults Create, Author Talks, and More!",
-      "title": "Community & Climate: The Problem with Plastic",
-      "startsAt": "2026-07-06T19:00:00-07:00",
-      "endsAt": null,
-      "location": "Sunnyvale Public Library",
-      "description": "Author talk with Susan Keefe about plastic pollution, part of the Community & Climate lecture series on global climate action.",
-      "sourceUrl": "https://sunnyvale.libcal.com/event/16620513",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
       "status": "new"
     },
     {
@@ -329,6 +314,21 @@
       "sourceUrlOriginal": "https://pdtr7acab.cc.rs6.net/tn.jsp?f=0018H1fvSwrsE-UUuGRtXoo7ZBUGSYw6UsQ87GyyDSprVg-u9-eNM0p0hiUes2L04zjq7J8zc1FjcMFMuc-HaP4slmag799zhoJKyvHLJL2yVF70tqBDj7n0Z6h2gD8UoqOdCWXKV6ABFbiNxkIS26bD41NhowhiRbsCgi98SvQvYPdKpwen9Mipw==&c=H_RIhB3uS9ak4qO6lkabXI5-XtZOoi_0SX0HbkCDV201NIeuJNn7JQ==&ch=Y0N26cnA8IzMT3uN2FTX3aFASVN1CDmLRLTrYubBZ3tDz6w5LUWRow=="
     },
     {
+      "id": "inbound_mr9l6qog_j099kn",
+      "receivedAt": "2026-07-06T19:01:47.574Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "CENTRAL: Behind the Shelves Library Tour",
+      "title": "Behind the Shelves Library Tour at Central Park Library",
+      "startsAt": "2026-07-13T16:00:00-07:00",
+      "endsAt": "2026-07-13T17:00:00-07:00",
+      "location": "Central Park Library, 2635 Homestead Road, Santa Clara, California 95051",
+      "description": "A guided 1-hour tour through Central Park Library exploring the building, library units, and behind-the-scenes areas. Open to all ages.",
+      "sourceUrl": "https://www.eventbrite.com/e/behind-the-shelves-central-park-library-tours-tickets-1588337834219?aff=oddtdtcreator",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_mon5thbp_6wc0k1",
       "receivedAt": "2026-05-01 17:01:16.03951+00",
       "fromEmail": "latest@email.live.stanford.edu",
@@ -509,6 +509,21 @@
       "status": "new"
     },
     {
+      "id": "inbound_mr9l76g2_t8b1n2",
+      "receivedAt": "2026-07-06T19:02:09.889Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "CENTRAL: Pokémon GO Community Play (Outside in Central Park)",
+      "title": "Pokémon GO Community Play",
+      "startsAt": "2026-07-11T12:00:00-07:00",
+      "endsAt": "2026-07-11T15:00:00-07:00",
+      "location": "Central Park Library, 2635 Homestead Road, Santa Clara, California 95051",
+      "description": "Join the Wild Goose Pokémon GO Community for an afternoon of catching Pokémon, meeting fellow trainers, and exploring Central Park. A photobooth will be available inside the library, and library card holders can exchange their card for a small prize.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113408/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_mqbd7ooq_3e1tvt",
       "receivedAt": "2026-06-12T20:14:22.004Z",
       "fromEmail": "info@ridgetrail.org",
@@ -523,21 +538,6 @@
       "cityName": null,
       "status": "new",
       "sourceUrlOriginal": "https://bayarearidgetrailcouncil.cmail20.com/t/d-l-wltjdut-hjljedldi-y/"
-    },
-    {
-      "id": "inbound_mq11zbh6_jv5z6b",
-      "receivedAt": "2026-06-05 15:02:04.95664+00",
-      "fromEmail": "cityofsunnyvale@public.govdelivery.com",
-      "emailSubject": "The Sunny Side of Sustainability",
-      "title": "The Problem with Plastic with Susan Keefe",
-      "startsAt": "2026-07-06T18:00:00-07:00",
-      "endsAt": "2026-07-06T19:00:00-07:00",
-      "location": null,
-      "description": "Online presentation about the problem with plastic.",
-      "sourceUrl": "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/11798/19?curm=7&cury=2026",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
     },
     {
       "id": "inbound_mq11zbh6_s98pf9",
@@ -1323,36 +1323,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqzckvau_6hm8tr",
-      "receivedAt": "2026-06-29T15:01:50.397Z",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "CENTRAL: Turkish Playdate | Türkçe Oyun Buluşması",
-      "title": "Turkish Playdate",
-      "startsAt": "2026-07-06T16:00:00-07:00",
-      "endsAt": "2026-07-06T17:00:00-07:00",
-      "location": "Central Park Library, 2635 Homestead Road, Santa Clara, California 95051",
-      "description": "Playdate for Turkish-speaking children and their caregivers featuring fun activities, crafts, and toys. Librarian available to answer questions and recommend books.",
-      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/110723/",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzekwf4_7jbwlt",
-      "receivedAt": "2026-06-29T15:58:54.928Z",
-      "fromEmail": "noreply@libraryaware.com",
-      "emailSubject": "SCCLD Newsletter",
-      "title": "Coventry and Kaluza Circus Show",
-      "startsAt": "2026-07-05T14:00:00-07:00",
-      "endsAt": null,
-      "location": "Morgan Hill Library",
-      "description": "Circus performance as part of summer reading program.",
-      "sourceUrl": "https://sccld.org/events/",
-      "cityKey": null,
-      "cityName": null,
-      "status": "new"
-    },
-    {
       "id": "inbound_mqzekwf4_0cirhw",
       "receivedAt": "2026-06-29T15:58:54.928Z",
       "fromEmail": "noreply@libraryaware.com",
@@ -1624,6 +1594,21 @@
       "status": "new"
     },
     {
+      "id": "inbound_mr7uaw1a_ghk1b0",
+      "receivedAt": "2026-07-05T13:41:24.395Z",
+      "fromEmail": "MountainView@public.govdelivery.com",
+      "emailSubject": "Below Market Rate (BMR) Rental Informational Call",
+      "title": "Below Market Rate (BMR) Rental Informational Call",
+      "startsAt": "2026-07-08T18:00:00-07:00",
+      "endsAt": null,
+      "location": null,
+      "description": "Informational call on the City's Below-Market Rate Rental Program covering rental opportunities, how to apply, navigating online portals, and the application to lease process. Interpretation in Spanish and Mandarin available upon request.",
+      "sourceUrl": "https://mountainview.zoom.us/webinar/register/WN_l92yifXQTdabfzO0JgbJAA",
+      "cityKey": "mountain-view",
+      "cityName": "Mountain View",
+      "status": "new"
+    },
+    {
       "id": "inbound_mqa7ptil_1yrg75",
       "receivedAt": "2026-06-12T00:52:01.297Z",
       "fromEmail": "chamber@losgatoschamber.ccsend.com",
@@ -1807,6 +1792,86 @@
       "status": "new"
     },
     {
+      "id": "inbound_mr9mrzwv_rck2sy",
+      "receivedAt": "2026-07-06T19:45:42.835Z",
+      "fromEmail": "info@campbellchamberofcommerce.ccsend.com",
+      "emailSubject": "Chamber Enews for the Week of July 6th-July 10, 2026",
+      "title": "Membership 101",
+      "startsAt": "2026-07-07T08:00:00-07:00",
+      "endsAt": "2026-07-07T08:45:00-07:00",
+      "location": "Chamber Office, 267 E. Campbell Avenue, Suite C, Campbell CA 95008",
+      "description": "45-minute workshop for new and existing Chamber members to learn how to create a Chamber website, post events and job listings, join the Ambassador program, and promote their business on social media.",
+      "sourceUrl": "https://business.campbellchamber.net/events/details/membership-101-8-8-45am-07-07-2026-15817",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new",
+      "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001_v33UCBrptkZtJn4yrfjI5NBWsVc_ICUIc9d0zVEi5GqS2lzacH8D1Nlua0FM3LePSNTmN5aJ_yNNHf5JORi0_8LJvzsNyQZXmbBhl1NmNT_FLCFUtzkGsE_TeXIBB7ImbEAejCs6xguOkNwr5rIA9J3fYjbMA_YPNX0wgSWRgUPrQVqx5l-rn5NeeQefdkXjUuoCVcWdObtvbwSsSRCXW6D5POzvO0A8YPILO76sCZ1n34FZue2iA==&c=xsoghQCr4sIKVmnEOYwAiHCtAwDDHbRrQJ9BhCYVAlsrvwfZW9A4JA==&ch=jJ8cT8eqhQnFXHW6qBJ9mhQMCdG3w37XkXhF3WQv-a1TqL7ylx5VNg=="
+    },
+    {
+      "id": "inbound_mr9mrzwv_f02oko",
+      "receivedAt": "2026-07-06T19:45:42.835Z",
+      "fromEmail": "info@campbellchamberofcommerce.ccsend.com",
+      "emailSubject": "Chamber Enews for the Week of July 6th-July 10, 2026",
+      "title": "Relay for Life",
+      "startsAt": "2026-07-11T10:00:00-07:00",
+      "endsAt": "2026-07-12T10:00:00-07:00",
+      "location": "Campbell Community Center Track",
+      "description": "24-hour community event supporting the American Cancer Society. Join the Chamber team, make a donation, or volunteer to support cancer research and survivors.",
+      "sourceUrl": "https://secure.acsevents.org/site/STR?fr_id=111865&pg=personal&px=56355936",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new",
+      "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001_v33UCBrptkZtJn4yrfjI5NBWsVc_ICUIc9d0zVEi5GqS2lzacH8D1Nlua0FM3LeNOneAGS0Fv0E2Q-fLG1-y-L_xPGJV_DBDlk96OUhrL2-LFDeZN_prFMI2S2UBz98j757iwizlu5rJS5vVVrPctJ1w7RjK3GXKog-0jqEZcyxvpqg8QOkYMnp5xO3FyGDIK9_H2ZCcHDohqE-OBQvOahcKVAPQx0jyMOR-02on-w=&c=xsoghQCr4sIKVmnEOYwAiHCtAwDDHbRrQJ9BhCYVAlsrvwfZW9A4JA==&ch=jJ8cT8eqhQnFXHW6qBJ9mhQMCdG3w37XkXhF3WQv-a1TqL7ylx5VNg=="
+    },
+    {
+      "id": "inbound_mr9mrzwv_oosue3",
+      "receivedAt": "2026-07-06T19:45:42.835Z",
+      "fromEmail": "info@campbellchamberofcommerce.ccsend.com",
+      "emailSubject": "Chamber Enews for the Week of July 6th-July 10, 2026",
+      "title": "Monthly Luncheon: Levitt Pavilion San Jose presentation",
+      "startsAt": "2026-07-15T11:30:00-07:00",
+      "endsAt": "2026-07-15T13:00:00-07:00",
+      "location": "Nordahl Hall",
+      "description": "Chamber luncheon featuring Suzanne St. John-Crane, Director of Strategy for Friends of Levitt Pavilion San Jose, discussing the journey behind the 2.6 acre live music campus project.",
+      "sourceUrl": "https://business.campbellchamber.net/events/details/monthly-luncheon-16541",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new",
+      "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001_v33UCBrptkZtJn4yrfjI5NBWsVc_ICUIc9d0zVEi5GqS2lzacH8D8BdnJqKf8woJdSxXTV6poSntJrQKDiXl0mxpVW5L1TeZWBCpRQZNEG6VtuDP1rryn_VPgCyy62Fdk-W6Svu5GGauEXB9f-6Ha8e9l-tUY4wv2QyREW4edqRtKIV1IZ7rRYrvqjrEoMUYawaHhuDChgOJcm8ZYi6MEe-IoIAMkk-&c=xsoghQCr4sIKVmnEOYwAiHCtAwDDHbRrQJ9BhCYVAlsrvwfZW9A4JA==&ch=jJ8cT8eqhQnFXHW6qBJ9mhQMCdG3w37XkXhF3WQv-a1TqL7ylx5VNg=="
+    },
+    {
+      "id": "inbound_mr9mrzwv_renimi",
+      "receivedAt": "2026-07-06T19:45:42.835Z",
+      "fromEmail": "info@campbellchamberofcommerce.ccsend.com",
+      "emailSubject": "Chamber Enews for the Week of July 6th-July 10, 2026",
+      "title": "Power Networking Lunch at iniBurger",
+      "startsAt": "2026-07-28T12:00:00-07:00",
+      "endsAt": "2026-07-28T13:00:00-07:00",
+      "location": "iniBurger, Kirkwood Plaza, 1700 Campbell Ave, Campbell CA",
+      "description": "Chamber's monthly power networking lunch where members enjoy lunch and make business connections over burgers.",
+      "sourceUrl": "https://business.campbellchamber.net/events/details/power-networking-lunch-at-iniburger-16471",
+      "cityKey": "campbell",
+      "cityName": "Campbell",
+      "status": "new",
+      "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001_v33UCBrptkZtJn4yrfjI5NBWsVc_ICUIc9d0zVEi5GqS2lzacH8D6n4AIClOa-1Dr8DgUXPrjOeqQkZ50d5KAyP3LLYvhBnGJ-A8ImSwfT9gRyuk_NXXsbj0kpdZ3iRpzaTPuJLJgDbSKrksKX8N_LVHsZtsOMYk18FkSWonFhGJv8A099AJbmgOOwn4yRWsMdDdpvuSVbmV4vl5Ozhg6_9SkGlZQZPehuh4owEPb7_LGnbwK5_Xg==&c=xsoghQCr4sIKVmnEOYwAiHCtAwDDHbRrQJ9BhCYVAlsrvwfZW9A4JA==&ch=jJ8cT8eqhQnFXHW6qBJ9mhQMCdG3w37XkXhF3WQv-a1TqL7ylx5VNg=="
+    },
+    {
+      "id": "inbound_mr9mrzwv_repln2",
+      "receivedAt": "2026-07-06T19:45:42.835Z",
+      "fromEmail": "info@campbellchamberofcommerce.ccsend.com",
+      "emailSubject": "Chamber Enews for the Week of July 6th-July 10, 2026",
+      "title": "61st Annual Golf Tournament",
+      "startsAt": "2026-08-26T12:00:00-07:00",
+      "endsAt": "2026-08-26T21:00:00-07:00",
+      "location": "Cinnabar Hills Golf Club, 23600 McKean Rd, San Jose CA",
+      "description": "Chamber's annual golf tournament offering individual player or foursome packages for 18 holes at Cinnabar Hills, with tournament sponsorships and fundraising opportunities.",
+      "sourceUrl": "https://campbellchamber.ticketspice.com/61st-annual-golf-tournament",
+      "cityKey": "san-jose",
+      "cityName": "San Jose",
+      "status": "new",
+      "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001_v33UCBrptkZtJn4yrfjI5NBWsVc_ICUIc9d0zVEi5GqS2lzacH8DylivU08v9aI953a7T6UzKdhqQnALFd74ovbijaSncx193X1CcRvl7ZAaJ1h8sVZs7uwx9J3n3FjT3AkSJVaPnlwNPP-F3bbsMmVgDNCsuoNrC3BnOYRpj3tmpuCjnnJWETz6gJ2xBoyU2Ir1JdfnfLw6mCCDIZgKg==&c=xsoghQCr4sIKVmnEOYwAiHCtAwDDHbRrQJ9BhCYVAlsrvwfZW9A4JA==&ch=jJ8cT8eqhQnFXHW6qBJ9mhQMCdG3w37XkXhF3WQv-a1TqL7ylx5VNg=="
+    },
+    {
       "id": "inbound_mqqyil9c_5toyq0",
       "receivedAt": "2026-06-23T18:07:18.061Z",
       "fromEmail": "reply@fanmail.sjearthquakes.com",
@@ -1878,6 +1943,21 @@
       "location": "Levi's Stadium, 4900 Marie P. DeBartolo Way, Santa Clara, CA 95054",
       "description": "Concert by Karol G at Levi's Stadium. Tickets on sale now.",
       "sourceUrl": "https://ls.49ers.com/MjIyLUJBTy04NDQAAAGheSsLHDDxVzS4JLExMlk6ioKHEdZwUP1DfHng3ZJvz-hFAruJPhvdQICeabJoHkufusIcb_A=",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr9vw6e0_3yr2a1",
+      "receivedAt": "2026-07-07T00:01:30.104Z",
+      "fromEmail": "PRCustomerServe@info.SantaClaraCA.gov",
+      "emailSubject": "Senior Center July 2026 Newsletter Now Available!",
+      "title": "Summer BBQ at Senior Center",
+      "startsAt": "2026-07-16T00:00:00-07:00",
+      "endsAt": null,
+      "location": "Santa Clara Senior Center",
+      "description": "The second BBQ of the summer at the Senior Center. Tickets available for purchase at the front desk beginning July 9.",
+      "sourceUrl": "https://www.santaclaraca.gov/our-city/departments-g-z/parks-recreation/community-centers/senior-center",
       "cityKey": "santa-clara",
       "cityName": "Santa Clara",
       "status": "new"
@@ -1956,6 +2036,22 @@
       "cityKey": "san-jose",
       "cityName": "San Jose",
       "status": "new"
+    },
+    {
+      "id": "inbound_mr9gxbnc_s776bv",
+      "receivedAt": "2026-07-06T17:02:26.992Z",
+      "fromEmail": "librarians@info.SantaClaraCA.gov",
+      "emailSubject": "CENTRAL: Kirk Waller Storyteller",
+      "title": "Kirk Waller Storyteller",
+      "startsAt": "2026-07-08T17:30:00-07:00",
+      "endsAt": "2026-07-08T18:00:00-07:00",
+      "location": "Central Park Library, 2635 Homestead Road, Santa Clara, California 95051",
+      "description": "A musical storytelling performance by Kirk Waller as part of the Summer Adventure reading program. The event takes place outside the library near the park-side entrance.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112509/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new",
+      "sourceUrlOriginal": "https://links-1.govdelivery.com/CL0/https:%2F%2Fwww.santaclaraca.gov%2FHome%2FComponents%2FCalendar%2FEvent%2F112509%2F/1/0100019f38617753-fb7bb8ce-46d4-416e-956e-030cf47f9f85-000000/4dQY7Ofg9SAzXAjaZ2Q0zBr4FOdzCFJcWXTVEDaklro=452"
     },
     {
       "id": "inbound_momb363f_8zxkly",
@@ -2091,21 +2187,6 @@
       "sourceUrl": "https://e.wordfly.com/click?sid=Mjc5M180MTdfNjM2NjNfNjk4Mg&l=4c363d57-d269-f111-a84c-0050569dd3d9",
       "cityKey": "san-jose",
       "cityName": "San Jose",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzel1lh_ppwvrv",
-      "receivedAt": "2026-06-29T15:59:03.674Z",
-      "fromEmail": "noreply@libraryaware.com",
-      "emailSubject": "SCCLD Newsletter",
-      "title": "Coventry and Kaluza Circus Show",
-      "startsAt": "2026-07-05T14:00:00-07:00",
-      "endsAt": null,
-      "location": "Morgan Hill Library",
-      "description": "Summer reading program circus performance for kids.",
-      "sourceUrl": "https://sccld.org/events/",
-      "cityKey": null,
-      "cityName": null,
       "status": "new"
     },
     {
@@ -2560,21 +2641,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr2bq2pc_9vwuv6",
-      "receivedAt": "2026-07-01T17:02:18.822Z",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "City Hall Connection eNewsletter: Fourth of July Celebration, Technology Showcase, Summer Events",
-      "title": "Celebrate the 250th Birthday of America in Music",
-      "startsAt": "2026-07-05T16:00:00-07:00",
-      "endsAt": null,
-      "location": "ParkStage, adjacent to Pioneer Park, Mountain View, CA",
-      "description": "Free public concert by the Terrible Adult Chamber Orchestra featuring patriotic American music, with introduction of historical context by composers.",
-      "sourceUrl": "https://www.mvcpa.com/",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mqiohqkw_hyf9ux",
       "receivedAt": "2026-06-17T23:02:41.349Z",
       "fromEmail": "cardinal@mail.gostanford.com",
@@ -2690,51 +2756,6 @@
       "location": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
       "description": "Adult acrylic painting workshop exploring bold color and organic design.",
       "sourceUrl": "https://go.levitate.ai/class/?t=d1149f09f1d84d669ec0711e14544df5",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mr2bkmo7_7blmhe",
-      "receivedAt": "2026-07-01T16:57:51.828Z",
-      "fromEmail": "pacific.artleague@pacificartleague-newsletters.com",
-      "emailSubject": "This Week at PAL: Summer Camps | Adult Workshops | Fall Catalog | Holiday Closure",
-      "title": "Sculpture Mythical Creatures + Beasts",
-      "startsAt": "2026-07-06T00:00:00-07:00",
-      "endsAt": "2026-07-10T00:00:00-07:00",
-      "location": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "description": "Summer camp for ages 7-16 in sculpture focused on mythical creatures and beasts.",
-      "sourceUrl": "https://go.levitate.ai/class/?t=3d95217a3f294969bb71cda65d9c5564",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mr2bkmo7_bq1pn4",
-      "receivedAt": "2026-07-01T16:57:51.828Z",
-      "fromEmail": "pacific.artleague@pacificartleague-newsletters.com",
-      "emailSubject": "This Week at PAL: Summer Camps | Adult Workshops | Fall Catalog | Holiday Closure",
-      "title": "Art Journaling",
-      "startsAt": "2026-07-06T00:00:00-07:00",
-      "endsAt": "2026-07-10T00:00:00-07:00",
-      "location": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "description": "Summer camp for ages 7-16 in art journaling techniques.",
-      "sourceUrl": "https://go.levitate.ai/class/?t=5da9ea09c4fb4f40be6a5a13938555df",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mr2bkmo7_gien2p",
-      "receivedAt": "2026-07-01T16:57:51.828Z",
-      "fromEmail": "pacific.artleague@pacificartleague-newsletters.com",
-      "emailSubject": "This Week at PAL: Summer Camps | Adult Workshops | Fall Catalog | Holiday Closure",
-      "title": "Anatomy & Figure Drawing",
-      "startsAt": "2026-07-06T00:00:00-07:00",
-      "endsAt": "2026-07-10T00:00:00-07:00",
-      "location": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "description": "Summer camp for ages 7-16 in anatomy and figure drawing.",
-      "sourceUrl": "https://go.levitate.ai/class/?t=d7b0bdfd60654a41954b2d1cceffe6b0",
       "cityKey": "palo-alto",
       "cityName": "Palo Alto",
       "status": "new"
@@ -3192,22 +3213,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr577w76_xttuz8",
-      "receivedAt": "2026-07-03T17:19:27.341Z",
-      "fromEmail": "sjda@sjdowntown.com",
-      "emailSubject": "Celebrate 4th of July Weekend Downtown",
-      "title": "Levitt Pavilion Concert Series: The Altons",
-      "startsAt": "2026-07-05T13:30:00-07:00",
-      "endsAt": "2026-07-05T16:45:00-07:00",
-      "location": "St. James Park",
-      "description": "Free outdoor concert featuring The Altons, an emerging West Coast souldies band from Southeast Los Angeles, with food trucks and family-friendly activities.",
-      "sourceUrl": "https://www.levittsanjose.org/2026-concert-series",
-      "cityKey": "san-jose",
-      "cityName": "San Jose",
-      "status": "new",
-      "sourceUrlOriginal": "https://sjdowntown.us4.list-manage.com/track/click?u=e5b87421d6bd12bf266cbb40d&id=a94ae55025&e=e0f43ae3a8"
-    },
-    {
       "id": "inbound_mr577w76_oq0f8w",
       "receivedAt": "2026-07-03T17:19:27.341Z",
       "fromEmail": "sjda@sjdowntown.com",
@@ -3343,6 +3348,21 @@
       "sourceUrl": "https://www.broadwaysanjose.com",
       "cityKey": "san-jose",
       "cityName": "San Jose",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mr81gssv_zfs01l",
+      "receivedAt": "2026-07-05T17:01:57.872Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Book Cover Bedazzling",
+      "title": "Book Cover Bedazzling",
+      "startsAt": "2026-07-25T14:00:00-07:00",
+      "endsAt": "2026-07-25T16:00:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
+      "description": "A craft program where participants can bedazzle a book cover with rhinestones. Bring your own favorite book or use a provided one. Intended for adults, but teens 15+ welcome.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113130/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
       "status": "new"
     },
     {
@@ -3861,21 +3881,6 @@
       "sourceUrl": "https://sj26.sanjose.org/world-cup",
       "cityKey": "san-jose",
       "cityName": "San Jose",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mq19ju9u_4yj7uq",
-      "receivedAt": "2026-06-05 18:34:06.903102+00",
-      "fromEmail": "cityofsunnyvale@public.govdelivery.com",
-      "emailSubject": "Correction (Bike Safety Information and Repair Workshop) - The Sunny Side of Sustainability",
-      "title": "The Problem with Plastic with Susan Keefe",
-      "startsAt": "2026-07-06T18:00:00-07:00",
-      "endsAt": "2026-07-06T19:00:00-07:00",
-      "location": null,
-      "description": "Educational talk with Susan Keefe about the problem with plastic, held online via Zoom.",
-      "sourceUrl": "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/11798/19?curm=7&cury=2026",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
       "status": "new"
     },
     {
@@ -5164,22 +5169,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr2kau7w_av9hy1",
-      "receivedAt": "2026-07-01T21:02:23.969Z",
-      "fromEmail": "cantor-enews@stanford.edu",
-      "emailSubject": "Be the first to see \"Jane\"",
-      "title": "Exhibition tour with artist Erika Chong Shuch",
-      "startsAt": "2026-07-06T13:00:00-07:00",
-      "endsAt": null,
-      "location": "Anderson Collection at Stanford University, Palo Alto",
-      "description": "Join artist Erika Chong Shuch for a tour of the exhibition '1,000 Ways to Hold: A new work by Erika Chong Shuch,' a participatory project about holding and being held.",
-      "sourceUrl": "https://events.stanford.edu/event/1000-ways-to-hold-exhibition-tour-by-erika-chong-shuch",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new",
-      "sourceUrlOriginal": "https://stanford.us12.list-manage.com/track/click?u=4020aefb22d6ab45619048678&id=75bab52fb5&e=39418bdf9d"
-    },
-    {
       "id": "inbound_mr2kau7w_lkt25c",
       "receivedAt": "2026-07-01T21:02:23.969Z",
       "fromEmail": "cantor-enews@stanford.edu",
@@ -5595,21 +5584,6 @@
       "sourceUrlOriginal": "https://numulosgatos.us4.list-manage.com/track/click?u=d7fc65fad0599e445e6b43007&id=5e422588fe&e=fd6532ab4c"
     },
     {
-      "id": "inbound_mpr3ljct_mu1lt4",
-      "receivedAt": "2026-05-29 15:48:35.612517+00",
-      "fromEmail": "pacific.artleague@pacificartleague-newsletters.com",
-      "emailSubject": "PAL Summer Camp - Spots are Filling Up",
-      "title": "PAL Summer Camps: July 6-10",
-      "startsAt": "2026-07-06T09:00:00-07:00",
-      "endsAt": "2026-07-10T17:00:00-07:00",
-      "location": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "description": "Art camps for ages 7-16 including Sculpture Mythical Creatures + Beasts, Art Journaling, and Anatomy & Figure Drawing. Professional instructors, small class sizes, high-quality materials included.",
-      "sourceUrl": "https://go.levitate.ai/summer2026?t=0f9abb37919e455b9130c69ed6ebc273",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new"
-    },
-    {
       "id": "inbound_mpr3ljct_5skz4g",
       "receivedAt": "2026-05-29 15:48:35.612517+00",
       "fromEmail": "pacific.artleague@pacificartleague-newsletters.com",
@@ -5834,38 +5808,6 @@
       "cityName": "Palo Alto",
       "status": "new",
       "sourceUrlOriginal": "https://stanford.us12.list-manage.com/track/click?u=4020aefb22d6ab45619048678&id=c98920e8da&e=39418bdf9d"
-    },
-    {
-      "id": "inbound_mr3ymw6t_96614r",
-      "receivedAt": "2026-07-02T20:31:24.502Z",
-      "fromEmail": "cantor-enews@stanford.edu",
-      "emailSubject": "Correction - Closing Date for \"Jeremy Frey: Woven\"",
-      "title": "Archive Room: Ruth Asawa and Archive Room: Ester Hernández closing",
-      "startsAt": "2026-07-06T23:59:59-07:00",
-      "endsAt": null,
-      "location": "Cantor Arts Center, Stanford University",
-      "description": "Final days to view intimate Archive Rooms featuring artists' archives from Stanford Special Collections, including Hernández's 1977 self-portrait and Ruth Asawa archival footage.",
-      "sourceUrl": "https://museum.stanford.edu/exhibitions/archive-room-ruth-asawa",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new",
-      "sourceUrlOriginal": "https://stanford.us12.list-manage.com/track/click?u=4020aefb22d6ab45619048678&id=8e013979b9&e=39418bdf9d"
-    },
-    {
-      "id": "inbound_mr3ymw6t_1brsgc",
-      "receivedAt": "2026-07-02T20:31:24.502Z",
-      "fromEmail": "cantor-enews@stanford.edu",
-      "emailSubject": "Correction - Closing Date for \"Jeremy Frey: Woven\"",
-      "title": "Exhibition tour with Erika Chong Shuch",
-      "startsAt": "2026-07-06T13:00:00-07:00",
-      "endsAt": null,
-      "location": "Anderson Collection at Stanford University",
-      "description": "Artist-led tour of 1,000 Ways to Hold, a participatory project exploring what people have held and what has held them.",
-      "sourceUrl": "https://events.stanford.edu/event/1000-ways-to-hold-exhibition-tour-by-erika-chong-shuch",
-      "cityKey": "palo-alto",
-      "cityName": "Palo Alto",
-      "status": "new",
-      "sourceUrlOriginal": "https://stanford.us12.list-manage.com/track/click?u=4020aefb22d6ab45619048678&id=7d377f78ec&e=39418bdf9d"
     },
     {
       "id": "inbound_mr3ymw6t_m9br37",
@@ -6508,6 +6450,36 @@
       "sourceUrlOriginal": "https://cfkqygdab.cc.rs6.net/tn.jsp?f=001qgde0t7u7i3ETx4OgPNovbp6IwFyHiHnXwiSIQPvuYMRg63yNlJgr5wrXJemiZT9elbACh012kGkufWx1c9KV2PylptJq-1nnCFp6nKL3qoo885Jk2pXgoqH90HAohYngj62w6rJDe7-jADpy1wlP3MQRyIeX4lWsz51xWt48zbgfjFobYMVAgXjLVOMVc7ShS0oEquKaeA=&c=FHDzjgJP3RntV8LZyOVfDuKL25r7Wa2Cqg758YisIK7HtHEy7kAkTA==&ch=Ndf2ldC-LS622rHZgQiyAln9QpGm0TiPkN0GmLa91c8qDc86GmZMUg=="
     },
     {
+      "id": "inbound_mra18y7t_tjjwxw",
+      "receivedAt": "2026-07-07T02:31:22.579Z",
+      "fromEmail": "PRCustomerServe@info.SantaClaraCA.gov",
+      "emailSubject": "This Friday: Concert in the Park & Sunset Cinema!",
+      "title": "Concerts in the Park: The Megatones",
+      "startsAt": "2026-07-10T18:30:00-07:00",
+      "endsAt": "2026-07-10T20:00:00-07:00",
+      "location": "Central Park, 909 Kiely Blvd, Santa Clara, CA",
+      "description": "Free outdoor concert featuring The Megatones performing rock, funk and country music. Bring blankets or lawn chairs. Food trucks available for purchase.",
+      "sourceUrl": "https://www.santaclaraca.gov/our-city/departments-g-z/parks-recreation/parks-recreation-special-events/concerts-in-the-park",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
+      "id": "inbound_mra18y7t_bo7n0i",
+      "receivedAt": "2026-07-07T02:31:22.579Z",
+      "fromEmail": "PRCustomerServe@info.SantaClaraCA.gov",
+      "emailSubject": "This Friday: Concert in the Park & Sunset Cinema!",
+      "title": "Sunset Cinema: A Minecraft Movie",
+      "startsAt": "2026-07-10T20:45:00-07:00",
+      "endsAt": null,
+      "location": "Lick Mill Park, 4750 Lick Mill Blvd, Santa Clara, CA",
+      "description": "Free outdoor screening of A Minecraft Movie (PG) on a giant inflatable screen. Pre-screening entertainment by acrobatic duo Coventry & Kaluza. Snacks and hot dogs available for purchase.",
+      "sourceUrl": "https://www.santaclaraca.gov/sunsetcinema",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_d3cb5520867f8633_01",
       "receivedAt": "2026-05-15 22:16:56.757771+00",
       "fromEmail": "reply@fanmail.sjearthquakes.com",
@@ -6924,51 +6896,6 @@
       "sourceUrlOriginal": "https://email.live.stanford.edu/c/AQjouxYQ0qwMGOKC7o8BIO2xmgIopO_RA0XHPRrjfrYW8gLXHDRZKsE9Wc4phuodop4zPRoV-MVs"
     },
     {
-      "id": "inbound_mr56ljnv_g6bd6s",
-      "receivedAt": "2026-07-03T17:02:19.660Z",
-      "fromEmail": "news@info.SantaClaraCA.gov",
-      "emailSubject": "MISSION: Firefighter Storytime",
-      "title": "Firefighter Storytime",
-      "startsAt": "2026-07-06T10:30:00-07:00",
-      "endsAt": "2026-07-06T11:15:00-07:00",
-      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
-      "description": "Join local firefighters for storytime, followed by photos with firefighters and the fire truck.",
-      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/112333/",
-      "cityKey": "santa-clara",
-      "cityName": "Santa Clara",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzclbmv_9a9mk3",
-      "receivedAt": "2026-06-29T15:02:01.794Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "July Events for Kids at Sunnyvale Public Library",
-      "title": "Preschool Little Learners",
-      "startsAt": "2026-07-06T11:00:00-07:00",
-      "endsAt": "2026-07-27T12:00:00-07:00",
-      "location": "Sunnyvale Public Library, Library Program Room",
-      "description": "Drop-in songs, stories and crafts emphasizing preschool readiness for ages 3 to 5. Held Mondays from July 6 to 27.",
-      "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzclbmv_t4h8s6",
-      "receivedAt": "2026-06-29T15:02:01.794Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "July Events for Kids at Sunnyvale Public Library",
-      "title": "Messy Art: Foil Transfers",
-      "startsAt": "2026-07-06T15:00:00-07:00",
-      "endsAt": null,
-      "location": "Sunnyvale Public Library, Library Program Room",
-      "description": "Create your own masterpiece with foil transfer art for grades K to 5.",
-      "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
       "id": "inbound_mqzclbmv_zc4nst",
       "receivedAt": "2026-06-29T15:02:01.794Z",
       "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
@@ -7038,21 +6965,6 @@
       "endsAt": null,
       "location": "Sunnyvale Public Library, Library Program Room",
       "description": "Drop-in S.T.E.M. activity with live bat presentation from NorCal Bats for grades 1 to 5.",
-      "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqzclbmv_3eq2y3",
-      "receivedAt": "2026-06-29T15:02:01.794Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "July Events for Kids at Sunnyvale Public Library",
-      "title": "Dash Robot Coding",
-      "startsAt": "2026-07-05T16:00:00-07:00",
-      "endsAt": "2026-07-05T17:00:00-07:00",
-      "location": "Sunnyvale Public Library, Library Program Room",
-      "description": "Learn to code the Dash robot and participate in fun coding challenges for grades 2 to 5. Limited to first 30 kids.",
       "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
       "cityKey": "sunnyvale",
       "cityName": "Sunnyvale",
@@ -7264,21 +7176,6 @@
       "location": "Sunnyvale Public Library, Library Program Room",
       "description": "Drop-in playtime for ages 0 to 5. Learn while you play at this activity for the library's littlest patrons.",
       "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mr3r7kjg_y9ko9v",
-      "receivedAt": "2026-07-02T17:03:39.171Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "Plastic Free July, Sewing By Hand, and More!",
-      "title": "The Problem with Plastic with Susan Keefe",
-      "startsAt": "2026-07-06T18:00:00-07:00",
-      "endsAt": "2026-07-06T19:00:00-07:00",
-      "location": null,
-      "description": "Online conversation with Susan Keefe, Beyond Plastics' Southern California Director, discussing the book \"The Problem with Plastic\" and the environmental and health impacts of plastic pollution and microplastics.",
-      "sourceUrl": "https://sunnyvale.libcal.com/event/16620513",
       "cityKey": "sunnyvale",
       "cityName": "Sunnyvale",
       "status": "new"
@@ -7509,21 +7406,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mqzclglh_t4mblk",
-      "receivedAt": "2026-06-29T15:02:14.638Z",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "The View Teen Center Monthly Newsletter - July",
-      "title": "Teen Open Gym",
-      "startsAt": "2026-07-05T18:30:00-07:00",
-      "endsAt": "2026-07-05T21:30:00-07:00",
-      "location": "Whisman Sports Center, 1500 Middlefield Rd., Mountain View, CA",
-      "description": "Open gym for middle and high school students from Mountain View and Los Altos. Bring student ID.",
-      "sourceUrl": "https://www.mountainview.gov/our-city/departments/community-services/recreation/youth-teens/teen-programs/teen-open-gym",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mq1a0738_dax63u",
       "receivedAt": "2026-06-05 18:46:54.498653+00",
       "fromEmail": "noreply@civicplus.com",
@@ -7721,21 +7603,6 @@
       "status": "new"
     },
     {
-      "id": "inbound_mr2bplo3_yk95em",
-      "receivedAt": "2026-07-01T17:02:06.925Z",
-      "fromEmail": "MountainView@public.govdelivery.com",
-      "emailSubject": "July at The MVCPA",
-      "title": "Celebrate the 250th Birthday of America in Music",
-      "startsAt": "2026-07-05T16:00:00-07:00",
-      "endsAt": "2026-07-05T18:00:00-07:00",
-      "location": "ParkStage behind Mountain View Center for Performing Arts, 500 Castro Street, Mountain View, CA 94041",
-      "description": "Free outdoor community concert featuring Terrible Adult Chamber Orchestra performing patriotic American music with audience participation and historic context about the composers and pieces.",
-      "sourceUrl": "https://www.mvcpa.com",
-      "cityKey": "mountain-view",
-      "cityName": "Mountain View",
-      "status": "new"
-    },
-    {
       "id": "inbound_mr2bplo3_p4puvw",
       "receivedAt": "2026-07-01T17:02:06.925Z",
       "fromEmail": "MountainView@public.govdelivery.com",
@@ -7902,6 +7769,21 @@
       "status": "new"
     },
     {
+      "id": "inbound_mr9lvv56_p15ad4",
+      "receivedAt": "2026-07-06T19:21:18.987Z",
+      "fromEmail": "news@info.SantaClaraCA.gov",
+      "emailSubject": "MISSION: Sights of the Cosmos",
+      "title": "MISSION: Sights of the Cosmos",
+      "startsAt": "2026-08-25T17:30:00-07:00",
+      "endsAt": "2026-08-25T18:30:00-07:00",
+      "location": "Mission Branch Library, 1098 Lexington St, Santa Clara, California 95050",
+      "description": "An hour-long program exploring the size and scale of the cosmos, beautiful objects visible in the night sky, and how we observe them through telescopes. For ages 10 and up, in partnership with the San Jose Astronomical Association.",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113472/",
+      "cityKey": "santa-clara",
+      "cityName": "Santa Clara",
+      "status": "new"
+    },
+    {
       "id": "inbound_mqfkwtbc_r71nie",
       "receivedAt": "2026-06-15T19:00:09.312Z",
       "fromEmail": "latest@email.live.stanford.edu",
@@ -8005,21 +7887,6 @@
       "endsAt": null,
       "location": "Washington Park, 840 W. Washington Ave, Sunnyvale",
       "description": "Evening of family fun with magic performance (bilingual Spanish and English). For all ages.",
-      "sourceUrl": null,
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mphm00j3_vktfxl",
-      "receivedAt": "2026-05-23 00:23:47.210247+00",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "June Events for Kids",
-      "title": "Messy Art: Foil Transfers",
-      "startsAt": "2026-07-06T15:00:00-07:00",
-      "endsAt": null,
-      "location": "Sunnyvale Public Library, Program Room",
-      "description": "Drop-in messy art activity. Grades K-5. Space limited; doors close when full.",
       "sourceUrl": null,
       "cityKey": "sunnyvale",
       "cityName": "Sunnyvale",
@@ -8313,21 +8180,6 @@
       "cityName": "San Jose",
       "status": "new",
       "sourceUrlOriginal": "http://connect.cdm.org/site/R?i=65Gt1icV9ZRvBP4N4kjYjJ_z7DOdOEQ_OeOJ__tazSVjDnu8RTJazg"
-    },
-    {
-      "id": "inbound_mqv7prif_01ryk4",
-      "receivedAt": "2026-06-26T17:35:31.665Z",
-      "fromEmail": "recreation-campbellca.gov@shared1.ccsend.com",
-      "emailSubject": "Campbell Recreation - Free Events in July!",
-      "title": "Scavenger Hunt",
-      "startsAt": "2026-07-05T00:00:00-07:00",
-      "endsAt": null,
-      "location": null,
-      "description": "All-day community scavenger hunt event.",
-      "sourceUrl": null,
-      "cityKey": "campbell",
-      "cityName": "Campbell",
-      "status": "new"
     },
     {
       "id": "inbound_mqv7prif_xowdiz",
@@ -8824,51 +8676,6 @@
       "sourceUrl": "https://www.heritagetheatre.org",
       "cityKey": "campbell",
       "cityName": "Campbell",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqv6j71u_bgkxog",
-      "receivedAt": "2026-06-26T17:02:42.913Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "Lunar Octet Jazz, Death Cafe, Board Games, and More!",
-      "title": "Board Games",
-      "startsAt": "2026-07-05T13:00:00-07:00",
-      "endsAt": "2026-07-05T16:00:00-07:00",
-      "location": "Sunnyvale Public Library Fiction Room",
-      "description": "Free drop-in board game session featuring strategy games, family-friendly games, and card games. Come alone or bring a group.",
-      "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqv6j71u_bmr8in",
-      "receivedAt": "2026-06-26T17:02:42.913Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "Lunar Octet Jazz, Death Cafe, Board Games, and More!",
-      "title": "Mindfulness Practice",
-      "startsAt": "2026-07-05T14:00:00-07:00",
-      "endsAt": "2026-07-05T15:00:00-07:00",
-      "location": "Sunnyvale Public Library Program Room",
-      "description": "Guided internal awareness practice led by Dr. Lee, a practitioner of Chinese medicine. For adults only, no registration required.",
-      "sourceUrl": "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "status": "new"
-    },
-    {
-      "id": "inbound_mqv6j71u_cb49du",
-      "receivedAt": "2026-06-26T17:02:42.913Z",
-      "fromEmail": "sunnyvalepubliclibrary@public.govdelivery.com",
-      "emailSubject": "Lunar Octet Jazz, Death Cafe, Board Games, and More!",
-      "title": "The Problem with Plastic with Susan Keefe",
-      "startsAt": "2026-07-06T00:00:00-07:00",
-      "endsAt": null,
-      "location": "Sunnyvale Public Library",
-      "description": "Adult lecture series talk on climate action and innovative solutions, focusing on plastic pollution. Registration required.",
-      "sourceUrl": "https://sunnyvale.libcal.com/event/16620513",
-      "cityKey": "sunnyvale",
-      "cityName": "Sunnyvale",
       "status": "new"
     },
     {
