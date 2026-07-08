@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-07T03:09:19.290Z",
+      "generatedAt": "2026-07-08T03:08:55.866Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jun 29 – Jul 6",
+      "dateRange": "Jun 30 – Jul 7",
       "stats": {
-        "total": 344,
-        "notable": 17,
+        "total": 264,
+        "notable": 16,
         "newUnits": 6,
-        "totalValuation": 8912415
+        "totalValuation": 5766624
       },
       "permits": [
         {
@@ -87,18 +87,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-124260-CI",
-          "address": "3940 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Figure Ai (Bemp100%) Office TI",
-          "valuation": 1300000,
-          "units": 0,
-          "issueDate": "2026-06-30",
-          "subtype": "Office"
-        },
-        {
           "id": "2026-125432-CI",
           "address": "875 N 13th St",
           "category": "commercial-large",
@@ -133,23 +121,59 @@
           "units": 1,
           "issueDate": "2026-07-02",
           "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-108501-RS",
+          "address": "1572 Princeton Dr",
+          "category": "residential-large",
+          "categoryLabel": "Major Renovation",
+          "workType": "Additions/Alterations",
+          "description": "Aro Home Demo/Rebuild",
+          "valuation": 533484,
+          "units": 1,
+          "issueDate": "2026-07-01",
+          "subtype": "Single-Family"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-07T03:09:21.733Z",
+      "generatedAt": "2026-07-08T03:08:58.118Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jun 29 – Jul 6",
+      "dateRange": "Jun 30 – Jul 7",
       "stats": {
-        "total": 85,
-        "notable": 2,
+        "total": 97,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01797",
+          "address": "634 Fulton St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-06",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01794",
+          "address": "155 California Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-06",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01767",
           "address": "2011 Park Bl",
@@ -160,18 +184,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-01",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01752",
-          "address": "3964 Nelson Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-06-30",
           "subtype": "Permit Issued"
         }
       ]

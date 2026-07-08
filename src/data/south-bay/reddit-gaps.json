@@ -1,62 +1,59 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-07T03:16:59.610Z",
+    "generatedAt": "2026-07-08T03:15:52.476Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 6
   },
   "summary": {
-    "threadsMined": 10,
-    "placesExtracted": 3,
+    "threadsMined": 6,
+    "placesExtracted": 2,
     "placesMatched": 1,
-    "placeGaps": 2,
-    "eventsExtracted": 0,
+    "placeGaps": 1,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "The Ritz",
+      "name": "Berryessa Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "live music venue currently being review bombed",
+      "context": "original library demolished, seeking historical photos",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1up3i6d/pokémon_go_friends/",
-        "https://www.reddit.com/r/SanJose/comments/1up2ak9/if_youve_enjoyed_a_show_at_the_ritz_they_are/",
-        "https://www.reddit.com/r/SanJose/comments/1uoyia0/im_drawing_an_historicalmythological_map_of/",
-        "https://www.reddit.com/r/SanJose/comments/1uorkt3/massive_shoutout_to_all_the_mexico_supporters/",
-        "https://www.reddit.com/r/SanJose/comments/1upgvte/debate_clubs_for_adults_in_south_bay/"
-      ]
-    },
-    {
-      "name": "Kim Tar",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "roast duck over rice restaurant",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1updgwt/seeking_lgbt_friendly_trans_dd_players/",
-        "https://www.reddit.com/r/SanJose/comments/1up52jx/any_mauritians_in_the_bay_area/",
-        "https://www.reddit.com/r/SanJose/comments/1uoy0a0/visitng_for_a_week_where_should_i_drink/",
-        "https://www.reddit.com/r/SanJose/comments/1upfeyc/roast_duck/",
-        "https://www.reddit.com/r/SanJose/comments/1upcxdk/hows_living_here_these_days/"
+        "https://www.reddit.com/r/SanJose/comments/1uq5y74/is_there_any_possibility_someone_has_photos_of/"
       ]
     }
   ],
-  "eventGaps": [],
+  "eventGaps": [
+    {
+      "name": "Stand up open mic",
+      "when": "March 2025",
+      "city": "San Jose",
+      "context": "first-time stand up comedy open mic night",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uq9gzc/who_has_the_best_breakfast_burrito_in_the_south/",
+        "https://www.reddit.com/r/SanJose/comments/1upnfa7/first_time_doing_stand_up_open_mic_san_jose_march/",
+        "https://www.reddit.com/r/SanJose/comments/1uq9zz6/you_are_guilty_of_animal_cruelty_if_you_walk_your/",
+        "https://www.reddit.com/r/SanJose/comments/1uq4uvb/dining_recs_for_large_group/",
+        "https://www.reddit.com/r/SanJose/comments/1upyk72/mexico_watch_parties_were_unmatched/"
+      ]
+    }
+  ],
   "placeMatches": [
     {
-      "name": "Discovery Meadow",
+      "name": "Be.Steak.A",
       "city": "San Jose",
-      "kind": "park",
-      "context": "hosted Mexico vs England World Cup watch party",
+      "kind": "restaurant",
+      "context": "recommended for large group dinner on Friday night",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1up3i6d/pokémon_go_friends/",
-        "https://www.reddit.com/r/SanJose/comments/1up2ak9/if_youve_enjoyed_a_show_at_the_ritz_they_are/",
-        "https://www.reddit.com/r/SanJose/comments/1uoyia0/im_drawing_an_historicalmythological_map_of/",
-        "https://www.reddit.com/r/SanJose/comments/1uorkt3/massive_shoutout_to_all_the_mexico_supporters/",
-        "https://www.reddit.com/r/SanJose/comments/1upgvte/debate_clubs_for_adults_in_south_bay/"
+        "https://www.reddit.com/r/SanJose/comments/1uq9gzc/who_has_the_best_breakfast_burrito_in_the_south/",
+        "https://www.reddit.com/r/SanJose/comments/1upnfa7/first_time_doing_stand_up_open_mic_san_jose_march/",
+        "https://www.reddit.com/r/SanJose/comments/1uq9zz6/you_are_guilty_of_animal_cruelty_if_you_walk_your/",
+        "https://www.reddit.com/r/SanJose/comments/1uq4uvb/dining_recs_for_large_group/",
+        "https://www.reddit.com/r/SanJose/comments/1upyk72/mexico_watch_parties_were_unmatched/"
       ],
-      "matchedName": "Discovery Meadow"
+      "matchedName": "BE.STEAK.A"
     }
   ],
   "eventMatches": []
