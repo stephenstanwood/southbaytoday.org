@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "bespoke-labs",
+    name: "Bespoke Labs",
+    city: "Mountain View",
+    category: "ai",
+    round: "Series A",
+    amount: "$40M",
+    date: "2026-07-06",
+    tagline:
+      "A research lab building the training grounds for reliable AI agents: it constructs simulated business environments — mock codebases, microservices, and communication logs — where long-horizon autonomous agents can safely learn, test, and improve before enterprises put them into production. Founded in 2024 by Mahesh Sathiamoorthy and Alex Dimakis. The $40M pairs a Wing VC–led Series A with a prior 8VC-led seed, with Mayfield, The House Fund, Google's Jeff Dean, and dbt Labs CEO Tristan Handy joining alongside angel investors from Anthropic, OpenAI, and Meta.",
+    color: "#2563eb",
+    url: "https://www.bespokelabs.ai",
+  },
+  {
     id: "oxmiq",
     name: "OXMIQ Labs",
     city: "Campbell",
