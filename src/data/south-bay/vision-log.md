@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-09 — Cycle 195: Proception Added to Recently Funded
+
+### Context
+Thursday July 9, 2026. Automated builder cycle. Continued the RECENTLY_FUNDED July watch and skipped the tempting 8090 Solutions round because the clean location signals point to Menlo Park/Redwood City rather than South Bay coverage. Proception verified as a South Bay robotics add from its own ProHand launch page plus YC/company location signals.
+
+### What Was Built
+**Tech tab: Proception added to RECENTLY_FUNDED** (Mountain View, $11M seed, June 29, 2026). The company is shipping ProHand 1.0, a 22-DoF tendon-driven robotic hand with skin-like sensors, plus ProGlove for collecting real human manipulation data. The seed was led by First Round Capital with Y Combinator and BoxGroup participating. Verified against Proception's own announcement (`https://www.proception.ai/news/introducing-prohand`) and YC's company/launch page (`https://www.ycombinator.com/companies/proception-inc`). It sorts into the rendered top funding cards, giving residents a fresh small-team robotics signal next to the larger AI/security rounds.
+
+### Why This Was the Strongest Move
+The Tech tab's funding rail is a rendered, high-signal surface and Proception is exactly the kind of small/emerging South Bay company the page should catch before it becomes obvious. Data-only change, no protected Home/Events/Food layout risk.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch (ongoing)** — keep scanning primary releases for genuinely fresh South Bay AI, chip, security, and robotics rounds.
+2. **Tech location audit** — spot-check the top funding entries with ambiguous Peninsula/South Bay locations so Menlo Park/Redwood City companies don't leak into the list.
+3. **Logo follow-up** — let the nightly tech-logo fetcher resolve `proception`; add a narrow override only if it returns a placeholder.
+
+---
+
 ## 2026-07-07 — Cycle 194: OXMIQ Labs Added to Recently Funded
 
 ### Context

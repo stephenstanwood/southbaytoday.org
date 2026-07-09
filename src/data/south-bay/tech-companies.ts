@@ -1050,6 +1050,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     url: "https://queue.inc",
   },
   {
+    id: "proception",
+    name: "Proception",
+    city: "Mountain View",
+    category: "robotics",
+    round: "Seed",
+    amount: "$11M",
+    date: "2026-06-29",
+    tagline:
+      "Dexterous robotic hands for humanoid and research robots: ProHand 1.0 is a 22-degree-of-freedom, tendon-driven hand with skin-like sensors, paired with ProGlove so researchers can collect real human manipulation data and transfer it into robot learning workflows. The seed was led by First Round Capital with Y Combinator and BoxGroup participating, and the first ProHand units started shipping to researchers and robotics companies the same week.",
+    color: "#2563eb",
+    url: "https://www.proception.ai",
+  },
+  {
     id: "straiker",
     name: "Straiker",
     city: "Mountain View",
