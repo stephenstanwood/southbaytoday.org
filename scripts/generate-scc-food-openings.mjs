@@ -39,11 +39,11 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b/i;
+const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b|\bMEETING\s+ROOM\b|\bHQ\d+\s+KITCHEN\b/i;
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
-const EQUIPMENT_ONLY_PATTERNS = /\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b/i;
+const EQUIPMENT_ONLY_PATTERNS = /\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b|\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|EQUIPMENT|KITCHEN)\s+ADDITION\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS)\b/i;
@@ -192,7 +192,7 @@ function cleanName(raw) {
   s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade|Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Tank\s+Replace|Lvl|Level|Lgt|Light|Concession(\s+\w+)?)(\s+\d+)?$/i, "").trim();
 
   // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank")
-  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Kitchen\s+Hood|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade|New\s+Equipment|Lgt|Light\s+Equipment|New\s+Build|New\s+Food\s+Facility)\s*$/i, "").trim();
+  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Kitchen\s+Hood|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade|New\s+Equipment|Gas\s+Stove|Lgt|Light\s+Equipment|New\s+Build|New\s+Food\s+Facility)\s*$/i, "").trim();
 
   // Strip "Phase [noun]" permit phase descriptors (e.g. "Phase Concession", "Phase 1 Construction")
   s = s.replace(/\s+Phase\s+(Concession|Construction|Renovation|Buildout|Build\s*Out|Install|Equipment|Remodel|Plumbing)\s*$/i, "").trim();
@@ -233,8 +233,12 @@ function cleanName(raw) {
   // If the "name" is just a street address (digits + street words ending in a
   // street type), it's a permit-data placeholder — the actual business name
   // wasn't on the filing. Skip rather than display "14612 Big Basin Wy" as
-  // a restaurant.
-  if (/^\d+\s+[\w.\s]+?\s+(St|Street|Ave|Avenue|Way|Wy|Rd|Road|Blvd|Boulevard|Dr|Drive|Ct|Court|Ln|Lane|Cir|Circle|Pl|Place|Pkwy|Parkway|Hwy|Highway|Ter|Terrace|Sq|Square)\.?$/i.test(s)) return null;
+  // a restaurant. The trailing group also accepts truncated street-type
+  // fragments (SCC truncates the name field at ~20 chars: "4988 Great American
+  // Pkwy" → "4988 Great American P"). Anchored to a leading street number, so
+  // real names that merely start with a digit ("7 Leaves Cafe", "99 Ranch
+  // Market") never match — they end in a business word, not a street fragment.
+  if (/^\d+\s+[\w.\s]+?\s+(St|Street|Ave?|Avenue|Way|Wa?y?|Rd|Road|Blvd?|Blv|Boulevard|Dr|Drive|Ct|Court|Ln|Lane|Cir?|Circle|Pl|Place|Pkw?y?|Pk?|Parkway|Hwy?|Highway|Ex|Expw?y?|Ter|Terrace|Sq|Square)\.?$/i.test(s)) return null;
 
   // Title case
   s = s
