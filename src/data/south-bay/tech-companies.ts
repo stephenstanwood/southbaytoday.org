@@ -1011,6 +1011,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
   {
+    id: "sambanova-series-f",
+    name: "SambaNova Systems",
+    city: "Palo Alto",
+    category: "chip",
+    round: "Series F",
+    amount: "$1B",
+    date: "2026-07-08",
+    tagline:
+      "Full-stack AI inference built on its Reconfigurable Dataflow Unit (RDU) chip — a Nvidia challenger co-founded by Stanford professors and run by CEO Rodrigo Liang. This $1B first close of a Series F values SambaNova at $11B and was led by General Atlantic, with Seligman Ventures, T. Rowe Price, Capital Group, Battery Ventures, BlackRock-managed funds, Intel Capital, and the Qatar Investment Authority joining; a second close is expected within weeks. Announced alongside the round: JPMorganChase picked SambaNova as an inference-infrastructure partner, deploying its SN40 and SN50 systems for secure, on-prem AI.",
+    color: "#7c3aed",
+    url: "https://sambanova.ai",
+  },
+  {
     id: "bespoke-labs",
     name: "Bespoke Labs",
     city: "Mountain View",
