@@ -1,60 +1,302 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-08T03:15:52.476Z",
+    "generatedAt": "2026-07-10T03:20:20.364Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 6
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 6,
-    "placesExtracted": 2,
-    "placesMatched": 1,
-    "placeGaps": 1,
-    "eventsExtracted": 1,
-    "eventsMatched": 0,
-    "eventGaps": 1,
+    "threadsMined": 14,
+    "placesExtracted": 11,
+    "placesMatched": 6,
+    "placeGaps": 5,
+    "eventsExtracted": 10,
+    "eventsMatched": 2,
+    "eventGaps": 8,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Berryessa Library",
+      "name": "ComedySportz San Jose",
       "city": "San Jose",
       "kind": "venue",
-      "context": "original library demolished, seeking historical photos",
+      "context": "live comedy improv show at Cupertino Library",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uq5y74/is_there_any_possibility_someone_has_photos_of/"
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "21st Amendment",
+      "city": "",
+      "kind": "bar",
+      "context": "brewery user enjoyed, located in San Leandro",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "Treasure Chest Gift Shop",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "Bike Tag #185 location in Willow Glen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ur73dx/free_pokemon_go_fest_event_at_santa_clara_central/",
+        "https://www.reddit.com/r/SanJose/comments/1us8sly/norway_vs_england_watchparty/",
+        "https://www.reddit.com/r/SanJose/comments/1us61pi/coming_from_out_of_town_to_take_a_lady_on_a_date/",
+        "https://www.reddit.com/r/SanJose/comments/1urfb3i/good_places_to_order_food_for_a_party/",
+        "https://www.reddit.com/r/SanJose/comments/1us9dyt/bike_tag_186_big_tent/"
+      ]
+    },
+    {
+      "name": "Gordon Biersch",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "hosts night markets with entertainment",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1us451e/sp_square_belgium_vs_spain/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jik/luchadores_at_night_market/",
+        "https://www.reddit.com/r/SanJose/comments/1urxmbc/mountain_bike_repair/",
+        "https://www.reddit.com/r/SanJose/comments/1urf6cr/going_to_san_jose_for_the_weekend/"
+      ]
+    },
+    {
+      "name": "SP Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "public gathering space for watching sports",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1us451e/sp_square_belgium_vs_spain/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jik/luchadores_at_night_market/",
+        "https://www.reddit.com/r/SanJose/comments/1urxmbc/mountain_bike_repair/",
+        "https://www.reddit.com/r/SanJose/comments/1urf6cr/going_to_san_jose_for_the_weekend/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Stand up open mic",
-      "when": "March 2025",
-      "city": "San Jose",
-      "context": "first-time stand up comedy open mic night",
+      "name": "Downtown Sunnyvale Summer Series Live Music",
+      "when": "7/8 starting at 7 PM",
+      "city": "Sunnyvale",
+      "context": "recurring summer concert series in downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uq9gzc/who_has_the_best_breakfast_burrito_in_the_south/",
-        "https://www.reddit.com/r/SanJose/comments/1upnfa7/first_time_doing_stand_up_open_mic_san_jose_march/",
-        "https://www.reddit.com/r/SanJose/comments/1uq9zz6/you_are_guilty_of_animal_cruelty_if_you_walk_your/",
-        "https://www.reddit.com/r/SanJose/comments/1uq4uvb/dining_recs_for_large_group/",
-        "https://www.reddit.com/r/SanJose/comments/1upyk72/mexico_watch_parties_were_unmatched/"
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "ComedySportz Improv Show",
+      "when": "Thursday July 9, 2:00 PM",
+      "city": "Cupertino",
+      "context": "free live high-energy comedy improv for all ages",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "Family Fun Night: Professor Pepper",
+      "when": "Thursday July 9, 7:00 PM",
+      "city": "Sunnyvale",
+      "context": "free bilingual Spanish and English magic show",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "Free Movie Night: The Incredibles",
+      "when": "weekend",
+      "city": "Campbell",
+      "context": "free outdoor movie screening in the park",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ]
+    },
+    {
+      "name": "Pokemon GO Fest",
+      "when": "July 11-12",
+      "city": "Santa Clara",
+      "context": "free event at Santa Clara Central Park",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ur73dx/free_pokemon_go_fest_event_at_santa_clara_central/",
+        "https://www.reddit.com/r/SanJose/comments/1us8sly/norway_vs_england_watchparty/",
+        "https://www.reddit.com/r/SanJose/comments/1us61pi/coming_from_out_of_town_to_take_a_lady_on_a_date/",
+        "https://www.reddit.com/r/SanJose/comments/1urfb3i/good_places_to_order_food_for_a_party/",
+        "https://www.reddit.com/r/SanJose/comments/1us9dyt/bike_tag_186_big_tent/"
+      ]
+    },
+    {
+      "name": "Bike Tag #186: Big Tent",
+      "when": "ongoing",
+      "city": "San Jose",
+      "context": "community bike scavenger hunt challenge",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ur73dx/free_pokemon_go_fest_event_at_santa_clara_central/",
+        "https://www.reddit.com/r/SanJose/comments/1us8sly/norway_vs_england_watchparty/",
+        "https://www.reddit.com/r/SanJose/comments/1us61pi/coming_from_out_of_town_to_take_a_lady_on_a_date/",
+        "https://www.reddit.com/r/SanJose/comments/1urfb3i/good_places_to_order_food_for_a_party/",
+        "https://www.reddit.com/r/SanJose/comments/1us9dyt/bike_tag_186_big_tent/"
+      ]
+    },
+    {
+      "name": "Belgium vs Spain",
+      "when": "tomorrow",
+      "city": "San Jose",
+      "context": "sports match viewing at SP Square",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1us451e/sp_square_belgium_vs_spain/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jik/luchadores_at_night_market/",
+        "https://www.reddit.com/r/SanJose/comments/1urxmbc/mountain_bike_repair/",
+        "https://www.reddit.com/r/SanJose/comments/1urf6cr/going_to_san_jose_for_the_weekend/"
+      ]
+    },
+    {
+      "name": "Gordon Biersch Night Market",
+      "when": "",
+      "city": "San Jose",
+      "context": "recurring event with luchadores entertainment",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1us451e/sp_square_belgium_vs_spain/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jik/luchadores_at_night_market/",
+        "https://www.reddit.com/r/SanJose/comments/1urxmbc/mountain_bike_repair/",
+        "https://www.reddit.com/r/SanJose/comments/1urf6cr/going_to_san_jose_for_the_weekend/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Be.Steak.A",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "recommended for large group dinner on Friday night",
+      "name": "Cupertino Library",
+      "city": "Cupertino",
+      "kind": "venue",
+      "context": "hosts ComedySportz improv and bilingual storytime events",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uq9gzc/who_has_the_best_breakfast_burrito_in_the_south/",
-        "https://www.reddit.com/r/SanJose/comments/1upnfa7/first_time_doing_stand_up_open_mic_san_jose_march/",
-        "https://www.reddit.com/r/SanJose/comments/1uq9zz6/you_are_guilty_of_animal_cruelty_if_you_walk_your/",
-        "https://www.reddit.com/r/SanJose/comments/1uq4uvb/dining_recs_for_large_group/",
-        "https://www.reddit.com/r/SanJose/comments/1upyk72/mexico_watch_parties_were_unmatched/"
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
       ],
-      "matchedName": "BE.STEAK.A"
+      "matchedName": "Cupertino Library"
+    },
+    {
+      "name": "Washington Park",
+      "city": "Sunnyvale",
+      "kind": "park",
+      "context": "hosts Family Fun Night with magic show",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ],
+      "matchedName": "Washington Park"
+    },
+    {
+      "name": "Saratoga Library",
+      "city": "Saratoga",
+      "kind": "venue",
+      "context": "hosts Mindful Me for Kids program",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ],
+      "matchedName": "Saratoga Library"
+    },
+    {
+      "name": "Campbell Park / Orchard Valley",
+      "city": "Campbell",
+      "kind": "park",
+      "context": "hosts free outdoor movie night screening",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ],
+      "matchedName": "Orchard Valley Coffee"
+    },
+    {
+      "name": "Santa Clara Central Park",
+      "city": "Santa Clara",
+      "kind": "park",
+      "context": "Pokemon GO Fest event venue July 11-12",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ur73dx/free_pokemon_go_fest_event_at_santa_clara_central/",
+        "https://www.reddit.com/r/SanJose/comments/1us8sly/norway_vs_england_watchparty/",
+        "https://www.reddit.com/r/SanJose/comments/1us61pi/coming_from_out_of_town_to_take_a_lady_on_a_date/",
+        "https://www.reddit.com/r/SanJose/comments/1urfb3i/good_places_to_order_food_for_a_party/",
+        "https://www.reddit.com/r/SanJose/comments/1us9dyt/bike_tag_186_big_tent/"
+      ],
+      "matchedName": "Central Park"
+    },
+    {
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "potential watch party location for sports",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Cupertino/comments/1ur73dx/free_pokemon_go_fest_event_at_santa_clara_central/",
+        "https://www.reddit.com/r/SanJose/comments/1us8sly/norway_vs_england_watchparty/",
+        "https://www.reddit.com/r/SanJose/comments/1us61pi/coming_from_out_of_town_to_take_a_lady_on_a_date/",
+        "https://www.reddit.com/r/SanJose/comments/1urfb3i/good_places_to_order_food_for_a_party/",
+        "https://www.reddit.com/r/SanJose/comments/1us9dyt/bike_tag_186_big_tent/"
+      ],
+      "matchedName": "San Pedro Square Market"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Mindful Me for Kids: Confidence & Affirmations",
+      "when": "Friday July 10, 4:00 PM",
+      "city": "Saratoga",
+      "context": "free mindfulness program for kids ages 5-10",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ],
+      "matchedName": "Mindful Me for Kids: Confidence & Affirmations"
+    },
+    {
+      "name": "Mandarin/English Bilingual Family Storytime",
+      "when": "Friday July 10, 7:00 PM",
+      "city": "Cupertino",
+      "context": "free storytime with songs and crafts for toddlers",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1urrzf4/downtown_sunnyvales_transformation_from_parking/",
+        "https://www.reddit.com/r/Cupertino/comments/1ur9gf2/downtown_sunnyvale_summer_series_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1us8cdn/best_neighborhoods_for_young_family/",
+        "https://www.reddit.com/r/SanJose/comments/1us3jze/breweries/",
+        "https://www.reddit.com/r/Cupertino/comments/1urvmni/fun_family_events_around_cupertino_west_valley/"
+      ],
+      "matchedName": "Mandarin/English Bilingual Family Storytime"
+    }
+  ]
 }
