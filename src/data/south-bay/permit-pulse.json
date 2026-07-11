@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-10T03:09:07.357Z",
+      "generatedAt": "2026-07-11T03:08:55.406Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 2 – Jul 9",
+      "dateRange": "Jul 3 – Jul 10",
       "stats": {
-        "total": 297,
-        "notable": 20,
-        "newUnits": 11,
-        "totalValuation": 11304840
+        "total": 349,
+        "notable": 22,
+        "newUnits": 12,
+        "totalValuation": 11593635
       },
       "permits": [
         {
@@ -111,6 +111,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-144591-RS",
+          "address": "1489 Mt Diablo Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Jadu",
+          "valuation": 84545,
+          "units": 1,
+          "issueDate": "2026-07-08",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2025-130218-RS",
           "address": "1344 Tofts Dr #2",
           "category": "residential-new",
@@ -121,35 +133,35 @@
           "units": 1,
           "issueDate": "2026-07-06",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-100479-RS",
-          "address": "3029 Bilbo Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bemp 100%) Garage Conversion to Jadu",
-          "valuation": 82009,
-          "units": 1,
-          "issueDate": "2026-07-06",
-          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-10T03:09:09.676Z",
+      "generatedAt": "2026-07-11T03:08:57.659Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 2 – Jul 9",
+      "dateRange": "Jul 3 – Jul 10",
       "stats": {
-        "total": 120,
-        "notable": 5,
+        "total": 136,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-01797",
+          "address": "634 Fulton St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-06",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-01794",
           "address": "155 California Av",
@@ -175,18 +187,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01797",
-          "address": "634 Fulton St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-06",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26PLN-00169",
           "address": "555 University Av",
           "category": "entitlement",
@@ -208,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-07",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00172",
+          "address": "4139 El Camino Wy",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Architectural Review to remove a dead Pine tree and replacement with one 24-inch box Coast Live Oak tree in the same location. Zone District: Neighborhood Commercial (CN). CEQA Status: Exempt per section 15301. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-09",
           "subtype": "Over the Counter Approved"
         }
       ]
