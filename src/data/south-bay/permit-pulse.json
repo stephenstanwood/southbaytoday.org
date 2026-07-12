@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-11T03:08:55.406Z",
+      "generatedAt": "2026-07-12T03:08:37.920Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 3 – Jul 10",
+      "dateRange": "Jul 4 – Jul 11",
       "stats": {
-        "total": 349,
-        "notable": 22,
-        "newUnits": 12,
-        "totalValuation": 11593635
+        "total": 454,
+        "notable": 30,
+        "newUnits": 21,
+        "totalValuation": 14987323
       },
       "permits": [
+        {
+          "id": "2026-123761-MF",
+          "address": "31 Isabela Tr #4",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "(Blg 4) Foundry Condo, Venture City",
+          "valuation": 1175832,
+          "units": 4,
+          "issueDate": "2026-07-09",
+          "subtype": "Condo"
+        },
         {
           "id": "2026-118910-RS",
           "address": "835 Altino Bl",
@@ -24,6 +36,18 @@
           "valuation": 512234,
           "units": 1,
           "issueDate": "2026-07-06",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-104705-RS",
+          "address": "3547 Kettmann Rd",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Lot 2 New 2-Story SFR W/ Attached Garage @ Vacant Lot 2",
+          "valuation": 511908,
+          "units": 1,
+          "issueDate": "2026-07-09",
           "subtype": "Single-Family"
         },
         {
@@ -75,8 +99,32 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2026-126621-RS",
+          "address": "795 N 2nd St #5",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "ADU Unit 5 New Detached ADU",
+          "valuation": 117686,
+          "units": 1,
+          "issueDate": "2026-07-09",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-126624-RS",
+          "address": "795 N 2nd St #6",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "ADU Unit #6 New Detached ADU",
+          "valuation": 117686,
+          "units": 1,
+          "issueDate": "2026-07-09",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2024-090448-RS",
-          "address": "1301 Weaver Dr",
+          "address": "1301 Weaver Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
@@ -85,74 +133,26 @@
           "units": 1,
           "issueDate": "2026-07-07",
           "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-103276-RS",
-          "address": "5163 Sunny Creek Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 97460,
-          "units": 1,
-          "issueDate": "2026-07-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-102990-RS",
-          "address": "4898 Caroline Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Pdox Garage Conversion + Addition to New Attach ADU",
-          "valuation": 97284,
-          "units": 1,
-          "issueDate": "2026-07-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-144591-RS",
-          "address": "1489 Mt Diablo Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Jadu",
-          "valuation": 84545,
-          "units": 1,
-          "issueDate": "2026-07-08",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-130218-RS",
-          "address": "1344 Tofts Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion Jadu",
-          "valuation": 82331,
-          "units": 1,
-          "issueDate": "2026-07-06",
-          "subtype": "2nd Unit Added"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-11T03:08:57.659Z",
+      "generatedAt": "2026-07-12T03:08:40.063Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 3 – Jul 10",
+      "dateRange": "Jul 4 – Jul 11",
       "stats": {
-        "total": 136,
-        "notable": 6,
+        "total": 160,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01797",
-          "address": "634 Fulton St",
+          "id": "26BLD-01794",
+          "address": "155 California Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -163,8 +163,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01794",
-          "address": "155 California Av",
+          "id": "26BLD-01797",
+          "address": "634 Fulton St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -184,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-08",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01817",
+          "address": "3964 Nelson Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Replace existing overhead 100 amp service with new overhead 200 amp service in the same location as the existing 100 amp panel.  Add 100 amp sub-panel in the interior of the house on the hallway wall adjacent to the kitchen.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-07",
           "subtype": "Permit Issued"
         },
         {
