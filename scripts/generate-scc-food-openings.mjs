@@ -18,6 +18,7 @@ import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { catSignal } from "./lib/notify.mjs";
+import { isAddressDerivedBusinessName } from "./lib/scc-food-openings.mjs";
 import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
 
 loadEnvLocal();
@@ -377,6 +378,7 @@ function shouldSkip(item) {
   const rawName = name.replace(/^E-\s*/i, "").trim();
 
   if (item.record_id && SOURCE_ID_SKIP.has(item.record_id)) return true;
+  if (isAddressDerivedBusinessName(rawName, item.site_location)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
@@ -739,7 +741,10 @@ async function main() {
 
   // Deduplicate by address (different units in same building stay distinct;
   // the same suite written two ways collapses to one — see addressKey)
-  const openedDeduped = dedupeByAddress(opened);
+  // Validate again after dedupe because its shared-prefix transform can create a
+  // new display name that no individual source record had.
+  const openedDeduped = dedupeByAddress(opened)
+    .filter((item) => !isAddressDerivedBusinessName(item.name, item.address));
 
   // --- Coming soon: plan approved but no final inspection yet ---
   const comingSoonRaw = await fetchPage(
@@ -769,7 +774,8 @@ async function main() {
     .filter(Boolean);
 
   // Deduplicate coming soon by address
-  const comingSoonDeduped = dedupeByAddress(comingSoon);
+  const comingSoonDeduped = dedupeByAddress(comingSoon)
+    .filter((item) => !isAddressDerivedBusinessName(item.name, item.address));
 
   // Remove items from coming-soon that are already in opened
   const openedAddresses = new Set(openedDeduped.map((i) => addressKey(i)));
