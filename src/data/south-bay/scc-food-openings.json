@@ -1,8 +1,44 @@
 {
-  "generatedAt": "2026-07-12T03:11:47.374Z",
+  "generatedAt": "2026-07-13T03:11:49.506Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [
+    {
+      "id": "opened-SR0884057",
+      "name": "Kodania Grocery Store",
+      "address": "1655 S Deanza Blvd",
+      "cityId": "cupertino",
+      "cityName": "CUPERTINO",
+      "date": "2026-07-10",
+      "status": "opened",
+      "sourceId": "SR0884057",
+      "blurb": "Korean grocery store offering prepared foods and traditional ingredients.",
+      "photoRef": "places/ChIJccAcZxu1j4ARQpxVQrim5zY/photos/Ab43m-s9b0iubJ01545EOACOBZR9ZcFTKvegGi_ebaHes9mw6odSfPDntL6bsdEIVo2S1J-WLv3sipc2Sqv5KlIre_KQQ_dlq4ld9iJHTUeNGzKF5gWiHcm6TNVhXlA8Qzp6UT1VYJPtZWgItnPZoFWEVKrIN0Eoki6aKqb2AQ4bt5r5jDbCM1LzClqwC6V6Kc1T1DLAcoaTCSO_ju_Dn1_lqkpTWdkomx0jGcx8QdGwuUsK034R3V8R8CEl2TfBYMIEapdck0RNWRpGcZbwC3486wY68tJK7rCDaD-F3f_AUxcRkNmcZQFFgpd4dY2gcKIUHJ2jXOm_SkgZUhIyqt4AT7U4-nbC2xYyB_5h-LFUWCI95ZLvJHgifdVxKGKisPgE9gfDGCc3MidHavYCNV3UY6McKE30Nr16A-wQOEwHk1DlWY4g"
+    },
+    {
+      "id": "opened-SR0884407",
+      "name": "Mian Milpitas",
+      "address": "181 W Calaveras Blvd",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-07-10",
+      "status": "opened",
+      "sourceId": "SR0884407",
+      "blurb": "Chinese noodle restaurant specializing in hand-pulled noodles and soups.",
+      "photoRef": "places/ChIJy1mNRqHJj4ARxsYYcYSQCl8/photos/AaVGc3mplUS11lZLzTWHCtA3cbK1JLjhZ5m8xZ5mh50vesGJ98hf7URKhob7CkaSYmJ04A041NiGm_sd-qJyhGUZkA8aOI-dAJ39djuUs9XgQwatToC_k01QkkCkcHWw9yL0HR9Y_IFC1hI08o6FxoAIJI4_zKzx6y39A7ARVH12cFm5dh201jnTQVm5u0w83zJpExEqOXNf40pzAXaTKzlbGCszuVuze_pCA4Wrb5e2hTCOlmnSvMDrYyH5Rb0ZAQxfpZS_D67gfdV8Gp5he8fr9peUffFfflgjKC5MI0B8T38mJudcvjp8Lse9VFXhnVA2htdtSzzPgIh7sDmrPWrjQ3uBylrNqi8KGXkiEjHT67wGFsqeJx2OBFUwb4uvZRa57zJc3bZ07YMjbVY8RGAKTg6E98pm-geJK4iqvuuxFo5oUSZg0chIsGhfEFJwnJiK"
+    },
+    {
+      "id": "opened-SR0883340",
+      "name": "Lucy's Mexican Grill",
+      "address": "2325 S. Winchester Blvd",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-07-10",
+      "status": "opened",
+      "sourceId": "SR0883340",
+      "blurb": "Mexican restaurant serving traditional grilled meats and classic dishes.",
+      "photoRef": "places/ChIJ61rGzf81joAROrGw7IFnr_Y/photos/AWCwydiR28pS8WvgwAoDV02GxCFpAEQHvvU6uqIA5JcYrmsRSTb07y-cAjgdKy8m_NTyqJ_bcY_fH6IpwW5_iBrbUnRFn-QJZo_I5bqyYzzMv5CLjbgflcRDnZVPixo6Pm9-g7dmycEAuye04IyCdA9nxQm16sJg5e6Tugl5NL2ECwf373c29bPdjBIFvTNnbolOBgLjL5uRCI8wOv54NgSYABaIy7EcFAwKo7TyCLuVFzNe6deieP5j8Ko06k2IuqctR4BiR2OaR4H5uMpe0QyI4PMapTM1xiLk6Ll8IWX60OsejEhonVy5eNFmkFYRcp0B-KZHyXbVtZHqccB0LKS_r0fw7X4mLYTJKsKyC_hKpdHPovBTL7W1xyAsMvBOKcm7Sp4Ql8O9TLvpX2Z-IUj3UHcQm0BG8ewxpbhtB9oTamY"
+    },
     {
       "id": "opened-SR0882851",
       "name": "Fomo Asian Kitchen And Bar",
@@ -12,7 +48,7 @@
       "date": "2026-07-09",
       "status": "opened",
       "sourceId": "SR0882851",
-      "blurb": "Pan-Asian cuisine and cocktails in South San Jose.",
+      "blurb": "Pan-Asian restaurant and bar offering diverse Asian cuisine and cocktails.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0882851.png"
     },
     {
@@ -24,8 +60,20 @@
       "date": "2026-07-09",
       "status": "opened",
       "sourceId": "SR0885147",
-      "blurb": "Fried chicken restaurant on North 1st Street.",
+      "blurb": "Fried chicken restaurant focusing on rotisserie and fried poultry.",
       "photoRef": "places/ChIJcXSlgXrLj4ARt4Ewwrgw2vg/photos/AaVGc3kCE8q0V_uaGv1IWgrbVjnHe35_iuN6bdvd4b4HqUDXidW8RUNFBXptJqjTYSxlI_8eWh9JxPNVUHURcRKMEnllvi9HK-xfhymaIqb0beKvIO6T_S9tWVObgg8KRwdk7_JPK4YnUYDtiAWC9q1pi3veShyCwSYLlMF2OWMq5LpRZky6heTrVgMZr0-RiS8BrtpJjWh2Jq6IdGiKNvbM63a4oar8cinI5yXWvGpUrzsC4aHuw89t03ggS34pjPqMkcMG0oMxJEnEAz5o62o1uJcjRI4D5U9UkRfW-A6O3GFphXAoG8fSHyJQIFj6roSS8Ggof5PdS9uc7OMvbak6qz48oel9TRfp-7Jse2QnAClUEMY8rX6Qd-4E2-zah3A-kSHoyxODny6_xpKov5k9VOFQnEkRnMOJlAjJS4lJ5w3TfX8duup4kJF20PJ9Qg"
+    },
+    {
+      "id": "opened-SR0884572",
+      "name": "Sweet Potato - Hmart San Jose",
+      "address": "1710 Oakland Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-07-09",
+      "status": "opened",
+      "sourceId": "SR0884572",
+      "blurb": "Korean sweet potato dessert shop inside H Mart supermarket.",
+      "photoRef": "places/ChIJAcdqHw_Mj4ARnMryRxfgTUI/photos/AaVGc3nHOtLwQikSFN-bEy4Day7iohpOWnRDxlztlHwWfrv_y46vFxg5QV2D46Mecc6eNrAFkKou9ZGn5A1rRkUUq4IQp-qNYBE2Rw2CQ_wJZxHoN8b2J1rYxFAAf8nCXiFusL43mC5n4Zg8t-eqiPQ7GkdFrt_c-MQyVCqQ9dfikX-l7mJPSNqqGQtMEjGaEwKI4qMDa_j2bPutl3Qv1fKuA1PE5Myyl2HwK6TkDR-I-U3UPeD7N-DXMsnYBxG0JmKHrL5YXdhxZLYuq_Jrv6BB-IhzkzjDMjJ4bxZWk0xJ4vbTg93NTzjzMT-hLz9Fs_BL-87ztm3N-Xq6zQ8O80SlfoQ37oAl83NgfRNJ-VTlU5fgrEeBBZgoSpcpP7Lz8LEiZVASSIdSyARiBSwIHIIDdrdPxBC0DKcZ0O7ThVBvQYyT6UiqaV3P61fGEjuncf0D"
     },
     {
       "id": "opened-SR0884059",
@@ -36,7 +84,7 @@
       "date": "2026-07-02",
       "status": "opened",
       "sourceId": "SR0884059",
-      "blurb": "Asian grocery and food market on Monterey Road.",
+      "blurb": "Asian grocery supermarket with prepared foods and international ingredients.",
       "photoRef": "places/ChIJtyma8621j4ARjeI2HR1fKQ4/photos/Ab43m-tXPDOrkcFl8rOoBXVeWCKOR7ObN86g98BUyvrhbpKBENVZJWnhDFHyv_eoI4mbFDPbaxNvf1JrC56AEkrm-6eUhFq9c0CKXHn0MHwJQ0U80x17S_F31XV_rGYAq4APa0JzHSF_33DxBm7rjkgrzKxMIsMoQqJ9fE4xLZfMDhedKXajmRZf5UJtcKX5GpMdQCBo5g_sdgGRQNBQQmIKT0ULh5MwJjc2gZ0N7rBW8iF1mwJej9FR0i3KAM5S3vDm0Q_YsYdcAinwuhtCsABmFlJypbuYW7i4yj4mUmx9-Dx4ScNPKen5FmcYM-b6NSP3Tu0BTN52bcnhZz3H4lb--L1XjG0AJEybZOVPoodHbZ2tzMTq4YdJKgVwBktFHKHiCdqDOUIEJkh1NebOUskofb8ACGKYGKrxXq0tcfp7QGbKHg"
     },
     {
@@ -48,7 +96,7 @@
       "date": "2026-07-02",
       "status": "opened",
       "sourceId": "SR0880218",
-      "blurb": "Ice cream creamery and cafe in Sunnyvale.",
+      "blurb": "Creamery and cafe offering ice cream and coffee beverages.",
       "photoRef": "places/ChIJE-eRQrDNj4AR3e4Z95l-Ru8/photos/AaVGc3mgz7kRwNGRbhCrbKEOmaDE_gXJEaCjx0u8mGi1CSeObZ5yTcA8LQG1MmPWgFSHLY5CV6JcgaRtjVcbIJFxhJUV7sfXE01NXjIRdka-wOl7OaUOUzmyqwFZF9r7-Ssar_QMEJOrCE7ePgxyAp0ZO9iJ9-o-9QNZvSm4V2elKAi7GKa8ZwCxCXT8pdBQr1ugaa7h8OGFPu2aHoIRcObl-pecG6_2kYiy_zMr02z-oH3gU3LnZ-Tr_chcJbJQSIHrVbEoQ8MhO_2DhyLeLOgmhci4wExEcK730Y7FkL5TGr_rf4XplZFoqlComB3iaz-9y7W9Cig_3PmIY8IA0hrqtSVRbhX7TnIRWpajL4_X6N7JILCoR4LoRAioJcx3pQKlNdB4qKrWRiCsX1CgbPtt9EoDwP6ndbveU0WGkU15Zhagm6cBSI1t2OA0MldYWQ"
     },
     {
@@ -60,7 +108,7 @@
       "date": "2026-06-29",
       "status": "opened",
       "sourceId": "SR0884963",
-      "blurb": "Japanese cuisine in Campbell.",
+      "blurb": "Japanese izakaya-style restaurant with small plates and Japanese cuisine.",
       "photoRef": "places/ChIJ3YYhUd40joAR3xeb6sqneBc/photos/AaVGc3loq2AehNNfqliRAztvzEbrIQzp0WjQiQo6rC1yU0Bp2L9vDv2xc-Y9WPy46Poy0GxrZUWGXf74iMWoYo47wJASgPFjx3WfM9mWFTRRJL0BaOxzBvK4T66LoEkliULSH7kHCz0YtNKHsV_VojleUO4pO3AIap2TzTb49qUV2uIyn6O4oLnzf97dqfmDIIEu4GkPOt3mfe614PrFYpnOwMuP_CWb4opNlKmo1-lmIRYoflCHEDl0Ip5aOdpp6bZ5HRozX7IJc4Yq7syUz5JmCEHwJOhqmraJ29DwHN50RH3ZFmNT2spmaapf6nyoRGToCK0Z70Dgd7CeOvT1uXlAxZSuzQLTLflqpLzNn9oFiY5s5UaqAy7NXuW3ZwhwalPbA_cEsB5sLEpGUNbsykDGdeyavcU603O7XzvuA6_ZNB0oxRCB"
     },
     {
@@ -72,7 +120,7 @@
       "date": "2026-06-26",
       "status": "opened",
       "sourceId": "SR0880341",
-      "blurb": "Chinese restaurant in Campbell on Hamilton Avenue.",
+      "blurb": "Chinese restaurant serving Sichuan and regional Chinese specialties.",
       "photoRef": "places/ChIJR3lgDDQ1joARjHsip90ur8A/photos/AaVGc3nhUCCIvXn1ay4fC26100SBnILPAPJ7ZcUHBwupoXr5Dtdbffea4A5RHcOaJLxrtEENuWduoSTUcBZhjozpqCyInNYOfGf5PIW8oSZ28nl73ix4Krcc-3JCMRqoR9gJIOGZ9ARMkY4owNKVm88i4KLDj_cRuAOmKito5ro8biMQF7k0RUj3tNO1vgczpkByRrghMw8zmIK9gvBOO1ZcWZ_OYrm2rq4cqfvudciEWU_XQXGoKOQKa0SylmOmlgXs13OH-wVq4iJkLnvmFRR4Kq1Uu4Ib3CFej4sOQo9-gqZh2eSF5hSFNxONZrkkqJzcahf9mUKdjPWq0kzAXLOFX5pk_9g8-hn6gDbcEBzkwdo9JGZEZFkOy6N8UFbYpknptqWtHaUOdYgl4_upNSZ4PSjCuFh09UZlJVaN1YIOG7CphG0"
     },
     {
@@ -84,7 +132,7 @@
       "date": "2026-06-25",
       "status": "opened",
       "sourceId": "SR0884083",
-      "blurb": "Plant-based Japanese izakaya in Palo Alto.",
+      "blurb": "Vegan Japanese izakaya offering plant-based small plates and cocktails.",
       "photoRef": "places/ChIJsZYrFAC7j4ARgZiNdSEjGsQ/photos/AaVGc3l0n_zQ30ProH5E3pSK0Gozqy1pS1yf5RvMfo8Tlz1dqEqHJ_y-iEX4TzZPsptVy19RXMDXsHOfwuhHi9DFt_1-VTsKzHOeltTZ7-ZrF0n2RJUGMNyQWXfr6YeVcR6uoJ4IGk3afVuxdE6-xFsDwEcpc3sM4_iKS25zxFOAEGYZEO3aKcvSxbfnV4dGrBn7v8apUkGH1lfiMZZQYKUkh9KboSV46pnIEPfhjN1hINOeijjnyuFHEvt5gG_6f-LqdIscWXpMK4BdbJ-Nh30QiCE0KqnPrFKfFrxLNXDDxTQBmXGpBzheJbqDTfHnQRhYb21HawTr1XYR3gDwbWLofhUsLYxkb99wioHRYXXrdN4hWjEeHDmcagl8q7RFu7imMavD9DbHWKx2QOIQv9KUjWYePa1GG2VQj6B9CeF_3Z33rY7Blm7CwCFAaff9je_b"
     },
     {
@@ -96,59 +144,47 @@
       "date": "2026-06-24",
       "status": "opened",
       "sourceId": "SR0885013",
-      "blurb": "Restaurant on Hostetter Road in San Jose.",
+      "blurb": "Asian fusion restaurant with diverse cuisine offerings and drinks.",
       "photoRef": "places/ChIJgfOovBXNj4ARQPkjlxZKvXU/photos/AaVGc3kC7WxR-lzCFX3GlGnl-qpdc_wJJwIr3hHn4FGX6lD7GOSUOlEOVQZh11gtGmrZwdGPAdZj2BEmk6hj2QBDyjT5Jq99_LN1e_v4L9PCO2hJ2h3hihO2upOxj369BD3qLP6b4QGL9wk1Ddup5Eodd3UIBnbFr9U_InQ97-8dwCncXQywuneMbCeZy-nIEArKamx55F143FyTepfdRiQ7AiMLtORO3YZ1C3zn7zpdXcsM9Td0JU0M3cyodsxs-28dXsQKHkAK-dSfhvvEjWZsSyO6dyZXrvT3GxhTX7IuAgsxY6119x6smdMkbEhINuoxSjwfI1EGM7XuP3LCa8KCG-Xw5q3IUU1--qtl6YvZTi9cfcMajfsHAPbZF-Rs9jb3fknz-Ujj5DBnwqNAqNZylFSSYlsB7od1WKVeQDwfaYwI6DOPVmGuDembE-GuJF_4"
-    },
-    {
-      "id": "opened-SR0884014",
-      "name": "Tea Annie",
-      "address": "656a Fremont Ave",
-      "cityId": "los-altos",
-      "cityName": "LOS ALTOS",
-      "date": "2026-06-15",
-      "status": "opened",
-      "sourceId": "SR0884014",
-      "blurb": "Tea cafe in Los Altos.",
-      "photoRef": "places/ChIJoSaYsCuxj4ARfRl6NsAGuNI/photos/Ab43m-s27Z-RW78r-eHkQvGD-qoRY3oh2Mo_iou8Y7D7O_oqLLrCQEPOJfdS7ZH8B6zPvQ0DTROPihHjiynFKLocJPkTnPCzUro4iL9S6uuru3z8qm7OjfWttjK71eMPQdqBmsejm0coE2kizkVELmcwEutRihJSR6DAPzFAyiiczOuWy20bfnTOikIMbSihtXgRCE6wpM14xANcLfu47e8WtUpJdUHJdWU1UokrYCsAy8L0-aqYjSBPpEY6m1Y0TgHq4NlRDoz-gS_1S0set28ccUq7HPfeJ0HDemyD-yR1Vx5STA"
-    },
-    {
-      "id": "opened-SR0881196",
-      "name": "Asia Live Main",
-      "address": "2855 Stevens Creek Blvd #1891",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-06-12",
-      "status": "opened",
-      "sourceId": "SR0881196",
-      "blurb": "Asian cuisine near Stevens Creek Boulevard.",
-      "photoRef": "places/ChIJJQPTYwDLj4ARre4QMZkusGY/photos/AaVGc3mn08ZE1SQG6hSYs7bIv7SKzb92BAzkKuqgNuiZdMD-U7_YKHiuRmE0UmrwJWwI4V48DSW46Ilj4kKHyAeeESOtj3i_tmMyrCJcNPJcgAQKVXzN-5-W2puyfPVX9MQZusHuIDarqPlwimtbr0YDPE1GEFUrNogJxFIAn6KhFrbYTij9zVn9j44sQMkNOh3UMEci6bMD-sMZfzmo7VhOp60XpT76JRxkBND8USN36jt9BmuFjyQRAIkOeU7y42y2tM0-CFmf-RyjN6VndhBfFPNyZjduVrvA-RjV_kMlUuNsel4nTfqjKBlrQWdO-LVOBia0fZi2oPwASNpNcZ0yTiAUOWCDOnR8yv2JVn-HveYm_PFbX3ZqzuxRzOFZpdDvQ8LpirwFX6Yl-DQEQM3DPiZFgchb5FqJ-mrU-I7Cx7b1Tv-vjknouzZLJ2j5kg"
-    },
-    {
-      "id": "opened-SR0880668",
-      "name": "Marufuku Ramen",
-      "address": "374 University Ave",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "date": "2026-06-12",
-      "status": "opened",
-      "sourceId": "SR0880668",
-      "blurb": "Japanese ramen restaurant in downtown Palo Alto.",
-      "photoRef": "places/ChIJH9Oh6Ug1joARJ9LCpSQLuXI/photos/AaVGc3n6dN0JpaYv43A9nb0o_jyjyG737L98QX-NWX7Jf_dsTapEEN6Ie452XJ2PXyaQvE7Rmmsj8TYKUO7kOLZPVA6YuA9kM5Hu8HfICFqfFHajUy4tDNUFl4pz4v8fDgb1kXr5r9PBk4t1G9TL2Giqlh8qQmrH9na1z7uPqFzmzL1gmr_4tB79CUk7G8FTvr6TXCDyGJjZRHkmQ0sLUCIfnAXblGkcJv_vivgwZ_Av9mGtnoNrz-ETpdOIsmO_7wbARuJoz0MO348PjuTZGlYJvNR8zC_Xi87waG0gChN_YKTxdah-8oEIiYRwa53dEq_r0D8TJnTwQxeJ7NZiVs5lY2Op7ebfjkivNWtL1qG9hIPJMT_3abuwL4nXe36voNDc5_0UUKKJ7xFiUF8Ej8w5tsSKezjSabnPMVDSzg34XkuUJhZZLo0V3_Ldff4VnfUK"
-    },
-    {
-      "id": "opened-SR0877348",
-      "name": "Chromatic Coffee Cafe",
-      "address": "460 Lincoln Ave, Ste. 10",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-06-11",
-      "status": "opened",
-      "sourceId": "SR0877348",
-      "blurb": "Coffee cafe on Lincoln Avenue in San Jose.",
-      "photoRef": "places/ChIJPcPBm6rLj4ARpj3BqKNmHGY/photos/AaVGc3m-OgNLSVI11oWq4NiRg7Ucy6IEb9QoRIT1kKXH0iCeUdLHL8udsdq0O7eJsqeVUMJAKFfztZlAwZkl0QrLvyr_eUeTNoaH7rA1Ufciq34xvn7B7N5XFFe5C8g7N6A8-DTeOozBPZ8d5vzenQPqEPWci9nwLSeWDixcFhyuGuaYdKMZlFKDH0bQonJG7HVQYN-D4OEanvlF0CKantQ3fvo5_AykmxCKQZIEai139WNDtj_fVpHYf4zySxZDmAR0Rz5dstABRITJYjja19zU1YOFiUUP8Ry3DizOEoQ_yHHDAKe2-9vdZRnZw5_8RM1O0QRvx6xBFDX0Oqnqigf3GtfNHMfse64wgPT7ymGEVY8vg3ay6DPXtu9F7Y7Uqy1ymuZ6OWrxi7LffPJUp-BX_qHgjVLDkJ4vpVqZvgqeOVzRYYtm"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0884438",
+      "name": "Golden Pin Donuts",
+      "address": "2006 S Winchester Blvd",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-07-10",
+      "status": "coming-soon",
+      "sourceId": "SR0884438",
+      "blurb": "Donut shop opening on S Winchester Blvd in Campbell.",
+      "photoRef": "places/ChIJGbPipR81joARUJS6ON0AGZQ/photos/AWCwydidh_svkUBDinnqcYczPuHEkMa9S8o5bKYe0JJmeNR_08S6Kye9SyIbMHDVSL0Qk8Nmzqp6R3a4-05lX2xRMp5sO0D46xE-AVlRIyXZuY1LWAYy_qTVRpBM9s8kalPo4S73Y3m4POPzUTitrhSoURbKcjOUoYETVlTHOYsRMIULDr-guDrYktY3r8E53IC-lBowJgZlCNK7Zn-toqJYzUD4V2z6FJW3IfGKC9zQquStrABG68agSjhJi9XGhzP9XjIo-FryZ8a2LwEXOr4AASDhnRSpHBkARYMt8jHoX5zi8z5wtAxqYFHoKQTyxbD3La0hH9XKqPwhk_t_yNiD_DNYAcS8z7pquI8CE6QdI8fG5R2l5GtLSw7YDko562dTBJbxOOjFxwj0mEdN9X-9wYsPoVGsdCXAyUUEzMQiLo-FVz8_"
+    },
+    {
+      "id": "soon-SR0884452",
+      "name": "Fujisan Sushi @ Tawa1766",
+      "address": "338 Barber Ln",
+      "cityId": "milpitas",
+      "cityName": "MILPITAS",
+      "date": "2026-07-10",
+      "status": "coming-soon",
+      "sourceId": "SR0884452",
+      "blurb": "Sushi restaurant coming to Barber Ln in Milpitas.",
+      "photoRef": "places/ChIJb0FaZ-TJj4AR-q5E8zdyfpc/photos/AWCwydh_M9jYiVbX1IOqv6vWlyGiIEz5pn7fqnfsPen-M43o2uipIpEYG9YFA0gXQQl7xbuA3kPNEW6aNtziYxSQ_7Z7qQfQXWff_samrUz2Ru6yAHMeUDbb7Ncm-ssbuIUujC2MHa-MGOryQl2hfZ1flryn2KHZG_211SE8We-ZBJXWIDBRhWt99MMj8elI-sq24fhnh8AF-JOZfm3Bw93_2xXRsusxmH2mBgB84i_mM9UEPxCYICWXQ_ep7xrrBtv9o9Jq1QF-fN7qD_XFf8lxY7WDpe1q0WR-HvDJ4WNODItgVn-GAPiOfz3bFq-e2UFCAxVX1_SSzKNU948ko5Jx5Fi-l3W_lzCPSDexqLYAe-TDE2mfjT8xcTa8n1r2ZCWEcwEo98ndFCIUTsrp7acm2ZfauC__9lxLUIeyZMFNfjaRpgpusYueBG2Q0R5LMw"
+    },
+    {
+      "id": "soon-SR0884738",
+      "name": "Jersey Mike's Subs",
+      "address": "1790 S. Bascom Ave, Ste. #100",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "date": "2026-07-10",
+      "status": "coming-soon",
+      "sourceId": "SR0884738",
+      "blurb": "Submarine sandwich chain opening on S Bascom Ave in Campbell.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884738.png"
+    },
     {
       "id": "soon-SR0884919",
       "name": "Ikitchens",
@@ -158,7 +194,7 @@
       "date": "2026-07-09",
       "status": "coming-soon",
       "sourceId": "SR0884919",
-      "blurb": "Cloud kitchen concept opening on Service St in San Jose.",
+      "blurb": "Cloud kitchen concept coming to Service St in San Jose.",
       "photoRef": "places/ChIJkV6j0HjMj4ARMpeaB_OOpNA/photos/AWCwydhmLUpR1K9THqFp9UL0plIdYVXQASXxGtn7PMDE0You3qlM39ajxz-G_S5bZgY0WAwKrS5AoCfwm97tSXNTvMBu_AAQ15AMZBoAXo5kHFVX43YC2shA3JJfuEzebidppEHVpjSyx95rb9cWGzqyV9jZM5xwkUnsE7bgJ5Uvgnz_U097RMFRC5JWo-T_y9Vv6ZQPmTxq_9GmldRHIs06JW5oyq0xDl19kg-C8eHjYUgjRe7qy3lHFaEGclB4GQemcFTxF0FDPecLrL7tEOsumpUwGgE8lDIgWV8vF627KTCPBMl5SFOyi5bwe4JkSpfG91Kfxe8esv_j5BNblx32ua1ZT-tN6CKtR-Cb_0w_S_lc4pQPragLgq4foffpExyfWwc7AwB4FL6H2cILj1lkh9w51W4wsnDRIpUJKcQ4wkDqNsW3"
     },
     {
@@ -170,7 +206,7 @@
       "date": "2026-07-09",
       "status": "coming-soon",
       "sourceId": "SR0885274",
-      "blurb": "Michoacan-style Mexican cuisine coming to East Santa Clara St.",
+      "blurb": "Michoacan-style Mexican restaurant on E Santa Clara St in San Jose.",
       "photoRef": "places/ChIJn1Gz6EzNj4ARXkvGHyo7aG4/photos/AWCwydjfal-lJLwCIIw5SH06yFr5AUxwNPN-a3RUUI7lZ9q8S7RUDU0QoS-DyzJMmFPDgjj8YMjMOVoheQD-ubjeEUK3P5K6z-TUTloRn7TZS3FUAweqroNPGBpFNe62KLCgwrWLHMe5Hu-rhnHpVWkVOjTirPOgpXB_z5HdlbieOdp1oOJsNkRONHloQSTcGcCURDRV140m6EQrGdoGhORpIoSWRDFXPZ0AAESd7NI7tr2pUUd97FokVL1gPBDlUdyxip2fLpSJbpXcCv3JXEcpRkkIquc_E9Wb-_hWdOWQTIcgP795ESEVB75uAMCwUngvSa0VZMPWm9C1QXgwXpi3iKloAZY3i4KSlgdVZ6P4D76eClzIW0ZVcahfDGh6FUIr9iWXYM24xavNrRA2L-J2jp2AqOUVDzqviJ9NCPxjZfkGNTD6PMMzfXZ9CJLuQA"
     },
     {
@@ -182,7 +218,7 @@
       "date": "2026-07-08",
       "status": "coming-soon",
       "sourceId": "SR0884724",
-      "blurb": "Italian gelato shop opening at El Paseo in Saratoga.",
+      "blurb": "Gelato shop opening on El Paseo in Saratoga.",
       "photoRef": "places/ChIJW5Ondc_Lj4ARJAwUecl7o3s/photos/AWCwydix02lOHP6kTFzl67jG3pfoR_zM3ENzbq9VosOo4ixyRbmbsAU-JXcw7uwgxLwM2INGCynquaSrCEim59FUVcdUTkT05FsK48WdLw52RGwMho6bCusKdAwB8JbeojMTFtZCCJK44csTU2W1H5IudBpCyw0VDRQArmzCwSmz0lAU0zlFNcQVvLMvLY4cXo5AQ3kcw8gB17oZEgm1KtZT_qGD6TBIlD4jPSxKWWs0C3ihtoml7V8PtuSRKDhjSAaHgTKkFkdBDekYcR6BdXgEk0e4M--0dCd_f34taYXMjgdplDHiSnJB3kKCJ3vzq5EnnP3dr1rkjmYVdUausDDBLfF5OF8ZbEk9PtRk59N_Db0KnFutnVin1A5IbdQv7y2mKqegCeuAWO_EiV56hBwsSh19FE278Ipm-CCoxPW39gMnIN3H01Y55u3su6o1Xw"
     },
     {
@@ -198,6 +234,18 @@
       "photoRef": "places/ChIJpSSFIx0zjoARJW1stv2JzVg/photos/AWCwydiwdqDO6ZGfgWmA-dciTYRBPMqH8wU9mPhGL9bto8GpoXWr8KJ6N7z7_a4hJIVfFZ1uYo3rX9KN6onAmmIga-gt1aWrsxMn8qyAklKUXg5_E7NT3AiOpqfjTQ7MWJx8RGhFfbEKFOAnKZj5R6vwmVVljdyYZve10pE3_OhzILWRFaGG57DtTVL0Yrh7biO_Z0EQtJMVZ12fxvV9fRk-SgsDQIpbY-yBNvF67ez7A43kMhCIgWHbp1Gv8dyEm6VUUfFr8TyG_hFgv2bovBLq4RFhqIyRAgALWRBS-Fai24Qu4uk4EUaxcsfNEbjCfpeM46YgWH7A5q4cqOaZ4goSTnWpwylUVN3x6HzzrbdwuxZw4bt8fK8Y_UmXF-Py26MwUVs9rPd-4A4kuVT4QtEZZ-9W5VIqXuyUH5CiOC6VRTA1DQ"
     },
     {
+      "id": "soon-SR0885280",
+      "name": "Afc Sushi @ Santa Clara University",
+      "address": "301 Market St",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "date": "2026-07-07",
+      "status": "coming-soon",
+      "sourceId": "SR0885280",
+      "blurb": "Sushi restaurant opening on Market St in Santa Clara.",
+      "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AaVGc3muY7fYfooo0Gct20BvHBWfAHcDh5Q5he_gtouC-m_9T2TOoJCmWAkm-wAeQgaKC6xz-F0evgJfjFaQS3q3Oe9_QT7AlPQXYpqOgY7fXxZrcUq-oo9IrDsrMTRp2w33MUtJKcj8nbT2gpJ8QiXt7r3DGXDd5e1D2H91kcOQtnfOaosQZRUwQT1mXOpE3HiOGbG1fXkvRvVXeGD5-8saEOWkpKD1-or_KUwZrEGaKCfBjpel2Uy_WGn7n005OdPyqeaDivKcgNhtmWoDGoCkS2ilOogvbiKa4rg9SyP2DqUyYO94JSRXfLGBNd1lb9OwCxjsyDmQAjtGS4QsBjR0polE08WNyvJmg7VHU66wCpWW5cIk2L4t4VeZWwsfdRKq_9jzXXbCp0haRqU96t_5trCmiR0Iaah-8Nj7XLgj-6KZYg"
+    },
+    {
       "id": "soon-SR0885247",
       "name": "Tapioca Express",
       "address": "2200 Eastridge Lp, Ste. 2000",
@@ -206,7 +254,7 @@
       "date": "2026-07-06",
       "status": "coming-soon",
       "sourceId": "SR0885247",
-      "blurb": "Bubble tea chain opening at Eastridge Loop in San Jose.",
+      "blurb": "Bubble tea chain coming to Eastridge Loop in San Jose.",
       "photoRef": "places/ChIJ7zia-APNj4ARLDc9M0R3GEs/photos/AaVGc3nnxLMzjWXRABe3v8TleGC80MheumFmT2op7sRoEYC_P0ow9k0yiQJnVLPOhqHHnBbkEZcRMCZcBIo9Ng3m1biqkIbeG2WNg2Uq58sXhXTfG_E8dWekQ7hh7HMs8GT3pURDy3aSjtpGzwjCqRqA0Aijm1Fy_6KV__Q_Tw3qVyj3buOubMve5_TZnTtrnyIwkgcKk5wkvDFgk2QixPmB7fahtH5I_MPnbQjR2mvq5wLWHmHbCKuJARKHsGEADn-UaufkNH8yocfv4U-hFAP7fFpqy5qIK0n0SQ3aIPP0YcBVgc_n1S5gyy4YK8cP7lXQWXn1WdMu00WOWA2MOd1dO9b0K86-jz_x6-tSciYl9nlmXfts_eIeIJGzXVfUOVnK22JZh5BdOKXgWaQL8Gvj1OcM76aUsPX9CwcfofB0cmaaAZCa"
     },
     {
@@ -218,20 +266,8 @@
       "date": "2026-07-06",
       "status": "coming-soon",
       "sourceId": "SR0880594",
-      "blurb": "French pastry and croissant shop coming to Palo Alto.",
+      "blurb": "French pastry and croissant shop opening in Palo Alto.",
       "photoRef": "places/ChIJz7ah-VbLj4ARP9DUpzYVtGs/photos/AaVGc3k4UMNN6VmEQ8yu5v3AHhNLGJiG7FxztokbGPeznd7ERmuWFk6OQAgZN6Cs7bUTabW3WQwDyifRLnFMzYrXHSWsnIhJt63gNgyn5Rdtau3Gn4fLfRx26hklAZLtRyQFMVgHJLuedOosP4ZkjtVYZp5_LMqAX8EnHwgAEwhpdDUJYPY6jlf43-Fv-8yt1lbMf6Ytj0hDghwRj-V4oeAYfD9wXGZNG0QwXmy1vEze3MOnBDu0T0NjFHAjHPjWMSLlDiJXMkh-9HHGpiPXkwe0jmJszMaPVF-MQKaGUprUYxaXvyp-U56onxfhzCAp7rDivvnMEby0xIxxebsEnNd3iLoogM7qT4VgWlH0Wd422r1vaRZKThuMLIc4MmWIRPtMIvwwvLNbPF3G99eAXtKk9ZpBd-XNxpGMf0Vc8r2F6chZBdbW"
-    },
-    {
-      "id": "soon-SR0884174",
-      "name": "Daily Obsessions Coffee Company",
-      "address": "312 Gates Dr., Ste. 190",
-      "cityId": "milpitas",
-      "cityName": "MILPITAS",
-      "date": "2026-07-06",
-      "status": "coming-soon",
-      "sourceId": "SR0884174",
-      "blurb": "Coffee shop opening on Gates Dr. in Milpitas.",
-      "photoRef": "places/ChIJISFh3b_Nj4ARL6-JTPfQcCA/photos/AWCwydj7jYsGIte1Y6lUxRB9zNoGT72C8nhO2Ns1Z26ZAB0e0SPb8qvyWfOg3AHCO1kD0ktYlU_KRT1vrn4iSPMP5izcOzjHbGHy6n4Fxk-oXFMYrn66Vj_I658wna-Q_-kH7X2uZFmBJb1uY-gjUifvUMnQFOg_2Th-m43EGABg6kdo-9gxqPeBmI-EuhAFuEDU-hUjxj0cxPRGhJrZUtLdNrDXkNEwrxQ-ZFfx-Qsk8vgbgcYb-iLrlgsUePeBNLX025DHN3RIH1l-lWGMU3V45ZIMt5aifod9Hb2I4Te3d20O-bD9AjCa2WDWdmSXluymliECjiBwns3iQX4e-NPFL_OGUPO8C3phpVpKfzfF4WuqEk8d38TiRo5iuzFwCh6rl_b097W8EVYJf6tKOsoL8kS7pQ4fad34_mz4aevRkzT4QbNOl_KugkJMi_5h36W5"
     },
     {
       "id": "soon-SR0884723",
@@ -242,44 +278,20 @@
       "date": "2026-07-06",
       "status": "coming-soon",
       "sourceId": "SR0884723",
-      "blurb": "Middle Eastern dessert and beverage spot on El Camino Real.",
+      "blurb": "Middle Eastern dessert and beverage shop on El Camino Real.",
       "photoRef": "places/ChIJkQw9OzfJj4AR2J4FzujomJE/photos/AWCwydhzbvaezUOtxH014W9RUKtwniRxrFpLY5o_q5U61QT_hJNhNmqehQnBgZb8-xd9XMP0G67qKMxVlppjmKjx_t4O6jpWxKxPgyjjaXLfWaW4wzZrOPSYpoG9n8a1s5eDCRI1KGkJ_4lU4z53v_nV0zDxuksv-3cWD8eIo6uwJS81waCQ-tfFFTzzkrdhnjjOSHYergzrXht01etWV2H4S_mx0f8bMhmeMjneTXnKztyxgizkDRiHa5bAsbFVnJSDkCGpzF6cpTXwoafec2EK5rf99H0XfnmebcotWyYK9VIJY8dj_E1fEoUV3cXpiWXxofg-1BBX2jkZQaQqsxd-3voZf8Z2sTBI9U0xrKtzLGsq-B4nMtRoQcHeL4FpWL_wFSybZzb48WzVb6njy2Lhth5vw2NfGTB_vRU7w3vP7SoO-81azriDqCTTlYD6NU8h"
     },
     {
-      "id": "soon-SR0883198",
-      "name": "Da Vien",
-      "address": "10 E. Hamilton Ave, Ste. 800",
-      "cityId": "campbell",
-      "cityName": "CAMPBELL",
-      "date": "2026-07-06",
-      "status": "coming-soon",
-      "sourceId": "SR0883198",
-      "blurb": "Vietnamese restaurant opening on East Hamilton Ave in Campbell.",
-      "photoRef": "places/ChIJ_w2rYFzJj4ARJQQleM0qBUo/photos/AaVGc3nFCxfUi65ZLiuVC4tii-J0iKkfN257FI3abplZGXo6POcs2s_IzfGEHEf5y1NLgv11nYOJV4jzukCISfDxMdCSRFVfWzHCKqaX2nB_BSf6ndfCedsBMV3tNK9P1qrJQuDaIzxac7KkYeJA4lboglnZS0e2z8JU0UidJ5vRHxlXt-KdhSdEsO84Ydc9lVJc4g0eBUcyaMyvxwC7hr8jJXqamwcGE3QR4wq05qSTbdr3TWIXzmUZfbm5llwRWOadSOc_S0uSmLIXmsjNF8VPhLw1AkcQgnaPLbqUmVSxZKpuIMmsEcJ0q4qlm2FPaze6WOjfW5Ua1qyCn2qQWxF_-BvZJbTgsSuFzGwJhg_vHkt9MFzAujVW1TrwW4D5pSD_dVS5w9U3A-Xej0Dp9n-8tOD09oHVIsza6fONOu9_-4aZBs3iTP8foLYuT8UoF7wP"
-    },
-    {
-      "id": "soon-SR0885305",
-      "name": "Saivam",
-      "address": "1828 N Milpitas Blvd",
+      "id": "soon-SR0884174",
+      "name": "Daily Obsessions Coffee Company",
+      "address": "312 Gates Dr., Ste. 190",
       "cityId": "milpitas",
       "cityName": "MILPITAS",
-      "date": "2026-06-30",
+      "date": "2026-07-06",
       "status": "coming-soon",
-      "sourceId": "SR0885305",
-      "blurb": "Indian cuisine coming to North Milpitas Blvd in Milpitas.",
-      "photoRef": "places/ChIJy1mNRqHJj4ARxsYYcYSQCl8/photos/AaVGc3nk6_gwTg3RFST3g98Gs7DVCU6TozS58v6LDU1iT52A_KXVQQXVhPTqq2lsj_PKa5Db3xglaLNXq8ND9_4t4b_qCMLO9UVfdlS35G0j13UpjZeu7jijPC57PkgxuIQjU9mW5x7L5NCj50PrJ2vqfWsvKtP9LIX7Ml5hmnimgIhwn6SsvAceARW_Q2Q__At-QfYU3FFS0hF_V25nCww0lIzFqqSeLkosPERibOObW0CHN4iXHJqt7iVDoZ4du6Bva9O6XjrV_Gltxh5P8Dnc-Fi2wwefpPmYbpw49iMvXlawOG97s1p9jN-Tl-x-Y_W9xvy0PYZUm8oWHLfYc89TQpf1EhvHmlP5VScVq8kiqja-rdarY40oRg0uZw5Elsqr9Y0_UPVtMEzDXp8ivj4SGCRzxDePwi7NZHZ6OLDl6DdO9P72T3VseMMhRX_PDOPv"
-    },
-    {
-      "id": "soon-SR0884769",
-      "name": "Bistro Demiya",
-      "address": "407 Lytton Ave",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "date": "2026-06-29",
-      "status": "coming-soon",
-      "sourceId": "SR0884769",
-      "blurb": "Bistro restaurant opening at Lytton Ave in Palo Alto.",
-      "photoRef": "places/ChIJK0feIwC7j4ARdzkM8Fl0a3w/photos/AaVGc3lNVhW2V00SbLfck_kAofxALFAaGqrLD1yAgbz73SWyPLhPaLJPCYO8qdw13mCs_SlIawzPvrvQx2a06gu6imSqHYi9CFr0UQwZ7JaPwiERnwaZ8BfHNczstAYH3bVvaEtq5eQrMjflFHf1Hsmew7g6q8DvvJAgbKx91rMkC6m-eu9gKArUmNAMlWQb-DTpB5BGAGmWzAn2SstBFxFizC0pl3NEqkfo8XAjPWsW1uG0orzUNtQPs4cxgTsH0JO2tSOXH8ii3VK0xckKeTljhNm9sc0IwW1tFeOjZ2dsRaG1rzK2U4jzFL9PHUz206WFXhbe6cP_vOawdzCiCM83zZwv-kzJcIYlBVD129MRgyRTVxaWwOj-NEI7J12pMsx3PmEd3THKPUMu9XiYyHCfSbVsFsptAFq81BtbuXgbnSTP3tR3F0zF0YtvBGenv2s1"
+      "sourceId": "SR0884174",
+      "blurb": "Coffee shop coming to Gates Dr in Milpitas.",
+      "photoRef": "places/ChIJISFh3b_Nj4ARL6-JTPfQcCA/photos/AWCwydj7jYsGIte1Y6lUxRB9zNoGT72C8nhO2Ns1Z26ZAB0e0SPb8qvyWfOg3AHCO1kD0ktYlU_KRT1vrn4iSPMP5izcOzjHbGHy6n4Fxk-oXFMYrn66Vj_I658wna-Q_-kH7X2uZFmBJb1uY-gjUifvUMnQFOg_2Th-m43EGABg6kdo-9gxqPeBmI-EuhAFuEDU-hUjxj0cxPRGhJrZUtLdNrDXkNEwrxQ-ZFfx-Qsk8vgbgcYb-iLrlgsUePeBNLX025DHN3RIH1l-lWGMU3V45ZIMt5aifod9Hb2I4Te3d20O-bD9AjCa2WDWdmSXluymliECjiBwns3iQX4e-NPFL_OGUPO8C3phpVpKfzfF4WuqEk8d38TiRo5iuzFwCh6rl_b097W8EVYJf6tKOsoL8kS7pQ4fad34_mz4aevRkzT4QbNOl_KugkJMi_5h36W5"
     }
   ]
 }
