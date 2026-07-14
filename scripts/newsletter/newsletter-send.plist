@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Daily newsletter send — 6:00 AM PT, every day.
+  Daily newsletter send — job starts 5:50 AM PT so the email lands ~6:00.
+  (The Fable editorial pass takes ~7-8 minutes; a timeout degrades to the
+  deterministic build, never a missed send.)
 
   Install on the Mini:
     cp scripts/newsletter/newsletter-send.plist ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
-    launchctl load ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
+    launchctl bootout gui/$(id -u)/org.southbaytoday.newsletter-send 2>/dev/null || true
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
 
   Logs: /tmp/sbt-newsletter-send.{out,err}.log
 -->
@@ -26,9 +29,9 @@
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>6</integer>
+        <integer>5</integer>
         <key>Minute</key>
-        <integer>0</integer>
+        <integer>50</integer>
     </dict>
 
     <key>StandardOutPath</key>
