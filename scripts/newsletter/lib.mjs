@@ -619,13 +619,15 @@ function isLocalRedditSub(sub) {
   return LOCAL_REDDIT_SUBS.has(String(sub || "").toLowerCase());
 }
 
+// RSS carries no vote/comment counts (Reddit's unauthenticated .json API 403s —
+// see generate-reddit-pulse.mjs), so every post lands here with score:0/
+// numComments:0. Ranking leans on locality + recency only; `index` is the
+// post's rank in loadRedditPulse().posts, which is already recency-sorted.
 function scoreRedditPost(post, index) {
   const title = `${post.displayTitle || post.title || ""} ${post.summary || ""}`;
-  let score = Math.max(0, 40 - index);
+  let score = Math.max(0, 60 - index * 4);
   if (isLocalRedditSub(post.sub)) score += 45;
   if (LOCAL_REDDIT_TERMS.test(title)) score += 30;
-  if (post.numComments) score += Math.min(25, Math.log2(post.numComments + 1) * 5);
-  if (post.score) score += Math.min(15, Math.log2(post.score + 1) * 2);
   if (!isLocalRedditSub(post.sub) && !LOCAL_REDDIT_TERMS.test(title)) score -= 70;
   return score;
 }
