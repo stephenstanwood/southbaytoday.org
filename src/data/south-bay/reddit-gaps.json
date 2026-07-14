@@ -1,99 +1,195 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-12T03:15:31.842Z",
+    "generatedAt": "2026-07-14T03:35:47.107Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 14
   },
   "summary": {
     "threadsMined": 14,
-    "placesExtracted": 5,
-    "placesMatched": 0,
+    "placesExtracted": 8,
+    "placesMatched": 3,
     "placeGaps": 5,
-    "eventsExtracted": 1,
+    "eventsExtracted": 5,
     "eventsMatched": 0,
-    "eventGaps": 1,
+    "eventGaps": 5,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Educational Park Library",
+      "name": "Rooster T Feathers Comedy Club",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "hosts Roosters Comedy Showcase weekly on Wednesdays",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ]
+    },
+    {
+      "name": "Lick Observatory",
+      "city": "",
+      "kind": "venue",
+      "context": "46th Annual Summer Series concert tickets",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ]
+    },
+    {
+      "name": "Plato's",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "consignment shop for used clothing",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvsfju/play_based_weekend_chinese_classes_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1uvmhfa/where_to_donatesell_used_like_new_items/",
+        "https://www.reddit.com/r/SanJose/comments/1uvj2hl/place_to_get_a_photo_from_a_camera_framed/",
+        "https://www.reddit.com/r/santaclara/comments/1uvguxs/pickup_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1uvek06/england_vs_argentina_watch_party_lications/"
+      ]
+    },
+    {
+      "name": "Goodwill",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "donation option for decluttering items",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvsfju/play_based_weekend_chinese_classes_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1uvmhfa/where_to_donatesell_used_like_new_items/",
+        "https://www.reddit.com/r/SanJose/comments/1uvj2hl/place_to_get_a_photo_from_a_camera_framed/",
+        "https://www.reddit.com/r/santaclara/comments/1uvguxs/pickup_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1uvek06/england_vs_argentina_watch_party_lications/"
+      ]
+    },
+    {
+      "name": "Discovery Meadows",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Trunk or Treat event in October",
+      "context": "potential venue for soccer watch parties",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uu3ksd/things_to_do_at_night_not_involving_drinking/",
-        "https://www.reddit.com/r/SanJose/comments/1utqvra/recruiting_for_trunk_or_treat_sjpl_educational/",
-        "https://www.reddit.com/r/SanJose/comments/1utzns6/trance_rave_for_under_18/",
-        "https://www.reddit.com/r/mountainview/comments/1utvtn7/local_stores_for_lehengas/",
-        "https://www.reddit.com/r/SanJose/comments/1utoq6f/love_island_watch_party/"
-      ]
-    },
-    {
-      "name": "Mas Locos Cantina",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "hosting Love Island Season 8 finale watch party",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uu3ksd/things_to_do_at_night_not_involving_drinking/",
-        "https://www.reddit.com/r/SanJose/comments/1utqvra/recruiting_for_trunk_or_treat_sjpl_educational/",
-        "https://www.reddit.com/r/SanJose/comments/1utzns6/trance_rave_for_under_18/",
-        "https://www.reddit.com/r/mountainview/comments/1utvtn7/local_stores_for_lehengas/",
-        "https://www.reddit.com/r/SanJose/comments/1utoq6f/love_island_watch_party/"
-      ]
-    },
-    {
-      "name": "Maker Nexus",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "makerspace with woodworking and metalworking tools",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1utmoa4/makerspace_for_wood_or_metal_working/",
-        "https://www.reddit.com/r/mountainview/comments/1utcwg0/soccer_pick_up_groups/",
-        "https://www.reddit.com/r/SanJose/comments/1utap0b/biking_group_and_making_friends_in_general/",
-        "https://www.reddit.com/r/SanJose/comments/1utyrzj/best_places_to_find_oversized_beanbag_or_foam/",
-        "https://www.reddit.com/r/SanJose/comments/1utwo7t/looking_for_hair_models/"
-      ]
-    },
-    {
-      "name": "Shoreline Amphitheater",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "concert and event venue with breast pump policies",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1utwkvf/shoreline_amphitheater_breast_pump_policies/",
-        "https://www.reddit.com/r/mountainview/comments/1utvqz7/any_bars_to_watch_ufc_329_tonight/",
-        "https://www.reddit.com/r/mountainview/comments/1utsjb1/anyone_watching_the_england_match/",
-        "https://www.reddit.com/r/mountainview/comments/1utbtde/places_to_sell_my_clothes_recommendations/"
-      ]
-    },
-    {
-      "name": "St Stevens",
-      "city": "Mountain View",
-      "kind": "bar",
-      "context": "sports bar showing England football matches",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1utwkvf/shoreline_amphitheater_breast_pump_policies/",
-        "https://www.reddit.com/r/mountainview/comments/1utvqz7/any_bars_to_watch_ufc_329_tonight/",
-        "https://www.reddit.com/r/mountainview/comments/1utsjb1/anyone_watching_the_england_match/",
-        "https://www.reddit.com/r/mountainview/comments/1utbtde/places_to_sell_my_clothes_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1uvsfju/play_based_weekend_chinese_classes_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1uvmhfa/where_to_donatesell_used_like_new_items/",
+        "https://www.reddit.com/r/SanJose/comments/1uvj2hl/place_to_get_a_photo_from_a_camera_framed/",
+        "https://www.reddit.com/r/santaclara/comments/1uvguxs/pickup_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1uvek06/england_vs_argentina_watch_party_lications/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Trunk or Treat, SJPL @ Educational Park Library",
-      "when": "October 24th or 31st",
-      "city": "San Jose",
-      "context": "volunteer-driven Halloween giveaway event in parking lot",
+      "name": "Roosters Comedy Showcase",
+      "when": "Wednesday 7/15 8PM-9PM",
+      "city": "Sunnyvale",
+      "context": "weekly showcase of Bay Area comedic talent",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1uu3ksd/things_to_do_at_night_not_involving_drinking/",
-        "https://www.reddit.com/r/SanJose/comments/1utqvra/recruiting_for_trunk_or_treat_sjpl_educational/",
-        "https://www.reddit.com/r/SanJose/comments/1utzns6/trance_rave_for_under_18/",
-        "https://www.reddit.com/r/mountainview/comments/1utvtn7/local_stores_for_lehengas/",
-        "https://www.reddit.com/r/SanJose/comments/1utoq6f/love_island_watch_party/"
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ]
+    },
+    {
+      "name": "The Odyssey in IMAX",
+      "when": "Thursday 7/16 4:30PM",
+      "city": "San Jose",
+      "context": "Christopher Nolan film screening at The Tech Interactive",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ]
+    },
+    {
+      "name": "Lick Observatory - The 46th Annual Summer Series",
+      "when": "dates not specified",
+      "city": "",
+      "context": "concert series with sold-out ticket dates",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ]
+    },
+    {
+      "name": "England vs Argentina watch party",
+      "when": "semi finals (unspecified date)",
+      "city": "San Jose",
+      "context": "soccer match viewing event at local venues",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvsfju/play_based_weekend_chinese_classes_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1uvmhfa/where_to_donatesell_used_like_new_items/",
+        "https://www.reddit.com/r/SanJose/comments/1uvj2hl/place_to_get_a_photo_from_a_camera_framed/",
+        "https://www.reddit.com/r/santaclara/comments/1uvguxs/pickup_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1uvek06/england_vs_argentina_watch_party_lications/"
+      ]
+    },
+    {
+      "name": "FREE Watch Parties for the Quarterfinals",
+      "when": "",
+      "city": "Santa Clara",
+      "context": "free watch parties event in Santa Clara",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uv7ta6/emt_classes_at_mission_college/",
+        "https://www.reddit.com/r/santaclara/comments/1uv0y8e/apartment_recs_in_santa_clarasunnyvale_area/",
+        "https://www.reddit.com/r/SanJose/comments/1uv0due/adult_education_and_making_friends_in_the_30s/",
+        "https://www.reddit.com/r/santaclara/comments/1utucdx/free_watch_parties_for_the_quarterfinals/"
       ]
     }
   ],
-  "placeMatches": [],
+  "placeMatches": [
+    {
+      "name": "The Tech Interactive",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "screening The Odyssey in IMAX dome theater",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ],
+      "matchedName": "The Tech Interactive"
+    },
+    {
+      "name": "Memorial Park",
+      "city": "Cupertino",
+      "kind": "park",
+      "context": "pickleball courts with drop-in play opportunities",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvu7a3/things_to_do_in_san_jose_this_week_715_718_2026/",
+        "https://www.reddit.com/r/santaclara/comments/1uvny37/if_there_were_a_hyper_local_santa_clara_page_or/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk76c/lick_observatory_the_46th_annual_summer_series/",
+        "https://www.reddit.com/r/SanJose/comments/1uvk2mv/clothing_swap/",
+        "https://www.reddit.com/r/santaclara/comments/1uusdvr/dropin_pickleball_options_in_the_south_bay/"
+      ],
+      "matchedName": "Cupertino Memorial Park"
+    },
+    {
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosting soccer watch party events",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1uvsfju/play_based_weekend_chinese_classes_for_kids/",
+        "https://www.reddit.com/r/SanJose/comments/1uvmhfa/where_to_donatesell_used_like_new_items/",
+        "https://www.reddit.com/r/SanJose/comments/1uvj2hl/place_to_get_a_photo_from_a_camera_framed/",
+        "https://www.reddit.com/r/santaclara/comments/1uvguxs/pickup_soccer_games/",
+        "https://www.reddit.com/r/SanJose/comments/1uvek06/england_vs_argentina_watch_party_lications/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    }
+  ],
   "eventMatches": []
 }
