@@ -10,6 +10,8 @@ import { join } from "node:path";
 import { loadEnvLocal } from "../lib/env.mjs";
 import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
 import { writeFileAtomic } from "../lib/io.mjs";
+import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../src/lib/south-bay/weatherProvider.mjs";
+import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 
 loadEnvLocal();
 
@@ -96,55 +98,28 @@ export function loadOpenings() {
   return loadOptional(ARTIFACTS.foodOpenings, { opened: [] }, "openings");
 }
 
-// ── Weather (Open-Meteo, no key) ───────────────────────────────────────────
-
-const WMO = {
-  0:  ["☀️", "Clear sky"], 1:  ["🌤", "Mostly clear"], 2:  ["⛅", "Partly cloudy"], 3:  ["☁️", "Overcast"],
-  45: ["🌫️", "Fog"], 48: ["🌫", "Freezing fog"],
-  51: ["🌦", "Light drizzle"], 53: ["🌦", "Drizzle"], 55: ["🌧", "Heavy drizzle"],
-  61: ["🌧", "Light rain"], 63: ["🌧", "Rain"], 65: ["🌧", "Heavy rain"],
-  71: ["🌨", "Light snow"], 73: ["🌨", "Snow"], 75: ["🌨", "Heavy snow"],
-  80: ["🌦", "Rain showers"], 81: ["🌧", "Rain showers"], 82: ["⛈", "Heavy showers"],
-  95: ["⛈", "Thunderstorm"], 96: ["⛈", "Thunderstorm + hail"], 99: ["⛈", "Thunderstorm + hail"],
-};
-
-function forecastEmoji(code, cloudCoverMean, rainPct) {
-  if (code >= 51) return WMO[code] || ["🌡", "Unknown"];
-  if ((rainPct ?? 0) >= 50) return WMO[code >= 51 ? code : 61] || ["🌧", "Rain"];
-  const cc = cloudCoverMean ?? -1;
-  if (cc < 0) {
-    if (code === 0) return ["☀️", "Sunny"];
-    if (code === 1) return ["☀️", "Mostly sunny"];
-    if (code === 2) return ["🌤", "Mostly sunny"];
-    if (code === 3) return ["⛅", "Partly cloudy"];
-    return WMO[code] || ["🌡", "Unknown"];
-  }
-  if (cc < 25) return ["☀️", "Sunny"];
-  if (cc < 55) return ["🌤", "Mostly sunny"];
-  if (cc < 80) return ["⛅", "Partly cloudy"];
-  return ["☁️", "Cloudy"];
-}
+// ── Weather ────────────────────────────────────────────────────────────────
+// Canonical provider: NWS primary, Open-Meteo fallback (see the decision
+// record in src/lib/south-bay/weatherProvider.mjs). The newsletter previously
+// fetched Open-Meteo directly and ran 6-8°F hot on heat days ("99°" emails
+// while NWS/Google said 92-93°). No current temp on purpose: at the 6:00am
+// build there is no trustworthy live reading, only the day's forecast.
 
 export async function fetchWeather() {
-  // Campbell, CA — same anchor the site uses.
-  const url = "https://api.open-meteo.com/v1/forecast?latitude=37.2872&longitude=-121.95"
-    + "&current=temperature_2m,weather_code"
-    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,cloud_cover_mean"
-    + "&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=2";
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const tempNow = Math.round(data.current.temperature_2m);
-    const codeNow = data.current.weather_code;
-    const [emoji] = WMO[codeNow] || ["🌡"];
-    const high = Math.round(data.daily.temperature_2m_max[0]);
-    const low = Math.round(data.daily.temperature_2m_min[0]);
-    const rainPct = data.daily.precipitation_probability_max[0];
-    const cc = data.daily.cloud_cover_mean?.[0];
-    const [, dayDesc] = forecastEmoji(data.daily.weather_code[0], cc, rainPct);
-    return { emoji, tempNow, high, low, rainPct, dayDesc };
-  } catch {
+    const { forecast, provider } = await fetchForecast(DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON, { days: 2 });
+    const today = forecast[0];
+    if (!today) return null;
+    return {
+      emoji: today.emoji,
+      high: today.high,
+      low: today.low,
+      rainPct: today.rainPct,
+      dayDesc: today.desc,
+      provider,
+    };
+  } catch (err) {
+    console.warn(`⚠️  newsletter: weather unavailable (${err?.message}) — skipping weather strip`);
     return null;
   }
 }
@@ -238,11 +213,12 @@ export async function assembleNewsletterData(date, opts = {}) {
     (m) => m.month === parseInt(monthStr) && m.day === parseInt(dayStr)
   );
 
-  const redditCandidates = pickRedditPosts(loadRedditPulse().posts || [], 10);
+  const recentSelections = loadRecentNewsletterSelections(date);
+  const redditCandidates = pickRedditPosts(loadRedditPulse().posts || [], 10, recentSelections);
   const redditPosts = redditCandidates.slice(0, 4);
   const weather = await fetchWeather();
-  const tonightPick = pickTonightEvent(todayEvents);
-  const featuredEvents = pickFeaturedEvents(todayEvents, { dayPlan, tonightPick, limit: 10 });
+  const tonightPick = pickTonightEvent(todayEvents, recentSelections);
+  const featuredEvents = pickFeaturedEvents(todayEvents, { dayPlan, tonightPick, limit: 10, recent: recentSelections });
   const dayPlanBlurb = dayPlan ? buildDayPlanBlurb(dayPlan, weather) : "";
   const tonightPickBlurb = tonightPick ? buildTonightBlurb(tonightPick) : "";
   const visuals = newsletterVisuals({
@@ -274,17 +250,38 @@ export async function assembleNewsletterData(date, opts = {}) {
 
   if (!editorialEnabled) return data;
 
-  return applyEditorialPass(data, {
-    eventCandidates: pickEditorialEventCandidates(todayEvents, { dayPlan, limit: 36 }),
-    openingCandidates: recentOpenings,
-    redditCandidates,
-  });
+  // Editorial failure must never kill the 6am send — degrade to the
+  // deterministic build (same philosophy as the hero: a failed extra never
+  // blocks the email).
+  try {
+    return await applyEditorialPass(data, {
+      eventCandidates: pickEditorialEventCandidates(todayEvents, { dayPlan, limit: 36, recent: recentSelections }),
+      openingCandidates: recentOpenings,
+      redditCandidates,
+      recentSelections,
+    });
+  } catch (err) {
+    console.warn(`⚠️  newsletter: editorial pass failed (${String(err?.message || err).slice(0, 300)}) — sending deterministic build`);
+    data.editorialMeta = { status: "failed", error: String(err?.message || err).slice(0, 300) };
+    return data;
+  }
 }
 
 function makeNewsletterPlan(plan, date) {
   if (!plan?.cards?.length) return null;
+  // Defense-in-depth against chain picks: plan generation now excludes chains
+  // at the candidate-pool level, but default-plans.json can be a day stale
+  // (Peet's Coffee and Elements Massage both shipped as field-guide stops on
+  // 2026-07-14). Drop chain cards at render rather than email them.
+  const cards = plan.cards.filter((c) => {
+    if (!isNationalChain(c.name)) return true;
+    console.warn(`⚠️  newsletter: dropping chain day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+    return false;
+  });
+  if (!cards.length) return null;
   return {
     ...plan,
+    cards,
     planDate: plan.planDate || date,
     cityName: cityName(plan.city),
     planUrl: plan.planUrl || `${SITE_URL}/`,
@@ -551,10 +548,10 @@ function buildTonightBlurb(event) {
   return `${lead ? `${lead}. ` : ""}${detail}.`;
 }
 
-function pickTonightEvent(events) {
+function pickTonightEvent(events, recent = null) {
   const choices = events
     .filter(isTonightPickCandidate)
-    .map((e) => ({ event: e, score: scoreEvent(e, true) }))
+    .map((e) => ({ event: e, score: scoreEvent(e, true) + recentRepeatPenalty(e, recent, true) }))
     .sort((a, b) => b.score - a.score);
   return choices[0]?.event || null;
 }
@@ -567,29 +564,50 @@ function isTonightPickCandidate(e) {
   return !/\b(board|commission|committee|meeting|study session|webinar|book club|maintenance|cleanup|clean-up|repair|workday|work day)\b/i.test(text);
 }
 
-function pickFeaturedEvents(events, { dayPlan, tonightPick, limit }) {
+function pickFeaturedEvents(events, { dayPlan, tonightPick, limit, recent = null }) {
   const used = new Set();
   for (const c of orderedCards(dayPlan)) {
     used.add(normalizeComparable(c.name));
     used.add(normalizeComparable(c.id));
   }
   if (tonightPick) used.add(normalizeComparable(tonightPick.title));
-  return events
+  const ranked = events
     .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
-    .map((e) => ({ event: e, score: scoreEvent(e, false) }))
-    .sort((a, b) => b.score - a.score || parseTimeMinutes(a.event.time) - parseTimeMinutes(b.event.time))
-    .slice(0, limit)
-    .map((x) => x.event);
+    .map((e) => ({ event: e, score: scoreEvent(e, false) + recentRepeatPenalty(e, recent, false) }))
+    .sort((a, b) => b.score - a.score || parseTimeMinutes(a.event.time) - parseTimeMinutes(b.event.time));
+  // Per-source cap so one prolific feed (a library system, one meetup group)
+  // can't fill the whole section — the shortlist was library-heavy before the
+  // editor ever saw it.
+  const out = [];
+  const bySource = new Map();
+  for (const { event } of ranked) {
+    const source = event.source || "other";
+    const n = bySource.get(source) || 0;
+    if (n >= 3) continue;
+    bySource.set(source, n + 1);
+    out.push(event);
+    if (out.length >= limit) break;
+  }
+  return out;
 }
 
+// Lowercase on purpose — compare with post.sub.toLowerCase(). The old Set
+// mixed casings and missed the scraper's actual "MountainView", so every
+// r/MountainView post ate the -70 "not local" penalty and vanished.
 const LOCAL_REDDIT_SUBS = new Set([
-  "SanJose", "sanjose", "Sunnyvale", "sunnyvale", "santaclara", "mountainview",
-  "PaloAlto", "paloalto", "Cupertino", "LosGatos", "campbell", "Milpitas",
+  "sanjose", "sunnyvale", "santaclara", "mountainview", "paloalto",
+  "cupertino", "losgatos", "campbell", "milpitas", "losaltos", "saratoga",
 ]);
 const LOCAL_REDDIT_TERMS = /\b(san jose|south bay|santa clara|sunnyvale|mountain view|palo alto|cupertino|campbell|los gatos|saratoga|los altos|milpitas|morgan hill|gilroy)\b/i;
 
-function pickRedditPosts(posts, limit) {
+function pickRedditPosts(posts, limit, recent = null) {
   return posts
+    // Hard-drop threads the email already ran in the last 3 days — the
+    // conversation section repeated verbatim day after day.
+    .filter((post) => {
+      const days = recent?.redditTitles.get(normalizeComparable(post.displayTitle || post.title));
+      return days === undefined || days > 3;
+    })
     .map((post, index) => ({ post, score: scoreRedditPost(post, index) }))
     .filter((x) => x.score > 0)
     .sort((a, b) => b.score - a.score)
@@ -597,14 +615,18 @@ function pickRedditPosts(posts, limit) {
     .map((x) => x.post);
 }
 
+function isLocalRedditSub(sub) {
+  return LOCAL_REDDIT_SUBS.has(String(sub || "").toLowerCase());
+}
+
 function scoreRedditPost(post, index) {
   const title = `${post.displayTitle || post.title || ""} ${post.summary || ""}`;
   let score = Math.max(0, 40 - index);
-  if (LOCAL_REDDIT_SUBS.has(post.sub)) score += 45;
+  if (isLocalRedditSub(post.sub)) score += 45;
   if (LOCAL_REDDIT_TERMS.test(title)) score += 30;
   if (post.numComments) score += Math.min(25, Math.log2(post.numComments + 1) * 5);
   if (post.score) score += Math.min(15, Math.log2(post.score + 1) * 2);
-  if (!LOCAL_REDDIT_SUBS.has(post.sub) && !LOCAL_REDDIT_TERMS.test(title)) score -= 70;
+  if (!isLocalRedditSub(post.sub) && !LOCAL_REDDIT_TERMS.test(title)) score -= 70;
   return score;
 }
 
@@ -612,16 +634,46 @@ function normalizeComparable(s) {
   return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
 
+// Venues where a booking is a headline by definition. Exact phrases on
+// purpose — a loose "civic"/"theater" match false-positives on Cupertino
+// Civic Plaza and every community room. (Chris Stapleton at Shoreline lost
+// Tonight's Pick to a free plaza jazz series on 2026-07-08 because nothing in
+// scoring or the editor packet knew what a marquee venue was.)
+const MARQUEE_VENUES = /\b(shoreline amphitheat\w*|mountain winery|sap center|levi'?s stadium|paypal park|excite ballpark|san jose civic|california theatre|center for the performing arts|montgomery theater|hammer theatre|san jose improv|stanford theatre|frost amphitheat\w*|heritage theatre|great america)\b/i;
+
+export function isMarqueeEvent(e) {
+  return MARQUEE_VENUES.test(`${e?.venue || ""} ${e?.title || ""}`);
+}
+
+// Scrape artifacts that make a title read like a raw feed dump ("Fugetsu \-
+// Sunnyvale", "Summer's here, and the days are getting…shorter? Wtaf!").
+// These events stay selectable — the editor can retitle them — but they
+// shouldn't outrank events that already read like editorial copy.
+function titleQualityPenalty(title) {
+  const t = String(title || "");
+  let penalty = 0;
+  if (/\\-|…|\|/.test(t)) penalty += 6;
+  if (/[?!]{2,}|\?.*!|!.*\?/.test(t)) penalty += 4;
+  if (/\b[A-Z]{6,}\b/.test(t)) penalty += 4;
+  if (t.length > 90) penalty += 4;
+  return penalty;
+}
+
 function scoreEvent(e, tonight) {
   let score = 0;
   const hour = parseTimeMinutes(e.time);
   if (Number.isFinite(hour) && hour < 9999) score += 10;
   if (tonight && hour >= 17 * 60) score += 10;
+  if (isMarqueeEvent(e)) score += tonight ? 18 : 12;
   if (e.image) score += 5;
   if (e.blurb) score += 8;
-  if (e.cost === "free") score += 4;
+  // Free is a perk for the calendar list, but Tonight's Pick is the one slot
+  // meant to be the single best answer to "what should I do tonight" — being
+  // free shouldn't outrank a headliner there.
+  if (e.cost === "free" && !tonight) score += 4;
   if (e.kidFriendly) score += 2;
   if (e.virtual) score -= 20;
+  score -= titleQualityPenalty(e.title);
   if (/\b(board|commission|committee|meeting|study session|webinar)\b/i.test(e.title || "")) score -= 15;
   if (/\b(book club|storytime|story time|support group|office hours)\b/i.test(e.title || "")) score -= 6;
   return score;
@@ -632,7 +684,7 @@ function shouldRunEditorialPass() {
   return !["0", "false", "off", "no"].includes(v);
 }
 
-function pickEditorialEventCandidates(events, { dayPlan, limit }) {
+function pickEditorialEventCandidates(events, { dayPlan, limit, recent = null }) {
   const used = new Set();
   for (const c of orderedCards(dayPlan)) {
     used.add(normalizeComparable(c.name));
@@ -642,7 +694,10 @@ function pickEditorialEventCandidates(events, { dayPlan, limit }) {
   const eligible = events
     .filter((e) => e.url)
     .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
-    .map((event) => ({ event, score: scoreEvent(event, false) + editorialEventBoost(event) }));
+    .map((event) => ({
+      event,
+      score: scoreEvent(event, false) + editorialEventBoost(event) + recentRepeatPenalty(event, recent, false),
+    }));
 
   const topOverall = [...eligible].sort((a, b) => b.score - a.score).slice(0, Math.ceil(limit * 0.75));
   const evening = [...eligible]
@@ -654,11 +709,18 @@ function pickEditorialEventCandidates(events, { dayPlan, limit }) {
     .slice(0, 8);
 
   const seen = new Set();
+  const bySource = new Map();
   const merged = [];
   for (const { event } of [...topOverall, ...evening, ...chronological]) {
     const key = normalizeComparable(event.id || event.title);
     if (seen.has(key)) continue;
     seen.add(key);
+    // Cap any single source at a third of the shortlist — one library feed
+    // was pre-skewing the whole pool before the editor could balance it.
+    const source = event.source || "other";
+    const n = bySource.get(source) || 0;
+    if (n >= Math.ceil(limit / 3)) continue;
+    bySource.set(source, n + 1);
     merged.push(event);
     if (merged.length >= limit) break;
   }
@@ -682,7 +744,7 @@ async function applyEditorialPass(data, candidates) {
   const revised = applyEditorialJson(data, candidates, edit);
   revised.editorialMeta = {
     status: "claude",
-    model: process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "opus",
+    model: process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "fable",
     eventCandidates: candidates.eventCandidates.length,
     openingCandidates: candidates.openingCandidates.length,
     redditCandidates: candidates.redditCandidates.length,
@@ -696,7 +758,6 @@ function buildEditorialPacket(data, candidates) {
     date: data.longDate,
     editorialMemory: newsletterMemoryForPrompt(loadNewsletterEditorialMemory()),
     weather: data.weather ? {
-      now: `${data.weather.tempNow}F`,
       high: data.weather.high,
       low: data.weather.low,
       rainPct: data.weather.rainPct,
@@ -746,11 +807,77 @@ function buildEditorialPacket(data, candidates) {
       comments: p.numComments || 0,
       summary: compactText(p.summary, 180),
     })),
+    recentlySent: candidates.recentSelections?.summaries?.length
+      ? candidates.recentSelections.summaries
+      : undefined,
   };
 }
 
 const NEWSLETTER_HISTORY_FILE = join(DATA_DIR, "newsletter-send-history.jsonl");
 const NEWSLETTER_MEMORY_FILE = join(DATA_DIR, "newsletter-editorial-memory.json");
+
+// Read back what recent sends actually featured. The history file was
+// write-only for two months, so the same reddit threads, tonight picks, and
+// venues could repeat day after day with nothing noticing. Returns Maps of
+// normalized title/venue -> daysAgo (smallest wins). Missing file (fresh
+// checkout, laptop dev) = empty maps, zero penalties.
+export function loadRecentNewsletterSelections(today, days = 5) {
+  const recent = {
+    tonightTitles: new Map(),
+    featuredTitles: new Map(),
+    redditTitles: new Map(),
+    venues: new Map(),
+    summaries: [], // compact per-day summary for the editor packet
+  };
+  let lines;
+  try {
+    lines = readFileSync(NEWSLETTER_HISTORY_FILE, "utf8").trim().split("\n").slice(-14);
+  } catch {
+    return recent;
+  }
+  const remember = (map, key, daysAgo) => {
+    const k = normalizeComparable(key);
+    if (!k) return;
+    const prev = map.get(k);
+    if (prev === undefined || daysAgo < prev) map.set(k, daysAgo);
+  };
+  for (const line of lines) {
+    let entry;
+    try { entry = JSON.parse(line); } catch { continue; }
+    const daysAgo = daysBetween(entry?.date, today);
+    // daysAgo >= 1: a same-morning rebuild must not penalize its own picks.
+    if (!Number.isFinite(daysAgo) || daysAgo < 1 || daysAgo > days) continue;
+    const sel = entry.selections || {};
+    remember(recent.tonightTitles, sel.tonightPick, daysAgo);
+    remember(recent.venues, sel.tonightPickVenue, daysAgo);
+    for (const t of sel.featuredEvents || []) remember(recent.featuredTitles, t, daysAgo);
+    for (const v of sel.featuredEventVenues || []) remember(recent.venues, v, daysAgo);
+    for (const t of sel.reddit || []) remember(recent.redditTitles, t, daysAgo);
+    if (daysAgo <= 3) {
+      recent.summaries.push({
+        daysAgo,
+        tonightPick: sel.tonightPick || null,
+        featuredEvents: (sel.featuredEvents || []).slice(0, 10),
+      });
+    }
+  }
+  return recent;
+}
+
+// Negative score adjustment for events the newsletter already showed recently.
+function recentRepeatPenalty(e, recent, tonight) {
+  if (!recent) return 0;
+  const title = normalizeComparable(e.title);
+  const venue = normalizeComparable(e.venue);
+  let penalty = 0;
+  const tonightDays = recent.tonightTitles.get(title);
+  if (tonightDays !== undefined) penalty += tonight ? 25 : 12;
+  const featuredDays = recent.featuredTitles.get(title);
+  if (featuredDays !== undefined && featuredDays <= 3) penalty += 12;
+  const venueDays = venue ? recent.venues.get(venue) : undefined;
+  if (venueDays !== undefined && venueDays <= 2) penalty += 6;
+  return -penalty;
+}
 
 function loadNewsletterEditorialMemory() {
   try {
@@ -784,6 +911,8 @@ function compactEventForEditor(e, idx) {
     city: cityName(e.city),
     category: e.category || "",
     cost: e.cost || "",
+    source: e.source || "",
+    ...(isMarqueeEvent(e) ? { marquee: true } : {}),
     audience: e.audienceAge || (e.kidFriendly ? "kids/family" : ""),
     blurb: compactText(e.blurb || e.description, 220),
   };
@@ -819,18 +948,24 @@ Fact rules:
 
 Selection guidance:
 - Pick one evening item only if it starts at 4 PM or later, is specific, local, and plausible as a good answer to "what should I do tonight?" Never pick maintenance, cleanup, repair, meetings, webinars, or generic admin/service items.
+- If a nationally touring act or headline show is on tonight (look for "marquee": true, or a big-name venue like Shoreline, Mountain Winery, SAP Center), it is almost always the tonight pick. A famous name at a famous venue beats a pleasant free local event — readers can find the plaza jazz series on their own; they will be annoyed to learn tomorrow that you buried the headliner.
 - Featured events should be balanced: adult/family/free/outdoor/culture when available. Do not let generic library items crowd out stronger citywide events unless the day is genuinely family-heavy.
+- Check recentlySent (when present): do not repeat a tonight pick from the last few days, and avoid re-featuring the same events unless they are genuinely still the best option. Repetition is the fastest way to make the email feel robotic.
 - Reddit items should be South Bay-specific conversation, not generic Bay Area chatter.
 - Openings should be readable and genuinely fresh; skip raw, overly bureaucratic, or week-old entries if they make the email worse.
+- Raw scraped titles are often ugly ("Fugetsu \\- Sunnyvale", clickbait punctuation, ALL CAPS). When you select an event whose title reads like a feed dump, supply a cleaned title in titleOverrides — keep the real event/venue names, drop the junk, max 70 characters. Only rewrite what needs it.
+- If a field-guide card is an obvious mistake for an editorial local guide (a national chain, a massage franchise, something closed or embarrassing), list its idx in dayPlanDropIdxs. Drop at most 2; an imperfect but specific local pick should stay.
 
 Return JSON with exactly these keys:
 {
   "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or useful clusters in today's material.",
   "dayPlanHeadline": "short headline for the field guide",
   "dayPlanBlurb": "2-3 sentences making the plan feel intentional and useful",
+  "dayPlanDropIdxs": [],
   "tonightPickIdx": 0,
   "tonightPickBlurb": "1-2 sentences why this is the evening pick, using only packet facts",
   "featuredEventIdxs": [0, 1, 2, 3, 4, 5],
+  "titleOverrides": {"3": "Cleaned-up title for candidate 3"},
   "eventsHeading": "Also on the calendar",
   "eventsNote": "1 sentence explaining the shape of the selected events",
   "openingIdxs": [0, 1],
@@ -841,7 +976,7 @@ Return JSON with exactly these keys:
   "conversationNote": "1 sentence framing the local chatter"
 }
 
-Use null for tonightPickIdx if none is strong enough. Use empty arrays for weak optional sections.
+Use null for tonightPickIdx if none is strong enough, and empty arrays for weak optional sections — these are honored as deliberate cuts, not errors. Use {} for titleOverrides and [] for dayPlanDropIdxs when nothing needs fixing.
 
 EDITOR PACKET:
 ${JSON.stringify(packet, null, 2)}
@@ -851,8 +986,13 @@ ${JSON.stringify(packet, null, 2)}
 const CLAUDE_CLI = process.env.CLAUDE_CLI_PATH || "/opt/homebrew/bin/claude";
 
 async function callClaudeNewsletterEditor(instructions) {
-  const model = process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "opus";
-  const timeoutMs = Number(process.env.SBT_NEWSLETTER_CLAUDE_TIMEOUT_MS || 120_000);
+  // Fable default since 2026-07-14 — the editorial pass is pure taste work,
+  // so it gets the best model on the Max plan. Measured ~7-8 min on the full
+  // packet, hence the 10-min timeout and the 5:50am launchd start (send still
+  // lands ~6:00). A timeout degrades to the deterministic build, never a
+  // missed send.
+  const model = process.env.SBT_NEWSLETTER_CLAUDE_MODEL || "fable";
+  const timeoutMs = Number(process.env.SBT_NEWSLETTER_CLAUDE_TIMEOUT_MS || 600_000);
   return new Promise((resolve, reject) => {
     let stdout = "";
     let stderr = "";
@@ -899,8 +1039,31 @@ function parseClaudeJson(raw) {
   }
 }
 
+// A cleaned title must still be about the same event: require at least one
+// substantial shared token with the original title/venue/city. Prevents a
+// hallucinated rewrite from describing a different event; a miss just ships
+// the raw title.
+function isTitleAnchoredToEvent(title, event) {
+  const text = normalizeComparable(title);
+  if (!text || !event) return false;
+  const anchorText = normalizeComparable(`${event.title || ""} ${event.venue || ""} ${cityName(event.city) || ""}`);
+  const anchorTokensSet = new Set(anchorText.split(/\s+/).filter((t) => t.length >= 4));
+  return text.split(/\s+/).some((t) => t.length >= 4 && anchorTokensSet.has(t));
+}
+
 function applyEditorialJson(data, candidates, edit) {
-  const eventByIdx = new Map(candidates.eventCandidates.map((e, idx) => [idx, e]));
+  // Editor decisions are honored: explicit null / empty arrays are deliberate
+  // cuts, not parse failures. Fallbacks fire only when a key is missing or
+  // malformed. (The old behavior silently overrode the editor's "no good
+  // tonight pick" and refilled deliberately-emptied sections with the raw
+  // uncurated lists — the "editor" was a figurehead.)
+  const overrides = (edit.titleOverrides && typeof edit.titleOverrides === "object") ? edit.titleOverrides : {};
+  const withTitleOverride = (event, idx) => {
+    const cleaned = newsletterCopyString(typeof overrides[String(idx)] === "string" ? overrides[String(idx)] : "", 90);
+    if (!cleaned || cleaned === event.title || !isTitleAnchoredToEvent(cleaned, event)) return event;
+    return { ...event, title: cleaned, rawTitle: event.title };
+  };
+  const eventByIdx = new Map(candidates.eventCandidates.map((e, idx) => [idx, withTitleOverride(e, idx)]));
   const openingByIdx = new Map(candidates.openingCandidates.map((o, idx) => [idx, o]));
   const redditByIdx = new Map(candidates.redditCandidates.map((p, idx) => [idx, p]));
 
@@ -909,6 +1072,11 @@ function applyEditorialJson(data, candidates, edit) {
   const tonightPick = editedTonightPick && isTonightPickCandidate(editedTonightPick)
     ? editedTonightPick
     : null;
+  const tonightOptedOut = "tonightPickIdx" in edit && edit.tonightPickIdx === null;
+  const featuredProvided = Array.isArray(edit.featuredEventIdxs);
+  const openingsProvided = Array.isArray(edit.openingIdxs);
+  const redditProvided = Array.isArray(edit.redditIdxs);
+
   const featured = pickByIndexes(eventByIdx, edit.featuredEventIdxs, 10)
     .filter((e) => !tonightPick || normalizeComparable(e.id || e.title) !== normalizeComparable(tonightPick.id || tonightPick.title));
   const fallbackFeatured = data.featuredEvents
@@ -917,19 +1085,43 @@ function applyEditorialJson(data, candidates, edit) {
   const openings = pickByIndexes(openingByIdx, edit.openingIdxs, 6)
     .filter((o) => isFreshOpening(o, data.date));
   const reddit = pickByIndexes(redditByIdx, edit.redditIdxs, 4);
-  const finalTonightPick = tonightPick || data.tonightPick;
+  const finalTonightPick = tonightPick || (tonightOptedOut ? null : data.tonightPick);
   const editedTonightBlurb = tonightPick && isBlurbAnchoredToEvent(edit.tonightPickBlurb, tonightPick)
     ? newsletterCopyString(edit.tonightPickBlurb, 500)
     : "";
 
+  // "Provided but resolved to nothing from a non-empty list" still reads as
+  // malformed (bad indexes) and falls back; a provided EMPTY list is a cut.
+  const useEditorList = (provided, rawList, resolved) =>
+    provided && !(rawList.length && !resolved.length);
+
+  // Field-guide veto: the editor may drop up to 2 cards that are obvious
+  // mistakes (chains, closures); the plan never shrinks below 3 cards.
+  let dayPlan = data.dayPlan;
+  const dropIdxs = new Set((Array.isArray(edit.dayPlanDropIdxs) ? edit.dayPlanDropIdxs : []).map(Number).filter(Number.isInteger));
+  if (dayPlan?.cards?.length && dropIdxs.size) {
+    const ordered = orderedCards(dayPlan);
+    const keep = ordered.filter((_, idx) => !dropIdxs.has(idx));
+    if (ordered.length - keep.length <= 2 && keep.length >= 3) {
+      dayPlan = { ...dayPlan, cards: keep };
+    }
+  }
+
   const revised = {
     ...data,
+    dayPlan,
     dayPlanBlurb: newsletterCopyString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
     tonightPick: finalTonightPick,
-    tonightPickBlurb: editedTonightBlurb || (finalTonightPick ? buildTonightBlurb(finalTonightPick) : data.tonightPickBlurb),
-    featuredEvents: featured.length ? uniqueItems(featured, 10) : uniqueItems(fallbackFeatured, 10),
-    recentOpenings: openings.length ? openings : data.recentOpenings.filter((o) => isFreshOpening(o, data.date)),
-    redditPosts: reddit.length ? reddit : data.redditPosts,
+    tonightPickBlurb: editedTonightBlurb || (finalTonightPick ? buildTonightBlurb(finalTonightPick) : ""),
+    featuredEvents: useEditorList(featuredProvided, featuredProvided ? edit.featuredEventIdxs : [], featured)
+      ? uniqueItems(featured, 10)
+      : uniqueItems(fallbackFeatured, 10),
+    recentOpenings: useEditorList(openingsProvided, openingsProvided ? edit.openingIdxs : [], openings)
+      ? openings
+      : data.recentOpenings.filter((o) => isFreshOpening(o, data.date)),
+    redditPosts: useEditorList(redditProvided, redditProvided ? edit.redditIdxs : [], reddit)
+      ? reddit
+      : data.redditPosts,
     editorial: {
       briefing: newsletterCopyString(edit.briefing, 800),
       dayPlanHeadline: newsletterCopyString(edit.dayPlanHeadline, 120),
@@ -1151,7 +1343,7 @@ export function renderEmail(data) {
     weatherStrip(data.weather),
     leadImageBlock(data),
     briefingBlock(data.editorial?.briefing),
-    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial, data.visuals),
+    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial),
     tonightPickBlock(data.tonightPick, data.tonightPickBlurb, data.visuals),
     eventsBlock(data.featuredEvents, data.todayEvents.length, data.editorial),
     openingsBlock(data.recentOpenings, data.date, data.editorial),
@@ -1258,7 +1450,7 @@ function leadImageBlock(data) {
 </div>`;
 }
 
-function dayPlanBlock(plan, blurb, editorial = null, visuals = null) {
+function dayPlanBlock(plan, blurb, editorial = null) {
   if (!plan) return "";
   const cards = orderedCards(plan);
   if (!cards.length) return "";
@@ -1599,7 +1791,7 @@ function renderDiscordDigest(data, subject) {
   const lines = [`📬 **${subject}**`];
   if (data.editorial?.briefing) lines.push("", data.editorial.briefing);
   if (data.weather) {
-    lines.push("", `**Weather:** ${data.weather.tempNow}° now, high ${data.weather.high}°, low ${data.weather.low}°, ${String(data.weather.dayDesc || "").toLowerCase()}.`);
+    lines.push("", `**Weather:** high ${data.weather.high}°, low ${data.weather.low}°, ${String(data.weather.dayDesc || "").toLowerCase()}.`);
   }
   if (data.dayPlan?.cards?.length) {
     lines.push("", `**${data.editorial?.dayPlanHeadline || "Today's field guide"}**`);
@@ -1656,7 +1848,9 @@ function newsletterSelectionSnapshot(data) {
     briefing: data.editorial?.briefing || "",
     dayPlan: orderedCards(data.dayPlan).map((c) => c.name),
     tonightPick: data.tonightPick?.title || null,
+    tonightPickVenue: data.tonightPick?.venue || null,
     featuredEvents: chronologicalEvents(data.featuredEvents || []).map((e) => e.title),
+    featuredEventVenues: chronologicalEvents(data.featuredEvents || []).map((e) => e.venue || ""),
     openings: (data.recentOpenings || []).filter((o) => isFreshOpening(o, data.date)).map((o) => o.name),
     meetings: (data.tonightMeetings || []).map((m) => `${cityName(m.city)} ${m.bodyName || "Meeting"}`),
     history: (data.todayHistory || []).map((h) => h.company),
@@ -1699,14 +1893,25 @@ function saveNewsletterReflection({ reflection, data, subject, sentAt }) {
     improveNext: stringArray(reflection.improveNext, 6, 220),
     avoid: stringArray(reflection.avoid, 6, 180),
   };
-  const guidance = [
+  // Dedupe before capping: recurring critiques (chains, raw titles) used to
+  // pile up as near-identical rephrasings, crowding the 10-item prompt window
+  // with one lesson stated ten ways. Latest phrasing wins.
+  const guidanceCandidates = [
     ...(current.guidance || []),
     ...stringArray(reflection.guidance, 8, 220),
     ...entry.improveNext,
-  ].slice(-24);
+  ];
+  const seenGuidance = new Set();
+  const guidance = [];
+  for (const g of guidanceCandidates.reverse()) {
+    const key = normalizeComparable(g).split(/\s+/).slice(0, 8).join(" ");
+    if (!key || seenGuidance.has(key)) continue;
+    seenGuidance.add(key);
+    guidance.unshift(g);
+  }
   const output = {
     _meta: { updatedAt: new Date().toISOString(), generator: "newsletter self-reflection" },
-    guidance,
+    guidance: guidance.slice(-24),
     reflections: [...(current.reflections || []), entry].slice(-30),
   };
   writeFileAtomic(NEWSLETTER_MEMORY_FILE, JSON.stringify(output, null, 2) + "\n");

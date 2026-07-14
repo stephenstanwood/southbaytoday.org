@@ -30,6 +30,8 @@ import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
 import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
 import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
+import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.mjs";
+import { isNationalChain } from "../../lib/south-bay/chains.mjs";
 import {
   type Bucket,
   BUCKET_ORDER,
@@ -170,6 +172,27 @@ const PERMANENT_NAME_BLOCKLIST = new Set<string>([
 ].filter(Boolean));
 
 const CANDIDATE_POOL_SIZE = 35;
+
+// Same normalized name at 4+ locations in places.json is a chain in practice
+// (catches brands the curated list in chains.mjs doesn't know). Threshold is
+// 4, not 3: at 3 it falsely nukes distinctive multi-branch locals (Magical
+// Bridge Playground, Manresa Bread, Nirvana Soul). Curated places are exempt —
+// if Stephen hand-picked it, multi-location is fine.
+const MULTI_LOCATION_THRESHOLD = 4;
+const PLACE_NAME_COUNTS: Map<string, number> = (() => {
+  const map = new Map<string, number>();
+  for (const p of (placesData as any).places ?? []) {
+    const n = normalizeName(p.name);
+    if (!n) continue;
+    map.set(n, (map.get(n) ?? 0) + 1);
+  }
+  return map;
+})();
+
+function isMultiLocationChain(name: string | null | undefined): boolean {
+  const n = normalizeName(name);
+  return !!n && (PLACE_NAME_COUNTS.get(n) ?? 0) >= MULTI_LOCATION_THRESHOLD;
+}
 
 // 20 km covers the working radius (SJ ↔ Sunnyvale, Mountain View, Los Altos).
 const NEARBY_KM = 20;
@@ -449,39 +472,32 @@ function computeDurationMin(start: string | null | undefined, end: string | null
 // Weather fetch (internal, same-origin)
 // ---------------------------------------------------------------------------
 
-async function fetchWeather(city: City): Promise<{ weather: string | null; forecast: any[] | null }> {
+async function fetchWeather(city: City, planDate?: string): Promise<{ weather: string | null; forecast: any[] | null }> {
   try {
     const cityConfig = CITY_MAP[city];
     if (!cityConfig) return { weather: null, forecast: null };
 
-    const url = [
-      `https://api.open-meteo.com/v1/forecast`,
-      `?latitude=${cityConfig.lat}&longitude=${cityConfig.lon}`,
-      `&current=temperature_2m,weather_code`,
-      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max`,
-      `&temperature_unit=fahrenheit`,
-      `&timezone=America%2FLos_Angeles`,
-      `&forecast_days=1`,
-    ].join("");
+    // Canonical provider (NWS primary) — Open-Meteo ran 5-8°F hot here, which
+    // skewed the isHot flag and had plans dodging "101°" days that were 93°.
+    // See the decision record in src/lib/south-bay/weatherProvider.mjs.
+    // Match the forecast day to the PLAN date: NWS drops "today" from the
+    // paired list after ~6pm (night-only period), so forecast[0] can be
+    // tomorrow. An evening shuffle for today must not inherit tomorrow's
+    // heat/rain flags — no matching day means no weather signal.
+    const { forecast } = await fetchForecast(cityConfig.lat, cityConfig.lon, { days: 3 });
+    const wanted = planDate || todayStr();
+    const today = forecast.find((d: any) => d.date === wanted);
+    if (!today) return { weather: null, forecast: null };
 
-    const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
-    if (!res.ok) return { weather: null, forecast: null };
-    const data = await res.json();
-
-    const temp = Math.round(data.current.temperature_2m);
-    const high = Math.round(data.daily.temperature_2m_max[0]);
-    const low = Math.round(data.daily.temperature_2m_min[0]);
-    const rainPct = data.daily.precipitation_probability_max[0] ?? 0;
-    const weatherCode = data.current.weather_code as number;
-
-    const isRainy = rainPct >= 40 || [61, 63, 65, 71, 73, 75, 80, 81, 82, 95, 96, 99].includes(weatherCode);
+    const { high, low, rainPct, desc } = today;
+    const isRainy = isRainyDay(desc, rainPct);
     const isHot = high > 90;
     const isCold = high < 55;
     const isNice = !isRainy && !isHot && !isCold;
 
     return {
-      weather: `${temp}°F, high ${high}°F${rainPct >= 5 ? `, ${rainPct}% chance of rain` : ""}`,
-      forecast: [{ high, low, rainPct, isRainy, isHot, isCold, isNice, weatherCode }],
+      weather: `${desc}, high ${high}°F${rainPct >= 5 ? `, ${rainPct}% chance of rain` : ""}`,
+      forecast: [{ high, low, rainPct, isRainy, isHot, isCold, isNice, desc }],
     };
   } catch {
     return { weather: null, forecast: null };
@@ -801,6 +817,11 @@ function buildCandidatePool(
     if ((p.category || "").toLowerCase() === "neighborhood") continue;
     if (/^(main\s+street|downtown|the\s+district|uptown)\s+\w+/i.test(p.name || "")) continue;
     if (kids && (p.category || "").toLowerCase() === "wellness") continue;
+    // Chains never make the field guide — a Peet's or Elements Massage as an
+    // editorial pick reads as filler (both shipped in the 2026-07-14 email;
+    // the soft prompt rule alone didn't hold).
+    if (isNationalChain(p.name)) continue;
+    if (!p.curated && isMultiLocationChain(p.name)) continue;
 
     if (p.city !== city) {
       if (!p.lat || !p.lng || !cityConfig) continue;
@@ -1567,7 +1588,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   try {
-    const weatherData = await fetchWeather(city);
+    const weatherData = await fetchWeather(city, planDate);
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
 
     const allCandidates = buildCandidatePool(city, kids, dismissedSet, planDate, blockedSet, dismissedNameSet);
@@ -1670,7 +1691,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       outdoor: 3,
       museum: 2,
       entertainment: 3,
-      wellness: 1,
+      // wellness scores -60 by design, but weightedSample still gave massage
+      // franchises a real shot at the one capped seat (Elements Massage 07-14,
+      // Massage Envy 07-09 both shipped). Zero seats: spas aren't idea sparks.
+      wellness: 0,
       shopping: 2,
       arts: 3,
       sports: 2,
