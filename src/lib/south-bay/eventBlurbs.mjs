@@ -18,10 +18,11 @@
 // rules already in plan-day.ts so card-level consumers can use it directly).
 // ---------------------------------------------------------------------------
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
+import { writeFileAtomic } from "../../../scripts/lib/io.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
@@ -46,7 +47,7 @@ function loadCache() {
 
 function saveCache(cache) {
   cache.generatedAt = new Date().toISOString();
-  writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
+  writeFileAtomic(CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
 }
 
 function norm(s) {
@@ -60,6 +61,24 @@ function cacheKey(event) {
   // sjearthquakes.com/schedule, which used to map every game to whichever
   // game's blurb got cached first — every team showed the same opponent).
   return `fp:${norm(event.title)}|${norm(event.venue)}`;
+}
+
+/** Reverse of cacheKey() for `fp:` keys — recovers the (normalized) title
+ *  and venue so a cache entry can be given Haiku context even when the
+ *  source event has aged out of upcoming-events.json. */
+function parseFpKey(key) {
+  if (!key.startsWith("fp:")) return { title: "", venue: "" };
+  const rest = key.slice(3);
+  const pipe = rest.lastIndexOf("|");
+  if (pipe === -1) return { title: rest, venue: "" };
+  return { title: rest.slice(0, pipe), venue: rest.slice(pipe + 1) };
+}
+
+function dayOfWeek(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(`${dateStr}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-US", { weekday: "long" });
 }
 
 /** Migrate legacy `url:<URL>` cache entries.
@@ -149,6 +168,24 @@ function blurbLeaksDateContext(blurb, event) {
   return false;
 }
 
+// Guards the uniqueness-retry path specifically: given only a title/venue
+// (no description, sometimes no venue at all), Haiku will sometimes refuse
+// or ask a clarifying question instead of producing a blurb. Those refusals
+// pass the date-leak filter fine (they're not lying about dates) so they
+// need their own check before landing in the cache.
+function isPlausibleBlurb(text) {
+  if (!text) return false;
+  if (text.includes("\n")) return false;
+  if (text.length > 220) return false;
+  if (/\?\s*$/.test(text)) return false;
+  const lower = text.toLowerCase();
+  const refusalPhrases = [
+    "i don't have", "i do not have", "i can't", "i cannot",
+    "could you", "please provide", "as an ai", "i'm not able", "i am not able",
+  ];
+  return !refusalPhrases.some((p) => lower.includes(p));
+}
+
 function buildUserPrompt(events) {
   const lines = events.map((e, i) => {
     const parts = [`${i + 1}. ${e.title || "Untitled"}`];
@@ -215,6 +252,44 @@ function parseBlurbArray(raw, expectedLen) {
   return out;
 }
 
+function buildUniqueUserPrompt(event, conflictBlurbs) {
+  const parts = [`Event: ${event.title || "Untitled"}`];
+  if (event.category) parts.push(`cat: ${event.category}`);
+  if (event.venue) parts.push(`venue: ${event.venue}`);
+  if (event.city) parts.push(`city: ${event.city}`);
+  const dow = dayOfWeek(event.date);
+  if (dow) parts.push(`day: ${dow}`);
+  if (event.ongoing) parts.push(`ongoing-exhibit`);
+  if (event.description) {
+    const d = String(event.description).replace(/\s+/g, " ").trim().slice(0, 280);
+    if (d) parts.push(`desc: ${d}`);
+  }
+  const line = parts.join(" | ");
+  const conflictList = conflictBlurbs.map((b) => `- "${b}"`).join("\n");
+
+  return `Write one blurb for this event.
+
+${line}
+
+This event is one of several similar listings (e.g. a recurring series across different venues) that already share this blurb, which is now too generic and interchangeable:
+${conflictList}
+
+Write a NEW blurb for THIS event that reads as clearly distinct from the ones above — name its specific venue, neighborhood, city, or the day of the week it runs, using only the facts given above. Do not invent vendors, features, or details that aren't present in the data. If nothing else distinguishes it, lead with the venue or city name.
+
+Output just the one-sentence blurb — no markdown, no quotes, no commentary.`;
+}
+
+async function haikuUniqueBlurb(client, event, conflictBlurbs) {
+  const response = await client.messages.create({
+    model: MODEL,
+    max_tokens: 300,
+    system: SYSTEM_PROMPT,
+    messages: [{ role: "user", content: buildUniqueUserPrompt(event, conflictBlurbs) }],
+  });
+  const text = response.content?.[0]?.text ?? "";
+  return text.trim().replace(/^["']|["']$/g, "");
+}
+
 async function haikuBatch(client, events) {
   const response = await client.messages.create({
     model: MODEL,
@@ -254,6 +329,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
     preexisting: 0,
     cache_hits: 0,
     generated: 0,
+    deduped: 0,
     failed: 0,
     skipped: 0,
   };
@@ -270,19 +346,24 @@ export async function resolveEventBlurbs(events, opts = {}) {
   for (const k of Object.keys(cache.byKey)) {
     const blurb = cache.byKey[k]?.blurb;
     if (!blurb) continue;
-    let title = "", venue = "";
-    if (k.startsWith("fp:")) {
-      const rest = k.slice(3);
-      const pipe = rest.lastIndexOf("|");
-      if (pipe >= 0) { title = rest.slice(0, pipe); venue = rest.slice(pipe + 1); }
-      else { title = rest; }
-    }
+    const { title, venue } = parseFpKey(k);
     if (blurbLeaksDateContext(blurb, { title, venue })) {
       delete cache.byKey[k];
       leakDropped++;
     }
   }
   if (leakDropped) console.log(`[eventBlurbs] swept ${leakDropped} date-leak blurb(s) from cache`);
+
+  // Track every blurb currently in the cache so newly-generated blurbs can
+  // be checked against OTHER events' blurbs, not just their own. Haiku tends
+  // to produce identical boilerplate for near-identical listings (e.g. every
+  // farmers market got "Shop for local produce, artisan goods, and
+  // ready-to-eat food weekly.") — this catches that at generation time
+  // instead of letting it ship.
+  const usedBlurbs = new Map(); // norm(blurb) -> owning cache key
+  for (const [k, entry] of Object.entries(cache.byKey)) {
+    if (entry?.blurb) usedBlurbs.set(norm(entry.blurb), k);
+  }
 
   // --- Pass 1: apply preexisting + cache hits ------------------------------
   const todo = [];
@@ -323,19 +404,56 @@ export async function resolveEventBlurbs(events, opts = {}) {
     try {
       const blurbs = await haikuBatch(client, batch.map((b) => b.event));
       for (let i = 0; i < batch.length; i++) {
-        const blurb = blurbs[i];
-        if (blurb && blurb.length > 0) {
-          if (blurbLeaksDateContext(blurb, batch[i].event)) {
-            console.warn(`[eventBlurbs] dropped (date leak): "${blurb}" for ${batch[i].event.title}`);
-            stats.failed++;
-            continue;
-          }
-          batch[i].event.blurb = blurb;
-          cache.byKey[batch[i].key] = { blurb, generatedAt: new Date().toISOString() };
-          stats.generated++;
-        } else {
+        let blurb = blurbs[i];
+        if (!blurb || blurb.length === 0) {
           stats.failed++;
+          continue;
         }
+        if (blurbLeaksDateContext(blurb, batch[i].event)) {
+          console.warn(`[eventBlurbs] dropped (date leak): "${blurb}" for ${batch[i].event.title}`);
+          stats.failed++;
+          continue;
+        }
+
+        // Cross-event duplicate check: if this exact blurb is already used
+        // by a DIFFERENT event/venue, ask Haiku to make it distinct instead
+        // of shipping the same boilerplate twice.
+        const key = batch[i].key;
+        let owner = usedBlurbs.get(norm(blurb));
+        if (owner && owner !== key) {
+          const conflictBlurbs = [blurb];
+          let deduped = false;
+          for (let attempt = 0; attempt < 2 && !deduped; attempt++) {
+            let candidate;
+            try {
+              candidate = await haikuUniqueBlurb(client, batch[i].event, conflictBlurbs);
+            } catch (err) {
+              console.warn(`[eventBlurbs] dedup retry failed for ${batch[i].event.title}: ${err.message}`);
+              break;
+            }
+            if (!candidate || !isPlausibleBlurb(candidate) || blurbLeaksDateContext(candidate, batch[i].event)) {
+              if (candidate) conflictBlurbs.push(candidate);
+              continue;
+            }
+            const candidateOwner = usedBlurbs.get(norm(candidate));
+            if (candidateOwner && candidateOwner !== key) {
+              conflictBlurbs.push(candidate);
+              continue;
+            }
+            blurb = candidate;
+            deduped = true;
+          }
+          if (deduped) {
+            stats.deduped++;
+          } else {
+            console.warn(`[eventBlurbs] could not de-duplicate blurb for "${batch[i].event.title}" (${batch[i].event.venue}) — shares blurb with ${owner}`);
+          }
+        }
+
+        batch[i].event.blurb = blurb;
+        cache.byKey[key] = { blurb, generatedAt: new Date().toISOString() };
+        usedBlurbs.set(norm(blurb), key);
+        stats.generated++;
       }
       // Periodic save so a crash mid-run doesn't cost everything.
       if ((start / batchSize) % 5 === 4) saveCache(cache);
@@ -347,4 +465,111 @@ export async function resolveEventBlurbs(events, opts = {}) {
 
   if (!dryRun) saveCache(cache);
   return stats;
+}
+
+// ---------------------------------------------------------------------------
+// Public API: regenerateDuplicateCacheEntries — one-time (or periodic) sweep
+// ---------------------------------------------------------------------------
+
+/**
+ * Find blurbs in the persistent cache that are identical across events at
+ * DIFFERENT venues (boilerplate collisions like every farmers market getting
+ * "Shop for local produce, artisan goods, and ready-to-eat food weekly.")
+ * and regenerate each affected entry with a uniqueness nudge.
+ *
+ * Same-venue clusters (a recurring instance of ONE event — monthly museum
+ * tours, training-camp dates, multiple performances of one show) are left
+ * alone on purpose: that's the same real-world activity repeated, not a
+ * templated-boilerplate bug.
+ *
+ * `events` supplies live context (description/city/date) for entries whose
+ * event still exists in the current data; entries for expired events fall
+ * back to the title/venue recovered from the cache key itself.
+ *
+ * Options:
+ *   - dryRun: don't call Haiku or write the cache; return the cluster list only.
+ */
+export async function regenerateDuplicateCacheEntries(events, opts = {}) {
+  const dryRun = !!opts.dryRun;
+
+  const cache = loadCache();
+  const eventsByKey = new Map();
+  for (const e of events) {
+    const key = cacheKey(e);
+    if (!eventsByKey.has(key)) eventsByKey.set(key, e);
+  }
+
+  const byBlurb = new Map();
+  for (const [key, entry] of Object.entries(cache.byKey)) {
+    const blurb = entry?.blurb;
+    if (!blurb) continue;
+    if (!byBlurb.has(blurb)) byBlurb.set(blurb, []);
+    byBlurb.get(blurb).push(key);
+  }
+
+  const clusters = [];
+  for (const [blurb, keys] of byBlurb) {
+    if (keys.length < 2) continue;
+    const venues = new Set(keys.map((k) => parseFpKey(k).venue));
+    if (venues.size > 1) clusters.push({ blurb, keys });
+  }
+
+  const report = [];
+  if (dryRun) {
+    for (const { blurb, keys } of clusters) {
+      for (const key of keys) report.push({ key, before: blurb, after: blurb, changed: false });
+    }
+    return report;
+  }
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error("[eventBlurbs] ANTHROPIC_API_KEY not set — cannot regenerate");
+  const client = new Anthropic({ apiKey });
+
+  const usedBlurbs = new Map();
+  for (const [k, entry] of Object.entries(cache.byKey)) {
+    if (entry?.blurb) usedBlurbs.set(norm(entry.blurb), k);
+  }
+
+  for (const { blurb, keys } of clusters) {
+    for (const key of keys) {
+      const parsed = parseFpKey(key);
+      const event = eventsByKey.get(key) || { title: parsed.title, venue: parsed.venue };
+
+      const conflictBlurbs = [blurb];
+      let finalBlurb = null;
+      for (let attempt = 0; attempt < 2 && !finalBlurb; attempt++) {
+        let candidate;
+        try {
+          candidate = await haikuUniqueBlurb(client, event, conflictBlurbs);
+        } catch (err) {
+          console.warn(`[eventBlurbs] dedup regen failed for ${key}: ${err.message}`);
+          break;
+        }
+        if (!candidate || !isPlausibleBlurb(candidate) || blurbLeaksDateContext(candidate, event)) {
+          if (candidate) conflictBlurbs.push(candidate);
+          continue;
+        }
+        const owner = usedBlurbs.get(norm(candidate));
+        if (owner && owner !== key) {
+          conflictBlurbs.push(candidate);
+          continue;
+        }
+        finalBlurb = candidate;
+      }
+
+      if (!finalBlurb) {
+        console.warn(`[eventBlurbs] could not de-duplicate "${key}" — leaving as-is`);
+        report.push({ key, before: blurb, after: blurb, changed: false });
+        continue;
+      }
+
+      report.push({ key, before: blurb, after: finalBlurb, changed: true });
+      cache.byKey[key] = { blurb: finalBlurb, generatedAt: new Date().toISOString() };
+      usedBlurbs.set(norm(finalBlurb), key);
+    }
+  }
+
+  saveCache(cache);
+  return report;
 }
