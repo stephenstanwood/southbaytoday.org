@@ -14,6 +14,7 @@ export default function ReaderWidget() {
   const [status, setStatus] = useState<Status>('idle');
   const [type, setType] = useState<TipType>('feedback');
   const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
   const panelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -44,11 +45,17 @@ export default function ReaderWidget() {
       const res = await fetch('/api/reader-tip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, message: message.trim(), page: window.location.href }),
+        body: JSON.stringify({
+          type,
+          message: message.trim(),
+          page: window.location.href,
+          email: email.trim() || undefined,
+        }),
       });
       if (res.ok) {
         setStatus('sent');
         setMessage('');
+        setEmail('');
         setTimeout(() => setStatus('idle'), 2500);
       } else {
         setStatus('error');
@@ -165,6 +172,24 @@ export default function ReaderWidget() {
             background: '#faf7f2', padding: '10px 12px',
             fontSize: 13, color: '#1c1917', fontFamily: 'inherit',
             resize: 'none', outline: 'none',
+          }}
+          onFocus={e => { e.target.style.borderColor = '#a8a29e'; }}
+          onBlur={e => { e.target.style.borderColor = '#e7e0d5'; }}
+        />
+
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Email (optional, if you'd like a reply)"
+          autoComplete="email"
+          maxLength={254}
+          style={{
+            width: '100%', boxSizing: 'border-box',
+            borderRadius: 8, border: '1.5px solid #e7e0d5',
+            background: '#faf7f2', padding: '9px 12px',
+            fontSize: 13, color: '#1c1917', fontFamily: 'inherit',
+            outline: 'none',
           }}
           onFocus={e => { e.target.style.borderColor = '#a8a29e'; }}
           onBlur={e => { e.target.style.borderColor = '#e7e0d5'; }}

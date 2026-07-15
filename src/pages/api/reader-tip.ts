@@ -25,33 +25,44 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return new Response(JSON.stringify({ error: 'Not configured' }), { status: 500 });
   }
 
-  let body: { type?: string; message?: string; page?: string };
+  let body: { type?: string; message?: string; page?: string; email?: string };
   try {
     body = await request.json();
   } catch {
     return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400 });
   }
 
-  const { type = 'feedback', message, page } = body;
-  if (!message?.trim()) {
+  const type = typeof body.type === 'string' ? body.type : 'feedback';
+  const message = typeof body.message === 'string' ? body.message.trim() : '';
+  const page = typeof body.page === 'string' ? body.page.trim() : '';
+  const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+  if (!message) {
     return new Response(JSON.stringify({ error: 'Message required' }), { status: 400 });
   }
   if (message.length > 5000) {
     return new Response(JSON.stringify({ error: 'Message too long' }), { status: 413 });
   }
+  if (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+    return new Response(JSON.stringify({ error: 'Invalid email' }), { status: 400 });
+  }
 
   const meta = TYPE_META[type] ?? TYPE_META.feedback;
   const pageStr = page ? ` — ${page}` : '';
 
+  const fields = [
+    ...(email ? [{ name: 'Contact email', value: email, inline: false }] : []),
+    ...(page ? [{ name: 'URL', value: page.slice(0, 200), inline: false }] : []),
+  ];
+
   const payload = {
     flags: DISCORD_SUPPRESS_NOTIFICATIONS,
     allowed_mentions: { parse: [] },
-    content: `${meta.emoji} **${meta.label}**${pageStr}\n> ${message.trim().slice(0, 1800).replace(/\n/g, '\n> ')}`,
+    content: `${meta.emoji} **${meta.label}**${pageStr}\n> ${message.slice(0, 1800).replace(/\n/g, '\n> ')}`,
     embeds: [{
       title: `${meta.emoji} ${meta.label}`,
-      description: message.trim().slice(0, 2000),
+      description: message.slice(0, 2000),
       color: meta.color,
-      fields: page ? [{ name: 'URL', value: page.slice(0, 200), inline: false }] : [],
+      fields,
       timestamp: new Date().toISOString(),
       footer: { text: 'South Bay Today reader submission' },
     }],
