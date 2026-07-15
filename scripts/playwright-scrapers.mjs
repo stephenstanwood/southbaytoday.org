@@ -1871,7 +1871,7 @@ async function scrapeMidpen(page) {
 }
 
 async function scrapeGuadalupeRiverPark(page) {
-  return scrapeEventListPage(page, {
+  const events = await scrapeEventListPage(page, {
     url: "https://www.grpg.org/events",
     source: "Guadalupe River Park Conservancy",
     venue: "Guadalupe River Park",
@@ -1879,6 +1879,28 @@ async function scrapeGuadalupeRiverPark(page) {
     city: "san-jose",
     category: "outdoor",
     cost: "free",
+  });
+
+  // GRPG's embedded calendar omits the location and description for this
+  // event even though its registration details include both. Keep the
+  // reader-confirmed facts here so the next scrape cannot undo the fix.
+  return events.map((event) => {
+    if (
+      event.date === "2026-07-18" &&
+      /^Restore & Explore: Trail Clean Up and Trail Tour$/i.test(event.title)
+    ) {
+      return {
+        ...event,
+        title: "Restore & Explore: Trail Clean-Up & Trail Tour",
+        endTime: "11:00 AM",
+        venue: "Arena Green West",
+        address: "N Autumn St, San Jose, CA 95110",
+        description:
+          "Trail clean-up and guided tour for ages 10+. Adult chaperones are required for participants 15 and under. Questions: events@grpg.org or volunteer@grpg.org.",
+        kidFriendly: true,
+      };
+    }
+    return event;
   });
 }
 

@@ -10,6 +10,11 @@ const TYPE_META: Record<string, { emoji: string; label: string; color: number }>
   feedback:   { emoji: '💬', label: 'Feedback',          color: 0x8b5cf6 },
 };
 
+// Keep reader submissions in #feedback for the triage routine without
+// buzzing Stephen's devices for every routine correction or suggestion.
+// Suspicious or ambiguous submissions are escalated separately by DM.
+const DISCORD_SUPPRESS_NOTIFICATIONS = 1 << 12;
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   // Reader-facing endpoint that fans out to a Discord webhook — rate-limit so
   // a single client can't flood the feedback channel.
@@ -39,6 +44,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const pageStr = page ? ` — ${page}` : '';
 
   const payload = {
+    flags: DISCORD_SUPPRESS_NOTIFICATIONS,
+    allowed_mentions: { parse: [] },
     content: `${meta.emoji} **${meta.label}**${pageStr}\n> ${message.trim().slice(0, 1800).replace(/\n/g, '\n> ')}`,
     embeds: [{
       title: `${meta.emoji} ${meta.label}`,
