@@ -24,6 +24,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { mergeConfirmedGrpgEvents } from "./lib/grpg-events.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -1884,7 +1885,7 @@ async function scrapeGuadalupeRiverPark(page) {
   // GRPG's embedded calendar omits the location and description for this
   // event even though its registration details include both. Keep the
   // reader-confirmed facts here so the next scrape cannot undo the fix.
-  return events.map((event) => {
+  const correctedEvents = events.map((event) => {
     if (
       event.date === "2026-07-18" &&
       /^Restore & Explore: Trail Clean Up and Trail Tour$/i.test(event.title)
@@ -1902,6 +1903,11 @@ async function scrapeGuadalupeRiverPark(page) {
     }
     return event;
   });
+
+  // These recurring programs were confirmed directly by the organizer. Merge
+  // them after the live scrape because the embedded calendar can omit future
+  // occurrences or leave their time and location details incomplete.
+  return mergeConfirmedGrpgEvents(correctedEvents, { startDate: TODAY });
 }
 
 async function scrapeSantanaRow(page) {
