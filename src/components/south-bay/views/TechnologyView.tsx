@@ -11,7 +11,6 @@ import {
   RECENTLY_FUNDED,
   TECH_MILESTONES,
   TECH_CONFERENCES,
-  type TechCategory,
   type TechCompany,
   type TechTrend,
   type SccTechSpotlight,
@@ -1464,49 +1463,6 @@ function AnnualConferencesSection() {
 }
 
 // ── Main view ─────────────────────────────────────────────────────────────
-
-// Filters derive from the data, so adding/removing a company can't leave a
-// zero-result chip (e.g. "Robotics", "Cupertino") or hide whole subsets
-// (Meta/LinkedIn social, PayPal fintech, eBay e-commerce, Campbell/Saratoga).
-type FilterChip = { key: string | null; label: string };
-
-const COMPANY_CATEGORY_COUNTS = TECH_COMPANIES.reduce<Record<string, number>>(
-  (acc, c) => {
-    acc[c.category] = (acc[c.category] ?? 0) + 1;
-    return acc;
-  },
-  {},
-);
-const COMPANY_CATEGORY_FILTERS: FilterChip[] = [
-  { key: null, label: "All" },
-  ...Object.entries(COMPANY_CATEGORY_COUNTS)
-    .map(([key]) => ({ key, label: CATEGORY_LABELS[key as TechCategory] ?? key }))
-    .sort((a, b) => {
-      const diff =
-        (COMPANY_CATEGORY_COUNTS[b.key] ?? 0) -
-        (COMPANY_CATEGORY_COUNTS[a.key] ?? 0);
-      return diff !== 0 ? diff : a.label.localeCompare(b.label);
-    }),
-];
-
-const SPOTLIGHT_CITY_COUNTS = SCC_SPOTLIGHT.reduce<Record<string, number>>(
-  (acc, c) => {
-    acc[c.city] = (acc[c.city] ?? 0) + 1;
-    return acc;
-  },
-  {},
-);
-const SPOTLIGHT_CITY_FILTERS: FilterChip[] = [
-  { key: null, label: "All" },
-  ...Object.entries(SPOTLIGHT_CITY_COUNTS)
-    .map(([city]) => ({ key: city, label: city }))
-    .sort((a, b) => {
-      const diff =
-        (SPOTLIGHT_CITY_COUNTS[b.key] ?? 0) -
-        (SPOTLIGHT_CITY_COUNTS[a.key] ?? 0);
-      return diff !== 0 ? diff : a.label.localeCompare(b.label);
-    }),
-];
 
 function FundingHighlightsSection() {
   const latest = [...RECENTLY_FUNDED]
