@@ -1475,8 +1475,12 @@ function tonightPickBlock(pick, blurb, visuals = null) {
   const meta = eventMeta(pick);
   const ticketUrl = pick.url || null;
   const image = resolveImageUrl(pick, 800, 600) || usableImage(visuals?.tonightPickImage);
+  const imageCreditLabel = pick.venue ? `${pick.venue} event page` : "Event page";
+  const imageCredit = image && ticketUrl
+    ? `<div style="font-size:11px;line-height:1.4;color:${PALETTE.faint};margin:6px 0 16px 0;">Image source: <a href="${esc(ticketUrl)}" style="color:${PALETTE.muted};text-decoration:underline;">${esc(imageCreditLabel)}</a></div>`
+    : "";
   const imageHtml = image
-    ? `<img src="${esc(image)}" alt="${esc(visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0 0 16px 0;border:1px solid ${PALETTE.border};">`
+    ? `<img src="${esc(image)}" alt="${esc(visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0;border:1px solid ${PALETTE.border};">${imageCredit}`
     : "";
   const ctaLabel = pick.cost === "paid" ? "Get tickets →" : "Event details →";
   const cta = ticketUrl

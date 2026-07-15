@@ -88,6 +88,37 @@ test("newsletter renders also-calendar events chronologically and hides stale/bl
   assert.equal(html.includes("Newly open"), false);
 });
 
+test("Tonight's Pick credits a rendered image with a direct event-page link", () => {
+  const eventUrl = "https://improv.com/sanjose/event/chinedu+unaka/14808323/";
+  const { html } = renderEmail({
+    date: "2026-07-15",
+    longDate: "Wednesday, July 15, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: {
+      title: "Chinedu Unaka comedy show",
+      time: "8:00 PM",
+      venue: "San Jose Improv",
+      city: "san-jose",
+      url: eventUrl,
+      image: "https://i.ticketweb.com/chinedu.jpg",
+    },
+    tonightPickBlurb: "Chinedu Unaka headlines the San Jose Improv.",
+    todayEvents: [],
+    featuredEvents: [],
+    recentOpenings: [],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {},
+    editorial: null,
+  });
+
+  assert.match(html, new RegExp(`Image source: <a href="${eventUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>San Jose Improv event page</a>`));
+  assert.ok(html.indexOf("Image source:") < html.indexOf("Tonight's pick"));
+});
+
 test("also-calendar events without an image span the full width (colspan), not the 72px image gutter", () => {
   // Regression: the events list is ONE shared table. Rows with an image emit two cells
   // (<td width=72>img</td><td>text</td>); rows without an image must span BOTH columns,
