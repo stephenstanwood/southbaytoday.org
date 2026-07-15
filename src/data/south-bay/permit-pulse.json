@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-14T03:09:04.583Z",
+      "generatedAt": "2026-07-15T03:08:46.403Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 6 – Jul 13",
+      "dateRange": "Jul 7 – Jul 14",
       "stats": {
-        "total": 435,
-        "notable": 25,
-        "newUnits": 15,
-        "totalValuation": 45177472
+        "total": 316,
+        "notable": 17,
+        "newUnits": 12,
+        "totalValuation": 37842158
       },
       "permits": [
         {
@@ -63,42 +63,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2024-090448-RS",
-          "address": "1301 Weaver Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "(Bemp100%) Detached ADU",
-          "valuation": 104667,
-          "units": 1,
-          "issueDate": "2026-07-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-103276-RS",
-          "address": "5163 Sunny Creek Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 97460,
-          "units": 1,
-          "issueDate": "2026-07-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-102990-RS",
-          "address": "4898 Caroline Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Pdox Garage Conversion + Addition to New Attach ADU",
-          "valuation": 97284,
-          "units": 1,
-          "issueDate": "2026-07-07",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2025-144591-RS",
           "address": "1489 Mt Diablo Dr #2",
           "category": "residential-new",
@@ -133,19 +97,55 @@
           "units": 1,
           "issueDate": "2026-07-09",
           "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-141071-RS",
+          "address": "1749 Cape Misty Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 75583,
+          "units": 1,
+          "issueDate": "2026-07-09",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-140264-RS",
+          "address": "2045 Malden Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to Jadu",
+          "valuation": 72127,
+          "units": 1,
+          "issueDate": "2026-07-10",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-123919-CI",
+          "address": "2333 Samaritan Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "New Construction",
+          "description": "Good Samaritan Balance-to-Complete Parking Garage",
+          "valuation": 29282400,
+          "units": 0,
+          "issueDate": "2026-07-10",
+          "subtype": "Open Public Parking Garage"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-14T03:09:07.245Z",
+      "generatedAt": "2026-07-15T03:08:48.652Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 6 – Jul 13",
+      "dateRange": "Jul 7 – Jul 14",
       "stats": {
-        "total": 125,
-        "notable": 5,
+        "total": 126,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -163,39 +163,51 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01817",
-          "address": "3964 Nelson Ct",
+          "id": "26BLD-01886",
+          "address": "1826 Waverley St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Replace existing overhead 100 amp service with new overhead 200 amp service in the same location as the existing 100 amp panel.  Add 100 amp sub-panel in the interior of the house on the hallway wall adjacent to the kitchen.",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "CODE ENFORCEMENT (26PCE-00979) Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-07-07",
+          "issueDate": "2026-07-13",
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00169",
-          "address": "555 University Av",
+          "id": "26PLN-00185",
+          "address": "1145 Amarillo Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Two (2) sets of non-illuminated wall signs (Venture Dock / Falcon X Global Innovation Partners). New U&O Needed for business name change.",
+          "description": "Over the Counter AR for PARKER PALO ALTO 1145,1139,1151,1157,1163,1171,1177,1183 Amarillo Ave, and 2570, 2586 W Bayshore Rd; to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building(s).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-07-07",
+          "issueDate": "2026-07-13",
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00165",
-          "address": "1865 El Camino Real",
+          "id": "26PLN-00183",
+          "address": "1093 Tanland Dr",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Architectural Review to install one illuminated wall sign for \"Silicon Valley Orthodontics\". The sign will be comprised of aluminum and will be 67 inches wide by 47 inches tall. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301. Zone District: Neighborhood Commercial (CN). For more information contact the project project Bryan Boozari at Bryan.Boozari@PaloAlto.gov.",
+          "description": "Over the Counter AR to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building. .",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-07-07",
+          "issueDate": "2026-07-13",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00184",
+          "address": "1094 Tanland Dr",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Over the Counter AR to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building(s).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-13",
           "subtype": "Over the Counter Approved"
         },
         {
