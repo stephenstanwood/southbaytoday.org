@@ -19,6 +19,7 @@ import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { isPlaceTemporarilyUnavailable } from "../src/lib/south-bay/placeAvailability.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_PATH = join(__dirname, "..", "src", "data", "south-bay", "places.json");
@@ -31,6 +32,7 @@ const MAX_PER_CITY = 30;
 const places = JSON.parse(readFileSync(PLACES_PATH, "utf8")).places ?? [];
 
 const candidates = places.filter((p) => {
+  if (isPlaceTemporarilyUnavailable(p)) return false;
   if (!p.hours || typeof p.hours !== "object") return false;
   if (typeof p.rating !== "number" || p.rating < MIN_RATING) return false;
   if (typeof p.ratingCount !== "number" || p.ratingCount < MIN_RATING_COUNT) return false;

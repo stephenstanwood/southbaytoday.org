@@ -33,6 +33,7 @@ import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayT
 import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.mjs";
 import { isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
+import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
 import {
   type Bucket,
   BUCKET_ORDER,
@@ -696,7 +697,7 @@ function buildCandidatePool(
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
     if (isDismissedByName(evt.title) || isDismissedByName(evt.venue)) continue;
-    if (isPlaceTemporarilyUnavailable(evt)) continue;
+    if (!isEventPublishable(evt)) continue;
     if (evt.virtual === true) continue;
     if (isVirtualEvent(evt)) continue;
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;

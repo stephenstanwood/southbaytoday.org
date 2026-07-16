@@ -7,6 +7,7 @@
 // windowDays cap is how the "near" feed stays small — clients that only show
 // the next week or two shouldn't pay for December's events on first paint.
 import upcomingData from "../../data/south-bay/upcoming-events.json";
+import { isEventPublishable } from "./eventOccurrence.mjs";
 
 const all = upcomingData as { generatedAt?: string; events?: Record<string, unknown>[] };
 
@@ -26,6 +27,7 @@ export function buildEventsPayload(windowDays?: number): {
   const horizon = windowDays ? ptDate(windowDays) : null;
 
   const events = (all.events ?? [])
+    .filter((e) => isEventPublishable(e))
     .filter((e) => {
       const date = e?.date;
       if (typeof date !== "string") return true;

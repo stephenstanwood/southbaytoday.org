@@ -60,6 +60,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
 import { parseDate, parseDatePT, isoDate, todayPT, displayDate, displayTime } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
+import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -6699,6 +6700,7 @@ async function main() {
       // listings of timed events that lost their time get dropped here.
       (e.ongoing || e.time) &&
       !(uniSources.has(e.source) && e.time && e.endTime && e.time === e.endTime) &&
+      isEventPublishable(e) &&
       isPublicEvent(e.title, e.source, e.description, e.venue),
   );
 

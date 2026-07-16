@@ -13,6 +13,7 @@ import { writeFileAtomic } from "../lib/io.mjs";
 import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../src/lib/south-bay/weatherProvider.mjs";
 import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 
 loadEnvLocal();
 
@@ -213,7 +214,7 @@ export async function assembleNewsletterData(date, opts = {}) {
     console.warn(`⚠️  newsletter: event feed is stale or undated — omitting current-day events rather than publishing unverified occurrences`);
   }
   const allEvents = eventFeedFresh
-    ? (eventFeed.events || []).filter((event) => !isPlaceTemporarilyUnavailable(event))
+    ? (eventFeed.events || []).filter((event) => isEventPublishable(event))
     : [];
   const validEventIds = new Set(allEvents.map((event) => `event:${event.id}`));
   const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date, { validEventIds });

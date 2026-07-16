@@ -16,6 +16,7 @@ import { writeFileAtomic } from "./lib/io.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-events.json");
@@ -102,7 +103,11 @@ async function main() {
   // the homepage card and the Events strip both describe "the weekend ahead",
   // and mixing Friday picks in starves Sat/Sun of slots.
   const weekend = events.filter(
-    (e) => !e.ongoing && e.date >= start && e.date <= end && (dowOfIso(e.date) === 6 || dowOfIso(e.date) === 0)
+    (e) => isEventPublishable(e)
+      && !e.ongoing
+      && e.date >= start
+      && e.date <= end
+      && (dowOfIso(e.date) === 6 || dowOfIso(e.date) === 0)
   );
 
   const satEvents = weekend.filter((e) => dowOfIso(e.date) === 6);
