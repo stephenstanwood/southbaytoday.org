@@ -1,15 +1,17 @@
 ---
 name: sbt-growth-sweep
-description: Weekly autonomous traffic, SEO, discovery, quality, and AI-citation sweep for South Bay Today.
+description: Weekly autonomous product, editorial, source, traffic, SEO, discovery, quality, and AI-citation sweep for South Bay Today.
 ---
 
 # South Bay Today weekly growth sweep
 
 Run every Friday at 2:45am Pacific on Stephen's Mac Mini. Work only in
 `/Users/stephenstanwood/Projects/southbaytoday.org`. This is an autonomous
-maintenance and growth task: ship high-confidence fixes and improvements
-directly; ask Stephen only about paid services, credentials, irreversible
-external changes, editorial identity, or genuinely close strategic calls.
+product, editorial, maintenance, and growth task. It is not limited to
+technical SEO: ship high-confidence substantive and technical fixes and
+improvements directly; ask Stephen only about paid services, credentials,
+irreversible external changes, editorial identity, major new top-level product
+bets, or genuinely close strategic calls.
 
 ## Safe operating contract
 
@@ -21,9 +23,12 @@ external changes, editorial identity, or genuinely close strategic calls.
    in a trap and explicitly at the end.
 2. Read `CLAUDE.md`, inspect `git status`, and preserve unrelated work. Fetch
    and rebase/pull safely before editing. The repo uses direct `main` pushes.
-3. Preserve the product contract: do not add new Home/Events-top/Food sections,
-   rewire orphaned sections, expose admin routes, add paid services, or invent
-   unsupported event facts or source URLs.
+3. Treat the product constraints in `CLAUDE.md` as the current baseline, not a
+   reason to skip product thinking. Reversible improvements to sources,
+   ranking, fields, labels, placement, and existing sections are in scope.
+   Raise major new top-level sections, mission/identity changes, or large
+   information-architecture rewrites to Stephen with evidence. Never expose
+   admin routes, add paid services, or invent unsupported facts/source URLs.
 4. Never print tokens, cookies, environment variables, or credential files.
 
 ## Measure first
@@ -40,6 +45,41 @@ external changes, editorial identity, or genuinely close strategic calls.
 - Review current official search/AI-publisher guidance only when a material
   behavior or standard may have changed. Prefer primary documentation.
 
+## Review the actual product
+
+Approach this as the weekly product/editorial meeting for South Bay Today, not
+as a code-maintenance checklist. Inspect the live experience, source corpus,
+generated artifacts, reader behavior, and current South Bay context. Ask:
+
+- What real reader jobs is the site solving well or poorly this week? What
+  questions, decisions, cities, audiences, dates, or moments are missing?
+- Are the source feeds authoritative, current, resilient, and broad enough?
+  Which cities, venues, public agencies, libraries, universities, cultural
+  groups, food records, or community calendars are absent or overrepresented?
+- Is ingestion, deduplication, categorization, scoring, and ranking choosing
+  the most useful material—or merely the easiest material to collect?
+- Is each surface showing the right facts in the right place? Review Home day
+  plans, Events, city pages, government, food, newsletter, event leaves, cards,
+  filters, labels, ordering, links, source credit, and empty/error states.
+- What should be promoted, demoted, combined, explained, moved, added, or
+  removed? Is important material buried? Is low-value material consuming space?
+- What did traffic, searches, feedback, seasonal context, and source failures
+  reveal about where the product should go next—not merely which title tag to
+  tweak?
+
+Use direct evidence from primary sources and the rendered product. You may
+automatically add or repair source integrations, rebalance coverage, improve
+ranking/scoring, change fields or presentation within existing surfaces,
+remove low-value clutter, and improve reader-facing copy or workflows when the
+case is strong and the change is reversible. Reader usefulness, factual
+quality, local coverage, and trust come before raw traffic or SEO volume.
+
+When a worthwhile change is too large or subjective to ship automatically,
+send Stephen a concise recommendation with the evidence, expected reader
+benefit, tradeoffs, and the smallest useful experiment. Do not reduce the
+weekly run to a report when a safe, valuable substantive improvement is clear;
+also do not manufacture churn just to create a commit.
+
 ## Sweep and improve
 
 Inspect the full public site and current code for:
@@ -55,6 +95,8 @@ Inspect the full public site and current code for:
 - obvious performance, security, dependency, and conversion regressions;
 - traffic opportunities suggested by real queries/pages/referrers, without
   keyword stuffing, fake FAQs, mass thin pages, or content written for bots.
+- substantive source, coverage, editorial-selection, information-placement,
+  and reader-usefulness opportunities found in the product review above.
 
 Implement all high-confidence reversible fixes and improvements you can verify.
 It is acceptable to make no code change when the evidence does not support one.
@@ -82,7 +124,9 @@ same unchanged URL batch repeatedly within a run.
 Send Stephen one concise Discord completion note containing:
 
 - 7- and 30-day visitor/pageview trends and top meaningful traffic source;
-- what changed and the production commit, or why a no-op was correct;
+- the most important product/editorial/source insight from the week;
+- what substantive and technical changes shipped and the production commit,
+  or why a no-op was correct;
 - verification and live-deployment status;
 - warnings that need judgment (including any search-console credential gap,
   paid tooling choice, or unexplained high-value indexing loss).
