@@ -4,15 +4,28 @@ import StaticLinkStrip from "../components/south-bay/StaticLinkStrip.astro";
 import upcomingData from "../data/south-bay/upcoming-events.json";
 import { CITIES } from "../lib/south-bay/cities";
 import { eventListJsonLd, type SchemaEventRecord } from "../lib/south-bay/eventSchema";
+import { buildEventSlugs } from "../lib/south-bay/eventSlug";
 
 // The Events tab itself is a client:only React app, so crawlers never see the
 // rendered list — this build-time JSON-LD block is how today's events reach
 // search engines. The static /events/<date> pages carry the full window.
 const cityNames = new Map<string, string>(CITIES.map((c) => [c.id as string, c.name]));
+const allEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? []);
+const slugById = new Map<string, string>();
+for (const [slug, event] of buildEventSlugs(allEvents)) {
+  if (event.id) slugById.set(String(event.id), slug);
+}
 const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-const todaysEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? [])
+const todaysEvents = allEvents
   .filter((e) => e.date === todayPt && e.time)
-  .map((e) => ({ ...e, cityName: e.city ? cityNames.get(e.city) ?? null : null }));
+  .map((e) => {
+    const slug = e.id ? slugById.get(String(e.id)) ?? null : null;
+    return {
+      ...e,
+      cityName: e.city ? cityNames.get(e.city) ?? null : null,
+      pageUrl: slug ? `https://southbaytoday.org/event/${slug}` : null,
+    };
+  });
 
 const jsonLd = eventListJsonLd(todaysEvents, {
   name: "South Bay events today",

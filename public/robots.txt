@@ -1,4 +1,18 @@
 User-agent: *
 Allow: /
 
+# Search and user-requested retrieval. These explicit groups document the
+# site's intent; the wildcard above already permits them.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 Sitemap: https://southbaytoday.org/sitemap-index.xml

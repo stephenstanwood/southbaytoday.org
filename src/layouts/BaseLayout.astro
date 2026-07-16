@@ -32,11 +32,33 @@ const ogImage = ogImageProp || `${siteUrl}/images/og-image.png`;
 
 const websiteSchema = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "The South Bay Today",
-  url: siteUrl,
-  description:
-    "Day plans, events, restaurants, and local government coverage across the South Bay: San Jose, Campbell, Los Gatos, Mountain View, Palo Alto, and more.",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "The South Bay Today",
+      alternateName: "South Bay Today",
+      url: siteUrl,
+      logo: `${siteUrl}/icon-512.png`,
+      email: "hello@southbaytoday.org",
+      sameAs: ["https://mastodon.social/@southbaytoday"],
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Stoa Works LLC",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "The South Bay Today",
+      alternateName: "South Bay Today",
+      url: siteUrl,
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-US",
+      description:
+        "Day plans, events, restaurants, and local government coverage across the South Bay: San Jose, Campbell, Los Gatos, Mountain View, Palo Alto, and more.",
+    },
+  ],
 });
 ---
 
@@ -57,6 +79,7 @@ const websiteSchema = JSON.stringify({
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="The South Bay Today" />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={ogImage} />
@@ -77,6 +100,7 @@ const websiteSchema = JSON.stringify({
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="The South Bay Today — Events" href="/rss.xml" />
+    <link rel="alternate" type="text/plain" title="The South Bay Today — guide for AI agents" href="/llms.txt" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href={fontsUrl} rel="stylesheet" />

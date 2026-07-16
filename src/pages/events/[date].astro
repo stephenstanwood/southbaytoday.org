@@ -115,7 +115,10 @@ const description = `${events.length} things happening across the South Bay on $
   .filter(Boolean)
   .join(", ")}, and more.`;
 
-const listJsonLd = eventListJsonLd(events as SchemaEventRecord[], {
+const listJsonLd = eventListJsonLd(events.map((event) => ({
+  ...event,
+  pageUrl: event.detailSlug ? `https://southbaytoday.org/event/${event.detailSlug}` : null,
+})) as SchemaEventRecord[], {
   name: `South Bay events on ${dayLabel}`,
   url: `https://southbaytoday.org/events/${date}`,
   limit: 60,

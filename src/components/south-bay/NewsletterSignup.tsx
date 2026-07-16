@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -26,6 +27,11 @@ export default function NewsletterSignup({
       if (data.ok) {
         setStatus("success");
         setEmail("");
+        try {
+          track("Newsletter signup", { placement: variant });
+        } catch {
+          // Analytics should never turn a successful subscription into an error.
+        }
       } else {
         setStatus("error");
         setError(data.error || "Something went wrong");
@@ -80,6 +86,7 @@ export default function NewsletterSignup({
           <div className="sbt-nl-min-fields">
             <input
               type="email"
+              aria-label="Email address"
               required
               autoComplete="email"
               placeholder="you@example.com"
@@ -267,6 +274,7 @@ export default function NewsletterSignup({
       <form onSubmit={onSubmit} style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
         <input
           type="email"
+          aria-label="Email address"
           required
           autoComplete="email"
           placeholder="you@example.com"
