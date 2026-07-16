@@ -101,11 +101,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "down",
     trendNote: "14K in SCC; Tan's 2025 restructuring cut global headcount ~20% to ~88K",
     highlights: [
-      "Lip-Bu Tan took over as CEO March 2025; cutting layers of management and ~25K jobs by year-end",
+      "Lip-Bu Tan took over as CEO in March 2025 and has since stripped out layers of management and cut more than 25K jobs; further cuts depend on the foundry business landing outside customers",
       "Reported preliminary foundry deals with Apple and Tesla; chip yields still trail TSMC",
     ],
     description:
-      "CPU pioneer mid-restructuring under a new CEO. Once the defining company of Silicon Valley.",
+      "CPU pioneer mid-restructuring under CEO Lip-Bu Tan. Once the defining company of Silicon Valley.",
     color: "#0071C5",
     careersUrl: "https://jobs.intel.com",
   },
@@ -287,13 +287,13 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "hardware",
     sccEmployeesK: 4,
     trend: "flat",
-    trendNote: "4K at SJ HQ; focused on hard drives after Sandisk spin-off Feb 2025",
+    trendNote: "4K at SJ HQ; focused on hard drives after SanDisk spin-off Feb 2025",
     highlights: [
-      "Sandisk spin-off completed February 2025 — WD now a focused hard drive company",
+      "SanDisk spin-off completed February 2025 — WD now a focused hard drive company",
       "Hard drive demand rising again with AI data center storage needs driving enterprise sales",
     ],
     description:
-      "Data storage hardware. Split off Sandisk to focus on the hard drive business.",
+      "Data storage hardware. Split off SanDisk to focus on the hard drive business.",
     color: "#CC1414",
     careersUrl: "https://www.westerndigital.com/careers",
   },
@@ -787,7 +787,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   },
   {
     id: "sandisk",
-    name: "Sandisk",
+    name: "SanDisk",
     city: "San Jose",
     category: "hardware",
     stage: "public",
