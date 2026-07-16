@@ -5,6 +5,7 @@ import StaticLinkStrip from "../../components/south-bay/StaticLinkStrip.astro";
 import { CITIES } from "../../lib/south-bay/cities";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
+import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
 
 export function getStaticPaths() {
   return CITIES.map((city) => ({
@@ -24,9 +25,21 @@ const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_
 const weekOut = new Date();
 weekOut.setDate(weekOut.getDate() + 7);
 const weekOutPt = weekOut.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-const cityEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? [])
+const allEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? []);
+const slugById = new Map<string, string>();
+for (const [slug, event] of buildEventSlugs(allEvents)) {
+  if (event.id) slugById.set(String(event.id), slug);
+}
+const cityEvents = allEvents
   .filter((e) => e.city === cityId && e.time && e.date && e.date >= todayPt && e.date <= weekOutPt)
-  .map((e) => ({ ...e, cityName }));
+  .map((e) => {
+    const slug = e.id ? slugById.get(String(e.id)) ?? null : null;
+    return {
+      ...e,
+      cityName,
+      pageUrl: slug ? `https://southbaytoday.org/event/${slug}` : null,
+    };
+  });
 const jsonLd = eventListJsonLd(cityEvents, {
   name: `Events in ${cityName} this week`,
   url: `https://southbaytoday.org/city/${cityId}`,

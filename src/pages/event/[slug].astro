@@ -43,17 +43,25 @@ export function getStaticPaths() {
   const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
   return [...buildEventSlugs(pool)].map(([slug, event]) => ({
     params: { slug },
-    props: { event, passed: Boolean(event.date && event.date < todayPt) },
+    props: {
+      event,
+      passed: Boolean(event.date && event.date < todayPt),
+      updatedAt: event.date && event.date < todayPt
+        ? (archiveData as { updatedAt?: string }).updatedAt ?? null
+        : (upcomingData as { generatedAt?: string }).generatedAt ?? null,
+    },
   }));
 }
 
 interface Props {
   event: RawEvent;
   passed: boolean;
+  updatedAt: string | null;
 }
 
-const { event, passed } = Astro.props;
+const { event, passed, updatedAt } = Astro.props;
 const cityName = event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null;
+const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 
 const dayLabel = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US", {
   timeZone: "UTC",
@@ -94,20 +102,41 @@ const calendarUrl = buildGoogleCalendarUrl({
   url: event.url,
 });
 
-const eventSchema = eventToSchema({ ...event, cityName } as SchemaEventRecord);
+const eventSchema = eventToSchema({ ...event, cityName, pageUrl } as SchemaEventRecord);
+const webPageSchema = {
+  "@type": "WebPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: title,
+  inLanguage: "en-US",
+  ...(updatedAt ? { dateModified: updatedAt } : {}),
+  ...(eventSchema ? { mainEntity: { "@id": `${pageUrl}#event` } } : {}),
+};
 const breadcrumbSchema = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "South Bay Today", item: "https://southbaytoday.org" },
     { "@type": "ListItem", position: 2, name: "Events", item: "https://southbaytoday.org/events" },
     { "@type": "ListItem", position: 3, name: dayLabel, item: `https://southbaytoday.org/events/${event.date}` },
-    { "@type": "ListItem", position: 4, name: event.title ?? "" },
+    { "@type": "ListItem", position: 4, name: event.title ?? "", item: pageUrl },
   ],
 };
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@graph": eventSchema ? [eventSchema, breadcrumbSchema] : [breadcrumbSchema],
+  "@graph": eventSchema ? [webPageSchema, eventSchema, breadcrumbSchema] : [webPageSchema, breadcrumbSchema],
 });
+
+const updatedLabel = updatedAt
+  ? new Date(updatedAt).toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+    })
+  : null;
 
 const absoluteOgImage = imageUrl
   ? imageUrl.startsWith("http")
@@ -170,26 +199,40 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
       </div>
     )}
     {event.source && <div><dt>Listed by</dt><dd>{event.source}</dd></div>}
+    {updatedAt && updatedLabel && (
+      <div><dt>Refreshed</dt><dd><time datetime={updatedAt}>{updatedLabel}</time></dd></div>
+    )}
   </dl>
 
   <div class="cal-detail-actions">
     {event.url && (
-      <a class="cal-btn cal-btn--primary" href={event.url} rel="noopener noreferrer">
+      <a class="cal-btn cal-btn--primary" href={event.url} rel="noopener noreferrer" data-analytics-event="Event source click">
         Event details ↗
       </a>
     )}
     {!passed && calendarUrl && (
-      <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer">
+      <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer" data-analytics-event="Calendar add">
         Add to Google Calendar
       </a>
     )}
     {passed ? (
-      <a class="cal-btn" href="/events">Upcoming events</a>
+      <a class="cal-btn" href="/events" data-analytics-event="Related events click">Upcoming events</a>
     ) : (
-      <a class="cal-btn" href={`/events/${event.date}`}>More events this day</a>
+      <a class="cal-btn" href={`/events/${event.date}`} data-analytics-event="Related events click">More events this day</a>
     )}
   </div>
 </CalendarShell>
+
+<script>
+  import { track } from "@vercel/analytics";
+
+  document.querySelectorAll<HTMLElement>("[data-analytics-event]").forEach((element) => {
+    element.addEventListener("click", () => {
+      const eventName = element.dataset.analyticsEvent;
+      if (eventName) track(eventName);
+    });
+  });
+</script>
 
 <style>
   .cal-passed {

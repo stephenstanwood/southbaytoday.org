@@ -519,7 +519,7 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
   if (loading) {
     return (
       <div style={{ marginBottom: 28 }}>
-        <h1 className="city-plan-headline">What should we do in {cityName} today?</h1>
+        <h2 className="city-plan-headline">What should we do in {cityName} today?</h2>
         <div style={{ padding: "8px 0 20px", margin: "0 -16px" }}>
           <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cityCardAppear 0.4s ease-out 0.1s forwards" }}>
             <div style={{ width: 20, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", backgroundSize: "100% 200%", animation: "cityPlanRainbow 3s ease infinite", flexShrink: 0 }} />
@@ -542,7 +542,7 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
 
   return (
     <div style={{ marginBottom: 28 }}>
-      <h1 className="city-plan-headline">What should we do in {cityName} today?</h1>
+      <h2 className="city-plan-headline">What should we do in {cityName} today?</h2>
       <div className="sbt-buckets">
         {BUCKET_ORDER.map((bucket, i) => {
           const card = cardsByBucket.get(bucket);

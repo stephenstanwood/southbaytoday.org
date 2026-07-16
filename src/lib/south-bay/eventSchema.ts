@@ -17,7 +17,8 @@ export interface SchemaEventRecord {
   address?: string | null;
   city?: string | null; // city id, e.g. "san-jose"
   cityName?: string | null; // pre-resolved display name, optional
-  url?: string | null;
+  url?: string | null; // primary-source / ticketing URL
+  pageUrl?: string | null; // canonical South Bay Today leaf page
   image?: string | null;
   photoRef?: string | null;
   blurb?: string | null;
@@ -66,11 +67,21 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   const offset = ptOffsetForDate(e.date);
   const start = parseClockTime(e.time);
   const end = parseClockTime(e.endTime);
+  const attendanceText = [e.title, e.venue, e.address].filter(Boolean).join(" ");
+  const isOnline = /\b(?:online|virtual|zoom)\b/i.test(attendanceText);
+  const isMixed = isOnline && /\b(?:hybrid|in[ -]person)\b/i.test(attendanceText);
 
   const schema: Record<string, unknown> = {
     "@type": "Event",
+    ...(e.pageUrl ? { "@id": `${e.pageUrl}#event` } : {}),
     name: e.title,
     startDate: start ? isoDateTime(e.date, start, offset) : e.date,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: isMixed
+      ? "https://schema.org/MixedEventAttendanceMode"
+      : isOnline
+        ? "https://schema.org/OnlineEventAttendanceMode"
+        : "https://schema.org/OfflineEventAttendanceMode",
   };
   // Only claim an end when it's parseable and actually after the start.
   if (start && end && end.h * 60 + end.m > start.h * 60 + start.m) {
@@ -78,20 +89,32 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   }
 
   const locality = e.cityName || null;
-  const address: Record<string, unknown> = { "@type": "PostalAddress", addressRegion: "CA" };
+  const address: Record<string, unknown> = {
+    "@type": "PostalAddress",
+    addressRegion: "CA",
+    addressCountry: "US",
+  };
   if (e.address) address.streetAddress = e.address;
   if (locality) address.addressLocality = locality;
-  schema.location = {
+  const place = {
     "@type": "Place",
     name: e.venue || locality || "South Bay",
     ...(e.address || locality ? { address } : {}),
   };
+  const virtualLocation = {
+    "@type": "VirtualLocation",
+    name: e.venue || "Online",
+    ...(e.url ? { url: e.url } : {}),
+  };
+  schema.location = isMixed ? [place, virtualLocation] : isOnline ? virtualLocation : place;
 
   const description = plainDescription(e);
   if (description) schema.description = description;
   const image = absoluteImage(e);
   if (image) schema.image = image;
-  if (e.url) schema.url = e.url;
+  if (e.pageUrl) schema.url = e.pageUrl;
+  else if (e.url) schema.url = e.url;
+  if (e.pageUrl && e.url && e.pageUrl !== e.url) schema.sameAs = e.url;
   if (e.cost === "free") {
     schema.isAccessibleForFree = true;
     schema.offers = {

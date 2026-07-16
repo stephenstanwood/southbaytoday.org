@@ -4,15 +4,15 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { parseHour, fallbackBlurb } from "./plan-day.ts";
-import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
+import { parseHour, fallbackBlurb } from "../../pages/api/plan-day.ts";
+import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import {
   bucketForHour,
   bucketForEvent,
   bucketOrderIndex,
   isBucket,
   BUCKET_ORDER,
-} from "../../lib/south-bay/buckets.ts";
+} from "./buckets.ts";
 
 test("parseHour: AM/PM", () => {
   assert.equal(parseHour("9:00 AM"), 9);

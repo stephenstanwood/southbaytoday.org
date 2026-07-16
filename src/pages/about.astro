@@ -7,9 +7,22 @@ import CalendarShell from "../layouts/CalendarShell.astro";
 const title = "About — South Bay Today";
 const description =
   "What The South Bay Today is, where the data comes from, and how it stays current. All local. Good vibes. No ads.";
+const aboutSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": "https://southbaytoday.org/about#webpage",
+  url: "https://southbaytoday.org/about",
+  name: title,
+  description,
+  inLanguage: "en-US",
+  mainEntity: { "@id": "https://southbaytoday.org/#organization" },
+});
 ---
 
 <CalendarShell title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={aboutSchema} />
+  </Fragment>
   <nav class="cal-daynav" aria-label="Breadcrumb">
     <a href="/">← Home</a>
     <span class="cal-kicker">South Bay / About</span>
