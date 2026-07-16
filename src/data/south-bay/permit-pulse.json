@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-15T03:08:46.403Z",
+      "generatedAt": "2026-07-16T03:09:23.477Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 7 – Jul 14",
+      "dateRange": "Jul 8 – Jul 15",
       "stats": {
-        "total": 316,
-        "notable": 17,
+        "total": 375,
+        "notable": 21,
         "newUnits": 12,
-        "totalValuation": 37842158
+        "totalValuation": 40994815
       },
       "permits": [
         {
@@ -39,6 +39,18 @@
           "subtype": "Single-Family"
         },
         {
+          "id": "2026-121695-RS",
+          "address": "320 E St James St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Basement Conversion to ADU",
+          "valuation": 149180,
+          "units": 1,
+          "issueDate": "2026-07-13",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2026-126621-RS",
           "address": "795 N 2nd St #5",
           "category": "residential-new",
@@ -60,18 +72,6 @@
           "valuation": 117686,
           "units": 1,
           "issueDate": "2026-07-09",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-144591-RS",
-          "address": "1489 Mt Diablo Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Jadu",
-          "valuation": 84545,
-          "units": 1,
-          "issueDate": "2026-07-08",
           "subtype": "2nd Unit Added"
         },
         {
