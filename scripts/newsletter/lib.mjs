@@ -12,6 +12,7 @@ import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
 import { writeFileAtomic } from "../lib/io.mjs";
 import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../src/lib/south-bay/weatherProvider.mjs";
 import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
+import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 
 loadEnvLocal();
 
@@ -49,13 +50,30 @@ export async function resendFetch(path, init = {}) {
 
 // ── Date helpers (Pacific Time) ────────────────────────────────────────────
 
-export function todayPT() {
+export function todayPT(now = new Date()) {
   // YYYY-MM-DD for "today" in America/Los_Angeles
   const fmt = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Los_Angeles",
     year: "numeric", month: "2-digit", day: "2-digit",
   });
-  return fmt.format(new Date());
+  return fmt.format(now);
+}
+
+const EVENT_FEED_MAX_AGE_MS = 18 * 60 * 60 * 1000;
+
+/**
+ * A current-day newsletter may only use a recent event scrape. If the nightly
+ * event job failed, an older file can still contain today's now-cancelled
+ * listings; an empty event section is safer than publishing stale occurrences.
+ * Historical previews remain available because their source file is archival
+ * by definition rather than a live-send input.
+ */
+export function isEventFeedFreshForNewsletter(feed, date, now = new Date()) {
+  if (date !== todayPT(now)) return true;
+  const generatedAt = Date.parse(feed?.generatedAt || "");
+  if (!Number.isFinite(generatedAt)) return false;
+  const age = now.getTime() - generatedAt;
+  return age >= 0 && age <= EVENT_FEED_MAX_AGE_MS;
 }
 
 export function formatLongDate(isoDate) {
@@ -189,9 +207,17 @@ export function loadMilestones() {
 export async function assembleNewsletterData(date, opts = {}) {
   const editorialEnabled = opts.editorial ?? shouldRunEditorialPass();
   const defaultPlans = loadDefaultPlans();
-  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date);
+  const eventFeed = loadEvents();
+  const eventFeedFresh = isEventFeedFreshForNewsletter(eventFeed, date);
+  if (!eventFeedFresh) {
+    console.warn(`⚠️  newsletter: event feed is stale or undated — omitting current-day events rather than publishing unverified occurrences`);
+  }
+  const allEvents = eventFeedFresh
+    ? (eventFeed.events || []).filter((event) => !isPlaceTemporarilyUnavailable(event))
+    : [];
+  const validEventIds = new Set(allEvents.map((event) => `event:${event.id}`));
+  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date, { validEventIds });
 
-  const allEvents = loadEvents().events || [];
   const todayEvents = allEvents
     .filter((e) => e.date === date && !e.ongoing)
     .filter((e) => e.time && !/^12:00\s*am/i.test(e.time))
@@ -267,16 +293,26 @@ export async function assembleNewsletterData(date, opts = {}) {
   }
 }
 
-function makeNewsletterPlan(plan, date) {
+export function makeNewsletterPlan(plan, date, { validEventIds = null } = {}) {
   if (!plan?.cards?.length) return null;
-  // Defense-in-depth against chain picks: plan generation now excludes chains
-  // at the candidate-pool level, but default-plans.json can be a day stale
-  // (Peet's Coffee and Elements Massage both shipped as field-guide stops on
-  // 2026-07-14). Drop chain cards at render rather than email them.
+  // Defense-in-depth against bad picks: plan generation excludes chains and
+  // editorial availability overrides, but default-plans.json can be a day
+  // stale. Drop them again at render rather than email them.
   const cards = plan.cards.filter((c) => {
-    if (!isNationalChain(c.name)) return true;
-    console.warn(`⚠️  newsletter: dropping chain day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
-    return false;
+    if (isNationalChain(c.name)) {
+      console.warn(`⚠️  newsletter: dropping chain day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+      return false;
+    }
+    if (isPlaceTemporarilyUnavailable(c)) {
+      console.warn(`⚠️  newsletter: dropping unavailable day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+      return false;
+    }
+    const isEventCard = c.source === "event" || String(c.id || "").startsWith("event:");
+    if (isEventCard && validEventIds && !validEventIds.has(c.id)) {
+      console.warn(`⚠️  newsletter: dropping event card absent from the current event feed "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+      return false;
+    }
+    return true;
   });
   if (!cards.length) return null;
   return {

@@ -16,6 +16,7 @@ import { ARTIFACTS, DATA_DIR, REPO_ROOT, generatorMeta } from "./lib/paths.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { autotagPlace } from "./lib/infer-place-tags.mjs";
+import { applyPlaceEditorialOverride } from "../src/lib/south-bay/placeAvailability.mjs";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -580,7 +581,7 @@ async function main() {
           const category = TYPE_TO_CATEGORY[primaryType] || cat.ourCat;
           const displayType = place.primaryTypeDisplayName?.text || null;
 
-          const entry = {
+          const entry = applyPlaceEditorialOverride({
             id: placeId,
             name: cleanPlaceName(place.displayName?.text || "Unknown"),
             address: place.formattedAddress || "",
@@ -599,7 +600,7 @@ async function main() {
             mapsUrl: place.googleMapsUri || null,
             photoRef: place.photos?.[0]?.name || null,
             curated: false,
-          };
+          });
 
           seen.set(placeId, entry);
           addedThisQuery++;

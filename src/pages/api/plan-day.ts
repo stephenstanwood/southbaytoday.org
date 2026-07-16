@@ -32,6 +32,7 @@ import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
 import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
 import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.mjs";
 import { isNationalChain } from "../../lib/south-bay/chains.mjs";
+import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import {
   type Bucket,
   BUCKET_ORDER,
@@ -695,6 +696,7 @@ function buildCandidatePool(
   for (const evt of events) {
     if (dismissedIds.has(`event:${evt.id}`)) continue;
     if (isDismissedByName(evt.title) || isDismissedByName(evt.venue)) continue;
+    if (isPlaceTemporarilyUnavailable(evt)) continue;
     if (evt.virtual === true) continue;
     if (isVirtualEvent(evt)) continue;
     if (evt.title && PLAN_TITLE_BLOCKLIST.some((re) => re.test(evt.title))) continue;
@@ -808,6 +810,7 @@ function buildCandidatePool(
     if (dismissedIds.has(`place:${p.id}`)) continue;
     if (isDismissedByName(p.name)) continue;
     if (isBlocked(p.name)) continue;
+    if (isPlaceTemporarilyUnavailable(p)) continue;
 
     const primaryType = p.primaryType || "";
     const types: string[] = p.types || [];

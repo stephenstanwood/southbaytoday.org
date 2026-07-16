@@ -18,7 +18,10 @@ import { fileURLToPath } from "url";
 import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { catSignal } from "./lib/notify.mjs";
-import { isAddressDerivedBusinessName } from "./lib/scc-food-openings.mjs";
+import {
+  isAddressDerivedBusinessName,
+  normalizeSouthBayAddress,
+} from "./lib/scc-food-openings.mjs";
 import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
 
 loadEnvLocal();
@@ -299,6 +302,8 @@ function cleanAddress(raw) {
     .replace(/\s+/g, " ")
     .trim()
     .replace(/[.,]+$/, "");
+
+  s = normalizeSouthBayAddress(s);
 
   return s || null;
 }

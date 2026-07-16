@@ -31,6 +31,11 @@ function words(value) {
   return String(value ?? "").toLowerCase().match(/[a-z0-9]+/g) ?? [];
 }
 
+/** Normalize recurring South Bay street-name variants from SCC permit data. */
+export function normalizeSouthBayAddress(value) {
+  return String(value ?? "").replace(/\bDeanza\b/gi, "De Anza");
+}
+
 /**
  * Detect permit placeholder names derived from the site's street address.
  *
