@@ -21,6 +21,7 @@ import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json
 import digestsJson from "../../../data/south-bay/digests.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
+import { isPlaceTemporarilyUnavailable } from "../../../lib/south-bay/placeAvailability.mjs";
 
 import Masthead from "../Masthead";
 import ForecastCard from "../cards/ForecastCard";
@@ -706,7 +707,7 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   const [ready, setReady] = useState(false);
   useEffect(() => { setReady(true); }, []);
   const allByCity = (openNowCandidatesJson as { cities?: Record<string, OpenNowCandidate[]> }).cities ?? {};
-  const pool = allByCity[cityId] ?? [];
+  const pool = (allByCity[cityId] ?? []).filter((place) => !isPlaceTemporarilyUnavailable(place));
 
   const picks = useMemo(() => {
     if (!ready || pool.length === 0) return [];

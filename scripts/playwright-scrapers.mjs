@@ -24,7 +24,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { mergeConfirmedGrpgEvents } from "./lib/grpg-events.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -629,8 +628,9 @@ async function scrapeSJMuseumOfArt(page) {
 // ── Linden Tree Books ──
 
 async function scrapeLindenTree(page) {
+  const occurrenceSourceUrl = "https://www.lindentreebooks.com/events-calendar/";
   // Linden Tree times out on networkidle due to slow resources — use domcontentloaded
-  await page.goto("https://www.lindentreebooks.com/events-calendar", {
+  await page.goto(occurrenceSourceUrl, {
     waitUntil: "domcontentloaded", timeout: 20_000,
   });
   await page.waitForTimeout(3000); // let main content render
@@ -687,7 +687,13 @@ async function scrapeLindenTree(page) {
       // anchor inside each listing, not an event page. Five events once shipped
       // all pointing at the same sticker-book product (and inherited its white
       // product-cover og:image). Only keep non-product links.
-      const eventLink = r.link && !/\.html(\?|$)/i.test(r.link) ? r.link : null;
+      let eventLink = null;
+      try {
+        const candidate = new URL(r.link || "");
+        const isFirstParty = ["lindentreebooks.com", "www.lindentreebooks.com"]
+          .includes(candidate.hostname.toLowerCase());
+        if (isFirstParty && !/\.html(\?|$)/i.test(candidate.pathname)) eventLink = candidate.href;
+      } catch { /* use the organizer calendar below */ }
       return {
         title: r.title,
         date,
@@ -696,11 +702,16 @@ async function scrapeLindenTree(page) {
         venue: "Linden Tree Books",
         address: "265 State St, Los Altos, CA 94022",
         city: "los-altos",
-        url: eventLink || "https://www.lindentreebooks.com/events-calendar",
+        url: eventLink || occurrenceSourceUrl,
         source: "Linden Tree Books",
         category: "arts",
         cost: "free",
         kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|picture\s+book)/i.test(r.title),
+        occurrenceEvidence: {
+          kind: "first-party-occurrence-page",
+          sourceUrl: occurrenceSourceUrl,
+          date,
+        },
       };
     })
     .filter(Boolean);
@@ -1658,6 +1669,7 @@ async function scrapeEventListPage(page, config) {
               endDate: item.endDate,
               link: item.url,
               venue: item.location?.name,
+              eventStatus: item.eventStatus,
             });
           }
           for (const value of Object.values(item)) {
@@ -1699,6 +1711,14 @@ async function scrapeEventListPage(page, config) {
       category: config.category || inferCategory(r.title),
       cost: config.cost || null,
       kidFriendly: KID_RE.test(`${r.title} ${r.text || ""}`),
+      ...(r.eventStatus ? { eventStatus: r.eventStatus } : {}),
+      ...(config.occurrenceSourceUrl ? {
+        occurrenceEvidence: {
+          kind: "first-party-occurrence-page",
+          sourceUrl: config.occurrenceSourceUrl,
+          date,
+        },
+      } : {}),
     };
   }).filter(Boolean);
 }
@@ -1874,6 +1894,7 @@ async function scrapeMidpen(page) {
 async function scrapeGuadalupeRiverPark(page) {
   const events = await scrapeEventListPage(page, {
     url: "https://www.grpg.org/events",
+    occurrenceSourceUrl: "https://grpg.org/calendar/events/",
     source: "Guadalupe River Park Conservancy",
     venue: "Guadalupe River Park",
     address: "438 Coleman Ave, San Jose, CA 95110",
@@ -1904,10 +1925,10 @@ async function scrapeGuadalupeRiverPark(page) {
     return event;
   });
 
-  // These recurring programs were confirmed directly by the organizer. Merge
-  // them after the live scrape because the embedded calendar can omit future
-  // occurrences or leave their time and location details incomplete.
-  return mergeConfirmedGrpgEvents(correctedEvents, { startDate: TODAY });
+  // Only return exact dated rows present on the organizer's current calendar.
+  // A cadence such as "first Thursday" is a recheck hint, not proof that a
+  // future occurrence is actually scheduled.
+  return correctedEvents;
 }
 
 async function scrapeSantanaRow(page) {
@@ -2489,6 +2510,8 @@ async function main() {
       url: e.url,
       source: e.source,
       kidFriendly: e.kidFriendly || false,
+      ...(e.eventStatus ? { eventStatus: e.eventStatus } : {}),
+      ...(e.occurrenceEvidence ? { occurrenceEvidence: e.occurrenceEvidence } : {}),
     };
   });
 

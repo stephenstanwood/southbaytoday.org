@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isPlaceTemporarilyUnavailable } from "../../../src/lib/south-bay/placeAvailability.mjs";
+import { isEventPublishable } from "../../../src/lib/south-bay/eventOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
@@ -166,7 +167,7 @@ export function findSwapCandidates(opts) {
     const events = loadEvents();
     for (const e of events) {
       if (!e || exclude.has(e.id) || !e.city || !e.title) continue;
-      if (isPlaceTemporarilyUnavailable(e)) continue;
+      if (!isEventPublishable(e)) continue;
       if (e.virtual === true) continue;
       // Date match: event's start date must equal planDate, OR event is ongoing.
       const eventDate = (e.startDate || e.date || "").slice(0, 10);
