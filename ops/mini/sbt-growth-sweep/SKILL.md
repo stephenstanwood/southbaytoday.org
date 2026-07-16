@@ -13,6 +13,8 @@ external changes, editorial identity, or genuinely close strategic calls.
 
 ## Safe operating contract
 
+0. Mini SSH commands must run in a login shell (`zsh -lic`) or explicitly add
+   `/opt/homebrew/bin` to `PATH`; non-interactive SSH does not expose Node/npm.
 1. Acquire the shared repository lock before any git operation:
    `bash ~/.claude/scheduled-tasks/lib/repo-lock.sh acquire sbt-growth-sweep`.
    If the lock is busy, stop cleanly and report who holds it. Always release it
