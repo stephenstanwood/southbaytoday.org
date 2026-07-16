@@ -1,8 +1,71 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { renderEmail, finalizeNewsletterImages, formatLongDate, todayPT } from "./lib.mjs";
+import {
+  renderEmail,
+  finalizeNewsletterImages,
+  formatLongDate,
+  isEventFeedFreshForNewsletter,
+  makeNewsletterPlan,
+  todayPT,
+} from "./lib.mjs";
 
 const BLOCKED_UNSPLASH = "https://images.unsplash.com/photo-1585899873671-ade0aa28a821?crop=entropy&w=400";
+
+test("newsletter drops a temporarily unavailable place from a stale plan", () => {
+  const plan = makeNewsletterPlan({
+    city: "santa-clara",
+    cards: [
+      { id: "place:open-place", name: "Open Place", bucket: "morning" },
+      { id: "place:ChIJUVuaM6zLj4ARoQSjNyb1ebQ", name: "De Saisset Museum", bucket: "afternoon" },
+      { id: "event:evening", name: "Evening Event", bucket: "evening" },
+    ],
+  }, "2026-07-16");
+
+  assert.deepEqual(plan.cards.map((card) => card.id), ["place:open-place", "event:evening"]);
+});
+
+test("current-day newsletters reject a stale event feed", () => {
+  const now = new Date("2026-07-16T13:00:00Z");
+  assert.equal(
+    isEventFeedFreshForNewsletter({ generatedAt: "2026-07-16T03:11:03Z" }, "2026-07-16", now),
+    true,
+  );
+  assert.equal(
+    isEventFeedFreshForNewsletter({ generatedAt: "2026-07-15T03:11:03Z" }, "2026-07-16", now),
+    false,
+  );
+  assert.equal(isEventFeedFreshForNewsletter({}, "2026-07-16", now), false);
+});
+
+test("newsletter drops a plan event missing from the current event feed", () => {
+  const plan = makeNewsletterPlan({
+    cards: [
+      { id: "place:open-place", name: "Open Place", source: "place" },
+      { id: "event:stale", name: "Stale Event", source: "event" },
+      { id: "event:confirmed", name: "Confirmed Event", source: "event" },
+    ],
+  }, "2026-07-16", { validEventIds: new Set(["event:confirmed"]) });
+
+  assert.deepEqual(plan.cards.map((card) => card.id), ["place:open-place", "event:confirmed"]);
+});
+
+test("newsletter drops a temporarily unavailable venue event from a stale plan", () => {
+  const plan = makeNewsletterPlan({
+    cards: [
+      {
+        id: "event:museum-exhibition",
+        name: "Museum Exhibition",
+        source: "event",
+        url: "https://events.scu.edu/de-saisset/event/1234-example",
+      },
+      { id: "event:confirmed", name: "Confirmed Event", source: "event" },
+    ],
+  }, "2026-07-16", {
+    validEventIds: new Set(["event:museum-exhibition", "event:confirmed"]),
+  });
+
+  assert.deepEqual(plan.cards.map((card) => card.id), ["event:confirmed"]);
+});
 
 test("newsletter lead image renders before the opening briefing and is not duplicated in the field guide", () => {
   const hero = "https://cdn.example.com/sbt-hero.jpg";

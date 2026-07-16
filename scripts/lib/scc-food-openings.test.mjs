@@ -1,7 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isAddressDerivedBusinessName } from "./scc-food-openings.mjs";
+import {
+  isAddressDerivedBusinessName,
+  normalizeSouthBayAddress,
+} from "./scc-food-openings.mjs";
+
+test("normalizes De Anza street names from SCC permit spelling", () => {
+  assert.equal(normalizeSouthBayAddress("1655 S Deanza Blvd"), "1655 S De Anza Blvd");
+  assert.equal(normalizeSouthBayAddress("South Deanza Boulevard"), "South De Anza Boulevard");
+});
 
 test("rejects the two SCC records whose deduped prefix recreated Great American P", () => {
   const siteLocation = "4988 GREAT AMERICAN PY., SANTA CLARA, CA 95054";
