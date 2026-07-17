@@ -14,6 +14,7 @@ import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../s
 import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { isVerifiedOpeningRecord } from "../lib/scc-food-openings.mjs";
 
 loadEnvLocal();
 
@@ -117,6 +118,17 @@ export function loadOpenings() {
   return loadOptional(ARTIFACTS.foodOpenings, { opened: [] }, "openings");
 }
 
+export function selectDefaultPlan(plans, date, { kids = false } = {}) {
+  const prefix = kids ? "kids" : "adults";
+  const candidates = Object.entries(plans || {})
+    .filter(([key, plan]) => (key === prefix || key.startsWith(`${prefix}:`)) && plan?.cards?.length)
+    .map(([, plan]) => plan);
+  return candidates.find((plan) => plan.planDate === date)
+    || plans?.[prefix]
+    || candidates[0]
+    || null;
+}
+
 // ── Weather ────────────────────────────────────────────────────────────────
 // Canonical provider: NWS primary, Open-Meteo fallback (see the decision
 // record in src/lib/south-bay/weatherProvider.mjs). The newsletter previously
@@ -216,8 +228,13 @@ export async function assembleNewsletterData(date, opts = {}) {
   const allEvents = eventFeedFresh
     ? (eventFeed.events || []).filter((event) => isEventPublishable(event))
     : [];
-  const validEventIds = new Set(allEvents.map((event) => `event:${event.id}`));
-  const dayPlan = makeNewsletterPlan(defaultPlans.plans?.adults, date, { validEventIds });
+  const validEventIds = new Set(
+    allEvents
+      .filter((event) => event.date === date)
+      .map((event) => `event:${event.id}`),
+  );
+  const selectedPlan = selectDefaultPlan(defaultPlans.plans, date);
+  const dayPlan = makeNewsletterPlan(selectedPlan, date, { validEventIds });
 
   const todayEvents = allEvents
     .filter((e) => e.date === date && !e.ongoing)
@@ -514,6 +531,7 @@ function daysBetween(fromDate, toDate) {
 }
 
 function isFreshOpening(opening, date) {
+  if (!isVerifiedOpeningRecord(opening)) return false;
   const age = daysBetween(opening?.date, date);
   return Number.isFinite(age) && age >= 0 && age <= NEWSLETTER_OPENING_MAX_AGE_DAYS;
 }

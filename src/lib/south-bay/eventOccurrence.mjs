@@ -8,6 +8,23 @@ const EVIDENCE_REQUIRED_SOURCES = new Map([
   ["Linden Tree Books", new Set(["lindentreebooks.com", "www.lindentreebooks.com"])],
 ]);
 
+function isProjectedFarmersMarket(event) {
+  return event?.projectedRecurrence === true
+    || (
+      event?.source === "South Bay Signal"
+      && /\bfarmers?[’']?\s+markets?\b/i.test(String(event?.title || event?.name || ""))
+    );
+}
+
+function sameSourceHost(left, right) {
+  try {
+    const normalize = (value) => new URL(String(value)).hostname.toLowerCase().replace(/^www\./, "");
+    return normalize(left) === normalize(right);
+  } catch {
+    return false;
+  }
+}
+
 const INACTIVE_STATUS_TOKENS = new Set([
   "eventcancelled",
   "eventcanceled",
@@ -40,6 +57,19 @@ export function isEventExplicitlyInactive(event) {
 
 export function hasRequiredOccurrenceEvidence(event) {
   if (!event || typeof event !== "object") return false;
+
+  if (isProjectedFarmersMarket(event)) {
+    const evidence = event.occurrenceEvidence;
+    if (!evidence || evidence.kind !== "first-party-market-schedule") return false;
+    if (String(evidence.date || "") !== String(event.date || "").slice(0, 10)) return false;
+    if (!/^\d{4}-\d{2}-\d{2}T/.test(String(evidence.checkedAt || ""))) return false;
+    if (!sameSourceHost(evidence.sourceUrl, event.url)) return false;
+    try {
+      return new URL(String(evidence.sourceUrl)).protocol === "https:";
+    } catch {
+      return false;
+    }
+  }
 
   const allowedHosts = EVIDENCE_REQUIRED_SOURCES.get(String(event.source || ""));
   if (!allowedHosts) return true;

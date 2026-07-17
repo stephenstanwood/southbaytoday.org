@@ -62,6 +62,11 @@ import { fetchJson, fetchText, UA } from "./lib/http.mjs";
 import { parseDate, parseDatePT, isoDate, todayPT, displayDate, displayTime } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import {
+  marketOccurrenceEvidence,
+  verifyMarketScheduleSource,
+} from "../src/lib/south-bay/marketOccurrence.mjs";
+import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -2774,9 +2779,11 @@ async function fetchMontalvoEvents() {
         if (!["Event", "EventSeries"].includes(item["@type"])) continue;
         const name = item.name;
         const startDate = item.startDate;
+        const endDate = item.endDate;
         const url = item.url;
         if (!name || !startDate || !url) continue;
         const start = parseDatePT(stripBogusUtcOffset(startDate));
+        const end = endDate ? parseDatePT(stripBogusUtcOffset(endDate)) : null;
         if (!start || start < now) continue;
         events.push({
           id: h("montalvo", url, startDate),
@@ -2784,12 +2791,12 @@ async function fetchMontalvoEvents() {
           date: isoDate(start),
           displayDate: displayDate(start),
           time: displayTime(start),
-          endTime: null,
+          endTime: end && isoDate(end) === isoDate(start) ? displayTime(end) : null,
           venue: "Montalvo Arts Center",
           address: "15400 Montalvo Rd, Saratoga",
           city: "saratoga",
           category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
-          cost: "paid",
+          cost: Number(item.offers?.price) === 0 ? "free" : "paid",
           description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
           url,
           source: "Montalvo Arts Center",
@@ -2806,8 +2813,31 @@ async function fetchMontalvoEvents() {
       return true;
     });
 
-    console.log(`  ✅ Montalvo Arts Center: ${unique.length} events`);
-    return unique;
+    const enriched = await Promise.all(unique.map(async (event) => {
+      try {
+        const detailHtml = await fetchText(event.url);
+        const detail = parseMontalvoOccurrencePage(detailHtml);
+        if (!detail || (detail.date && detail.date !== event.date)) return event;
+        return {
+          ...event,
+          title: detail.title || event.title,
+          time: detail.time || event.time,
+          endTime: detail.endTime || event.endTime,
+          cost: detail.cost || event.cost,
+          occurrenceEvidence: {
+            kind: "first-party-occurrence-page",
+            sourceUrl: event.url,
+            date: event.date,
+            checkedAt: new Date().toISOString(),
+          },
+        };
+      } catch {
+        return event;
+      }
+    }));
+
+    console.log(`  ✅ Montalvo Arts Center: ${enriched.length} events`);
+    return enriched;
   } catch (err) {
     console.log(`  ⚠️  Montalvo Arts Center: ${err.message}`);
     return [];
@@ -4361,22 +4391,67 @@ function fetchScccfdEvents() {
   return events;
 }
 
-function fetchFarmersMarketEvents() {
+async function fetchFarmersMarketEvents() {
   console.log("  ⏳ Farmers markets...");
   const markets = [
-    { title: "Mountain View Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Caltrain Station", address: "600 W Evelyn Ave, Mountain View", city: "mountain-view", url: "https://cafarmersmkts.com/mountain-view-market", season: [1, 12] },
-    { title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Town Park Plaza", address: "50 University Ave, Los Gatos", city: "los-gatos", url: "https://www.losgatos.ca.gov/1411/Farmers-Market", season: [5, 10] },
-    { title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga", url: "https://cafarmersmkts.com/saratoga-market", season: [4, 11] },
-    { title: "Santana Row Farmers Market", day: 3, time: "11:00 AM", endTime: "3:00 PM", venue: "Santana Row", address: "377 Santana Row, San Jose", city: "san-jose", url: "https://www.santanarow.com/events", season: [1, 12] },
-    // D54: /farmers-market 404s (site restructured to /event/ pages) — verified
-    // 2026-07-16 that /event/campbell-farmers-market resolves 200 with real
-    // Sunday-market content, no redirect. Evergreen slug (no year), unlike the
-    // /event/2026/farmers-market alternate which would need updating yearly.
-    { title: "Campbell Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell", url: "https://www.downtowncampbell.com/event/campbell-farmers-market", season: [1, 12] },
-    { title: "Sunnyvale Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "Murphy Avenue", address: "Murphy Ave, Sunnyvale", city: "sunnyvale", url: "https://urbanvillageonline.com/markets/sunnyvale", season: [1, 12] },
-    { title: "Cupertino Farmers Market", day: 5, time: "9:00 AM", endTime: "1:00 PM", venue: "Oaks Shopping Center", address: "21275 Stevens Creek Blvd, Cupertino", city: "cupertino", url: "https://cafarmersmkts.com/cupertino-market", season: [1, 12] },
-    { title: "California Ave Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "California Avenue", address: "California Ave, Palo Alto", city: "palo-alto", url: "https://www.cityofpaloalto.org/Departments/Community-Services/Arts-Sciences/Farmers-Market", season: [1, 12] },
+    {
+      title: "Mountain View Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "Caltrain Station", address: "600 W Evelyn Ave, Mountain View", city: "mountain-view",
+      url: "https://www.cafarmersmkts.com/mountain-view-farmers-market/", season: [1, 12],
+      evidencePatterns: [/Mountain View Farmers[’']? Market/i, /Every Sunday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
+    {
+      title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "Town Park Plaza", address: "50 University Ave, Los Gatos", city: "los-gatos",
+      url: "https://www.cafarmersmkts.com/losgatos-farmers-market/", season: [1, 12],
+      evidencePatterns: [/Los Gatos Farmers[’']? Market/i, /Every Sunday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
+    {
+      title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga",
+      url: "https://www.cafarmersmkts.com/saratoga-farmers-market", season: [1, 12],
+      evidencePatterns: [/Saratoga Farmers[’']? Market/i, /Every Saturday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
+    {
+      title: "Santana Row Farmers Market", day: 3, time: "4:00 PM", endTime: "8:00 PM",
+      venue: "Santana Row", address: "377 Santana Row, San Jose", city: "san-jose",
+      url: "https://santanarow.com/event/farmers-market/", season: [6, 9],
+      startDate: "2026-07-22", endDate: "2026-09-30",
+      evidencePatterns: [/Santana Row Farmers[’']? Market/i, /every Wednesday/i, /4(?::00)?\s*(?:pm|p\.m\.)\s*(?:to|[-–])\s*8(?::00)?\s*(?:pm|p\.m\.)/i, /July 22, 2026\s*[-–]\s*September 30, 2026/i],
+    },
+    // Urban Village Farmers' Market publishes the current Campbell schedule and
+    // date-specific street-closure exceptions on its first-party market pages.
+    {
+      title: "Campbell Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell",
+      url: "https://uvfm.org/campbell-sundays", season: [1, 12],
+      excludedDates: ["2026-05-17", "2026-10-18"],
+      evidencePatterns: [/Campbell Farmers[’']? Market/i, /every Sunday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
+    {
+      title: "Sunnyvale Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "Murphy Avenue", address: "Murphy Ave, Sunnyvale", city: "sunnyvale",
+      url: "https://uvfm.org/sunnyvale-saturday", season: [1, 12],
+      excludedDates: ["2026-06-06", "2026-07-04"],
+      evidencePatterns: [/Sunnyvale Farmers[’']? Market/i, /Saturdays/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
+    {
+      title: "California Ave Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
+      venue: "California Avenue", address: "California Ave, Palo Alto", city: "palo-alto",
+      url: "https://uvfm.org/palo-alto-sundays", season: [1, 12],
+      evidencePatterns: [/California Ave(?:nue)? Farmers[’']? Market/i, /Sundays/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
+    },
   ];
+
+  const verifiedMarkets = [];
+  for (const market of markets) {
+    const verification = await verifyMarketScheduleSource(market, { userAgent: UA });
+    if (!verification.confirmed) {
+      console.log(`  ⚠️  Farmers markets: suppressed ${market.title} (${verification.reason})`);
+      continue;
+    }
+    verifiedMarkets.push({ market, verification });
+  }
 
   const events = [];
   const now = new Date();
@@ -4390,9 +4465,12 @@ function fetchFarmersMarketEvents() {
     const dateStr = isoDate(d);
     if (dateStr < today) continue;
 
-    for (const m of markets) {
+    for (const { market: m, verification } of verifiedMarkets) {
       if (dayOfWeek !== m.day) continue;
       if (month < m.season[0] || month > m.season[1]) continue;
+      if (m.startDate && dateStr < m.startDate) continue;
+      if (m.endDate && dateStr > m.endDate) continue;
+      if (m.excludedDates?.includes(dateStr)) continue;
 
       const dateObj = new Date(`${dateStr}T12:00:00-07:00`);
       events.push({
@@ -4411,6 +4489,8 @@ function fetchFarmersMarketEvents() {
         url: m.url,
         source: "South Bay Signal",
         kidFriendly: true,
+        projectedRecurrence: true,
+        occurrenceEvidence: marketOccurrenceEvidence(verification, dateStr),
       });
     }
   }
@@ -7252,4 +7332,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   });
 }
 
-export { polishDescription, cleanTitle, stripRedundantVenueSuffix, fetchPaloAltoPlayersEvents };
+export { polishDescription, cleanTitle, stripRedundantVenueSuffix, fetchPaloAltoPlayersEvents, fetchFarmersMarketEvents };

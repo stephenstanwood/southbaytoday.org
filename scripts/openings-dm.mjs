@@ -15,6 +15,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { isVerifiedOpeningRecord } from "./lib/scc-food-openings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = resolve(__dirname, "../src/data/south-bay");
@@ -72,7 +73,7 @@ function todaysFood() {
   const food = readJson("scc-food-openings.json");
   if (!food?.opened) return [];
   return food.opened
-    .filter((x) => x.date === TODAY)
+    .filter((x) => isVerifiedOpeningRecord(x) && x.date === TODAY)
     .map((x) => ({
       kind: "Restaurant",
       emoji: "🍽️",

@@ -138,7 +138,9 @@ function cardHtml({ kicker, title, subline }) {
 
 // ── Honest, data-derived cards ──────────────────────────────────────────────
 const govCityCount = Object.keys(digests).length;
-const foodOpeningCount = (foodOpenings.opened?.length ?? 0) + (foodOpenings.comingSoon?.length ?? 0);
+const foodUpdateCount = (foodOpenings.opened?.length ?? 0)
+  + (foodOpenings.inspections?.length ?? 0)
+  + (foodOpenings.comingSoon?.length ?? 0);
 
 const sectionCards = [
   {
@@ -163,7 +165,7 @@ const sectionCards = [
     file: "og-food.jpg",
     kicker: "South Bay Today",
     title: "Food",
-    subline: `${foodOpeningCount} restaurant openings tracked this season`,
+    subline: `${foodUpdateCount} food openings and permit updates tracked`,
   },
 ];
 

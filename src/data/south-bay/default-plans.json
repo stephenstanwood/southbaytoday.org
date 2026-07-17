@@ -8,27 +8,6 @@
     "adults": {
       "cards": [
         {
-          "id": "event:farmersmarket-73567e9530d85767",
-          "name": "Cupertino Farmers Market",
-          "category": "food",
-          "city": "cupertino",
-          "address": "21275 Stevens Creek Blvd, Cupertino",
-          "bucket": "breakfast",
-          "eventTime": "9:00 AM",
-          "eventEndTime": "1:00 PM",
-          "timeBlock": "Breakfast",
-          "blurb": "Pick up fresh produce and prepared meals Friday mornings at Oaks Shopping Center in Cupertino.",
-          "url": "https://cafarmersmkts.com/cupertino-market",
-          "cost": "free",
-          "costNote": null,
-          "photoRef": "places/ChIJi-PFZ0-0j4ARGr_xvCe006U/photos/AWCwydgiAcePS6-BI9JNpEvEytChiSypmdB1ZSeKiiY3d0w0ULmgphOEBDgxQ2Mu5CWa-RK-madpX7E6MMIgkhSpJ0xUV-rsSNEZussPiZwXLElUinXHODK661g_phBHOgW521s-L-MpqBcCUGAHxoz5VX8N5LUUWQX1dl84AdmcGLODTOBGdiOPIk21yK4W2W7Doej2t3pHtlVQYTFAbCk_Q2Z0an1XiD8Nre-wOAXLYMsP5letcrW1MSd7bgGBfVU7bdTJ6f2M7ou_jKrVEamWrc4eAqHTdRB3K1W_ifPRzQMOY0KY2qOtTVZ-j2_CvaOmXXBBS1xhywAnAeDdODQFDTUB-4ooQljB2QAafp1cmR4TBW3pgWQbLqGI5ELvHYG7Hma7Y0b65TnSMlSWH7VN--UyTpZhK9MjCODJVyGzBzQDUg",
-          "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-          "venue": "Oaks Shopping Center",
-          "source": "event",
-          "locked": false,
-          "rationale": "backfill | empty-bucket=breakfast"
-        },
-        {
           "id": "place:ChIJgbAiC7zMj4ARf9VjyD-BcOM",
           "name": "Dr. Martin Luther King, Jr. Library",
           "category": "museum",
@@ -121,25 +100,25 @@
           "rationale": "claude:pool-rank-14/25 | rating=4.1 | bucket=dinner"
         },
         {
-          "id": "event:meetup-c83e1a7fba173ab2",
-          "name": "Enter If You Dare: Art, Music & Nighttime Adventures at Montalvo!",
+          "id": "event:montalvo-9a21836e04bc8e7c",
+          "name": "2026 Marcus Festival: Enter if You Dare",
           "category": "events",
           "city": "saratoga",
-          "address": "15400 Montalvo Road, Saratoga",
+          "address": "15400 Montalvo Rd, Saratoga",
           "bucket": "evening",
-          "eventTime": "5:30 PM",
-          "eventEndTime": "10:30 PM",
+          "eventTime": "6:00 PM",
+          "eventEndTime": "10:00 PM",
           "timeBlock": "Evening",
-          "blurb": "Experience art, music, and nighttime activities at Montalvo Arts Center.",
-          "url": "https://www.meetup.com/saratoga-dining-out-meetup-group/events/315075256/",
-          "cost": null,
+          "blurb": "Explore Montalvo after dark with art installations, live music, and hands-on artmaking.",
+          "url": "https://my.montalvoarts.org/3230/3231",
+          "cost": "free",
           "costNote": null,
           "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AaVGc3kEVwMMb9eTxL5KVsjZpDaREbp2zmAR5uiPcF_-ZJwzQ5vdPFtBVDRPX5x_RwNdbhikEArpxUDBLofIrpUwVQryKEriwApvWtWhgMVddprN2YvIJuIoBCginN_2wzFfeN_bpEzamC4DaAjyDHhUcLkfD2l-6eN-eIDd7PuZDabvkUMNU9yQ-OkyCwynW_cb00wMnTygSmKIvYXxo8yeOtmQ9BrsGnHN4WQHqlYbhLg05ej0A9GqyzQng3TfTK6yKrqrbHM-fxZMufuX_1C_PGGJssDK-5nd14fZKLhrDhI0AboKSJRzM7oZEgCH9AWOw4bI_f8Vv62E-7FzxtaQYXQbEaUtFSwYaekHxKfMikgU65et8qOXsIVLbDv2W-Jl1RaGgHZlgPPsarUw0KGZv9rlcn8qlnC2GeIY_vpS2xU_shKUd7G6h3Q_bpQ81FRA",
           "image": null,
           "venue": "Montalvo Arts Center",
           "source": "event",
           "locked": false,
-          "rationale": "claude:pool-rank-3/25 | event-today | bucket=evening"
+          "rationale": "manual-source-correction | first-party occurrence | event-today | bucket=evening"
         }
       ],
       "weather": "Sunny, high 81°F",

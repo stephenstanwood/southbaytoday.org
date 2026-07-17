@@ -48,6 +48,44 @@ test("an aggregator or tracking link cannot stand in for first-party evidence", 
   }), false);
 });
 
+test("projected farmers markets require a live, date-matched first-party schedule check", () => {
+  const market = {
+    source: "South Bay Signal",
+    title: "Cupertino Farmers Market",
+    date: "2026-07-17",
+    url: "https://www.cafarmersmkts.com/cupertino-market",
+  };
+
+  assert.equal(hasRequiredOccurrenceEvidence(market), false);
+  assert.equal(hasRequiredOccurrenceEvidence({
+    ...market,
+    occurrenceEvidence: {
+      kind: "first-party-market-schedule",
+      sourceUrl: "https://www.cafarmersmkts.com/cupertino-market",
+      date: "2026-07-24",
+      checkedAt: "2026-07-17T10:00:00.000Z",
+    },
+  }), false);
+  assert.equal(hasRequiredOccurrenceEvidence({
+    ...market,
+    occurrenceEvidence: {
+      kind: "first-party-market-schedule",
+      sourceUrl: "https://events.example.com/cupertino-market",
+      date: "2026-07-17",
+      checkedAt: "2026-07-17T10:00:00.000Z",
+    },
+  }), false);
+  assert.equal(hasRequiredOccurrenceEvidence({
+    ...market,
+    occurrenceEvidence: {
+      kind: "first-party-market-schedule",
+      sourceUrl: "https://cafarmersmkts.com/cupertino-market",
+      date: "2026-07-17",
+      checkedAt: "2026-07-17T10:00:00.000Z",
+    },
+  }), true);
+});
+
 test("structured inactive statuses and explicit cancellation titles are rejected", () => {
   assert.equal(isEventExplicitlyInactive({ eventStatus: "https://schema.org/EventCancelled" }), true);
   assert.equal(isEventExplicitlyInactive({ sourceStatus: "postponed" }), true);
@@ -87,4 +125,29 @@ test("canonical evidence-required rows contain exact occurrence evidence", () =>
 
   assert.equal(evidenceRequiredEvents.every((event) => hasRequiredOccurrenceEvidence(event)), true);
   assert.equal(evidenceRequiredEvents.every((event) => isEventPublishable(event)), true);
+});
+
+test("canonical events suppress the unconfirmed Cupertino market projection", () => {
+  const upcoming = JSON.parse(readFileSync(
+    new URL("../../data/south-bay/upcoming-events.json", import.meta.url),
+    "utf8",
+  ));
+  const cupertinoMarkets = (upcoming.events || []).filter(
+    (event) => event.title === "Cupertino Farmers Market",
+  );
+  assert.deepEqual(cupertinoMarkets, []);
+});
+
+test("canonical projected markets all carry current first-party schedule evidence", () => {
+  const upcoming = JSON.parse(readFileSync(
+    new URL("../../data/south-bay/upcoming-events.json", import.meta.url),
+    "utf8",
+  ));
+  const projectedMarkets = (upcoming.events || []).filter(
+    (event) => event.projectedRecurrence === true,
+  );
+
+  assert.ok(projectedMarkets.length > 0);
+  assert.equal(projectedMarkets.every((event) => hasRequiredOccurrenceEvidence(event)), true);
+  assert.equal(projectedMarkets.every((event) => isEventPublishable(event)), true);
 });

@@ -51,10 +51,10 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
-  // Update any inline `image` fields on the live opened/comingSoon items that
+  // Update any inline `image` fields on the live opening/inspection/coming-soon items that
   // pointed at an old URL we just resized.
   let inlineUpdated = 0;
-  for (const item of [...(openings.opened || []), ...(openings.comingSoon || [])]) {
+  for (const item of [...(openings.opened || []), ...(openings.inspections || []), ...(openings.comingSoon || [])]) {
     if (item.image && urlMap.has(item.image)) {
       item.image = urlMap.get(item.image);
       inlineUpdated++;

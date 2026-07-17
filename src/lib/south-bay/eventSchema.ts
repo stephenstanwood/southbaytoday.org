@@ -15,6 +15,7 @@ export interface SchemaEventRecord {
   time?: string | null; // "6:00 PM"
   endTime?: string | null;
   venue?: string | null;
+  organizerUrl?: string | null; // verified first-party organizer/venue homepage
   address?: string | null;
   city?: string | null; // city id, e.g. "san-jose"
   cityName?: string | null; // pre-resolved display name, optional
@@ -60,6 +61,16 @@ function plainDescription(e: SchemaEventRecord): string | null {
   const text = (e.blurb || e.description || "").replace(/\s+/g, " ").trim();
   if (!text) return null;
   return text.length > 300 ? `${text.slice(0, 297)}…` : text;
+}
+
+function absoluteHttpUrl(value: string | null | undefined): string | null {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:" ? url.href : null;
+  } catch {
+    return null;
+  }
 }
 
 /** "From $30" → 30. Never guesses a price from thin air — only a literal $figure. */
@@ -146,11 +157,12 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
       ...(lowPrice !== null ? { lowPrice, priceCurrency: "USD" } : {}),
     };
   }
-  // organizer: the venue is the only field we can honestly call an organizing
-  // party without guessing — curation "source" (library newsletter, news
-  // aggregator, etc.) describes where we found the listing, not who runs it.
-  if (e.venue) {
-    schema.organizer = { "@type": "Organization", name: e.venue };
+  // A name-only organizer triggers Google's nested `url` warning. Emit the
+  // organization only when we also know its verified homepage; otherwise omit
+  // this optional property rather than guessing from an aggregator/ticket URL.
+  const organizerUrl = absoluteHttpUrl(e.organizerUrl);
+  if (e.venue && organizerUrl) {
+    schema.organizer = { "@type": "Organization", name: e.venue, url: organizerUrl };
   }
   return schema;
 }

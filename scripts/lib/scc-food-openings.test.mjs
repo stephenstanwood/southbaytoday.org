@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  classifyFinalInspection,
   isAddressDerivedBusinessName,
+  isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
 } from "./scc-food-openings.mjs";
 
@@ -48,4 +51,54 @@ test("keeps numeric restaurant brands that do not encode their site address", ()
     isAddressDerivedBusinessName("10 Butchers Korean BBQ", "10 E Hamilton Ave, Campbell, CA"),
     false,
   );
+});
+
+test("a county final inspection alone is not an opening", () => {
+  const record = classifyFinalInspection({
+    sourceId: "SR0884792",
+    name: "Fugetsu Market & Goods",
+    inspectionDate: "2026-07-13",
+  });
+
+  assert.equal(record.status, "inspection-complete");
+  assert.equal(record.inspectionDate, "2026-07-13");
+  assert.equal(record.date, undefined);
+  assert.equal(record.openingEvidence, undefined);
+  assert.equal(isVerifiedOpeningRecord(record), false);
+});
+
+test("a separate first-party source establishes the true opening date", () => {
+  const record = classifyFinalInspection(
+    {
+      sourceId: "SR0884792",
+      name: "Fugetsu Market & Goods",
+      inspectionDate: "2026-07-13",
+    },
+    {
+      date: "2026-03-15",
+      url: "https://www.instagram.com/p/DVz2HnDlNAJ/",
+      source: "Fugetsu Market",
+    },
+  );
+
+  assert.equal(record.status, "opened");
+  assert.equal(record.date, "2026-03-15");
+  assert.equal(record.inspectionDate, "2026-07-13");
+  assert.equal(isVerifiedOpeningRecord(record), true);
+  assert.notEqual(record.date, record.inspectionDate);
+});
+
+test("canonical food data keeps inspections out of the verified openings feed", () => {
+  const data = JSON.parse(readFileSync(
+    new URL("../../src/data/south-bay/scc-food-openings.json", import.meta.url),
+    "utf8",
+  ));
+
+  assert.equal((data.opened || []).every(isVerifiedOpeningRecord), true);
+  assert.equal((data.inspections || []).every((record) => (
+    record.status === "inspection-complete"
+    && record.date === undefined
+    && /^\d{4}-\d{2}-\d{2}$/.test(record.inspectionDate)
+  )), true);
+  assert.equal((data.opened || []).some((record) => record.sourceId === "SR0884792"), false);
 });

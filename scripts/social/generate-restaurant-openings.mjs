@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 import { randomBytes } from "node:crypto";
 import { CLAUDE_COPY_MODEL } from "./lib/constants.mjs";
 import { logStep, logSuccess, logSkip, logError, logItem } from "./lib/logger.mjs";
+import { isVerifiedOpeningRecord } from "../lib/scc-food-openings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = "/tmp/sbs-social";
@@ -66,7 +67,7 @@ TRUST MODEL:
 function loadOpenings() {
   const filePath = join(ROOT, "src", "data", "south-bay", "scc-food-openings.json");
   const data = JSON.parse(readFileSync(filePath, "utf8"));
-  return data.opened || [];
+  return (data.opened || []).filter(isVerifiedOpeningRecord);
 }
 
 // ── Already-seen filter ──────────────────────────────────────────────────

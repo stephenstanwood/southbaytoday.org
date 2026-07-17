@@ -62,6 +62,47 @@ function sameTitle(a, b) {
   return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
 }
 
+function titleWords(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .split(/\s+/)
+    .filter((word) => word.length >= 2 && !STOP_WORDS.has(word));
+}
+
+function sharesTitleAnchor(a, b, length = 3) {
+  const left = titleWords(a);
+  const right = titleWords(b);
+  if (left.length < length || right.length < length) return false;
+  const rightPhrases = new Set();
+  for (let i = 0; i <= right.length - length; i++) {
+    rightPhrases.add(right.slice(i, i + length).join(" "));
+  }
+  for (let i = 0; i <= left.length - length; i++) {
+    if (rightPhrases.has(left.slice(i, i + length).join(" "))) return true;
+  }
+  return false;
+}
+
+function firstPartyAuthorityScore(event) {
+  const evidence = event?.occurrenceEvidence;
+  if (
+    String(evidence?.kind || "").startsWith("first-party")
+    && evidence?.date === event?.date
+    && /^https:\/\//i.test(String(evidence?.sourceUrl || ""))
+  ) {
+    return 100;
+  }
+  return 0;
+}
+
+function chooseDuplicateToDrop(e1, e2) {
+  const authority1 = firstPartyAuthorityScore(e1);
+  const authority2 = firstPartyAuthorityScore(e2);
+  if (authority1 !== authority2) return authority1 > authority2 ? e2 : e1;
+  return richnessScore(e1) < richnessScore(e2) ? e1 : e2;
+}
+
 function richnessScore(e) {
   let s = 0;
   if (e.description) s += Math.min(e.description.length / 100, 5);
@@ -111,14 +152,22 @@ export function fuzzyDedupEvents(events) {
         // skip and venue-closeness check below — id shape and time proximity
         // don't matter here.
         if (e1.url && e2.url && e1.url === e2.url && sameTitle(e1.title, e2.title)) {
-          const drop = richnessScore(e1) < richnessScore(e2) ? e1 : e2;
+          const drop = chooseDuplicateToDrop(e1, e2);
           dropIds.add(drop.id);
           droppedCount++;
           continue;
         }
 
         const t2 = tokenize(e2.title);
-        const titleMatch = isSubsetOf(t1, t2) || isSubsetOf(t2, t1) || jaccard(t1, t2) >= 0.85;
+        const hasFirstParty = firstPartyAuthorityScore(e1) > 0 || firstPartyAuthorityScore(e2) > 0;
+        const titleMatch = isSubsetOf(t1, t2)
+          || isSubsetOf(t2, t1)
+          || jaccard(t1, t2) >= 0.85
+          // First-party titles are often longer and more formal than an
+          // aggregator's rewrite. A shared three-word anchor plus the same
+          // date/city/venue is enough only when one record carries dated
+          // first-party occurrence evidence.
+          || (hasFirstParty && sharesTitleAnchor(e1.title, e2.title));
         if (!titleMatch) continue;
 
         const tm2 = parseTimeMin(e2.time);
@@ -130,7 +179,7 @@ export function fuzzyDedupEvents(events) {
         const venueClose = jaccard(v1, v2) >= 0.4;
         if (!timeClose && !venueClose) continue;
 
-        const drop = richnessScore(e1) < richnessScore(e2) ? e1 : e2;
+        const drop = chooseDuplicateToDrop(e1, e2);
         dropIds.add(drop.id);
         droppedCount++;
       }
