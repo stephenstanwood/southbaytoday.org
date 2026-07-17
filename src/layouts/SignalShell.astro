@@ -7,6 +7,8 @@ interface Props {
   title?: string;
   description?: string;
   initialTab?: Tab;
+  /** absolute URL for og:image / twitter:image (defaults to the site card) */
+  ogImage?: string;
 }
 
 // The app shell server-renders at build time (client:load) on every page,
@@ -18,12 +20,14 @@ const {
   title = "The South Bay Today",
   description = "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San Jose, Palo Alto, and six more South Bay cities.",
   initialTab,
+  ogImage,
 } = Astro.props;
 ---
 
 <BaseLayout
   title={title}
   description={description}
+  ogImage={ogImage}
   themeColor="#F7F8FA"
   fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Permanent+Marker&display=swap"
 >
