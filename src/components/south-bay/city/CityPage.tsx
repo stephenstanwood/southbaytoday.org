@@ -194,7 +194,7 @@ export default function CityPage({ cityId, cityName }: Props) {
         {/* Photo scroll — same curated Flickr marquee as the homepage, scoped
             to this city (falls back to the full South Bay pool when the
             city's tagged photo count is too thin for a seamless loop). */}
-        <div style={{ margin: "14px -16px 18px" }}>
+        <div style={{ margin: "14px -16px" }}>
           <PhotoStrip cityFilter={cityId} />
         </div>
 

@@ -55,7 +55,7 @@ export default memo(function PhotoStrip({ cityFilter }: Props) {
   if (pool.length < 4) return null;
   if (seed === null) {
     return (
-      <div style={{ overflow: "hidden", marginTop: 4, marginBottom: 4 }}>
+      <div style={{ overflow: "hidden", borderRadius: 12 }}>
         <div style={{ height: 200 }} />
       </div>
     );
@@ -103,7 +103,7 @@ export default memo(function PhotoStrip({ cityFilter }: Props) {
   );
 
   return (
-    <div style={{ overflow: "hidden", marginTop: 4, marginBottom: 4, position: "relative" }}>
+    <div style={{ overflow: "hidden", borderRadius: 12, position: "relative" }}>
       <div className={`photo-strip-track${paused ? " is-paused" : ""}`}>
         {strip.map(p => tile(p, "-a", false))}
         {strip.map(p => tile(p, "-b", true))}

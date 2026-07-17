@@ -484,7 +484,7 @@ export default function SouthBayTodayView(_props: Props) {
       </div>
 
       {/* Photo scroll */}
-      <div style={{ margin: "0 -16px 14px" }}>
+      <div className="sbt-photo-strip-frame">
         <PhotoStrip />
       </div>
 
@@ -650,6 +650,9 @@ export default function SouthBayTodayView(_props: Props) {
           gap: 8px;
           flex-wrap: wrap;
         }
+        .sbt-photo-strip-frame {
+          margin: 12px -16px;
+        }
         @media (max-width: 480px) {
           .sbt-headline-row { padding: 18px 0 12px; }
           .sbt-headline-row::before { inset: 3px -10px 0; border-radius: 20px; }
@@ -750,6 +753,9 @@ export default function SouthBayTodayView(_props: Props) {
             grid-template-columns: 1fr;
             gap: 8px;
             margin: 0 -8px;
+          }
+          .sbt-photo-strip-frame {
+            margin-inline: -8px;
           }
         }
         /* ── Newsletter row (matches bucket-grid edges) ── */

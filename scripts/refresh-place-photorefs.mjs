@@ -5,9 +5,11 @@
 // into default-plans.json, place-research-cache.json, and upcoming-events.json
 // (events copy a venue's photoRef at ingest time).
 //
-// Idempotent. Skips itself if places.json was refreshed in the last 25 days
-// unless --force is passed. Concurrency is intentionally low (2) — large
-// bursts hit rate limits and produce silent skips.
+// Idempotent. Skips a full refresh if places.json was refreshed in the last
+// 25 days unless --force is passed. Individual failures are saved as pending
+// IDs and retried by the next scheduled run instead of sitting stale until the
+// next full cycle. Use --place-id=<Google place ID> for a targeted repair.
+// Concurrency is intentionally low (2) — large bursts hit rate limits.
 
 import { execSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
@@ -23,6 +25,8 @@ const DATA = join(__dirname, "..", "src", "data", "south-bay");
 const PLACES = join(DATA, "places.json");
 
 const FORCE = process.argv.includes("--force");
+const placeIdArg = process.argv.find((arg) => arg.startsWith("--place-id="));
+const TARGET_PLACE_ID = placeIdArg?.slice("--place-id=".length).trim() || null;
 const CONCURRENCY = 2;
 const REFRESH_THRESHOLD_DAYS = 25;
 
@@ -33,9 +37,16 @@ if (!apiKey) {
 }
 
 const data = JSON.parse(readFileSync(PLACES, "utf8"));
+data._meta = data._meta || {};
+
+const pendingIds = new Set(
+  Array.isArray(data._meta.photoRefRefreshPendingIds)
+    ? data._meta.photoRefRefreshPendingIds.filter((id) => typeof id === "string" && id)
+    : [],
+);
 
 const lastRefresh = data._meta?.lastPhotoRefRefresh;
-if (!FORCE && lastRefresh) {
+if (!FORCE && !TARGET_PLACE_ID && pendingIds.size === 0 && lastRefresh) {
   const ageDays = (Date.now() - new Date(lastRefresh).getTime()) / 86400000;
   if (ageDays < REFRESH_THRESHOLD_DAYS) {
     console.log(`skip: last refresh ${ageDays.toFixed(1)}d ago (threshold ${REFRESH_THRESHOLD_DAYS}d). Pass --force to override.`);
@@ -43,8 +54,22 @@ if (!FORCE && lastRefresh) {
   }
 }
 
-const withRefs = data.places.filter((p) => p.photoRef !== undefined);
-console.log(`refreshing ${withRefs.length} places (concurrency ${CONCURRENCY})`);
+let refreshMode = "full";
+let candidates;
+if (TARGET_PLACE_ID) {
+  refreshMode = "targeted";
+  candidates = data.places.filter((p) => p.id === TARGET_PLACE_ID);
+  if (candidates.length === 0) {
+    console.error(`place not found: ${TARGET_PLACE_ID}`);
+    process.exit(1);
+  }
+} else if (!FORCE && pendingIds.size > 0) {
+  refreshMode = "pending";
+  candidates = data.places.filter((p) => pendingIds.has(p.id));
+} else {
+  candidates = data.places.filter((p) => p.photoRef !== undefined);
+}
+console.log(`refreshing ${candidates.length} places (${refreshMode}, concurrency ${CONCURRENCY})`);
 
 async function refreshOne(p, attempt = 0) {
   try {
@@ -78,7 +103,8 @@ async function refreshOne(p, attempt = 0) {
 
 let done = 0, refreshed = 0, gone = 0, errored = 0;
 const idToNew = new Map();
-const queue = [...withRefs];
+const failedIds = new Set();
+const queue = [...candidates];
 
 async function worker() {
   while (queue.length) {
@@ -94,10 +120,11 @@ async function worker() {
       gone++;
     } else {
       errored++;
+      failedIds.add(p.id);
     }
     done++;
     if (done % 200 === 0) {
-      console.log(`  ${done}/${withRefs.length} (refreshed=${refreshed}, gone=${gone}, err=${errored})`);
+      console.log(`  ${done}/${candidates.length} (refreshed=${refreshed}, gone=${gone}, err=${errored})`);
     }
   }
 }
@@ -105,8 +132,19 @@ async function worker() {
 await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 console.log(`\nfinal: refreshed=${refreshed}, gone=${gone}, errored=${errored}`);
 
-data._meta = data._meta || {};
-data._meta.lastPhotoRefRefresh = new Date().toISOString();
+for (const p of candidates) {
+  if (failedIds.has(p.id)) pendingIds.add(p.id);
+  else pendingIds.delete(p.id);
+}
+if (pendingIds.size > 0) {
+  data._meta.photoRefRefreshPendingIds = [...pendingIds].sort();
+  console.warn(`pending retry: ${pendingIds.size} place${pendingIds.size === 1 ? "" : "s"}`);
+} else {
+  delete data._meta.photoRefRefreshPendingIds;
+}
+if (refreshMode === "full") {
+  data._meta.lastPhotoRefRefresh = new Date().toISOString();
+}
 writeFileAtomic(PLACES, JSON.stringify(data, null, 2));
 console.log("places.json written");
 
@@ -168,5 +206,11 @@ if (process.argv.includes("--commit")) {
     console.log("committed + pushed");
   } catch (err) {
     console.error("commit/push failed:", err.message);
+    process.exitCode = 1;
   }
+}
+
+if (errored > 0) {
+  console.error(`${errored} place${errored === 1 ? "" : "s"} left pending for the next run`);
+  process.exitCode = 1;
 }
