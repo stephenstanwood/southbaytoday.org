@@ -1,8 +1,7 @@
 /** Centralized Claude model ID constants */
 
-export const CLAUDE_SONNET = "claude-sonnet-4-6";
-export const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
-export const CLAUDE_OPUS = "claude-opus-4-7";
+export const CLAUDE_SONNET = "claude-sonnet-5";
+export const CLAUDE_OPUS = "claude-opus-4-8";
 
 /** Extract trimmed text from the first content block of a Claude response. */
 export function extractText(content: Array<{ type: string; text?: string }>): string {

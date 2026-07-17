@@ -229,7 +229,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-5",
       max_tokens: 2048,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -2115,7 +2115,7 @@ async function calUploadImage(dateStr, slotType) {
 }
 
 // ── Midjourney prompt copy ──────────────────────────────────────────────
-// Server distills the post copy into a tight image subject via Claude Haiku
+// Server distills the post copy into a tight image subject via Claude Sonnet
 // and returns the full permutation prompt. Client just copies it.
 async function copyMjPromptFromBox(ta) {
   const box = ta.closest('.mj-prompt-box');

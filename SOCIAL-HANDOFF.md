@@ -10,7 +10,7 @@ A full social posting pipeline lives in `scripts/social/`. It includes:
 - **Scoring engine** (`lib/scoring.mjs`) that ranks candidates by relevance, timeliness, usefulness, novelty, specificity, public appeal, and source confidence, with penalties for dupes, stale items, and admin noise
 - **Diversity constraints** (`lib/diversity.mjs`) to prevent one city or category from dominating
 - **Dedup/history** (`lib/dedup.mjs`) with fuzzy title matching and 30-day rolling history in `src/data/south-bay/social-post-history.json`
-- **Copy generation** (`lib/copy-gen.mjs`) via Claude Haiku — reworked for single-item posts with all voice learnings baked in
+- **Copy generation** (`lib/copy-gen.mjs`) via Claude Sonnet — reworked for single-item posts with all voice learnings baked in
 - **URL validation** (`lib/url-check.mjs`) — verifies URLs are specific, reachable, and not generic homepages; rejects Legistar calendar pages, bare domains, ugly query-param URLs
 - **Fact-check step** (`lib/fact-check.mjs`) — Claude pass before publishing to catch wrong dates, past events, jargon, wrong venue/city combos, unverified claims
 - **Card generation** (`lib/card-gen.mjs`) using satori + sharp, producing 1200x675 branded PNG cards

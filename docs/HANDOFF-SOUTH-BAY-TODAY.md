@@ -74,7 +74,7 @@ Stephen decided to pivot the entire product:
 1. **API route** (`src/pages/api/plan-day.ts`)
    - Input: city, kids/no-kids, current time, locked items, dismissed items
    - Pulls from: events (upcoming-events.json) + places (places.json) + restaurants + weather
-   - Calls Claude Haiku to sequence a coherent day
+   - Calls Claude Opus 4.8 to sequence a coherent day
    - Output: ordered array of cards with time blocks, "why this" blurbs, category, location
 
 2. **Scoring/filtering layer** (pre-Claude)
@@ -88,7 +88,7 @@ Stephen decided to pivot the entire product:
 3. **Claude prompt engineering**
    - Input: candidate pool (pre-filtered, ~20-30 items) + constraints
    - Output: ordered sequence of 5-6 picks with time blocks and transition reasoning
-   - Model: Haiku for cost (~$0.001/plan)
+   - Model: Opus 4.8 for planning quality
 
 ### Phase 3: Homepage Build
 **Goal:** Replace current homepage with the South Bay Today card interface.
@@ -153,7 +153,7 @@ Stephen decided to pivot the entire product:
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
 | Persistence | localStorage | No accounts, per-device is fine for v1 |
-| Day planning | Claude Haiku API | ~$0.001/plan, great quality, handles sequencing logic |
+| Day planning | Claude Opus 4.8 API | Handles the sequencing and itinerary-quality judgment |
 | Places data | Google Places API batch | ~$50 one-time, monthly refresh, 1500-2000 places |
 | Card dismiss | Skip (30d) + Hide (permanent) | Two buttons always visible, no modal/popup |
 | Time display | Snapshot on load | Not a ticking clock — reduces anxiety |

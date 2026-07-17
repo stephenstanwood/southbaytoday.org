@@ -1,5 +1,5 @@
 /**
- * Event extractor — single Claude Haiku call per inbound email.
+ * Event extractor — single Claude Sonnet call per inbound email.
  *
  * Routes through the Mini Claude proxy (Stephen's Max subscription) instead
  * of the metered Anthropic API when available. Falls back to the Anthropic API
@@ -154,7 +154,7 @@ ${bodyBlock}`;
   }
 
   const response = await createClaudeMessage({
-    model: "claude-haiku-4-5-20251001",
+    model: "claude-sonnet-5",
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: userBlocks }],

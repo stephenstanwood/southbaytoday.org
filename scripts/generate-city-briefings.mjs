@@ -4,7 +4,7 @@
  *
  * Generates a city-specific weekly briefing for each South Bay city.
  * Pulls from upcoming events, around-town highlights, and council agenda
- * items, then uses Claude Haiku to write a one-sentence editorial lead.
+ * items, then uses Claude Sonnet to write a one-sentence editorial lead.
  *
  * Output: src/data/south-bay/city-briefings.json
  *
@@ -32,7 +32,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 const CITIES = [
   { id: "campbell",      name: "Campbell" },
@@ -67,7 +67,7 @@ async function callClaude(prompt) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 256,
       messages: [{ role: "user", content: prompt }],
     }),

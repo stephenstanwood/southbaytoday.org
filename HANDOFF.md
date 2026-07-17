@@ -22,7 +22,7 @@
 - **Places pool:** 2516 entries with `photoRef` (Google Places photo reference). Plan engine uses these.
 - **Photo thumbnails:** `photoRef` is present in data but **plan cards still show emoji fallback** — the `/api/place-photo` proxy exists but cards aren't wired up to it yet.
 - **Events:** 544 from 25 sources (recovered from 86 after TDZ bug fix last cycle).
-- **Plan engine:** `POST /api/plan-day` — scores places + events, calls Haiku to sequence 5-7 cards. 5-min cache by city:kids:hour.
+- **Plan engine:** `POST /api/plan-day` — scores places + events, calls Opus 4.8 to sequence 5-7 cards. 5-min cache by city:kids:hour.
 
 ---
 

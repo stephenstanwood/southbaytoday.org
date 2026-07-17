@@ -3,7 +3,7 @@
  * generate-digests.mjs
  *
  * Pulls pre-ingested council meeting data from stoa.works/api/council-meetings,
- * summarizes the most recent meeting per city with Claude Haiku, and writes
+ * summarizes the most recent meeting per city with Claude Sonnet, and writes
  * results to src/data/south-bay/digests.json.
  *
  * Much faster than re-scraping Legistar/CivicEngage — Stoa already has the data.
@@ -29,7 +29,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 // ── City config (SBS city IDs → Stoa city names + schedule) ──
 
@@ -166,7 +166,7 @@ async function fetchLegistarPastMeeting(client) {
 // ── Claude summarization ──
 
 // Meta-commentary parentheticals occasionally leak into keyTopics even though
-// the prompt forbids them — Haiku writes "Five-year service agreements
+// the prompt forbids them — Sonnet writes "Five-year service agreements
 // authorized with vendors (names partially listed)" or "Closed session
 // convened (details not public)". The qualifier is the model admitting its
 // source data was thin; a resident reading the digest just sees filler in
@@ -191,7 +191,7 @@ function cleanKeyTopics(topics) {
     .filter((t) => t.length > 0);
 }
 
-// Haiku occasionally truncates two-word city names — most often "Mountain View"
+// Sonnet occasionally truncates two-word city names — most often "Mountain View"
 // becomes "Mountain" ("the Mountain City Council held a special session…").
 // Stephen has caught and hand-fixed this verbatim at least once (commit 15558a1).
 // Keyed per-city so we only patch the digest belonging to that city — avoids
@@ -251,7 +251,7 @@ Match the source's wording on sensitive framing. If the agenda says "federal civ
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 512,
       messages: [{ role: "user", content: prompt }],
     }),

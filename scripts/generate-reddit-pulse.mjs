@@ -3,7 +3,7 @@
  * generate-reddit-pulse.mjs
  *
  * Pulls top + recent posts from South Bay-relevant subreddits, classifies them
- * via Haiku, extracts named places/events from titles + bodies, and writes:
+ * via Sonnet, extracts named places/events from titles + bodies, and writes:
  *
  *   reddit-pulse.json — curated "What the South Bay is Saying" feed for the homepage
  *   reddit-gaps.json  — places/events mentioned on Reddit that we don't have
@@ -35,7 +35,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 const USER_AGENT = "southbaytoday-pulse/1.0 (by /u/southbaytoday; https://southbaytoday.org)";
 const REQUEST_DELAY_MS = 2000;
 
@@ -46,7 +46,7 @@ const IMAGE_CACHE_PATH = join(DATA_DIR, "reddit-image-cache.json");
 // Posts we extract named entities from (title + body). Tunable.
 const MAX_COMMENT_FETCHES = 14;
 
-// Map free-text city strings (Haiku output) → canonical South Bay cityId.
+// Map free-text city strings (Sonnet output) → canonical South Bay cityId.
 // Cities NOT in this map are out-of-scope (e.g., Daly City, Oakland, SF) and
 // must be skipped — Reddit threads on r/bayarea regularly mention them.
 const CITY_ID_MAP = {
@@ -71,9 +71,9 @@ function resolveCity(raw) {
   return { cityId, cityName: key.toUpperCase() };
 }
 
-// Deterministic out-of-area filter — runs BEFORE Haiku classification so we
+// Deterministic out-of-area filter — runs BEFORE Sonnet classification so we
 // never spend tokens (or risk a misclassification) on SF/East Bay posts that
-// the curator obviously doesn't want in the feed. Haiku's `out_of_area`
+// the curator obviously doesn't want in the feed. Sonnet's `out_of_area`
 // category stays as a backstop for posts these patterns miss.
 const SOUTH_BAY_HINT_REGEX = /\b(san jose|sj |sjc|sunnyvale|palo alto|mountain view|mtn view|santa clara|cupertino|los gatos|saratoga|campbell|milpitas|los altos|stanford|silicon valley|south bay|willow glen|almaden|cambrian|berryessa|santana row|valley fair)\b/i;
 const SF_MARKER_REGEX = /(\bin sf\b|\bin san francisco\b|\bsf'?s\b|\bsfo\b|\bin the city\b|\bfrom sf\b|\bto sf\b)/i;
@@ -218,7 +218,7 @@ async function callClaude(prompt, maxTokens = 4096) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -308,7 +308,7 @@ async function main() {
 
   console.log(`${candidates.length} candidates to classify.\n`);
 
-  // ─── PHASE 2: Classify with Haiku ───────────────────────────────────
+  // ─── PHASE 2: Classify with Sonnet ───────────────────────────────────
   // Classify in chunks so the JSON response can't blow past max_tokens. RSS has
   // no engagement floor, so the candidate pool is large; one monolithic call
   // truncates. Global 1-based indices are preserved across chunks so the enrich
@@ -358,7 +358,7 @@ Be strict on relevance. Crime/lawsuits/scary stuff = relevance 1-3 (we won't sur
 Return ONLY a JSON array of objects, no other text.`;
   };
 
-  console.log("Classifying with Haiku…");
+  console.log("Classifying with Sonnet…");
   const CLASSIFY_CHUNK = 60;
   const classified = [];
   for (let start = 0; start < candidates.length; start += CLASSIFY_CHUNK) {
@@ -680,7 +680,7 @@ Return ONLY a JSON array of objects, no other text.`;
 
   // ─── PHASE 3c: Light-touch title polish ─────────────────────────────
   // Runs AFTER image filtering so we polish only what we're actually shipping
-  // (including any reserve-swapped posts). One Haiku call for all final titles.
+  // (including any reserve-swapped posts). One Sonnet call for all final titles.
   // Original `title` is preserved on each post; `displayTitle` is what the UI renders.
   if (pulse.length > 0) {
     const titlesBlock = pulse
@@ -774,7 +774,7 @@ No other text.`;
 
   console.log(`\nExtracting entities from ${minedPosts.length} posts (titles + bodies; RSS has no comments)…`);
 
-  // ─── PHASE 5: Extract named entities via Haiku ──────────────────────
+  // ─── PHASE 5: Extract named entities via Sonnet ──────────────────────
   // Chunk posts to keep prompts reasonable.
   const allEntities = { places: [], events: [] };
   const chunkSize = 5;
@@ -973,7 +973,7 @@ Return ONLY the JSON object, no other text.`;
 
       for (const post of restaurantPosts) {
         // We only auto-add when the post title clearly names a restaurant + signal.
-        // Confidence-validate via a quick Haiku check; skip if unclear.
+        // Confidence-validate via a quick Sonnet check; skip if unclear.
         const validatePrompt = `This Reddit post claims a South Bay restaurant or food business news. Decide if it should be auto-added to our food-openings tracker.
 
 POST: r/${post.sub} — ${post.title}

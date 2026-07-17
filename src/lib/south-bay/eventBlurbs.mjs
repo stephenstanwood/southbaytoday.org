@@ -10,9 +10,9 @@
 //   Tier 1: Event already has a blurb (cache hit carried in the event obj).
 //   Tier 2: Persistent cache hit (event-blurb-cache.json keyed by URL or
 //           fingerprint). Free.
-//   Tier 3: Haiku batch generation — 30 events per call, ~$0.05 per full
-//           ~530-event regen. Behind RESOLVE_EVENT_BLURBS=1 env flag so
-//           local dev runs don't burn Haiku credits.
+//   Tier 3: Sonnet batch generation — 30 events per call, cached across runs.
+//           Behind RESOLVE_EVENT_BLURBS=1 env flag so
+//           local dev runs don't burn Sonnet credits.
 //
 // Output field: event.blurb (1 sentence, planner voice — matches the tone
 // rules already in plan-day.ts so card-level consumers can use it directly).
@@ -28,7 +28,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
 const CACHE_PATH = join(REPO_ROOT, "src", "data", "south-bay", "event-blurb-cache.json");
 
-const MODEL = "claude-haiku-4-5-20251001";
+const MODEL = "claude-sonnet-5";
 const BATCH_SIZE = 30;
 const MAX_TOKENS = 1500;
 
@@ -64,7 +64,7 @@ function cacheKey(event) {
 }
 
 /** Reverse of cacheKey() for `fp:` keys — recovers the (normalized) title
- *  and venue so a cache entry can be given Haiku context even when the
+ *  and venue so a cache entry can be given Sonnet context even when the
  *  source event has aged out of upcoming-events.json. */
 function parseFpKey(key) {
   if (!key.startsWith("fp:")) return { title: "", venue: "" };
@@ -113,7 +113,7 @@ function migrateUrlKeys(cache, currentEvents) {
 }
 
 // ---------------------------------------------------------------------------
-// Haiku batch generation
+// Sonnet batch generation
 // ---------------------------------------------------------------------------
 
 const SYSTEM_PROMPT = `You write one-sentence blurbs for local events in a South Bay day-planner app (South Bay Today).
@@ -169,7 +169,7 @@ function blurbLeaksDateContext(blurb, event) {
 }
 
 // Guards the uniqueness-retry path specifically: given only a title/venue
-// (no description, sometimes no venue at all), Haiku will sometimes refuse
+// (no description, sometimes no venue at all), Sonnet will sometimes refuse
 // or ask a clarifying question instead of producing a blurb. Those refusals
 // pass the date-leak filter fine (they're not lying about dates) so they
 // need their own check before landing in the cache.
@@ -279,7 +279,7 @@ Write a NEW blurb for THIS event that reads as clearly distinct from the ones ab
 Output just the one-sentence blurb — no markdown, no quotes, no commentary.`;
 }
 
-async function haikuUniqueBlurb(client, event, conflictBlurbs) {
+async function sonnetUniqueBlurb(client, event, conflictBlurbs) {
   const response = await client.messages.create({
     model: MODEL,
     max_tokens: 300,
@@ -290,7 +290,7 @@ async function haikuUniqueBlurb(client, event, conflictBlurbs) {
   return text.trim().replace(/^["']|["']$/g, "");
 }
 
-async function haikuBatch(client, events) {
+async function sonnetBatch(client, events) {
   const response = await client.messages.create({
     model: MODEL,
     max_tokens: MAX_TOKENS,
@@ -316,7 +316,7 @@ async function haikuBatch(client, events) {
  *
  * Options:
  *   - enabled:   override the env flag (default: RESOLVE_EVENT_BLURBS === "1")
- *   - batchSize: events per Haiku call (default 30)
+ *   - batchSize: events per Sonnet call (default 30)
  *   - dryRun:    don't mutate events or write cache; return stats only.
  */
 export async function resolveEventBlurbs(events, opts = {}) {
@@ -355,7 +355,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
   if (leakDropped) console.log(`[eventBlurbs] swept ${leakDropped} date-leak blurb(s) from cache`);
 
   // Track every blurb currently in the cache so newly-generated blurbs can
-  // be checked against OTHER events' blurbs, not just their own. Haiku tends
+  // be checked against OTHER events' blurbs, not just their own. Sonnet tends
   // to produce identical boilerplate for near-identical listings (e.g. every
   // farmers market got "Shop for local produce, artisan goods, and
   // ready-to-eat food weekly.") — this catches that at generation time
@@ -402,7 +402,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
     const batch = todo.slice(start, start + batchSize);
     if (dryRun) { stats.skipped += batch.length; continue; }
     try {
-      const blurbs = await haikuBatch(client, batch.map((b) => b.event));
+      const blurbs = await sonnetBatch(client, batch.map((b) => b.event));
       for (let i = 0; i < batch.length; i++) {
         let blurb = blurbs[i];
         if (!blurb || blurb.length === 0) {
@@ -416,7 +416,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
         }
 
         // Cross-event duplicate check: if this exact blurb is already used
-        // by a DIFFERENT event/venue, ask Haiku to make it distinct instead
+        // by a DIFFERENT event/venue, ask Sonnet to make it distinct instead
         // of shipping the same boilerplate twice.
         const key = batch[i].key;
         let owner = usedBlurbs.get(norm(blurb));
@@ -426,7 +426,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
           for (let attempt = 0; attempt < 2 && !deduped; attempt++) {
             let candidate;
             try {
-              candidate = await haikuUniqueBlurb(client, batch[i].event, conflictBlurbs);
+              candidate = await sonnetUniqueBlurb(client, batch[i].event, conflictBlurbs);
             } catch (err) {
               console.warn(`[eventBlurbs] dedup retry failed for ${batch[i].event.title}: ${err.message}`);
               break;
@@ -487,7 +487,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
  * back to the title/venue recovered from the cache key itself.
  *
  * Options:
- *   - dryRun: don't call Haiku or write the cache; return the cluster list only.
+ *   - dryRun: don't call Sonnet or write the cache; return the cluster list only.
  */
 export async function regenerateDuplicateCacheEntries(events, opts = {}) {
   const dryRun = !!opts.dryRun;
@@ -541,7 +541,7 @@ export async function regenerateDuplicateCacheEntries(events, opts = {}) {
       for (let attempt = 0; attempt < 2 && !finalBlurb; attempt++) {
         let candidate;
         try {
-          candidate = await haikuUniqueBlurb(client, event, conflictBlurbs);
+          candidate = await sonnetUniqueBlurb(client, event, conflictBlurbs);
         } catch (err) {
           console.warn(`[eventBlurbs] dedup regen failed for ${key}: ${err.message}`);
           break;

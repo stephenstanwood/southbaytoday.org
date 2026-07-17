@@ -519,7 +519,7 @@ function looksCancelled(description, blurb) {
 // prohibited items, clear-bag requirements), not event-specific info. When
 // `info` is empty the mapper falls through to `pleaseNote` and the resulting
 // "description" is a security blurb like "Attention! - SAP Center enforces a
-// restricted bag policy for all events…", which then poisons the Haiku blurb
+// restricted bag policy for all events…", which then poisons the Sonnet blurb
 // resolver's input and surfaces in search hits. Detect and drop.
 const VENUE_POLICY_PATTERNS = [
   /\b(?:restricted |clear[- ])?bag\s+(?:policy|rule|check|size|requirement)/i,
@@ -2564,7 +2564,7 @@ async function fetchChmEventDateTime(url) {
 //     Please join the waitlist or sign up to see the show virtually.
 //     Unfortunately, we will not be able to admit walk-ins." — eats ~140 of the
 //     200-char description budget when present, leaving a sliver of real content
-//     and causing the Haiku blurb resolver to write "Watch virtually or join the
+//     and causing the Sonnet blurb resolver to write "Watch virtually or join the
 //     waitlist…" instead of describing the actual event.
 //   - Trailing WordPress excerpt footer: "[…] The post <title> appeared first on
 //     CHM." — usually clipped by truncate() at 200 chars, but stripping pre-cut
@@ -7124,12 +7124,12 @@ async function main() {
     }
   }
 
-  // Blurb resolution — one Haiku pass per ingest so every event ships with a
+  // Blurb resolution — one Sonnet pass per ingest so every event ships with a
   // stable "what to do here" sentence. Cache is persistent (keyed by URL), so
   // reruns only spend tokens on new/changed events. Behind RESOLVE_EVENT_BLURBS=1
   // so local dev doesn't pay unless explicitly asked.
   const { resolveEventBlurbs } = await import("../src/lib/south-bay/eventBlurbs.mjs");
-  console.log("\n📝 Resolving event blurbs (cache → Haiku batch)...");
+  console.log("\n📝 Resolving event blurbs (cache → Sonnet batch)...");
   const blurbStats = await resolveEventBlurbs(collapsedEvents);
   console.log(`   preexisting:   ${blurbStats.preexisting}`);
   console.log(`   cache hits:    ${blurbStats.cache_hits}`);

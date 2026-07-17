@@ -5,7 +5,7 @@
  * the topic/category fallback has no historical entries to reuse and only
  * helps after ~30 days of natural cache turnover.
  *
- * Runs Haiku in batches over the cached prompts. Cheap one-time cost.
+ * Runs Sonnet in batches over the cached prompts. Cheap one-time cost.
  *
  * Run: node --env-file=.env.local scripts/backfill-reddit-image-cache-metadata.mjs
  */
@@ -24,7 +24,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 const IMAGE_CACHE_PATH = join(DATA_DIR, "reddit-image-cache.json");
 const BATCH_SIZE = 60;
 
@@ -37,7 +37,7 @@ async function callClaude(prompt, maxTokens = 16384) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     }),

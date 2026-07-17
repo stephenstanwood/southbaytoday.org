@@ -295,7 +295,7 @@ Use `events@in.southbaytoday.org` directly **OR** use `sandcathype@gmail.com` (f
 ## What happens after you subscribe
 
 1. Mailing list sends confirmation email → Gmail → Resend → webhook → **auto-clicked**
-2. First real newsletter arrives → Gmail → Resend → webhook → Claude Haiku extracts events → Vercel Blob → Mini pulls nightly → merged into site
+2. First real newsletter arrives → Gmail → Resend → webhook → Claude Sonnet extracts events → Vercel Blob → Mini pulls nightly → merged into site
 3. Tracker at `/admin/newsletters?key=<ADMIN_KEY>` updates to `receiving` automatically
 
 **Admin key:** `sbt_cdc1df30b8f7c200f5074404d322dab1`

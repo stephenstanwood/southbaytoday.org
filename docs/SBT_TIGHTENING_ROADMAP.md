@@ -20,7 +20,7 @@ fresh Claude Code session and it'll know exactly what to do.
 
 Shipped. `src/lib/south-bay/eventBlurbs.mjs` resolver + persistent cache at `src/data/south-bay/event-blurb-cache.json`, wired into `generate-events.mjs` after images and into every DayCard write site in `plan-day.ts` (sequencer, locked force-insert, back-to-back replacement, padder). Backfilled 706/706 events from the Mini — ≈$0.05, 4.5 min. Memory: `reference_event_blurb_pipeline.md`. **Pending:** add `RESOLVE_EVENT_BLURBS=1` to Mini's `.env.local` so nightly regens pick up new events.
 
-**Scope:** One Haiku batch call per event ingest generates a 1-sentence "what is this" description. Plan-day.ts stops asking Claude to improvise blurbs per shuffle.
+**Scope:** One Sonnet batch call per event ingest generates a 1-sentence "what is this" description. Plan-day.ts stops asking Claude to improvise blurbs per shuffle.
 
 **Why this first:** Biggest single quality lever. Kills the "swing by X and see what's going on" root cause (we only templated the fallback — better to never need one). Plus eliminates the variance where the same event gets different blurbs on every shuffle.
 
@@ -31,8 +31,8 @@ Shipped. `src/lib/south-bay/eventBlurbs.mjs` resolver + persistent cache at `src
 - Edit: `src/pages/api/plan-day.ts` — prefer `evt.blurb` in the prompt instead of re-generating; update the main planner prompt
 
 **Design notes:**
-- Batch: send ~30 events per Haiku call, get back 30 blurbs, parse. Typical regen has ~530 events = ~18 batch calls.
-- Cost estimate: Haiku at ~300 input + 60 output tokens × 530 events ≈ $0.05/run. Under-100 threshold — no flag needed.
+- Batch: send ~30 events per Sonnet call, get back 30 blurbs, parse. Typical regen has ~530 events = ~18 batch calls.
+- Sonnet is the minimum active model; keep the batch size and cache so the quality bump remains bounded.
 - Blurb length: 1–2 sentences, casual, no "real event" / "only today" / distance mentions (memory: `feedback_ai_speak_bans`).
 - Tone: match the existing planner prompt's blurb rules.
 - Cache keyed by event URL (stable across date variants of the same recurring event).

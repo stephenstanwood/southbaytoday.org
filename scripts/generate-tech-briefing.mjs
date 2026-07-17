@@ -3,7 +3,7 @@
  * generate-tech-briefing.mjs
  *
  * Generates a weekly "This Week in South Bay Tech" editorial briefing using
- * Claude Haiku. Pulls from recently-funded startups in tech-companies.ts and
+ * Claude Sonnet. Pulls from recently-funded startups in tech-companies.ts and
  * upcoming tech events from upcoming-events.json.
  *
  * Output: src/data/south-bay/tech-briefing.json
@@ -31,7 +31,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 function getWeekRange() {
   const now = new Date();
@@ -94,7 +94,7 @@ async function callClaude(prompt) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 400,
       messages: [{ role: "user", content: prompt }],
     }),

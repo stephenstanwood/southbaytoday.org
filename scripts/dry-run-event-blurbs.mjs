@@ -6,8 +6,8 @@
 //   RESOLVE_EVENT_BLURBS=1 node scripts/dry-run-event-blurbs.mjs    # resolve + write back
 //
 // Reads ANTHROPIC_API_KEY from .env.local (auto-loaded below) or the
-// ambient env. On the Mini, .env.local has it. Haiku cost at 30 events/batch
-// ≈ $0.05 per full ~530-event backfill.
+// ambient env. On the Mini, .env.local has it. Sonnet runs at 30 events/batch
+// and the persistent cache keeps repeat backfills bounded.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";

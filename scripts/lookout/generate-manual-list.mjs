@@ -104,7 +104,7 @@ lines.push("");
 lines.push("## What happens after you subscribe");
 lines.push("");
 lines.push("1. Mailing list sends confirmation email → Gmail → Resend → webhook → **auto-clicked**");
-lines.push("2. First real newsletter arrives → Gmail → Resend → webhook → Claude Haiku extracts events → Vercel Blob → Mini pulls nightly → merged into site");
+lines.push("2. First real newsletter arrives → Gmail → Resend → webhook → Claude Sonnet extracts events → Vercel Blob → Mini pulls nightly → merged into site");
 lines.push("3. Tracker at `/admin/newsletters?key=<ADMIN_KEY>` updates to `receiving` automatically");
 lines.push("");
 lines.push("**Admin key:** `sbt_cdc1df30b8f7c200f5074404d322dab1`");

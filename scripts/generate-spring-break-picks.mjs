@@ -26,7 +26,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 function cityLabel(city) {
   return city.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
@@ -41,7 +41,7 @@ async function callClaude(prompt) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     }),
