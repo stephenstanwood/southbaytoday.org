@@ -33,7 +33,7 @@ function formatShortDate(iso: string | null): string {
   return new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
-// ── New & Coming Soon ───────────────────────────────────────────────────────
+// ── Openings, inspections, and coming soon ─────────────────────────────────
 
 type FoodItem = {
   id: string;
@@ -41,8 +41,9 @@ type FoodItem = {
   address: string | null;
   cityId: string | null;
   cityName: string;
-  date: string | null;
-  status: "opened" | "coming-soon";
+  date?: string | null;
+  inspectionDate?: string | null;
+  status: "opened" | "inspection-complete" | "coming-soon";
   blurb?: string | null;
   photoRef?: string | null;
   image?: string | null;
@@ -50,6 +51,8 @@ type FoodItem = {
 
 function FoodTile({ item }: { item: FoodItem }) {
   const isOpen = item.status === "opened";
+  const isInspection = item.status === "inspection-complete";
+  const tone = isOpen ? "open" : isInspection ? "inspection" : "soon";
   // Tier 1: real Google Places photo. Tier 2: Recraft food illustration.
   // Tier 3: status-themed gradient.
   const photo = item.photoRef
@@ -62,14 +65,14 @@ function FoodTile({ item }: { item: FoodItem }) {
     [item.name, item.address, city].filter(Boolean).join(" "),
   );
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
-  const dateLabel = formatShortDate(item.date);
+  const dateLabel = formatShortDate(isInspection ? item.inspectionDate ?? null : item.date ?? null);
 
   return (
     <a
       href={mapsHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={`food-tile food-tile-${isOpen ? "open" : "soon"}${photo ? "" : " food-tile--no-photo"}`}
+      className={`food-tile food-tile-${tone}${photo ? "" : " food-tile--no-photo"}`}
     >
       {photo && (
         <img
@@ -92,8 +95,8 @@ function FoodTile({ item }: { item: FoodItem }) {
       <div className="food-tile-shade" />
       <div className="food-tile-top">
         <span className="food-pill food-pill-light">{city}</span>
-        <span className={`food-pill food-pill-${isOpen ? "open" : "soon"}`}>
-          {isOpen ? "NEW" : "COMING SOON"}
+        <span className={`food-pill food-pill-${tone}`}>
+          {isOpen ? "OPENED" : isInspection ? "INSPECTED" : "COMING SOON"}
         </span>
       </div>
       <div className="food-tile-bottom">
@@ -103,7 +106,7 @@ function FoodTile({ item }: { item: FoodItem }) {
           {item.address && <span className="food-tile-addr">{item.address}</span>}
           {dateLabel && (
             <span>
-              {isOpen ? `Opened ${dateLabel}` : `Permit ${dateLabel}`}
+              {isOpen ? `Opened ${dateLabel}` : isInspection ? `Final inspection ${dateLabel}` : `Permit ${dateLabel}`}
             </span>
           )}
         </div>
@@ -116,38 +119,52 @@ function NewAndComingSoon() {
   const data = sccFoodOpeningsJson as {
     generatedAt: string;
     opened: FoodItem[];
+    inspections: FoodItem[];
     comingSoon: FoodItem[];
   };
   const openedAll = (data.opened ?? []).filter((i) => i.name && i.cityId);
+  const inspectionsAll = (data.inspections ?? []).filter((i) => i.name && i.cityId);
   const comingSoonAll = (data.comingSoon ?? []).filter((i) => i.name && i.cityId);
   const opened = openedAll.slice(0, 8);
+  const inspections = inspectionsAll.slice(0, 8);
   const comingSoon = comingSoonAll.slice(0, 8);
-  if (opened.length === 0 && comingSoon.length === 0) return null;
+  if (opened.length === 0 && inspections.length === 0 && comingSoon.length === 0) return null;
 
   const updated = formatShortDate(data.generatedAt.slice(0, 10));
 
   return (
     <section className="food-section">
       <header className="food-section-head">
-        <h2 className="food-h2">New &amp; Coming Soon</h2>
+        <h2 className="food-h2">Food Openings &amp; Permits</h2>
         <p className="food-sub">
-          Recent openings + permits
+          Verified openings, final inspections + permits
           {updated && <> · Updated {updated}</>}
         </p>
       </header>
 
       {opened.length > 0 && (
         <>
-          <div className="food-eyebrow food-eyebrow-open">Recently Opened</div>
+          <div className="food-eyebrow food-eyebrow-open">Verified Openings</div>
           <div className="food-tile-grid">
             {opened.map((item) => <FoodTile key={item.id} item={item} />)}
           </div>
         </>
       )}
 
+      {inspections.length > 0 && (
+        <>
+          <div className="food-eyebrow food-eyebrow-inspection" style={{ marginTop: opened.length > 0 ? 28 : 0 }}>
+            Recent Final Inspections
+          </div>
+          <div className="food-tile-grid">
+            {inspections.map((item) => <FoodTile key={item.id} item={item} />)}
+          </div>
+        </>
+      )}
+
       {comingSoon.length > 0 && (
         <>
-          <div className="food-eyebrow food-eyebrow-soon" style={{ marginTop: opened.length > 0 ? 28 : 0 }}>
+          <div className="food-eyebrow food-eyebrow-soon" style={{ marginTop: opened.length > 0 || inspections.length > 0 ? 28 : 0 }}>
             Coming Soon
           </div>
           <div className="food-tile-grid">
@@ -233,10 +250,12 @@ function PermitPulse() {
   // De-dupe against scc-food-openings (already shown above) by lowercase name.
   const sccData = sccFoodOpeningsJson as {
     opened: Array<{ name?: string }>;
+    inspections: Array<{ name?: string }>;
     comingSoon: Array<{ name?: string }>;
   };
   const sccNames = new Set<string>([
     ...(sccData.opened ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
+    ...(sccData.inspections ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
     ...(sccData.comingSoon ?? []).map((i) => (i.name ?? "").trim().toLowerCase()).filter(Boolean),
   ]);
 
@@ -372,24 +391,24 @@ function FoodHero() {
   const openings = sccFoodOpeningsJson as {
     generatedAt: string;
     opened: FoodItem[];
+    inspections: FoodItem[];
     comingSoon: FoodItem[];
   };
-  const marketCount = SOUTH_BAY_EVENTS.filter((e) => e.category === "market").length;
   const updated = formatShortDate(openings.generatedAt.slice(0, 10));
 
   return (
     <PageHero
       eyebrow="South Bay / Food Desk"
       title="Food"
-      description="Recent openings, promising buildouts, and farmers markets across the South Bay, edited down so the good leads are easy to scan."
+      description="Verified openings, recent final inspections, promising buildouts, and farmers markets across the South Bay."
       note={`Health-permit refresh ${updated || "recently"}`}
       // --sb-coral (#F43F7C) is only ~3.6:1 on the hero background as text —
       // darkened within the same coral/rose family to #BE123C (~6.3:1) for the kicker.
       accent="#BE123C"
       stats={[
-        { value: openings.opened?.length ?? 0, label: "Recent openings" },
+        { value: openings.opened?.length ?? 0, label: "Verified openings" },
+        { value: openings.inspections?.length ?? 0, label: "Final inspections" },
         { value: openings.comingSoon?.length ?? 0, label: "Coming soon" },
-        { value: marketCount, label: "Farmers markets" },
       ]}
     />
   );
@@ -512,6 +531,7 @@ function FoodViewStyles() {
         margin-bottom: 10px;
       }
       .food-eyebrow-open { color: #16a34a; }
+      .food-eyebrow-inspection { color: #7c3aed; }
       .food-eyebrow-soon { color: #2563eb; }
 
       .food-tile-grid {
@@ -534,6 +554,9 @@ function FoodViewStyles() {
       }
       .food-tile-open.food-tile--no-photo {
         background: linear-gradient(135deg, #0f766e 0%, #1d4ed8 100%);
+      }
+      .food-tile-inspection.food-tile--no-photo {
+        background: linear-gradient(145deg, #581c87, #7c3aed 55%, #a855f7);
       }
       .food-tile-soon.food-tile--no-photo {
         background: linear-gradient(135deg, #4338ca 0%, #0f766e 100%);
@@ -576,6 +599,7 @@ function FoodViewStyles() {
       }
       .food-pill-light { background: rgba(255,255,255,0.95); color: #111; }
       .food-pill-open  { background: #15803d; color: #fff; }
+      .food-pill-inspection { background: #7c3aed; color: #fff; }
       .food-pill-soon  { background: #2563eb; color: #fff; }
       .food-tile-bottom {
         position: absolute; left: 12px; right: 12px; bottom: 10px;

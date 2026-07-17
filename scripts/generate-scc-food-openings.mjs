@@ -19,7 +19,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import {
+  classifyFinalInspection,
   isAddressDerivedBusinessName,
+  isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
 } from "./lib/scc-food-openings.mjs";
 import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
@@ -34,6 +36,16 @@ const IMAGE_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "scc-
 const API_BASE = "https://data.sccgov.org/resource/skd7-7ix3.json";
 const LOOKBACK_DAYS = 45;
 const LOOKBACK_DATE = new Date(Date.now() - LOOKBACK_DAYS * 86400000).toISOString().split("T")[0];
+
+// A final inspection is not an opening date. Only records in this map may
+// enter the `opened` feed, and their date comes from the cited opening source.
+const VERIFIED_OPENING_EVIDENCE = {
+  SR0884792: {
+    date: "2026-03-15",
+    url: "https://www.instagram.com/p/DVz2HnDlNAJ/",
+    source: "Fugetsu Market",
+  },
+};
 
 // Cities we care about (South Bay). SCC data uses uppercase city names.
 const SOUTH_BAY_CITIES = new Set([
@@ -547,6 +559,21 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
   return generateBlurbMap(items, prompt, "Coming-soon blurb generation");
 }
 
+/** Generate neutral descriptions for permits whose only dated fact is inspection. */
+async function generateInspectionBlurbs(items) {
+  const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
+
+For each food business below, write one concise factual sentence (max 12 words) describing its apparent business type or location. These records only establish that a county final inspection occurred. Never say or imply the business opened, is new, recently opened, or is now operating. No exclamation points, no hype. Don't start with the business name.
+
+The "CITY:" field after each address is authoritative. ${CUISINE_INFERENCE_RULE}
+
+Businesses:
+${blurbList(items)}
+
+Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
+  return generateBlurbMap(items, prompt, "Inspection blurb generation");
+}
+
 // ── Google Places photoRef enrichment ────────────────────────────────────
 // Tile UI on /#food shows each opening as a square card with a real photo.
 // First try places.json (free; covers existing chains). Fall back to a live
@@ -765,39 +792,32 @@ async function fetchPage(whereClause, orderField, limit = 50) {
 async function main() {
   console.log("Fetching SCC restaurant permit data…\n");
 
-  // --- Recently opened: passed final inspection in last LOOKBACK_DAYS days ---
-  const openedRaw = await fetchPage(
+  // --- Recent county final inspections ---
+  const finalizedRaw = await fetchPage(
     `final_inspection > '${LOOKBACK_DATE}T00:00:00.000'`,
     "final_inspection",
     100,
   );
 
-  // SCC final_inspection fires for re-inspections (equipment swaps, ownership
-  // changes, annual recerts) of long-standing places, not just new openings.
-  // We catch those via EQUIPMENT_ONLY_PATTERNS + SOURCE_ID_SKIP + CORPORATE_PATTERNS
-  // rather than an elapsed-time heuristic — the old 150d filter dropped real
-  // new builds whose plan check dragged (Dough Zone, Molly Tea SC, T&T Westgate,
-  // Jollibee, Whole Foods Stevens Creek, etc. all took >150d but are legit new).
-  // False positives that slip through (existing chains getting re-inspected) go
-  // into SOURCE_ID_SKIP after Stephen reviews.
-
-  const opened = openedRaw
+  // SCC final_inspection also fires for re-inspections, ownership changes, and
+  // long-running permit work. Classify every row as an inspection unless a
+  // separate first-party source establishes a real opening date.
+  const finalized = finalizedRaw
     .filter((item) => !shouldSkip(item))
     .map((item) => {
       const cleaned = cleanName(item.business_name);
       if (!cleaned) return null;
       const name = (item.record_id && NAME_OVERRIDES[item.record_id]) ?? cleaned;
       const city = (item.city ?? "").toUpperCase();
-      return {
-        id: `opened-${item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-")}`,
+      return classifyFinalInspection({
+        id: item.record_id ?? item.business_name?.toLowerCase().replace(/\W+/g, "-"),
         name,
         address: cleanAddress(item.site_location),
         cityId: CITY_ID_MAP[city] ?? null,
         cityName: city,
-        date: item.final_inspection?.slice(0, 10) ?? null,
-        status: "opened",
+        inspectionDate: item.final_inspection?.slice(0, 10) ?? null,
         sourceId: item.record_id ?? null,
-      };
+      }, item.record_id ? VERIFIED_OPENING_EVIDENCE[item.record_id] : null);
     })
     .filter(Boolean);
 
@@ -805,8 +825,13 @@ async function main() {
   // the same suite written two ways collapses to one — see addressKey)
   // Validate again after dedupe because its shared-prefix transform can create a
   // new display name that no individual source record had.
-  const openedDeduped = dedupeByAddress(opened)
+  const finalizedDeduped = dedupeByAddress(finalized)
     .filter((item) => !isAddressDerivedBusinessName(item.name, item.address));
+  const openedDeduped = finalizedDeduped
+    .filter(isVerifiedOpeningRecord)
+    .filter((item) => item.date >= LOOKBACK_DATE);
+  const inspectionsDeduped = finalizedDeduped
+    .filter((item) => item.status === "inspection-complete");
 
   // --- Coming soon: plan approved but no final inspection yet ---
   const comingSoonRaw = await fetchPage(
@@ -839,9 +864,10 @@ async function main() {
   const comingSoonDeduped = dedupeByAddress(comingSoon)
     .filter((item) => !isAddressDerivedBusinessName(item.name, item.address));
 
-  // Remove items from coming-soon that are already in opened
-  const openedAddresses = new Set(openedDeduped.map((i) => addressKey(i)));
-  const comingSoonFinal = comingSoonDeduped.filter((i) => !openedAddresses.has(addressKey(i)));
+  // A final inspection closes the coming-soon permit state even when we cannot
+  // honestly claim the business opened.
+  const finalizedAddresses = new Set(finalizedDeduped.map((i) => addressKey(i)));
+  const comingSoonFinal = comingSoonDeduped.filter((i) => !finalizedAddresses.has(addressKey(i)));
 
   // Manual overrides are hand-verified — trust them outright. AI-generated
   // blurbs get a post-gen city-mismatch check (D55): a plaza named after a
@@ -870,6 +896,14 @@ async function main() {
     blurb: resolveBlurb(i, blurbs),
   }));
 
+  const topInspections = inspectionsDeduped.slice(0, 12);
+  console.log("Generating neutral blurbs for final inspections…");
+  const inspectionBlurbs = await generateInspectionBlurbs(topInspections);
+  const inspectionsWithBlurbs = topInspections.map((i) => ({
+    ...i,
+    blurb: inspectionBlurbs[i.id] ?? null,
+  }));
+
   // Generate anticipation blurbs for top coming-soon restaurants
   const topComingSoon = comingSoonFinal.slice(0, 12);
   console.log("Generating blurbs for coming-soon restaurants…");
@@ -883,34 +917,39 @@ async function main() {
   // Attach Google Places photoRef so /#food can render real-photo tiles.
   console.log("Looking up Google Places photos…");
   await enrichWithPhotos(openedWithBlurbs);
+  await enrichWithPhotos(inspectionsWithBlurbs);
   await enrichWithPhotos(comingSoonWithBlurbs);
 
   // Generate Recraft food illustrations for items that didn't get a Places photo.
   console.log("Recraft fallback for items without Places photo…");
-  await generateFallbackImages([...openedWithBlurbs, ...comingSoonWithBlurbs]);
+  await generateFallbackImages([...openedWithBlurbs, ...inspectionsWithBlurbs, ...comingSoonWithBlurbs]);
 
   const output = {
     generatedAt: new Date().toISOString(),
     lookbackDays: LOOKBACK_DAYS,
     sourceUrl: "https://data.sccgov.org/resource/skd7-7ix3",
     opened: openedWithBlurbs,
+    inspections: inspectionsWithBlurbs,
     comingSoon: comingSoonWithBlurbs,
   };
 
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
 
-  console.log(`✅ ${openedDeduped.length} recently opened, ${comingSoonFinal.length} coming soon → scc-food-openings.json`);
+  console.log(`✅ ${openedDeduped.length} verified openings, ${inspectionsDeduped.length} final inspections, ${comingSoonFinal.length} coming soon → scc-food-openings.json`);
   console.log("\nRecently opened:");
   openedDeduped.slice(0, 8).forEach((i) => console.log(`  [${i.date}] ${i.name} — ${i.address}, ${i.cityName}`));
+  console.log("\nRecent final inspections (not opening claims):");
+  inspectionsDeduped.slice(0, 8).forEach((i) => console.log(`  [${i.inspectionDate}] ${i.name} — ${i.address}, ${i.cityName}`));
   console.log("\nComing soon:");
   comingSoonFinal.slice(0, 8).forEach((i) => console.log(`  [${i.date}] ${i.name} — ${i.address}, ${i.cityName}`));
 
-  // Content-freshness alarm: if the newest "opened" entry is >14 days old, DM Stephen.
+  // Content-freshness alarm: final-inspection dates test whether the SCC feed is
+  // still moving. They must not be relabeled as opening dates in the alert.
   // The file mtime won't catch this — reddit-pulse appends keep bumping generatedAt
   // even when the SCC source has stopped producing new entries.
   const FRESHNESS_THRESHOLD_DAYS = 14;
-  const dates = openedWithBlurbs
-    .map((i) => i.date)
+  const dates = inspectionsWithBlurbs
+    .map((i) => i.inspectionDate)
     .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
     .sort();
   const newest = dates[dates.length - 1] ?? null;
@@ -918,13 +957,13 @@ async function main() {
     const ageDays = (Date.now() - new Date(newest + "T12:00:00").getTime()) / 86400000;
     if (ageDays > FRESHNESS_THRESHOLD_DAYS) {
       const msg =
-        `Newest SCC food opening is **${Math.round(ageDays)} days old** (${newest}). ` +
-        `Either the upstream API stopped returning new SB restaurants, our filter is dropping legit openings, ` +
-        `or a chain is dominating recent inspections. Check scripts/generate-scc-food-openings.mjs run logs.`;
+        `Newest SCC final inspection is **${Math.round(ageDays)} days old** (${newest}). ` +
+        `Either the upstream API stopped returning new South Bay records or our filter is dropping valid inspections. ` +
+        `Check scripts/generate-scc-food-openings.mjs run logs.`;
       console.warn(`⚠️  Freshness alert: ${msg}`);
       await catSignal({
         key: "scc-food-openings-stale",
-        title: "SBT food openings — data going stale",
+        title: "SBT food permits — data going stale",
         body: msg,
       });
     }

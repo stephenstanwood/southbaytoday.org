@@ -1,6 +1,6 @@
 ---
-// Static "new restaurants" page — the crawlable surface for the SCC
-// health-permit openings data ("new restaurants san jose 2026" queries).
+// Static food-business updates page — the crawlable surface for verified
+// openings, SCC final inspections, and coming-soon records.
 // The Food tab renders the same data interactively; this page is pure HTML,
 // month-stamped, regenerated nightly.
 import CalendarShell from "../../layouts/CalendarShell.astro";
@@ -13,11 +13,13 @@ interface Opening {
   cityId?: string | null;
   cityName?: string | null;
   date?: string | null;
+  inspectionDate?: string | null;
   blurb?: string | null;
 }
 
-const data = openingsJson as { generatedAt?: string; opened?: Opening[]; comingSoon?: Opening[] };
+const data = openingsJson as { generatedAt?: string; opened?: Opening[]; inspections?: Opening[]; comingSoon?: Opening[] };
 const opened = data.opened ?? [];
+const inspections = data.inspections ?? [];
 const comingSoon = data.comingSoon ?? [];
 
 const monthLabel = new Date().toLocaleDateString("en-US", {
@@ -26,8 +28,8 @@ const monthLabel = new Date().toLocaleDateString("en-US", {
   year: "numeric",
 });
 
-const title = `New restaurants in the South Bay (${monthLabel}) — South Bay Today`;
-const description = `${opened.length} recently opened and ${comingSoon.length} coming-soon restaurants, cafes, and food shops across San José, Cupertino, Palo Alto, and more — from county health-permit records.`;
+const title = `South Bay food openings and permits (${monthLabel}) — South Bay Today`;
+const description = `${opened.length} verified openings, ${inspections.length} recent final inspections, and ${comingSoon.length} coming-soon food businesses across the South Bay.`;
 
 // "PALO ALTO" → "Palo Alto"
 const tidyCity = (s?: string | null) =>
@@ -62,15 +64,14 @@ const breadcrumbJsonLd = JSON.stringify({
     <span />
   </nav>
 
-  <h1>New restaurants in the South Bay</h1>
+  <h1>South Bay food openings and permits</h1>
   <p class="cal-sub">
-    {opened.length} recently opened · {comingSoon.length} coming soon — sourced from Santa
-    Clara County health-permit records, refreshed daily ·{" "}
+    {opened.length} verified openings · {inspections.length} final inspections · {comingSoon.length} coming soon — refreshed daily ·{" "}
     <a href="/food">browse the Food desk →</a>
   </p>
 
-  <section>
-    <h2 class="fn-section">Recently opened</h2>
+  {opened.length > 0 && <section>
+    <h2 class="fn-section">Verified openings</h2>
     <ol class="cal-list">
       {opened.map((r) => (
         <li class="cal-event">
@@ -83,9 +84,25 @@ const breadcrumbJsonLd = JSON.stringify({
         </li>
       ))}
     </ol>
-  </section>
+  </section>}
 
-  <section>
+  {inspections.length > 0 && <section>
+    <h2 class="fn-section">Recent final inspections</h2>
+    <ol class="cal-list">
+      {inspections.map((r) => (
+        <li class="cal-event">
+          <div class="cal-time">{fmtDate(r.inspectionDate) ?? "—"}</div>
+          <div class="cal-body">
+            <h3 class="fn-name">{r.name}</h3>
+            <p class="cal-meta">{[r.address, tidyCity(r.cityName)].filter(Boolean).join(" · ")}</p>
+            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>}
+
+  {comingSoon.length > 0 && <section>
     <h2 class="fn-section">Coming soon</h2>
     <ol class="cal-list">
       {comingSoon.map((r) => (
@@ -99,11 +116,12 @@ const breadcrumbJsonLd = JSON.stringify({
         </li>
       ))}
     </ol>
-  </section>
+  </section>}
 
   <p class="fn-note">
-    Dates are permit dates from the county's environmental-health records — actual opening
-    days can differ. Spot something wrong? Use the Tips &amp; Feedback button on the
+    Final-inspection dates come from the county's environmental-health records and are not
+    opening dates. An item is labeled opened only when a separate source establishes the
+    date. Coming-soon dates are permit dates. Spot something wrong? Use the Tips &amp; Feedback button on the
     <a href="/food">Food desk</a>.
   </p>
 </CalendarShell>

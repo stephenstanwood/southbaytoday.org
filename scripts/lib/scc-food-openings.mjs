@@ -31,6 +31,68 @@ function words(value) {
   return String(value ?? "").toLowerCase().match(/[a-z0-9]+/g) ?? [];
 }
 
+function isIsoDate(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(String(value || ""));
+}
+
+function isHttpUrl(value) {
+  try {
+    const url = new URL(String(value || ""));
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Classify a county final-inspection record without turning the inspection date
+ * into an opening claim. A real opening date exists only when a separate,
+ * attributable source explicitly establishes it.
+ */
+export function classifyFinalInspection(record, openingEvidence = null) {
+  const sourceId = record?.sourceId || null;
+  const inspectionDate = isIsoDate(record?.inspectionDate) ? record.inspectionDate : null;
+  const hasOpeningEvidence = isIsoDate(openingEvidence?.date)
+    && isHttpUrl(openingEvidence?.url)
+    && typeof openingEvidence?.source === "string"
+    && openingEvidence.source.trim().length > 0;
+
+  if (hasOpeningEvidence) {
+    return {
+      ...record,
+      id: `opened-${sourceId || record?.id || "unknown"}`,
+      status: "opened",
+      date: openingEvidence.date,
+      inspectionDate,
+      openingEvidence: {
+        date: openingEvidence.date,
+        url: openingEvidence.url,
+        source: openingEvidence.source.trim(),
+      },
+    };
+  }
+
+  const classified = {
+    ...record,
+    id: `inspection-${sourceId || record?.id || "unknown"}`,
+    status: "inspection-complete",
+    inspectionDate,
+  };
+  delete classified.date;
+  delete classified.openingEvidence;
+  return classified;
+}
+
+/** Defense-in-depth for every surface that labels a record as opened. */
+export function isVerifiedOpeningRecord(record) {
+  return record?.status === "opened"
+    && isIsoDate(record?.date)
+    && record.date === record?.openingEvidence?.date
+    && isHttpUrl(record?.openingEvidence?.url)
+    && typeof record?.openingEvidence?.source === "string"
+    && record.openingEvidence.source.trim().length > 0;
+}
+
 /** Normalize recurring South Bay street-name variants from SCC permit data. */
 export function normalizeSouthBayAddress(value) {
   return String(value ?? "").replace(/\bDeanza\b/gi, "De Anza");

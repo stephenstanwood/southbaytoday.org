@@ -90,7 +90,7 @@ const ARTIFACTS = [
     file: "scc-food-openings.json",
     cadence: "daily",
     maxStaleHours: 48,
-    countFn: (d) => (d.opened?.length ?? 0) + (d.comingSoon?.length ?? 0),
+    countFn: (d) => (d.opened?.length ?? 0) + (d.inspections?.length ?? 0) + (d.comingSoon?.length ?? 0),
     metaFn: (d) => d.generatedAt,
   },
   {

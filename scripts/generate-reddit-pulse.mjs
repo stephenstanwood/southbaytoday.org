@@ -8,7 +8,7 @@
  *   reddit-pulse.json — curated "What the South Bay is Saying" feed for the homepage
  *   reddit-gaps.json  — places/events mentioned on Reddit that we don't have
  *
- * Also auto-appends high-confidence restaurant openings to scc-food-openings.json.
+ * Also auto-appends high-confidence coming-soon restaurant signals to scc-food-openings.json.
  *
  * Source: Reddit's public RSS feeds (reddit.com/r/<sub>/{top,new}/.rss). The
  * unauthenticated *.json API now 403s and new API apps are gated to moderation
@@ -853,11 +853,11 @@ Return ONLY the JSON object, no other text.`;
     } catch (err) { console.warn("places.json read err:", err.message); }
   }
 
-  // scc-food-openings — REAL keys are opened + comingSoon
+  // scc-food-openings — verified openings, final inspections, and coming-soon signals
   if (existsSync(ARTIFACTS.foodOpenings)) {
     try {
       const fo = JSON.parse(readFileSync(ARTIFACTS.foodOpenings, "utf8"));
-      for (const r of [...(fo.opened || []), ...(fo.comingSoon || [])]) {
+      for (const r of [...(fo.opened || []), ...(fo.inspections || []), ...(fo.comingSoon || [])]) {
         indexName(knownPlaceMap, r.name);
       }
     } catch (err) { console.warn("food-openings read err:", err.message); }
@@ -949,13 +949,14 @@ Return ONLY the JSON object, no other text.`;
     else eventGaps.push(e);
   }
 
-  // ─── PHASE 7: Auto-append clearly structured restaurant openings ────
-  // Conservative — only auto-add when category=restaurant_news AND signal is unambiguous.
+  // ─── PHASE 7: Auto-append clearly structured coming-soon signals ────
+  // Inspection records and Reddit posts are never treated as opening evidence.
   let appendedCount = 0;
   if (existsSync(ARTIFACTS.foodOpenings)) {
     try {
       const fo = JSON.parse(readFileSync(ARTIFACTS.foodOpenings, "utf8"));
       fo.opened = fo.opened || [];
+      fo.inspections = fo.inspections || [];
       fo.comingSoon = fo.comingSoon || [];
 
       const restaurantPosts = enriched.filter(
@@ -966,7 +967,7 @@ Return ONLY the JSON object, no other text.`;
       // a Reddit post about the same restaurant must collide. Source URL was
       // a poor key (SCC entries have no source, so reddit dupes slipped in).
       const existingNames = new Set(
-        [...fo.opened, ...fo.comingSoon]
+        [...fo.opened, ...fo.inspections, ...fo.comingSoon]
           .map((r) => normalizeName(r.name))
           .filter(Boolean),
       );
@@ -1002,20 +1003,26 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
           ) {
             const normName = normalizeName(v.name);
             if (existingNames.has(normName)) continue;
+            // A Reddit report can be a useful discovery signal, but it does
+            // not establish the actual opening date. Keep it out of `opened`
+            // until a separate first-party opening source is verified.
+            if (v.signal === "opened") {
+              console.log(`  ⊘ skipped [opened] ${v.name} — needs first-party opening source`);
+              continue;
+            }
             const cityResolved = resolveCity(v.city);
             if (!cityResolved) {
               console.log(`  ⊘ skipped [${v.signal}] ${v.name} — out-of-scope city "${v.city}"`);
               continue;
             }
-            const status = v.signal === "opened" ? "opened" : "coming-soon";
-            const today = new Date().toISOString().slice(0, 10);
+            const status = "coming-soon";
             const entry = {
-              id: `${v.signal === "opened" ? "opened" : "soon"}-reddit-${post.id}`,
+              id: `soon-reddit-${post.id}`,
               name: v.name,
               address: null,
               cityId: cityResolved.cityId,
               cityName: cityResolved.cityName,
-              date: v.signal === "opened" ? today : null,
+              date: null,
               status,
               blurb: v.blurb || post.title,
               source: post.permalink,
@@ -1023,8 +1030,7 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
               discoveredAt: new Date().toISOString(),
               discoveryMethod: "reddit-pulse",
             };
-            if (v.signal === "opened") fo.opened.push(entry);
-            else fo.comingSoon.push(entry);
+            fo.comingSoon.push(entry);
             existingNames.add(normName);
             appendedCount++;
             console.log(`  ➕ auto-added [${v.signal}] ${v.name} (${cityResolved.cityName})`);
@@ -1037,7 +1043,7 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
       if (appendedCount > 0) {
         fo.generatedAt = new Date().toISOString();
         writeFileAtomic(ARTIFACTS.foodOpenings, JSON.stringify(fo, null, 2) + "\n");
-        console.log(`✅ Auto-appended ${appendedCount} restaurant openings → scc-food-openings.json`);
+        console.log(`✅ Auto-appended ${appendedCount} coming-soon restaurant signals → scc-food-openings.json`);
       }
     } catch (err) {
       console.warn("auto-append failed:", err.message);

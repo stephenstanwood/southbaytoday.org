@@ -6,6 +6,7 @@ import {
   formatLongDate,
   isEventFeedFreshForNewsletter,
   makeNewsletterPlan,
+  selectDefaultPlan,
   todayPT,
 } from "./lib.mjs";
 
@@ -47,6 +48,15 @@ test("newsletter drops a plan event missing from the current event feed", () => 
   }, "2026-07-16", { validEventIds: new Set(["event:confirmed"]) });
 
   assert.deepEqual(plan.cards.map((card) => card.id), ["place:open-place", "event:confirmed"]);
+});
+
+test("newsletter selects the exact dated default plan for future previews", () => {
+  const adults = { planDate: "2026-07-17", cards: [{ id: "event:today" }] };
+  const tomorrow = { planDate: "2026-07-18", cards: [{ id: "event:tomorrow" }] };
+  const plans = { adults, "adults:tomorrow": tomorrow };
+
+  assert.equal(selectDefaultPlan(plans, "2026-07-17"), adults);
+  assert.equal(selectDefaultPlan(plans, "2026-07-18"), tomorrow);
 });
 
 test("newsletter drops a temporarily unavailable venue event from a stale plan", () => {
@@ -149,6 +159,47 @@ test("newsletter renders also-calendar events chronologically and hides stale/bl
   assert.ok(html.indexOf("Early Event") < html.indexOf("Late Event"));
   assert.equal(html.includes("Old Cafe"), false);
   assert.equal(html.includes("Newly open"), false);
+});
+
+test("newsletter never renders a final inspection date as an opening date", () => {
+  const { html } = renderEmail({
+    date: "2026-07-17",
+    longDate: "Friday, July 17, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: null,
+    tonightPickBlurb: "",
+    todayEvents: [],
+    featuredEvents: [],
+    recentOpenings: [
+      {
+        name: "Fugetsu Market & Goods",
+        status: "inspection-complete",
+        inspectionDate: "2026-07-13",
+        date: "2026-07-13", // legacy bad shape must still fail closed
+      },
+      {
+        name: "Verified Cafe",
+        status: "opened",
+        date: "2026-07-13",
+        openingEvidence: {
+          date: "2026-07-13",
+          url: "https://verified.example.com/opening-announcement",
+          source: "Verified Cafe",
+        },
+      },
+    ],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {},
+    editorial: null,
+  });
+
+  assert.equal(html.includes("Fugetsu Market &amp; Goods"), false);
+  assert.ok(html.includes("Verified Cafe"));
+  assert.ok(html.includes("Opened 4 days ago"));
 });
 
 test("Tonight's Pick credits a rendered image with a direct event-page link", () => {

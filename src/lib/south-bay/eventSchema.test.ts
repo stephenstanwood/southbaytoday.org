@@ -13,6 +13,7 @@ test("eventToSchema identifies the canonical leaf page and preserves the primary
     venue: "Town Plaza",
     address: "1 Main St",
     cityName: "Los Gatos",
+    organizerUrl: "https://townplaza.example.org",
     url: sourceUrl,
     pageUrl,
     cost: "free",
@@ -40,6 +41,11 @@ test("eventToSchema identifies the canonical leaf page and preserves the primary
     price: "0",
     priceCurrency: "USD",
     url: sourceUrl,
+  });
+  assert.deepEqual(schema.organizer, {
+    "@type": "Organization",
+    name: "Town Plaza",
+    url: "https://townplaza.example.org/",
   });
 });
 
@@ -79,4 +85,23 @@ test("eventToSchema describes explicitly online events as virtual", () => {
 test("eventToSchema rejects records without a real title and ISO date", () => {
   assert.equal(eventToSchema({ title: "", date: "2026-07-19" }), null);
   assert.equal(eventToSchema({ title: "Open House", date: "July 19" }), null);
+});
+
+test("eventToSchema omits a name-only or invalid organizer", () => {
+  const withoutUrl = eventToSchema({
+    title: "Community Night",
+    date: "2026-07-21",
+    venue: "Community Center",
+  });
+  const invalidUrl = eventToSchema({
+    title: "Community Night",
+    date: "2026-07-21",
+    venue: "Community Center",
+    organizerUrl: "javascript:alert(1)",
+  });
+
+  assert.ok(withoutUrl);
+  assert.ok(invalidUrl);
+  assert.equal(withoutUrl.organizer, undefined);
+  assert.equal(invalidUrl.organizer, undefined);
 });

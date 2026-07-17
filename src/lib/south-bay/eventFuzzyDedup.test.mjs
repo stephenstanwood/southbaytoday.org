@@ -119,6 +119,48 @@ test("exact (title,url) dedup requires both title and url to match", () => {
   assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
 });
 
+test("first-party occurrence time wins over a richer aggregator duplicate", () => {
+  const officialUrl = "https://my.montalvoarts.org/3230/3231";
+  const events = [
+    ev({
+      id: "official",
+      date: "2026-07-17",
+      city: "saratoga",
+      title: "2026 Marcus Festival: Enter if You Dare, a celebration of The Art and Architecture of Maybe",
+      venue: "Montalvo Arts Center",
+      source: "Montalvo Arts Center",
+      time: "6:00 PM",
+      endTime: "10:00 PM",
+      url: officialUrl,
+      occurrenceEvidence: {
+        kind: "first-party-occurrence-page",
+        sourceUrl: officialUrl,
+        date: "2026-07-17",
+      },
+    }),
+    ev({
+      id: "meetup",
+      date: "2026-07-17",
+      city: "saratoga",
+      title: "Enter If You Dare: Art, Music & Nighttime Adventures at Montalvo!",
+      venue: "Montalvo Arts Center",
+      source: "Meetup",
+      time: "5:30 PM",
+      endTime: "10:30 PM",
+      url: "https://www.meetup.com/example/events/123",
+      description: "A much longer aggregator description that used to win richness scoring.".repeat(4),
+    }),
+  ];
+
+  const { kept, droppedCount } = fuzzyDedupEvents(events);
+  assert.equal(droppedCount, 1);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].id, "official");
+  assert.equal(kept[0].time, "6:00 PM");
+  assert.equal(kept[0].endTime, "10:00 PM");
+  assert.equal(kept[0].url, officialUrl);
+});
+
 test("handles empty and malformed input without throwing", () => {
   assert.deepEqual(fuzzyDedupEvents([]), { kept: [], droppedCount: 0 });
   const messy = [null, { id: "x" }, ev({ title: "Solo Show", venue: "Hall" })];
