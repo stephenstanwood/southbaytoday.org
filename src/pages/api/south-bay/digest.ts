@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { MiniClaude } from "../../../lib/miniClaude";
 import { errJson, okJson } from "../../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../../lib/rateLimit";
-import { CLAUDE_HAIKU, extractText, stripFences } from "../../../lib/models";
+import { CLAUDE_SONNET, extractText, stripFences } from "../../../lib/models";
 import {
   fetchCityAgenda,
   fetchAgendaContent,
@@ -103,7 +103,7 @@ ${content}`;
 
   try {
     const message = await client.messages.create({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 2048,
       messages: [{ role: "user", content: prompt }],
     });

@@ -30,7 +30,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 // ── Helpers ──
 
@@ -71,7 +71,7 @@ async function callClaude(prompt) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: 1536,
       messages: [{ role: "user", content: prompt }],
     }),

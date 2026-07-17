@@ -437,7 +437,7 @@ function shouldSkip(item) {
 const CUISINE_INFERENCE_RULE = `Only name a cuisine when the source supports it. The name may be a person, a holding company, or a code — it is NOT evidence of a cuisine, and a person's name is never evidence of their food's ethnicity. State a cuisine ONLY when (a) the name explicitly says it ("Gelato Scoping Store" → gelato, "Latin & Asian Hospitality Group" → Latin and Asian), or (b) it's a chain you genuinely recognize ("Jersey Mike's Subs" → sub sandwiches). Otherwise write a location-only line — "Restaurant opening on Lafayette St in Santa Clara." — and do not guess at the food. Never infer cuisine or nationality from a personal or surname-like name.`;
 
 /**
- * Generate one-line blurbs for a list of recently opened restaurants using Claude Haiku.
+ * Generate one-line blurbs for a list of recently opened restaurants using Claude Sonnet.
  * Returns a map of item id → blurb string.
  */
 function blurbList(items) {
@@ -472,7 +472,7 @@ function blurbCityMismatch(blurb, cityName) {
 }
 
 /**
- * Shared Haiku call: runs `prompt`, parses the returned [{name, blurb}] array,
+ * Shared Sonnet call: runs `prompt`, parses the returned [{name, blurb}] array,
  * and maps it back onto item ids. The blurb generators below differ only in
  * their prompt + log label.
  */
@@ -482,7 +482,7 @@ async function generateBlurbMap(items, prompt, label) {
   const client = new Anthropic({ apiKey });
   try {
     const msg = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-5",
       max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     });
@@ -523,7 +523,7 @@ Respond with a JSON array of objects with "name" and "blurb" fields only. No mar
 }
 
 /**
- * Generate anticipation-style blurbs for coming-soon restaurants using Claude Haiku.
+ * Generate anticipation-style blurbs for coming-soon restaurants using Claude Sonnet.
  * Returns a map of item id → blurb string.
  */
 async function generateComingSoonBlurbs(items) {
@@ -654,7 +654,7 @@ Respond with JSON: array of objects with "sourceId" and "prompt" fields only. No
 
   try {
     const msg = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-5",
       max_tokens: 1500,
       messages: [{ role: "user", content: prompt }],
     });

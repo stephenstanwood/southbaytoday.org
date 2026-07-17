@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // One-time sweep: find blurbs in event-blurb-cache.json that are identical
-// across DIFFERENT venues (Haiku boilerplate collisions — e.g. every
+// across DIFFERENT venues (Sonnet boilerplate collisions — e.g. every
 // farmers market got "Shop for local produce, artisan goods, and
 // ready-to-eat food weekly.") and regenerate each with a uniqueness nudge.
 //

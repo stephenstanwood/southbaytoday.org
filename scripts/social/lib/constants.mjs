@@ -18,8 +18,8 @@ export const CONFIG = {
   SBS_BASE_URL: "https://southbaytoday.org",
 };
 
-// Haiku for cheap bulk work: classifier, fact-check, editorial filter, reply triage.
-export const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
+// Sonnet for cheap bulk work: classifier, fact-check, editorial filter, reply triage.
+export const CLAUDE_MODEL = "claude-sonnet-5";
 
 // Opus for user-facing copy generation (day-plan social posts, tonight picks,
 // wildcards, restaurant opening blurbs, daily-email blurbs). Each daily run

@@ -20,7 +20,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const FETCH_TIMEOUT_MS = 8000;
-const CLAUDE_RESOLVER_MODEL = "claude-haiku-4-5-20251001";
+const CLAUDE_RESOLVER_MODEL = "claude-sonnet-5";
 const CLAUDE_RESOLVER_MAX_USES = 4; // web searches per name — cap for cost
 
 const HANDLE_PATTERNS = {

@@ -33,7 +33,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_HAIKU = "claude-haiku-4-5-20251001";
+const CLAUDE_SONNET = "claude-sonnet-5";
 
 // ── City config ──
 
@@ -64,7 +64,7 @@ async function claudeJson(prompt, maxTokens = 1024) {
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: CLAUDE_HAIKU,
+      model: CLAUDE_SONNET,
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     }),
