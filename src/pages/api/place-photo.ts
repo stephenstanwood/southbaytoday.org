@@ -34,12 +34,27 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
 
   try {
     const photoUrl = `https://places.googleapis.com/v1/${photoRef}/media?maxWidthPx=${maxW}&maxHeightPx=${maxH}&key=${apiKey}`;
-    const res = await fetch(photoUrl, {
-      signal: AbortSignal.timeout(8000),
-      redirect: "follow",
-    });
+    let res: Response | undefined;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        res = await fetch(photoUrl, {
+          signal: AbortSignal.timeout(8000),
+          redirect: "follow",
+        });
+      } catch (error) {
+        if (attempt === 1) throw error;
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        continue;
+      }
 
-    if (!res.ok) {
+      if (res.ok) break;
+      const retryable = res.status === 429 || res.status >= 500;
+      if (!retryable || attempt === 1) break;
+      await res.body?.cancel();
+      await new Promise((resolve) => setTimeout(resolve, 150));
+    }
+
+    if (!res?.ok) {
       return new Response("Photo not found", { status: 404 });
     }
 
