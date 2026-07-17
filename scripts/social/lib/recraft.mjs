@@ -111,6 +111,67 @@ export async function generateAndUpload({ prompt, pathname, colors, model }) {
   return { url, buffer };
 }
 
+/**
+ * Resize an image buffer to display-appropriate dimensions (sharp, lossy
+ * webp) and upload to Vercel Blob with the correct content-type.
+ *
+ * Recraft ships lossless ~896x1152 (or 1280x832) source images regardless of
+ * the requested `size` param; those are 500KB-1.7MB apiece and every UI
+ * consumer displays them at ~150-450px. Re-encoding at the actual display
+ * size before upload is a 3-5x byte reduction with no visible quality loss
+ * at tile scale (D43/D45/D46, 2026-07-16).
+ *
+ * @param {Buffer} buffer - Source image data (any format sharp can read)
+ * @param {string} pathname - Blob path for the resized derivative
+ * @param {object} [opts]
+ * @param {number} [opts.width=400] - Target width in px
+ * @param {number} [opts.height=400] - Target height in px
+ * @param {string} [opts.fit="cover"] - sharp resize fit mode
+ * @param {number} [opts.quality=80] - webp quality (0-100)
+ * @returns {Promise<{url: string, buffer: Buffer}>}
+ */
+export async function resizeAndUploadToBlob(buffer, pathname, opts = {}) {
+  const { width = 400, height = 400, fit = "cover", quality = 80 } = opts;
+  loadEnv();
+
+  const sharp = (await import("sharp")).default;
+  const resized = await sharp(buffer)
+    .resize(width, height, { fit })
+    .webp({ quality })
+    .toBuffer();
+
+  const { put } = await import("@vercel/blob");
+  const result = await put(pathname, resized, {
+    access: "public",
+    contentType: "image/webp",
+    allowOverwrite: true,
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  });
+
+  return { url: result.url, buffer: resized };
+}
+
+/**
+ * Generate a Recraft image, resize it to display dimensions, and upload the
+ * lossy webp derivative to Vercel Blob. Prefer this over `generateAndUpload`
+ * for any tile/thumbnail context — see `resizeAndUploadToBlob` for why.
+ *
+ * @param {object} opts
+ * @param {string} opts.prompt - Full Recraft prompt
+ * @param {string} opts.pathname - Blob path for the resized derivative
+ * @param {Array<{rgb: number[]}>} [opts.colors] - Color palette
+ * @param {string} [opts.model] - Recraft model
+ * @param {number} [opts.width] - Target width in px (see resizeAndUploadToBlob)
+ * @param {number} [opts.height] - Target height in px
+ * @param {string} [opts.fit] - sharp resize fit mode
+ * @param {number} [opts.quality] - webp quality (0-100)
+ * @returns {Promise<{url: string, buffer: Buffer}>}
+ */
+export async function generateAndUploadResized({ prompt, pathname, colors, model, width, height, fit, quality }) {
+  const { buffer } = await generateRecraftImage({ prompt, colors, model });
+  return resizeAndUploadToBlob(buffer, pathname, { width, height, fit, quality });
+}
+
 // CLI test mode
 if (process.argv[1]?.endsWith("recraft.mjs") && process.argv.includes("--test")) {
   loadEnv();

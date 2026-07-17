@@ -6,7 +6,8 @@ import ReaderWidget from "../components/south-bay/ReaderWidget";
 interface Props {
   title: string;
   description: string;
-  /** Google Fonts CSS URL */
+  /** Deprecated — fonts are self-hosted via /fonts/fonts.css now. Accepted so
+   *  existing callers don't break; has no effect. */
   fontsUrl?: string;
   /** meta theme-color */
   themeColor?: string;
@@ -19,7 +20,6 @@ interface Props {
 const {
   title,
   description,
-  fontsUrl = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
   themeColor = "#f8f4ef",
   noindex = false,
   ogImage: ogImageProp,
@@ -56,7 +56,7 @@ const websiteSchema = JSON.stringify({
       publisher: { "@id": `${siteUrl}/#organization` },
       inLanguage: "en-US",
       description:
-        "Day plans, events, restaurants, and local government coverage across the South Bay: San Jose, Campbell, Los Gatos, Mountain View, Palo Alto, and more.",
+        "Day plans, events, restaurants, and local government coverage across the South Bay: San José, Campbell, Los Gatos, Mountain View, Palo Alto, and more.",
     },
   ],
 });
@@ -84,7 +84,7 @@ const websiteSchema = JSON.stringify({
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@southbaysignal" />
+    <meta name="twitter:site" content="@southbaytoday" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
@@ -101,9 +101,10 @@ const websiteSchema = JSON.stringify({
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="The South Bay Today — Events" href="/rss.xml" />
     <link rel="alternate" type="text/plain" title="The South Bay Today — guide for AI agents" href="/llms.txt" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href={fontsUrl} rel="stylesheet" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-variable-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-variable-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-italic-400-latin.woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
     <slot name="head" />
   </head>
   <body>

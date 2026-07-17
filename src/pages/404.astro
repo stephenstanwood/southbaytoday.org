@@ -1,0 +1,58 @@
+---
+// Custom 404 — Astro/Vercel serve this automatically for unmatched routes on
+// static output. On-brand instead of the stock framework error page.
+import CalendarShell from "../layouts/CalendarShell.astro";
+
+const title = "Page not found — South Bay Today";
+const description = "This page isn't on the calendar. Find today's plan, upcoming events, or a South Bay city page instead.";
+---
+
+<CalendarShell title={title} description={description}>
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href="/">← Home</a>
+    <span class="cal-kicker">South Bay / 404</span>
+    <span />
+  </nav>
+
+  <h1>This page isn't on the calendar.</h1>
+  <p class="cal-sub">
+    The link's broken or the page moved. Here's where things actually are.
+  </p>
+
+  <ul class="cal-404-links">
+    <li><a href="/">Today's plan</a> — what's happening across the South Bay right now.</li>
+    <li><a href="/events">Events</a> — everything coming up, filterable by city.</li>
+    <li><a href="/city/san-jose">San José</a> — one city's events, council, and news in one place.</li>
+  </ul>
+</CalendarShell>
+
+<style>
+  .cal-404-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cal-404-links li {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .cal-404-links li:last-child {
+    border-bottom: none;
+  }
+  .cal-404-links a {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .cal-404-links a:hover {
+    text-decoration: underline;
+  }
+</style>

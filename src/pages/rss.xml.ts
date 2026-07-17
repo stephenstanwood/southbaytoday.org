@@ -99,7 +99,7 @@ export const GET: APIRoute = () => {
     <title>The South Bay Today — Events</title>
     <link>${SITE}/events</link>
     <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Day-by-day event listings across Campbell, Los Gatos, Mountain View, San Jose, Palo Alto, and more South Bay cities.</description>
+    <description>Day-by-day event listings across Campbell, Los Gatos, Mountain View, San José, Palo Alto, and more South Bay cities.</description>
     <language>en-us</language>
     <lastBuildDate>${rfc822(todayPt, 6, 0)}</lastBuildDate>
 ${items}

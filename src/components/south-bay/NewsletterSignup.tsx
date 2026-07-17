@@ -195,7 +195,7 @@ export default function NewsletterSignup({
           A fresh plan every morning.
         </div>
         <div style={{ fontSize: 14, color: "#5b6478", marginTop: 8, marginBottom: 14, lineHeight: 1.5 }}>
-          One email. A plan for the day, everything we've found happening, openings, civic news. Once a day — that's the whole deal.
+          One email: the day's plan, what's new, what's opening, what city hall did. Once a day — that's the whole deal.
         </div>
         {renderForm({ inputFontSize: 15, buttonPadding: "10px 22px", buttonFontSize: 14 })}
         {error && <div style={{ fontSize: 13, color: "#c0392b", marginTop: 8 }}>{error}</div>}

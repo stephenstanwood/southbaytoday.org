@@ -1,9 +1,13 @@
 // Company logo URL helpers — no API key needed.
 // Primary: pinned high-res file from /public/logos (auto-resolved by
 //   scripts/fetch-tech-logos.mjs and stored in tech-logo-manifest.ts).
+// Next: self-hosted favicon for companies without a curated logo yet
+//   (scripts/fetch-tech-favicons.mjs, stored in tech-favicon-manifest.ts) —
+//   avoids a live icon.horse request per pageload for the same domain.
 // Fallback cascade: icon.horse → DuckDuckGo → Google s2 favicons.
 // Final: colored initial avatar (handled in <CompanyLogo>).
 import { TECH_LOGO_MANIFEST } from "./tech-logo-manifest";
+import { TECH_FAVICON_MANIFEST } from "./tech-favicon-manifest";
 
 const SUBDOMAIN_STRIP = /^(jobs|careers|invest|investor|developer|developers|store|en-us|www2)\./i;
 
@@ -44,6 +48,7 @@ const HAND_CURATED_LOGOS: Record<string, string> = {
   "apple-ipo": APPLE_LOGO,
   "apple-acquires-next": APPLE_LOGO,
   "apple-retail": APPLE_LOGO,
+  "iphone-on-sale": APPLE_LOGO,
   "google-ipo": GOOGLE_LOGO,
   "hp35-calculator": "/logos/hp.png",
 };
@@ -106,6 +111,13 @@ export function urlToDomain(url: string | undefined | null): string {
   } catch {
     return "";
   }
+}
+
+// Self-hosted favicon, pre-fetched once by scripts/fetch-tech-favicons.mjs
+// for companies without a curated logo. Returns "" if not yet cached — the
+// caller falls through to the live icon.horse cascade in that case.
+export function localFavicon(domain: string): string {
+  return domain ? TECH_FAVICON_MANIFEST[domain] || "" : "";
 }
 
 // Primary source — icon.horse serves higher-res PNGs (often 256x256+) sourced

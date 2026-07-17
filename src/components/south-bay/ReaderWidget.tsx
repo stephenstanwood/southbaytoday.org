@@ -69,8 +69,11 @@ export default function ReaderWidget() {
 
   const currentType = TYPE_OPTIONS.find(o => o.value === type)!;
 
+  // Fixed FAB sits above the safe-area inset (iOS home-indicator strip) and
+  // rests at reduced opacity so it doesn't permanently occlude trailing page
+  // content; SignalShell's .sb-main gets matching bottom padding on mobile.
   const btnStyle: React.CSSProperties = {
-    position: 'fixed', bottom: 20, right: 20, zIndex: 9999,
+    position: 'fixed', bottom: 'calc(20px + env(safe-area-inset-bottom))', right: 20, zIndex: 9999,
     background: '#1c1917', color: '#fafaf9',
     border: 'none', borderRadius: 999,
     padding: '10px 18px', fontSize: 13, fontWeight: 600,
@@ -80,7 +83,7 @@ export default function ReaderWidget() {
   };
 
   const panelStyle: React.CSSProperties = {
-    position: 'fixed', bottom: 20, right: 20, zIndex: 9999,
+    position: 'fixed', bottom: 'calc(20px + env(safe-area-inset-bottom))', right: 20, zIndex: 9999,
     background: '#fdfaf5', borderRadius: 16,
     boxShadow: '0 8px 32px rgba(0,0,0,0.14)',
     border: '1px solid #e7e0d5',
@@ -97,6 +100,8 @@ export default function ReaderWidget() {
           <span className="rw-fab-label">Tips &amp; Feedback</span>
         </button>
         <style>{`
+          .rw-fab { opacity: 0.75; transition: opacity 0.15s; }
+          .rw-fab:hover, .rw-fab:focus-visible { opacity: 1; }
           @media (max-width: 560px) {
             .rw-fab { padding: 11px !important; gap: 0 !important; }
             .rw-fab-label { display: none; }

@@ -193,7 +193,7 @@ async function scrapeCivicEngage(
 // Uses the free Legistar Web API (webapi.legistar.com) — no auth required.
 
 const LEGISTAR_HEADERS = {
-  "User-Agent": "SouthBaySignal/1.0 (stanwood.dev; public information aggregator)",
+  "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public information aggregator)",
 };
 
 async function scrapeLegistar(

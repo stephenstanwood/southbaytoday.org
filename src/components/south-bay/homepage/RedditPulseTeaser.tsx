@@ -81,10 +81,21 @@ export default function RedditPulseTeaser() {
               target="_blank"
               rel="noopener noreferrer"
               className="rp-tile"
-              style={{
-                background: `#000 url(${p.image}) center/cover no-repeat`,
-              }}
+              style={{ background: "#000" }}
             >
+              {/* Real <img> (not CSS background-image) so the browser's native
+                  lazy-loading actually defers offscreen tiles — a
+                  background-image never enters the loading="lazy" pipeline. */}
+              <img
+                className="rp-tile-img"
+                src={p.image ?? undefined}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width={400}
+                height={400}
+              />
+
               {/* Bottom-up gradient for legibility under title */}
               <div className="rp-tile-shade" />
 
@@ -132,6 +143,14 @@ export default function RedditPulseTeaser() {
         .rp-tile:hover {
           transform: translateY(-2px) scale(1.02);
           box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        }
+        .rp-tile-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
         .rp-tile-shade {
           position: absolute;

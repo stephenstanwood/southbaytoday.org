@@ -88,6 +88,37 @@ test("numeric tokens prevent merging distinct grade/age bands", () => {
   assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
 });
 
+test("collapses exact (title,url) duplicates even when same-source times differ >30min and venues match", () => {
+  // Two ingest paths for the same organizer feed (SJMA's direct scraper +
+  // the Playwright mirror) can disagree on time — one resolves a real
+  // detail-page time, the other defaults to noon — while sharing source,
+  // venue, and canonical URL. D51.
+  const events = [
+    ev({
+      id: "sjma-rich", title: "First Fridays: August 2026", venue: "San Jose Museum of Art",
+      source: "San Jose Museum of Art", time: "6:00 PM", endTime: "9:00 PM",
+      url: "https://sjmusart.org/event/first-fridays-august-2026",
+    }),
+    ev({
+      id: "pw-bare", title: "First Fridays: August 2026", venue: "San Jose Museum of Art",
+      source: "San Jose Museum of Art", time: "12:00 PM",
+      url: "https://sjmusart.org/event/first-fridays-august-2026",
+    }),
+  ];
+  const { kept, droppedCount } = fuzzyDedupEvents(events);
+  assert.equal(droppedCount, 1);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].id, "sjma-rich");
+});
+
+test("exact (title,url) dedup requires both title and url to match", () => {
+  const events = [
+    ev({ id: "a", title: "First Fridays: August 2026", url: "https://sjmusart.org/event/first-fridays-august-2026", time: "6:00 PM" }),
+    ev({ id: "b", title: "First Fridays: September 2026", url: "https://sjmusart.org/event/first-fridays-august-2026", time: "6:15 PM" }),
+  ];
+  assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
+});
+
 test("handles empty and malformed input without throwing", () => {
   assert.deepEqual(fuzzyDedupEvents([]), { kept: [], droppedCount: 0 });
   const messy = [null, { id: "x" }, ev({ title: "Solo Show", venue: "Hall" })];

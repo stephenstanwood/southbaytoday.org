@@ -13,6 +13,10 @@ interface PageHeroProps {
   note?: ReactNode;
   stats?: PageHeroStat[];
   headingId?: string;
+  /** Optional per-section accent (e.g. an existing --sb-* token or a
+   * contrast-checked hex) tinting the kicker. Omit for the default muted
+   * kicker — a strict no-op, so callers that don't pass it are unaffected. */
+  accent?: string;
 }
 
 export default function PageHero({
@@ -22,14 +26,16 @@ export default function PageHero({
   note,
   stats = [],
   headingId,
+  accent,
 }: PageHeroProps) {
   const resolvedHeadingId = headingId ?? `sb-page-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-heading`;
   const statsStyle = {
     "--sb-page-stat-count": Math.max(stats.length, 1),
   } as CSSProperties;
+  const heroStyle = accent ? ({ "--sb-hero-accent": accent } as CSSProperties) : undefined;
 
   return (
-    <section className="sb-page-hero" aria-labelledby={resolvedHeadingId}>
+    <section className="sb-page-hero" aria-labelledby={resolvedHeadingId} style={heroStyle}>
       <div className="sb-page-hero-copy">
         <div className="sb-page-kicker">{eyebrow}</div>
         <h1 id={resolvedHeadingId} className="sb-page-title">{title}</h1>

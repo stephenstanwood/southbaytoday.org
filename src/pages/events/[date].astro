@@ -71,11 +71,19 @@ export function getStaticPaths() {
         const tb = parseClockTime(b.time);
         return (ta ? ta.h * 60 + ta.m : 1441) - (tb ? tb.h * 60 + tb.m : 1441);
       })
-      .map((e) => ({
-        ...e,
-        cityName: e.city ? cityNames.get(e.city) ?? null : null,
-        detailSlug: e.id ? slugById.get(String(e.id)) ?? null : null,
-      }));
+      .map((e) => {
+        const t = parseClockTime(e.time);
+        return {
+          ...e,
+          cityName: e.city ? cityNames.get(e.city) ?? null : null,
+          detailSlug: e.id ? slugById.get(String(e.id)) ?? null : null,
+          // Minutes-since-midnight start time, used client-side to dim
+          // already-started events when this date happens to be "today" in
+          // the visitor's Pacific-time clock (the page itself is static and
+          // can't know "now" at build time).
+          startMinutes: t ? t.h * 60 + t.m : null,
+        };
+      });
     return {
       params: { date },
       props: {
@@ -90,7 +98,7 @@ export function getStaticPaths() {
 
 interface Props {
   date: string;
-  events: (RawEvent & { cityName: string | null; detailSlug: string | null })[];
+  events: (RawEvent & { cityName: string | null; detailSlug: string | null; startMinutes: number | null })[];
   prevDate: string | null;
   nextDate: string | null;
 }
@@ -134,7 +142,7 @@ const breadcrumbJsonLd = JSON.stringify({
 });
 ---
 
-<CalendarShell title={title} description={description}>
+<CalendarShell title={title} description={description} activeTab="events">
   <Fragment slot="head">
     {listJsonLd && <script type="application/ld+json" set:html={listJsonLd} />}
     <script type="application/ld+json" set:html={breadcrumbJsonLd} />
@@ -155,7 +163,7 @@ const breadcrumbJsonLd = JSON.stringify({
 
   <ol class="cal-list">
     {events.map((e) => (
-      <li class="cal-event">
+      <li class="cal-event" data-start-min={e.startMinutes ?? ""}>
         <div class="cal-time">{e.time}</div>
         <div class="cal-body">
           <h2>
@@ -177,4 +185,42 @@ const breadcrumbJsonLd = JSON.stringify({
       </li>
     ))}
   </ol>
+
+  <script define:vars={{ pageDate: date }}>
+    // This page is static (build-time rendered), so it can't know "now" —
+    // only the visitor's browser can. When the page's date matches today in
+    // Pacific time, dim any event whose start time has already passed and
+    // label it, instead of silently listing it alongside events still ahead.
+    const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+    if (pageDate === todayPt) {
+      const now = new Date();
+      const nowPt = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+      const nowMinutes = nowPt.getHours() * 60 + nowPt.getMinutes();
+      document.querySelectorAll(".cal-event[data-start-min]").forEach((el) => {
+        const raw = el.getAttribute("data-start-min");
+        if (!raw) return;
+        const startMinutes = Number(raw);
+        if (!Number.isFinite(startMinutes) || startMinutes > nowMinutes) return;
+        el.classList.add("cal-event--started");
+        const meta = el.querySelector(".cal-meta");
+        if (meta && !meta.querySelector(".cal-chip--started")) {
+          const badge = document.createElement("span");
+          badge.className = "cal-chip cal-chip--started";
+          badge.textContent = "Already started";
+          meta.appendChild(badge);
+        }
+      });
+    }
+  </script>
+
+  <style>
+    .cal-event--started {
+      opacity: 0.55;
+    }
+    .cal-chip--started {
+      border-color: var(--border, #e2e2e2);
+      background: transparent;
+      color: var(--muted, #6b6b6b);
+    }
+  </style>
 </CalendarShell>

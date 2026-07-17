@@ -1,0 +1,113 @@
+---
+// Newsletter archive index. Issues live in Vercel Blob (see
+// pages/newsletters/[...slug].ts), not in build-time data, so this list is
+// resolved at request time via blob's list() — no invented links. If the
+// listing can't be resolved (no token, empty archive, blob error), the page
+// falls back to a plain branded page pointing at the signup + today's plan.
+export const prerender = false;
+
+import CalendarShell from "../../layouts/CalendarShell.astro";
+import NewsletterSignup from "../../components/south-bay/NewsletterSignup";
+import { list } from "@vercel/blob";
+
+const title = "Newsletter archive — South Bay Today";
+const description = "Past issues of the South Bay Today newsletter — the day's plan, what's new, what's opening, what city hall did.";
+
+interface Issue {
+  date: string;
+  label: string;
+}
+
+let issues: Issue[] = [];
+
+const token = import.meta.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
+if (token) {
+  try {
+    const { blobs } = await list({ prefix: "newsletters/", token, limit: 100 });
+    const dates = blobs
+      .map((b) => {
+        const m = b.pathname.match(/^newsletters\/(\d{4}-\d{2}-\d{2})\.html$/);
+        return m ? m[1] : null;
+      })
+      .filter((d): d is string => !!d)
+      .sort((a, b) => (a < b ? 1 : -1))
+      .slice(0, 30);
+
+    issues = dates.map((date) => ({
+      date,
+      label: new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+        timeZone: "UTC",
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+    }));
+  } catch {
+    // Blob listing failed — fall through to the signup-only view below.
+  }
+}
+---
+
+<CalendarShell title={title} description={description}>
+  <nav class="cal-daynav" aria-label="Breadcrumb">
+    <a href="/">← Home</a>
+    <span class="cal-kicker">South Bay / Newsletter</span>
+    <span />
+  </nav>
+
+  <h1>The newsletter, archived.</h1>
+  <p class="cal-sub">
+    One email a day: the day's plan, what's new, what's opening, what city hall did.
+  </p>
+
+  <div class="nl-index-signup">
+    <NewsletterSignup client:load variant="card" />
+  </div>
+
+  {issues.length > 0 ? (
+    <ul class="nl-index-list">
+      {issues.map((issue) => (
+        <li>
+          <a href={`/newsletters/${issue.date}`}>{issue.label}</a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="cal-copy">
+      Past issues aren't listable right now — subscribe above and the day's issue lands in your inbox at 6:00&nbsp;AM.
+    </p>
+  )}
+</CalendarShell>
+
+<style>
+  .nl-index-signup {
+    margin: 0 0 28px;
+  }
+  .nl-index-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nl-index-list li {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+  .nl-index-list li:last-child {
+    border-bottom: none;
+  }
+  .nl-index-list a {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nl-index-list a:hover {
+    text-decoration: underline;
+  }
+</style>

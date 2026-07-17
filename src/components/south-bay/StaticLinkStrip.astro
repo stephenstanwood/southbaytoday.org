@@ -43,6 +43,8 @@ const govCityList = govCities
         <span class="sls-label">Events by day</span>
         {eventDates.map((d) => <a href={`/events/${d}`}>{dayLabel(d)}</a>)}
         <a href="/rss.xml">RSS</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
       </p>
     )}
     {govCityList.length > 0 && (
@@ -68,10 +70,16 @@ const govCityList = govCities
     text-align: center;
   }
   .sls p {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 14px;
+    row-gap: 6px;
+    align-items: baseline;
+    justify-content: center;
     margin: 6px 0;
     font-size: 11px;
-    line-height: 2;
-    color: #888;
+    line-height: 1.4;
+    color: #6b6178;
   }
   .sls-label {
     font-family: "Space Mono", monospace;
@@ -79,13 +87,16 @@ const govCityList = govCities
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-right: 10px;
   }
   .sls a {
-    color: #777;
+    color: #6b6178;
     text-decoration: none;
-    margin: 0 7px;
     white-space: nowrap;
+    /* 11px links need a ≥24px touch target (WCAG 2.5.8) — pad the hit area
+       and let the row gaps carry the visual spacing. */
+    display: inline-block;
+    padding: 5px 4px;
+    margin: -3px -2px;
   }
   .sls a:hover {
     color: #1a1a1a;

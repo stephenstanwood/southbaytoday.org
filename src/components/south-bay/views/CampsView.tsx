@@ -54,13 +54,13 @@ const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
 ];
 
 const TYPE_COLORS: Record<CampType, string> = {
-  general:   "#6b7280",
+  general:   "#565f6e",
   sports:    "#1d4ed8",
   arts:      "#9333ea",
   stem:      "#0369a1",
-  nature:    "#15803d",
-  specialty: "#b45309",
-  academic:  "#b45309",
+  nature:    "#0f6b33",
+  specialty: "#92400e",
+  academic:  "#92400e",
 };
 
 const ALL_ORG_TYPES: { id: string; label: string }[] = [
@@ -201,7 +201,7 @@ function CampCard({ camp }: { camp: Camp }) {
       )}
 
       <div className="camps-card-footer">
-        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{sessionCount(camp)} sessions listed</span>}
+        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{sessionCount(camp)} session{sessionCount(camp) !== 1 ? "s" : ""} listed</span>}
         <a
           href={camp.registerUrl}
           target="_blank"
@@ -326,7 +326,7 @@ function BrowseMode() {
             <div className="camps-kicker">Directory</div>
             <h2>Browse the full camp list</h2>
           </div>
-          <p>Use one or two selectors when you need them. Otherwise the directory stays out of your way.</p>
+          <p>Use one or two filters when you need them. Otherwise the directory stays out of your way.</p>
         </div>
 
         <div className="camps-toolbar">
@@ -423,7 +423,7 @@ function BrowseMode() {
 
         {filtered.length === 0 ? (
           <div className="camps-empty">
-            <h3>No camps match those selectors</h3>
+            <h3>No camps match those filters</h3>
             <p>Try clearing one field or searching by city instead.</p>
           </div>
         ) : (
@@ -1011,6 +1011,7 @@ export default function CampsView() {
         title="Summer Camps"
         description="A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
         note={`Links verified ${verifiedDisplay}`}
+        accent="#B45309"
         stats={[
           { value: CAMPS.length, label: "Programs" },
           { value: SUMMER_WEEKS.length, label: "Summer weeks" },
@@ -1021,23 +1022,33 @@ export default function CampsView() {
 
       <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
         <button
+          id="camps-tab-browse"
+          role="tab"
           onClick={() => setMode("browse")}
           className={mode === "browse" ? "is-active" : ""}
           aria-selected={mode === "browse"}
+          aria-controls="camps-panel-browse"
         >
           Directory
         </button>
         <button
+          id="camps-tab-builder"
+          role="tab"
           onClick={() => setMode("builder")}
           className={mode === "builder" ? "is-active" : ""}
           aria-selected={mode === "builder"}
+          aria-controls="camps-panel-builder"
         >
           Plan Weeks
         </button>
       </div>
 
-      {mode === "browse" ? <BrowseMode /> : (
-        <section className="camps-builder-wrap">
+      {mode === "browse" ? (
+        <div id="camps-panel-browse" role="tabpanel" aria-labelledby="camps-tab-browse">
+          <BrowseMode />
+        </div>
+      ) : (
+        <section id="camps-panel-builder" role="tabpanel" aria-labelledby="camps-tab-builder" className="camps-builder-wrap">
           <SummerBuilderMode />
         </section>
       )}

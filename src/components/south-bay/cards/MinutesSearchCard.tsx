@@ -23,7 +23,7 @@ const CITY_NAME_MAP: Record<string, string> = {
   cupertino: "Cupertino",
   sunnyvale: "Sunnyvale",
   "mountain-view": "Mountain View",
-  "san-jose": "San Jose",
+  "san-jose": "San José",
   "santa-clara": "Santa Clara",
   "palo-alto": "Palo Alto",
   milpitas: "Milpitas",
@@ -234,6 +234,7 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
             <select
               value={city}
               onChange={(e) => onCityChange(e.target.value)}
+              aria-label="City"
               style={{
                 appearance: "none",
                 background: "transparent",

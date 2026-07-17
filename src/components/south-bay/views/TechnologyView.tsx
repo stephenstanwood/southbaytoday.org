@@ -262,8 +262,8 @@ function SpotlightCard({ company }: { company: SccTechSpotlight }) {
 function HiringRow({ company }: { company: TechCompany }) {
   const isUp = company.trend === "up";
   const isDown = company.trend === "down";
-  const statusColor = isUp ? "#16a34a" : isDown ? "#dc2626" : "#6b7280";
-  const statusBg = isUp ? "#f0fdf4" : isDown ? "#fef2f2" : "#f9fafb";
+  const statusColor = isUp ? "#15803d" : isDown ? "#92400e" : "#565f6e";
+  const statusBg = isUp ? "#f0fdf4" : isDown ? "#fffbeb" : "#f9fafb";
   const statusLabel = isUp ? "▲ Hiring" : isDown ? "▼ Reduced" : "→ Selective";
 
   const content = (
@@ -1591,6 +1591,9 @@ export default function TechnologyView() {
         title="Technology"
         description="A readable snapshot of the companies, jobs, and funding rounds shaping the local tech economy."
         note="Data snapshot · Q1–Q2 2026 · Santa Clara County employment estimates · Not affiliated with any company listed"
+        // --sb-teal (#22C6D3) is only ~2.1:1 on the hero background as text —
+        // darkened within the same teal family to #0E7490 (~5.4:1) for the kicker.
+        accent="#0E7490"
         stats={pulseStats.map((stat) => ({
           value: stat.value,
           label: stat.label,

@@ -4,15 +4,18 @@
 // under .cal-page. No React, no hydration — these pages exist for crawlers,
 // no-JS readers, and fast cold loads.
 import BaseLayout from "./BaseLayout.astro";
+import Masthead, { type MastheadProps } from "../components/south-bay/Masthead";
 
 interface Props {
   title: string;
   description: string;
   /** absolute URL for og:image (e.g. an event's photo) */
   ogImage?: string;
+  /** highlight a nav tab when the page corresponds to one; omit/null for sub-routes */
+  activeTab?: MastheadProps["activeTab"];
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, activeTab = null } = Astro.props;
 ---
 
 <BaseLayout
@@ -20,16 +23,13 @@ const { title, description, ogImage } = Astro.props;
   description={description}
   ogImage={ogImage}
   themeColor="#F7F8FA"
-  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
 >
   <Fragment slot="head">
     <slot name="head" />
   </Fragment>
 
   <div class="cal-page">
-    <header class="cal-masthead">
-      <a href="/" class="cal-brand"><em>the</em> South Bay <span>Today</span></a>
-    </header>
+    <Masthead activeTab={activeTab} />
 
     <main class="cal-main">
       <slot />
@@ -50,42 +50,31 @@ const { title, description, ogImage } = Astro.props;
 </BaseLayout>
 
 <style is:global>
+  /* Masthead is a shared React component (also used by SignalShell) that
+     reads these --sb-* tokens; define them here so it renders on-brand
+     instead of falling back to unset custom properties. Values mirror
+     SignalShell.astro's :root so cal-pages read as the same site. */
+  :root {
+    --sb-bg: #FFF8F2;
+    --sb-ink: #13072F;
+    --sb-muted: #5f5870;
+    --sb-light: #6b6178;
+    --sb-accent: #8738F5;
+    --sb-primary-light: #F4ECFF;
+    --sb-max-width: 960px;
+    --sb-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sb-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
   .cal-page {
-    --ink: #1a1a1a;
+    --ink: #13072F;
     --muted: #555;
-    --light: #888;
+    --light: #6b6178;
     --border: #c8c4bc;
     --border-light: #e5e2db;
-    background: #faf9f6;
+    background: linear-gradient(180deg, #fff8f2 0%, #fff7ff 44%, #f3fbff 100%);
     color: var(--ink);
     font-family: "Inter", system-ui, sans-serif;
     min-height: 100vh;
-  }
-  .cal-masthead {
-    text-align: center;
-    padding: 22px 16px 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .cal-brand {
-    color: var(--ink);
-    text-decoration: none;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 26px;
-    font-weight: 900;
-  }
-  .cal-brand em {
-    font-weight: 400;
-    font-size: 16px;
-    margin-right: 4px;
-  }
-  .cal-brand span {
-    display: block;
-    font-family: "Space Mono", monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    margin-top: 2px;
   }
   .cal-main {
     max-width: 760px;

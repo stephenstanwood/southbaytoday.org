@@ -24,7 +24,7 @@ import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { DATA_DIR, ARTIFACTS, generatorMeta } from "./lib/paths.mjs";
-import { generateAndUpload } from "./social/lib/recraft.mjs";
+import { generateAndUploadResized } from "./social/lib/recraft.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 
 loadEnvLocal();
@@ -496,9 +496,14 @@ Return ONLY a JSON array of objects, no other text.`;
     const fullPrompt = `${prompt}. Bold flat-color illustration. Vivid colors. Square 1:1 ratio. NO TEXT, no letters, no words, no people, no logos, no faces.`;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        const result = await generateAndUpload({
+        // Tiles render at ~150-185px via CSS background-image (RedditPulseTeaser
+        // 4-col grid) — 400x400 lossy webp q80 is generous headroom at that
+        // display size and a ~5x byte reduction vs. Recraft's lossless source.
+        const result = await generateAndUploadResized({
           prompt: fullPrompt,
-          pathname: `reddit-pulse/${p.id}.png`,
+          pathname: `reddit-pulse/${p.id}-400.webp`,
+          width: 400,
+          height: 400,
         });
         return result.url;
       } catch (err) {

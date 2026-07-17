@@ -269,7 +269,24 @@ Match the source's wording on sensitive framing. If the agenda says "federal civ
 
 // ── Main ──
 
+// Carry forward on partial regen — a city whose source has nothing fresh
+// this run (Stoa ingestion gap, Legistar hiccup, Claude summarize error)
+// used to just vanish from the output (`digests = {}` starts empty every
+// run and there's no fallback merge), silently 404ing /gov/<city> after
+// enough consecutive misses. los-altos disappeared this way for 3+ months
+// (last real digest 2026-04-13) because Stoa's council-meetings ingestion
+// for it currently returns only far-future stub placeholders with no past
+// content — see feedback_carry_forward_on_partial_regen memory. D30/D31/D08.
+function loadPreviousDigests() {
+  try {
+    return JSON.parse(readFileSync(OUT_PATH, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
 async function main() {
+  const previousDigests = loadPreviousDigests();
   const records = await fetchStoaMeetings();
 
   // Group by city name (keep most recent City Council meeting per city)
@@ -330,6 +347,25 @@ async function main() {
 
   const digests = {};
 
+  // Reuse the previous run's digest for a city that comes up empty this run,
+  // as long as it isn't itself past the 9-month floor — don't perpetuate
+  // indefinitely-stale carried-forward data. Logs loudly (was a silent
+  // `continue` before) so a persistent source gap is debuggable rather than
+  // just watching the city quietly 404 a few weeks later.
+  function carryForward(config, reason) {
+    const prev = previousDigests[config.city];
+    if (!prev) {
+      console.warn(`  ⚠️  ${config.cityName}: no source meeting AND no previous digest to carry forward (city=${config.city}, reason=${reason})`);
+      return;
+    }
+    if (prev.meetingDateIso && prev.meetingDateIso < staleIso) {
+      console.warn(`  ⚠️  ${config.cityName}: previous digest (${prev.meetingDateIso}) is also >9 months old — not carrying forward (city=${config.city}, reason=${reason})`);
+      return;
+    }
+    digests[config.city] = { ...prev, carriedForward: true, carryForwardReason: reason };
+    console.warn(`  ↻ ${config.cityName}: carrying forward previous digest (${prev.meetingDateIso}) (city=${config.city}, reason=${reason})`);
+  }
+
   // Cutoff: if Stoa's record is older than this, try Legistar fallback
   const stoaStaleCutoff = new Date(Date.now() - STOA_STALENESS_DAYS * 86_400_000)
     .toISOString().split("T")[0];
@@ -355,11 +391,13 @@ async function main() {
     }
 
     if (!meeting) {
-      console.log(`  ⚠️  ${config.cityName}: no recent City Council meeting from any source`);
+      console.warn(`  ⚠️  ${config.cityName}: no recent City Council meeting from any source (city=${config.city}, stoaCity=${config.stoaCity}, legistarApi=${config.legistarApi ?? "none"})`);
+      carryForward(config, "no-source-meeting");
       continue;
     }
     if (meeting.date < staleIso) {
-      console.log(`  ⏭️  ${config.cityName}: most recent record is ${meeting.date} (>9 months old, skipping)`);
+      console.warn(`  ⏭️  ${config.cityName}: most recent record is ${meeting.date} (>9 months old, skipping) (city=${config.city})`);
+      carryForward(config, "source-meeting-too-old");
       continue;
     }
 
@@ -394,7 +432,8 @@ async function main() {
 
       console.log(`  ✅ ${config.cityName}: ${meetingDateFormatted}`);
     } catch (err) {
-      console.error(`  ❌ ${config.cityName}: ${err.message}`);
+      console.error(`  ❌ ${config.cityName}: summarize failed (city=${config.city}, meetingDate=${meeting.date}, source=${meeting.source ?? "stoa"}): ${err.message}`);
+      carryForward(config, "summarize-failed");
     }
 
     // Be polite — small delay between Claude calls

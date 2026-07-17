@@ -190,22 +190,25 @@ function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { card
       return null;
     };
 
+    // Missing-city fallbacks must be deterministic (not pickRandomAnchor):
+    // this function runs in a render initializer, and any randomness here
+    // breaks the SSR/hydration byte-for-byte contract documented below.
     if (eff.isTomorrow) {
       const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
       if (tomorrowPlan) {
-        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor() };
+        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || REGIONAL_ANCHOR };
       }
       const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
       if (todayPlan) {
         const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
-        return { cards: placesOnly, anchor: (todayPlan.city as City) || pickRandomAnchor() };
+        return { cards: placesOnly, anchor: (todayPlan.city as City) || REGIONAL_ANCHOR };
       }
       return { cards: [], anchor: null };
     }
 
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
     if (!plan) return { cards: [], anchor: null };
-    return { cards: plan.cards, anchor: (plan.city as City) || pickRandomAnchor() };
+    return { cards: plan.cards, anchor: (plan.city as City) || REGIONAL_ANCHOR };
   } catch {
     return { cards: [], anchor: null };
   }
@@ -498,7 +501,7 @@ export default function SouthBayTodayView(_props: Props) {
                 ? "That's a wrap on today's plan — shuffle for tomorrow or try these classics"
                 : "Nothing in the pool right now — try these classics"}
           </p>
-          {error && <p style={{ fontSize: 12, color: "#888", margin: 0, marginBottom: 10 }}>{error}</p>}
+          {error && <p style={{ fontSize: 12, color: "#6b6178", margin: 0, marginBottom: 10 }}>{error}</p>}
           {weather && <p style={{ fontSize: 13, color: "#555", margin: 0, marginBottom: 14 }}>{weather}</p>}
           <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", display: "flex", flexDirection: "column", gap: 8 }}>
             <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
@@ -1079,10 +1082,10 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
         </div>
         {/* Unsplash attribution — only when using Unsplash photo */}
         {unsplash && !card.photoRef && !card.image && (
-          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#bbb", textAlign: "center" }}>
-            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>{unsplash.photographer}</a>
+          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#6b6178", textAlign: "center" }}>
+            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>{unsplash.photographer}</a>
             {" · "}
-            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>Unsplash</a>
+            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>Unsplash</a>
           </div>
         )}
       </div>
@@ -1093,21 +1096,21 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
           )}
           {!(card.source === "event" && card.category === "events") && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
           )}
           {card.city && (
             <>
-              <span style={{ fontSize: 9, color: "#ddd", fontWeight: 700 }}>·</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
+              <span style={{ fontSize: 9, color: "#6b6178", fontWeight: 700 }}>·</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
             </>
           )}
-          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#E63946", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
+          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#8738F5", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
         </div>
         <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{cardName}</h3>
         {card.source === "event" && cardVenue && (
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#999" }}>{cardVenue}</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6b6178" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#6b6178" }}>{cardVenue}</span>
           </div>
         )}
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{cardBlurb}</p>
@@ -1310,7 +1313,7 @@ function LoadingVerb() {
 
   return (
     <p className="loading-verb" style={{ fontSize: 28, fontWeight: 900, textAlign: "center", margin: 0, minHeight: 36, background: "linear-gradient(90deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC, #FF6B35)", backgroundSize: "200% 100%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", animation: "rainbow 3s ease infinite", fontFamily: "'Inter', sans-serif", letterSpacing: -0.5, whiteSpace: "nowrap" }}>
-      {display}<span style={{ WebkitTextFillColor: "#ccc", animation: "blink 0.8s step-end infinite" }}>|</span>
+      {display}<span aria-hidden="true" style={{ WebkitTextFillColor: "#6b6178", animation: "blink 0.8s step-end infinite" }}>|</span>
     </p>
   );
 }

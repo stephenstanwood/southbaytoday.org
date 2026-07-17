@@ -92,6 +92,10 @@ const NAME_OVERRIDES = {
 
 const BLURB_OVERRIDES = {
   "SR0881648": "Sweetgreen opens at El Paseo de Saratoga — salads, grain bowls, and warm plates. Soft opening May 15–16, official launch May 19.",
+  // D55: El Paseo de Saratoga is a shopping plaza IN SAN JOSE — the model
+  // kept reading "Saratoga" off the plaza name and writing "in Saratoga",
+  // same trap as SR0881648 above.
+  "SR0884724": "Gelato shop opening at El Paseo de Saratoga in San Jose.",
   "SR0879467": "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio.",
   "SR0883252": "Popular Yemeni coffee chain expanding to downtown San Jose — cardamom-spiced brews and pastries.",
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
@@ -422,7 +426,34 @@ function shouldSkip(item) {
  * Returns a map of item id → blurb string.
  */
 function blurbList(items) {
-  return items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"}, ${i.cityName}`).join("\n");
+  return items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"} — CITY: ${i.cityName}`).join("\n");
+}
+
+// Title-case a SCC-record city name ("SAN JOSE" -> "San Jose") for the
+// mismatch check below and for override authoring.
+function titleCaseCity(cityName) {
+  return String(cityName || "")
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// D55: shopping-center names that borrow another city's name ("El Paseo de
+// Saratoga" is in San Jose; the plaza's own name reads as a stronger signal
+// to the model than the trailing city field) fool the blurb model into
+// writing "opening in Saratoga" for a San Jose address. Scan the generated
+// blurb for an "in <City>"/"at <City>" location claim naming a DIFFERENT
+// covered city than the record's actual cityName and drop the blurb (falls
+// back to null, same as a failed generation) rather than ship a wrong city.
+function blurbCityMismatch(blurb, cityName) {
+  if (!blurb || !cityName) return null;
+  const correct = titleCaseCity(cityName).toLowerCase();
+  for (const rawCity of new Set(Object.keys(CITY_ID_MAP))) {
+    const candidate = titleCaseCity(rawCity);
+    if (candidate.toLowerCase() === correct) continue;
+    const re = new RegExp(`\\b(?:in|at)\\s+${candidate}\\b`, "i");
+    if (re.test(blurb)) return candidate;
+  }
+  return null;
 }
 
 /**
@@ -460,6 +491,8 @@ async function generateBlurbs(items) {
 
 For each newly opened restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it offers. Focus on cuisine type, chain background, or what makes it distinctive. No exclamation points, no hype. Don't start with the restaurant name.
 
+The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
+
 Examples of good blurbs:
 - "Filipino chain known for Chickenjoy fried chicken, now in South San Jose."
 - "Korean braised pork knuckle specialist on El Camino Real."
@@ -480,6 +513,8 @@ async function generateComingSoonBlurbs(items) {
   const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
 
 For each "coming soon" restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it will offer. Focus on cuisine type, chain background, or location context. No exclamation points, no hype. Don't start with the restaurant name.
+
+The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
 
 Examples of good blurbs:
 - "BBQ chain with smoked ribs and wings, opening on Curtner Ave."
@@ -641,7 +676,7 @@ async function generateFallbackImages(items) {
   }
 
   const prompts = await generateRecraftPrompts(fresh);
-  const { generateAndUpload } = await import("./social/lib/recraft.mjs");
+  const { generateAndUploadResized } = await import("./social/lib/recraft.mjs");
 
   console.log(`  Recraft fallbacks: ${cachedHits.length} cached, generating ${fresh.length} new…`);
   for (const item of fresh) {
@@ -652,10 +687,13 @@ async function generateFallbackImages(items) {
     let url = null;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        const result = await generateAndUpload({
+        // /#food tiles display at 217x162 (FoodTile) — 450x340 lossy webp q80
+        // is generous headroom vs. Recraft's lossless ~1MB+ source (D45).
+        const result = await generateAndUploadResized({
           prompt: fullPrompt,
-          pathname: `food-tiles/${item.sourceId}.png`,
-          size: "1024x1024",
+          pathname: `food-tiles/${item.sourceId}-450.webp`,
+          width: 450,
+          height: 340,
         });
         url = result.url;
         break;
@@ -786,6 +824,23 @@ async function main() {
   const openedAddresses = new Set(openedDeduped.map((i) => addressKey(i)));
   const comingSoonFinal = comingSoonDeduped.filter((i) => !openedAddresses.has(addressKey(i)));
 
+  // Manual overrides are hand-verified — trust them outright. AI-generated
+  // blurbs get a post-gen city-mismatch check (D55): a plaza named after a
+  // different city (El Paseo de Saratoga, in San Jose) can fool the model
+  // into writing "opening in Saratoga" for a San Jose address. Drop rather
+  // than ship a wrong city — falls back to null, same as a failed generation.
+  function resolveBlurb(item, aiBlurbMap) {
+    const override = item.sourceId && BLURB_OVERRIDES[item.sourceId];
+    if (override) return override;
+    const aiBlurb = aiBlurbMap[item.id] ?? null;
+    const mismatch = blurbCityMismatch(aiBlurb, item.cityName);
+    if (mismatch) {
+      console.warn(`[blurb-city-mismatch] "${item.name}" (${item.cityName}) blurb names "${mismatch}": ${JSON.stringify(aiBlurb)}`);
+      return null;
+    }
+    return aiBlurb;
+  }
+
   // Generate blurbs for top opened restaurants
   const topOpened = openedDeduped.slice(0, 12);
   console.log("Generating blurbs for opened restaurants…");
@@ -793,7 +848,7 @@ async function main() {
 
   const openedWithBlurbs = openedDeduped.slice(0, 12).map((i) => ({
     ...i,
-    blurb: (i.sourceId && BLURB_OVERRIDES[i.sourceId]) ?? blurbs[i.id] ?? null,
+    blurb: resolveBlurb(i, blurbs),
   }));
 
   // Generate anticipation blurbs for top coming-soon restaurants
@@ -803,7 +858,7 @@ async function main() {
 
   const comingSoonWithBlurbs = comingSoonFinal.slice(0, 12).map((i) => ({
     ...i,
-    blurb: (i.sourceId && BLURB_OVERRIDES[i.sourceId]) ?? comingSoonBlurbs[i.id] ?? null,
+    blurb: resolveBlurb(i, comingSoonBlurbs),
   }));
 
   // Attach Google Places photoRef so /#food can render real-photo tiles.

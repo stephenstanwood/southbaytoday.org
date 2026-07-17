@@ -305,6 +305,7 @@ export default function GovernmentView({ selectedCities }: Props) {
         eyebrow="South Bay / Civic Desk"
         title="Local Government"
         description="Council meetings, searchable records, and plain-English summaries for the cities you follow. Built for quick civic context, not municipal scavenger hunts."
+        accent="var(--sb-accent)"
         stats={[
           { value: meetingCount, label: "Meetings this week" },
           { value: orderedCities.length, label: "With digests" },

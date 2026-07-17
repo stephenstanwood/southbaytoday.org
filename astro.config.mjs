@@ -1,4 +1,6 @@
 // @ts-check
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
@@ -14,6 +16,23 @@ const isPastDatedUrl = (/** @type {string} */ page) => {
   return m ? m[1] < buildDayPt : false;
 };
 
+// council-page lastmod: real per-city freshness (last summarized meeting)
+// where it's cheap to reach from a src/data JSON already on disk; every other
+// URL falls back to the build date, which still beats shipping no <lastmod>.
+/** @type {Record<string, string>} */
+let govLastmodByCity = {};
+try {
+  const digestsPath = fileURLToPath(new URL('./src/data/south-bay/digests.json', import.meta.url));
+  const digests = JSON.parse(readFileSync(digestsPath, 'utf-8'));
+  govLastmodByCity = Object.fromEntries(
+    Object.entries(digests).map(([city, d]) => [city, /** @type {{ meetingDateIso?: string }} */ (d).meetingDateIso ?? '']),
+  );
+} catch {
+  // digests.json not present at config-eval time — sitemap just falls back
+  // to the build date for /gov/ pages too.
+}
+const buildDate = new Date().toISOString();
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://southbaytoday.org',
@@ -22,6 +41,11 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [react(), sitemap({
     filter: (page) => !page.includes('/logo-preview') && !page.includes('/admin') && !isPastDatedUrl(page),
+    serialize(item) {
+      const govMatch = item.url.match(/\/gov\/([a-z-]+)\/?$/);
+      const cityLastmod = govMatch ? govLastmodByCity[govMatch[1]] : undefined;
+      return { ...item, lastmod: cityLastmod || buildDate };
+    },
   })],
   vite: {
     // @ts-ignore - tailwindcss/vite type mismatch with astro's bundled vite

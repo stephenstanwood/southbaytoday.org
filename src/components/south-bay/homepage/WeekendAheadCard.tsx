@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import weekendPicksJson from "../../../data/south-bay/weekend-picks.json";
 
 const CITY_LABELS: Record<string, string> = {
-  "san-jose": "San Jose",
+  "san-jose": "San José",
   "campbell": "Campbell",
   "los-gatos": "Los Gatos",
   "saratoga": "Saratoga",
@@ -69,6 +69,36 @@ function timeToMinutes(t: string | null | undefined): number {
   if (ampm === "PM" && h !== 12) h += 12;
   if (ampm === "AM" && h === 12) h = 0;
   return h * 60 + min;
+}
+
+// The square tile crops photography with `cover`, which is the right call
+// for real venue photos — but a source-supplied `image` (poster/banner art
+// from the event listing itself, as opposed to a curated Google Places
+// venue photo) is disproportionately likely to carry embedded headline
+// text that a blind center-crop slices off. Only `image`-sourced tiles are
+// considered flyer candidates; `photoRef` always resolves to photography
+// and stays on `cover`. Within candidates, only genuinely non-square
+// aspect ratios (portrait posters, or wide text banners) flip to `contain`.
+function useTileImageFit(photo: string | null, isFlyerCandidate: boolean): "cover" | "contain" {
+  const [fit, setFit] = useState<"cover" | "contain">("cover");
+  useEffect(() => {
+    if (!photo || !isFlyerCandidate) {
+      setFit("cover");
+      return;
+    }
+    let cancelled = false;
+    const img = new Image();
+    img.onload = () => {
+      if (cancelled || !img.naturalWidth || !img.naturalHeight) return;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      setFit(ratio < 0.85 || ratio > 2 ? "contain" : "cover");
+    };
+    img.src = photo;
+    return () => {
+      cancelled = true;
+    };
+  }, [photo, isFlyerCandidate]);
+  return fit;
 }
 
 export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "events") => void }) {
@@ -154,7 +184,6 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
 
       <div className="wa-grid">
         {visible.map((p) => {
-          const photo = pickPhoto(p);
           const cityName = CITY_LABELS[p.city] ?? p.city;
           const dayBadge =
             p.date === todayIso
@@ -162,38 +191,7 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
               : p.date === addDays(todayIso, 1)
                 ? "Tomorrow"
                 : new Date(p.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "short" });
-          return (
-            <a
-              key={p.id}
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="wa-tile"
-              style={{
-                background: photo
-                  ? `#000 url(${photo}) center/cover no-repeat`
-                  : "linear-gradient(135deg, #fb923c 0%, #c2410c 100%)",
-              }}
-              title={p.why}
-            >
-              <div className="wa-shade" />
-              <div className="wa-top">
-                <span className="wa-badge wa-badge-day">{dayBadge}</span>
-              </div>
-              <div className="wa-bottom">
-                <div className="wa-title">{p.title}</div>
-                <div className="wa-meta">
-                  <span>{cityName}</span>
-                  {p.time && (
-                    <>
-                      <span aria-hidden>·</span>
-                      <span>{p.time}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </a>
-          );
+          return <WeekendTile key={p.id} pick={p} dayBadge={dayBadge} cityName={cityName} />;
         })}
       </div>
 
@@ -277,6 +275,20 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
           color: rgba(255,255,255,0.85);
           text-shadow: 0 1px 1px rgba(0,0,0,0.4);
         }
+        .wa-flyer-backdrop {
+          position: absolute;
+          inset: -10%;
+          background-size: cover;
+          background-position: center;
+          filter: blur(18px) brightness(0.55);
+        }
+        .wa-flyer-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
         @media (max-width: 760px) {
           .wa-grid {
             grid-template-columns: repeat(2, 1fr);
@@ -288,5 +300,61 @@ export default function WeekendAheadCard({ onNavigate }: { onNavigate: (tab: "ev
         }
       `}</style>
     </section>
+  );
+}
+
+function WeekendTile({
+  pick: p,
+  dayBadge,
+  cityName,
+}: {
+  pick: WeekendPick;
+  dayBadge: string;
+  cityName: string;
+}) {
+  const photo = pickPhoto(p);
+  const isFlyerCandidate = Boolean(p.image);
+  const fit = useTileImageFit(photo, isFlyerCandidate);
+  const isFlyer = Boolean(photo) && fit === "contain";
+
+  return (
+    <a
+      href={p.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="wa-tile"
+      style={{
+        background:
+          photo && !isFlyer
+            ? `#000 url(${photo}) center/cover no-repeat`
+            : isFlyer
+              ? "#1c1917"
+              : "linear-gradient(135deg, #fb923c 0%, #c2410c 100%)",
+      }}
+      title={p.why}
+    >
+      {isFlyer && photo && (
+        <>
+          <div className="wa-flyer-backdrop" style={{ backgroundImage: `url(${photo})` }} aria-hidden="true" />
+          <img src={photo} alt="" className="wa-flyer-img" />
+        </>
+      )}
+      <div className="wa-shade" />
+      <div className="wa-top">
+        <span className="wa-badge wa-badge-day">{dayBadge}</span>
+      </div>
+      <div className="wa-bottom">
+        <div className="wa-title">{p.title}</div>
+        <div className="wa-meta">
+          <span>{cityName}</span>
+          {p.time && (
+            <>
+              <span aria-hidden>·</span>
+              <span>{p.time}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </a>
   );
 }

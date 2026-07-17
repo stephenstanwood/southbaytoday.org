@@ -6,6 +6,8 @@
 import CalendarShell from "../../layouts/CalendarShell.astro";
 import digestsJson from "../../data/south-bay/digests.json";
 import meetingsJson from "../../data/south-bay/upcoming-meetings.json";
+import { CITY_MAP } from "../../lib/south-bay/cities";
+import type { City } from "../../lib/south-bay/types";
 
 interface Digest {
   city: string;
@@ -56,8 +58,25 @@ const meetingDayLabel = meeting?.date
     })
   : null;
 
-const title = `${cityName} City Council — meeting summaries & next agenda — South Bay Today`;
-const description = `${digest.summary.slice(0, 155)}`;
+// Same predicate the body uses to decide between the "next meeting" card and
+// the no-meeting-confirmed fallback, so the <title> promise never disagrees
+// with what the page actually renders.
+const hasConfirmedMeeting = Boolean(meeting && meetingDayLabel);
+
+const title = hasConfirmedMeeting
+  ? `${cityName} City Council — meeting summaries & next agenda — South Bay Today`
+  : `${cityName} City Council — meeting summaries — South Bay Today`;
+
+// Trim to a word boundary rather than slicing mid-word, and use a real
+// ellipsis instead of implying the sentence just stops.
+function truncateAtWord(text: string, maxLen: number): string {
+  if (text.length <= maxLen) return text;
+  const cut = text.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : maxLen)}…`;
+}
+const description = truncateAtWord(digest.summary, 155);
+const cityWebsite = CITY_MAP[cityId as City]?.website;
 
 const schemas: Record<string, unknown>[] = [
   {
@@ -91,7 +110,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": sche
 const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
 ---
 
-<CalendarShell title={title} description={description}>
+<CalendarShell title={title} description={description} activeTab="government">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={jsonLd} />
   </Fragment>
@@ -109,7 +128,7 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
     <a href={`/city/${cityId}`}>everything in {cityName} →</a>
   </p>
 
-  {meeting && meetingDayLabel && (
+  {meeting && meetingDayLabel ? (
     <section class="gov-block gov-block--next">
       <h2>Next meeting · {meetingDayLabel}</h2>
       {agendaPreview.length > 0 ? (
@@ -126,6 +145,18 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
           Full agenda ↗
         </a>
       )}
+    </section>
+  ) : (
+    <section class="gov-block gov-block--next">
+      <h2>Next meeting</h2>
+      <p class="gov-muted">
+        No upcoming meeting confirmed yet — check the{" "}
+        {cityWebsite ? (
+          <a href={cityWebsite} rel="noopener noreferrer">city's calendar ↗</a>
+        ) : (
+          "city's calendar"
+        )}.
+      </p>
     </section>
   )}
 

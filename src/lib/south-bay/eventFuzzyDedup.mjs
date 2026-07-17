@@ -55,6 +55,13 @@ function parseTimeMin(t) {
   return h * 60 + parseInt(m[2], 10);
 }
 
+// Case-insensitive, whitespace-trimmed exact title match — used for the
+// certain-duplicate fast path below (distinct from the fuzzy subset/jaccard
+// title match used elsewhere in this module).
+function sameTitle(a, b) {
+  return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
+}
+
 function richnessScore(e) {
   let s = 0;
   if (e.description) s += Math.min(e.description.length / 100, 5);
@@ -95,6 +102,21 @@ export function fuzzyDedupEvents(events) {
       for (let j = i + 1; j < candidates.length; j++) {
         const e2 = candidates[j];
         if (dropIds.has(e2.id)) continue;
+
+        // Exact (title, url) match is a certain duplicate — two ingest paths
+        // scraping the same organizer feed (e.g. SJMA's direct scraper +
+        // the Playwright mirror) can disagree on id shape or time (one
+        // resolves a detail-page time, the other defaults to noon), but
+        // never disagree on canonical URL. Bypass the same-source time-diff
+        // skip and venue-closeness check below — id shape and time proximity
+        // don't matter here.
+        if (e1.url && e2.url && e1.url === e2.url && sameTitle(e1.title, e2.title)) {
+          const drop = richnessScore(e1) < richnessScore(e2) ? e1 : e2;
+          dropIds.add(drop.id);
+          droppedCount++;
+          continue;
+        }
+
         const t2 = tokenize(e2.title);
         const titleMatch = isSubsetOf(t1, t2) || isSubsetOf(t2, t1) || jaccard(t1, t2) >= 0.85;
         if (!titleMatch) continue;

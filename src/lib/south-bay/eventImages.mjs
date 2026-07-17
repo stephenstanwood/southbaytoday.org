@@ -339,13 +339,27 @@ async function fetchUnsplashByCategory(category) {
 // Tier 4: Recraft
 // ---------------------------------------------------------------------------
 
-function fingerprint(event) {
+export function fingerprint(event) {
   const parts = [
     (event.title || "").toLowerCase().trim(),
     (event.venue || "").toLowerCase().trim(),
     (event.city || "").toLowerCase().trim(),
   ];
   return parts.join("|").replace(/[^a-z0-9|]+/g, "-").slice(0, 120);
+}
+
+// Tier 3 (Unsplash) images are a category-generic safety net, not a final
+// answer — a richer per-event Recraft entry can land in byFingerprint later
+// (backfill run, manual override) after an event already carries one. Used
+// to decide whether a pre-existing `image` should still be re-checked
+// against the cache instead of being treated as done.
+export function isUnsplashSearchImage(url) {
+  if (!url) return false;
+  try {
+    return new URL(url).hostname === "images.unsplash.com";
+  } catch {
+    return false;
+  }
 }
 
 function recraftPrompt(event) {
@@ -371,13 +385,21 @@ function recraftPrompt(event) {
 }
 
 async function generateRecraft(event) {
-  const { generateRecraftImage, uploadToBlob } = await import(
+  const { generateRecraftImage, resizeAndUploadToBlob } = await import(
     /* vite-ignore */ "../../../scripts/social/lib/recraft.mjs"
   );
   const prompt = recraftPrompt(event);
   const { buffer } = await generateRecraftImage({ prompt, size: "3:2" });
   const slug = fingerprint(event).replace(/\|/g, "-");
-  const url = await uploadToBlob(buffer, `event-images/${slug}-${Date.now()}.png`);
+  // Card thumbnails render at ~112x151 — 280x180 (3:2, matching the source
+  // aspect) lossy webp q80 is generous headroom vs. Recraft's lossless
+  // ~1280x832 source, and fixes the mislabeled image/png content-type on
+  // the old raw-PNG-pathname uploads (D46).
+  const { url } = await resizeAndUploadToBlob(buffer, `event-images/${slug}-${Date.now()}-280.webp`, {
+    width: 280,
+    height: 180,
+    fit: "cover",
+  });
   return url;
 }
 
@@ -461,6 +483,20 @@ export async function resolveEventImages(events, opts = {}) {
   // --- Tier 1: venue → photoRef (synchronous) ------------------------------
   const needOG = []; // events that don't have a photoRef/image after Tier 1
   for (const e of events) {
+    // A pre-existing Unsplash-search image is a Tier 3 fallback, not a final
+    // answer — the resolver used to skip these entirely (`e.image` truthy ⇒
+    // "preexisting"), so a Recraft entry that later landed in byFingerprint
+    // (via a backfill run or manual override) never got picked up. Cache
+    // lookup must beat an already-resolved Unsplash fallback.
+    if (!e.photoRef && isUnsplashSearchImage(e.image)) {
+      const cached = cache.byFingerprint[fingerprint(e)];
+      if (cached?.image) {
+        if (!dryRun) e.image = cached.image;
+        stats.tier4_recraft_cached++;
+        stats.preexisting++;
+        continue;
+      }
+    }
     if (e.photoRef || e.image) {
       stats.preexisting++;
       continue;
