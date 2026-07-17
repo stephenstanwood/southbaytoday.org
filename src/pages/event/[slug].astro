@@ -25,6 +25,7 @@ interface RawEvent {
   blurb?: string | null;
   description?: string | null;
   cost?: string | null;
+  costNote?: string | null;
   kidFriendly?: boolean | null;
   category?: string | null;
   source?: string | null;
@@ -73,10 +74,32 @@ const dayLabel = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US",
 
 const timeLabel = event.endTime && event.time ? `${event.time}–${event.endTime}` : event.time ?? "";
 const metaBits = [timeLabel, event.venue, cityName].filter(Boolean);
-const title = `${event.title} — ${dayLabel} — South Bay Today`;
-const description = `${event.title} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
-  cityName ? ` in ${cityName}` : ""
-}. ${(event.blurb || event.description || "").slice(0, 140)}`.trim();
+
+// <title> uncapped ran long on most events — drop the year (redundant with the
+// visible dayLabel elsewhere on the page) and, if it's still long, drop the
+// site suffix rather than truncate the event's actual title.
+const dayLabelNoYear = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US", {
+  timeZone: "UTC",
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+});
+const titleCore = `${event.title} — ${dayLabelNoYear}`;
+const title = titleCore.length > 68 ? titleCore : `${titleCore} — South Bay Today`;
+
+function capDescription(text: string, max = 155): string {
+  const trimmed = text.trim();
+  if (trimmed.length <= max) return trimmed;
+  const sliced = trimmed.slice(0, max);
+  const lastSpace = sliced.lastIndexOf(" ");
+  const safe = (lastSpace > 0 ? sliced.slice(0, lastSpace) : sliced).trimEnd();
+  return `${safe}…`;
+}
+const description = capDescription(
+  `${event.title} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
+    cityName ? ` in ${cityName}` : ""
+  }. ${(event.blurb || event.description || "").trim()}`.trim(),
+);
 
 const imageUrl = event.image && /^https?:\/\//i.test(event.image)
   ? event.image
@@ -88,6 +111,19 @@ const mapsQuery = [event.venue, event.address, cityName ? `${cityName}, CA` : nu
   .filter(Boolean)
   .join(", ");
 const mapsUrl = mapsQuery ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}` : null;
+
+// Address strings pulled from source listings often repeat the venue name
+// ("Frost Amphitheater, 327 Lasuen St, ..."). The "Where" line already shows
+// the venue, so strip a leading venue prefix before rendering the address.
+function stripVenuePrefix(address: string | null | undefined, venue: string | null | undefined): string {
+  const addr = (address ?? "").trim();
+  const v = (venue ?? "").trim();
+  if (!addr || !v) return addr;
+  const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`^${escaped}\\s*,?\\s*`, "i");
+  return addr.replace(re, "").trim();
+}
+const displayAddress = stripVenuePrefix(event.address, event.venue);
 
 const calendarUrl = buildGoogleCalendarUrl({
   title: event.title ?? "",
@@ -150,7 +186,7 @@ const longDesc = (event.description ?? "").trim();
 const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.slice(0, 40));
 ---
 
-<CalendarShell title={title} description={description} ogImage={absoluteOgImage}>
+<CalendarShell title={title} description={description} ogImage={absoluteOgImage} activeTab="events">
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
@@ -171,11 +207,19 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   <p class="cal-sub">
     {metaBits.join(" · ")}
     {event.cost === "free" && <span class="cal-chip">Free</span>}
+    {event.cost === "paid" && <span class="cal-chip cal-chip--paid">Paid</span>}
     {event.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
   </p>
 
   {imageUrl && (
-    <img class="cal-detail-photo" src={imageUrl} alt={`${event.title}${event.venue ? ` at ${event.venue}` : ""}`} loading="lazy" />
+    <img
+      class="cal-detail-photo"
+      src={imageUrl}
+      width="760"
+      height="420"
+      alt={`${event.title}${event.venue ? ` at ${event.venue}` : ""}`}
+      loading="lazy"
+    />
   )}
 
   {blurb && <p class="cal-detail-copy">{blurb}</p>}
@@ -188,7 +232,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         <dt>Where</dt>
         <dd>
           {event.venue}
-          {event.address ? ` — ${event.address}` : ""}
+          {displayAddress ? ` — ${displayAddress}` : ""}
           {cityName ? `, ${cityName}` : ""}
           {mapsUrl && (
             <>
@@ -235,6 +279,11 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
 </script>
 
 <style>
+  .cal-chip--paid {
+    border-color: #ddd6fe;
+    background: #f5f3ff;
+    color: #5b21b6;
+  }
   .cal-passed {
     margin: 0 0 14px;
     padding: 10px 14px;
@@ -250,6 +299,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   }
   .cal-detail-photo {
     width: 100%;
+    aspect-ratio: 760 / 420;
     max-height: 420px;
     object-fit: cover;
     border-radius: 8px;

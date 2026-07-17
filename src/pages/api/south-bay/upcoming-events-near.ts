@@ -5,7 +5,13 @@ import { buildEventsPayload, FEED_CACHE_HEADERS } from "../../../lib/south-bay/e
 // the Events tab's first paint read this; the full feed loads behind it only
 // where the longer horizon is actually used (search, far dates, Tech's 30-day
 // conference window).
-export const prerender = true;
+//
+// On-demand (not prerendered): Vercel's static-asset server ignores Response
+// headers on prerendered routes with no file extension and served this as
+// application/octet-stream with a download disposition instead of JSON.
+// Rendering on-demand makes it a real function response, so our declared
+// Content-Type and Cache-Control headers (FEED_CACHE_HEADERS) are honored.
+export const prerender = false;
 
 export const GET: APIRoute = () => {
   const payload = buildEventsPayload(14);

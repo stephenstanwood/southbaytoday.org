@@ -19,7 +19,7 @@ import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displ
 import PageHero from "../PageHero";
 
 const CITIES: { id: City; name: string }[] = [
-  { id: "san-jose", name: "San Jose" },
+  { id: "san-jose", name: "San José" },
   { id: "santa-clara", name: "Santa Clara" },
   { id: "sunnyvale", name: "Sunnyvale" },
   { id: "mountain-view", name: "Mountain View" },
@@ -34,7 +34,7 @@ const CITIES: { id: City; name: string }[] = [
 ];
 
 const CITY_LABELS: Record<string, string> = {
-  "san-jose": "San Jose", "campbell": "Campbell", "los-gatos": "Los Gatos",
+  "san-jose": "San José", "campbell": "Campbell", "los-gatos": "Los Gatos",
   "saratoga": "Saratoga", "cupertino": "Cupertino", "santa-clara": "Santa Clara",
   "sunnyvale": "Sunnyvale", "mountain-view": "Mountain View", "palo-alto": "Palo Alto",
   "milpitas": "Milpitas", "los-altos": "Los Altos", "santa-cruz": "Santa Cruz",
@@ -1604,30 +1604,51 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return todayIso;
   });
 
+  // Two-stage load: the 14-day near feed paints the visible rail (today + 6
+  // days) fast and cheap. The full feed (~2MB decompressed) is only worth
+  // paying for once something actually needs it — search, a deep-linked date
+  // outside the near window, or an idle prefetch a few seconds after mount so
+  // it's ready by the time someone reaches for it. Eagerly true when the
+  // initial date came from a `?date=` deep link, since we can't yet know
+  // whether that date falls inside the near feed's window.
+  const [wantFullFeed, setWantFullFeed] = useState(() => selectedDate !== todayIso);
+
   useEffect(() => {
-    // Two-stage load: the 14-day near feed paints the visible rail (today + 6
-    // days) fast, then the full feed replaces it for search, far dates, and
-    // the upcoming-total stat. If near fails we still try full.
+    // Near feed always loads — it's what paints the initial rail. Only apply
+    // it if nothing has landed yet (a full-feed response, once requested,
+    // always wins over the near feed).
     let cancelled = false;
-    let fullLanded = false;
     fetch("/api/south-bay/upcoming-events-near")
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (!cancelled && !fullLanded && d) setUpcomingData(d);
+        if (!cancelled && d) setUpcomingData((prev) => prev ?? d);
       })
       .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!wantFullFeed) return;
+    let cancelled = false;
     fetch("/api/south-bay/upcoming-events")
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (cancelled) return;
-        fullLanded = true;
-        setUpcomingData(d ?? { events: [] });
+        if (!cancelled) setUpcomingData(d ?? { events: [] });
       })
       .catch(() => {
         if (!cancelled) setUpcomingData((prev) => prev ?? { events: [] });
       });
     return () => { cancelled = true; };
-  }, []);
+  }, [wantFullFeed]);
+
+  useEffect(() => {
+    // Idle prefetch — nobody explicitly asked for the full feed yet, but load
+    // it anyway after a few seconds so search/far-date navigation feel
+    // instant once someone reaches for them.
+    if (wantFullFeed) return;
+    const id = window.setTimeout(() => setWantFullFeed(true), 3000);
+    return () => window.clearTimeout(id);
+  }, [wantFullFeed]);
 
   const allEvents = useMemo(
     () => (upcomingData?.events ?? []).map(normalizeEventForDisplay),
@@ -2005,11 +2026,18 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // hidden in those modes anyway, and we want pure city/category/kids/free/
   // search filtering so the numbers stay consistent with what the user sees
   // when they tap a date pill.
+  //
+  // Unlike dayEvents (which hides today's already-started events so the list
+  // reads as "what's still ahead"), this count intentionally does NOT apply
+  // hasNotStarted — it's the full day's total, matching what the static
+  // /events/[date] page and the "Today" hero stat report. That keeps the
+  // pill's number legible as "how many things are on the calendar today"
+  // even when some have already started; hasNotStarted still governs which
+  // events actually render in the list below (see dayEvents).
   const eventCountByDate = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
@@ -2215,9 +2243,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             <span className="sb-events-search-icon" aria-hidden>Search</span>
             <input
               type="search"
-              placeholder="Search events"
+              placeholder="Event, venue, or city"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              onFocus={() => setWantFullFeed(true)}
             />
           </label>
 
@@ -2365,7 +2394,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         <section className="sb-events-results">
           {searchResults.length === 0 && (
             <div className="sb-empty">
-              <div className="sb-empty-title">No matches yet</div>
+              <div className="sb-empty-title">No matches for &ldquo;{search.trim()}&rdquo;</div>
               <div className="sb-empty-sub">Try a broader search or clear a filter.</div>
             </div>
           )}

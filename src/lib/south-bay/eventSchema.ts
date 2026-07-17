@@ -1,8 +1,9 @@
 // Build-time schema.org Event mapping for crawlable surfaces (static date
 // pages + JSON-LD head blocks on /events and city pages). Honest fields only:
-// nothing is fabricated — missing time means a date-only startDate, offers
-// appear only for cost === "free", and location carries exactly the venue /
-// address / city we actually have.
+// nothing is fabricated — missing time means a date-only startDate, a price
+// is only ever set from a literal $figure in the data (never guessed for
+// "paid"), and location carries exactly the venue / address / city we
+// actually have.
 import { parseClockTime } from "./calendarLink";
 
 const SITE = "https://southbaytoday.org";
@@ -24,6 +25,7 @@ export interface SchemaEventRecord {
   blurb?: string | null;
   description?: string | null;
   cost?: string | null;
+  costNote?: string | null; // e.g. "From $30" — a floor, not a fixed price
 }
 
 /** UTC offset suffix ("-07:00") for America/Los_Angeles on a given date. */
@@ -58,6 +60,15 @@ function plainDescription(e: SchemaEventRecord): string | null {
   const text = (e.blurb || e.description || "").replace(/\s+/g, " ").trim();
   if (!text) return null;
   return text.length > 300 ? `${text.slice(0, 297)}…` : text;
+}
+
+/** "From $30" → 30. Never guesses a price from thin air — only a literal $figure. */
+function parseLowPrice(note: string | null | undefined): number | null {
+  if (!note) return null;
+  const m = note.match(/\$([\d,]+(?:\.\d+)?)/);
+  if (!m) return null;
+  const n = Number(m[1].replace(/,/g, ""));
+  return Number.isFinite(n) ? n : null;
 }
 
 /** One event record → schema.org Event object, or null if it can't be honest. */
@@ -123,6 +134,23 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
       priceCurrency: "USD",
       ...(e.url ? { url: e.url } : {}),
     };
+  } else if (e.cost === "paid" || e.cost === "low") {
+    // Most listings only know "paid," not a figure — an Offer with no price is
+    // still honest. costNote sometimes gives a real floor ("From $30"); when it
+    // does, an AggregateOffer's lowPrice says exactly that, not a fixed price.
+    const lowPrice = parseLowPrice(e.costNote);
+    schema.offers = {
+      "@type": lowPrice !== null ? "AggregateOffer" : "Offer",
+      availability: "https://schema.org/InStock",
+      ...(e.url ? { url: e.url } : {}),
+      ...(lowPrice !== null ? { lowPrice, priceCurrency: "USD" } : {}),
+    };
+  }
+  // organizer: the venue is the only field we can honestly call an organizing
+  // party without guessing — curation "source" (library newsletter, news
+  // aggregator, etc.) describes where we found the listing, not who runs it.
+  if (e.venue) {
+    schema.organizer = { "@type": "Organization", name: e.venue };
   }
   return schema;
 }

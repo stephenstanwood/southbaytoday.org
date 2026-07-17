@@ -167,6 +167,18 @@ function classify(event) {
           reason: "slug-mismatch",
           detail: `city="${city}" but location references "${otherSlug}"`,
         });
+      } else if (city === "santa-clara-county") {
+        // "santa-clara-county" is a curated catch-all for hand-picked
+        // landmarks, not a real city slug (it isn't in the City union,
+        // src/lib/south-bay/types.ts) — an ingest fallback stamping it on
+        // an unresolved venue (D53: POST/Midpen preserve names that didn't
+        // match a known location) is unlocatable, not curated. Flag hard so
+        // it can't silently ship the way the 6 POST/Midpen records did.
+        findings.push({
+          severity: "hard",
+          reason: "unverifiable-county-fallback",
+          detail: `city="santa-clara-county" but location text contains no "santa clara county" token — looks like an unresolved ingest fallback, not a curated pick`,
+        });
       }
     }
   }

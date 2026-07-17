@@ -581,6 +581,12 @@ async function scrapeSJJazz(page) {
 
 // ── SJ Museum of Art ──
 
+// SJMA's calendar occasionally lists cross-promotions for other venues (e.g.
+// a San Jose Giants game) that this scraper would otherwise stamp with
+// SJMA's own venue/address — drop rather than publish a wrong "Directions"
+// address. Mirrors the same guard in generate-events.mjs::fetchSjMuseumOfArtEvents.
+const SJMA_CROSS_PROMO_TITLE_RE = /\bvs\.?\s|\bversus\b/i;
+
 async function scrapeSJMuseumOfArt(page) {
   await page.goto("https://sjmusart.org/calendar", { waitUntil: "networkidle", timeout: 25_000 });
 
@@ -607,6 +613,7 @@ async function scrapeSJMuseumOfArt(page) {
     .map((r) => {
       const date = tryParseDate(r.date);
       if (!date || date < TODAY) return null;
+      if (SJMA_CROSS_PROMO_TITLE_RE.test(r.title)) return null; // off-site cross-promotion, wrong venue data
       return {
         title: r.title,
         date,
@@ -1297,7 +1304,12 @@ function inferPostLocation(title) {
   for (const [name, slug, venue] of POST_LOCATION_RULES) {
     if (t.includes(name)) return { city: slug, venue };
   }
-  return { city: "santa-clara-county", venue: null };
+  // Unmapped preserve name — "santa-clara-county" isn't in the City union
+  // (src/lib/south-bay/types.ts) and a generic "Various POST preserves"
+  // venue gives Directions nothing real to point at. Drop rather than
+  // publish an unlocatable event; add the preserve to POST_LOCATION_RULES
+  // (in-area) or POST_OUT_OF_AREA_TOKENS (out-of-area) once known. D53.
+  return null;
 }
 
 async function scrapePOST(page) {
@@ -1861,19 +1873,24 @@ async function scrapeMidpen(page) {
     "cupertino": "Cupertino",
     "los-altos": "Los Altos",
     "palo-alto": "Palo Alto",
-    "santa-clara-county": "Santa Clara County",
   };
-  const outOfArea = /\b(la honda|pulgas ridge|purisima|long ridge|russian ridge|skyline ridge|windy hill|el corte de madera|pescadero|half moon bay)\b/i;
+  const outOfArea = /\b(la honda|pulgas ridge|purisima|long ridge|russian ridge|skyline ridge|windy hill|el corte de madera|pescadero|half moon bay|ravenswood)\b/i;
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
     if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
     if (/\b(meeting|budget|committee|board)\b/i.test(r.title)) return null;
     const place = (r.preserve || "Midpen Open Space Preserve").replace(/\t.*$/, "").trim();
     if (outOfArea.test(`${r.title} ${place}`)) return null;
-    let city = "santa-clara-county";
+    let city = null;
     for (const [re, slug] of locationRules) {
       if (re.test(`${r.title} ${place}`)) { city = slug; break; }
     }
+    // Unmapped preserve — "santa-clara-county" isn't in the City union
+    // (src/lib/south-bay/types.ts) and an unresolved preserve name gives
+    // Directions nothing real to point at. Drop rather than publish an
+    // unlocatable event; add the preserve to locationRules (in-area) or
+    // outOfArea (out-of-area) once known. D53.
+    if (!city) return null;
     return {
       title: r.title,
       date,
@@ -2495,7 +2512,11 @@ async function main() {
   const events = allRaw.map((e) => {
     const d = new Date(`${e.date}T12:00:00-07:00`);
     return {
-      id: h("pw", e.source, e.date, e.title, e.venue),
+      // Include time: same source/date/title/venue can carry multiple
+      // showtimes on one day (e.g. SAP Center's Monster Jam 12pm + 6pm) —
+      // omitting it collided two distinct events onto one id and broke
+      // React keys downstream.
+      id: h("pw", e.source, e.date, e.title, e.venue, e.time || ""),
       title: e.title,
       date: e.date,
       displayDate: displayDate(d),

@@ -16,7 +16,7 @@ interface Props {
 // hydration matches the build's HTML.
 const {
   title = "The South Bay Today",
-  description = "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San Jose, Palo Alto, and six more South Bay cities.",
+  description = "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San José, Palo Alto, and six more South Bay cities.",
   initialTab,
 } = Astro.props;
 ---
@@ -34,7 +34,7 @@ const {
         --sb-card: #FFFFFF;
         --sb-ink: #13072F;
         --sb-muted: #5f5870;
-        --sb-light: #8d829d;
+        --sb-light: #6b6178;
         --sb-border: rgba(124, 58, 237, 0.25);
         --sb-border-light: rgba(34, 198, 211, 0.22);
         --sb-rule: #13072F;
@@ -412,6 +412,8 @@ const {
         margin: 0 -2px 8px;
         scrollbar-width: thin;
         -webkit-overflow-scrolling: touch;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
       }
       .sb-events-date-pill {
         position: relative;
@@ -932,6 +934,8 @@ const {
           padding-bottom: 2px;
           scrollbar-width: none;
           -webkit-overflow-scrolling: touch;
+          mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+          -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
         }
         .sb-events-toggle-row::-webkit-scrollbar { display: none; }
         .sb-events-toggle-row > * { flex: 0 0 auto; }
@@ -1384,6 +1388,8 @@ const {
         -webkit-overflow-scrolling: touch;
         padding: 2px 4px 12px;
         margin: 0 -4px 4px;
+        mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
       }
       .cdt-chips::-webkit-scrollbar { display: none; }
       .cdt-chip {
@@ -3346,6 +3352,16 @@ const {
       }
       @media (max-width: 640px) {
         .camps-view .dev-header-title { font-size: 28px; }
+      }
+
+      /* Clears the fixed Tips & Feedback FAB (ReaderWidget.tsx) so it never
+         permanently covers trailing page content on narrow viewports. Kept
+         last in cascade order so it wins over earlier .sb-main padding
+         shorthand at overlapping breakpoints. */
+      @media (max-width: 680px) {
+        .sb-main {
+          padding-bottom: calc(84px + env(safe-area-inset-bottom));
+        }
       }
     </style>
     <slot name="head" />

@@ -56,6 +56,7 @@ import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
 import { VIRTUAL_EVENT_PATTERNS } from "../src/lib/south-bay/eventFilters.mjs";
 import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { SLUG_TO_CITY_TOKENS } from "./social/lib/content-rules.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
 import { parseDate, parseDatePT, isoDate, todayPT, displayDate, displayTime } from "./lib/dates.mjs";
@@ -2265,12 +2266,32 @@ function restoreSjsuAcronyms(text) {
   return text.replace(/\bShrm\b/g, "SHRM");
 }
 
+// SJSU's Localist feed defaults every event to the San Jose campus, but
+// `item.location` sometimes names an off-campus partner venue in another
+// covered city (D56: "Cupertino Community Hall" for an SBDC pitch
+// competition). Cross-check the venue string against the other covered
+// cities' name tokens — SJSU's own campus buildings never contain another
+// city's name, so a match is a confident correction, not a false positive.
+// Excludes the curated out-of-area slugs (santa-cruz, santa-clara-county) —
+// those are hand-picked elsewhere, not something this feed should infer.
+const SJSU_OTHER_CITY_TOKENS = Object.entries(SLUG_TO_CITY_TOKENS)
+  .filter(([slug]) => slug !== "san-jose" && slug !== "santa-cruz" && slug !== "santa-clara-county");
+
+function inferSjsuCity(venue) {
+  const v = String(venue || "").toLowerCase();
+  for (const [slug, tokens] of SJSU_OTHER_CITY_TOKENS) {
+    if (tokens.some((t) => v.includes(t))) return slug;
+  }
+  return "san-jose";
+}
+
 async function fetchSjsuEvents() {
   console.log("  ⏳ SJSU Events...");
   try {
     const xml = await fetchText("https://events.sjsu.edu/calendar.xml", { timeout: 45_000 }); // large feed ~1.4MB
     const items = parseRssItems(xml);
     let skipped = 0;
+    let venueCityFixes = 0;
     const parsed = items.map((item) => {
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
@@ -2278,6 +2299,11 @@ async function fetchSjsuEvents() {
       item.title = restoreSjsuAcronyms(item.title);
       item.description = restoreSjsuAcronyms(item.description);
       const venue = item.location || extractVenueFromTitle(item.title) || "San Jose State University";
+      const city = inferSjsuCity(venue);
+      if (city !== "san-jose") {
+        venueCityFixes++;
+        console.warn(`[sjsu] venue "${venue}" names ${city}, not san-jose — correcting city (${item.title})`);
+      }
       const category = inferUniversityCategory(item.title, item.description, "", venue);
       // SJSU's Localist platform emits a 224x42 wordmark as og:image which
       // crops to "SAN UNI" on a square tile. Pin a real square asset:
@@ -2302,7 +2328,7 @@ async function fetchSjsuEvents() {
         endTime: null,
         venue,
         address: "",
-        city: "san-jose",
+        city,
         category,
         cost,
         description: truncate(stripBareUrls(stripHtml(item.description))),
@@ -2346,7 +2372,7 @@ async function fetchSjsuEvents() {
       .filter((e) => !dropIds.has(e.id))
       .map(({ _startMs, ...e }) => e);
 
-    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""})`);
+    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${venueCityFixes ? `, ${venueCityFixes} venue-vs-city corrections` : ""})`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);
@@ -4328,7 +4354,11 @@ function fetchFarmersMarketEvents() {
     { title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Town Park Plaza", address: "50 University Ave, Los Gatos", city: "los-gatos", url: "https://www.losgatos.ca.gov/1411/Farmers-Market", season: [5, 10] },
     { title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga", url: "https://cafarmersmkts.com/saratoga-market", season: [4, 11] },
     { title: "Santana Row Farmers Market", day: 3, time: "11:00 AM", endTime: "3:00 PM", venue: "Santana Row", address: "377 Santana Row, San Jose", city: "san-jose", url: "https://www.santanarow.com/events", season: [1, 12] },
-    { title: "Campbell Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell", url: "https://www.downtowncampbell.com/farmers-market", season: [1, 12] },
+    // D54: /farmers-market 404s (site restructured to /event/ pages) — verified
+    // 2026-07-16 that /event/campbell-farmers-market resolves 200 with real
+    // Sunday-market content, no redirect. Evergreen slug (no year), unlike the
+    // /event/2026/farmers-market alternate which would need updating yearly.
+    { title: "Campbell Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "Downtown Campbell", address: "Campbell Ave, Campbell", city: "campbell", url: "https://www.downtowncampbell.com/event/campbell-farmers-market", season: [1, 12] },
     { title: "Sunnyvale Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM", venue: "Murphy Avenue", address: "Murphy Ave, Sunnyvale", city: "sunnyvale", url: "https://urbanvillageonline.com/markets/sunnyvale", season: [1, 12] },
     { title: "Cupertino Farmers Market", day: 5, time: "9:00 AM", endTime: "1:00 PM", venue: "Oaks Shopping Center", address: "21275 Stevens Creek Blvd, Cupertino", city: "cupertino", url: "https://cafarmersmkts.com/cupertino-market", season: [1, 12] },
     { title: "California Ave Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM", venue: "California Avenue", address: "California Ave, Palo Alto", city: "palo-alto", url: "https://www.cityofpaloalto.org/Departments/Community-Services/Arts-Sciences/Farmers-Market", season: [1, 12] },
@@ -5378,6 +5408,13 @@ function normalizeTimeStr(num, ampm) {
   return `${parseInt(hourPart, 10)}:${minPart.padStart(2, "0")} ${period}`;
 }
 
+// SJMA's calendar occasionally lists cross-promotions for other venues (e.g.
+// a San Jose Giants game) that the Drupal Views scrape stamps with SJMA's own
+// venue/address regardless. We can't resolve the real off-site venue from the
+// listing alone, so drop rather than publish a wrong "Directions" address —
+// conservative: only titles matching an obvious sports-team-vs pattern.
+const SJMA_CROSS_PROMO_TITLE_RE = /\bvs\.?\s|\bversus\b/i;
+
 async function fetchSjMuseumOfArtEvents() {
   console.log("  ⏳ San Jose Museum of Art...");
   try {
@@ -5408,6 +5445,7 @@ async function fetchSjMuseumOfArtEvents() {
       // Normalize "Sjma" → "SJMA" (Drupal sometimes lowercases the acronym)
       const title = rawTitle.replace(/\bSjma\b/g, "SJMA");
       if (!title || /registration|camp/i.test(title)) continue;
+      if (SJMA_CROSS_PROMO_TITLE_RE.test(title)) continue; // off-site cross-promotion, wrong venue data
 
       const url = linkMatch
         ? `https://sjmusart.org${linkMatch[1]}`

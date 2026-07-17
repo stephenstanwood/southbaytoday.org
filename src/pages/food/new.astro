@@ -27,7 +27,7 @@ const monthLabel = new Date().toLocaleDateString("en-US", {
 });
 
 const title = `New restaurants in the South Bay (${monthLabel}) — South Bay Today`;
-const description = `${opened.length} recently opened and ${comingSoon.length} coming-soon restaurants, cafes, and food shops across San Jose, Cupertino, Palo Alto, and more — from county health-permit records.`;
+const description = `${opened.length} recently opened and ${comingSoon.length} coming-soon restaurants, cafes, and food shops across San José, Cupertino, Palo Alto, and more — from county health-permit records.`;
 
 // "PALO ALTO" → "Palo Alto"
 const tidyCity = (s?: string | null) =>
@@ -51,7 +51,7 @@ const breadcrumbJsonLd = JSON.stringify({
 });
 ---
 
-<CalendarShell title={title} description={description}>
+<CalendarShell title={title} description={description} activeTab="food">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={breadcrumbJsonLd} />
   </Fragment>

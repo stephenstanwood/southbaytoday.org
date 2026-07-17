@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect, lazy, Suspense } from "react"
 import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES } from "../../lib/south-bay/cities";
+import { formatTodayLabel } from "../../lib/south-bay/formatTodayLabel";
 import SouthBayTodayView from "./homepage/SouthBayTodayView";
 import NewsletterSignup from "./NewsletterSignup";
 
@@ -13,16 +14,6 @@ const EventsView = lazy(() => import("./views/EventsView"));
 const TechnologyView = lazy(() => import("./views/TechnologyView"));
 const FoodView = lazy(() => import("./views/FoodView"));
 const CampsView = lazy(() => import("./views/CampsView"));
-
-function formatTodayLabel(): string {
-  return new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "America/Los_Angeles",
-  });
-}
 
 const TAB_IDS = new Set<string>(TABS.map((t) => t.id));
 

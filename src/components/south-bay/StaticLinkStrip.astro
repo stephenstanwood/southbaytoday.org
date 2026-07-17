@@ -43,6 +43,8 @@ const govCityList = govCities
         <span class="sls-label">Events by day</span>
         {eventDates.map((d) => <a href={`/events/${d}`}>{dayLabel(d)}</a>)}
         <a href="/rss.xml">RSS</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
       </p>
     )}
     {govCityList.length > 0 && (
@@ -68,9 +70,15 @@ const govCityList = govCities
     text-align: center;
   }
   .sls p {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 14px;
+    row-gap: 6px;
+    align-items: baseline;
+    justify-content: center;
     margin: 6px 0;
     font-size: 11px;
-    line-height: 2;
+    line-height: 1.4;
     color: #888;
   }
   .sls-label {
@@ -79,12 +87,10 @@ const govCityList = govCities
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-right: 10px;
   }
   .sls a {
     color: #777;
     text-decoration: none;
-    margin: 0 7px;
     white-space: nowrap;
   }
   .sls a:hover {

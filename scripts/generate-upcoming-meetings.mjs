@@ -215,7 +215,14 @@ async function fetchAgendaItems(client, eventId) {
       headers: { "User-Agent": UA, Accept: "application/json" },
       signal: AbortSignal.timeout(15_000),
     });
-    if (!res.ok) return [];
+    if (!res.ok) {
+      // Was silent — swallowing a bad status here (rate limit, client
+      // rename, dead eventId) is indistinguishable from "meeting genuinely
+      // has no substantive items", which is how staleness investigations
+      // for this file kept coming up empty-handed. D30/D31.
+      console.warn(`[upcoming-meetings] fetchAgendaItems: ${client}/${eventId} -> HTTP ${res.status} (${url})`);
+      return [];
+    }
     const items = await res.json();
 
     // Filter to substantive items and take up to 5
@@ -226,7 +233,8 @@ async function fetchAgendaItems(client, eventId) {
         title: cleanAgendaTitle(item.EventItemTitle),
         sequence: item.EventItemAgendaSequence,
       }));
-  } catch {
+  } catch (err) {
+    console.warn(`[upcoming-meetings] fetchAgendaItems: ${client}/${eventId} -> ${err.message} (${url})`);
     return [];
   }
 }

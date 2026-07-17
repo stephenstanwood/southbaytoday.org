@@ -9,6 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { useState, useEffect } from "react";
+import { formatTodayLabel } from "../../lib/south-bay/formatTodayLabel";
 
 type TabId = "overview" | "events" | "camps" | "government" | "technology" | "food";
 
@@ -25,13 +26,6 @@ export interface MastheadProps {
   /** Optional tab id to highlight (only useful when the page corresponds to a
    *  tab). City pages pass null since they're sub-routes, not tabs. */
   activeTab?: TabId | null;
-}
-
-function formatTodayLabel(): string {
-  return new Date().toLocaleDateString("en-US", {
-    weekday: "long", month: "long", day: "numeric",
-    timeZone: "America/Los_Angeles",
-  }).toUpperCase();
 }
 
 export default function Masthead({ activeTab = null }: MastheadProps) {

@@ -33,6 +33,7 @@ export default memo(function PhotoStrip() {
   // after mount swaps ~17 of 20 tiles mid-animation (the pool is ~139) —
   // every thumb fetched twice and the marquee stutters through hydration.
   const [seed, setSeed] = useState<number | null>(null);
+  const [paused, setPaused] = useState(false);
   useEffect(() => { setSeed(Math.floor(Math.random() * 1_000_000)); }, []);
   if (ALL_PHOTOS.length < 4) return null;
   if (seed === null) {
@@ -44,13 +45,18 @@ export default memo(function PhotoStrip() {
   }
   const strip = seededShuffle(ALL_PHOTOS, seed).slice(0, Math.min(20, ALL_PHOTOS.length));
 
-  const tile = (p: CuratedPhoto, keySuffix: string) => (
+  // `duplicate` marks the second, translateX(-50%)-only copy of the loop: it
+  // exists purely so the marquee wraps seamlessly and must be invisible to
+  // keyboard/AT users, who would otherwise hit every photo twice per lap.
+  const tile = (p: CuratedPhoto, keySuffix: string, duplicate: boolean) => (
     <a
       key={p.id + keySuffix}
       href={p.photoPage}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${p.title} — ${p.photographer} — ${p.license}`}
+      aria-label={duplicate ? undefined : `${p.title} — ${p.photographer} — ${p.license}`}
+      aria-hidden={duplicate ? "true" : undefined}
+      tabIndex={duplicate ? -1 : undefined}
       style={{
         flexShrink: 0, display: "block", position: "relative",
         height: 200, width: 280, overflow: "hidden", background: "#ccc",
@@ -80,11 +86,28 @@ export default memo(function PhotoStrip() {
   );
 
   return (
-    <div style={{ overflow: "hidden", marginTop: 4, marginBottom: 4 }}>
-      <div className="photo-strip-track">
-        {strip.map(p => tile(p, "-a"))}
-        {strip.map(p => tile(p, "-b"))}
+    <div style={{ overflow: "hidden", marginTop: 4, marginBottom: 4, position: "relative" }}>
+      <div className={`photo-strip-track${paused ? " is-paused" : ""}`}>
+        {strip.map(p => tile(p, "-a", false))}
+        {strip.map(p => tile(p, "-b", true))}
       </div>
+      <button
+        type="button"
+        className="ps-pause-toggle"
+        onClick={() => setPaused((p) => !p)}
+        aria-pressed={paused}
+        aria-label={paused ? "Play photo scroll" : "Pause photo scroll"}
+      >
+        {paused ? "▶" : "❚❚"}
+      </button>
+      {/*
+        NOTE: @keyframes photo-scroll / .photo-strip-track / .ps-caption below
+        are byte-identical to SignalShell.astro's copy. That looks like drift
+        but isn't: PhotoStrip also mounts on /city/[slug] pages, which use
+        BaseLayout (not SignalShell) and never load SignalShell's CSS — so
+        this copy is load-bearing there. Do not delete without giving city
+        pages their own way to load the marquee styles first.
+      */}
       <style>{`
         @keyframes photo-scroll {
           0%   { transform: translateX(0); }
@@ -97,6 +120,7 @@ export default memo(function PhotoStrip() {
           will-change: transform;
         }
         .photo-strip-track:hover { animation-play-state: paused; }
+        .photo-strip-track.is-paused { animation-play-state: paused; }
         .ps-caption {
           position: absolute; bottom: 0; left: 0; right: 0;
           background: linear-gradient(transparent, rgba(0,0,0,0.7));
@@ -105,6 +129,29 @@ export default memo(function PhotoStrip() {
           transition: opacity 0.15s;
         }
         .photo-strip-track a:hover .ps-caption { opacity: 1; }
+        .photo-strip-track a:focus-within .ps-caption { opacity: 1; }
+        .ps-pause-toggle {
+          position: absolute;
+          bottom: 8px;
+          right: 8px;
+          z-index: 2;
+          width: 28px;
+          height: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          border-radius: 50%;
+          background: rgba(18, 6, 47, 0.62);
+          color: #fff;
+          font-size: 11px;
+          line-height: 1;
+          cursor: pointer;
+        }
+        .ps-pause-toggle:hover,
+        .ps-pause-toggle:focus-visible {
+          background: rgba(18, 6, 47, 0.85);
+        }
       `}</style>
     </div>
   );

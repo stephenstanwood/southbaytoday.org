@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-05-28T03:10:49.846Z"
+    "auditedAt": "2026-07-16T23:25:49.787Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1695,
+    "total": 1276,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,21 +16,24 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 322,
+    "total": 551,
     "totals": {
-      "hard": 4,
-      "soft": 0,
+      "hard": 25,
+      "soft": 4,
       "info": 0
     },
     "byReason": {
-      "out-of-area": 4
+      "unknown-slug": 2,
+      "out-of-area": 24,
+      "virtual-not-flagged": 2,
+      "slug-mismatch": 1
     },
     "hard": [
       {
-        "id": "inbound_0134ad7ad56916a5_01",
-        "title": "Boots & Brews Country Music Festival",
+        "id": "inbound_mrdonrn0_hxpe1g",
+        "title": "Meet Magnificent Raptors",
         "city": null,
-        "date": "2026-06-20T00:00:00-07:00",
+        "date": "2026-07-26T17:30:00-07:00",
         "location": "Morgan Hill",
         "findings": [
           {
@@ -41,11 +44,179 @@
         ]
       },
       {
-        "id": "inbound_dc385c22ba8a97b4_01",
-        "title": "Global Run Day with Hoka + A Runner's Mind",
+        "id": "inbound_mrjemwp7_lv07ty",
+        "title": "Hypertufa Planter Workshop",
         "city": null,
-        "date": "2026-06-03T18:00:00-07:00",
-        "location": "A Runner's Mind, 3575 Sacramento St, San Francisco, CA 94118",
+        "date": "2026-07-23T10:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_gclch4",
+        "title": "Composting Program",
+        "city": null,
+        "date": "2026-07-29T18:30:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_35u772",
+        "title": "Seed Kits",
+        "city": null,
+        "date": "2026-08-01T00:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_mrum0o",
+        "title": "Obon Festival",
+        "city": null,
+        "date": "2026-07-17T16:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_96yfl1",
+        "title": "JAMaROO Storytime and Craft",
+        "city": null,
+        "date": "2026-07-30T10:30:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_y5d6rg",
+        "title": "Drip Painting",
+        "city": null,
+        "date": "2026-07-22T13:30:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_cv18tr",
+        "title": "Bead Plants",
+        "city": null,
+        "date": "2026-07-22T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_zta03h",
+        "title": "Succulent Magnets",
+        "city": null,
+        "date": "2026-07-29T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_iyonq6",
+        "title": "Paper Wisteria",
+        "city": null,
+        "date": "2026-08-05T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_83wu6i",
+        "title": "Grow Your Money",
+        "city": null,
+        "date": "2026-07-18T15:00:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemwp7_2zn035",
+        "title": "Safe Space: Video Games",
+        "city": null,
+        "date": "2026-07-24T16:00:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mqpmli70_7no75i",
+        "title": "61st Annual Golf Tournament",
+        "city": "campbell",
+        "date": "2026-08-26T12:00:00-07:00",
+        "location": "Cinnabar Hills Golf Club, 23600 McKean Rd, San Jose, CA",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "slug-mismatch",
+            "detail": "city=\"campbell\" but location references \"san-jose\""
+          }
+        ]
+      },
+      {
+        "id": "inbound_mqtt6fia_5yepy2",
+        "title": "Maggie Stiefvater: The Dream Thieves graphic novel release",
+        "city": "san-jose",
+        "date": "2026-08-08T18:00:00-07:00",
+        "location": "Books Inc. Opera Plaza, San Francisco, CA",
         "findings": [
           {
             "severity": "hard",
@@ -55,10 +226,24 @@
         ]
       },
       {
-        "id": "inbound_f816af6122ab01b5_04",
-        "title": "Mer-MAY Party",
+        "id": "inbound_mr27g9wh_go9qhz",
+        "title": "August Day Trip to San Francisco Zoo & Gardens",
+        "city": "sunnyvale",
+        "date": "2026-08-18T09:00:00-07:00",
+        "location": "San Francisco Zoo & Gardens",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"san francisco\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_pw8499",
+        "title": "Hypertufa Planter Workshop",
         "city": null,
-        "date": "2026-05-29T00:00:00-07:00",
+        "date": "2026-07-23T10:00:00-07:00",
         "location": "Gilroy Library",
         "findings": [
           {
@@ -69,10 +254,10 @@
         ]
       },
       {
-        "id": "inbound_f816af6122ab01b5_05",
-        "title": "Chinese Medicine for Chronic Pain",
+        "id": "inbound_mrjemtr8_2c26dh",
+        "title": "Composting Program",
         "city": null,
-        "date": "2026-05-30T00:00:00-07:00",
+        "date": "2026-07-29T18:30:00-07:00",
         "location": "Gilroy Library",
         "findings": [
           {
@@ -81,8 +266,177 @@
             "detail": "location mentions \"gilroy\" with no in-area city token"
           }
         ]
+      },
+      {
+        "id": "inbound_mrjemtr8_fn9g2k",
+        "title": "Obon Festival",
+        "city": null,
+        "date": "2026-07-17T16:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_72ylrc",
+        "title": "JAMaROO Storytime and Craft",
+        "city": null,
+        "date": "2026-07-30T10:30:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_80l5s6",
+        "title": "Drip Painting",
+        "city": null,
+        "date": "2026-07-22T13:30:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_dudres",
+        "title": "Bead Plants",
+        "city": null,
+        "date": "2026-07-22T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_pe19x1",
+        "title": "Succulent Magnets",
+        "city": null,
+        "date": "2026-07-29T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_28tpwx",
+        "title": "Paper Wisteria",
+        "city": null,
+        "date": "2026-08-05T14:00:00-07:00",
+        "location": "Gilroy Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_4d2x2j",
+        "title": "Grow Your Money",
+        "city": null,
+        "date": "2026-07-18T15:00:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjemtr8_iuttsf",
+        "title": "Safe Space: Video Games",
+        "city": null,
+        "date": "2026-07-24T16:00:00-07:00",
+        "location": "Morgan Hill Library",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
       }
     ],
-    "soft": []
+    "soft": [
+      {
+        "id": "inbound_mqpty7ed_rnhaun",
+        "title": "National Night Out",
+        "city": "monte-sereno",
+        "date": "2026-08-04T17:00:00-07:00",
+        "location": "Town Plaza Park, Los Gatos, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrjnewhy_1aaxob",
+        "title": "Mountain View Technology Showcase",
+        "city": "mountain-view",
+        "date": "2026-07-30T11:00:00-07:00",
+        "location": "Civic Center Plaza, 500 Castro St., Mountain View, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mqpugxt4_wkbmmw",
+        "title": "Community Police Academy",
+        "city": "monte-sereno",
+        "date": "2026-09-17T00:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mquzvgcz_2656j7",
+        "title": "beehiiv Summer Release Event",
+        "city": null,
+        "date": "2026-07-16T10:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      }
+    ]
   }
 }

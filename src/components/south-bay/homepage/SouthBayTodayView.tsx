@@ -190,22 +190,25 @@ function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { card
       return null;
     };
 
+    // Missing-city fallbacks must be deterministic (not pickRandomAnchor):
+    // this function runs in a render initializer, and any randomness here
+    // breaks the SSR/hydration byte-for-byte contract documented below.
     if (eff.isTomorrow) {
       const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
       if (tomorrowPlan) {
-        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || pickRandomAnchor() };
+        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || REGIONAL_ANCHOR };
       }
       const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
       if (todayPlan) {
         const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
-        return { cards: placesOnly, anchor: (todayPlan.city as City) || pickRandomAnchor() };
+        return { cards: placesOnly, anchor: (todayPlan.city as City) || REGIONAL_ANCHOR };
       }
       return { cards: [], anchor: null };
     }
 
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
     if (!plan) return { cards: [], anchor: null };
-    return { cards: plan.cards, anchor: (plan.city as City) || pickRandomAnchor() };
+    return { cards: plan.cards, anchor: (plan.city as City) || REGIONAL_ANCHOR };
   } catch {
     return { cards: [], anchor: null };
   }

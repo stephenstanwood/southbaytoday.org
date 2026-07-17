@@ -60,21 +60,26 @@ export default function ForecastCard({ homeCity }: Props) {
 
   if (!forecast || forecast.length === 0) return null;
 
+  // Colors verified >=4.5:1 against the composited warm page bg (#fbf1e6),
+  // not just white — the earlier palette read fine on white but two bands
+  // dropped as low as 2.85:1 once composited over the warm gradient. The
+  // hottest two bands also moved off true red per house style (no red UI;
+  // amber/rust ok) onto a rust tone that still reads hottest in the ramp.
   const tempColor = (t: number) => {
-    if (t >= 95) return "#C2290A";
-    if (t >= 85) return "#E8531D";
-    if (t >= 75) return "#D97706";
-    if (t >= 65) return "#4D7C0F";
-    if (t >= 55) return "#0284C7";
+    if (t >= 95) return "#8B3A0F";
+    if (t >= 85) return "#A8460C";
+    if (t >= 75) return "#9C5504";
+    if (t >= 65) return "#456F0C";
+    if (t >= 55) return "#0270AA";
     return "#4F46E5";
   };
   const tempBg = (t: number, strong = false) => {
     const a = strong ? 0.10 : 0.05;
-    if (t >= 95) return `rgba(194,41,10,${a})`;
-    if (t >= 85) return `rgba(232,83,29,${a})`;
-    if (t >= 75) return `rgba(217,119,6,${a})`;
-    if (t >= 65) return `rgba(77,124,15,${a})`;
-    if (t >= 55) return `rgba(2,132,199,${a})`;
+    if (t >= 95) return `rgba(139,58,15,${a})`;
+    if (t >= 85) return `rgba(168,70,12,${a})`;
+    if (t >= 75) return `rgba(156,85,4,${a})`;
+    if (t >= 65) return `rgba(69,111,12,${a})`;
+    if (t >= 55) return `rgba(2,112,170,${a})`;
     return `rgba(79,70,229,${a})`;
   };
 
