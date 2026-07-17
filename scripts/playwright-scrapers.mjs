@@ -365,10 +365,20 @@ async function scrapeTheTech(page) {
 
 // ── LibCal Libraries (MV Public Library, Los Gatos, Milpitas) ──
 
-// Bookmobile/outreach stops on libcal use bare venue names as titles ("Ginzton
-// Terrace Apartments", "Castro Elementary School", "Hope Services"). They live
-// on the library's calendar but aren't public events — the library's bookmobile
-// just visits that location.
+// Bookmobile stops are labeled as such by LibCal itself — the listing card
+// carries "Categories: Mobile Library Stop" / "Location: Mobile Library Stop".
+// Prefer that first-party signal over guessing from the title shape: the title
+// is just wherever the bookmobile parks, and those names don't follow a
+// predictable pattern ("Villa Siena", "El Camino Hospital- Lower-Level Lobby",
+// "Magical Bridge Playground" all slipped past the regex below and were then
+// given invented blurbs — a stop at a hospital lobby became "a community health
+// talk"). The regex stays as a fallback for layouts that don't expose the label.
+function isMobileLibraryStop(cardText) {
+  return /(?:Categories|Location)\s*:\s*Mobile Library Stop/i.test(cardText || "");
+}
+
+// Fallback: bookmobile/outreach stops use bare venue names as titles ("Ginzton
+// Terrace Apartments", "Castro Elementary School", "Hope Services").
 //
 // Pattern is FULL-title match (anchored ^...$) so we don't drop real events
 // like "Friends of the Los Altos Library Booksale @ Los Altos Community Center"
@@ -440,7 +450,7 @@ async function scrapeLibCal(page, config) {
           const dateStr = monthDay ? `${monthDay[0]}, ${currentYear}` : null;
           // Time like "11:00am" from card body
           const timeMatch = card.textContent?.match(/\d{1,2}:\d{2}\s*[ap]m/i);
-          events.push({ title, date: dateStr, time: timeMatch?.[0], link: titleLink.href });
+          events.push({ title, date: dateStr, time: timeMatch?.[0], link: titleLink.href, cardText: card.textContent || "" });
         }
 
         // Strategy 2: LibCal media-body layout (Mountain View style)
@@ -458,7 +468,7 @@ async function scrapeLibCal(page, config) {
             const dateMatch = bodyText.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2}/i);
             const date = dateMatch ? `${dateMatch[0]}, ${currentYear}` : null;
             const timeMatch = bodyText.match(/\d{1,2}:\d{2}\s*[ap]m/i);
-            events.push({ title, date, time: timeMatch?.[0], link: titleLink.href });
+            events.push({ title, date, time: timeMatch?.[0], link: titleLink.href, cardText: bodyText });
           }
         }
 
@@ -482,11 +492,9 @@ async function scrapeLibCal(page, config) {
           .map((r) => {
             const date = tryParseDate(r.date);
             if (!date || date < TODAY) return null;
-            // MV bookmobile / outreach stops surface as bare venue-name titles
-            // ("Ginzton Terrace Apartments", "Castro Elementary School", "Hope
-            // Services"). They're internal stops on the library's bookmobile
-            // calendar, not public events. Filter by title pattern.
-            if (isBookmobileStopTitle(r.title)) return null;
+            // Bookmobile stops live on the library's calendar but aren't public
+            // events. LibCal labels them; fall back to title shape if it doesn't.
+            if (isMobileLibraryStop(r.cardText) || isBookmobileStopTitle(r.title)) return null;
             return {
               title: r.title,
               date,
@@ -1266,6 +1274,11 @@ const POST_OUT_OF_AREA_TOKENS = [
   "menlo park", "atherton", "redwood city", "san mateo",
   "pacifica", "san bruno",
   "morgan hill", "gilroy", "san martin",
+  // San Mateo County coastal/bayside sites POST runs walks at. The catch-all in
+  // inferPostLocation already drops unmapped preserves, but name them so the
+  // intent is explicit rather than incidental — these reached the published feed
+  // before that catch-all existed, tagged "santa-clara-county".
+  "wavecrest", "bair island", "pillar point",
 ];
 
 // Map preserve / park names to South Bay city slug + canonical venue name.

@@ -78,9 +78,6 @@ const VENUE_CONCESSION_PATTERNS = /\bLEVI'?S?\s+STADIUM\b|\bCONVENTION\s+CENTER\
 // SPC B2990" = SJC terminal), so match AIRPORT BL with the VD optional.
 const VENUE_ADDRESS_PATTERNS = /\bAIRPORT\s+BL(?:VD)?\b|\bSJC\b|\bTERM(INAL)?\s+[A-Z0-9]\b|MARIE\s+P\.?\s+DEBARTOLO/i;
 
-// Patterns for names that need more cleanup
-const TENANT_IMPROVEMENT_PATTERN = /tenant improvement|TENANT IMPROV/i;
-
 // Manual blurb overrides keyed by sourceId — these survive AI regeneration
 // Use when AI-generated blurbs are generic or when we have specific local knowledge
 // Sourceid → preferred display name. Use when SCC's spelling/capitalization
@@ -91,6 +88,15 @@ const NAME_OVERRIDES = {
 };
 
 const BLURB_OVERRIDES = {
+  // Permit filings whose name gave the model nothing to go on, so it invented a
+  // cuisine anyway — "Anne Doan" (an applicant's name) came out as "Vietnamese
+  // restaurant". Pinned to location-only until someone confirms the concept.
+  // See CUISINE_INFERENCE_RULE for the upstream guard.
+  "SR0884033": "Restaurant opening on Lafayette St in Santa Clara.",
+  "SR0884919": "Food business coming to Service St in San Jose.",
+  "SR0884963": "Restaurant on S Central Ave in Campbell.",
+  "SR0885456": "Fish-focused eatery opening on S De Anza Blvd in Cupertino.",
+  "SR0883695": "Latin and Asian concept coming to Homestead Rd in Santa Clara.",
   "SR0881648": "Sweetgreen opens at El Paseo de Saratoga — salads, grain bowls, and warm plates. Soft opening May 15–16, official launch May 19.",
   // D55: El Paseo de Saratoga is a shopping plaza IN SAN JOSE — the model
   // kept reading "Saratoga" off the plaza name and writing "in Saratoga",
@@ -421,6 +427,15 @@ function shouldSkip(item) {
   return false;
 }
 
+// These records are Santa Clara County health-permit filings, so "name" is
+// whatever went on the application — often the applicant rather than a business
+// ("Anne Doan"), an operator ("Latin & Asian Hospitality Group"), or an opaque
+// code ("Rti - Wei's Fish"). The model has no menu, so it was reading cuisine off
+// the name and stating it as fact: "Anne Doan" became "Vietnamese restaurant"
+// — a cuisine guessed from a person's surname. Name + address + city is all we
+// actually know; when the name isn't a chain we recognize, say only that.
+const CUISINE_INFERENCE_RULE = `Only name a cuisine when the source supports it. The name may be a person, a holding company, or a code — it is NOT evidence of a cuisine, and a person's name is never evidence of their food's ethnicity. State a cuisine ONLY when (a) the name explicitly says it ("Gelato Scoping Store" → gelato, "Latin & Asian Hospitality Group" → Latin and Asian), or (b) it's a chain you genuinely recognize ("Jersey Mike's Subs" → sub sandwiches). Otherwise write a location-only line — "Restaurant opening on Lafayette St in Santa Clara." — and do not guess at the food. Never infer cuisine or nationality from a personal or surname-like name.`;
+
 /**
  * Generate one-line blurbs for a list of recently opened restaurants using Claude Haiku.
  * Returns a map of item id → blurb string.
@@ -493,6 +508,8 @@ For each newly opened restaurant below, write one concise factual sentence (max 
 
 The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
 
+${CUISINE_INFERENCE_RULE}
+
 Examples of good blurbs:
 - "Filipino chain known for Chickenjoy fried chicken, now in South San Jose."
 - "Korean braised pork knuckle specialist on El Camino Real."
@@ -515,6 +532,8 @@ async function generateComingSoonBlurbs(items) {
 For each "coming soon" restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it will offer. Focus on cuisine type, chain background, or location context. No exclamation points, no hype. Don't start with the restaurant name.
 
 The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
+
+${CUISINE_INFERENCE_RULE}
 
 Examples of good blurbs:
 - "BBQ chain with smoked ribs and wings, opening on Curtner Ave."

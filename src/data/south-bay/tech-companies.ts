@@ -436,7 +436,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "broadcom",
     name: "Broadcom",
-    city: "San Jose",
+    city: "Palo Alto",
     category: "chip",
     stage: "public",
     tagline: "Semiconductors and enterprise software (VMware). One of SCC's largest private-sector employers.",
@@ -788,10 +788,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "sandisk",
     name: "SanDisk",
-    city: "San Jose",
+    city: "Milpitas",
     category: "hardware",
     stage: "public",
-    tagline: "Flash storage pioneer — consumer SSDs, memory cards, and enterprise NAND solutions. Spun off from Western Digital in February 2025 and trades independently as SNDK. One of the most recognized storage brands in the world, headquartered in San Jose since 1988.",
+    tagline: "Flash storage pioneer — consumer SSDs, memory cards, and enterprise NAND solutions. Spun off from Western Digital in February 2025 and trades independently as SNDK. One of the most recognized storage brands in the world, founded in 1988 and headquartered in Milpitas.",
     color: "#E31937",
     url: "https://www.sandisk.com",
     employeesNote: "~8K employees globally",

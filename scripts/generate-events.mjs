@@ -859,6 +859,10 @@ function cleanTitle(title) {
     // JST = Jesuit School of Theology (the merged SCU theology program is
     // styled JST-SCU on SCU's calendar).
     "HSI", "JST",
+    // Art on the Grounds — Montalvo Arts Center's outdoor-installation program.
+    // Its JSON-LD titles arrive as "AOG Marcus Fest: …" and the 2+ rule downcased
+    // the prefix to "Aog".
+    "AOG",
     // Sports leagues / clubs the existing list missed. Sources name-drop these
     // in mixed-case titles where the 2+ rule downcases them — e.g. "San Jose
     // Earthquakes vs LAFC - Prime Time" from the City Newsletter became "vs
@@ -2743,6 +2747,16 @@ async function fetchSjJazzEvents() {
   }
 }
 
+// Montalvo's JSON-LD stamps every startDate with "+00:00" but the value is
+// local wall-clock time, not UTC. Honoring the offset shifts every event 7-8
+// hours earlier: a 09:00 summer camp became "2:00 AM", Opera San Jose's 19:00
+// curtain became "12:00 PM". Dropping the offset hands parseDatePT a naive
+// timestamp, which it already resolves as PT. Confirmed against Montalvo's own
+// listings and the city newsletter (Marcus Fest 18:00 = 6:00 PM).
+function stripBogusUtcOffset(str) {
+  return typeof str === "string" ? str.replace(/(?:Z|\+00:00)$/, "") : str;
+}
+
 async function fetchMontalvoEvents() {
   console.log("  ⏳ Montalvo Arts Center...");
   try {
@@ -2762,7 +2776,7 @@ async function fetchMontalvoEvents() {
         const startDate = item.startDate;
         const url = item.url;
         if (!name || !startDate || !url) continue;
-        const start = parseDatePT(startDate);
+        const start = parseDatePT(stripBogusUtcOffset(startDate));
         if (!start || start < now) continue;
         events.push({
           id: h("montalvo", url, startDate),

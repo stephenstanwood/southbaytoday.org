@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-07-16T23:25:49.787Z"
+    "auditedAt": "2026-07-17T04:21:53.321Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1276,
+    "total": 1751,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,16 +16,16 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 551,
+    "total": 547,
     "totals": {
-      "hard": 25,
-      "soft": 4,
+      "hard": 28,
+      "soft": 3,
       "info": 0
     },
     "byReason": {
       "unknown-slug": 2,
-      "out-of-area": 24,
-      "virtual-not-flagged": 2,
+      "out-of-area": 27,
+      "virtual-not-flagged": 1,
       "slug-mismatch": 1
     },
     "hard": [
@@ -194,6 +194,48 @@
             "severity": "hard",
             "reason": "out-of-area",
             "detail": "location mentions \"morgan hill\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrnq6jm3_72hw23",
+        "title": "East Bay Hills Hike & Ride",
+        "city": null,
+        "date": "2026-09-02T00:00:00-07:00",
+        "location": "Berkeley & Oakland",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"oakland\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrnq6jm3_485ytw",
+        "title": "Volunteer Opportunity: Monthly Trail Mix",
+        "city": null,
+        "date": "2026-07-23T10:00:00-07:00",
+        "location": "Ridge Trail Office, 2247 Sixth Street, Berkeley, CA 94710",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"berkeley\" with no in-area city token"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mrnq6jm3_brmwbk",
+        "title": "Outride Day at Specialized",
+        "city": null,
+        "date": "2026-07-21T14:00:00-07:00",
+        "location": "Specialized Bicycle Components HQ, 15155 Concord Circle, Morgan Hill, CA",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"concord\" with no in-area city token"
           }
         ]
       },
@@ -420,20 +462,6 @@
             "severity": "soft",
             "reason": "unknown-slug",
             "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mquzvgcz_2656j7",
-        "title": "beehiiv Summer Release Event",
-        "city": null,
-        "date": "2026-07-16T10:00:00-07:00",
-        "location": "",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
           }
         ]
       }

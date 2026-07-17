@@ -80,8 +80,24 @@ async function callClaude(prompt) {
   return data.content[0].text.trim();
 }
 
-function titleCase(str) {
-  return str.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+// Agenda items that carry no news. Council agendas open with procedural
+// scaffolding ("Public Participation and Access", "5:30 P.M. SPECIAL COUNCIL
+// MEETING (Study Session)", "Adjourn"), so taking agendaItems[0] surfaced
+// filler as the week's city-hall highlight while the actual item — Sunnyvale's
+// "Eliminate the Use of Chemical Pesticide on City Owned or Leased Property" —
+// sat further down the list and only showed up in the summary.
+const AGENDA_BOILERPLATE = [
+  /^public participation/i,
+  /^(call to order|roll call|flag salute|pledge)/i,
+  /special council meeting|study session\)?$/i,
+  /^(adjourn|recess|closed session)/i,
+  /^approve .*minutes/i,
+  /^(consent calendar|oral communications|public comment)/i,
+  /^(presentations?|proclamations?|ceremonial)/i,
+];
+
+function firstSubstantiveAgendaItem(agendaItems) {
+  return agendaItems?.find((a) => a.title && !AGENDA_BOILERPLATE.some((p) => p.test(a.title.trim()))) ?? null;
 }
 
 function formatEventDate(iso) {
@@ -103,9 +119,11 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
     return `- ${a.headline}${date}${summary}`;
   }).join("\n");
 
-  const agendaLines = meetingData?.agendaItems?.slice(0, 3).map((a) =>
-    `- ${a.title}`
-  ).join("\n") ?? "";
+  const agendaLines = (meetingData?.agendaItems ?? [])
+    .filter((a) => a.title && !AGENDA_BOILERPLATE.some((p) => p.test(a.title.trim())))
+    .slice(0, 3)
+    .map((a) => `- ${a.title}`)
+    .join("\n");
 
   const hasSomething = events.length > 0 || aroundItems.length > 0 || (meetingData?.agendaItems?.length ?? 0) > 0;
   if (!hasSomething) return null;
@@ -141,9 +159,32 @@ Reply with ONLY the sentence, no quotes or preamble.`;
 
 async function main() {
   const { events: allEvents } = JSON.parse(readFileSync(EVENTS_PATH, "utf8"));
-  const { items: aroundItems } = JSON.parse(readFileSync(AROUND_PATH, "utf8"));
+  const around = JSON.parse(readFileSync(AROUND_PATH, "utf8"));
   const meetingsData = JSON.parse(readFileSync(MEETINGS_PATH, "utf8"));
   const { start, end, label } = getWeekRange();
+
+  // This script copies around-town headlines verbatim into city-hall highlights,
+  // so it only tells the truth when it runs AFTER generate-around-town.mjs. When
+  // it ran first it published the *previous* day's headlines — including ones the
+  // fresh pass had since corrected: "City Council revokes tobacco retailer
+  // licenses" went out as settled fact after around-town had softened it to "to
+  // revoke" (the agenda only carried a hearing to consider revocation).
+  //
+  // Drop stale city-hall material rather than reprint it. Briefings still ship —
+  // events and council agendas are read fresh — they just lose the city-hall
+  // highlight until the run order is fixed upstream.
+  const aroundAgeHours = around.generatedAt
+    ? (Date.now() - Date.parse(around.generatedAt)) / 3_600_000
+    : Infinity;
+  const aroundIsFresh = aroundAgeHours < 6;
+  const aroundItems = aroundIsFresh ? around.items : [];
+  if (!aroundIsFresh) {
+    console.warn(
+      `⚠️  around-town.json is ${Number.isFinite(aroundAgeHours) ? `${aroundAgeHours.toFixed(1)}h old` : "missing generatedAt"} — ` +
+      `skipping city-hall highlights so stale headlines aren't reprinted.\n` +
+      `    Fix: run generate-around-town.mjs BEFORE generate-city-briefings.mjs.\n`
+    );
+  }
 
   console.log(`Generating city briefings for ${label}…\n`);
 
@@ -191,10 +232,11 @@ async function main() {
           url: e.url || null,
         });
       }
-      if (cityMeeting?.agendaItems?.length) {
+      const leadAgendaItem = firstSubstantiveAgendaItem(cityMeeting?.agendaItems);
+      if (leadAgendaItem) {
         highlights.push({
           type: "council",
-          title: cityMeeting.agendaItems[0].title.replace(/\.$/, ""),
+          title: leadAgendaItem.title.replace(/\.$/, ""),
           when: cityMeeting.displayDate,
           venue: null,
           category: "government",
