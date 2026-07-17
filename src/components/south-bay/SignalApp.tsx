@@ -157,7 +157,7 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
         <div className="sb-header-inner">
           <a href="/" className="sb-brand">
             <img
-              src="/images/sbt-newsletter-avatar.png"
+              src="/images/sbt-avatar-172.png"
               alt=""
               width={86}
               height={86}

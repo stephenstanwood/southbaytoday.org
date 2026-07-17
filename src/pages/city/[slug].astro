@@ -17,6 +17,11 @@ export function getStaticPaths() {
 const { cityId, cityName } = Astro.props;
 const title = `${cityName} — South Bay Today`;
 const description = `What's happening in ${cityName} today: events, city council meetings, development updates, and local news.`;
+// santa-cruz has no dedicated OG card — cities.ts marks it a case-by-case
+// pick, not full coverage (scripts/generate-og-images.mjs skips it too), so
+// it falls back to BaseLayout's shared default image.
+const absoluteOgImage =
+  cityId !== "santa-cruz" ? `https://southbaytoday.org/og/og-city-${cityId}.jpg` : undefined;
 
 // Build-time JSON-LD block (next 7 days of the city's events). CityPage
 // server-renders its chrome now, but its events list still arrives via a
@@ -51,7 +56,7 @@ const jsonLd = eventListJsonLd(cityEvents, {
   title={title}
   description={description}
   themeColor="#F7F8FA"
-  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+  ogImage={absoluteOgImage}
 >
   <Fragment slot="head">
     <style is:global>
@@ -60,7 +65,7 @@ const jsonLd = eventListJsonLd(cityEvents, {
         --sb-card: #FFFFFF;
         --sb-ink: #1A1A1A;
         --sb-muted: #555555;
-        --sb-light: #888888;
+        --sb-light: #6b6178;
         --sb-border: #C8C4BC;
         --sb-border-light: #E5E2DB;
         --sb-primary: #1A1A1A;

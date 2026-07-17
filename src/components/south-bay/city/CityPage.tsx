@@ -22,6 +22,7 @@ import digestsJson from "../../../data/south-bay/digests.json";
 import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
 import { isPlaceTemporarilyUnavailable } from "../../../lib/south-bay/placeAvailability.mjs";
+import { openCampCountForCity } from "../../../lib/south-bay/cityCamps";
 
 import Masthead from "../Masthead";
 import ForecastCard from "../cards/ForecastCard";
@@ -181,14 +182,20 @@ export default function CityPage({ cityId, cityName }: Props) {
           )}
         </div>
 
+        {/* Camps pointer — one-line nudge to /camps, only when this city has
+            a program still running this summer. Renders nothing otherwise. */}
+        <CityCampsPointer cityId={cityId} cityName={cityName} />
+
         {/* 5-day forecast strip — same component the homepage uses. */}
         <div style={{ marginTop: 12, marginBottom: 0 }}>
           <ForecastCard homeCity={cityId as City} />
         </div>
 
-        {/* Photo scroll — same curated Flickr marquee as the homepage. */}
+        {/* Photo scroll — same curated Flickr marquee as the homepage, scoped
+            to this city (falls back to the full South Bay pool when the
+            city's tagged photo count is too thin for a seamless loop). */}
         <div style={{ margin: "14px -16px 18px" }}>
-          <PhotoStrip />
+          <PhotoStrip cityFilter={cityId} />
         </div>
 
         {/* ═══ YOUR DAY ═══ */}
@@ -228,6 +235,35 @@ export default function CityPage({ cityId, cityName }: Props) {
   );
 }
 
+
+// ---------------------------------------------------------------------------
+// City Camps Pointer — one-line nudge to /camps, only when this city has a
+// program still open this summer. Colors match CampsView's own "mix it up"
+// tip banner (#fffbeb/#fde68a/#92400e) so the cross-link feels like it comes
+// from the same page it's pointing to, not a bolted-on ad.
+// ---------------------------------------------------------------------------
+
+function CityCampsPointer({ cityId, cityName }: { cityId: string; cityName: string }) {
+  const count = openCampCountForCity(cityId);
+  if (count === 0) return null;
+
+  return (
+    <a
+      href="/camps"
+      style={{
+        display: "flex", alignItems: "center", gap: 8,
+        marginTop: 10, padding: "10px 14px", borderRadius: 8,
+        border: "1px solid #fde68a", background: "#fffbeb",
+        color: "#92400e", textDecoration: "none",
+        fontSize: 13, fontWeight: 600,
+      }}
+    >
+      <span aria-hidden style={{ fontSize: 16, flexShrink: 0 }}>🏕️</span>
+      <span>{count} camp{count === 1 ? "" : "s"} still open in {cityName} this summer</span>
+      <span aria-hidden style={{ marginLeft: "auto", fontWeight: 700, flexShrink: 0 }}>→</span>
+    </a>
+  );
+}
 
 // ── Event Row ──
 
@@ -343,7 +379,7 @@ function PlanLoadingVerb() {
       fontFamily: "'Inter', sans-serif",
       letterSpacing: -0.5, whiteSpace: "nowrap",
     }}>
-      {display}<span style={{ WebkitTextFillColor: "#ccc", animation: "cityPlanBlink 0.8s step-end infinite" }}>|</span>
+      {display}<span aria-hidden="true" style={{ WebkitTextFillColor: "#6b6178", animation: "cityPlanBlink 0.8s step-end infinite" }}>|</span>
       <style>{`
         @keyframes cityPlanRainbow {
           0% { background-position: 0% 50%; }
@@ -428,10 +464,10 @@ function CardInner({ card }: { card: DayCard }) {
           {showEmoji && <span aria-hidden>{emoji}</span>}
         </div>
         {current?.isUnsplash && unsplash && (
-          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#bbb", textAlign: "center" }}>
-            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>{unsplash.photographer}</a>
+          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#6b6178", textAlign: "center" }}>
+            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>{unsplash.photographer}</a>
             {" · "}
-            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#bbb", textDecoration: "none" }}>Unsplash</a>
+            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>Unsplash</a>
           </div>
         )}
       </div>
@@ -441,21 +477,21 @@ function CardInner({ card }: { card: DayCard }) {
             <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
           )}
           {!(card.source === "event" && card.category === "events") && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
           )}
           {card.city && (
             <>
-              <span style={{ fontSize: 9, color: "#ddd", fontWeight: 700 }}>·</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#bbb", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
+              <span style={{ fontSize: 9, color: "#6b6178", fontWeight: 700 }}>·</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
             </>
           )}
-          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#E63946", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
+          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#8738F5", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
         </div>
         <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{card.name}</h3>
         {card.source === "event" && card.venue && (
           <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#999" }}>{card.venue}</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6b6178" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#6b6178" }}>{card.venue}</span>
           </div>
         )}
         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{card.blurb}</p>
@@ -815,7 +851,7 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
                   {p.name}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 4 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#b45309" }}>{ratingLabel}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#92400e" }}>{ratingLabel}</span>
                   <span style={{ fontSize: 10, color: "var(--sb-light)" }}>({ratingCount})</span>
                   {p.displayType && (
                     <>

@@ -383,6 +383,9 @@ function FoodHero() {
       title="Food"
       description="Recent openings, promising buildouts, and farmers markets across the South Bay, edited down so the good leads are easy to scan."
       note={`Health-permit refresh ${updated || "recently"}`}
+      // --sb-coral (#F43F7C) is only ~3.6:1 on the hero background as text —
+      // darkened within the same coral/rose family to #BE123C (~6.3:1) for the kicker.
+      accent="#BE123C"
       stats={[
         { value: openings.opened?.length ?? 0, label: "Recent openings" },
         { value: openings.comingSoon?.length ?? 0, label: "Coming soon" },
@@ -572,7 +575,7 @@ function FoodViewStyles() {
         max-width: 60%; overflow: hidden; text-overflow: ellipsis;
       }
       .food-pill-light { background: rgba(255,255,255,0.95); color: #111; }
-      .food-pill-open  { background: #16a34a; color: #fff; }
+      .food-pill-open  { background: #15803d; color: #fff; }
       .food-pill-soon  { background: #2563eb; color: #fff; }
       .food-tile-bottom {
         position: absolute; left: 12px; right: 12px; bottom: 10px;

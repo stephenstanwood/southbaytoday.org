@@ -79,7 +79,7 @@ const govCityList = govCities
     margin: 6px 0;
     font-size: 11px;
     line-height: 1.4;
-    color: #888;
+    color: #6b6178;
   }
   .sls-label {
     font-family: "Space Mono", monospace;
@@ -89,9 +89,14 @@ const govCityList = govCities
     text-transform: uppercase;
   }
   .sls a {
-    color: #777;
+    color: #6b6178;
     text-decoration: none;
     white-space: nowrap;
+    /* 11px links need a ≥24px touch target (WCAG 2.5.8) — pad the hit area
+       and let the row gaps carry the visual spacing. */
+    display: inline-block;
+    padding: 5px 4px;
+    margin: -3px -2px;
   }
   .sls a:hover {
     color: #1a1a1a;

@@ -174,6 +174,28 @@ const updatedLabel = updatedAt
     })
   : null;
 
+// "More at {venue}" — other upcoming events at the same venue, case-insensitive
+// match, soonest first, capped at 4. Self is excluded by date+title (same key
+// getStaticPaths' dedup uses above), not just object identity, so this still
+// holds if props ever stop being passed by reference.
+const venueTodayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+const upcomingPool = ((upcomingData as { events?: RawEvent[] }).events ?? []).filter(
+  (e) => e.date && e.date >= venueTodayPt && e.time,
+);
+const venueSlugs = buildEventSlugs(upcomingPool);
+const slugByEvent = new Map<RawEvent, string>();
+for (const [slug, e] of venueSlugs) slugByEvent.set(e, slug);
+const eventVenueKey = (event.venue ?? "").trim().toLowerCase();
+const isSelf = (e: RawEvent) => e === event || (e.date === event.date && e.title === event.title);
+const moreAtVenue = eventVenueKey
+  ? upcomingPool
+      .filter((e) => !isSelf(e) && (e.venue ?? "").trim().toLowerCase() === eventVenueKey)
+      .map((e) => ({ event: e, slug: slugByEvent.get(e) }))
+      .filter((x): x is { event: RawEvent; slug: string } => Boolean(x.slug))
+      .sort((a, b) => (a.event.date! < b.event.date! ? -1 : a.event.date! > b.event.date! ? 1 : 0))
+      .slice(0, 4)
+  : [];
+
 const absoluteOgImage = imageUrl
   ? imageUrl.startsWith("http")
     ? imageUrl
@@ -208,6 +230,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     {metaBits.join(" · ")}
     {event.cost === "free" && <span class="cal-chip">Free</span>}
     {event.cost === "paid" && <span class="cal-chip cal-chip--paid">Paid</span>}
+    {event.cost === "low" && <span class="cal-chip cal-chip--low">Low cost</span>}
     {event.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
   </p>
 
@@ -265,6 +288,23 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
       <a class="cal-btn" href={`/events/${event.date}`} data-analytics-event="Related events click">More events this day</a>
     )}
   </div>
+
+  {moreAtVenue.length > 0 && (
+    <div class="cal-more-venue">
+      <h2 class="cal-more-venue-heading">More at {event.venue}</h2>
+      <div class="cal-detail-actions">
+        {moreAtVenue.map(({ event: e, slug }) => (
+          <a class="cal-btn" href={`/event/${slug}`} data-analytics-event="More at venue click">
+            {new Date(`${e.date}T12:00:00Z`).toLocaleDateString("en-US", {
+              timeZone: "UTC",
+              month: "short",
+              day: "numeric",
+            })} · {e.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
 </CalendarShell>
 
 <script>
@@ -283,6 +323,28 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     border-color: #ddd6fe;
     background: #f5f3ff;
     color: #5b21b6;
+  }
+  .cal-chip--low {
+    border-color: #fde68a;
+    background: #fff7ed;
+    color: #92400e;
+  }
+  .cal-more-venue {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-light);
+  }
+  .cal-more-venue-heading {
+    margin: 0 0 10px;
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+  .cal-more-venue .cal-detail-actions {
+    margin-top: 0;
   }
   .cal-passed {
     margin: 0 0 14px;

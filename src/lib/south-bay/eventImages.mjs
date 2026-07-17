@@ -385,13 +385,21 @@ function recraftPrompt(event) {
 }
 
 async function generateRecraft(event) {
-  const { generateRecraftImage, uploadToBlob } = await import(
+  const { generateRecraftImage, resizeAndUploadToBlob } = await import(
     /* vite-ignore */ "../../../scripts/social/lib/recraft.mjs"
   );
   const prompt = recraftPrompt(event);
   const { buffer } = await generateRecraftImage({ prompt, size: "3:2" });
   const slug = fingerprint(event).replace(/\|/g, "-");
-  const url = await uploadToBlob(buffer, `event-images/${slug}-${Date.now()}.png`);
+  // Card thumbnails render at ~112x151 — 280x180 (3:2, matching the source
+  // aspect) lossy webp q80 is generous headroom vs. Recraft's lossless
+  // ~1280x832 source, and fixes the mislabeled image/png content-type on
+  // the old raw-PNG-pathname uploads (D46).
+  const { url } = await resizeAndUploadToBlob(buffer, `event-images/${slug}-${Date.now()}-280.webp`, {
+    width: 280,
+    height: 180,
+    fit: "cover",
+  });
   return url;
 }
 

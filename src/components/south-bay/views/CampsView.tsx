@@ -54,13 +54,13 @@ const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
 ];
 
 const TYPE_COLORS: Record<CampType, string> = {
-  general:   "#6b7280",
+  general:   "#565f6e",
   sports:    "#1d4ed8",
   arts:      "#9333ea",
   stem:      "#0369a1",
-  nature:    "#15803d",
-  specialty: "#b45309",
-  academic:  "#b45309",
+  nature:    "#0f6b33",
+  specialty: "#92400e",
+  academic:  "#92400e",
 };
 
 const ALL_ORG_TYPES: { id: string; label: string }[] = [
@@ -1011,6 +1011,7 @@ export default function CampsView() {
         title="Summer Camps"
         description="A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
         note={`Links verified ${verifiedDisplay}`}
+        accent="#B45309"
         stats={[
           { value: CAMPS.length, label: "Programs" },
           { value: SUMMER_WEEKS.length, label: "Summer weeks" },

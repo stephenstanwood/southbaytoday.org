@@ -313,7 +313,7 @@ export const GET: APIRoute = async ({ params, url }) => {
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sb-bg: #FAF9F6; --sb-ink: #1A1A1A; --sb-muted: #555; --sb-light: #888;
+    --sb-bg: #FAF9F6; --sb-ink: #1A1A1A; --sb-muted: #555; --sb-light: #6b6178;
     --sb-border: #C8C4BC;
     --sb-serif: 'Playfair Display', Georgia, serif;
     --sb-sans: 'Inter', system-ui, sans-serif;

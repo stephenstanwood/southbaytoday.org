@@ -7,6 +7,8 @@ interface Props {
   title?: string;
   description?: string;
   initialTab?: Tab;
+  /** absolute URL for og:image / twitter:image (defaults to the site card) */
+  ogImage?: string;
 }
 
 // The app shell server-renders at build time (client:load) on every page,
@@ -18,14 +20,15 @@ const {
   title = "The South Bay Today",
   description = "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San José, Palo Alto, and six more South Bay cities.",
   initialTab,
+  ogImage,
 } = Astro.props;
 ---
 
 <BaseLayout
   title={title}
   description={description}
+  ogImage={ogImage}
   themeColor="#F7F8FA"
-  fontsUrl="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Permanent+Marker&display=swap"
 >
   <Fragment slot="head">
     <style is:global>
@@ -110,6 +113,11 @@ const {
       .sb-logo-the { font-family: var(--sb-serif); font-weight: 400; font-style: italic; font-size: 18px; color: var(--sb-ink); }
       .sb-logo-south-bay { font-family: var(--sb-serif); font-weight: 900; font-size: 40px; line-height: 1; color: var(--sb-ink); letter-spacing: -0.01em; }
       .sb-logo-signal-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+      /* House "day arc" motif — the warm-to-cool sunset → coral → accent → teal
+         gradient, canonically defined here under the masthead logo. Reused
+         verbatim (same stop order) on .sb-nav's bottom rule and .sb-footer's
+         top rule below; new chrome accents should reuse this exact sequence
+         rather than inventing another gradient. */
       .sb-logo-signal-rule { flex: 1; height: 2px; background: linear-gradient(90deg, var(--sb-sunset), var(--sb-coral), var(--sb-accent), var(--sb-teal)); opacity: 0.8; }
       .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sb-accent); }
       .sb-date {
@@ -140,6 +148,19 @@ const {
         position: sticky;
         top: 0;
         z-index: 99;
+      }
+      /* Day-arc motif reuse (see .sb-logo-signal-rule) — an overlay so it
+         adds no height on top of the existing border-bottom. */
+      .sb-nav::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--sb-sunset), var(--sb-coral), var(--sb-accent), var(--sb-teal));
+        opacity: 0.55;
+        pointer-events: none;
       }
       .sb-nav-inner {
         max-width: var(--sb-max-width);
@@ -989,7 +1010,11 @@ const {
         max-width: 760px;
       }
       .sb-page-kicker {
-        color: var(--sb-muted);
+        /* Per-section accent (S03): PageHero sets --sb-hero-accent inline
+           when its optional `accent` prop is passed; falls back to the
+           shared muted tone otherwise (EventsView's plain PageHero usage
+           is unaffected). */
+        color: var(--sb-hero-accent, var(--sb-muted));
         font-family: 'Space Mono', monospace;
         font-size: 10px;
         font-weight: 800;
@@ -3193,6 +3218,7 @@ const {
 
       /* ── Footer ── */
       .sb-footer {
+        position: relative;
         max-width: var(--sb-max-width);
         margin: 0 auto;
         padding: 22px 24px 18px;
@@ -3201,6 +3227,19 @@ const {
         color: var(--sb-light);
         border-top: 3px double var(--sb-border);
         letter-spacing: 0.02em;
+      }
+      /* Day-arc motif reuse (see .sb-logo-signal-rule) — overlay on the
+         existing double border-top, adds no height. */
+      .sb-footer::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--sb-sunset), var(--sb-coral), var(--sb-accent), var(--sb-teal));
+        opacity: 0.55;
+        pointer-events: none;
       }
       @media (max-width: 560px) {
         .sb-footer { padding: 18px 16px 14px; }
@@ -3249,16 +3288,8 @@ const {
         .sb-filters { padding: 10px 16px; }
         .sb-main { padding: 20px 16px; }
         .sb-page-title { font-size: 34px; }
-        .sb-page-stats {
-          grid-template-columns: 1fr;
-        }
-        .sb-page-stat {
-          border-left: none;
-          border-top: 1px solid var(--sb-border-light);
-        }
-        .sb-page-stat:first-child {
-          border-top: none;
-        }
+        /* Stat-band collapse moved to the dedicated 680px block below (S08)
+           so it wins the cascade at these narrower widths too. */
         .sb-section-title { font-size: 18px; }
         .sb-games-grid { grid-template-columns: 1fr; }
         .sb-overview-grid { grid-template-columns: 1fr; }
@@ -3361,6 +3392,31 @@ const {
       @media (max-width: 680px) {
         .sb-main {
           padding-bottom: calc(84px + env(safe-area-inset-bottom));
+        }
+
+        /* S08: compress the PageHero stat band into a tighter 2-up grid
+           (instead of stacking every stat full-width) and tighten hero
+           padding, so a real listing/card clears the fold sooner on phones.
+           Row boundary is nth-child(n+3) so this reads correctly whether a
+           section has 3 stats (Government, Food) or 4 (Camps, Technology). */
+        .sb-page-hero {
+          gap: 14px;
+          padding-bottom: 16px;
+        }
+        .sb-page-stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .sb-page-stat {
+          padding: 10px 12px;
+        }
+        .sb-page-stat:nth-child(odd) {
+          border-left: none;
+        }
+        .sb-page-stat:nth-child(n+3) {
+          border-top: 1px solid var(--sb-border-light);
+        }
+        .sb-page-stat strong {
+          font-size: 21px;
         }
       }
     </style>

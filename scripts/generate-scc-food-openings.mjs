@@ -676,7 +676,7 @@ async function generateFallbackImages(items) {
   }
 
   const prompts = await generateRecraftPrompts(fresh);
-  const { generateAndUpload } = await import("./social/lib/recraft.mjs");
+  const { generateAndUploadResized } = await import("./social/lib/recraft.mjs");
 
   console.log(`  Recraft fallbacks: ${cachedHits.length} cached, generating ${fresh.length} new…`);
   for (const item of fresh) {
@@ -687,10 +687,13 @@ async function generateFallbackImages(items) {
     let url = null;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        const result = await generateAndUpload({
+        // /#food tiles display at 217x162 (FoodTile) — 450x340 lossy webp q80
+        // is generous headroom vs. Recraft's lossless ~1MB+ source (D45).
+        const result = await generateAndUploadResized({
           prompt: fullPrompt,
-          pathname: `food-tiles/${item.sourceId}.png`,
-          size: "1024x1024",
+          pathname: `food-tiles/${item.sourceId}-450.webp`,
+          width: 450,
+          height: 340,
         });
         url = result.url;
         break;
