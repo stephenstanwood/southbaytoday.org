@@ -28,6 +28,18 @@ export const PILLAR_BUCKET_BY_MEAL: Partial<Record<Bucket, PillarBucket>> = {
 export const MEAL_PAIR_PREFERRED_MILES = 3;
 export const MEAL_PAIR_MAX_MILES = 5;
 
+/** Claude may exercise taste among comparably strong finalists, but cannot
+ * override a material deterministic quality gap. */
+export function isWithinQualityBand(
+  candidateScore: number,
+  bestAvailableScore: number,
+  maxGap: number,
+): boolean {
+  return Number.isFinite(candidateScore) &&
+    Number.isFinite(bestAvailableScore) &&
+    candidateScore >= bestAvailableScore - maxGap;
+}
+
 export interface PairCoordinates {
   lat?: number | null;
   lng?: number | null;

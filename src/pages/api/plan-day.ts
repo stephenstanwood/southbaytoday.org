@@ -32,7 +32,7 @@ import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.m
 import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
-import { isMarqueeEvent, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
+import { isMarqueeEvent, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
 import {
   type Bucket,
   BUCKET_LABELS,
@@ -48,6 +48,7 @@ import {
   MEAL_PAIR_MAX_MILES,
   dayPlanPairingIssues,
   dominantPillarCity,
+  isWithinQualityBand,
   rankNearbyMeals,
   type PillarBucket,
 } from "../../lib/south-bay/dayPlanPairs";
@@ -143,6 +144,7 @@ interface Candidate {
   newlyOpened?: boolean;
   foodDistinctiveness?: number;
   marquee?: boolean;
+  routinePenalty?: number;
   source: "event" | "place";
   eventDate?: string;
   eventTime?: string | null;
@@ -206,6 +208,8 @@ const PERMANENT_NAME_BLOCKLIST = new Set<string>([
 const PILLAR_EVENT_OPTIONS_PER_BUCKET = 12;
 const PILLAR_PLACE_OPTIONS_PER_BUCKET = 8;
 const PILLAR_OPTIONS_PER_BUCKET = PILLAR_EVENT_OPTIONS_PER_BUCKET + PILLAR_PLACE_OPTIONS_PER_BUCKET;
+const PILLAR_MODEL_MAX_SCORE_GAP = 10;
+const MEAL_MODEL_MAX_PAIRING_GAP = 7;
 const MEAL_OPTIONS_PER_PILLAR = 5;
 const REGIONAL_WEATHER_CITY: City = "campbell";
 
@@ -669,12 +673,12 @@ function scoreCandidates(
       // A dated occurrence is the strongest evidence that something is
       // exceptional *today*. Ongoing exhibitions remain eligible, but they do
       // not get to outrank a strong one-day event just for being an event.
-      score += c.ongoing ? 18 : 32;
-      if (c.eventDate === planIso) score += 24;
-      if (c.eventTime) score += 5;
-      if (c.marquee) score += 38;
+      score += c.ongoing ? 16 : 24;
+      if (c.eventDate === planIso) score += 20;
+      if (c.eventTime) score += 4;
+      if (c.marquee) score += 42;
       score -= titleQualityPenalty(c.name);
-      score -= routineEventPenalty(c);
+      score -= c.routinePenalty ?? routineEventPenalty(c);
       if ((c.blurb || c.description || "").trim().length >= 70) score += 5;
       if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
       if (holidayHasKeywords && c.eventDate === planIso) {
@@ -826,6 +830,20 @@ function buildCandidatePool(
     // Hard skip: kids-mode events flagged kidFriendly:false.
     if (kids && evt.kidFriendly === false) continue;
 
+    // Some source feeds label caregiver-and-child programming as "all ages."
+    // An adult plan explicitly means no kids are present, so these are not
+    // merely weak picks — the reader cannot meaningfully attend them.
+    if (!kids && requiresChildToAttend(evt)) {
+      logDecision({
+        script: "plan-day",
+        action: "dropped",
+        target: `${evt.title} (event:${evt.id})`,
+        reason: "requires a baby or young child in adult mode",
+        meta: { city, targetDate: today },
+      });
+      continue;
+    }
+
     if (kids && evt.title && /\b(parents?|caregivers?|adults?\s+only|seniors?|memoir|estate planning|tax\s+(prep|help)|investing|retirement|widow|grief|alzheimer|dementia|book club for adults|esl)\b/i.test(evt.title)) {
       logDecision({
         script: "plan-day",
@@ -860,6 +878,7 @@ function buildCandidatePool(
     }
 
     const eventLocation = locationForEvent(evt);
+    const routinePenalty = routineEventPenalty(evt);
     candidates.push({
       id: `event:${evt.id}`,
       name: cleanDisplayName(evt.title),
@@ -880,6 +899,7 @@ function buildCandidatePool(
       lng: eventLocation.lng,
       locationPrecision: eventLocation.precision,
       marquee: isMarqueeEvent(evt),
+      routinePenalty,
       source: "event",
       eventDate: evt.date,
       eventTime: evt.time,
@@ -1171,6 +1191,7 @@ function activityLine(candidate: Candidate, dayKey: DayKey): string {
   if (candidate.source === "event") {
     parts.push(candidate.ongoing ? "signal: ongoing exhibition" : "signal: EVENT TODAY");
     if (candidate.marquee) parts.push("signal: MARQUEE");
+    if ((candidate.routinePenalty || 0) >= 30) parts.push("signal: routine community programming");
     if (candidate.eventTime) {
       const time = candidate.eventEndTime
         ? `${candidate.eventTime}–${candidate.eventEndTime}`
@@ -1522,9 +1543,21 @@ OUTPUT — JSON array only:
     const lockedMeal = preferredLockedMeal(lockedCandidates, mealBucket);
     const modelPick = pickByBucket.get(bucket);
 
+    const optionHasAvailableMeal = (entry: PillarOption) =>
+      entry.meals.some((meal) => !usedMeals.has(meal.candidate.id));
+    const bestAvailableOption = options.find((entry) =>
+      !usedPillars.has(entry.candidate.id) && optionHasAvailableMeal(entry));
+    const modelOption = options.find((entry) =>
+      entry.candidate.id === modelPick?.pillarId && optionHasAvailableMeal(entry));
     let option = lockedPillar
       ? options.find((entry) => entry.candidate.id === lockedPillar.id)
-      : options.find((entry) => entry.candidate.id === modelPick?.pillarId);
+      : modelOption && bestAvailableOption && isWithinQualityBand(
+          modelOption.bucketScore,
+          bestAvailableOption.bucketScore,
+          PILLAR_MODEL_MAX_SCORE_GAP,
+        )
+        ? modelOption
+        : undefined;
     if (lockedPillar && !option) {
       throw new Error(`Locked ${bucket} activity ${lockedPillar.name} has no valid ${mealBucket} within ${MEAL_PAIR_MAX_MILES} miles`);
     }
@@ -1542,13 +1575,22 @@ OUTPUT — JSON array only:
     }
     if (!option || usedPillars.has(option.candidate.id)) {
       if (lockedPillar || lockedMeal) throw new Error(`Locked choice for ${bucket}/${mealBucket} conflicts with another pair`);
-      option = options.find((entry) => !usedPillars.has(entry.candidate.id));
+      option = options.find((entry) =>
+        !usedPillars.has(entry.candidate.id) && optionHasAvailableMeal(entry));
     }
     if (!option) throw new Error(`Could not choose a unique ${bucket} pillar`);
 
+    const bestAvailableMeal = option.meals.find((entry) => !usedMeals.has(entry.candidate.id));
+    const modelMeal = option.meals.find((entry) => entry.candidate.id === modelPick?.mealId && !usedMeals.has(entry.candidate.id));
     let meal = lockedMeal
       ? option.meals.find((entry) => entry.candidate.id === lockedMeal.id)
-      : option.meals.find((entry) => entry.candidate.id === modelPick?.mealId && !usedMeals.has(entry.candidate.id));
+      : modelMeal && bestAvailableMeal && isWithinQualityBand(
+          modelMeal.pairingScore,
+          bestAvailableMeal.pairingScore,
+          MEAL_MODEL_MAX_PAIRING_GAP,
+        )
+        ? modelMeal
+        : undefined;
     if (!meal || usedMeals.has(meal.candidate.id)) {
       if (lockedMeal) throw new Error(`Locked ${mealBucket} ${lockedMeal.name} conflicts with another pair`);
       meal = option.meals.find((entry) => !usedMeals.has(entry.candidate.id));
