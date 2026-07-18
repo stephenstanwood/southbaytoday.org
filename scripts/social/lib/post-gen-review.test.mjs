@@ -66,6 +66,32 @@ function fullPlan(overrides = []) {
   return base;
 }
 
+function pairedBucketPlan(cities = ["san-jose", "santa-clara", "sunnyvale"]) {
+  const specs = [
+    ["morning", "breakfast", "Museum", "Bakery"],
+    ["afternoon", "lunch", "Garden", "Lunch Spot"],
+    ["evening", "dinner", "Concert", "Dinner Spot"],
+  ];
+  const cards = [];
+  specs.forEach(([pillarBucket, mealBucket, pillarTitle, mealTitle], index) => {
+    const city = cities[index] || cities[0];
+    const pillar = makeCard({ title: pillarTitle, city, category: "arts" });
+    const meal = makeCard({ title: mealTitle, city, category: "food" });
+    pillar.id = `pillar-${pillarBucket}`;
+    pillar.bucket = pillarBucket;
+    pillar.role = "pillar";
+    pillar.pairedWithId = `meal-${mealBucket}`;
+    meal.id = `meal-${mealBucket}`;
+    meal.bucket = mealBucket;
+    meal.role = "paired-meal";
+    meal.pairedWithId = pillar.id;
+    meal.pairDistanceMiles = 1.5;
+    meal.pairLocationPrecision = "exact";
+    cards.push(pillar, meal);
+  });
+  return cards;
+}
+
 // ── tests ────────────────────────────────────────────────────────────────
 
 test("terminology fix: Aids → AIDS", () => {
@@ -199,19 +225,43 @@ test("day-plan starting after 11 AM is flagged", () => {
   assert.ok(flagged.some(f => /starts too late/.test(f.reason)), "expected 'starts too late'");
 });
 
-test("city sprawl (≥5 cities) is flagged", () => {
+test("pillar cities may differ when each meal stays with its pillar", () => {
   const date = "2026-05-10";
-  const cities = ["san-jose", "santa-clara", "sunnyvale", "mountain-view", "palo-alto"];
-  const cards = cities.map((c, i) => makeCard({
-    title: `Stop ${i}`,
-    city: c,
-    timeBlock: `${9 + i * 2}:00-${10 + i * 2}:00`,
-  }));
-  // Pad to 6 so thin-plan doesn't fire
-  cards.push(makeCard({ title: "Evening", timeBlock: "20:00-22:00", city: cities[0] }));
+  const cards = pairedBucketPlan(["san-jose", "mountain-view", "los-gatos"]);
+  const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards) } });
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  assert.ok(!flagged.some(f => /driving|pillar pairs/.test(f.reason)), JSON.stringify(flagged));
+});
+
+test("historical bucket plans are not retroactively treated as pillar pairs", () => {
+  const date = "2026-05-10";
+  const buckets = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+  const cards = buckets.map((bucket) => ({ ...makeCard({ title: bucket }), bucket }));
   const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards, { status: "approved" }) } });
   const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
-  assert.ok(flagged.some(f => /too much driving/.test(f.reason)), "expected sprawl flag");
+  assert.ok(!flagged.some((f) => /invalid pillar pairs/.test(f.reason)), JSON.stringify(flagged));
+});
+
+test("meal beyond the pair radius is hard-blocked", () => {
+  const date = "2026-05-10";
+  const cards = pairedBucketPlan();
+  cards.find((card) => card.bucket === "lunch").pairDistanceMiles = 6.2;
+  const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards) } });
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  const hit = flagged.find((f) => /invalid pillar pairs/.test(f.reason));
+  assert.ok(hit, "expected pair-integrity flag");
+  assert.ok(hit.hardBlock, "expected hardBlock=true");
+});
+
+test("approved plans cannot bypass pair integrity", () => {
+  const date = "2026-05-10";
+  const cards = pairedBucketPlan();
+  cards.find((card) => card.bucket === "breakfast").pairedWithId = "wrong-pillar";
+  const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards, { status: "approved" }) } });
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  const hit = flagged.find((f) => /invalid pillar pairs/.test(f.reason));
+  assert.ok(hit, "expected approved pair-integrity flag");
+  assert.ok(hit.hardBlock, "expected hardBlock=true");
 });
 
 test("spa frequency cap: 3 consecutive spa plans → 2 removed", () => {

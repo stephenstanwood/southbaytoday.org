@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// National/commodity chain detection for editorial surfaces.
+// Chain detection and editorial-interest signals for recommendation surfaces.
 //
 // The day-plan "field guide" and newsletter are supposed to read like a local
 // friend's picks — a Peet's or an Elements Massage as a recommended stop reads
@@ -9,9 +9,9 @@
 // entries because Google text search returns them; there is no chain flag in
 // the data, so we detect by brand name here.
 //
-// Scope: commodity brands nobody needs a local briefing to discover. Leave
-// borderline "destination" chains (e.g. Topgolf, Somi Somi) alone — under-block
-// rather than strip anything someone might genuinely plan a stop around.
+// Scope: identify commodity brands nobody needs a local briefing to discover,
+// then require a branch-specific interest signal downstream. Borderline
+// destination chains (e.g. Topgolf, Somi Somi) remain outside the detector.
 // ---------------------------------------------------------------------------
 
 const CHAIN_PATTERNS = [
@@ -65,12 +65,53 @@ function normalizeForChainMatch(name) {
 }
 
 /**
- * True if a place name reads as a national/commodity chain that has no
- * business being an editorial "field guide" pick. Events HOSTED at a chain
- * are not this function's concern — only place recommendations.
+ * True if a place name reads as a national/commodity chain. Detection is not
+ * a blanket ban: an individual branch can still qualify when it is new,
+ * distinctive, unusually well-regarded, or backed by a real editorial note.
+ * Events HOSTED at a chain are not this function's concern.
  */
 export function isNationalChain(name) {
   const n = normalizeForChainMatch(name);
   if (!n) return false;
   return CHAIN_PATTERNS.some((re) => re.test(n));
+}
+
+const LOCATION_SUFFIXES = [
+  "campbell", "cupertino", "los altos", "los gatos", "milpitas",
+  "mountain view", "palo alto", "san jose", "santa clara", "saratoga",
+  "sunnyvale", "willow glen", "downtown",
+];
+
+/** Normalize location-suffixed names so local multi-location brands count as
+ * one family ("Aqui Campbell" / "Aqui Cupertino", "Bill's Cafe - Willow"). */
+export function chainBrandKey(name) {
+  let value = String(name || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[‘’']/g, "'")
+    .replace(/\s+[-–—]\s+.*$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  for (const suffix of LOCATION_SUFFIXES) {
+    if (value.endsWith(` ${suffix}`)) {
+      value = value.slice(0, -(suffix.length + 1)).trim();
+      break;
+    }
+  }
+  return value.replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+/** Why a specific chain branch earns editorial consideration. An empty list
+ * means it is just a convenient generic branch and should not be a pick. */
+export function chainInterestReasons(place = {}) {
+  const reasons = [];
+  if (place.newlyOpened === true) reasons.push("verified new opening");
+  if (Number(place.foodDistinctiveness || 0) >= 6) reasons.push("distinctive format or cuisine");
+  if ((place.category || "food") === "food" && Number(place.rating || 0) >= 4.6 && Number(place.ratingCount || 0) >= 500) {
+    reasons.push("standout branch reputation");
+  }
+  const note = String(place.blurb || place.description || "").trim();
+  if (place.curated === true && note.length >= 70) reasons.push("specific editorial note");
+  return reasons;
 }

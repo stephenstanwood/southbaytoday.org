@@ -12,6 +12,21 @@ import {
 
 const BLOCKED_UNSPLASH = "https://images.unsplash.com/photo-1585899873671-ade0aa28a821?crop=entropy&w=400";
 
+function pairedPlanCards() {
+  return [
+    ["morning", "breakfast", "Morning Activity", "Breakfast Place"],
+    ["afternoon", "lunch", "Afternoon Activity", "Lunch Place"],
+    ["evening", "dinner", "Evening Activity", "Dinner Place"],
+  ].flatMap(([pillarBucket, mealBucket, pillarName, mealName]) => {
+    const pillarId = `pillar:${pillarBucket}`;
+    const mealId = `meal:${mealBucket}`;
+    return [
+      { id: pillarId, name: pillarName, bucket: pillarBucket, role: "pillar", pairedWithId: mealId, source: "place", city: "san-jose" },
+      { id: mealId, name: mealName, bucket: mealBucket, role: "paired-meal", pairedWithId: pillarId, pairDistanceMiles: 1.2, pairLocationPrecision: "exact", source: "place", city: "san-jose" },
+    ];
+  });
+}
+
 test("newsletter drops a temporarily unavailable place from a stale plan", () => {
   const plan = makeNewsletterPlan({
     city: "santa-clara",
@@ -23,6 +38,43 @@ test("newsletter drops a temporarily unavailable place from a stale plan", () =>
   }, "2026-07-16");
 
   assert.deepEqual(plan.cards.map((card) => card.id), ["place:open-place", "event:evening"]);
+});
+
+test("newsletter rejects an invalid pillar-pairs plan instead of dropping half a pair", () => {
+  const cards = pairedPlanCards();
+  cards.find((card) => card.bucket === "lunch").pairDistanceMiles = 7;
+  const plan = makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards }, "2026-07-18");
+  assert.equal(plan, null);
+});
+
+test("newsletter allows only chain branches with an explicit interest signal", () => {
+  const generic = pairedPlanCards();
+  generic.find((card) => card.bucket === "breakfast").name = "Peet's Coffee";
+  assert.equal(makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards: generic }, "2026-07-18"), null);
+
+  const interesting = pairedPlanCards();
+  const breakfast = interesting.find((card) => card.bucket === "breakfast");
+  breakfast.name = "Peet's Coffee";
+  breakfast.interestingChain = true;
+  breakfast.chainInterestReasons = ["verified new opening"];
+  assert.ok(makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards: interesting }, "2026-07-18"));
+});
+
+test("newsletter renders each activity pick before its nearby meal", () => {
+  const { html } = renderEmail({
+    date: "2026-07-18",
+    longDate: "Saturday, July 18, 2026",
+    weather: null,
+    dayPlan: { selectionModel: "pillar-pairs-v1", cards: pairedPlanCards() },
+    dayPlanBlurb: "Three strong pairings.",
+    tonightPick: null,
+    tonightPickBlurb: "",
+    todayEvents: [], featuredEvents: [], recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  });
+  assert.ok(html.indexOf("Morning pick") < html.indexOf("Breakfast nearby"));
+  assert.ok(html.indexOf("Afternoon pick") < html.indexOf("Lunch nearby"));
+  assert.match(html, /Three standout picks for today/);
 });
 
 test("current-day newsletters reject a stale event feed", () => {

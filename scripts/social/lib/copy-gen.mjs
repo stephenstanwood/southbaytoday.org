@@ -555,31 +555,31 @@ export async function generateDayPlanCopy(plan, dateStr, planUrl) {
     return parts.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
   }).join(", ");
 
-  // Bucket-style: group stops by bucket label so the post reads as
-  // "Breakfast: X, Morning: Y..." instead of an hour-by-hour schedule.
-  const BUCKET_LABEL = {
-    breakfast: "Breakfast",
-    morning: "Morning",
-    lunch: "Lunch",
-    afternoon: "Afternoon",
-    dinner: "Dinner",
-    evening: "Evening",
-  };
-  const ORDER = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+  // Pillar-first: each activity is primary and its meal is a nearby companion.
+  const PAIRS = [
+    ["Morning pick", "morning", "Breakfast nearby", "breakfast"],
+    ["Afternoon pick", "afternoon", "Lunch nearby", "lunch"],
+    ["Evening pick", "evening", "Dinner nearby", "dinner"],
+  ];
   const byBucket = new Map();
   for (const c of plan.cards) {
     if (c.bucket && !byBucket.has(c.bucket)) byBucket.set(c.bucket, c);
   }
   let stopsText = "";
   const allMentions = [];
-  if (byBucket.size > 0) {
-    for (const b of ORDER) {
-      const card = byBucket.get(b);
-      if (!card) continue;
-      const label = BUCKET_LABEL[b] || b;
-      stopsText += `- ${label}: ${card.name}\n  ${(card.blurb || "").slice(0, 100)}\n`;
-      const m = mentionInstructions({ venue: card.name, title: card.name });
-      if (m) allMentions.push(m);
+  const hasPairs = PAIRS.every(([, pillarBucket, , mealBucket]) => byBucket.has(pillarBucket) && byBucket.has(mealBucket));
+  if (hasPairs) {
+    for (const [pillarLabel, pillarBucket, mealLabel, mealBucket] of PAIRS) {
+      const pillar = byBucket.get(pillarBucket);
+      const meal = byBucket.get(mealBucket);
+      const chainInterest = meal.interestingChain && meal.chainInterestReasons?.length
+        ? `\n  Why this chain branch qualifies: ${meal.chainInterestReasons.join(", ")}`
+        : "";
+      stopsText += `- ${pillarLabel}: ${pillar.name}\n  ${(pillar.blurb || "").slice(0, 100)}\n  ${mealLabel}: ${meal.name}\n  ${(meal.blurb || "").slice(0, 100)}${chainInterest}\n`;
+      for (const card of [pillar, meal]) {
+        const m = mentionInstructions({ venue: card.name, title: card.name });
+        if (m) allMentions.push(m);
+      }
     }
   } else {
     // Legacy timeBlock cards.
@@ -594,23 +594,23 @@ export async function generateDayPlanCopy(plan, dateStr, planUrl) {
   const mentionBlock = uniqueMentions.length > 0 ? uniqueMentions.join("\n") : "";
 
   const url = planUrl || `https://southbaytoday.org`;
-  const slotCount = byBucket.size > 0 ? byBucket.size : plan.cards.length;
-  const slotWord = byBucket.size > 0 ? "ideas" : "stops";
+  const planShape = hasPairs ? "three activity/meal pairs" : `${plan.cards.length} ideas`;
 
-  const prompt = `Write a social post for South Bay Today's daily DAY-PLAN signature slot for ${dayName}. The plan is six "idea sparks" the reader can pick from — breakfast, morning, lunch, afternoon, dinner, evening. NOT a tick-tock schedule. Frame it as a brainstorm of ideas.
+  const prompt = `Write a social post for South Bay Today's daily DAY-PLAN signature slot for ${dayName}. The plan starts with the three strongest activities available: one morning, one afternoon, and one evening. Each has a nearby meal companion. These are three independent pairings, not a six-stop route or a tick-tock schedule.
 
 DAY: ${dayName}, ${date.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
 CITIES: ${cityDisplay}
 
-THE IDEAS (one per bucket):
+THE THREE PAIRS:
 ${stopsText}
 
 URL FOR BLUESKY/MASTODON ONLY: ${url}
 ${mentionBlock}
 
-NEVER frame this as a strict schedule ("9 AM: ...", "head to X at 11"). It's a menu of ideas. Use phrasing like "ideas for ${dayName}", "here's a day", "pick what sounds good". Some readers might do all six, some none. Don't promise specific times.
+Lead with the activity picks; meals are secondary nearby suggestions. Never frame this as a strict schedule or imply that the three cities form a route. Readers can choose one pair, two, or all three. Don't promise specific times.
+If a meal is a chain, mention it only through the supplied branch-specific reason it earned the pick; never sell a familiar brand as convenient filler.
 
-This is ${slotCount} ${slotWord}. Write seven main variants — each NATIVE to its platform (don't translate):
+This is ${planShape}. Write seven main variants — each NATIVE to its platform (don't translate):
 
 1. X (max 240 chars, NO URL, no hashtags) — punchy hook, name 1-2 ideas by bucket. Tag X @handles if provided. The publisher adds the link in a self-reply.
 
@@ -628,17 +628,17 @@ This is ${slotCount} ${slotWord}. Write seven main variants — each NATIVE to i
 
 ALSO write an X poll variant. The publisher uses this on every ~3rd day-plan publish to drive engagement (polls boost X reach 2-3x and force a pick-one commitment from followers).
 
-8. pollX — an object: { text: string ≤200 chars, options: string[] of exactly 4 entries each ≤25 chars }. The "text" is the poll question — short, punchy, no hashtags, no URL ("Wednesday in San Jose — pick your move?" / "${dayName} energy check?"). The "options" are 4 of the 6 ideas above, condensed to ≤25 chars each. Use short clear labels — pick the bucket label + a single key noun: "Breakfast: Bill's", "Hike: Rancho", "Live music: Cafe Stritch", "Dinner: Aqui". Choose 4 with the most distinct vibes so people actually have a choice.
+8. pollX — an object: { text: string ≤200 chars, options: string[] of exactly 4 entries each ≤25 chars }. The "text" is the poll question, short and punchy, with no hashtags or URL. Use the three activity pillars as the first three options; the fourth can be the most distinctive meal. Keep each label concrete and ≤25 chars.
 
 ALSO write Pinterest-specific copy. Pinterest is a VISUAL SEARCH ENGINE with a 6-month tail per pin — completely different model from feed-based platforms. Write the title like a SEARCH a Pinterest user would type, not like a social post.
 
-9. pinterestTitle (max 100 chars) — Title Case, search-keyword-optimized. Lead with the search hook. Examples of the SHAPE we want: "Things to Do in San Jose This Weekend", "${dayName} Day Plan in ${cityDisplay || "the South Bay"}", "South Bay Itinerary With Kids", "Where to Go in Cupertino on a ${dayName}". NO @-mentions, NO emoji, NO URL. Use the lead city.
+9. pinterestTitle (max 100 chars) — Title Case, search-keyword-optimized. Lead with the regional search hook, such as "Things to Do in the South Bay on ${dayName}". NO @-mentions, NO emoji, NO URL. Do not pretend one city anchors the whole guide.
 
 10. pinterestDescription (max 500 chars) — 2-4 sentences expanding the title for Pinterest's search index. Tell the searcher what they'll find. Conversational but search-rich (repeat city names, mention bucket labels — "breakfast," "trail," "dinner"). End with a line break + 4-6 search hashtags (#SanJose #ThingsToDoInSanJose #SouthBay #BayAreaTravel etc). NO URL (Pinterest passes the URL separately).
 
 ALSO write a seedReply — fires as a +30s reply on X/Threads after the parent goes live, before the link self-reply lands at 2.5min. The point is to add ONE more piece of useful content (and a small algo nudge from author-engagement), not to repeat the parent or sell anything.
 
-11. seedReply (max 260 chars, NO URL, NO hashtags, NO CTA) — one sentence that picks the standout of the six ideas above and says why in plain language. Examples of the SHAPE we want: "If you only have time for one of these, the afternoon Quicksilver hike is the move — the spring wildflowers are at peak right now." / "Real talk: the dinner pick at Aqui is the one I'd build the rest of the day around — best margaritas in Campbell, period." Editorial voice (a local would say this), no marketing tone, no "check it out", no link, no @-handles.
+11. seedReply (max 260 chars, NO URL, NO hashtags, NO CTA) — one sentence that picks the standout ACTIVITY pillar and says why in plain language. Editorial voice (a local would say this), no marketing tone, no "check it out", no link, no @-handles.
 
 LINK RULE — re-read: no URL anywhere in X, Threads, Facebook, Instagram, Email, pollX, pinterestTitle, pinterestDescription, seedReply.
 

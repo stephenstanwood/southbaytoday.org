@@ -14,6 +14,7 @@ import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../s
 import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { isMarqueeEvent, routineEventPenalty, titleQualityPenalty } from "../../src/lib/south-bay/editorialQuality.mjs";
 import { isVerifiedOpeningRecord } from "../lib/scc-food-openings.mjs";
 
 loadEnvLocal();
@@ -313,26 +314,40 @@ export async function assembleNewsletterData(date, opts = {}) {
 
 export function makeNewsletterPlan(plan, date, { validEventIds = null } = {}) {
   if (!plan?.cards?.length) return null;
-  // Defense-in-depth against bad picks: plan generation excludes chains and
-  // editorial availability overrides, but default-plans.json can be a day
-  // stale. Drop them again at render rather than email them.
+  const isPairPlan = plan.selectionModel === "pillar-pairs-v1" || plan.cards.some((card) => card.role);
+  // Defense-in-depth against bad picks: generic chain branches are excluded,
+  // while branches that generation marked interesting remain eligible.
+  // Legacy plans can lose a card; a pillar-pairs plan is atomic and must be
+  // rejected whole rather than quietly severing a meal relationship.
+  const rejectedCards = [];
   const cards = plan.cards.filter((c) => {
-    if (isNationalChain(c.name)) {
-      console.warn(`⚠️  newsletter: dropping chain day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+    if (isNationalChain(c.name) && c.interestingChain !== true) {
+      rejectedCards.push({ card: c, reason: "generic chain branch" });
       return false;
     }
     if (isPlaceTemporarilyUnavailable(c)) {
-      console.warn(`⚠️  newsletter: dropping unavailable day-plan card "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+      rejectedCards.push({ card: c, reason: "temporarily unavailable" });
       return false;
     }
     const isEventCard = c.source === "event" || String(c.id || "").startsWith("event:");
     if (isEventCard && validEventIds && !validEventIds.has(c.id)) {
-      console.warn(`⚠️  newsletter: dropping event card absent from the current event feed "${c.name}" (${c.bucket || c.timeBlock || "?"})`);
+      rejectedCards.push({ card: c, reason: "absent from current event feed" });
       return false;
     }
     return true;
   });
+  for (const { card, reason } of rejectedCards) {
+    console.warn(`⚠️  newsletter: ${isPairPlan ? "rejecting plan for" : "dropping"} ${reason} day-plan card "${card.name}" (${card.bucket || card.timeBlock || "?"})`);
+  }
+  if (isPairPlan && rejectedCards.length) return null;
   if (!cards.length) return null;
+  if (isPairPlan) {
+    const pairProblems = newsletterPairingIssues(cards);
+    if (pairProblems.length) {
+      console.warn(`⚠️  newsletter: rejecting invalid pillar-pairs plan: ${pairProblems.join("; ")}`);
+      return null;
+    }
+  }
   return {
     ...plan,
     cards,
@@ -340,6 +355,23 @@ export function makeNewsletterPlan(plan, date, { validEventIds = null } = {}) {
     cityName: cityName(plan.city),
     planUrl: plan.planUrl || `${SITE_URL}/`,
   };
+}
+
+function newsletterPairingIssues(cards) {
+  const pairs = [["morning", "breakfast"], ["afternoon", "lunch"], ["evening", "dinner"]];
+  const byBucket = new Map(cards.map((card) => [card.bucket, card]));
+  const issues = [];
+  if (cards.length !== 6 || byBucket.size !== 6) issues.push("expected six unique bucket cards");
+  for (const [pillarBucket, mealBucket] of pairs) {
+    const pillar = byBucket.get(pillarBucket);
+    const meal = byBucket.get(mealBucket);
+    if (!pillar || !meal) { issues.push(`missing ${pillarBucket}/${mealBucket}`); continue; }
+    if (pillar.role !== "pillar" || meal.role !== "paired-meal") issues.push(`wrong roles for ${pillarBucket}/${mealBucket}`);
+    if (pillar.pairedWithId !== meal.id || meal.pairedWithId !== pillar.id) issues.push(`broken links for ${pillarBucket}/${mealBucket}`);
+    if (!Number.isFinite(meal.pairDistanceMiles) || meal.pairDistanceMiles > 5.05) issues.push(`invalid distance for ${mealBucket}`);
+    if (!["exact", "venue"].includes(meal.pairLocationPrecision)) issues.push(`unverified proximity for ${mealBucket}`);
+  }
+  return issues;
 }
 
 // Build-time image reachability cache. Email clients can't run an onError
@@ -544,7 +576,7 @@ const BUCKET_LABEL = {
   dinner: "Dinner",
   evening: "Evening",
 };
-const BUCKET_ORDER = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+const BUCKET_ORDER = ["morning", "breakfast", "afternoon", "lunch", "evening", "dinner"];
 
 function orderedCards(plan) {
   const cards = plan?.cards || [];
@@ -565,17 +597,22 @@ function humanList(items) {
 
 function buildDayPlanBlurb(plan, weather) {
   const cards = orderedCards(plan);
-  const cities = [...new Set(cards.map((c) => cityName(c.city)).filter(Boolean))].slice(0, 3);
-  const standout = cards.find((c) => c.source === "event") || cards.find((c) => c.bucket === "evening") || cards[0];
+  const pillars = cards.filter((card) => card.role === "pillar");
+  const activityPicks = pillars.length === 3
+    ? pillars
+    : cards.filter((card) => ["morning", "afternoon", "evening"].includes(card.bucket));
+  const cities = [...new Set(activityPicks.map((c) => cityName(c.city)).filter(Boolean))].slice(0, 3);
+  const names = activityPicks.map((card) => card.name).filter(Boolean).slice(0, 3);
   const dayDesc = weather?.dayDesc ? lowerFirst(weather.dayDesc) : "steady weather";
   const weatherBit = weather
     ? `${dayDesc}, high ${weather.high}°`
     : "a full day of options";
-  const cityBit = cities.length ? `around ${humanList(cities)}` : "around the South Bay";
-  const standoutBit = standout
-    ? ` The one I would notice first: ${standout.name}${standout.blurb ? `, ${lowerFirst(trimPeriod(standout.blurb))}` : ""}.`
+  const cityBit = cities.length ? ` across ${humanList(cities)}` : " across the South Bay";
+  const picksBit = names.length ? `: ${humanList(names)}` : "";
+  const pairingBit = pillars.length === 3
+    ? " Each one comes with a nearby meal, so these are three self-contained pairings, not one six-stop route."
     : "";
-  return `Today's plan is a flexible menu ${cityBit}: a place to start, somewhere to wander, and a dinner/evening idea if the day keeps going. Weather looks like ${weatherBit}.${standoutBit}`;
+  return `Today's guide starts with the three strongest activity picks${cityBit}${picksBit}.${pairingBit} Weather looks like ${weatherBit}.`;
 }
 
 function lowerFirst(s) {
@@ -691,30 +728,7 @@ function normalizeComparable(s) {
   return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
 
-// Venues where a booking is a headline by definition. Exact phrases on
-// purpose — a loose "civic"/"theater" match false-positives on Cupertino
-// Civic Plaza and every community room. (Chris Stapleton at Shoreline lost
-// Tonight's Pick to a free plaza jazz series on 2026-07-08 because nothing in
-// scoring or the editor packet knew what a marquee venue was.)
-const MARQUEE_VENUES = /\b(shoreline amphitheat\w*|mountain winery|sap center|levi'?s stadium|paypal park|excite ballpark|san jose civic|california theatre|center for the performing arts|montgomery theater|hammer theatre|san jose improv|stanford theatre|frost amphitheat\w*|heritage theatre|great america)\b/i;
-
-export function isMarqueeEvent(e) {
-  return MARQUEE_VENUES.test(`${e?.venue || ""} ${e?.title || ""}`);
-}
-
-// Scrape artifacts that make a title read like a raw feed dump ("Fugetsu \-
-// Sunnyvale", "Summer's here, and the days are getting…shorter? Wtaf!").
-// These events stay selectable — the editor can retitle them — but they
-// shouldn't outrank events that already read like editorial copy.
-function titleQualityPenalty(title) {
-  const t = String(title || "");
-  let penalty = 0;
-  if (/\\-|…|\|/.test(t)) penalty += 6;
-  if (/[?!]{2,}|\?.*!|!.*\?/.test(t)) penalty += 4;
-  if (/\b[A-Z]{6,}\b/.test(t)) penalty += 4;
-  if (t.length > 90) penalty += 4;
-  return penalty;
-}
+export { isMarqueeEvent };
 
 function scoreEvent(e, tonight) {
   let score = 0;
@@ -731,8 +745,7 @@ function scoreEvent(e, tonight) {
   if (e.kidFriendly) score += 2;
   if (e.virtual) score -= 20;
   score -= titleQualityPenalty(e.title);
-  if (/\b(board|commission|committee|meeting|study session|webinar)\b/i.test(e.title || "")) score -= 15;
-  if (/\b(book club|storytime|story time|support group|office hours)\b/i.test(e.title || "")) score -= 6;
+  score -= routineEventPenalty(e);
   return score;
 }
 
@@ -993,6 +1006,9 @@ Voice:
 - Useful beats hype. Never describe a day or part of a day as quiet, slow, thin, light, sparse, sleepy, soft, or weak. There is always something to do; frame the useful options and strongest patterns without apologizing for the calendar.
 - Write like a person talks. Avoid stiff phrasing like "daytime favors practical use of time."
 - Do not over-explain geography or logistics. The day plan is a set of ideas, not a route defense.
+- The day plan is deliberately three quality-first activity pillars: morning, afternoon, and evening. Each has one nearby meal. Treat them as three independent pairings; cities may differ and that is not a flaw.
+- A chain card appears only when upstream found a branch-specific reason it is interesting. Write from that supplied reason; never recommend a familiar logo merely for convenience.
+- Preserve all six field-guide cards. Removing one card breaks a pillar/meal pair; selection mistakes must be fixed upstream, not hidden in the newsletter.
 - Do not tell readers what they are "passing on" or what a choice means skipping. Explain why the selected thing is worth noticing.
 - No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
 - Avoid em dashes. Use commas, periods, or parentheses.
@@ -1011,14 +1027,12 @@ Selection guidance:
 - Reddit items should be South Bay-specific conversation, not generic Bay Area chatter.
 - Openings should be readable and genuinely fresh; skip raw, overly bureaucratic, or week-old entries if they make the email worse.
 - Raw scraped titles are often ugly ("Fugetsu \\- Sunnyvale", clickbait punctuation, ALL CAPS). When you select an event whose title reads like a feed dump, supply a cleaned title in titleOverrides — keep the real event/venue names, drop the junk, max 70 characters. Only rewrite what needs it.
-- If a field-guide card is an obvious mistake for an editorial local guide (a national chain, a massage franchise, something closed or embarrassing), list its idx in dayPlanDropIdxs. Drop at most 2; an imperfect but specific local pick should stay.
 
 Return JSON with exactly these keys:
 {
   "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or useful clusters in today's material.",
   "dayPlanHeadline": "short headline for the field guide",
   "dayPlanBlurb": "2-3 sentences making the plan feel intentional and useful",
-  "dayPlanDropIdxs": [],
   "tonightPickIdx": 0,
   "tonightPickBlurb": "1-2 sentences why this is the evening pick, using only packet facts",
   "featuredEventIdxs": [0, 1, 2, 3, 4, 5],
@@ -1033,7 +1047,7 @@ Return JSON with exactly these keys:
   "conversationNote": "1 sentence framing the local chatter"
 }
 
-Use null for tonightPickIdx if none is strong enough, and empty arrays for weak optional sections — these are honored as deliberate cuts, not errors. Use {} for titleOverrides and [] for dayPlanDropIdxs when nothing needs fixing.
+Use null for tonightPickIdx if none is strong enough, and empty arrays for weak optional sections — these are honored as deliberate cuts, not errors. Use {} for titleOverrides when nothing needs fixing.
 
 EDITOR PACKET:
 ${JSON.stringify(packet, null, 2)}
@@ -1152,17 +1166,9 @@ function applyEditorialJson(data, candidates, edit) {
   const useEditorList = (provided, rawList, resolved) =>
     provided && !(rawList.length && !resolved.length);
 
-  // Field-guide veto: the editor may drop up to 2 cards that are obvious
-  // mistakes (chains, closures); the plan never shrinks below 3 cards.
-  let dayPlan = data.dayPlan;
-  const dropIdxs = new Set((Array.isArray(edit.dayPlanDropIdxs) ? edit.dayPlanDropIdxs : []).map(Number).filter(Number.isInteger));
-  if (dayPlan?.cards?.length && dropIdxs.size) {
-    const ordered = orderedCards(dayPlan);
-    const keep = ordered.filter((_, idx) => !dropIdxs.has(idx));
-    if (ordered.length - keep.length <= 2 && keep.length >= 3) {
-      dayPlan = { ...dayPlan, cards: keep };
-    }
-  }
+  // The plan is an atomic set of three pillar/meal pairs. Editorial can
+  // rewrite its framing, but cannot silently sever a pair by dropping a card.
+  const dayPlan = data.dayPlan;
 
   const revised = {
     ...data,
@@ -1512,7 +1518,7 @@ function dayPlanBlock(plan, blurb, editorial = null) {
   const cards = orderedCards(plan);
   if (!cards.length) return "";
   const rows = cards.map(planCardRow).join("\n");
-  const headline = editorial?.dayPlanHeadline || "A flexible South Bay day";
+  const headline = editorial?.dayPlanHeadline || "Three standout picks for today";
   const cta = plan.planUrl
     ? `<a href="${esc(plan.planUrl)}" style="display:inline-block;background:${PALETTE.blue};color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:600;font-size:15px;margin-top:18px;">Open the live guide →</a>`
     : "";
@@ -1552,7 +1558,12 @@ function tonightPickBlock(pick, blurb, visuals = null) {
 }
 
 function planCardRow(card) {
-  const label = BUCKET_LABEL[card.bucket] || card.timeBlock || "Idea";
+  const bucketLabel = BUCKET_LABEL[card.bucket] || card.timeBlock || "Idea";
+  const label = card.role === "pillar"
+    ? `${bucketLabel} pick`
+    : card.role === "paired-meal"
+      ? `${bucketLabel} nearby`
+      : bucketLabel;
   const name = card.url || card.mapsUrl
     ? `<a href="${esc(card.url || card.mapsUrl)}" style="color:${PALETTE.ink};text-decoration:none;font-weight:700;">${esc(card.name)}</a>`
     : `<span style="color:${PALETTE.ink};font-weight:700;">${esc(card.name)}</span>`;

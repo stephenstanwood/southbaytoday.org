@@ -6,10 +6,10 @@
 //   - Venue repeats across the week (four Ritz theme nights in 3 weeks)
 //   - Same venue on consecutive days (SJSU Music Building Mon + Tue)
 //   - Day-of-week in title contradicts slot date ("Monday Night Revels" on Wed)
-//   - Day plans with fewer than 5 stops or starting after noon
+//   - Day plans with broken pillar/meal links or meals beyond 5 miles
 //   - Broken venue strings ("457" — truncation from Legistar summaries)
 //   - Terminology/capitalization typos (aids → AIDS, pandemic → epidemic)
-//   - Day-plan cards out of chronological order (defense-in-depth w/ plan-day)
+//   - Day-plan cards outside canonical pair display order
 //
 // Deterministic fixes are applied in place. Harder issues get their slot
 // status reset to "draft" so the caller can re-run the generator for one
@@ -20,7 +20,6 @@ import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  IN_AREA_CITIES,
   OUT_OF_AREA_CITIES,
   VIRTUAL_SIGNALS,
   isBorderAllowedVenue,
@@ -322,7 +321,13 @@ function sanitizeDayPlanCards(slot) {
   return touched;
 }
 
-const BUCKET_ORDER_LIST = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];
+const BUCKET_ORDER_LIST = ["morning", "breakfast", "afternoon", "lunch", "evening", "dinner"];
+const DAY_PLAN_PAIRS = [
+  ["morning", "breakfast"],
+  ["afternoon", "lunch"],
+  ["evening", "dinner"],
+];
+const MEAL_PAIR_MAX_MILES = 5;
 
 function sortDayPlanCards(slot) {
   const cards = slot?.plan?.cards;
@@ -396,14 +401,33 @@ function matchesCategory(text, patterns) {
   return patterns.some((re) => re.test(text));
 }
 
-function countDayPlanCities(slot) {
+function dayPlanPairingIssues(slot) {
   const cards = slot?.plan?.cards || [];
-  const cities = new Set();
-  for (const c of cards) {
-    const city = (c.city || c.cityName || "").trim().toLowerCase();
-    if (city) cities.add(city);
+  const byBucket = new Map(cards.map((card) => [card.bucket, card]));
+  const issues = [];
+  if (cards.length !== 6 || byBucket.size !== 6) {
+    issues.push(`expected 6 unique buckets, found ${byBucket.size}`);
   }
-  return cities.size;
+  for (const [pillarBucket, mealBucket] of DAY_PLAN_PAIRS) {
+    const pillar = byBucket.get(pillarBucket);
+    const meal = byBucket.get(mealBucket);
+    if (!pillar) { issues.push(`missing ${pillarBucket} pillar`); continue; }
+    if (!meal) { issues.push(`missing ${mealBucket} pairing`); continue; }
+    if (pillar.role !== "pillar") issues.push(`${pillarBucket} is not marked pillar`);
+    if (meal.role !== "paired-meal") issues.push(`${mealBucket} is not marked paired-meal`);
+    if (pillar.pairedWithId !== meal.id || meal.pairedWithId !== pillar.id) {
+      issues.push(`${pillarBucket}/${mealBucket} links are not reciprocal`);
+    }
+    if (!Number.isFinite(meal.pairDistanceMiles)) {
+      issues.push(`${mealBucket} is missing pair distance`);
+    } else if (meal.pairDistanceMiles > MEAL_PAIR_MAX_MILES + 0.05) {
+      issues.push(`${mealBucket} is ${meal.pairDistanceMiles.toFixed(1)} miles from ${pillarBucket}`);
+    }
+    if (!["exact", "venue"].includes(meal.pairLocationPrecision)) {
+      issues.push(`${mealBucket} proximity is not venue-resolved`);
+    }
+  }
+  return issues;
 }
 
 function dayPlanHasCategory(slot, patterns) {
@@ -571,29 +595,46 @@ export function runQualityReview(schedule, options = {}) {
     const dpStatus = dp?.status;
     const dpIsDraft = dpStatus === "draft";
     const dpIsLive = dp && !["rejected", "published"].includes(dpStatus);
-    if (dp && dpIsDraft) {
-      const cards = dp.plan?.cards || [];
-      const isBucketPlan = cards.some((c) => c.bucket);
+    const dpCards = dp?.plan?.cards || [];
+    const isBucketPlan = dpCards.some((c) => c.bucket);
+    const isPairPlan = dp?.plan?.selectionModel === "pillar-pairs-v1" ||
+      dp?.selectionModel === "pillar-pairs-v1" ||
+      dpCards.some((card) => card.role === "pillar" || card.role === "paired-meal");
+    if (dp && dpIsDraft && !isPairPlan) {
       if (isBucketPlan) {
-        // Bucket plan: ≥4 of 6 buckets filled (matches planPassesQuality).
-        const filled = new Set(cards.map((c) => c.bucket).filter(Boolean));
+        // Pre-v1 bucket plans are historical compatibility data. Keep their
+        // old thinness check without pretending they have pair metadata.
+        const filled = new Set(dpCards.map((card) => card.bucket).filter(Boolean));
         if (filled.size < 4) {
           flagged.push({ date, slotType: "day-plan", reason: `only ${filled.size} bucket(s) filled (need 4+)` });
         }
       } else {
         // Legacy timeline: ≥6 stops, must start by noon.
-        if (cards.length < 6) {
-          flagged.push({ date, slotType: "day-plan", reason: `only ${cards.length} stops (need 6+)` });
+        if (dpCards.length < 6) {
+          flagged.push({ date, slotType: "day-plan", reason: `only ${dpCards.length} stops (need 6+)` });
         } else {
-          const firstHour = parseHour((cards[0].timeBlock || "").split(/\s*-\s*/)[0]);
+          const firstHour = parseHour((dpCards[0].timeBlock || "").split(/\s*-\s*/)[0]);
           if (firstHour !== null && firstHour > 11) {
-            flagged.push({ date, slotType: "day-plan", reason: `starts too late (${cards[0].timeBlock})` });
+            flagged.push({ date, slotType: "day-plan", reason: `starts too late (${dpCards[0].timeBlock})` });
           }
         }
       }
     }
-    // Hard-block checks on day-plan regardless of status (sprawl, virtual, saturated spa, hours mismatch).
+    // Hard-block checks on every live day-plan, including plans an editor has
+    // already approved. Approval must never let a severed or distant pair ship.
     if (dp && dpIsLive) {
+      if (isPairPlan) {
+        const pairProblems = dayPlanPairingIssues(dp);
+        if (pairProblems.length) {
+          flagged.push({
+            date,
+            slotType: "day-plan",
+            hardBlock: true,
+            reason: `invalid pillar pairs: ${pairProblems.slice(0, 3).join("; ")}`,
+          });
+        }
+      }
+
       // Hours integrity: every card with verified hours must fit on the plan's date.
       // Catches the "Travieso (sat-only) on Thursday" failure mode that surfaces
       // whenever the plan-day API or its data source forgets the plan's date.
@@ -613,10 +654,6 @@ export function runQualityReview(schedule, options = {}) {
         }
       }
 
-      const cityCount = countDayPlanCities(dp);
-      if (cityCount >= 5) {
-        flagged.push({ date, slotType: "day-plan", reason: `too much driving (${cityCount} cities)` });
-      }
       // Demographic coherence: spa cooldown across the window.
       const hasSpa = dayPlanHasCategory(dp, CATEGORY_KEYWORDS.spa);
       if (hasSpa) {

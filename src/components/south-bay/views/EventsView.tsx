@@ -614,6 +614,7 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city,
+          scope: "regional",
           kids: false,
           lockedIds: [`event:${eventId}`],
           currentHour: 9,
@@ -628,7 +629,7 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           cards: planData.cards,
-          city,
+          city: planData.city || city,
           kids: false,
           weather: planData.weather,
           planDate: date,

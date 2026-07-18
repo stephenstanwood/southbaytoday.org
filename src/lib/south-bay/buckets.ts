@@ -1,16 +1,15 @@
 // ---------------------------------------------------------------------------
 // Day-plan buckets — replaces the old hour-by-hour timeBlock format.
 //
-// A plan is six "idea sparks", not a tick-tock schedule:
-//   breakfast  morning
-//   lunch      afternoon
-//   dinner     evening
+// A plan is three exceptional activity pillars, each with one nearby meal:
+//   morning    breakfast nearby
+//   afternoon  lunch nearby
+//   evening    dinner nearby
 //
-// The user can do all six together if they want, but the plan is meant to read
-// as a brainstorm. This module owns the canonical names, display labels, the
-// rough time window each bucket implies (used for hours-fitting validation),
-// and small helpers for mapping clock times → buckets when an event has a
-// fixed real-world start.
+// The activity earns its place on quality alone. Geography is evaluated only
+// when attaching the meal to that pillar. This module owns the canonical
+// names, display order, the rough time window each bucket implies (used for
+// hours-fitting validation), and helpers for fixed-time events.
 // ---------------------------------------------------------------------------
 
 export type Bucket =
@@ -22,15 +21,14 @@ export type Bucket =
   | "evening";
 
 /** Display order for the 2×3 grid, top-to-bottom, left-to-right.
- *  Left column = meals (breakfast → lunch → dinner).
- *  Right column = activities (morning → afternoon → evening). */
+ *  Each row leads with the pillar, followed by its nearby meal. */
 export const BUCKET_ORDER: Bucket[] = [
-  "breakfast",
   "morning",
-  "lunch",
+  "breakfast",
   "afternoon",
-  "dinner",
+  "lunch",
   "evening",
+  "dinner",
 ];
 
 export const BUCKET_LABELS: Record<Bucket, string> = {
@@ -130,14 +128,14 @@ export function bucketOrderIndex(b: Bucket | string | null | undefined): number 
   return i === -1 ? 99 : i;
 }
 
-/** Wall-clock cutoff (PT, 24h) past which a bucket reads as "missed today".
- *  Used by the homepage view to drop past buckets from the grid. Cutoffs are
- *  conservative — e.g. lunch only drops out after 3 PM, not at noon. */
+/** Wall-clock cutoff (PT, 24h) past which a pair reads as "missed today".
+ *  Both cards in a pair share one cutoff so the homepage never leaves a meal
+ *  orphaned from the activity it was selected to support. */
 export const BUCKET_PASSED_AFTER_HOUR: Record<Bucket, number> = {
-  breakfast: 11,
+  breakfast: 13,
   morning: 13,
-  lunch: 15,
+  lunch: 18,
   afternoon: 18,
-  dinner: 21,
-  evening: 23, // never really "passed" before midnight
+  dinner: 23,
+  evening: 23,
 };

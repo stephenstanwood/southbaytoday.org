@@ -1,21 +1,19 @@
 export const prerender = false;
 
 // ---------------------------------------------------------------------------
-// South Bay Today — Day-Planning Engine (bucket version)
+// South Bay Today — Quality-first pillar/meal planner
 // ---------------------------------------------------------------------------
 // POST /api/plan-day
 // Input:  { city, kids, lockedCards, dismissedIds, planDate, ... }
 // Output: { cards: [...], weather, ... }
 //
-// Each plan is six "idea sparks" — not an hour-by-hour schedule:
-//   breakfast / lunch / dinner   (food)
-//   morning   / afternoon / evening (activity)
+// Each plan starts with the three best activities available across the full
+// relevant pool: one morning, one afternoon, one evening. Only then does each
+// pillar receive a quality restaurant pairing within five miles. Geography is
+// never optimized across pillars.
 //
-// Pipeline:
-// 1. Load places + today's events + weather
-// 2. Score & filter a candidate pool (~35 items)
-// 3. Call Claude Sonnet to fill the 6 buckets, one venue per bucket
-// 4. Validate venue hours fit the bucket window; drop kids-mode evening
+// Regional scope is the homepage/newsletter default. City pages opt into a
+// strict city scope, but use the same pillar-first method.
 // ---------------------------------------------------------------------------
 
 import type { APIRoute } from "astro";
@@ -31,24 +29,34 @@ import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
 import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
 import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
 import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.mjs";
-import { isNationalChain } from "../../lib/south-bay/chains.mjs";
+import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
+import { isMarqueeEvent, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
 import {
   type Bucket,
-  BUCKET_ORDER,
   BUCKET_LABELS,
   BUCKET_TIME_WINDOWS,
-  MEAL_BUCKETS,
   bucketForEvent,
   bucketOrderIndex,
   isBucket,
 } from "../../lib/south-bay/buckets";
+import {
+  DAY_PLAN_SELECTION_MODEL,
+  PILLAR_BUCKETS,
+  MEAL_BUCKET_BY_PILLAR,
+  MEAL_PAIR_MAX_MILES,
+  dayPlanPairingIssues,
+  dominantPillarCity,
+  rankNearbyMeals,
+  type PillarBucket,
+} from "../../lib/south-bay/dayPlanPairs";
 import type { City } from "../../lib/south-bay/types";
 
 import placesData from "../../data/south-bay/places.json";
 import eventsData from "../../data/south-bay/upcoming-events.json";
 import placeBlurbCache from "../../data/south-bay/place-blurb-cache.json";
+import foodOpeningsData from "../../data/south-bay/scc-food-openings.json";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -64,6 +72,9 @@ interface UserPreferences {
 interface PlanRequest {
   city: City;
   kids: boolean;
+  /** Regional plans ignore city when selecting content. City pages opt into
+   *  city scope explicitly so their local promise remains honest. */
+  scope?: "regional" | "city";
   lockedIds?: string[];
   /** Richer lock info: pairs an id with the bucket the user locked it into.
    *  Takes precedence over lockedIds when both are sent. timeBlock kept for
@@ -84,12 +95,9 @@ interface PlanRequest {
   blockedNames?: string[];
   /** Recently-shown ids/names. Score penalty fades over a two-week window. */
   recentlyShown?: Array<string | { id?: string; name?: string; daysAgo?: number }>;
-  /** Anchors used on recent shuffles — informational, kept for future use. */
-  recentAnchors?: string[];
   /** Week-level context so Claude can diversify across a 10-day batch.
    *  Only populated by generate-schedule.mjs when batching. */
   weekContext?: {
-    anchorCities?: string[];
     categorySaturation?: Record<string, number>;
   };
   /** LEGACY (unused by bucket pipeline). Older callers may still send
@@ -108,6 +116,7 @@ interface Candidate {
   /** Ingest-time blurb (events only) — preferred source for the card's blurb. */
   blurb?: string | null;
   rating?: number | null;
+  ratingCount?: number | null;
   cost?: string | null;
   costNote?: string | null;
   kidsCostNote?: string | null;
@@ -120,11 +129,24 @@ interface Candidate {
   photoRef?: string | null;
   image?: string | null;
   displayType?: string | null;
+  primaryType?: string | null;
+  types?: string[];
+  lat: number;
+  lng: number;
+  locationPrecision: "exact" | "venue" | "city";
+  curated?: boolean;
+  isChain?: boolean;
+  chainLocations?: number;
+  interestingChain?: boolean;
+  chainInterestReasons?: string[];
+  bestSlots?: string[];
+  newlyOpened?: boolean;
+  foodDistinctiveness?: number;
+  marquee?: boolean;
   source: "event" | "place";
   eventDate?: string;
   eventTime?: string | null;
   eventEndTime?: string | null;
-  eventDurationMin?: number | null;
   ongoing?: boolean;
   score: number;
 }
@@ -158,6 +180,14 @@ interface DayCard {
   image?: string | null;
   source: "event" | "place";
   locked: boolean;
+  interestingChain?: boolean;
+  chainInterestReasons?: string[];
+  role: "pillar" | "paired-meal";
+  pairedWithId: string;
+  /** Present on meal cards; computed by the server, never supplied by Claude. */
+  pairDistanceMiles?: number;
+  /** Lowest-confidence location used for the pair distance. */
+  pairLocationPrecision?: "exact" | "venue" | "city";
   rationale?: string;
 }
 
@@ -173,31 +203,136 @@ const PERMANENT_NAME_BLOCKLIST = new Set<string>([
   normalizeName("3Below Theaters"), // San Jose — closed
 ].filter(Boolean));
 
-const CANDIDATE_POOL_SIZE = 35;
+const PILLAR_EVENT_OPTIONS_PER_BUCKET = 12;
+const PILLAR_PLACE_OPTIONS_PER_BUCKET = 8;
+const PILLAR_OPTIONS_PER_BUCKET = PILLAR_EVENT_OPTIONS_PER_BUCKET + PILLAR_PLACE_OPTIONS_PER_BUCKET;
+const MEAL_OPTIONS_PER_PILLAR = 5;
+const REGIONAL_WEATHER_CITY: City = "campbell";
 
-// Same normalized name at 4+ locations in places.json is a chain in practice
-// (catches brands the curated list in chains.mjs doesn't know). Threshold is
-// 4, not 3: at 3 it falsely nukes distinctive multi-branch locals (Magical
-// Bridge Playground, Manresa Bread, Nirvana Soul). Curated places are exempt —
-// if Stephen hand-picked it, multi-location is fine.
+// Four local records with one brand key count as a chain even when the brand
+// is absent from the national list. Chain status is an editorial hurdle, not
+// a ban: generic branches are filtered, interesting ones remain eligible.
 const MULTI_LOCATION_THRESHOLD = 4;
-const PLACE_NAME_COUNTS: Map<string, number> = (() => {
+const PLACE_BRAND_COUNTS: Map<string, number> = (() => {
   const map = new Map<string, number>();
   for (const p of (placesData as any).places ?? []) {
-    const n = normalizeName(p.name);
-    if (!n) continue;
-    map.set(n, (map.get(n) ?? 0) + 1);
+    const key = chainBrandKey(p.name);
+    if (!key) continue;
+    map.set(key, (map.get(key) ?? 0) + 1);
   }
   return map;
 })();
 
-function isMultiLocationChain(name: string | null | undefined): boolean {
-  const n = normalizeName(name);
-  return !!n && (PLACE_NAME_COUNTS.get(n) ?? 0) >= MULTI_LOCATION_THRESHOLD;
+function chainLocationCount(name: string | null | undefined): number {
+  const key = chainBrandKey(name);
+  return key ? (PLACE_BRAND_COUNTS.get(key) ?? 1) : 1;
 }
 
-// 20 km covers the working radius (SJ ↔ Sunnyvale, Mountain View, Los Altos).
-const NEARBY_KM = 20;
+interface PlaceLocation {
+  lat: number;
+  lng: number;
+  city: string;
+}
+
+const normalizeLocationKey = (value: string | null | undefined): string =>
+  String(value || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\b(usa|united states|california)\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+function venueTokenMatch(left: string, right: string): boolean {
+  const tokens = (value: string) => value
+    .split(/\s+/)
+    .filter((token) => token.length > 2 && !["the", "and", "for", "with"].includes(token));
+  const a = tokens(left);
+  const b = tokens(right);
+  if (a.length < 2 || b.length < 2) return false;
+  const bSet = new Set(b);
+  const shared = a.filter((token) => bSet.has(token)).length;
+  return shared >= 2 && shared / Math.min(a.length, b.length) >= 0.72;
+}
+
+const PLACE_LOCATIONS: Array<{ nameKey: string; addressKey: string; location: PlaceLocation }> = [];
+const VENUE_LOCATION_LOOKUP = new Map<string, PlaceLocation>();
+const ADDRESS_LOCATION_LOOKUP = new Map<string, PlaceLocation>();
+for (const p of (placesData as any).places ?? []) {
+  if (!Number.isFinite(p?.lat) || !Number.isFinite(p?.lng)) continue;
+  const location = { lat: p.lat, lng: p.lng, city: p.city };
+  const nameKey = normalizeLocationKey(p.name);
+  const addressKey = normalizeLocationKey(p.address);
+  if (nameKey) VENUE_LOCATION_LOOKUP.set(nameKey, location);
+  if (addressKey) ADDRESS_LOCATION_LOOKUP.set(addressKey, location);
+  PLACE_LOCATIONS.push({ nameKey, addressKey, location });
+}
+
+function locationForEvent(event: any): PlaceLocation & { precision: "exact" | "venue" | "city" } {
+  if (Number.isFinite(event?.lat) && Number.isFinite(event?.lng)) {
+    return { lat: event.lat, lng: event.lng, city: event.city, precision: "exact" };
+  }
+
+  const venueKey = normalizeLocationKey(event?.venue);
+  const exactVenue = venueKey ? VENUE_LOCATION_LOOKUP.get(venueKey) : null;
+  if (exactVenue) return { ...exactVenue, precision: "venue" };
+
+  const addressKey = normalizeLocationKey(event?.address);
+  const exactAddress = addressKey ? ADDRESS_LOCATION_LOOKUP.get(addressKey) : null;
+  if (exactAddress) return { ...exactAddress, precision: "venue" };
+
+  // Venue feeds frequently omit the state/ZIP or append a room name. Accept a
+  // conservative same-city containment match before falling back to a city
+  // centroid. The fallback is labeled so diagnostics remain honest.
+  const fuzzy = PLACE_LOCATIONS.find((entry) => {
+    if (entry.location.city !== event?.city) return false;
+    const nameMatch = venueKey.length >= 9 && entry.nameKey.length >= 9 &&
+      (venueKey.includes(entry.nameKey) || entry.nameKey.includes(venueKey) || venueTokenMatch(venueKey, entry.nameKey));
+    const addressMatch = addressKey.length >= 9 && entry.addressKey.length >= 9 &&
+      (addressKey.includes(entry.addressKey) || entry.addressKey.includes(addressKey));
+    return nameMatch || addressMatch;
+  });
+  if (fuzzy) return { ...fuzzy.location, precision: "venue" };
+
+  const city = CITY_MAP[event?.city as City] || CITY_MAP[REGIONAL_WEATHER_CITY];
+  return { lat: city.lat, lng: city.lon, city: event?.city || REGIONAL_WEATHER_CITY, precision: "city" };
+}
+
+const NEWLY_OPENED_FOOD_KEYS = new Set<string>(
+  ((foodOpeningsData as any).opened ?? [])
+    .map((opening: any) => {
+      const name = normalizeName(opening?.name);
+      const city = String(opening?.cityId || opening?.city || opening?.cityName || "")
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-");
+      return name && city ? `${name}|${city}` : null;
+    })
+    .filter(Boolean),
+);
+
+function isVerifiedNewOpening(name: string | null | undefined, city: string | null | undefined): boolean {
+  const normalized = normalizeName(name);
+  return !!normalized && !!city && NEWLY_OPENED_FOOD_KEYS.has(`${normalized}|${city}`);
+}
+
+const FOOD_TYPE_COUNTS = new Map<string, number>();
+for (const p of (placesData as any).places ?? []) {
+  if ((p?.category || "").toLowerCase() !== "food") continue;
+  const key = normalizeLocationKey(p.displayType || p.primaryType);
+  if (key) FOOD_TYPE_COUNTS.set(key, (FOOD_TYPE_COUNTS.get(key) || 0) + 1);
+}
+
+function foodDistinctiveness(displayType: string | null | undefined, primaryType?: string | null): number {
+  const label = normalizeLocationKey(displayType || primaryType);
+  if (!label || /^(restaurant|cafe|coffee shop|bakery|bar|food|breakfast restaurant|brunch restaurant|american restaurant|fast food restaurant|hamburger restaurant|pizza restaurant|sandwich shop)$/.test(label)) return 0;
+  const count = FOOD_TYPE_COUNTS.get(label) || 0;
+  if (count <= 3) return 12;
+  if (count <= 8) return 9;
+  if (count <= 20) return 6;
+  if (count <= 50) return 3;
+  return 0;
+}
 
 // Venue photo lookup — maps a normalized venue name to a photoRef from
 // places.json so events inherit photos from their host venue.
@@ -247,18 +382,6 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371;
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLon = ((lon2 - lon1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
 
 function todayStr(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
@@ -462,14 +585,6 @@ function parseClockToMinutes(t: string | null | undefined): number | null {
   return h * 60 + min;
 }
 
-function computeDurationMin(start: string | null | undefined, end: string | null | undefined): number | null {
-  const a = parseClockToMinutes(start);
-  const b = parseClockToMinutes(end);
-  if (a === null || b === null) return null;
-  const d = b - a;
-  return d > 0 ? d : null;
-}
-
 // ---------------------------------------------------------------------------
 // Weather fetch (internal, same-origin)
 // ---------------------------------------------------------------------------
@@ -530,33 +645,6 @@ function recentPenalty(daysAgo: number): number {
   return 0;
 }
 
-function weightedSample<T extends { score?: number }>(
-  candidates: T[],
-  n: number,
-  temperature = 18,
-): T[] {
-  if (candidates.length <= n) return candidates.slice();
-  const remaining = candidates.slice();
-  const result: T[] = [];
-  while (result.length < n && remaining.length > 0) {
-    const maxScore = Math.max(...remaining.map((c) => c.score ?? 0));
-    const weights = remaining.map((c) => Math.exp(((c.score ?? 0) - maxScore) / temperature));
-    const total = weights.reduce((a, b) => a + b, 0);
-    let roll = Math.random() * total;
-    let chosen = remaining.length - 1;
-    for (let i = 0; i < weights.length; i++) {
-      roll -= weights[i];
-      if (roll <= 0) {
-        chosen = i;
-        break;
-      }
-    }
-    result.push(remaining[chosen]);
-    remaining.splice(chosen, 1);
-  }
-  return result;
-}
-
 function scoreCandidates(
   candidates: Candidate[],
   weather: WeatherContext | null,
@@ -578,8 +666,16 @@ function scoreCandidates(
     let score = 0;
 
     if (c.source === "event") {
-      score += 35;
-      if (c.eventDate === todayStr()) score += 20;
+      // A dated occurrence is the strongest evidence that something is
+      // exceptional *today*. Ongoing exhibitions remain eligible, but they do
+      // not get to outrank a strong one-day event just for being an event.
+      score += c.ongoing ? 18 : 32;
+      if (c.eventDate === planIso) score += 24;
+      if (c.eventTime) score += 5;
+      if (c.marquee) score += 38;
+      score -= titleQualityPenalty(c.name);
+      score -= routineEventPenalty(c);
+      if ((c.blurb || c.description || "").trim().length >= 70) score += 5;
       if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
       if (holidayHasKeywords && c.eventDate === planIso) {
         const haystack = `${c.name} ${c.blurb ?? ""} ${c.description ?? ""} ${c.venue ?? ""}`.toLowerCase();
@@ -589,11 +685,18 @@ function scoreCandidates(
 
     if (c.rating && c.rating >= 4.5) score += 10;
     else if (c.rating && c.rating >= 4.0) score += 3;
+    if (c.ratingCount) score += Math.min(14, Math.log10(c.ratingCount + 1) * 4);
     else if ((c as any).curated && (!c.rating || c.rating === 0)) score += 7;
 
     if ((c as any).curated) score += 10;
 
-    if (c.category === "food") score += 10;
+    if (c.category === "food") {
+      if (c.newlyOpened) score += 14;
+      score += c.foodDistinctiveness || 0;
+    }
+    if (c.isChain) {
+      score -= Math.min(12, 4 + Math.log2(Math.max(1, c.chainLocations || 1)) * 2);
+    }
 
     if (kids && c.kidFriendly === true) score += 15;
     if (kids && c.kidFriendly === false) score -= 40;
@@ -643,7 +746,9 @@ function scoreCandidates(
       score -= Math.max(idPenalty, namePenalty);
     }
 
-    score += Math.random() * 25;
+    // Reshuffles can move among excellent options, but randomness no longer
+    // has enough weight to make a merely adequate candidate look exceptional.
+    score += Math.random() * 2;
 
     c.score = score;
   }
@@ -662,9 +767,9 @@ function buildCandidatePool(
   targetDate?: string,
   blockedNames?: Set<string>,
   dismissedNames?: Set<string>,
+  scope: "regional" | "city" = "regional",
 ): Candidate[] {
   const candidates: Candidate[] = [];
-  const cityConfig = CITY_MAP[city];
   const today = targetDate || todayStr();
   const planDayKey = dayKeyForDate(today);
   const isBlocked = (name: string | null | undefined) => {
@@ -715,12 +820,8 @@ function buildCandidatePool(
     }
 
     const evtCity = evt.city as City;
-    if (evtCity !== city) {
-      const evtCityConfig = CITY_MAP[evtCity];
-      if (!evtCityConfig || !cityConfig) continue;
-      const dist = haversineKm(cityConfig.lat, cityConfig.lon, evtCityConfig.lat, evtCityConfig.lon);
-      if (dist > NEARBY_KM) continue;
-    }
+    if (!VALID_CITIES.has(evtCity)) continue;
+    if (scope === "city" && evtCity !== city) continue;
 
     // Hard skip: kids-mode events flagged kidFriendly:false.
     if (kids && evt.kidFriendly === false) continue;
@@ -758,6 +859,7 @@ function buildCandidatePool(
       continue;
     }
 
+    const eventLocation = locationForEvent(evt);
     candidates.push({
       id: `event:${evt.id}`,
       name: cleanDisplayName(evt.title),
@@ -773,11 +875,15 @@ function buildCandidatePool(
       url: evt.url,
       photoRef: (evt as any).photoRef || lookupVenuePhoto(evt.venue),
       image: (evt as any).image || null,
+      types: [],
+      lat: eventLocation.lat,
+      lng: eventLocation.lng,
+      locationPrecision: eventLocation.precision,
+      marquee: isMarqueeEvent(evt),
       source: "event",
       eventDate: evt.date,
       eventTime: evt.time,
       eventEndTime: evt.endTime,
-      eventDurationMin: computeDurationMin(evt.time, evt.endTime),
       ongoing: evt.ongoing ?? false,
       score: 0,
     });
@@ -821,26 +927,47 @@ function buildCandidatePool(
     if ((p.category || "").toLowerCase() === "neighborhood") continue;
     if (/^(main\s+street|downtown|the\s+district|uptown)\s+\w+/i.test(p.name || "")) continue;
     if (kids && (p.category || "").toLowerCase() === "wellness") continue;
-    // Chains never make the field guide — a Peet's or Elements Massage as an
-    // editorial pick reads as filler (both shipped in the 2026-07-14 email;
-    // the soft prompt rule alone didn't hold).
-    if (isNationalChain(p.name)) continue;
-    if (!p.curated && isMultiLocationChain(p.name)) continue;
 
-    if (p.city !== city) {
-      if (!p.lat || !p.lng || !cityConfig) continue;
-      const dist = haversineKm(cityConfig.lat, cityConfig.lon, p.lat, p.lng);
-      if (dist > NEARBY_KM) continue;
-    }
+    if (!VALID_CITIES.has(p.city)) continue;
+    if (scope === "city" && p.city !== city) continue;
+
+    const category = canonicalCategory(p.category || "food");
+    const blurb = cleanDisplayCopy(PLACE_BLURBS.get(p.id)) || null;
+    const newlyOpened = category === "food" && isVerifiedNewOpening(p.name, p.city);
+    const distinctiveness = category === "food" ? foodDistinctiveness(p.displayType, p.primaryType) : 0;
+    const observedChainLocations = chainLocationCount(p.name);
+    const nationalChain = isNationalChain(p.name);
+    const isChain = nationalChain || observedChainLocations >= MULTI_LOCATION_THRESHOLD;
+    const chainLocations = nationalChain ? Math.max(8, observedChainLocations) : observedChainLocations;
+    const interestReasons = isChain
+      ? chainInterestReasons({
+          category,
+          rating: p.rating,
+          ratingCount: p.ratingCount,
+          curated: !!p.curated,
+          newlyOpened,
+          foodDistinctiveness: distinctiveness,
+          blurb,
+          description: p.description,
+        })
+      : [];
+    // Chain branches are allowed, but only when this specific recommendation
+    // has an editorial reason to exist. This blocks commodity filler such as
+    // Peet's while preserving a new, distinctive, or standout chain location.
+    if (isChain && interestReasons.length === 0) continue;
+
+    const placeCity = CITY_MAP[p.city as City] || CITY_MAP[city];
+    const hasExactLocation = Number.isFinite(p.lat) && Number.isFinite(p.lng);
 
     candidates.push({
       id: `place:${p.id}`,
       name: cleanDisplayName(p.name),
-      category: canonicalCategory(p.category || "food"),
+      category,
       city: p.city,
       address: p.address || "",
-      blurb: cleanDisplayCopy(PLACE_BLURBS.get(p.id)) || null,
+      blurb,
       rating: p.rating,
+      ratingCount: p.ratingCount,
       cost: p.cost || null,
       costNote: p.costNote || (p.priceLevel ? priceLevelLabel(p.priceLevel) : null),
       kidsCostNote: (p as any).kidsCostNote || null,
@@ -851,9 +978,21 @@ function buildCandidatePool(
       photoRef: p.photoRef || lookupVenuePhoto(p.name) || null,
       hours: p.hours,
       displayType: cleanDisplayName(p.displayType) || null,
+      primaryType: p.primaryType || null,
+      types,
+      lat: hasExactLocation ? p.lat : placeCity.lat,
+      lng: hasExactLocation ? p.lng : placeCity.lon,
+      locationPrecision: hasExactLocation ? "exact" : "city",
+      curated: !!p.curated,
+      isChain,
+      chainLocations,
+      interestingChain: isChain && interestReasons.length > 0,
+      chainInterestReasons: interestReasons,
+      bestSlots: p.bestSlots || [],
+      newlyOpened,
+      foodDistinctiveness: distinctiveness,
       source: "place",
       score: 0,
-      ...(p.curated ? { curated: true, bestSlots: p.bestSlots } : {}),
     });
   }
 
@@ -890,56 +1029,353 @@ function describePreferences(prefs?: UserPreferences): string {
   return parts.length ? `USER PREFERENCES: This person ${parts.join(", ")}.` : "";
 }
 
-/** Format a candidate for the prompt's pool listing. Returns null when the
- *  candidate has hours data that says "closed today" — we never want Claude
- *  to consider those. */
-function candidateLine(c: Candidate, dayKey: DayKey, index: number): string | null {
-  const parts = [`${index + 1}. [${c.id}] ${c.name}`];
-  parts.push(`category: ${c.category}`);
-  if (c.displayType) parts.push(`type: ${c.displayType}`);
-  parts.push(`city: ${c.city}`);
-  if (c.address) parts.push(`address: ${c.address}`);
-  if (c.source === "event" && !c.ongoing) parts.push(`EVENT TODAY`);
-  if (c.source === "event" && c.ongoing) parts.push(`ongoing exhibition`);
-  if (c.eventTime) {
-    const timeStr = c.eventEndTime ? `${c.eventTime}–${c.eventEndTime}` : c.eventTime;
-    parts.push(`time: ${timeStr}`);
-    const evBucket = bucketForEvent(c.eventTime, c.category);
-    if (evBucket) parts.push(`fits-bucket: ${evBucket}`);
-  }
-  if (c.rating) parts.push(`rating: ${c.rating}`);
-  if (c.cost) parts.push(`cost: ${c.cost}`);
-  if (c.costNote) parts.push(`price: ${c.costNote}`);
-  if (c.kidFriendly === true) parts.push(`kid-friendly`);
-  if (c.indoorOutdoor) parts.push(`setting: ${c.indoorOutdoor}`);
-  if (c.blurb) parts.push(`blurb: ${c.blurb}`);
+interface PillarPairPick {
+  pillarBucket: PillarBucket;
+  pillarId: string;
+  pillarBlurb?: string;
+  mealId: string;
+  mealBlurb?: string;
+}
 
-  const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
-  const placeTypes = (c as any).types as string[] | null | undefined;
-  const fmt = (h: number) => (h > 12 ? `${h - 12} PM` : h === 12 ? "12 PM" : h === 0 ? "12 AM" : `${h} AM`);
-  if (hoursObj) {
-    const ranges = openRangesOn(hoursObj, dayKey);
-    if (ranges.length === 0) return null; // closed on plan date — omit
-    parts.push(`hours: ${ranges.map(([o, c2]) => `${fmt(o)}–${fmt(c2)}`).join(", ")}`);
-  } else if (isTimeSensitive(placeTypes, c.category)) {
-    return null; // time-sensitive with no hours data — drop
+interface PillarOption {
+  bucket: PillarBucket;
+  candidate: Candidate;
+  meals: Array<{
+    candidate: Candidate;
+    distanceMiles: number;
+    qualityScore: number;
+    pairingScore: number;
+  }>;
+  bucketScore: number;
+}
+
+function isPillarBucket(value: unknown): value is PillarBucket {
+  return typeof value === "string" && (PILLAR_BUCKETS as readonly string[]).includes(value);
+}
+
+function defaultBucketForLockedCandidate(candidate: Candidate): Bucket {
+  if (candidate.source === "event" && candidate.eventTime) {
+    // A food festival or farmers market is still an activity pillar. Only
+    // restaurant places occupy meal buckets.
+    const eventBucket = bucketForEvent(candidate.eventTime, "events");
+    if (eventBucket) return eventBucket;
+  }
+  if (candidate.category === "food") return "lunch";
+  return "afternoon";
+}
+
+function fitsPillarBucket(candidate: Candidate, bucket: PillarBucket, dayKey: DayKey, kids = false): boolean {
+  if (candidate.source === "place" && candidate.category === "food") return false;
+  if (candidate.source === "event") {
+    if (candidate.eventTime) {
+      if (bucketForEvent(candidate.eventTime, "events") !== bucket) return false;
+      if (kids && bucket === "evening") {
+        const start = parseClockToMinutes(candidate.eventTime);
+        const end = parseClockToMinutes(candidate.eventEndTime);
+        if (start !== null && start > 18 * 60 + 30) return false;
+        if (end !== null && end > 20 * 60) return false;
+      }
+      return true;
+    }
+    return candidate.ongoing === true && bucket !== "evening";
+  }
+  return openDuringBucket(candidate.hours, dayKey, bucket, candidate.types, candidate.category);
+}
+
+const MEAL_VENUE_TYPES = new Set([
+  "restaurant", "cafe", "coffee_shop", "bakery", "bistro", "diner",
+  "sandwich_shop", "bar_and_grill", "pub", "food_court",
+]);
+
+const NON_DINING_PRIMARY_TYPES = new Set([
+  "catering_service", "food_delivery", "meal_delivery", "meal_takeaway",
+  "food_store", "grocery_store", "supermarket", "convenience_store",
+  "candy_store", "chocolate_shop", "confectionery", "dessert_shop",
+  "business_center", "store",
+]);
+
+const BREAKFAST_PRIMARY_TYPES = new Set([
+  "breakfast_restaurant", "brunch_restaurant", "cafe", "coffee_shop",
+  "bakery", "pastry_shop", "diner", "sandwich_shop",
+]);
+
+const DINNER_PRIMARY_TYPES = new Set([
+  "restaurant", "bistro", "diner", "bar_and_grill", "pub", "gastropub",
+]);
+
+export function isMealVenueCandidate(
+  candidate: Pick<Candidate, "types" | "primaryType" | "displayType" | "curated" | "address">,
+  bucket?: Bucket,
+): boolean {
+  const types = candidate.types || [];
+  const primaryType = candidate.primaryType || "";
+  if (NON_DINING_PRIMARY_TYPES.has(primaryType)) return false;
+  // Home food businesses and delivery kitchens can carry cafe/bakery tags,
+  // but they are not useful places to send a reader for a meal.
+  if (/\b(?:apt|apartment)\b/i.test(candidate.address || "")) return false;
+
+  const primaryIsRestaurant = primaryType === "restaurant" || primaryType.endsWith("_restaurant");
+  const primaryIsDiningVenue = primaryIsRestaurant || MEAL_VENUE_TYPES.has(primaryType);
+  const displayIsDiningVenue = /\b(restaurant|cafe|café|coffee|bakery|bistro|diner|taqueria|pizzeria|brasserie|izakaya|gastropub|bar and grill)\b/i.test(candidate.displayType || "");
+  const trustedUntypedRecord = candidate.curated === true && !primaryType && types.length === 0;
+  if (!primaryIsDiningVenue && !displayIsDiningVenue && !trustedUntypedRecord) return false;
+
+  if (bucket === "dinner") {
+    return primaryIsRestaurant || DINNER_PRIMARY_TYPES.has(primaryType) ||
+      (!primaryType && /\b(restaurant|bistro|diner|taqueria|pizzeria|brasserie|izakaya|gastropub|bar and grill)\b/i.test(candidate.displayType || ""));
+  }
+  if (bucket === "breakfast" && primaryType) {
+    return primaryIsRestaurant || BREAKFAST_PRIMARY_TYPES.has(primaryType);
+  }
+  return true;
+}
+
+function openForMealService(
+  hours: Record<string, string> | null | undefined,
+  dayKey: DayKey,
+  bucket: Bucket,
+): boolean {
+  if (!hours) return false;
+  const probeHour = bucket === "breakfast" ? 9.5 : bucket === "lunch" ? 12.5 : 18.5;
+  return openRangesOn(hours, dayKey).some(([open, close]) => open <= probeHour && close >= probeHour + 0.75);
+}
+
+function fitsMealBucket(candidate: Candidate, bucket: Bucket, dayKey: DayKey): boolean {
+  return candidate.source === "place" &&
+    candidate.category === "food" &&
+    candidate.locationPrecision !== "city" &&
+    isMealVenueCandidate(candidate, bucket) &&
+    openForMealService(candidate.hours, dayKey, bucket);
+}
+
+function pillarBucketScore(
+  candidate: Candidate,
+  bucket: PillarBucket,
+  weekContext: PlanRequest["weekContext"],
+): number {
+  let score = candidate.score;
+  if (candidate.source === "event") {
+    score += candidate.eventTime ? 8 : 0;
+    if (bucket === "evening") score += 10;
+    if (candidate.marquee) score += 8;
+  }
+  if (candidate.source === "place" && candidate.bestSlots?.includes(bucket)) score += 10;
+  const saturation = weekContext?.categorySaturation?.[candidate.category] || 0;
+  score -= Math.min(18, Math.max(0, saturation - 1) * 2);
+  return score;
+}
+
+function activityLine(candidate: Candidate, dayKey: DayKey): string {
+  const parts = [`[${candidate.id}] ${candidate.name}`, `city: ${candidate.city}`, `category: ${candidate.category}`];
+  if (candidate.displayType) parts.push(`type: ${candidate.displayType}`);
+  if (candidate.source === "event") {
+    parts.push(candidate.ongoing ? "signal: ongoing exhibition" : "signal: EVENT TODAY");
+    if (candidate.marquee) parts.push("signal: MARQUEE");
+    if (candidate.eventTime) {
+      const time = candidate.eventEndTime
+        ? `${candidate.eventTime}–${candidate.eventEndTime}`
+        : candidate.eventTime;
+      parts.push(`time: ${time}`);
+    }
+    if (candidate.venue) parts.push(`venue: ${candidate.venue}`);
   } else {
-    parts.push(`hours: daylight (no formal hours)`);
+    if (candidate.rating) {
+      parts.push(`reputation: ${candidate.rating}${candidate.ratingCount ? ` from ${candidate.ratingCount} ratings` : ""}`);
+    }
+    if (candidate.curated) parts.push("signal: editorially curated");
+    const ranges = openRangesOn(candidate.hours, dayKey);
+    if (ranges.length) {
+      const fmt = (hour: number) => hour > 12 ? `${hour - 12} PM` : hour === 12 ? "12 PM" : `${hour} AM`;
+      parts.push(`hours: ${ranges.map(([open, close]) => `${fmt(open)}–${fmt(close)}`).join(", ")}`);
+    }
+  }
+  if (candidate.cost === "free") parts.push("cost: free");
+  else if (candidate.costNote) parts.push(`price: ${candidate.costNote}`);
+  if (candidate.indoorOutdoor) parts.push(`setting: ${candidate.indoorOutdoor}`);
+  if (candidate.blurb || candidate.description) parts.push(`note: ${candidate.blurb || candidate.description}`);
+  if (candidate.interestingChain && candidate.chainInterestReasons?.length) {
+    parts.push(`chain interest: ${candidate.chainInterestReasons.join(", ")}`);
   }
   return parts.join(" | ");
 }
 
-interface BucketPick {
-  bucket: Bucket;
-  id: string;
-  blurb: string;
+function mealLine(ranked: PillarOption["meals"][number]): string {
+  const meal = ranked.candidate;
+  const parts = [
+    `[${meal.id}] ${meal.name}`,
+    `${ranked.distanceMiles.toFixed(1)} mi from activity`,
+    `city: ${meal.city}`,
+  ];
+  if (meal.displayType) parts.push(`type: ${meal.displayType}`);
+  if (meal.newlyOpened) parts.push("signal: newly opened");
+  if (meal.curated) parts.push("signal: editorially curated");
+  if ((meal.foodDistinctiveness || 0) >= 6) parts.push("signal: distinctive food type");
+  if (meal.rating) {
+    parts.push(`reputation: ${meal.rating}${meal.ratingCount ? ` from ${meal.ratingCount} ratings` : ""}`);
+  }
+  if (meal.costNote) parts.push(`price: ${meal.costNote}`);
+  if (meal.blurb) parts.push(`note: ${meal.blurb}`);
+  if (meal.interestingChain && meal.chainInterestReasons?.length) {
+    parts.push(`chain interest: ${meal.chainInterestReasons.join(", ")}`);
+  }
+  return parts.join(" | ");
 }
 
-async function pickBucketsWithClaude(
+function buildPillarOptions(
+  candidates: Candidate[],
+  lockedCandidates: Array<{ candidate: Candidate; bucket: Bucket | null }>,
+  dayKey: DayKey,
+  weekContext: PlanRequest["weekContext"],
+  kids: boolean,
+): Map<PillarBucket, PillarOption[]> {
+  const mealsByBucket = new Map<Bucket, Candidate[]>();
+  for (const pillarBucket of PILLAR_BUCKETS) {
+    const mealBucket = MEAL_BUCKET_BY_PILLAR[pillarBucket];
+    mealsByBucket.set(
+      mealBucket,
+      candidates.filter((candidate) => fitsMealBucket(candidate, mealBucket, dayKey)),
+    );
+  }
+
+  const lockedByBucket = new Map<PillarBucket, Candidate>();
+  for (const locked of lockedCandidates) {
+    const resolved = locked.bucket || defaultBucketForLockedCandidate(locked.candidate);
+    if (isPillarBucket(resolved) && fitsPillarBucket(locked.candidate, resolved, dayKey, kids)) {
+      lockedByBucket.set(resolved, locked.candidate);
+    }
+  }
+
+  const result = new Map<PillarBucket, PillarOption[]>();
+  for (const bucket of PILLAR_BUCKETS) {
+    const mealBucket = MEAL_BUCKET_BY_PILLAR[bucket];
+    const eligible = candidates
+      .filter((candidate) => fitsPillarBucket(candidate, bucket, dayKey, kids))
+      .map((candidate) => ({
+        candidate,
+        bucketScore: pillarBucketScore(candidate, bucket, weekContext),
+      }))
+      .sort((a, b) => b.bucketScore - a.bucketScore || a.candidate.id.localeCompare(b.candidate.id));
+
+    const locked = lockedByBucket.get(bucket);
+    const shortlist: Array<{ candidate: Candidate; bucketScore: number }> = [];
+    const add = (entry: { candidate: Candidate; bucketScore: number }) => {
+      if (shortlist.some((existing) => existing.candidate.id === entry.candidate.id)) return;
+      shortlist.push(entry);
+    };
+    if (locked) {
+      add({
+        candidate: locked,
+        bucketScore: pillarBucketScore(locked, bucket, weekContext) + 1000,
+      });
+    }
+    // Dated events and excellent evergreen places are separate finalist lanes.
+    // A busy calendar cannot crowd every place out before the editor compares
+    // quality, and a large POI corpus cannot bury today's exceptional event.
+    for (const entry of eligible.filter(({ candidate }) => candidate.source === "event").slice(0, PILLAR_EVENT_OPTIONS_PER_BUCKET)) add(entry);
+    for (const entry of eligible.filter(({ candidate }) => candidate.source === "place").slice(0, PILLAR_PLACE_OPTIONS_PER_BUCKET)) add(entry);
+    for (const entry of eligible) {
+      if (shortlist.length >= PILLAR_OPTIONS_PER_BUCKET) break;
+      add(entry);
+    }
+    shortlist.sort((a, b) => b.bucketScore - a.bucketScore || a.candidate.id.localeCompare(b.candidate.id));
+
+    const options: PillarOption[] = [];
+    const lockedMeal = preferredLockedMeal(lockedCandidates, mealBucket);
+    for (const entry of shortlist) {
+      // A city centroid is not evidence that two places are actually nearby.
+      // Keep those candidates in the corpus, but never make a proximity claim
+      // until ingestion can resolve the activity to a venue or exact point.
+      if (entry.candidate.locationPrecision === "city") continue;
+      const rankedMeals = rankNearbyMeals(
+        entry.candidate,
+        mealsByBucket.get(mealBucket) || [],
+        MEAL_PAIR_MAX_MILES,
+      );
+      const lockedMealEntry = lockedMeal
+        ? rankedMeals.find((meal) => meal.candidate.id === lockedMeal.id)
+        : null;
+      const meals = lockedMealEntry
+        ? [lockedMealEntry, ...rankedMeals.filter((meal) => meal.candidate.id !== lockedMealEntry.candidate.id)].slice(0, MEAL_OPTIONS_PER_PILLAR)
+        : rankedMeals.slice(0, MEAL_OPTIONS_PER_PILLAR);
+      if (!meals.length) continue;
+      options.push({ bucket, ...entry, meals });
+    }
+    result.set(bucket, options);
+  }
+  return result;
+}
+
+function preferredLockedMeal(
+  lockedCandidates: Array<{ candidate: Candidate; bucket: Bucket | null }>,
+  mealBucket: Bucket,
+): Candidate | null {
+  for (const locked of lockedCandidates) {
+    if (locked.candidate.source !== "place" || locked.candidate.category !== "food") continue;
+    const resolved = locked.bucket || defaultBucketForLockedCandidate(locked.candidate);
+    if (resolved === mealBucket) return locked.candidate;
+  }
+  return null;
+}
+
+function candidateBlurb(candidate: Candidate, modelBlurb?: string): string {
+  return cleanDisplayCopy(
+    candidate.blurb ||
+    candidate.description?.slice(0, 200) ||
+    modelBlurb ||
+    fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue),
+  );
+}
+
+function toDayCard(
+  candidate: Candidate,
+  bucket: Bucket,
+  role: DayCard["role"],
+  pairedWithId: string,
+  kids: boolean,
+  blurb: string | undefined,
+  rationale: string,
+  pairDistanceMiles?: number,
+  pairLocationPrecision?: DayCard["pairLocationPrecision"],
+): DayCard {
+  return {
+    id: candidate.id,
+    name: cleanDisplayName(candidate.name),
+    category: candidate.category,
+    city: candidate.city,
+    address: candidate.address,
+    bucket,
+    eventTime: candidate.eventTime || null,
+    eventEndTime: candidate.eventEndTime || null,
+    timeBlock: BUCKET_LABELS[bucket],
+    blurb: candidateBlurb(candidate, blurb),
+    url: candidate.url,
+    mapsUrl: candidate.mapsUrl,
+    cost: candidate.cost,
+    costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
+    kidsCostNote: candidate.kidsCostNote,
+    photoRef: candidate.photoRef || null,
+    image: candidate.image || null,
+    venue: cleanDisplayName(candidate.venue) || null,
+    source: candidate.source,
+    locked: rationale.includes("locked"),
+    ...(candidate.interestingChain ? {
+      interestingChain: true,
+      chainInterestReasons: candidate.chainInterestReasons || [],
+    } : {}),
+    role,
+    pairedWithId,
+    ...(Number.isFinite(pairDistanceMiles) ? { pairDistanceMiles } : {}),
+    ...(pairLocationPrecision ? { pairLocationPrecision } : {}),
+    rationale,
+  };
+}
+
+async function pickPillarPairsWithClaude(
   pool: Candidate[],
   lockedCandidates: Array<{ candidate: Candidate; bucket: Bucket | null }>,
   weather: string | null,
   city: City,
+  scope: "regional" | "city",
   kids: boolean,
   prefs: UserPreferences | undefined,
   targetDate: string | undefined,
@@ -947,7 +1383,6 @@ async function pickBucketsWithClaude(
   dayKey: DayKey,
 ): Promise<DayCard[]> {
   const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
-  const cityName = getCityName(city);
   const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
   const todayLabel = planDateObj.toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles",
@@ -956,552 +1391,235 @@ async function pickBucketsWithClaude(
     day: "numeric",
   });
 
-  const lockedSection = lockedCandidates.length > 0
-    ? `\n\nMUST-INCLUDE ITEMS (always include every one in the bucket noted):\n${lockedCandidates.map(({ candidate: c, bucket }) => {
-        const slot = bucket ? ` — bucket: ${bucket}` : "";
-        const evt = c.eventTime ? ` at ${c.eventTime}` : "";
-        return `- ${c.name} (${c.category}, ${c.city})${slot}${evt}`;
-      }).join("\n")}`
-    : "";
+  const allCandidates = [
+    ...lockedCandidates.map(({ candidate }) => candidate),
+    ...pool,
+  ].filter((candidate, index, all) => all.findIndex((other) => other.id === candidate.id) === index);
 
-  const topPool = pool.slice(0, CANDIDATE_POOL_SIZE);
-  const poolText = topPool
-    .map((c, i) => candidateLine(c, dayKey, i))
-    .filter((line): line is string => line !== null)
-    .join("\n");
-
-  let weekContextSection = "";
-  if (weekContext) {
-    const parts: string[] = [];
-    const anchors = (weekContext.anchorCities || []).filter(Boolean);
-    if (anchors.length) {
-      const counts: Record<string, number> = {};
-      for (const a of anchors) counts[a] = (counts[a] || 0) + 1;
-      const summary = Object.entries(counts)
-        .map(([c, n]) => (n > 1 ? `${c} (${n}×)` : c))
-        .join(", ");
-      parts.push(`Anchor cities already picked this week: ${summary}. Prefer neighborhoods that complement.`);
+  const optionsByBucket = buildPillarOptions(allCandidates, lockedCandidates, dayKey, weekContext, kids);
+  for (const bucket of PILLAR_BUCKETS) {
+    if (!(optionsByBucket.get(bucket)?.length)) {
+      throw new Error(`No viable ${bucket} pillar with a meal within ${MEAL_PAIR_MAX_MILES} miles`);
     }
-    const cats = weekContext.categorySaturation || {};
-    const saturated = Object.entries(cats).filter(([, n]) => n >= 2);
-    if (saturated.length) {
-      parts.push(`Category saturation: ${saturated.map(([c, n]) => `${c} ×${n}`).join(", ")}. Lean away when alternatives exist.`);
-    }
-    if (parts.length) weekContextSection = `\n\nTHIS-WEEK CONTEXT:\n${parts.join("\n")}`;
   }
 
-  const prompt = `You are the day-planning engine for South Bay Today, a local guide for the South Bay region of California. Build a SIX-BUCKET "idea spark" plan, not an hour-by-hour schedule.
+  const lockedAssignmentCounts = new Map<Bucket, number>();
+  for (const locked of lockedCandidates) {
+    const resolved = locked.bucket || defaultBucketForLockedCandidate(locked.candidate);
+    const isMeal = locked.candidate.source === "place" && locked.candidate.category === "food";
+    if (isMeal && !["breakfast", "lunch", "dinner"].includes(resolved)) {
+      throw new Error(`Locked restaurant ${locked.candidate.name} is assigned to activity bucket ${resolved}`);
+    }
+    if (!isMeal && !isPillarBucket(resolved)) {
+      throw new Error(`Locked activity ${locked.candidate.name} is assigned to meal bucket ${resolved}`);
+    }
+    lockedAssignmentCounts.set(resolved, (lockedAssignmentCounts.get(resolved) || 0) + 1);
+  }
+  for (const [bucket, count] of lockedAssignmentCounts) {
+    if (count > 1) throw new Error(`Multiple locked cards compete for ${bucket}`);
+  }
 
-Anchor city: ${cityName}. The candidate pool pulls from the whole South Bay — adjacent cities are fine when they cluster.
+  const requiredIds = new Set(lockedCandidates.map(({ candidate }) => candidate.id));
+  const optionText = PILLAR_BUCKETS.map((bucket) => {
+    const mealBucket = MEAL_BUCKET_BY_PILLAR[bucket];
+    const options = optionsByBucket.get(bucket) || [];
+    const lines = options.map((option, index) => {
+      const required = requiredIds.has(option.candidate.id) ? " | REQUIRED BY USER" : "";
+      const meals = option.meals
+        .map((meal) => `    - ${mealLine(meal)}`)
+        .join("\n");
+      return `${index + 1}. ${activityLine(option.candidate, dayKey)}${required}\n  VERIFIED ${mealBucket.toUpperCase()} OPTIONS:\n${meals}`;
+    });
+    return `${bucket.toUpperCase()} PILLAR CANDIDATES\n${lines.join("\n")}`;
+  }).join("\n\n");
 
-It's ${todayLabel}. ${weather ? `Weather: ${weather}.` : ""}
-${kids ? "This plan is for a family WITH KIDS. Every pick must be kid-friendly — no bars, no 21+ events, no late-only spots. Picture a family that eats dinner at 5 — evening is just \"what to do for a couple hours after\": an ice cream stop, a downtown stroll, a playground at golden hour, a library evening, a creekside walk. Low-key wind-down, ideally wrapped by 7:30." : "This plan is for adults WITHOUT KIDS."}
+  const saturation = Object.entries(weekContext?.categorySaturation || {})
+    .filter(([, count]) => count >= 2)
+    .map(([category, count]) => `${category} ×${count}`)
+    .join(", ");
+
+  const prompt = `You are the senior editor for South Bay Today. Build ${scope === "city" ? `a ${getCityName(city)} day plan` : "the best possible South Bay day plan"} for ${todayLabel}.
+
+CORE METHOD — DO THESE IN ORDER:
+1. Ignore the restaurants. Compare the activity candidates across the ENTIRE relevant pool and pick the one truly exceptional MORNING activity, the one truly exceptional AFTERNOON activity, and the one truly exceptional EVENING activity.
+2. Only after the three pillars are chosen, pair each with one restaurant from that pillar's VERIFIED meal list: breakfast with morning, lunch with afternoon, dinner with evening.
+
+PILLAR QUALITY COMES FIRST. Geography must never make a merely adequate activity beat an exceptional one. The three pillars may be in the same town or three different towns. Judge specificity, one-day relevance, editorial interest, rarity, marquee signals, and whether a reader would be annoyed to learn tomorrow that we buried it. A dated event often beats an evergreen place, but a weak routine listing does not beat a genuinely excellent activity.
+MEAL QUALITY COMES NEXT. Every listed restaurant is already open in the right meal window and within ${MEAL_PAIR_MAX_MILES} miles of its pillar. Pick on "new, unique, great": verified new openings, distinctive local formats/cuisines, editorial curation, strong ratings with real review evidence, and specific source-backed notes. A chain is eligible only when its supplied chain-interest signal makes that branch worth recommending; never pick a familiar brand merely because it is convenient. Distance only breaks close quality ties.
+${scope === "city" ? `CITY SCOPE: all six picks must stay in ${getCityName(city)}.` : "REGIONAL SCOPE: do not cluster the three pillars and do not optimize a six-stop driving route."}
+${weather ? `Weather: ${weather}.` : ""}
+${kids ? "FAMILY MODE: every activity and meal must work with kids. Avoid 21+ venues, adult-only programs, luxury dinner, and late activities that cannot wrap around 7:30 PM." : "ADULT MODE: no kids are in the group."}
 ${describePreferences(prefs)}
-${lockedSection}${weekContextSection}
+${saturation ? `Recent category saturation: ${saturation}. Use this only to break close pillar-quality ties.` : ""}
 
-CANDIDATE POOL:
-${poolText}
-
-TASK: Fill all SIX buckets — every plan should have something in every slot. The plan is a brainstorm, not a tour: a user might do all six, some, or none. Each bucket should hold a venue or event the user could realistically slot into that part of the day.
-
-THE BUCKETS (breakfast, morning, lunch, afternoon, dinner, evening):
-- breakfast — coffee shop, bakery, casual breakfast restaurant. Venue should be open ~7–11 AM.
-- morning   — outdoor activity, museum, walk, market, gallery, library, playground. ~9 AM–1 PM.
-- lunch     — restaurant or casual food spot. ~11 AM–3 PM.
-- afternoon — outdoor activity, museum, shopping, gallery, library, playground. ~1–6 PM.
-- dinner    — restaurant. ~5–9 PM.
-- evening   — push hard for an EVENT TODAY (concert, show, talk, late-opening exhibit) when the pool has one that fits. Otherwise fall back to a low-key spot: a park, a creekside trail at golden hour, a downtown stroll, a playground, an ice cream shop, a bookstore, a library reading room, a record store. ~6–10 PM (kids: ~6–7:30 PM, family-eats-at-5 wind-down).
-
-ALWAYS-FILL RULE — never skip a bucket. If breakfast has no perfect cafe, pick the best food candidate that's open then. If evening has no event, pick a park / playground / library / ice cream / bookstore / waterfront / overlook. A "go take a walk at X park" is a totally legitimate evening idea.
-
-VARIETY RULE — dig for gems. Don't anchor evening on the same park or library day after day. Across all six buckets, lean toward picks the user probably hasn't seen recently. Score-penalized "recently shown" candidates in the pool are deprioritized for a reason — pull from the broader pool when there's something fresh. Mix categories aggressively: if afternoon is outdoor, evening shouldn't also be outdoor unless the evening pick is genuinely a different vibe (golden-hour overlook vs. mid-day hike).
+${optionText}
 
 RULES:
-- Pick ONE candidate per bucket.
-- breakfast / lunch / dinner are FOOD ONLY. Pick a restaurant, café, or bakery — never a park or museum.
-- morning / afternoon / evening are ACTIVITIES (or events). Never a sit-down restaurant.
-- Events with a fixed time (see "fits-bucket" hint) belong in the bucket their time matches. Don't move a 7 PM concert to the afternoon bucket.
-- Include AT LEAST ONE "EVENT TODAY" item if the pool has any — that's the local-guide differentiator. Evening is the strongest candidate for an event slot.
-- Geographic clustering: aim for the venues to cluster (one or two cities) so a user who DOES want to do all six isn't driving in circles. But don't drop a great pick over a 20-minute drive.
-- Don't pick the same venue twice across buckets.
-- Don't pick an obvious chain ("Starbucks", "Olive Garden") when local options exist.
-- NEVER pick a "neighborhood" or "downtown area" — always a SPECIFIC place.
-- NEVER pick a venue (theater, amphitheater, stadium) unless it appears in the pool as an EVENT TODAY.
-${kids ? "- KIDS BUDGET: Casual and affordable. Never $$$$ restaurants. Prefer $ and $$.\n- KIDS EVENING — \"if I eat dinner at 5, what can I do for a couple hours\": picture the family wrapping dinner by 6 and looking for one low-stakes thing before bed. Ice cream walk, a downtown loop, a playground at golden hour, a library evening, a creekside trail, a bookstore browse. NEVER a sit-down activity that runs past 7:30. Mix it up day to day — don't anchor on the same playground or library every time." : ""}
-- READ THE PRICE DATA: if a place is listed as $$$$ it is NOT "casual." Match your description to the actual price level.
+- Return exactly three pair objects: morning+breakfast, afternoon+lunch, evening+dinner.
+- Pick IDs only from the candidate and verified meal lists under the matching pillar.
+- Never reuse an activity or restaurant.
+- Any REQUIRED BY USER activity must be the pillar for its time bucket.
+- Write one factual sentence per item using only its supplied note/type/setting/price data.
+- Do not mention distance, travel time, proximity, star ratings, review counts, rankings, scoring, or the mechanics of pairing.
+- Do not write cross-card transitions such as "after the museum" or "before the show."
+- Never use filler like "hidden gem", "worth a stop", "solid local pick", "great place", "fun spot", "easy table", or "good food, no fuss."
 
-TONE — write like a friend texting an idea:
-- "blurb": one specific sentence about what makes THIS place worth a stop. Use the data: pull the venue's category/displayType (e.g. "Vietnamese restaurant", "Performing arts theater", "Bouldering gym"), the indoor/outdoor setting, and the price tier ($, $$, $$$, $$$$). When the candidate has a "blurb" or "note" line, mine it for one concrete detail (a signature dish, a defining feature, a vibe descriptor) and weave it in. The blurb MUST describe the place named by the id you picked — never describe a different place.
-- BANNED — these are FILLER and unacceptable: "solid local pick", "go-to spot", "easy table", "good food no fuss", "hidden gem", "worth a stop", "popular spot", "great place", "fun spot", "neighborhood favorite", "low-key vibe", "casual spot for a meal". If you find yourself reaching for any of these, stop and use a real attribute instead.
-- Examples of GOOD specificity: "Wood-fired Neapolitan pies in a small Campbell storefront — takeout-friendly." / "Outdoor bouldering walls and a handful of top-ropes — bring your own shoes or rent at the desk." / "Tiny South First record shop, big jazz and used-vinyl section." / "Persian charcoal kebabs on a sunny patio — get the koobideh." Notice each names what the place IS and one concrete reason to go.
-- Examples of BAD: "Solid local pick for a meal." / "Good food, no fuss." / "Easy outdoor stretch." (these say nothing — never write blurbs like this.)
-- NEVER say: "right now", "real game", "real event", "anchor event", "one-time", "only today", "happens only today", "unforgettable", "energy burn", "change of scenery"
-- NEVER reference what a user is doing in a different bucket — no "after the X", "before the X", "post-X", "shake off the X". The blurb is about THIS place, not the day's flow.
-- NEVER mention star ratings or review scores.
-- NEVER mention distance, travel time, or proximity. No "near", "nearby", "close to", "minutes from", "short drive".
-- NEVER fabricate details not in the data — if the candidate line doesn't say "tri-tip sandwich", don't claim a tri-tip sandwich. Stick to the displayType, the cost, the setting, and any note/blurb the data provides.
-- NEVER describe a place as being "in" a city it's not in.
-- Vary your sentence structure. Don't lean on em dashes (—) — mix periods, commas, short sentences.
-
-OUTPUT (JSON array, no markdown fences, one entry per filled bucket):
+OUTPUT — JSON array only:
 [
   {
-    "bucket": "breakfast",
-    "id": "place:google-id-or-event:event-id",
-    "blurb": "One sentence about what to do here."
+    "pillarBucket": "morning",
+    "pillarId": "event-or-place-id",
+    "pillarBlurb": "Specific factual sentence.",
+    "mealId": "place-id from this pillar's breakfast list",
+    "mealBlurb": "Specific factual sentence."
   },
-  ...
-]
+  {
+    "pillarBucket": "afternoon",
+    "pillarId": "event-or-place-id",
+    "pillarBlurb": "Specific factual sentence.",
+    "mealId": "place-id from this pillar's lunch list",
+    "mealBlurb": "Specific factual sentence."
+  },
+  {
+    "pillarBucket": "evening",
+    "pillarId": "event-or-place-id",
+    "pillarBlurb": "Specific factual sentence.",
+    "mealId": "place-id from this pillar's dinner list",
+    "mealBlurb": "Specific factual sentence."
+  }
+]`;
 
-Return ONLY the JSON array. No explanation.`;
-
-  const response = await client.messages.create({
-    model: CLAUDE_OPUS,
-    max_tokens: 2500,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const text = extractText(response.content);
-  const cleaned = stripFences(text);
-
-  let picks: BucketPick[];
+  let modelPicks: PillarPairPick[] = [];
   try {
-    picks = JSON.parse(cleaned);
-  } catch {
-    throw new Error(`Failed to parse Claude response: ${cleaned.slice(0, 200)}`);
+    const response = await client.messages.create({
+      model: CLAUDE_OPUS,
+      max_tokens: 1800,
+      messages: [{ role: "user", content: prompt }],
+    });
+    const parsed = JSON.parse(stripFences(extractText(response.content)));
+    if (Array.isArray(parsed)) modelPicks = parsed;
+  } catch (error) {
+    console.warn(`[plan-day] editorial selection failed; using ranked pairs: ${String((error as Error)?.message || error).slice(0, 180)}`);
   }
 
-  const allCandidates = [...lockedCandidates.map((l) => l.candidate), ...topPool];
-  const candidateMap = new Map(allCandidates.map((c) => [c.id, c]));
-  const lockedIdSet = new Set(lockedCandidates.map((l) => l.candidate.id));
-  const poolRank = new Map(topPool.map((c, i) => [c.id, i + 1]));
+  const pickByBucket = new Map<PillarBucket, PillarPairPick>();
+  for (const pick of modelPicks) {
+    if (!isPillarBucket(pick?.pillarBucket)) continue;
+    if (!pickByBucket.has(pick.pillarBucket)) pickByBucket.set(pick.pillarBucket, pick);
+  }
 
   const cards: DayCard[] = [];
-  const usedBuckets = new Set<Bucket>();
-  const usedIds = new Set<string>();
+  const usedPillars = new Set<string>();
+  const usedMeals = new Set<string>();
 
-  for (const pick of picks) {
-    if (!isBucket(pick.bucket)) continue;
-    if (usedBuckets.has(pick.bucket)) continue; // dedup
-    const candidate = candidateMap.get(pick.id);
-    if (!candidate) continue;
-    if (usedIds.has(candidate.id)) continue;
+  for (const bucket of PILLAR_BUCKETS) {
+    const mealBucket = MEAL_BUCKET_BY_PILLAR[bucket];
+    const options = optionsByBucket.get(bucket) || [];
+    const lockedPillar = lockedCandidates.find((locked) => {
+      const resolved = locked.bucket || defaultBucketForLockedCandidate(locked.candidate);
+      return resolved === bucket && fitsPillarBucket(locked.candidate, bucket, dayKey, kids);
+    })?.candidate;
+    const lockedMeal = preferredLockedMeal(lockedCandidates, mealBucket);
+    const modelPick = pickByBucket.get(bucket);
 
-    // Force event cards to the bucket their real time matches.
-    let bucket: Bucket = pick.bucket;
-    if (candidate.source === "event" && candidate.eventTime) {
-      const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
-      if (evBucket && evBucket !== pick.bucket) {
-        if (usedBuckets.has(evBucket)) continue; // already filled
-        logDecision({
-          script: "plan-day",
-          action: "autofixed",
-          target: `${candidate.name} (${candidate.id})`,
-          reason: `event time → bucket: claude said "${pick.bucket}", real time ${candidate.eventTime} → "${evBucket}"`,
-          meta: { city, targetDate, eventTime: candidate.eventTime },
-        });
-        bucket = evBucket;
+    let option = lockedPillar
+      ? options.find((entry) => entry.candidate.id === lockedPillar.id)
+      : options.find((entry) => entry.candidate.id === modelPick?.pillarId);
+    if (lockedPillar && !option) {
+      throw new Error(`Locked ${bucket} activity ${lockedPillar.name} has no valid ${mealBucket} within ${MEAL_PAIR_MAX_MILES} miles`);
+    }
+    if (lockedMeal && (!option || !option.meals.some((meal) => meal.candidate.id === lockedMeal.id))) {
+      if (lockedPillar) {
+        throw new Error(`Locked ${mealBucket} ${lockedMeal.name} is not within ${MEAL_PAIR_MAX_MILES} miles of locked ${bucket} activity`);
+      }
+      option = options.find((entry) =>
+        !usedPillars.has(entry.candidate.id) &&
+        entry.meals.some((meal) => meal.candidate.id === lockedMeal.id)
+      );
+      if (!option) {
+        throw new Error(`Locked ${mealBucket} ${lockedMeal.name} has no compatible ${bucket} activity`);
       }
     }
-
-    // Meal/activity guard — meal buckets are food-only.
-    if (MEAL_BUCKETS.has(bucket) && candidate.category !== "food" && candidate.source === "place") {
-      logDecision({
-        script: "plan-day",
-        action: "dropped",
-        target: `${candidate.name} (${candidate.id})`,
-        reason: `non-food place in meal bucket "${bucket}"`,
-        meta: { city, targetDate },
-      });
-      continue;
+    if (!option || usedPillars.has(option.candidate.id)) {
+      if (lockedPillar || lockedMeal) throw new Error(`Locked choice for ${bucket}/${mealBucket} conflicts with another pair`);
+      option = options.find((entry) => !usedPillars.has(entry.candidate.id));
     }
+    if (!option) throw new Error(`Could not choose a unique ${bucket} pillar`);
 
-    const isLocked = lockedIdSet.has(candidate.id);
-    const rank = poolRank.get(candidate.id);
-    const rationaleParts: string[] = [];
-    if (isLocked) rationaleParts.push("locked-by-caller");
-    else if (rank) rationaleParts.push(`claude:pool-rank-${rank}/${topPool.length}`);
-    else rationaleParts.push("claude:pick");
-    if (candidate.source === "event") rationaleParts.push(candidate.ongoing ? "ongoing-exhibit" : "event-today");
-    if (candidate.rating) rationaleParts.push(`rating=${candidate.rating}`);
-    if (candidate.category) rationaleParts.push(`bucket=${bucket}`);
+    let meal = lockedMeal
+      ? option.meals.find((entry) => entry.candidate.id === lockedMeal.id)
+      : option.meals.find((entry) => entry.candidate.id === modelPick?.mealId && !usedMeals.has(entry.candidate.id));
+    if (!meal || usedMeals.has(meal.candidate.id)) {
+      if (lockedMeal) throw new Error(`Locked ${mealBucket} ${lockedMeal.name} conflicts with another pair`);
+      meal = option.meals.find((entry) => !usedMeals.has(entry.candidate.id));
+    }
+    if (!meal) throw new Error(`Could not choose a unique ${mealBucket} pairing`);
 
-    const cardBlurb =
-      candidate.blurb ||
-      pick.blurb ||
-      candidate.description?.slice(0, 200) ||
-      fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue);
+    const pillarRationale = [
+      lockedPillar?.id === option.candidate.id ? "locked-by-caller" : "quality-first-pillar",
+      option.candidate.source === "event" ? (option.candidate.marquee ? "marquee-event-today" : "event-today") : "exceptional-place",
+      `bucket-score=${option.bucketScore.toFixed(1)}`,
+    ].join(" | ");
+    const mealRationale = [
+      lockedMeal?.id === meal.candidate.id ? "locked-by-caller" : "paired-meal",
+      `quality=${meal.qualityScore.toFixed(1)}`,
+      `distance=${meal.distanceMiles.toFixed(1)}mi`,
+      ...(meal.candidate.interestingChain
+        ? [`chain-interest=${meal.candidate.chainInterestReasons?.join(",") || "qualified"}`]
+        : []),
+    ].join(" | ");
 
-    cards.push({
-      id: candidate.id,
-      name: cleanDisplayName(candidate.name),
-      category: candidate.category,
-      city: candidate.city,
-      address: candidate.address,
+    const pillarCard = toDayCard(
+      option.candidate,
       bucket,
-      eventTime: candidate.eventTime || null,
-      eventEndTime: candidate.eventEndTime || null,
-      timeBlock: BUCKET_LABELS[bucket],
-      blurb: cleanDisplayCopy(cardBlurb),
-      url: candidate.url,
-      mapsUrl: candidate.mapsUrl,
-      cost: candidate.cost,
-      costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
-      kidsCostNote: candidate.kidsCostNote,
-      photoRef: (candidate as any).photoRef || null,
-      image: (candidate as any).image || null,
-      venue: cleanDisplayName(candidate.venue) || null,
-      source: candidate.source,
-      locked: isLocked,
-      rationale: rationaleParts.join(" | "),
-    });
+      "pillar",
+      meal.candidate.id,
+      kids,
+      modelPick?.pillarBlurb,
+      pillarRationale,
+    );
+    const mealCard = toDayCard(
+      meal.candidate,
+      mealBucket,
+      "paired-meal",
+      option.candidate.id,
+      kids,
+      modelPick?.mealBlurb,
+      mealRationale,
+      Math.round(meal.distanceMiles * 10) / 10,
+      option.candidate.locationPrecision === "city" || meal.candidate.locationPrecision === "city"
+        ? "city"
+        : option.candidate.locationPrecision === "venue" || meal.candidate.locationPrecision === "venue"
+          ? "venue"
+          : "exact",
+    );
+    cards.push(mealCard, pillarCard);
+    usedPillars.add(option.candidate.id);
+    usedMeals.add(meal.candidate.id);
 
-    usedBuckets.add(bucket);
-    usedIds.add(candidate.id);
-
-    logDecision({
-      script: "plan-day",
-      action: "picked",
-      target: `${candidate.name} (${candidate.id})`,
-      reason: rationaleParts.join(" | "),
-      meta: { city, targetDate, bucket, kids },
-    });
-  }
-
-  // Force locked items that Claude omitted into the plan.
-  for (const { candidate, bucket: pinned } of lockedCandidates) {
-    if (usedIds.has(candidate.id)) continue;
-    let bucket: Bucket = pinned ?? "afternoon";
-    if (candidate.source === "event" && candidate.eventTime) {
-      const evBucket = bucketForEvent(candidate.eventTime, candidate.category);
-      if (evBucket) bucket = evBucket;
-    }
-    if (usedBuckets.has(bucket)) {
-      // Pick the first unused bucket as a fallback slot.
-      const open = BUCKET_ORDER.find((b) => !usedBuckets.has(b));
-      if (!open) continue;
-      bucket = open;
-    }
-
-    cards.push({
-      id: candidate.id,
-      name: candidate.name,
-      category: candidate.category,
-      city: candidate.city,
-      address: candidate.address,
-      bucket,
-      eventTime: candidate.eventTime || null,
-      eventEndTime: candidate.eventEndTime || null,
-      timeBlock: BUCKET_LABELS[bucket],
-      blurb: candidate.blurb || candidate.description?.slice(0, 200) || fallbackBlurb(candidate.source, candidate.category, candidate.name, candidate.venue),
-      url: candidate.url,
-      mapsUrl: candidate.mapsUrl,
-      cost: candidate.cost,
-      costNote: kids && candidate.kidsCostNote ? candidate.kidsCostNote : candidate.costNote,
-      kidsCostNote: candidate.kidsCostNote,
-      photoRef: (candidate as any).photoRef || null,
-      image: (candidate as any).image || null,
-      venue: candidate.venue || null,
-      source: candidate.source,
-      locked: true,
-      rationale: "locked-force-insert | claude-omitted",
-    });
-    usedBuckets.add(bucket);
-    usedIds.add(candidate.id);
-    logDecision({
-      script: "plan-day",
-      action: "force-inserted",
-      target: `${candidate.name} (${candidate.id})`,
-      reason: "locked item missing from Claude output",
-      meta: { city, targetDate, bucket },
-    });
-  }
-
-  // Drop blurb↔card mismatches (blurb describes a different pool candidate).
-  {
-    const before = cards.length;
-    const CITY_TOKENS = new Set([
-      "san", "jose", "san-jose", "los", "gatos", "palo", "alto", "santa",
-      "clara", "mountain", "view", "cupertino", "sunnyvale", "milpitas",
-      "campbell", "saratoga", "south", "north", "east", "west", "downtown",
-    ]);
-    const GENERIC_TOKENS = new Set([
-      "market", "museum", "center", "street", "avenue", "park", "plaza",
-      "restaurant", "cafe", "bar", "library", "community",
-    ]);
-    const distinctive = (name: string): string[] =>
-      (name || "")
-        .toLowerCase()
-        .split(/[^a-z0-9]+/)
-        .filter((w) => w.length >= 5 && !CITY_TOKENS.has(w) && !GENERIC_TOKENS.has(w));
-
-    const poolDistinct = new Map<string, string[]>();
-    for (const c of pool) poolDistinct.set(c.id, distinctive(c.name));
-
-    for (let i = cards.length - 1; i >= 0; i--) {
-      if (cards[i].locked) continue;
-      const cardId = cards[i].id;
-      const name = (cards[i].name || "").toLowerCase();
-      const blurb = (cards[i].blurb || "").toLowerCase();
-      if (!name || !blurb) continue;
-      if (blurb.includes(name)) continue;
-
-      const ownDistinct = poolDistinct.get(cardId) || distinctive(name);
-      if (ownDistinct.some((w) => blurb.includes(w))) continue;
-
-      let mismatchedTo: string | null = null;
-      for (const [otherId, tokens] of poolDistinct.entries()) {
-        if (otherId === cardId) continue;
-        if (tokens.some((w) => blurb.includes(w))) {
-          mismatchedTo = otherId;
-          break;
-        }
-      }
-
-      if (mismatchedTo) {
-        logDecision({
-          script: "plan-day",
-          action: "dropped",
-          target: `${cards[i].name} (${cards[i].id})`,
-          reason: `blurb describes different pool candidate (${mismatchedTo})`,
-          meta: { city, targetDate, blurb: cards[i].blurb?.slice(0, 80) },
-        });
-        usedBuckets.delete(cards[i].bucket);
-        cards.splice(i, 1);
-      }
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] blurb validator: dropped ${before - cards.length} mismatched card(s)`);
-    }
-  }
-
-  // Drop category-blurb mismatches (blurb's vocabulary clearly belongs to a
-  // different category than the card).
-  {
-    const before = cards.length;
-    const ALIEN_SIGNALS: Record<string, RegExp> = {
-      outdoor: /\b(food hall|dozen vendors?|the menu|order the|tacos,?\s*ramen|ramen,?\s*banh|tasting menu|wine bar|cocktails?|happy hour|the bartender|chef[''']s|prix fixe)\b/i,
-      food: /\b(easy trails?|hike the|hiking|playground|ducks to chase|wildflowers?|open space|swing set|sandbox|lap the loop|ride the train|the carousel)\b/i,
-      museum: /\b(food hall|dozen vendors?|easy trails?|hike|happy hour|tasting menu)\b/i,
-      shopping: /\b(food hall|dozen vendors?|easy trails?|hike|the menu|order the|tasting menu)\b/i,
-      entertainment: /\b(food hall|dozen vendors?|easy trails?|hike)\b/i,
-    };
-    for (let i = cards.length - 1; i >= 0; i--) {
-      if (cards[i].locked) continue;
-      const cat = cards[i].category;
-      const re = ALIEN_SIGNALS[cat];
-      if (!re) continue;
-      const blurb = cards[i].blurb || "";
-      if (!re.test(blurb)) continue;
+    for (const card of [pillarCard, mealCard]) {
       logDecision({
         script: "plan-day",
-        action: "dropped",
-        target: `${cards[i].name} (${cards[i].id})`,
-        reason: `blurb vocabulary signals different category than card (${cat})`,
-        meta: { city, targetDate, blurb: blurb.slice(0, 120), category: cat },
-      });
-      usedBuckets.delete(cards[i].bucket);
-      cards.splice(i, 1);
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] category validator: dropped ${before - cards.length} card(s) with cross-category blurbs`);
-    }
-  }
-
-  // Hours-fit check: drop place cards whose venue isn't open for at least 1h
-  // within the bucket's window.
-  {
-    const before = cards.length;
-    for (let i = cards.length - 1; i >= 0; i--) {
-      if (cards[i].locked) continue;
-      if (cards[i].source === "event") continue; // events keep their announced time
-      const candidate = candidateMap.get(cards[i].id);
-      if (!candidate) continue;
-      const hoursObj = (candidate as any).hours as Record<string, string> | null | undefined;
-      const placeTypes = (candidate as any).types as string[] | null | undefined;
-      if (!openDuringBucket(hoursObj, dayKey, cards[i].bucket, placeTypes, candidate.category)) {
-        const reason = !hoursObj
-          ? "no verified hours for time-sensitive venue"
-          : `venue not open during ${cards[i].bucket} window`;
-        logDecision({
-          script: "plan-day",
-          action: "dropped",
-          target: `${cards[i].name} (${cards[i].id})`,
-          reason,
-          meta: { city, targetDate, bucket: cards[i].bucket },
-        });
-        usedBuckets.delete(cards[i].bucket);
-        cards.splice(i, 1);
-      }
-    }
-    if (cards.length < before) {
-      console.log(`[plan-day] hours-fit: dropped ${before - cards.length} card(s) outside bucket hours`);
-    }
-  }
-
-  // Backfill: any bucket that ended up empty (Claude skipped it, or a
-  // post-processor dropped its pick) gets the best remaining pool candidate
-  // that matches the bucket's category + hours constraints. The "always-fill"
-  // promise — a thin homepage with two cards is worse than a complete plan
-  // with one or two filler picks.
-  const usedAfterValidation = new Set(cards.map((c) => c.bucket));
-  const usedIdsAfter = new Set(cards.map((c) => c.id));
-  const emptyBuckets = BUCKET_ORDER.filter((b) => !usedAfterValidation.has(b));
-  if (emptyBuckets.length > 0) {
-    for (const bucket of emptyBuckets) {
-      const isMeal = MEAL_BUCKETS.has(bucket);
-      // Iterate the full pool by score (already sorted in plan-day caller).
-      let backfill: Candidate | null = null;
-      for (const c of pool) {
-        if (usedIdsAfter.has(c.id)) continue;
-        // Meal buckets food-only; activity buckets non-food (events of any
-        // category fine since they're explicitly slotted by their time).
-        if (isMeal && c.category !== "food") continue;
-        if (!isMeal && c.source === "place" && c.category === "food") continue;
-        // Events with a fixed time only fit if their bucket matches.
-        if (c.source === "event" && c.eventTime) {
-          const evBucket = bucketForEvent(c.eventTime, c.category);
-          if (evBucket && evBucket !== bucket) continue;
-        }
-        // Hours fit (places only).
-        if (c.source === "place") {
-          const hoursObj = (c as any).hours as Record<string, string> | null | undefined;
-          const placeTypes = (c as any).types as string[] | null | undefined;
-          if (!openDuringBucket(hoursObj, dayKey, bucket, placeTypes, c.category)) continue;
-        }
-        backfill = c;
-        break;
-      }
-      if (!backfill) continue;
-      cards.push({
-        id: backfill.id,
-        name: backfill.name,
-        category: backfill.category,
-        city: backfill.city,
-        address: backfill.address,
-        bucket,
-        eventTime: backfill.eventTime || null,
-        eventEndTime: backfill.eventEndTime || null,
-        timeBlock: BUCKET_LABELS[bucket],
-        blurb: backfill.blurb || backfill.description?.slice(0, 200) || fallbackBlurb(backfill.source, backfill.category, backfill.name, backfill.venue),
-        url: backfill.url,
-        mapsUrl: backfill.mapsUrl,
-        cost: backfill.cost,
-        costNote: kids && backfill.kidsCostNote ? backfill.kidsCostNote : backfill.costNote,
-        kidsCostNote: backfill.kidsCostNote,
-        photoRef: (backfill as any).photoRef || null,
-        image: (backfill as any).image || null,
-        venue: backfill.venue || null,
-        source: backfill.source,
-        locked: false,
-        rationale: `backfill | empty-bucket=${bucket}`,
-      });
-      usedIdsAfter.add(backfill.id);
-      logDecision({
-        script: "plan-day",
-        action: "backfilled",
-        target: `${backfill.name} (${backfill.id})`,
-        reason: `claude/validators left ${bucket} empty`,
-        meta: { city, targetDate, bucket },
+        action: "picked",
+        target: `${card.name} (${card.id})`,
+        reason: card.rationale || card.role,
+        meta: {
+          city,
+          scope,
+          targetDate,
+          bucket: card.bucket,
+          role: card.role,
+          pairedWithId: card.pairedWithId,
+          pairDistanceMiles: card.pairDistanceMiles,
+          kids,
+        },
       });
     }
   }
 
-  // Evergreen fallback: any bucket the pool-backfill couldn't fill goes
-  // straight to placesData. Parks, trails, shops, museums — the South Bay
-  // has thousands of these, and an empty bucket is a worse user experience
-  // than recommending a generic-but-good evergreen ("go for a walk at this
-  // park"). Bypasses the score-bounded pool entirely.
-  const stillEmpty = BUCKET_ORDER.filter((b) => !cards.some((c) => c.bucket === b));
-  if (stillEmpty.length > 0) {
-    const placesAll = ((placesData as any).places ?? []) as any[];
-    const cityConfig = CITY_MAP[city];
-    // Order matters: for activity buckets we prefer outdoor (parks, trails)
-    // over museums over shops over commercial entertainment. Surfaces the
-    // "infinite parks and trails" Stephen wants, not boutique venues.
-    const ACTIVITY_CAT_PRIORITY: Record<string, number> = {
-      outdoor: 4, museum: 3, shopping: 2, entertainment: 1,
-    };
-    const usedIdsFinal = new Set(cards.map((c) => c.id));
-    // Stable per-day seed so the same fallback doesn't repeat across days.
-    const seedStr = `${city}|${targetDate || ""}|${kids ? "k" : "a"}`;
-    let seedNum = 0;
-    for (let i = 0; i < seedStr.length; i++) seedNum = (seedNum * 31 + seedStr.charCodeAt(i)) >>> 0;
-
-    for (const bucket of stillEmpty) {
-      const isMeal = MEAL_BUCKETS.has(bucket);
-      const filterCandidates = (minRatingCount: number) => placesAll.filter((p: any) => {
-        if (!p || !p.id) return false;
-        if (usedIdsFinal.has(`place:${p.id}`)) return false;
-        const cat = (p.category || "").toLowerCase();
-        if (cat === "neighborhood") return false;
-        if (kids && cat === "wellness") return false;
-        if (PERMANENT_NAME_BLOCKLIST.has(normalizeName(p.name) || "")) return false;
-        if (isMeal && cat !== "food") return false;
-        if (!isMeal && (cat === "food" || !(cat in ACTIVITY_CAT_PRIORITY))) return false;
-        // Quality gate — skip 5★ noise from places with 3 reviews.
-        if ((p.ratingCount || 0) < minRatingCount) return false;
-        if (p.city !== city) {
-          if (!p.lat || !p.lng || !cityConfig) return false;
-          const dist = haversineKm(cityConfig.lat, cityConfig.lon, p.lat, p.lng);
-          if (dist > NEARBY_KM) return false;
-        }
-        if (!openDuringBucket(p.hours, dayKey, bucket, p.types || [], cat)) return false;
-        return true;
-      });
-      // Try a strict quality bar first, then loosen.
-      let candidates = filterCandidates(100);
-      if (candidates.length === 0) candidates = filterCandidates(20);
-      if (candidates.length === 0) candidates = filterCandidates(0);
-      if (candidates.length === 0) continue;
-      candidates.sort((a, b) => {
-        if (!isMeal) {
-          const pa = ACTIVITY_CAT_PRIORITY[(a.category || "").toLowerCase()] || 0;
-          const pb = ACTIVITY_CAT_PRIORITY[(b.category || "").toLowerCase()] || 0;
-          if (pa !== pb) return pb - pa;
-        }
-        return (b.rating || 0) - (a.rating || 0);
-      });
-      // Rotate within the top by per-day seed so we don't pin the same pick.
-      const top = candidates.slice(0, 12);
-      const idx = (seedNum + BUCKET_ORDER.indexOf(bucket) * 7) % top.length;
-      const pick = top[idx];
-      cards.push({
-        id: `place:${pick.id}`,
-        name: cleanDisplayName(pick.name),
-        category: canonicalCategory(pick.category || "outdoor"),
-        city: pick.city,
-        address: pick.address || "",
-        bucket,
-        eventTime: null,
-        timeBlock: BUCKET_LABELS[bucket],
-        blurb: cleanDisplayCopy(PLACE_BLURBS.get(pick.id) || fallbackBlurb("place", pick.category, pick.name, null)),
-        url: pick.url,
-        mapsUrl: pick.mapsUrl,
-        cost: pick.cost,
-        costNote: pick.costNote || (pick.priceLevel ? priceLevelLabel(pick.priceLevel) : null),
-        kidsCostNote: null,
-        photoRef: pick.photoRef || null,
-        image: null,
-        venue: null,
-        source: "place",
-        locked: false,
-        rationale: `evergreen-fallback | empty-bucket=${bucket}`,
-      });
-      usedIdsFinal.add(`place:${pick.id}`);
-      logDecision({
-        script: "plan-day",
-        action: "backfilled-evergreen",
-        target: `${pick.name} (${pick.id})`,
-        reason: `pool-backfill left ${bucket} empty`,
-        meta: { city, targetDate, bucket },
-      });
-    }
-  }
-
-  // Final sort: bucket order so the renderer doesn't have to.
   cards.sort((a, b) => bucketOrderIndex(a.bucket) - bucketOrderIndex(b.bucket));
-
+  const issues = dayPlanPairingIssues(cards);
+  if (issues.length) throw new Error(`Invalid pillar-pairs plan: ${issues.join("; ")}`);
   return cards;
 }
 
@@ -1522,6 +1640,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const {
     city,
     kids = false,
+    scope = "regional",
     lockedIds = [],
     lockedCards = [],
     dismissedIds = [],
@@ -1536,10 +1655,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   // Defensive input caps — these arrays come straight from the client and feed
   // normalization + the Claude prompt. Without bounds, a crafted request could
-  // send megabyte arrays. Limits sit far above any legitimate session. Also
-  // doubles as an array-type guard (the lockedCards for..of below would
-  // misbehave on a non-array value).
+  // send megabyte arrays. Limits sit far above any legitimate session. Check
+  // shape separately before iterating so a crafted scalar cannot slip through.
   const overCap = (a: unknown, max: number) => Array.isArray(a) && a.length > max;
+  if (![lockedCards, lockedIds, dismissedIds, dismissedNames, blockedNames, recentlyShown].every(Array.isArray)) {
+    return errJson("List fields must be arrays", 400);
+  }
   if (
     overCap(lockedCards, 20) || overCap(lockedIds, 20) ||
     overCap(dismissedIds, 300) || overCap(dismissedNames, 300) ||
@@ -1560,6 +1681,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   if (!city || !VALID_CITIES.has(city)) {
     return errJson(`Invalid city. Must be one of: ${[...VALID_CITIES].join(", ")}`, 400);
+  }
+  if (scope !== "regional" && scope !== "city") {
+    return errJson('Invalid scope. Must be "regional" or "city"', 400);
   }
 
   if (!import.meta.env.ANTHROPIC_API_KEY) {
@@ -1583,8 +1707,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const prefsHash = preferences
     ? Math.round((preferences.outdoorBias || 0) * 10 + (preferences.costBias || 0) * 10)
     : 0;
-  const cacheKey = `${city}:${kids}:${prefsHash}:${planDate || ""}`;
-  if (!noCache && lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0 && recentlyShown.length === 0) {
+  const cacheRegion = scope === "city" ? city : "south-bay";
+  const cacheKey = `${scope}:${cacheRegion}:${kids}:${prefsHash}:${planDate || ""}`;
+  const isCacheableRequest = !noCache && !weekContext &&
+    lockedIds.length === 0 && dismissedIds.length === 0 &&
+    dismissedNameSet.size === 0 && blockedSet.size === 0 && recentlyShown.length === 0;
+  if (isCacheableRequest) {
     const cached = planCache.get(cacheKey);
     if (cached && Date.now() - cached.ts < CACHE_TTL) {
       return okJson(cached.data, { "Cache-Control": "private, no-store" });
@@ -1592,10 +1720,19 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   try {
-    const weatherData = await fetchWeather(city, planDate);
+    const weatherCity = scope === "regional" ? REGIONAL_WEATHER_CITY : city;
+    const weatherData = await fetchWeather(weatherCity, planDate);
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
 
-    const allCandidates = buildCandidatePool(city, kids, dismissedSet, planDate, blockedSet, dismissedNameSet);
+    const allCandidates = buildCandidatePool(
+      city,
+      kids,
+      dismissedSet,
+      planDate,
+      blockedSet,
+      dismissedNameSet,
+      scope,
+    );
 
     // Score with graduated variety penalty.
     const recentById = new Map<string, number>();
@@ -1640,85 +1777,31 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     }));
     const unlockedPool = scored.filter((c) => !lockedSet.has(c.id));
 
-    // --- Build the diverse pool ---
-
-    // Dedupe events at same venue + time.
-    const rawEventCandidates = unlockedPool.filter((c) => c.source === "event");
-    const dedupedEvents: Candidate[] = [];
-    const eventGroupSeen = new Map<string, Candidate>();
-    for (const c of rawEventCandidates) {
-      const loc = (c.venue || c.address || c.city || "").toLowerCase().trim();
-      const time = (c.eventTime || "").toLowerCase().trim();
-      const groupKey = time ? `${loc}|${time}` : null;
-      if (eventGroupSeen.has(c.id)) continue;
-      eventGroupSeen.set(c.id, c);
-      if (!groupKey) {
-        dedupedEvents.push(c);
+    // Dedupe same-venue/same-time event records without shrinking the regional
+    // pool. The old planner sampled six events and eight restaurants before
+    // Claude ever saw them; that pre-randomization is exactly what made strong
+    // picks disappear.
+    const eventGroups = new Map<string, Candidate>();
+    const planningPool: Candidate[] = [];
+    for (const candidate of unlockedPool) {
+      if (candidate.source !== "event") {
+        planningPool.push(candidate);
         continue;
       }
-      const existing = dedupedEvents.find((e) => {
-        const eLoc = (e.venue || e.address || e.city || "").toLowerCase().trim();
-        const eTime = (e.eventTime || "").toLowerCase().trim();
-        return `${eLoc}|${eTime}` === groupKey;
-      });
-      if (!existing) dedupedEvents.push(c);
-      else if ((c.score || 0) > (existing.score || 0)) {
-        dedupedEvents[dedupedEvents.indexOf(existing)] = c;
-      }
+      const location = (candidate.venue || candidate.address || candidate.city || "").toLowerCase().trim();
+      const time = (candidate.eventTime || "").toLowerCase().trim();
+      const key = time ? `${location}|${time}` : candidate.id;
+      const existing = eventGroups.get(key);
+      if (!existing || candidate.score > existing.score) eventGroups.set(key, candidate);
     }
-    const eventCandidates = dedupedEvents;
-    const foodCandidates = unlockedPool.filter((c) => c.source === "place" && c.category === "food");
-    const otherPlaces = unlockedPool.filter((c) => c.source === "place" && c.category !== "food");
+    planningPool.push(...eventGroups.values());
 
-    const diversePool: Candidate[] = [];
-    const MAX_CURATED_PLACES = 2;
-    let curatedCount = 0;
-    const tryAdd = (c: Candidate): boolean => {
-      const isCurated = (c as any).curated && c.source === "place";
-      if (isCurated) {
-        if (curatedCount >= MAX_CURATED_PLACES) return false;
-        curatedCount++;
-      }
-      diversePool.push(c);
-      return true;
-    };
-
-    const eventSample = weightedSample(eventCandidates, 6, 12);
-    for (const c of eventSample) tryAdd(c);
-
-    // Need enough food picks to populate three meal buckets — bump to 8.
-    const foodSample = weightedSample(foodCandidates, Math.max(8, 8), 22);
-    for (const c of foodSample) tryAdd(c);
-
-    const catCounts: Record<string, number> = {};
-    const CAT_CAPS: Record<string, number> = {
-      outdoor: 3,
-      museum: 2,
-      entertainment: 3,
-      // wellness scores -60 by design, but weightedSample still gave massage
-      // franchises a real shot at the one capped seat (Elements Massage 07-14,
-      // Massage Envy 07-09 both shipped). Zero seats: spas aren't idea sparks.
-      wellness: 0,
-      shopping: 2,
-      arts: 3,
-      sports: 2,
-      events: 3,
-    };
-    const otherSample = weightedSample(otherPlaces, 80, 22);
-    for (const c of otherSample) {
-      const count = catCounts[c.category] || 0;
-      const maxForCat = CAT_CAPS[c.category] ?? 3;
-      if (count >= maxForCat) continue;
-      if (!tryAdd(c)) continue;
-      catCounts[c.category] = count + 1;
-      if (diversePool.length >= CANDIDATE_POOL_SIZE) break;
-    }
-
-    const cards = await pickBucketsWithClaude(
-      diversePool,
+    const cards = await pickPillarPairsWithClaude(
+      planningPool,
       lockedWithBucket,
       weatherData.weather,
       city,
+      scope,
       kids,
       preferences,
       planDate,
@@ -1729,14 +1812,17 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const responseData = {
       cards,
       weather: weatherData.weather,
-      city,
+      city: scope === "city" ? city : dominantPillarCity(cards, REGIONAL_WEATHER_CITY),
+      scope,
+      selectionModel: DAY_PLAN_SELECTION_MODEL,
+      mealPairMaxMiles: MEAL_PAIR_MAX_MILES,
       kids,
       generatedAt: new Date().toISOString(),
       poolSize: allCandidates.length,
       invalidLockedIds: invalidLockedIds.length > 0 ? invalidLockedIds : undefined,
     };
 
-    if (lockedIds.length === 0 && dismissedIds.length === 0 && dismissedNameSet.size === 0 && blockedSet.size === 0) {
+    if (isCacheableRequest) {
       planCache.set(cacheKey, { data: responseData, ts: Date.now() });
       if (planCache.size > 100) {
         const oldest = planCache.keys().next().value!;

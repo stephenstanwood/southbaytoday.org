@@ -14,6 +14,21 @@ Run these scripts to refresh pre-generated data:
 - `npm run generate-events` — upcoming events from 20+ sources
 - See `package.json` for full list of `generate-*` scripts
 
+## Day plans: quality-first pillar pairs
+
+The canonical plan model is `pillar-pairs-v1`: select the best morning,
+afternoon, and evening activities before considering food, then attach a great
+breakfast/lunch/dinner within 5 miles of each pillar. Regional plans may span
+three towns; geography across pillars is irrelevant and must not become a
+clustering, anchor-city, route, or diversity objective. `/city/<slug>` is the
+only `scope: "city"` consumer. Every other surface uses `scope: "regional"`.
+
+The six cards are three atomic pairs with reciprocal `pairedWithId` metadata.
+Never drop, carry forward, or manually swap one card in isolation. The full
+contract and consumer map are in `docs/day-plan-selection.md`. Chains may
+qualify, but only when the specific branch is new, distinctive, exceptionally
+well-regarded, or editorially notable; a generic branch is filler.
+
 ## File Organization
 - Generated JSON artifacts (committed): `src/data/south-bay/*.json`
 - Runtime social state (gitignored): `social-*.json` files in same dir

@@ -1864,7 +1864,7 @@ async function openSwapPicker(dateStr, cardIndex) {
                '<h3>Swap ' + (c.name || 'card') + '</h3>' +
                '<div class="swap-modal-sub">' + (c.timeBlock || '') + ' · ' + (c.category || '') + ' · ' + dateStr + '</div>';
     if (!cands.length) {
-      html += '<p style="color:#888">No candidates found (may be too restrictive — try a different category or anchor city).</p>';
+      html += '<p style="color:#888">No candidates found for this legacy card and time slot.</p>';
     } else {
       for (const cand of cands) {
         const meta = (cand.category || '') + ' · ' + (cand.city || '') +
@@ -2406,13 +2406,13 @@ const server = createServer((req, res) => {
       console.error("[review] failed:", err.message);
     }
     // Don't banner the user for things the gen pipeline already auto-resolves
-    // (sprawl, hours, <6 cards, no-URL). Only surface true-attention flags
+    // (pair integrity, hours, no-URL). Only surface true-attention flags
     // (those that can't be machine-resolved). Stephen's preference is "fix
     // don't flag" — the swiper should never see a flag for something we
     // could regen ourselves. Banners persist only for soft "needs-human"
     // flags (none are tagged that way today; we'll add explicit ones later).
     const AUTOFIXABLE_PATTERNS = [
-      /too much driving/i,
+      /invalid pillar pairs/i,
       /hours mismatch/i,
       /spa saturation/i,
       /only \d+ stops?/i,
@@ -2534,6 +2534,11 @@ const server = createServer((req, res) => {
         res.end(JSON.stringify({ ok: false, error: "Card not found" }));
         return;
       }
+      if (slot.plan.selectionModel === "pillar-pairs-v1" || slot.plan.cards.some((candidate) => candidate.role)) {
+        res.writeHead(409, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ok: false, error: "Pillar/meal plans must be regenerated as a unit; a single-card swap would break the pair." }));
+        return;
+      }
       const card = slot.plan.cards[cardIndex];
       const candidates = findSwapCandidates({
         anchorCity: slot.city || card.city || "san-jose",
@@ -2574,6 +2579,11 @@ const server = createServer((req, res) => {
         if (!slot?.plan?.cards?.[cardIndex]) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ ok: false, error: "Card not found" }));
+          return;
+        }
+        if (slot.plan.selectionModel === "pillar-pairs-v1" || slot.plan.cards.some((candidate) => candidate.role)) {
+          res.writeHead(409, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ ok: false, error: "Pillar/meal plans must be regenerated as a unit; a single-card swap would break the pair." }));
           return;
         }
         const oldCard = slot.plan.cards[cardIndex];

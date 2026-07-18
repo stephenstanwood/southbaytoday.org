@@ -14,6 +14,19 @@ Run these scripts to refresh pre-generated data:
 - `npm run generate-events` — upcoming events from 20+ sources
 - See `package.json` for full list of `generate-*` scripts
 
+## Day plans: quality-first pillar pairs
+
+The canonical plan model is `pillar-pairs-v1`: choose the best morning,
+afternoon, and evening activities across the relevant pool first, then attach
+breakfast/lunch/dinner within 5 miles of each activity. Regional pillars do not
+need to share a city and must never be clustered or route-optimized. City pages
+send `scope: "city"`; all other surfaces use `scope: "regional"`. Treat the six
+cards as three atomic pairs: never drop or manually swap one card by itself.
+Chains are allowed only with a branch-specific interest signal; never restore
+a blanket chain ban or let generic convenience substitute for editorial value.
+See `docs/day-plan-selection.md` before changing planner, newsletter, graphics,
+shared-plan, or scheduled-hero logic.
+
 ## File Organization
 - Generated JSON artifacts (committed): `src/data/south-bay/*.json`
 - Runtime social state (gitignored): `social-*.json` files in same dir

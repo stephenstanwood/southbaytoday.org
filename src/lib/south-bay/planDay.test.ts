@@ -4,15 +4,25 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { parseHour, fallbackBlurb } from "../../pages/api/plan-day.ts";
+import { parseHour, fallbackBlurb, isMealVenueCandidate } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
+import { canonicalizeCard } from "./canonicalizeCard.mjs";
+import { routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
 import {
   bucketForHour,
   bucketForEvent,
   bucketOrderIndex,
   isBucket,
   BUCKET_ORDER,
+  BUCKET_PASSED_AFTER_HOUR,
 } from "./buckets.ts";
+import {
+  MEAL_PAIR_MAX_MILES,
+  dayPlanPairingIssues,
+  dominantPillarCity,
+  filterAtomicPairCards,
+  rankNearbyMeals,
+} from "./dayPlanPairs.ts";
 
 test("parseHour: AM/PM", () => {
   assert.equal(parseHour("9:00 AM"), 9);
@@ -70,6 +80,12 @@ test("bucketOrderIndex: canonical order", () => {
   }
 });
 
+test("activity and meal pairs age out together", () => {
+  assert.equal(BUCKET_PASSED_AFTER_HOUR.morning, BUCKET_PASSED_AFTER_HOUR.breakfast);
+  assert.equal(BUCKET_PASSED_AFTER_HOUR.afternoon, BUCKET_PASSED_AFTER_HOUR.lunch);
+  assert.equal(BUCKET_PASSED_AFTER_HOUR.evening, BUCKET_PASSED_AFTER_HOUR.dinner);
+});
+
 test("isBucket: validates", () => {
   assert.equal(isBucket("breakfast"), true);
   assert.equal(isBucket("morning"), true);
@@ -109,6 +125,28 @@ test("fallbackBlurb: truly unknown source/category → last ditch", () => {
   assert.ok(out.length > 0);
 });
 
+test("editorial quality signals penalize scraped and routine listings, not normal hyphens", () => {
+  assert.equal(titleQualityPenalty("Trail Clean-Up"), 0);
+  assert.ok(titleQualityPenalty("Concert | Ticket Portal") > 0);
+  assert.ok(routineEventPenalty({ title: "Planning Commission Meeting" }) >= 40);
+  assert.ok(routineEventPenalty({ title: "One Night of Queen" }) === 0);
+});
+
+test("meal venue guard excludes grocery stores and mislabeled business centers", () => {
+  assert.equal(isMealVenueCandidate({ types: ["supermarket", "grocery_store", "food"], primaryType: "supermarket", displayType: "Asian grocery store", curated: false, address: "" }), false);
+  assert.equal(isMealVenueCandidate({ types: ["business_center", "point_of_interest"], primaryType: "business_center", displayType: "Business center", curated: false, address: "" }), false);
+  assert.equal(isMealVenueCandidate({ types: ["barbecue_restaurant", "restaurant"], primaryType: "barbecue_restaurant", displayType: "Barbecue restaurant", curated: true, address: "" }), true);
+  assert.equal(isMealVenueCandidate({ types: ["cafe", "food"], primaryType: "cafe", displayType: "Cafe", curated: false, address: "" }), true);
+});
+
+test("meal venue guard uses primary business type and the requested service", () => {
+  assert.equal(isMealVenueCandidate({ types: ["catering_service", "coffee_shop", "cafe", "bakery"], primaryType: "catering_service", displayType: "Caterer", curated: false, address: "123 Main St" }, "breakfast"), false);
+  assert.equal(isMealVenueCandidate({ types: ["pastry_shop", "bakery", "food_store"], primaryType: "pastry_shop", displayType: "Pastry shop", curated: false, address: "168 Echo Ave Apt 1" }, "breakfast"), false);
+  assert.equal(isMealVenueCandidate({ types: ["cafe", "food"], primaryType: "cafe", displayType: "Cafe", curated: false, address: "123 Main St" }, "dinner"), false);
+  assert.equal(isMealVenueCandidate({ types: ["brunch_restaurant", "restaurant"], primaryType: "brunch_restaurant", displayType: "Brunch restaurant", curated: false, address: "123 Main St" }, "breakfast"), true);
+  assert.equal(isMealVenueCandidate({ types: ["austrian_restaurant", "restaurant"], primaryType: "austrian_restaurant", displayType: "Austrian restaurant", curated: false, address: "123 Main St" }, "dinner"), true);
+});
+
 test("display cleanup: strips CJK/Hangul translation fragments from names", () => {
   assert.equal(cleanDisplayName("世界生活館 Amazing Books & Gifts"), "Amazing Books & Gifts");
   assert.equal(cleanDisplayName("Paik's Noodle / 홍콩반점 산호세"), "Paik's Noodle");
@@ -124,4 +162,108 @@ test("display cleanup: capitalizes proper adjectives in blurbs", () => {
     cleanDisplayCopy("More at https://example.com/taiwanese-food before taiwanese lunch."),
     "More at https://example.com/taiwanese-food before Taiwanese lunch.",
   );
+});
+
+test("meal pairing: quality wins inside the radius, distance enforces the ceiling", () => {
+  const pillar = { lat: 37, lng: -122 };
+  const ranked = rankNearbyMeals(pillar, [
+    {
+      id: "generic-close",
+      lat: 37.006,
+      lng: -122,
+      rating: 4.4,
+      ratingCount: 1_000,
+      foodDistinctiveness: 0,
+    },
+    {
+      id: "new-distinctive",
+      lat: 37.035,
+      lng: -122,
+      rating: 4.7,
+      ratingCount: 500,
+      foodDistinctiveness: 9,
+      newlyOpened: true,
+      blurb: "A specific source-backed description long enough to earn the copy signal.",
+    },
+    {
+      id: "too-far",
+      lat: 37.1,
+      lng: -122,
+      rating: 5,
+      ratingCount: 5_000,
+      foodDistinctiveness: 12,
+      newlyOpened: true,
+    },
+  ]);
+
+  assert.equal(ranked[0].candidate.id, "new-distinctive");
+  assert.ok(ranked[0].distanceMiles < MEAL_PAIR_MAX_MILES);
+  assert.equal(ranked.some((entry) => entry.candidate.id === "too-far"), false);
+});
+
+test("meal pairing penalizes a chain against an equivalent independent", () => {
+  const pillar = { lat: 37, lng: -122 };
+  const ranked = rankNearbyMeals(pillar, [
+    { id: "interesting-chain", lat: 37.01, lng: -122, rating: 4.7, ratingCount: 900, foodDistinctiveness: 9, isChain: true, chainLocations: 8 },
+    { id: "independent", lat: 37.01, lng: -122, rating: 4.7, ratingCount: 900, foodDistinctiveness: 9 },
+  ]);
+  assert.equal(ranked[0].candidate.id, "independent");
+});
+
+test("pillar-pairs validator accepts three reciprocal meal/activity pairs", () => {
+  const cards = [
+    { id: "breakfast", bucket: "breakfast" as const, role: "paired-meal" as const, pairedWithId: "morning", pairDistanceMiles: 1.2, pairLocationPrecision: "exact" as const, city: "campbell" },
+    { id: "morning", bucket: "morning" as const, role: "pillar" as const, pairedWithId: "breakfast", city: "campbell" },
+    { id: "lunch", bucket: "lunch" as const, role: "paired-meal" as const, pairedWithId: "afternoon", pairDistanceMiles: 3.1, pairLocationPrecision: "venue" as const, city: "palo-alto" },
+    { id: "afternoon", bucket: "afternoon" as const, role: "pillar" as const, pairedWithId: "lunch", city: "palo-alto" },
+    { id: "dinner", bucket: "dinner" as const, role: "paired-meal" as const, pairedWithId: "evening", pairDistanceMiles: 4.9, pairLocationPrecision: "exact" as const, city: "san-jose" },
+    { id: "evening", bucket: "evening" as const, role: "pillar" as const, pairedWithId: "dinner", city: "san-jose" },
+  ];
+  assert.deepEqual(dayPlanPairingIssues(cards), []);
+  assert.equal(dominantPillarCity(cards, "campbell"), "campbell", "three-way tie follows daypart order");
+});
+
+test("pillar-pairs validator catches broken links and arbitrary driving", () => {
+  const issues = dayPlanPairingIssues([
+    { id: "breakfast", bucket: "breakfast", role: "paired-meal", pairedWithId: "wrong", pairDistanceMiles: 7, pairLocationPrecision: "city" },
+    { id: "morning", bucket: "morning", role: "pillar", pairedWithId: "breakfast" },
+  ]);
+  assert.ok(issues.some((issue) => issue.includes("breakfast does not point")));
+  assert.ok(issues.some((issue) => issue.includes("7.0 miles")));
+  assert.ok(issues.some((issue) => issue.includes("not venue-resolved")));
+  assert.ok(issues.some((issue) => issue.includes("missing afternoon pillar")));
+  assert.ok(issues.some((issue) => issue.includes("missing evening pillar")));
+});
+
+test("atomic pair filtering removes a stale activity and its meal", () => {
+  const cards = [
+    { id: "activity", bucket: "morning" as const, role: "pillar" as const, pairedWithId: "meal" },
+    { id: "meal", bucket: "breakfast" as const, role: "paired-meal" as const, pairedWithId: "activity", pairDistanceMiles: 1 },
+    { id: "afternoon", bucket: "afternoon" as const, role: "pillar" as const, pairedWithId: "lunch" },
+    { id: "lunch", bucket: "lunch" as const, role: "paired-meal" as const, pairedWithId: "afternoon", pairDistanceMiles: 1 },
+  ];
+  assert.deepEqual(
+    filterAtomicPairCards(cards, new Set(["activity"])).map((card) => card.id),
+    ["afternoon", "lunch"],
+  );
+});
+
+test("shared-plan canonicalization preserves pair and chain-interest metadata", () => {
+  const card = canonicalizeCard({
+    id: "meal",
+    name: "Interesting Chain",
+    category: "food",
+    city: "campbell",
+    bucket: "breakfast",
+    role: "paired-meal",
+    pairedWithId: "activity",
+    pairDistanceMiles: 1.2,
+    pairLocationPrecision: "exact",
+    interestingChain: true,
+    chainInterestReasons: ["verified new opening"],
+  });
+  assert.equal(card.pairedWithId, "activity");
+  assert.equal(card.pairLocationPrecision, "exact");
+  assert.equal(card.interestingChain, true);
+  assert.deepEqual(card.chainInterestReasons, ["verified new opening"]);
 });
