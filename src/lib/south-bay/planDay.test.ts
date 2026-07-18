@@ -4,10 +4,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { parseHour, fallbackBlurb, isMealVenueCandidate } from "../../pages/api/plan-day.ts";
+import { parseHour, fallbackBlurb, isMealVenueCandidate, scoreCandidates } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import { canonicalizeCard } from "./canonicalizeCard.mjs";
-import { requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
+import { REGIONAL_ROUTINE_PENALTY_CUTOFF, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
 import {
   bucketForHour,
   bucketForEvent,
@@ -130,9 +130,9 @@ test("editorial quality signals penalize scraped and routine listings, not norma
   assert.equal(titleQualityPenalty("Trail Clean-Up"), 0);
   assert.ok(titleQualityPenalty("Concert | Ticket Portal") > 0);
   assert.ok(routineEventPenalty({ title: "Planning Commission Meeting" }) >= 40);
-  assert.ok(routineEventPenalty({ title: "Leisure Noon Origami" }) >= 35);
-  assert.ok(routineEventPenalty({ title: "Spin the Wheel at Pearl Branch Library!" }) >= 35);
-  assert.ok(routineEventPenalty({ title: "Live Music" }) >= 35);
+  assert.ok(routineEventPenalty({ title: "Leisure Noon Origami" }) >= REGIONAL_ROUTINE_PENALTY_CUTOFF);
+  assert.ok(routineEventPenalty({ title: "Spin the Wheel at Pearl Branch Library!" }) >= REGIONAL_ROUTINE_PENALTY_CUTOFF);
+  assert.ok(routineEventPenalty({ title: "Live Music" }) >= REGIONAL_ROUTINE_PENALTY_CUTOFF);
   assert.ok(routineEventPenalty({ title: "One Night of Queen" }) === 0);
 });
 
@@ -144,6 +144,34 @@ test("editorial choice cannot override a material deterministic quality gap", ()
 test("adult mode detects mislabeled caregiver-and-child programming", () => {
   assert.equal(requiresChildToAttend({ title: "Baby Wearing Dance", description: "For adult caregivers and pre-walking babies." }), true);
   assert.equal(requiresChildToAttend({ title: "One Night of Queen" }), false);
+});
+
+test("kid-friendly events receive one kids boost, not two", () => {
+  const candidate = {
+    id: "event:test",
+    name: "Family Concert",
+    category: "family",
+    city: "campbell",
+    address: "",
+    lat: 37.28,
+    lng: -121.95,
+    locationPrecision: "exact" as const,
+    source: "event" as const,
+    eventDate: "2026-07-19",
+    eventTime: "6:00 PM",
+    kidFriendly: true,
+    routinePenalty: 0,
+    score: 0,
+  };
+  const originalRandom = Math.random;
+  Math.random = () => 0;
+  try {
+    const adultScore = scoreCandidates([{ ...candidate }], null, false, undefined, undefined, "2026-07-19")[0].score;
+    const kidsScore = scoreCandidates([{ ...candidate }], null, true, undefined, undefined, "2026-07-19")[0].score;
+    assert.equal(kidsScore - adultScore, 15);
+  } finally {
+    Math.random = originalRandom;
+  }
 });
 
 test("meal venue guard excludes grocery stores and mislabeled business centers", () => {

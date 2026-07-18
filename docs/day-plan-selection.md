@@ -20,6 +20,9 @@ generic titles carry substantial penalties, while marquee and genuinely
 specific one-off events retain a strong advantage. The model may exercise
 taste among close finalists, but its activity choice is ignored when it falls
 more than 10 deterministic score points behind the best available pillar.
+Routine listings with a 35-point-or-higher penalty do not enter regional
+finalist pools at all unless the reader explicitly locked one; city-scoped
+plans keep them available for genuinely thin local inventories.
 Likewise, a model-selected meal cannot trail the best available pairing score
 by more than 7 points. This keeps editorial judgment without letting a prompt
 override a material quality gap. Programs that require a baby or young child

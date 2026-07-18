@@ -32,7 +32,7 @@ import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.m
 import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
-import { isMarqueeEvent, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
+import { isMarqueeEvent, REGIONAL_ROUTINE_PENALTY_CUTOFF, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
 import {
   type Bucket,
   BUCKET_LABELS,
@@ -649,7 +649,7 @@ function recentPenalty(daysAgo: number): number {
   return 0;
 }
 
-function scoreCandidates(
+export function scoreCandidates(
   candidates: Candidate[],
   weather: WeatherContext | null,
   kids: boolean,
@@ -680,7 +680,6 @@ function scoreCandidates(
       score -= titleQualityPenalty(c.name);
       score -= c.routinePenalty ?? routineEventPenalty(c);
       if ((c.blurb || c.description || "").trim().length >= 70) score += 5;
-      if (kids && (c.kidFriendly === true || (c as any).audienceAge === "kids")) score += 15;
       if (holidayHasKeywords && c.eventDate === planIso) {
         const haystack = `${c.name} ${c.blurb ?? ""} ${c.description ?? ""} ${c.venue ?? ""}`.toLowerCase();
         if (matchesHolidayTheme(holiday!, haystack)) score += 30;
@@ -1248,6 +1247,7 @@ function buildPillarOptions(
   dayKey: DayKey,
   weekContext: PlanRequest["weekContext"],
   kids: boolean,
+  scope: "regional" | "city",
 ): Map<PillarBucket, PillarOption[]> {
   const mealsByBucket = new Map<Bucket, Candidate[]>();
   for (const pillarBucket of PILLAR_BUCKETS) {
@@ -1269,15 +1269,23 @@ function buildPillarOptions(
   const result = new Map<PillarBucket, PillarOption[]>();
   for (const bucket of PILLAR_BUCKETS) {
     const mealBucket = MEAL_BUCKET_BY_PILLAR[bucket];
+    const locked = lockedByBucket.get(bucket);
     const eligible = candidates
-      .filter((candidate) => fitsPillarBucket(candidate, bucket, dayKey, kids))
+      .filter((candidate) =>
+        fitsPillarBucket(candidate, bucket, dayKey, kids) &&
+        (
+          scope === "city" ||
+          candidate.source !== "event" ||
+          (candidate.routinePenalty || 0) < REGIONAL_ROUTINE_PENALTY_CUTOFF ||
+          candidate.id === locked?.id
+        )
+      )
       .map((candidate) => ({
         candidate,
         bucketScore: pillarBucketScore(candidate, bucket, weekContext),
       }))
       .sort((a, b) => b.bucketScore - a.bucketScore || a.candidate.id.localeCompare(b.candidate.id));
 
-    const locked = lockedByBucket.get(bucket);
     const shortlist: Array<{ candidate: Candidate; bucketScore: number }> = [];
     const add = (entry: { candidate: Candidate; bucketScore: number }) => {
       if (shortlist.some((existing) => existing.candidate.id === entry.candidate.id)) return;
@@ -1417,7 +1425,7 @@ async function pickPillarPairsWithClaude(
     ...pool,
   ].filter((candidate, index, all) => all.findIndex((other) => other.id === candidate.id) === index);
 
-  const optionsByBucket = buildPillarOptions(allCandidates, lockedCandidates, dayKey, weekContext, kids);
+  const optionsByBucket = buildPillarOptions(allCandidates, lockedCandidates, dayKey, weekContext, kids, scope);
   for (const bucket of PILLAR_BUCKETS) {
     if (!(optionsByBucket.get(bucket)?.length)) {
       throw new Error(`No viable ${bucket} pillar with a meal within ${MEAL_PAIR_MAX_MILES} miles`);

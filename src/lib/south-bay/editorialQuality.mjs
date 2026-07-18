@@ -3,6 +3,7 @@
 // does not get to invent them.
 
 const MARQUEE_VENUES = /\b(shoreline amphitheat\w*|mountain winery|sap center|levi'?s stadium|paypal park|excite ballpark|san jose civic|california theatre|center for the performing arts|montgomery theater|hammer theatre|san jose improv|stanford theatre|frost amphitheat\w*|heritage theatre|great america)\b/i;
+export const REGIONAL_ROUTINE_PENALTY_CUTOFF = 35;
 
 export function isMarqueeEvent(event) {
   return MARQUEE_VENUES.test(`${event?.venue || ""} ${event?.title || event?.name || ""}`);
