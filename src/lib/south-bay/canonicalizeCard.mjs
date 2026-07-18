@@ -10,6 +10,10 @@
 // to bucket slots ("breakfast", "morning", etc.). New cards write `bucket`;
 // `timeBlock` is preserved for legacy shared plans so /plan/<id> from before
 // the cutover still renders.
+//
+// 2026-07-18: bucket cards gained a pillar/paired-meal relationship. Those
+// fields are part of the durable shared-plan contract, not disposable model
+// metadata, so canonicalization must carry them across every surface.
 // ---------------------------------------------------------------------------
 
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
@@ -113,7 +117,12 @@ export function canonicalizeCard(raw) {
   };
 
   // Preserve optional fields that exist on some cards (don't drop them).
-  const passthrough = ["kidsCostNote", "locked", "type", "neighborhood", "featuredPlace", "eventId", "placeId", "rationale"];
+  const passthrough = [
+    "kidsCostNote", "locked", "type", "neighborhood", "featuredPlace",
+    "eventId", "placeId", "rationale", "eventEndTime", "image",
+    "role", "pairedWithId", "pairDistanceMiles", "pairLocationPrecision",
+    "interestingChain", "chainInterestReasons",
+  ];
   for (const key of passthrough) {
     if (raw[key] !== undefined) canonical[key] = raw[key];
   }

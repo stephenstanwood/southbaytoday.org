@@ -259,14 +259,33 @@ export function dayPlanPrompt(plan, dateStr, styleDirection) {
   const date = new Date(dateStr + "T12:00:00");
   const dayName = DAY_NAMES[date.getDay()];
 
-  const cities = [...new Set(plan.cards.map((c) => c.city).filter(Boolean))];
-  const cityDisplay = cities.map((c) => c.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")).join(" + ");
+  const cityLabel = (city) => String(city || "")
+    .split("-")
+    .map((word) => word ? word[0].toUpperCase() + word.slice(1) : "")
+    .join(" ");
+  const byBucket = new Map((plan.cards || []).map((card) => [card.bucket, card]));
+  const pairs = [
+    ["MORNING PICK", "morning", "BREAKFAST NEARBY", "breakfast"],
+    ["AFTERNOON PICK", "afternoon", "LUNCH NEARBY", "lunch"],
+    ["EVENING PICK", "evening", "DINNER NEARBY", "dinner"],
+  ];
+  const hasPairs = pairs.every(([, pillarBucket, , mealBucket]) => byBucket.has(pillarBucket) && byBucket.has(mealBucket));
 
-  let stopsText = "";
-  for (const card of plan.cards) {
-    const time = card.timeBlock?.split(" - ")[0] || "";
-    const blurb = card.blurb?.split("—")[0]?.trim() || card.blurb || "";
-    stopsText += `\n${time} — ${card.name}\n${blurb.slice(0, 80)}\n`;
+  let planText = "";
+  if (hasPairs) {
+    planText = pairs.map(([pillarLabel, pillarBucket, mealLabel, mealBucket]) => {
+      const pillar = byBucket.get(pillarBucket);
+      const meal = byBucket.get(mealBucket);
+      const pillarCity = cityLabel(pillar.city);
+      const mealCity = cityLabel(meal.city);
+      return `${pillarLabel}\n${pillar.name}${pillarCity ? ` · ${pillarCity}` : ""}\n${mealLabel}\n${meal.name}${mealCity ? ` · ${mealCity}` : ""}`;
+    }).join("\n\n");
+  } else {
+    // Legacy shared plans remain renderable during the cutover.
+    planText = (plan.cards || []).map((card) => {
+      const time = card.timeBlock?.split(" - ")[0] || card.bucket || "IDEA";
+      return `${String(time).toUpperCase()}\n${card.name}`;
+    }).join("\n\n");
   }
 
   const composition = sampleComposition();
@@ -274,8 +293,7 @@ export function dayPlanPrompt(plan, dateStr, styleDirection) {
   return `Design a portrait 4:5 Instagram poster showing a day plan for a local community guide. The poster must contain ALL of this text content, accurately spelled, in a clear readable hierarchy:
 
 "${dayName.toUpperCase()} IN THE SOUTH BAY"
-${cityDisplay}
-${stopsText}
+${planText}
 southbaytoday.org
 
 DESIGN DIRECTION:
@@ -284,7 +302,10 @@ ${styleDirection}
 COMPOSITION DIRECTION (interpret within the style above):
 ${composition.hints}
 
-CRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include "STOP 1", "STOP 2" labels — just the times and venue names.`;
+LAYOUT HIERARCHY:
+Build three distinct paired modules: morning, afternoon, and evening. In each module, make the activity pick the large primary line and its nearby meal a smaller companion line. Do not draw a route, map, or imply that the three activity cities need to connect geographically.
+
+CRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include "STOP 1", "STOP 2" labels.`;
 }
 
 /**

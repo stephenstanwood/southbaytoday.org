@@ -328,6 +328,9 @@ type DayCard = {
   city?: string | null;
   venue?: string | null;
   source: "event" | "place";
+  role?: "pillar" | "paired-meal";
+  pairedWithId?: string | null;
+  pairDistanceMiles?: number | null;
 };
 
 // Rotating verbs for the rainbow loader — same set the homepage uses so the
@@ -503,10 +506,15 @@ function CardInner({ card }: { card: DayCard }) {
 function BucketSlot({ bucket, card, accent, animationDelay }: { bucket: Bucket; card: DayCard; accent: string; animationDelay: number }) {
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
   return (
-    <div className="sbt-bucket" style={{ animation: `cityFadeSlideIn 0.3s ease-out ${animationDelay}s both` }}>
+    <div className={`sbt-bucket${card.role ? ` sbt-bucket--${card.role}` : ""}`} style={{ animation: `cityFadeSlideIn 0.3s ease-out ${animationDelay}s both` }}>
       <div className="sbt-bucket-header">
         <span className="sbt-bucket-accent" style={{ background: accent }} />
         <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
+        {card.role && (
+          <span className={`sbt-bucket-role sbt-bucket-role--${card.role}`}>
+            {card.role === "pillar" ? "Today’s pick" : "Nearby"}
+          </span>
+        )}
       </div>
       {cardUrl ? (
         <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
@@ -529,7 +537,7 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
     fetch("/api/plan-day", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ city: cityId, kids: false, currentHour: new Date().getHours() }),
+      body: JSON.stringify({ city: cityId, scope: "city", kids: false, currentHour: new Date().getHours() }),
     })
       .then((r) => r.ok ? r.json() : null)
       .then((d) => { if (d?.cards) setCards(d.cards); })
@@ -584,7 +592,7 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
         {BUCKET_ORDER.map((bucket, i) => {
           const card = cardsByBucket.get(bucket);
           if (!card) return null;
-          const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+          const accent = ACCENT_COLORS[Math.floor(i / 2) % ACCENT_COLORS.length];
           return (
             <BucketSlot
               key={bucket}
@@ -636,6 +644,10 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
           position: relative;
           min-height: 140px;
         }
+        .sbt-bucket--pillar {
+          border-color: rgba(123, 47, 190, 0.30);
+          box-shadow: 0 12px 26px rgba(31, 12, 73, 0.09);
+        }
         .sbt-bucket-header {
           display: flex;
           align-items: center;
@@ -656,6 +668,18 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
           letter-spacing: 1px;
           text-transform: uppercase;
         }
+        .sbt-bucket-role {
+          margin-left: auto;
+          border-radius: 999px;
+          padding: 2px 7px;
+          font-family: 'Inter', sans-serif;
+          font-size: 8px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .sbt-bucket-role--pillar { background: #13072f; color: #fff; }
+        .sbt-bucket-role--paired-meal { border: 1px solid #ddd; color: #6b6178; }
         .sbt-bucket-link {
           display: flex;
           flex: 1;

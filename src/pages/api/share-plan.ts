@@ -14,6 +14,11 @@ import type { APIRoute } from "astro";
 import { errJson, okJson } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { canonicalizePlanCards } from "../../lib/south-bay/canonicalizeCard.mjs";
+import {
+  DAY_PLAN_SELECTION_MODEL,
+  MEAL_PAIR_MAX_MILES,
+  dayPlanPairingIssues,
+} from "../../lib/south-bay/dayPlanPairs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -33,6 +38,13 @@ interface SharedPlanCard {
   photoRef?: string | null;
   venue?: string | null;
   source: "event" | "place";
+  bucket?: "breakfast" | "morning" | "lunch" | "afternoon" | "dinner" | "evening" | null;
+  role?: "pillar" | "paired-meal" | null;
+  pairedWithId?: string | null;
+  pairDistanceMiles?: number | null;
+  pairLocationPrecision?: "exact" | "venue" | "city" | null;
+  interestingChain?: boolean;
+  chainInterestReasons?: string[];
 }
 
 interface SharedPlan {
@@ -42,6 +54,8 @@ interface SharedPlan {
   weather: string | null;
   planDate?: string;
   createdAt: string;
+  selectionModel?: string;
+  mealPairMaxMiles?: number;
 }
 
 const PLANS_PATH = join(process.cwd(), "src/data/south-bay/shared-plans.json");
@@ -83,6 +97,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!cards.length) return errJson("No renderable cards", 400);
 
   const id = generateId();
+  const isPillarPairPlan = dayPlanPairingIssues(cards).length === 0;
   const plan: SharedPlan = {
     cards,
     city: body.city,
@@ -90,6 +105,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     weather: body.weather,
     planDate: body.planDate || undefined,
     createdAt: new Date().toISOString(),
+    ...(isPillarPairPlan ? {
+      selectionModel: DAY_PLAN_SELECTION_MODEL,
+      mealPairMaxMiles: MEAL_PAIR_MAX_MILES,
+    } : {}),
   };
 
   // Try to write to disk (works locally + on Mini, fails silently on Vercel)

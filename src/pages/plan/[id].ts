@@ -140,7 +140,7 @@ export const GET: APIRoute = async ({ params, url }) => {
     const filledBuckets = BUCKET_ORDER.filter((b) => cardsByBucket.has(b));
     const slotsHtml = filledBuckets.map((bucket, i) => {
       const card = cardsByBucket.get(bucket);
-      const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+      const accent = ACCENT_COLORS[Math.floor(i / 2) % ACCENT_COLORS.length];
       const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
       const bodyAttr = cardUrl ? "a" : "div";
       const bodyOpen = cardUrl
@@ -152,11 +152,17 @@ export const GET: APIRoute = async ({ params, url }) => {
         ? `<div style="margin:0 14px 12px;padding:6px 8px;background:#f3f4f6;border-left:3px solid #6366f1;font-size:10px;color:#4b5563;font-family:monospace;letter-spacing:0.2px">🔍 ${esc(card.rationale)}</div>`
         : "";
       void bodyAttr;
+      const roleLabel = card.role === "pillar"
+        ? "Today’s pick"
+        : card.role === "paired-meal"
+          ? "Nearby"
+          : "";
       return `
-        <div class="sbt-bucket">
+        <div class="sbt-bucket${card.role ? ` sbt-bucket--${esc(card.role)}` : ""}">
           <div class="sbt-bucket-header">
             <span class="sbt-bucket-accent" style="background:${accent}"></span>
             <span class="sbt-bucket-label">${esc(BUCKET_LABELS[bucket as keyof typeof BUCKET_LABELS] || bucket)}</span>
+            ${roleLabel ? `<span class="sbt-bucket-role sbt-bucket-role--${esc(card.role)}">${esc(roleLabel)}</span>` : ""}
           </div>
           ${bodyOpen}${inner}${bodyClose}
           ${debugBlock}
@@ -164,7 +170,10 @@ export const GET: APIRoute = async ({ params, url }) => {
     }).join("\n");
 
     bodyHtml = `<div class="sbt-buckets">${slotsHtml}</div>`;
-    metaRowHtml = `<div class="plan-meta-row">${plan.weather ? `🌤 ${esc(plan.weather)} · ` : ""}${filledBuckets.length} ideas${plan.kids ? " · Family-friendly" : ""}</div>`;
+    const planShape = plan.selectionModel === "pillar-pairs-v1"
+      ? "3 activity picks · 3 nearby meals"
+      : `${filledBuckets.length} ideas`;
+    metaRowHtml = `<div class="plan-meta-row">${plan.weather ? `🌤 ${esc(plan.weather)} · ` : ""}${planShape}${plan.kids ? " · Family-friendly" : ""}</div>`;
   } else {
     // ── Legacy timeline render ──
     // Hide past cards for today's plans so an old link from earlier in the
@@ -347,9 +356,13 @@ export const GET: APIRoute = async ({ params, url }) => {
   .sbt-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 640px) { .sbt-buckets { grid-template-columns: 1fr; gap: 10px; } }
   .sbt-bucket { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; overflow: hidden; display: flex; flex-direction: column; min-height: 140px; }
+  .sbt-bucket--pillar { border-color: rgba(123,47,190,.30); box-shadow: 0 12px 26px rgba(31,12,73,.09); }
   .sbt-bucket-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px 6px; }
   .sbt-bucket-accent { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .sbt-bucket-label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 900; color: #111; letter-spacing: 1px; text-transform: uppercase; }
+  .sbt-bucket-role { margin-left:auto;border-radius:999px;padding:2px 7px;font-family:'Inter',sans-serif;font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase; }
+  .sbt-bucket-role--pillar { background:#13072f;color:#fff; }
+  .sbt-bucket-role--paired-meal { border:1px solid #ddd;color:#6b6178; }
   .sbt-bucket-link { display: flex; gap: 12px; padding: 4px 14px 14px; text-decoration: none; color: inherit; }
 </style>
 </head>

@@ -21,6 +21,7 @@ import RedditPulseTeaser from "./RedditPulseTeaser";
 import WeekendAheadCard from "./WeekendAheadCard";
 import NewsletterSignup from "../NewsletterSignup";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
+import { filterAtomicPairCards } from "../../../lib/south-bay/dayPlanPairs";
 // =====================================================================
 // HOME-TAB-LOCKED — DO NOT ADD TEASER COMPONENTS HERE
 // The home tab is hand-curated. Adding new teasers, callouts, strips,
@@ -68,6 +69,11 @@ interface DayCard {
   image?: string | null;
   venue?: string | null;
   source: "event" | "place";
+  /** Pillars are selected first; each paired meal points back to one. */
+  role?: "pillar" | "paired-meal";
+  pairedWithId?: string | null;
+  pairDistanceMiles?: number | null;
+  pairLocationPrecision?: "exact" | "venue" | "city";
 }
 
 interface PlanResponse {
@@ -77,6 +83,8 @@ interface PlanResponse {
   kids: boolean;
   generatedAt: string;
   poolSize: number;
+  scope?: "regional" | "city";
+  selectionModel?: string;
 }
 
 interface LocalState {
@@ -116,10 +124,6 @@ function defaultState(): LocalState {
   return { kids: false };
 }
 
-const PLAN_ANCHORS: City[] = CITIES
-  .filter((c) => c.id !== "santa-cruz")
-  .map((c) => c.id);
-
 const CITY_LABELS: Record<string, string> = Object.fromEntries(
   CITIES.map((c) => [c.id, c.name]),
 );
@@ -129,12 +133,6 @@ const CITY_LABELS: Record<string, string> = Object.fromEntries(
 function cityLabel(slug: string | null | undefined): string {
   if (!slug) return "";
   return CITY_LABELS[slug] || slug.split("-").map((s) => s[0]?.toUpperCase() + s.slice(1)).join(" ");
-}
-
-/** Pick a random plan anchor, preferring one that isn't the last one used. */
-function pickRandomAnchor(exclude?: City | null): City {
-  const pool = exclude ? PLAN_ANCHORS.filter((c) => c !== exclude) : PLAN_ANCHORS;
-  return pool[Math.floor(Math.random() * pool.length)]!;
 }
 
 /** Compute the effective time context for planning. Late at night there's
@@ -174,7 +172,7 @@ function getEffectiveTime(kids: boolean): {
  *  render so SSR HTML and client hydration agree regardless of when the build
  *  ran vs. when the page is viewed. The post-mount refine effect re-runs with
  *  the real clock. */
-function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { cards: DayCard[]; anchor: City | null } {
+function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { cards: DayCard[]; city: City | null } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
@@ -190,27 +188,29 @@ function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { card
       return null;
     };
 
-    // Missing-city fallbacks must be deterministic (not pickRandomAnchor):
-    // this function runs in a render initializer, and any randomness here
-    // breaks the SSR/hydration byte-for-byte contract documented below.
+    // The city field is retained for shared-plan compatibility. It is the
+    // dominant pillar city, not an anchor or a constraint on regional plans.
     if (eff.isTomorrow) {
       const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
       if (tomorrowPlan) {
-        return { cards: tomorrowPlan.cards, anchor: (tomorrowPlan.city as City) || REGIONAL_ANCHOR };
+        return { cards: tomorrowPlan.cards, city: (tomorrowPlan.city as City) || REGIONAL_CONTEXT_CITY };
       }
       const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
       if (todayPlan) {
+        if (todayPlan.selectionModel === "pillar-pairs-v1" || todayPlan.cards.some((card: DayCard) => card.role)) {
+          return { cards: [], city: null };
+        }
         const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
-        return { cards: placesOnly, anchor: (todayPlan.city as City) || REGIONAL_ANCHOR };
+        return { cards: placesOnly, city: (todayPlan.city as City) || REGIONAL_CONTEXT_CITY };
       }
-      return { cards: [], anchor: null };
+      return { cards: [], city: null };
     }
 
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], anchor: null };
-    return { cards: plan.cards, anchor: (plan.city as City) || REGIONAL_ANCHOR };
+    if (!plan) return { cards: [], city: null };
+    return { cards: plan.cards, city: (plan.city as City) || REGIONAL_CONTEXT_CITY };
   } catch {
-    return { cards: [], anchor: null };
+    return { cards: [], city: null };
   }
 }
 
@@ -230,11 +230,9 @@ type Props = {
 // Main component
 // ---------------------------------------------------------------------------
 
-// Regional anchor for any weather/forecast widget that needs a single city.
-// SBT is an "explore the whole area" product now — there's no user-selected
-// home city. Picking San Jose keeps the forecast stable and plausibly
-// representative for the whole South Bay.
-const REGIONAL_ANCHOR: City = "san-jose";
+// Stable regional context for weather and APIs that still require one city.
+// It never filters or geographically anchors a regional day plan.
+const REGIONAL_CONTEXT_CITY: City = "campbell";
 
 export default function SouthBayTodayView(_props: Props) {
   // All initial state must be deterministic — this component server-renders
@@ -244,7 +242,7 @@ export default function SouthBayTodayView(_props: Props) {
   // today's plan, all buckets visible); the refine effect below upgrades to
   // the user's stored mode and real time-of-day immediately after mount.
   const [state, setState] = useState<LocalState>(() => defaultState());
-  const initialPlan = useRef<{ cards: DayCard[]; anchor: City | null } | null>(null);
+  const initialPlan = useRef<{ cards: DayCard[]; city: City | null } | null>(null);
   if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(false, { forceToday: true });
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
@@ -256,6 +254,7 @@ export default function SouthBayTodayView(_props: Props) {
       return plans.adults?.weather || plans["adults:h9"]?.weather || null;
     } catch { return null; }
   });
+  const [planCity, setPlanCity] = useState<City>(initialPlan.current.city || REGIONAL_CONTEXT_CITY);
   // Loading is reserved for explicit Reshuffle clicks. Initial paint always
   // uses the pre-generated plan (cron generates kids + adults daily); if the
   // cron failed and there's no cached plan, the empty-state UI handles it.
@@ -272,12 +271,7 @@ export default function SouthBayTodayView(_props: Props) {
   // hydrating browser even though the two clocks differ.
   const [planDateISO, setPlanDateISO] = useState<string>(() => getTodayISOInPT());
   const fetchRef = useRef(0);
-  const lastAnchorRef = useRef<City | null>(initialPlan.current.anchor);
-  // Anchor diversity within a single session.
-  const recentAnchorsRef = useRef<City[]>(initialPlan.current.anchor ? [initialPlan.current.anchor] : []);
-  // Display city for forecast + weather label — user's persisted home city,
-  // or san-jose (center of south bay) as a neutral default.
-  const displayCity: City = REGIONAL_ANCHOR;
+  const displayCity: City = REGIONAL_CONTEXT_CITY;
 
   // Keep nowMinutes live so past buckets drop out of the grid as soon as
   // their cutoff hits, without a reload. 30 s is plenty — cutoffs are
@@ -308,27 +302,23 @@ export default function SouthBayTodayView(_props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchPlan = useCallback(async (noCache = false) => {
+  const fetchPlan = useCallback(async (noCache = false, kidsOverride?: boolean) => {
     const id = ++fetchRef.current;
     setLoading(true);
     setError(null);
-    // Pick a fresh random anchor, avoiding the last so SHUFFLE always
-    // visibly shifts the plan to a different part of the south bay.
-    const anchor = pickRandomAnchor(lastAnchorRef.current);
-    lastAnchorRef.current = anchor;
-    recentAnchorsRef.current = [anchor, ...recentAnchorsRef.current].slice(0, 3);
-
-    const eff = getEffectiveTime(state.kids);
+    const requestedKids = kidsOverride ?? state.kids;
+    const eff = getEffectiveTime(requestedKids);
     try {
       const res = await fetch("/api/plan-day", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          city: anchor, kids: state.kids,
+          city: REGIONAL_CONTEXT_CITY,
+          scope: "regional",
+          kids: requestedKids,
           currentHour: eff.currentHour,
           currentMinute: eff.currentMinute,
           planDate: eff.planDate,
-          recentAnchors: recentAnchorsRef.current,
           noCache,
         }),
       });
@@ -342,6 +332,7 @@ export default function SouthBayTodayView(_props: Props) {
       setCards(sorted);
       setPlanDateISO(eff.planDate || getTodayISOInPT());
       setWeather(data.weather);
+      setPlanCity((data.city as City) || REGIONAL_CONTEXT_CITY);
     } catch (err) {
       if (id === fetchRef.current) setError(err instanceof Error ? err.message : "Failed to plan your day");
     } finally {
@@ -379,11 +370,14 @@ export default function SouthBayTodayView(_props: Props) {
       if (nowMinutes < cutoffMin) return; // still mid-day
     }
     const tom = loadTomorrowPlan(state.kids);
-    if (!tom.cards.length) return;
+    if (!tom.cards.length) {
+      setCards([]);
+      setPlanDateISO(getTomorrowISOInPT());
+      return;
+    }
     setCards(tom.cards);
     setPlanDateISO(getTomorrowISOInPT());
-    lastAnchorRef.current = tom.anchor;
-    recentAnchorsRef.current = tom.anchor ? [tom.anchor] : [];
+    if (tom.city) setPlanCity(tom.city);
     if (tom.weather) setWeather(tom.weather);
   }, [cards, planDateISO, nowMinutes, loading, state.kids]);
 
@@ -397,8 +391,7 @@ export default function SouthBayTodayView(_props: Props) {
     // to a network shuffle if default-plans.json doesn't have the mode.
     const preGen = loadDefaultPlan(nextKids);
     setCards(preGen.cards);
-    lastAnchorRef.current = preGen.anchor;
-    recentAnchorsRef.current = preGen.anchor ? [preGen.anchor] : [];
+    if (preGen.city) setPlanCity(preGen.city);
     setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
     // Swap the weather line to match the new mode.
     try {
@@ -408,6 +401,7 @@ export default function SouthBayTodayView(_props: Props) {
       const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
       if (w) setWeather(w);
     } catch {}
+    if (!preGen.cards.length) void fetchPlan(true, nextKids);
   }
   const handleKidsToggle = () => applyMode(!state.kids);
   const handleNewPlan = () => fetchPlan(true);
@@ -421,13 +415,19 @@ export default function SouthBayTodayView(_props: Props) {
 
   // With buckets, slots stay visible until their wall-clock cutoff
   // (BUCKET_PASSED_AFTER_HOUR), then they drop out of the grid entirely.
-  // Stale plans from yesterday hide everything. Individual event cards also
-  // drop once their end time (or a 3-hour default duration) has passed —
-  // a 6:30 AM event shouldn't sit in the Morning slot until 1 PM.
+  // Stale plans from yesterday hide everything. Events also age out after
+  // their end time (or a 3-hour default duration); in a pillar-pairs plan the
+  // attached meal leaves with the event so the UI never displays half a pair.
   const todayPT = getTodayISOInPT();
-  const visibleCards: DayCard[] = planDateISO < todayPT
-    ? []
-    : cards.filter((c) => !isStaleEventCard(c, nowMinutes, planDateISO, todayPT));
+  const visibleCards: DayCard[] = (() => {
+    if (planDateISO < todayPT) return [];
+    const staleIds = new Set(
+      cards
+        .filter((card) => isStaleEventCard(card, nowMinutes, planDateISO, todayPT))
+        .map((card) => card.id),
+    );
+    return filterAtomicPairCards(cards, staleIds);
+  })();
   // Group cards by bucket for the 2×3 grid. Cards from before the bucket
   // cutover (2026-05-07) only have a clock-range timeBlock; infer a bucket
   // from the start time so they render in the grid instead of the legacy
@@ -478,7 +478,7 @@ export default function SouthBayTodayView(_props: Props) {
           <button onClick={handleNewPlan} disabled={loading} className={loading ? "sbt-shuffle sbt-shuffle--loading" : "sbt-shuffle"}>Reshuffle ↻</button>
           {/* Share — only when there's a plan worth sharing */}
           {visibleCards.length > 1 && !loading && (
-            <ShareButton cards={visibleCards} city={displayCity} kids={state.kids} weather={weather} compact />
+            <ShareButton cards={visibleCards} city={planCity} kids={state.kids} weather={weather} compact />
           )}
         </div>
       </div>
@@ -505,7 +505,7 @@ export default function SouthBayTodayView(_props: Props) {
           {weather && <p style={{ fontSize: 13, color: "#555", margin: 0, marginBottom: 14 }}>{weather}</p>}
           <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", display: "flex", flexDirection: "column", gap: 8 }}>
             <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
-              <strong>Walk downtown Los Gatos.</strong> Coffee at Peet&apos;s, browse the shops on N Santa Cruz Ave, grab lunch wherever looks busy.
+              <strong>Walk downtown Los Gatos.</strong> Start at a local coffee counter, browse N Santa Cruz Ave, then follow the busiest lunch patio.
             </li>
             <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
               <strong>Computer History Museum + Shoreline.</strong> Hit the permanent exhibits, then walk the lake trail for an hour.
@@ -540,7 +540,7 @@ export default function SouthBayTodayView(_props: Props) {
             const card = cardsByBucket.get(bucket);
             if (!card) return null;
             if (isPastBucket(bucket)) return null;
-            const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
+            const accent = ACCENT_COLORS[Math.floor(i / 2) % ACCENT_COLORS.length];
             return (
               <BucketSlot
                 key={bucket}
@@ -789,6 +789,13 @@ export default function SouthBayTodayView(_props: Props) {
           box-shadow: 0 12px 26px rgba(31, 12, 73, 0.07);
           transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, border-color 0.16s ease-out;
         }
+        .sbt-bucket--pillar {
+          border-color: rgba(135, 56, 245, 0.30);
+          box-shadow: 0 14px 30px rgba(31, 12, 73, 0.11);
+        }
+        .sbt-bucket--paired-meal {
+          background: rgba(255, 255, 255, 0.92);
+        }
         .sbt-bucket:hover {
           transform: translateY(-2px);
           border-color: rgba(135, 56, 245, 0.34);
@@ -815,6 +822,25 @@ export default function SouthBayTodayView(_props: Props) {
           color: #13072f;
           letter-spacing: 1px;
           text-transform: uppercase;
+        }
+        .sbt-bucket-role {
+          margin-left: auto;
+          border-radius: 999px;
+          padding: 2px 7px;
+          font-family: 'Inter', sans-serif;
+          font-size: 8px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .sbt-bucket-role--pillar {
+          background: #13072f;
+          color: #fff;
+        }
+        .sbt-bucket-role--paired-meal {
+          border: 1px solid rgba(19, 7, 47, 0.18);
+          background: #fff;
+          color: #6f5d85;
         }
         .sbt-bucket-link {
           display: flex;
@@ -1139,12 +1165,17 @@ function BucketSlot({ bucket, card, accent, animationDelay }: BucketSlotProps) {
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
   return (
     <div
-      className="sbt-bucket"
+      className={`sbt-bucket${card.role ? ` sbt-bucket--${card.role}` : ""}`}
       style={{ animation: `fadeSlideIn 0.3s ease-out ${animationDelay}s both` }}
     >
       <div className="sbt-bucket-header">
         <span className="sbt-bucket-accent" style={{ background: accent }} />
         <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
+        {card.role && (
+          <span className={`sbt-bucket-role sbt-bucket-role--${card.role}`}>
+            {card.role === "pillar" ? "Today’s pick" : "Nearby"}
+          </span>
+        )}
       </div>
       {cardUrl ? (
         <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
@@ -1248,7 +1279,7 @@ function getTomorrowISOInPT(): string {
  *  round-trip. */
 function loadTomorrowPlan(
   kids: boolean,
-): { cards: DayCard[]; anchor: City | null; weather: string | null } {
+): { cards: DayCard[]; city: City | null; weather: string | null } {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
@@ -1261,21 +1292,24 @@ function loadTomorrowPlan(
     if (tomorrowPlan) {
       return {
         cards: tomorrowPlan.cards,
-        anchor: (tomorrowPlan.city as City) || pickRandomAnchor(),
+        city: (tomorrowPlan.city as City) || REGIONAL_CONTEXT_CITY,
         weather: tomorrowPlan.weather || null,
       };
     }
     // Fallback: today's plan with events stripped.
     const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], anchor: null, weather: null };
+    if (!plan) return { cards: [], city: null, weather: null };
+    if (plan.selectionModel === "pillar-pairs-v1" || plan.cards.some((card: DayCard) => card.role)) {
+      return { cards: [], city: null, weather: null };
+    }
     const placesOnly = plan.cards.filter((c: DayCard) => c.source !== "event");
     return {
       cards: placesOnly,
-      anchor: (plan.city as City) || pickRandomAnchor(),
+      city: (plan.city as City) || REGIONAL_CONTEXT_CITY,
       weather: plan.weather || null,
     };
   } catch {
-    return { cards: [], anchor: null, weather: null };
+    return { cards: [], city: null, weather: null };
   }
 }
 

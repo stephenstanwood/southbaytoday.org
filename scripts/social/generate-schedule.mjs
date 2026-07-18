@@ -24,8 +24,7 @@ import { execSync } from "node:child_process";
 import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
 import { scoreAndRank } from "./lib/scoring.mjs";
 import { generateDayPlanCopy, generateTonightPickCopy, generateWildcardCopy } from "./lib/copy-gen.mjs";
-import { SLOT_TYPES, TYPED_SLOTS, todayPT, addDays } from "./lib/slot-scheduler.mjs";
-import { CITY_NAMES } from "./lib/constants.mjs";
+import { todayPT, addDays } from "./lib/slot-scheduler.mjs";
 import { runQualityReview } from "./lib/post-gen-review.mjs";
 import { normalizeName } from "./lib/normalizeName.mjs";
 import { canonicalizePlanCards } from "../../src/lib/south-bay/canonicalizeCard.mjs";
@@ -36,8 +35,16 @@ const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "s
 const PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
 const EVENTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "upcoming-events.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
-const MILESTONES_DIR = join(__dirname, "..", "..", "src", "lib", "south-bay");
 const RESTAURANT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "scc-food-openings.json");
+const REGIONAL_PLAN_CITY = "campbell";
+const REGIONAL_PLAN_LABEL = "South Bay";
+const DAY_PLAN_SELECTION_MODEL = "pillar-pairs-v1";
+const MEAL_PAIR_MAX_MILES = 5;
+const PAIRS = [
+  ["morning", "breakfast"],
+  ["afternoon", "lunch"],
+  ["evening", "dinner"],
+];
 
 // Load env
 const ENV_FILE = join(__dirname, "..", "..", ".env.local");
@@ -68,7 +75,7 @@ function computeDefaultDays() {
   // Inclusive horizon: today through next-Wed + 7 days
   return daysToNextWed + 7 + 1;
 }
-const daysAhead = parseInt(args.find((a, i) => args[i - 1] === "--days") || String(computeDefaultDays()));
+const daysAhead = parseInt(args.find((_, i) => args[i - 1] === "--days") || String(computeDefaultDays()));
 // --hero-only: skip the social batch entirely and just refresh
 // default-plans.json. This is now the standalone homepage/newsletter plan
 // generator: it calls /api/plan-day directly for adults + kids instead of
@@ -237,8 +244,9 @@ function deriveMissingEventTimes(cards) {
   }
 }
 
-/** Call the plan API for a specific city + date. Returns plan data or null. */
-async function fetchPlanFromApi(city, dateStr, opts = {}) {
+/** Call the regional plan API for a date. `city` is only a stable weather
+ *  context; it never limits the candidate pool. Returns plan data or null. */
+async function fetchPlanFromApi(city = REGIONAL_PLAN_CITY, dateStr, opts = {}) {
   const { blockedNames = [], weekContext, kids = false, recentlyShown = [] } = opts;
   try {
     const res = await fetch(`${PLAN_API_BASE}/api/plan-day`, {
@@ -246,13 +254,15 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         city,
+        scope: "regional",
         kids,
         planDate: dateStr,
         blockedNames,
         weekContext,
         recentlyShown,
+        noCache: Boolean(opts.noCache),
       }),
-      signal: AbortSignal.timeout(45000),
+      signal: AbortSignal.timeout(90000),
     });
     if (!res.ok) {
       console.log(`      ⚠️  Plan API ${res.status} ${res.statusText} (city=${city} kids=${kids} date=${dateStr})`);
@@ -270,16 +280,41 @@ async function fetchPlanFromApi(city, dateStr, opts = {}) {
   }
 }
 
-/** Check whether a bucket plan qualifies. */
+function pairingIssues(cards) {
+  const issues = [];
+  const byBucket = new Map((cards || []).map((card) => [card.bucket, card]));
+  if (byBucket.size !== 6) issues.push(`only ${byBucket.size} bucket(s) filled`);
+  for (const [pillarBucket, mealBucket] of PAIRS) {
+    const pillar = byBucket.get(pillarBucket);
+    const meal = byBucket.get(mealBucket);
+    if (!pillar) { issues.push(`missing ${pillarBucket} pillar`); continue; }
+    if (!meal) { issues.push(`missing ${mealBucket} pairing`); continue; }
+    if (pillar.role !== "pillar") issues.push(`${pillarBucket} is not marked pillar`);
+    if (meal.role !== "paired-meal") issues.push(`${mealBucket} is not marked paired-meal`);
+    if (pillar.pairedWithId !== meal.id || meal.pairedWithId !== pillar.id) {
+      issues.push(`${pillarBucket}/${mealBucket} links are not reciprocal`);
+    }
+    if (!Number.isFinite(meal.pairDistanceMiles)) {
+      issues.push(`${mealBucket} is missing pair distance`);
+    } else if (meal.pairDistanceMiles > MEAL_PAIR_MAX_MILES + 0.05) {
+      issues.push(`${mealBucket} is ${meal.pairDistanceMiles.toFixed(1)} miles from ${pillarBucket}`);
+    }
+    if (!["exact", "venue"].includes(meal.pairLocationPrecision)) {
+      issues.push(`${mealBucket} proximity is not venue-resolved`);
+    }
+  }
+  return issues;
+}
+
+/** Check whether a generated pillar-pairs plan qualifies. */
 function planPassesQuality(plan, usedNames) {
   if (!plan?.cards?.length) return { ok: false, reason: "empty" };
   const cards = plan.cards;
-  const buckets = new Set(cards.map((c) => c.bucket).filter(Boolean));
-  // Need at least 4 of the 6 buckets filled — otherwise it's a thin plan.
-  if (buckets.size < 4) return { ok: false, reason: `only ${buckets.size} bucket(s) filled` };
-  // Need at least one early-day bucket so the plan has somewhere to start.
-  const hasEarly = buckets.has("breakfast") || buckets.has("morning") || buckets.has("lunch");
-  if (!hasEarly) return { ok: false, reason: `no breakfast/morning/lunch bucket` };
+  if (plan.selectionModel !== DAY_PLAN_SELECTION_MODEL) {
+    return { ok: false, reason: `unexpected selection model: ${plan.selectionModel || "legacy"}` };
+  }
+  const pairProblems = pairingIssues(cards);
+  if (pairProblems.length) return { ok: false, reason: pairProblems.join("; ") };
   // Reject if ≥2 venues repeat a previously-used name this run.
   const names = cards.map((c) => normalizeName(c.name)).filter(Boolean);
   const overlap = names.filter((n) => usedNames.has(n));
@@ -308,11 +343,13 @@ function createSharedPlanUrl(plan, dateStr) {
   const planId = generatePlanId();
   const entry = {
     cards: canonicalizePlanCards(plan.cards),
-    city: plan.cards[0]?.city || "san-jose",
+    city: plan.city || plan.cards.find((card) => card.role === "pillar")?.city || REGIONAL_PLAN_CITY,
     kids: false,
     weather: plan.weather,
     planDate: dateStr,
     createdAt: new Date().toISOString(),
+    selectionModel: plan.selectionModel || null,
+    mealPairMaxMiles: plan.mealPairMaxMiles || null,
   };
   const current = loadSharedPlans();
   current[planId] = entry;
@@ -625,11 +662,11 @@ function weightedRandomPick(items) {
  *    - "missing-only": only fill missing slots, leave existing drafts alone
  *      (used for Pass 2 — flagged slots were deleted, everything else is keep)
  */
-async function runGenerationPass(schedule, plansData, scored, { passLabel = "pass", regenMode = "draft-or-missing", yesterdayAdultsNames = [] } = {}) {
+async function runGenerationPass(schedule, plansData, scored, { regenMode = "draft-or-missing", yesterdayAdultsNames = [] } = {}) {
   const shouldFill = (slot) => {
     if (!slot) return true;
     // Empty-stub drafts (status=draft but no actual content) always need filling.
-    // Pass 3 anchor-swap creates these stubs; missing-only would otherwise skip them.
+    // A prior quality pass can leave an empty draft stub; always refill it.
     const isEmptyStub = slot.status === "draft" && !slot.plan && !slot.item && !slot.copy;
     if (isEmptyStub) return true;
     if (regenMode === "missing-only") return false;
@@ -644,11 +681,10 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
   const recentTonightTitles = new Set();
   const recentTonightVenues = new Set();
   const usedDayPlanNames = new Set();
-  // Week-level context for plan-day — anchor cities seen this batch + category counts.
-  const anchorCitiesThisWeek = [];
+  // Week-level context only dampens overused categories. Geography does not
+  // participate across pillars or across days.
   const categorySaturation = {};
-  const recordPlanForContext = (plan, cityName) => {
-    if (cityName) anchorCitiesThisWeek.push(cityName);
+  const recordPlanForContext = (plan) => {
     for (const c of (plan?.cards || [])) {
       const cat = (c.category || "").toLowerCase();
       if (!cat) continue;
@@ -664,7 +700,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
           const n = normalizeName(c.name);
           if (n) usedDayPlanNames.add(n);
         }
-        recordPlanForContext(dp.plan, dp.cityName);
+        recordPlanForContext(dp.plan);
       }
       const tp = day["tonight-pick"];
       if (tp?.item) {
@@ -693,15 +729,8 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
 
     // ── Day Plan (7:15 AM) ──────────────────────────────────────────────
     if (shouldFill(day["day-plan"])) {
-      // Anchor city rotates by day-of-year for flavor. The plan-day API
-      // pulls candidates from the full South Bay region (20km radius), so
-      // the "city" is more of a center-of-gravity than a hard filter.
-      const cityKeys = Object.keys(CITY_NAMES);
-      const dayOfYear = Math.floor(
-        (new Date(dateStr + "T12:00:00") - new Date(dateStr.split("-")[0] + "-01-01T00:00:00")) / 86400000
-      );
-      const citySlug = cityKeys[dayOfYear % cityKeys.length];
-      const cityName = CITY_NAMES[citySlug] || citySlug;
+      const citySlug = REGIONAL_PLAN_CITY;
+      const cityName = REGIONAL_PLAN_LABEL;
 
       if (dryRun) {
         console.log(`    📋 Day Plan: ${cityName} [dry run]`);
@@ -712,23 +741,28 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
         console.log(`    📋 Fetching plan for ${cityName} on ${dateStr}...`);
         try {
           const blockedNames = Array.from(usedDayPlanNames);
-          const weekContext = {
-            anchorCities: anchorCitiesThisWeek.slice(),
-            categorySaturation: { ...categorySaturation },
-          };
+          const weekContext = { categorySaturation: { ...categorySaturation } };
           // Penalize (not hard-block) yesterday's adults picks so today's
           // plan shuffles even when seedUsedFromSchedule missed anything.
           // daysAgo: 1 → -25 points in plan-day's scoreCandidates.
           const recentlyShown = yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 1 }));
-          const candidate = await fetchPlanFromApi(citySlug, dateStr, { blockedNames, weekContext, recentlyShown });
+          let candidate = await fetchPlanFromApi(citySlug, dateStr, { blockedNames, weekContext, recentlyShown });
           if (!candidate) {
             lastReason = "api returned nothing";
           } else {
-            const quality = planPassesQuality(candidate, usedDayPlanNames);
+            let quality = planPassesQuality(candidate, usedDayPlanNames);
             if (!quality.ok) {
-              console.log(`      ⚠️  Quality warning: ${quality.reason} — accepting anyway`);
+              console.log(`      ⚠️  Invalid pair plan: ${quality.reason} — retrying uncached`);
+              candidate = await fetchPlanFromApi(citySlug, dateStr, {
+                blockedNames, weekContext, recentlyShown, noCache: true,
+              });
+              quality = planPassesQuality(candidate, usedDayPlanNames);
             }
-            plan = candidate;
+            if (!quality.ok) {
+              lastReason = quality.reason;
+            } else {
+              plan = candidate;
+            }
           }
         } catch (err) {
           lastReason = err.message;
@@ -755,7 +789,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             const n = normalizeName(c.name);
             if (n) usedDayPlanNames.add(n);
           }
-          recordPlanForContext(plan, cityName);
+          recordPlanForContext(plan);
 
           // Create a shared plan entry and get a shareable URL
           const planUrl = createSharedPlanUrl(plan, dateStr);
@@ -766,10 +800,15 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
             day["day-plan"] = {
               status: "draft",
               slotType: "day-plan",
-              city: citySlug,
+              city: plan.city || citySlug,
               cityName,
               planUrl,
-              plan: { cards: plan.cards, weather: plan.weather },
+              plan: {
+                cards: plan.cards,
+                weather: plan.weather,
+                selectionModel: plan.selectionModel,
+                mealPairMaxMiles: plan.mealPairMaxMiles,
+              },
               copy,
               imageUrl: null,
               imageStyle: null,
@@ -778,7 +817,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
               generatedAt: new Date().toISOString(),
             };
             generated++;
-            console.log(`    📋 Day Plan: ${cityName} (${plan.cards.length} stops) ✅`);
+            console.log(`    📋 Day Plan: ${cityName} (3 pillar/meal pairs) ✅`);
             try { await generateImageForSlot(day["day-plan"], dateStr, "day-plan"); }
             catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
           } catch (err) {
@@ -795,7 +834,7 @@ async function runGenerationPass(schedule, plansData, scored, { passLabel = "pas
         const n = normalizeName(c.name);
         if (n) usedDayPlanNames.add(n);
       }
-      recordPlanForContext(day["day-plan"].plan, day["day-plan"].cityName);
+      recordPlanForContext(day["day-plan"].plan);
     }
 
     // ── Tonight Pick (11:45 AM) ─────────────────────────────────────────
@@ -979,7 +1018,7 @@ async function main() {
   console.log(`   🔁 variety seed: ${yesterdayAdultsNames.length} adults + ${yesterdayKidsNames.length} kids names from yesterday`);
 
   // ── Pass 1: initial generation ─────────────────────────────────────────
-  const p1 = await runGenerationPass(schedule, plansData, scored, { passLabel: "initial", yesterdayAdultsNames });
+  const p1 = await runGenerationPass(schedule, plansData, scored, { yesterdayAdultsNames });
   console.log(`\n▶︎ Pass 1: ${p1.generated} generated, ${p1.skipped} preserved`);
 
   // ── Quality review ────────────────────────────────────────────────────
@@ -999,7 +1038,7 @@ async function main() {
     // ── Pass 2: regenerate only the slots that were deleted by review ────
     if (review.flagged.length) {
       console.log(`\n🔁 Pass 2: regenerating ${review.flagged.length} flagged slot(s)...`);
-      const p2 = await runGenerationPass(schedule, plansData, scored, { passLabel: "regen", regenMode: "missing-only", yesterdayAdultsNames });
+      const p2 = await runGenerationPass(schedule, plansData, scored, { regenMode: "missing-only", yesterdayAdultsNames });
       console.log(`✅ Pass 2: ${p2.generated} regenerated`);
 
       // Re-run the deterministic portion of the review (terminology,
@@ -1010,58 +1049,18 @@ async function main() {
         console.log(`   🔧 auto-fix [${a.date} ${a.slotType}] ${a.kind}: ${a.details}`);
       }
 
-      // ── Pass 3: city-anchor swap retry ────────────────────────────────
-      // Pass 2 used the same anchor city as Pass 1, so any slot that's
-      // STILL flagged (sprawl, <6 stops, hours mismatch) is unlikely to
-      // resolve with another same-city retry — the candidate pool for that
-      // city/date combo is genuinely thin. Swap in the least-used city in
-      // the window and try once more. After this, we accept the result.
-      const stillFlaggedDayPlans = review2.flagged.filter(
-        (f) => f.slotType === "day-plan" && /(too much driving|only \d+ stops?|only \d+ bucket|hours mismatch|starts too late)/i.test(f.reason || ""),
-      );
-      if (stillFlaggedDayPlans.length) {
-        const ALL_CITIES = Object.keys(CITY_NAMES);
-        const cityUsage = new Map(ALL_CITIES.map((c) => [c, 0]));
-        for (const d of Object.values(schedule.days || {})) {
-          const c = d["day-plan"]?.city;
-          if (c && cityUsage.has(c)) cityUsage.set(c, cityUsage.get(c) + 1);
-        }
-        console.log(`\n🔁 Pass 3: ${stillFlaggedDayPlans.length} still-flagged day-plan(s) — swapping anchor city + retry`);
-        for (const f of stillFlaggedDayPlans) {
-          const slot = schedule.days?.[f.date]?.["day-plan"];
-          if (!slot || ["image-approved", "published"].includes(slot.status)) continue;
-          const currentCity = slot.city || "";
-          // Pick the least-used city != currentCity. Tiebreak: alphabetic for determinism.
-          const altCity = [...cityUsage.entries()]
-            .filter(([c]) => c !== currentCity)
-            .sort(([a, ua], [b, ub]) => ua - ub || a.localeCompare(b))[0]?.[0];
-          if (!altCity) continue;
-          console.log(`   ↔︎ ${f.date}: ${currentCity || "(none)"} → ${altCity} (${f.reason})`);
-          delete schedule.days[f.date]["day-plan"];
-          schedule.days[f.date]["day-plan"] = { status: "draft", slotType: "day-plan", city: altCity };
-          cityUsage.set(altCity, (cityUsage.get(altCity) || 0) + 1);
-        }
-        const p3 = await runGenerationPass(schedule, plansData, scored, { passLabel: "anchor-swap", regenMode: "missing-only", yesterdayAdultsNames });
-        console.log(`✅ Pass 3: ${p3.generated} regenerated`);
-
-        // Final review — log only, no reset.
-        const review3 = runQualityReview(schedule, { dates: windowDates, resetFlaggedToDraft: false });
-        for (const f of review3.flagged) {
-          console.log(`   ⚠️  accepted [${f.date} ${f.slotType}] ${f.reason} (3 passes exhausted)`);
-        }
-      } else {
-        for (const f of review2.flagged) {
-          console.log(`   ⚠️  still flagged [${f.date} ${f.slotType}] ${f.reason} (not auto-resolvable)`);
-        }
+      // The first retry is regional again: a different city would not
+      // change the candidate pool and must never be used as a quality lever.
+      for (const f of review2.flagged) {
+        console.log(`   ⚠️  still flagged [${f.date} ${f.slotType}] ${f.reason} (regional retry exhausted)`);
       }
     }
 
     // ── Pass 4: empty-slot safety net ──────────────────────────────────────
     // After all other passes, scan the window for day-plan slots that ended up
     // missing or empty (no plan/cards). Those are guaranteed bugs — the user
-    // sees "Untitled" rows in the review portal. Make one more attempt per
-    // empty slot with a city not yet used in the window, accept whatever
-    // comes back, and Discord-alert any that still fail.
+    // sees "Untitled" rows in the review portal. Make one more regional
+    // attempt per empty slot and Discord-alert any that still fail.
     const emptyDayPlans = windowDates.filter((dateStr) => {
       const dp = schedule.days?.[dateStr]?.["day-plan"];
       if (!dp) return true;
@@ -1069,25 +1068,20 @@ async function main() {
       return !dp.plan?.cards?.length;
     });
     if (emptyDayPlans.length) {
-      console.log(`\n🚨 Pass 4: ${emptyDayPlans.length} empty day-plan slot(s) — emergency fill`);
-      const ALL_CITIES = Object.keys(CITY_NAMES);
-      const cityUsage = new Map(ALL_CITIES.map((c) => [c, 0]));
-      for (const d of Object.values(schedule.days || {})) {
-        const c = d["day-plan"]?.city;
-        if (c && cityUsage.has(c) && d["day-plan"]?.plan?.cards?.length) {
-          cityUsage.set(c, cityUsage.get(c) + 1);
-        }
-      }
+      console.log(`\n🚨 ${emptyDayPlans.length} empty day-plan slot(s) — regional emergency fill`);
       const stillEmpty = [];
       for (const dateStr of emptyDayPlans) {
-        const altCity = [...cityUsage.entries()].sort(([a, ua], [b, ub]) => ua - ub || a.localeCompare(b))[0]?.[0];
-        if (!altCity) { stillEmpty.push(dateStr); continue; }
-        const cityName = CITY_NAMES[altCity] || altCity;
-        console.log(`   🚨 ${dateStr}: emergency fill with ${cityName}`);
+        console.log(`   🚨 ${dateStr}: emergency regional fill`);
         try {
-          const plan = await fetchPlanFromApi(altCity, dateStr);
+          const plan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, dateStr, { noCache: true });
           if (!plan?.cards?.length) {
-            console.log(`      ❌ plan-day returned empty for ${altCity}`);
+            console.log("      ❌ plan-day returned empty");
+            stillEmpty.push(dateStr);
+            continue;
+          }
+          const quality = planPassesQuality(plan, new Set());
+          if (!quality.ok) {
+            console.log(`      ❌ invalid pair plan: ${quality.reason}`);
             stillEmpty.push(dateStr);
             continue;
           }
@@ -1098,10 +1092,15 @@ async function main() {
           schedule.days[dateStr]["day-plan"] = {
             status: "draft",
             slotType: "day-plan",
-            city: altCity,
-            cityName,
+            city: plan.city || REGIONAL_PLAN_CITY,
+            cityName: REGIONAL_PLAN_LABEL,
             planUrl,
-            plan: { cards: plan.cards, weather: plan.weather },
+            plan: {
+              cards: plan.cards,
+              weather: plan.weather,
+              selectionModel: plan.selectionModel,
+              mealPairMaxMiles: plan.mealPairMaxMiles,
+            },
             copy,
             imageUrl: null,
             imageStyle: null,
@@ -1109,8 +1108,7 @@ async function main() {
             imageApprovedAt: null,
             generatedAt: new Date().toISOString(),
           };
-          cityUsage.set(altCity, (cityUsage.get(altCity) || 0) + 1);
-          console.log(`      ✅ filled with ${cityName} (${plan.cards.length} stops)`);
+          console.log("      ✅ filled with 3 pillar/meal pairs");
           try { await generateImageForSlot(schedule.days[dateStr]["day-plan"], dateStr, "day-plan"); }
           catch (err) { console.log(`      ⚠️  Image gen failed: ${err.message} (review portal can retry)`); }
         } catch (err) {
@@ -1170,13 +1168,16 @@ async function main() {
 const DEFAULT_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
 
 async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsNames = [], yesterdayKidsNames = []) {
-  const { citySlug, cityName } = selectHomepageCity(todayStr);
-
-  console.log(`\n📋 Generating today's adults plan (${cityName}) for homepage/newsletter...`);
+  console.log(`\n📋 Generating today's adults plan (${REGIONAL_PLAN_LABEL}) for homepage/newsletter...`);
   let todayAdultsPlan = null;
   try {
     const recentlyShown = yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 1 }));
-    todayAdultsPlan = await fetchPlanFromApi(citySlug, todayStr, { kids: false, recentlyShown });
+    todayAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: false, recentlyShown });
+    const quality = planPassesQuality(todayAdultsPlan, new Set());
+    if (!quality.ok) {
+      console.warn(`   ⚠️  Adults plan rejected: ${quality.reason}`);
+      todayAdultsPlan = null;
+    }
     if (todayAdultsPlan?.cards?.length) {
       deriveMissingEventTimes(todayAdultsPlan.cards);
       await enrichCardPhotos(todayAdultsPlan.cards);
@@ -1186,17 +1187,22 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
     console.warn(`   ⚠️  Adults plan fetch failed: ${err.message}`);
   }
 
-  // Carry forward fallbacks keep the site from going blank if the API is
-  // briefly down. Prefer the old social schedule while it still exists, then
-  // the prior default-plans.json.
+  // Carry-forward fallbacks keep the site from going blank if the API is
+  // briefly down, but only a complete v1 pair plan is eligible. Legacy social
+  // schedule data must not quietly reintroduce the old six-bucket logic.
   const previousPlans = loadDefaultPlans()?.plans || {};
   const scheduledTodayAdults = schedule.days?.[todayStr]?.["day-plan"];
-  const fallbackAdultsEntry = scheduledTodayAdults?.plan?.cards?.length
+  const scheduledFallbackQuality = scheduledTodayAdults?.plan?.cards?.length
+    ? planPassesQuality(scheduledTodayAdults.plan, new Set())
+    : { ok: false };
+  const fallbackAdultsEntry = scheduledFallbackQuality.ok
     ? {
         cards: scheduledTodayAdults.plan.cards,
         weather: scheduledTodayAdults.plan.weather || null,
         city: scheduledTodayAdults.city,
         kids: false,
+        selectionModel: scheduledTodayAdults.plan.selectionModel || null,
+        mealPairMaxMiles: scheduledTodayAdults.plan.mealPairMaxMiles || null,
         carriedForward: true,
         generatedAt: new Date().toISOString(),
       }
@@ -1206,17 +1212,20 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
     return;
   }
 
-  // Generate today's kids plan — this is the only extra Claude call option 2
-  // introduces relative to the social-only baseline.
-  console.log(`\n📋 Generating today's kids plan (${cityName}) for homepage...`);
+  console.log(`\n📋 Generating today's kids plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
   let kidsPlan = null;
   try {
     // Penalize yesterday's kids picks so the homepage doesn't serve
     // Bill's Cafe + Vasona Lake + Smoking Pig every day in a row.
     // daysAgo: 1 → -25 points in plan-day's scoreCandidates.
     const recentlyShown = yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 1 }));
-    kidsPlan = await fetchPlanFromApi(citySlug, todayStr, { kids: true, recentlyShown });
-    if (kidsPlan) {
+    kidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: true, recentlyShown });
+    const quality = planPassesQuality(kidsPlan, new Set());
+    if (!quality.ok) {
+      console.warn(`   ⚠️  Kids plan rejected: ${quality.reason}`);
+      kidsPlan = null;
+    }
+    if (kidsPlan?.cards?.length) {
       deriveMissingEventTimes(kidsPlan.cards);
       await enrichCardPhotos(kidsPlan.cards);
       await enrichMissingImages(kidsPlan.cards);
@@ -1230,27 +1239,30 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   // Without dedicated tomorrow heroes, today's cache leaks today-only events
   // into tomorrow's view.
   const tomorrowStr = isoOffset(todayStr, 1);
-  const { citySlug: tomorrowCitySlug, cityName: tomorrowCityName } = selectHomepageCity(tomorrowStr);
   let tomorrowAdultsEntry = null;
   let tomorrowKidsEntry = null;
-  console.log(`\n📋 Generating tomorrow's adults plan (${tomorrowCityName}) for homepage...`);
+  console.log(`\n📋 Generating tomorrow's adults plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
   try {
     const todayAdultNames = (todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
     const recentlyShown = [
       ...yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 2 })),
       ...todayAdultNames.map((n) => ({ name: n, daysAgo: 1 })),
     ];
-    const tomorrowAdultsPlan = await fetchPlanFromApi(tomorrowCitySlug, tomorrowStr, { kids: false, recentlyShown });
-    if (tomorrowAdultsPlan?.cards?.length) {
+    const tomorrowAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: false, recentlyShown });
+    const quality = planPassesQuality(tomorrowAdultsPlan, new Set());
+    if (!quality.ok) console.warn(`   ⚠️  Tomorrow adults plan rejected: ${quality.reason}`);
+    if (quality.ok && tomorrowAdultsPlan?.cards?.length) {
       deriveMissingEventTimes(tomorrowAdultsPlan.cards);
       await enrichCardPhotos(tomorrowAdultsPlan.cards);
       await enrichMissingImages(tomorrowAdultsPlan.cards);
       tomorrowAdultsEntry = {
         cards: tomorrowAdultsPlan.cards,
         weather: tomorrowAdultsPlan.weather || null,
-        city: tomorrowCitySlug,
+        city: tomorrowAdultsPlan.city || REGIONAL_PLAN_CITY,
         kids: false,
         planDate: tomorrowStr,
+        selectionModel: tomorrowAdultsPlan.selectionModel,
+        mealPairMaxMiles: tomorrowAdultsPlan.mealPairMaxMiles,
         generatedAt: new Date().toISOString(),
       };
     }
@@ -1258,24 +1270,28 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
     console.warn(`   ⚠️  Tomorrow adults plan fetch failed: ${err.message}`);
   }
 
-  console.log(`\n📋 Generating tomorrow's kids plan (${tomorrowCityName}) for homepage...`);
+  console.log(`\n📋 Generating tomorrow's kids plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
   try {
     const todayNames = (kidsPlan?.cards || todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
     const recentlyShown = [
       ...yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 2 })),
       ...todayNames.map((n) => ({ name: n, daysAgo: 1 })),
     ];
-    const tomorrowKidsPlan = await fetchPlanFromApi(tomorrowCitySlug, tomorrowStr, { kids: true, recentlyShown });
-    if (tomorrowKidsPlan?.cards?.length) {
+    const tomorrowKidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: true, recentlyShown });
+    const quality = planPassesQuality(tomorrowKidsPlan, new Set());
+    if (!quality.ok) console.warn(`   ⚠️  Tomorrow kids plan rejected: ${quality.reason}`);
+    if (quality.ok && tomorrowKidsPlan?.cards?.length) {
       deriveMissingEventTimes(tomorrowKidsPlan.cards);
       await enrichCardPhotos(tomorrowKidsPlan.cards);
       await enrichMissingImages(tomorrowKidsPlan.cards);
       tomorrowKidsEntry = {
         cards: tomorrowKidsPlan.cards,
         weather: tomorrowKidsPlan.weather || null,
-        city: tomorrowCitySlug,
+        city: tomorrowKidsPlan.city || REGIONAL_PLAN_CITY,
         kids: true,
         planDate: tomorrowStr,
+        selectionModel: tomorrowKidsPlan.selectionModel,
+        mealPairMaxMiles: tomorrowKidsPlan.mealPairMaxMiles,
         generatedAt: new Date().toISOString(),
       };
     }
@@ -1286,23 +1302,27 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   const adultsEntry = todayAdultsPlan?.cards?.length ? {
     cards: todayAdultsPlan.cards,
     weather: todayAdultsPlan.weather || null,
-    city: citySlug,
+    city: todayAdultsPlan.city || REGIONAL_PLAN_CITY,
     kids: false,
     planDate: todayStr,
+    selectionModel: todayAdultsPlan.selectionModel,
+    mealPairMaxMiles: todayAdultsPlan.mealPairMaxMiles,
     generatedAt: new Date().toISOString(),
   } : fallbackAdultsEntry;
   const kidsEntry = kidsPlan ? {
     cards: kidsPlan.cards,
     weather: kidsPlan.weather || null,
-    city: citySlug,
+    city: kidsPlan.city || REGIONAL_PLAN_CITY,
     kids: true,
     planDate: todayStr,
+    selectionModel: kidsPlan.selectionModel,
+    mealPairMaxMiles: kidsPlan.mealPairMaxMiles,
     generatedAt: new Date().toISOString(),
   } : null;
 
-  // Carry-forward fallback: if today's or tomorrow's kids fetch returned empty,
-  // reuse the previous run's cards with events stripped (today-only events
-  // would leak). Better than dropping the key entirely.
+  // Carry-forward fallback: if today's or tomorrow's kids fetch returned
+  // empty, reuse only a complete place-only v1 plan. We never strip events in
+  // isolation because that would leave their meals orphaned.
   const carryForwardKids = (...keys) => {
     for (const key of keys) {
       const prev = carryForwardPlan(previousPlans, key);
@@ -1324,7 +1344,8 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   const output = {
     _meta: {
       generatedAt: new Date().toISOString(),
-      generator: "generate-schedule (homepage hero, bucket schema)",
+      generator: "generate-schedule (homepage hero, pillar-pairs-v1)",
+      selectionModel: DAY_PLAN_SELECTION_MODEL,
       planCount: Object.keys(plans).length,
     },
     plans,
@@ -1345,25 +1366,14 @@ function carryForwardPlan(plans, ...keys) {
   for (const key of keys) {
     const prev = plans[key];
     if (!prev?.cards?.length) continue;
-    const placesOnly = prev.cards.filter((c) => c.source !== "event");
-    if (!placesOnly.length) continue;
-    return { ...prev, cards: placesOnly, carriedForward: true, generatedAt: new Date().toISOString() };
+    // Never surgically remove an expired event: doing so severs its meal pair.
+    // A carry-forward is safe only when the complete six-card plan is already
+    // place-only and still satisfies the pillar-pairs contract.
+    if (prev.cards.some((c) => c.source === "event")) continue;
+    if (!planPassesQuality(prev, new Set()).ok) continue;
+    return { ...prev, carriedForward: true, generatedAt: new Date().toISOString() };
   }
   return null;
-}
-
-function selectHomepageCity(dateStr) {
-  const cityKeys = Object.keys(CITY_NAMES);
-  const day = dayOfYear(dateStr);
-  const citySlug = cityKeys[day % cityKeys.length];
-  return { citySlug, cityName: CITY_NAMES[citySlug] || citySlug };
-}
-
-function dayOfYear(isoStr) {
-  const [y, m, d] = isoStr.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d));
-  const start = new Date(Date.UTC(y, 0, 0));
-  return Math.floor((dt - start) / 86400000);
 }
 
 /** Add `n` days to a YYYY-MM-DD string and return a new YYYY-MM-DD. */
