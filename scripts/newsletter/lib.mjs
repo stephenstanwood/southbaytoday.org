@@ -11,7 +11,7 @@ import { loadEnvLocal } from "../lib/env.mjs";
 import { ARTIFACTS, DATA_DIR } from "../lib/paths.mjs";
 import { writeFileAtomic } from "../lib/io.mjs";
 import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../src/lib/south-bay/weatherProvider.mjs";
-import { isNationalChain } from "../../src/lib/south-bay/chains.mjs";
+import { chainBrandKey, isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { isMarqueeEvent, routineEventPenalty, titleQualityPenalty } from "../../src/lib/south-bay/editorialQuality.mjs";
@@ -362,6 +362,17 @@ function newsletterPairingIssues(cards) {
   const byBucket = new Map(cards.map((card) => [card.bucket, card]));
   const issues = [];
   if (cards.length !== 6 || byBucket.size !== 6) issues.push("expected six unique bucket cards");
+  const mealBrands = new Map();
+  for (const mealBucket of ["breakfast", "lunch", "dinner"]) {
+    const meal = byBucket.get(mealBucket);
+    if (!meal) continue;
+    const brand = chainBrandKey(meal.name) || meal.id;
+    if (mealBrands.has(brand)) {
+      issues.push(`duplicate meal brand: ${mealBrands.get(brand)} / ${meal.name || meal.id}`);
+    } else {
+      mealBrands.set(brand, meal.name || meal.id);
+    }
+  }
   for (const [pillarBucket, mealBucket] of pairs) {
     const pillar = byBucket.get(pillarBucket);
     const meal = byBucket.get(mealBucket);

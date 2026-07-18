@@ -41,6 +41,12 @@ logo does not beat an equivalent independent. Caterers, grocery stores,
 food-delivery businesses, home food businesses, and meal-inappropriate venue
 types are not eligible.
 
+A restaurant brand may appear only once in a plan. Branch IDs and addresses do
+not make repeat locations distinct recommendations: Oren's in Cupertino and
+Oren's in Mountain View still count as the same meal brand. Selection enforces
+this rule, and the API, scheduled generator, post-generation review, and
+newsletter all reject plans that violate it.
+
 The radius must be supported by exact place coordinates or a matched venue.
 An event known only to a city centroid stays in the event corpus but cannot be
 used for a proximity pair.

@@ -49,6 +49,7 @@ import {
   dayPlanPairingIssues,
   dominantPillarCity,
   isWithinQualityBand,
+  mealBrandKey,
   rankNearbyMeals,
   type PillarBucket,
 } from "../../lib/south-bay/dayPlanPairs";
@@ -1486,7 +1487,7 @@ ${optionText}
 RULES:
 - Return exactly three pair objects: morning+breakfast, afternoon+lunch, evening+dinner.
 - Pick IDs only from the candidate and verified meal lists under the matching pillar.
-- Never reuse an activity or restaurant.
+- Never reuse an activity, restaurant, or restaurant brand. Different branches of the same brand count as a repeat.
 - Any REQUIRED BY USER activity must be the pillar for its time bucket.
 - Write one factual sentence per item using only its supplied note/type/setting/price data.
 - Do not mention distance, travel time, proximity, star ratings, review counts, rankings, scoring, or the mechanics of pairing.
@@ -1540,6 +1541,10 @@ OUTPUT — JSON array only:
   const cards: DayCard[] = [];
   const usedPillars = new Set<string>();
   const usedMeals = new Set<string>();
+  const usedMealBrands = new Set<string>();
+  const mealIsAvailable = (candidate: Candidate) =>
+    !usedMeals.has(candidate.id) &&
+    !usedMealBrands.has(mealBrandKey(candidate.name, candidate.id));
 
   for (const bucket of PILLAR_BUCKETS) {
     const mealBucket = MEAL_BUCKET_BY_PILLAR[bucket];
@@ -1551,8 +1556,12 @@ OUTPUT — JSON array only:
     const lockedMeal = preferredLockedMeal(lockedCandidates, mealBucket);
     const modelPick = pickByBucket.get(bucket);
 
+    if (lockedMeal && !mealIsAvailable(lockedMeal)) {
+      throw new Error(`Locked ${mealBucket} ${lockedMeal.name} duplicates a restaurant brand already used in this plan`);
+    }
+
     const optionHasAvailableMeal = (entry: PillarOption) =>
-      entry.meals.some((meal) => !usedMeals.has(meal.candidate.id));
+      entry.meals.some((meal) => mealIsAvailable(meal.candidate));
     const bestAvailableOption = options.find((entry) =>
       !usedPillars.has(entry.candidate.id) && optionHasAvailableMeal(entry));
     const modelOption = options.find((entry) =>
@@ -1588,8 +1597,9 @@ OUTPUT — JSON array only:
     }
     if (!option) throw new Error(`Could not choose a unique ${bucket} pillar`);
 
-    const bestAvailableMeal = option.meals.find((entry) => !usedMeals.has(entry.candidate.id));
-    const modelMeal = option.meals.find((entry) => entry.candidate.id === modelPick?.mealId && !usedMeals.has(entry.candidate.id));
+    const bestAvailableMeal = option.meals.find((entry) => mealIsAvailable(entry.candidate));
+    const modelMeal = option.meals.find((entry) =>
+      entry.candidate.id === modelPick?.mealId && mealIsAvailable(entry.candidate));
     let meal = lockedMeal
       ? option.meals.find((entry) => entry.candidate.id === lockedMeal.id)
       : modelMeal && bestAvailableMeal && isWithinQualityBand(
@@ -1599,9 +1609,9 @@ OUTPUT — JSON array only:
         )
         ? modelMeal
         : undefined;
-    if (!meal || usedMeals.has(meal.candidate.id)) {
+    if (!meal || !mealIsAvailable(meal.candidate)) {
       if (lockedMeal) throw new Error(`Locked ${mealBucket} ${lockedMeal.name} conflicts with another pair`);
-      meal = option.meals.find((entry) => !usedMeals.has(entry.candidate.id));
+      meal = option.meals.find((entry) => mealIsAvailable(entry.candidate));
     }
     if (!meal) throw new Error(`Could not choose a unique ${mealBucket} pairing`);
 
@@ -1646,6 +1656,7 @@ OUTPUT — JSON array only:
     cards.push(mealCard, pillarCard);
     usedPillars.add(option.candidate.id);
     usedMeals.add(meal.candidate.id);
+    usedMealBrands.add(mealBrandKey(meal.candidate.name, meal.candidate.id));
 
     for (const card of [pillarCard, mealCard]) {
       logDecision({

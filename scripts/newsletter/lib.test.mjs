@@ -60,6 +60,13 @@ test("newsletter allows only chain branches with an explicit interest signal", (
   assert.ok(makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards: interesting }, "2026-07-18"));
 });
 
+test("newsletter rejects repeated restaurant brands even when branch ids differ", () => {
+  const cards = pairedPlanCards();
+  cards.find((card) => card.bucket === "breakfast").name = "Oren's Hummus - Cupertino";
+  cards.find((card) => card.bucket === "dinner").name = "Oren's Hummus - Mountain View";
+  assert.equal(makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards }, "2026-07-18"), null);
+});
+
 test("newsletter renders each activity pick before its nearby meal", () => {
   const { html } = renderEmail({
     date: "2026-07-18",
