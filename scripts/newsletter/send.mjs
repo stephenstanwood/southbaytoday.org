@@ -2,13 +2,15 @@
 // ---------------------------------------------------------------------------
 // Send today's newsletter.
 //
-// Default: creates a Resend Broadcast for the configured audience and sends it.
+// Default (through scheduled-send.mjs): creates a Resend Broadcast for the
+// configured audience and sends it. Direct real-broadcast invocation is blocked
+// because it would bypass the checkout preflight.
 // --test <email>: skips broadcasts, sends a one-shot to that address (for QA).
 // --dry-run: builds the HTML but doesn't call Resend.
 //
 // Usage:
 //   node scripts/newsletter/send.mjs --test stephen@stanwood.dev
-//   node scripts/newsletter/send.mjs                                  # broadcast
+//   node scripts/newsletter/scheduled-send.mjs                        # broadcast
 //   node scripts/newsletter/send.mjs --date 2026-05-06 --dry-run
 // ---------------------------------------------------------------------------
 
@@ -18,6 +20,7 @@ import {
   todayPT, loadConfig, FROM_ADDRESS, REPLY_TO,
 } from "./lib.mjs";
 import { generateNewsletterHero } from "./generate-hero.mjs";
+import { assertVerifiedCheckoutToken } from "./scheduled-preflight.mjs";
 
 const args = process.argv.slice(2);
 function flag(name) {
@@ -32,6 +35,13 @@ const dryRun = bool("dry-run");
 const editorial = !bool("no-editorial");
 
 async function main() {
+  if (!testTo && !dryRun) {
+    assertVerifiedCheckoutToken({
+      expectedHead: process.env.SBT_NEWSLETTER_PREFLIGHT_HEAD,
+      log: console.log,
+    });
+  }
+
   const cfg = loadConfig();
   if (!cfg.audienceId) {
     console.error("no audienceId in newsletter-config.json — run setup-audience.mjs first");

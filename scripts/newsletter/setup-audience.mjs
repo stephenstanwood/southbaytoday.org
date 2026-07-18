@@ -55,7 +55,7 @@ async function main() {
   console.log("\nNext steps:");
   console.log("  1. Verify southbaytoday.org for sending in Resend dashboard if you haven't already");
   console.log("  2. Run: node scripts/newsletter/send.mjs --test stephen@stanwood.dev");
-  console.log("  3. Once happy, schedule via launchd (see newsletter-send.plist)");
+  console.log("  3. Once happy, run broadcasts via scheduled-send.mjs / launchd (see newsletter-send.plist)");
 }
 
 main().catch((err) => {

@@ -5,6 +5,10 @@
   (The Fable editorial pass takes ~7-8 minutes; a timeout degrades to the
   deterministic build, never a missed send.)
 
+  scheduled-send.mjs holds the shared Mini repo lock, fetches origin/main,
+  safely fast-forwards a clean behind checkout, and fails closed on dirty,
+  diverged, or locally modified source before it invokes send.mjs.
+
   Install on the Mini:
     cp scripts/newsletter/newsletter-send.plist ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
     launchctl bootout gui/$(id -u)/org.southbaytoday.newsletter-send 2>/dev/null || true
@@ -20,7 +24,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/opt/homebrew/bin/node</string>
-        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/newsletter/send.mjs</string>
+        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/newsletter/scheduled-send.mjs</string>
     </array>
 
     <key>WorkingDirectory</key>
