@@ -14,7 +14,13 @@ import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../s
 import { chainBrandKey, isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
-import { isMarqueeEvent, routineEventPenalty, titleQualityPenalty } from "../../src/lib/south-bay/editorialQuality.mjs";
+import {
+  audienceBreadthPenalty,
+  isMarqueeEvent,
+  routineEventPenalty,
+  titleQualityPenalty,
+  UNPROMPTED_AUDIENCE_PENALTY_CUTOFF,
+} from "../../src/lib/south-bay/editorialQuality.mjs";
 import { isVerifiedOpeningRecord } from "../lib/scc-food-openings.mjs";
 
 loadEnvLocal();
@@ -330,6 +336,14 @@ export function makeNewsletterPlan(plan, date, { validEventIds = null } = {}) {
       return false;
     }
     const isEventCard = c.source === "event" || String(c.id || "").startsWith("event:");
+    if (
+      isEventCard &&
+      c.locked !== true &&
+      audienceBreadthPenalty({ title: c.name, description: c.description, blurb: c.blurb }) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF
+    ) {
+      rejectedCards.push({ card: c, reason: "affiliation-limited audience" });
+      return false;
+    }
     if (isEventCard && validEventIds && !validEventIds.has(c.id)) {
       rejectedCards.push({ card: c, reason: "absent from current event feed" });
       return false;
@@ -661,6 +675,7 @@ function pickTonightEvent(events, recent = null) {
 
 function isTonightPickCandidate(e) {
   if (!e || e.virtual || !e.url) return false;
+  if (audienceBreadthPenalty(e) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF) return false;
   const minutes = parseTimeMinutes(e.time);
   if (!Number.isFinite(minutes) || minutes < 16 * 60 || minutes >= 24 * 60) return false;
   const text = `${e.title || ""} ${e.venue || ""} ${e.category || ""}`.toLowerCase();
@@ -676,6 +691,7 @@ function pickFeaturedEvents(events, { dayPlan, tonightPick, limit, recent = null
   if (tonightPick) used.add(normalizeComparable(tonightPick.title));
   const ranked = events
     .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
+    .filter((e) => audienceBreadthPenalty(e) < UNPROMPTED_AUDIENCE_PENALTY_CUTOFF)
     .map((e) => ({ event: e, score: scoreEvent(e, false) + recentRepeatPenalty(e, recent, false) }))
     .sort((a, b) => b.score - a.score || parseTimeMinutes(a.event.time) - parseTimeMinutes(b.event.time));
   // Per-source cap so one prolific feed (a library system, one meetup group)
@@ -757,6 +773,7 @@ function scoreEvent(e, tonight) {
   if (e.virtual) score -= 20;
   score -= titleQualityPenalty(e.title);
   score -= routineEventPenalty(e);
+  score -= audienceBreadthPenalty(e);
   return score;
 }
 
@@ -774,6 +791,7 @@ function pickEditorialEventCandidates(events, { dayPlan, limit, recent = null })
 
   const eligible = events
     .filter((e) => e.url)
+    .filter((e) => audienceBreadthPenalty(e) < UNPROMPTED_AUDIENCE_PENALTY_CUTOFF)
     .filter((e) => !used.has(normalizeComparable(e.title)) && !used.has(normalizeComparable(e.id)))
     .map((event) => ({
       event,
@@ -1032,6 +1050,7 @@ Fact rules:
 
 Selection guidance:
 - Pick one evening item only if it starts at 4 PM or later, is specific, local, and plausible as a good answer to "what should I do tonight?" Never pick maintenance, cleanup, repair, meetings, webinars, or generic admin/service items.
+- Prefer events with broad reader relevance. Affiliation-limited offers, alumni nights, members-only previews, and institution-specific ticket sections belong in the searchable calendar, not the newsletter's recommendation slots.
 - If a nationally touring act or headline show is on tonight (look for "marquee": true, or a big-name venue like Shoreline, Mountain Winery, SAP Center), it is almost always the tonight pick. A famous name at a famous venue beats a pleasant free local event — readers can find the plaza jazz series on their own; they will be annoyed to learn tomorrow that you buried the headliner.
 - Featured events should be balanced: adult/family/free/outdoor/culture when available. Do not let generic library items crowd out stronger citywide events unless the day is genuinely family-heavy.
 - Check recentlySent (when present): do not repeat a tonight pick from the last few days, and avoid re-featuring the same events unless they are genuinely still the best option. Repetition is the fastest way to make the email feel robotic.

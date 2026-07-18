@@ -23,6 +23,12 @@ more than 10 deterministic score points behind the best available pillar.
 Routine listings with a 35-point-or-higher penalty do not enter regional
 finalist pools at all unless the reader explicitly locked one; city-scoped
 plans keep them available for genuinely thin local inventories.
+Audience breadth is also a first-order quality signal. Affiliation-limited
+offers such as alumni nights, members-only previews, and institution-specific
+ticket sections remain searchable in the Events calendar, but do not enter an
+unprompted day plan or newsletter recommendation. An explicit reader lock can
+still build a plan around one, because that lock supplies the missing interest
+signal.
 Likewise, a model-selected meal cannot trail the best available pairing score
 by more than 7 points. This keeps editorial judgment without letting a prompt
 override a material quality gap. Programs that require a baby or young child
@@ -82,7 +88,7 @@ partner too, or rejects/regenerates the whole plan at generation boundaries.
 - `src/lib/south-bay/dayPlanPairs.ts`: distance, meal quality, pair constants,
   and structural validation.
 - `src/lib/south-bay/editorialQuality.mjs`: shared marquee, title-quality, and
-  routine-event signals.
+  routine-event and audience-breadth signals.
 - `scripts/social/generate-schedule.mjs`: nightly adults/kids today/tomorrow
   hero generation; never rotates an anchor city.
 - `scripts/newsletter/lib.mjs`: atomic validation and pillar-first rendering.

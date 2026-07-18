@@ -47,6 +47,17 @@ test("newsletter rejects an invalid pillar-pairs plan instead of dropping half a
   assert.equal(plan, null);
 });
 
+test("newsletter rejects a stale pair plan with an affiliation-limited pillar", () => {
+  const cards = pairedPlanCards();
+  Object.assign(cards.find((card) => card.bucket === "afternoon"), {
+    name: "Bay FC CSU Night",
+    source: "event",
+    blurb: "Watch Bay FC as a CSU alumnus in a reserved section at PayPal Park.",
+  });
+  const plan = makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards }, "2026-07-18");
+  assert.equal(plan, null);
+});
+
 test("newsletter allows only chain branches with an explicit interest signal", () => {
   const generic = pairedPlanCards();
   generic.find((card) => card.bucket === "breakfast").name = "Peet's Coffee";
