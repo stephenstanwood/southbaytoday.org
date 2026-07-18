@@ -8,6 +8,22 @@ import {
 } from "./placeAvailability.mjs";
 
 const DE_SAISSET_ID = "ChIJUVuaM6zLj4ARoQSjNyb1ebQ";
+const ROSE_GARDEN_MARKET_ID = "ChIJuZpNGzXLj4ARIrlguZcNUOc";
+
+test("Rose Garden market keeps its first-party canonical name and URL", () => {
+  assert.deepEqual(
+    applyPlaceEditorialOverride({
+      id: ROSE_GARDEN_MARKET_ID,
+      name: "Rose Garden Farmer's Market",
+      url: null,
+    }),
+    {
+      id: ROSE_GARDEN_MARKET_ID,
+      name: "Rose Garden Farmers' Market",
+      url: "https://www.wcfma.org/rose-garden/",
+    },
+  );
+});
 
 test("de Saisset stays suppressed until a human verifies reopening", () => {
   assert.equal(isPlaceTemporarilyUnavailable(DE_SAISSET_ID), true);

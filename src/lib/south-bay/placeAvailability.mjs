@@ -3,6 +3,12 @@
 // is a prompt to recheck the source, not an automatic expiry: the place stays
 // unavailable until a human confirms that it has reopened and removes the flag.
 export const PLACE_EDITORIAL_OVERRIDES = Object.freeze({
+  ChIJuZpNGzXLj4ARIrlguZcNUOc: Object.freeze({
+    canonicalName: "Rose Garden Farmers' Market",
+    canonicalUrl: "https://www.wcfma.org/rose-garden/",
+    aliases: Object.freeze(["rose garden farmer's market", "rose garden farmers' market"]),
+    source: "https://www.wcfma.org/rose-garden/",
+  }),
   ChIJUVuaM6zLj4ARoQSjNyb1ebQ: Object.freeze({
     canonicalName: "de Saisset Museum",
     canonicalUrl: "https://www.scu.edu/desaisset/",
