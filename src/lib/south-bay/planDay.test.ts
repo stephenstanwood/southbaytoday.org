@@ -22,6 +22,7 @@ import {
   dominantPillarCity,
   filterAtomicPairCards,
   isWithinQualityBand,
+  mealBrandKey,
   rankNearbyMeals,
 } from "./dayPlanPairs.ts";
 
@@ -252,6 +253,14 @@ test("meal pairing penalizes a chain against an equivalent independent", () => {
   assert.equal(ranked[0].candidate.id, "independent");
 });
 
+test("meal brand identity collapses different branches of the same restaurant", () => {
+  assert.equal(
+    mealBrandKey("Oren's Hummus - Cupertino", "cupertino-id"),
+    mealBrandKey("Oren's Hummus - Mountain View", "mountain-view-id"),
+  );
+  assert.notEqual(mealBrandKey("Oren's Hummus"), mealBrandKey("Dishdash"));
+});
+
 test("pillar-pairs validator accepts three reciprocal meal/activity pairs", () => {
   const cards = [
     { id: "breakfast", bucket: "breakfast" as const, role: "paired-meal" as const, pairedWithId: "morning", pairDistanceMiles: 1.2, pairLocationPrecision: "exact" as const, city: "campbell" },
@@ -275,6 +284,18 @@ test("pillar-pairs validator catches broken links and arbitrary driving", () => 
   assert.ok(issues.some((issue) => issue.includes("not venue-resolved")));
   assert.ok(issues.some((issue) => issue.includes("missing afternoon pillar")));
   assert.ok(issues.some((issue) => issue.includes("missing evening pillar")));
+});
+
+test("pillar-pairs validator rejects repeated restaurant brands across branches", () => {
+  const cards = [
+    { id: "meal:breakfast", name: "Oren's Hummus - Cupertino", bucket: "breakfast" as const, role: "paired-meal" as const, pairedWithId: "pillar:morning", pairDistanceMiles: 1, pairLocationPrecision: "exact" as const },
+    { id: "pillar:morning", name: "Morning", bucket: "morning" as const, role: "pillar" as const, pairedWithId: "meal:breakfast" },
+    { id: "meal:lunch", name: "Lunch Place", bucket: "lunch" as const, role: "paired-meal" as const, pairedWithId: "pillar:afternoon", pairDistanceMiles: 1, pairLocationPrecision: "exact" as const },
+    { id: "pillar:afternoon", name: "Afternoon", bucket: "afternoon" as const, role: "pillar" as const, pairedWithId: "meal:lunch" },
+    { id: "meal:dinner", name: "Oren's Hummus - Mountain View", bucket: "dinner" as const, role: "paired-meal" as const, pairedWithId: "pillar:evening", pairDistanceMiles: 1, pairLocationPrecision: "exact" as const },
+    { id: "pillar:evening", name: "Evening", bucket: "evening" as const, role: "pillar" as const, pairedWithId: "meal:dinner" },
+  ];
+  assert.ok(dayPlanPairingIssues(cards).some((issue) => issue.includes("duplicate meal brand")));
 });
 
 test("atomic pair filtering removes a stale activity and its meal", () => {

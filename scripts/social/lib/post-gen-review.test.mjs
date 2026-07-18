@@ -253,6 +253,18 @@ test("meal beyond the pair radius is hard-blocked", () => {
   assert.ok(hit.hardBlock, "expected hardBlock=true");
 });
 
+test("different branches of one restaurant brand are hard-blocked", () => {
+  const date = "2026-05-10";
+  const cards = pairedBucketPlan();
+  cards.find((card) => card.bucket === "breakfast").name = "Oren's Hummus - Cupertino";
+  cards.find((card) => card.bucket === "dinner").name = "Oren's Hummus - Mountain View";
+  const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards) } });
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  const hit = flagged.find((f) => /duplicate meal brand/.test(f.reason));
+  assert.ok(hit, "expected restaurant-brand dedupe flag");
+  assert.ok(hit.hardBlock, "expected hardBlock=true");
+});
+
 test("approved plans cannot bypass pair integrity", () => {
   const date = "2026-05-10";
   const cards = pairedBucketPlan();

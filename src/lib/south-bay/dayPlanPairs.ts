@@ -1,4 +1,5 @@
 import type { Bucket } from "./buckets";
+import { chainBrandKey } from "./chains.mjs";
 
 /**
  * The regional day plan is three strong activity pillars. Each pillar owns
@@ -27,6 +28,16 @@ export const PILLAR_BUCKET_BY_MEAL: Partial<Record<Bucket, PillarBucket>> = {
 // enough that the meal feels attached to the activity rather than arbitrary.
 export const MEAL_PAIR_PREFERRED_MILES = 3;
 export const MEAL_PAIR_MAX_MILES = 5;
+
+/**
+ * Plan-wide restaurant identity. Google Places gives each branch a distinct
+ * id, but a reader still experiences Oren's Cupertino and Oren's Mountain
+ * View as the same recommendation. Fall back to the record id only when a
+ * usable name is unavailable.
+ */
+export function mealBrandKey(name: string | null | undefined, fallbackId = ""): string {
+  return chainBrandKey(name) || String(fallbackId || "").trim().toLowerCase();
+}
 
 /** Claude may exercise taste among comparably strong finalists, but cannot
  * override a material deterministic quality gap. */
@@ -140,6 +151,7 @@ export function rankNearbyMeals<T extends MealQualityCandidate>(
 
 export interface PairPlanCard {
   id: string;
+  name?: string | null;
   bucket?: Bucket | null;
   city?: string | null;
   role?: "pillar" | "paired-meal" | null;
@@ -170,6 +182,19 @@ export function dayPlanPairingIssues(
   for (const card of cards) {
     if (ids.has(card.id)) issues.push(`duplicate card id: ${card.id}`);
     ids.add(card.id);
+  }
+
+  const mealBrands = new Map<string, string>();
+  for (const mealBucket of Object.values(MEAL_BUCKET_BY_PILLAR)) {
+    const meal = cards.find((card) => card.bucket === mealBucket);
+    if (!meal) continue;
+    const brand = mealBrandKey(meal.name, meal.id);
+    const first = mealBrands.get(brand);
+    if (first) {
+      issues.push(`duplicate meal brand: ${first} / ${meal.name || meal.id}`);
+    } else {
+      mealBrands.set(brand, meal.name || meal.id);
+    }
   }
 
   for (const pillarBucket of PILLAR_BUCKETS) {

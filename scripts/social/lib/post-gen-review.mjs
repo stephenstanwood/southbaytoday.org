@@ -26,6 +26,7 @@ import {
 } from "./content-rules.mjs";
 import { logDecision } from "../../../src/lib/south-bay/decisionLog.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../src/lib/south-bay/displayText.mjs";
+import { chainBrandKey } from "../../../src/lib/south-bay/chains.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
@@ -407,6 +408,17 @@ function dayPlanPairingIssues(slot) {
   const issues = [];
   if (cards.length !== 6 || byBucket.size !== 6) {
     issues.push(`expected 6 unique buckets, found ${byBucket.size}`);
+  }
+  const mealBrands = new Map();
+  for (const mealBucket of ["breakfast", "lunch", "dinner"]) {
+    const meal = byBucket.get(mealBucket);
+    if (!meal) continue;
+    const brand = chainBrandKey(meal.name) || meal.id;
+    if (mealBrands.has(brand)) {
+      issues.push(`duplicate meal brand: ${mealBrands.get(brand)} / ${meal.name || meal.id}`);
+    } else {
+      mealBrands.set(brand, meal.name || meal.id);
+    }
   }
   for (const [pillarBucket, mealBucket] of DAY_PLAN_PAIRS) {
     const pillar = byBucket.get(pillarBucket);

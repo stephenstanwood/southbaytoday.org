@@ -28,6 +28,7 @@ import { todayPT, addDays } from "./lib/slot-scheduler.mjs";
 import { runQualityReview } from "./lib/post-gen-review.mjs";
 import { normalizeName } from "./lib/normalizeName.mjs";
 import { canonicalizePlanCards } from "../../src/lib/south-bay/canonicalizeCard.mjs";
+import { chainBrandKey } from "../../src/lib/south-bay/chains.mjs";
 import { buildMjPromptForSlot } from "./lib/mj-prompt.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -284,6 +285,17 @@ function pairingIssues(cards) {
   const issues = [];
   const byBucket = new Map((cards || []).map((card) => [card.bucket, card]));
   if (byBucket.size !== 6) issues.push(`only ${byBucket.size} bucket(s) filled`);
+  const mealBrands = new Map();
+  for (const mealBucket of ["breakfast", "lunch", "dinner"]) {
+    const meal = byBucket.get(mealBucket);
+    if (!meal) continue;
+    const brand = chainBrandKey(meal.name) || meal.id;
+    if (mealBrands.has(brand)) {
+      issues.push(`duplicate meal brand: ${mealBrands.get(brand)} / ${meal.name || meal.id}`);
+    } else {
+      mealBrands.set(brand, meal.name || meal.id);
+    }
+  }
   for (const [pillarBucket, mealBucket] of PAIRS) {
     const pillar = byBucket.get(pillarBucket);
     const meal = byBucket.get(mealBucket);
