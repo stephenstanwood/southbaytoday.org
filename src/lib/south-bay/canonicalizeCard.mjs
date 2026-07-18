@@ -72,6 +72,8 @@ function inferBucket(timeBlock, category) {
  * Coerce a raw card-ish object into the canonical shape.
  * Unknown extra fields (kidsCostNote, locked, type, neighborhood, featuredPlace,
  * eventId, placeId, rationale) are preserved so callers can keep their metadata.
+ * @param {Record<string, any>} raw
+ * @returns {Record<string, any>}
  */
 export function canonicalizeCard(raw) {
   if (!raw || typeof raw !== "object") {
@@ -96,6 +98,7 @@ export function canonicalizeCard(raw) {
     };
   }
 
+  /** @type {Record<string, any>} */
   const canonical = {
     id: str(raw.id),
     name: cleanDisplayName(str(raw.name || raw.title)),

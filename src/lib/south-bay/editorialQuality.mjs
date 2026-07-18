@@ -18,6 +18,13 @@ export function titleQualityPenalty(title) {
   return penalty;
 }
 
+/** Source feeds sometimes call caregiver-and-child programs "all ages" even
+ * though an adult without a child cannot participate. */
+export function requiresChildToAttend(event) {
+  const text = `${event?.title || event?.name || ""} ${event?.description || ""}`;
+  return /\b(baby[ -]?wearing|pre[ -]?walking babies?|parent(?:s)? and me|mommy and me|caregiver and (?:baby|toddler))\b/i.test(text);
+}
+
 /**
  * A dated occurrence is useful evidence, but it is not automatically a great
  * recommendation. This penalty keeps routine programming from crowding out a
@@ -27,13 +34,20 @@ export function routineEventPenalty(event) {
   const title = String(event?.title || event?.name || "");
   let penalty = 0;
   if (/\b(board|commission|committee|subcommittee|regular|special)\s+meeting\b|\bstudy session\b|\bwebinar\b|\boffice hours\b|\bsupport group\b|\bpractice\b|\brehearsal\b/i.test(title)) {
-    penalty = Math.max(penalty, 42);
+    penalty = Math.max(penalty, 55);
   }
   if (/\b(story\s*time|book club|toddler|homework help|tech help|esl|teen(?:s)? teach|crafternoon|drop[- ]?in clinic)\b/i.test(title)) {
-    penalty = Math.max(penalty, 26);
+    penalty = Math.max(penalty, 36);
+  }
+  // These are legitimate community programs, but a date stamp does not make
+  // them one of the three most exceptional things in the entire South Bay.
+  // Keep them available for thin city inventories while ensuring a strong
+  // park, museum, performance, or one-off event wins regionally.
+  if (/\b(leisure noon|spin the wheel|baby[ -]?wearing|reading milestone|grab[ -]and[ -]go craft|community puzzle swap)\b/i.test(title)) {
+    penalty = Math.max(penalty, 38);
   }
   if (/^\s*(live music|open mic|happy hour|workshop|class|drop[- ]?in)\s*[.!]*$/i.test(title)) {
-    penalty = Math.max(penalty, 20);
+    penalty = Math.max(penalty, 38);
   }
   return penalty;
 }

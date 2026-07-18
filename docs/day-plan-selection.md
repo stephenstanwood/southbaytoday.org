@@ -15,6 +15,16 @@ dated events and evergreen places, and asks the editorial model to choose one
 pillar for each part of the day. The three pillars can be in any South Bay
 towns; no score rewards clustering them or building a route.
 
+A date is evidence, not automatic quality. Routine recurring programming and
+generic titles carry substantial penalties, while marquee and genuinely
+specific one-off events retain a strong advantage. The model may exercise
+taste among close finalists, but its activity choice is ignored when it falls
+more than 10 deterministic score points behind the best available pillar.
+Likewise, a model-selected meal cannot trail the best available pairing score
+by more than 7 points. This keeps editorial judgment without letting a prompt
+override a material quality gap. Programs that require a baby or young child
+are excluded from adult mode even when a source mislabeled them as all-ages.
+
 The editor compares pillars before considering their attached restaurant
 lists. A meal must be a real dine-in venue, open during the relevant service,
 and no more than 5 miles from its pillar; 3 miles is preferred. Inside that

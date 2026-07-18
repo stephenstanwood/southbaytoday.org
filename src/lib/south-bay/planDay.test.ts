@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import { parseHour, fallbackBlurb, isMealVenueCandidate } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import { canonicalizeCard } from "./canonicalizeCard.mjs";
-import { routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
+import { requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
 import {
   bucketForHour,
   bucketForEvent,
@@ -21,6 +21,7 @@ import {
   dayPlanPairingIssues,
   dominantPillarCity,
   filterAtomicPairCards,
+  isWithinQualityBand,
   rankNearbyMeals,
 } from "./dayPlanPairs.ts";
 
@@ -129,7 +130,20 @@ test("editorial quality signals penalize scraped and routine listings, not norma
   assert.equal(titleQualityPenalty("Trail Clean-Up"), 0);
   assert.ok(titleQualityPenalty("Concert | Ticket Portal") > 0);
   assert.ok(routineEventPenalty({ title: "Planning Commission Meeting" }) >= 40);
+  assert.ok(routineEventPenalty({ title: "Leisure Noon Origami" }) >= 35);
+  assert.ok(routineEventPenalty({ title: "Spin the Wheel at Pearl Branch Library!" }) >= 35);
+  assert.ok(routineEventPenalty({ title: "Live Music" }) >= 35);
   assert.ok(routineEventPenalty({ title: "One Night of Queen" }) === 0);
+});
+
+test("editorial choice cannot override a material deterministic quality gap", () => {
+  assert.equal(isWithinQualityBand(72, 80, 10), true);
+  assert.equal(isWithinQualityBand(69, 80, 10), false);
+});
+
+test("adult mode detects mislabeled caregiver-and-child programming", () => {
+  assert.equal(requiresChildToAttend({ title: "Baby Wearing Dance", description: "For adult caregivers and pre-walking babies." }), true);
+  assert.equal(requiresChildToAttend({ title: "One Night of Queen" }), false);
 });
 
 test("meal venue guard excludes grocery stores and mislabeled business centers", () => {
