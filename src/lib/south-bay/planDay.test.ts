@@ -7,7 +7,14 @@ import assert from "node:assert/strict";
 import { parseHour, fallbackBlurb, isMealVenueCandidate, scoreCandidates } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import { canonicalizeCard } from "./canonicalizeCard.mjs";
-import { REGIONAL_ROUTINE_PENALTY_CUTOFF, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "./editorialQuality.mjs";
+import {
+  audienceBreadthPenalty,
+  REGIONAL_ROUTINE_PENALTY_CUTOFF,
+  requiresChildToAttend,
+  routineEventPenalty,
+  titleQualityPenalty,
+  UNPROMPTED_AUDIENCE_PENALTY_CUTOFF,
+} from "./editorialQuality.mjs";
 import {
   bucketForHour,
   bucketForEvent,
@@ -135,6 +142,32 @@ test("editorial quality signals penalize scraped and routine listings, not norma
   assert.ok(routineEventPenalty({ title: "Spin the Wheel at Pearl Branch Library!" }) >= REGIONAL_ROUTINE_PENALTY_CUTOFF);
   assert.ok(routineEventPenalty({ title: "Live Music" }) >= REGIONAL_ROUTINE_PENALTY_CUTOFF);
   assert.ok(routineEventPenalty({ title: "One Night of Queen" }) === 0);
+});
+
+test("affiliation-limited offers cannot become unprompted top picks", () => {
+  const csuNight = {
+    title: "Bay FC CSU Night",
+    description: "Join other Spartans for CSU Alumni Night with a reserved ticket section.",
+    blurb: "Watch Bay FC as a CSU alumnus in a reserved section at PayPal Park.",
+  };
+  assert.ok(audienceBreadthPenalty(csuNight) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF);
+  assert.ok(audienceBreadthPenalty({ title: "Members Only Museum Preview" }) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF);
+  assert.ok(audienceBreadthPenalty({
+    title: "Celebrating Legacy, Impact, and Service",
+    blurb: "Hear speakers celebrate a sorority chapter's 65 years of service.",
+  }) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF);
+  assert.ok(audienceBreadthPenalty({
+    title: "Recent Grad Mixer",
+    blurb: "Meet fellow recent grads and build your alumni network.",
+  }) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF);
+  assert.equal(audienceBreadthPenalty({
+    title: "Bay FC vs. Houston Dash",
+    description: "Bay FC hosts Houston at PayPal Park.",
+  }), 0);
+  assert.equal(audienceBreadthPenalty({
+    title: "Public talk with SJSU alumnus Jane Doe",
+    description: "Everyone is welcome to hear a local engineer speak.",
+  }), 0);
 });
 
 test("editorial choice cannot override a material deterministic quality gap", () => {

@@ -32,7 +32,15 @@ import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.m
 import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
-import { isMarqueeEvent, REGIONAL_ROUTINE_PENALTY_CUTOFF, requiresChildToAttend, routineEventPenalty, titleQualityPenalty } from "../../lib/south-bay/editorialQuality.mjs";
+import {
+  audienceBreadthPenalty,
+  isMarqueeEvent,
+  REGIONAL_ROUTINE_PENALTY_CUTOFF,
+  requiresChildToAttend,
+  routineEventPenalty,
+  titleQualityPenalty,
+  UNPROMPTED_AUDIENCE_PENALTY_CUTOFF,
+} from "../../lib/south-bay/editorialQuality.mjs";
 import {
   type Bucket,
   BUCKET_LABELS,
@@ -146,6 +154,7 @@ interface Candidate {
   foodDistinctiveness?: number;
   marquee?: boolean;
   routinePenalty?: number;
+  audiencePenalty?: number;
   source: "event" | "place";
   eventDate?: string;
   eventTime?: string | null;
@@ -680,6 +689,7 @@ export function scoreCandidates(
       if (c.marquee) score += 42;
       score -= titleQualityPenalty(c.name);
       score -= c.routinePenalty ?? routineEventPenalty(c);
+      score -= c.audiencePenalty ?? audienceBreadthPenalty(c);
       if ((c.blurb || c.description || "").trim().length >= 70) score += 5;
       if (holidayHasKeywords && c.eventDate === planIso) {
         const haystack = `${c.name} ${c.blurb ?? ""} ${c.description ?? ""} ${c.venue ?? ""}`.toLowerCase();
@@ -879,6 +889,7 @@ function buildCandidatePool(
 
     const eventLocation = locationForEvent(evt);
     const routinePenalty = routineEventPenalty(evt);
+    const audiencePenalty = audienceBreadthPenalty(evt);
     candidates.push({
       id: `event:${evt.id}`,
       name: cleanDisplayName(evt.title),
@@ -900,6 +911,7 @@ function buildCandidatePool(
       locationPrecision: eventLocation.precision,
       marquee: isMarqueeEvent(evt),
       routinePenalty,
+      audiencePenalty,
       source: "event",
       eventDate: evt.date,
       eventTime: evt.time,
@@ -1192,6 +1204,7 @@ function activityLine(candidate: Candidate, dayKey: DayKey): string {
     parts.push(candidate.ongoing ? "signal: ongoing exhibition" : "signal: EVENT TODAY");
     if (candidate.marquee) parts.push("signal: MARQUEE");
     if ((candidate.routinePenalty || 0) >= 30) parts.push("signal: routine community programming");
+    if ((candidate.audiencePenalty || 0) >= UNPROMPTED_AUDIENCE_PENALTY_CUTOFF) parts.push("signal: affiliation-limited audience");
     if (candidate.eventTime) {
       const time = candidate.eventEndTime
         ? `${candidate.eventTime}–${candidate.eventEndTime}`
@@ -1278,6 +1291,11 @@ function buildPillarOptions(
           scope === "city" ||
           candidate.source !== "event" ||
           (candidate.routinePenalty || 0) < REGIONAL_ROUTINE_PENALTY_CUTOFF ||
+          candidate.id === locked?.id
+        ) &&
+        (
+          candidate.source !== "event" ||
+          (candidate.audiencePenalty || 0) < UNPROMPTED_AUDIENCE_PENALTY_CUTOFF ||
           candidate.id === locked?.id
         )
       )
@@ -1474,7 +1492,7 @@ CORE METHOD — DO THESE IN ORDER:
 1. Ignore the restaurants. Compare the activity candidates across the ENTIRE relevant pool and pick the one truly exceptional MORNING activity, the one truly exceptional AFTERNOON activity, and the one truly exceptional EVENING activity.
 2. Only after the three pillars are chosen, pair each with one restaurant from that pillar's VERIFIED meal list: breakfast with morning, lunch with afternoon, dinner with evening.
 
-PILLAR QUALITY COMES FIRST. Geography must never make a merely adequate activity beat an exceptional one. The three pillars may be in the same town or three different towns. Judge specificity, one-day relevance, editorial interest, rarity, marquee signals, and whether a reader would be annoyed to learn tomorrow that we buried it. A dated event often beats an evergreen place, but a weak routine listing does not beat a genuinely excellent activity.
+PILLAR QUALITY COMES FIRST. Geography must never make a merely adequate activity beat an exceptional one. The three pillars may be in the same town or three different towns. Judge audience breadth, specificity, one-day relevance, editorial interest, rarity, marquee signals, and whether a reader would be annoyed to learn tomorrow that we buried it. A dated event often beats an evergreen place, but a weak routine listing or affiliation-limited offer does not beat a genuinely excellent activity.
 MEAL QUALITY COMES NEXT. Every listed restaurant is already open in the right meal window and within ${MEAL_PAIR_MAX_MILES} miles of its pillar. Pick on "new, unique, great": verified new openings, distinctive local formats/cuisines, editorial curation, strong ratings with real review evidence, and specific source-backed notes. A chain is eligible only when its supplied chain-interest signal makes that branch worth recommending; never pick a familiar brand merely because it is convenient. Distance only breaks close quality ties.
 ${scope === "city" ? `CITY SCOPE: all six picks must stay in ${getCityName(city)}.` : "REGIONAL SCOPE: do not cluster the three pillars and do not optimize a six-stop driving route."}
 ${weather ? `Weather: ${weather}.` : ""}
