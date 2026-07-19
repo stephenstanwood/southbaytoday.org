@@ -1,7 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { dayPlanPrompt } from "./poster-styles.mjs";
+import {
+  APPROVED_STYLES,
+  NOVEL_DIRECTIONS,
+  ORIGINAL_POSTER_ART_RULE,
+  assertOriginalStyleDirection,
+  dayPlanPrompt,
+} from "./poster-styles.mjs";
 
 test("day-plan poster groups each activity pillar with its nearby meal", () => {
   const cards = [
@@ -19,4 +25,22 @@ test("day-plan poster groups each activity pillar with its nearby meal", () => {
   assert.ok(prompt.indexOf("EVENING PICK") < prompt.indexOf("DINNER NEARBY"));
   assert.match(prompt, /activity pick the large primary line/);
   assert.match(prompt, /Do not draw a route/);
+});
+
+test("poster prompts reject named third-party style references and require original branding", () => {
+  for (const direction of [
+    ...APPROVED_STYLES.map((style) => style.style),
+    ...NOVEL_DIRECTIONS,
+  ]) {
+    assert.doesNotThrow(() => assertOriginalStyleDirection(direction));
+  }
+
+  assert.throws(
+    () => dayPlanPrompt({ cards: [] }, "2026-07-19", "Penguin Classics book cover"),
+    /third-party brand or publication/i,
+  );
+
+  const prompt = dayPlanPrompt({ cards: [] }, "2026-07-19", "original editorial poster");
+  assert.ok(prompt.includes(ORIGINAL_POSTER_ART_RULE));
+  assert.match(prompt, /Do not invent a South Bay Today logo, mascot, seal, or icon/);
 });

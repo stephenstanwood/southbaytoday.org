@@ -41,7 +41,7 @@ export const APPROVED_STYLES = [
   {
     id: "memphis-80s",
     label: "Memphis 80s",
-    style: `Memphis design movement aesthetic (1980s). Bright clashing colors: hot pink, electric blue, yellow, black, mint green. Random geometric shapes (triangles, circles, squiggly lines, zigzags) scattered around. Bold black sans-serif headlines on colored blocks. Energetic, chaotic, fun. Like a vintage MTV graphic.`,
+    style: `Memphis design movement aesthetic (1980s). Bright clashing colors: hot pink, electric blue, yellow, black, mint green. Random geometric shapes (triangles, circles, squiggly lines, zigzags) scattered around. Bold black sans-serif headlines on colored blocks. Energetic, chaotic, fun, with vintage music-video title-card energy.`,
     colors: [{ rgb: [255, 20, 147] }, { rgb: [0, 100, 255] }, { rgb: [255, 255, 0] }, { rgb: [0, 210, 180] }, { rgb: [0, 0, 0] }],
   },
   {
@@ -59,19 +59,19 @@ export const APPROVED_STYLES = [
   {
     id: "pastel-dreamy",
     label: "Pastel Dreamy",
-    style: `Soft pastel color palette: baby pink, mint green, lavender, soft peach, powder blue. Gentle rounded sans-serif typography. Subtle cloud or bubble shapes as section backgrounds. Dreamy, calming, approachable. Like a modern wellness brand or gentle lifestyle poster. Slightly rounded corners on color blocks.`,
+    style: `Soft pastel color palette: baby pink, mint green, lavender, soft peach, powder blue. Gentle rounded sans-serif typography. Subtle cloud or bubble shapes as section backgrounds. Dreamy, calming, approachable, with a gentle lifestyle-poster feel. Slightly rounded corners on color blocks.`,
     colors: [{ rgb: [255, 182, 193] }, { rgb: [176, 224, 230] }, { rgb: [221, 160, 221] }, { rgb: [255, 218, 185] }, { rgb: [152, 251, 152] }],
   },
   {
     id: "wild-card-bold",
     label: "Wild Card Bold",
-    style: `Bold contemporary graphic design poster mixing styles freely. Oversized typography overlapping with abstract painted brush strokes in bright colors. Mix of serif and sans-serif fonts at different scales. Collage-like energy. Sections feel hand-assembled. Confident, bold, arresting — like a Cooper Hewitt Design Museum exhibition poster.`,
+    style: `Bold contemporary graphic design poster mixing styles freely. Oversized typography overlapping with abstract painted brush strokes in bright colors. Mix of serif and sans-serif fonts at different scales. Collage-like energy. Sections feel hand-assembled. Confident, bold, arresting museum-exhibition-poster energy.`,
     colors: [{ rgb: [255, 90, 0] }, { rgb: [0, 80, 200] }, { rgb: [255, 220, 0] }, { rgb: [0, 0, 0] }, { rgb: [255, 255, 255] }],
   },
   {
     id: "travel-guide",
     label: "Travel Guide",
-    style: `Travel guidebook page layout. Clean white background, structured like a Lonely Planet city guide. Small illustrated icons next to each stop (coffee cup, art frame, fork/knife, microphone). Numbered stops with clean dotted timeline down the left side. Professional travel editorial design. Navy blue and warm orange accent colors.`,
+    style: `Independent travel-guidebook page layout. Clean white background with a structured city field-guide grid. Small illustrated icons next to each stop (coffee cup, art frame, fork/knife, microphone). Numbered stops with clean dotted timeline down the left side. Professional travel editorial design. Navy blue and warm orange accent colors.`,
     colors: [{ rgb: [20, 50, 100] }, { rgb: [255, 140, 50] }, { rgb: [255, 255, 255] }, { rgb: [60, 60, 60] }],
   },
   {
@@ -114,7 +114,7 @@ export const APPROVED_STYLES = [
   {
     id: "vintage-airbrush",
     label: "Vintage Airbrush 80s",
-    style: `1980s airbrush-illustration aesthetic. Soft gradient color fields (sunset pinks blending into purples, chrome blues), smooth faded edges, subtle grain. Chrome-effect metallic accents. Retro-futurist sans-serif type with slight italic slant. Vibes of an old Atari box, Miami Vice intro, or Trapper Keeper cover.`,
+    style: `1980s airbrush-illustration aesthetic. Soft gradient color fields (sunset pinks blending into purples, chrome blues), smooth faded edges, subtle grain. Chrome-effect metallic accents. Retro-futurist sans-serif type with slight italic slant. Vintage arcade packaging and prime-time neon title-sequence energy.`,
     colors: [{ rgb: [255, 110, 200] }, { rgb: [120, 80, 220] }, { rgb: [80, 200, 220] }, { rgb: [255, 240, 180] }],
   },
   {
@@ -126,7 +126,7 @@ export const APPROVED_STYLES = [
   {
     id: "editorial-magazine",
     label: "Editorial Magazine",
-    style: `High-end editorial magazine layout (think New York Magazine or The Gentlewoman). Large expressive serif display headline dominates the top. Clean grid with rule lines between sections. Single bold accent color against generous white space. Sophisticated, restrained, reads like a print feature.`,
+    style: `High-end independent editorial magazine layout. Large expressive serif display headline dominates the top. Clean grid with rule lines between sections. Single bold accent color against generous white space. Sophisticated, restrained, reads like a print feature.`,
     colors: [{ rgb: [255, 255, 255] }, { rgb: [20, 20, 25] }, { rgb: [200, 55, 65] }, { rgb: [180, 180, 180] }],
   },
   {
@@ -147,7 +147,7 @@ export const APPROVED_STYLES = [
  * Novel style prompts for the 20% experimental slot.
  * These are broader creative directions the model can interpret freely.
  */
-const NOVEL_DIRECTIONS = [
+export const NOVEL_DIRECTIONS = [
   `Japanese woodblock print (ukiyo-e) aesthetic with bold outlines, flat color areas, and nature motifs. Traditional meets modern typography.`,
   `Comic book / pop art panel layout with Ben-Day dots, speech bubbles for descriptions, bold black outlines, and primary colors.`,
   `Blueprint / technical drawing aesthetic with white lines on navy blue background, precise grid, and monospace type.`,
@@ -166,13 +166,30 @@ const NOVEL_DIRECTIONS = [
   `Chinese paper-cut (jianzhi) aesthetic with intricate symmetrical red cutouts on cream, bold negative shapes, traditional patterns.`,
   `Neon noir aesthetic — dark rainy city night backdrop with saturated neon sign glow, film-grain texture, chrome edges on type.`,
   `Mid-century Cuban travel poster aesthetic with bright coral/turquoise/yellow, illustrated silhouettes of classic cars or palm trees, hand-lettered feel.`,
-  `Book cover / penguin classics aesthetic — strict horizontal bands of solid color, serif type centered, tiny author-like attribution at bottom.`,
+  `Mid-century paperback-cover aesthetic — strict horizontal bands of solid color, centered serif type, and a tiny colophon-like line at bottom. Keep every element original and unbranded.`,
   `Sushi menu / kaiseki aesthetic — cream paper, vertical Japanese-inspired layout, small brush-stroke ornaments, red seal accents, quiet dignity.`,
   `Concert flyer / xeroxed punk aesthetic — high-contrast black-and-white with photocopy grain, torn edges, ransom-note mixed-font typography, DIY energy.`,
   `Architectural drawing aesthetic — isometric building silhouettes, thin construction lines, dimension annotations, paper-drafting feel in sepia + accent.`,
   `South Bay redwood/rolling-hills nature poster — soft gradients of eucalyptus green, fog gray, golden hour amber; subtle stylized hill silhouettes behind text.`,
   `Farmers-market chalkboard-meets-linen aesthetic — linen cream texture, hand-painted sign look, small produce illustrations between sections.`,
 ];
+
+// Named commercial brands and publications in a style prompt can make an image
+// model reproduce their trade dress or invent a lookalike mark. The unattended
+// newsletter hit exactly that failure mode when a "Penguin Classics" direction
+// produced a penguin-like logo. Keep the style pool descriptive and original.
+const THIRD_PARTY_STYLE_REFERENCE = /\b(?:atari|cooper hewitt|lonely planet|miami vice|mtv|new york magazine|penguin(?: classics)?|the gentlewoman|trapper keeper)\b/i;
+
+export const ORIGINAL_POSTER_ART_RULE = "Use only original, unbranded graphic elements. Do not add, imitate, or allude to any third-party logo, mascot, seal, publisher mark, icon, brand name, or trade dress. Do not invent a South Bay Today logo, mascot, seal, or icon. Use only the exact branding text supplied in the content above, set as plain typography.";
+
+export function assertOriginalStyleDirection(styleDirection) {
+  const direction = String(styleDirection || "");
+  const match = direction.match(THIRD_PARTY_STYLE_REFERENCE);
+  if (match) {
+    throw new Error(`poster style direction names a third-party brand or publication: ${match[0]}`);
+  }
+  return direction;
+}
 
 /**
  * Read recently-used style IDs so we can damp them (fights same-y feeds when
@@ -256,6 +273,7 @@ const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frid
  * @returns {string}
  */
 export function dayPlanPrompt(plan, dateStr, styleDirection) {
+  styleDirection = assertOriginalStyleDirection(styleDirection);
   const date = new Date(dateStr + "T12:00:00");
   const dayName = DAY_NAMES[date.getDay()];
 
@@ -305,6 +323,9 @@ ${composition.hints}
 LAYOUT HIERARCHY:
 Build three distinct paired modules: morning, afternoon, and evening. In each module, make the activity pick the large primary line and its nearby meal a smaller companion line. Do not draw a route, map, or imply that the three activity cities need to connect geographically.
 
+ORIGINAL ART / BRAND SAFETY:
+${ORIGINAL_POSTER_ART_RULE}
+
 CRITICAL: All text must be spelled correctly and fully legible. This is a graphic design poster, NOT a photograph. The text content is the star — make it beautiful but readable. Do NOT include "STOP 1", "STOP 2" labels.`;
 }
 
@@ -315,6 +336,7 @@ CRITICAL: All text must be spelled correctly and fully legible. This is a graphi
  * @returns {string}
  */
 export function tonightPickPrompt(item, styleDirection) {
+  styleDirection = assertOriginalStyleDirection(styleDirection);
   const venue = item.venue || "";
   const city = item.cityName || item.city || "";
   const time = item.time || "";
@@ -339,6 +361,9 @@ ${styleDirection}
 COMPOSITION DIRECTION (interpret within the style above):
 ${composition.hints}
 
+ORIGINAL ART / BRAND SAFETY:
+${ORIGINAL_POSTER_ART_RULE}
+
 This is a SINGLE EVENT spotlight, not a multi-stop day plan. Make the event name large and prominent. Evening/night energy. NOT a photograph — graphic design poster. All text must be spelled correctly and fully legible.`;
 }
 
@@ -350,8 +375,9 @@ This is a SINGLE EVENT spotlight, not a multi-stop day plan. Make the event name
  * @returns {string}
  */
 export function wildcardPrompt(item, subtype, styleDirection) {
+  styleDirection = assertOriginalStyleDirection(styleDirection);
   const composition = sampleComposition();
-  const compositionBlock = `\nCOMPOSITION DIRECTION (interpret within the style above):\n${composition.hints}\n`;
+  const compositionBlock = `\nCOMPOSITION DIRECTION (interpret within the style above):\n${composition.hints}\n\nORIGINAL ART / BRAND SAFETY:\n${ORIGINAL_POSTER_ART_RULE}\n`;
 
   if (subtype === "sv-history") {
     return `Design a portrait 4:5 Instagram poster for a "Silicon Valley History" feature. Retro-tech meets modern design.

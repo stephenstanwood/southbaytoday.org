@@ -63,7 +63,10 @@ export async function generateNewsletterHero(date, { force = false } = {}) {
 
   let style;
   try {
-    style = await pickStyle();
+    // The morning email is generated unattended, so it stays inside the
+    // human-reviewed pool. Experimental directions belong in a review loop;
+    // one named-publisher experiment previously induced a lookalike logo.
+    style = await pickStyle({ novelRate: 0 });
   } catch (err) {
     console.warn(`newsletter hero: pickStyle failed (${err.message}) — using default style`);
     style = APPROVED_STYLES[0];
