@@ -186,6 +186,32 @@ test("newsletter lead image renders before the opening briefing and is not dupli
   assert.equal(html.split(hero).length - 1, 1);
 });
 
+test("newsletter footer uses Stephen's first-person signoff and closed-up em dashes", () => {
+  const { html } = renderEmail({
+    date: "2026-07-20",
+    longDate: "Monday, July 20, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: null,
+    tonightPickBlurb: "",
+    todayEvents: [],
+    featuredEvents: [],
+    recentOpenings: [],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {},
+    editorial: null,
+  });
+
+  assert.ok(html.includes("If you spot something we missed—a new restaurant, a great event, a story worth telling—just hit reply. I read everything."));
+  assert.ok(html.includes("- Stephen Stanwood"));
+  assert.equal(html.includes("We read everything."), false);
+  assert.equal(html.includes("missed — a new restaurant"), false);
+  assert.equal(html.includes("telling — just hit reply"), false);
+});
+
 test("newsletter renders also-calendar events chronologically and hides stale/blocked assets", () => {
   const { html } = renderEmail({
     date: "2026-05-28",

@@ -1787,8 +1787,8 @@ function conversationBlock(posts, editorial = null) {
 function footerBlock() {
   return `<div style="padding:28px;border-top:8px solid ${PALETTE.card};font-size:14px;color:${PALETTE.muted};line-height:1.6;">
   <p style="margin:0 0 10px 0;">Thanks for letting us into your morning ☀️</p>
-  <p style="margin:0 0 10px 0;">If you spot something we missed — a new restaurant, a great event, a story worth telling — just hit reply. We read everything.</p>
-  <p style="margin:14px 0 0 0;color:${PALETTE.ink};">— Stephen 👋</p>
+  <p style="margin:0 0 10px 0;">If you spot something we missed—a new restaurant, a great event, a story worth telling—just hit reply. I read everything.</p>
+  <p style="margin:14px 0 0 0;color:${PALETTE.ink};">- Stephen Stanwood</p>
   <p style="margin:18px 0 0 0;font-size:12px;color:${PALETTE.faint};">South Bay Today · <a href="https://southbaytoday.org" style="color:${PALETTE.faint};">southbaytoday.org</a> · <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:${PALETTE.faint};">unsubscribe</a></p>
 </div>`;
 }
