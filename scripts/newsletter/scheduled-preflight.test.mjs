@@ -92,25 +92,50 @@ test("preflight blocks local source commits even when they are ahead of origin/m
   );
 });
 
-test("preflight blocks and preserves a checkout that diverged from origin/main", (t) => {
+test("preflight merges origin/main when a checkout diverged only because of local generated data", (t) => {
   const { seed, checkout } = setupRepo(t);
   put(checkout, "src/data/south-bay/default-plans.json", "{\"local\":true}\n");
   commitAll(checkout, "local data");
-  const localHead = git(checkout, "rev-parse", "HEAD");
 
   put(seed, "README.md", "remote update\n");
   commitAll(seed, "remote update");
   git(seed, "push");
 
-  assert.throws(
-    () => preflightNewsletterCheckout({ repoRoot: checkout, log: () => {} }),
-    /diverged from origin\/main/,
+  const result = preflightNewsletterCheckout({ repoRoot: checkout, log: () => {} });
+
+  assert.equal(result.state, "merged-remote-with-local-data");
+  assert.equal(
+    readFileSync(join(checkout, "README.md"), "utf8"),
+    "remote update\n",
   );
-  assert.equal(git(checkout, "rev-parse", "HEAD"), localHead);
   assert.equal(
     readFileSync(join(checkout, "src/data/south-bay/default-plans.json"), "utf8"),
     "{\"local\":true}\n",
   );
+  assert.deepEqual(result.aheadPaths, ["src/data/south-bay/default-plans.json"]);
+  assert.equal(
+    git(checkout, "merge-base", "--is-ancestor", "origin/main", "HEAD"),
+    "",
+  );
+});
+
+test("preflight resolves overlapping generated data with the origin/main version", (t) => {
+  const { seed, checkout } = setupRepo(t);
+  put(checkout, "src/data/south-bay/default-plans.json", "{\"local\":true}\n");
+  commitAll(checkout, "local data");
+
+  put(seed, "src/data/south-bay/default-plans.json", "{\"remote\":true}\n");
+  commitAll(seed, "remote data");
+  git(seed, "push");
+
+  const result = preflightNewsletterCheckout({ repoRoot: checkout, log: () => {} });
+
+  assert.equal(result.state, "merged-remote-with-local-data");
+  assert.equal(
+    readFileSync(join(checkout, "src/data/south-bay/default-plans.json"), "utf8"),
+    "{\"remote\":true}\n",
+  );
+  assert.deepEqual(result.aheadPaths, []);
 });
 
 test("preflight blocks tracked working-tree changes", (t) => {
@@ -150,6 +175,25 @@ test("launchd routes the scheduled job through the guarded wrapper", () => {
   );
   assert.equal(
     /<string>\/Users\/stephenstanwood\/Projects\/southbaytoday\.org\/scripts\/newsletter\/send\.mjs<\/string>/.test(plist),
+    false,
+  );
+});
+
+test("launchd refreshes default plans through the guarded wrapper before newsletter build", () => {
+  const plist = readFileSync(
+    new URL("../social/default-plans-refresh.plist", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    plist,
+    /<string>\/Users\/stephenstanwood\/Projects\/southbaytoday\.org\/scripts\/social\/scheduled-default-plans\.mjs<\/string>/,
+  );
+  assert.match(
+    plist,
+    /<key>Hour<\/key>\s*<integer>3<\/integer>\s*<key>Minute<\/key>\s*<integer>20<\/integer>/,
+  );
+  assert.equal(
+    /<string>\/Users\/stephenstanwood\/Projects\/southbaytoday\.org\/scripts\/social\/generate-schedule\.mjs<\/string>/.test(plist),
     false,
   );
 });

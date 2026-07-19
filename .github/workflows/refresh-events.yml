@@ -2,8 +2,9 @@ name: Refresh Events
 
 on:
   schedule:
-    # Daily at 6:00 AM PT (14:00 UTC)
-    - cron: "0 14 * * *"
+    # Daily at 10:17 PM PDT / 9:17 PM PST, ahead of the 3:20 AM Mini plan refresh.
+    # The off-hour minute leaves a wide buffer for scheduler delays.
+    - cron: "17 5 * * *"
   workflow_dispatch: # allow manual trigger
 
 jobs:
