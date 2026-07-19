@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Refresh homepage/newsletter plans after the nightly GitHub event feed and
+  before the 3:50 AM newsletter build. The wrapper holds the shared repo lock,
+  merges canonical source/data safely, and keeps the generated plan local.
+-->
 <plist version="1.0">
 <dict>
     <key>Label</key>
@@ -7,18 +12,16 @@
     <key>ProgramArguments</key>
     <array>
         <string>/opt/homebrew/bin/node</string>
-        <string>--env-file=.env.local</string>
-        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/social/generate-schedule.mjs</string>
-        <string>--hero-only</string>
+        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/social/scheduled-default-plans.mjs</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>2</integer>
+        <integer>3</integer>
         <key>Minute</key>
-        <integer>30</integer>
+        <integer>20</integer>
     </dict>
     <key>StandardOutPath</key>
     <string>/Users/stephenstanwood/Library/Logs/default-plans-refresh.log</string>
