@@ -82,6 +82,10 @@ const daysAhead = parseInt(args.find((_, i) => args[i - 1] === "--days") || Stri
 // generator: it calls /api/plan-day directly for adults + kids instead of
 // depending on social-schedule.json.
 const heroOnly = args.includes("--hero-only");
+// --local-only: commit the refreshed homepage/newsletter plans on the Mini but
+// leave origin/main untouched. The guarded newsletter preflight will merge
+// canonical remote changes before the next run.
+const localOnly = args.includes("--local-only");
 
 // Generic URL hosts that mean "no real event link" — copy generated against
 // these either says "No URL provided" or pastes a useless homepage link.
@@ -1000,13 +1004,17 @@ async function main() {
       if (dirty) {
         execSync("git add src/data/south-bay/default-plans.json", { cwd: repoRoot, stdio: "pipe" });
         execSync('git commit -m "data: refresh homepage default plans"', { cwd: repoRoot, stdio: "pipe" });
-        execSync("git push", { cwd: repoRoot, stdio: "pipe" });
-        console.log("   📎 default-plans.json committed and pushed");
+        if (localOnly) {
+          console.log("   📎 default-plans.json committed locally");
+        } else {
+          execSync("git push", { cwd: repoRoot, stdio: "pipe" });
+          console.log("   📎 default-plans.json committed and pushed");
+        }
       } else {
         console.log("   (default-plans.json unchanged)");
       }
     } catch (e) {
-      console.warn("   ⚠️  Failed to auto-push default-plans.json:", e.message);
+      console.warn("   ⚠️  Failed to auto-save default-plans.json:", e.message);
     }
     return;
   }

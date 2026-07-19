@@ -68,11 +68,23 @@ function localAheadPaths(repoRoot, remoteRef) {
   return output.split("\0").filter(Boolean);
 }
 
-function assertAllowedLocalAhead(repoRoot, remoteRef) {
-  const changed = localAheadPaths(repoRoot, remoteRef);
-  const unsafe = changed.filter(
+function unmergedPaths(repoRoot) {
+  const output = runGit(
+    repoRoot,
+    ["diff", "--name-only", "--diff-filter=U", "-z"],
+  ).stdout;
+  return output.split("\0").filter(Boolean);
+}
+
+function unsafeGeneratedDataPaths(paths) {
+  return paths.filter(
     (path) => !ALLOWED_LOCAL_AHEAD_PATHS.some((pattern) => pattern.test(path)),
   );
+}
+
+function assertAllowedLocalAhead(repoRoot, remoteRef) {
+  const changed = localAheadPaths(repoRoot, remoteRef);
+  const unsafe = unsafeGeneratedDataPaths(changed);
   if (unsafe.length) {
     throw new Error(
       `checkout has local commits that modify source or configuration: ${unsafe.join(", ")}`,
@@ -81,13 +93,51 @@ function assertAllowedLocalAhead(repoRoot, remoteRef) {
   return changed;
 }
 
+function mergeRemoteIntoGeneratedDataCheckout(repoRoot, remoteRef, log) {
+  const mergeBase = runGit(repoRoot, ["merge-base", "HEAD", remoteRef]).stdout;
+  const localChanges = assertAllowedLocalAhead(repoRoot, mergeBase);
+  emit(
+    log,
+    `checkout diverged, but local-only changes are generated data (${localChanges.join(", ") || "no file delta"}); merging ${remoteRef}`,
+  );
+
+  const merge = runGit(
+    repoRoot,
+    ["merge", "--no-edit", remoteRef],
+    { allowStatuses: [0, 1] },
+  );
+  if (merge.status !== 0) {
+    const conflicts = unmergedPaths(repoRoot);
+    const unsafe = unsafeGeneratedDataPaths(conflicts);
+    if (!conflicts.length || unsafe.length) {
+      runGit(repoRoot, ["merge", "--abort"], { allowStatuses: [0, 1, 128] });
+      const detail = String(merge.stderr || merge.stdout || "unknown merge error").trim();
+      throw new Error(
+        `checkout diverged from ${remoteRef} and could not be safely merged: ${detail}`,
+      );
+    }
+
+    emit(
+      log,
+      `resolving generated-data overlap from ${remoteRef} (${conflicts.join(", ")})`,
+    );
+    runGit(repoRoot, ["checkout", "--theirs", "--", ...conflicts]);
+    runGit(repoRoot, ["add", "--", ...conflicts]);
+    runGit(repoRoot, ["commit", "--no-edit"]);
+  }
+
+  const head = runGit(repoRoot, ["rev-parse", "HEAD"]).stdout;
+  const aheadPaths = assertAllowedLocalAhead(repoRoot, remoteRef);
+  return { head, aheadPaths };
+}
+
 /**
  * Fetch the canonical branch and prove that the scheduled checkout contains it.
  *
  * A clean checkout that is only behind is fast-forwarded. Data-only local
- * commits are allowed when they already contain origin/main. Dirty, diverged,
- * detached, or source-ahead states fail closed so the sender cannot silently
- * execute old or locally modified newsletter code.
+ * commits are allowed and can absorb a newer origin/main. Overlapping generated
+ * data takes the remote version; source-ahead, dirty, or detached states still
+ * fail closed so the sender cannot silently execute locally modified code.
  */
 export function preflightNewsletterCheckout({
   repoRoot = DEFAULT_REPO_ROOT,
@@ -141,9 +191,10 @@ export function preflightNewsletterCheckout({
     head = runGit(repoRoot, ["rev-parse", "HEAD"]).stdout;
     state = "fast-forwarded";
   } else {
-    throw new Error(
-      `scheduled checkout diverged from ${remoteRef} (HEAD=${shortSha(head)}, ${remoteRef}=${shortSha(originHead)}); refusing send`,
-    );
+    const merged = mergeRemoteIntoGeneratedDataCheckout(repoRoot, remoteRef, log);
+    head = merged.head;
+    aheadPaths = merged.aheadPaths;
+    state = "merged-remote-with-local-data";
   }
 
   if (!isAncestor(repoRoot, originHead, head)) {
