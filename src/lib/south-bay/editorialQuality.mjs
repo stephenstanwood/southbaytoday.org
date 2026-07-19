@@ -4,6 +4,7 @@
 
 const MARQUEE_VENUES = /\b(shoreline amphitheat\w*|mountain winery|sap center|levi'?s stadium|paypal park|excite ballpark|san jose civic|california theatre|center for the performing arts|montgomery theater|hammer theatre|san jose improv|stanford theatre|frost amphitheat\w*|heritage theatre|great america)\b/i;
 export const REGIONAL_ROUTINE_PENALTY_CUTOFF = 35;
+export const UNPROMPTED_AUDIENCE_PENALTY_CUTOFF = 35;
 
 export function isMarqueeEvent(event) {
   return MARQUEE_VENUES.test(`${event?.venue || ""} ${event?.title || event?.name || ""}`);
@@ -24,6 +25,45 @@ export function titleQualityPenalty(title) {
 export function requiresChildToAttend(event) {
   const text = `${event?.title || event?.name || ""} ${event?.description || ""}`;
   return /\b(baby[ -]?wearing|pre[ -]?walking babies?|parent(?:s)? and me|mommy and me|caregiver and (?:baby|toddler))\b/i.test(text);
+}
+
+/**
+ * Events can be public listings while still addressing only a tiny affinity
+ * group. Keep those events searchable in the calendar, but out of unprompted
+ * editorial recommendations unless a reader explicitly builds around one.
+ *
+ * This is intentionally about audience breadth, not subject matter. A public
+ * talk by an alumnus is broad; an alumni night, reserved alumni section, or
+ * members-only preview is not.
+ */
+export function audienceBreadthPenalty(event) {
+  // Explicit gates use reader-facing title/blurb only. Some multi-day source
+  // descriptions mention a members-only preview while later occurrences are
+  // public; applying that sentence to every date would suppress the public days.
+  const recommendationText = [
+    event?.title || event?.name || "",
+    event?.blurb || "",
+  ].join(" ");
+  const sourceText = `${recommendationText} ${event?.description || ""}`;
+
+  if (
+    /\b(?:members?|employees?|faculty|staff|students?|alumni|alumnus|alumna|alumnae|donors?|season[- ]ticket holders?)\s+only\b/i.test(recommendationText) ||
+    /\b(?:invitation|invite)[ -]?only\b/i.test(recommendationText) ||
+    /\b(?:reserved|exclusive(?:ly)?|available|open)\s+(?:only\s+)?(?:to|for)\s+(?:(?:current|enrolled|university|college|school|club|association)\s+){0,3}(?:members?|employees?|faculty|staff|students?|alumni|alumnus|alumna|alumnae|donors?|season[- ]ticket holders?)\b/i.test(recommendationText)
+  ) {
+    return 60;
+  }
+
+  const hasAffiliationAudience = /\b(?:alumni|alumnus|alumna|alumnae|sorority|fraternity)\b/i.test(recommendationText);
+  const hasAffinityGathering = /\b(?:night|reception|mixer|meetup|gathering|tailgate|outing|network(?:ing)?|coalition|chapter|reunion|reserved section|tickets?|offer|package|discount)\b/i.test(recommendationText);
+  if (
+    (hasAffiliationAudience && hasAffinityGathering) ||
+    /\b(?:student|faculty|staff|employee|member|donor)\s+(?:night|reception|mixer|meetup|appreciation|ticket offer)\b/i.test(sourceText)
+  ) {
+    return 45;
+  }
+
+  return 0;
 }
 
 /**
