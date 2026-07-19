@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Daily newsletter send — job starts 5:50 AM PT so the email lands ~6:00.
+  Daily newsletter send — job starts 3:50 AM PT so the email lands ~4:00.
   (The Fable editorial pass takes ~7-8 minutes; a timeout degrades to the
   deterministic build, never a missed send.)
 
@@ -33,7 +33,7 @@
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>5</integer>
+        <integer>3</integer>
         <key>Minute</key>
         <integer>50</integer>
     </dict>
