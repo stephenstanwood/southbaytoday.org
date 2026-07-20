@@ -713,6 +713,8 @@ function isPublicEvent(title, source, description, venue) {
 // Add entries here when a source consistently sends bad data.
 const TITLE_FIXES = {
   "Fun Runa": "Fun Run",
+  "Pop Up Art Event": "Pop Up Art Gallery",
+  "San Benito Co. Line": "San Benito County Line",
   // These match AFTER the all-caps regex runs (NITE→Nite, JOSE→Jose via 4+ regex, but HIP/HOP/IN/SAN survive)
   "HIP HOP NITE": "Hip Hop Nite",   // pre-regex fallback
   "HIP HOP Nite": "Hip Hop Nite",   // post-regex: NITE→Nite but HIP/HOP (3-letter) survive
@@ -860,7 +862,7 @@ function cleanTitle(title) {
     "TLAB", "HICAP",
     // South Bay venues / institutions. SVCF = Silicon Valley Community
     // Foundation — title-cased to "Svcf" by the 2+ pass without coverage.
-    "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF",
+    "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "KCAT",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
@@ -893,7 +895,7 @@ function cleanTitle(title) {
     "HPC",
     "FAR", "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
     "NCAA", "PAC", "POV", "PSA", "SAG", "SAT", "SAP", "SBN", "SCU", "SIG", "SJZ",
-    "SMT", "SUV", "TBA", "TBD", "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK",
+    "SMT", "SUV", "TBA", "TBD", "USA", "USB", "VPN", "VHS", "FAQ", "JFK", "MLK", "CCC",
     "FDA", "CDC", "ICE", "TSA", "EPA", "DOJ", "DUI", "PTA", "PTO", "HOA", "VFW",
     "BTS", "WWE", "AEW", "UFC", "MMA", "EDM", "RNB", "HIP", "HIF", "NPR", "PBS",
     "AARP", "NAACP", "NAMI", "SCORE",
@@ -1721,7 +1723,13 @@ function cleanVenue(raw) {
   // Remove single-space inline address blob: "Vasona Park 233 Blossom Hill Rd." → "Vasona Park"
   // Trigger only when the trailing chunk starts with a number and ends with a street suffix
   // so we don't chop legitimate venue names that contain numbers (e.g. "Building 5").
-  v = v.replace(/[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*$/, "");
+  v = v.replace(
+    /[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*(?:,?\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale))?\s*$/i,
+    "",
+  );
+  // Some sources omit the street suffix after a numbered street:
+  // "UC Student and Policy Center, 1115 11th" → "UC Student and Policy Center".
+  v = v.replace(/,\s*\d+\s+\d+(?:st|nd|rd|th)?\s*$/i, "");
   // Same pattern but tolerant of a unit/building tail AFTER the street suffix:
   // "Koll Oakmead Park, 3350 Scott Blvd Building 54" → "Koll Oakmead Park".
   // Meetup organizers append a full street address (number + street + unit) into
@@ -2957,6 +2965,7 @@ async function fetchCampbellEvents() {
 async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") {
   console.log(`  ⏳ ${name}...`);
   try {
+    const feedOrigin = new URL(url).origin;
     const ical = await fetchText(url);
     const rawEvents = parseIcalEvents(ical);
     const now = new Date();
@@ -2989,7 +2998,8 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
         // Relative iCal feed URLs (e.g. /common/modules/iCalendar/...) are not useful links
         const rawUrl = ev.url || null;
         const urlIsRelativeIcal = rawUrl && rawUrl.startsWith("/common/modules/iCalendar/");
-        const eventUrl = descIsUrl ? descTrimmed : (!urlIsRelativeIcal ? rawUrl : null);
+        const uidUrl = /^\d+$/.test(String(ev.uid || "")) ? `${feedOrigin}/Calendar.aspx?EID=${ev.uid}` : null;
+        const eventUrl = descIsUrl ? descTrimmed : (!urlIsRelativeIcal ? rawUrl : uidUrl);
         const cleanedVenue = cleanVenue((ev.location || "").replace(/\\,/g, ","));
         const venueLabel = cleanedVenue || inferCivicVenueFromTitle(ev.summary) || null;
         const description = (descIsUrl || descIsProtocolRelative) ? "" : stripBareUrls(descText);
@@ -3008,7 +3018,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
         const isRace = /\b(5k|10k|half marathon|marathon|triathlon|fun run|road run|trail run|color run)\b/i.test(ev.summary || "");
         return {
           id: h(defaultCity, ev.uid || ev.summary, ev.dtstart),
-          title: ev.summary.replace(/\\,/g, ",").replace(/\\n/g, " "),
+          title: cleanTitle(ev.summary.replace(/\\,/g, ",").replace(/\\n/g, " ")),
           date: isoDate(start),
           displayDate: displayDate(start),
           time: displayTime(start),
@@ -7170,11 +7180,21 @@ async function main() {
 
   // Pre-sort capped events so that within any (date, venue, time) trio, the
   // source-venue match comes first — that's the listing dedup will keep.
-  // Tiebreak by longer description (richer data).
+  // Tiebreak by richer data, especially a real URL. Newsletter duplicates can
+  // differ only by sourceUrl; keep the sourceable row over a slightly longer
+  // unsourced blurb.
   capped.sort((a, b) => {
     const aff = sourceVenueAffinity(b) - sourceVenueAffinity(a);
     if (aff !== 0) return aff;
-    return (b.description?.length || 0) - (a.description?.length || 0);
+    const richness = (e) => {
+      let score = 0;
+      if (e.url) score += 20;
+      if (e.time) score += 2;
+      if (e.endTime) score += 1;
+      if (e.description) score += Math.min(e.description.length / 100, 5);
+      return score;
+    };
+    return richness(b) - richness(a);
   });
 
   const seen = new Set();
@@ -7292,6 +7312,7 @@ async function main() {
         .replace(/<[^>]+>/g, "")   // strip any residual HTML tags
         .replace(/[\u00a0]/g, " ") // non-breaking space → regular space
         .replace(/\s+/g, " ").trim();
+      e.venue = cleanVenue(e.venue) || null;
     }
     // Address gets the same entity/whitespace treatment as venue, plus a strip
     // of CivicPlus "View Map" link text and normalized comma spacing. Sources

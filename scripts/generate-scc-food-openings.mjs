@@ -97,6 +97,7 @@ const VENUE_ADDRESS_PATTERNS = /\bAIRPORT\s+BL(?:VD)?\b|\bSJC\b|\bTERM(INAL)?\s+
 const NAME_OVERRIDES = {
   "SR0881648": "sweetgreen",
   "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
+  "SR0884719": "FujiSan Sushi @ Tawa1702",
 };
 
 const BLURB_OVERRIDES = {

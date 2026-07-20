@@ -109,7 +109,7 @@ function richnessScore(e) {
   if (e.time) s += 2;
   if (e.endTime) s += 1;
   if (e.image || e.photoRef) s += 2;
-  if (e.url) s += 1;
+  if (e.url) s += 3;
   if (e.cost) s += 0.5;
   return s;
 }

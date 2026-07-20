@@ -88,6 +88,33 @@ test("numeric tokens prevent merging distinct grade/age bands", () => {
   assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
 });
 
+test("prefers a sourced duplicate over an unsourced copy with minor extra detail", () => {
+  const events = [
+    ev({
+      id: "older",
+      title: "Toddler Time with Malinky Music (bilingual Spanish and English)",
+      venue: "Sunnyvale Public Library",
+      time: "11:00 AM",
+      endTime: "12:00 PM",
+      description: "Music performance for ages 2 to 5. Sing and dance with a special music performer. Drop-in; space limited.",
+      url: "",
+    }),
+    ev({
+      id: "sourced",
+      title: "Toddler Time with Malinky Music",
+      venue: "Sunnyvale Public Library",
+      time: "11:00 AM",
+      description: "Sing and dance with bilingual Spanish and English music performance for ages 2 to 5.",
+      url: "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
+    }),
+  ];
+
+  const { kept, droppedCount } = fuzzyDedupEvents(events);
+  assert.equal(droppedCount, 1);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].id, "sourced");
+});
+
 test("collapses exact (title,url) duplicates even when same-source times differ >30min and venues match", () => {
   // Two ingest paths for the same organizer feed (SJMA's direct scraper +
   // the Playwright mirror) can disagree on time — one resolves a real

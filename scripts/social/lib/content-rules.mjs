@@ -145,4 +145,6 @@ export const ACRONYM_FIXES = [
   ["DIY", /\b(Diy|diy)\b/g],
   ["LGBTQ", /\b(Lgbtq|lgbtq)\b/g],
   ["NASA", /\b(Nasa|nasa)\b/g],
+  ["CCC", /\b(Ccc|ccc)\b/g],
+  ["KCAT", /\b(Kcat|kcat)\b/g],
 ];
