@@ -141,6 +141,33 @@ export function parseSanJoseJazzLineup(html) {
   return entries;
 }
 
+export function extractSanJoseJazzDayUrls(html) {
+  const origin = "https://summerfest.sanjosejazz.org";
+  const urls = [];
+  const seen = new Set();
+  const hrefPattern = /href\s*=\s*(["'])([^"']*\/filters\/chronological\/[^"']+)\1/gi;
+  let match;
+
+  while ((match = hrefPattern.exec(String(html || ""))) !== null) {
+    try {
+      const url = new URL(decodeHtml(match[2]), origin);
+      if (url.protocol !== "https:" || url.origin !== origin) continue;
+      url.search = "";
+      url.hash = "";
+      url.pathname = url.pathname.replace(/\/+$/, "");
+      const normalized = url.toString();
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      urls.push(normalized);
+    } catch {
+      // Ignore malformed menu links; the strict caller still blocks if no
+      // complete official schedule can be recovered.
+    }
+  }
+
+  return urls;
+}
+
 export function parseCivicPlusCalendarPage(html) {
   const entries = [];
   const blocks = String(html || "").match(/<li>\s*<h3>[\s\S]*?itemtype="http:\/\/schema\.org\/Event"[\s\S]*?<\/li>/gi) || [];

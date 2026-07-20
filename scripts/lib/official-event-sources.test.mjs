@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  extractSanJoseJazzDayUrls,
   extractVboSession,
   parseHappyHollowSchedules,
   parseCivicPlusCalendarPage,
@@ -75,6 +76,19 @@ test("parses one artist occurrence from the official San Jose Jazz lineup", () =
       image: "https://example.com/adi.jpg",
       description: "French Caribbean singer and bassist.",
     },
+  ]);
+});
+
+test("discovers current San Jose Jazz day pages without hardcoded year slugs", () => {
+  const html = `
+    <a href="/filters/chronological/friday-aug-7">Friday</a>
+    <a href="https://summerfest.sanjosejazz.org/filters/chronological/saturday-aug-8?view=all">Saturday</a>
+    <a href="/filters/chronological/friday-aug-7">Friday mobile duplicate</a>
+    <a href="https://example.com/filters/chronological/sunday-aug-9">Wrong host</a>
+  `;
+  assert.deepEqual(extractSanJoseJazzDayUrls(html), [
+    "https://summerfest.sanjosejazz.org/filters/chronological/friday-aug-7",
+    "https://summerfest.sanjosejazz.org/filters/chronological/saturday-aug-8",
   ]);
 });
 
