@@ -1,42 +1,290 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-15T22:18:25.587Z",
+    "generatedAt": "2026-07-20T03:28:45.803Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 35,
-    "sourceCount": 457,
+    "eventCount": 424,
+    "sourceCount": 23,
     "sources": [
-      "Mountain View Public Library (19)",
-      "Los Gatos Library (28)",
-      "San Jose Museum of Art (22)",
-      "Linden Tree Books (11)",
-      "Hicklebee's (2)",
-      "History San Jose (30)",
+      "Mountain View Public Library (12)",
+      "Los Gatos Library (25)",
+      "San Jose Museum of Art (20)",
+      "Linden Tree Books (9)",
+      "Hicklebee's (3)",
+      "History San Jose (28)",
       "Montalvo Arts Center (6)",
       "City Lights Theater (7)",
       "ICA San José (3)",
-      "Mountain Winery (47)",
+      "Mountain Winery (44)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
-      "Midpen Open Space (7)",
-      "Guadalupe River Park Conservancy (3)",
+      "Midpen Open Space (5)",
+      "Guadalupe River Park Conservancy (2)",
       "Santana Row (5)",
-      "City of Cupertino (79)",
+      "City of Cupertino (78)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (107)",
+      "TheatreWorks Silicon Valley (102)",
       "Levi's Stadium (18)",
       "SAP Center (17)",
-      "The Tech Interactive (9)",
-      "Books Inc (5)",
-      "Peninsula Open Space Trust (5)"
+      "The Tech Interactive (8)",
+      "Books Inc (4)",
+      "Peninsula Open Space Trust (1)"
+    ],
+    "sourceHealth": [
+      {
+        "id": "city-of-mountain-view",
+        "label": "City of Mountain View",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "city-of-sunnyvale",
+        "label": "City of Sunnyvale",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "city-of-san-jose",
+        "label": "City of San Jose",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "the-tech-interactive",
+        "label": "The Tech Interactive",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "mountain-view-public-library",
+        "label": "Mountain View Public Library",
+        "status": "ok",
+        "count": 12,
+        "error": null
+      },
+      {
+        "id": "los-gatos-library",
+        "label": "Los Gatos Library",
+        "status": "ok",
+        "count": 25,
+        "error": null
+      },
+      {
+        "id": "san-jose-jazz",
+        "label": "San Jose Jazz",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "sj-museum-of-art",
+        "label": "SJ Museum of Art",
+        "status": "ok",
+        "count": 20,
+        "error": null
+      },
+      {
+        "id": "linden-tree-books",
+        "label": "Linden Tree Books",
+        "status": "ok",
+        "count": 9,
+        "error": null
+      },
+      {
+        "id": "hicklebee-s",
+        "label": "Hicklebee's",
+        "status": "ok",
+        "count": 3,
+        "error": null
+      },
+      {
+        "id": "history-san-jose",
+        "label": "History San Jose",
+        "status": "ok",
+        "count": 28,
+        "error": null
+      },
+      {
+        "id": "montalvo-arts-center",
+        "label": "Montalvo Arts Center",
+        "status": "ok",
+        "count": 6,
+        "error": null
+      },
+      {
+        "id": "city-lights-theater",
+        "label": "City Lights Theater",
+        "status": "ok",
+        "count": 7,
+        "error": null
+      },
+      {
+        "id": "ica-san-jose",
+        "label": "ICA San Jose",
+        "status": "ok",
+        "count": 3,
+        "error": null
+      },
+      {
+        "id": "scccfd-eventbrite",
+        "label": "SCCCFD (Eventbrite)",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "mountain-winery",
+        "label": "Mountain Winery",
+        "status": "ok",
+        "count": 44,
+        "error": null
+      },
+      {
+        "id": "san-jose-theaters",
+        "label": "San Jose Theaters",
+        "status": "ok",
+        "count": 20,
+        "error": null
+      },
+      {
+        "id": "hammer-theatre",
+        "label": "Hammer Theatre",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "children-s-discovery-museum",
+        "label": "Children's Discovery Museum",
+        "status": "ok",
+        "count": 2,
+        "error": null
+      },
+      {
+        "id": "palo-alto-art-center",
+        "label": "Palo Alto Art Center",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "midpen-open-space",
+        "label": "Midpen Open Space",
+        "status": "ok",
+        "count": 5,
+        "error": null
+      },
+      {
+        "id": "guadalupe-river-park",
+        "label": "Guadalupe River Park",
+        "status": "ok",
+        "count": 2,
+        "error": null
+      },
+      {
+        "id": "santana-row",
+        "label": "Santana Row",
+        "status": "ok",
+        "count": 5,
+        "error": null
+      },
+      {
+        "id": "downtown-mountain-view",
+        "label": "Downtown Mountain View",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "city-of-cupertino",
+        "label": "City of Cupertino",
+        "status": "ok",
+        "count": 78,
+        "error": null
+      },
+      {
+        "id": "opera-san-jos",
+        "label": "Opera San José",
+        "status": "ok",
+        "count": 5,
+        "error": null
+      },
+      {
+        "id": "theatreworks-silicon-valley",
+        "label": "TheatreWorks Silicon Valley",
+        "status": "ok",
+        "count": 102,
+        "error": null
+      },
+      {
+        "id": "california-s-great-america",
+        "label": "California's Great America",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "levi-s-stadium",
+        "label": "Levi's Stadium",
+        "status": "ok",
+        "count": 18,
+        "error": null
+      },
+      {
+        "id": "sap-center",
+        "label": "SAP Center",
+        "status": "ok",
+        "count": 17,
+        "error": null
+      },
+      {
+        "id": "the-tech-upcoming",
+        "label": "The Tech Upcoming",
+        "status": "ok",
+        "count": 8,
+        "error": null
+      },
+      {
+        "id": "books-inc",
+        "label": "Books Inc",
+        "status": "ok",
+        "count": 4,
+        "error": null
+      },
+      {
+        "id": "barnes-noble",
+        "label": "Barnes & Noble",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "half-price-books",
+        "label": "Half Price Books",
+        "status": "empty",
+        "count": 0,
+        "error": null
+      },
+      {
+        "id": "post-peninsula-open-space-trust",
+        "label": "POST (Peninsula Open Space Trust)",
+        "status": "ok",
+        "count": 1,
+        "error": null
+      }
     ]
   },
   "events": [
     {
-      "id": "a8ed15f8b218",
-      "title": "Senior Center/Avenidas Rose Kleiner Center",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "10:00 am",
+      "id": "c8ec88514956",
+      "title": "Story Stones",
+      "date": "2026-07-20",
+      "displayDate": "Mon, Jul 20",
+      "time": "3:30 pm",
       "endTime": null,
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
@@ -44,15 +292,15 @@
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16777711",
+      "url": "https://mountainview.libcal.com/event/16934170",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
-      "id": "5f3cdc575d17",
-      "title": "Baby Storytime",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
+      "id": "762874d1d30a",
+      "title": "Summer Outdoor Storytime",
+      "date": "2026-07-21",
+      "displayDate": "Tue, Jul 21",
       "time": "10:30 am",
       "endTime": null,
       "venue": "Mountain View Public Library",
@@ -61,202 +309,15 @@
       "category": "family",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16422253",
+      "url": "https://mountainview.libcal.com/event/16546789",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
     {
-      "id": "e0329770abc2",
-      "title": "ESL Conversation Club",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "4:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/15895381",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "dde500f3baa4",
-      "title": "Cuesta Park",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "6:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16777718",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "bf366eda661a",
-      "title": "Bilingual Storytime: Mandarin/English",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "6:30 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16875105",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "ffdcc86f37ba",
-      "title": "Magical Bridge Playground",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "10:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16777701",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "f316cd515154",
-      "title": "Migrant Heart: The Hidden Cost of the American Dream and Healing Through Storytelling with Reyna Grande",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "11:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16953194",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "445cfad3129b",
+      "id": "0a89977ab57f",
       "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "4:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/17095489",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "af10e205e48e",
-      "title": "Hunger Games Escape Room",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "6:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/17067351",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "af10e205e48e",
-      "title": "Hunger Games Escape Room",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "6:30 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/17067354",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "af10e205e48e",
-      "title": "Hunger Games Escape Room",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "7:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/17067356",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "af10e205e48e",
-      "title": "Hunger Games Escape Room",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "7:30 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/17067357",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "4cc353cbbaaa",
-      "title": "Villa Siena",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "10:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/16777694",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "03cad6abb3ec",
-      "title": "El Camino Hospital- Lower-Level Lobby",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
+      "date": "2026-07-21",
+      "displayDate": "Tue, Jul 21",
       "time": "1:00 pm",
       "endTime": null,
       "venue": "Mountain View Public Library",
@@ -265,67 +326,50 @@
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/17046165",
+      "url": "https://mountainview.libcal.com/event/17095556",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "50e1f3a4070c",
-      "title": "STEAM Fridays",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "2:00 pm",
+      "id": "0a8e5c858b1d",
+      "title": "Sewing with FabMo: Book Covers",
+      "date": "2026-07-21",
+      "displayDate": "Tue, Jul 21",
+      "time": "6:00 pm",
       "endTime": null,
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
       "city": "mountain-view",
-      "category": "community",
+      "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16535177",
+      "url": "https://mountainview.libcal.com/event/14866773",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "5b1a26fc9577",
-      "title": "Drop-in Bike Clinic",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
+      "id": "62a5cc0cf2e7",
+      "title": "Baby Storytime",
+      "date": "2026-07-22",
+      "displayDate": "Wed, Jul 22",
       "time": "10:30 am",
       "endTime": null,
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
       "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/15917711",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "89121b5d5995",
-      "title": "Toddler Drive In",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "11:00 am",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
       "category": "family",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16118263",
+      "url": "https://mountainview.libcal.com/event/16422254",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
     {
-      "id": "26a64da3b75e",
-      "title": "San Francisco Dance Film Festival",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "2:00 pm",
+      "id": "45a2a7c9370d",
+      "title": "ESL Conversation Club",
+      "date": "2026-07-22",
+      "displayDate": "Wed, Jul 22",
+      "time": "4:00 pm",
       "endTime": null,
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
@@ -333,16 +377,16 @@
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16905454",
+      "url": "https://mountainview.libcal.com/event/15895382",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "c9b58e4ae5a8",
-      "title": "Create a Mini Library",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "1:30 pm",
+      "id": "405e5edd8652",
+      "title": "Japanese Aesthetics: Exploring Japan's Artistic Sensibilities",
+      "date": "2026-07-22",
+      "displayDate": "Wed, Jul 22",
+      "time": "6:30 pm",
       "endTime": null,
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
@@ -350,131 +394,97 @@
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://mountainview.libcal.com/event/16810458",
+      "url": "https://mountainview.libcal.com/event/15921897",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "0fedec5100ec",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "11:00am",
+      "id": "c5d78db34aa0",
+      "title": "Magical Bridge Storytime",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
+      "time": "10:00 am",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "family",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16846493",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/17084763",
+      "source": "Mountain View Public Library",
       "kidFriendly": true
     },
     {
-      "id": "9c7dd2838f29",
-      "title": "Summer Time Prizes @ Belgatos Park",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "12:00pm",
+      "id": "094bfeb8c4be",
+      "title": "Amplify: Unscripted--Building Confident Young Speakers",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
+      "time": "4:00 pm",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/14385559",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/17056752",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "df88df2cf52b",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "3:00pm",
+      "id": "831cd9b51053",
+      "title": "Community Preservation Lab Scanning Service",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
+      "time": "4:00 pm",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/16887011",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "412a31063d44",
-      "title": "Intro to Tarot (Court Cards)",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "4:30pm",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16655158",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/17095564",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "f6b883385133",
-      "title": "Online Author Talk : Reyna Grande",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "11:00am",
+      "id": "78e0b1e1594f",
+      "title": "STEAM Fridays",
+      "date": "2026-07-24",
+      "displayDate": "Fri, Jul 24",
+      "time": "9:00 am",
       "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/16886777",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "2be5138bc602",
-      "title": "Slim Chance Circus (Ages 0-12)",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "4:00pm",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "community",
       "cost": "free",
       "description": "",
-      "url": "https://losgatosca.libcal.com/event/16499795",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "f01f8da9d4d1",
-      "title": "Free Hearing Test",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "10:00am",
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://losgatosca.libcal.com/event/16505383",
-      "source": "Los Gatos Library",
+      "url": "https://mountainview.libcal.com/event/16535178",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
-      "id": "120051a24a76",
+      "id": "30d0b0c6405a",
+      "title": "Needle Crafts Circle",
+      "date": "2026-07-25",
+      "displayDate": "Sat, Jul 25",
+      "time": "10:00 am",
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://mountainview.libcal.com/event/16612700",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "2500139198e1",
       "title": "3D Print Tween Camp",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -491,7 +501,7 @@
       "kidFriendly": false
     },
     {
-      "id": "57ad5e181479",
+      "id": "f407c8a928e6",
       "title": "ESL Conversation Club",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -508,7 +518,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f8653092b32a",
+      "id": "f67d49f3f9c5",
       "title": "Social Stitching",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -525,7 +535,24 @@
       "kidFriendly": false
     },
     {
-      "id": "76659f23cdfa",
+      "id": "4f3853e138df",
+      "title": "Storytime (Ages 0-5)",
+      "date": "2026-07-21",
+      "displayDate": "Tue, Jul 21",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16846494",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "04aeec60af3a",
       "title": "West Valley Stormwater Authority in the Lobby",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -542,7 +569,7 @@
       "kidFriendly": false
     },
     {
-      "id": "22a6482abdaa",
+      "id": "5bd65e5fda64",
       "title": "Drop-In Tech Help",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -559,7 +586,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5827d8ee470a",
+      "id": "8a23cb03f253",
       "title": "Tuesday PM Bookclub",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -576,7 +603,24 @@
       "kidFriendly": false
     },
     {
-      "id": "82c2348ce5b7",
+      "id": "f1bbe705d397",
+      "title": "Kids Knitting (Ages 7+)",
+      "date": "2026-07-22",
+      "displayDate": "Wed, Jul 22",
+      "time": "3:00pm",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16887012",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "54cc1c6df659",
       "title": "Bug Nature Journals with Beetlelady! (Ages 6-12)",
       "date": "2026-07-22",
       "displayDate": "Wed, Jul 22",
@@ -593,7 +637,7 @@
       "kidFriendly": true
     },
     {
-      "id": "f7cba528079a",
+      "id": "d28f2cd8a838",
       "title": "Cookbook Club",
       "date": "2026-07-22",
       "displayDate": "Wed, Jul 22",
@@ -610,7 +654,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f2ca8c25215f",
+      "id": "58fa6a770f3a",
       "title": "Park-It Market",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -627,7 +671,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8290b7873f67",
+      "id": "f49b39fa4ddb",
       "title": "JAMaROO Music and Movement",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -644,7 +688,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a1d7c00e1c0f",
+      "id": "000498928ea9",
       "title": "Informed Community Book Club",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -661,7 +705,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b3919be6adad",
+      "id": "42cd2c5b3b91",
       "title": "Canceled: Gardening Talk with the Santa Clara Master Gardners",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -678,7 +722,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8e06e9fee62a",
+      "id": "d0ae996e9fdb",
       "title": "Online Author Talk : Dr. Marisa Franco",
       "date": "2026-07-28",
       "displayDate": "Tue, Jul 28",
@@ -695,7 +739,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b144aa1b68b1",
+      "id": "77344e0b8806",
       "title": "Crafty Corner (Ages 3-10)",
       "date": "2026-07-28",
       "displayDate": "Tue, Jul 28",
@@ -712,7 +756,7 @@
       "kidFriendly": true
     },
     {
-      "id": "dc3136a3d775",
+      "id": "64684e568491",
       "title": "Summer Time Prizes @ Blossom Hill Park",
       "date": "2026-07-29",
       "displayDate": "Wed, Jul 29",
@@ -729,7 +773,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d6cc54f80e07",
+      "id": "badc3ae5b4bc",
       "title": "Online Author Talk : Paula J. Johnson",
       "date": "2026-08-04",
       "displayDate": "Tue, Aug 4",
@@ -746,7 +790,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7514dbe39aa2",
+      "id": "7dff85dd8775",
       "title": "Creative Break",
       "date": "2026-08-06",
       "displayDate": "Thu, Aug 6",
@@ -763,7 +807,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9f5643c11a66",
+      "id": "ed2f4999c9a6",
       "title": "Monday Morning Book Club",
       "date": "2026-08-10",
       "displayDate": "Mon, Aug 10",
@@ -780,7 +824,7 @@
       "kidFriendly": false
     },
     {
-      "id": "26f76b60d24d",
+      "id": "366072ccea00",
       "title": "Cafecito Book Club",
       "date": "2026-08-13",
       "displayDate": "Thu, Aug 13",
@@ -797,7 +841,7 @@
       "kidFriendly": false
     },
     {
-      "id": "367d89e02fb7",
+      "id": "1436c1a802c9",
       "title": "Kirk Park: An Inspiring Native Plant Pollinator Garden",
       "date": "2026-08-16",
       "displayDate": "Sun, Aug 16",
@@ -814,7 +858,7 @@
       "kidFriendly": false
     },
     {
-      "id": "dc1250307d7f",
+      "id": "e81426a57aca",
       "title": "Narcan Training at the Library",
       "date": "2026-08-17",
       "displayDate": "Mon, Aug 17",
@@ -831,7 +875,41 @@
       "kidFriendly": false
     },
     {
-      "id": "cb787861fb96",
+      "id": "a68a99b48c07",
+      "title": "Nature Book Club",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16630858",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "83ba4071819c",
+      "title": "Online Author Talk : Beronda Montgomery",
+      "date": "2026-08-25",
+      "displayDate": "Tue, Aug 25",
+      "time": "11:00am",
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://losgatosca.libcal.com/event/16987357",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "16fb307e56f8",
       "title": "CityDance San José: Salsa",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -848,7 +926,7 @@
       "kidFriendly": false
     },
     {
-      "id": "cb787861fb96",
+      "id": "16fb307e56f8",
       "title": "CityDance San José: Salsa",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -865,7 +943,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f4ea403d0c4a",
+      "id": "73115ac205af",
       "title": "First Fridays: August 2026",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -882,7 +960,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f4ea403d0c4a",
+      "id": "73115ac205af",
       "title": "First Fridays: August 2026",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -899,41 +977,7 @@
       "kidFriendly": false
     },
     {
-      "id": "782f1d67f439",
-      "title": "San Jose Giants vs The Fresno Grizzlies",
-      "date": "2026-08-14",
-      "displayDate": "Fri, Aug 14",
-      "time": "Friday, August 14, 2026",
-      "endTime": null,
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://sjmusart.org/event/san-jose-giants-vs-fresno-grizzlies",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false
-    },
-    {
-      "id": "782f1d67f439",
-      "title": "San Jose Giants vs The Fresno Grizzlies",
-      "date": "2026-08-14",
-      "displayDate": "Fri, Aug 14",
-      "time": "Friday, August 14, 2026",
-      "endTime": null,
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://sjmusart.org/event/san-jose-giants-vs-fresno-grizzlies",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false
-    },
-    {
-      "id": "f216648af0ed",
+      "id": "d7060023909f",
       "title": "CityDance San José: Country Line Dancing",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -950,7 +994,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f216648af0ed",
+      "id": "d7060023909f",
       "title": "CityDance San José: Country Line Dancing",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -967,7 +1011,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5e43b2412464",
+      "id": "f3108e4c9591",
       "title": "Content Pick-Up Party: 18.4 Profiles",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -984,7 +1028,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5e43b2412464",
+      "id": "f3108e4c9591",
       "title": "Content Pick-Up Party: 18.4 Profiles",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -1001,7 +1045,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fc212eb1803c",
+      "id": "a11d9650f100",
       "title": "First Fridays: September 2026",
       "date": "2026-09-04",
       "displayDate": "Fri, Sep 4",
@@ -1018,7 +1062,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fc212eb1803c",
+      "id": "a11d9650f100",
       "title": "First Fridays: September 2026",
       "date": "2026-09-04",
       "displayDate": "Fri, Sep 4",
@@ -1035,7 +1079,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2cf75a3b062a",
+      "id": "a7ea9dfea6bb",
       "title": "CityDance San José: Afrobeat",
       "date": "2026-09-24",
       "displayDate": "Thu, Sep 24",
@@ -1052,7 +1096,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2cf75a3b062a",
+      "id": "a7ea9dfea6bb",
       "title": "CityDance San José: Afrobeat",
       "date": "2026-09-24",
       "displayDate": "Thu, Sep 24",
@@ -1069,7 +1113,7 @@
       "kidFriendly": false
     },
     {
-      "id": "96a16a5c2646",
+      "id": "0fd141a7f257",
       "title": "First Friday: New Ballet Season Preview",
       "date": "2026-10-02",
       "displayDate": "Fri, Oct 2",
@@ -1086,7 +1130,7 @@
       "kidFriendly": false
     },
     {
-      "id": "96a16a5c2646",
+      "id": "0fd141a7f257",
       "title": "First Friday: New Ballet Season Preview",
       "date": "2026-10-02",
       "displayDate": "Fri, Oct 2",
@@ -1103,7 +1147,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a2e979ad04d4",
+      "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -1120,7 +1164,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a2e979ad04d4",
+      "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -1137,7 +1181,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2850712f5d6c",
+      "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
       "displayDate": "Fri, Nov 6",
@@ -1154,7 +1198,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2850712f5d6c",
+      "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
       "displayDate": "Fri, Nov 6",
@@ -1171,7 +1215,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a5fdef50e1d0",
+      "id": "a322ab0c474f",
       "title": "First Fridays: December 2026",
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
@@ -1188,7 +1232,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a5fdef50e1d0",
+      "id": "a322ab0c474f",
       "title": "First Fridays: December 2026",
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
@@ -1205,73 +1249,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9c6c99aad6bb",
-      "title": "Teen Writing Workshop: The Valley of Silver Serpents",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "5pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-07-16"
-      }
-    },
-    {
-      "id": "92ad360b34aa",
-      "title": "Book Launch with Dashka Slater",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "11am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-07-18"
-      }
-    },
-    {
-      "id": "b57691231415",
-      "title": "Storytime with Rob Sayegh Jr.",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-07-19"
-      }
-    },
-    {
-      "id": "505b05a6ee5d",
+      "id": "29427335197b",
       "title": "Illustration Workshop with Laura G. Lee",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -1283,7 +1261,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/workshops-summer2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -1293,7 +1271,7 @@
       }
     },
     {
-      "id": "c7db7b3fe6c1",
+      "id": "9ddf3b77f749",
       "title": "Writers’ Gathering for Adults",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -1315,7 +1293,7 @@
       }
     },
     {
-      "id": "66445824c4b0",
+      "id": "845e74b50de9",
       "title": "Book Launch with Jen de Oliveira",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -1337,7 +1315,7 @@
       }
     },
     {
-      "id": "3308efca1f71",
+      "id": "eb03eb59cf62",
       "title": "Storytime with Lisa Frenkel Riddiough",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -1359,10 +1337,10 @@
       }
     },
     {
-      "id": "c8c2f3dc04be",
+      "id": "6937b3974bb5",
       "title": "Summer Write-a-Thon",
-      "date": "2026-07-23",
-      "displayDate": "Thu, Jul 23",
+      "date": "2026-07-26",
+      "displayDate": "Sun, Jul 26",
       "time": "2:30pm",
       "endTime": null,
       "venue": "Linden Tree Books",
@@ -1377,11 +1355,11 @@
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-07-23"
+        "date": "2026-07-26"
       }
     },
     {
-      "id": "794d9c7fa18b",
+      "id": "c0cb9994c22f",
       "title": "Storytime with Alan Barillaro",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -1403,7 +1381,29 @@
       }
     },
     {
-      "id": "cd70fdd7e541",
+      "id": "bd7da16d8100",
+      "title": "Storytime with Charlotte Cheng",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-08-09"
+      }
+    },
+    {
+      "id": "7f422bf0b5fb",
       "title": "Middle Grade Book Club: The Missing Magic of Sparrow Xia",
       "date": "2026-08-30",
       "displayDate": "Sun, Aug 30",
@@ -1425,7 +1425,7 @@
       }
     },
     {
-      "id": "a1a6a0496a95",
+      "id": "e6484c1344d2",
       "title": "Book Launch with Raina Telgemeier and Gale Galliganat Gunn High School’s Spangenberg Theater",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -1447,7 +1447,7 @@
       }
     },
     {
-      "id": "99d56b835a2a",
+      "id": "8db5232845ee",
       "title": "Hand Cut Silhouettes with Karl Johnson",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -1464,7 +1464,7 @@
       "kidFriendly": true
     },
     {
-      "id": "19691c7842b1",
+      "id": "a3073ab82e1a",
       "title": "Family Day on the Avenue",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -1481,41 +1481,24 @@
       "kidFriendly": true
     },
     {
-      "id": "caad0bd643f2",
-      "title": "South Bay Flashback: A Book Talk with Bill Guardino and Brian Conroy",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "11:00 am",
-      "endTime": "1:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
+      "id": "fd4988720f0f",
+      "title": "Find Waldo Local on Lincoln Avenue!",
+      "date": "2026-07-31",
+      "displayDate": "Fri, Jul 31",
+      "time": null,
+      "endTime": null,
+      "venue": "Hicklebee's",
+      "address": "1378 Lincoln Ave, San Jose, CA 95125",
       "city": "san-jose",
       "category": "arts",
-      "cost": "paid",
+      "cost": "free",
       "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
+      "url": "https://hicklebees.com/event/2026-07-31/find-waldo-local-lincoln-avenue",
+      "source": "Hicklebee's",
+      "kidFriendly": true
     },
     {
-      "id": "caad0bd643f2",
-      "title": "South Bay Flashback: A Book Talk with Bill Guardino and Brian Conroy",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "11:00 am",
-      "endTime": "1:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "1dc74888c3e7",
+      "id": "ff2c6e82bfaa",
       "title": "Shiny Side Up Bicycle Show",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -1532,7 +1515,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1dc74888c3e7",
+      "id": "ff2c6e82bfaa",
       "title": "Shiny Side Up Bicycle Show",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -1549,7 +1532,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c49604342959",
+      "id": "53840509aa8f",
       "title": "Italian Family Festa 2026",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -1566,7 +1549,7 @@
       "kidFriendly": true
     },
     {
-      "id": "c49604342959",
+      "id": "53840509aa8f",
       "title": "Italian Family Festa 2026",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -1583,7 +1566,7 @@
       "kidFriendly": true
     },
     {
-      "id": "7fc42592e7fc",
+      "id": "9c0160bdcde7",
       "title": "Spirit of ’45: Living History & Swing Dance",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -1600,7 +1583,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7fc42592e7fc",
+      "id": "9c0160bdcde7",
       "title": "Spirit of ’45: Living History & Swing Dance",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -1617,7 +1600,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f272dd470c4d",
+      "id": "96b018a888fd",
       "title": "Annual Chamber of Commerce BBQ",
       "date": "2026-08-20",
       "displayDate": "Thu, Aug 20",
@@ -1634,7 +1617,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f272dd470c4d",
+      "id": "96b018a888fd",
       "title": "Annual Chamber of Commerce BBQ",
       "date": "2026-08-20",
       "displayDate": "Thu, Aug 20",
@@ -1651,7 +1634,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fb26fa4e9a4c",
+      "id": "d633a9d0ee6f",
       "title": "San José Poetry Festival 2026",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -1668,7 +1651,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fb26fa4e9a4c",
+      "id": "d633a9d0ee6f",
       "title": "San José Poetry Festival 2026",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -1685,7 +1668,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2c293b9cc2e9",
+      "id": "4d8e7f7d8ca6",
       "title": "Chicano Soul Fest 2026",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -1702,7 +1685,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2c293b9cc2e9",
+      "id": "4d8e7f7d8ca6",
       "title": "Chicano Soul Fest 2026",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -1719,7 +1702,7 @@
       "kidFriendly": false
     },
     {
-      "id": "27e189ef0f40",
+      "id": "b092b0363b0d",
       "title": "Cars In the Park",
       "date": "2026-09-12",
       "displayDate": "Sat, Sep 12",
@@ -1736,7 +1719,7 @@
       "kidFriendly": false
     },
     {
-      "id": "27e189ef0f40",
+      "id": "b092b0363b0d",
       "title": "Cars In the Park",
       "date": "2026-09-12",
       "displayDate": "Sat, Sep 12",
@@ -1753,7 +1736,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ee0f52ad87e8",
+      "id": "29ba46cf06c3",
       "title": "The Gatsby Picnic",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -1770,7 +1753,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ee0f52ad87e8",
+      "id": "29ba46cf06c3",
       "title": "The Gatsby Picnic",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -1787,7 +1770,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4b6a4326d114",
+      "id": "cd4fa6ff3776",
       "title": "NAMI Walks Silicon Valley 2026",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
@@ -1804,7 +1787,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4b6a4326d114",
+      "id": "cd4fa6ff3776",
       "title": "NAMI Walks Silicon Valley 2026",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
@@ -1821,7 +1804,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e12fe9cb5a74",
+      "id": "6cec9e611f8c",
       "title": "Low Times Car Show",
       "date": "2026-10-04",
       "displayDate": "Sun, Oct 4",
@@ -1838,7 +1821,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e12fe9cb5a74",
+      "id": "6cec9e611f8c",
       "title": "Low Times Car Show",
       "date": "2026-10-04",
       "displayDate": "Sun, Oct 4",
@@ -1855,7 +1838,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a9ff813ed930",
+      "id": "490ed1d1279a",
       "title": "Valley Of Heart’s Delight Annual Fundraiser",
       "date": "2026-10-08",
       "displayDate": "Thu, Oct 8",
@@ -1872,7 +1855,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a9ff813ed930",
+      "id": "490ed1d1279a",
       "title": "Valley Of Heart’s Delight Annual Fundraiser",
       "date": "2026-10-08",
       "displayDate": "Thu, Oct 8",
@@ -1889,7 +1872,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e06420a197a6",
+      "id": "1a4b0d2ff41b",
       "title": "Slash and Sip: Adult Pumpkin Carving at San Pedro Square Market",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
@@ -1906,7 +1889,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e06420a197a6",
+      "id": "1a4b0d2ff41b",
       "title": "Slash and Sip: Adult Pumpkin Carving at San Pedro Square Market",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
@@ -1923,7 +1906,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a09f45b7622e",
+      "id": "cd1a5ce49cb4",
       "title": "Children’s Halloween Haunt 2026",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -1940,7 +1923,7 @@
       "kidFriendly": true
     },
     {
-      "id": "a09f45b7622e",
+      "id": "cd1a5ce49cb4",
       "title": "Children’s Halloween Haunt 2026",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -1957,7 +1940,7 @@
       "kidFriendly": true
     },
     {
-      "id": "92a9d12fc7e5",
+      "id": "0b2b97a39872",
       "title": "San José Roots",
       "date": "2026-11-07",
       "displayDate": "Sat, Nov 7",
@@ -1974,7 +1957,7 @@
       "kidFriendly": false
     },
     {
-      "id": "92a9d12fc7e5",
+      "id": "0b2b97a39872",
       "title": "San José Roots",
       "date": "2026-11-07",
       "displayDate": "Sat, Nov 7",
@@ -1991,41 +1974,7 @@
       "kidFriendly": false
     },
     {
-      "id": "00b6edd2a143",
-      "title": "AOG Marcus Fest: Enter if you",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3230/3231",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "00b6edd2a143",
-      "title": "AOG Marcus Fest: Enter if you",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3230/3231",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "636025654b0b",
+      "id": "66879d263b1b",
       "title": "Summer Camp: Discover Your Creative Nature: Intro To Music",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -2042,7 +1991,24 @@
       "kidFriendly": false
     },
     {
-      "id": "fd1baa6e2468",
+      "id": "66879d263b1b",
+      "title": "Summer Camp: Discover Your Creative Nature: Intro To Music",
+      "date": "2026-07-20",
+      "displayDate": "Mon, Jul 20",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/2983/3001",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "9efc710b8cee",
       "title": "Summer Camp: Fantasy Illustrations",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -2059,7 +2025,7 @@
       "kidFriendly": false
     },
     {
-      "id": "bc298a2bb7a4",
+      "id": "d00d7a891c92",
       "title": "Summer Camp: Ceramics – Wheel Throwing",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -2076,7 +2042,7 @@
       "kidFriendly": false
     },
     {
-      "id": "07daa35bf90d",
+      "id": "8ff6565c1bab",
       "title": "Opera San Jose",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -2093,7 +2059,24 @@
       "kidFriendly": false
     },
     {
-      "id": "bde0c95f38ca",
+      "id": "fd202bbfec84",
+      "title": "Sketch the Great Outdoors!",
+      "date": "2026-07-27",
+      "displayDate": "Mon, Jul 27",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/2985/3003",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "23d60ed18e7e",
       "title": "Ride the Cyclone",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -2110,7 +2093,7 @@
       "kidFriendly": false
     },
     {
-      "id": "68d585ef2ca9",
+      "id": "b780636bb7e8",
       "title": "Eureka Day",
       "date": "2026-10-18",
       "displayDate": "Sun, Oct 18",
@@ -2127,7 +2110,7 @@
       "kidFriendly": false
     },
     {
-      "id": "732dbf5d5ea0",
+      "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
       "displayDate": "Sun, Dec 20",
@@ -2144,7 +2127,7 @@
       "kidFriendly": false
     },
     {
-      "id": "95371f8f47ef",
+      "id": "cc29148cd947",
       "title": "Based on a Totally True Story",
       "date": "2027-02-14",
       "displayDate": "Sun, Feb 14",
@@ -2161,7 +2144,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3d11ce5ccb2e",
+      "id": "193c9b4a1345",
       "title": "Arsenic and Old Lace",
       "date": "2027-04-11",
       "displayDate": "Sun, Apr 11",
@@ -2178,7 +2161,7 @@
       "kidFriendly": false
     },
     {
-      "id": "dea8cb3357be",
+      "id": "5b4b7b1f885c",
       "title": "Dream Hou$e",
       "date": "2027-06-06",
       "displayDate": "Sun, Jun 6",
@@ -2195,7 +2178,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a9629f74fd8e",
+      "id": "9bc57a33ff7d",
       "title": "Company",
       "date": "2027-08-22",
       "displayDate": "Sun, Aug 22",
@@ -2212,7 +2195,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ee62f95b4a78",
+      "id": "80d6f210fe4d",
       "title": "Miguel Novelo: INFRAMUNDO",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -2229,7 +2212,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f831964a27fc",
+      "id": "ee34e44f1b13",
       "title": "Anoushka Mirchandani: My Body Was A River Once",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -2246,7 +2229,7 @@
       "kidFriendly": false
     },
     {
-      "id": "6c296ec1fd4d",
+      "id": "9d0e2d8ae93c",
       "title": "Oscar Lopez: Without Them is Not Us",
       "date": "2024-09-14",
       "displayDate": "Sat, Sep 14",
@@ -2263,58 +2246,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e41cc3fdf2ad",
-      "title": "Willie Nelson & Family with Caroline Grace",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/concert-series",
-      "source": "Mountain Winery",
-      "kidFriendly": true
-    },
-    {
-      "id": "30f195b813ec",
-      "title": "Sam Barber with John Vincent III & Wild Horses",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/concert-series",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "56388480f03c",
-      "title": "One Night of Queen",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/concert-series",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "0ebd344f7c6e",
+      "id": "f9e6a6e4e38d",
       "title": "Jeff Foxworthy",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -2331,7 +2263,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d8b176e004b9",
+      "id": "fd6fbdd677d0",
       "title": "Wynonna Judd & Melissa Etheridge",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -2348,8 +2280,8 @@
       "kidFriendly": false
     },
     {
-      "id": "d204dd1437b8",
-      "title": "Gladys Knight",
+      "id": "319ce3df7dee",
+      "title": "Gladys Knight with Patrick McDermott",
       "date": "2026-07-22",
       "displayDate": "Wed, Jul 22",
       "time": "7:30 PM",
@@ -2365,7 +2297,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5f28734b4d60",
+      "id": "86a6ecf1ac07",
       "title": "The Association, The Troggs, Chicago Lead Singer Jason Scheff, Gary Puckett, The Fortunes, Ron Dante, The Vogues, The Cowsills",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -2382,7 +2314,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d7ffc1868fb4",
+      "id": "80eacc85d8af",
       "title": "Lauren Daigle",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -2399,7 +2331,7 @@
       "kidFriendly": false
     },
     {
-      "id": "35c45603e24c",
+      "id": "c7cf297d785d",
       "title": "Trevor Noah",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -2416,7 +2348,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c198ac2e9def",
+      "id": "1ff74758d63e",
       "title": "Trevor Noah",
       "date": "2026-07-27",
       "displayDate": "Mon, Jul 27",
@@ -2433,7 +2365,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4145d6242257",
+      "id": "e798262a8eea",
       "title": "Trevor Noah",
       "date": "2026-07-28",
       "displayDate": "Tue, Jul 28",
@@ -2450,7 +2382,7 @@
       "kidFriendly": false
     },
     {
-      "id": "74e46870af55",
+      "id": "61c577c68cda",
       "title": "Bill Burr Live",
       "date": "2026-07-30",
       "displayDate": "Thu, Jul 30",
@@ -2467,7 +2399,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f4aa05b75c0f",
+      "id": "83501ac28358",
       "title": "The Stray Cats with Pete Bernhard of The Devil Makes Three",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -2484,7 +2416,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8148b137e6a0",
+      "id": "d484fa358ea2",
       "title": "Nile Rodgers & CHIC",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -2501,7 +2433,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e6b34b7661e6",
+      "id": "b980bbf8fe1d",
       "title": "CANCELLED with Classic Albums Live: The Eagles Greatest Hits",
       "date": "2026-08-05",
       "displayDate": "Wed, Aug 5",
@@ -2518,7 +2450,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e3606429dd87",
+      "id": "3fbfc5a8c330",
       "title": "Los Lobos & Los Lonely Boys",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -2535,7 +2467,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d79fcf570cc9",
+      "id": "e0eef849b253",
       "title": "The Movement and Pepper",
       "date": "2026-08-15",
       "displayDate": "Sat, Aug 15",
@@ -2552,7 +2484,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e91a0507bb82",
+      "id": "a227a2b900f5",
       "title": "The Head And The Heart with Linus Hablot",
       "date": "2026-08-16",
       "displayDate": "Sun, Aug 16",
@@ -2569,7 +2501,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d7cfd33f4dc8",
+      "id": "f4a4c2430626",
       "title": "Gipsy Kings Featuring Nicolas Reyes",
       "date": "2026-08-18",
       "displayDate": "Tue, Aug 18",
@@ -2586,7 +2518,7 @@
       "kidFriendly": false
     },
     {
-      "id": "af3b34a8adc1",
+      "id": "f1eda39d9cca",
       "title": "Men at Work with Toad the Wet Sprocket, Shonen Knife",
       "date": "2026-08-19",
       "displayDate": "Wed, Aug 19",
@@ -2603,7 +2535,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c2c68374ea47",
+      "id": "bf312ce3da9a",
       "title": "Tucker Wetmore",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -2620,7 +2552,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f69e113da46e",
+      "id": "1d27ed72092d",
       "title": "Ladies Night Out feat. Dru Hill, Ginuwine & Troop",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -2637,7 +2569,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1dba3cde7580",
+      "id": "719e38dac206",
       "title": "CANCELLED with Allen Stone & The Dip",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -2654,7 +2586,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a8f293a66a94",
+      "id": "201fea65b641",
       "title": "Ledisi",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -2671,7 +2603,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1d5f27ac039b",
+      "id": "682ae0deb041",
       "title": "FIA with Johnny Suite & Special Guests WESTERN CONFERENCE",
       "date": "2026-08-28",
       "displayDate": "Fri, Aug 28",
@@ -2688,7 +2620,7 @@
       "kidFriendly": false
     },
     {
-      "id": "6d81264bbb54",
+      "id": "7364d44f225a",
       "title": "Young MC, C&C Music Factory featuring Freedom Williams, Tag Team",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -2705,7 +2637,7 @@
       "kidFriendly": false
     },
     {
-      "id": "41e3de208e36",
+      "id": "17ac3551147c",
       "title": "Diana Ross",
       "date": "2026-08-30",
       "displayDate": "Sun, Aug 30",
@@ -2722,7 +2654,7 @@
       "kidFriendly": false
     },
     {
-      "id": "125f2bda151d",
+      "id": "110a0f47682d",
       "title": "A Great Night Out with Amy Helm",
       "date": "2026-09-02",
       "displayDate": "Wed, Sep 2",
@@ -2739,7 +2671,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c627cff6b393",
+      "id": "31671e306c66",
       "title": "TajMo: The Taj Mahal & Keb' Mo' Band",
       "date": "2026-09-03",
       "displayDate": "Thu, Sep 3",
@@ -2756,7 +2688,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2ed5d9fde8d2",
+      "id": "167281c1c302",
       "title": "Jesse McCartney",
       "date": "2026-09-11",
       "displayDate": "Fri, Sep 11",
@@ -2773,7 +2705,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d128e8812857",
+      "id": "40d44d4d367f",
       "title": "Smokey Robinson",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -2790,7 +2722,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7873c958cd42",
+      "id": "c3a978e4ec29",
       "title": "The Temptations & Four Tops",
       "date": "2026-09-17",
       "displayDate": "Thu, Sep 17",
@@ -2807,7 +2739,7 @@
       "kidFriendly": false
     },
     {
-      "id": "95d9c67f8fe9",
+      "id": "f4639d853b7b",
       "title": "Jeff Dunham: Artificial Intelligence",
       "date": "2026-09-19",
       "displayDate": "Sat, Sep 19",
@@ -2824,7 +2756,7 @@
       "kidFriendly": false
     },
     {
-      "id": "bbf1d10fced6",
+      "id": "0a8b54cebf87",
       "title": "America",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
@@ -2841,7 +2773,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5a58259f867d",
+      "id": "b59878003491",
       "title": "Peter Hook & The Light with Performing ‘Get Ready’ live and in full plus a selection of Joy Division and New Order’s Greatest Hits",
       "date": "2026-09-22",
       "displayDate": "Tue, Sep 22",
@@ -2858,7 +2790,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f0f860924253",
+      "id": "f87f7f387740",
       "title": "José González with Phosphorescent (Solo)",
       "date": "2026-09-23",
       "displayDate": "Wed, Sep 23",
@@ -2875,7 +2807,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7dc29f6f4ffe",
+      "id": "ceaed14f246a",
       "title": "Starship starring Mickey Thomas & ASIA featuring John Payne",
       "date": "2026-09-24",
       "displayDate": "Thu, Sep 24",
@@ -2892,7 +2824,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d50c4d43202c",
+      "id": "4eef3292e5f8",
       "title": "The Concert: A Tribute to ABBA",
       "date": "2026-09-26",
       "displayDate": "Sat, Sep 26",
@@ -2909,7 +2841,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a81c9ffe8758",
+      "id": "03188f23036c",
       "title": "A.J. Croce Presents CROCE PLAYS CROCE with Leo Kottke",
       "date": "2026-09-27",
       "displayDate": "Sun, Sep 27",
@@ -2926,7 +2858,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c960dd70e038",
+      "id": "8c805705e9c4",
       "title": "Pat Benatar & Neil Giraldo",
       "date": "2026-09-30",
       "displayDate": "Wed, Sep 30",
@@ -2943,7 +2875,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a04da7eeb49d",
+      "id": "d9e15609378a",
       "title": "Lynyrd Skynyrd",
       "date": "2026-10-01",
       "displayDate": "Thu, Oct 1",
@@ -2960,7 +2892,7 @@
       "kidFriendly": false
     },
     {
-      "id": "16785bf8a527",
+      "id": "b94a2b7431ea",
       "title": "Get The Led Out with A Celebration Of \"The Mighty Zep\"",
       "date": "2026-10-02",
       "displayDate": "Fri, Oct 2",
@@ -2977,7 +2909,7 @@
       "kidFriendly": false
     },
     {
-      "id": "21dc554f6818",
+      "id": "a545f8a53289",
       "title": "Rumours of Fleetwood Mac",
       "date": "2026-10-09",
       "displayDate": "Fri, Oct 9",
@@ -2994,7 +2926,7 @@
       "kidFriendly": false
     },
     {
-      "id": "21505b683496",
+      "id": "04191fd14079",
       "title": "Air Supply",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
@@ -3011,7 +2943,7 @@
       "kidFriendly": false
     },
     {
-      "id": "23397a720be4",
+      "id": "0958cd60f87f",
       "title": "Nelly",
       "date": "2026-10-17",
       "displayDate": "Sat, Oct 17",
@@ -3028,7 +2960,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7a36c6895432",
+      "id": "f36c0dcbaf2d",
       "title": "John Mulaney: Mister Whatever",
       "date": "2026-10-18",
       "displayDate": "Sun, Oct 18",
@@ -3045,7 +2977,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4e2d7b0e8a71",
+      "id": "5b0b14d28bcc",
       "title": "Foreigner",
       "date": "2026-10-28",
       "displayDate": "Wed, Oct 28",
@@ -3062,7 +2994,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b44f9a5b0791",
+      "id": "429dfb6357e5",
       "title": "The Sound of Music – Broadway San Jose",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -3079,7 +3011,7 @@
       "kidFriendly": false
     },
     {
-      "id": "0a5f87cd48f4",
+      "id": "b5992a428167",
       "title": "Legally Blonde – CMT Mainstage",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -3096,7 +3028,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f6509d4fcecd",
+      "id": "87247aba42ba",
       "title": "HIMEHINA World Tour – In San Jose with Offkai Expo",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -3113,7 +3045,7 @@
       "kidFriendly": false
     },
     {
-      "id": "da1a7f6a7c9c",
+      "id": "386383ef6e6b",
       "title": "Densetsu.EXE: Legends Anew",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -3130,7 +3062,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d56cc6c3c56d",
+      "id": "59ffc536fa3c",
       "title": "WOODZ",
       "date": "2026-07-27",
       "displayDate": "Mon, Jul 27",
@@ -3147,7 +3079,7 @@
       "kidFriendly": false
     },
     {
-      "id": "cad743c0e9bc",
+      "id": "109972154510",
       "title": "Simple Plan: Bigger Than You Think! Tour – The Sequel!",
       "date": "2026-07-28",
       "displayDate": "Tue, Jul 28",
@@ -3164,7 +3096,7 @@
       "kidFriendly": false
     },
     {
-      "id": "078559a6fa6f",
+      "id": "af50a2d08028",
       "title": "Calle 24 – Eterno Tour",
       "date": "2026-07-30",
       "displayDate": "Thu, Jul 30",
@@ -3181,7 +3113,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e59854d11754",
+      "id": "0fb1e5b0526e",
       "title": "Nawazuddin Siddiqui in NAQAAB – A Comedy Thriller",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -3198,7 +3130,7 @@
       "kidFriendly": false
     },
     {
-      "id": "eb889b9e2749",
+      "id": "ba208e4fcfed",
       "title": "San Jose Jazz Summer Fest 2026 at the Montgomery Theater (Friday)",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -3215,7 +3147,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c1d2380e235e",
+      "id": "53133de857b3",
       "title": "NAFA Red Carpet and Marathi Film Festival",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -3232,7 +3164,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8d6525a02f4d",
+      "id": "f0531fc0c0fc",
       "title": "San Jose Jazz Summer Fest 2026 at the Montgomery Theater (Saturday)",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
@@ -3249,7 +3181,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1b18cac1d456",
+      "id": "47afdf7b4e59",
       "title": "San Jose Jazz Summer Fest 2026 at the Montgomery Theater (Sunday)",
       "date": "2026-08-09",
       "displayDate": "Sun, Aug 9",
@@ -3266,7 +3198,7 @@
       "kidFriendly": false
     },
     {
-      "id": "cf066899670e",
+      "id": "c07c74e3f231",
       "title": "The Beths & Beach Bunny",
       "date": "2026-08-11",
       "displayDate": "Tue, Aug 11",
@@ -3283,7 +3215,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3fc3e99c5556",
+      "id": "0a97a5ae46ef",
       "title": "George Lopez",
       "date": "2026-08-14",
       "displayDate": "Fri, Aug 14",
@@ -3300,7 +3232,7 @@
       "kidFriendly": false
     },
     {
-      "id": "603ce8bfdf7a",
+      "id": "56b891015ebf",
       "title": "Celebrity Fans Meetup",
       "date": "2026-08-15",
       "displayDate": "Sat, Aug 15",
@@ -3317,7 +3249,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ac35ebfc91b8",
+      "id": "9452ca27a727",
       "title": "Girls Gone Bible: Revival Tour",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -3334,7 +3266,7 @@
       "kidFriendly": false
     },
     {
-      "id": "30999c26b285",
+      "id": "e6d6051965e5",
       "title": "’90s Corridos Tour",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -3351,7 +3283,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f185bca12487",
+      "id": "c9b179c81800",
       "title": "Ronstadt Revolution – Featuring Natalie Amaya",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -3368,7 +3300,7 @@
       "kidFriendly": false
     },
     {
-      "id": "6a40ca9896a9",
+      "id": "46f4fbabb3cb",
       "title": "Marc Maron – Yammering into the Void Tour",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -3385,7 +3317,7 @@
       "kidFriendly": false
     },
     {
-      "id": "32ecdf4fe4a7",
+      "id": "1185d74195cc",
       "title": "Undertale Symphony",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -3402,10 +3334,10 @@
       "kidFriendly": false
     },
     {
-      "id": "8d6aafa07958",
+      "id": "a6c989dec9f3",
       "title": "All Ages Storytime",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -3419,10 +3351,10 @@
       "kidFriendly": true
     },
     {
-      "id": "7a3d16adb731",
+      "id": "95a83644218d",
       "title": "Toddler Storytime",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -3436,58 +3368,7 @@
       "kidFriendly": true
     },
     {
-      "id": "e1087f63ec02",
-      "title": "Trail Maintenance: Wildcat Loop Trail (South Leg)",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "9:00 am",
-      "endTime": null,
-      "venue": "Rancho San Antonio Preserve",
-      "address": "Rancho San Antonio Preserve, Los Altos",
-      "city": "los-altos",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.openspace.org/where-to-go/events-activities",
-      "source": "Midpen Open Space",
-      "kidFriendly": false
-    },
-    {
-      "id": "fd6d6fe8aaaa",
-      "title": "Adaptations at the Marsh",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "10:00 am",
-      "endTime": null,
-      "venue": "Ravenswood Preserve",
-      "address": "Ravenswood Preserve, Santa Clara County",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.openspace.org/where-to-go/events-activities",
-      "source": "Midpen Open Space",
-      "kidFriendly": false
-    },
-    {
-      "id": "19058b914dca",
-      "title": "Habitat Restoration: Yellow Star Thistle Removal",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "9:00 am",
-      "endTime": null,
-      "venue": "Sierra Azul Preserve",
-      "address": "Sierra Azul Preserve, Los Gatos",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.openspace.org/where-to-go/events-activities",
-      "source": "Midpen Open Space",
-      "kidFriendly": false
-    },
-    {
-      "id": "842b1e477919",
+      "id": "e14df22f13f9",
       "title": "Moth Night",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -3504,7 +3385,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b333aa396228",
+      "id": "8b6109f08230",
       "title": "Ramble at Rancho",
       "date": "2026-07-20",
       "displayDate": "Mon, Jul 20",
@@ -3521,7 +3402,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ef1e28dc5364",
+      "id": "2d3d3284fec8",
       "title": "Stay Cool! Discover the Redwoods",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -3538,7 +3419,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2a977a77e0ed",
+      "id": "1c94a480ff72",
       "title": "Habitat Restoration: Yellow Star Thistle Removal",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -3555,29 +3436,24 @@
       "kidFriendly": false
     },
     {
-      "id": "42019b4286a3",
-      "title": "Restore & Explore: Trail Clean-Up & Trail Tour",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
+      "id": "3031fbea45a7",
+      "title": "Habitat Restoration: Thistle Removal",
+      "date": "2026-08-01",
+      "displayDate": "Sat, Aug 1",
       "time": "9:00 am",
-      "endTime": "11:00 AM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
+      "endTime": null,
+      "venue": "Rancho San Antonio Preserve",
+      "address": "Rancho San Antonio Preserve, Los Altos",
+      "city": "los-altos",
+      "category": "community",
       "cost": "free",
-      "description": "Trail clean-up and guided tour for ages 10+. Adult chaperones are required for participants 15 and under. Questions: events@grpg.org or volunteer@grpg.org.",
-      "url": "https://www.google.com/calendar/event?eid=NTV0aXJsYmFyNDE0MmY2OGplYXF1Ym50YXJfMjAyNjA3MThUMTYwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-07-18"
-      }
+      "description": "",
+      "url": "https://www.openspace.org/where-to-go/events-activities",
+      "source": "Midpen Open Space",
+      "kidFriendly": false
     },
     {
-      "id": "e1f29e4ce409",
+      "id": "352fcbb85795",
       "title": "Neighborhood Hands Bi-monthly Cleanup",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -3599,19 +3475,19 @@
       }
     },
     {
-      "id": "b7fb88518b17",
+      "id": "bee904c98305",
       "title": "Yoga and Zumba in the River Park",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
-      "time": "9:00 AM",
-      "endTime": "11:15 AM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95110",
+      "time": "9:00 am",
+      "endTime": null,
+      "venue": "Guadalupe River Park",
+      "address": "438 Coleman Ave, San Jose, CA 95110",
       "city": "san-jose",
       "category": "outdoor",
       "cost": "free",
-      "description": "Free last-Saturday fitness sessions: Zumba from 9–10 AM and yoga from 10:15–11:15 AM.",
-      "url": "https://www.grpg.org/events",
+      "description": "",
+      "url": "https://www.google.com/calendar/event?eid=NWhhOTA0NTlhN3U2dXJvNmc2YzQ3Y3VnM2FfMjAyNjA3MjVUMTYwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
       "source": "Guadalupe River Park Conservancy",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -3621,10 +3497,10 @@
       }
     },
     {
-      "id": "1a6b742d610f",
+      "id": "b9f3a2e17c22",
       "title": "Farmers' Market",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
+      "date": "2026-07-22",
+      "displayDate": "Wed, Jul 22",
       "time": "4:00pm",
       "endTime": null,
       "venue": "Santana Row",
@@ -3638,10 +3514,10 @@
       "kidFriendly": false
     },
     {
-      "id": "5321c0e9bb08",
+      "id": "3c37837156b1",
       "title": "Yoga & Pilates on The Row",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
+      "date": "2026-07-25",
+      "displayDate": "Sat, Jul 25",
       "time": "8:30am",
       "endTime": null,
       "venue": "Santana Row",
@@ -3655,7 +3531,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f0b8d2a17c9c",
+      "id": "8d9c94fe4ea3",
       "title": "The Jazba Bazaar",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -3672,7 +3548,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7a188dbc3663",
+      "id": "a7f56f71a95b",
       "title": "Makers Market's Local Artist Street Fair",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
@@ -3689,7 +3565,7 @@
       "kidFriendly": true
     },
     {
-      "id": "b3e4947ea98f",
+      "id": "4684de8e1377",
       "title": "Cars & Croissants on The Row",
       "date": "2026-08-09",
       "displayDate": "Sun, Aug 9",
@@ -3706,24 +3582,7 @@
       "kidFriendly": false
     },
     {
-      "id": "62c30ccfa149",
-      "title": "Summer Concert Series",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "06:30 PM",
-      "endTime": "08:00 PM",
-      "venue": "Memorial Park Amphitheater",
-      "address": "Memorial Park Amphitheater, 21163 Anton Way, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "music",
-      "cost": "free",
-      "description": "Spend your Thursday evenings outdoors with free live music at the Memorial Park Amphitheater. Bring a blanket or low-back chair, settle in on the lawn, and enjoy a lineup of bands spanning classic rock, Latin rock, blues, R&B, and more. For more information and band lineup, visit the Summer Concert Series webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Summer-Concert-Series/Summer-Concert-Series-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "068692af4f02",
+      "id": "ced4e138fc2d",
       "title": "Summer Concert Series",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -3740,7 +3599,7 @@
       "kidFriendly": true
     },
     {
-      "id": "69db2c4226b4",
+      "id": "a771d42f6001",
       "title": "Summer Concert Series",
       "date": "2026-07-30",
       "displayDate": "Thu, Jul 30",
@@ -3757,7 +3616,7 @@
       "kidFriendly": true
     },
     {
-      "id": "b3244849fbce",
+      "id": "2d6ab9bb1364",
       "title": "Summer Concert Series",
       "date": "2026-08-06",
       "displayDate": "Thu, Aug 6",
@@ -3774,7 +3633,7 @@
       "kidFriendly": true
     },
     {
-      "id": "7296f6128ef5",
+      "id": "dd251a67fb74",
       "title": "Summer Concert Series",
       "date": "2026-08-13",
       "displayDate": "Thu, Aug 13",
@@ -3791,245 +3650,24 @@
       "kidFriendly": true
     },
     {
-      "id": "321e14f08e47",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "id": "baa2a4083e35",
+      "title": "Summer Concert Series",
+      "date": "2026-08-20",
+      "displayDate": "Thu, Aug 20",
+      "time": "06:30 PM",
+      "endTime": "08:00 PM",
+      "venue": "Memorial Park Amphitheater",
+      "address": "Memorial Park Amphitheater, 21163 Anton Way, Cupertino, CA, 95014, View Map",
       "city": "cupertino",
-      "category": "family",
+      "category": "music",
       "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "description": "Spend your Thursday evenings outdoors with free live music at the Memorial Park Amphitheater. Bring a blanket or low-back chair, settle in on the lawn, and enjoy a lineup of bands spanning classic rock, Latin rock, blues, R&B, and more. For more information and band lineup, visit the Summer Concert Series webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Summer-Concert-Series/Summer-Concert-Series-Event",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
     {
-      "id": "7a1044e77b4f",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "83c7f6803c91",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-08-01",
-      "displayDate": "Sat, Aug 1",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "be237b26d294",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-08-08",
-      "displayDate": "Sat, Aug 8",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "d52fe674cd8e",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-08-15",
-      "displayDate": "Sat, Aug 15",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "0ea0b7896fc1",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-02-07",
-      "displayDate": "Sun, Feb 7",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "34c67da51d63",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-02-14",
-      "displayDate": "Sun, Feb 14",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "230b2c5c6b62",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-02-21",
-      "displayDate": "Sun, Feb 21",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "c1a98e3faf5f",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-02-28",
-      "displayDate": "Sun, Feb 28",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "158b8e18bf4b",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-03-07",
-      "displayDate": "Sun, Mar 7",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "588cf9b23900",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-03-14",
-      "displayDate": "Sun, Mar 14",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "52cfefb22e5f",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-03-21",
-      "displayDate": "Sun, Mar 21",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "35a0536f1f6a",
-      "title": "Environmental Education Center Open House",
-      "date": "2027-03-28",
-      "displayDate": "Sun, Mar 28",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "9662ab6cd7b4",
-      "title": "Cupertino Campout",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "04:00 PM",
-      "endTime": null,
-      "venue": "Creekside Park",
-      "address": "Creekside Park, 10455 Miller Avenue, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "The Cupertino Campout is a weekend to remember! Families are invited to pitch a tent at Creekside Park and join us for a night under the stars, filled with recreational activities. This campout is a fantastic way to gather with family, neighbors, and friends or make new ones, all while enjoying all kinds of fun. Pre-registration is required. For more information, please visit the Cupertino Campout webpage. Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Cupertino-Campout/Cupertino-Campout-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "f6e85e912175",
+      "id": "7407fcd3c025",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -4046,7 +3684,7 @@
       "kidFriendly": true
     },
     {
-      "id": "7786cea416f8",
+      "id": "513942adc846",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -4063,7 +3701,7 @@
       "kidFriendly": true
     },
     {
-      "id": "dc0778900595",
+      "id": "414c08c90eac",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2027-02-22",
       "displayDate": "Mon, Feb 22",
@@ -4080,7 +3718,7 @@
       "kidFriendly": true
     },
     {
-      "id": "da9fce5b91e0",
+      "id": "4d2938e1dccf",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2027-03-29",
       "displayDate": "Mon, Mar 29",
@@ -4097,7 +3735,7 @@
       "kidFriendly": true
     },
     {
-      "id": "d9befb68d0aa",
+      "id": "5f999db0df30",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -4114,7 +3752,7 @@
       "kidFriendly": true
     },
     {
-      "id": "83db070eadad",
+      "id": "de33dacd6406",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-08-30",
       "displayDate": "Sun, Aug 30",
@@ -4131,7 +3769,7 @@
       "kidFriendly": true
     },
     {
-      "id": "c34a4422a90f",
+      "id": "67279a16127c",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-09-27",
       "displayDate": "Sun, Sep 27",
@@ -4148,7 +3786,7 @@
       "kidFriendly": true
     },
     {
-      "id": "90492505d3ca",
+      "id": "74d0215ac8da",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-10-25",
       "displayDate": "Sun, Oct 25",
@@ -4165,7 +3803,7 @@
       "kidFriendly": true
     },
     {
-      "id": "368018c14e7b",
+      "id": "a1bb85e5decb",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-11-29",
       "displayDate": "Sun, Nov 29",
@@ -4182,7 +3820,7 @@
       "kidFriendly": true
     },
     {
-      "id": "b39ff5bf9711",
+      "id": "821788e835a4",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-12-20",
       "displayDate": "Sun, Dec 20",
@@ -4199,7 +3837,7 @@
       "kidFriendly": true
     },
     {
-      "id": "86b529659beb",
+      "id": "61d47a098908",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2027-01-31",
       "displayDate": "Sun, Jan 31",
@@ -4216,7 +3854,7 @@
       "kidFriendly": true
     },
     {
-      "id": "5b86ab0f0e2b",
+      "id": "601d176899e5",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2027-02-28",
       "displayDate": "Sun, Feb 28",
@@ -4233,7 +3871,7 @@
       "kidFriendly": true
     },
     {
-      "id": "715fe9d104ce",
+      "id": "e8511809db22",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2027-03-28",
       "displayDate": "Sun, Mar 28",
@@ -4250,7 +3888,228 @@
       "kidFriendly": true
     },
     {
-      "id": "5108b9736ffd",
+      "id": "b895d7d1b0d2",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-07-25",
+      "displayDate": "Sat, Jul 25",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "704ed2f5033e",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-08-01",
+      "displayDate": "Sat, Aug 1",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "71e4da6b3924",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-08-08",
+      "displayDate": "Sat, Aug 8",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "434d999eb42f",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-08-15",
+      "displayDate": "Sat, Aug 15",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "1a069b3337f0",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-08-22",
+      "displayDate": "Sat, Aug 22",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "9558bb732322",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-02-07",
+      "displayDate": "Sun, Feb 7",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "f2f997e18b31",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-02-14",
+      "displayDate": "Sun, Feb 14",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "fe5b4acd02f3",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-02-21",
+      "displayDate": "Sun, Feb 21",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "0f4a032d7dca",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-02-28",
+      "displayDate": "Sun, Feb 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "80ead32d32b3",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-03-07",
+      "displayDate": "Sun, Mar 7",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "dd478743133b",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-03-14",
+      "displayDate": "Sun, Mar 14",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "9ea2c960cdfb",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-03-21",
+      "displayDate": "Sun, Mar 21",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "075973e1e5f5",
+      "title": "Environmental Education Center Open House",
+      "date": "2027-03-28",
+      "displayDate": "Sun, Mar 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "b7bd7b3f0f29",
       "title": "Free Shakespeare in the Park Event",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -4267,7 +4126,7 @@
       "kidFriendly": true
     },
     {
-      "id": "4100000b98be",
+      "id": "deaf6ef1e89a",
       "title": "Free Shakespeare in the Park Event",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -4284,7 +4143,7 @@
       "kidFriendly": true
     },
     {
-      "id": "f13f18d04f04",
+      "id": "afdd6dde2152",
       "title": "Free Shakespeare in the Park Event",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -4301,7 +4160,7 @@
       "kidFriendly": true
     },
     {
-      "id": "8934ad242fb4",
+      "id": "5fbb6aa1a696",
       "title": "Free Shakespeare in the Park Event",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -4318,7 +4177,7 @@
       "kidFriendly": true
     },
     {
-      "id": "9a131b7c29bb",
+      "id": "d8697d400e88",
       "title": "Free Shakespeare in the Park Event",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
@@ -4335,7 +4194,7 @@
       "kidFriendly": true
     },
     {
-      "id": "3a339b13b86a",
+      "id": "0f29e7697558",
       "title": "Free Home Composting Education Workshop",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -4352,7 +4211,7 @@
       "kidFriendly": false
     },
     {
-      "id": "df030c657ca3",
+      "id": "e802bac08730",
       "title": "Free Home Composting Education Workshop",
       "date": "2026-09-26",
       "displayDate": "Sat, Sep 26",
@@ -4369,7 +4228,7 @@
       "kidFriendly": false
     },
     {
-      "id": "38a83eaa7f9d",
+      "id": "40267c7b9420",
       "title": "Free Home Composting Education Workshop",
       "date": "2027-03-19",
       "displayDate": "Fri, Mar 19",
@@ -4386,7 +4245,7 @@
       "kidFriendly": false
     },
     {
-      "id": "95e9ba26ab35",
+      "id": "f542da2956f1",
       "title": "Free Home Composting Education Workshop",
       "date": "2026-10-25",
       "displayDate": "Sun, Oct 25",
@@ -4403,7 +4262,7 @@
       "kidFriendly": false
     },
     {
-      "id": "303b8de2af92",
+      "id": "476291d1c6a1",
       "title": "Free Home Composting Education Workshop",
       "date": "2027-02-28",
       "displayDate": "Sun, Feb 28",
@@ -4420,7 +4279,7 @@
       "kidFriendly": false
     },
     {
-      "id": "24ec4eea9bb8",
+      "id": "948e46efcefa",
       "title": "Join-A-Ranger: Wildlife Tracking",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -4437,7 +4296,7 @@
       "kidFriendly": true
     },
     {
-      "id": "48c6050668c7",
+      "id": "34df58e40d92",
       "title": "Movies in the Park",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -4454,7 +4313,7 @@
       "kidFriendly": true
     },
     {
-      "id": "6fef5aa88be2",
+      "id": "a80fea20f653",
       "title": "Movies in the Park",
       "date": "2026-08-14",
       "displayDate": "Fri, Aug 14",
@@ -4471,7 +4330,7 @@
       "kidFriendly": true
     },
     {
-      "id": "ef5caaa224d2",
+      "id": "b54f396d39e9",
       "title": "Movies in the Park",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -4488,7 +4347,7 @@
       "kidFriendly": true
     },
     {
-      "id": "b20ab8c929d8",
+      "id": "3ad4a9dddee1",
       "title": "Movies in the Park",
       "date": "2026-08-28",
       "displayDate": "Fri, Aug 28",
@@ -4505,7 +4364,7 @@
       "kidFriendly": true
     },
     {
-      "id": "9c7060757f29",
+      "id": "f194bc9114ce",
       "title": "Middle School Bike Skills",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
@@ -4522,7 +4381,7 @@
       "kidFriendly": true
     },
     {
-      "id": "ab405c6d5a42",
+      "id": "5d73f2b859c8",
       "title": "Middle School Bike Skills",
       "date": "2026-08-15",
       "displayDate": "Sat, Aug 15",
@@ -4539,7 +4398,7 @@
       "kidFriendly": true
     },
     {
-      "id": "068f0b2ae736",
+      "id": "f7563a223c38",
       "title": "Middle School Bike Skills",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -4556,7 +4415,7 @@
       "kidFriendly": true
     },
     {
-      "id": "8e4ac7a9fd38",
+      "id": "7e72d4db6584",
       "title": "Senior Center Open House",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -4573,7 +4432,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2866ca56b03b",
+      "id": "ac1c54ef7f6f",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -4590,7 +4449,7 @@
       "kidFriendly": false
     },
     {
-      "id": "462953a1f8dd",
+      "id": "86e44567cb97",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-14",
       "displayDate": "Sat, Nov 14",
@@ -4607,7 +4466,7 @@
       "kidFriendly": false
     },
     {
-      "id": "77c17121cdde",
+      "id": "cd206e4c8dff",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-09-21",
       "displayDate": "Mon, Sep 21",
@@ -4624,7 +4483,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b7aaaea32d06",
+      "id": "d7238747e0fd",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-16",
       "displayDate": "Mon, Nov 16",
@@ -4641,7 +4500,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8e1f5b66723d",
+      "id": "2125da2e29d1",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2027-01-18",
       "displayDate": "Mon, Jan 18",
@@ -4658,7 +4517,7 @@
       "kidFriendly": false
     },
     {
-      "id": "aa4aa9866c7d",
+      "id": "8c02b0fdbd12",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-08-23",
       "displayDate": "Sun, Aug 23",
@@ -4675,7 +4534,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9434317c17fa",
+      "id": "371ac0e23f4d",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-15",
       "displayDate": "Sun, Nov 15",
@@ -4692,7 +4551,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b5991a7a7f70",
+      "id": "c83bd5821441",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2027-01-17",
       "displayDate": "Sun, Jan 17",
@@ -4709,7 +4568,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c2d231b4ada3",
+      "id": "7ca959914ee5",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2027-02-11",
       "displayDate": "Thu, Feb 11",
@@ -4726,7 +4585,7 @@
       "kidFriendly": false
     },
     {
-      "id": "95061e47b6a7",
+      "id": "57436e69d568",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2027-03-11",
       "displayDate": "Thu, Mar 11",
@@ -4743,7 +4602,7 @@
       "kidFriendly": false
     },
     {
-      "id": "83717d2bf841",
+      "id": "ace57465d748",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-09-09",
       "displayDate": "Wed, Sep 9",
@@ -4760,7 +4619,7 @@
       "kidFriendly": false
     },
     {
-      "id": "cbfc3df257e0",
+      "id": "d154959154a1",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-10-14",
       "displayDate": "Wed, Oct 14",
@@ -4777,7 +4636,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4e68f8ca15a6",
+      "id": "4149d96f87bf",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-11-10",
       "displayDate": "Tue, Nov 10",
@@ -4794,7 +4653,7 @@
       "kidFriendly": false
     },
     {
-      "id": "09746831e796",
+      "id": "7d0462a47e52",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-12-02",
       "displayDate": "Wed, Dec 2",
@@ -4811,7 +4670,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1b9e44c826f6",
+      "id": "a32e2b2be0f2",
       "title": "Creek Cleanups",
       "date": "2026-09-19",
       "displayDate": "Sat, Sep 19",
@@ -4828,7 +4687,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fc5d75b1c9a7",
+      "id": "c4f70b13d5cf",
       "title": "Creek Cleanups",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
@@ -4845,7 +4704,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d78d887a5cbc",
+      "id": "fd94fe5eb449",
       "title": "Citywide Garage Sale",
       "date": "2026-09-19",
       "displayDate": "Sat, Sep 19",
@@ -4862,7 +4721,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a056e83db4fe",
+      "id": "97a09a2f1400",
       "title": "Citywide Garage Sale",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
@@ -4879,7 +4738,7 @@
       "kidFriendly": false
     },
     {
-      "id": "319cc656b936",
+      "id": "00cf21b73867",
       "title": "Cupertino Fall Bike Fest",
       "date": "2026-09-26",
       "displayDate": "Sat, Sep 26",
@@ -4896,7 +4755,7 @@
       "kidFriendly": true
     },
     {
-      "id": "8cac97bbe870",
+      "id": "cc0dc6d0d6d2",
       "title": "Na Leo Mokupuni in Cupertino",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
@@ -4913,7 +4772,7 @@
       "kidFriendly": true
     },
     {
-      "id": "d5e3a6da5558",
+      "id": "10117d8c0877",
       "title": "Pooch Plunge",
       "date": "2026-10-10",
       "displayDate": "Sat, Oct 10",
@@ -4930,7 +4789,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3592c32d61a1",
+      "id": "0fb398e91088",
       "title": "Pizza and Politics",
       "date": "2026-10-15",
       "displayDate": "Thu, Oct 15",
@@ -4947,7 +4806,7 @@
       "kidFriendly": true
     },
     {
-      "id": "2cfe32e78e54",
+      "id": "5d51f3e5dad5",
       "title": "Hidden Treasures",
       "date": "2026-10-22",
       "displayDate": "Thu, Oct 22",
@@ -4964,7 +4823,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1e96b289a0cf",
+      "id": "dcbd516b2a4a",
       "title": "Monster Mash",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -4981,7 +4840,7 @@
       "kidFriendly": true
     },
     {
-      "id": "7dbe9dd86737",
+      "id": "b8b04c3a981a",
       "title": "2026 Cupertino Community Service Awards",
       "date": "2026-10-28",
       "displayDate": "Wed, Oct 28",
@@ -4998,7 +4857,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9631fa34a023",
+      "id": "743b061a5272",
       "title": "Tree Lighting",
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
@@ -5015,7 +4874,7 @@
       "kidFriendly": true
     },
     {
-      "id": "859095a07fb0",
+      "id": "9c0ab718a527",
       "title": "Breakfast with Santa",
       "date": "2026-12-06",
       "displayDate": "Sun, Dec 6",
@@ -5032,7 +4891,7 @@
       "kidFriendly": true
     },
     {
-      "id": "4e6ec3f4dcae",
+      "id": "a2b447b7251a",
       "title": "Signing Santa",
       "date": "2026-12-12",
       "displayDate": "Sat, Dec 12",
@@ -5049,7 +4908,7 @@
       "kidFriendly": true
     },
     {
-      "id": "d3158609d250",
+      "id": "baae1e496d31",
       "title": "Don Giovanni",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -5066,7 +4925,7 @@
       "kidFriendly": false
     },
     {
-      "id": "243a017a1a11",
+      "id": "9b9493684658",
       "title": "Don Giovanni",
       "date": "2026-09-18",
       "displayDate": "Fri, Sep 18",
@@ -5083,7 +4942,7 @@
       "kidFriendly": false
     },
     {
-      "id": "25ca97509292",
+      "id": "931076cc71fb",
       "title": "Don Giovanni",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
@@ -5100,7 +4959,7 @@
       "kidFriendly": false
     },
     {
-      "id": "438b33f0622e",
+      "id": "64fc4df69c15",
       "title": "Don Giovanni",
       "date": "2026-09-25",
       "displayDate": "Fri, Sep 25",
@@ -5117,7 +4976,7 @@
       "kidFriendly": false
     },
     {
-      "id": "340040a5c025",
+      "id": "a7a780159312",
       "title": "Don Giovanni",
       "date": "2026-09-27",
       "displayDate": "Sun, Sep 27",
@@ -5134,75 +4993,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fa0a09fba5c9",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7473",
-      "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "bd3559fe5812",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7474",
-      "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "56ce154a3963",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7475",
-      "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "a6dbdbdaf086",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7476",
-      "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "cd4fa59bc9f3",
+      "id": "5e8543150aa1",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-19",
       "displayDate": "Sun, Jul 19",
@@ -5219,7 +5010,7 @@
       "kidFriendly": false
     },
     {
-      "id": "dfd557d5d334",
+      "id": "b14370ce4f56",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -5236,7 +5027,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e5d74ad07f84",
+      "id": "c2293e17f3a3",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-22",
       "displayDate": "Wed, Jul 22",
@@ -5253,7 +5044,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9e73f1d4de49",
+      "id": "5b4e0c0afa09",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -5270,7 +5061,7 @@
       "kidFriendly": false
     },
     {
-      "id": "00d362d10438",
+      "id": "0546d206921d",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -5287,7 +5078,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3394d46d9944",
+      "id": "c73e2845bda7",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -5304,7 +5095,7 @@
       "kidFriendly": false
     },
     {
-      "id": "236f15b5c6f7",
+      "id": "30608e7a9615",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -5321,24 +5112,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8cadfba6b570",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-28",
-      "displayDate": "Tue, Jul 28",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7488",
-      "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "03bfd5ddfe56",
+      "id": "d3fce34c7781",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-29",
       "displayDate": "Wed, Jul 29",
@@ -5355,7 +5129,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8a01dcb3ba93",
+      "id": "71520620685c",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-30",
       "displayDate": "Thu, Jul 30",
@@ -5372,7 +5146,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3684158da461",
+      "id": "96968b7dd779",
       "title": "The Employee Dharma Handbook",
       "date": "2026-07-31",
       "displayDate": "Fri, Jul 31",
@@ -5389,7 +5163,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c736c0d74ea2",
+      "id": "ea9743513391",
       "title": "The Employee Dharma Handbook",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
@@ -5406,7 +5180,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4760988f9f6a",
+      "id": "806427b3db49",
       "title": "The Employee Dharma Handbook",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -5423,7 +5197,7 @@
       "kidFriendly": false
     },
     {
-      "id": "79ffde1b78a3",
+      "id": "d20077df8292",
       "title": "Dracula",
       "date": "2026-10-07",
       "displayDate": "Wed, Oct 7",
@@ -5440,7 +5214,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e186f65d71a8",
+      "id": "ea98a3993768",
       "title": "Dracula",
       "date": "2026-10-08",
       "displayDate": "Thu, Oct 8",
@@ -5457,7 +5231,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b886eb1e6b47",
+      "id": "b14b59e2ad9a",
       "title": "Dracula",
       "date": "2026-10-09",
       "displayDate": "Fri, Oct 9",
@@ -5474,7 +5248,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2d89fc1bf4c9",
+      "id": "967b00642511",
       "title": "Dracula",
       "date": "2026-10-10",
       "displayDate": "Sat, Oct 10",
@@ -5491,7 +5265,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9bb4eb75c606",
+      "id": "e009c31f6ad8",
       "title": "Dracula",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
@@ -5508,7 +5282,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2d151a383a95",
+      "id": "41f0401b93b7",
       "title": "Dracula",
       "date": "2026-10-13",
       "displayDate": "Tue, Oct 13",
@@ -5525,7 +5299,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1fbfd061f18d",
+      "id": "4f33732d4ffd",
       "title": "Dracula",
       "date": "2026-10-14",
       "displayDate": "Wed, Oct 14",
@@ -5542,7 +5316,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3a77a13a61a3",
+      "id": "b3f7f939d883",
       "title": "Dracula",
       "date": "2026-10-15",
       "displayDate": "Thu, Oct 15",
@@ -5559,7 +5333,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ace83a23e72a",
+      "id": "f07da5964635",
       "title": "Dracula",
       "date": "2026-10-16",
       "displayDate": "Fri, Oct 16",
@@ -5576,7 +5350,7 @@
       "kidFriendly": false
     },
     {
-      "id": "18f1fcbd7a1f",
+      "id": "ecf1e0425872",
       "title": "Dracula",
       "date": "2026-10-17",
       "displayDate": "Sat, Oct 17",
@@ -5593,7 +5367,7 @@
       "kidFriendly": false
     },
     {
-      "id": "825c3989dd29",
+      "id": "37c208ff0c73",
       "title": "Dracula",
       "date": "2026-10-18",
       "displayDate": "Sun, Oct 18",
@@ -5610,7 +5384,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b584bec7acc0",
+      "id": "04468ba39324",
       "title": "Dracula",
       "date": "2026-10-20",
       "displayDate": "Tue, Oct 20",
@@ -5627,7 +5401,7 @@
       "kidFriendly": false
     },
     {
-      "id": "30b403e1388c",
+      "id": "0f5435ff4247",
       "title": "Dracula",
       "date": "2026-10-21",
       "displayDate": "Wed, Oct 21",
@@ -5644,7 +5418,7 @@
       "kidFriendly": false
     },
     {
-      "id": "881ba6d1ef1d",
+      "id": "80bac78c2f56",
       "title": "Dracula",
       "date": "2026-10-22",
       "displayDate": "Thu, Oct 22",
@@ -5661,7 +5435,7 @@
       "kidFriendly": false
     },
     {
-      "id": "127798d2b217",
+      "id": "a5313e0c0a3c",
       "title": "Dracula",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
@@ -5678,7 +5452,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9e27c72fdc54",
+      "id": "24145c506b7d",
       "title": "Dracula",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
@@ -5695,7 +5469,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7c1a432dbd8f",
+      "id": "018e00dce8ae",
       "title": "Dracula",
       "date": "2026-10-25",
       "displayDate": "Sun, Oct 25",
@@ -5712,7 +5486,7 @@
       "kidFriendly": false
     },
     {
-      "id": "412222e84049",
+      "id": "cd6a4a11e148",
       "title": "Dracula",
       "date": "2026-10-27",
       "displayDate": "Tue, Oct 27",
@@ -5729,7 +5503,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b5c9b6b46629",
+      "id": "e16dc29ec6e4",
       "title": "Dracula",
       "date": "2026-10-28",
       "displayDate": "Wed, Oct 28",
@@ -5746,7 +5520,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4b1af192bda8",
+      "id": "0bee6c6c7599",
       "title": "Dracula",
       "date": "2026-10-29",
       "displayDate": "Thu, Oct 29",
@@ -5763,7 +5537,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2673183fb0e5",
+      "id": "463c9782db92",
       "title": "Dracula",
       "date": "2026-10-30",
       "displayDate": "Fri, Oct 30",
@@ -5780,7 +5554,7 @@
       "kidFriendly": false
     },
     {
-      "id": "787cfcdc7c7c",
+      "id": "22fd96f02c6e",
       "title": "Dracula",
       "date": "2026-10-31",
       "displayDate": "Sat, Oct 31",
@@ -5797,7 +5571,7 @@
       "kidFriendly": false
     },
     {
-      "id": "334f3307c257",
+      "id": "c729725ff420",
       "title": "Dracula",
       "date": "2026-11-01",
       "displayDate": "Sun, Nov 1",
@@ -5814,7 +5588,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f0ad9f736f85",
+      "id": "81a9881c8e33",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-02",
       "displayDate": "Wed, Dec 2",
@@ -5831,7 +5605,7 @@
       "kidFriendly": false
     },
     {
-      "id": "857ed3126285",
+      "id": "2d55695d3bdb",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-03",
       "displayDate": "Thu, Dec 3",
@@ -5848,7 +5622,7 @@
       "kidFriendly": false
     },
     {
-      "id": "06d64397a1f2",
+      "id": "e67e521dbb39",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
@@ -5865,7 +5639,7 @@
       "kidFriendly": false
     },
     {
-      "id": "eda70e22c98a",
+      "id": "5a2df9e6b19a",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-05",
       "displayDate": "Sat, Dec 5",
@@ -5882,7 +5656,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e7ec383c5c98",
+      "id": "2bdadc23bd1f",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-06",
       "displayDate": "Sun, Dec 6",
@@ -5899,7 +5673,7 @@
       "kidFriendly": false
     },
     {
-      "id": "91c72a7d6424",
+      "id": "068330270d59",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-08",
       "displayDate": "Tue, Dec 8",
@@ -5916,7 +5690,7 @@
       "kidFriendly": false
     },
     {
-      "id": "670bbe636364",
+      "id": "b44d36c34f8c",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-09",
       "displayDate": "Wed, Dec 9",
@@ -5933,7 +5707,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2c4e84e89dfd",
+      "id": "b19c79710617",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-10",
       "displayDate": "Thu, Dec 10",
@@ -5950,7 +5724,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b0540a222332",
+      "id": "4f31b2e84a3d",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-11",
       "displayDate": "Fri, Dec 11",
@@ -5967,7 +5741,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f4f80bb2760b",
+      "id": "bfe3eb1b20d8",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-12",
       "displayDate": "Sat, Dec 12",
@@ -5984,7 +5758,7 @@
       "kidFriendly": false
     },
     {
-      "id": "dfe8b5b43c2e",
+      "id": "f2b76ac44b23",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-13",
       "displayDate": "Sun, Dec 13",
@@ -6001,7 +5775,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5a7d95d5beeb",
+      "id": "335612d19a7c",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-15",
       "displayDate": "Tue, Dec 15",
@@ -6018,7 +5792,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b37b67bf8e4e",
+      "id": "b32bed732482",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-16",
       "displayDate": "Wed, Dec 16",
@@ -6035,7 +5809,7 @@
       "kidFriendly": false
     },
     {
-      "id": "48c5458e59b1",
+      "id": "9c66093b8033",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-17",
       "displayDate": "Thu, Dec 17",
@@ -6052,7 +5826,7 @@
       "kidFriendly": false
     },
     {
-      "id": "81f59b790d30",
+      "id": "b131bf1f830a",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-18",
       "displayDate": "Fri, Dec 18",
@@ -6069,7 +5843,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ee690982744c",
+      "id": "2aac4f42e0dd",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-19",
       "displayDate": "Sat, Dec 19",
@@ -6086,7 +5860,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3ca54b9ae09e",
+      "id": "df8ab6718f27",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-20",
       "displayDate": "Sun, Dec 20",
@@ -6103,7 +5877,7 @@
       "kidFriendly": false
     },
     {
-      "id": "cfac9cac0371",
+      "id": "dca8a13a677b",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-22",
       "displayDate": "Tue, Dec 22",
@@ -6120,7 +5894,7 @@
       "kidFriendly": false
     },
     {
-      "id": "fefe22066fd0",
+      "id": "0ec7253615f2",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-23",
       "displayDate": "Wed, Dec 23",
@@ -6137,7 +5911,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3e98b9d2ca71",
+      "id": "6d065cce12d0",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-26",
       "displayDate": "Sat, Dec 26",
@@ -6154,7 +5928,7 @@
       "kidFriendly": false
     },
     {
-      "id": "6ee3c392acac",
+      "id": "f0a50224e453",
       "title": "Alice, Formerly of Wonderland",
       "date": "2026-12-27",
       "displayDate": "Sun, Dec 27",
@@ -6171,7 +5945,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e8b44f924031",
+      "id": "2459bad3ca68",
       "title": "Shane",
       "date": "2027-03-03",
       "displayDate": "Wed, Mar 3",
@@ -6188,7 +5962,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1fdb877a9e92",
+      "id": "f12e898f65ab",
       "title": "Shane",
       "date": "2027-03-04",
       "displayDate": "Thu, Mar 4",
@@ -6205,7 +5979,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5996c90fd533",
+      "id": "933decd9e207",
       "title": "Shane",
       "date": "2027-03-05",
       "displayDate": "Fri, Mar 5",
@@ -6222,7 +5996,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e312cb4310f6",
+      "id": "d6b51ed40e89",
       "title": "Shane",
       "date": "2027-03-06",
       "displayDate": "Sat, Mar 6",
@@ -6239,7 +6013,7 @@
       "kidFriendly": false
     },
     {
-      "id": "20f465a479e7",
+      "id": "c88014baa72e",
       "title": "Shane",
       "date": "2027-03-07",
       "displayDate": "Sun, Mar 7",
@@ -6256,7 +6030,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f0c343ae26da",
+      "id": "948d0557160a",
       "title": "Shane",
       "date": "2027-03-09",
       "displayDate": "Tue, Mar 9",
@@ -6273,7 +6047,7 @@
       "kidFriendly": false
     },
     {
-      "id": "234d816f0a0a",
+      "id": "53281214bb65",
       "title": "Shane",
       "date": "2027-03-10",
       "displayDate": "Wed, Mar 10",
@@ -6290,7 +6064,7 @@
       "kidFriendly": false
     },
     {
-      "id": "5133b570affc",
+      "id": "beb8272e3e6d",
       "title": "Shane",
       "date": "2027-03-11",
       "displayDate": "Thu, Mar 11",
@@ -6307,7 +6081,7 @@
       "kidFriendly": false
     },
     {
-      "id": "11152133da70",
+      "id": "4a95a0e4be02",
       "title": "Shane",
       "date": "2027-03-12",
       "displayDate": "Fri, Mar 12",
@@ -6324,7 +6098,7 @@
       "kidFriendly": false
     },
     {
-      "id": "74298a85cbef",
+      "id": "1517bf05b5b0",
       "title": "Shane",
       "date": "2027-03-13",
       "displayDate": "Sat, Mar 13",
@@ -6341,7 +6115,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8c3883ad840a",
+      "id": "b82faa0c4fcc",
       "title": "Shane",
       "date": "2027-03-14",
       "displayDate": "Sun, Mar 14",
@@ -6358,7 +6132,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c52ab0bb3e4d",
+      "id": "a44e14c98bab",
       "title": "Shane",
       "date": "2027-03-16",
       "displayDate": "Tue, Mar 16",
@@ -6375,7 +6149,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a40030d56796",
+      "id": "1a539de6b064",
       "title": "Shane",
       "date": "2027-03-17",
       "displayDate": "Wed, Mar 17",
@@ -6392,7 +6166,7 @@
       "kidFriendly": false
     },
     {
-      "id": "9196bc1933c5",
+      "id": "622eecd035c1",
       "title": "Shane",
       "date": "2027-03-18",
       "displayDate": "Thu, Mar 18",
@@ -6409,7 +6183,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c9243deddec1",
+      "id": "952375a47c77",
       "title": "Shane",
       "date": "2027-03-19",
       "displayDate": "Fri, Mar 19",
@@ -6426,7 +6200,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c36ca32e88f3",
+      "id": "e53082e6610a",
       "title": "Shane",
       "date": "2027-03-20",
       "displayDate": "Sat, Mar 20",
@@ -6443,7 +6217,7 @@
       "kidFriendly": false
     },
     {
-      "id": "eb821457bee8",
+      "id": "87ef53247f21",
       "title": "Shane",
       "date": "2027-03-21",
       "displayDate": "Sun, Mar 21",
@@ -6460,7 +6234,7 @@
       "kidFriendly": false
     },
     {
-      "id": "610d7af27ec8",
+      "id": "d59ae541eb84",
       "title": "Shane",
       "date": "2027-03-23",
       "displayDate": "Tue, Mar 23",
@@ -6477,7 +6251,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f3d122bebabb",
+      "id": "c5f9e76b17d4",
       "title": "Shane",
       "date": "2027-03-24",
       "displayDate": "Wed, Mar 24",
@@ -6494,7 +6268,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4affdb25330c",
+      "id": "b30366581ca2",
       "title": "Shane",
       "date": "2027-03-25",
       "displayDate": "Thu, Mar 25",
@@ -6511,7 +6285,7 @@
       "kidFriendly": false
     },
     {
-      "id": "bba318b4dc40",
+      "id": "f5e128c2446d",
       "title": "Shane",
       "date": "2027-03-26",
       "displayDate": "Fri, Mar 26",
@@ -6528,7 +6302,7 @@
       "kidFriendly": false
     },
     {
-      "id": "85a2a351b90f",
+      "id": "7460bdaae58d",
       "title": "Shane",
       "date": "2027-03-27",
       "displayDate": "Sat, Mar 27",
@@ -6545,7 +6319,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1e9e56ea605f",
+      "id": "84dc8ce7c6e6",
       "title": "Shane",
       "date": "2027-03-28",
       "displayDate": "Sun, Mar 28",
@@ -6562,7 +6336,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ba1bd6f753be",
+      "id": "4d8cf0f27d7c",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-03-31",
       "displayDate": "Wed, Mar 31",
@@ -6579,7 +6353,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c57f0f94a1e9",
+      "id": "e9fb6dc96650",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-01",
       "displayDate": "Thu, Apr 1",
@@ -6596,7 +6370,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8ceef3235e4e",
+      "id": "f52707ef0227",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-02",
       "displayDate": "Fri, Apr 2",
@@ -6613,7 +6387,7 @@
       "kidFriendly": false
     },
     {
-      "id": "eac0f272c38a",
+      "id": "efe50977ab1a",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-03",
       "displayDate": "Sat, Apr 3",
@@ -6630,7 +6404,7 @@
       "kidFriendly": false
     },
     {
-      "id": "59973eae9e5d",
+      "id": "a4da9a2edcf8",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-04",
       "displayDate": "Sun, Apr 4",
@@ -6647,7 +6421,7 @@
       "kidFriendly": false
     },
     {
-      "id": "1582b3c1ba94",
+      "id": "7c6f09b12d22",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-06",
       "displayDate": "Tue, Apr 6",
@@ -6664,7 +6438,7 @@
       "kidFriendly": false
     },
     {
-      "id": "bfcf729893a3",
+      "id": "70b76b41fa80",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-07",
       "displayDate": "Wed, Apr 7",
@@ -6681,7 +6455,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f1974fb732df",
+      "id": "834b0bdee940",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-08",
       "displayDate": "Thu, Apr 8",
@@ -6698,7 +6472,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c799c2dfe079",
+      "id": "a911014e5490",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-09",
       "displayDate": "Fri, Apr 9",
@@ -6715,7 +6489,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ef9adb7cd839",
+      "id": "f0cb63a06ed6",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-10",
       "displayDate": "Sat, Apr 10",
@@ -6732,7 +6506,7 @@
       "kidFriendly": false
     },
     {
-      "id": "975644ecd830",
+      "id": "ab6c0bad55e4",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-11",
       "displayDate": "Sun, Apr 11",
@@ -6749,7 +6523,7 @@
       "kidFriendly": false
     },
     {
-      "id": "439b02a68eb0",
+      "id": "f5bfc268ebd2",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-13",
       "displayDate": "Tue, Apr 13",
@@ -6766,7 +6540,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ed6d5a6f1603",
+      "id": "38495f0a7f12",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-14",
       "displayDate": "Wed, Apr 14",
@@ -6783,7 +6557,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e06fcb987034",
+      "id": "f800df51ebec",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-15",
       "displayDate": "Thu, Apr 15",
@@ -6800,7 +6574,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c67a9e02e851",
+      "id": "e3393a87712d",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-16",
       "displayDate": "Fri, Apr 16",
@@ -6817,7 +6591,7 @@
       "kidFriendly": false
     },
     {
-      "id": "ffe9038684f3",
+      "id": "ec7266f45ca8",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-17",
       "displayDate": "Sat, Apr 17",
@@ -6834,7 +6608,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a84100b4385d",
+      "id": "0246c60a5e62",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-18",
       "displayDate": "Sun, Apr 18",
@@ -6851,7 +6625,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a537d7b6ddae",
+      "id": "0a933af9d4a2",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-20",
       "displayDate": "Tue, Apr 20",
@@ -6868,7 +6642,7 @@
       "kidFriendly": false
     },
     {
-      "id": "614a39be7fe6",
+      "id": "502c5d18db9c",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-21",
       "displayDate": "Wed, Apr 21",
@@ -6885,7 +6659,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7b87d3b5bfb5",
+      "id": "891c22e28876",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-22",
       "displayDate": "Thu, Apr 22",
@@ -6902,7 +6676,7 @@
       "kidFriendly": false
     },
     {
-      "id": "90e09c2d9ef0",
+      "id": "7e70630fe024",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-23",
       "displayDate": "Fri, Apr 23",
@@ -6919,7 +6693,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b5731e41f2e3",
+      "id": "0073edcd8c2c",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-24",
       "displayDate": "Sat, Apr 24",
@@ -6936,7 +6710,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a6d865b697fc",
+      "id": "cd16933dd6fa",
       "title": "Beautiful: The Carole King Musical",
       "date": "2027-04-25",
       "displayDate": "Sun, Apr 25",
@@ -6953,7 +6727,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a68107502145",
+      "id": "78a9cd816e42",
       "title": "ED SHEERAN: LOOP TOUR",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -6970,7 +6744,7 @@
       "kidFriendly": false
     },
     {
-      "id": "353729002d8e",
+      "id": "c17b911de501",
       "title": "AC/DC: POWER UP TOUR",
       "date": "2026-08-05",
       "displayDate": "Wed, Aug 5",
@@ -6987,7 +6761,7 @@
       "kidFriendly": false
     },
     {
-      "id": "191e65cb1c66",
+      "id": "6cd732b855d8",
       "title": "TENNESSEE TITANS VS. SAN FRANCISCO 49ERS",
       "date": "2026-08-13",
       "displayDate": "Thu, Aug 13",
@@ -7004,7 +6778,7 @@
       "kidFriendly": false
     },
     {
-      "id": "684f404064f0",
+      "id": "f38ba0bdfe45",
       "title": "KAROL G: VIAJANDO POR EL MUNDO TROPITOUR",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -7021,7 +6795,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8c43a32b614c",
+      "id": "2850218d88a6",
       "title": "KAROL G: VIAJANDO POR EL MUNDO TROPITOUR",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
@@ -7038,7 +6812,7 @@
       "kidFriendly": false
     },
     {
-      "id": "04c685b7237e",
+      "id": "119eb8dc6440",
       "title": "CHRIS BROWN & USHER: THE R&B TOUR",
       "date": "2026-08-28",
       "displayDate": "Fri, Aug 28",
@@ -7055,7 +6829,7 @@
       "kidFriendly": false
     },
     {
-      "id": "eaf59255c574",
+      "id": "3c5411774f69",
       "title": "CHRIS BROWN & USHER: THE R&B TOUR",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -7072,7 +6846,7 @@
       "kidFriendly": false
     },
     {
-      "id": "64b1c84b6536",
+      "id": "b6fdfb7627e6",
       "title": "CHRIS BROWN & USHER: THE R&B TOUR",
       "date": "2026-09-01",
       "displayDate": "Tue, Sep 1",
@@ -7089,7 +6863,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8445a9f82693",
+      "id": "b1a0d5fc8884",
       "title": "SAN JOSE EARTHQUAKES VS. LAFC",
       "date": "2026-09-19",
       "displayDate": "Sat, Sep 19",
@@ -7106,7 +6880,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e60284ee435d",
+      "id": "16a1d6744182",
       "title": "MIAMI DOLPHINS VS. SAN FRANCISCO 49ERS",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
@@ -7123,7 +6897,7 @@
       "kidFriendly": false
     },
     {
-      "id": "bec773797baf",
+      "id": "85e90e835739",
       "title": "ARIZONA CARDINALS VS. SAN FRANCISCO 49ERS",
       "date": "2026-09-27",
       "displayDate": "Sun, Sep 27",
@@ -7140,7 +6914,7 @@
       "kidFriendly": false
     },
     {
-      "id": "b42706e35dfa",
+      "id": "d5665b3032c3",
       "title": "DENVER BRONCOS VS. SAN FRANCISCO 49ERS",
       "date": "2026-10-04",
       "displayDate": "Sun, Oct 4",
@@ -7157,7 +6931,7 @@
       "kidFriendly": false
     },
     {
-      "id": "e98277a7d0a1",
+      "id": "5f188178b3b5",
       "title": "BRUNO MARS: THE ROMANTIC TOUR",
       "date": "2026-10-10",
       "displayDate": "Sat, Oct 10",
@@ -7174,7 +6948,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c98d72711bf8",
+      "id": "5700683a7b15",
       "title": "BRUNO MARS: THE ROMANTIC TOUR",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
@@ -7191,7 +6965,7 @@
       "kidFriendly": false
     },
     {
-      "id": "f859739923d6",
+      "id": "35481971d840",
       "title": "WASHINGTON COMMANDERS VS. SAN FRANCISCO 49ERS",
       "date": "2026-10-19",
       "displayDate": "Mon, Oct 19",
@@ -7208,7 +6982,7 @@
       "kidFriendly": false
     },
     {
-      "id": "d02c7222f744",
+      "id": "5229328e2d6b",
       "title": "LAS VEGAS RAIDERS VS. SAN FRANCISCO 49ERS",
       "date": "2026-11-08",
       "displayDate": "Sun, Nov 8",
@@ -7225,7 +6999,7 @@
       "kidFriendly": false
     },
     {
-      "id": "dd583bc18e21",
+      "id": "967b7ce2c0ee",
       "title": "SEATTLE SEAHAWKS VS. SAN FRANCISCO 49ERS",
       "date": "2026-11-29",
       "displayDate": "Sun, Nov 29",
@@ -7242,7 +7016,7 @@
       "kidFriendly": false
     },
     {
-      "id": "732034dedcbf",
+      "id": "d5079148962f",
       "title": "LOS ANGELES RAMS VS. SAN FRANCISCO 49ERS",
       "date": "2026-12-13",
       "displayDate": "Sun, Dec 13",
@@ -7259,24 +7033,7 @@
       "kidFriendly": false
     },
     {
-      "id": "2d0d9e2b154f",
-      "title": "Nate Bargatze",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "7:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Add the Sierra Nevada Concert Experience and enjoy the show as a VIP! Concerts& Music Festivals With this perfect addition to your ticket purchase, you will enjoy unlimited premium hors d'oeuvres, wine, and non-alcoholic beverages, and private entry into The NetApp Celly Lounge. The Sierra Nevada Concert Experience begins 30 minutes prior to SAP Center doors opening to the general public and continues until 15 minutes prior to the main act taking the stage.** *Available to guests age 21 or older; photo ID required ** Subject to change Drink Responsibly | Responsibility.org Note: You MUST have a ticket to the event to purchase a ticket for the Sierra Nevada Concert Experience.",
-      "url": "https://www.sapcenter.com/events/detail/nate-bargatze",
-      "source": "SAP Center",
-      "kidFriendly": true
-    },
-    {
-      "id": "3addf3ca555c",
+      "id": "43cd7487f8f8",
       "title": "CrossFit Games",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -7287,13 +7044,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
     },
     {
-      "id": "c5a8a660a886",
+      "id": "60d8897d831f",
       "title": "CrossFit Games",
       "date": "2026-07-25",
       "displayDate": "Sat, Jul 25",
@@ -7304,13 +7061,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
     },
     {
-      "id": "98032feba837",
+      "id": "1be7e63614cd",
       "title": "CrossFit Games",
       "date": "2026-07-26",
       "displayDate": "Sun, Jul 26",
@@ -7321,13 +7078,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
     },
     {
-      "id": "fe3bf68be0e2",
+      "id": "9db9147ff08a",
       "title": "Benson Boone",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -7338,13 +7095,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Add the Sierra Nevada Concert Experience and enjoy the show as a VIP! With this perfect addition to your ticket purchase, you will enjoy unlimited premium hors d'oeuvres, wine, and non-alcoholic beverages, and private entry into The NetApp Celly Lounge. The Sierra Nevada Concert Experience begins 30 minutes prior to SAP Center doors opening to the general public and continues until 15 minutes prior to the main act taking the stage.** EventTicket Sales *Available to guests age 21 or older; photo ID required ** Subject to change Drink Responsibly | Responsibility.org Note: You MUST have a ticket to the event to purchase a ticket for the Sierra Nevada Concert Experience. More Info",
+      "description": "Add the Sierra Nevada Concert Experience and enjoy the show as a VIP! With this perfect addition to your ticket purchase, you will enjoy unlimited premium hors d'oeuvres, wine, and non-alcoholic beverages, and private entry into The NetApp Celly Lounge. The Sierra Nevada Concert Experience begins 30 minutes prior to SAP Center doors opening to the general public and continues until 15 minutes prior to the main act taking the stage.** LongDistance Bus & Rail *Available to guests age 21 or older; photo ID required ** Subject to change Drink Responsibly | Responsibility.org Note: You MUST have a ticket to the event to purchase a ticket for the Sierra Nevada Concert Experience. More Info",
       "url": "https://www.sapcenter.com/events/detail/benson-boone",
       "source": "SAP Center",
       "kidFriendly": true
     },
     {
-      "id": "ea32bf066e9b",
+      "id": "a17fefa73a86",
       "title": "Grupo Frontera",
       "date": "2026-08-09",
       "displayDate": "Sun, Aug 9",
@@ -7355,13 +7112,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Hockey",
+      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time!",
       "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
       "source": "SAP Center",
       "kidFriendly": false
     },
     {
-      "id": "908669891db4",
+      "id": "8b58a9b1c877",
       "title": "Omar Courtz",
       "date": "2026-08-19",
       "displayDate": "Wed, Aug 19",
@@ -7378,7 +7135,7 @@
       "kidFriendly": false
     },
     {
-      "id": "8b66e9c2b8bb",
+      "id": "f699a71532dd",
       "title": "MOUNT WESTMORE",
       "date": "2026-08-21",
       "displayDate": "Fri, Aug 21",
@@ -7395,7 +7152,7 @@
       "kidFriendly": false
     },
     {
-      "id": "7600a622fcdd",
+      "id": "6bc61838ab4a",
       "title": "Mamamoo",
       "date": "2026-08-27",
       "displayDate": "Thu, Aug 27",
@@ -7412,7 +7169,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a43416016c70",
+      "id": "0d320096d58f",
       "title": "Sonu Nigam",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
@@ -7429,7 +7186,7 @@
       "kidFriendly": false
     },
     {
-      "id": "300cb096f3a6",
+      "id": "3326e95396be",
       "title": "Monster Jam",
       "date": "2026-09-04",
       "displayDate": "Fri, Sep 4",
@@ -7446,7 +7203,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c43b349bbb09",
+      "id": "efefc3fa5c5d",
       "title": "Monster Jam",
       "date": "2026-09-05",
       "displayDate": "Sat, Sep 5",
@@ -7463,7 +7220,7 @@
       "kidFriendly": false
     },
     {
-      "id": "c43b349bbb09",
+      "id": "b337c8dc09e6",
       "title": "Monster Jam",
       "date": "2026-09-05",
       "displayDate": "Sat, Sep 5",
@@ -7480,7 +7237,7 @@
       "kidFriendly": false
     },
     {
-      "id": "4b3f80319f4d",
+      "id": "fc59b25560ae",
       "title": "Monster Jam",
       "date": "2026-09-06",
       "displayDate": "Sun, Sep 6",
@@ -7497,7 +7254,7 @@
       "kidFriendly": false
     },
     {
-      "id": "a8ae0a126671",
+      "id": "61323f7ee084",
       "title": "Soda Stereo",
       "date": "2026-09-10",
       "displayDate": "Thu, Sep 10",
@@ -7514,7 +7271,7 @@
       "kidFriendly": false
     },
     {
-      "id": "72879679def4",
+      "id": "377c0f64450d",
       "title": "Palomazo Norteño",
       "date": "2026-09-12",
       "displayDate": "Sat, Sep 12",
@@ -7531,7 +7288,7 @@
       "kidFriendly": false
     },
     {
-      "id": "3fa4c477b3a9",
+      "id": "a50119904b67",
       "title": "Andrea Bocelli",
       "date": "2026-09-13",
       "displayDate": "Sun, Sep 13",
@@ -7548,58 +7305,24 @@
       "kidFriendly": false
     },
     {
-      "id": "96a84c9b5866",
-      "title": "Tech Topple",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "10:00AM",
+      "id": "b1dc3ae6a448",
+      "title": "Carin Leon",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
+      "time": "8:00 pm",
       "endTime": null,
-      "venue": "New Venture Hall",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "education",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
-    },
-    {
-      "id": "5cfd0fe5d822",
-      "title": "The Odyssey",
-      "date": "2026-07-16",
-      "displayDate": "Thu, Jul 16",
-      "time": "4:30PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
+      "url": "https://www.sapcenter.com/events/detail/carin-leon-2",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
-      "id": "04134f26660e",
-      "title": "Solar S’mores Workshop",
-      "date": "2026-07-18",
-      "displayDate": "Sat, Jul 18",
-      "time": "3:00PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
-    },
-    {
-      "id": "fa92373792f9",
+      "id": "7866f3e8a5f0",
       "title": "Science of Sailing Pop-up Exhibition",
       "date": "2026-07-24",
       "displayDate": "Fri, Jul 24",
@@ -7616,7 +7339,7 @@
       "kidFriendly": true
     },
     {
-      "id": "302215c56f17",
+      "id": "714076f68db6",
       "title": "Member-Only Hour",
       "date": "2026-08-02",
       "displayDate": "Sun, Aug 2",
@@ -7633,7 +7356,7 @@
       "kidFriendly": true
     },
     {
-      "id": "652fa07aee0b",
+      "id": "08df388b6594",
       "title": "LASERS: Galactic Odyssey",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -7650,7 +7373,7 @@
       "kidFriendly": true
     },
     {
-      "id": "81b1a7668a25",
+      "id": "8383806fed81",
       "title": "LASERS: Pink Floyd",
       "date": "2026-08-07",
       "displayDate": "Fri, Aug 7",
@@ -7667,7 +7390,7 @@
       "kidFriendly": true
     },
     {
-      "id": "c9a75c2691f4",
+      "id": "ae6e434de9d4",
       "title": "Girl Scout Program: Home Scientist (Brownies)",
       "date": "2026-11-01",
       "displayDate": "Sun, Nov 1",
@@ -7684,7 +7407,7 @@
       "kidFriendly": true
     },
     {
-      "id": "fd16dab38ebd",
+      "id": "f9ec9d837ccd",
       "title": "Girl Scout Program: Roller Coaster Design Challenge (Daisies)",
       "date": "2026-11-01",
       "displayDate": "Sun, Nov 1",
@@ -7701,41 +7424,41 @@
       "kidFriendly": true
     },
     {
-      "id": "9b377065c62e",
-      "title": "PARINI SHROFF: SOME PEOPLE",
-      "date": "2026-07-15",
-      "displayDate": "Wed, Jul 15",
-      "time": "7:00 PM",
+      "id": "14ac2c3257eb",
+      "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes)",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "10:30AM",
       "endTime": null,
-      "venue": "Books Inc. Mountain View",
-      "address": "",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
       "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
     },
     {
-      "id": "08c7754b7689",
-      "title": "SAMAIRA MEHTA: SAMA CRUSHES THE CODE",
-      "date": "2026-07-17",
-      "displayDate": "Fri, Jul 17",
-      "time": "7:00 PM",
+      "id": "860c92ff94db",
+      "title": "Girl Scout Program: Amusement Innovator (Juniors)",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "12:00PM",
       "endTime": null,
-      "venue": "Books Inc. Mountain View",
-      "address": "",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
       "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
     },
     {
-      "id": "d5f12eafaf78",
+      "id": "6a6e9c82ec52",
       "title": "ALL THINGS ROMANCE BOOK CLUB: Out on a Limb",
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
@@ -7752,7 +7475,7 @@
       "kidFriendly": false
     },
     {
-      "id": "6c159e0b91e8",
+      "id": "abb16ea6422c",
       "title": "M.A. CARRICK: THE EYE OF LEVIATHAN",
       "date": "2026-07-22",
       "displayDate": "Wed, Jul 22",
@@ -7769,7 +7492,7 @@
       "kidFriendly": false
     },
     {
-      "id": "00a930ff7a19",
+      "id": "68edda865611",
       "title": "CLARA WARD: DREAM THE DEEP",
       "date": "2026-07-23",
       "displayDate": "Thu, Jul 23",
@@ -7786,87 +7509,36 @@
       "kidFriendly": false
     },
     {
-      "id": "52462845f118",
-      "title": "A Slow Walk Through Wavecrest",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "10:00 AM",
+      "id": "a7a605700261",
+      "title": "HAPPY BOOKERS BOOK CLUB: DARK MATTER",
+      "date": "2026-07-27",
+      "displayDate": "Mon, Jul 27",
+      "time": "6:00 PM",
       "endTime": null,
-      "venue": "Peninsula Open Space Trust",
-      "address": "Various POST preserves + partner locations",
+      "venue": "Books Inc. Mountain View",
+      "address": "",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "2c9af5fbd8ac",
+      "title": "Feathers of the Forests (Online Event)",
+      "date": "2026-08-20",
+      "displayDate": "Thu, Aug 20",
+      "time": "7 PM",
+      "endTime": "8 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
       "city": "santa-clara-county",
       "category": "outdoor",
       "cost": "free",
       "description": "",
-      "url": "https://openspacetrust.org/event/a-slow-walk-through-wavecrest/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "49492ebcdd0f",
-      "title": "Bair Island Volunteer Workday",
-      "date": "2026-08-08",
-      "displayDate": "Sat, Aug 8",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Peninsula Open Space Trust",
-      "address": "Various POST preserves + partner locations",
-      "city": "santa-clara-county",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bair-island-volunteer-workday-121992069220664/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "f00f67422e67",
-      "title": "Coastal Walk at Pillar Point Bluff",
-      "date": "2026-08-08",
-      "displayDate": "Sat, Aug 8",
-      "time": "10:00 AM",
-      "endTime": null,
-      "venue": "Peninsula Open Space Trust",
-      "address": "Various POST preserves + partner locations",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/coastal-walk-at-pillar-point-bluff-5/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "b2c559ed6c00",
-      "title": "Birding for Beginners",
-      "date": "2026-08-15",
-      "displayDate": "Sat, Aug 15",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Peninsula Open Space Trust",
-      "address": "Various POST preserves + partner locations",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/birding-for-beginners/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "bf4dbce54524",
-      "title": "Sunset Naturalist Walk at Bair Island",
-      "date": "2026-08-29",
-      "displayDate": "Sat, Aug 29",
-      "time": "5:30 PM",
-      "endTime": null,
-      "venue": "Peninsula Open Space Trust",
-      "address": "Various POST preserves + partner locations",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/sunset-naturalist-walk-at-bair-island/",
+      "url": "https://openspacetrust.org/event/feathers-of-the-forests-online-event/",
       "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
