@@ -39,7 +39,9 @@ bash scripts/events/install-mini-refresh.sh
   scheduled for the future. Past date buckets age out automatically, so a
   legitimate seasonal ending needs no allowlist.
 - Stable primary routes are preferred over year-specific URLs. For example, San
-  Jose Jazz uses `/lineup`, not dated festival-day filter slugs.
+  Jose Jazz starts at `/lineup`; if that official view is semantically empty,
+  it tries `/chronological` and the current day pages discovered from the
+  first-party menu instead of hardcoding yearly filter slugs.
 - A failed Mini run rolls back only its uncommitted generated data, leaves the
   last known-good database deployed, alerts, and retries.
 

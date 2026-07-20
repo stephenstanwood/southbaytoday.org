@@ -69,6 +69,7 @@ import {
 import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 import {
+  extractSanJoseJazzDayUrls,
   extractVboSession,
   parseCivicPlusCalendarPage,
   parseHappyHollowSchedules,
@@ -2696,8 +2697,37 @@ async function fetchSjJazzEvents() {
     // found" while the first-party Summer Fest lineup publishes complete
     // day/time/stage records. Use the stable lineup route instead of dated
     // filter slugs, which change every festival year.
-    const html = await fetchText("https://summerfest.sanjosejazz.org/lineup");
-    const lineup = parseSanJoseJazzLineup(html);
+    const origin = "https://summerfest.sanjosejazz.org";
+    const lineupHtml = await fetchText(`${origin}/lineup`);
+    let lineup = parseSanJoseJazzLineup(lineupHtml);
+
+    // The official host occasionally returns a complete shell with no artist
+    // cards to GitHub-hosted runners while serving the full page to the Mini.
+    // Recover through its other stable view, then through the current day URLs
+    // discovered from the first-party menu. The dated slugs remain data, not
+    // hardcoded configuration, so this rolls forward with each festival year.
+    if (lineup.length === 0) {
+      console.log("  ↻ San Jose Jazz lineup was empty; trying official chronological view");
+      const chronologicalHtml = await fetchText(`${origin}/chronological`);
+      lineup = parseSanJoseJazzLineup(chronologicalHtml);
+
+      if (lineup.length === 0) {
+        const dayUrls = [...new Set([
+          ...extractSanJoseJazzDayUrls(lineupHtml),
+          ...extractSanJoseJazzDayUrls(chronologicalHtml),
+        ])];
+        if (dayUrls.length > 0) {
+          console.log(`  ↻ San Jose Jazz: trying ${dayUrls.length} discovered official day page(s)`);
+          const dayPages = await Promise.all(dayUrls.map((url) => fetchText(url)));
+          const unique = new Map();
+          for (const event of dayPages.flatMap(parseSanJoseJazzLineup)) {
+            unique.set(`${event.url}|${event.date}|${event.time}|${event.stage}`, event);
+          }
+          lineup = [...unique.values()];
+        }
+      }
+    }
+
     if (lineup.length === 0) throw new Error("official lineup parser returned no artist performances");
     const today = todayPT();
     const events = lineup
