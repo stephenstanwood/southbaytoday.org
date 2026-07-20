@@ -68,15 +68,17 @@ async function pool(fns, concurrency = 4) {
 async function runScraper(browser, name, fn) {
   const page = await browser.newPage();
   let events = [];
+  let error = null;
   try {
     events = await fn(page);
   } catch (err) {
+    error = err.message;
     console.log(`  ⚠️  ${name}: ${err.message}`);
   } finally {
     await page.close();
   }
   console.log(`  ${events.length > 0 ? "✅" : "⚠️ "} ${name}: ${events.length} events`);
-  return events;
+  return { events, error };
 }
 
 /** Try to parse a date string into YYYY-MM-DD, return null on failure */
@@ -2521,7 +2523,7 @@ async function main() {
   await browser.close();
 
   // Flatten and normalize to standard event schema
-  const allRaw = results.flat();
+  const allRaw = results.flatMap((result) => result.events);
   const events = allRaw.map((e) => {
     const d = new Date(`${e.date}T12:00:00-07:00`);
     return {
@@ -2552,14 +2554,40 @@ async function main() {
   // Summary
   const bySrc = {};
   for (const e of events) bySrc[e.source] = (bySrc[e.source] || 0) + 1;
+  const sourceHealth = tasks.map((task, index) => ({
+    id: task.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    label: task.name,
+    status: results[index].error ? "error" : (results[index].events.length > 0 ? "ok" : "empty"),
+    count: results[index].events.length,
+    error: results[index].error,
+  }));
+
+  let previous = null;
+  try { previous = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+  if (process.env.SBT_STRICT_EVENT_REFRESH === "1" && previous) {
+    const previousEvents = Number(previous?._meta?.eventCount || previous?.events?.length || 0);
+    const previousSources = Number(previous?._meta?.sources?.length || 0);
+    const nextSources = Object.keys(bySrc).length;
+    const lostSources = previousSources - nextSources;
+    if (
+      previousSources >= 10
+      && (lostSources >= 4 || events.length < previousEvents * 0.6)
+    ) {
+      throw new Error(
+        `Playwright coverage regression: ${previousSources}→${nextSources} sources, ${previousEvents}→${events.length} events`,
+      );
+    }
+  }
 
   const output = {
     _meta: {
       generatedAt: new Date().toISOString(),
       generator: "playwright-scrapers",
       scrapersRun: tasks.length,
-      sourceCount: events.length,
+      eventCount: events.length,
+      sourceCount: Object.keys(bySrc).length,
       sources: Object.entries(bySrc).map(([s, n]) => `${s} (${n})`),
+      sourceHealth,
     },
     events,
   };
