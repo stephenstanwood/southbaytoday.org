@@ -67,6 +67,7 @@ import {
   verifyMarketScheduleSource,
 } from "../src/lib/south-bay/marketOccurrence.mjs";
 import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
+import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -6754,6 +6755,24 @@ async function main() {
       if (src && !sourceNames.includes(src)) sourceNames.push(src);
     }
   }
+
+  // The Town's CivicPlus feed carries generic series titles and currently
+  // omits the August 26 Jazz on the Plazz finale. Newsletter extraction also
+  // produced a duplicate July 19 Music in the Park row with the wrong time.
+  // Replace every row for these two verified 2026 schedules with the complete,
+  // performer-specific first-party records before global cleanup and dedup.
+  const losGatosSummer = mergeLosGatosSummerConcerts(allEvents, {
+    fromDate: todayPT(),
+  });
+  allEvents.length = 0;
+  allEvents.push(...losGatosSummer.events);
+  for (const event of losGatosSummer.canonicalEvents) {
+    if (!sourceNames.includes(event.source)) sourceNames.push(event.source);
+  }
+  console.log(
+    `  ✅ Los Gatos summer concerts: ${losGatosSummer.canonicalEvents.length} canonical `
+      + `(${losGatosSummer.replacedCount} source row(s) replaced, ${losGatosSummer.addedCount} added)`,
+  );
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events
   allEvents.forEach((e) => { e.title = cleanTitle(e.title); });
