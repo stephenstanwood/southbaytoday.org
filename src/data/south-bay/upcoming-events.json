@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-20T04:45:33.796Z",
-  "eventCount": 1823,
+  "generatedAt": "2026-07-20T04:48:52.074Z",
+  "eventCount": 1822,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -1532,44 +1532,45 @@
       "label": "fetchFarmersMarketEvents",
       "critical": false,
       "status": "ok",
-      "count": 88,
+      "count": 89,
       "dateCounts": {
-        "2026-07-24": 2,
-        "2026-07-25": 4,
-        "2026-07-28": 1,
-        "2026-07-31": 2,
-        "2026-08-01": 4,
-        "2026-08-04": 1,
-        "2026-08-07": 2,
-        "2026-08-08": 4,
-        "2026-08-11": 1,
-        "2026-08-14": 2,
-        "2026-08-15": 4,
-        "2026-08-18": 1,
-        "2026-08-21": 2,
-        "2026-08-22": 4,
-        "2026-08-25": 1,
-        "2026-08-28": 2,
-        "2026-08-29": 4,
-        "2026-09-01": 1,
-        "2026-09-04": 2,
-        "2026-09-05": 4,
-        "2026-09-08": 1,
-        "2026-09-11": 2,
-        "2026-09-12": 4,
-        "2026-09-15": 1,
-        "2026-09-18": 2,
-        "2026-09-19": 4,
-        "2026-09-22": 1,
-        "2026-09-25": 2,
-        "2026-09-26": 4,
-        "2026-09-29": 1,
-        "2026-10-02": 2,
-        "2026-10-03": 4,
-        "2026-10-09": 2,
-        "2026-10-10": 4,
-        "2026-10-16": 2,
-        "2026-10-17": 4
+        "2026-07-19": 4,
+        "2026-07-22": 1,
+        "2026-07-25": 2,
+        "2026-07-26": 4,
+        "2026-07-29": 1,
+        "2026-08-01": 2,
+        "2026-08-02": 4,
+        "2026-08-05": 1,
+        "2026-08-08": 2,
+        "2026-08-09": 4,
+        "2026-08-12": 1,
+        "2026-08-15": 2,
+        "2026-08-16": 4,
+        "2026-08-19": 1,
+        "2026-08-22": 2,
+        "2026-08-23": 4,
+        "2026-08-26": 1,
+        "2026-08-29": 2,
+        "2026-08-30": 4,
+        "2026-09-02": 1,
+        "2026-09-05": 2,
+        "2026-09-06": 4,
+        "2026-09-09": 1,
+        "2026-09-12": 2,
+        "2026-09-13": 4,
+        "2026-09-16": 1,
+        "2026-09-19": 2,
+        "2026-09-20": 4,
+        "2026-09-23": 1,
+        "2026-09-26": 2,
+        "2026-09-27": 4,
+        "2026-09-30": 1,
+        "2026-10-03": 2,
+        "2026-10-04": 4,
+        "2026-10-10": 2,
+        "2026-10-11": 4,
+        "2026-10-17": 2
       },
       "error": null
     },
@@ -1587,14 +1588,14 @@
       "label": "Meetup",
       "critical": true,
       "status": "ok",
-      "count": 92,
+      "count": 91,
       "dateCounts": {
         "2026-07-20": 6,
         "2026-07-21": 8,
         "2026-07-22": 4,
         "2026-07-23": 11,
         "2026-07-24": 6,
-        "2026-07-25": 12,
+        "2026-07-25": 11,
         "2026-07-26": 5,
         "2026-07-27": 3,
         "2026-07-28": 5,
@@ -1903,20 +1904,21 @@
       "label": "fetchHistorySanJoseEvents",
       "critical": false,
       "status": "ok",
-      "count": 12,
+      "count": 13,
       "dateCounts": {
         "2026-07-25": 1,
         "2026-08-01": 1,
         "2026-08-20": 1,
+        "2026-08-22": 1,
+        "2026-08-29": 1,
+        "2026-09-12": 1,
         "2026-09-13": 1,
         "2026-10-03": 1,
         "2026-10-04": 1,
         "2026-10-23": 1,
         "2026-11-07": 1,
         "2027-12-08": 1,
-        "2028-01-09": 1,
-        "2028-02-01": 1,
-        "2028-02-06": 1
+        "2028-01-09": 1
       },
       "error": null
     },
@@ -2514,16 +2516,16 @@
       "name": "playwright-events",
       "status": "ok",
       "count": 424,
-      "timestamp": "2026-07-20T04:40:39.839Z",
-      "ageHours": 0.08,
+      "timestamp": "2026-07-20T04:48:24.083Z",
+      "ageHours": 0,
       "reason": null
     },
     {
       "name": "inbound-events",
       "status": "ok",
       "count": 513,
-      "timestamp": "2026-07-20T04:40:41.240Z",
-      "ageHours": 0.08,
+      "timestamp": "2026-07-20T04:48:25.474Z",
+      "ageHours": 0,
       "reason": null
     }
   ],
@@ -4115,7 +4117,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/2984/3002",
         "date": "2026-07-20",
-        "checkedAt": "2026-07-20T04:45:16.233Z"
+        "checkedAt": "2026-07-20T04:48:28.154Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AWCwydh1juxp9VpbRo0RkBYCf7qNT4TEYPPV64urb6umI08AeeBZxf4wp9qBYXsKGgLj3o6Z4CxJrl3ZpelsoHf1_QoFyciBQ-mo7-e-EXhITwE6hznkdq12FIluNBAdBLEccfIuARaMVjWHIzSoc4cAsK0h2K3k4Svlcrb9Kj_i0xZWskYbA2sjBqFUhijXLq78jRWly_Xq4Bfquu6BIQttXWTyI7glZW-PDxIyVZAbQCYH7MGXbLSfzP15l2i8TyoHyKjfwl0rAMrkaeRlBIfi_TfY_sxjO__ctjQqp_0Xvk_q4aEBTWxcsCyqz0Cd9D7jOjLUJw97drsqWzzlUaOknIKX7PvXCrTZGDdOvIS8EzzXjjvzabROA21Iay93Uzns3-A4Y-trk1_GdV-MzqOjcfNJM2a6oN1vo6eTczAOHDXvbGVpHVJ_vhirfinAbYHk",
@@ -4425,7 +4427,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/3228/3229",
         "date": "2026-07-24",
-        "checkedAt": "2026-07-20T04:45:16.389Z"
+        "checkedAt": "2026-07-20T04:48:28.180Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AWCwydh1juxp9VpbRo0RkBYCf7qNT4TEYPPV64urb6umI08AeeBZxf4wp9qBYXsKGgLj3o6Z4CxJrl3ZpelsoHf1_QoFyciBQ-mo7-e-EXhITwE6hznkdq12FIluNBAdBLEccfIuARaMVjWHIzSoc4cAsK0h2K3k4Svlcrb9Kj_i0xZWskYbA2sjBqFUhijXLq78jRWly_Xq4Bfquu6BIQttXWTyI7glZW-PDxIyVZAbQCYH7MGXbLSfzP15l2i8TyoHyKjfwl0rAMrkaeRlBIfi_TfY_sxjO__ctjQqp_0Xvk_q4aEBTWxcsCyqz0Cd9D7jOjLUJw97drsqWzzlUaOknIKX7PvXCrTZGDdOvIS8EzzXjjvzabROA21Iay93Uzns3-A4Y-trk1_GdV-MzqOjcfNJM2a6oN1vo6eTczAOHDXvbGVpHVJ_vhirfinAbYHk",
@@ -4624,7 +4626,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/2985/3003",
         "date": "2026-07-27",
-        "checkedAt": "2026-07-20T04:45:16.366Z"
+        "checkedAt": "2026-07-20T04:48:28.135Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AWCwydh1juxp9VpbRo0RkBYCf7qNT4TEYPPV64urb6umI08AeeBZxf4wp9qBYXsKGgLj3o6Z4CxJrl3ZpelsoHf1_QoFyciBQ-mo7-e-EXhITwE6hznkdq12FIluNBAdBLEccfIuARaMVjWHIzSoc4cAsK0h2K3k4Svlcrb9Kj_i0xZWskYbA2sjBqFUhijXLq78jRWly_Xq4Bfquu6BIQttXWTyI7glZW-PDxIyVZAbQCYH7MGXbLSfzP15l2i8TyoHyKjfwl0rAMrkaeRlBIfi_TfY_sxjO__ctjQqp_0Xvk_q4aEBTWxcsCyqz0Cd9D7jOjLUJw97drsqWzzlUaOknIKX7PvXCrTZGDdOvIS8EzzXjjvzabROA21Iay93Uzns3-A4Y-trk1_GdV-MzqOjcfNJM2a6oN1vo6eTczAOHDXvbGVpHVJ_vhirfinAbYHk",
@@ -5411,6 +5413,27 @@
       "firstSeenAt": "2026-07-10T03:12:56.738Z"
     },
     {
+      "id": "a17fefa73a86",
+      "title": "Grupo Frontera",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Regional Mexican Music",
+      "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/AWCwydgztP1LYpKT0hSLrKSSwIRzcvzwYpJRPN4kfl3V4x-kd4rpodjr0znI4Q7hG81VxzloEkEnaWDs6_WdChlBp0OSWoQuE2mOtkAHZ6iEjs39gUrrdqVvi_Kgb7aDs7x9duzPNtB7e5Wp-AxVmkDcodzyctrUTDgwj3tNqVvV_pA-_hosiexr6-rfgPcLE4f-WGWQgraCa41A9vLJqTrFR-AUzgkeGYiW3VxZ905bCtHNteK7ISw_GgzWBr2Avm1ppgogesPkjMJJSS2M92pvWYKi51IBzUiRqt4fq-DxvWHH7SxxfQXClqZzlhePsBDDoH03mmkEeGXpkpI75XDj8kQXPJVqNSg8WnAhqH4OaFaUFXdNxieBoMX-M2pYLy6PFJML7THuqIGQB7OuvOCSxeycyGX1yIWZMKLvcjkXwFLz61NB",
+      "blurb": "Catch Grupo Frontera's Triste Pero Bien Cabron Tour and dance with the raza all night.",
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
+    },
+    {
       "id": "keplersbooks-c56f1c33922d581b",
       "title": "Joseph Ogilvy with James Workman",
       "date": "2026-08-12",
@@ -5444,7 +5467,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Plant Bingo is a fun, laid-back night for plant lovers to gather, play bingo, and win plants as prizes. We'll play multiple rounds of bingo throughout the evening, and each round gives you the chance…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198824&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198824&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198824_event_md_906.png",
       "kidFriendly": false,
@@ -5549,7 +5572,7 @@
       "category": "music",
       "cost": "paid",
       "description": "This event will be an evening of classical and contemporary music performed by the Mission Chamber Orchestra of San Jose with pianist Jon Nakamatsu. The Mcosj presents professional level performances…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=190508&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=190508&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/190508_event_md_426.jpg",
       "kidFriendly": false,
@@ -5633,7 +5656,7 @@
       "category": "music",
       "cost": "paid",
       "description": "This event will be an evening of classical and contemporary music performed by the Mission Chamber Orchestra of San Jose with guitarist Pepe Romero. The Mcosj presents professional level performances…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=197777&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=197777&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/197777_event_md_861.jpg",
       "kidFriendly": false,
@@ -5780,7 +5803,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Silicon Valley's flagship policy festival is back! Now in its fourth year, our premier all-day event features marquee names in media and politics for exclusive interviews, expert panels and in-depth…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=195604&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=195604&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/195604_event_md_157.jpg",
       "kidFriendly": false,
@@ -5864,7 +5887,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Hammer Presents Merry-Achi Christmas 2026 10-time Latin Grammy and US Grammy Nominee (Best Regional Mexican Music Album) 2024 Latin Grammy Nominee (Best Ranchero/Mariachi Album) Mariachi Master Jóse…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198571_event_md_295.png",
       "kidFriendly": false,
@@ -5885,7 +5908,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Hammer Presents Merry-Achi Christmas 2026 10-time Latin Grammy and US Grammy Nominee (Best Regional Mexican Music Album) 2024 Latin Grammy Nominee (Best Ranchero/Mariachi Album) Mariachi Master Jóse…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198571_event_md_295.png",
       "kidFriendly": false,
@@ -5927,7 +5950,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Established in 1999, Lōkahi Polynesian Dance Group proudly celebrates its 27th annual Hō'ike. Last year, we invited you on a journey through Oʻahu. Tonight, we continue that adventure as we welcome…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198240&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198240&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198240_event_md_177.png",
       "kidFriendly": false,
@@ -5948,7 +5971,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Established in 1999, Lōkahi Polynesian Dance Group proudly celebrates its 27th annual Hō'ike. Last year, we invited you on a journey through Oʻahu. Tonight, we continue that adventure as we welcome…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198240&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198240&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198240_event_md_177.png",
       "kidFriendly": false,
@@ -5969,7 +5992,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Fifty years after the startling discovery that monarch butterflies spend winters in the forests of Mexico, photographer and National Geographic Explorer Jaime Rojo reveals this winged wonder of the…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198541&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198541&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198541_event_md_410.png",
       "kidFriendly": false,
@@ -6692,27 +6715,6 @@
       "firstSeenAt": "2026-05-26T19:11:11.176Z"
     },
     {
-      "id": "a17fefa73a86",
-      "title": "Grupo Frontera",
-      "date": "2026-08-09",
-      "displayDate": "Sun, Aug 9",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Hockey",
-      "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
-      "source": "SAP Center",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/AWCwydgztP1LYpKT0hSLrKSSwIRzcvzwYpJRPN4kfl3V4x-kd4rpodjr0znI4Q7hG81VxzloEkEnaWDs6_WdChlBp0OSWoQuE2mOtkAHZ6iEjs39gUrrdqVvi_Kgb7aDs7x9duzPNtB7e5Wp-AxVmkDcodzyctrUTDgwj3tNqVvV_pA-_hosiexr6-rfgPcLE4f-WGWQgraCa41A9vLJqTrFR-AUzgkeGYiW3VxZ905bCtHNteK7ISw_GgzWBr2Avm1ppgogesPkjMJJSS2M92pvWYKi51IBzUiRqt4fq-DxvWHH7SxxfQXClqZzlhePsBDDoH03mmkEeGXpkpI75XDj8kQXPJVqNSg8WnAhqH4OaFaUFXdNxieBoMX-M2pYLy6PFJML7THuqIGQB7OuvOCSxeycyGX1yIWZMKLvcjkXwFLz61NB",
-      "blurb": "Catch Grupo Frontera's Triste Pero Bien Cabron Tour and dance with the raza all night.",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
-    },
-    {
       "id": "keplersbooks-092989ca107b7113",
       "title": "Kamini Ramani with Judy Estrin and Srinija Srinivasan",
       "date": "2026-09-30",
@@ -6977,7 +6979,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "A vivid journey through Silk Road dance traditions, brought to life with original choreography, rich costuming, and immersive design.",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=193168&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=193168&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/193168_event_md_621.png",
       "kidFriendly": false,
@@ -10136,7 +10138,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198572&s=54a6138e-c0fa-4643-ac4e-a71eed8ff61b",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198572&s=d9a7fb18-6301-4e63-ad4c-ff5aad61ed5a",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/167990_event_md_478.png",
       "kidFriendly": false,
@@ -19952,25 +19954,25 @@
       "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "4d8e7f7d8ca6",
+      "id": "historysj-a18d9b4aefae1181",
       "title": "Chicano Soul Fest 2026",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
       "time": "11:00 AM",
       "endTime": "7:00 PM",
       "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://historysanjose.org/programs-events/",
+      "url": "https://historysanjose.org/programs-events//page/2",
       "source": "History San Jose",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJj67qoGUzjoARpofMbag2H7o/photos/AWCwydheg5Np6w6Q1EtfkFo4Q_Y6ZvezuHFkJlLahng2uK2Msn3tCloYjVeRug01mdvBmtKbj_vztEbOydNwROvS2NQVlO2t2xoGRP6Qsze45B-VvSmrJ8h6z82shX9OWKNY2L05kYTxGOJBHQzFO94IURgaBOHlhJXvhz3yFAkjFgOe6Un3Tf6XHuNMSYkjDXkyitkCQLAWYiEQT9mE9kzfmgGtaMtUqF4_ZubDI3HjkoEFaCr1J-FJ-70vqPzr3oqlwg3xChOPruL5zl3CP-H_g7E71InBYFF9j3Rb6PBBTduykFobvOsST3VmO9RCaGr_mJM1dqZgZCBqpv4B2KiawqiIMBZWKzpoV9J9glsep8xRZlza7UcSzbRY-en5Kwm8zlNHvkQzLA_f_flVG38reD9q9CSA6MwhrMaT7OuWWeBm4w9q",
       "blurb": "Dance to live Chicano soul music and sample food from local vendors.",
-      "firstSeenAt": "2026-07-20T04:45:33.785Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
       "id": "saratoga-034ea7e2024db7ab",
@@ -19994,25 +19996,25 @@
       "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "b092b0363b0d",
+      "id": "historysj-3332eed90f923d17",
       "title": "Cars in the Park",
       "date": "2026-09-12",
       "displayDate": "Sat, Sep 12",
       "time": "11:00 AM",
       "endTime": "4:00 PM",
       "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
       "city": "san-jose",
-      "category": "community",
+      "category": "outdoor",
       "cost": "paid",
       "description": "",
-      "url": "https://forms.gle/vBFRPfcS6ovjf7WG6",
+      "url": "https://fareharbor.com/embeds/book/historysanjose/items/314579/?full-items=yes",
       "source": "History San Jose",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJj67qoGUzjoARpofMbag2H7o/photos/AWCwydheg5Np6w6Q1EtfkFo4Q_Y6ZvezuHFkJlLahng2uK2Msn3tCloYjVeRug01mdvBmtKbj_vztEbOydNwROvS2NQVlO2t2xoGRP6Qsze45B-VvSmrJ8h6z82shX9OWKNY2L05kYTxGOJBHQzFO94IURgaBOHlhJXvhz3yFAkjFgOe6Un3Tf6XHuNMSYkjDXkyitkCQLAWYiEQT9mE9kzfmgGtaMtUqF4_ZubDI3HjkoEFaCr1J-FJ-70vqPzr3oqlwg3xChOPruL5zl3CP-H_g7E71InBYFF9j3Rb6PBBTduykFobvOsST3VmO9RCaGr_mJM1dqZgZCBqpv4B2KiawqiIMBZWKzpoV9J9glsep8xRZlza7UcSzbRY-en5Kwm8zlNHvkQzLA_f_flVG38reD9q9CSA6MwhrMaT7OuWWeBm4w9q",
       "blurb": "Walk through rows of classic cars, hot rods, and lowriders on display.",
-      "firstSeenAt": "2026-07-20T03:58:32.284Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
       "id": "historysj-5b0d2f7ec0b656e6",
@@ -28983,6 +28985,118 @@
       "firstSeenAt": "2026-07-17T03:11:37.789Z"
     },
     {
+      "id": "farmersmarket-8d9e7006aab32344",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-07-19",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
+      "id": "farmersmarket-a1264f94e2151632",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-07-19",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
+      "id": "farmersmarket-d40e3357da989ae0",
+      "title": "Campbell Farmers Market",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Downtown Campbell",
+      "address": "Campbell Ave, Campbell",
+      "city": "campbell",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://uvfm.org/campbell-sundays",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://uvfm.org/campbell-sundays",
+        "date": "2026-07-19",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
+      },
+      "audienceAge": "all",
+      "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
+      "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
+      "id": "farmersmarket-751b82ffb315936f",
+      "title": "California Ave Farmers Market",
+      "date": "2026-07-19",
+      "displayDate": "Sun, Jul 19",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "California Avenue",
+      "address": "California Ave, Palo Alto",
+      "city": "palo-alto",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://uvfm.org/palo-alto-sundays",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://uvfm.org/palo-alto-sundays",
+        "date": "2026-07-19",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
+      },
+      "audienceAge": "all",
+      "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
+      "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
       "id": "inbound-e74d0b07ea133b61",
       "title": "Paint Your Pet's Portrait Workshop",
       "date": "2026-07-19",
@@ -29004,10 +29118,10 @@
       "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
-      "id": "farmersmarket-83135d268c054941",
+      "id": "farmersmarket-23b8c28abf8d009c",
       "title": "Saratoga Farmers Market",
-      "date": "2026-07-24",
-      "displayDate": "Fri, Jul 24",
+      "date": "2026-07-25",
+      "displayDate": "Sat, Jul 25",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -29023,19 +29137,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-07-24",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-07-25",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-926a87610444d0e3",
+      "id": "farmersmarket-6581a6fb0a6dd2bb",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-07-24",
-      "displayDate": "Fri, Jul 24",
+      "date": "2026-07-25",
+      "displayDate": "Sat, Jul 25",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -29051,19 +29165,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-07-24",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-07-25",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-f62e5a5698eff0a9",
+      "id": "farmersmarket-5526ff91c26d1e46",
       "title": "Mountain View Farmers Market",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
+      "date": "2026-07-26",
+      "displayDate": "Sun, Jul 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -29079,19 +29193,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-07-25",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-07-26",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-29d345ab8aa36e1f",
+      "id": "farmersmarket-03f396ab79ec8713",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
+      "date": "2026-07-26",
+      "displayDate": "Sun, Jul 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -29107,19 +29221,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-07-25",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-07-26",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-e847fb561d6aae3c",
+      "id": "farmersmarket-a026a925b44daea8",
       "title": "Campbell Farmers Market",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
+      "date": "2026-07-26",
+      "displayDate": "Sun, Jul 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -29135,19 +29249,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-07-25",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-07-26",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-b4299de2dffa7c18",
+      "id": "farmersmarket-4da7f62507570253",
       "title": "California Ave Farmers Market",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
+      "date": "2026-07-26",
+      "displayDate": "Sun, Jul 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -29163,13 +29277,13 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-07-25",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-07-26",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
       "id": "inbound-63f89dae4563132a",
@@ -29193,10 +29307,10 @@
       "firstSeenAt": "2026-07-13T03:10:21.187Z"
     },
     {
-      "id": "farmersmarket-84d4e747281114f5",
+      "id": "farmersmarket-98b704a84b096799",
       "title": "Santana Row Farmers Market",
-      "date": "2026-07-28",
-      "displayDate": "Tue, Jul 28",
+      "date": "2026-07-29",
+      "displayDate": "Wed, Jul 29",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -29212,131 +29326,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-07-28",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-07-29",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-5e5d5954caba5b78",
+      "id": "farmersmarket-38a543240278a9cb",
       "title": "Saratoga Farmers Market",
-      "date": "2026-07-31",
-      "displayDate": "Fri, Jul 31",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-07-31",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-1514b5704c64b14b",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-07-31",
-      "displayDate": "Fri, Jul 31",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-07-31",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-d668c5ca54a40c66",
-      "title": "Mountain View Farmers Market",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-08-01",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-216546f0e668a3b2",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-b99a600cd25af692",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-08-01",
       "displayDate": "Sat, Aug 1",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-08-01",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
+      "id": "farmersmarket-394c541e62bec700",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-08-02",
+      "displayDate": "Sun, Aug 2",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-08-02",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
+    },
+    {
+      "id": "farmersmarket-835cc61331808798",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-08-02",
+      "displayDate": "Sun, Aug 2",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-08-02",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-b01e5dcee55f361c",
+      "id": "farmersmarket-5abca016ee4f6351",
       "title": "Campbell Farmers Market",
-      "date": "2026-08-01",
-      "displayDate": "Sat, Aug 1",
+      "date": "2026-08-02",
+      "displayDate": "Sun, Aug 2",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -29352,19 +29466,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-08-01",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-08-02",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-297efa87ddb537cc",
+      "id": "farmersmarket-1a0b6283414ee207",
       "title": "California Ave Farmers Market",
-      "date": "2026-08-01",
-      "displayDate": "Sat, Aug 1",
+      "date": "2026-08-02",
+      "displayDate": "Sun, Aug 2",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -29380,19 +29494,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-08-01",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-08-02",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-04-28T11:08:03.535Z"
     },
     {
-      "id": "farmersmarket-2c211a172414a4ee",
+      "id": "farmersmarket-677c9d63fef854f8",
       "title": "Santana Row Farmers Market",
-      "date": "2026-08-04",
-      "displayDate": "Tue, Aug 4",
+      "date": "2026-08-05",
+      "displayDate": "Wed, Aug 5",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -29408,131 +29522,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-08-04",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-08-05",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-07T11:10:48.014Z"
     },
     {
-      "id": "farmersmarket-602a125790d698d4",
+      "id": "farmersmarket-d829929229b523fa",
       "title": "Saratoga Farmers Market",
-      "date": "2026-08-07",
-      "displayDate": "Fri, Aug 7",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-08-07",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-718ca5d9e2c54d5b",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-08-07",
-      "displayDate": "Fri, Aug 7",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-08-07",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-7e90a7a1bec0b76e",
-      "title": "Mountain View Farmers Market",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-08-08",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-05-10T11:11:57.456Z"
     },
     {
-      "id": "farmersmarket-21839cbbdcad4517",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-069fc3c950405525",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-08-08",
       "displayDate": "Sat, Aug 8",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-08-08",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-05-10T11:11:57.456Z"
+    },
+    {
+      "id": "farmersmarket-fbb403eb590df1a1",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-08-09",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-05-11T11:09:02.228Z"
+    },
+    {
+      "id": "farmersmarket-8aacec119241744c",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-08-09",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-11T11:09:02.228Z"
     },
     {
-      "id": "farmersmarket-06479129d249c4c6",
+      "id": "farmersmarket-385bc08137d8ffe2",
       "title": "Campbell Farmers Market",
-      "date": "2026-08-08",
-      "displayDate": "Sat, Aug 8",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -29548,19 +29662,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-08-08",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-08-09",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-11T11:09:02.228Z"
     },
     {
-      "id": "farmersmarket-4fd97ddf75edcdff",
+      "id": "farmersmarket-69ad3874b279f4bf",
       "title": "California Ave Farmers Market",
-      "date": "2026-08-08",
-      "displayDate": "Sat, Aug 8",
+      "date": "2026-08-09",
+      "displayDate": "Sun, Aug 9",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -29576,19 +29690,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-08-08",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-08-09",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-11T11:09:02.228Z"
     },
     {
-      "id": "farmersmarket-605657bcf8b622e7",
+      "id": "farmersmarket-b65323706c54830c",
       "title": "Santana Row Farmers Market",
-      "date": "2026-08-11",
-      "displayDate": "Tue, Aug 11",
+      "date": "2026-08-12",
+      "displayDate": "Wed, Aug 12",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -29604,131 +29718,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-08-11",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-08-12",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-14T11:10:25.823Z"
     },
     {
-      "id": "farmersmarket-131158a19815e4a7",
+      "id": "farmersmarket-d5888b1fdcaae1dc",
       "title": "Saratoga Farmers Market",
-      "date": "2026-08-14",
-      "displayDate": "Fri, Aug 14",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-08-14",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-9e1537bd8d78ef42",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-08-14",
-      "displayDate": "Fri, Aug 14",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-08-14",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-2929567fbf574f29",
-      "title": "Mountain View Farmers Market",
       "date": "2026-08-15",
       "displayDate": "Sat, Aug 15",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-08-15",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-05-17T11:12:19.569Z"
     },
     {
-      "id": "farmersmarket-6b21a0d99d2b0cbe",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-4e62e6e5a512ae22",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-08-15",
       "displayDate": "Sat, Aug 15",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-08-15",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-05-17T11:12:19.569Z"
+    },
+    {
+      "id": "farmersmarket-3ab51a1ffdaaab59",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-08-16",
+      "displayDate": "Sun, Aug 16",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-08-16",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-05-18T19:10:52.211Z"
+    },
+    {
+      "id": "farmersmarket-dc501dc1513a4b10",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-08-16",
+      "displayDate": "Sun, Aug 16",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-08-16",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-18T19:10:52.211Z"
     },
     {
-      "id": "farmersmarket-19948b2e75621048",
+      "id": "farmersmarket-59e470f518754ee4",
       "title": "Campbell Farmers Market",
-      "date": "2026-08-15",
-      "displayDate": "Sat, Aug 15",
+      "date": "2026-08-16",
+      "displayDate": "Sun, Aug 16",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -29744,19 +29858,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-08-15",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-08-16",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-18T19:10:52.211Z"
     },
     {
-      "id": "farmersmarket-82cfebe9aea803df",
+      "id": "farmersmarket-e7ee608f166abcbb",
       "title": "California Ave Farmers Market",
-      "date": "2026-08-15",
-      "displayDate": "Sat, Aug 15",
+      "date": "2026-08-16",
+      "displayDate": "Sun, Aug 16",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -29772,19 +29886,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-08-15",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-08-16",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-18T19:10:52.211Z"
     },
     {
-      "id": "farmersmarket-3ad518335801c702",
+      "id": "farmersmarket-a4cab157ce3e8ef8",
       "title": "Santana Row Farmers Market",
-      "date": "2026-08-18",
-      "displayDate": "Tue, Aug 18",
+      "date": "2026-08-19",
+      "displayDate": "Wed, Aug 19",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -29800,131 +29914,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-08-18",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-08-19",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-21T11:08:57.268Z"
     },
     {
-      "id": "farmersmarket-7b379a3fc31e98c4",
+      "id": "farmersmarket-3954cc61d100bdd1",
       "title": "Saratoga Farmers Market",
-      "date": "2026-08-21",
-      "displayDate": "Fri, Aug 21",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-08-21",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-ee5b0b531abf068c",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-08-21",
-      "displayDate": "Fri, Aug 21",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-08-21",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-ee4ff8950ed169a2",
-      "title": "Mountain View Farmers Market",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-08-22",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
     },
     {
-      "id": "farmersmarket-468b394b5de43f42",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-b5234c2aeb180cf9",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-08-22",
       "displayDate": "Sat, Aug 22",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-08-22",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
+    },
+    {
+      "id": "farmersmarket-b6520dd0a8fa69e0",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-08-23",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
+    },
+    {
+      "id": "farmersmarket-6000bd06bde8dc2d",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-08-23",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
     },
     {
-      "id": "farmersmarket-854459f7caa2990a",
+      "id": "farmersmarket-c82a5c1eb6158d7d",
       "title": "Campbell Farmers Market",
-      "date": "2026-08-22",
-      "displayDate": "Sat, Aug 22",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -29940,19 +30054,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-08-22",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-08-23",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
     },
     {
-      "id": "farmersmarket-a55301ff69b28618",
+      "id": "farmersmarket-bbb9f37a5cea2ea8",
       "title": "California Ave Farmers Market",
-      "date": "2026-08-22",
-      "displayDate": "Sat, Aug 22",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -29968,19 +30082,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-08-22",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-08-23",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-25T11:19:38.194Z"
     },
     {
-      "id": "farmersmarket-ec505c945bf110a3",
+      "id": "farmersmarket-306e975f7e5c4480",
       "title": "Santana Row Farmers Market",
-      "date": "2026-08-25",
-      "displayDate": "Tue, Aug 25",
+      "date": "2026-08-26",
+      "displayDate": "Wed, Aug 26",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -29996,131 +30110,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-08-25",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-08-26",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-05-28T11:12:03.377Z"
     },
     {
-      "id": "farmersmarket-fbcafe8010128947",
+      "id": "farmersmarket-ae906b8f24071932",
       "title": "Saratoga Farmers Market",
-      "date": "2026-08-28",
-      "displayDate": "Fri, Aug 28",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-08-28",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-52f24753b4408911",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-08-28",
-      "displayDate": "Fri, Aug 28",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-08-28",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-fe2725c3b367f67d",
-      "title": "Mountain View Farmers Market",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-08-29",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-05-31T11:09:22.756Z"
     },
     {
-      "id": "farmersmarket-8f90660cd4b9c06d",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-1ebed51d96097e94",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-08-29",
       "displayDate": "Sat, Aug 29",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-08-29",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-05-31T11:09:22.756Z"
+    },
+    {
+      "id": "farmersmarket-c02453069901877d",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-08-30",
+      "displayDate": "Sun, Aug 30",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-08-30",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-06-01T11:11:04.200Z"
+    },
+    {
+      "id": "farmersmarket-ec906105c184ad80",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-08-30",
+      "displayDate": "Sun, Aug 30",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-08-30",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-01T11:11:04.200Z"
     },
     {
-      "id": "farmersmarket-9cd59cd898a22121",
+      "id": "farmersmarket-4717826ec70a1362",
       "title": "Campbell Farmers Market",
-      "date": "2026-08-29",
-      "displayDate": "Sat, Aug 29",
+      "date": "2026-08-30",
+      "displayDate": "Sun, Aug 30",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -30136,19 +30250,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-08-29",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-08-30",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-01T11:11:04.200Z"
     },
     {
-      "id": "farmersmarket-93244c7f5afd1d68",
+      "id": "farmersmarket-a5de1a41856429a8",
       "title": "California Ave Farmers Market",
-      "date": "2026-08-29",
-      "displayDate": "Sat, Aug 29",
+      "date": "2026-08-30",
+      "displayDate": "Sun, Aug 30",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -30164,19 +30278,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-08-29",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-08-30",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-01T11:11:04.200Z"
     },
     {
-      "id": "farmersmarket-06fe785415602804",
+      "id": "farmersmarket-4dd42a83d3e1b796",
       "title": "Santana Row Farmers Market",
-      "date": "2026-09-01",
-      "displayDate": "Tue, Sep 1",
+      "date": "2026-09-02",
+      "displayDate": "Wed, Sep 2",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -30192,131 +30306,131 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-09-01",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-09-02",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-04T19:11:35.462Z"
     },
     {
-      "id": "farmersmarket-b6358e7c6137d7f2",
+      "id": "farmersmarket-ed989e04e4a2f701",
       "title": "Saratoga Farmers Market",
-      "date": "2026-09-04",
-      "displayDate": "Fri, Sep 4",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "West Valley College",
-      "address": "14000 Fruitvale Ave, Saratoga",
-      "city": "saratoga",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-09-04",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
-      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-1203c269451d259b",
-      "title": "Sunnyvale Farmers Market",
-      "date": "2026-09-04",
-      "displayDate": "Fri, Sep 4",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Murphy Avenue",
-      "address": "Murphy Ave, Sunnyvale",
-      "city": "sunnyvale",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/sunnyvale-saturday",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-09-04",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-ce7099fa82a718f2",
-      "title": "Mountain View Farmers Market",
       "date": "2026-09-05",
       "displayDate": "Sat, Sep 5",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
+      "venue": "West Valley College",
+      "address": "14000 Fruitvale Ave, Saratoga",
+      "city": "saratoga",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "url": "https://www.cafarmersmkts.com/saratoga-farmers-market",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-09-05",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
+      "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
     },
     {
-      "id": "farmersmarket-8f85596d417d0768",
-      "title": "Los Gatos Farmers Market",
+      "id": "farmersmarket-10b120bc6d1acd7d",
+      "title": "Sunnyvale Farmers Market",
       "date": "2026-09-05",
       "displayDate": "Sat, Sep 5",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
+      "venue": "Murphy Avenue",
+      "address": "Murphy Ave, Sunnyvale",
+      "city": "sunnyvale",
       "category": "food",
       "cost": "free",
       "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "url": "https://uvfm.org/sunnyvale-saturday",
       "source": "South Bay Signal",
       "kidFriendly": true,
       "projectedRecurrence": true,
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-09-05",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "checkedAt": "2026-07-20T04:48:27.329Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
+    },
+    {
+      "id": "farmersmarket-ecaff50d67767ae9",
+      "title": "Mountain View Farmers Market",
+      "date": "2026-09-06",
+      "displayDate": "Sun, Sep 6",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Caltrain Station",
+      "address": "600 W Evelyn Ave, Mountain View",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
+        "date": "2026-09-06",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
+      },
+      "audienceAge": "all",
+      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
+      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
+    },
+    {
+      "id": "farmersmarket-e13b7a50135c4597",
+      "title": "Los Gatos Farmers Market",
+      "date": "2026-09-06",
+      "displayDate": "Sun, Sep 6",
+      "time": "9:00 AM",
+      "endTime": "1:00 PM",
+      "venue": "Town Park Plaza",
+      "address": "50 University Ave, Los Gatos",
+      "city": "los-gatos",
+      "category": "food",
+      "cost": "free",
+      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
+      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+      "source": "South Bay Signal",
+      "kidFriendly": true,
+      "projectedRecurrence": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-market-schedule",
+        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
+        "date": "2026-09-06",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
     },
     {
-      "id": "farmersmarket-a3aae911e4abd31a",
+      "id": "farmersmarket-f192429ba1eb8e93",
       "title": "Campbell Farmers Market",
-      "date": "2026-09-05",
-      "displayDate": "Sat, Sep 5",
+      "date": "2026-09-06",
+      "displayDate": "Sun, Sep 6",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -30332,19 +30446,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-09-05",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-09-06",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
     },
     {
-      "id": "farmersmarket-55c8c580ea2a4106",
+      "id": "farmersmarket-45c53fc52300d583",
       "title": "California Ave Farmers Market",
-      "date": "2026-09-05",
-      "displayDate": "Sat, Sep 5",
+      "date": "2026-09-06",
+      "displayDate": "Sun, Sep 6",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -30360,19 +30474,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-09-05",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-09-06",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-08T19:12:41.653Z"
     },
     {
-      "id": "farmersmarket-58b5da864d3075e1",
+      "id": "farmersmarket-923c81ee7bea6fd2",
       "title": "Santana Row Farmers Market",
-      "date": "2026-09-08",
-      "displayDate": "Tue, Sep 8",
+      "date": "2026-09-09",
+      "displayDate": "Wed, Sep 9",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -30388,19 +30502,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-09-08",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-09-09",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-545a99d21f7c52dd",
+      "id": "farmersmarket-dcdccb342fab4e0c",
       "title": "Saratoga Farmers Market",
-      "date": "2026-09-11",
-      "displayDate": "Fri, Sep 11",
+      "date": "2026-09-12",
+      "displayDate": "Sat, Sep 12",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -30416,19 +30530,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-09-11",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-09-12",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-c8b61c1a11646495",
+      "id": "farmersmarket-42cebc5035479948",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-09-11",
-      "displayDate": "Fri, Sep 11",
+      "date": "2026-09-12",
+      "displayDate": "Sat, Sep 12",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -30444,19 +30558,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-09-11",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-09-12",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-d4acdc495bc1cc9e",
+      "id": "farmersmarket-d10a9bc4a33e35aa",
       "title": "Mountain View Farmers Market",
-      "date": "2026-09-12",
-      "displayDate": "Sat, Sep 12",
+      "date": "2026-09-13",
+      "displayDate": "Sun, Sep 13",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -30472,19 +30586,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-09-12",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-09-13",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-0c784b8640ffe0fa",
+      "id": "farmersmarket-be3e5abbb06bc38a",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-09-12",
-      "displayDate": "Sat, Sep 12",
+      "date": "2026-09-13",
+      "displayDate": "Sun, Sep 13",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -30500,19 +30614,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-09-12",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-09-13",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-8305623da0dc2e84",
+      "id": "farmersmarket-12a8cf6d360ceebb",
       "title": "Campbell Farmers Market",
-      "date": "2026-09-12",
-      "displayDate": "Sat, Sep 12",
+      "date": "2026-09-13",
+      "displayDate": "Sun, Sep 13",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -30528,19 +30642,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-09-12",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-09-13",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-bc3ac977b0b3f4c5",
+      "id": "farmersmarket-44ae020d0a0d28f9",
       "title": "California Ave Farmers Market",
-      "date": "2026-09-12",
-      "displayDate": "Sat, Sep 12",
+      "date": "2026-09-13",
+      "displayDate": "Sun, Sep 13",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -30556,19 +30670,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-09-12",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-09-13",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-15T19:14:48.784Z"
     },
     {
-      "id": "farmersmarket-0852cab2df6b8f86",
+      "id": "farmersmarket-0879f53c752d78f7",
       "title": "Santana Row Farmers Market",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
+      "date": "2026-09-16",
+      "displayDate": "Wed, Sep 16",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -30584,19 +30698,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-09-15",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-09-16",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-18T11:08:07.074Z"
     },
     {
-      "id": "farmersmarket-42b052b7f592a33c",
+      "id": "farmersmarket-05c6780bf457eae5",
       "title": "Saratoga Farmers Market",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
+      "date": "2026-09-19",
+      "displayDate": "Sat, Sep 19",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -30612,19 +30726,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-09-18",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-09-19",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-21T19:11:04.441Z"
     },
     {
-      "id": "farmersmarket-0004043a36f93f84",
+      "id": "farmersmarket-dc68da79b43c2bf1",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
+      "date": "2026-09-19",
+      "displayDate": "Sat, Sep 19",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -30640,19 +30754,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-09-18",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-09-19",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-21T19:11:04.441Z"
     },
     {
-      "id": "farmersmarket-e0e59e53afd576f7",
+      "id": "farmersmarket-348b90a2c6069c38",
       "title": "Mountain View Farmers Market",
-      "date": "2026-09-19",
-      "displayDate": "Sat, Sep 19",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -30668,19 +30782,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-09-19",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-09-20",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-22T19:10:02.011Z"
     },
     {
-      "id": "farmersmarket-90540605d4cc8260",
+      "id": "farmersmarket-b063067de5837782",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-09-19",
-      "displayDate": "Sat, Sep 19",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -30696,19 +30810,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-09-19",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-09-20",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-22T19:10:02.011Z"
     },
     {
-      "id": "farmersmarket-3ed1e9e3c1da6544",
+      "id": "farmersmarket-e4b0689d30d00723",
       "title": "Campbell Farmers Market",
-      "date": "2026-09-19",
-      "displayDate": "Sat, Sep 19",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -30724,19 +30838,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-09-19",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-09-20",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-22T19:10:02.011Z"
     },
     {
-      "id": "farmersmarket-e4adbcd78a3279bf",
+      "id": "farmersmarket-4255c1a5c8e194ce",
       "title": "California Ave Farmers Market",
-      "date": "2026-09-19",
-      "displayDate": "Sat, Sep 19",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -30752,19 +30866,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-09-19",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-09-20",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-22T19:10:02.011Z"
     },
     {
-      "id": "farmersmarket-a400a08e9385c915",
+      "id": "farmersmarket-e9e3e6e37a5bbbcb",
       "title": "Santana Row Farmers Market",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
+      "date": "2026-09-23",
+      "displayDate": "Wed, Sep 23",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -30780,19 +30894,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-09-22",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-09-23",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-26T03:11:51.138Z"
     },
     {
-      "id": "farmersmarket-46f8df49551fd457",
+      "id": "farmersmarket-d0917df6d725b731",
       "title": "Saratoga Farmers Market",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -30808,19 +30922,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-09-25",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-09-26",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-09ad02dd2aac5677",
+      "id": "farmersmarket-3971e75339d64fcd",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -30836,19 +30950,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-09-25",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-09-26",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-6212a9e203d5aafb",
+      "id": "farmersmarket-53497a41907fbe7e",
       "title": "Mountain View Farmers Market",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -30864,19 +30978,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-09-26",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-09-27",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-aa3f354090ef03ca",
+      "id": "farmersmarket-788f4ced3e2a7c8f",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -30892,19 +31006,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-09-26",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-09-27",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-90d036d8f11fe673",
+      "id": "farmersmarket-96fda25ea586a9cc",
       "title": "Campbell Farmers Market",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -30920,19 +31034,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-09-26",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-09-27",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-8f91f4f3bf7ffb79",
+      "id": "farmersmarket-93f52c6bd253c4e0",
       "title": "California Ave Farmers Market",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -30948,19 +31062,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-09-26",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-09-27",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-06-30T03:13:40.911Z"
     },
     {
-      "id": "farmersmarket-8d1698ae4c59a22d",
+      "id": "farmersmarket-bed824bfca0b67b4",
       "title": "Santana Row Farmers Market",
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
+      "date": "2026-09-30",
+      "displayDate": "Wed, Sep 30",
       "time": "4:00 PM",
       "endTime": "8:00 PM",
       "venue": "Santana Row",
@@ -30976,19 +31090,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
-        "date": "2026-09-29",
-        "checkedAt": "2026-07-20T04:45:14.324Z"
+        "date": "2026-09-30",
+        "checkedAt": "2026-07-20T04:48:26.569Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AWCwydgqSPXbLN1pQ8wMxvla4R5llaEH37U8XEczmrkzxfFAb416dVg6feY-ca4Ch_Fx4wKWWty_Zqg9qMq5sLe-5CiEF8yup8sGCBIwi4ozCeVNy4kV5zRfiM_fiJJRjgZyOg4Zc499oMOhf9yL1ztLntrm7FGIusgXT_iwcC9mJbrOrECLVOeObAnDGGnIEYxMvCVTqZyINW0TGNkZjCjhqQkS_lmAa9L6A9SQ2c9Ofpr8kMkOICUHbNZQG_oe5-kjo3SX4JHK0cz_LDXWPS89E9qdXcTuxfHDkdY2UncG7ch5PmiJaQp36WisfOH_2jQJuOIN3Ehg4oR_AavyWxT0HelaFkRGd_muvilaFM0NKpSANBuiczHwU2AEIxW_k-o3pzDbD-NyWZ3KFlZViVyb8mJ7v9mBLt9eN6ZPqnmY2D6z-w",
       "blurb": "Browse local produce, prepared foods, and craft vendors Wednesday mornings at Santana Row.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-03T03:12:09.309Z"
     },
     {
-      "id": "farmersmarket-1e4a9d06dc3ef0d3",
+      "id": "farmersmarket-58c533c430cd66b9",
       "title": "Saratoga Farmers Market",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-03",
+      "displayDate": "Sat, Oct 3",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -31004,19 +31118,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-10-02",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-10-03",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-833475860a089727",
+      "id": "farmersmarket-50de3f093c1f42bd",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-03",
+      "displayDate": "Sat, Oct 3",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -31032,19 +31146,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-10-02",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-10-03",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-856ef9e586524ae1",
+      "id": "farmersmarket-0a82d0a938519f06",
       "title": "Mountain View Farmers Market",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -31060,19 +31174,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-10-03",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-10-04",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-19efdca1f1d68b57",
+      "id": "farmersmarket-d1c5e220c686baad",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -31088,19 +31202,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-10-03",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-10-04",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-9e428a687c64679a",
+      "id": "farmersmarket-f819ddbfea2c72d1",
       "title": "Campbell Farmers Market",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -31116,19 +31230,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-10-03",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-10-04",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-cb3d4d6ca4d2b088",
+      "id": "farmersmarket-1ab4f3c3d8ef7887",
       "title": "California Ave Farmers Market",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -31144,19 +31258,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-10-03",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-10-04",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-07T03:12:16.178Z"
     },
     {
-      "id": "farmersmarket-f21b72a769319c91",
+      "id": "farmersmarket-256258868e18e345",
       "title": "Saratoga Farmers Market",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -31172,19 +31286,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-10-09",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-10-10",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-13T03:10:21.187Z"
     },
     {
-      "id": "farmersmarket-6b239df80130fbad",
+      "id": "farmersmarket-447ad97904cf987a",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -31200,19 +31314,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-10-09",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-10-10",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-13T03:10:21.187Z"
     },
     {
-      "id": "farmersmarket-530e1378f0c7a9f9",
+      "id": "farmersmarket-fd0315f251e5a679",
       "title": "Mountain View Farmers Market",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Caltrain Station",
@@ -31228,19 +31342,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-10-10",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
+        "date": "2026-10-11",
+        "checkedAt": "2026-07-20T04:48:25.582Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-14T03:14:35.304Z"
     },
     {
-      "id": "farmersmarket-423697743a1fc22b",
+      "id": "farmersmarket-562f346f2df5c714",
       "title": "Los Gatos Farmers Market",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Town Park Plaza",
@@ -31256,19 +31370,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-10-10",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
+        "date": "2026-10-11",
+        "checkedAt": "2026-07-20T04:48:26.443Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-14T03:14:35.304Z"
     },
     {
-      "id": "farmersmarket-281ab2c7bc29d318",
+      "id": "farmersmarket-2804c877e3e44f47",
       "title": "Campbell Farmers Market",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Downtown Campbell",
@@ -31284,19 +31398,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-10-10",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
+        "date": "2026-10-11",
+        "checkedAt": "2026-07-20T04:48:27.065Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
       "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-14T03:14:35.304Z"
     },
     {
-      "id": "farmersmarket-f51fc0bf8c4a2c21",
+      "id": "farmersmarket-5ce502d1483f0ae7",
       "title": "California Ave Farmers Market",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "California Avenue",
@@ -31312,19 +31426,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-10-10",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
+        "date": "2026-10-11",
+        "checkedAt": "2026-07-20T04:48:27.386Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
       "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-14T03:14:35.304Z"
     },
     {
-      "id": "farmersmarket-b82cdcfec2bb8247",
+      "id": "farmersmarket-cc78ec12f3541ac4",
       "title": "Saratoga Farmers Market",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "West Valley College",
@@ -31340,19 +31454,19 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
-        "date": "2026-10-16",
-        "checkedAt": "2026-07-20T04:45:14.035Z"
+        "date": "2026-10-17",
+        "checkedAt": "2026-07-20T04:48:26.508Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AWCwydjcciXPOK-hPqdiVGYpIt2VqN6Ex8vTE8oLgSx_iSBcGQJyvET-iQwlMhQYbzkxRi2bwAipZFeMTsYd_FSgnq2sE82MvGTl03j-Z7IB6PS9OLtEPRsNZiib91488inf1WQRBrBIv1Xc0hi6uybIEqJDGJqhm92MBQLx55-1whAeQJ2b6f4FyiBe6kFvIlPI9FcrZAH2omW2hEn0EeF6G74O9OmI9-CBZIvrPDsVOZWpcRfnepygx4vJ71gZaz3im0y1qdPBsaOrwSlAUkiHMn56QyA8owQrdbXcZz_VgzoZ376Oj77eLzHWFEQHX_UUT3MP22ye-9wzY1KwrNFb7pRP9BquLVkdSkUGvjKsCa1s-trjsxg6fSa1oSiEviHuksEnvXsseh9dZcnFK6Nh_m_vz5Nn0GWoaGyBOxKBeVU4_A",
       "blurb": "Browse local produce and artisan goods at West Valley College on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
-      "id": "farmersmarket-ad49cb2c991d26c8",
+      "id": "farmersmarket-197adde6a9d51a1e",
       "title": "Sunnyvale Farmers Market",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": "9:00 AM",
       "endTime": "1:00 PM",
       "venue": "Murphy Avenue",
@@ -31368,125 +31482,13 @@
       "occurrenceEvidence": {
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
-        "date": "2026-10-16",
-        "checkedAt": "2026-07-20T04:45:15.295Z"
+        "date": "2026-10-17",
+        "checkedAt": "2026-07-20T04:48:27.329Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Browse produce stands and grab breakfast tacos along Murphy Avenue on Saturday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-607799ce044e9051",
-      "title": "Mountain View Farmers Market",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Caltrain Station",
-      "address": "600 W Evelyn Ave, Mountain View",
-      "city": "mountain-view",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
-        "date": "2026-10-17",
-        "checkedAt": "2026-07-20T04:45:11.974Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce and prepared foods at the Caltrain Station farmers market on Sunday mornings.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-6a1b1f4209c5279c",
-      "title": "Los Gatos Farmers Market",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Town Park Plaza",
-      "address": "50 University Ave, Los Gatos",
-      "city": "los-gatos",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
-        "date": "2026-10-17",
-        "checkedAt": "2026-07-20T04:45:13.712Z"
-      },
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse fresh produce, artisan goods, and grab prepared food from local vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-b1cc0d9f430227e9",
-      "title": "Campbell Farmers Market",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "Downtown Campbell",
-      "address": "Campbell Ave, Campbell",
-      "city": "campbell",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/campbell-sundays",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/campbell-sundays",
-        "date": "2026-10-17",
-        "checkedAt": "2026-07-20T04:45:15.059Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AWCwydjYoUn_Pvp5SLlLBJ_Pref4YcqR48i8ZRqIfxs3vkaCN6YZpHo1zwOmUf1Xw3DaBFeQQsNT2Xld15euliOz2yQ8cZSz2cnUMb7yBKA14zIsPwu8TJ0JdsNFTX2XTok-fRmYKkiqqKwcL0OPgTEEBnw-PMEEKCvDL4VOmpiTuokdhVf9VtT_H4g1I8-K9Omm1cvvvf7Zm9KUpnoSXvNwgC0ZjQj7oncNeTg7Hk7MZPGv6AbMbQv5U4hxQL_hr2O-m2HwVewUDawivq3I1rrjCUUFbZXAaeCCiJRstd0SVJEwHQVinG-0kYvxq5VPZGP4IP-QmYieEEZI8E98rwrfQNGgJz_kSSYRtKxbYqdi9EiFZpnVirHh0D5bKvEnTgqmEQCdRVpIaBhRkEsiKXA-SXNjUR3Z2y8yad6fb4atzeLrGRrYUwgULjeI0EtoXeT9",
-      "blurb": "Browse locally grown produce and prepared foods at Downtown Campbell's Sunday market.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
-    },
-    {
-      "id": "farmersmarket-502b5c8eb0eaa004",
-      "title": "California Ave Farmers Market",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "9:00 AM",
-      "endTime": "1:00 PM",
-      "venue": "California Avenue",
-      "address": "California Ave, Palo Alto",
-      "city": "palo-alto",
-      "category": "food",
-      "cost": "free",
-      "description": "Weekly open-air farmers market featuring local produce, artisan goods, and prepared foods.",
-      "url": "https://uvfm.org/palo-alto-sundays",
-      "source": "South Bay Signal",
-      "kidFriendly": true,
-      "projectedRecurrence": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-market-schedule",
-        "sourceUrl": "https://uvfm.org/palo-alto-sundays",
-        "date": "2026-10-17",
-        "checkedAt": "2026-07-20T04:45:15.315Z"
-      },
-      "audienceAge": "all",
-      "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AWCwydgyRm1NoRUTb0pG3KojUSXfxKpqQmRiPHoGTFoTLqtXEb2BIBZJWBx_oytX5Zsf0inMTV1dDncm0R9pJSwg1w7VigoBzPt7OAltRys4WbKUyem406AMyJbxosF-Ze6kIdUxevqcx9nfdHowVd9QlSaOHO6T4zPAC-XaSculRcrAtbJPd2cGh1HqU1_Cptr0mgFLb6S91-sKcStkPbdGMLfAYqHQNowqZoOXPWZNE8-5O5ikIdW89YJxnQr3IrW9PshXJoLqqLkMVqP82uEELCW_NuBfxfOKpMFGEqATuNc3gOklnfEd4cBOK3ZEeQ2zhgOh1GGJeGqXgOmsVP4GRi4XtdlBPWZNxUSJEOo593vaNuLAm4DiPLXffUzZTE966tqVlqtrhbKJwG-tb4_0HPAkPxZdtN7bHK18gRPC8fnh6eVC",
-      "blurb": "Shop California Avenue Sundays for local produce, prepared foods, and crafted goods from regional vendors.",
-      "firstSeenAt": "2026-07-20T03:32:31.736Z"
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
       "id": "inbound-efe82d2d75833358",
@@ -31676,26 +31678,6 @@
       "photoRef": "places/ChIJZQ5MDmbKj4AR6lFAdgsJeOc/photos/AWCwydh-JfglMn5fICNpAkkMNWaFLfC-M3GKwVNW-spA9Ei7uZGPjKXn_2jMg4JZEiyuBkAyc4xRyTedsx1M8lE741C3wRKKaL4ttgeF9qbJhO_t6qZPDlWUCs3BGcYamjdKGMhqWHNjKhUZ75XWlcFSJe7Vgr8ieU0W9zu589lA-ojveAb4cgtHnnpKHZHVvZe7b4qA5a8MRqXBggGtkNlRp-H9huo4QNCp_DixdZbYE8VLJbyiKLYr6tSLp5aeR-L3rrN_fWBGi3rrxbA2fPly_1v_zETmZpxRHShCOo7dIgSL1lHfOAZTImMucqWDyX2PIf2SH2fuzEit5ZA99gNdodoE_OMc9mUZAWLbTYWDpZDtYoQjfgzLwg9swexRkuKhsot761pfUsFv_LnnDnohl7CYOAi87noCYsNW9bAwZ07kGg",
       "blurb": "Hear Latin jazz, mambo, and funk with infectious grooves outdoors.",
       "firstSeenAt": "2026-06-22T19:10:02.011Z"
-    },
-    {
-      "id": "meetup-9466e95e8270ca20",
-      "title": "Community Work Day at the Native Plant Garden in Kirk Park",
-      "date": "2026-07-25",
-      "displayDate": "Sat, Jul 25",
-      "time": "9:00 AM",
-      "endTime": "11:00 AM",
-      "venue": "Native Plant Garden",
-      "address": null,
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "Meetup event by California Native Plant Society - Santa Clara Valley Chapter.",
-      "url": "https://www.meetup.com/california-native-plant-society-santa-clara-valley-chapter/events/315092291/",
-      "source": "Meetup",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://secure.meetupstatic.com/photos/event/7/4/7/c/600_520889820.jpeg",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
       "id": "inbound-1eb4719265a5fb60",
@@ -32517,6 +32499,7 @@
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJH6xsrTi3j4AR2rEcB3hIt5w/photos/AWCwydggw1lKnlRZqo_0q7BHjW68uF4qff1UAFpWf6pgE13df7GzjZ862SYocIptweR3gEOKV51QGrTkG_FfzjTrCNxzSdTHFEzYqZXt3RuEpiVQuWr0tfdb9BqXDTA-6OsWkguqjQ6p6td6Gw4qL1g73a3tD35TPeog-VlD3x850umAgXoAbYgxji3YsRkPui60L-kDBFn-ODTADctYXqrg584Oa_XqI8uK5on_AUs61k70M7kua1pjlhbE_3B7AOndgl1nH4HRppLm7jE8fvFry0LTcDXCVesWYBtpbokUhZMrg8EI_D10gbeE4MOorTcIcPA4CuHg_XkEgOgGRSht3UBZkKSdoTipzjLE1PP6PYNQo2FVSfty2ksQPLTLDfxCzcGZic8ntCKutAQbX9_IzjUKmikJfkR_jmtvyf9RSJeK4uMK",
+      "blurb": "Watch Super Mario Galaxy on the big screen at Whisman Park with a crowd of 20s, 30s and 40s locals.",
       "firstSeenAt": "2026-07-20T04:45:33.785Z"
     },
     {
