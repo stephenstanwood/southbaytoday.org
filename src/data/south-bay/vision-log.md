@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-20 — Cycle 197: Spectro Cloud Added to Recently Funded
+
+### Context
+Monday July 20, 2026. Automated builder cycle. Continued the Tech tab funding watch after the earlier Odyssey pass and found one clean missing South Bay round: Spectro Cloud's San Jose Series D from July 15.
+
+### What Was Built
+**Tech tab: Spectro Cloud added to RECENTLY_FUNDED** (San Jose, $100M+ Series D, July 15, 2026). Spectro Cloud builds AI infrastructure management software for enterprises, public-sector teams, neoclouds, and sovereign clouds. Its PaletteAI platform helps teams build, govern, and operate GPU clusters, AI factories, and distributed inference across mixed environments. The oversubscribed round was led by Growth Equity at Goldman Sachs Alternatives, with AMD Ventures, Ericsson, LG Technology Ventures, and Maximus joining; total capital raised is now $260M. Verified against Spectro Cloud's own announcement (`https://www.spectrocloud.com/news/spectro-cloud-raises-100-million-series-d-to-accelerate-production-ai-adoption`).
+
+### Why This Was the Strongest Move
+It updates the rendered Tech tab's most recent funding cards with a fresh San Jose AI-infrastructure company and automatically lifts the year-to-date funding count and total. It does not touch protected Home, Events, or Food surfaces.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch (ongoing)** — keep scanning primary releases for genuinely fresh South Bay AI, chip, security, cloud, and robotics rounds.
+2. **Tech location audit** — keep spot-checking ambiguous Peninsula/South Bay funding items; reject Boston, SF, San Mateo, Redwood City, and Menlo Park unless coverage explicitly expands.
+3. **Logo follow-up** — let the tech-logo/favicons pipeline resolve `spectro-cloud`; add a narrow override only if it returns a placeholder.
+
+---
+
 ## 2026-07-20 — Cycle 196: Odyssey Added to Tech Coverage
 
 ### Context

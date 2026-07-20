@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// South Bay Tech Companies — curated snapshot, Q1–Q2 2026
+// South Bay Tech Companies — curated 2026 snapshot
 // sccEmployeesK: Santa Clara County local jobs estimate (not global headcount)
 // Sources: company filings, campus reports, EDD data, news coverage
 // ---------------------------------------------------------------------------
@@ -1021,6 +1021,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // the South Bay. Was mislabeled "Santa Clara." Founder Elias Manousos's
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
+  {
+    id: "spectro-cloud",
+    name: "Spectro Cloud",
+    city: "San Jose",
+    category: "cloud",
+    round: "Series D",
+    amount: "$100M+",
+    date: "2026-07-15",
+    tagline:
+      "AI infrastructure management software for enterprises, public-sector teams, neoclouds, and sovereign clouds: PaletteAI gives platform teams one operating model to build, govern, and run GPU clusters, AI factories, and distributed inference without locking into a single stack. The oversubscribed Series D was led by Growth Equity at Goldman Sachs Alternatives, with AMD Ventures, Ericsson, LG Technology Ventures, and Maximus joining; it brings total capital raised to $260M.",
+    color: "#1d4ed8",
+    url: "https://www.spectrocloud.com/news/spectro-cloud-raises-100-million-series-d-to-accelerate-production-ai-adoption",
+  },
   {
     id: "sambanova-series-f",
     name: "SambaNova Systems",
