@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-17T03:08:42.256Z",
+      "generatedAt": "2026-07-20T05:07:52.081Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 9 – Jul 16",
+      "dateRange": "Jul 12 – Jul 19",
       "stats": {
-        "total": 373,
-        "notable": 17,
-        "newUnits": 4,
-        "totalValuation": 42746606
+        "total": 474,
+        "notable": 24,
+        "newUnits": 6,
+        "totalValuation": 12828747
       },
       "permits": [
         {
@@ -27,6 +27,18 @@
           "subtype": "2nd Unit Added"
         },
         {
+          "id": "2025-138924-RS",
+          "address": "1205 Alkae Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 121737,
+          "units": 1,
+          "issueDate": "2026-07-16",
+          "subtype": "2nd Unit Added"
+        },
+        {
           "id": "2026-104918-RS",
           "address": "1082 Danbury Dr #2",
           "category": "residential-new",
@@ -39,40 +51,40 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-145028-RS",
-          "address": "1524 Camino Monde #2",
+          "id": "2026-102939-RS",
+          "address": "610 Bundy Av",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Pdox Detached ADU",
-          "valuation": 82155,
+          "description": "Hcd Approved Detached ADU",
+          "valuation": 80747,
           "units": 1,
-          "issueDate": "2026-07-10",
+          "issueDate": "2026-07-15",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-140264-RS",
-          "address": "2045 Malden Av #2",
+          "id": "2025-143452-RS",
+          "address": "1400 Bouret Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 72127,
+          "description": "Attached Rear ADU",
+          "valuation": 59813,
           "units": 1,
-          "issueDate": "2026-07-10",
+          "issueDate": "2026-07-15",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-123919-CI",
-          "address": "2333 Samaritan Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
+          "id": "2025-134961-RS",
+          "address": "1868 Rosswood Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Good Samaritan Balance-to-Complete Parking Garage",
-          "valuation": 29282400,
-          "units": 0,
-          "issueDate": "2026-07-10",
-          "subtype": "Open Public Parking Garage"
+          "description": "Code Case ADU",
+          "valuation": 52600,
+          "units": 1,
+          "issueDate": "2026-07-15",
+          "subtype": "2nd Unit Added"
         },
         {
           "id": "2026-124186-CI",
@@ -111,18 +123,6 @@
           "subtype": "Retail"
         },
         {
-          "id": "2026-126397-CI",
-          "address": "5601 Great Oaks Py #50",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Western Digital (Bem100%) Ebarra Cmp Tool Install",
-          "valuation": 900000,
-          "units": 0,
-          "issueDate": "2026-07-10",
-          "subtype": "Manufacturing"
-        },
-        {
           "id": "2026-127360-CI",
           "address": "932 Blossom Hill Rd",
           "category": "commercial-large",
@@ -137,29 +137,41 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-17T03:08:44.410Z",
+      "generatedAt": "2026-07-20T05:07:54.418Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 9 – Jul 16",
+      "dateRange": "Jul 12 – Jul 19",
       "stats": {
-        "total": 107,
-        "notable": 5,
+        "total": 127,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-01916",
-          "address": "770 Moreno Av",
+          "id": "26BLD-01909",
+          "address": "1610 Dana Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Update electrical and lighting in the kitchen.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-14",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01947",
+          "address": "750 Forest Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-07-14",
+          "issueDate": "2026-07-16",
           "subtype": "Permit Issued"
         },
         {
@@ -173,6 +185,30 @@
           "units": 0,
           "issueDate": "2026-07-13",
           "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-01916",
+          "address": "770 Moreno Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-14",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00187",
+          "address": "1053 E Meadow Cir",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "PLN OTC Revision to Minor AR Application 25PLN-00003, Reduction in parking count provided within allowed minimum parking requirements under the PAMC Section 18.52.050.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-16",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00185",
