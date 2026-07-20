@@ -651,9 +651,10 @@ function trimPeriod(s) {
 
 function buildTonightBlurb(event) {
   const why = event.blurb || event.description || "";
+  const locality = eventLocality(event);
   const where = event.venue
-    ? `at ${event.venue}${event.city ? ` in ${cityName(event.city)}` : ""}`
-    : (event.city ? `in ${cityName(event.city)}` : "");
+    ? `at ${event.venue}${locality ? ` in ${locality}` : ""}`
+    : (locality ? `in ${locality}` : "");
   const lead = [
     event.cost === "free" ? "Free" : null,
     event.time ? `at ${event.time}` : null,
@@ -1007,7 +1008,7 @@ function compactEventForEditor(e, idx) {
     title: e.title || "",
     time: e.time || "",
     venue: e.venue || "",
-    city: cityName(e.city),
+    city: eventLocality(e),
     category: e.category || "",
     cost: e.cost || "",
     source: e.source || "",
@@ -1147,7 +1148,7 @@ function parseClaudeJson(raw) {
 function isTitleAnchoredToEvent(title, event) {
   const text = normalizeComparable(title);
   if (!text || !event) return false;
-  const anchorText = normalizeComparable(`${event.title || ""} ${event.venue || ""} ${cityName(event.city) || ""}`);
+  const anchorText = normalizeComparable(`${event.title || ""} ${event.venue || ""} ${eventLocality(event) || ""}`);
   const anchorTokensSet = new Set(anchorText.split(/\s+/).filter((t) => t.length >= 4));
   return text.split(/\s+/).some((t) => t.length >= 4 && anchorTokensSet.has(t));
 }
@@ -1282,7 +1283,7 @@ function isBlurbAnchoredToEvent(blurb, event) {
   const anchors = [
     event.title,
     event.venue,
-    cityName(event.city),
+    eventLocality(event),
   ].flatMap(anchorTokens);
   return anchors.some((token) => token.length >= 5 && text.includes(token));
 }
@@ -1425,9 +1426,12 @@ const CITY_LABEL = {
   "mountain-view": "Mountain View", "palo-alto": "Palo Alto", "cupertino": "Cupertino",
   "campbell": "Campbell", "los-gatos": "Los Gatos", "saratoga": "Saratoga",
   "los-altos": "Los Altos", "milpitas": "Milpitas", "morgan-hill": "Morgan Hill",
-  "gilroy": "Gilroy", "santa-clara-county": "Santa Clara County",
+  "menlo-park": "Menlo Park", "gilroy": "Gilroy", "santa-clara-county": "Santa Clara County",
 };
 const cityName = (id) => CITY_LABEL[id] || (id || "").replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+function eventLocality(event) {
+  return String(event?.locality || "").trim() || cityName(event?.city);
+}
 
 export function renderEmail(data) {
   const subject = `South Bay Today — ${data.longDate}`;
@@ -1622,7 +1626,7 @@ function eventMeta(e) {
   return [
     e.time,
     e.venue,
-    e.city ? cityName(e.city) : null,
+    eventLocality(e),
     e.cost === "free" ? "Free" : null,
   ].filter(Boolean).join(" · ");
 }

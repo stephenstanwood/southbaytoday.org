@@ -24,6 +24,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { normalizeMidpenOccurrenceUrl } from "./lib/official-event-sources.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -1861,22 +1862,19 @@ async function scrapePaloAltoArtCenter(page) {
 }
 
 async function scrapeMidpen(page) {
-  await page.goto("https://www.openspace.org/where-to-go/events-activities", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.goto("https://www.openspace.org/get-involved/events-activities", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
-  const raw = await page.evaluate(() => {
-    const lines = (document.body?.innerText || "").split(/\n+|\t+|\s+\|\s+/).map((l) => l.trim()).filter(Boolean);
-    const out = [];
-    for (let i = 0; i < lines.length; i++) {
-      const activity = lines[i];
-      if (!/^(GUIDED ACTIVITY|VOLUNTEER PROJECT)$/i.test(activity)) continue;
-      const title = lines[i + 1];
-      const date = lines[i + 2];
-      const time = lines[i + 3];
-      const preserve = lines.slice(i + 4, i + 10).find((l) => /\bPreserve\b|\bSierra Azul\b|\bFremont Older\b|\bBear Creek\b|\bMonte Bello\b/i.test(l));
-      out.push({ activity, title, date, time, preserve });
-    }
-    return out;
-  });
+  const raw = await page.evaluate(() => [...document.querySelectorAll("tbody tr")].map((row) => {
+    const titleLink = row.querySelector(".views-field-title a[href]");
+    return {
+      activity: row.querySelector(".views-field-type")?.textContent?.trim() || "",
+      title: titleLink?.textContent?.trim() || "",
+      url: titleLink?.href || "",
+      date: row.querySelector(".activity-search-date")?.textContent?.trim() || "",
+      time: row.querySelector(".activity-search-time")?.textContent?.trim() || "",
+      preserve: row.querySelector(".views-field-field-preserve-term-1")?.textContent?.trim() || "",
+    };
+  }).filter((row) => /^(GUIDED ACTIVITY|VOLUNTEER PROJECT)$/i.test(row.activity) && row.title));
   const locationRules = [
     [/bear creek redwoods|sierra azul/i, "los-gatos"],
     [/fremont older|monte bello/i, "cupertino"],
@@ -1892,7 +1890,9 @@ async function scrapeMidpen(page) {
   const outOfArea = /\b(la honda|pulgas ridge|purisima|long ridge|russian ridge|skyline ridge|windy hill|el corte de madera|pescadero|half moon bay|ravenswood)\b/i;
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
+    const url = normalizeMidpenOccurrenceUrl(r.url);
     if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    if (!url) return null;
     if (/\b(meeting|budget|committee|board)\b/i.test(r.title)) return null;
     const place = (r.preserve || "Midpen Open Space Preserve").replace(/\t.*$/, "").trim();
     if (outOfArea.test(`${r.title} ${place}`)) return null;
@@ -1914,7 +1914,7 @@ async function scrapeMidpen(page) {
       venue: place,
       address: place === "Midpen Open Space Preserve" ? "" : `${place}, ${cityLabel[city] || "Santa Clara County"}`,
       city,
-      url: "https://www.openspace.org/where-to-go/events-activities",
+      url,
       source: "Midpen Open Space",
       category: r.activity === "VOLUNTEER PROJECT" ? "community" : "outdoor",
       cost: "free",

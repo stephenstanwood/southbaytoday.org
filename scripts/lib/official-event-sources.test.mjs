@@ -2,14 +2,34 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  extractAddressLocality,
   extractSanJoseJazzDayUrls,
   extractVboSession,
+  normalizeMidpenOccurrenceUrl,
   parseHappyHollowSchedules,
   parseCivicPlusCalendarPage,
   parseJazzOnThePlazzSchedule,
   parseMusicInParkSchedule,
   parseSanJoseJazzLineup,
 } from "./official-event-sources.mjs";
+
+test("extracts the public locality from Squarespace address fields", () => {
+  assert.equal(extractAddressLocality("Menlo Park, CA, 94025"), "Menlo Park");
+  assert.equal(extractAddressLocality("1010 El Camino Real, Menlo Park, CA 94025"), "Menlo Park");
+});
+
+test("keeps exact Midpen occurrence URLs and rejects the generic calendar", () => {
+  assert.equal(
+    normalizeMidpenOccurrenceUrl("/events/guided-activities/ramble-rancho-15?utm_source=test"),
+    "https://www.openspace.org/events/guided-activities/ramble-rancho-15",
+  );
+  assert.equal(
+    normalizeMidpenOccurrenceUrl("https://www.openspace.org/events/volunteer-projects/habitat-restoration-thistle-removal-23"),
+    "https://www.openspace.org/events/volunteer-projects/habitat-restoration-thistle-removal-23",
+  );
+  assert.equal(normalizeMidpenOccurrenceUrl("https://www.openspace.org/where-to-go/events-activities"), null);
+  assert.equal(normalizeMidpenOccurrenceUrl("https://example.com/events/guided-activities/ramble-rancho-15"), null);
+});
 
 test("extracts the current VBO event.asp session redirect", () => {
   assert.equal(

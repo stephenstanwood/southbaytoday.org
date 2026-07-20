@@ -48,6 +48,29 @@ function plainText(value = "") {
     .trim();
 }
 
+export function extractAddressLocality(value) {
+  const parts = plainText(value).split(",").map((part) => part.trim()).filter(Boolean);
+  if (!parts.length) return "";
+  const candidate = /^\d/.test(parts[0]) ? parts[1] : parts[0];
+  if (!candidate || /^(?:CA|California|\d{5}(?:-\d{4})?)$/i.test(candidate)) return "";
+  return candidate;
+}
+
+export function normalizeMidpenOccurrenceUrl(value) {
+  try {
+    const url = new URL(String(value || ""), "https://www.openspace.org");
+    if (url.protocol !== "https:" || !/^(?:www\.)?openspace\.org$/i.test(url.hostname)) return null;
+    if (!/^\/events\/(?:guided-activities|volunteer-projects)\/[a-z0-9-]+\/?$/i.test(url.pathname)) return null;
+    url.hostname = "www.openspace.org";
+    url.search = "";
+    url.hash = "";
+    url.pathname = url.pathname.replace(/\/+$/, "");
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
 function isoDate(year, monthName, day) {
   const month = MONTHS[String(monthName).toLowerCase()];
   if (!month || !Number.isInteger(year) || !Number.isInteger(day)) return null;
