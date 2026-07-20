@@ -566,6 +566,17 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     employeesNote: "200 employees",
   },
   {
+    id: "odyssey",
+    name: "Odyssey",
+    city: "Palo Alto",
+    category: "ai",
+    stage: "startup",
+    tagline: "AI lab building general world models: causal, multimodal systems that simulate physical environments for robotics, science, gaming, healthcare, and defense. Raised a $310M Series B at a $1.45B valuation in June 2026, with Amazon, AMD Ventures, GV, EQT, and IQT joining Natural Capital.",
+    color: "#2563eb",
+    url: "https://odyssey.ml",
+    employeesNote: "Founded by self-driving car veterans",
+  },
+  {
     id: "ampere-computing",
     name: "Ampere Computing",
     city: "Santa Clara",
@@ -1178,6 +1189,19 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
       "AI-driven platform that turns a demanding workload into a production-ready chip design — letting a company build custom silicon without standing up a large semiconductor team. Founders Ebrahim Hussain (ex-Apple and Tesla custom silicon) and Aaditya Subedi (Harvard AI code-verification research) met at Stanford; the seed was led by Kindred Ventures with TQ Ventures, Race Capital, and Together Fund, and angels including OpenAI's Srinivas Narayanan, Perplexity's Aravind Srinivas, and Stanford's Kunle Olukotun.",
     color: "#4338ca",
     url: "https://architectlabs.com",
+  },
+  {
+    id: "odyssey",
+    name: "Odyssey",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Series B",
+    amount: "$310M",
+    date: "2026-06-17",
+    tagline:
+      "General world models for simulating physical environments: Odyssey is training causal, multimodal systems that can predict and interact with the world over long horizons, with applications across robotics, science, gaming, healthcare, and defense. The $310M Series B valued the Palo Alto lab at $1.45B and was led by Natural Capital, with Amazon, AMD Ventures, GV, EQT, IQT, and others joining. AWS becomes Odyssey's preferred cloud provider, with the team optimizing world-model workloads on Trainium chips alongside Amazon's Annapurna Labs.",
+    color: "#2563eb",
+    url: "https://odyssey.ml/our-series-b",
   },
   {
     id: "xcena",

@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-07-20 — Cycle 196: Odyssey Added to Tech Coverage
+
+### Context
+Monday July 20, 2026. Automated builder cycle. Continued the Tech tab funding watch. Neo's July 20 launch verified out as Boston/Israel rather than South Bay, and Sycamore was already in `RECENTLY_FUNDED`, so the clean missing South Bay add was Odyssey's June Palo Alto world-model round.
+
+### What Was Built
+**Tech tab: Odyssey added to SCC_SPOTLIGHT and RECENTLY_FUNDED** (Palo Alto, $310M Series B, June 17, 2026). Odyssey is building general world models — causal, multimodal systems that simulate physical environments for robotics, science, gaming, healthcare, and defense. The $310M Series B valued the company at $1.45B and was led by Natural Capital, with Amazon, AMD Ventures, GV, EQT, IQT, and others participating. AWS becomes Odyssey's preferred cloud provider, with the team optimizing workloads on Trainium chips alongside Annapurna Labs. Verified against Odyssey's own announcement (`https://odyssey.ml/our-series-b`) and the Business Wire release (`https://www.businesswire.com/news/home/20260617490386/en/Odyssey-Raises-%24310-Million-to-Accelerate-World-Simulation`).
+
+### Why This Was the Strongest Move
+It improves the rendered Tech tab without touching protected Home, Events, or Food surfaces: Odyssey now appears in the curated startup spotlight, and its $310M round updates the year-to-date funding count and total used in the Tech hero.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED July watch (ongoing)** — keep scanning primary releases for genuinely fresh South Bay AI, chip, security, and robotics rounds.
+2. **Tech location audit** — keep spot-checking ambiguous Peninsula/South Bay funding items; reject Boston, SF, San Mateo, Redwood City, and Menlo Park unless coverage explicitly expands.
+3. **Logo follow-up** — let the tech-logo/favicons pipeline resolve `odyssey`; add a narrow override only if it returns a placeholder.
+
+---
+
 ## 2026-07-09 — Cycle 195: Proception Added to Recently Funded
 
 ### Context
