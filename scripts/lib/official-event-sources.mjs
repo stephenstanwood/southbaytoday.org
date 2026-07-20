@@ -1,0 +1,220 @@
+const MONTHS = {
+  jan: 1,
+  january: 1,
+  feb: 2,
+  february: 2,
+  mar: 3,
+  march: 3,
+  apr: 4,
+  april: 4,
+  may: 5,
+  jun: 6,
+  june: 6,
+  jul: 7,
+  july: 7,
+  aug: 8,
+  august: 8,
+  sep: 9,
+  sept: 9,
+  september: 9,
+  oct: 10,
+  october: 10,
+  nov: 11,
+  november: 11,
+  dec: 12,
+  december: 12,
+};
+
+function decodeHtml(value = "") {
+  return String(value)
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;|&#39;/gi, "'")
+    .replace(/&ndash;/gi, "–")
+    .replace(/&mdash;/gi, "—")
+    .replace(/&rsquo;/gi, "’")
+    .replace(/&ldquo;/gi, "“")
+    .replace(/&rdquo;/gi, "”");
+}
+
+function plainText(value = "") {
+  return decodeHtml(value)
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isoDate(year, monthName, day) {
+  const month = MONTHS[String(monthName).toLowerCase()];
+  if (!month || !Number.isInteger(year) || !Number.isInteger(day)) return null;
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+function normalizeClock(value) {
+  const match = String(value || "").match(/\b(\d{1,2})(?::(\d{2}))?\s*([ap])\.?m\.?\b/i);
+  if (!match) return null;
+  return `${Number(match[1])}:${match[2] || "00"} ${match[3].toUpperCase()}M`;
+}
+
+export function extractVboSession(html) {
+  return String(html || "").match(
+    /(?:events(?:\/showevents)?|event\.asp)?\?[^"']*\bs=([0-9a-f-]{36})/i,
+  )?.[1] || String(html || "").match(/\bs=([0-9a-f-]{36})/i)?.[1] || null;
+}
+
+export function parseMusicInParkSchedule(html) {
+  const year = Number(String(html).match(/\b(20\d{2})\s+Concert\s+Schedul/i)?.[1]);
+  if (!year) return [];
+
+  const entries = [];
+  const re = /<p\b[^>]*>\s*(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})(?:st|nd|rd|th)?\s*[-–—]\s*([\s\S]*?)<\/p>/gi;
+  let match;
+  while ((match = re.exec(String(html))) !== null) {
+    const performer = plainText(match[3]);
+    const date = isoDate(year, match[1], Number(match[2]));
+    if (!date || !performer) continue;
+    entries.push({ date, performer });
+  }
+  return entries;
+}
+
+export function parseJazzOnThePlazzSchedule(html) {
+  const source = String(html || "");
+  const year = Number(source.match(/Summer\s+Concerts\s+(20\d{2})/i)?.[1]);
+  if (!year) return [];
+
+  const entries = [];
+  const re = /<h[34]\b[^>]*>\s*(January|February|March|April|May|June|July|August|Aug)\s+(\d{1,2})(?:st|nd|rd|th)?\s*<\/h[34]>\s*<h3\b[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h[34]\b[^>]*>\s*(?:January|February|March|April|May|June|July|August|Aug)\s+\d{1,2}|$)/gi;
+  let match;
+  while ((match = re.exec(source)) !== null) {
+    const performer = plainText(match[3]).replace(/\s+Season Finale\s*$/i, "").trim();
+    const date = isoDate(year, match[1], Number(match[2]));
+    const description = plainText(match[4].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || "");
+    if (!date || !performer) continue;
+    entries.push({ date, performer, description });
+  }
+  return entries;
+}
+
+export function parseSanJoseJazzLineup(html) {
+  const source = String(html || "");
+  const year = Number(
+    source.match(/San Jose Jazz Summer Fest\s*(20\d{2})/i)?.[1]
+      || source.match(/Summer Fest\s*(20\d{2})/i)?.[1]
+      || source.match(/(?:©|&copy;)\s*(20\d{2})\s+San Jose Jazz/i)?.[1],
+  );
+  if (!year) return [];
+
+  const entries = [];
+  const seen = new Set();
+  const blocks = source.split(/<div class="artist\s+col[^">]*">/i).slice(1);
+  for (const block of blocks) {
+    const url = decodeHtml(
+      block.match(/<h3\b[^>]*>\s*<a\b[^>]*href="([^"]*\/artists\/[^"]+)"/i)?.[1]
+        || block.match(/href="([^"]*\/artists\/[^"]+)"/i)?.[1]
+        || "",
+    );
+    const title = plainText(
+      block.match(/<h3\b[^>]*>\s*<a\b[^>]*>([\s\S]*?)<\/a>/i)?.[1] || "",
+    );
+    const dateMatch = block.match(/class="month-date"[^>]*>\s*(January|February|March|April|May|June|July|August|Jan|Feb|Mar|Apr|Jun|Jul|Aug)\s+(\d{1,2})/i);
+    const date = dateMatch ? isoDate(year, dateMatch[1], Number(dateMatch[2])) : null;
+    const time = normalizeClock(
+      block.match(/class="time[^"]*"[^>]*>\s*(?:<span\b[^>]*>)?\s*([^<]+)/i)?.[1]
+        || block.match(/class="twelfth-hour"[^>]*>\s*([^<]+)/i)?.[1]
+        || "",
+    );
+    const stage = plainText(block.match(/class="stage-name[^"]*"[^>]*>([\s\S]*?)<\/span>/i)?.[1] || "");
+    const image = decodeHtml(block.match(/<img\b[^>]*src="([^"]+)"/i)?.[1] || "");
+    const description = plainText(block.match(/class="quicklook-text"[^>]*>([\s\S]*?)<\/div>/i)?.[1] || "");
+    if (!url || !title || !date || !time || !stage) continue;
+
+    const key = `${url}|${date}|${time}|${stage}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    entries.push({ title, date, time, stage, url, image, description });
+  }
+  return entries;
+}
+
+export function parseCivicPlusCalendarPage(html) {
+  const entries = [];
+  const blocks = String(html || "").match(/<li>\s*<h3>[\s\S]*?itemtype="http:\/\/schema\.org\/Event"[\s\S]*?<\/li>/gi) || [];
+  for (const block of blocks) {
+    const id = block.match(/id="eventTitle_(\d+)"/i)?.[1];
+    const title = plainText(block.match(/itemprop="name">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const startsAt = block.match(/itemprop="startDate"[^>]*>(20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/i)?.[1];
+    if (!id || !title || !startsAt) continue;
+
+    const description = plainText(block.match(/itemprop="description">([\s\S]*?)<\/p>/i)?.[1] || "");
+    const locationBlock = block.match(/itemprop="location"[\s\S]*?<\/span><\/span><\/div>/i)?.[0] || "";
+    const venue = plainText(locationBlock.match(/itemprop="name">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const street = plainText(locationBlock.match(/itemprop="streetAddress">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const locality = plainText(locationBlock.match(/itemprop="addressLocality">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const region = plainText(locationBlock.match(/itemprop="addressRegion">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const postal = plainText(locationBlock.match(/itemprop="postalCode">([\s\S]*?)<\/span>/i)?.[1] || "");
+    const address = [street, locality, region, postal].filter(Boolean).join(", ").replace(/, ([A-Z]{2}), (\d{5})$/, ", $1 $2");
+    const dateHeader = plainText(block.match(/class="date">([\s\S]*?)<\/div>/i)?.[1] || "");
+    const clocks = [...dateHeader.matchAll(/\b\d{1,2}(?::\d{2})?\s*[AP]M\b/gi)].map((match) => normalizeClock(match[0]));
+    const href = decodeHtml(block.match(/id="eventTitle_\d+"\s+href="([^"]+)"/i)?.[1] || "");
+
+    entries.push({
+      id,
+      title,
+      startsAt,
+      time: clocks[0] || null,
+      endTime: clocks[1] || null,
+      description,
+      venue,
+      address,
+      href,
+    });
+  }
+  return entries;
+}
+
+function nthWeekdayOfMonth(year, month, weekday, occurrence) {
+  const first = new Date(Date.UTC(year, month - 1, 1));
+  const day = 1 + ((weekday - first.getUTCDay() + 7) % 7) + (occurrence - 1) * 7;
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
+export function parseHappyHollowSchedules({ seniorHtml = "", hoorayHtml = "" } = {}) {
+  const entries = [];
+  const seniorText = plainText(seniorHtml);
+  const senior = seniorText.match(
+    /The\s+(20\d{2})\s+season[\s\S]*?fourth Thursday of the month from May through October from\s+9\s*-\s*10\s+a\.?m\.?/i,
+  );
+  if (senior) {
+    const year = Number(senior[1]);
+    for (let month = 5; month <= 10; month += 1) {
+      entries.push({
+        kind: "senior-safari",
+        date: nthWeekdayOfMonth(year, month, 4, 4),
+        title: "Senior Safari",
+        time: "9:00 AM",
+        endTime: "10:00 AM",
+      });
+    }
+  }
+
+  const hoorayText = plainText(hoorayHtml);
+  const hooray = hoorayText.match(
+    /Hooray for Happy Hollow benefit event is\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June|July|Aug(?:ust)?|Sept?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2}),\s+(20\d{2})/i,
+  );
+  if (hooray) {
+    entries.push({
+      kind: "hooray",
+      date: isoDate(Number(hooray[3]), hooray[1], Number(hooray[2])),
+      title: "Hooray for Happy Hollow",
+      time: null,
+      endTime: null,
+    });
+  }
+
+  return entries.filter((entry) => entry.date);
+}
