@@ -1570,6 +1570,9 @@ function polishDescription(text) {
   // Lounge", "Cross Fit Games"). Both are single-word brand marks.
   t = t.replace(/\bNet App\b/g, "NetApp");
   t = t.replace(/\bCross Fit\b/g, "CrossFit");
+  // Los Gatos Music in the Park performer The BentPeter Band uses a closed-up
+  // stage name; the generic camel-case splitter must not rewrite that proper noun.
+  t = t.replace(/\bBent Peter\b/g, "BentPeter");
   // CHM body copy name-drops Steve Jobs's post-Apple venture "NeXT" — the
   // lowercase+uppercase splitter turns it into "Ne XT". Single-word brand mark
   // (1985 founding through 1996 Apple acquisition).
