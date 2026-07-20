@@ -16,6 +16,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { head, list } from "@vercel/blob";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { todayPT } from "./lib/dates.mjs";
 import {
   ACRONYM_FIXES,
   VIRTUAL_TITLE_SIGNALS,
@@ -44,11 +45,12 @@ const SHARD_PREFIX = "lookout/events-shards/";
 
 const token = process.env.BLOB_READ_WRITE_TOKEN;
 if (!token) {
-  console.error("BLOB_READ_WRITE_TOKEN not set — skipping inbound events pull");
-  process.exit(0);
+  console.error("BLOB_READ_WRITE_TOKEN not set — refusing to preserve a stale inbound snapshot");
+  process.exit(1);
 }
 
 const events = [];
+const sourceErrors = [];
 
 // 1. Legacy monolithic blob (pre-sharding) — keep reading until it's gone.
 try {
@@ -63,6 +65,7 @@ try {
 } catch (err) {
   if (err.name !== "BlobNotFoundError") {
     console.error("⚠️  legacy blob read failed:", err.message);
+    sourceErrors.push(`legacy blob: ${err.message}`);
   }
 }
 
@@ -73,9 +76,13 @@ try {
     blobs.map(async (b) => {
       try {
         const res = await fetch(`${b.url}?_cb=${Date.now()}`, { cache: "no-store" });
-        if (!res.ok) return null;
+        if (!res.ok) {
+          sourceErrors.push(`${b.pathname}: HTTP ${res.status}`);
+          return null;
+        }
         return JSON.parse(await res.text());
-      } catch {
+      } catch (err) {
+        sourceErrors.push(`${b.pathname}: ${err.message}`);
         return null;
       }
     })
@@ -85,6 +92,7 @@ try {
   }
 } catch (err) {
   console.error("⚠️  shard list failed:", err.message);
+  sourceErrors.push(`shard list: ${err.message}`);
 }
 
 // Dedup by id (legacy + shards overlap is possible).
@@ -99,7 +107,7 @@ events.length = 0;
 events.push(...unique);
 
 // Only keep events that are still in the future and approved (or new — we trust the extractor)
-const today = new Date().toISOString().slice(0, 10);
+const today = todayPT();
 const fresh = events.filter((e) => {
   if (e.status === "rejected") return false;
   const date = (e.startsAt || "").slice(0, 10);
@@ -150,6 +158,21 @@ const out = {
   },
   events: fresh,
 };
+
+if (process.env.SBT_STRICT_EVENT_REFRESH === "1") {
+  let previous = null;
+  try { previous = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+  const previousTotal = Number(previous?._meta?.totalInBlob || 0);
+  if (sourceErrors.length > 0) {
+    throw new Error(`inbound source read failed: ${sourceErrors.slice(0, 3).join("; ")}`);
+  }
+  if (events.length === 0) {
+    throw new Error("inbound source returned zero events");
+  }
+  if (previousTotal >= 20 && events.length < previousTotal * 0.5) {
+    throw new Error(`inbound coverage regression: ${previousTotal}→${events.length} source events`);
+  }
+}
 
 writeFileAtomic(OUT_PATH, JSON.stringify(out, null, 2));
 console.log(`✅ inbound-events.json: ${fresh.length} events (${events.length} total in blob)`);

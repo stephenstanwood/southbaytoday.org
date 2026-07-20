@@ -7,6 +7,10 @@ on:
     - cron: "17 5 * * *"
   workflow_dispatch: # allow manual trigger
 
+concurrency:
+  group: refresh-events-main
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -26,14 +30,19 @@ jobs:
 
       - name: Generate events
         env:
+          SBT_STRICT_EVENT_REFRESH: "1"
           TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
-          EVENTBRITE_API_KEY: ${{ secrets.EVENTBRITE_API_KEY }}
+          MEETUP_CLIENT_ID: ${{ secrets.MEETUP_CLIENT_ID }}
+          MEETUP_MEMBER_ID: ${{ secrets.MEETUP_MEMBER_ID }}
+          MEETUP_KID: ${{ secrets.MEETUP_KID }}
+          MEETUP_PRIVATE_KEY: ${{ secrets.MEETUP_PRIVATE_KEY }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: node scripts/generate-events.mjs
 
       - name: Commit updated events
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/south-bay/upcoming-events.json
+          git add src/data/south-bay
           git diff --staged --quiet || git commit -m "chore: refresh upcoming events"
           git push

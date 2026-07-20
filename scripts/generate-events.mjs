@@ -67,6 +67,21 @@ import {
   verifyMarketScheduleSource,
 } from "../src/lib/south-bay/marketOccurrence.mjs";
 import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
+import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
+import {
+  extractVboSession,
+  parseCivicPlusCalendarPage,
+  parseHappyHollowSchedules,
+  parseJazzOnThePlazzSchedule,
+  parseMusicInParkSchedule,
+  parseSanJoseJazzLineup,
+} from "./lib/official-event-sources.mjs";
+import {
+  buildSourceHealth,
+  criticalSourceProblems,
+  eventRegressionProblem,
+  strictRefreshInputHealth,
+} from "./lib/event-source-health.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -76,6 +91,15 @@ const BLACKLIST_PATH = join(__dirname, "..", "src", "data", "south-bay", "social
 const PLAYWRIGHT_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
 const INBOUND_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "inbound-events.json");
 const TIME_BACKFILL_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "event-time-backfill-cache.json");
+const STRICT_EVENT_REFRESH = process.env.SBT_STRICT_EVENT_REFRESH === "1";
+
+function readJsonFile(path) {
+  try {
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return null;
+  }
+}
 
 // Load dynamic blacklist from social review pipeline (venues, sources, titles)
 let _blacklist;
@@ -107,6 +131,8 @@ const TITLE_BLOCKLIST = [
   /\bstudy session\b/i,   // council study sessions
   /\btask\s+force\s+(?:monthly\s+)?meeting\b/i, // member-only working sessions (SVLG tax/workforce task forces)
   /\b(town|city)\s+council\b/i, // "Town Council Meeting", "City Council Budget Hearing", etc. — gov tab content
+  /\bzoning\s+administrator\b/i, // land-use hearing/agenda content belongs in Gov, not Events
+  /\b(?:mayor|vice mayor|councilmember)\b.*\boffice hours\b/i,
   /\bcommittee\s*$/i,     // titles ending in "Committee" (Development Review Committee, Historic Preservation Committee)
   /\bcommission\s*$/i,    // titles ending in "Commission" (Parks and Sustainability Commission, Civic Improvement Commission)
   /\bclosed\s*(for|—|–|-|:)/i, // closure notices ("Closed for", "Closed: Independence Day", etc.)
@@ -2643,112 +2669,44 @@ async function fetchChmEvents() {
 }
 
 async function fetchSjJazzEvents() {
-  console.log("  ⏳ San Jose Jazz...");
-  const events = [];
-  const currentYear = new Date().getFullYear();
-
+  console.log("  ⏳ San Jose Jazz Summer Fest...");
   try {
-    // Scrape paginated HTML calendar (5 events/page, ~4 pages)
-    for (let page = 1; page <= 6; page++) {
-      const url = page === 1
-        ? "https://www.sanjosejazz.org/events/"
-        : `https://sanjosejazz.org/events/page/${page}/`;
-      // SJZ blocks non-browser UAs — use a browser-like UA
-      const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" },
-        signal: AbortSignal.timeout(15_000),
-      });
-      if (!res.ok) break;
-      const html = await res.text();
-      if (!html || html.length < 500) break;
+    // The legacy sanjosejazz.org/events page currently renders "No events
+    // found" while the first-party Summer Fest site publishes the complete
+    // day/time/stage lineup. Read those chronological pages directly.
+    const dayPages = ["friday-aug-7", "saturday-aug-8", "sunday-aug-9"];
+    const htmlPages = await Promise.all(dayPages.map((day) =>
+      fetchText(`https://summerfest.sanjosejazz.org/filters/chronological/${day}`)
+    ));
+    const today = todayPT();
+    const events = htmlPages
+      .flatMap(parseSanJoseJazzLineup)
+      .filter((event) => event.date >= today)
+      .map((event) => ({
+        id: h("sjz", event.url, event.date, event.time, event.stage),
+        title: event.title,
+        date: event.date,
+        displayDate: displayDate(parseDatePT(`${event.date}T12:00:00`)),
+        time: event.time,
+        endTime: null,
+        venue: event.stage,
+        address: "Downtown San Jose, San Jose, CA 95113",
+        city: "san-jose",
+        category: "music",
+        cost: "paid",
+        description: truncate(event.description),
+        url: event.url,
+        source: "San Jose Jazz",
+        kidFriendly: false,
+        ...(event.image ? { image: event.image } : {}),
+      }));
 
-      // Parse each .sjz-event container block (split on "sjz-event is-" to avoid
-      // matching sub-classes like sjz-event-name, sjz-event-date, etc.)
-      const eventBlocks = html.split(/class="sjz-event is-/).slice(1);
-      if (eventBlocks.length === 0) break;
-
-      for (const block of eventBlocks) {
-        const nameMatch = block.match(/class="sjz-event-name">\s*([\s\S]*?)\s*<\/p>/);
-        const dateMatch = block.match(/class="sjz-event-date">\s*([\s\S]*?)\s*<\/p>/);
-        const hourMatch = block.match(/class="sjz-event-hour">\s*([\s\S]*?)\s*<\/p>/);
-        const excerptMatch = block.match(/class="sjz-event-excerpt">\s*([\s\S]*?)\s*<\/p>/);
-        const linkMatch = block.match(/href="(https?:\/\/[^"]*sanjosejazz\.org\/events\/[^"]+)"[^>]*>READ MORE/);
-        const isFree = /FREE ADMISSION/i.test(block);
-
-        const title = nameMatch?.[1]?.trim();
-        const dateStr = dateMatch?.[1]?.trim(); // e.g. "Fri, Apr 3"
-        if (!title || !dateStr) continue;
-
-        // Parse time from hour field (e.g. "7pm Pacific / <span>SJZ Break Room</span>")
-        const rawHour = hourMatch?.[1] || "";
-        const timeMatch = rawHour.match(/(\d+(?::\d+)?(?:am|pm))/i);
-        const time = timeMatch?.[1] || null;
-
-        // Extract venue from <span class="event-place">
-        const venueMatch = rawHour.match(/event-place[^>]*>[\s\S]*?(?:-->)?\s*([\w\s]+?)\s*(?:<!--)?<\/span>/);
-        const venue = venueMatch?.[1]?.trim() || "SJZ Break Room";
-
-        // Parse date — "Fri, Apr 3" → full ISO date
-        const dmMatch = dateStr.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d+)/);
-        if (!dmMatch) continue;
-        const monthNames = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-        const month = monthNames[dmMatch[1]];
-        const day = parseInt(dmMatch[2]);
-        let year = currentYear;
-        // If the month is before now and more than 2 months ago, it's next year
-        const now = new Date();
-        const candidate = new Date(year, month, day);
-        if (candidate < new Date(now.getTime() - 60 * 86400000)) year++;
-        const isoDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-
-        // Clean description
-        const desc = excerptMatch?.[1]?.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() || "";
-        const shortDesc = desc.length > 200 ? desc.slice(0, 197) + "…" : desc;
-
-        // Format time for display
-        let displayTime = null;
-        if (time) {
-          const h = parseInt(time);
-          const isPm = /pm/i.test(time);
-          const minMatch = time.match(/:(\d+)/);
-          const mins = minMatch ? `:${minMatch[1]}` : ":00";
-          const hour24 = isPm && h !== 12 ? h + 12 : !isPm && h === 12 ? 0 : h;
-          displayTime = `${hour24}${mins.replace(":00", "")}:00`.replace(/^(\d):/, "0$1:");
-          // Format as "7:00 PM"
-          const displayH = hour24 > 12 ? hour24 - 12 : hour24 === 0 ? 12 : hour24;
-          displayTime = `${displayH}:${minMatch?.[1] || "00"} ${isPm ? "PM" : "AM"}`;
-        }
-
-        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "").slice(0, 40);
-        events.push({
-          id: `sjz-${slug}-${isoDate}`,
-          title: title.includes("SJZ") || title.includes("San Jose Jazz") ? title : `${title} — San Jose Jazz`,
-          date: isoDate,
-          displayDate: dateStr,
-          time: displayTime,
-          endTime: null,
-          venue: venue,
-          address: "310 South First St, San Jose",
-          city: "san-jose",
-          category: "music",
-          cost: isFree ? "free" : "paid",
-          description: shortDesc,
-          url: linkMatch?.[1] || "https://www.sanjosejazz.org/events/",
-          source: "San Jose Jazz",
-          kidFriendly: isFree,
-        });
-      }
-
-      // Check for next page link
-      if (!html.includes(`/events/page/${page + 1}/`)) break;
-      await new Promise((r) => setTimeout(r, 500)); // polite delay
-    }
-
-    console.log(`  ✅ San Jose Jazz: ${events.length} events`);
+    console.log(`  ✅ San Jose Jazz: ${events.length} artist performances`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Jazz: ${err.message}`);
-    return events;
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
   }
 }
 
@@ -3039,6 +2997,75 @@ async function fetchLosGatosEvents() {
   );
 }
 
+async function fetchMusicInParkEvents() {
+  console.log("  ⏳ Los Gatos Music in the Park lineup...");
+  const url = "https://www.losgatosca.gov/350/Music-in-the-Park";
+  try {
+    const html = await fetchText(url);
+    const today = todayPT();
+    const events = parseMusicInParkSchedule(html)
+      .filter((entry) => entry.date >= today)
+      .map((entry) => ({
+        id: `los-gatos-music-in-the-park-${entry.date}`,
+        title: `Music in the Park - ${entry.performer}`,
+        date: entry.date,
+        displayDate: displayDate(parseDatePT(`${entry.date}T12:00:00`)),
+        time: "5:00 PM",
+        endTime: "7:00 PM",
+        venue: "Los Gatos Civic Center Lawn",
+        address: "110 E. Main Street, Los Gatos, CA 95030",
+        city: "los-gatos",
+        category: "music",
+        cost: "free",
+        description: `Free, family-friendly outdoor concert featuring ${entry.performer}.`,
+        url,
+        source: "Town of Los Gatos",
+        kidFriendly: true,
+      }));
+    console.log(`  ✅ Music in the Park lineup: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Music in the Park lineup: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
+  }
+}
+
+async function fetchJazzOnThePlazzEvents() {
+  console.log("  ⏳ Jazz on the Plazz lineup...");
+  try {
+    const year = new Date().getFullYear();
+    const url = `https://jazzontheplazz.com/${year}-concerts/`;
+    const html = await fetchText(url);
+    const today = todayPT();
+    const events = parseJazzOnThePlazzSchedule(html)
+      .filter((entry) => entry.date >= today)
+      .map((entry) => ({
+        id: `los-gatos-jazz-on-the-plazz-${entry.date}`,
+        title: `Jazz on the Plazz - ${entry.performer}`,
+        date: entry.date,
+        displayDate: displayDate(parseDatePT(`${entry.date}T12:00:00`)),
+        time: "6:30 PM",
+        endTime: "8:30 PM",
+        venue: "Los Gatos Town Plaza Park",
+        address: "Montebello Way, Los Gatos, CA 95030",
+        city: "los-gatos",
+        category: "music",
+        cost: "free",
+        description: truncate(entry.description),
+        url,
+        source: "Los Gatos Music & Arts",
+        kidFriendly: false,
+      }));
+    console.log(`  ✅ Jazz on the Plazz lineup: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Jazz on the Plazz lineup: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
+  }
+}
+
 async function fetchSaratogaEvents() {
   return fetchCivicPlusIcal(
     "City of Saratoga",
@@ -3048,11 +3075,58 @@ async function fetchSaratogaEvents() {
 }
 
 async function fetchLosAltosEvents() {
-  return fetchCivicPlusIcal(
-    "City of Los Altos",
-    "https://www.losaltosca.gov/common/modules/iCalendar/iCalendar.aspx?catID=37&feed=calendar",
-    "los-altos",
-  );
+  console.log("  ⏳ City of Los Altos...");
+  try {
+    // catID=37 is a real but empty calendar, and the all-calendar RSS omits
+    // recurring rows visible on the official page. CivicPlus publishes full
+    // schema.org Event blocks in its HTML, so read this month plus two ahead.
+    const [year, month] = todayPT().split("-").map(Number);
+    const pages = await Promise.all([0, 1, 2].map((offset) => {
+      const target = new Date(Date.UTC(year, month - 1 + offset, 1));
+      const url = new URL("https://www.losaltosca.gov/Calendar.aspx");
+      url.searchParams.set("month", String(target.getUTCMonth() + 1));
+      url.searchParams.set("year", String(target.getUTCFullYear()));
+      return fetchText(url.toString());
+    }));
+
+    const today = todayPT();
+    const seen = new Set();
+    const events = pages
+      .flatMap(parseCivicPlusCalendarPage)
+      .filter((entry) => {
+        const date = entry.startsAt.slice(0, 10);
+        const key = `${entry.id}|${date}`;
+        if (seen.has(key) || date < today || isBlockedEvent(entry.title)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map((entry) => {
+        const start = parseDatePT(entry.startsAt);
+        return {
+          id: h("los-altos", entry.id, entry.startsAt),
+          title: entry.title,
+          date: entry.startsAt.slice(0, 10),
+          displayDate: displayDate(start),
+          time: entry.time,
+          endTime: entry.endTime,
+          venue: cleanVenue(entry.venue) || null,
+          address: entry.address,
+          city: "los-altos",
+          category: inferCategory(entry.title, entry.description, entry.venue),
+          cost: "free",
+          description: truncate(entry.description),
+          url: new URL(entry.href, "https://www.losaltosca.gov").toString(),
+          source: "City of Los Altos",
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|ages?\s*\d|grades?\s+[K0-9])/i.test(`${entry.title} ${entry.description}`),
+        };
+      });
+    console.log(`  ✅ City of Los Altos: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  City of Los Altos: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
+  }
 }
 
 async function fetchMountainViewEvents() {
@@ -4156,36 +4230,45 @@ async function fetchPaloAltoLibraryEvents() {
 async function fetchHappyHollowEvents() {
   console.log("  ⏳ Happy Hollow Park & Zoo...");
   try {
-    const xml = await fetchText("https://www.happyhollow.org/events/feed/");
-    const items = parseRssItems(xml);
-    const now = new Date();
-    const events = items
-      .map((item) => {
-        const start = parseDate(item.startDate || item.pubDate);
-        if (!start || start < now) return null;
+    // The old /events/feed/ endpoint is an empty RSS channel. Happy Hollow's
+    // actual first-party dates live on its current program and benefit pages.
+    const [seniorHtml, hoorayHtml] = await Promise.all([
+      fetchText("https://happyhollow.org/seniorsafari/"),
+      fetchText("https://happyhollow.org/hh-foundation/hooray/"),
+    ]);
+    const today = todayPT();
+    const events = parseHappyHollowSchedules({ seniorHtml, hoorayHtml })
+      .filter((entry) => entry.date >= today)
+      .map((entry) => {
+        const senior = entry.kind === "senior-safari";
+        const url = senior
+          ? "https://happyhollow.org/seniorsafari/"
+          : "https://happyhollow.org/hh-foundation/hooray/";
         return {
-          id: h("happyhollow", item.link || item.title, item.pubDate),
-          title: item.title,
-          date: isoDate(start),
-          displayDate: displayDate(start),
-          time: displayTime(start),
-          endTime: null,
+          id: h("happyhollow", entry.kind, entry.date),
+          title: entry.title,
+          date: entry.date,
+          displayDate: displayDate(parseDatePT(`${entry.date}T12:00:00`)),
+          time: entry.time,
+          endTime: entry.endTime,
           venue: "Happy Hollow Park & Zoo",
-          address: "748 Story Rd, San Jose",
+          address: "748 Story Rd, San Jose, CA 95112",
           city: "san-jose",
-          category: inferCategory(item.title, item.description || "", ""),
-          cost: "paid",
-          description: truncate(stripHtml(item.description || item.content)),
-          url: item.link,
+          category: "community",
+          cost: senior ? "free" : "paid",
+          description: senior
+            ? "Adults 50 and over get early park entry, animal meet-and-greets, zookeeper chats, and activities."
+            : "Happy Hollow Foundation's annual 21+ benefit supports animal care, conservation, access, and park improvements.",
+          url,
           source: "Happy Hollow Park & Zoo",
-          kidFriendly: true,
+          kidFriendly: false,
         };
-      })
-      .filter(Boolean);
+      });
     console.log(`  ✅ Happy Hollow: ${events.length} events`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  Happy Hollow Park & Zoo: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -5701,7 +5784,7 @@ async function fetchPearTheatreEvents() {
     const orgId = "7928";
     const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&o=${orgId}&eid=0&edid=0&PluginType=Embed`;
     const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
-    const session = pluginHtml.match(/events\?s=([0-9a-f-]{36})/i)?.[1];
+    const session = extractVboSession(pluginHtml);
     if (!session) throw new Error("missing VBO session");
 
     const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
@@ -5768,6 +5851,7 @@ async function fetchPearTheatreEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  The Pear Theatre: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6681,79 +6765,138 @@ async function fetchHistorySanJoseEvents() {
 async function main() {
   console.log("Scraping upcoming South Bay events...\n");
 
+  let inputHealth = null;
+  if (STRICT_EVENT_REFRESH) {
+    inputHealth = strictRefreshInputHealth({
+      playwright: readJsonFile(PLAYWRIGHT_EVENTS_PATH),
+      inbound: readJsonFile(INBOUND_EVENTS_PATH),
+    });
+    if (!inputHealth.ok) {
+      const detail = inputHealth.problems.join("; ");
+      await catSignal({
+        key: "events-refresh-input-health",
+        title: "Event refresh blocked before overwrite",
+        body: detail,
+      });
+      throw new Error(`strict refresh inputs failed: ${detail}`);
+    }
+    console.log(
+      `🔒 Strict inputs: ${inputHealth.snapshots.map((item) => `${item.name}=${item.count} (${item.ageHours}h old)`).join(", ")}\n`,
+    );
+  }
+
+  const source = (fn, { id = fn.name, label = fn.name, critical = false } = {}) => ({
+    id,
+    label,
+    critical,
+    fn,
+  });
+
   const sources = [
-    fetchStanfordEvents,
-    fetchSjsuEvents,
-    fetchScuEvents,
-    fetchChmEvents,
-    fetchCampbellEvents,
-    fetchMilpitasEvents,
-    fetchLosGatosEvents,
-    fetchSaratogaEvents,
-    fetchLosAltosEvents,
-    fetchLosAltosHistoryEvents,
-    fetchOperaSanJoseEvents,
+    source(fetchStanfordEvents),
+    source(fetchSjsuEvents),
+    source(fetchScuEvents),
+    source(fetchChmEvents),
+    source(fetchCampbellEvents),
+    source(fetchMilpitasEvents),
+    source(fetchLosGatosEvents),
+    source(fetchMusicInParkEvents, { label: "Los Gatos Music in the Park" }),
+    source(fetchJazzOnThePlazzEvents, { label: "Jazz on the Plazz" }),
+    source(fetchSaratogaEvents),
+    source(fetchLosAltosEvents, { label: "City of Los Altos", critical: true }),
+    source(fetchLosAltosHistoryEvents),
+    source(fetchOperaSanJoseEvents),
     // fetchMountainViewEvents,  — 403 blocked since 2026-03
     // fetchSunnyvaleEvents,     — 403 blocked since 2026-03
     // fetchCupertinoEvents,     — 404/timeout since 2026-03; covered by SCCL BiblioCommons
     // fetchSanJoseCityEvents,   — 403 blocked since 2026-03
     // fetchTheTechEvents,       — no /feed/ endpoint as of 2026-03
-    fetchSjplEvents,
-    fetchScclEvents,
-    fetchSvlgEvents,
-    fetchSjJazzEvents,
-    fetchMontalvoEvents,
+    source(fetchSjplEvents),
+    source(fetchScclEvents),
+    source(fetchSvlgEvents),
+    source(fetchSjJazzEvents, { label: "San Jose Jazz" }),
+    source(fetchMontalvoEvents),
     // fetchEventbriteEvents, — deprecated: /v3/events/search/ removed by Eventbrite
-    fetchEarthquakesSchedule,
-    fetchBayFCSchedule,
-    fetchSJGiantsSchedule,
-    fetchTicketmasterEvents,
-    fetchSharksSchedule,
-    fetchSantaCruzWarriorsSchedule,
-    fetchSantaCruzPicks,
-    fetchMvplEvents,
+    source(fetchEarthquakesSchedule),
+    source(fetchBayFCSchedule),
+    source(fetchSJGiantsSchedule),
+    source(fetchTicketmasterEvents, { label: "Ticketmaster", critical: true }),
+    source(fetchSharksSchedule),
+    source(fetchSantaCruzWarriorsSchedule),
+    source(fetchSantaCruzPicks),
+    source(fetchMvplEvents),
     // fetchSunnyvaleLibraryEvents, — 403 (Events feature disabled on their BiblioCommons); covered by SCCL
-    fetchPaloAltoLibraryEvents,
-    fetchHappyHollowEvents,
-    fetchMaclaEvents,
-    fetchHeritageTheatreEvents,
-    fetchShorelineEvents,
-    fetchScccfdEvents,
-    fetchLgChamberEvents,
-    fetchFarmersMarketEvents,
-    fetchMiscHardcodedEvents,
-    fetchMeetupEvents,
-    fetchEastWestBookshopEvents,
-    fetchKeplersEvents,
-    fetchHicklebeesEvents,
-    fetchSjdaEvents,
-    fetchSjMuseumOfArtEvents,
-    fetchJamsjEvents,
-    fetchHistorySanJoseEvents,
-    fetchPearTheatreEvents,
-    fetchSanJoseTheatersEvents,
-    fetchSouthBayMusicalTheatreEvents,
-    fetchLosAltosStageEvents,
-    fetchPaloAltoPlayersEvents,
-    fetchHammerTheatreEvents,
-    fetchGambleGardenEvents,
-    fetchMexicanHeritagePlazaEvents,
-    fetchMuseumOfAmericanHeritageEvents,
-    fetchPlaywrightEvents,
-    fetchInboundEvents,
+    source(fetchPaloAltoLibraryEvents),
+    source(fetchHappyHollowEvents, { label: "Happy Hollow Park & Zoo" }),
+    source(fetchMaclaEvents),
+    source(fetchHeritageTheatreEvents),
+    source(fetchShorelineEvents),
+    source(fetchScccfdEvents),
+    source(fetchLgChamberEvents),
+    source(fetchFarmersMarketEvents),
+    source(fetchMiscHardcodedEvents),
+    source(fetchMeetupEvents, { label: "Meetup", critical: true }),
+    source(fetchEastWestBookshopEvents),
+    source(fetchKeplersEvents),
+    source(fetchHicklebeesEvents),
+    source(fetchSjdaEvents),
+    source(fetchSjMuseumOfArtEvents),
+    source(fetchJamsjEvents),
+    source(fetchHistorySanJoseEvents),
+    source(fetchPearTheatreEvents, { label: "The Pear Theatre" }),
+    source(fetchSanJoseTheatersEvents),
+    source(fetchSouthBayMusicalTheatreEvents),
+    source(fetchLosAltosStageEvents),
+    source(fetchPaloAltoPlayersEvents),
+    source(fetchHammerTheatreEvents),
+    source(fetchGambleGardenEvents),
+    source(fetchMexicanHeritagePlazaEvents),
+    source(fetchMuseumOfAmericanHeritageEvents),
+    source(fetchPlaywrightEvents, { label: "Playwright source snapshot", critical: true }),
+    source(fetchInboundEvents, { label: "Inbound newsletter snapshot", critical: true }),
   ];
 
-  const results = await Promise.allSettled(sources.map((fn) => fn()));
+  const results = await Promise.allSettled(sources.map(({ fn }) => fn()));
+  const sourceHealth = buildSourceHealth(sources, results);
+  const criticalProblems = criticalSourceProblems(sourceHealth);
+  if (STRICT_EVENT_REFRESH && criticalProblems.length > 0) {
+    const detail = criticalProblems.join("; ");
+    await catSignal({
+      key: "events-refresh-critical-source",
+      title: "Event refresh blocked before overwrite",
+      body: detail,
+    });
+    throw new Error(`critical event sources failed: ${detail}`);
+  }
 
   const allEvents = [];
   const sourceNames = [];
   for (const result of results) {
     if (result.status === "fulfilled" && result.value.length > 0) {
       allEvents.push(...result.value);
-      const src = result.value[0]?.source;
-      if (src && !sourceNames.includes(src)) sourceNames.push(src);
+      for (const event of result.value) {
+        if (event.source && !sourceNames.includes(event.source)) sourceNames.push(event.source);
+      }
     }
   }
+
+  // The Town's CivicPlus feed carries generic series titles and currently
+  // omits the August 26 Jazz on the Plazz finale. Newsletter extraction also
+  // produced a duplicate July 19 Music in the Park row with the wrong time.
+  // Replace every row for these two verified 2026 schedules with the complete,
+  // performer-specific first-party records before global cleanup and dedup.
+  const losGatosSummer = mergeLosGatosSummerConcerts(allEvents, {
+    fromDate: todayPT(),
+  });
+  allEvents.length = 0;
+  allEvents.push(...losGatosSummer.events);
+  for (const event of losGatosSummer.canonicalEvents) {
+    if (!sourceNames.includes(event.source)) sourceNames.push(event.source);
+  }
+  console.log(
+    `  ✅ Los Gatos summer concerts: ${losGatosSummer.canonicalEvents.length} canonical `
+      + `(${losGatosSummer.replacedCount} source row(s) replaced, ${losGatosSummer.addedCount} added)`,
+  );
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events
   allEvents.forEach((e) => { e.title = cleanTitle(e.title); });
@@ -7255,12 +7398,28 @@ async function main() {
     generatedAt: new Date().toISOString(),
     eventCount: collapsedEvents.length,
     sources: sourceNames,
+    sourceHealth,
+    ...(inputHealth ? { inputSnapshots: inputHealth.snapshots } : {}),
     events: collapsedEvents,
   };
 
   // Capture the previous run BEFORE overwriting, for the regression guard below.
   let prevRun = null;
   try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+
+  const regression = eventRegressionProblem({
+    previous: prevRun,
+    nextSourceCount: sourceNames.length,
+    nextEventCount: collapsedEvents.length,
+  });
+  if (STRICT_EVENT_REFRESH && regression) {
+    await catSignal({
+      key: "events-source-regression",
+      title: "Event refresh blocked before overwrite",
+      body: regression,
+    });
+    throw new Error(regression);
+  }
 
   // Rolling 30-day archive of events that age out of the upcoming file. The
   // static /event/<slug> pages build from upcoming ∪ archive so a page keeps
@@ -7299,21 +7458,13 @@ async function main() {
   // Regression guard. Scrapers fail quietly — each logs "⚠️ <Source>" and the run
   // continues with fewer events — so a whole batch breaking goes unnoticed. If the
   // contributing-source count or total events craters vs the previous run, DM.
-  if (prevRun) {
-    const prevSources = prevRun.sources?.length || 0;
-    const prevEvents = prevRun.eventCount || prevRun.events?.length || 0;
-    const lostSources = prevSources - sourceNames.length;
-    if (prevSources >= 10 && (lostSources >= 4 || collapsedEvents.length < prevEvents * 0.6)) {
-      console.warn(`⚠️  Regression vs previous run: ${prevSources}→${sourceNames.length} sources, ${prevEvents}→${collapsedEvents.length} events`);
-      await catSignal({
-        key: "events-source-regression",
-        title: "Event pipeline regression",
-        body:
-          `generate-events dropped from **${prevSources}→${sourceNames.length}** sources and ` +
-          `**${prevEvents}→${collapsedEvents.length}** events vs the previous run. ` +
-          `A batch of scrapers likely broke — check the run log for ⚠️ lines.`,
-      });
-    }
+  if (regression) {
+    console.warn(`⚠️  ${regression}`);
+    await catSignal({
+      key: "events-source-regression",
+      title: "Event pipeline regression",
+      body: `${regression}. A batch of scrapers likely broke — check the run log for warnings.`,
+    });
   }
 
   // Summary by city
@@ -7332,4 +7483,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   });
 }
 
-export { polishDescription, cleanTitle, stripRedundantVenueSuffix, fetchPaloAltoPlayersEvents, fetchFarmersMarketEvents };
+export {
+  cleanTitle,
+  fetchFarmersMarketEvents,
+  fetchHappyHollowEvents,
+  fetchJazzOnThePlazzEvents,
+  fetchLosAltosEvents,
+  fetchMusicInParkEvents,
+  fetchPaloAltoPlayersEvents,
+  fetchPearTheatreEvents,
+  fetchSjJazzEvents,
+  polishDescription,
+  stripRedundantVenueSuffix,
+};

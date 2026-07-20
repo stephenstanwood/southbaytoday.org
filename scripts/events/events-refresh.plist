@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Deterministic primary-source refresh on the Mac Mini. The first slot is the
+  normal run; the second retries a repo-lock deferral. A local success stamp
+  makes the second slot a no-op after a healthy first run.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.southbaytoday.events-refresh</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/node</string>
+        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/events/scheduled-refresh.mjs</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>19</integer>
+            <key>Minute</key>
+            <integer>15</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>20</integer>
+            <key>Minute</key>
+            <integer>45</integer>
+        </dict>
+    </array>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>Nice</key>
+    <integer>5</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/sbt-events-refresh.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/sbt-events-refresh.log</string>
+</dict>
+</plist>
