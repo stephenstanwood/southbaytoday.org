@@ -728,6 +728,7 @@ const TITLE_FIXES = {
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
   "Xfyd ": "XFYD ",     // XFYD chess club — all-caps brand name on flyers
   "Grpc's": "GRPC's",   // Guadalupe River Park Conservancy — Google Cal title-cases it
+  " Uv ": " UV ",       // ultraviolet resin classes — library feeds/old data title-case the acronym
   // Performer/brand acronyms styled ALL-CAPS in the act's own marketing — the
   // 2+ regex downcases them once the rest of the title tips into mixed case,
   // and they're too generic (ONE, RJ, DSP, EXE) to safely add to KEEP_UPPER.
@@ -872,7 +873,7 @@ function cleanTitle(title) {
     // 2–3 letter acronyms that legitimately appear in event titles. Anything
     // NOT in this list gets title-cased when the surrounding title is mostly
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).
-    "AI", "AR", "VR", "EV", "PM", "AM", "DJ", "TV", "PC", "IT", "HR", "PR", "ER",
+    "AI", "AR", "VR", "UV", "EV", "PM", "AM", "DJ", "TV", "PC", "IT", "HR", "PR", "ER",
     "SF", "SJ", "LA", "CA", "SC", "US", "UK", "FC", "RB",
     "GK", "II", "TK", "JR", "SR", "VS",
     "BBQ", "BYOB", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
@@ -4853,6 +4854,17 @@ function normalizeMeetupAddress(address, city) {
   return cleaned;
 }
 
+function isIntersectionVenue(value) {
+  return /\b(?:st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ct|court|ln|lane|way|pkwy|parkway|cir|circle|pl|place)\b\.?\s*(?:&|and|\/)\s*.+\b(?:st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ct|court|ln|lane|way|pkwy|parkway|cir|circle|pl|place)\b/i.test(String(value || ""));
+}
+
+function meetupVenueFromTitle(title) {
+  const match = String(title || "").match(
+    /\b(?:at|in)\s+(?:the\s+)?([A-Z][A-Za-z0-9'&.-]*(?:\s+[A-Z][A-Za-z0-9'&.-]*){0,5}\s+(?:Park|Garden|Preserve|Trail|Library|Center|Museum|Theater|Theatre|Winery))\b/,
+  );
+  return match ? cleanVenue(match[1]) : "";
+}
+
 async function fetchMeetupEvents() {
   const CLIENT_ID = process.env.MEETUP_CLIENT_ID?.trim();
   const MEMBER_ID = process.env.MEETUP_MEMBER_ID?.replace(/\\n/g, "").trim();
@@ -5002,8 +5014,12 @@ async function fetchMeetupEvents() {
     // Run through cleanVenue so Meetup organizers who type a raw street address
     // into the venue-name field ("22500 Cristo Rey Dr") fall back to the group
     // name rather than rendering a bare address as the venue.
-    const venue = cleanVenue(node.venue?.name?.trim() || "") || node.group?.name || "TBD";
     const address = normalizeMeetupAddress(node.venue?.address, city);
+    let venue = cleanVenue(node.venue?.name?.trim() || "");
+    if (isIntersectionVenue(venue)) {
+      venue = meetupVenueFromTitle(title) || "";
+    }
+    venue ||= node.group?.name || "TBD";
     const locationText = [venue, address].filter(Boolean).join(" ");
     if (/\b(?:somewhere|secret(?:\s+\w+){0,3}\s+location|released\s+on\s+day|private\s+home|home\s+near)\b/i.test(locationText)) continue;
 

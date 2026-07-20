@@ -75,7 +75,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Year-round downtown market with 70+ vendors. Produce, flowers, honey, specialty foods, and artisan goods. Live music most weeks.",
+      "Year-round downtown market with produce, flowers, honey, specialty foods, and artisan goods. Live music most weeks.",
     url: "https://www.campbellfarmersmarket.com",
     emoji: "🌽",
     featured: true,
@@ -93,7 +93,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Beloved year-round market at the downtown Caltrain station lot, steps from Castro Street. 80+ vendors covering fresh produce, baked goods, artisan cheese, flowers, and prepared foods.",
+      "Beloved year-round market at the downtown Caltrain station lot, steps from Castro Street. Fresh produce, baked goods, artisan cheese, flowers, and prepared foods.",
     url: "https://www.cafarmersmkts.com/mountain-view-farmers-market",
     emoji: "🌸",
     featured: true,
@@ -244,12 +244,13 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "market",
     recurrence: "weekly",
     days: ["thursday"],
-    time: "3pm – 7pm",
+    time: "4pm – 8pm",
     months: [5, 6, 7, 8, 9, 10],
     cost: "free",
     kidFriendly: true,
     description:
       "Charming seasonal Thursday market in the heart of Los Altos Village. Fresh produce, flowers, and artisan foods.",
+    url: "https://www.pcfma.org/market/downtown-los-altos-farmers-market",
     emoji: "🌻",
   },
   {
@@ -284,7 +285,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Outdoor farmers' market on Santana Row every Wednesday evening. 25+ vendors with organic produce, local cheeses, breads, flowers, and prepared foods.",
+      "Outdoor farmers' market on Santana Row every Wednesday evening with organic produce, local cheeses, breads, flowers, and prepared foods.",
     url: "https://santanarow.com/event/farmers-market/",
     emoji: "🥬",
   },
@@ -301,7 +302,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Monthly street fair on the second Saturday with 60+ local artists, crafters, and makers. Handmade jewelry, ceramics, woodwork, apparel, live music. Sip & stroll event.",
+      "Monthly street fair on the second Saturday with local artists, crafters, and makers. Handmade jewelry, ceramics, woodwork, apparel, live music. Sip & stroll event.",
     url: "https://santanarow.com/events/",
     emoji: "🎨",
   },
@@ -508,18 +509,19 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
   {
     id: "campbell-friday-music",
-    title: "Campbell Downtown Live Music",
+    title: "Campbell Summer Concert Series",
     city: "campbell",
-    venue: "Downtown Campbell",
+    venue: "Orchard City Green",
     category: "music",
     recurrence: "weekly",
-    days: ["friday"],
-    time: "6pm",
-    months: [6, 7, 8, 9],
+    days: ["thursday"],
+    time: "6:30pm – 8pm",
+    months: [7, 8],
     cost: "free",
     kidFriendly: true,
     description:
-      "Summer Friday night concerts in downtown Campbell. Live bands, food and drinks from nearby restaurants.",
+      "Free summer concerts on Orchard City Green with local bands, food, and drinks from nearby restaurants.",
+    url: "https://www.campbellca.gov/280/Summer-Concert-Series",
     emoji: "🎸",
   },
   {
@@ -529,26 +531,30 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     venue: "Civic Center Plaza",
     category: "music",
     recurrence: "weekly",
-    months: [7, 8],
+    days: ["friday"],
+    time: "6pm – 7:30pm",
+    months: [6, 7, 8, 9],
     cost: "free",
     kidFriendly: true,
-    description: "Free outdoor concerts in downtown Mountain View during July and August.",
+    description: "Free Friday-night outdoor concerts on Civic Center Plaza during the summer season.",
+    url: "https://www.mountainview.gov/our-city/departments/community-services/special-events/concerts-on-the-plaza",
     emoji: "🎵",
   },
   {
     id: "los-gatos-summer-concerts",
-    title: "Los Gatos Music on the Plaza",
+    title: "Los Gatos Jazz on the Plazz",
     city: "los-gatos",
-    venue: "Town Plaza / Library",
+    venue: "Town Plaza Park",
     category: "music",
     recurrence: "weekly",
-    days: ["thursday"],
-    time: "6pm – 8pm",
-    months: [6, 7, 8],
+    days: ["wednesday"],
+    time: "6:30pm – 8:30pm",
+    months: [7, 8],
     cost: "free",
     kidFriendly: true,
     description:
-      "Free summer concerts on Thursday evenings in downtown Los Gatos. Local and regional bands.",
+      "Free Wednesday-evening jazz concerts in Town Plaza Park, presented by Los Gatos Music & Arts.",
+    url: "https://www.losgatosmusicandarts.online/",
     emoji: "🎵",
   },
   {
@@ -558,13 +564,14 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     venue: "Murphy Avenue Plaza",
     category: "music",
     recurrence: "weekly",
-    days: ["friday"],
-    time: "6:30pm – 8:30pm",
-    months: [6, 7, 8],
+    days: ["wednesday"],
+    time: "6pm – 8:30pm",
+    months: [7, 8],
     cost: "free",
     kidFriendly: true,
     description:
-      "Free outdoor concerts on Friday evenings in downtown Sunnyvale. Jazz, pop, and local acts.",
+      "Free Wednesday-night summer music series on historic Murphy Avenue with live bands and local vendors.",
+    url: "https://sunnyvaledowntown.org/events",
     emoji: "🎶",
   },
   {
@@ -581,6 +588,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: true,
     description:
       "Free live music in Santana Row's outdoor plaza on weekend afternoons during the warm season.",
+    url: "https://www.santanarow.com/events/",
     emoji: "🎼",
   },
 
@@ -688,6 +696,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: false,
     description:
       "Monthly art walk through San Jose's SoFA arts district on the first Friday. Galleries, studios, pop-up art, and street performers.",
+    url: "https://www.southfirstfridays.com/",
     emoji: "🎭",
   },
 
@@ -705,6 +714,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "~$12 admission + skate rental",
     kidFriendly: true,
     description: "Outdoor holiday ice rink in downtown San Jose's Plaza de César Chávez. Nov–Jan.",
+    url: "https://www.downtownicesj.com/",
     emoji: "⛸️",
   },
   {
@@ -752,7 +762,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Street festival free; some ticketed stages",
     kidFriendly: true,
     description:
-      "One of the largest jazz festivals in the country — three days and 100+ performances across downtown San Jose.",
+      "Three-day jazz festival with performances across downtown San Jose.",
     url: "https://sanjosejazz.org/summer-fest",
     emoji: "🎷",
     featured: true,
@@ -769,7 +779,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Individual films ~$15; passes available",
     kidFriendly: false,
     description:
-      "One of the top film festivals in the US, held in downtown San Jose each March. 70+ world premieres and indie films.",
+      "Downtown San Jose film festival held each March, with independent films and premieres.",
     url: "https://cinequest.org",
     emoji: "🎬",
   },
@@ -785,7 +795,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Two-day street festival with 200+ artists, wine and food vendors, and live music on multiple stages.",
+      "Two-day street festival with artists, wine and food vendors, and live music on multiple stages.",
+    url: "https://www.sunnyvaleartandwine.com/",
     emoji: "🍷",
   },
   {
@@ -800,7 +811,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Annual August arts festival in downtown Los Gatos. 100+ juried artists, live music, and local food.",
+      "Annual August arts festival in downtown Los Gatos with juried artists, live music, and local food.",
+    url: "https://losgatosfiesta.com/",
     emoji: "🎨",
   },
   {
@@ -817,6 +829,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: true,
     description:
       "Three-day autumn festival celebrating Greek culture with authentic food, traditional dancing, and live music.",
+    url: "https://www.sanjosegreekfestival.com/",
     emoji: "🫒",
   },
   {
@@ -831,7 +844,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "One of the largest Lunar New Year / Tet celebrations outside Vietnam. Cultural performances, food, firecrackers, and community pride.",
+      "Lunar New Year / Tet celebrations around San Jose with cultural performances, food, firecrackers, and community pride.",
+    url: "https://www.sanjose.org/lunarnewyear",
     emoji: "🏮",
     featured: true,
   },
@@ -865,6 +879,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     kidFriendly: true,
     description:
       "Annual fall Oktoberfest in downtown Campbell with German beer, food, live bands, and family entertainment.",
+    url: "https://campbelloktoberfest.com/",
     emoji: "🍺",
   },
   {
@@ -879,7 +894,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "One of the South Bay's biggest street festivals, held the weekend after Labor Day. 250+ artists, 50+ wineries, and live music on Castro Street.",
+      "Large street festival held the weekend after Labor Day, with artists, wineries, and live music on Castro Street.",
     url: "https://www.mvartwine.com",
     emoji: "🎨",
     featured: true,
@@ -900,7 +915,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$35",
     kidFriendly: true,
     description:
-      "NHL hockey at SAP Center. 40+ home games per season, Oct–Apr.",
+      "NHL hockey at SAP Center during the regular season, Oct–Apr.",
     url: "https://www.nhl.com/sharks/schedule",
     emoji: "🦈",
     featured: true,

@@ -152,11 +152,11 @@ function classify(event) {
   const isMultiCityVenue = MULTI_CITY_VENUE_PATTERNS.some(re => re.test(loc));
   if (city && SLUG_TO_CITY_TOKENS[city] && loc && !isMultiCityVenue) {
     const tokens = SLUG_TO_CITY_TOKENS[city];
-    if (!tokens.some(t => locLower.includes(t))) {
+    if (!tokens.some(t => addrLower.includes(t))) {
       let otherSlug = null;
       for (const [slug, toks] of Object.entries(SLUG_TO_CITY_TOKENS)) {
         if (slug === city) continue;
-        if (toks.some(t => locLower.includes(t))) {
+        if (toks.some(t => addrLower.includes(t))) {
           otherSlug = slug;
           break;
         }

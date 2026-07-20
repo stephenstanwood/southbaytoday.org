@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-07-17T04:21:53.321Z"
+    "auditedAt": "2026-07-20T03:49:05.770Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1751,
+    "total": 1820,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,17 +16,17 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 547,
+    "total": 513,
     "totals": {
-      "hard": 28,
+      "hard": 25,
       "soft": 3,
       "info": 0
     },
     "byReason": {
       "unknown-slug": 2,
-      "out-of-area": 27,
+      "out-of-area": 23,
       "virtual-not-flagged": 1,
-      "slug-mismatch": 1
+      "slug-mismatch": 2
     },
     "hard": [
       {
@@ -76,20 +76,6 @@
         "title": "Seed Kits",
         "city": null,
         "date": "2026-08-01T00:00:00-07:00",
-        "location": "Gilroy Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mrjemwp7_mrum0o",
-        "title": "Obon Festival",
-        "city": null,
-        "date": "2026-07-17T16:00:00-07:00",
         "location": "Gilroy Library",
         "findings": [
           {
@@ -170,20 +156,6 @@
         ]
       },
       {
-        "id": "inbound_mrjemwp7_83wu6i",
-        "title": "Grow Your Money",
-        "city": null,
-        "date": "2026-07-18T15:00:00-07:00",
-        "location": "Morgan Hill Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"morgan hill\" with no in-area city token"
-          }
-        ]
-      },
-      {
         "id": "inbound_mrjemwp7_2zn035",
         "title": "Safe Space: Video Games",
         "city": null,
@@ -254,6 +226,20 @@
         ]
       },
       {
+        "id": "inbound_mq9qux9o_uhkzfb",
+        "title": "61st Annual Campbell Chamber Foundation Golf Tournament",
+        "city": "campbell",
+        "date": "2026-08-26T12:00:00-07:00",
+        "location": "Cinnabar Hills Golf Club, 23600 McKean Rd, San Jose, CA",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "slug-mismatch",
+            "detail": "city=\"campbell\" but location references \"san-jose\""
+          }
+        ]
+      },
+      {
         "id": "inbound_mqtt6fia_5yepy2",
         "title": "Maggie Stiefvater: The Dream Thieves graphic novel release",
         "city": "san-jose",
@@ -300,20 +286,6 @@
         "title": "Composting Program",
         "city": null,
         "date": "2026-07-29T18:30:00-07:00",
-        "location": "Gilroy Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mrjemtr8_fn9g2k",
-        "title": "Obon Festival",
-        "city": null,
-        "date": "2026-07-17T16:00:00-07:00",
         "location": "Gilroy Library",
         "findings": [
           {
@@ -390,20 +362,6 @@
             "severity": "hard",
             "reason": "out-of-area",
             "detail": "location mentions \"gilroy\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mrjemtr8_4d2x2j",
-        "title": "Grow Your Money",
-        "city": null,
-        "date": "2026-07-18T15:00:00-07:00",
-        "location": "Morgan Hill Library",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"morgan hill\" with no in-area city token"
           }
         ]
       },
