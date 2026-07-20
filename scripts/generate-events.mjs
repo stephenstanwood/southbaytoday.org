@@ -68,7 +68,9 @@ import {
 } from "../src/lib/south-bay/marketOccurrence.mjs";
 import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
+import { normalizeInboundEventPresentation } from "./lib/inbound-event-normalize.mjs";
 import {
+  extractAddressLocality,
   extractSanJoseJazzDayUrls,
   extractVboSession,
   parseCivicPlusCalendarPage,
@@ -5163,6 +5165,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           ? `${loc.addressLine1}, ${loc.addressLine2 || ""}`.replace(/,\s*$/, "").trim()
           : defaultAddress;
         const city = inferCity(venue, addr) || defaultCity;
+        const locality = extractAddressLocality(loc.addressLine2 || addr);
         const desc = item.excerpt
           ? stripHtml(item.excerpt)
           : (item.body ? truncate(stripHtml(item.body)) : "");
@@ -5180,6 +5183,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           venue,
           address: addr,
           city,
+          ...(locality ? { locality } : {}),
           category: inferCategory(item.title, desc, "", venue),
           // "Free Admission" or "Free " in the title (e.g. JAMsj's free-admission
           // days) overrides the venue's default "paid" cost.
@@ -6670,40 +6674,12 @@ function fetchInboundEvents() {
       const startDate = new Date(e.startsAt);
       if (isNaN(startDate.getTime())) continue;
 
-      // Extract a human time string from the ISO timestamp in PT.
-      // Treat midnight (00:00 local) as "time unknown" — the extractor writes
-      // T00:00:00 when no time was found in the newsletter. Check the
-      // formatted output rather than the parsed hour: older Node Intl
-      // returns "24" for midnight in `hour: "2-digit", hour12: false` mode,
-      // which slips past `_ptHour === 0` and leaks "12:00 AM" cards.
-      const time = (() => {
-        const display = startDate.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-          timeZone: "America/Los_Angeles",
-        });
-        return display === "12:00 AM" ? null : display;
-      })();
-
-      // Parse end time from endsAt if provided. Mirror the start-time
-      // midnight handling — newsletter extractors write T00:00:00 when no
-      // time was found, and "12:00 AM" as an end time is meaningless next to
-      // a real start time. Also drop endTime when it equals the start time
-      // (same source value with no actual end-of-event signal).
-      let endTime = null;
-      if (e.endsAt) {
-        const endDate = new Date(e.endsAt);
-        if (!isNaN(endDate.getTime())) {
-          const display = endDate.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-            timeZone: "America/Los_Angeles",
-          });
-          if (display !== "12:00 AM" && display !== time) endTime = display;
-        }
-      }
+      // Normalize extractor timestamps before they become visitor-facing
+      // clock times. Inbound feeds use midnight and 23:59:59 as unknown/all-day
+      // sentinels; source-specific first-party overrides can then supply real
+      // published visitor hours and canonical URLs.
+      const presentation = normalizeInboundEventPresentation(e);
+      const { time, endTime } = presentation;
 
       // Real category inference instead of hardcoded "community" — this is
       // what makes newsletter events show up on the right tabs (Tech, Sports,
@@ -6772,7 +6748,7 @@ function fetchInboundEvents() {
         category,
         cost: null,
         description: e.description ?? "",
-        url: e.sourceUrl ?? "",
+        url: presentation.url,
         source: "City Newsletter",
         ...(image ? { image } : {}),
         kidFriendly,

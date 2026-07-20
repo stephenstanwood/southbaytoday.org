@@ -132,11 +132,6 @@ test("keeps the committed event database aligned with the verified schedule", ()
     ),
   ).events;
 
-  const expectedUpcoming = getLosGatosSummerConcerts({ fromDate: "2026-07-19" });
-  const expectedArchive = getLosGatosSummerConcerts({
-    fromDate: "2026-07-08",
-    throughDate: "2026-07-15",
-  });
   const scheduleRows = [...upcoming, ...archive].filter((event) =>
     event.id?.startsWith("los-gatos-music-in-the-park-") ||
     event.id?.startsWith("los-gatos-jazz-on-the-plazz-"),
@@ -149,16 +144,9 @@ test("keeps the committed event database aligned with the verified schedule", ()
     new Set(allExpected.map((event) => event.id)),
   );
 
-  for (const expected of expectedUpcoming) {
-    const actual = upcoming.find((event) => event.id === expected.id);
-    assert.ok(actual, `missing upcoming event ${expected.id}`);
-    for (const [key, value] of Object.entries(expected)) {
-      assert.deepEqual(actual[key], value, `${expected.id}.${key}`);
-    }
-  }
-  for (const expected of expectedArchive) {
-    const actual = archive.find((event) => event.id === expected.id);
-    assert.ok(actual, `missing archived event ${expected.id}`);
+  for (const expected of allExpected) {
+    const actual = scheduleRows.find((event) => event.id === expected.id);
+    assert.ok(actual, `missing committed event ${expected.id}`);
     for (const [key, value] of Object.entries(expected)) {
       assert.deepEqual(actual[key], value, `${expected.id}.${key}`);
     }

@@ -257,6 +257,36 @@ test("newsletter renders also-calendar events chronologically and hides stale/bl
   assert.equal(html.includes("Newly open"), false);
 });
 
+test("newsletter renders a border venue's public locality instead of its eligibility city", () => {
+  const { html } = renderEmail({
+    date: "2026-07-20",
+    longDate: "Monday, July 20, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: null,
+    tonightPickBlurb: "",
+    todayEvents: [{}],
+    featuredEvents: [{
+      title: "This Is Now with Angie Coiro: Rebecca Solnit",
+      time: "6:30 PM",
+      venue: "Kepler's Books",
+      city: "palo-alto",
+      locality: "Menlo Park",
+      url: "https://www.keplers.org/upcoming-events-internal/rebecca-solnit",
+    }],
+    recentOpenings: [],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {},
+    editorial: null,
+  });
+
+  assert.ok(html.includes("Menlo Park"));
+  assert.equal(html.includes("Palo Alto"), false);
+});
+
 test("newsletter never renders a final inspection date as an opening date", () => {
   const { html } = renderEmail({
     date: "2026-07-17",

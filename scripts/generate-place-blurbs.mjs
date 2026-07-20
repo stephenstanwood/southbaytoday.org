@@ -216,9 +216,10 @@ function capFirst(value) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function foodProfileFromName(name, typeText) {
+export function foodProfileFromName(name, typeText) {
   const hay = normalizeKey(name) + " " + normalizeKey(typeText);
   const rules = [
+    [/telef.?ric barcelona/, "Spanish restaurant", "tapas, paella, and Spanish plates"],
     [/bloom bagels|main street bagels|bagel/, "bagel shop", "bagels, coffee, and breakfast sandwiches"],
     [/roja/, "fine-dining restaurant", "seasonal dinner plates and cocktails"],
     [/le l kitchen|lele kitchen/, "Asian restaurant", "Asian plates and rice bowls"],
@@ -281,9 +282,9 @@ function foodProfileFromName(name, typeText) {
     [/coffee|cafe|caffe|roasting|philz|lookout|arwa|bijan|nahita|olympus/, "cafe", "coffee, pastries, and cafe bites"],
     [/bakery|donut|doughnut|cake|bundt|patisserie|pastry/, "bakery", "pastries, cakes, and baked goods"],
     [/ice cream|gelato|creamery|tong sui|dessert|sweets|boba|tea|teaspoon/, "dessert and drinks shop", "desserts, tea drinks, and sweet snacks"],
-    [/wine|vino|tasting house|tessora/, "wine bar", "wine pours and small plates"],
-    [/brew|beer|tap|barrel/, "beer bar", "beer, taps, and pub bites"],
-    [/pub|grill|bar|district|local union|double d|topgolf|dave buster/, "bar and grill", "burgers, drinks, and shareable plates"],
+    [/\b(?:wine|vino)\b|tasting house|tessora/, "wine bar", "wine pours and small plates"],
+    [/\b(?:brew(?:pub|ery|ing)?|beer|tap(?:s|room)?|barrel)\b/, "beer bar", "beer, taps, and pub bites"],
+    [/\b(?:pub|grill|bar)\b|district|local union|double d|topgolf|dave buster/, "bar and grill", "burgers, drinks, and shareable plates"],
     [/coconuts|caribbean/, "Caribbean restaurant", "Caribbean plates"],
     [/cascal|suspiro|macarena|bodeguita/, "Spanish and Latin restaurant", "tapas, Latin plates, and cocktails"],
   ];
@@ -348,8 +349,8 @@ function foodProfileFromType(typeText) {
     [/ice cream|dessert|chocolate|confectionery/, "dessert shop", "desserts and sweet snacks"],
     [/wine/, "wine bar", "wine pours and small plates"],
     [/cocktail/, "cocktail bar", "cocktails and bar snacks"],
-    [/brew|beer/, "beer bar", "beer, taps, and pub bites"],
-    [/pub|bar and grill|gastropub|bar\b/, "bar and grill", "burgers, drinks, and shareable plates"],
+    [/\b(?:brew(?:pub|ery|ing)?|beer)\b/, "beer bar", "beer, taps, and pub bites"],
+    [/\b(?:pub|bar and grill|gastropub|bar)\b/, "bar and grill", "burgers, drinks, and shareable plates"],
     [/food court/, "food hall", "multiple food vendors under one roof"],
     [/vegan|vegetarian/, "plant-based spot", "plant-based bowls and cafe plates"],
     [/asian fusion|fusion/, "Asian fusion restaurant", "Asian-fusion plates"],
@@ -360,7 +361,7 @@ function foodProfileFromType(typeText) {
   return null;
 }
 
-function inferFoodProfile(p, displayType) {
+export function inferFoodProfile(p, displayType) {
   const typeText = [displayType, ...(p.types || [])].filter(Boolean).join(" ");
   return foodProfileFromName(p.name || "", typeText)
     || foodProfileFromType(typeText)
@@ -687,21 +688,23 @@ const out = {
   blurbs: cache,
 };
 
-writeFileAtomic(OUT, JSON.stringify(out, null, 2));
-console.log(`Wrote ${OUT}`);
-console.log(`  ${out._meta.blurbCount} blurbs (${researchHits} from Google editorialSummary, ${templateHits} from templates)`);
-console.log(`\nSample editorial (5):`);
-const editorialSamples = Object.entries(cache).filter(([, v]) => v.source === "editorial").slice(0, 5);
-for (const [id, v] of editorialSamples) {
-  const p = places.find((x) => x.id === id);
-  console.log(`  ${p?.name} → ${v.blurb}`);
+if (process.argv[1] === __filename) {
+  writeFileAtomic(OUT, JSON.stringify(out, null, 2));
+  console.log(`Wrote ${OUT}`);
+  console.log(`  ${out._meta.blurbCount} blurbs (${researchHits} from Google editorialSummary, ${templateHits} from templates)`);
+  console.log(`\nSample editorial (5):`);
+  const editorialSamples = Object.entries(cache).filter(([, v]) => v.source === "editorial").slice(0, 5);
+  for (const [id, v] of editorialSamples) {
+    const p = places.find((x) => x.id === id);
+    console.log(`  ${p?.name} → ${v.blurb}`);
+  }
+  console.log(`\nSample template (one per category):`);
+  const cats = new Map();
+  for (const p of places) {
+    if (cats.size >= 8) break;
+    if (cache[p.id].source !== "template") continue;
+    if (cats.has(cache[p.id].category)) continue;
+    cats.set(cache[p.id].category, { name: p.name, blurb: cache[p.id].blurb });
+  }
+  for (const [cat, x] of cats) console.log(`  [${cat}] ${x.name} → ${x.blurb}`);
 }
-console.log(`\nSample template (one per category):`);
-const cats = new Map();
-for (const p of places) {
-  if (cats.size >= 8) break;
-  if (cache[p.id].source !== "template") continue;
-  if (cats.has(cache[p.id].category)) continue;
-  cats.set(cache[p.id].category, { name: p.name, blurb: cache[p.id].blurb });
-}
-for (const [cat, x] of cats) console.log(`  [${cat}] ${x.name} → ${x.blurb}`);
