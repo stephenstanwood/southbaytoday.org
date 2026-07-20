@@ -2682,9 +2682,10 @@ async function fetchSjJazzEvents() {
     const htmlPages = await Promise.all(dayPages.map((day) =>
       fetchText(`https://summerfest.sanjosejazz.org/filters/chronological/${day}`)
     ));
+    const lineup = htmlPages.flatMap(parseSanJoseJazzLineup);
+    if (lineup.length === 0) throw new Error("official lineup parser returned no artist performances");
     const today = todayPT();
-    const events = htmlPages
-      .flatMap(parseSanJoseJazzLineup)
+    const events = lineup
       .filter((event) => event.date >= today)
       .map((event) => ({
         id: h("sjz", event.url, event.date, event.time, event.stage),
@@ -3006,8 +3007,10 @@ async function fetchMusicInParkEvents() {
   const url = "https://www.losgatosca.gov/350/Music-in-the-Park";
   try {
     const html = await fetchText(url);
+    const schedule = parseMusicInParkSchedule(html);
+    if (schedule.length === 0) throw new Error("official schedule parser returned no concerts");
     const today = todayPT();
-    const events = parseMusicInParkSchedule(html)
+    const events = schedule
       .filter((entry) => entry.date >= today)
       .map((entry) => ({
         id: `los-gatos-music-in-the-park-${entry.date}`,
@@ -3041,8 +3044,10 @@ async function fetchJazzOnThePlazzEvents() {
     const year = new Date().getFullYear();
     const url = `https://jazzontheplazz.com/${year}-concerts/`;
     const html = await fetchText(url);
+    const schedule = parseJazzOnThePlazzSchedule(html);
+    if (schedule.length === 0) throw new Error("official schedule parser returned no concerts");
     const today = todayPT();
-    const events = parseJazzOnThePlazzSchedule(html)
+    const events = schedule
       .filter((entry) => entry.date >= today)
       .map((entry) => ({
         id: `los-gatos-jazz-on-the-plazz-${entry.date}`,
@@ -4240,8 +4245,10 @@ async function fetchHappyHollowEvents() {
       fetchText("https://happyhollow.org/seniorsafari/"),
       fetchText("https://happyhollow.org/hh-foundation/hooray/"),
     ]);
+    const schedule = parseHappyHollowSchedules({ seniorHtml, hoorayHtml });
+    if (schedule.length === 0) throw new Error("official program pages returned no dated events");
     const today = todayPT();
-    const events = parseHappyHollowSchedules({ seniorHtml, hoorayHtml })
+    const events = schedule
       .filter((entry) => entry.date >= today)
       .map((entry) => {
         const senior = entry.kind === "senior-safari";

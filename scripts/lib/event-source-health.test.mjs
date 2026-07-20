@@ -45,18 +45,23 @@ test("strict input health requires credentials and both fresh snapshots", () => 
   assert.deepEqual(result.problems, []);
 });
 
-test("source health fails closed only for declared critical adapters", () => {
+test("source health blocks every adapter error and critical empty source", () => {
   const health = buildSourceHealth(
     [
       { id: "broad", label: "Broad feed", critical: true },
       { id: "seasonal", label: "Seasonal feed", critical: false },
+      { id: "broken", label: "Broken feed", critical: false },
     ],
     [
       { status: "fulfilled", value: [] },
       { status: "fulfilled", value: [] },
+      { status: "rejected", reason: new Error("upstream 503") },
     ],
   );
-  assert.deepEqual(criticalSourceProblems(health), ["Broad feed is empty"]);
+  assert.deepEqual(criticalSourceProblems(health), [
+    "Broad feed is empty",
+    "Broken feed is error: upstream 503",
+  ]);
 });
 
 test("detects meaningful source or event-count regressions", () => {
