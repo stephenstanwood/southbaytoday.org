@@ -30,7 +30,7 @@ const CACHE_PATH = join(REPO_ROOT, "src", "data", "south-bay", "event-blurb-cach
 
 const MODEL = "claude-sonnet-5";
 const BATCH_SIZE = 30;
-const MAX_TOKENS = 1500;
+const MAX_TOKENS = 3000;
 
 // ---------------------------------------------------------------------------
 // Persistent cache
@@ -279,14 +279,21 @@ Write a NEW blurb for THIS event that reads as clearly distinct from the ones ab
 Output just the one-sentence blurb — no markdown, no quotes, no commentary.`;
 }
 
+export function extractAnthropicText(response) {
+  return response?.content?.find(
+    (block) => block?.type === "text" && typeof block.text === "string",
+  )?.text ?? "";
+}
+
 async function sonnetUniqueBlurb(client, event, conflictBlurbs) {
   const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 300,
+    max_tokens: 500,
+    output_config: { effort: "low" },
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: buildUniqueUserPrompt(event, conflictBlurbs) }],
   });
-  const text = response.content?.[0]?.text ?? "";
+  const text = extractAnthropicText(response);
   return text.trim().replace(/^["']|["']$/g, "");
 }
 
@@ -294,10 +301,11 @@ async function sonnetBatch(client, events) {
   const response = await client.messages.create({
     model: MODEL,
     max_tokens: MAX_TOKENS,
+    output_config: { effort: "low" },
     system: SYSTEM_PROMPT,
     messages: [{ role: "user", content: buildUserPrompt(events) }],
   });
-  const text = response.content?.[0]?.text ?? "";
+  const text = extractAnthropicText(response);
   const parsed = parseBlurbArray(text, events.length);
   if (!parsed) {
     console.warn(`[eventBlurbs] parse fail (batch of ${events.length}). raw: ${text.slice(0, 200)}`);
