@@ -77,9 +77,11 @@ import {
   parseSanJoseJazzLineup,
 } from "./lib/official-event-sources.mjs";
 import {
+  DEFAULT_SNAPSHOT_MAX_AGE_HOURS,
   buildSourceHealth,
   criticalSourceProblems,
   eventRegressionProblem,
+  sourceRegressionProblems,
   strictRefreshInputHealth,
 } from "./lib/event-source-health.mjs";
 
@@ -92,6 +94,16 @@ const PLAYWRIGHT_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay",
 const INBOUND_EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "inbound-events.json");
 const TIME_BACKFILL_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", "event-time-backfill-cache.json");
 const STRICT_EVENT_REFRESH = process.env.SBT_STRICT_EVENT_REFRESH === "1";
+
+function strictSnapshotMaxAgeHours() {
+  const raw = String(process.env.SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS || "").trim();
+  if (!raw) return DEFAULT_SNAPSHOT_MAX_AGE_HOURS;
+  const hours = Number(raw);
+  if (!Number.isFinite(hours) || hours <= 0) {
+    throw new Error(`invalid SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: ${raw}`);
+  }
+  return hours;
+}
 
 function readJsonFile(path) {
   try {
@@ -2228,6 +2240,7 @@ async function fetchStanfordEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Stanford: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2415,6 +2428,7 @@ async function fetchSjsuEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2538,6 +2552,7 @@ async function fetchScuEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SCU: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2589,7 +2604,8 @@ async function fetchChmEventDateTime(url) {
     const dt = new Date(`${m[1]} ${m[2]}`);
     if (isNaN(dt.getTime())) return null;
     return { date: dt, time: m[2] };
-  } catch {
+  } catch (err) {
+    if (STRICT_EVENT_REFRESH) throw err;
     return null;
   }
 }
@@ -2668,6 +2684,7 @@ async function fetchChmEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  CHM: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2676,13 +2693,11 @@ async function fetchSjJazzEvents() {
   console.log("  ⏳ San Jose Jazz Summer Fest...");
   try {
     // The legacy sanjosejazz.org/events page currently renders "No events
-    // found" while the first-party Summer Fest site publishes the complete
-    // day/time/stage lineup. Read those chronological pages directly.
-    const dayPages = ["friday-aug-7", "saturday-aug-8", "sunday-aug-9"];
-    const htmlPages = await Promise.all(dayPages.map((day) =>
-      fetchText(`https://summerfest.sanjosejazz.org/filters/chronological/${day}`)
-    ));
-    const lineup = htmlPages.flatMap(parseSanJoseJazzLineup);
+    // found" while the first-party Summer Fest lineup publishes complete
+    // day/time/stage records. Use the stable lineup route instead of dated
+    // filter slugs, which change every festival year.
+    const html = await fetchText("https://summerfest.sanjosejazz.org/lineup");
+    const lineup = parseSanJoseJazzLineup(html);
     if (lineup.length === 0) throw new Error("official lineup parser returned no artist performances");
     const today = todayPT();
     const events = lineup
@@ -2803,6 +2818,7 @@ async function fetchMontalvoEvents() {
     return enriched;
   } catch (err) {
     console.log(`  ⚠️  Montalvo Arts Center: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2839,6 +2855,7 @@ async function fetchSvlgEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SVLG: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2900,6 +2917,7 @@ async function fetchCampbellEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Campbell: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -2990,6 +3008,7 @@ async function fetchCivicPlusIcal(name, url, defaultCity, defaultCost = "free") 
     return events;
   } catch (err) {
     console.log(`  ⚠️  ${name}: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3221,6 +3240,7 @@ async function fetchCivicPlusRssCity(name, url, defaultCity) {
     return events;
   } catch (err) {
     console.log(`  ⚠️  ${name}: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3283,6 +3303,7 @@ async function fetchTheTechEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  The Tech Interactive: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3391,6 +3412,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
     return results;
   } catch (err) {
     console.log(`  ⚠️  ${libraryName}: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3519,6 +3541,7 @@ async function fetchScclEvents() {
     return allEvents;
   } catch (err) {
     console.log(`  ⚠️  ${libraryName}: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return allEvents; // return whatever we got before the error
   }
 }
@@ -3591,6 +3614,7 @@ async function fetchEventbriteEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Eventbrite: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3747,7 +3771,11 @@ function fixTicketmasterUrl(url, eventName, city, dateStr) {
 async function fetchTicketmasterEvents() {
   console.log("  ⏳ Ticketmaster...");
   const apiKey = process.env.TICKETMASTER_API_KEY;
-  if (!apiKey) { console.log("  ⚠️  Ticketmaster: no API key"); return []; }
+  if (!apiKey) {
+    console.log("  ⚠️  Ticketmaster: no API key");
+    if (STRICT_EVENT_REFRESH) throw new Error("Ticketmaster API key is missing");
+    return [];
+  }
 
   try {
     const now = new Date();
@@ -3812,6 +3840,7 @@ async function fetchTicketmasterEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Ticketmaster: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3857,6 +3886,7 @@ async function fetchShorelineEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Shoreline: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -3990,6 +4020,7 @@ async function fetchSantaCruzWarriorsSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SC Warriors: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4035,6 +4066,7 @@ async function fetchSharksSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Sharks: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4086,6 +4118,7 @@ async function fetchEarthquakesSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Earthquakes: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4152,6 +4185,7 @@ async function fetchSJGiantsSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJ Giants: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4203,6 +4237,7 @@ async function fetchBayFCSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Bay FC: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4328,6 +4363,7 @@ async function fetchMaclaEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  MACLA: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4385,6 +4421,7 @@ async function fetchHeritageTheatreEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Heritage Theatre: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -4880,6 +4917,7 @@ async function fetchMeetupEvents() {
 
   if (!CLIENT_ID || !MEMBER_ID || !KID || !PRIVATE_KEY) {
     console.log("  ⚠️  Meetup: credentials not set, skipping");
+    if (STRICT_EVENT_REFRESH) throw new Error("Meetup credentials are incomplete");
     return [];
   }
 
@@ -4911,6 +4949,7 @@ async function fetchMeetupEvents() {
   const tokenData = await tokenRes.json();
   if (!tokenData.access_token) {
     console.log("  ⚠️  Meetup: auth failed", JSON.stringify(tokenData));
+    if (STRICT_EVENT_REFRESH) throw new Error("Meetup authentication returned no access token");
     return [];
   }
   const token = tokenData.access_token;
@@ -4925,7 +4964,12 @@ async function fetchMeetupEvents() {
       body: JSON.stringify({ query }),
       signal: AbortSignal.timeout(20_000),
     });
-    return res.json();
+    if (!res.ok) throw new Error(`Meetup GraphQL returned ${res.status}`);
+    const data = await res.json();
+    if (Array.isArray(data?.errors) && data.errors.length > 0) {
+      throw new Error(`Meetup GraphQL error: ${data.errors[0]?.message || "unknown error"}`);
+    }
+    return data;
   }
 
   const today = new Date();
@@ -4970,6 +5014,7 @@ async function fetchMeetupEvents() {
       }
     } catch (err) {
       console.log(`  ⚠️  Meetup query "${kw}" failed:`, err.message);
+      if (STRICT_EVENT_REFRESH) throw err;
     }
   }
 
@@ -5115,6 +5160,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
     return events;
   } catch (err) {
     console.log(`  ⚠️  ${source}: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -5255,6 +5301,7 @@ async function fetchHicklebeesEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Hicklebee's: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -5545,6 +5592,7 @@ async function fetchSjdaEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJDA: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -5709,6 +5757,7 @@ async function fetchSjMuseumOfArtEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Museum of Art: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -5844,6 +5893,7 @@ async function fetchPearTheatreEvents() {
         occurrences = parsePearOccurrences(sliderHtml, rangeText);
       } catch (err) {
         console.log(`  ↳ The Pear Theatre date fetch failed for ${title}: ${err.message}`);
+        if (STRICT_EVENT_REFRESH) throw err;
       }
 
       for (const occurrence of occurrences) {
@@ -6082,6 +6132,7 @@ async function fetchSanJoseTheatersEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Theaters: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6161,6 +6212,7 @@ async function fetchSouthBayMusicalTheatreEvents() {
       await new Promise((r) => setTimeout(r, 150));
     } catch (err) {
       console.log(`  ↳ South Bay Musical Theatre page failed: ${err.message}`);
+      if (STRICT_EVENT_REFRESH) throw err;
     }
   }
 
@@ -6221,6 +6273,7 @@ async function fetchLosAltosStageEvents() {
         await new Promise((r) => setTimeout(r, 150));
       } catch (err) {
         console.log(`  ↳ Los Altos Stage detail failed for ${title}: ${err.message}`);
+        if (STRICT_EVENT_REFRESH) throw err;
       }
     }
 
@@ -6228,6 +6281,7 @@ async function fetchLosAltosStageEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Los Altos Stage Company: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6337,6 +6391,7 @@ async function fetchPaloAltoPlayersEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Palo Alto Players: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6382,6 +6437,7 @@ async function fetchHammerTheatreEvents() {
         occurrences = parsePearOccurrences(sliderHtml, rangeText);
       } catch (err) {
         console.log(`  ↳ Hammer Theatre date fetch failed for ${title}: ${err.message}`);
+        if (STRICT_EVENT_REFRESH) throw err;
       }
 
       if (occurrences.length === 0) {
@@ -6423,6 +6479,7 @@ async function fetchHammerTheatreEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Hammer Theatre: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6496,6 +6553,7 @@ async function fetchGambleGardenEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  Gamble Garden: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6520,6 +6578,7 @@ function fetchPlaywrightEvents() {
     return filtered;
   } catch (err) {
     console.log(`  ⚠️  Playwright events: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6683,6 +6742,7 @@ function fetchInboundEvents() {
     return out;
   } catch (err) {
     console.log(`  ⚠️  Inbound events: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6782,6 +6842,7 @@ async function fetchHistorySanJoseEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  History San Jose: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
     return [];
   }
 }
@@ -6791,11 +6852,18 @@ async function fetchHistorySanJoseEvents() {
 async function main() {
   console.log("Scraping upcoming South Bay events...\n");
 
+  // Source-level baselines have to be captured before any output write. They
+  // catch one official adapter collapsing even when large feeds keep the
+  // aggregate event count looking healthy.
+  let prevRun = null;
+  try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+
   let inputHealth = null;
   if (STRICT_EVENT_REFRESH) {
     inputHealth = strictRefreshInputHealth({
       playwright: readJsonFile(PLAYWRIGHT_EVENTS_PATH),
       inbound: readJsonFile(INBOUND_EVENTS_PATH),
+      maxAgeHours: strictSnapshotMaxAgeHours(),
     });
     if (!inputHealth.ok) {
       const detail = inputHealth.problems.join("; ");
@@ -6893,6 +6961,21 @@ async function main() {
       body: detail,
     });
     throw new Error(`critical event sources failed: ${detail}`);
+  }
+
+  const sourceRegressions = sourceRegressionProblems({
+    previousSourceHealth: prevRun?.sourceHealth,
+    nextSourceHealth: sourceHealth,
+    today: todayPT(),
+  });
+  if (STRICT_EVENT_REFRESH && sourceRegressions.length > 0) {
+    const detail = sourceRegressions.join("; ");
+    await catSignal({
+      key: "events-single-source-regression",
+      title: "Event refresh blocked before overwrite",
+      body: detail,
+    });
+    throw new Error(`individual event sources regressed: ${detail}`);
   }
 
   const allEvents = [];
@@ -7428,10 +7511,6 @@ async function main() {
     ...(inputHealth ? { inputSnapshots: inputHealth.snapshots } : {}),
     events: collapsedEvents,
   };
-
-  // Capture the previous run BEFORE overwriting, for the regression guard below.
-  let prevRun = null;
-  try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
 
   const regression = eventRegressionProblem({
     previous: prevRun,

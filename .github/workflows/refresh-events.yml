@@ -14,6 +14,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
       contents: write
 
@@ -31,6 +32,9 @@ jobs:
       - name: Generate events
         env:
           SBT_STRICT_EVENT_REFRESH: "1"
+          # A healthy Mini run is only ~3h old here. Eight hours makes this an
+          # independent same-night heartbeat instead of tolerating a missed day.
+          SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"
           TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
           MEETUP_CLIENT_ID: ${{ secrets.MEETUP_CLIENT_ID }}
           MEETUP_MEMBER_ID: ${{ secrets.MEETUP_MEMBER_ID }}
@@ -39,6 +43,9 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: node scripts/generate-events.mjs
 
+      - name: Verify generated health contract
+        run: node scripts/events/verify-refresh-output.mjs --max-age-hours 1 --snapshot-max-age-hours 8
+
       - name: Commit updated events
         run: |
           git config user.name "github-actions[bot]"
@@ -46,3 +53,9 @@ jobs:
           git add src/data/south-bay
           git diff --staged --quiet || git commit -m "chore: refresh upcoming events"
           git push
+
+      - name: Alert on refresh failure
+        if: ${{ failure() }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: node scripts/events/notify-workflow-failure.mjs

@@ -1,0 +1,87 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  inspectEventRefreshOutput,
+  inspectMiniEventRefresh,
+  inspectMiniRefreshState,
+} from "./event-refresh-health.mjs";
+
+const NOW = new Date("2026-07-20T05:00:00.000Z");
+const REQUIRED = [
+  "fetchMusicInParkEvents",
+  "fetchJazzOnThePlazzEvents",
+  "fetchLosAltosEvents",
+  "fetchSjJazzEvents",
+  "fetchHappyHollowEvents",
+  "fetchPearTheatreEvents",
+  "fetchTicketmasterEvents",
+  "fetchMeetupEvents",
+  "fetchPlaywrightEvents",
+  "fetchInboundEvents",
+];
+
+function healthyOutput() {
+  return {
+    generatedAt: "2026-07-20T04:30:00.000Z",
+    eventCount: 2,
+    events: [{ id: "a" }, { id: "b" }],
+    sourceHealth: REQUIRED.map((id) => ({
+      id,
+      label: id,
+      critical: ["fetchTicketmasterEvents", "fetchMeetupEvents", "fetchPlaywrightEvents", "fetchInboundEvents"].includes(id),
+      status: "ok",
+      count: 2,
+      dateCounts: { "2026-08-01": 2 },
+      error: null,
+    })),
+    inputSnapshots: [
+      { name: "playwright-events", status: "ok", timestamp: "2026-07-20T04:20:00.000Z" },
+      { name: "inbound-events", status: "ok", timestamp: "2026-07-20T04:25:00.000Z" },
+    ],
+  };
+}
+
+test("accepts a fresh complete refresh output", () => {
+  const health = inspectEventRefreshOutput({ data: healthyOutput(), now: NOW });
+  assert.equal(health.ok, true);
+  assert.equal(health.eventCount, 2);
+  assert.deepEqual(health.problems, []);
+});
+
+test("detects missing adapters, stale snapshots, and count mismatches", () => {
+  const data = healthyOutput();
+  data.eventCount = 99;
+  data.sourceHealth = data.sourceHealth.filter((source) => source.id !== "fetchMusicInParkEvents");
+  data.inputSnapshots[0].timestamp = "2026-07-18T00:00:00.000Z";
+  const health = inspectEventRefreshOutput({
+    data,
+    now: NOW,
+    snapshotMaxAgeHours: 8,
+  });
+  assert.equal(health.ok, false);
+  assert.ok(health.problems.some((problem) => problem.includes("does not match")));
+  assert.ok(health.problems.some((problem) => problem.includes("fetchMusicInParkEvents")));
+  assert.ok(health.problems.some((problem) => problem.includes("playwright-events snapshot is")));
+});
+
+test("detects a stale or malformed Mini success heartbeat", () => {
+  assert.equal(inspectMiniRefreshState({
+    state: { lastSuccessAt: "2026-07-18T00:00:00.000Z", head: "a".repeat(40) },
+    now: NOW,
+  }).ok, false);
+  assert.deepEqual(inspectMiniRefreshState({
+    state: { lastSuccessAt: "2026-07-20T04:00:00.000Z", head: "not-a-sha" },
+    now: NOW,
+  }).problems, ["Mini refresh state has no valid pushed HEAD"]);
+});
+
+test("combines scheduler heartbeat and generated-output health", () => {
+  const health = inspectMiniEventRefresh({
+    state: { lastSuccessAt: "2026-07-20T04:00:00.000Z", head: "a".repeat(40) },
+    data: healthyOutput(),
+    now: NOW,
+  });
+  assert.equal(health.ok, true);
+  assert.deepEqual(health.problems, []);
+});

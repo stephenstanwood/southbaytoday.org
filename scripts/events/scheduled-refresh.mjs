@@ -78,10 +78,23 @@ function runNode(repoRoot, relativePath, lockScript, timeout) {
   log(`running ${relativePath}`);
   run(process.execPath, [join(repoRoot, relativePath)], {
     cwd: repoRoot,
-    env: { ...process.env, SBT_STRICT_EVENT_REFRESH: "1" },
+    env: {
+      ...process.env,
+      SBT_STRICT_EVENT_REFRESH: "1",
+      SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "2",
+    },
     timeout,
   });
   refreshLock(lockScript);
+}
+
+function ensureWatchdogAgent(repoRoot) {
+  if (process.platform !== "darwin" || process.env.SBT_SKIP_AGENT_ENSURE === "1") return;
+  run(
+    "/bin/bash",
+    [join(repoRoot, "scripts", "events", "install-mini-refresh.sh"), "--watchdog-only"],
+    { cwd: repoRoot, timeout: 60_000 },
+  );
 }
 
 function commitGeneratedData(repoRoot) {
@@ -115,6 +128,18 @@ const lockScript = process.env.SBT_REPO_LOCK_SCRIPT || DEFAULT_LOCK_SCRIPT;
 const statePath = process.env.SBT_EVENTS_REFRESH_STATE || DEFAULT_STATE_PATH;
 
 loadEnvLocal(join(repoRoot, ".env.local"));
+
+try {
+  ensureWatchdogAgent(repoRoot);
+} catch (error) {
+  console.error(`${PREFIX} ${new Date().toISOString()} BLOCKED: ${error.message}`);
+  await catSignal({
+    key: "events-refresh-watchdog-install",
+    title: "Event refresh watchdog could not be restored",
+    body: error.message,
+  });
+  process.exit(1);
+}
 
 if (!force && !preflightOnly && recentlySucceeded(statePath)) {
   log(`last successful Mini refresh is under ${MIN_SUCCESS_AGE_HOURS}h old; retry slot is a no-op`);
