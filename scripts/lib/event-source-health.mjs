@@ -114,7 +114,10 @@ export function buildSourceHealth(sourceDefinitions, settledResults) {
 
 export function criticalSourceProblems(sourceHealth) {
   return sourceHealth
-    .filter((source) => source.critical && source.status !== "ok")
+    // Every thrown adapter error is unsafe: it means we do not know whether
+    // the source is legitimately empty. Seasonal sources may return a proven
+    // empty array, while critical broad sources must also remain non-empty.
+    .filter((source) => source.status === "error" || (source.critical && source.status !== "ok"))
     .map((source) => `${source.label} is ${source.status}${source.error ? `: ${source.error}` : ""}`);
 }
 
