@@ -29,6 +29,9 @@ bash scripts/events/install-mini-refresh.sh
 
 - Every adapter exception blocks a strict refresh, including errors that legacy
   adapters used to swallow and return as an empty array.
+- Shared HTTP fetches retry temporary network failures, rate limits, and 5xx
+  responses up to three times with bounded backoff before strict mode fails.
+  Permanent 4xx responses fail immediately.
 - Missing credentials, stale/empty snapshots, critical empty sources, and
   aggregate event/source regressions block the output write.
 - Every adapter records per-date raw counts in `sourceHealth`. The next run
