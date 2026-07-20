@@ -1,29 +1,29 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-20T04:48:24.083Z",
+    "generatedAt": "2026-07-20T07:32:17.972Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 35,
-    "eventCount": 424,
+    "eventCount": 418,
     "sourceCount": 23,
     "sources": [
       "Mountain View Public Library (12)",
       "Los Gatos Library (25)",
       "San Jose Museum of Art (20)",
-      "Linden Tree Books (9)",
+      "Linden Tree Books (8)",
       "Hicklebee's (3)",
-      "History San Jose (28)",
+      "History San Jose (26)",
       "Montalvo Arts Center (6)",
       "City Lights Theater (7)",
       "ICA San José (3)",
-      "Mountain Winery (44)",
+      "Mountain Winery (43)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
-      "Midpen Open Space (5)",
+      "Midpen Open Space (4)",
       "Guadalupe River Park Conservancy (2)",
       "Santana Row (5)",
       "City of Cupertino (78)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (102)",
+      "TheatreWorks Silicon Valley (101)",
       "Levi's Stadium (18)",
       "SAP Center (17)",
       "The Tech Interactive (8)",
@@ -91,7 +91,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 9,
+        "count": 8,
         "error": null
       },
       {
@@ -105,7 +105,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 28,
+        "count": 26,
         "error": null
       },
       {
@@ -140,7 +140,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 44,
+        "count": 43,
         "error": null
       },
       {
@@ -175,7 +175,7 @@
         "id": "midpen-open-space",
         "label": "Midpen Open Space",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null
       },
       {
@@ -217,7 +217,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 102,
+        "count": 101,
         "error": null
       },
       {
@@ -1249,28 +1249,6 @@
       "kidFriendly": false
     },
     {
-      "id": "29427335197b",
-      "title": "Illustration Workshop with Laura G. Lee",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-07-19"
-      }
-    },
-    {
       "id": "9ddf3b77f749",
       "title": "Writers’ Gathering for Adults",
       "date": "2026-07-23",
@@ -1496,40 +1474,6 @@
       "url": "https://hicklebees.com/event/2026-07-31/find-waldo-local-lincoln-avenue",
       "source": "Hicklebee's",
       "kidFriendly": true
-    },
-    {
-      "id": "ff2c6e82bfaa",
-      "title": "Shiny Side Up Bicycle Show",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "10:00 am",
-      "endTime": "3:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://fareharbor.com/embeds/book/historysanjose/items/470939/?full-items=yes",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "ff2c6e82bfaa",
-      "title": "Shiny Side Up Bicycle Show",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "10:00 am",
-      "endTime": "3:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://fareharbor.com/embeds/book/historysanjose/items/470939/?full-items=yes",
-      "source": "History San Jose",
-      "kidFriendly": false
     },
     {
       "id": "53840509aa8f",
@@ -2243,23 +2187,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "f9e6a6e4e38d",
-      "title": "Jeff Foxworthy",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/concert-series",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -3334,10 +3261,10 @@
       "kidFriendly": false
     },
     {
-      "id": "a6c989dec9f3",
+      "id": "2ad7966f038c",
       "title": "All Ages Storytime",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
+      "date": "2026-07-20",
+      "displayDate": "Mon, Jul 20",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -3351,10 +3278,10 @@
       "kidFriendly": true
     },
     {
-      "id": "95a83644218d",
+      "id": "4705676e8683",
       "title": "Toddler Storytime",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
+      "date": "2026-07-20",
+      "displayDate": "Mon, Jul 20",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -3366,23 +3293,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "e14df22f13f9",
-      "title": "Moth Night",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "8:30 pm",
-      "endTime": null,
-      "venue": "Monte Bello Preserve",
-      "address": "Monte Bello Preserve, Cupertino",
-      "city": "cupertino",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.openspace.org/where-to-go/events-activities",
-      "source": "Midpen Open Space",
-      "kidFriendly": false
     },
     {
       "id": "8b6109f08230",
@@ -4990,23 +4900,6 @@
       "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "5e8543150aa1",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-19",
-      "displayDate": "Sun, Jul 19",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7478",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -7112,7 +7005,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! RegionalMexican Music",
+      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Hockey",
       "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
       "source": "SAP Center",
       "kidFriendly": false
