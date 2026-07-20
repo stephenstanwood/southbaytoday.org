@@ -14,6 +14,29 @@ function ageHours(timestamp, now) {
   return (now.getTime() - then) / 3_600_000;
 }
 
+function datedEventCounts(events) {
+  const counts = new Map();
+  for (const event of Array.isArray(events) ? events : []) {
+    const date = String(event?.date || "");
+    if (!/^20\d{2}-\d{2}-\d{2}$/.test(date)) continue;
+    counts.set(date, (counts.get(date) || 0) + 1);
+  }
+  return Object.fromEntries([...counts.entries()].sort(([a], [b]) => a.localeCompare(b)));
+}
+
+function countDatedEventsOnOrAfter(source, today) {
+  const counts = source?.dateCounts;
+  if (!counts || typeof counts !== "object" || Array.isArray(counts)) return null;
+  const entries = Object.entries(counts).filter(([date, count]) => (
+    /^20\d{2}-\d{2}-\d{2}$/.test(date) && Number.isFinite(Number(count))
+  ));
+  if (entries.length === 0) return null;
+  return entries.reduce(
+    (sum, [date, count]) => sum + (date >= today ? Number(count) : 0),
+    0,
+  );
+}
+
 export function inspectSnapshot({
   name,
   data,
@@ -96,17 +119,20 @@ export function buildSourceHealth(sourceDefinitions, settledResults) {
         critical: Boolean(source.critical),
         status: "error",
         count: 0,
+        dateCounts: {},
         error: result?.reason?.message || String(result?.reason || "source did not run"),
       };
     }
 
-    const count = Array.isArray(result.value) ? result.value.length : 0;
+    const events = Array.isArray(result.value) ? result.value : [];
+    const count = events.length;
     return {
       id: source.id,
       label: source.label,
       critical: Boolean(source.critical),
       status: count > 0 ? "ok" : "empty",
       count,
+      dateCounts: datedEventCounts(events),
       error: null,
     };
   });
@@ -130,4 +156,49 @@ export function eventRegressionProblem({ previous, nextSourceCount, nextEventCou
   const lostSources = previousSourceCount - nextSourceCount;
   if (lostSources < 4 && nextEventCount >= previousEventCount * 0.6) return null;
   return `event coverage regressed from ${previousSourceCount} to ${nextSourceCount} sources and ${previousEventCount} to ${nextEventCount} events`;
+}
+
+/**
+ * Catch a single adapter losing records that were still scheduled for the
+ * future. Aggregate event totals cannot see this when a large library feed
+ * masks a smaller first-party source. Date-bucket baselines naturally age out,
+ * so seasonal sources may empty after their final occurrence without a manual
+ * allowlist.
+ */
+export function sourceRegressionProblems({
+  previousSourceHealth,
+  nextSourceHealth,
+  today,
+  minimumExpected = 3,
+  minimumRetainedRatio = 0.25,
+} = {}) {
+  if (!/^20\d{2}-\d{2}-\d{2}$/.test(String(today || ""))) return [];
+  const previousById = new Map(
+    (Array.isArray(previousSourceHealth) ? previousSourceHealth : [])
+      .map((source) => [source?.id, source]),
+  );
+  const problems = [];
+
+  for (const next of Array.isArray(nextSourceHealth) ? nextSourceHealth : []) {
+    const previous = previousById.get(next?.id);
+    if (!previous || previous.status !== "ok" || next?.status === "error") continue;
+
+    const expected = countDatedEventsOnOrAfter(previous, today);
+    const actual = countDatedEventsOnOrAfter(next, today) ?? 0;
+    if (expected === null || expected < minimumExpected) continue;
+
+    if (actual === 0) {
+      problems.push(`${next.label} lost ${expected} still-upcoming source records`);
+      continue;
+    }
+
+    const retainedRatio = actual / expected;
+    if (retainedRatio < minimumRetainedRatio) {
+      problems.push(
+        `${next.label} retained only ${actual} of ${expected} still-upcoming source records (${Math.round(retainedRatio * 100)}%)`,
+      );
+    }
+  }
+
+  return problems;
 }

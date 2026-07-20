@@ -12,6 +12,7 @@
 Run these scripts to refresh pre-generated data:
 - `npm run generate-digests` — council meeting summaries (needs ANTHROPIC_API_KEY)
 - `npm run generate-events` — upcoming events from 20+ sources
+- Event refresh reliability and recovery: `docs/event-source-refresh.md`
 - See `package.json` for full list of `generate-*` scripts
 
 ## Day plans: quality-first pillar pairs

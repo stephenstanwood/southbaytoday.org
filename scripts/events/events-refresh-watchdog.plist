@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Independent heartbeat for the primary event refresh. It restores the main
+  launch agent if needed and forces one guarded run when the last pushed
+  success or generated output becomes stale.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.southbaytoday.events-refresh-watchdog</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/node</string>
+        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/events/refresh-watchdog.mjs</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
+    <key>StartInterval</key>
+    <integer>10800</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>Nice</key>
+    <integer>5</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/sbt-events-refresh-watchdog.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/stephenstanwood/Library/Logs/sbt-events-refresh-watchdog.log</string>
+</dict>
+</plist>
