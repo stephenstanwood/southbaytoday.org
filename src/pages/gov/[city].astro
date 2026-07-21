@@ -7,6 +7,10 @@ import CalendarShell from "../../layouts/CalendarShell.astro";
 import digestsJson from "../../data/south-bay/digests.json";
 import meetingsJson from "../../data/south-bay/upcoming-meetings.json";
 import { CITY_MAP } from "../../lib/south-bay/cities";
+import {
+  CIVIC_EVENT_IMAGE_URL,
+  civicMeetingToSchema,
+} from "../../lib/south-bay/civicMeetingSchema";
 import type { City } from "../../lib/south-bay/types";
 
 interface Digest {
@@ -88,29 +92,19 @@ const schemas: Record<string, unknown>[] = [
     ],
   },
 ];
-if (meeting?.date) {
-  schemas.push({
-    "@type": "Event",
-    name: `${cityName} ${meeting.bodyName ?? "City Council"} meeting`,
-    startDate: meeting.date,
-    ...(meeting.location || cityName
-      ? {
-          location: {
-            "@type": "Place",
-            name: meeting.location || `${cityName} City Hall`,
-            address: { "@type": "PostalAddress", addressLocality: cityName, addressRegion: "CA" },
-          },
-        }
-      : {}),
-    ...(meeting.url ? { url: meeting.url } : {}),
-  });
-}
+const meetingSchema = civicMeetingToSchema({ cityId, cityName, cityWebsite, meeting });
+if (meetingSchema) schemas.push(meetingSchema);
 const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": schemas });
 
 const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
 ---
 
-<CalendarShell title={title} description={description} activeTab="government">
+<CalendarShell
+  title={title}
+  description={description}
+  ogImage={CIVIC_EVENT_IMAGE_URL}
+  activeTab="government"
+>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={jsonLd} />
   </Fragment>

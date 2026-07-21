@@ -17,6 +17,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "digests.json");
@@ -63,13 +64,6 @@ const CITIES = [
 const STOA_STALENESS_DAYS = 21;
 
 // ── Helpers ──
-
-/** For Legistar cities, construct a calendar URL filtered to a specific meeting date. */
-function legistarMeetingUrl(subdomain, date) {
-  const [year, month, day] = date.split("-");
-  const d = `${parseInt(month)}%2F${parseInt(day)}%2F${year}`;
-  return `https://${subdomain}.legistar.com/Calendar.aspx?From=${d}&To=${d}`;
-}
 
 // ── Fetch Stoa data ──
 

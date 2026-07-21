@@ -233,10 +233,12 @@ async function scrapeLegistar(
     timeZone: "America/Los_Angeles",
   });
 
-  // Link to the Legistar meeting detail page when available
+  // EventInSiteURL is the provider-owned public identifier. EventId belongs
+  // to the Web API and is not interchangeable with the public site's ID
+  // parameter, so a missing provider URL must fall back to the calendar.
   const meetingUrl =
     recentEvent.EventInSiteURL ??
-    `${config.baseUrl}/MeetingDetail.aspx?ID=${recentEvent.EventId}`;
+    config.agendaUrl;
 
   return {
     city: config.city,

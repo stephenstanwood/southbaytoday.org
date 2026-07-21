@@ -18,6 +18,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
+import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "around-town.json");
@@ -84,13 +85,6 @@ function makeId(cityId, date, headline) {
   // same ID for two distinct items on the same city+date).
   const hash = createHash("sha1").update(headline).digest("hex").slice(0, 8);
   return `${cityId}-${date}-${hash}`;
-}
-
-/** For Legistar cities, construct a calendar URL filtered to a specific meeting date. */
-function legistarMeetingUrl(subdomain, date) {
-  const [year, month, day] = date.split("-");
-  const d = `${parseInt(month)}%2F${parseInt(day)}%2F${year}`;
-  return `https://${subdomain}.legistar.com/Calendar.aspx?From=${d}&To=${d}`;
 }
 
 // ── Boilerplate detection (shared with generate-digests.mjs) ──

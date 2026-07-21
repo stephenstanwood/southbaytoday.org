@@ -14,6 +14,7 @@ import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../s
 import { chainBrandKey, isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { selectDatedDefaultPlan } from "../../src/lib/south-bay/defaultPlanSelection.mjs";
 import {
   audienceBreadthPenalty,
   isMarqueeEvent,
@@ -126,14 +127,7 @@ export function loadOpenings() {
 }
 
 export function selectDefaultPlan(plans, date, { kids = false } = {}) {
-  const prefix = kids ? "kids" : "adults";
-  const candidates = Object.entries(plans || {})
-    .filter(([key, plan]) => (key === prefix || key.startsWith(`${prefix}:`)) && plan?.cards?.length)
-    .map(([, plan]) => plan);
-  return candidates.find((plan) => plan.planDate === date)
-    || plans?.[prefix]
-    || candidates[0]
-    || null;
+  return selectDatedDefaultPlan(plans, date, { kids });
 }
 
 // ── Weather ────────────────────────────────────────────────────────────────
