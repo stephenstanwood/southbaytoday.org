@@ -48,14 +48,36 @@ const CITIES = [
   { id: "milpitas",      name: "Milpitas" },
 ];
 
+// Event `date` fields are Pacific calendar dates, so the window and the label
+// printed over it must both be computed in PT. Deriving `start` from
+// toISOString() (UTC) while labelling with toLocaleDateString() (local) made the
+// two disagree every night the job ran after 5pm PT — the UTC day had already
+// rolled over, so a Jul 21–28 window shipped under a "Jul 20 – Jul 27" header.
+const TZ = "America/Los_Angeles";
+
+function pacificDateStr(date) {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(date);
+}
+
+// Anchor at noon UTC so day arithmetic and formatting never cross a DST edge.
+function shiftDays(dateStr, days) {
+  const dt = new Date(`${dateStr}T12:00:00Z`);
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return dt.toISOString().split("T")[0];
+}
+
+function labelDate(dateStr) {
+  return new Date(`${dateStr}T12:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 function getWeekRange() {
-  const now = new Date();
-  const start = now.toISOString().split("T")[0];
-  const end = new Date(now);
-  end.setDate(end.getDate() + 7);
-  const endStr = end.toISOString().split("T")[0];
-  const label = `${now.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${end.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
-  return { start, end: endStr, label };
+  const start = pacificDateStr(new Date());
+  const end = shiftDays(start, 7);
+  return { start, end, label: `${labelDate(start)} – ${labelDate(end)}` };
 }
 
 async function callClaude(prompt) {

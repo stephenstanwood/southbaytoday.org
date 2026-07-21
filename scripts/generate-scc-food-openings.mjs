@@ -55,11 +55,11 @@ const SOUTH_BAY_CITIES = new Set([
 ]);
 
 // Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b|\bMEETING\s+ROOM\b|\bHQ\d+\s+KITCHEN\b|\bFENCE\b|\bGATES?\b|\bSECURITY\b|\bALARM\b|\bSPRINKLER\b|\bRE-?ROOF\b|\bSIGNAGE\b|\bMONUMENT\s+SIGN\b|\bPARKING\s+(LOT|GARAGE|STRUCTURE)\b|\bELEVATOR\b|\bRETAINING\s+WALL\b/i;
+const SKIP_PATTERNS = /\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|\bPANTRY\s+ROOM\b|\bSTORAGE\s+PANTRY\b|\bLVL\s+\d|\bRELOCATION\b|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b|\bMEETING\s+ROOM\b|\bHQ\d+\s+KITCHEN\b|\bFENCE\b|\bGATES?\b|\bSECURITY\b|\bALARM\b|\bSPRINKLER\b|\bRE-?ROOF\b|\bSIGNAGE\b|\bMONUMENT\s+SIGN\b|\bPARKING\s+(LOT|GARAGE|STRUCTURE)\b|\bELEVATOR\b|\bRETAINING\s+WALL\b/i;
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
-const EQUIPMENT_ONLY_PATTERNS = /\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b|\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|EQUIPMENT|KITCHEN)\s+ADDITION\b/i;
+const EQUIPMENT_ONLY_PATTERNS = /\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s]COOLER\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bUNDERCOUNTER\b|\b(DISHWASHER|DISH\s*MACHINE|ICE\s+MACHINE|PREP\s+SINK)\s*$|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b|\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|EQUIPMENT|KITCHEN)\s+ADDITION\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants
 const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS)\b/i;
@@ -246,9 +246,10 @@ function cleanName(raw) {
   // Strip trailing address-like suffixes ("4120" at end)
   s = s.replace(/\s+\d+\s*$/, "").trim();
 
-  // Strip a trailing bare dash left behind by an empty permit-descriptor field
-  // (e.g. "B250 Cityline Databricks -"). No real name ends in a hanging dash.
-  s = s.replace(/\s*[-–]\s*$/, "").trim();
+  // Strip trailing punctuation left behind by an empty or truncated permit
+  // field — a hanging dash ("B250 Cityline Databricks -") or a dangling comma
+  // where SCC cut the name short ("Cosa Fai,"). No real name ends in either.
+  s = s.replace(/\s*[-–,;]\s*$/, "").trim();
 
   // Strip parenthetical garbage (airport permit codes, unit numbers embedded in name)
   s = s.replace(/\s*\(Unit\s+[A-Z0-9-]+[^)]*\)/gi, "").trim();
@@ -416,6 +417,12 @@ function shouldSkip(item) {
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
   if (VENUE_CONCESSION_PATTERNS.test(rawName)) return true;
   if (VENUE_ADDRESS_PATTERNS.test(item.site_location ?? "")) return true;
+
+  // "MFF" (Mobile Food Facility) sometimes lands in the site_location field
+  // instead of the name, so the MFF clause in SKIP_PATTERNS — which only sees
+  // the name — misses it and the truck ships with "Mff" printed as its street
+  // address. Match the address side too.
+  if (/^\s*MFF\b|\bMFF\s*$/i.test(item.site_location ?? "")) return true;
 
   // Skip entries whose site location is a PO Box — a storefront food venue is
   // never located at a PO Box. These are almost always HOA/apartment amenity

@@ -61,6 +61,14 @@ export const CATEGORY_LABELS: Record<DevCategory, string> = {
 };
 
 // ── Projects ────────────────────────────────────────────────────────────────
+//
+// The section headers below are navigation aids only and drift as projects
+// change state (Google Downtown West sits under "UNDER CONSTRUCTION" but is
+// on-hold). The `status` field is authoritative — it drives STATUS_CONFIG and
+// DEV_PULSE. Update `status` when a project moves; don't trust the header.
+//
+// Entries whose `developer` is "Various" are rollups of several separate
+// projects, not a single tracked permit — they carry a sourceNote saying so.
 
 export const DEV_PROJECTS: DevProject[] = [
 
@@ -112,6 +120,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Various",
     timeline: "Phased delivery 2024–2028",
     featured: false,
+    sourceNote: "Rollup of several separate projects around the Milpitas and Berryessa BART stations, not one tracked development — unit counts and phase dates are approximate. Verify at milpitas.gov planning records and vta.org TOD pages.",
   },
 
   {
@@ -127,6 +136,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Various",
     timeline: "Ongoing through 2026–2027",
     featured: false,
+    sourceNote: "Rollup of downtown-core infill projects, not one tracked development — no single permit backs this entry. Verify active projects at campbellca.gov current developments.",
   },
 
   {
@@ -254,6 +264,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Various",
     timeline: "Active approvals and construction",
     featured: false,
+    sourceNote: "Rollup of multiple Urban Village approvals near the Berryessa/North San José BART station, not one tracked development — overlaps the Milpitas BART entry. Verify at sanjoseca.gov planning records.",
   },
 
   {
@@ -269,6 +280,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Various",
     timeline: "Active development",
     featured: false,
+    sourceNote: "Rollup of small downtown infill approvals along Santa Cruz Ave and adjacent streets, not one tracked development. Verify at losgatosca.gov planning records.",
   },
 
   {

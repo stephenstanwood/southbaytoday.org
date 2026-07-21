@@ -1773,6 +1773,15 @@ function cleanVenue(raw) {
     /,\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale)\s*$/i,
     "",
   );
+  // Meetup/Eventbrite organizers routinely lowercase the place-type word that
+  // ends a venue name ("Martial Cottle park"). Uppercase it when the preceding
+  // token is already capitalized, so the venue reads the way the place brands
+  // itself. Scoped to a place-type whitelist in final position, so venues with
+  // no trailing type word ("The Tech Interactive") are left alone.
+  v = v.replace(
+    /(?<=\b[A-Z][\w'’.&-]*\s)(park|library|center|centre|theatre|theater|museum|plaza|gardens?|stadium|ballpark|college|university|school|church|winery|brewery|taproom)$/,
+    (w) => w[0].toUpperCase() + w.slice(1),
+  );
   // Source-typo fixes (sources occasionally publish misspelled venue names)
   v = v.replace(/\bNursey\b/g, "Nursery");
   v = v.replace(/\bInfront\b/g, "In Front");
