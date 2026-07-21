@@ -1,29 +1,41 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-20T05:07:52.081Z",
+      "generatedAt": "2026-07-21T03:08:58.196Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 12 – Jul 19",
+      "dateRange": "Jul 13 – Jul 20",
       "stats": {
-        "total": 474,
-        "notable": 24,
-        "newUnits": 6,
-        "totalValuation": 12828747
+        "total": 456,
+        "notable": 26,
+        "newUnits": 10,
+        "totalValuation": 12376301
       },
       "permits": [
         {
-          "id": "2026-121695-RS",
-          "address": "320 E St James St #2",
+          "id": "2026-127920-RS",
+          "address": "458 Lewis Rd #5",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Basement Conversion to ADU",
-          "valuation": 149180,
+          "description": "Epr New Detached 1-Sty ADUS at Mf Lot",
+          "valuation": 131764,
           "units": 1,
-          "issueDate": "2026-07-13",
+          "issueDate": "2026-07-17",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-127922-RS",
+          "address": "458 Lewis Rd #6",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr New Detached 1-Sty ADUS at Mf Lot",
+          "valuation": 131764,
+          "units": 2,
+          "issueDate": "2026-07-17",
           "subtype": "2nd Unit Added"
         },
         {
@@ -36,6 +48,30 @@
           "valuation": 121737,
           "units": 1,
           "issueDate": "2026-07-16",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-109813-RS",
+          "address": "1233 Sanfilippo Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached Garage to ADU",
+          "valuation": 109774,
+          "units": 1,
+          "issueDate": "2026-07-17",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2026-106873-RS",
+          "address": "1543 Santa Maria Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Veev Jadu",
+          "valuation": 109724,
+          "units": 1,
+          "issueDate": "2026-07-17",
           "subtype": "2nd Unit Added"
         },
         {
@@ -97,71 +133,23 @@
           "units": 0,
           "issueDate": "2026-07-14",
           "subtype": "Hotel/Motel"
-        },
-        {
-          "id": "2026-127216-CI",
-          "address": "1741 Technology Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Maxlinear (Bemp100%) 5th Floor TI",
-          "valuation": 1400892,
-          "units": 0,
-          "issueDate": "2026-07-13",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-127114-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Bemp100%) Chagee TI #1835",
-          "valuation": 1300000,
-          "units": 0,
-          "issueDate": "2026-07-14",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-127360-CI",
-          "address": "932 Blossom Hill Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Boot Barn Tenant Improvement",
-          "valuation": 759730,
-          "units": 0,
-          "issueDate": "2026-07-13",
-          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-20T05:07:54.418Z",
+      "generatedAt": "2026-07-21T03:09:00.331Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 12 – Jul 19",
+      "dateRange": "Jul 13 – Jul 20",
       "stats": {
-        "total": 127,
-        "notable": 8,
+        "total": 93,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-01909",
-          "address": "1610 Dana Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Update electrical and lighting in the kitchen.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-14",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-01947",
           "address": "750 Forest Av",
@@ -172,18 +160,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-16",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01886",
-          "address": "1826 Waverley St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "CODE ENFORCEMENT (26PCE-00979) Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-13",
           "subtype": "Permit Issued"
         },
         {
@@ -199,6 +175,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-01909",
+          "address": "1610 Dana Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "Res: Update electrical and lighting in the kitchen.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-14",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26PLN-00187",
           "address": "1053 E Meadow Cir",
           "category": "entitlement",
@@ -208,42 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-16",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00185",
-          "address": "1145 Amarillo Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over the Counter AR for PARKER PALO ALTO 1145,1139,1151,1157,1163,1171,1177,1183 Amarillo Ave, and 2570, 2586 W Bayshore Rd; to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-13",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00183",
-          "address": "1093 Tanland Dr",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over the Counter AR to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building. .",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-13",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00184",
-          "address": "1094 Tanland Dr",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over the Counter AR to replace siding with New Lap Siding, and Belly Bands, stucco over brick and repaint building(s).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-13",
           "subtype": "Over the Counter Approved"
         }
       ]
