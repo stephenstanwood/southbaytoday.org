@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-20T05:08:02.552Z",
+  "generatedAt": "2026-07-21T12:06:53.951Z",
   "meetings": {
     "sunnyvale": {
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
       "bodyName": "City Council",
       "location": "Online and Council Chambers, City Hall",
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?ID=4518&GUID=E2C22AC4-5320-4715-8D8F-A9F51E5D8B5A",
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4518&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
       "legistarEventId": 4518,
       "agendaItems": [
         {
@@ -29,14 +29,20 @@
           "title": "Approve City Council Meeting Minutes of June 16, 2026",
           "sequence": 16
         }
-      ]
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-07-21",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-07-21T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
     },
     "cupertino": {
       "date": "2026-07-21",
       "displayDate": "Tue, Jul 21",
       "bodyName": "City Council",
       "location": "Council Chamber",
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?ID=5295&GUID=0EF66390-0846-4D40-A1FE-5A06A9E24A8A",
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5295&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
       "legistarEventId": 5295,
       "agendaItems": [
         {
@@ -59,47 +65,28 @@
           "title": "Amendments to the City’s Naming, Donation, and Sponsorship Policies",
           "sequence": 32
         }
-      ]
-    },
-    "campbell": {
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
-      "bodyName": "City Council",
-      "location": null,
-      "url": "https://www.campbellca.gov/AgendaCenter/City-Council-10",
-      "agendaItems": []
-    },
-    "saratoga": {
-      "date": "2026-08-06",
-      "displayDate": "Thu, Aug 6",
-      "bodyName": "City Council",
-      "location": null,
-      "url": "https://www.saratoga.ca.us/AgendaCenter/City-Council-13",
-      "agendaItems": []
-    },
-    "los-altos": {
-      "date": "2026-07-29",
-      "displayDate": "Wed, Jul 29",
-      "bodyName": "City Council",
-      "location": null,
-      "url": "https://www.losaltosca.gov/AgendaCenter/City-Council-4",
-      "agendaItems": []
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-07-21",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-07-21T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
     },
     "milpitas": {
-      "date": "2026-07-21",
-      "displayDate": "Tue, Jul 21",
-      "bodyName": "City Council",
+      "date": "2026-08-11",
+      "displayDate": "Tue, Aug 11",
+      "bodyName": "City Council Special Meeting",
       "location": "Milpitas City Hall",
       "url": "https://www.milpitas.gov/129/Agendas-Minutes",
-      "agendaItems": []
-    },
-    "los-gatos": {
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
-      "bodyName": "Town Council",
-      "location": null,
-      "url": "https://losgatos-ca.municodemeetings.com/",
-      "agendaItems": []
+      "civicClerkEventId": 2941,
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "civicclerk",
+        "observedDate": "2026-08-11",
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-07-21T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+      }
     }
   }
 }

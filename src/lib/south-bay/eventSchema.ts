@@ -15,6 +15,7 @@ export interface SchemaEventRecord {
   time?: string | null; // "6:00 PM"
   endTime?: string | null;
   venue?: string | null;
+  organizerName?: string | null;
   organizerUrl?: string | null; // verified first-party organizer/venue homepage
   address?: string | null;
   city?: string | null; // city id, e.g. "san-jose"
@@ -161,8 +162,9 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   // organization only when we also know its verified homepage; otherwise omit
   // this optional property rather than guessing from an aggregator/ticket URL.
   const organizerUrl = absoluteHttpUrl(e.organizerUrl);
-  if (e.venue && organizerUrl) {
-    schema.organizer = { "@type": "Organization", name: e.venue, url: organizerUrl };
+  const organizerName = e.organizerName || e.venue;
+  if (organizerName && organizerUrl) {
+    schema.organizer = { "@type": "Organization", name: organizerName, url: organizerUrl };
   }
   return schema;
 }

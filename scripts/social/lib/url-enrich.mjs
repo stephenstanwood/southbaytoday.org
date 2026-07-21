@@ -138,19 +138,12 @@ async function enrichRestaurantUrl(item) {
 // ── Civic URL enrichment ───────────────────────────────────────────────────
 
 function enrichCivicUrl(item) {
-  // Legistar calendar pages are rejected by URL validation.
-  // Try to construct a more specific meeting detail page.
+  // Never rebuild a Legistar public URL from an API meetingId. The Web API's
+  // EventId is not the public site's ID; only EventInSiteURL is authoritative.
   if (!item.url) return null;
 
   // If the URL has an EID parameter, it's already a specific event page
   if (item.url.includes("EID=")) return null; // already specific
-
-  // If it's a bare Legistar calendar page, we can't improve it without the meeting ID
-  // The around-town data sometimes has a meetingId or sourceUrl — check for those
-  if (item.meetingId && item.url?.includes("legistar.com")) {
-    const base = item.url.split("/Calendar")[0];
-    return `${base}/MeetingDetail.aspx?ID=${item.meetingId}`;
-  }
 
   return null;
 }

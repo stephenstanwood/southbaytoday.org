@@ -21,6 +21,10 @@ import RedditPulseTeaser from "./RedditPulseTeaser";
 import WeekendAheadCard from "./WeekendAheadCard";
 import NewsletterSignup from "../NewsletterSignup";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
+import {
+  selectDatedDefaultPlan,
+  selectNamedDefaultPlan,
+} from "../../../lib/south-bay/defaultPlanSelection.mjs";
 import { filterAtomicPairCards } from "../../../lib/south-bay/dayPlanPairs";
 // =====================================================================
 // HOME-TAB-LOCKED — DO NOT ADD TEASER COMPONENTS HERE
@@ -87,6 +91,13 @@ interface PlanResponse {
   selectionModel?: string;
 }
 
+interface LoadedDefaultPlan {
+  cards: DayCard[];
+  city: City | null;
+  weather: string | null;
+  planDate: string;
+}
+
 interface LocalState {
   kids: boolean;
 }
@@ -148,7 +159,14 @@ function getEffectiveTime(kids: boolean): {
   planDate: string | undefined;
 } {
   const now = new Date();
-  const ptHour = Number(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false }));
+  const ptParts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  }).formatToParts(now);
+  const ptHour = Number(ptParts.find((part) => part.type === "hour")?.value || 0) % 24;
+  const ptMinute = Number(ptParts.find((part) => part.type === "minute")?.value || 0);
   const cutoff = kids ? 18 : 20;
   if (ptHour >= cutoff) {
     // Compute tomorrow's YYYY-MM-DD in PT. We do this by asking for PT's
@@ -159,7 +177,7 @@ function getEffectiveTime(kids: boolean): {
     const planDate = tomorrow.toISOString().slice(0, 10);
     return { isTomorrow: true, currentHour: 9, currentMinute: 0, planDate };
   }
-  return { isTomorrow: false, currentHour: now.getHours(), currentMinute: now.getMinutes(), planDate: undefined };
+  return { isTomorrow: false, currentHour: ptHour, currentMinute: ptMinute, planDate: undefined };
 }
 
 /** Load a pre-generated bucket plan from default-plans.json for instant display.
@@ -172,45 +190,31 @@ function getEffectiveTime(kids: boolean): {
  *  render so SSR HTML and client hydration agree regardless of when the build
  *  ran vs. when the page is viewed. The post-mount refine effect re-runs with
  *  the real clock. */
-function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): { cards: DayCard[]; city: City | null } {
+function loadDefaultPlan(kids: boolean, opts?: { forceToday?: boolean }): LoadedDefaultPlan {
   try {
     const json = defaultPlansJson as any;
     const plans = json.plans || {};
-    const eff = opts?.forceToday
-      ? { isTomorrow: false as const }
-      : getEffectiveTime(kids);
-    const kidsSuffix = kids ? "kids" : "adults";
+    const effective = getEffectiveTime(kids);
+    const targetDate = effective.planDate || getTodayISOInPT();
+    const plan = opts?.forceToday
+      ? selectNamedDefaultPlan(plans, { kids })
+      : selectDatedDefaultPlan(plans, targetDate, { kids });
 
-    // Read either the new schema ("adults") or the legacy ":h9" anchor key
-    // for back-compat during the cutover from old default-plans.json data.
-    const pickPlan = (...keys: string[]) => {
-      for (const k of keys) if (plans[k]?.cards?.length) return plans[k];
-      return null;
+    if (!plan) return { cards: [], city: null, weather: null, planDate: targetDate };
+    return {
+      cards: plan.cards,
+      city: (plan.city as City) || REGIONAL_CONTEXT_CITY,
+      weather: plan.weather || null,
+      planDate: plan.planDate || targetDate,
     };
-
-    // The city field is retained for shared-plan compatibility. It is the
-    // dominant pillar city, not an anchor or a constraint on regional plans.
-    if (eff.isTomorrow) {
-      const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
-      if (tomorrowPlan) {
-        return { cards: tomorrowPlan.cards, city: (tomorrowPlan.city as City) || REGIONAL_CONTEXT_CITY };
-      }
-      const todayPlan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-      if (todayPlan) {
-        if (todayPlan.selectionModel === "pillar-pairs-v1" || todayPlan.cards.some((card: DayCard) => card.role)) {
-          return { cards: [], city: null };
-        }
-        const placesOnly = todayPlan.cards.filter((c: DayCard) => c.source !== "event");
-        return { cards: placesOnly, city: (todayPlan.city as City) || REGIONAL_CONTEXT_CITY };
-      }
-      return { cards: [], city: null };
-    }
-
-    const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], city: null };
-    return { cards: plan.cards, city: (plan.city as City) || REGIONAL_CONTEXT_CITY };
   } catch {
-    return { cards: [], city: null };
+    const effective = getEffectiveTime(kids);
+    return {
+      cards: [],
+      city: null,
+      weather: null,
+      planDate: effective.planDate || getTodayISOInPT(),
+    };
   }
 }
 
@@ -242,18 +246,11 @@ export default function SouthBayTodayView(_props: Props) {
   // today's plan, all buckets visible); the refine effect below upgrades to
   // the user's stored mode and real time-of-day immediately after mount.
   const [state, setState] = useState<LocalState>(() => defaultState());
-  const initialPlan = useRef<{ cards: DayCard[]; city: City | null } | null>(null);
+  const initialPlan = useRef<LoadedDefaultPlan | null>(null);
   if (initialPlan.current === null) initialPlan.current = loadDefaultPlan(false, { forceToday: true });
   const hasDefaultPlan = initialPlan.current.cards.length > 0;
   const [cards, setCards] = useState<DayCard[]>(initialPlan.current.cards);
-  const [weather, setWeather] = useState<string | null>(() => {
-    if (!hasDefaultPlan) return null;
-    try {
-      const json = defaultPlansJson as any;
-      const plans = json.plans || {};
-      return plans.adults?.weather || plans["adults:h9"]?.weather || null;
-    } catch { return null; }
-  });
+  const [weather, setWeather] = useState<string | null>(initialPlan.current.weather);
   const [planCity, setPlanCity] = useState<City>(initialPlan.current.city || REGIONAL_CONTEXT_CITY);
   // Loading is reserved for explicit Reshuffle clicks. Initial paint always
   // uses the pre-generated plan (cron generates kids + adults daily); if the
@@ -295,10 +292,10 @@ export default function SouthBayTodayView(_props: Props) {
   useEffect(() => {
     const stored = loadState();
     prefsLoadedRef.current = true;
-    const eff = getEffectiveTime(stored.kids);
-    if (stored.kids || eff.isTomorrow) {
-      applyMode(stored.kids);
-    }
+    // Always refine. A build made on Monday still contains Tuesday under the
+    // `:tomorrow` key after midnight; key-only selection otherwise leaves the
+    // homepage on Monday until the next deploy.
+    applyMode(stored.kids, { fetchIfMissing: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -357,34 +354,26 @@ export default function SouthBayTodayView(_props: Props) {
     }
   }, []);
 
-  // Auto-flip to tomorrow's plan when today is over. Fires when the page
-  // crosses the kids/adults evening cutoff with a stale today plan still
-  // mounted, or when the date itself rolls over past midnight. Reuses the
-  // pre-generated tomorrow plan so we don't hit /api/plan-day.
+  // Promote the exact dated plan whenever the PT target date advances — at the
+  // evening cutoff or across midnight. Keys are generation-time labels only;
+  // planDate is the source of truth.
   useEffect(() => {
-    if (loading || cards.length === 0) return;
+    if (loading) return;
     const today = getTodayISOInPT();
-    if (planDateISO > today) return; // already showing tomorrow
-    if (planDateISO === today) {
-      const cutoffMin = (state.kids ? 18 : 22) * 60; // 6 PM kids / 10 PM adults
-      if (nowMinutes < cutoffMin) return; // still mid-day
-    }
-    const tom = loadTomorrowPlan(state.kids);
-    if (!tom.cards.length) {
-      setCards([]);
-      setPlanDateISO(getTomorrowISOInPT());
-      return;
-    }
-    setCards(tom.cards);
-    setPlanDateISO(getTomorrowISOInPT());
-    if (tom.city) setPlanCity(tom.city);
-    if (tom.weather) setWeather(tom.weather);
+    const effective = getEffectiveTime(state.kids);
+    const targetDate = effective.planDate || today;
+    if (planDateISO >= targetDate) return;
+    const next = loadDefaultPlan(state.kids);
+    setCards(next.cards);
+    setPlanDateISO(next.planDate);
+    if (next.city) setPlanCity(next.city);
+    setWeather(next.weather);
   }, [cards, planDateISO, nowMinutes, loading, state.kids]);
 
   // Actions. applyMode loads the pre-generated plan for a target audience
   // mode using the real clock (today or, past the evening cutoff, tomorrow).
   // Shared by the kids toggle and the post-hydration refine effect.
-  function applyMode(nextKids: boolean) {
+  function applyMode(nextKids: boolean, opts?: { fetchIfMissing?: boolean }) {
     setState({ kids: nextKids });
     // Try the pre-generated plan for the new mode first — that's the whole
     // point of pre-gen'ing both kids + adults plans at 2 AM. Only fall back
@@ -392,16 +381,9 @@ export default function SouthBayTodayView(_props: Props) {
     const preGen = loadDefaultPlan(nextKids);
     setCards(preGen.cards);
     if (preGen.city) setPlanCity(preGen.city);
-    setPlanDateISO(getEffectiveTime(nextKids).planDate || getTodayISOInPT());
-    // Swap the weather line to match the new mode.
-    try {
-      const json = defaultPlansJson as any;
-      const plans = json.plans || {};
-      const kidsSuffix = nextKids ? "kids" : "adults";
-      const w = plans[kidsSuffix]?.weather || plans[`${kidsSuffix}:h9`]?.weather;
-      if (w) setWeather(w);
-    } catch {}
-    if (!preGen.cards.length) void fetchPlan(true, nextKids);
+    setPlanDateISO(preGen.planDate);
+    setWeather(preGen.weather);
+    if (!preGen.cards.length && opts?.fetchIfMissing !== false) void fetchPlan(true, nextKids);
   }
   const handleKidsToggle = () => applyMode(!state.kids);
   const handleNewPlan = () => fetchPlan(true);
@@ -1264,53 +1246,6 @@ function isStaleEventCard(
     parseClockMinutes(card.eventEndTime) ??
     startMin + DEFAULT_EVENT_DURATION_MIN;
   return nowMinutes > endMin + EVENT_STALENESS_GRACE_MIN;
-}
-
-/** Tomorrow's YYYY-MM-DD in America/Los_Angeles. */
-function getTomorrowISOInPT(): string {
-  const today = getTodayISOInPT();
-  const [y, m, d] = today.split("-").map(Number);
-  const t = new Date(Date.UTC(y, m - 1, d + 1));
-  return t.toISOString().slice(0, 10);
-}
-
-/** Load the tomorrow plan from default-plans.json. Used when today's plan
- *  runs out mid-session so we can flip into tomorrow without a network
- *  round-trip. */
-function loadTomorrowPlan(
-  kids: boolean,
-): { cards: DayCard[]; city: City | null; weather: string | null } {
-  try {
-    const json = defaultPlansJson as any;
-    const plans = json.plans || {};
-    const kidsSuffix = kids ? "kids" : "adults";
-    const pickPlan = (...keys: string[]) => {
-      for (const k of keys) if (plans[k]?.cards?.length) return plans[k];
-      return null;
-    };
-    const tomorrowPlan = pickPlan(`${kidsSuffix}:tomorrow`, `${kidsSuffix}:h9:tomorrow`);
-    if (tomorrowPlan) {
-      return {
-        cards: tomorrowPlan.cards,
-        city: (tomorrowPlan.city as City) || REGIONAL_CONTEXT_CITY,
-        weather: tomorrowPlan.weather || null,
-      };
-    }
-    // Fallback: today's plan with events stripped.
-    const plan = pickPlan(kidsSuffix, `${kidsSuffix}:h9`);
-    if (!plan) return { cards: [], city: null, weather: null };
-    if (plan.selectionModel === "pillar-pairs-v1" || plan.cards.some((card: DayCard) => card.role)) {
-      return { cards: [], city: null, weather: null };
-    }
-    const placesOnly = plan.cards.filter((c: DayCard) => c.source !== "event");
-    return {
-      cards: placesOnly,
-      city: (plan.city as City) || REGIONAL_CONTEXT_CITY,
-      weather: plan.weather || null,
-    };
-  } catch {
-    return { cards: [], city: null, weather: null };
-  }
 }
 
 const LOADING_VERBS = [

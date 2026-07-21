@@ -8,8 +8,7 @@
 // <style> block so it works in any layout without depending on global CSS.
 // ---------------------------------------------------------------------------
 
-import { useState, useEffect } from "react";
-import { formatTodayLabel } from "../../lib/south-bay/formatTodayLabel";
+import { useLiveTodayLabel } from "../../lib/south-bay/useLiveTodayLabel";
 
 type TabId = "overview" | "events" | "camps" | "government" | "technology" | "food";
 
@@ -29,18 +28,7 @@ export interface MastheadProps {
 }
 
 export default function Masthead({ activeTab = null }: MastheadProps) {
-  // Same pattern as SignalApp's masthead: the server HTML carries the build
-  // night's date, so refresh it on mount (suppressHydrationWarning covers the
-  // text swap) and keep it current across midnight for long-lived tabs.
-  const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
-  useEffect(() => {
-    setTodayLabel(formatTodayLabel());
-    const id = setInterval(() => {
-      const next = formatTodayLabel();
-      setTodayLabel((prev) => (prev === next ? prev : next));
-    }, 60_000);
-    return () => clearInterval(id);
-  }, []);
+  const todayLabel = useLiveTodayLabel();
 
   return (
     <>

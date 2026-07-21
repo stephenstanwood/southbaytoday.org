@@ -5,8 +5,10 @@
 // regardless of the visitor's or server's local timezone.
 // ---------------------------------------------------------------------------
 
-export function formatTodayLabel(): string {
-  return new Date().toLocaleDateString("en-US", {
+export const STATIC_TODAY_LABEL = "Today";
+
+export function formatTodayLabel(now = new Date()): string {
+  return now.toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",

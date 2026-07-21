@@ -2,7 +2,7 @@ import { useState, useCallback, useRef, useEffect, lazy, Suspense } from "react"
 import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES } from "../../lib/south-bay/cities";
-import { formatTodayLabel } from "../../lib/south-bay/formatTodayLabel";
+import { useLiveTodayLabel } from "../../lib/south-bay/useLiveTodayLabel";
 import SouthBayTodayView from "./homepage/SouthBayTodayView";
 import NewsletterSignup from "./NewsletterSignup";
 
@@ -53,19 +53,7 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
   // legacy #events-style bookmark would make the hydrating client disagree
   // with the server HTML; the mount effect below resolves the hash instead.
   const [activeTab, setActiveTab] = useState<Tab>(() => initialTab ?? "overview");
-  // Auto-refresh the masthead date on day rollover so a tab left open past
-  // midnight doesn't show yesterday's label.
-  const [todayLabel, setTodayLabel] = useState<string>(() => formatTodayLabel());
-  useEffect(() => {
-    // Refresh immediately on mount (server HTML may carry the build night's
-    // date) and then keep it current across midnight for long-lived tabs.
-    setTodayLabel(formatTodayLabel());
-    const id = setInterval(() => {
-      const next = formatTodayLabel();
-      setTodayLabel((prev) => (prev === next ? prev : next));
-    }, 60_000);
-    return () => clearInterval(id);
-  }, []);
+  const todayLabel = useLiveTodayLabel();
 
   const navigateTo = useCallback((tab: Tab) => {
     setActiveTab(tab);

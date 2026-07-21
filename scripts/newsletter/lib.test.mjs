@@ -127,6 +127,7 @@ test("newsletter selects the exact dated default plan for future previews", () =
 
   assert.equal(selectDefaultPlan(plans, "2026-07-17"), adults);
   assert.equal(selectDefaultPlan(plans, "2026-07-18"), tomorrow);
+  assert.equal(selectDefaultPlan(plans, "2026-07-19"), null);
 });
 
 test("newsletter drops a temporarily unavailable venue event from a stale plan", () => {

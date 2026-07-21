@@ -15,6 +15,13 @@
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { writeFileAtomic } from "./lib/io.mjs";
+import {
+  confirmMeeting,
+  legistarMeetingUrl,
+  onlyConfirmedMeetings,
+  pickCivicClerkMeeting,
+  ptDateISO,
+} from "./lib/civic-meetings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-meetings.json");
@@ -22,11 +29,11 @@ const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-mee
 const UA = "SouthBaySignal/1.0 (stanwood.dev; public civic data aggregator)";
 
 const LEGISTAR_CITIES = [
-  { city: "san-jose",      client: "sanjose",      body: "City Council" },
-  { city: "mountain-view", client: "mountainview",  body: "City Council" },
-  { city: "sunnyvale",     client: "sunnyvaleca",   body: "City Council" },
-  { city: "cupertino",     client: "cupertino",     body: "City Council" },
-  { city: "santa-clara",   client: "santaclara",    body: "City Council" },
+  { city: "san-jose",      client: "sanjose",      site: "sanjose",      body: "City Council" },
+  { city: "mountain-view", client: "mountainview", site: "mountainview", body: "City Council" },
+  { city: "sunnyvale",     client: "sunnyvaleca",  site: "sunnyvaleca",  body: "City Council" },
+  { city: "cupertino",     client: "cupertino",    site: "cupertino",    body: "City Council" },
+  { city: "santa-clara",   client: "santaclara",   site: "santaclara",   body: "City Council" },
 ];
 
 // Phrases that indicate a boilerplate/procedural agenda item to skip
@@ -239,12 +246,12 @@ async function fetchAgendaItems(client, eventId) {
   }
 }
 
-async function fetchNextMeeting(city, client, body) {
-  const today = new Date().toISOString().split("T")[0];
+async function fetchNextMeeting(client, site, body) {
+  const today = ptDateISO();
   const url =
     `https://webapi.legistar.com/v1/${client}/Events` +
-    `?$filter=EventBodyName eq '${body}' and EventDate gt datetime'${today}T00:00:00'` +
-    `&$orderby=EventDate asc&$top=1`;
+    `?$filter=EventBodyName eq '${body}' and EventDate ge datetime'${today}T00:00:00'` +
+    `&$orderby=EventDate asc&$top=10`;
 
   const res = await fetch(url, {
     headers: { "User-Agent": UA, Accept: "application/json" },
@@ -253,10 +260,14 @@ async function fetchNextMeeting(city, client, body) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   const events = await res.json();
-  if (!events.length) return null;
-
-  const ev = events[0];
+  const ev = events.find((event) => !/cancel(?:led|ed)|postponed/i.test([
+    event.EventDescription,
+    event.EventComment,
+    event.EventAgendaStatusName,
+  ].filter(Boolean).join(" ")));
+  if (!ev) return null;
   const date = new Date(ev.EventDate);
+  const dateIso = String(ev.EventDate).slice(0, 10);
 
   // Skip placeholder dates more than 60 days out (common Legistar calendar blocker)
   const daysOut = (date.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
@@ -264,18 +275,19 @@ async function fetchNextMeeting(city, client, body) {
 
   const agendaItems = await fetchAgendaItems(client, ev.EventId);
 
-  return {
-    date: date.toISOString().split("T")[0],
+  const meeting = {
+    date: dateIso,
     displayDate: date.toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
       timeZone: "America/Los_Angeles",
     }),
     bodyName: ev.EventBodyName,
     location: cleanLocation(ev.EventLocation),
-    url: `https://${client}.legistar.com/MeetingDetail.aspx?ID=${ev.EventId}&GUID=${ev.EventGuid}`,
+    url: legistarMeetingUrl(site, dateIso, ev.EventInSiteURL),
     legistarEventId: ev.EventId,
     agendaItems,
   };
+  return confirmMeeting(meeting, { provider: "legistar", sourceUrl: url, observedDate: dateIso });
 }
 
 // ── PrimeGov (Palo Alto) ────────────────────────────────────────────────────
@@ -312,7 +324,7 @@ async function fetchPrimeGovMeeting(city, domain, committeeId) {
     timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit",
   }).format(date);
 
-  return {
+  const meeting = {
     date: pacificIso,
     displayDate: date.toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
@@ -323,6 +335,11 @@ async function fetchPrimeGovMeeting(city, domain, committeeId) {
     url: `https://${domain}/Portal/Meeting?meetingId=${ev.id}`,
     agendaItems: [],
   };
+  return confirmMeeting(meeting, {
+    provider: "primegov",
+    sourceUrl: meeting.url,
+    observedDate: pacificIso,
+  });
 }
 
 const PRIMEGOV_CITIES = [
@@ -331,23 +348,7 @@ const PRIMEGOV_CITIES = [
 
 // ── CivicEngage HTML scraping (Campbell, Saratoga, Los Altos) ───────────────
 
-function nextScheduledDate(dayOfWeek, weeksOfMonth) {
-  const today = new Date();
-  const todayIso = today.toISOString().split("T")[0];
-  for (let offset = 0; offset < 45; offset++) {
-    const d = new Date(today);
-    d.setDate(d.getDate() + offset);
-    if (d.getDay() !== dayOfWeek) continue;
-    const weekOfMonth = Math.ceil(d.getDate() / 7);
-    if (!weeksOfMonth.includes(weekOfMonth)) continue;
-    const iso = d.toISOString().split("T")[0];
-    if (iso < todayIso) continue;
-    return { date: d, iso };
-  }
-  return null;
-}
-
-async function fetchCivicEngageMeeting(city, baseUrl, calendarId, fallbackSchedule) {
+async function fetchCivicEngageMeeting(baseUrl, calendarId) {
   // CivicEngage agenda centers have a predictable HTML structure
   // Scrape the agenda list page for the next upcoming meeting date
   const url = `${baseUrl}/AgendaCenter/${calendarId}`;
@@ -360,8 +361,7 @@ async function fetchCivicEngageMeeting(city, baseUrl, calendarId, fallbackSchedu
 
   // Parse meeting dates from the HTML — CivicEngage uses data-date attributes or date strings
   // Pattern: look for links with dates in format "MM/DD/YYYY" or agenda items with dates
-  const today = new Date();
-  const todayIso = today.toISOString().split("T")[0];
+  const todayIso = ptDateISO();
 
   // CivicEngage lists agendas with dates — find future ones
   // The HTML contains rows like: <td>04/15/2026</td> or dates in agenda links
@@ -377,21 +377,14 @@ async function fetchCivicEngageMeeting(city, baseUrl, calendarId, fallbackSchedu
   // Deduplicate and sort
   const unique = [...new Set(dates)].sort();
 
-  let nextDate;
-  if (unique.length) {
-    nextDate = unique[0];
-  } else if (fallbackSchedule) {
-    // No future dates on the page — use known meeting schedule
-    const fb = nextScheduledDate(fallbackSchedule.dayOfWeek, fallbackSchedule.weeksOfMonth);
-    if (fb) nextDate = fb.iso;
-  }
+  const nextDate = unique[0];
   if (!nextDate) return null;
 
   const d = new Date(nextDate + "T12:00:00");
   const daysOut = (d.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
   if (daysOut > 60) return null;
 
-  return {
+  const meeting = {
     date: nextDate,
     displayDate: d.toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
@@ -402,48 +395,54 @@ async function fetchCivicEngageMeeting(city, baseUrl, calendarId, fallbackSchedu
     url: `${baseUrl}/AgendaCenter/${calendarId}`,
     agendaItems: [],
   };
+  return confirmMeeting(meeting, {
+    provider: "civicengage",
+    sourceUrl: url,
+    observedDate: nextDate,
+  });
 }
 
 const CIVICENGAGE_CITIES = [
-  { city: "campbell",  baseUrl: "https://www.campbellca.gov",  calendarId: "City-Council-10",
-    fallbackSchedule: { dayOfWeek: 2, weeksOfMonth: [1, 3] } }, // 1st & 3rd Tuesdays
-  { city: "saratoga",  baseUrl: "https://www.saratoga.ca.us",  calendarId: "City-Council-13",
-    fallbackSchedule: { dayOfWeek: 3, weeksOfMonth: [1, 3] } }, // 1st & 3rd Wednesdays
-  { city: "los-altos", baseUrl: "https://www.losaltosca.gov",  calendarId: "City-Council-4",
-    fallbackSchedule: { dayOfWeek: 2, weeksOfMonth: [2, 4] } }, // 2nd & 4th Tuesdays
+  { city: "campbell",  baseUrl: "https://www.campbellca.gov",  calendarId: "City-Council-10" },
+  { city: "saratoga",  baseUrl: "https://www.saratoga.ca.us",  calendarId: "City-Council-13" },
+  { city: "los-altos", baseUrl: "https://www.losaltosca.gov",  calendarId: "City-Council-4" },
 ];
 
 // ── Milpitas (CivicClerk / calendar page scraping) ──────────────────────────
 
 async function fetchMilpitasMeeting() {
-  // Milpitas City Council meets 1st and 3rd Tuesdays at 7pm
-  // CivicClerk portal is client-rendered — no server-side dates to scrape
-  // Compute next meeting from known schedule
-  const today = new Date();
-  const todayIso = today.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const today = ptDateISO();
+  const apiUrl = new URL("https://milpitasca.api.civicclerk.com/v1/Events");
+  apiUrl.searchParams.set("$filter", `categoryName eq 'City Council' and eventDate ge ${today}T00:00:00Z`);
+  apiUrl.searchParams.set("$orderby", "eventDate asc");
+  apiUrl.searchParams.set("$top", "100");
+  const res = await fetch(apiUrl, {
+    headers: { "User-Agent": UA, Accept: "application/json" },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const payload = await res.json();
+  const event = pickCivicClerkMeeting(payload.value, today);
+  if (!event) return null;
 
-  for (let offset = 0; offset < 45; offset++) {
-    const d = new Date(today);
-    d.setDate(d.getDate() + offset);
-    if (d.getDay() !== 2) continue; // not Tuesday
-    const weekOfMonth = Math.ceil(d.getDate() / 7);
-    if (weekOfMonth !== 1 && weekOfMonth !== 3) continue;
-    const iso = d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-    if (iso < todayIso) continue;
-
-    return {
-      date: iso,
-      displayDate: d.toLocaleDateString("en-US", {
-        weekday: "short", month: "short", day: "numeric",
-        timeZone: "America/Los_Angeles",
-      }),
-      bodyName: "City Council",
-      location: "Milpitas City Hall",
-      url: "https://www.milpitas.gov/129/Agendas-Minutes",
-      agendaItems: [],
-    };
-  }
-  return null;
+  const date = String(event.eventDate).slice(0, 10);
+  const dateObject = new Date(`${date}T12:00:00Z`);
+  const meeting = {
+    date,
+    displayDate: dateObject.toLocaleDateString("en-US", {
+      weekday: "short", month: "short", day: "numeric", timeZone: "UTC",
+    }),
+    bodyName: event.eventName || "City Council",
+    location: "Milpitas City Hall",
+    url: "https://www.milpitas.gov/129/Agendas-Minutes",
+    civicClerkEventId: event.id,
+    agendaItems: [],
+  };
+  return confirmMeeting(meeting, {
+    provider: "civicclerk",
+    sourceUrl: apiUrl.href,
+    observedDate: date,
+  });
 }
 
 // ── Los Gatos (MuniCode) ────────────────────────────────────────────────────
@@ -458,7 +457,7 @@ async function fetchLosGatosMeeting() {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const html = await res.text();
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = ptDateISO();
 
   // MuniCode pages have dates in various formats — look for ISO or US format
   const dates = [];
@@ -483,21 +482,14 @@ async function fetchLosGatosMeeting() {
 
   const unique = [...new Set(dates)].sort();
 
-  let nextDate;
-  if (unique.length) {
-    nextDate = unique[0];
-  } else {
-    // Fallback: Los Gatos Town Council meets 1st and 3rd Tuesdays
-    const fb = nextScheduledDate(2, [1, 3]);
-    if (fb) nextDate = fb.iso;
-  }
+  const nextDate = unique[0];
   if (!nextDate) return null;
 
   const d = new Date(nextDate + "T12:00:00");
   const daysOut = (d.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
   if (daysOut > 60) return null;
 
-  return {
+  const meeting = {
     date: nextDate,
     displayDate: d.toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
@@ -508,6 +500,11 @@ async function fetchLosGatosMeeting() {
     url: "https://losgatos-ca.municodemeetings.com/",
     agendaItems: [],
   };
+  return confirmMeeting(meeting, {
+    provider: "municode",
+    sourceUrl: url,
+    observedDate: nextDate,
+  });
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────
@@ -515,15 +512,15 @@ async function fetchLosGatosMeeting() {
 async function main() {
   console.log("Fetching upcoming council meetings...\n");
 
-  const meetings = {};
+  const candidates = {};
 
   // Legistar cities
-  for (const { city, client, body } of LEGISTAR_CITIES) {
+  for (const { city, client, site, body } of LEGISTAR_CITIES) {
     process.stdout.write(`  ⏳ ${city} (Legistar)...`);
     try {
-      const next = await fetchNextMeeting(city, client, body);
+      const next = await fetchNextMeeting(client, site, body);
       if (next) {
-        meetings[city] = next;
+        candidates[city] = next;
         const itemCount = next.agendaItems?.length ?? 0;
         console.log(` ✅ ${next.displayDate} (${itemCount} agenda items)`);
       } else {
@@ -540,7 +537,7 @@ async function main() {
     try {
       const next = await fetchPrimeGovMeeting(city, domain, committeeId);
       if (next) {
-        meetings[city] = next;
+        candidates[city] = next;
         console.log(` ✅ ${next.displayDate}`);
       } else {
         console.log(` — none scheduled`);
@@ -551,12 +548,12 @@ async function main() {
   }
 
   // CivicEngage cities
-  for (const { city, baseUrl, calendarId, fallbackSchedule } of CIVICENGAGE_CITIES) {
+  for (const { city, baseUrl, calendarId } of CIVICENGAGE_CITIES) {
     process.stdout.write(`  ⏳ ${city} (CivicEngage)...`);
     try {
-      const next = await fetchCivicEngageMeeting(city, baseUrl, calendarId, fallbackSchedule);
+      const next = await fetchCivicEngageMeeting(baseUrl, calendarId);
       if (next) {
-        meetings[city] = next;
+        candidates[city] = next;
         console.log(` ✅ ${next.displayDate}`);
       } else {
         console.log(` — none scheduled`);
@@ -571,7 +568,7 @@ async function main() {
   try {
     const next = await fetchMilpitasMeeting();
     if (next) {
-      meetings["milpitas"] = next;
+      candidates["milpitas"] = next;
       console.log(` ✅ ${next.displayDate}`);
     } else {
       console.log(` — none scheduled`);
@@ -585,32 +582,18 @@ async function main() {
   try {
     const next = await fetchLosGatosMeeting();
     if (next) {
-      meetings["los-gatos"] = next;
+      candidates["los-gatos"] = next;
       console.log(` ✅ ${next.displayDate}`);
     } else {
       console.log(` — none scheduled`);
     }
   } catch (err) {
-    // MuniCode is slow — fall back to known schedule (1st & 3rd Tuesdays)
-    const fb = nextScheduledDate(2, [1, 3]);
-    if (fb) {
-      const d = new Date(fb.iso + "T12:00:00");
-      meetings["los-gatos"] = {
-        date: fb.iso,
-        displayDate: d.toLocaleDateString("en-US", {
-          weekday: "short", month: "short", day: "numeric",
-          timeZone: "America/Los_Angeles",
-        }),
-        bodyName: "Town Council",
-        location: null,
-        url: "https://losgatos-ca.municodemeetings.com/",
-        agendaItems: [],
-      };
-      console.log(` ⚠️  ${err.message} → fallback ${meetings["los-gatos"].displayDate}`);
-    } else {
-      console.log(` ⚠️  ${err.message}`);
-    }
+    console.log(` ⚠️  ${err.message}`);
   }
+
+  const meetings = onlyConfirmedMeetings(candidates);
+  const rejected = Object.keys(candidates).length - Object.keys(meetings).length;
+  if (rejected > 0) console.warn(`⚠️  publication gate rejected ${rejected} unconfirmed meeting(s)`);
 
   const output = {
     generatedAt: new Date().toISOString(),
