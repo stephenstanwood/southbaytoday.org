@@ -147,6 +147,7 @@ export const TECH_LOGO_MANIFEST: Record<string, string> = {
   "tenstorrent": "/logos/tenstorrent.png",
   "tesla": "/logos/tesla.png",
   "trellix": "/logos/trellix.ico",
+  "tylsemi": "/logos/tylsemi.png",
   "upscale-ai": "/logos/upscale-ai.png",
   "vinci": "/logos/vinci.png",
   "vmware": "/logos/vmware.png",

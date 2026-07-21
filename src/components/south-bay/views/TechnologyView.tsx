@@ -910,7 +910,7 @@ const RAISED_2026_MILLIONS = RECENTLY_FUNDED
   .reduce((sum, r) => sum + (parseFundingAmount(r.amount) ?? 0), 0);
 const RAISED_2026_LABEL = formatFundingTotal(RAISED_2026_MILLIONS);
 
-// Top categories among the 2026 Q1–Q2 rounds — feeds the pulse strip recap so
+// Top categories among the year-to-date 2026 rounds — feeds the pulse strip recap so
 // the "what's hot" callout never lies about what residents are actually seeing
 // in the funding list below.
 const Q1Q2_FUNDED = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01");
@@ -1590,7 +1590,10 @@ export default function TechnologyView() {
         eyebrow="South Bay / Tech Desk"
         title="Technology"
         description="A readable snapshot of the companies, jobs, and funding rounds shaping the local tech economy."
-        note="Data snapshot · Q1–Q2 2026 · Santa Clara County employment estimates · Not affiliated with any company listed"
+        // The Q1–Q2 vintage belongs to the employment estimates only — the
+        // funding stat beside it is derived live and already runs into Q3, so
+        // say which number the date applies to instead of stamping the whole page.
+        note="Santa Clara County employment estimates · Q1–Q2 2026 · Funding tracked through today · Not affiliated with any company listed"
         // --sb-teal (#22C6D3) is only ~2.1:1 on the hero background as text —
         // darkened within the same teal family to #0E7490 (~5.4:1) for the kicker.
         accent="#0E7490"

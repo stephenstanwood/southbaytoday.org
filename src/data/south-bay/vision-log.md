@@ -2,6 +2,75 @@
 
 ---
 
+## 2026-07-21 — Cycle 198: TYLsemi Added, Rivos Retired, Tech Hero Date Fixed
+
+### Context
+Tuesday July 21, 2026. Automated builder cycle. Continued the Tech tab funding
+watch and audited the two rendered company lists for stale entries.
+
+### What Was Built
+
+**Tech tab: TYLsemi added to RECENTLY_FUNDED and SCC_SPOTLIGHT** (San Jose,
+$43M early-stage, July 14, 2026). TYLsemi came out of stealth with a full-stack
+chiplet platform for custom AI silicon — pre-built connectivity (TYL.IO), power
+delivery (TYL.Power), and memory (TYL.Mem) chiplets plus TYL.Forge, which carries
+a design from architecture through manufacturing, at roughly half the time and
+cost of building custom AI silicon from scratch. Founders Mohit Gupta (CEO) and
+Sunil Bhardwaj came from Alphawave, SiFive, Cadence, and Rambus; the oversubscribed
+round was led by Matter Venture Partners with Viola Ventures, GHOVC, and Egis
+Technology joining. Verified against TYLsemi's own press release
+(`https://www.tylsemi.ai/press-releases/tylsemi-raises-43-million-to-launch-first-full-stack-chipletplatform-for-custom-ai-silicon/`)
+and SiliconANGLE's July 14 coverage. Founding year was NOT stated by any primary
+source, so the spotlight card says "Led by former Alphawave and SiFive silicon
+executives" rather than inventing a date.
+
+**Tech tab: Rivos dropped from SCC_SPOTLIGHT.** Meta acquired Rivos in late 2025
+and the team now builds Meta's in-house AI silicon, so it is neither a startup nor
+an independent growth company — the two things the "Smaller, But Notable" section
+promises. The entry also carried a "~$2B" acquisition price that no party ever
+confirmed; terms were never disclosed. Removed rather than reclassified, with a
+dropped-entry note in the source (same convention RECENTLY_FUNDED already uses).
+
+**Tech tab: hero date label no longer contradicts the funding stat.** The hero
+read "Data snapshot · Q1–Q2 2026" directly beneath a derived stat reading "Raised
+in Q1–Q3 2026." The Q1–Q2 vintage only ever applied to the employment estimates,
+so the note now says which number the date belongs to: "Santa Clara County
+employment estimates · Q1–Q2 2026 · Funding tracked through today." The employment
+labels stay hardcoded — they are a genuine static data vintage.
+
+**Coverage boundary documented.** Fireworks AI ($1.5B Series D, July 15) and
+Cognichip ($60M Series A, April) both surfaced in the July scan and were both
+rejected — Redwood City / San Mateo County, north of the Santa Clara County line
+every other entry sits inside. Added as a standing note so future cycles don't
+re-litigate them.
+
+**Link health check.** All 87 RECENTLY_FUNDED card URLs were checked; every one
+resolves (ayarlabs.com returns 403 to scripted requests but serves browsers fine).
+
+**Logo.** Fetched `tylsemi.png` and cropped it to the square brand mark — the
+auto-resolved asset was a wide wordmark whose "semi" was white-on-transparent and
+therefore invisible on the light card.
+
+### Why This Was the Strongest Move
+The Tech tab's two rendered company lists both got more honest in the same pass:
+a real, brand-new San Jose chip startup entered them, a company that has not been
+a startup since last year left, and an unverifiable $2B price tag went with it.
+The hero stopped stamping a Q2 date over a stat that already covers Q3. No
+protected Home, Events, or Food surface was touched.
+
+### Next 3 Strongest Ideas
+1. **RECENTLY_FUNDED late-July watch** — keep scanning primary releases for fresh
+   Santa Clara County rounds; the July 16–20 national roundups had none.
+2. **SCC_SPOTLIGHT staleness audit** — Rivos was not the only entry that may have
+   aged out. Worth a pass over the remaining `stage: "startup"` rows for
+   acquisitions, shutdowns, and headcount drift.
+3. **Orphan Tech sections** — `SvHistorySection`, `AnnualConferencesSection`,
+   `FundingTicker`, `TechEventsSection`, and `GovTechCallout` are defined in
+   TechnologyView.tsx but never called, and `tech-briefing.json` (last generated
+   May 11) has no consumer. Left alone per Rule #1; flagging only.
+
+---
+
 ## 2026-07-20 — Cycle 197: Spectro Cloud Added to Recently Funded
 
 ### Context

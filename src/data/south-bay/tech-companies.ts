@@ -587,16 +587,21 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://amperecomputing.com",
     employeesNote: "600 employees",
   },
+  // Note: Rivos (Mountain View, RISC-V SoCs) was dropped from the spotlight.
+  // Meta acquired it in late 2025 and the team now builds Meta's in-house AI
+  // silicon, so it is neither a startup nor an independent growth company —
+  // the two things this section promises. The old entry also carried a "~$2B"
+  // price tag that no party ever confirmed; terms were never disclosed.
   {
-    id: "rivos",
-    name: "Rivos",
-    city: "Mountain View",
+    id: "tylsemi",
+    name: "TYLsemi",
+    city: "San Jose",
     category: "chip",
     stage: "startup",
-    tagline: "RISC-V SoC startup founded by ex-Apple chip engineers, targeting server and AI workloads. Acquired by Meta in late 2025 (~$2B) to build out its in-house AI silicon.",
-    color: "#DC2626",
-    url: "https://rivosinc.com",
-    employeesNote: "400 employees",
+    tagline: "Sells the building blocks of a custom AI chip: ready-made chiplets for connectivity, power, and memory, plus a platform that takes a design from architecture through manufacturing. Came out of stealth in July 2026 with $43M.",
+    color: "#7c3aed",
+    url: "https://www.tylsemi.ai",
+    employeesNote: "Led by former Alphawave and SiFive silicon executives",
   },
   {
     id: "sambanova",
@@ -997,7 +1002,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Recently funded South Bay startups — verified Q4 2025 – Q2 2026
+// Recently funded South Bay startups — verified Q4 2025 – Q3 2026
 // ---------------------------------------------------------------------------
 
 export interface RecentlyFunded {
@@ -1021,6 +1026,23 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // the South Bay. Was mislabeled "Santa Clara." Founder Elias Manousos's
   // profile and the launch coverage (SecurityWeek, SiliconANGLE) all place it
   // in SF. Far north of Redwood City; out of coverage.
+  // Note: Fireworks AI ($1.5B Series D, July 2026) and Cognichip ($60M Series A,
+  // April 2026) are both Redwood City / San Mateo County — north of the Santa
+  // Clara County line every other entry here sits inside. Out of coverage
+  // unless the footprint explicitly expands.
+  {
+    id: "tylsemi",
+    name: "TYLsemi",
+    city: "San Jose",
+    category: "chip",
+    round: "Early-Stage",
+    amount: "$43M",
+    date: "2026-07-14",
+    tagline:
+      "Came out of stealth with a full-stack chiplet platform for custom AI silicon — pre-built building blocks for connectivity (TYL.IO), power delivery (TYL.Power), and memory (TYL.Mem) paired with TYL.Forge, which carries a design from architecture through manufacturing. The pitch is roughly half the time and cost of building a custom AI chip from scratch. Founders Mohit Gupta (CEO) and Sunil Bhardwaj came from Alphawave, SiFive, Cadence, and Rambus; the oversubscribed round was led by Matter Venture Partners with Viola Ventures, GHOVC, and Egis Technology joining.",
+    color: "#7c3aed",
+    url: "https://www.tylsemi.ai/press-releases/tylsemi-raises-43-million-to-launch-first-full-stack-chipletplatform-for-custom-ai-silicon/",
+  },
   {
     id: "spectro-cloud",
     name: "Spectro Cloud",
