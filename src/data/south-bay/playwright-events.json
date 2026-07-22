@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-22T02:17:04.538Z",
+    "generatedAt": "2026-07-22T04:37:59.684Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 35,
-    "eventCount": 429,
+    "eventCount": 428,
     "sourceCount": 23,
     "sources": [
-      "Mountain View Public Library (14)",
+      "Mountain View Public Library (13)",
       "Los Gatos Library (25)",
       "San Jose Museum of Art (22)",
       "Linden Tree Books (9)",
@@ -63,7 +63,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 14,
+        "count": 13,
         "error": null
       },
       {
@@ -279,23 +279,6 @@
     ]
   },
   "events": [
-    {
-      "id": "0a8e5c858b1d",
-      "title": "Sewing with FabMo: Book Covers",
-      "date": "2026-07-21",
-      "displayDate": "Tue, Jul 21",
-      "time": "6:00 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/14866773",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "62a5cc0cf2e7",
       "title": "Baby Storytime",
@@ -7180,7 +7163,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Hockey",
+      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! RegionalMexican Music",
       "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
       "source": "SAP Center",
       "kidFriendly": false
