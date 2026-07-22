@@ -1,6 +1,25 @@
+import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
+
 const PT = "America/Los_Angeles";
 
 export const JEREMY_FREY_EXHIBITION_URL = "https://museum.stanford.edu/exhibitions/jeremy-frey-woven-0";
+
+// Some newsletter trackers can't be unwrapped — Books Inc.'s Adestra links
+// (l.e.booksinc.com/rts/go2.aspx) serve a 200 instead of redirecting once the
+// blast expires, so unwrapMany caches them as identity and the raw wrapper
+// would otherwise be published. A wrapper URL is worse than none: it's a dead
+// link that also carries the per-subscriber id from our own newsletter
+// signup. Fall back to the venue's own events page where we know one — these
+// are the same canonical URLs our first-party scrapers already use.
+const TRACKER_FALLBACKS = [
+  { match: /\bbooksinc\.com\b/i, url: "https://www.booksinc.com/pages/events" },
+];
+
+function detrack(url) {
+  if (!url || !isTrackerUrl(url)) return url;
+  const fallback = TRACKER_FALLBACKS.find((f) => f.match.test(url));
+  return fallback ? fallback.url : "";
+}
 
 export function inboundClock(value) {
   if (!value) return null;
@@ -43,6 +62,6 @@ export function normalizeInboundEventPresentation(event) {
   return {
     time,
     endTime,
-    url: override?.url || event?.canonicalUrl || event?.sourceUrl || "",
+    url: override?.url || detrack(event?.canonicalUrl) || detrack(event?.sourceUrl) || "",
   };
 }

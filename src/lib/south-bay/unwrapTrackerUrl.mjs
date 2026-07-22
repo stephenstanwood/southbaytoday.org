@@ -33,7 +33,12 @@ const POLITE_DELAY_MS = 200;
 // every URL with a query string.
 const TRACKER_PATTERNS = [
   /\bcc\.rs6\.net\/tn\.jsp/i,                  // Constant Contact
-  /\.list-manage\.com\/track\/click/i,          // Mailchimp
+  // Mailchimp — both the legacy /track/click path and the newer
+  // us*.list-manage.com/<token>?e=<subscriber>&c2id=<campaign> form. Nothing
+  // real is ever hosted on list-manage.com, so match the whole domain: the
+  // newer form carries our own subscriber id, which must never be published.
+  /\blist-manage\.com\b/i,                      // Mailchimp
+  /\/rts\/go2\.aspx\b/i,                        // Adestra / Upland (l.e.<brand>.com)
   /\bconnect\.cdm\.org\/site\/R\b/i,            // Convio / Blackbaud
   /\bemail\.live\.stanford\.edu\/c\//i,         // Stanford dotdigital
   /\bclick\.fanmail\./i,                        // SJ Earthquakes / Marketo

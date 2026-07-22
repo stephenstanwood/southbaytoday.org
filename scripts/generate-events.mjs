@@ -6649,6 +6649,19 @@ const INBOUND_ACCEPTED_CITIES = new Set([
   "palo-alto", "monte-sereno",
 ]);
 
+// Third line of defense — the cityKey check above only catches an extractor
+// that names a city we don't cover. It can't catch one that names a covered
+// city for an event that isn't there: a Books Inc. Opera Plaza author talk in
+// San Francisco came through tagged "san-jose" and published on the San Jose
+// tab. So also read the location string: if it names a Bay Area city we don't
+// cover and names none that we do, drop it regardless of cityKey.
+const OUT_OF_AREA_LOCATION = /\b(san francisco|oakland|berkeley|alameda|fremont|hayward|walnut creek|san mateo|redwood city|daly city|san leandro|richmond|concord|vallejo|sacramento|los angeles|san rafael|novato|petaluma|napa|emeryville|burlingame|san bruno|pacifica|half moon bay|morgan hill|gilroy|marin)\b/i;
+const COVERED_LOCATION = /\b(san jos[eé]|santa clara|sunnyvale|cupertino|campbell|milpitas|saratoga|los gatos|los altos|palo alto|mountain view|monte sereno|stanford|moffett)\b/i;
+// Exception: organized outings depart from a covered city even though the
+// destination is elsewhere — "August Day Trip to San Francisco Zoo & Gardens"
+// is a Sunnyvale senior-center trip, not an SF event. Keep those.
+const LOCAL_DEPARTURE_TRIP = /\b(day\s+trip|bus\s+trip|field\s+trip|excursion|trip\s+to|tour\s+to)\b/i;
+
 function fetchInboundEvents() {
   console.log("  ⏳ Inbound-email events...");
   try {
@@ -6679,6 +6692,12 @@ function fetchInboundEvents() {
       if (dateKey < today) { skipPast++; continue; }
       if (!e.cityKey) { skipCity++; continue; } // Skip events we couldn't geo-place
       if (!INBOUND_ACCEPTED_CITIES.has(e.cityKey)) { skipCity++; continue; }
+      const inboundLocation = e.location ?? "";
+      if (
+        OUT_OF_AREA_LOCATION.test(inboundLocation) &&
+        !COVERED_LOCATION.test(inboundLocation) &&
+        !LOCAL_DEPARTURE_TRIP.test(e.title)
+      ) { skipCity++; continue; }
 
       const startDate = new Date(e.startsAt);
       if (isNaN(startDate.getTime())) continue;

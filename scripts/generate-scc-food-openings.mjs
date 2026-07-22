@@ -216,7 +216,10 @@ function cleanName(raw) {
 
   // Strip trailing permit artifact suffixes like "- 3 Comp Sink Install", "- TI", "- Remodel", "- Hood Install"
   s = s.replace(/\s+-\s+\d+\s+Comp\s+Sink.*$/i, "").trim();
-  s = s.replace(/\s+-\s+(TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade|Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Tank\s+Replace|Lvl|Level|Lgt|Light|Concession(\s+\w+)?)(\s+\d+)?$/i, "").trim();
+  // The qualifier prefix ("Restaurant T.I.", "Kitchen Remodel") and the dotted
+  // "T.I." spelling both occur in the county feed — "Hotel De Anza - Restaurant
+  // T.I." published with the permit jargon still attached to the venue name.
+  s = s.replace(/\s+-\s+(?:Restaurant\s+|Kitchen\s+|Food\s+)?(T\.?I\.?|Tenant\s+Impr(?:ovement)?|TI|Remodel|Hood\s+Install|Plumbing|Electrical|Fire\s+Suppression|Grease\s+Trap|Ansul|Ventilation|Sprinkler|Build[-\s]?Out|Buildout|Renovation|Expansion|Addition|Alteration|Conversion|New\s+Construction|Plan\s+Check|Permit|Install|Upgrade|Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Tank\s+Replace|Lvl|Level|Lgt|Light|Concession(\s+\w+)?)(\s+\d+)?$/i, "").trim();
 
   // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank")
   s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Kitchen\s+Hood|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade|New\s+Equipment|Gas\s+Stove|Lgt|Light\s+Equipment|New\s+Build|New\s+Food\s+Facility)\s*$/i, "").trim();

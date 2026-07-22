@@ -207,7 +207,18 @@ export function parseCivicPlusCalendarPage(html) {
     const locality = plainText(locationBlock.match(/itemprop="addressLocality">([\s\S]*?)<\/span>/i)?.[1] || "");
     const region = plainText(locationBlock.match(/itemprop="addressRegion">([\s\S]*?)<\/span>/i)?.[1] || "");
     const postal = plainText(locationBlock.match(/itemprop="postalCode">([\s\S]*?)<\/span>/i)?.[1] || "");
-    const address = [street, locality, region, postal].filter(Boolean).join(", ").replace(/, ([A-Z]{2}), (\d{5})$/, ", $1 $2");
+    // Some CivicPlus calendars put the whole address in streetAddress AND
+    // repeat it in the locality/region/postal spans, which concatenated into
+    // "13 S San Antonio Rd, Los Altos, CA 94022, Los Altos, CA 94022" (and
+    // worse, a second, conflicting ZIP on the Main St & State St entry). If
+    // street already reads as a complete address — names the locality and
+    // carries a state or ZIP — use it on its own.
+    const streetIsComplete =
+      Boolean(street && locality) &&
+      street.toLowerCase().includes(locality.toLowerCase()) &&
+      (Boolean(region) && new RegExp(`\\b${region}\\b`, "i").test(street)) === true;
+    const addressParts = streetIsComplete ? [street] : [street, locality, region, postal];
+    const address = addressParts.filter(Boolean).join(", ").replace(/, ([A-Z]{2}), (\d{5})$/, ", $1 $2");
     const dateHeader = plainText(block.match(/class="date">([\s\S]*?)<\/div>/i)?.[1] || "");
     const clocks = [...dateHeader.matchAll(/\b\d{1,2}(?::\d{2})?\s*[AP]M\b/gi)].map((match) => normalizeClock(match[0]));
     const href = decodeHtml(block.match(/id="eventTitle_\d+"\s+href="([^"]+)"/i)?.[1] || "");
