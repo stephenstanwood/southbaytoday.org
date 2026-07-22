@@ -1136,6 +1136,17 @@ function cleanTitle(title) {
     const TITLE_ABBR = new Set(["Blvd", "Corp", "Dept", "Univ", "Assn", "Bros", "Mtns"]);
     t = t.replace(/\b([A-Za-z]{4,})\.\s*$/, (m, word) => (TITLE_ABBR.has(word) ? m : word));
   }
+  // Restore missing apostrophes in possessives. Ticketmaster ships college
+  // sports titles as "Stanford Cardinal Womens Volleyball vs. Marquette Golden
+  // Eagles Womens Volleyball"; DESC_TYPO_FIXES only runs on body copy, so the
+  // shared list is applied here too. Case of the match's first letter is kept.
+  for (const [pat, fix] of POSSESSIVE_FIXES) {
+    t = t.replace(pat, (m) =>
+      m[0] === m[0].toUpperCase() && m[0] !== m[0].toLowerCase()
+        ? fix.charAt(0).toUpperCase() + fix.slice(1)
+        : fix,
+    );
+  }
   // Strip orphaned CJK/fullwidth punctuation. Some Meetup feeds (e.g. JTPA's
   // Japanese-language events) arrive with the Japanese title text lost upstream,
   // leaving only the structural punctuation behind — "JTPA ー 「 ー ： ー 」" —
@@ -1309,6 +1320,19 @@ const BOILERPLATE_SENTENCE_PATTERNS = [
  * - capitalize sentence-start words ("free performance" → "Free performance")
  * - tidy whitespace
  */
+// Missing-apostrophe possessives that appear in BOTH titles and body copy, so
+// cleanTitle and polishDescription can share one list. Ticketmaster is the main
+// offender ("Stanford Cardinal Womens Volleyball vs. Marquette ... Womens
+// Volleyball"); titles never reach DESC_TYPO_FIXES, so cleanTitle applies these
+// itself.
+const POSSESSIVE_FIXES = [
+  [/\bwomens\b/gi, "women's"],
+  [/\bmens\b/gi, "men's"],
+  [/\bchildrens\b/gi, "children's"],
+  // NOTE: "Veterans Day" / "Veterans Memorial" take no apostrophe by convention —
+  // deliberately not listed here.
+];
+
 // Common scraper-introduced typos. Replacement preserves the original case of
 // the matched word (lowercase → lowercase, Capitalized → Capitalized).
 const DESC_TYPO_FIXES = [
@@ -1323,6 +1347,30 @@ const DESC_TYPO_FIXES = [
   [/\btodays\b/gi, "today's"],
   [/\btomorrows\b/gi, "tomorrow's"],
   [/\byesterdays\b/gi, "yesterday's"],
+  // Ticketmaster sports titles/bodies ship "Womens Volleyball", "Mens Basketball".
+  // Same list cleanTitle applies, so titles and bodies agree.
+  ...POSSESSIVE_FIXES,
+  // Missing-apostrophe contractions. Only forms with no valid apostrophe-less
+  // English word are listed — "lets" (he lets us) and "wont" (wont to wander)
+  // are deliberately excluded, as is "cant" (cant = jargon/slang noun).
+  [/\bdont\b/gi, "don't"],
+  [/\bdoesnt\b/gi, "doesn't"],
+  [/\bdidnt\b/gi, "didn't"],
+  [/\bisnt\b/gi, "isn't"],
+  [/\barent\b/gi, "aren't"],
+  [/\bwasnt\b/gi, "wasn't"],
+  [/\bwerent\b/gi, "weren't"],
+  [/\bhavent\b/gi, "haven't"],
+  [/\bhasnt\b/gi, "hasn't"],
+  [/\bcouldnt\b/gi, "couldn't"],
+  [/\bwouldnt\b/gi, "wouldn't"],
+  [/\bshouldnt\b/gi, "shouldn't"],
+  [/\byoure\b/gi, "you're"],
+  [/\btheyre\b/gi, "they're"],
+  // Ticketmaster drag listings spell the show "Ru Pauls Drag Race". The
+  // camel-case splitter downstream re-breaks the intercap, so it is closed back
+  // up alongside the other single-word brand marks (see "Ru Paul" below).
+  [/\bru\s?paul'?s\b/gi, "RuPaul's"],
 ];
 
 // Common abbreviations whose internal periods would otherwise be mistaken
@@ -1591,6 +1639,10 @@ function polishDescription(text) {
   // Los Gatos Music in the Park performer The BentPeter Band uses a closed-up
   // stage name; the generic camel-case splitter must not rewrite that proper noun.
   t = t.replace(/\bBent Peter\b/g, "BentPeter");
+  // Ticketmaster drag listings reference "Ru Pauls Drag Race"; DESC_TYPO_FIXES
+  // restores the possessive as "RuPaul's", which the splitter above then breaks
+  // into "Ru Paul's". Close it back up to the official one-word stage name.
+  t = t.replace(/\bRu Paul(?='s\b)/g, "RuPaul");
   // CHM body copy name-drops Steve Jobs's post-Apple venture "NeXT" — the
   // lowercase+uppercase splitter turns it into "Ne XT". Single-word brand mark
   // (1985 founding through 1996 Apple acquisition).
