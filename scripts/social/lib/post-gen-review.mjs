@@ -27,9 +27,18 @@ import {
 import { logDecision } from "../../../src/lib/south-bay/decisionLog.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../src/lib/south-bay/displayText.mjs";
 import { chainBrandKey } from "../../../src/lib/south-bay/chains.mjs";
+import {
+  dayKeyForIsoDate,
+  mealServiceIssue,
+} from "../../../src/lib/south-bay/mealService.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLACES_FILE = join(__dirname, "..", "..", "..", "src", "data", "south-bay", "places.json");
+// Do not retroactively reinterpret historical approved artifacts under a
+// contract that did not exist when they were reviewed. Every plan generated
+// or shipped from the July 22 repair onward receives the stricter service-fit
+// check; older cards retain the prior hours-only audit.
+const MEAL_SERVICE_GUARD_START = "2026-07-22";
 
 // Lazy-load + cache places.json — used by the hours integrity check.
 let _placesCache = null;
@@ -49,14 +58,6 @@ function loadPlacesById() {
   } catch {}
   _placesCache = map;
   return map;
-}
-
-const SHORT_DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-function dayKeyForDate(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(`${dateStr}T12:00:00`);
-  const idx = d.getDay();
-  return SHORT_DAY_KEYS[idx] || null;
 }
 
 function parseClockHour(t) {
@@ -80,17 +81,23 @@ const BUCKET_WINDOWS = {
   evening: [18, 22],
 };
 
-// Returns null if no hours data (can't audit), true if the venue is open for
-// at least 1h within the card's bucket/timeBlock window, false if not.
-// Bucket cards check against BUCKET_WINDOWS; legacy timeBlock cards parse
-// the clock range.
-function cardFitsVenueHours(card, dayKey, placesById) {
+// Returns null if the card cannot be audited, otherwise a human-readable
+// integrity issue. Meal cards use the same semantic service + anchor-hour
+// contract as plan generation; an arbitrary restaurant that happens to open
+// in the morning is not automatically a breakfast recommendation.
+function cardVenueIntegrityIssue(card, dayKey, placesById, enforceMealService = true) {
   if (!card || !dayKey) return null;
   const id = String(card.id || "").replace(/^place:/, "");
   const place = id ? placesById.get(id) : null;
-  if (!place || !place.hours) return null;
+  if (!place) return null;
+
+  if (enforceMealService && ["breakfast", "lunch", "dinner"].includes(card.bucket)) {
+    return mealServiceIssue(place, card.bucket, dayKey);
+  }
+
+  if (!place.hours) return null;
   const range = place.hours[dayKey];
-  if (!range) return false; // closed that day
+  if (!range) return "closed on the plan date";
 
   let sH, eH;
   if (card.bucket && BUCKET_WINDOWS[card.bucket]) {
@@ -99,7 +106,7 @@ function cardFitsVenueHours(card, dayKey, placesById) {
     const [sStr, eStr] = String(card.timeBlock || "").split(/\s*-\s*/);
     sH = parseClockHour(sStr);
     eH = parseClockHour(eStr);
-    if (sH == null || eH == null) return null; // can't audit
+    if (sH == null || eH == null) return null;
   }
 
   for (const seg of range.split(",")) {
@@ -111,12 +118,12 @@ function cardFitsVenueHours(card, dayKey, placesById) {
     if (card.bucket) {
       const overlapStart = Math.max(oh, sH);
       const overlapEnd = Math.min(ch, eH);
-      if (overlapEnd - overlapStart >= 1) return true;
+      if (overlapEnd - overlapStart >= 1) return null;
     } else {
-      if (sH >= oh && eH <= ch) return true;
+      if (sH >= oh && eH <= ch) return null;
     }
   }
-  return false;
+  return "hours do not cover the planned time";
 }
 
 const DOW_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -650,18 +657,18 @@ export function runQualityReview(schedule, options = {}) {
       // Hours integrity: every card with verified hours must fit on the plan's date.
       // Catches the "Travieso (sat-only) on Thursday" failure mode that surfaces
       // whenever the plan-day API or its data source forgets the plan's date.
-      const dpDayKey = dayKeyForDate(date);
+      const dpDayKey = dayKeyForIsoDate(date);
       if (dpDayKey) {
         const placesById = loadPlacesById();
         const offenders = [];
         for (const card of dp.plan?.cards || []) {
-          const fits = cardFitsVenueHours(card, dpDayKey, placesById);
-          if (fits === false) offenders.push(card.name || card.venue || "(unnamed)");
+          const issue = cardVenueIntegrityIssue(card, dpDayKey, placesById, date >= MEAL_SERVICE_GUARD_START);
+          if (issue) offenders.push(`${card.name || card.venue || "(unnamed)"} (${issue})`);
         }
         if (offenders.length) {
           flagged.push({
             date, slotType: "day-plan", hardBlock: true,
-            reason: `hours mismatch: ${offenders.slice(0, 3).join(", ")}${offenders.length > 3 ? ` +${offenders.length - 3} more` : ""}`,
+            reason: `hours/service mismatch: ${offenders.slice(0, 3).join(", ")}${offenders.length > 3 ? ` +${offenders.length - 3} more` : ""}`,
           });
         }
       }

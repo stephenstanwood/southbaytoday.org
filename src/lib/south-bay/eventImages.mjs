@@ -39,6 +39,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeAbsoluteHttpUrl } from "./httpUrl.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
@@ -65,6 +66,9 @@ function normVenue(s) {
 // bridge these because extra words sit mid-name.
 const VENUE_ALIASES = {
   "linden tree books": "linden tree children s books",
+  "rancho san antonio preserve": "rancho san antonio open space preserve",
+  "sierra azul preserve": "sierra azul open space preserve",
+  "bear creek redwoods preserve": "bear creek redwoods open space preserve",
 };
 
 let _venueLookup = null;
@@ -203,6 +207,7 @@ const OG_VALIDATE_TIMEOUT_MS = 5000;
 
 function rejectableImageUrl(imageUrl) {
   if (!imageUrl) return "";
+  if (!normalizeAbsoluteHttpUrl(imageUrl)) return "invalid absolute URL";
   if (isBlockedEventImage(imageUrl)) return "blocked image";
   if (BAD_OG_URL.test(imageUrl)) return "filename pattern";
   return "";
@@ -465,18 +470,6 @@ export async function resolveEventImages(events, opts = {}) {
       if (!dryRun) e.image = null;
       stats.prevalidated_dropped++;
       continue;
-    }
-    // Cheap sanity check — must be a valid http(s) URL. Anything weirder
-    // (data:, javascript:, malformed) is dropped so we resolve fresh.
-    try {
-      const u = new URL(e.image);
-      if (u.protocol !== "http:" && u.protocol !== "https:") {
-        if (!dryRun) e.image = null;
-        stats.prevalidated_dropped++;
-      }
-    } catch {
-      if (!dryRun) e.image = null;
-      stats.prevalidated_dropped++;
     }
   }
 

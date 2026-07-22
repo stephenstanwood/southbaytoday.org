@@ -33,6 +33,10 @@ import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
 import {
+  mealOpenForService,
+  mealVenueMatchesService,
+} from "../../lib/south-bay/mealService.mjs";
+import {
   audienceBreadthPenalty,
   isMarqueeEvent,
   REGIONAL_ROUTINE_PENALTY_CUTOFF,
@@ -1114,52 +1118,15 @@ function fitsPillarBucket(candidate: Candidate, bucket: PillarBucket, dayKey: Da
   return openDuringBucket(candidate.hours, dayKey, bucket, candidate.types, candidate.category);
 }
 
-const MEAL_VENUE_TYPES = new Set([
-  "restaurant", "cafe", "coffee_shop", "bakery", "bistro", "diner",
-  "sandwich_shop", "bar_and_grill", "pub", "food_court",
-]);
-
-const NON_DINING_PRIMARY_TYPES = new Set([
-  "catering_service", "food_delivery", "meal_delivery", "meal_takeaway",
-  "food_store", "grocery_store", "supermarket", "convenience_store",
-  "candy_store", "chocolate_shop", "confectionery", "dessert_shop",
-  "business_center", "store",
-]);
-
-const BREAKFAST_PRIMARY_TYPES = new Set([
-  "breakfast_restaurant", "brunch_restaurant", "cafe", "coffee_shop",
-  "bakery", "pastry_shop", "diner", "sandwich_shop",
-]);
-
-const DINNER_PRIMARY_TYPES = new Set([
-  "restaurant", "bistro", "diner", "bar_and_grill", "pub", "gastropub",
-]);
-
 export function isMealVenueCandidate(
-  candidate: Pick<Candidate, "types" | "primaryType" | "displayType" | "curated" | "address">,
+  candidate: Pick<Candidate, "types" | "primaryType" | "displayType" | "curated" | "address" | "bestSlots">,
   bucket?: Bucket,
 ): boolean {
-  const types = candidate.types || [];
-  const primaryType = candidate.primaryType || "";
-  if (NON_DINING_PRIMARY_TYPES.has(primaryType)) return false;
-  // Home food businesses and delivery kitchens can carry cafe/bakery tags,
-  // but they are not useful places to send a reader for a meal.
-  if (/\b(?:apt|apartment)\b/i.test(candidate.address || "")) return false;
-
-  const primaryIsRestaurant = primaryType === "restaurant" || primaryType.endsWith("_restaurant");
-  const primaryIsDiningVenue = primaryIsRestaurant || MEAL_VENUE_TYPES.has(primaryType);
-  const displayIsDiningVenue = /\b(restaurant|cafe|café|coffee|bakery|bistro|diner|taqueria|pizzeria|brasserie|izakaya|gastropub|bar and grill)\b/i.test(candidate.displayType || "");
-  const trustedUntypedRecord = candidate.curated === true && !primaryType && types.length === 0;
-  if (!primaryIsDiningVenue && !displayIsDiningVenue && !trustedUntypedRecord) return false;
-
-  if (bucket === "dinner") {
-    return primaryIsRestaurant || DINNER_PRIMARY_TYPES.has(primaryType) ||
-      (!primaryType && /\b(restaurant|bistro|diner|taqueria|pizzeria|brasserie|izakaya|gastropub|bar and grill)\b/i.test(candidate.displayType || ""));
+  if (!bucket || !["breakfast", "lunch", "dinner"].includes(bucket)) {
+    return ["breakfast", "lunch", "dinner"].some((service) =>
+      mealVenueMatchesService(candidate, service));
   }
-  if (bucket === "breakfast" && primaryType) {
-    return primaryIsRestaurant || BREAKFAST_PRIMARY_TYPES.has(primaryType);
-  }
-  return true;
+  return mealVenueMatchesService(candidate, bucket);
 }
 
 function openForMealService(
@@ -1167,9 +1134,7 @@ function openForMealService(
   dayKey: DayKey,
   bucket: Bucket,
 ): boolean {
-  if (!hours) return false;
-  const probeHour = bucket === "breakfast" ? 9.5 : bucket === "lunch" ? 12.5 : 18.5;
-  return openRangesOn(hours, dayKey).some(([open, close]) => open <= probeHour && close >= probeHour + 0.75);
+  return mealOpenForService(hours, dayKey, bucket);
 }
 
 function fitsMealBucket(candidate: Candidate, bucket: Bucket, dayKey: DayKey): boolean {

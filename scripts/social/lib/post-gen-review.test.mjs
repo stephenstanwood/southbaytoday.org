@@ -233,6 +233,21 @@ test("pillar cities may differ when each meal stays with its pillar", () => {
   assert.ok(!flagged.some(f => /driving|pillar pairs/.test(f.reason)), JSON.stringify(flagged));
 });
 
+test("approved pair plans hard-block a semantically wrong breakfast venue", () => {
+  const date = "2026-07-22";
+  const cards = pairedBucketPlan();
+  Object.assign(cards.find((card) => card.bucket === "breakfast"), {
+    id: "place:ChIJWRprdFrKj4AR2VYO8rJEUqE",
+    name: "Fatima Bazaar & Grill",
+  });
+  cards.find((card) => card.bucket === "morning").pairedWithId = "place:ChIJWRprdFrKj4AR2VYO8rJEUqE";
+  const s = makeSchedule({ [date]: { "day-plan": makeDayPlan(cards, { status: "approved" }) } });
+  const { flagged } = runQualityReview(s, { dates: [date], resetFlaggedToDraft: false });
+  const hit = flagged.find((entry) => /hours\/service mismatch/.test(entry.reason));
+  assert.ok(hit?.hardBlock, JSON.stringify(flagged));
+  assert.match(hit.reason, /not a verified breakfast venue/);
+});
+
 test("historical bucket plans are not retroactively treated as pillar pairs", () => {
   const date = "2026-05-10";
   const buckets = ["breakfast", "morning", "lunch", "afternoon", "dinner", "evening"];

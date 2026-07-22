@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import { parseHour, fallbackBlurb, isMealVenueCandidate, scoreCandidates } from "../../pages/api/plan-day.ts";
 import { cleanDisplayCopy, cleanDisplayName } from "./displayText.mjs";
 import { canonicalizeCard } from "./canonicalizeCard.mjs";
+import { mealOpenForService } from "./mealService.mjs";
 import {
   audienceBreadthPenalty,
   REGIONAL_ROUTINE_PENALTY_CUTOFF,
@@ -221,6 +222,25 @@ test("meal venue guard uses primary business type and the requested service", ()
   assert.equal(isMealVenueCandidate({ types: ["cafe", "food"], primaryType: "cafe", displayType: "Cafe", curated: false, address: "123 Main St" }, "dinner"), false);
   assert.equal(isMealVenueCandidate({ types: ["brunch_restaurant", "restaurant"], primaryType: "brunch_restaurant", displayType: "Brunch restaurant", curated: false, address: "123 Main St" }, "breakfast"), true);
   assert.equal(isMealVenueCandidate({ types: ["austrian_restaurant", "restaurant"], primaryType: "austrian_restaurant", displayType: "Austrian restaurant", curated: false, address: "123 Main St" }, "dinner"), true);
+});
+
+test("breakfast requires an explicit breakfast-service signal", () => {
+  const fatima = {
+    types: ["halal_restaurant", "grocery_store", "food_store", "restaurant"],
+    primaryType: "halal_restaurant",
+    displayType: "Halal restaurant",
+    curated: false,
+    address: "805 Scott Blvd, Santa Clara, CA",
+    bestSlots: [],
+  };
+  assert.equal(isMealVenueCandidate(fatima, "breakfast"), false);
+  assert.equal(isMealVenueCandidate(fatima, "lunch"), true);
+  assert.equal(isMealVenueCandidate({ ...fatima, bestSlots: ["breakfast"] }, "breakfast"), true);
+});
+
+test("breakfast hours must cover the service anchor", () => {
+  assert.equal(mealOpenForService({ wed: "10:00-21:00" }, "wed", "breakfast"), false);
+  assert.equal(mealOpenForService({ wed: "09:00-21:00" }, "wed", "breakfast"), true);
 });
 
 test("display cleanup: strips CJK/Hangul translation fragments from names", () => {

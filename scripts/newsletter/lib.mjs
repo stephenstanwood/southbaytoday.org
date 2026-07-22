@@ -14,6 +14,8 @@ import { fetchForecast, DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON } from "../../s
 import { chainBrandKey, isNationalChain } from "../../src/lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../src/lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { normalizeAbsoluteHttpUrl } from "../../src/lib/south-bay/httpUrl.mjs";
+import { dayKeyForIsoDate, mealServiceIssue } from "../../src/lib/south-bay/mealService.mjs";
 import { selectDatedDefaultPlan } from "../../src/lib/south-bay/defaultPlanSelection.mjs";
 import {
   audienceBreadthPenalty,
@@ -100,6 +102,18 @@ export function formatLongDate(isoDate) {
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
+}
+
+let newsletterPlacesById = null;
+function loadNewsletterPlacesById() {
+  if (newsletterPlacesById) return newsletterPlacesById;
+  try {
+    const data = readJson(join(DATA_DIR, "places.json"));
+    newsletterPlacesById = new Map((data.places || []).filter((place) => place?.id).map((place) => [place.id, place]));
+  } catch {
+    newsletterPlacesById = new Map();
+  }
+  return newsletterPlacesById;
 }
 
 // Resilient loader: a single missing/corrupt source file must NOT abort the
@@ -355,6 +369,11 @@ export function makeNewsletterPlan(plan, date, { validEventIds = null } = {}) {
       console.warn(`⚠️  newsletter: rejecting invalid pillar-pairs plan: ${pairProblems.join("; ")}`);
       return null;
     }
+    const mealProblems = newsletterMealIntegrityIssues(cards, plan.planDate || date);
+    if (mealProblems.length) {
+      console.warn(`⚠️  newsletter: rejecting meal-service mismatch: ${mealProblems.join("; ")}`);
+      return null;
+    }
   }
   return {
     ...plan,
@@ -393,6 +412,22 @@ function newsletterPairingIssues(cards) {
   return issues;
 }
 
+function newsletterMealIntegrityIssues(cards, date) {
+  const dayKey = dayKeyForIsoDate(date);
+  if (!dayKey) return [];
+  const placesById = loadNewsletterPlacesById();
+  const issues = [];
+  for (const card of cards || []) {
+    if (!["breakfast", "lunch", "dinner"].includes(card.bucket)) continue;
+    const placeId = String(card.id || "").replace(/^place:/, "");
+    const place = placesById.get(placeId);
+    if (!place) continue;
+    const issue = mealServiceIssue(place, card.bucket, dayKey);
+    if (issue) issues.push(`${card.name || place.name || card.bucket}: ${issue}`);
+  }
+  return issues;
+}
+
 // Build-time image reachability cache. Email clients can't run an onError
 // fallback the way the React Events tab does, so a dead URL becomes a permanent
 // broken-image glyph in the inbox. The single biggest source of this: Google
@@ -408,14 +443,14 @@ function isVerifiedDead(url) {
 }
 
 function usableImage(url) {
-  const value = String(url || "").trim();
+  const value = normalizeAbsoluteHttpUrl(url) || "";
   if (isBlockedNewsletterImage(value)) return "";
   if (isVerifiedDead(value)) return "";
   // place-photo proxy URLs are keyed for verification by their ref (reachability
   // is size-independent), so a known-dead ref is dropped regardless of w/h.
   const m = value.match(/\/api\/place-photo\?ref=([^&]+)/);
   if (m && isVerifiedDead(`placephoto:${safeDecode(m[1])}`)) return "";
-  return /^https?:\/\//i.test(value) ? value : "";
+  return value;
 }
 
 function safeDecode(s) {
@@ -444,6 +479,31 @@ function resolveImageUrl(item, w = 144, h = 144) {
     return placePhotoUrl(ref, w, h);
   }
   return "";
+}
+
+function isSpecificEventPageUrl(value) {
+  const normalized = normalizeAbsoluteHttpUrl(value);
+  if (!normalized) return false;
+  const url = new URL(normalized);
+  const path = url.pathname.replace(/\/+$/, "") || "/";
+  if (/^\/(?:events?|calendar|concert-series)?$/i.test(path)) return false;
+  return true;
+}
+
+// Tonight's Pick attribution makes a stronger claim than an ordinary event
+// thumbnail: the photo is presented as coming from the linked occurrence
+// page. A venue photoRef is therefore ineligible, as is an explicit image on
+// a generic venue calendar. If either piece is missing, render no image and
+// no credit rather than inventing a relationship between them.
+function tonightPickEventImage(pick) {
+  if (!pick || !isSpecificEventPageUrl(pick.url)) return "";
+  const occurrenceUrl = normalizeAbsoluteHttpUrl(pick.url);
+  const imageSourceUrl = normalizeAbsoluteHttpUrl(pick.imageSourceUrl);
+  if (!occurrenceUrl || imageSourceUrl !== occurrenceUrl) return "";
+  const alt = normalizeComparable(pick.imageAlt);
+  const titleTokens = new Set(normalizeComparable(pick.title).split(/\s+/).filter((token) => token.length >= 4));
+  if (!alt || !alt.split(/\s+/).some((token) => titleTokens.has(token))) return "";
+  return usableImage(pick.image);
 }
 
 // ── Build-time image reachability probe ──────────────────────────────────────
@@ -482,8 +542,8 @@ export async function verifyNewsletterImages(data) {
   const directUrls = new Set();
   const refs = new Set();
   const addDirect = (url) => {
-    const v = String(url || "").trim();
-    if (/^https?:\/\//i.test(v) && !isBlockedNewsletterImage(v)) directUrls.add(v);
+    const v = normalizeAbsoluteHttpUrl(url);
+    if (v && !isBlockedNewsletterImage(v)) directUrls.add(v);
   };
   const addItem = (item) => {
     if (!item) return;
@@ -555,7 +615,7 @@ function firstUsableImage(items, picker) {
 function newsletterVisuals({ date, longDate, dayPlan, tonightPick, featuredEvents, recentOpenings, redditPosts }) {
   const dayPlanImage = usableImage(loadNewsletterHero(date))
     || firstUsableImage(orderedCards(dayPlan), (c) => c.image);
-  const tonightPickImage = resolveImageUrl(tonightPick, 800, 600);
+  const tonightPickImage = tonightPickEventImage(tonightPick);
   const eventsImage = firstResolvedImage(featuredEvents, 144, 144);
   const openingsImage = firstResolvedImage(recentOpenings, 116, 116);
   const conversationImage = firstUsableImage(redditPosts, (p) => p.image);
@@ -565,7 +625,7 @@ function newsletterVisuals({ date, longDate, dayPlan, tonightPick, featuredEvent
     dayPlanImage,
     dayPlanImageAlt: `South Bay Today field guide for ${longDate}`,
     tonightPickImage,
-    tonightPickImageAlt: tonightPick?.title || "Tonight's pick",
+    tonightPickImageAlt: tonightPick?.imageAlt || tonightPick?.title || "Tonight's pick",
     archiveImage,
     eventsImage,
     openingsImage,
@@ -1031,6 +1091,7 @@ Voice:
 - Write like a person talks. Avoid stiff phrasing like "daytime favors practical use of time."
 - Do not over-explain geography or logistics. The day plan is a set of ideas, not a route defense.
 - The day plan is deliberately three quality-first activity pillars: morning, afternoon, and evening. Each has one nearby meal. Treat them as three independent pairings; cities may differ and that is not a flaw.
+- When the field-guide cards span multiple cities, never claim the day, route, plan, or field guide stays close to, centers on, clusters around, or remains within one city or downtown.
 - A chain card appears only when upstream found a branch-specific reason it is interesting. Write from that supplied reason; never recommend a familiar logo merely for convenience.
 - Preserve all six field-guide cards. Removing one card breaks a pillar/meal pair; selection mistakes must be fixed upstream, not hidden in the newsletter.
 - Do not tell readers what they are "passing on" or what a choice means skipping. Explain why the selected thing is worth noticing.
@@ -1147,6 +1208,36 @@ function isTitleAnchoredToEvent(title, event) {
   return text.split(/\s+/).some((t) => t.length >= 4 && anchorTokensSet.has(t));
 }
 
+export function sanitizeGeographicBriefing(value, dayPlan) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const cityLabels = [...new Set((dayPlan?.cards || [])
+    .map((card) => String(card?.city || "").trim())
+    .filter(Boolean))]
+    .map((slug) => slug.replace(/-/g, " "));
+  if (cityLabels.length <= 1) return text;
+
+  const falseCompactClaim = (sentence) => {
+    const normalized = normalizeComparable(sentence);
+    const namedPlanCities = cityLabels.filter((label) => normalized.includes(label)).length;
+    // "Starts in San Jose, then moves to Campbell" is honest even though it
+    // contains one-city language. The dangerous claim names at most one of
+    // the several cities actually represented by the cards.
+    if (namedPlanCities >= 2) return false;
+    const planSubject = /\b(field guide|day|route|plan|it)\b/i.test(sentence);
+    const compactLanguage = /\b(stays?|keeps?|remains?|cent(?:er|red|ers)|clusters?|close to|near|around|within)\b/i.test(sentence);
+    const singleArea = /\b(downtown|one city|single city|one compact area)\b/i.test(sentence)
+      || cityLabels.some((label) => normalized.includes(label));
+    return planSubject && compactLanguage && singleArea;
+  };
+
+  return (text.match(/[^.!?]+[.!?]?/g) || [text])
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence && !falseCompactClaim(sentence))
+    .join(" ")
+    .trim();
+}
+
 function applyEditorialJson(data, candidates, edit) {
   // Editor decisions are honored: explicit null / empty arrays are deliberate
   // cuts, not parse failures. Fallbacks fire only when a key is missing or
@@ -1194,11 +1285,19 @@ function applyEditorialJson(data, candidates, edit) {
   // The plan is an atomic set of three pillar/meal pairs. Editorial can
   // rewrite its framing, but cannot silently sever a pair by dropping a card.
   const dayPlan = data.dayPlan;
+  const editedDayPlanBlurb = sanitizeGeographicBriefing(
+    newsletterCopyString(edit.dayPlanBlurb, 650),
+    dayPlan,
+  );
+  const editedBriefing = sanitizeGeographicBriefing(
+    newsletterCopyString(edit.briefing, 800),
+    dayPlan,
+  );
 
   const revised = {
     ...data,
     dayPlan,
-    dayPlanBlurb: newsletterCopyString(edit.dayPlanBlurb, 650) || data.dayPlanBlurb,
+    dayPlanBlurb: editedDayPlanBlurb || data.dayPlanBlurb,
     tonightPick: finalTonightPick,
     tonightPickBlurb: editedTonightBlurb || (finalTonightPick ? buildTonightBlurb(finalTonightPick) : ""),
     featuredEvents: useEditorList(featuredProvided, featuredProvided ? edit.featuredEventIdxs : [], featured)
@@ -1211,7 +1310,7 @@ function applyEditorialJson(data, candidates, edit) {
       ? reddit
       : data.redditPosts,
     editorial: {
-      briefing: newsletterCopyString(edit.briefing, 800),
+      briefing: editedBriefing,
       dayPlanHeadline: newsletterCopyString(edit.dayPlanHeadline, 120),
       eventsHeading: newsletterCopyString(edit.eventsHeading, 80),
       eventsNote: newsletterCopyString(edit.eventsNote, 240),
@@ -1428,21 +1527,30 @@ function eventLocality(event) {
 }
 
 export function renderEmail(data) {
-  const subject = `South Bay Today — ${data.longDate}`;
+  const safeBriefing = sanitizeGeographicBriefing(data.editorial?.briefing, data.dayPlan);
+  const safeDayPlanBlurb = sanitizeGeographicBriefing(data.dayPlanBlurb, data.dayPlan);
+  const safeData = safeBriefing === (data.editorial?.briefing || "") && safeDayPlanBlurb === (data.dayPlanBlurb || "")
+    ? data
+    : {
+        ...data,
+        dayPlanBlurb: safeDayPlanBlurb,
+        editorial: { ...(data.editorial || {}), briefing: safeBriefing },
+      };
+  const subject = `South Bay Today — ${safeData.longDate}`;
   const html = wrapShell(subject, [
-    headerBlock(data),
-    weatherStrip(data.weather),
-    leadImageBlock(data),
-    briefingBlock(data.editorial?.briefing),
-    dayPlanBlock(data.dayPlan, data.dayPlanBlurb, data.editorial),
-    tonightPickBlock(data.tonightPick, data.tonightPickBlurb, data.visuals),
-    eventsBlock(data.featuredEvents, data.todayEvents.length, data.editorial),
-    openingsBlock(data.recentOpenings, data.date, data.editorial),
-    meetingsBlock(data.tonightMeetings),
-    historyBlock(data.todayHistory),
-    conversationBlock(data.redditPosts, data.editorial),
+    headerBlock(safeData),
+    weatherStrip(safeData.weather),
+    leadImageBlock(safeData),
+    briefingBlock(safeData.editorial?.briefing),
+    dayPlanBlock(safeData.dayPlan, safeData.dayPlanBlurb, safeData.editorial),
+    tonightPickBlock(safeData.tonightPick, safeData.tonightPickBlurb, safeData.visuals),
+    eventsBlock(safeData.featuredEvents, safeData.todayEvents.length, safeData.editorial),
+    openingsBlock(safeData.recentOpenings, safeData.date, safeData.editorial),
+    meetingsBlock(safeData.tonightMeetings),
+    historyBlock(safeData.todayHistory),
+    conversationBlock(safeData.redditPosts, safeData.editorial),
     footerBlock(),
-  ].filter(Boolean).join("\n"), data);
+  ].filter(Boolean).join("\n"), safeData);
   return { subject, html };
 }
 
@@ -1563,13 +1671,13 @@ function tonightPickBlock(pick, blurb, visuals = null) {
   if (!pick) return "";
   const meta = eventMeta(pick);
   const ticketUrl = pick.url || null;
-  const image = resolveImageUrl(pick, 800, 600) || usableImage(visuals?.tonightPickImage);
+  const image = tonightPickEventImage(pick);
   const imageCreditLabel = pick.venue ? `${pick.venue} event page` : "Event page";
   const imageCredit = image && ticketUrl
     ? `<div style="font-size:11px;line-height:1.4;color:${PALETTE.faint};margin:6px 0 16px 0;">Image source: <a href="${esc(ticketUrl)}" style="color:${PALETTE.muted};text-decoration:underline;">${esc(imageCreditLabel)}</a></div>`
     : "";
   const imageHtml = image
-    ? `<img src="${esc(image)}" alt="${esc(visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0;border:1px solid ${PALETTE.border};">${imageCredit}`
+    ? `<img src="${esc(image)}" alt="${esc(pick.imageAlt || visuals?.tonightPickImageAlt || pick.title)}" width="564" style="width:100%;height:auto;display:block;border-radius:10px;margin:0;border:1px solid ${PALETTE.border};">${imageCredit}`
     : "";
   const ctaLabel = pick.cost === "paid" ? "Get tickets →" : "Event details →";
   const cta = ticketUrl

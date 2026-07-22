@@ -71,6 +71,45 @@ export function normalizeMidpenOccurrenceUrl(value) {
   }
 }
 
+export function normalizeMountainWineryCard(raw = {}) {
+  const headliner = plainText(raw.title || "");
+  const supporting = plainText(raw.supporting || "");
+  if (!headliner || !raw.date) return null;
+
+  let link;
+  try {
+    link = new URL(String(raw.link || ""), "https://www.mountainwinery.com");
+    if (link.protocol !== "https:" || link.hostname !== "www.mountainwinery.com") return null;
+    if (!/^\/events\/detail\/?$/i.test(link.pathname) || !/^\d+$/.test(link.searchParams.get("event_id") || "")) return null;
+  } catch {
+    return null;
+  }
+
+  let image = null;
+  try {
+    const candidate = new URL(String(raw.image || ""), link);
+    if (candidate.protocol === "https:" && candidate.hostname === "images.discovery-prod.axs.com") {
+      image = candidate.href;
+    }
+  } catch {
+    // An exact occurrence without art is still useful; the newsletter will
+    // simply omit the Tonight's Pick image and attribution.
+  }
+
+  const title = supporting && !headliner.toLowerCase().includes(supporting.toLowerCase())
+    ? `${headliner} with ${supporting}`
+    : headliner;
+  return {
+    title,
+    date: plainText(raw.date),
+    time: plainText(raw.time || "") || null,
+    link: link.href,
+    image,
+    imageAlt: plainText(raw.imageAlt || headliner) || headliner,
+    imageSourceUrl: image ? link.href : null,
+  };
+}
+
 function isoDate(year, monthName, day) {
   const month = MONTHS[String(monthName).toLowerCase()];
   if (!month || !Number.isInteger(year) || !Number.isInteger(day)) return null;
