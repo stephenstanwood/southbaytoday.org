@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-21T03:08:58.196Z",
+      "generatedAt": "2026-07-22T03:08:32.866Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 13 – Jul 20",
+      "dateRange": "Jul 14 – Jul 21",
       "stats": {
-        "total": 456,
-        "notable": 26,
-        "newUnits": 10,
-        "totalValuation": 12376301
+        "total": 363,
+        "notable": 22,
+        "newUnits": 9,
+        "totalValuation": 7382599
       },
       "permits": [
         {
@@ -75,18 +75,6 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-104918-RS",
-          "address": "1082 Danbury Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to Jadu",
-          "valuation": 87608,
-          "units": 1,
-          "issueDate": "2026-07-14",
-          "subtype": "2nd Unit Added"
-        },
-        {
           "id": "2026-102939-RS",
           "address": "610 Bundy Av",
           "category": "residential-new",
@@ -123,29 +111,41 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-124186-CI",
-          "address": "6111 San Ignacio Av #1",
+          "id": "2026-128126-CI",
+          "address": "1741 Technology Dr",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Residence Inn Guestroom Renovations",
-          "valuation": 2586517,
+          "description": "Market-Ready (Bemp100%) Suite 550 TI",
+          "valuation": 642040,
           "units": 0,
-          "issueDate": "2026-07-14",
-          "subtype": "Hotel/Motel"
+          "issueDate": "2026-07-17",
+          "subtype": "Office"
+        },
+        {
+          "id": "2022-657576-CI",
+          "address": "2380 Bering Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Sti) Eocell New Tenant'S Facility TI",
+          "valuation": 640000,
+          "units": 0,
+          "issueDate": "2026-07-15",
+          "subtype": "R & D Lab"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-21T03:09:00.331Z",
+      "generatedAt": "2026-07-22T03:08:35.083Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 13 – Jul 20",
+      "dateRange": "Jul 14 – Jul 21",
       "stats": {
-        "total": 93,
-        "notable": 4,
+        "total": 96,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -163,27 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-01916",
-          "address": "770 Moreno Av",
+          "id": "26BLD-01979",
+          "address": "757 E Charleston Rd",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-07-14",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-01909",
-          "address": "1610 Dana Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "Res: Update electrical and lighting in the kitchen.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-07-14",
+          "issueDate": "2026-07-20",
           "subtype": "Permit Issued"
         },
         {
