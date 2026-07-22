@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   inboundClock,
   JEREMY_FREY_EXHIBITION_URL,
+  PAPAHUGS_OCCURRENCE_URL,
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
@@ -24,6 +25,20 @@ test("Jeremy Frey closing day uses official museum hours and exhibition URL", ()
     time: "11:00 AM",
     endTime: "6:00 PM",
     url: JEREMY_FREY_EXHIBITION_URL,
+  });
+});
+
+test("PapaHugs uses the museum occurrence page and published end time", () => {
+  assert.deepEqual(normalizeInboundEventPresentation({
+    title: "David PapaHugs Sharpe concert",
+    startsAt: "2026-07-22T11:00:00-07:00",
+    endsAt: null,
+    location: "Children's Discovery Museum of San Jose Amphitheatre, 180 Woz Way, San Jose, CA 95110",
+    sourceUrl: "https://14945.blackbaudhosting.com/14945/page.aspx?pid=196&tab=2&txobjid=generic-ticket",
+  }), {
+    time: "11:00 AM",
+    endTime: "11:45 AM",
+    url: PAPAHUGS_OCCURRENCE_URL,
   });
 });
 

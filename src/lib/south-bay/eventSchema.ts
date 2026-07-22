@@ -5,6 +5,7 @@
 // "paid"), and location carries exactly the venue / address / city we
 // actually have.
 import { parseClockTime } from "./calendarLink";
+import { normalizeAbsoluteHttpUrl } from "./httpUrl.mjs";
 
 const SITE = "https://southbaytoday.org";
 
@@ -51,7 +52,8 @@ function isoDateTime(date: string, clock: { h: number; m: number }, offset: stri
 }
 
 function absoluteImage(e: SchemaEventRecord): string | null {
-  if (e.image && /^https?:\/\//i.test(e.image)) return e.image;
+  const image = normalizeAbsoluteHttpUrl(e.image);
+  if (image) return image;
   if (e.photoRef) {
     return `${SITE}/api/place-photo?ref=${encodeURIComponent(e.photoRef)}&w=640&h=480`;
   }
@@ -65,13 +67,7 @@ function plainDescription(e: SchemaEventRecord): string | null {
 }
 
 function absoluteHttpUrl(value: string | null | undefined): string | null {
-  if (!value) return null;
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:" ? url.href : null;
-  } catch {
-    return null;
-  }
+  return normalizeAbsoluteHttpUrl(value);
 }
 
 /** "From $30" → 30. Never guesses a price from thin air — only a literal $figure. */

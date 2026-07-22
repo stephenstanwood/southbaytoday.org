@@ -24,7 +24,10 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { normalizeMidpenOccurrenceUrl } from "./lib/official-event-sources.mjs";
+import {
+  normalizeMidpenOccurrenceUrl,
+  normalizeMountainWineryCard,
+} from "./lib/official-event-sources.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -1556,6 +1559,34 @@ async function scrapeMountainWinery(page) {
     const events = [];
     const seen = new Set();
 
+    // The calendar exposes one first-party detail link and one event-specific
+    // AXS image on each desktop card. Prefer that structured DOM over the old
+    // whole-page text heuristic, which could only return the generic concert
+    // series URL and left image resolution to a venue photo.
+    for (const card of document.querySelectorAll('a.c-axs-event-card__header[href*="/events/detail"]')) {
+      const title = card.querySelector(".c-axs-event-card__title")?.textContent?.trim() || "";
+      const supporting = card.querySelector(".c-axs-event-card__supporting-text")?.textContent?.trim() || "";
+      const day = card.querySelector(".day-date .day")?.textContent?.trim() || "";
+      const date = card.querySelector(".day-date .date")?.textContent?.trim() || "";
+      const time = card.querySelector(".show .show")?.textContent?.trim() || "";
+      const image = card.querySelector("img.mediaImage") || card.querySelector("img");
+      const link = card.href || "";
+      if (!title || !date || !link) continue;
+      const key = link;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      events.push({
+        title,
+        supporting,
+        date: `${day} ${date}`.replace(/\s+/g, " ").trim(),
+        time,
+        link,
+        image: image?.currentSrc || image?.src || "",
+        imageAlt: image?.alt || title,
+      });
+    }
+    if (events.length) return events;
+
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     for (const s of scripts) {
       try {
@@ -1623,26 +1654,30 @@ async function scrapeMountainWinery(page) {
 
   const COMEDY_NAMES = /\b(Trevor Noah|Bill Burr|Jeff Dunham|John Mulaney|Dana Carvey|Chris Tucker|Jeff Foxworthy|David Spade|Sebastian Maniscalco|Tom Segura|Bert Kreischer|Nate Bargatze|Jerry Seinfeld|Ali Wong|Hasan Minhaj|Adam Sandler|Kevin Hart|Bo Burnham|Mike Birbiglia|Jim Gaffigan|Patton Oswalt|Iliza Shlesinger|Ronny Chieng|Pete Davidson)\b/i;
   return raw.map((r) => {
-    const date = yearAwareDate(r.date);
-    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    const card = normalizeMountainWineryCard(r) || r;
+    const date = yearAwareDate(card.date);
+    if (!date || date < TODAY || !isUsefulTitle(card.title)) return null;
     // Drop billing fragments where the headliner couldn't be parsed —
     // "with Wang Chung…", "Special Guest Cheap Trick" — these would render
     // as a meaningless event title.
-    if (/^(with\s|special guest)/i.test(r.title)) return null;
-    const isComedy = /\b(comedy|comedian|stand-?up)\b/i.test(r.title) || COMEDY_NAMES.test(r.title);
+    if (/^(with\s|special guest)/i.test(card.title)) return null;
+    const isComedy = /\b(comedy|comedian|stand-?up)\b/i.test(card.title) || COMEDY_NAMES.test(card.title);
     return {
-      title: r.title,
+      title: card.title,
       date,
-      time: isoTimeToClock(r.date) || clockFromText(r.time) || clockFromText(r.date),
+      time: isoTimeToClock(card.date) || clockFromText(card.time) || clockFromText(card.date),
       endTime: null,
       venue: r.venue || "The Mountain Winery",
       address: "14831 Pierce Rd, Saratoga, CA 95070",
       city: "saratoga",
-      url: r.link || "https://www.mountainwinery.com/concert-series",
+      url: card.link || "https://www.mountainwinery.com/concert-series",
       source: "Mountain Winery",
       category: isComedy ? "arts" : "music",
       cost: "paid",
-      kidFriendly: KID_RE.test(r.title),
+      kidFriendly: KID_RE.test(card.title),
+      ...(card.image ? { image: card.image } : {}),
+      ...(card.imageAlt ? { imageAlt: card.imageAlt } : {}),
+      ...(card.imageSourceUrl ? { imageSourceUrl: card.imageSourceUrl } : {}),
     };
   }).filter(Boolean);
 }

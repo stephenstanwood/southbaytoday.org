@@ -105,3 +105,23 @@ test("eventToSchema omits a name-only or invalid organizer", () => {
   assert.equal(withoutUrl.organizer, undefined);
   assert.equal(invalidUrl.organizer, undefined);
 });
+
+test("eventToSchema rejects concatenated image origins and falls back safely", () => {
+  const malformed = "https://volunteer.openspace.orghttps//s3.amazonaws.com/files.galaxydigital.com/banner.jpg";
+  const withFallback = eventToSchema({
+    title: "Habitat Restoration",
+    date: "2026-08-01",
+    image: malformed,
+    photoRef: "places/rancho/photo",
+  });
+  const withoutFallback = eventToSchema({
+    title: "Habitat Restoration",
+    date: "2026-08-01",
+    image: malformed,
+  });
+
+  assert.ok(withFallback);
+  assert.ok(withoutFallback);
+  assert.equal(withFallback.image, "https://southbaytoday.org/api/place-photo?ref=places%2Francho%2Fphoto&w=640&h=480");
+  assert.equal(withoutFallback.image, undefined);
+});

@@ -6,6 +6,7 @@ import {
   extractSanJoseJazzDayUrls,
   extractVboSession,
   normalizeMidpenOccurrenceUrl,
+  normalizeMountainWineryCard,
   parseHappyHollowSchedules,
   parseCivicPlusCalendarPage,
   parseJazzOnThePlazzSchedule,
@@ -29,6 +30,31 @@ test("keeps exact Midpen occurrence URLs and rejects the generic calendar", () =
   );
   assert.equal(normalizeMidpenOccurrenceUrl("https://www.openspace.org/where-to-go/events-activities"), null);
   assert.equal(normalizeMidpenOccurrenceUrl("https://example.com/events/guided-activities/ramble-rancho-15"), null);
+});
+
+test("keeps Mountain Winery occurrence art tied to its exact event page", () => {
+  assert.deepEqual(normalizeMountainWineryCard({
+    title: "Gladys Knight",
+    supporting: "Patrick McDermott",
+    date: "Wed, Jul 22, 2026",
+    time: "7:30 PM",
+    link: "/events/detail?event_id=1350103",
+    image: "https://images.discovery-prod.axs.com/2026/03/uploadedimage_69cb07b32dcb7.jpg",
+    imageAlt: "Gladys Knight",
+  }), {
+    title: "Gladys Knight with Patrick McDermott",
+    date: "Wed, Jul 22, 2026",
+    time: "7:30 PM",
+    link: "https://www.mountainwinery.com/events/detail?event_id=1350103",
+    image: "https://images.discovery-prod.axs.com/2026/03/uploadedimage_69cb07b32dcb7.jpg",
+    imageAlt: "Gladys Knight",
+    imageSourceUrl: "https://www.mountainwinery.com/events/detail?event_id=1350103",
+  });
+  assert.equal(normalizeMountainWineryCard({
+    title: "Gladys Knight",
+    date: "Wed, Jul 22, 2026",
+    link: "https://www.mountainwinery.com/concert-series",
+  }), null);
 });
 
 test("extracts the current VBO event.asp session redirect", () => {

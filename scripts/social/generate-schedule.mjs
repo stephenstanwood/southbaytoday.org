@@ -29,12 +29,14 @@ import { runQualityReview } from "./lib/post-gen-review.mjs";
 import { normalizeName } from "./lib/normalizeName.mjs";
 import { canonicalizePlanCards } from "../../src/lib/south-bay/canonicalizeCard.mjs";
 import { chainBrandKey } from "../../src/lib/south-bay/chains.mjs";
+import { dayKeyForIsoDate, mealServiceIssue } from "../../src/lib/south-bay/mealService.mjs";
 import { buildMjPromptForSlot } from "./lib/mj-prompt.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SCHEDULE_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "social-schedule.json");
 const PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
 const EVENTS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "upcoming-events.json");
+const PLACES_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "places.json");
 const SHARED_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "shared-plans.json");
 const RESTAURANT_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "scc-food-openings.json");
 const REGIONAL_PLAN_CITY = "campbell";
@@ -322,8 +324,36 @@ function pairingIssues(cards) {
   return issues;
 }
 
+let _placesById = null;
+function loadPlacesById() {
+  if (_placesById) return _placesById;
+  try {
+    const data = JSON.parse(readFileSync(PLACES_FILE, "utf8"));
+    _placesById = new Map((data.places || []).filter((place) => place?.id).map((place) => [place.id, place]));
+  } catch {
+    _placesById = new Map();
+  }
+  return _placesById;
+}
+
+function mealIntegrityIssues(cards, dateStr) {
+  const dayKey = dayKeyForIsoDate(dateStr);
+  if (!dayKey) return [];
+  const placesById = loadPlacesById();
+  const issues = [];
+  for (const card of cards || []) {
+    if (!["breakfast", "lunch", "dinner"].includes(card.bucket)) continue;
+    const placeId = String(card.id || "").replace(/^place:/, "");
+    const place = placesById.get(placeId);
+    if (!place) continue;
+    const issue = mealServiceIssue(place, card.bucket, dayKey);
+    if (issue) issues.push(`${card.name || place.name || card.bucket}: ${issue}`);
+  }
+  return issues;
+}
+
 /** Check whether a generated pillar-pairs plan qualifies. */
-function planPassesQuality(plan, usedNames) {
+function planPassesQuality(plan, usedNames, dateStr = plan?.planDate) {
   if (!plan?.cards?.length) return { ok: false, reason: "empty" };
   const cards = plan.cards;
   if (plan.selectionModel !== DAY_PLAN_SELECTION_MODEL) {
@@ -331,6 +361,8 @@ function planPassesQuality(plan, usedNames) {
   }
   const pairProblems = pairingIssues(cards);
   if (pairProblems.length) return { ok: false, reason: pairProblems.join("; ") };
+  const mealProblems = mealIntegrityIssues(cards, dateStr);
+  if (mealProblems.length) return { ok: false, reason: mealProblems.join("; ") };
   // Reject if ≥2 venues repeat a previously-used name this run.
   const names = cards.map((c) => normalizeName(c.name)).filter(Boolean);
   const overlap = names.filter((n) => usedNames.has(n));
@@ -766,13 +798,13 @@ async function runGenerationPass(schedule, plansData, scored, { regenMode = "dra
           if (!candidate) {
             lastReason = "api returned nothing";
           } else {
-            let quality = planPassesQuality(candidate, usedDayPlanNames);
+            let quality = planPassesQuality(candidate, usedDayPlanNames, dateStr);
             if (!quality.ok) {
               console.log(`      ⚠️  Invalid pair plan: ${quality.reason} — retrying uncached`);
               candidate = await fetchPlanFromApi(citySlug, dateStr, {
                 blockedNames, weekContext, recentlyShown, noCache: true,
               });
-              quality = planPassesQuality(candidate, usedDayPlanNames);
+              quality = planPassesQuality(candidate, usedDayPlanNames, dateStr);
             }
             if (!quality.ok) {
               lastReason = quality.reason;
@@ -788,9 +820,14 @@ async function runGenerationPass(schedule, plansData, scored, { regenMode = "dra
         // Fall back to default plan only if the API gave us nothing
         if (!plan) {
           const fallback = pickPlanForDate(plansData, dateStr);
-          if (fallback) {
+          const fallbackQuality = fallback
+            ? planPassesQuality(fallback.plan, usedDayPlanNames, dateStr)
+            : { ok: false, reason: "no fallback" };
+          if (fallback && fallbackQuality.ok) {
             plan = fallback.plan;
             console.log(`      ↩ Fell back to default plan after: ${lastReason}`);
+          } else if (fallback) {
+            lastReason = `fallback rejected: ${fallbackQuality.reason}`;
           }
         }
 
@@ -1099,7 +1136,7 @@ async function main() {
             stillEmpty.push(dateStr);
             continue;
           }
-          const quality = planPassesQuality(plan, new Set());
+          const quality = planPassesQuality(plan, new Set(), dateStr);
           if (!quality.ok) {
             console.log(`      ❌ invalid pair plan: ${quality.reason}`);
             stillEmpty.push(dateStr);
@@ -1193,7 +1230,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   try {
     const recentlyShown = yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 1 }));
     todayAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: false, recentlyShown });
-    const quality = planPassesQuality(todayAdultsPlan, new Set());
+    const quality = planPassesQuality(todayAdultsPlan, new Set(), todayStr);
     if (!quality.ok) {
       console.warn(`   ⚠️  Adults plan rejected: ${quality.reason}`);
       todayAdultsPlan = null;
@@ -1213,7 +1250,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   const previousPlans = loadDefaultPlans()?.plans || {};
   const scheduledTodayAdults = schedule.days?.[todayStr]?.["day-plan"];
   const scheduledFallbackQuality = scheduledTodayAdults?.plan?.cards?.length
-    ? planPassesQuality(scheduledTodayAdults.plan, new Set())
+    ? planPassesQuality(scheduledTodayAdults.plan, new Set(), todayStr)
     : { ok: false };
   const fallbackAdultsEntry = scheduledFallbackQuality.ok
     ? {
@@ -1223,10 +1260,11 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
         kids: false,
         selectionModel: scheduledTodayAdults.plan.selectionModel || null,
         mealPairMaxMiles: scheduledTodayAdults.plan.mealPairMaxMiles || null,
+        planDate: todayStr,
         carriedForward: true,
         generatedAt: new Date().toISOString(),
       }
-    : carryForwardPlan(previousPlans, "adults", "adults:tomorrow");
+    : carryForwardPlan(previousPlans, todayStr, "adults", "adults:tomorrow");
   if (!todayAdultsPlan?.cards?.length && !fallbackAdultsEntry?.cards?.length) {
     console.warn("   ⚠️  Today's adults plan unavailable — skipping default-plans.json update");
     return;
@@ -1240,7 +1278,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
     // daysAgo: 1 → -25 points in plan-day's scoreCandidates.
     const recentlyShown = yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 1 }));
     kidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: true, recentlyShown });
-    const quality = planPassesQuality(kidsPlan, new Set());
+    const quality = planPassesQuality(kidsPlan, new Set(), todayStr);
     if (!quality.ok) {
       console.warn(`   ⚠️  Kids plan rejected: ${quality.reason}`);
       kidsPlan = null;
@@ -1269,7 +1307,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
       ...todayAdultNames.map((n) => ({ name: n, daysAgo: 1 })),
     ];
     const tomorrowAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: false, recentlyShown });
-    const quality = planPassesQuality(tomorrowAdultsPlan, new Set());
+    const quality = planPassesQuality(tomorrowAdultsPlan, new Set(), tomorrowStr);
     if (!quality.ok) console.warn(`   ⚠️  Tomorrow adults plan rejected: ${quality.reason}`);
     if (quality.ok && tomorrowAdultsPlan?.cards?.length) {
       deriveMissingEventTimes(tomorrowAdultsPlan.cards);
@@ -1298,7 +1336,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
       ...todayNames.map((n) => ({ name: n, daysAgo: 1 })),
     ];
     const tomorrowKidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: true, recentlyShown });
-    const quality = planPassesQuality(tomorrowKidsPlan, new Set());
+    const quality = planPassesQuality(tomorrowKidsPlan, new Set(), tomorrowStr);
     if (!quality.ok) console.warn(`   ⚠️  Tomorrow kids plan rejected: ${quality.reason}`);
     if (quality.ok && tomorrowKidsPlan?.cards?.length) {
       deriveMissingEventTimes(tomorrowKidsPlan.cards);
@@ -1343,9 +1381,9 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   // Carry-forward fallback: if today's or tomorrow's kids fetch returned
   // empty, reuse only a complete place-only v1 plan. We never strip events in
   // isolation because that would leave their meals orphaned.
-  const carryForwardKids = (...keys) => {
+  const carryForwardKids = (targetDate, ...keys) => {
     for (const key of keys) {
-      const prev = carryForwardPlan(previousPlans, key);
+      const prev = carryForwardPlan(previousPlans, targetDate, key);
       if (prev) return prev;
     }
     return null;
@@ -1353,8 +1391,8 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
 
   // Look at both new keys ("kids") and legacy ":h9" keys for forward-compat
   // during the cutover from old default-plans.json to bucket-shaped data.
-  const finalKidsEntry = kidsEntry || carryForwardKids("kids", "kids:h9");
-  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids("kids:tomorrow", "kids:h9:tomorrow");
+  const finalKidsEntry = kidsEntry || carryForwardKids(todayStr, "kids", "kids:h9");
+  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids(tomorrowStr, "kids:tomorrow", "kids:h9:tomorrow");
 
   const plans = { "adults": adultsEntry };
   if (finalKidsEntry) plans["kids"] = finalKidsEntry;
@@ -1382,7 +1420,7 @@ async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsName
   console.log(`   🏠 default-plans.json: ${adultsEntry.cards.length} adults ${kidsMsg}${tomMsg}`);
 }
 
-function carryForwardPlan(plans, ...keys) {
+function carryForwardPlan(plans, targetDate, ...keys) {
   for (const key of keys) {
     const prev = plans[key];
     if (!prev?.cards?.length) continue;
@@ -1390,8 +1428,8 @@ function carryForwardPlan(plans, ...keys) {
     // A carry-forward is safe only when the complete six-card plan is already
     // place-only and still satisfies the pillar-pairs contract.
     if (prev.cards.some((c) => c.source === "event")) continue;
-    if (!planPassesQuality(prev, new Set()).ok) continue;
-    return { ...prev, carriedForward: true, generatedAt: new Date().toISOString() };
+    if (!planPassesQuality(prev, new Set(), targetDate).ok) continue;
+    return { ...prev, planDate: targetDate, carriedForward: true, generatedAt: new Date().toISOString() };
   }
   return null;
 }

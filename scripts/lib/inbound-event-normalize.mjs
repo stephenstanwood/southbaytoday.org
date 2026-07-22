@@ -3,6 +3,7 @@ import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
 const PT = "America/Los_Angeles";
 
 export const JEREMY_FREY_EXHIBITION_URL = "https://museum.stanford.edu/exhibitions/jeremy-frey-woven-0";
+export const PAPAHUGS_OCCURRENCE_URL = "https://www.cdm.org/event/papahugs/";
 
 // Some newsletter trackers can't be unwrapped — Books Inc.'s Adestra links
 // (l.e.booksinc.com/rts/go2.aspx) serve a 200 instead of redirecting once the
@@ -49,6 +50,17 @@ function officialOverride(event) {
       url: JEREMY_FREY_EXHIBITION_URL,
       time: "11:00 AM",
       endTime: "6:00 PM",
+    };
+  }
+  if (
+    date === "2026-07-22"
+    && /(?:david\s+)?papahugs(?:\s+sharpe)?/i.test(identity)
+    && /(?:children'?s discovery museum|180\s+woz way)/i.test(identity)
+  ) {
+    return {
+      url: PAPAHUGS_OCCURRENCE_URL,
+      time: "11:00 AM",
+      endTime: "11:45 AM",
     };
   }
   return null;

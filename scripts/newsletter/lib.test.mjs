@@ -6,6 +6,7 @@ import {
   formatLongDate,
   isEventFeedFreshForNewsletter,
   makeNewsletterPlan,
+  sanitizeGeographicBriefing,
   selectDefaultPlan,
   todayPT,
 } from "./lib.mjs";
@@ -76,6 +77,19 @@ test("newsletter rejects repeated restaurant brands even when branch ids differ"
   cards.find((card) => card.bucket === "breakfast").name = "Oren's Hummus - Cupertino";
   cards.find((card) => card.bucket === "dinner").name = "Oren's Hummus - Mountain View";
   assert.equal(makeNewsletterPlan({ selectionModel: "pillar-pairs-v1", cards }, "2026-07-18"), null);
+});
+
+test("newsletter rejects a stale pair plan with the wrong breakfast service", () => {
+  const cards = pairedPlanCards();
+  const breakfast = cards.find((card) => card.bucket === "breakfast");
+  breakfast.id = "place:ChIJWRprdFrKj4AR2VYO8rJEUqE";
+  breakfast.name = "Fatima Bazaar & Grill";
+  cards.find((card) => card.bucket === "morning").pairedWithId = breakfast.id;
+  assert.equal(makeNewsletterPlan({
+    selectionModel: "pillar-pairs-v1",
+    planDate: "2026-07-22",
+    cards,
+  }, "2026-07-22"), null);
 });
 
 test("newsletter renders each activity pick before its nearby meal", () => {
@@ -344,6 +358,8 @@ test("Tonight's Pick credits a rendered image with a direct event-page link", ()
       city: "san-jose",
       url: eventUrl,
       image: "https://i.ticketweb.com/chinedu.jpg",
+      imageAlt: "Chinedu Unaka",
+      imageSourceUrl: eventUrl,
     },
     tonightPickBlurb: "Chinedu Unaka headlines the San Jose Improv.",
     todayEvents: [],
@@ -358,6 +374,105 @@ test("Tonight's Pick credits a rendered image with a direct event-page link", ()
 
   assert.match(html, new RegExp(`Image source: <a href="${eventUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>San Jose Improv event page</a>`));
   assert.ok(html.indexOf("Image source:") < html.indexOf("Tonight's pick"));
+});
+
+test("Tonight's Pick never presents a venue photo as event art", () => {
+  const genericUrl = "https://www.mountainwinery.com/concert-series";
+  const placePhoto = "https://southbaytoday.org/api/place-photo?ref=venue-photo&w=800&h=600";
+  const { html } = renderEmail({
+    date: "2026-07-22",
+    longDate: "Wednesday, July 22, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: {
+      title: "Gladys Knight with Patrick McDermott",
+      venue: "The Mountain Winery",
+      url: genericUrl,
+      photoRef: "places/venue-photo",
+    },
+    tonightPickBlurb: "Gladys Knight headlines tonight.",
+    todayEvents: [], featuredEvents: [], recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: { tonightPickImage: placePhoto, tonightPickImageAlt: "Gladys Knight with Patrick McDermott" },
+    editorial: null,
+  });
+
+  assert.equal(html.includes(placePhoto), false);
+  assert.equal(html.includes("Image source:"), false);
+});
+
+test("Tonight's Pick uses source-provided event alt text with exact occurrence art", () => {
+  const eventUrl = "https://www.mountainwinery.com/events/detail?event_id=1350103";
+  const eventImage = "https://images.discovery-prod.axs.com/2026/03/uploadedimage_69cb07b32dcb7.jpg";
+  const { html } = renderEmail({
+    date: "2026-07-22",
+    longDate: "Wednesday, July 22, 2026",
+    weather: null, dayPlan: null, dayPlanBlurb: "",
+    tonightPick: {
+      title: "Gladys Knight with Patrick McDermott",
+      venue: "The Mountain Winery",
+      url: eventUrl,
+      image: eventImage,
+      imageAlt: "Gladys Knight",
+      imageSourceUrl: eventUrl,
+    },
+    tonightPickBlurb: "Gladys Knight headlines tonight.",
+    todayEvents: [], featuredEvents: [], recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  });
+
+  assert.match(html, new RegExp(`<img src="${eventImage.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}" alt="Gladys Knight"`));
+  assert.ok(html.includes(`href="${eventUrl}"`));
+});
+
+test("Tonight's Pick suppresses art without matching occurrence provenance and semantic alt text", () => {
+  const eventUrl = "https://www.mountainwinery.com/events/detail?event_id=1350103";
+  const eventImage = "https://images.discovery-prod.axs.com/2026/03/uploadedimage_69cb07b32dcb7.jpg";
+  const base = {
+    date: "2026-07-22",
+    longDate: "Wednesday, July 22, 2026",
+    weather: null, dayPlan: null, dayPlanBlurb: "",
+    tonightPickBlurb: "Gladys Knight headlines tonight.",
+    todayEvents: [], featuredEvents: [], recentOpenings: [], tonightMeetings: [], todayHistory: [], redditPosts: [],
+    visuals: {}, editorial: null,
+  };
+  const withoutProvenance = renderEmail({
+    ...base,
+    tonightPick: {
+      title: "Gladys Knight with Patrick McDermott",
+      venue: "The Mountain Winery",
+      url: eventUrl,
+      image: eventImage,
+      imageAlt: "Gladys Knight",
+    },
+  }).html;
+  const wrongAlt = renderEmail({
+    ...base,
+    tonightPick: {
+      title: "Gladys Knight with Patrick McDermott",
+      venue: "The Mountain Winery",
+      url: eventUrl,
+      image: eventImage,
+      imageAlt: "Empty amphitheater",
+      imageSourceUrl: eventUrl,
+    },
+  }).html;
+
+  assert.equal(withoutProvenance.includes(eventImage), false);
+  assert.equal(withoutProvenance.includes("Image source:"), false);
+  assert.equal(wrongAlt.includes(eventImage), false);
+  assert.equal(wrongAlt.includes("Image source:"), false);
+});
+
+test("multi-city field guides strip false one-city framing", () => {
+  const cards = pairedPlanCards();
+  for (const card of cards) {
+    if (["morning", "breakfast"].includes(card.bucket)) card.city = "san-jose";
+    if (["afternoon", "lunch"].includes(card.bucket)) card.city = "campbell";
+    if (["evening", "dinner"].includes(card.bucket)) card.city = "santa-clara";
+  }
+  const briefing = "The field guide keeps the day close to downtown San Jose. A concert closes the night.";
+  assert.equal(sanitizeGeographicBriefing(briefing, { cards }), "A concert closes the night.");
 });
 
 test("also-calendar events without an image span the full width (colspan), not the 72px image gutter", () => {

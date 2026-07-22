@@ -9,6 +9,7 @@ import { CITIES } from "../../lib/south-bay/cities";
 import { buildGoogleCalendarUrl } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
 import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
+import { normalizeAbsoluteHttpUrl } from "../../lib/south-bay/httpUrl.mjs";
 
 interface RawEvent {
   id?: string | null;
@@ -101,8 +102,9 @@ const description = capDescription(
   }. ${(event.blurb || event.description || "").trim()}`.trim(),
 );
 
-const imageUrl = event.image && /^https?:\/\//i.test(event.image)
-  ? event.image
+const directImageUrl = normalizeAbsoluteHttpUrl(event.image);
+const imageUrl = directImageUrl
+  ? directImageUrl
   : event.photoRef
     ? `/api/place-photo?ref=${encodeURIComponent(event.photoRef)}&w=760&h=420`
     : null;
