@@ -1030,6 +1030,14 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // April 2026) are both Redwood City / San Mateo County — north of the Santa
   // Clara County line every other entry here sits inside. Out of coverage
   // unless the footprint explicitly expands.
+  // Note: ChipAgents ($50M Series A1, Feb 2026, $74M total; agentic AI for chip
+  // design) is deliberately NOT here — HQ is genuinely disputed. Sacra and the
+  // Pacific Coast Business Times (a Santa Barbara paper covering it as a local
+  // "Santa Barbara AI firm") place it in Santa Barbara / Goleta; only unattributed
+  // aggregator summaries claim a Santa Clara relocation, and founder William Wang
+  // is a UC Santa Barbara professor with operations in Goleta. Until a primary
+  // source confirms a Santa Clara County HQ, treat it as out of coverage — do not
+  // re-add on the strength of the round size alone.
   {
     id: "tylsemi",
     name: "TYLsemi",
