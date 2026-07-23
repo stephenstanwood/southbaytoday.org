@@ -35,8 +35,7 @@ interface RawEvent {
 }
 
 export function getStaticPaths() {
-  const WINDOW_DAYS = 60; // defined inside: getStaticPaths runs in isolated scope
-  const DateCtor = globalThis.Date; // ditto — see module-level alias note
+  const DateCtor = globalThis.Date; // see module-level alias note
   const cityNames = new Map<string, string>(CITIES.map((c) => [c.id, c.name]));
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
 
@@ -46,16 +45,20 @@ export function getStaticPaths() {
     if (e.id) slugById.set(String(e.id), slug);
   }
 
+  // A listing page for EVERY date with an upcoming timed event — no forward
+  // window. /event/[slug] pages exist for all upcoming events and each links
+  // back to /events/<its date> (as do RSS, the breadcrumb JSON-LD, and the
+  // StaticLinkStrip), so a date page has to exist wherever an event does or
+  // that link 404s. The old 60-day cap left every event further out — 122 of
+  // 183 future dates at last count — pointing at a page that was never built.
+  // Past dates still drop out; they live in the archive, not here.
   const todayPt = new DateCtor().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const horizon = new DateCtor();
-  horizon.setDate(horizon.getDate() + WINDOW_DAYS);
-  const horizonPt = horizon.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
   const byDate = new Map<string, RawEvent[]>();
   for (const e of all) {
     const date = e?.date;
     if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
-    if (date < todayPt || date > horizonPt) continue;
+    if (date < todayPt) continue;
     if (!e.time) continue; // exhibits / no-time records stay off date listings
     if (!byDate.has(date)) byDate.set(date, []);
     byDate.get(date)!.push(e);
