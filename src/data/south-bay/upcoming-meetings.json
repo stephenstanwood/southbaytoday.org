@@ -1,78 +1,6 @@
 {
-  "generatedAt": "2026-07-22T03:08:45.169Z",
+  "generatedAt": "2026-07-23T03:09:06.226Z",
   "meetings": {
-    "sunnyvale": {
-      "date": "2026-07-21",
-      "displayDate": "Tue, Jul 21",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4518&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4518,
-      "agendaItems": [
-        {
-          "title": "Public Participation and Access",
-          "sequence": 1
-        },
-        {
-          "title": "5:30 P.M. SPECIAL COUNCIL MEETING (Study Session)",
-          "sequence": 2
-        },
-        {
-          "title": "Eliminate the Use of Chemical Pesticide on City Owned or Leased Property",
-          "sequence": 6
-        },
-        {
-          "title": "Adjourn Special Meeting",
-          "sequence": 7
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of June 16, 2026",
-          "sequence": 16
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-07-21",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-07-21T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "cupertino": {
-      "date": "2026-07-21",
-      "displayDate": "Tue, Jul 21",
-      "bodyName": "City Council",
-      "location": "Council Chamber",
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5295&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5295,
-      "agendaItems": [
-        {
-          "title": "CEREMONIAL ITEMS - None",
-          "sequence": 13
-        },
-        {
-          "title": "Approval of a Third Amendment to extend the term through October 31, 2026, of the Interim City Attorney Agreement for City Attorney services by and between the City of Cupertino and Aleshire & Wynder, LLP, with Floy Andrews as Interim City Attorney.",
-          "sequence": 22
-        },
-        {
-          "title": "Public Hearing and approval of lien assessment and collection of fees on private parcels resulting from abatement of public nuisance (weeds and/or brush) for the annual Weed and Brush Abatement Programs",
-          "sequence": 28
-        },
-        {
-          "title": "Adoption of a Resolution Approving an Economic Development and Sales Tax Sharing Agreement with Insight Direct Worldwide, Inc. (Insight).",
-          "sequence": 29
-        },
-        {
-          "title": "Amendments to the City’s Naming, Donation, and Sponsorship Policies",
-          "sequence": 32
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-07-21",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-07-21T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
     "milpitas": {
       "date": "2026-08-11",
       "displayDate": "Tue, Aug 11",
@@ -85,7 +13,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-08-11",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-07-21T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-07-22T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   }

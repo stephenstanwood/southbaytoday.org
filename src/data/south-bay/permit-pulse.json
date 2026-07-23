@@ -1,19 +1,43 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-07-22T03:08:32.866Z",
+      "generatedAt": "2026-07-23T03:08:54.243Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Jul 14 – Jul 21",
+      "dateRange": "Jul 15 – Jul 22",
       "stats": {
-        "total": 363,
-        "notable": 22,
+        "total": 386,
+        "notable": 21,
         "newUnits": 9,
-        "totalValuation": 7382599
+        "totalValuation": 15134450
       },
       "permits": [
+        {
+          "id": "2024-099290-RS",
+          "address": "374 Hanson Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 211104,
+          "units": 1,
+          "issueDate": "2026-07-20",
+          "subtype": "2nd Unit Added"
+        },
+        {
+          "id": "2025-105498-RS",
+          "address": "3428 Royal Meadow Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 177872,
+          "units": 1,
+          "issueDate": "2026-07-20",
+          "subtype": "2nd Unit Added"
+        },
         {
           "id": "2026-127920-RS",
           "address": "458 Lewis Rd #5",
@@ -75,77 +99,53 @@
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2026-102939-RS",
-          "address": "610 Bundy Av",
+          "id": "2026-124781-RS",
+          "address": "952 Harliss Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Hcd Approved Detached ADU",
-          "valuation": 80747,
+          "description": "Epr Code Amnesty Legalize Detach Garage Conversion to ADU",
+          "valuation": 102123,
           "units": 1,
-          "issueDate": "2026-07-15",
+          "issueDate": "2026-07-20",
           "subtype": "2nd Unit Added"
         },
         {
-          "id": "2025-143452-RS",
-          "address": "1400 Bouret Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Rear ADU",
-          "valuation": 59813,
-          "units": 1,
-          "issueDate": "2026-07-15",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2025-134961-RS",
-          "address": "1868 Rosswood Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case ADU",
-          "valuation": 52600,
-          "units": 1,
-          "issueDate": "2026-07-15",
-          "subtype": "2nd Unit Added"
-        },
-        {
-          "id": "2026-128126-CI",
-          "address": "1741 Technology Dr",
+          "id": "2026-127528-CI",
+          "address": "488 Almaden Bl",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Market-Ready (Bemp100%) Suite 550 TI",
-          "valuation": 642040,
+          "description": "Interior Tenant Improvement",
+          "valuation": 5427195,
           "units": 0,
-          "issueDate": "2026-07-17",
+          "issueDate": "2026-07-20",
           "subtype": "Office"
         },
         {
-          "id": "2022-657576-CI",
-          "address": "2380 Bering Dr",
+          "id": "2026-128295-CI",
+          "address": "3939 N 1st St",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "(Sti) Eocell New Tenant'S Facility TI",
-          "valuation": 640000,
+          "description": "Figure Ai (Bem100%) Office TI",
+          "valuation": 1500000,
           "units": 0,
-          "issueDate": "2026-07-15",
-          "subtype": "R & D Lab"
+          "issueDate": "2026-07-20",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-07-22T03:08:35.083Z",
+      "generatedAt": "2026-07-23T03:08:56.381Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Jul 14 – Jul 21",
+      "dateRange": "Jul 15 – Jul 22",
       "stats": {
-        "total": 96,
-        "notable": 3,
+        "total": 108,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -184,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-07-16",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00193",
+          "address": "3233 Cowper St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for review of Annual Conditional Monitoring information submission for Khan Lab School related to 21PLN-00129 (CUP).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-07-21",
           "subtype": "Over the Counter Approved"
         }
       ]
