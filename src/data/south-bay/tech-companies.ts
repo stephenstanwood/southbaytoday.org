@@ -1039,6 +1039,32 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // source confirms a Santa Clara County HQ, treat it as out of coverage — do not
   // re-add on the strength of the round size alone.
   {
+    id: "glow",
+    name: "Glow",
+    city: "Palo Alto",
+    category: "security",
+    round: "Series A",
+    amount: "$180M",
+    date: "2026-07-22",
+    tagline:
+      "AI-powered endpoint security rebuilt for the agent era: autonomous agents continuously map the software on every device, score risk in real time, and enforce policy automatically — deciding what's allowed to run and removing what isn't, without waiting on manual review. Glow launched from stealth straight to unicorn status, the $180M Series A valuing it at $1.2B. Sequoia, Cyberstarts, Greenoaks, and Redpoint Ventures led, with Index Ventures, Lux Capital, Operator Collective, and others joining. Founded in 2025 by CEO Roi Tiger (former Meta VP of engineering), CTO Omer Singer (ex-Snowflake head of cybersecurity strategy), and VP R&D Ophir Arie (ex-Claroty); COO Emily Heath was previously CISO at United Airlines and DocuSign.",
+    color: "#6366f1",
+    url: "https://www.glow.io",
+  },
+  {
+    id: "meshy",
+    name: "Meshy",
+    city: "Sunnyvale",
+    category: "ai",
+    round: "Series B",
+    amount: "~$400M",
+    date: "2026-07-21",
+    tagline:
+      "The largest round yet for a company built purely on AI 3D: Meshy turns a line of text or a single image into a usable, game-ready 3D model in about a minute — collapsing work that used to take skilled artists hours. The near-$400M Series B values it at $1.5B and was backed by IDG Capital, Matrix Partners China, and Monolith Management, with existing investors Granite Asia, Sequoia China, BAI Capital, and Source Code Capital oversubscribing their allocations. Founded in 2021 by MIT PhD Ethan Hu; the platform now counts more than 12 million registered users, over 100 million models created, and annual recurring revenue growing roughly 12x year over year.",
+    color: "#8b5cf6",
+    url: "https://www.meshy.ai",
+  },
+  {
     id: "tylsemi",
     name: "TYLsemi",
     city: "San Jose",
