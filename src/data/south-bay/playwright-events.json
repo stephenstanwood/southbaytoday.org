@@ -1,21 +1,21 @@
 {
   "_meta": {
-    "generatedAt": "2026-07-23T02:16:56.029Z",
+    "generatedAt": "2026-07-23T07:43:12.011Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 35,
-    "eventCount": 433,
+    "eventCount": 434,
     "sourceCount": 23,
     "sources": [
       "Mountain View Public Library (14)",
       "Los Gatos Library (24)",
       "San Jose Museum of Art (24)",
-      "Linden Tree Books (9)",
+      "Linden Tree Books (12)",
       "Hicklebee's (3)",
       "History San Jose (26)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (7)",
       "ICA San José (3)",
-      "Mountain Winery (48)",
+      "Mountain Winery (47)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Midpen Open Space (4)",
@@ -23,7 +23,7 @@
       "Santana Row (6)",
       "City of Cupertino (83)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (100)",
+      "TheatreWorks Silicon Valley (99)",
       "Levi's Stadium (18)",
       "SAP Center (17)",
       "The Tech Interactive (8)",
@@ -91,7 +91,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 9,
+        "count": 12,
         "error": null
       },
       {
@@ -140,7 +140,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 48,
+        "count": 47,
         "error": null
       },
       {
@@ -217,7 +217,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 100,
+        "count": 99,
         "error": null
       },
       {
@@ -279,23 +279,6 @@
     ]
   },
   "events": [
-    {
-      "id": "405e5edd8652",
-      "title": "Japanese Aesthetics: Exploring Japan's Artistic Sensibilities",
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
-      "time": "6:30 pm",
-      "endTime": null,
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://mountainview.libcal.com/event/15921897",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "c5d78db34aa0",
       "title": "Magical Bridge Storytime",
@@ -514,6 +497,23 @@
       "cost": "free",
       "description": "",
       "url": "https://mountainview.libcal.com/event/16953175",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "8cd33b83e6fd",
+      "title": "ESL Conversation Club",
+      "date": "2026-07-29",
+      "displayDate": "Wed, Jul 29",
+      "time": "4:00 pm",
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://mountainview.libcal.com/event/15895383",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -1466,11 +1466,11 @@
       }
     },
     {
-      "id": "a4dc8a7eeb3a",
-      "title": "Illustration Workshop with Cindy Chang",
-      "date": "2026-08-16",
-      "displayDate": "Sun, Aug 16",
-      "time": "4pm",
+      "id": "b9d8fbd29813",
+      "title": "To the Moon and Back: Love Across Eons and GalaxiesYA Fantasy Author Panel with T.A. Chan, Samantha Chong, and S.G. Prince",
+      "date": "2026-08-14",
+      "displayDate": "Fri, Aug 14",
+      "time": "6:00pm",
       "endTime": null,
       "venue": "Linden Tree Books",
       "address": "265 State St, Los Altos, CA 94022",
@@ -1484,7 +1484,73 @@
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-08-14"
+      }
+    },
+    {
+      "id": "8a095975adbe",
+      "title": "Storytime with Claire Wrenn Bobrow",
+      "date": "2026-08-16",
+      "displayDate": "Sun, Aug 16",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-08-16"
+      }
+    },
+    {
+      "id": "9aa3123a4e10",
+      "title": "Storytime with Alison Kim",
+      "date": "2026-08-23",
+      "displayDate": "Sun, Aug 23",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-08-23"
+      }
+    },
+    {
+      "id": "d8ce65fd7d38",
+      "title": "Storytime with Jerrold Connors",
+      "date": "2026-08-30",
+      "displayDate": "Sun, Aug 30",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-08-30"
       }
     },
     {
@@ -2277,23 +2343,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "319ce3df7dee",
-      "title": "Gladys Knight with Patrick McDermott",
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1350103",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -3436,10 +3485,10 @@
       "kidFriendly": false
     },
     {
-      "id": "d03b6cbcb6e4",
+      "id": "139577849f6f",
       "title": "Toddler Storytime",
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -3453,10 +3502,10 @@
       "kidFriendly": true
     },
     {
-      "id": "028e8feb047a",
+      "id": "6800a0486c91",
       "title": "All Ages Storytime",
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
+      "date": "2026-07-23",
+      "displayDate": "Thu, Jul 23",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -5106,7 +5155,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni",
       "source": "Opera San José",
       "kidFriendly": false
@@ -5123,7 +5172,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -5140,7 +5189,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -5177,23 +5226,6 @@
       "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "c2293e17f3a3",
-      "title": "The Employee Dharma Handbook",
-      "date": "2026-07-22",
-      "displayDate": "Wed, Jul 22",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Lucie Stern Theatre",
-      "address": "1305 Middlefield Rd, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": "paid",
-      "description": "As an important rocket launch approaches, Val, an HR Executive at an aerospace company in Silicon Valley, suspects that a young engineer was overlooked for a promotion. Leela, a first generation Indian-American, doesn’t really want to talk about it, but Val suspects sexism is the cause. What they don’t expect to uncover are simmering tensions of ancient origins among the company’s Indian immigrant employees…sorry, Valued Team Members. Soon Val is navigating a funhouse of identity, nepotism, and desire as she tries to understand the culture and biases of Leela’s managers. When push comes to shove, Val will need to decide what her duty is to Leela, to the company, and to herself.",
-      "url": "https://my.theatreworks.org/7459/7481",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -7197,7 +7229,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games EventParking Passes Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games 2026Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
@@ -7214,7 +7246,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games EventParking Passes Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games 2026Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
@@ -7231,7 +7263,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Parking for the 2026 CrossFit Games EventParking Passes Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
+      "description": "Parking for the 2026 CrossFit Games 2026Games Parking Attending Multiple Days? The 3-Day Parking Pass is the recommended option for guests attending more than one day of the CrossFit Games. Enjoy the convenience of a single parking purchase for the entire weekend, guaranteed access to the ABC Lot, and the flexibility to come and go as needed throughout the event. 3-Day Parking Pass (ABC Lot) Guaranteed parking access in the ABC Lot all weekend Unlimited in-and-out privileges throughout the event One parking credential valid for all three event days No need to purchase parking separately each day Exclusive access to the ABC Lot Pricing Advance Purchase: $150 + applicable fees Event-Day Rate (if available): $180 Please note: ABC Lot inventory is limited and may sell out before the event. Advance purchase is strongly recommended. Purchase All 3 Days VIP Parking Package (includes In and Out Privileges in the A-B-C Main Lot) Attending a Single Day? Single-day parking is available in the Delmas Lots. Single-Day Parking Pass (Delmas Lots) Valid only on the selected event day Parking access from 8 AM to 7 PM No in-and-out privileges Re-entry requires a new parking purchase Pricing Advance Purchase: $45 + applicable fees Event-Day Rate: $50 Purchase General Event Parking for Friday, 7/24 Purchase General Event Parking for Saturday, 7/25 Purchase General Event Parking for Sunday 7/26 Why Purchase Parking in Advance? Parking inventory for the CrossFit Games weekend is limited. Purchasing parking before arriving is the easiest way to ensure a smooth and stress-free event experience. Benefits of purchasing in advance: Secure your parking before lots reach capacity Avoid searching for available parking on event day Speed up your arrival experience Guarantee access to your selected parking option Guests attending multiple days are encouraged to purchase the 3-Day Parking Pass early, as ABC Lot inventory is limited. More Info",
       "url": "https://www.sapcenter.com/events/detail/crossfit-games",
       "source": "SAP Center",
       "kidFriendly": false
@@ -7265,7 +7297,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! Hockey",
+      "description": "Grupo Frontera is bringing their Triste Pero Bien C*bron Tour to the SAP Center at San Jose 🤠Tickets on sale Friday, March 13 at 10 am. Call the raza and get ready for a good time! RegionalMexican Music",
       "url": "https://www.sapcenter.com/events/detail/grupo-frontera",
       "source": "SAP Center",
       "kidFriendly": false
