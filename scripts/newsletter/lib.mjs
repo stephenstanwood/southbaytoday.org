@@ -705,19 +705,11 @@ function trimPeriod(s) {
 
 function buildTonightBlurb(event) {
   const why = event.blurb || event.description || "";
-  const locality = eventLocality(event);
-  const where = event.venue
-    ? `at ${event.venue}${locality ? ` in ${locality}` : ""}`
-    : (locality ? `in ${locality}` : "");
-  const lead = [
-    event.cost === "free" ? "Free" : null,
-    event.time ? `at ${event.time}` : null,
-    where,
-  ].filter(Boolean).join(" ");
   const detail = why
     ? trimPeriod(why).slice(0, 220)
     : "A specific, low-friction evening option if you want one clear answer";
-  return `${lead ? `${lead}. ` : ""}${detail}.`;
+  return sanitizeTonightPickBlurb(`${detail}.`, event)
+    || "A specific, low-friction evening option if you want one clear answer.";
 }
 
 function pickTonightEvent(events, recent = null) {
@@ -1097,6 +1089,7 @@ Voice:
 - Do not tell readers what they are "passing on" or what a choice means skipping. Explain why the selected thing is worth noticing.
 - No corporate newsletter voice. No "unlock", "curated just for you", "vibrant", "hidden gem", or "don't miss."
 - Avoid em dashes. Use commas, periods, or parentheses.
+- Tonight's Pick already prints its time, venue, and city on a metadata line. Start tonightPickBlurb with a complete sentence about why to go; never repeat or lead with "at [time] at [venue]" metadata.
 
 Fact rules:
 - Use only facts in the packet. Do not infer addresses, prices, ages, quality, or popularity.
@@ -1273,8 +1266,11 @@ function applyEditorialJson(data, candidates, edit) {
     .filter((o) => isFreshOpening(o, data.date));
   const reddit = pickByIndexes(redditByIdx, edit.redditIdxs, 4);
   const finalTonightPick = tonightPick || (tonightOptedOut ? null : data.tonightPick);
-  const editedTonightBlurb = tonightPick && isBlurbAnchoredToEvent(edit.tonightPickBlurb, tonightPick)
-    ? newsletterCopyString(edit.tonightPickBlurb, 500)
+  const cleanedTonightBlurb = tonightPick
+    ? sanitizeTonightPickBlurb(edit.tonightPickBlurb, tonightPick)
+    : "";
+  const editedTonightBlurb = tonightPick && isBlurbAnchoredToEvent(cleanedTonightBlurb, tonightPick)
+    ? cleanedTonightBlurb
     : "";
 
   // "Provided but resolved to nothing from a non-empty list" still reads as
@@ -1379,6 +1375,37 @@ function isBlurbAnchoredToEvent(blurb, event) {
     eventLocality(event),
   ].flatMap(anchorTokens);
   return anchors.some((token) => token.length >= 5 && text.includes(token));
+}
+
+export function sanitizeTonightPickBlurb(value, event) {
+  const cleaned = newsletterCopyString(value, 500);
+  if (!cleaned || !event) return cleaned;
+
+  const firstSentence = cleaned.match(/^([^.!?]+[.!?])(?:\s+|$)([\s\S]*)$/);
+  if (!firstSentence) return cleaned;
+
+  const time = String(event.time || "").trim();
+  const venue = String(event.venue || "").trim();
+  const locality = eventLocality(event);
+  const fragments = new Set();
+  const addFragment = (fragment) => {
+    const normalized = normalizeComparable(fragment);
+    if (!normalized) return;
+    fragments.add(normalized);
+    fragments.add(`tonight ${normalized}`);
+    if (event.cost === "free") fragments.add(`free ${normalized}`);
+  };
+
+  addFragment(time && `at ${time}`);
+  addFragment(venue && `at ${venue}`);
+  addFragment(locality && `in ${locality}`);
+  addFragment(time && venue && `at ${time} at ${venue}`);
+  addFragment(time && locality && `at ${time} in ${locality}`);
+  addFragment(venue && locality && `at ${venue} in ${locality}`);
+  addFragment(time && venue && locality && `at ${time} at ${venue} in ${locality}`);
+
+  if (!fragments.has(normalizeComparable(firstSentence[1]))) return cleaned;
+  return newsletterCopyString(firstSentence[2], 500);
 }
 
 function anchorTokens(value) {
@@ -1529,11 +1556,17 @@ function eventLocality(event) {
 export function renderEmail(data) {
   const safeBriefing = sanitizeGeographicBriefing(data.editorial?.briefing, data.dayPlan);
   const safeDayPlanBlurb = sanitizeGeographicBriefing(data.dayPlanBlurb, data.dayPlan);
-  const safeData = safeBriefing === (data.editorial?.briefing || "") && safeDayPlanBlurb === (data.dayPlanBlurb || "")
+  const safeTonightPickBlurb = data.tonightPick
+    ? sanitizeTonightPickBlurb(data.tonightPickBlurb, data.tonightPick) || buildTonightBlurb(data.tonightPick)
+    : "";
+  const safeData = safeBriefing === (data.editorial?.briefing || "")
+      && safeDayPlanBlurb === (data.dayPlanBlurb || "")
+      && safeTonightPickBlurb === (data.tonightPickBlurb || "")
     ? data
     : {
         ...data,
         dayPlanBlurb: safeDayPlanBlurb,
+        tonightPickBlurb: safeTonightPickBlurb,
         editorial: { ...(data.editorial || {}), briefing: safeBriefing },
       };
   const subject = `South Bay Today — ${safeData.longDate}`;
