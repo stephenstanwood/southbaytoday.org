@@ -7,6 +7,7 @@ import {
   isEventFeedFreshForNewsletter,
   makeNewsletterPlan,
   sanitizeGeographicBriefing,
+  sanitizeTonightPickBlurb,
   selectDefaultPlan,
   todayPT,
 } from "./lib.mjs";
@@ -374,6 +375,42 @@ test("Tonight's Pick credits a rendered image with a direct event-page link", ()
 
   assert.match(html, new RegExp(`Image source: <a href="${eventUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>San Jose Improv event page</a>`));
   assert.ok(html.indexOf("Image source:") < html.indexOf("Tonight's pick"));
+});
+
+test("Tonight's Pick strips a dangling leading event-metadata fragment", () => {
+  const pick = {
+    title: "The Music of James Bond",
+    time: "7:30 PM",
+    venue: "Frost Amphitheater",
+    city: "palo-alto",
+  };
+  const acceptedEditorialCopy = "at 7:30 PM at Frost Amphitheater in Palo Alto. Hear the San Francisco Symphony perform 60 years of James Bond themes.";
+
+  assert.equal(
+    sanitizeTonightPickBlurb(acceptedEditorialCopy, pick),
+    "Hear the San Francisco Symphony perform 60 years of James Bond themes.",
+  );
+
+  const { html } = renderEmail({
+    date: "2026-07-24",
+    longDate: "Friday, July 24, 2026",
+    weather: null,
+    dayPlan: null,
+    dayPlanBlurb: "",
+    tonightPick: pick,
+    tonightPickBlurb: acceptedEditorialCopy,
+    todayEvents: [],
+    featuredEvents: [],
+    recentOpenings: [],
+    tonightMeetings: [],
+    todayHistory: [],
+    redditPosts: [],
+    visuals: {},
+    editorial: null,
+  });
+
+  assert.equal(html.includes("at 7:30 PM at Frost Amphitheater in Palo Alto."), false);
+  assert.ok(html.includes("Hear the San Francisco Symphony perform 60 years of James Bond themes."));
 });
 
 test("Tonight's Pick never presents a venue photo as event art", () => {
