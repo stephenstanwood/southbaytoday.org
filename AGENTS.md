@@ -39,6 +39,11 @@ shared-plan, or scheduled-hero logic.
 - stanwood.dev/south-bay redirects here permanently
 - NEVER create files in a root `api/` directory — Vercel treats that as legacy serverless functions and routes all `/api/*` traffic away from Astro's `_render`, breaking every API route. All API routes must live in `src/pages/api/`.
 
+## Email DNS
+- Vercel DNS is authoritative; the intended ImprovMX + Resend/SES layout and change procedure are in `docs/email-dns.md`.
+- DMARC must retain `p=reject`, `pct=100`, `adkim=r`, and `aspf=r`; `rua` routes aggregate reports to Postmark's free analyzer instead of a human inbox.
+- Run `npm run verify:email-dns` after any email or DNS change.
+
 ## Tabs
 Order: Today | Plan My Day | Events | Camps | Gov | Tech | Development | Food | Transit | Weather | Sports
 Hash routing: #overview, #plan, #events, #camps, #government, #technology, #development, #food, #transit, #weather, #sports
