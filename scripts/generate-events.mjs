@@ -1760,6 +1760,13 @@ function cleanVenue(raw) {
   v = v.replace(/^-\s+/, "");
   // If the string is meeting directions ("Meet at...", "Check in at..."), not a venue name
   if (/^(meet|check\s+in)\s+(at|in)\s+/i.test(v)) return "";
+  // Locational sentences slip into the venue field on some CivicPlus calendars,
+  // e.g. Los Altos "Downtown Park Outreach" booths whose location reads
+  // "Booth is located near State St & Third St." or "Booth located near the
+  // front door of the community center". A real venue name never contains the
+  // verb "located", so treat any such string as directions, not a place name,
+  // and let the caller fall back to a civic venue guess or the city.
+  if (/\blocated\s+(at|near|in|by|on|next|across|behind|inside|outside)\b/i.test(v)) return "";
   // Meetup organizers sometimes type a parking note into the venue-name field
   // ("Street Parking for Free", "Free Parking"). That's an instruction, not a
   // place name — return empty so the caller falls back to the group/source name.
