@@ -2970,6 +2970,15 @@ async function fetchSvlgEvents() {
 
 // ── CivicPlus RSS ──
 
+function cleanCampbellVenue(raw) {
+  const location = String(raw || "");
+  // Campbell's RSS publishes Jack Fischer Park as only its intersection,
+  // while the linked first-party event page supplies the actual facility name.
+  // Keep the reader-facing venue stable across future events at this location.
+  if (/\bAbbott Ave\.?\s*&\s*Pollard Road\b/i.test(location)) return "Jack Fischer Park";
+  return cleanVenue(location);
+}
+
 async function fetchCampbellEvents() {
   console.log("  ⏳ Campbell Community Calendar...");
   try {
@@ -2988,7 +2997,7 @@ async function fetchCampbellEvents() {
         || parseDate(item.pubDate);
       if (!start || start < now) return null;
       const timeStr = parseCivicPlusEventTime(item.eventTimes);
-      const venueLabel = cleanVenue(item.location || "") || inferCivicVenueFromTitle(item.title) || null;
+      const venueLabel = cleanCampbellVenue(item.location) || inferCivicVenueFromTitle(item.title) || null;
       const description = truncate(stripCivicPlusMetadata(stripHtml(item.description)));
       // Same placeholder filter as fetchCivicPlusRssCity — Campbell's RSS also
       // emits bare-title entries ("Theatre Event", "Almaden Spirit Athletics
