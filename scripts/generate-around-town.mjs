@@ -470,13 +470,30 @@ async function gatherPermitItems() {
       `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${p.address || "unknown address"} ($${(p.valuation || 0).toLocaleString()}, ${p.units || 0} units, issued ${p.issueDate})`
     ).join("\n");
 
+    // Counting is the one thing the model reliably gets wrong, so do it here
+    // and hand it the answer. On 2026-09-09 the seven ADU permits at 584 N 2nd
+    // St (#9 through #15, none missing) shipped as "Six detached ADUs … (#9
+    // through #15, minus one)" — a wrong tally plus a gap inferred from the
+    // unit numbers. Group by street address, ignoring the unit/suite suffix.
+    const byStreet = new Map();
+    for (const p of permits) {
+      const street = (p.address || "unknown address").replace(/\s*[#,]\s*\S+\s*$/, "").trim();
+      byStreet.set(street, (byStreet.get(street) || 0) + 1);
+    }
+    const sharedAddresses = [...byStreet.entries()].filter(([, n]) => n > 1);
+    const countsText = sharedAddresses.length
+      ? `\n\nVERIFIED COUNTS (authoritative — use these numbers verbatim, do not recount):\n${sharedAddresses
+          .map(([street, n]) => `- ${street}: exactly ${n} permits in the list above`)
+          .join("\n")}`
+      : "";
+
     console.log(`  ⏳ ${config.cityName}: evaluating ${permits.length} notable permits...`);
 
     try {
       const found = await claudeJson(`These are recently issued building permits in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about — new businesses, new housing, large construction projects, or anything unusual. Skip routine renovations and ADUs unless they fit a broader pattern worth pointing out.
 
 Permits:
-${permitText}
+${permitText}${countsText}
 
 IMPORTANT — a permit being issued means construction is *cleared to begin*, NOT that it has started. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches" — those imply a milestone the data does not support. Use language like "permitted", "receives building permit", "cleared to build", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
@@ -484,7 +501,7 @@ USE TYPE OVER INFERENCE: when a permit line carries "[use type: …]", say what 
 
 NOT NAMES: San José permit descriptions carry a trade-scope code in parentheses — "(Bemp 100%)", "(Bepm100%)", "(Bep 100%)", "(B 100%)", "(B)", and "Srp" prefixes. These are Building/Electrical/Plumbing/Mechanical scope markers, NOT developers, businesses, or project names. Never name them as a party ("developer Bemp"). Ignore them entirely. Only name a developer, owner, or tenant when it appears in the description as an actual name.
 
-COUNTS: the list above is the notable permits only, not every permit issued. If you state a count ("two ADUs", "three units"), it must match exactly what is listed — count the lines, do not estimate. When several permits share one address, prefer wording that does not hinge on a total ("prefab ADUs permitted at…").
+COUNTS: the list above is the notable permits only, not every permit issued. If a VERIFIED COUNTS block appears, those totals are authoritative — state them exactly or omit the number; never substitute your own tally. Otherwise prefer wording that does not hinge on a total ("prefab ADUs permitted at…"). Never infer a gap, a missing unit, or a range from the unit/suite numbers in addresses — "#9" through "#15" is a naming scheme, not a sequence, so do not write "minus one", "all but one", "#9 through #15", or any similar range/exception phrasing.
 
 NO FILLER ADJECTIVES: do not call a project "significant", "substantial", "major", "large-scale", "notable", or "important" without saying *why* the resident should care. Do not write "This represents …", "This reflects ongoing …", "This underscores …" — sentences that gesture at significance instead of stating it. If you can't name the concrete reason (square footage, units, tenant, dollar tag in context, neighborhood impact), drop the second sentence. One useful sentence beats two with one of them puffed up.
 

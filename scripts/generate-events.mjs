@@ -1915,6 +1915,13 @@ function cleanVenue(raw) {
   v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").trim();
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
+  // Bibliocommons puts the street address in a parenthetical after the place
+  // name: "Backesto Park (551 N. 13th Street, San Jose, CA 95112)". Strip the
+  // whole parenthetical when it opens with a house number — the address field
+  // already carries it. Must run BEFORE the ", City, CA 9xxxx" pass below,
+  // which otherwise eats the closing paren and leaves a dangling
+  // "Backesto Park (551 N. 13th Street" (shipped 2026-09-09).
+  v = v.replace(/\s*\(\s*\d+\s+[^()]*\)\s*$/, "").trim();
   // Localist/athletics feeds prefix the city+state onto the venue field, e.g.
   // "Santa Clara, Calif., Stevens Stadium - Buck Shaw Field". Strip a leading
   // "<City>, Calif.," / "<City>, CA," block only when a real venue name follows
@@ -2078,6 +2085,12 @@ function cleanVenue(raw) {
   // Normalize so the venue and any blurb generated from the venue field
   // ("Test your knowledge … at Dr. Funk") read naturally.
   v = v.replace(/^Dr\s+Funk\b/, "Dr. Funk");
+  // Safety net for the same parenthetical-address case when an upstream pass
+  // already consumed the closing paren: an unmatched "(" whose contents start
+  // with a house number is a truncated address, never part of a venue name.
+  if (v.split("(").length - 1 > v.split(")").length - 1) {
+    v = v.replace(/\s*\(\s*\d+\s+[^()]*$/, "").trim();
+  }
   // If the entire string is just a raw address (starts with a number), return empty so caller can use fallback
   if (/^\d+\s/.test(v)) return "";
   // Organizer typed raw GPS coordinates into the venue-name field (e.g.
