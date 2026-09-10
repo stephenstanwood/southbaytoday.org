@@ -183,7 +183,7 @@ function CampCard({ camp }: { camp: Camp }) {
           <dd>{weeksLabel(camp)}</dd>
         </div>
         <div>
-          <dt>Price</dt>
+          <dt>{SEASON_ACTIVE ? "Price" : "2026 price"}</dt>
           <dd>{price}</dd>
         </div>
         <div>
@@ -206,14 +206,25 @@ function CampCard({ camp }: { camp: Camp }) {
       )}
 
       <div className="camps-card-footer">
-        {camp.priceNote ? <span>{camp.priceNote}</span> : <span>{sessionCount(camp)} session{sessionCount(camp) !== 1 ? "s" : ""} listed</span>}
+        {camp.priceNote ? (
+          <span>{camp.priceNote}</span>
+        ) : (
+          <span>
+            {sessionCount(camp)} session{sessionCount(camp) !== 1 ? "s" : ""}{" "}
+            {SEASON_ACTIVE ? "listed" : "in 2026"}
+          </span>
+        )}
         <a
           href={camp.registerUrl}
           target="_blank"
           rel="noopener noreferrer"
           style={{ background: accent }}
         >
-          Register
+          {/* Off-season the last session is already past, so "Register" points at
+              a page with nothing to register for. The operator's page is still
+              the right destination — it's where next year's dates go up first —
+              but the label has to say so. */}
+          {SEASON_ACTIVE ? "Register" : "Program page"}
         </a>
       </div>
     </article>
