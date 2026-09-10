@@ -43,6 +43,10 @@ export const SHARED_LOGO_GROUPS = [
   ["netscape", "netscape-ipo"],
   ["glean", "glean-series-f"],
   ["etched", "etched-aug-2026"],
+  // Same company on two Recently Funded cards — an early round and a later
+  // one — so the pair shares the brand mark rather than resolving twice.
+  ["cylake", "cylake-sep-2026"],
+  ["lyte", "lyte-series-c"],
   // Same company on two surfaces: the "Smaller, But Notable" spotlight card and
   // its Recently Funded round card. Converged once the spotlight entry started
   // resolving off sambanova.ai instead of Wikipedia — same brand, so this is the
